@@ -1,49 +1,81 @@
 import { reporter } from "./reporter"
 import path from "path"
 import { PluginConfigMap } from "."
-export async function installPlugins(
-  plugins: Array<string>,
-  pluginOptions: PluginConfigMap = {},
-  rootPath: string,
-  packages: Array<string>
-): Promise<void> {
-  let installPluginCommand
-  let gatsbyPath
+import { requireResolve } from "./require-utils"
 
+const resolveGatsbyPath = (rootPath: string): string | never => {
   try {
-    gatsbyPath = require.resolve(`gatsby/package.json`, {
+    const gatsbyPath = requireResolve(`gatsby/package.json`, {
       paths: [rootPath],
     })
-  } catch (e) {
-    // Not found
-    console.warn(e)
-  }
 
-  if (!gatsbyPath) {
-    reporter.error(
+    if (!gatsbyPath) throw new Error()
+
+    return gatsbyPath
+  } catch (e) {
+    throw new Error(
       `Could not find "gatsby" in ${rootPath}. Perhaps it wasn't installed properly?`
     )
-    return
   }
+}
 
+const resolveGatsbyCliPath = (
+  rootPath: string,
+  gatsbyPath: string
+): string | never => {
   try {
-    installPluginCommand = require.resolve(
+    const installPluginCommand = requireResolve(
       `gatsby-cli/lib/handlers/plugin-add`,
       {
         // Try to find gatsby-cli in the site root, or in the site's gatsby dir
         paths: [rootPath, path.dirname(gatsbyPath)],
       }
     )
-  } catch (e) {
-    // The file is missing
-  }
 
-  if (!installPluginCommand) {
-    reporter.error(`gatsby-cli not installed, or is too old`)
+    if (!installPluginCommand) throw new Error()
+
+    return installPluginCommand
+  } catch (e) {
+    throw new Error(`gatsby-cli not installed, or is too old`)
+  }
+}
+
+const addPluginsToProject = async (
+  installPluginCommand: string,
+  plugins: Array<string>,
+  pluginOptions: PluginConfigMap = {},
+  rootPath: string,
+  packages: Array<string>
+): Promise<void> => {
+  try {
+    const { addPlugins } = require(installPluginCommand)
+    await addPlugins(plugins, pluginOptions, rootPath, packages)
+  } catch (e) {
+    throw new Error(
+      `Something went wrong when trying to add the plugins to the project: ${e.message}`
+    )
+  }
+}
+
+export async function installPlugins(
+  plugins: Array<string>,
+  pluginOptions: PluginConfigMap = {},
+  rootPath: string,
+  packages: Array<string>
+): Promise<void> {
+  try {
+    const gatsbyPath = resolveGatsbyPath(rootPath)
+    const installPluginCommand = resolveGatsbyCliPath(rootPath, gatsbyPath)
+
+    await addPluginsToProject(
+      installPluginCommand,
+      plugins,
+      pluginOptions,
+      rootPath,
+      packages
+    )
+  } catch (e) {
+    reporter.error(e.message)
     return
   }
-
-  const { addPlugins } = require(installPluginCommand)
-
-  await addPlugins(plugins, pluginOptions, rootPath, packages)
 }

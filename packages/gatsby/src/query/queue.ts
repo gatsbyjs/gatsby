@@ -36,10 +36,13 @@ const createBuildQueue = (
 
   const queueOptions: BetterQueue.QueueOptions<Task, TaskResult> = {
     ...createBaseOptions(),
-    process: ({ job, activity }, callback): void => {
-      queryRunner(graphqlRunner, job, activity?.span)
-        .then(result => callback(null, result))
-        .catch(callback)
+    async process({ job, activity }, callback): Promise<void> {
+      try {
+        const result = await queryRunner(graphqlRunner, job, activity?.span)
+        callback(null, result)
+      } catch (e) {
+        callback(e)
+      }
     },
   }
   return new Queue(queueOptions)
@@ -62,20 +65,20 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
     ): void => {
       cb(null, newTask)
     },
-    process: ({ job: queryJob, activity }, callback): void => {
-      queryRunner(getRunner(), queryJob, activity?.span).then(
-        result => {
-          if (!queryJob.isPage) {
-            websocketManager.emitStaticQueryData({
-              result,
-              id: queryJob.hash,
-            })
-          }
+    async process({ job: queryJob, activity }, callback): Promise<void> {
+      try {
+        const result = await queryRunner(getRunner(), queryJob, activity?.span)
+        if (!queryJob.isPage) {
+          websocketManager.emitStaticQueryData({
+            result,
+            id: queryJob.hash,
+          })
+        }
 
-          callback(null, result)
-        },
-        error => callback(error)
-      )
+        callback(null, result)
+      } catch (e) {
+        callback(e)
+      }
     },
   }
 

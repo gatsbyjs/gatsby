@@ -150,15 +150,30 @@ describe(`navigation`, () => {
       })
 
       it(`should trigger an effect after a search param has changed`, () => {
-        cy.findByTestId(`effect-message`).should(`have.text`, `Waiting for effect`)
+        cy.findByTestId(`effect-message`).should(
+          `have.text`,
+          `Waiting for effect`
+        )
         cy.findByTestId(`send-search-message`).click().waitForRouteChange()
-        cy.findByTestId(`effect-message`).should(`have.text`, `?message=searchParam`)
+        cy.findByTestId(`effect-message`).should(
+          `have.text`,
+          `?message=searchParam`
+        )
       })
 
       it(`should trigger an effect after the hash has changed`, () => {
-        cy.findByTestId(`effect-message`).should(`have.text`, `Waiting for effect`)
+        cy.findByTestId(`effect-message`).should(
+          `have.text`,
+          `Waiting for effect`
+        )
         cy.findByTestId(`send-hash-message`).click().waitForRouteChange()
         cy.findByTestId(`effect-message`).should(`have.text`, `#message-hash`)
+      })
+
+      it(`should trigger an effect after the state has changed`, () => {
+        cy.findByTestId(`effect-message`).should(`have.text`, ``)
+        cy.findByTestId(`send-state-message`).click().waitForRouteChange()
+        cy.findByTestId(`effect-message`).should(`have.text`, `this is a message using the state`)
       })
     })
   }
@@ -173,13 +188,22 @@ describe(`navigation`, () => {
       it(`should trigger an effect after a search param has changed`, () => {
         cy.findByTestId(`effect-message`).should(`have.text`, ``)
         cy.findByTestId(`send-search-message`).click().waitForRouteChange()
-        cy.findByTestId(`effect-message`).should(`have.text`, `?message=searchParam`)
+        cy.findByTestId(`effect-message`).should(
+          `have.text`,
+          `?message=searchParam`
+        )
       })
 
       it(`should trigger an effect after the hash has changed`, () => {
         cy.findByTestId(`effect-message`).should(`have.text`, ``)
         cy.findByTestId(`send-hash-message`).click().waitForRouteChange()
         cy.findByTestId(`effect-message`).should(`have.text`, `#message-hash`)
+      })
+
+      it(`should trigger an effect after the state has changed`, () => {
+        cy.findByTestId(`effect-message`).should(`have.text`, ``)
+        cy.findByTestId(`send-state-message`).click().waitForRouteChange()
+        cy.findByTestId(`effect-message`).should(`have.text`, `this is a message using the state`)
       })
     })
   }

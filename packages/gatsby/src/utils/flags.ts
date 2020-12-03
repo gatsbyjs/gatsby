@@ -60,6 +60,42 @@ const activeFlags: Array<IFlag> = [
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
   },
+  {
+    name: `PRESERVE_WEBPACK_CACHE`,
+    env: `GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE`,
+    command: `all`,
+    telemetryId: `PreserveWebpackCache`,
+    experimental: false,
+    description: `Don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+  },
+  {
+    name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
+    env: `GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE`,
+    command: `all`,
+    telemetryId: `PreserveFileDownloadCache`,
+    experimental: false,
+    description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+  },
+  {
+    name: `FAST_REFRESH`,
+    env: `GATSBY_FAST_REFRESH`,
+    command: `develop`,
+    telemetryId: `FastRefresh`,
+    experimental: false,
+    description: `Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
+  },
+  {
+    name: `PARALLEL_SOURCING`,
+    env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
+    command: `all`,
+    telemetryId: `ParallelSourcing`,
+    experimental: true,
+    description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28336`,
+  },
 ]
 
 export default activeFlags
