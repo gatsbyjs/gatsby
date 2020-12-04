@@ -24,16 +24,22 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.12.5"
+    "@babel/runtime": "^7.12.5",
+    "jscodeshift": "^0.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^0.9.0-next.0",
-    "cross-env": "^7.0.2",
-    "jscodeshift": "^0.11.0"
+    "@babel/plugin-syntax-jsx": "^7.12.1",
+    "@babel/plugin-syntax-typescript": "^7.12.1",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "recast": "^0.20.4",
+    "cross-env": "^7.0.2"
   },
   "engines": {
     "node": ">=10.13.0"
-  }
+  },
+  "bin": "./bin/gatsby-codemods.js"
 }

@@ -10,3 +10,9 @@ export const clearLine = (count = 1): Promise<boolean> =>
       resolve()
     })
   })
+
+export const kebabify = (str: string): string =>
+  str
+    .replace(/([a-z])([A-Z])/g, `$1-$2`)
+    .replace(/[^a-zA-Z]+/g, `-`)
+    .toLowerCase()

@@ -13,6 +13,7 @@ module.exports = {
     `/dist/`,
     `/node_modules/`,
     `__tests__/fixtures`,
+    `__testfixtures__`,
     `.cache`,
   ],
   transform: { "^.+\\.js$": `<rootDir>/jest-transformer.js` },
