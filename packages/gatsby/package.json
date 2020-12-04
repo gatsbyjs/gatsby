@@ -110,6 +110,7 @@
     "mini-css-extract-plugin": "^0.11.2",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
+    "multi-loader": "0.1.0",
     "moment": "^2.27.0",
     "name-all-modules-plugin": "^1.0.1",
     "normalize-path": "^3.0.0",

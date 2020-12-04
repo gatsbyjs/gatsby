@@ -4,6 +4,10 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
 import { Compiler } from "webpack"
 import { isEqual } from "lodash"
+import got from "got"
+import fs from "fs-extra"
+import path from "path"
+
 import { Stage } from "../commands/types"
 
 import {
@@ -88,7 +92,8 @@ export async function startWebpackServer({
       // We have switched off the default Webpack output in WebpackDevServer
       // options so we are going to "massage" the warnings and errors and present
       // them in a readable focused way.
-      const messages = formatWebpackMessages(stats.toJson({}, true))
+      const statsToJson = stats.toJson({}, true)
+      const messages = formatWebpackMessages(statsToJson)
       const urls = prepareUrls(
         program.https ? `https` : `http`,
         program.host,
@@ -114,6 +119,27 @@ export async function startWebpackServer({
           }
         }
       }
+
+      // Download css assets
+      const cssAssets = statsToJson.assets.filter(asset => {
+        console.log({ asset })
+        return asset.name.endsWith(`.css`)
+      })
+
+      console.log({ cssAssets, port: program.port })
+      // Stream to public directory so we can access during SSR.
+      cssAssets.forEach(asset => {
+        console.log(
+          `writing to`,
+          path.join(program.directory, `public`, asset.name)
+        )
+        const writeStream = fs.createWriteStream(
+          path.join(program.directory, `public`, asset.name)
+        )
+        const url = new URL(`/${asset.name}`, urls.localUrlForBrowser)
+        console.log(url)
+        got.stream(url.href).pipe(writeStream)
+      })
 
       isFirstCompile = false
 

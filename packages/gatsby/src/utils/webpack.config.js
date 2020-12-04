@@ -227,16 +227,16 @@ module.exports = async (
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
+            plugins.extractText(),
+            plugins.extractStats(),
           ])
           .filter(Boolean)
         break
       case `develop-html`:
         configPlugins = configPlugins.concat([
-          plugins.extractText(),
-
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
-          plugins.extractStats(),
+          // plugins.extractStats(),
         ])
 
         break

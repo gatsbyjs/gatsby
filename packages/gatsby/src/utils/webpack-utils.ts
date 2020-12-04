@@ -197,10 +197,10 @@ export const createWebpackUtils = (
     miniCssExtract: (options = {}) => {
       return {
         options,
-        loader:
-          stage === `develop`
-            ? require.resolve(`style-loader`)
-            : MiniCssExtractPlugin.loader,
+        loader: MiniCssExtractPlugin.loader,
+        // stage === false //`develop`
+        // ? require.resolve(`style-loader`)
+        // : MiniCssExtractPlugin.loader,
       }
     },
 
@@ -540,11 +540,19 @@ export const createWebpackUtils = (
           loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
         )
 
-      if (stage === `develop-html`) {
-        use.unshift(
-          loaders.miniCssExtract({ hmr: false && !restOptions.modules })
-        )
-      }
+      // if (stage === `develop-html`) {
+      // use.unshift(
+      // loaders.miniCssExtract({ hmr: false && !restOptions.modules })
+      // )
+      // }
+      // if (stage === `develop`) {
+      // use
+      // .unshift
+      // // require.resolve(`style-loader`)
+      // // loaders.miniCssExtract({ hmr: false && !restOptions.modules })
+      // ()
+      // use.unshift(loaders.miniCssExtract())
+      // }
 
       return {
         use,
