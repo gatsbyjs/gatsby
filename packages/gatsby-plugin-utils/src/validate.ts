@@ -1,11 +1,10 @@
-import { GatsbyNode } from "gatsby"
+import { GatsbyNode, Reporter } from "gatsby"
 import { ValidationOptions } from "joi"
 import { Joi, ObjectSchema } from "./joi"
 import { IPluginInfoOptions, IPluginRefObject, ISiteConfig } from "./types"
 import path from "path"
 import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
