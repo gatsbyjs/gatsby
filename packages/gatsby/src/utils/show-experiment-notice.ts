@@ -58,8 +58,7 @@ export function showExperimentNoticeAfterTimeout(
 }
 
 export const createNoticeMessage = (notices): string => {
-  let message = `
-Hi from the Gatsby maintainers! Based on what we see in your site, these coming
+  let message = `\nHi from the Gatsby maintainers! Based on what we see in your site, these coming
 features may help you. All of these can be enabled within gatsby-config.js via
 flags (samples below)`
 
@@ -69,8 +68,7 @@ flags (samples below)`
 
 ${chalk.bgBlue.bold(
   terminalLink(notice.experimentIdentifier, notice.umbrellaLink)
-)}, ${notice.noticeText}
-`)
+)}, ${notice.noticeText}\n`)
   )
 
   return message
