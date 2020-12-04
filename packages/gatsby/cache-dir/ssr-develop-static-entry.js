@@ -118,10 +118,10 @@ export default (pagePath, isClientOnlyPage, callback) => {
     const { componentChunkName, staticQueryHashes = [] } = pageData
 
     let scriptsAndStyles = flatten(
-      [`app`, componentChunkName].map(s => {
-        const fetchKey = `assetsByChunkName[${s}]`
+      [`main`].map(chunkKey => {
+        const fetchKey = `assetsByChunkName[${chunkKey}]`
 
-        let chunks = get(stats, fetchKey, [])
+        let chunks = get(stats, fetchKey)
         const namedChunkGroups = get(stats, `namedChunkGroups`)
 
         if (!chunks) {
@@ -135,7 +135,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
           return { rel: `preload`, name: chunk }
         })
 
-        namedChunkGroups[`main`].assets.forEach(asset =>
+        namedChunkGroups[chunkKey].assets.forEach(asset =>
           chunks.push({ rel: `preload`, name: asset })
         )
 
