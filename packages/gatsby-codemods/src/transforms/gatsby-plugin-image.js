@@ -1,4 +1,4 @@
-import graphql from "gatsby/graphql"
+import * as graphql from "graphql"
 import { parse, print } from "recast"
 import { transformFromAstSync, parseSync } from "@babel/core"
 
