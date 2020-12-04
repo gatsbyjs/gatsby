@@ -722,5 +722,8 @@ module.exports = async (
     parentSpan,
   })
 
+  require("util").inspect.defaultOptions.depth = null
+  console.log(getConfig())
+
   return getConfig()
 }

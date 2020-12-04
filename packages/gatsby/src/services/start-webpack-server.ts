@@ -142,6 +142,7 @@ export async function startWebpackServer({
           path.join(program.directory, `public`, `__${asset.name}`)
         )
         const url = new URL(`/${asset.name}`, urls.localUrlForBrowser)
+        console.log(url)
         await pipeline(got.stream(url.href), writeStream)
         console.log(`done`)
       })
