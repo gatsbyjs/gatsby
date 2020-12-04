@@ -1,14 +1,5 @@
 require(`isomorphic-fetch`)
 
-console.log(
-  `
-
-  firing this thing up!
-
-`,
-  process.argv
-)
-
 fetch(`http://localhost:8000/__refresh/${process.argv[2]}`, {
   method: `POST`,
   headers: {

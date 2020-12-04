@@ -7,56 +7,22 @@ beforeEach(() => {
 
 after(() => reset())
 
+it(`only updates the data from the matching plugin`, () => {
+  cy
+    .get(`#pinc-data li`)
+    .should(`have.length`, 1)
 
-// const reset = () => cy.exec(`npm run reset:preview`)
-//
-// describe(`Gatsby Preview (Updating)`, () => {
-//   it(`displays initial data`, () => {
-//     cy.get(`li:eq(0) a`).click().waitForRouteChange()
-//
-//     cy.findByText(`Hello World (1)`).should(`exist`)
-//
-//     cy.findByText(`0`).should(`exist`)
-//   })
-//
-//   it(`updates and hot-reloads changes to content`, () => {
-//     cy.get(`li:eq(0) a`).click().waitForRouteChange()
-//
-//     update()
-//
-//     cy.findByText(`1`).should(`exist`)
-//   })
-//
-//   it(`updates and hot-reloads new content`, () => {
-//     const count = 5
-//     update(count)
-//
-//     cy.get(`li`)
-//       .its(`length`)
-//       .should(`be`, count + 1)
-//   })
-//
-//   it(`updates when content is deleted`, () => {
-//     update(5)
-//
-//     reset()
-//
-//     cy.get(`li`).its(`length`).should(`be`, 1)
-//   })
-//
-//   it(`can be triggered with webhook data`, () => {
-//     cy.exec(`npm run update:webhook`)
-//
-//     cy.findByText(`Hello World from a Webhook (999)`).should(`exist`)
-//   })
-// })
-//
-//
+  cy
+    .get(`#fake-data li`)
+    .should(`have.length`, 1)
 
-it(`can be triggered with webhook data`, () => {
   cy.exec(`npm run update:cms-webhook gatsby-source-pinc-data`)
 
   cy
-    .get(`#pinc-data`)
-    .findByText(`Hello World from a Webhook (999)`).should(`exist`)
+    .get(`#pinc-data li`)
+    .should(`have.length`, 2)
+
+  cy
+    .get(`#fake-data li`)
+    .should(`have.length`, 1)
 })

@@ -495,38 +495,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
     )
 
-    reporter.info(`
-    
-    
-      sup bitches!!!
-    
-    
-    `)
-    console.log(
-      `
-
-
-        I'm here bitches!!!
-      
-
-      
-      `
-    )
     if (api === `sourceNodes` && args.pluginName) {
-      console.log(
-        `
-      
-
-        Here I am!
-
-        (rock you like a hurricaine)
-      
-
-        ${args.pluginName}
-        `,
-        implementingPlugins
-      )
-
       implementingPlugins = implementingPlugins.filter(
         plugin => plugin.name === args.pluginName
       )

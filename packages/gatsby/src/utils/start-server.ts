@@ -251,14 +251,6 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
 
   app.use(REFRESH_ENDPOINT, express.json())
   app.post(`${REFRESH_ENDPOINT}/:plugin_name`, (req, res) => {
-    console.log(`
-    
-    
-    Tryna refresh a plugin here don't mind me
-    
-    
-    
-    `)
     const pluginName = req.params[`plugin_name`]
 
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
