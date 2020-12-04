@@ -35,6 +35,7 @@
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/plugin-syntax-typescript": "^7.12.1",
     "babel-preset-gatsby-package": "^0.9.0-next.0",
+    "execa":"^5.0.0",
     "cross-env": "^7.0.2",
     "recast": "^0.20.4"
   },
