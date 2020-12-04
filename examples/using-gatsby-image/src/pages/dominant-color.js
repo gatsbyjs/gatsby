@@ -8,31 +8,28 @@ import ImageGallery from "../components/image-gallery"
 
 import Layout from "../components/layout"
 
-const TracedSVG = ({ data, location }) => (
+const DominantColor = ({ data, location }) => (
   <Layout
     location={location}
     image={getImage(data.coverImage.localFile)}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
-    <PageTitle>Traced SVG Placeholders</PageTitle>
+    <PageTitle>Dominant Color Placeholders</PageTitle>
     <FloatingImage
       imageMobile={getImage(data.floatingImageMobile.localFile)}
       imageDesktop={getImage(data.floatingImage.localFile)}
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
-      Generates a{` `}
-      <a href="https://github.com/gatsbyjs/gatsby/issues/2435">traced SVG</a> of
-      the image and returns the SVG source as an ”optimized URL-encoded” data:
-      URI. This provides an alternative to the default inline base64 placeholder
-      image.
+      Uses the dominant color of the image as the background. This value is
+      extracted ferom the image by sharp.
     </p>
     <p>
-      To make use of this technique, pass <code>placeholder: TRACED_SVG</code>{" "}
-      to the resolver, or <code>placeholder="tracedSVG"</code> with the
-      StaticImage component.
+      To make use of this technique, pass{" "}
+      <code>placeholder: DOMINANT_COLOR</code> to the resolver, or{" "}
+      <code>placeholder="dominantColor"</code> with the StaticImage component.
     </p>
-    <h2>Unsplash SVG Image Gallery</h2>
+    <h2>Unsplash Dominant Color Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
       image={getImage(data.fullWidthImage.localFile)}
@@ -41,7 +38,7 @@ const TracedSVG = ({ data, location }) => (
   </Layout>
 )
 
-export default TracedSVG
+export default DominantColor
 
 export const query = graphql`
   {
@@ -52,8 +49,7 @@ export const query = graphql`
         childImageSharp {
           gatsbyImageData(
             maxWidth: 720
-            tracedSVGOptions: { background: "#fff", color: "#663399" }
-            placeholder: TRACED_SVG
+            placeholder: DOMINANT_COLOR
             layout: FLUID
           )
         }
@@ -64,7 +60,11 @@ export const query = graphql`
     ) {
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 120, placeholder: TRACED_SVG, layout: FIXED)
+          gatsbyImageData(
+            width: 120
+            placeholder: DOMINANT_COLOR
+            layout: FIXED
+          )
         }
       }
     }
@@ -73,7 +73,11 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 200, placeholder: TRACED_SVG, layout: FIXED)
+          gatsbyImageData(
+            width: 200
+            placeholder: DOMINANT_COLOR
+            layout: FIXED
+          )
         }
       }
     }
@@ -82,29 +86,11 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(maxWidth: 480, placeholder: TRACED_SVG, layout: FLUID)
-        }
-      }
-    }
-    galleryImages: allUnsplashImagesYaml(
-      filter: { gallery: { eq: true } }
-      limit: 10
-    ) {
-      edges {
-        node {
-          credit
-          title
-          localFile {
-            childImageSharp {
-              gatsbyImageData(
-                maxWidth: 380
-                quality: 70
-                tracedSVGOptions: { background: "#fbfafc", color: "#dbd4e2" }
-                placeholder: TRACED_SVG
-                layout: FLUID
-              )
-            }
-          }
+          gatsbyImageData(
+            maxWidth: 480
+            placeholder: DOMINANT_COLOR
+            layout: FLUID
+          )
         }
       }
     }
@@ -122,8 +108,7 @@ export const query = graphql`
                 maxWidth: 380
                 maxHeight: 380
                 quality: 70
-                tracedSVGOptions: { background: "#fbfafc", color: "#dbd4e2" }
-                placeholder: TRACED_SVG
+                placeholder: DOMINANT_COLOR
                 layout: FLUID
               )
             }

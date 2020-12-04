@@ -27,31 +27,11 @@ const FloatingImage = ({
   title,
   backgroundColor,
 }) => (
-  <React.Fragment>
-    {/*
-        gatsby-image sets a couple of inline styles on its outer
-        container and allows overriding via its `style` prop. One
-        of these inline styles is `display: inline-block´.
-
-        In this case we have two images, one for mobile and one
-        for desktop, and toggle their visibility with `display`,
-        so we need to override the gatsby-image default to make
-        our own styles work.
-
-        https://www.gatsbyjs.com/plugins/gatsby-image/#gatsby-image-props
-    */}
-    <Image
-      fixed={[
-        imageMobile,
-        {
-          ...imageDesktop,
-          media: mq.phablet.replace(`@media`, ``).trim(),
-        },
-      ]}
-      backgroundColor={backgroundColor ? backgroundColor : false}
-      title={title}
-    />
-  </React.Fragment>
+  <GatsbyImage
+    image={imageDesktop}
+    backgroundColor={backgroundColor ?? false}
+    title={title}
+  />
 )
 
 export default FloatingImage

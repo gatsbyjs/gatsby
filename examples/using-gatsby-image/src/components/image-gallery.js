@@ -1,7 +1,6 @@
 import React from "react"
-import { GatsbyImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import styled from "@emotion/styled"
-import numeral from "numeral"
 
 import { mq, gutter, offset, offsetXxl } from "../utils/presets"
 import { options, scale } from "../utils/typography"
@@ -58,17 +57,14 @@ const GridItem = styled(`div`)`
 
 const GridItemImage = styled(GatsbyImage)`
   &:hover {
-    div + img {
+    [data-placeholder-image] {
       opacity: 1 !important;
       transition: none !important;
     }
 
-    img + picture > img {
+    [data-main-image] {
       opacity: 0 !important;
-    }
-
-    span: {
-      opacity: 1 !important;
+      transition: none !important;
     }
   }
 `
@@ -91,25 +87,25 @@ const Badge = styled(`span`)`
 const ImageGallery = edges => (
   <OuterContainer>
     <Grid>
-      {edges.images.map((image, index) => (
-        <GridItem key={index}>
-          <GridItemImage
-            image={image.node.localFile.childImageSharp.gatsbyImageData}
-            title={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
-          />
-          <Badge>
-            SVG
-            {` `}
-            {numeral(
-              Buffer.byteLength(
-                image.node.localFile.childImageSharp.gatsbyImageData.tracedSVG,
-                `utf8`
-              )
-            ).format()}
-            {` `}B
-          </Badge>
-        </GridItem>
-      ))}
+      {edges.images.map(image => {
+        const img = getImage(image.node.localFile)
+        const fallbackString = img?.placeholder?.fallback ?? img.backgroundColor
+        const byteLength = Buffer.byteLength(fallbackString, `utf8`)
+        return (
+          <GridItem key={fallbackString}>
+            <GridItemImage
+              image={img}
+              title={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
+            />
+
+            {byteLength > 1000 ? (
+              <Badge>Placeholder {(byteLength / 1000).toFixed(1)}kB</Badge>
+            ) : (
+              <Badge>Placeholder {byteLength.toFixed(1)}B</Badge>
+            )}
+          </GridItem>
+        )
+      })}
     </Grid>
   </OuterContainer>
 )

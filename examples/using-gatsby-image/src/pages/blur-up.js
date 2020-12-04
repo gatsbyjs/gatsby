@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage } from "gatsby-plugin-image"
-
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import ImageGallery from "../components/image-gallery"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
@@ -9,17 +9,13 @@ import Layout from "../components/layout"
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
-    image={data.coverImage.localFile.childImageSharp.gatsbyImageData}
+    image={getImage(data.coverImage.localFile)}
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
     <FloatingImage
-      imageMobile={
-        data.floatingImageMobile.localFile.childImageSharp.gatsbyImageData
-      }
-      imageDesktop={
-        data.floatingImage.localFile.childImageSharp.gatsbyImageData
-      }
+      imageMobile={getImage(data.floatingImageMobile.localFile)}
+      imageDesktop={getImage(data.floatingImage.localFile)}
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
 
@@ -40,12 +36,12 @@ const BlurUp = ({ data, location }) => (
     </p>
     <p>
       This technique is the default behavior when querying for an image with
-      QraphQL and providing a fragment like <code>GatsbyImageSharpFixed</code>.
-      If you don’t want to use the blur-up effect, choose a fragment with{` `}
-      <code>noBase64</code> at the end.
+      GraphQL or using StaticImage.
     </p>
+    <h2>Unsplash Dominant Color Gallery</h2>
+    <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
-      image={data.fullWidthImage.localFile.childImageSharp.gatsbyImageData}
+      image={getImage(data.fullWidthImage.localFile)}
       title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
@@ -86,6 +82,28 @@ export const query = graphql`
       localFile {
         childImageSharp {
           gatsbyImageData(maxWidth: 600, layout: FLUID)
+        }
+      }
+    }
+    galleryImagesCropped: allUnsplashImagesYaml(
+      filter: { gallery: { eq: true } }
+      skip: 10
+    ) {
+      edges {
+        node {
+          credit
+          title
+          localFile {
+            childImageSharp {
+              gatsbyImageData(
+                maxWidth: 380
+                maxHeight: 380
+                quality: 70
+                placeholder: BLURRED
+                layout: FLUID
+              )
+            }
+          }
         }
       }
     }
