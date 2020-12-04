@@ -1,6 +1,6 @@
 {
   "name": "gatsby-codemods",
-  "version": "1.7.0-next.1",
+  "version": "1.7.0-next.2",
   "description": "A collection of codemod scripts for use with JSCodeshift that help migrate to newer versions of Gatsby.",
   "main": "index.js",
   "scripts": {
@@ -35,8 +35,8 @@
     "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/plugin-syntax-typescript": "^7.12.1",
     "babel-preset-gatsby-package": "^0.9.0-next.0",
-    "execa":"^5.0.0",
     "cross-env": "^7.0.2",
+    "execa": "^5.0.0",
     "recast": "^0.20.4"
   },
   "engines": {
