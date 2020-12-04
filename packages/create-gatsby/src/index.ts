@@ -145,7 +145,7 @@ const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
   const [flag, siteDirectory] = process.argv.slice(2)
-  console.log(process.argv)
+
   let yesFlag = false
   if (flag === `-y`) {
     yesFlag = true
