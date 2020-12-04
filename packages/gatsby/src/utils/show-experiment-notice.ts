@@ -67,7 +67,7 @@ flags (samples below)`
     notice =>
       (message += `\n\n${chalk.bgBlue.bold(
         terminalLink(notice.experimentIdentifier, notice.umbrellaLink)
-      )}, ${notice.noticeText.trim()}\n`)
+      )}, ${notice.noticeText}\n`)
   )
 
   return message
