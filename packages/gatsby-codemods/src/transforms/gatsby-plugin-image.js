@@ -72,7 +72,6 @@ function runParseSync(source, filePath) {
     plugins: [
       `@babel/plugin-syntax-jsx`,
       `@babel/plugin-proposal-class-properties`,
-      `@babel/plugin-syntax-dynamic-import`,
     ],
     overrides: [
       {
