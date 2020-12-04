@@ -14,5 +14,6 @@ export const clearLine = (count = 1): Promise<boolean> =>
 export const kebabify = (str: string): string =>
   str
     .replace(/([a-z])([A-Z])/g, `$1-$2`)
-    .replace(/[^a-zA-Z]+/g, `-`)
+    .replace(/[^\w\d.]+|(--)+/g, `-`)
+    .replace(/^[-.]+|[-.]+$/g, ``)
     .toLowerCase()
