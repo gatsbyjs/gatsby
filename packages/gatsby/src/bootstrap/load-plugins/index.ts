@@ -20,6 +20,7 @@ import {
 } from "./types"
 import { validateConfigPluginsOptions } from "gatsby-plugin-utils"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
+import reporter from "gatsby-cli/lib/reporter"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -88,7 +89,7 @@ export async function loadPlugins(
   const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
-  await validateConfigPluginsOptions(config, rootDir)
+  await validateConfigPluginsOptions(reporter, config, rootDir)
 
   const currentAPIs = getAPI({
     browser: browserAPIs,

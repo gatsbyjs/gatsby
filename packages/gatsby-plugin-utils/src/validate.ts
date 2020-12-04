@@ -5,6 +5,7 @@ import { IPluginInfoOptions, IPluginRefObject, ISiteConfig } from "./types"
 import path from "path"
 import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -34,6 +35,7 @@ export async function validateOptionsSchema(
 }
 
 async function validatePluginsOptions(
+  reporter: Reporter,
   plugins: Array<IPluginRefObject>,
   rootDir: string | null
 ): Promise<{
@@ -62,7 +64,7 @@ async function validatePluginsOptions(
 
       // Validate correct usage of pluginOptionsSchema
       if (!Joi.isSchema(optionsSchema) || optionsSchema.type !== `object`) {
-        console.warn(
+        reporter.warn(
           `Plugin "${plugin.resolve}" has an invalid options schema so we cannot verify your configuration for it.`
         )
         return plugin
@@ -88,6 +90,7 @@ async function validatePluginsOptions(
             errors: subErrors,
             plugins: subPlugins,
           } = await validatePluginsOptions(
+            reporter,
             plugin.options.plugins as Array<IPluginRefObject>,
             rootDir
           )
@@ -112,7 +115,7 @@ async function validatePluginsOptions(
               path.relative(rootDir, plugin.parentDir)) ||
             null
           if (validationErrors.length > 0) {
-            console.error({
+            reporter.error({
               id: `11331`,
               context: {
                 configDir,
@@ -124,7 +127,7 @@ async function validatePluginsOptions(
           }
 
           if (validationWarnings.length > 0) {
-            console.warn(
+            reporter.warn(
               stripIndent(`
                 Warning: there are unknown plugin options for "${
                   plugin.resolve
@@ -160,12 +163,14 @@ async function validatePluginsOptions(
 }
 
 export async function validateConfigPluginsOptions(
+  reporter: Reporter,
   config: ISiteConfig = {},
   rootDir: string | null
 ): Promise<void> {
   if (!config.plugins) return
 
   const { errors, plugins } = await validatePluginsOptions(
+    reporter,
     config.plugins,
     rootDir
   )

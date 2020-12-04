@@ -1,9 +1,23 @@
+jest.mock(`gatsby-cli/lib/reporter`, () => {
+  return {
+    error: jest.fn(),
+    panic: jest.fn(),
+    log: jest.fn(),
+    warn: jest.fn(),
+    success: jest.fn(),
+    info: jest.fn(),
+  }
+})
 const mockProcessExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
 import { loadPlugins } from "../index"
 import { slash } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
 import { IFlattenedPlugin } from "../types"
 
 afterEach(() => {
+  Object.keys(reporter).forEach(method => {
+    reporter[method].mockClear()
+  })
   mockProcessExit.mockClear()
 })
 
@@ -184,15 +198,6 @@ describe(`Load plugins`, () => {
   })
 
   describe(`plugin options validation`, () => {
-    beforeEach(() => {
-      console.error = jest.fn()
-      console.warn = jest.fn()
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
     it(`throws a structured error with invalid plugin options`, async () => {
       const invalidPlugins = [
         {
@@ -213,10 +218,11 @@ describe(`Load plugins`, () => {
         plugins: invalidPlugins,
       })
 
-      expect(console.error as jest.Mock).toHaveBeenCalledTimes(
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(
         invalidPlugins.length
       )
-      expect((console.error as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
         Array [
           Object {
             "context": Object {
@@ -253,7 +259,8 @@ describe(`Load plugins`, () => {
           },
         ]
       `)
-      expect((console.error as jest.Mock).mock.calls[1]).toMatchInlineSnapshot(`
+      expect((reporter.error as jest.Mock).mock.calls[1])
+        .toMatchInlineSnapshot(`
         Array [
           Object {
             "context": Object {
@@ -295,9 +302,9 @@ describe(`Load plugins`, () => {
         plugins,
       })
 
-      expect(console.error as jest.Mock).toHaveBeenCalledTimes(0)
-      expect(console.warn as jest.Mock).toHaveBeenCalledTimes(1)
-      expect((console.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(0)
+      expect(reporter.warn as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.warn as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
         Array [
           "Warning: there are unknown plugin options for \\"gatsby-plugin-google-analytics\\": doesThisExistInTheSchema
         Please open an issue at ghub.io/gatsby-plugin-google-analytics if you believe this option is valid.",
@@ -354,8 +361,9 @@ describe(`Load plugins`, () => {
         ],
       })
 
-      expect(console.error as jest.Mock).toHaveBeenCalledTimes(1)
-      expect((console.error as jest.Mock).mock.calls[0]).toMatchInlineSnapshot(`
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
         Array [
           Object {
             "context": Object {
