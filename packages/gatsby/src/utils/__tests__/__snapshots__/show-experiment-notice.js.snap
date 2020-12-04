@@ -6,6 +6,6 @@ Hi from the Gatsby maintainers! Based on what we see in your site, these coming
 features may help you. All of these can be enabled within gatsby-config.js via
 flags (samples below)
 
-[44m[1mThe Flag (http://example.com)[22m[49m, hi
+The Flag (http://example.com), hi
 "
 `;

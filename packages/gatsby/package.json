@@ -143,6 +143,7 @@
     "st": "^2.0.0",
     "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.2",
+    "strip-ansi": "^5.2.0",
     "style-loader": "^0.23.1",
     "terminal-link": "^2.1.1",
     "terser-webpack-plugin": "^2.3.8",
