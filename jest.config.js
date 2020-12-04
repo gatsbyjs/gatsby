@@ -32,6 +32,7 @@ module.exports = {
     `<rootDir>/node_modules/`,
     `<rootDir>/packages/gatsby-admin/.cache/`,
     `__tests__/fixtures`,
+    `__testfixtures__/`,
   ],
   transform: {
     "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,

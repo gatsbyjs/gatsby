@@ -111,10 +111,7 @@ export class MultiSelectInput extends SelectInput {
   }
 
   submit() {
-    if (this.options.skip) {
-      this.state._choices = []
-    }
-    if (this.options.skip || this.focused.name === `___done`) {
+    if (this.focused.name === `___done`) {
       return super.submit()
     }
     return this.space()

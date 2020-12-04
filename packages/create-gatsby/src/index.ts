@@ -54,6 +54,9 @@ const makeChoices = (
 export const validateProjectName = async (
   value: string
 ): Promise<string | boolean> => {
+  if (!value) {
+    return `You have not provided a directory name for your site. Please do so when running with the 'y' flag.`
+  }
   value = value.trim()
   if (INVALID_FILENAMES.test(value)) {
     return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
@@ -87,7 +90,6 @@ export const questions = (initialFolderName: string, skip: boolean): any => [
     message: `Will you be using a CMS?`,
     hint: `(Single choice) Arrow keys to move, enter to confirm`,
     choices: makeChoices(cmses),
-    skip,
   },
   {
     type: `selectinput`,
@@ -95,7 +97,6 @@ export const questions = (initialFolderName: string, skip: boolean): any => [
     message: `Would you like to install a styling system?`,
     hint: `(Single choice) Arrow keys to move, enter to confirm`,
     choices: makeChoices(styles),
-    skip,
   },
   {
     type: `multiselectinput`,
@@ -103,7 +104,6 @@ export const questions = (initialFolderName: string, skip: boolean): any => [
     message: `Would you like to install additional features with other plugins?`,
     hint: `(Multiple choice) Use arrow keys to move, enter to select, and choose "Done" to confirm your choices`,
     choices: makeChoices(features, true),
-    skip,
   },
 ]
 interface IAnswers {
@@ -144,7 +144,8 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
-  const [flag] = process.argv.slice(2)
+  const [flag, siteDirectory] = process.argv.slice(2)
+  console.log(process.argv)
   let yesFlag = false
   if (flag === `-y`) {
     yesFlag = true
@@ -181,15 +182,28 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   enquirer.use(plugin)
 
-  const { name: siteName } = await enquirer.prompt({
-    type: `textinput`,
-    name: `name`,
-    message: `What would you like to call your site?`,
-    initial: `My Gatsby Site`,
-    format: (value: string): string => c.cyan(value),
-  } as any)
+  let data
+  let siteName
+  if (!yesFlag) {
+    ;({ name: siteName } = await enquirer.prompt({
+      type: `textinput`,
+      name: `name`,
+      message: `What would you like to call your site?`,
+      initial: `My Gatsby Site`,
+      format: (value: string): string => c.cyan(value),
+    } as any))
 
-  const data = await enquirer.prompt(questions(kebabify(siteName), yesFlag))
+    data = await enquirer.prompt(questions(kebabify(siteName), yesFlag))
+  } else {
+    const warn = await validateProjectName(siteDirectory)
+    if (typeof warn === `string`) {
+      reporter.warn(warn)
+      return
+    }
+    siteName = siteDirectory
+    data = await enquirer.prompt(questions(siteDirectory, yesFlag)[0])
+  }
+
   data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {

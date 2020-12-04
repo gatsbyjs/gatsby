@@ -226,33 +226,41 @@ export const query = graphql`
 
 ### Upgrading from the gatsby-image@2
 
-We will be releasing a codemod to automatically update your queries and imports. In the meantime, you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now, it allows you to try the component with your existing queries.
+We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
 
-```jsx
-import React from "react"
-import { graphql } from "gatsby"
-// Note the different import
-import { GatsbyImage } from "gatsby-plugin-image/compat"
+1. Install JSCodeshift as a global module
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <GatsbyImage fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
-
-export const query = graphql`
-  query {
-    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
-      childImageSharp {
-        fixed(width: 125, height: 125) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-  }
-`
+```shell
+npm install -g jscodeshift
 ```
+
+2. Install the gatsby-codemods package
+
+```shell
+npm install gatsby-codemods
+```
+
+3. Run a transform from this package on your project. Note that the paths are relative to the root of your project.
+
+```shell
+npx gatsby-codemods gatsby-plugin-image <path>
+```
+
+**If you have a custom babel config for your site, run relative to the root directory, e.g. `./`, otherwise `./src` is sufficient.**
+
+Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
+
+If you need to run with custom flags, you run with [jscodeshift](https://github.com/facebook/jscodeshift) directly and reference `node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js` as your transform path.
+
+4. Install this package
+
+```shell
+npm install gatsby-plugin-image
+```
+
+5. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
+
+6. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
 
 ## Three types of responsive images
 
