@@ -1,5 +1,6 @@
 import { Actions, CreatePagesArgs } from "gatsby"
 import { createPath, validatePath, ignorePath } from "gatsby-page-utils"
+import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
@@ -20,7 +21,8 @@ export function createPage(
   actions: Actions,
   ignore: Array<string>,
   graphql: CreatePagesArgs["graphql"],
-  reporter: Reporter
+  reporter: Reporter,
+  slugifyOptions?: ISlugifyOptions
 ): void {
   // Filter out special components that shouldn't be made into
   // pages.
@@ -43,7 +45,8 @@ export function createPage(
       absolutePath,
       actions,
       graphql,
-      reporter
+      reporter,
+      slugifyOptions
     )
     return
   }
