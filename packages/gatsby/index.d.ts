@@ -921,6 +921,7 @@ export interface RenderBodyArgs extends NodePluginArgs {
 
 export interface ReplaceRendererArgs extends NodePluginArgs {
   replaceBodyHTMLString: (str: string) => void
+  bodyComponent: React.ReactNode
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
   setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
@@ -1285,7 +1286,7 @@ export interface Actions {
     traceId?: string
   ): void
 
-  printTypeDefinitions (
+  printTypeDefinitions(
     path?: string,
     include?: { types?: Array<string>; plugins?: Array<string> },
     exclude?: { types?: Array<string>; plugins?: Array<string> },
