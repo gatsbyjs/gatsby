@@ -58,16 +58,19 @@ export function showExperimentNoticeAfterTimeout(
 }
 
 export const createNoticeMessage = (notices): string => {
-  let message = `\n
+  let message = `
 Hi from the Gatsby maintainers! Based on what we see in your site, these coming
 features may help you. All of these can be enabled within gatsby-config.js via
 flags (samples below)`
 
   notices.forEach(
     notice =>
-      (message += `\n\n${chalk.bgBlue.bold(
-        terminalLink(notice.experimentIdentifier, notice.umbrellaLink)
-      )}, ${notice.noticeText}\n`)
+      (message += `
+
+${chalk.bgBlue.bold(
+  terminalLink(notice.experimentIdentifier, notice.umbrellaLink)
+)}, ${notice.noticeText}
+`)
   )
 
   return message

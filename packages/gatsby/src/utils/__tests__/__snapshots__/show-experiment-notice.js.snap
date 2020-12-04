@@ -2,7 +2,6 @@
 
 exports[`show-experiment-notice generates a message 1`] = `
 "
-
 Hi from the Gatsby maintainers! Based on what we see in your site, these coming
 features may help you. All of these can be enabled within gatsby-config.js via
 flags (samples below)
