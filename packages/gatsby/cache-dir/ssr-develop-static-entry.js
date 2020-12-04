@@ -168,6 +168,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
       .forEach(style => {
         headComponents.unshift(
           <link
+            key={style.name}
             rel="stylesheet"
             type="text/css"
             href={`http://localhost:8000${__PATH_PREFIX__}/${style.name}`}
