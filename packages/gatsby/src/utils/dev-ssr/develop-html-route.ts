@@ -3,6 +3,7 @@ import { trackFeatureIsUsed } from "gatsby-telemetry"
 
 import { findPageByPath } from "../find-page-by-path"
 import { renderDevHTML } from "./render-dev-html"
+import { appendPreloadHeaders } from "../develop-preload-headers"
 
 export const route = ({ app, program, store }): any =>
   // Render an HTML page and serve it.
@@ -14,6 +15,8 @@ export const route = ({ app, program, store }): any =>
     if (!pathObj) {
       return next()
     }
+
+    await appendPreloadHeaders(req.path, res)
 
     const htmlActivity = report.phantomActivity(`building HTML for path`, {})
     htmlActivity.start()
