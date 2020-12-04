@@ -118,7 +118,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     const { componentChunkName, staticQueryHashes = [] } = pageData
 
     let scriptsAndStyles = flatten(
-      [`main`].map(chunkKey => {
+      [`commons`].map(chunkKey => {
         const fetchKey = `assetsByChunkName[${chunkKey}]`
 
         let chunks = get(stats, fetchKey)
@@ -139,7 +139,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
           chunks.push({ rel: `preload`, name: asset })
         )
 
-        const childAssets = namedChunkGroups[`main`].childAssets
+        const childAssets = namedChunkGroups[chunkKey].childAssets
         for (const rel in childAssets) {
           chunks = concat(
             chunks,
@@ -161,20 +161,16 @@ export default (pagePath, isClientOnlyPage, callback) => {
       style => style.name && style.name.endsWith(`.css`)
     )
 
+    console.log(styles)
     styles
       .slice(0)
       .reverse()
       .forEach(style => {
         headComponents.unshift(
-          <style
-            data-href={`${__PATH_PREFIX__}/${style.name}`}
-            id={`gatsby-global-css`}
-            dangerouslySetInnerHTML={{
-              __html: fs.readFileSync(
-                join(process.cwd(), `public`, style.name),
-                `utf-8`
-              ),
-            }}
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href={`http://localhost:8000${__PATH_PREFIX__}/${style.name}`}
           />
         )
       })

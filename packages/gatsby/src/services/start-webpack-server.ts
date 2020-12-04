@@ -7,6 +7,10 @@ import { isEqual } from "lodash"
 import got from "got"
 import fs from "fs-extra"
 import path from "path"
+const stream = require("stream")
+const { promisify } = require("util")
+
+const pipeline = promisify(stream.pipeline)
 
 import { Stage } from "../commands/types"
 
@@ -122,23 +126,24 @@ export async function startWebpackServer({
 
       // Download css assets
       const cssAssets = statsToJson.assets.filter(asset => {
-        console.log({ asset })
+        // console.log({ asset })
         return asset.name.endsWith(`.css`)
       })
 
-      console.log({ cssAssets, port: program.port })
+      console.log({ asset: cssAssets[0], port: program.port })
       // Stream to public directory so we can access during SSR.
-      cssAssets.forEach(asset => {
+      cssAssets.forEach(async asset => {
         console.log(
           `writing to`,
           path.join(program.directory, `public`, asset.name)
         )
+        console.log(asset)
         const writeStream = fs.createWriteStream(
-          path.join(program.directory, `public`, asset.name)
+          path.join(program.directory, `public`, `__${asset.name}`)
         )
         const url = new URL(`/${asset.name}`, urls.localUrlForBrowser)
-        console.log(url)
-        got.stream(url.href).pipe(writeStream)
+        await pipeline(got.stream(url.href), writeStream)
+        console.log(`done`)
       })
 
       isFirstCompile = false

@@ -17,6 +17,7 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+import MiniCssExtractPlugin from "mini-css-extract-plugin"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -203,7 +204,6 @@ module.exports = async (
   function getPlugins() {
     let configPlugins = [
       plugins.moment(),
-
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
@@ -214,7 +214,6 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
-
       plugins.virtualModules(),
     ]
 
@@ -227,10 +226,12 @@ module.exports = async (
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
-            plugins.extractText(),
+            // plugins.extractText(),
+            new MiniCssExtractPlugin({ filename: `[name].css` }),
             plugins.extractStats(),
           ])
           .filter(Boolean)
+        console.log(configPlugins)
         break
       case `develop-html`:
         configPlugins = configPlugins.concat([
@@ -289,14 +290,13 @@ module.exports = async (
     // prettier-ignore
     let configRules = [
       rules.js({
-        modulesThatUseGatsby,
+        modulesThatUseGatsby
       }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
       rules.media(),
       rules.miscAssets(),
-
       // This is a hack that exports one of @reach/router internals (BaseContext)
       // to export list. We need it to reset basepath and baseuri context after
       // Gatsby main router changes it, to keep v2 behaviour.
@@ -305,10 +305,12 @@ module.exports = async (
         test: require.resolve(`@reach/router/es/index`),
         type: `javascript/auto`,
         use: [{
-          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
-        }],
+          loader: require.resolve(
+            `./reach-router-add-basecontext-export-loader`
+          )
+        }]
       }
-    ]
+    ];
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
@@ -347,6 +349,16 @@ module.exports = async (
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
+        // configRules.push({
+        // test: /\.css$/,
+        // use: [
+        // {
+        // loader: MiniCssExtractPlugin.loader,
+        // options: {},
+        // },
+        // "css-loader",
+        // ],
+        // })
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
@@ -375,9 +387,9 @@ module.exports = async (
             oneOf: [
               rules.cssModules(),
               rules.css()
-            ],
-          },
-        ])
+            ]
+          }
+        ]);
         break
 
       case `build-javascript`:

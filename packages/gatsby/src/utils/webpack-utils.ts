@@ -537,7 +537,7 @@ export const createWebpackUtils = (
       ]
       if (!isSSR)
         use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
+          loaders.miniCssExtract({ hmr: !PRODUCTION }) // && !restOptions.modules })
         )
 
       // if (stage === `develop-html`) {
