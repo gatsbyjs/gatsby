@@ -146,6 +146,9 @@ const updateSchemaComposer = async ({
     inferenceMetadata,
     parentSpan: activity.span,
   })
+  addInferredChildOfExtensions({
+    schemaComposer,
+  })
   activity.end()
 
   activity = report.phantomActivity(`Processing types`, {
@@ -202,11 +205,6 @@ const processTypeComposer = async ({
 
     if (typeComposer.hasInterface(`Node`)) {
       await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
-      await addImplicitConvenienceChildrenFields({
-        schemaComposer,
-        typeComposer,
-        parentSpan,
-      })
     }
     await determineSearchableFields({
       schemaComposer,
@@ -999,15 +997,26 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   })
 }
 
-const addImplicitConvenienceChildrenFields = ({
-  schemaComposer,
-  typeComposer,
-}) => {
+const addInferredChildOfExtensions = ({ schemaComposer }) => {
+  schemaComposer.forEach(typeComposer => {
+    if (
+      typeComposer instanceof ObjectTypeComposer &&
+      typeComposer.hasInterface(`Node`)
+    ) {
+      addInferredChildOfExtension({
+        schemaComposer,
+        typeComposer,
+      })
+    }
+  })
+}
+
+const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
   const shouldInfer = typeComposer.getExtension(`infer`)
-  // In Gatsby v3, when `@dontInfer` is set, children fields will not be
-  // created for parent-child relations set by plugins with
+  // In Gatsby v3, when `@dontInfer` is set, `@childOf` extension will not be
+  // automatically created for parent-child relations set by plugins with
   // `createParentChildLink`. With `@dontInfer`, only parent-child
-  // relations explicitly set with the `childOf` extension will be added.
+  // relations explicitly set with the `@childOf` extension will be added.
   // if (shouldInfer === false) return
 
   const parentTypeName = typeComposer.getTypeName()
@@ -1017,10 +1026,11 @@ const addImplicitConvenienceChildrenFields = ({
 
   Object.keys(childNodesByType).forEach(typeName => {
     // Adding children fields to types with the `@dontInfer` extension is deprecated
-    if (shouldInfer === false) {
-      const childTypeComposer = schemaComposer.getAnyTC(typeName)
-      const childOfExtension = childTypeComposer.getExtension(`childOf`)
+    const childTypeComposer = schemaComposer.getAnyTC(typeName)
+    let childOfExtension = childTypeComposer.getExtension(`childOf`)
 
+    if (shouldInfer === false) {
+      // Adding children fields to types with the `@dontInfer` extension is deprecated
       // Only warn when the parent-child relation has not been explicitly set with
       if (
         !childOfExtension ||
@@ -1046,9 +1056,15 @@ const addImplicitConvenienceChildrenFields = ({
         )
       }
     }
-
-    typeComposer.addFields(createChildrenField(typeName))
-    typeComposer.addFields(createChildField(typeName))
+    // Set `@childOf` extension automatically
+    // This will cause convenience children fields like `childImageSharp`
+    // to be added in `addConvenienceChildrenFields` method.
+    // Also required for proper printing of the `@childOf` directive in the snapshot plugin
+    if (!childOfExtension?.types) {
+      childOfExtension = { types: [] }
+    }
+    childOfExtension.types.push(parentTypeName)
+    childTypeComposer.setExtension(`childOf`, childOfExtension)
   })
 }
 

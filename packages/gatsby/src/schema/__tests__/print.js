@@ -2,6 +2,8 @@ const { build } = require(`..`)
 import { buildObjectType } from "../types/type-builders"
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions/restricted`)
+const { actions: publicActions } = require(`../../redux/actions/public`)
+const { createParentChildLink } = publicActions
 const { printTypeDefinitions } = actions
 
 jest.mock(`fs-extra`)
@@ -41,14 +43,25 @@ jest.spyOn(global.Date.prototype, `toISOString`).mockReturnValue(`2019-01-01`)
 describe(`Print type definitions`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
-    const node = {
+    const node1 = {
       id: `test1`,
       internal: {
         type: `Test`,
       },
+      children: [],
       foo: 26,
     }
-    store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    const node2 = {
+      id: `test2`,
+      parent: `test1`,
+      internal: {
+        type: `FooChild`,
+      },
+      bar: `bar`,
+    }
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node1 } })
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node2 } })
+    createParentChildLink({ parent: node1, child: node2 })
     const typeDefs = []
     typeDefs.push(`
       type AnotherTest implements Node & ITest {
