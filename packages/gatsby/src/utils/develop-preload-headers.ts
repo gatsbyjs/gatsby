@@ -28,9 +28,17 @@ export async function appendPreloadHeaders(
       `Link`,
       `</page-data/app-data.json>; rel=preload; as=fetch ; crossorigin`
     )
+
     // add page-data.json preload
     // our runtime also demands 404 and dev-404 page-data to be fetched to even render (see cache-dir/app.js)
-    ;[page.path, `/404.html`, `/dev-404-page/`].forEach(pagePath => {
+    const pagePathsToPreload = [`/404.html`, `/dev-404-page/`]
+    if (!pagePathsToPreload.includes(page.path)) {
+      // let's make sure page path is first one (order shouldn't matter, just for reasonable order)
+      pagePathsToPreload.unshift(page.path)
+    }
+
+    const staticQueriesToPreload = new Set<string>()
+    for (const pagePath of pagePathsToPreload) {
       res.append(
         `Link`,
         `</${path.join(
@@ -39,24 +47,31 @@ export async function appendPreloadHeaders(
           `page-data.json`
         )}>; rel=preload; as=fetch ; crossorigin`
       )
-    })
 
-    try {
-      const pageData = await readPageData(
-        path.join(store.getState().program.directory, `public`),
-        page.path
-      )
-      // iterate over needed static queries and add preload for each of them
-      pageData.staticQueryHashes.forEach(staticQueryHash => {
-        res.append(
-          `Link`,
-          `</page-data/sq/d/${staticQueryHash}.json>; rel=preload; as=fetch ; crossorigin`
+      try {
+        const pageData = await readPageData(
+          path.join(store.getState().program.directory, `public`),
+          pagePath
         )
-      })
-    } catch (e) {
-      // there might be timing reasons why this fails - page-data file is not created yet
-      // as page was just recently added (so page exists already but page-data doesn't yet)
-      // in those cases we just do nothing
+
+        // iterate over needed static queries and add them to Set of static queries to preload
+        // Set will guarantee uniqueness in case queries are shared by requested page and 404 page.
+        for (const staticQueryHash of pageData.staticQueryHashes) {
+          staticQueriesToPreload.add(staticQueryHash)
+        }
+      } catch (e) {
+        // there might be timing reasons why this fails - page-data file is not created yet
+        // as page was just recently added (so page exists already but page-data doesn't yet)
+        // in those cases we just do nothing
+      }
+    }
+
+    // append accumulated static queries from pages we load
+    for (const staticQueryHash of staticQueriesToPreload) {
+      res.append(
+        `Link`,
+        `</page-data/sq/d/${staticQueryHash}.json>; rel=preload; as=fetch ; crossorigin`
+      )
     }
   } else {
     // should we track cases when there is actually nothing returned to find cases
