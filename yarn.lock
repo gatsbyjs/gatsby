@@ -11374,13 +11374,6 @@ gather-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gather-stream/-/gather-stream-1.0.0.tgz#b33994af457a8115700d410f317733cbe7a0904b"
 
-gatsby-design-tokens@^2.0.2:
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/gatsby-design-tokens/-/gatsby-design-tokens-2.0.13.tgz#33f5fa84a399b821ae224b9921847d7b37c45600"
-  integrity sha512-I4i1pYG5y8yQ9uul1uvUZ1sy5skCOg33kHUUeYCWvW7vPdtBcQLgYqT2tLPQMMCc16ljbJF0DL4g52zQ7tVAhQ==
-  dependencies:
-    hex2rgba "^0.0.1"
-
 gatsby-interface@^0.0.225:
   version "0.0.225"
   resolved "https://registry.yarnpkg.com/gatsby-interface/-/gatsby-interface-0.0.225.tgz#f2962d8f2e40163ff1bf908f3083ef634a3f4730"
