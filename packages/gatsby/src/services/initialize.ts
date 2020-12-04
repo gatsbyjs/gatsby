@@ -186,9 +186,9 @@ export async function initialize({
       reporter.warn(
         reporter.stripIndent(`
           Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
-          
+
           Will use react-hot-loader.
-          
+
           To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
         `)
       )
@@ -288,7 +288,11 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
+  const flattenedPlugins = await loadPlugins(
+    reporter,
+    config,
+    program.directory
+  )
   activity.end()
 
   // Multiple occurrences of the same name-version-pair can occur,

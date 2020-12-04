@@ -51,7 +51,7 @@ describe(`Load plugins`, () => {
     })
 
   it(`Load plugins for a site`, async () => {
-    let plugins = await loadPlugins({ plugins: [] })
+    let plugins = await loadPlugins(reporter, { plugins: [] })
 
     plugins = replaceFieldsThatCanVary(plugins)
 
@@ -67,7 +67,7 @@ describe(`Load plugins`, () => {
       ],
     }
 
-    let plugins = await loadPlugins(config)
+    let plugins = await loadPlugins(reporter, config)
 
     plugins = replaceFieldsThatCanVary(plugins)
 
@@ -88,7 +88,7 @@ describe(`Load plugins`, () => {
     }
 
     try {
-      await loadPlugins(config)
+      await loadPlugins(reporter, config)
     } catch (err) {
       expect(err.message).toMatchSnapshot()
     }
@@ -107,7 +107,7 @@ describe(`Load plugins`, () => {
       ],
     }
 
-    let plugins = await loadPlugins(config)
+    let plugins = await loadPlugins(reporter, config)
 
     plugins = replaceFieldsThatCanVary(plugins)
 
@@ -120,7 +120,7 @@ describe(`Load plugins`, () => {
         plugins: [],
       }
 
-      let plugins = await loadPlugins(config)
+      let plugins = await loadPlugins(reporter, config)
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -145,7 +145,7 @@ describe(`Load plugins`, () => {
         ],
       }
 
-      let plugins = await loadPlugins(config)
+      let plugins = await loadPlugins(reporter, config)
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -183,7 +183,7 @@ describe(`Load plugins`, () => {
         ],
       }
 
-      let plugins = await loadPlugins(config)
+      let plugins = await loadPlugins(reporter, config)
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -214,7 +214,7 @@ describe(`Load plugins`, () => {
           },
         },
       ]
-      await loadPlugins({
+      await loadPlugins(reporter, {
         plugins: invalidPlugins,
       })
 
@@ -298,7 +298,7 @@ describe(`Load plugins`, () => {
           },
         },
       ]
-      await loadPlugins({
+      await loadPlugins(reporter, {
         plugins,
       })
 
@@ -314,7 +314,7 @@ describe(`Load plugins`, () => {
     })
 
     it(`defaults plugin options to the ones defined in the schema`, async () => {
-      let plugins = await loadPlugins({
+      let plugins = await loadPlugins(reporter, {
         plugins: [
           {
             resolve: `gatsby-plugin-google-analytics`,
@@ -343,7 +343,7 @@ describe(`Load plugins`, () => {
     })
 
     it(`validates subplugin schemas`, async () => {
-      await loadPlugins({
+      await loadPlugins(reporter, {
         plugins: [
           {
             resolve: `gatsby-transformer-remark`,

@@ -20,7 +20,7 @@ import {
 } from "./types"
 import { validateConfigPluginsOptions } from "gatsby-plugin-utils"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
-import reporter from "gatsby-cli/lib/reporter"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -82,6 +82,7 @@ const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
 }
 
 export async function loadPlugins(
+  reporter: Reporter,
   rawConfig: IRawSiteConfig = {},
   rootDir: string | null = null
 ): Promise<Array<IFlattenedPlugin>> {
