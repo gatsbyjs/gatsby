@@ -1,8 +1,8 @@
 ---
-title: Gatsby Magic
+title: Gatsby Jargon
 ---
 
-This guide will explain the amazing features that may seem like “magic” and what goes on behind the scenes in Gatsby.
+Gatsby has lots of amazing features that make it easier to add new functionality to your websites. But, like any technology, that means there is some jargon that can be confusing to newcomers. This guide breaks down the Gatsby-isms to make it easier to learn what everything means.
 
 ## Starters
 
