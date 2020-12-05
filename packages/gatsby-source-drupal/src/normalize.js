@@ -57,8 +57,10 @@ exports.downloadFile = async (
               htaccess_pass: basicAuth.password,
             }
           : {}
+      // drupal does not properly encode it's media urls
+      const encodedSourceUrl = encodeURI(url.href)
       fileNode = await createRemoteFileNode({
-        url: url.href,
+        url: encodedSourceUrl,
         store,
         cache,
         createNode,
