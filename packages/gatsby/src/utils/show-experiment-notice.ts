@@ -2,15 +2,7 @@ import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
-import realTerminalLink from "terminal-link"
-
-const terminalLink = (text, url): string => {
-  if (process.env.NODE_ENV === `test`) {
-    return `${text} (${url})`
-  } else {
-    return realTerminalLink(text, url)
-  }
-}
+import terminalLink from "terminal-link"
 
 type CancelExperimentNoticeCallback = () => void
 
