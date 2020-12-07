@@ -38,7 +38,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, callback) => {
+export default (pagePath, isClientOnlyPage, port, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -171,7 +171,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
             key={style.name}
             rel="stylesheet"
             type="text/css"
-            href={`http://localhost:8000${__PATH_PREFIX__}/${style.name}`}
+            href={`http://localhost:${port}${__PATH_PREFIX__}/${style.name}`}
           />
         )
       })

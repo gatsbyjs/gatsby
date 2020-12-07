@@ -166,6 +166,7 @@ export const renderDevHTML = ({
       const htmlString = await worker.renderHTML({
         path,
         componentPath: pageObj.component,
+        port: store.getState().program.proxyPort,
         htmlComponentRendererPath,
         directory,
         isClientOnlyPage,
