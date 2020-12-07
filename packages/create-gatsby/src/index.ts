@@ -201,7 +201,9 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       return
     }
     siteName = siteDirectory
-    data = await enquirer.prompt(questions(makeNpmSafe(siteDirectory), yesFlag)[0])
+    data = await enquirer.prompt(
+      questions(makeNpmSafe(siteDirectory), yesFlag)[0]
+    )
   }
 
   data.project = data.project.trim()
