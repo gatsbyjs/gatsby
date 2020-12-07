@@ -1,9 +1,5 @@
 const api = require(`./api`)
 
-// copy this to e.g. fake-data-1
-// create a page where both sets of fake data are used
-// make sure the right data sets are updated 
-
 exports.onCreateNode = function onCreateNode({ actions, node }) {
   if (node.internal.type === api.nodeType) {
     actions.createNodeField({

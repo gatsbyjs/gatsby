@@ -1,9 +1,7 @@
-// copy entire sub-plugin including this stuff
 const fs = require(`fs`)
 const util = require(`util`)
 const path = require(`path`)
 
-// Make sure node type matches!
 const NODE_TYPE = `FakeData`
 
 const readFile = file =>
