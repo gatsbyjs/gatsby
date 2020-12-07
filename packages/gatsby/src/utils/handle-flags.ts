@@ -18,15 +18,12 @@ let enabledConfigFlags: Array<IFlag>
 let message = ``
 let unknownFlagMessage = ``
 
-export const getCachedFlagInfo = (): {
+// expose information about flags to other consuemrs
+export const getFlagInfo = (): {
   enabledConfigFlags: Array<IFlag>
-  unknownFlagMessage: string
-  message: string
 } => {
   return {
     enabledConfigFlags,
-    message,
-    unknownFlagMessage,
   }
 }
 
