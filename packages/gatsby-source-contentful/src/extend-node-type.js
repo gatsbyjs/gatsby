@@ -73,10 +73,18 @@ const getBase64Image = imageProps => {
     return fs.promises.readFile(cacheFile, `utf8`)
   }
 
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     base64Img.requestBase64(requestUrl, (a, b, body) => {
       // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      fs.promises.writeFile(cacheFile, body).then(() => resolve(body))
+      fs.promises
+        .writeFile(cacheFile, body)
+        .then(() => resolve(body))
+        .catch(e => {
+          console.error(
+            `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
+          )
+          reject(e)
+        })
     })
   })
 }
