@@ -5,6 +5,7 @@ import { IPluginInfoOptions, IPluginRefObject, ISiteConfig } from "./types"
 import path from "path"
 import { stripIndent } from "common-tags"
 import { trackCli } from "gatsby-telemetry"
+import { reporter as shimReporter } from "./reporter"
 
 const validationOptions: ValidationOptions = {
   // Show all errors at once, rather than only the first one every time
@@ -34,9 +35,9 @@ export async function validateOptionsSchema(
 }
 
 async function validatePluginsOptions(
-  reporter: Reporter,
   plugins: Array<IPluginRefObject>,
-  rootDir: string | null
+  rootDir: string | null,
+  reporter: Reporter
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -162,16 +163,16 @@ async function validatePluginsOptions(
 }
 
 export async function validateConfigPluginsOptions(
-  reporter: Reporter,
   config: ISiteConfig = {},
-  rootDir: string | null
+  rootDir: string | null,
+  reporter?: Reporter
 ): Promise<void> {
   if (!config.plugins) return
 
   const { errors, plugins } = await validatePluginsOptions(
-    reporter,
     config.plugins,
-    rootDir
+    rootDir,
+    reporter || shimReporter
   )
 
   config.plugins = plugins

@@ -1,4 +1,5 @@
 import c from "ansi-colors"
+import { Reporter } from "gatsby"
 // We don't want to depend on the whole of gatsby-cli, so we can't use reporter
 export const reporter = {
   info: (message: string): void => console.log(message),
@@ -13,4 +14,4 @@ export const reporter = {
     process.exit(1)
   },
   warn: (message: string): void => console.warn(message),
-}
+} as Reporter
