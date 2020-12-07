@@ -3,10 +3,12 @@
   "version": "0.6.0-next.0",
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
-    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build"
+    "build": "babel src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "typegen": "rimraf \"dist/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir dist/",
+    "watch": "babel -w src --out-dir dist/ --ignore \"**/__tests__\" --extensions \".ts\"",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen"
   },
   "keywords": [
     "gatsby"
@@ -34,7 +36,9 @@
     "@babel/core": "^7.12.3",
     "@types/micromatch": "^4.0.1",
     "babel-preset-gatsby-package": "^0.9.0-next.0",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.7"
   },
   "files": [
     "dist/"
