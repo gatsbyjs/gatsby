@@ -289,10 +289,11 @@ export async function initialize({
   })
   activity.start()
   const flattenedPlugins = await loadPlugins(
-    reporter,
     config,
-    program.directory
+    program.directory,
+    reporter
   )
+
   activity.end()
 
   // Multiple occurrences of the same name-version-pair can occur,

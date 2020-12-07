@@ -37,7 +37,7 @@ export async function validateOptionsSchema(
 async function validatePluginsOptions(
   plugins: Array<IPluginRefObject>,
   rootDir: string | null,
-  reporter: Reporter
+  reporter: Reporter | typeof shimReporter
 ): Promise<{
   errors: number
   plugins: Array<IPluginRefObject>
@@ -90,9 +90,9 @@ async function validatePluginsOptions(
             errors: subErrors,
             plugins: subPlugins,
           } = await validatePluginsOptions(
-            reporter,
             plugin.options.plugins as Array<IPluginRefObject>,
-            rootDir
+            rootDir,
+            reporter
           )
           plugin.options.plugins = subPlugins
           errors += subErrors

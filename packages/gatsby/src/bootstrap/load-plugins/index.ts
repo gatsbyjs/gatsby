@@ -90,7 +90,7 @@ export async function loadPlugins(
   const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
-  await validateConfigPluginsOptions(reporter, config, rootDir)
+  await validateConfigPluginsOptions(config, rootDir, reporter)
 
   const currentAPIs = getAPI({
     browser: browserAPIs,
