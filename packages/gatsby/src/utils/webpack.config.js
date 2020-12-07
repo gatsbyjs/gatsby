@@ -722,8 +722,14 @@ module.exports = async (
     parentSpan,
   })
 
-  require("util").inspect.defaultOptions.depth = null
-  console.log(getConfig())
+  require(`util`).inspect.defaultOptions.depth = null
+  console.log(
+    process.cwd() + `/webpack-config-${stage}-${new Date().toJSON()}.json`
+  )
+  fs.writeFileSync(
+    process.cwd() + `/webpack-config-${stage}-${new Date().toJSON()}.json`,
+    require(`util`).inspect(getConfig())
+  )
 
   return getConfig()
 }
