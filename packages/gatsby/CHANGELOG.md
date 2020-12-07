@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.28.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0...gatsby@2.28.1) (2020-12-07)
+
+### Bug Fixes
+
+- **gatsby:** Add bodyComponent to replaceRenderer args ([#28456](https://github.com/gatsbyjs/gatsby/issues/28456)) ([#28486](https://github.com/gatsbyjs/gatsby/issues/28486)) ([e29866a](https://github.com/gatsbyjs/gatsby/commit/e29866a3525ccdd2ad99ad06d85f889d5f63b515))
+- **gatsby:** correct tracing for GraphQL queries ([#28415](https://github.com/gatsbyjs/gatsby/issues/28415)) ([#28475](https://github.com/gatsbyjs/gatsby/issues/28475)) ([53502cc](https://github.com/gatsbyjs/gatsby/commit/53502cca8fe0bb980e75b666c7edca47a4a9027a))
+- **gatsby:** do not fail the build when eslint loader is removed ([#28494](https://github.com/gatsbyjs/gatsby/issues/28494)) ([#28517](https://github.com/gatsbyjs/gatsby/issues/28517)) ([27864d6](https://github.com/gatsbyjs/gatsby/commit/27864d6135bf6d2c36f473a7a67b6892e414ebad))
+- **gatsby:** re-render route when location state changes ([#28346](https://github.com/gatsbyjs/gatsby/issues/28346)) ([#28476](https://github.com/gatsbyjs/gatsby/issues/28476)) ([bb044de](https://github.com/gatsbyjs/gatsby/commit/bb044de83e0a9adb4010d84ec6800416af45fa42))
+- **gatsby:** scroll restoration issue in browser API ([#27384](https://github.com/gatsbyjs/gatsby/issues/27384)) ([#28477](https://github.com/gatsbyjs/gatsby/issues/28477)) ([7a6b7ae](https://github.com/gatsbyjs/gatsby/commit/7a6b7ae1fe7cbd81db76eb4473ea4cf77deb3eb7))
+
+### Features
+
+- **gatsby:** add preload headers for critical resources so those can started fetching before common.js is fetched ([#28460](https://github.com/gatsbyjs/gatsby/issues/28460)) ([#28521](https://github.com/gatsbyjs/gatsby/issues/28521)) ([4555b6a](https://github.com/gatsbyjs/gatsby/commit/4555b6a83da83e4ecaf01a2087d29cc8a307327e))
+
 # [2.28.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.2...gatsby@2.28.0) (2020-12-02)
 
 ### Bug Fixes

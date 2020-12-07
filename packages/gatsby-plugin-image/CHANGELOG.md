@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.3.0...gatsby-plugin-image@0.3.1) (2020-12-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** don't show hydration warning ([#28407](https://github.com/gatsbyjs/gatsby/issues/28407)) ([#28512](https://github.com/gatsbyjs/gatsby/issues/28512)) ([13be722](https://github.com/gatsbyjs/gatsby/commit/13be722748d08f49322f806cff2e5faf7a1677b3))
+
 # [0.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.3.0-next.1...gatsby-plugin-image@0.3.0) (2020-12-02)
 
 ### Bug Fixes

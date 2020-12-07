@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0...gatsby-source-contentful@4.2.1) (2020-12-07)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** prevent redundant fs/remote fetches for base64 ([#28438](https://github.com/gatsbyjs/gatsby/issues/28438)) ([#28515](https://github.com/gatsbyjs/gatsby/issues/28515)) ([e16f2b5](https://github.com/gatsbyjs/gatsby/commit/e16f2b5b4f73972729fe9c82ea0f4499f226b13f))
+
 # [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.2...gatsby-source-contentful@4.2.0) (2020-12-02)
 
 ### Performance Improvements
