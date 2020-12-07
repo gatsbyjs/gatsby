@@ -65,7 +65,7 @@ if (
   sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
-    `SSR in Development`,
+    `Server Side Rendering (SSR) in Development`,
     `gatsby.dev/dev-ssr-feedback`,
     `which helps surface issues with build errors more quickly. Here's how to try it:
 
