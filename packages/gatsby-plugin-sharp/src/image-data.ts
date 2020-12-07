@@ -108,6 +108,7 @@ export async function generateImageData({
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
+    formats: rawFormats = [`auto`, `webp`],
   } = args
 
   const {
@@ -117,7 +118,7 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  const formats = new Set(args.formats)
+  const formats = new Set(rawFormats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
 
   if (formats.has(`jpg`) && formats.has(`png`)) {
