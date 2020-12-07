@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.1...gatsby-plugin-manifest@2.9.0-next.2) (2020-12-04)
+
+### Features
+
+- **gatsby-plugin-manifest:** Add support for share_target ([#28457](https://github.com/gatsbyjs/gatsby/issues/28457)) ([1fe3f9a](https://github.com/gatsbyjs/gatsby/commit/1fe3f9ab6f7385a084ec783b4d109139cdfab620))
+
 # [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.0...gatsby-plugin-manifest@2.9.0-next.1) (2020-12-01)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

@@ -43,6 +43,9 @@ export type FileNode = Node & {
 export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
   file?.childImageSharp?.gatsbyImageData
 
+export const getSrc = (file: FileNode): string | undefined =>
+  file?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
+
 export function getWrapperProps(
   width: number,
   height: number,
