@@ -1,4 +1,4 @@
-import graphql from "gatsby/graphql"
+import * as graphql from "graphql"
 import { parse, print } from "recast"
 import { transformFromAstSync, parseSync } from "@babel/core"
 
@@ -72,7 +72,6 @@ function runParseSync(source, filePath) {
     plugins: [
       `@babel/plugin-syntax-jsx`,
       `@babel/plugin-proposal-class-properties`,
-      `@babel/plugin-syntax-dynamic-import`,
     ],
     overrides: [
       {

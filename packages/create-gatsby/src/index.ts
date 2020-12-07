@@ -15,7 +15,7 @@ import { trackCli } from "./tracking"
 import crypto from "crypto"
 import { reporter } from "./reporter"
 import { setSiteMetadata } from "./site-metadata"
-import { kebabify } from "./utils"
+import { makeNpmSafe } from "./utils"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
@@ -193,7 +193,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       format: (value: string): string => c.cyan(value),
     } as any))
 
-    data = await enquirer.prompt(questions(kebabify(siteName), yesFlag))
+    data = await enquirer.prompt(questions(makeNpmSafe(siteName), yesFlag))
   } else {
     const warn = await validateProjectName(siteDirectory)
     if (typeof warn === `string`) {
@@ -201,7 +201,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
       return
     }
     siteName = siteDirectory
-    data = await enquirer.prompt(questions(siteDirectory, yesFlag)[0])
+    data = await enquirer.prompt(questions(makeNpmSafe(siteDirectory), yesFlag)[0])
   }
 
   data.project = data.project.trim()

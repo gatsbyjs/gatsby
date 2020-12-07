@@ -7,7 +7,7 @@ import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
 import c from "ansi-colors"
-import { clearLine, kebabify } from "./utils"
+import { clearLine, makeNpmSafe } from "./utils"
 
 const packageManagerConfigKey = `cli.packageManager`
 
@@ -85,7 +85,7 @@ const setNameInPackage = async (
 ): Promise<void> => {
   const packageJsonPath = path.join(sitePath, `package.json`)
   const packageJson = await fs.readJSON(packageJsonPath)
-  packageJson.name = kebabify(name)
+  packageJson.name = makeNpmSafe(name)
   packageJson.description = name
   try {
     const result = await execa(`git`, [`config`, `user.name`])

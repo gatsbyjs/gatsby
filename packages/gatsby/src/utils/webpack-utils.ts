@@ -713,7 +713,7 @@ export const createWebpackUtils = (
   }
 }
 
-function reactHasJsxRuntime(): boolean {
+export function reactHasJsxRuntime(): boolean {
   // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
   // People can use a custom babelrc file to support it
   // try {

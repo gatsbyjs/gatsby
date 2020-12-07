@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.1...gatsby-plugin-image@0.4.0-next.2) (2020-12-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** don't show hydration warning ([#28407](https://github.com/gatsbyjs/gatsby/issues/28407)) ([b6b5207](https://github.com/gatsbyjs/gatsby/commit/b6b5207979370c244e32977c87242064f067842c))
+
+### Features
+
+- **gatsby-plugin-image:** Add helper function to grab src ([#28463](https://github.com/gatsbyjs/gatsby/issues/28463)) ([4ab296f](https://github.com/gatsbyjs/gatsby/commit/4ab296fb911798836110d31a3695abf53dc0c291))
+
 # [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.0...gatsby-plugin-image@0.4.0-next.1) (2020-12-01)
 
 ### Bug Fixes
