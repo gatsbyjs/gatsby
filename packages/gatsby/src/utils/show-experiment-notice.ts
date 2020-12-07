@@ -77,7 +77,9 @@ ${chalk.bgBlue.bold(
 const showNotices = (): void => {
   emitter.off(`COMPILATION_DONE`, showNotices)
   if (noticesToShow.length > 0) {
-    telemetry.trackFeatureIsUsed(`InviteToTryExperiment`)
+    telemetry.trackCli(`InviteToTryExperiment`, {
+      notices: showNotices.map(n => n.experimentIdentifier),
+    })
     const message = createNoticeMessage(noticesToShow)
     reporter.info(message)
   }
