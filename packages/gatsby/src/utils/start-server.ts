@@ -45,6 +45,7 @@ import * as path from "path"
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
+import { appendPreloadHeaders } from "./develop-preload-headers"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -442,6 +443,8 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
+      await appendPreloadHeaders(req.path, res)
+
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
           const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)
