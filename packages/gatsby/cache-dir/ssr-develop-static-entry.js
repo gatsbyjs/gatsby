@@ -168,6 +168,7 @@ export default (pagePath, isClientOnlyPage, port, callback) => {
       .forEach(style => {
         headComponents.unshift(
           <link
+            data-identity={`gatsby-dev-css`}
             key={style.name}
             rel="stylesheet"
             type="text/css"
