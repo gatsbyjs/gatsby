@@ -249,8 +249,7 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
     })
   }
 
-  app.use(REFRESH_ENDPOINT, express.json())
-  app.post(`${REFRESH_ENDPOINT}/:plugin_name`, (req, res) => {
+  app.post(`${REFRESH_ENDPOINT}/:plugin_name?`, express.json(), (req, res) => {
     const pluginName = req.params[`plugin_name`]
 
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
@@ -260,18 +259,6 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
 
     if (enableRefresh && authorizedRefresh) {
       refresh(req, pluginName)
-    }
-    res.end()
-  })
-
-  app.post(REFRESH_ENDPOINT, (req, res) => {
-    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
-    const authorizedRefresh =
-      !refreshToken || req.headers.authorization === refreshToken
-
-    if (enableRefresh && authorizedRefresh) {
-      refresh(req)
     }
     res.end()
   })
