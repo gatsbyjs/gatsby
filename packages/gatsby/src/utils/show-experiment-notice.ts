@@ -67,13 +67,11 @@ ${chalk.bgBlue.bold(
 
 export const showExperimentNotices = (): void => {
   if (noticesToShow.length > 0) {
-    telemetry.trackCli(`InviteToTryExperiment`, {
-      notices: noticesToShow.map(n => n.experimentIdentifier),
-    })
+    telemetry.trackCli(`InviteToTryExperiment`)
     // Store that we're showing the invite.
     noticesToShow.forEach(notice =>
       getConfigStore().set(
-        configStoreKey(notice.expermentIdentifier),
+        configStoreKey(notice.experimentIdentifier),
         Date.now()
       )
     )
