@@ -161,7 +161,6 @@ export default (pagePath, isClientOnlyPage, port, callback) => {
       style => style.name && style.name.endsWith(`.css`)
     )
 
-    console.log(styles)
     styles
       .slice(0)
       .reverse()
