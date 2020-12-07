@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { execSync } from "child_process"
 import execa from "execa"
 import fs from "fs-extra"
@@ -22,14 +23,14 @@ jest.mock(`../get-config-store`, () => {
       return {
         items: {},
         set(key: string, value: unknown): void {
-          this.items[key] = value
+          ;(this as any).items[key] = value
         },
         get(key: string): unknown {
-          return this.items[key]
+          return (this as any).items[key]
         },
 
         __reset(): void {
-          this.items = {}
+          ;(this as any).items = {}
         },
       }
     },
@@ -53,7 +54,12 @@ describe(`init-starter`, () => {
       })
 
       try {
-        await initStarter(`gatsby-starter-hello-world`, `./somewhere`, [])
+        await initStarter(
+          `gatsby-starter-hello-world`,
+          `./somewhere`,
+          [],
+          `A site`
+        )
       } catch (e) {
         expect(execa).toBeCalledWith(`git`, [
           `clone`,
@@ -77,7 +83,12 @@ describe(`init-starter`, () => {
         return { name: `gatsby-project` }
       })
 
-      await initStarter(`gatsby-starter-hello-world`, `./somewhere`, [])
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [],
+        `A site`
+      )
 
       expect(execa).toBeCalledWith(`git`, [
         `clone`,
@@ -101,7 +112,12 @@ describe(`init-starter`, () => {
         return { name: `gatsby-project` }
       })
 
-      await initStarter(`gatsby-starter-hello-world`, `./somewhere`, [])
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [],
+        `A site`
+      )
 
       expect(fs.remove).toBeCalledWith(`package-lock.json`)
       expect(reporter.success).toBeCalledWith(`Installed plugins`)
@@ -119,9 +135,12 @@ describe(`init-starter`, () => {
         return { name: `gatsby-project` }
       })
 
-      await initStarter(`gatsby-starter-hello-world`, `./somewhere`, [
-        `one-package`,
-      ])
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [`one-package`],
+        `A site`
+      )
 
       expect(fs.remove).toBeCalledWith(`yarn.lock`)
       expect(reporter.success).toBeCalledWith(`Installed Gatsby`)
@@ -150,9 +169,12 @@ describe(`init-starter`, () => {
         return { name: `gatsby-project` }
       })
 
-      await initStarter(`gatsby-starter-hello-world`, `./somewhere`, [
-        `one-package`,
-      ])
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [`one-package`],
+        `A site`
+      )
 
       expect(reporter.info).toBeCalledWith(
         `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`

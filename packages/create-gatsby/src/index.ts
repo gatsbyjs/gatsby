@@ -15,7 +15,7 @@ import { trackCli } from "./tracking"
 import crypto from "crypto"
 import { reporter } from "./reporter"
 import { setSiteMetadata } from "./site-metadata"
-import { kebabify } from "./utils"
+import { makeNpmSafe } from "./utils"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
@@ -179,7 +179,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
     format: (value: string): string => c.cyan(value),
   } as any)
 
-  const data = await enquirer.prompt(questions(kebabify(siteName)))
+  const data = await enquirer.prompt(questions(makeNpmSafe(siteName)))
   data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
