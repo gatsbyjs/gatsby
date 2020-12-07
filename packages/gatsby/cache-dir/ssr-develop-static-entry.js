@@ -218,14 +218,15 @@ export default (pagePath, isClientOnlyPage, callback) => {
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
     body: bodyStr,
-    headComponents,
+    headComponents: headComponents.concat([
+      <script key={`io`} src="/socket.io/socket.io.js" />,
+    ]),
     htmlAttributes,
     bodyAttributes,
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
       <script key={`commons`} src="/commons.js" />,
-      <script key={`io`} src="/socket.io/socket.io.js" />,
     ]),
   })
   let htmlStr = renderToStaticMarkup(htmlElement)
