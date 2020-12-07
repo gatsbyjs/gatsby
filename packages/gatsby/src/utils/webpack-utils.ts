@@ -196,11 +196,8 @@ export const createWebpackUtils = (
 
     miniCssExtract: (options = {}) => {
       return {
-        options,
+        options: { ...options, hmr: !PRODUCTION },
         loader: MiniCssExtractPlugin.loader,
-        // stage === false //`develop`
-        // ? require.resolve(`style-loader`)
-        // : MiniCssExtractPlugin.loader,
       }
     },
 
@@ -567,7 +564,7 @@ export const createWebpackUtils = (
     css.external = makeExternalOnly(css)
 
     const cssModules: IRuleUtils["cssModules"] = (options): RuleSetRule => {
-      const rule = css({ ...options, modules: true })
+      const rule = css({ ...options, modules: true, hmr: !PRODUCTION })
       delete rule.exclude
       rule.test = /\.module\.css$/
       return rule

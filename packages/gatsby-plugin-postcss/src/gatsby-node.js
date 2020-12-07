@@ -53,10 +53,10 @@ exports.onCreateWebpackConfig = (
 
   console.log(postcssLoader, postcssRule, postcssRuleModules)
 
-  // if (!isSSR) {
-  // postcssRule.use.unshift(loaders.miniCssExtract())
-  // postcssRuleModules.use.unshift(loaders.miniCssExtract({ hmr: false }))
-  // }
+  if (!isSSR) {
+    postcssRule.use.unshift(loaders.miniCssExtract())
+    postcssRuleModules.use.unshift(loaders.miniCssExtract())
+  }
 
   const postcssRules = { oneOf: [] }
 

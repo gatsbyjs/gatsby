@@ -233,14 +233,6 @@ module.exports = async (
           .filter(Boolean)
         console.log(configPlugins)
         break
-      case `develop-html`:
-        configPlugins = configPlugins.concat([
-          // Write out stats object mapping named dynamic imports (aka page
-          // components) to all their async chunks.
-          // plugins.extractStats(),
-        ])
-
-        break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
           plugins.extractText(),
@@ -349,16 +341,6 @@ module.exports = async (
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
-        // configRules.push({
-        // test: /\.css$/,
-        // use: [
-        // {
-        // loader: MiniCssExtractPlugin.loader,
-        // options: {},
-        // },
-        // "css-loader",
-        // ],
-        // })
 
         // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
         // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
