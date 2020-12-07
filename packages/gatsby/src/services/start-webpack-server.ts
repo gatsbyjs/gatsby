@@ -4,7 +4,6 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
 import { Compiler } from "webpack"
 import { isEqual } from "lodash"
-import got from "got"
 import fs from "fs-extra"
 import path from "path"
 const stream = require("stream")
@@ -123,27 +122,6 @@ export async function startWebpackServer({
           }
         }
       }
-
-      // Download css assets
-      const cssAssets = statsToJson.assets.filter(asset => {
-        return asset.name.endsWith(`.css`)
-      })
-
-      // Stream to public directory so we can access during SSR.
-      cssAssets.forEach(async asset => {
-        console.log(
-          `writing to`,
-          path.join(program.directory, `public`, asset.name)
-        )
-        console.log(asset)
-        const writeStream = fs.createWriteStream(
-          path.join(program.directory, `public`, `__${asset.name}`)
-        )
-        const url = new URL(`/${asset.name}`, urls.localUrlForBrowser)
-        console.log(url)
-        await pipeline(got.stream(url.href), writeStream)
-        console.log(`done`)
-      })
 
       isFirstCompile = false
 

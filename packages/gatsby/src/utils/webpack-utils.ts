@@ -196,8 +196,11 @@ export const createWebpackUtils = (
 
     miniCssExtract: (options = {}) => {
       return {
-        options: { ...options, hmr: !PRODUCTION },
+        options: { ...options, hmr: stage === `develop` },
         loader: MiniCssExtractPlugin.loader,
+        // loader: PRODUCTION
+        // ? MiniCssExtractPlugin.loader
+        // : require.resolve(`style-loader`),
       }
     },
 
