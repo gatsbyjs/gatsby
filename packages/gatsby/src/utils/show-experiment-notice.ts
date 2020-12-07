@@ -1,6 +1,5 @@
 import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
-import { emitter } from "../redux"
 import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import realTerminalLink from "terminal-link"
@@ -74,8 +73,7 @@ ${chalk.bgBlue.bold(
   return message
 }
 
-const showNotices = (): void => {
-  emitter.off(`COMPILATION_DONE`, showNotices)
+export const showNotices = (): void => {
   if (noticesToShow.length > 0) {
     telemetry.trackCli(`InviteToTryExperiment`, {
       notices: showNotices.map(n => n.experimentIdentifier),
@@ -87,9 +85,8 @@ const showNotices = (): void => {
         Date.now()
       )
     )
+
     const message = createNoticeMessage(noticesToShow)
     reporter.info(message)
   }
 }
-
-emitter.on(`COMPILATION_DONE`, showNotices)
