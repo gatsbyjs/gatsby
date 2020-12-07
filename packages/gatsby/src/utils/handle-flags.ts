@@ -14,6 +14,22 @@ const terminalLink = (text, url): string => {
   }
 }
 
+let enabledConfigFlags: Array<IFlag>
+let message = ``
+let unknownFlagMessage = ``
+
+export const getCachedFlagInfo = (): {
+  enabledConfigFlags: Array<IFlag>
+  unknownFlagMessage: string
+  message: string
+} => {
+  return {
+    enabledConfigFlags,
+    message,
+    unknownFlagMessage,
+  }
+}
+
 const handleFlags = (
   flags: Array<IFlag>,
   configFlags: Record<string, boolean>,
@@ -55,7 +71,7 @@ const handleFlags = (
     }
   }
 
-  let unknownFlagMessage = ``
+  unknownFlagMessage = ``
   if (unknownConfigFlags.length > 0) {
     unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known:`
     unknownConfigFlags.forEach(
@@ -66,7 +82,7 @@ const handleFlags = (
     )
   }
 
-  let enabledConfigFlags = Object.keys(configFlags)
+  enabledConfigFlags = Object.keys(configFlags)
     .filter(name => configFlags[name] && availableFlags.has(name))
     .map(flagName => availableFlags.get(flagName))
 
@@ -102,20 +118,23 @@ const handleFlags = (
   //  w/ message of thanks
 
   const generateFlagLine = (flag): string => {
-    let message = ``
-    message += `\n- ${flag.name}`
+    let lineMessage = ``
+    lineMessage += `\n- ${flag.name}`
     if (flag.experimental) {
-      message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
+      lineMessage += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
     }
     if (flag.umbrellaIssue) {
-      message += ` · (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
+      lineMessage += ` · (${terminalLink(
+        `Umbrella Issue`,
+        flag.umbrellaIssue
+      )})`
     }
-    message += ` · ${flag.description}`
+    lineMessage += ` · ${flag.description}`
 
-    return message
+    return lineMessage
   }
 
-  let message = ``
+  message = ``
   //  Create message about what flags are active.
   if (enabledConfigFlags.length > 0) {
     message = `The following flags are active:`
