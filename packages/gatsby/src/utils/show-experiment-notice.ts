@@ -28,6 +28,8 @@ interface INoticeObject {
 }
 
 const noticesToShow: Array<INoticeObject> = []
+const configStoreKey = (experimentIdentifier): string =>
+  `lastExperimentNotice.${experimentIdentifier}`
 
 export function showExperimentNoticeAfterTimeout(
   experimentIdentifier: string,
@@ -36,9 +38,9 @@ export function showExperimentNoticeAfterTimeout(
   showNoticeAfterMs: number,
   minimumIntervalBetweenNoticesMs: number = ONE_DAY
 ): CancelExperimentNoticeCallbackOrUndefined {
-  const configStoreKey = `lastExperimentNotice.${experimentIdentifier}`
-
-  const lastTimeWeShowedNotice = getConfigStore().get(configStoreKey)
+  const lastTimeWeShowedNotice = getConfigStore().get(
+    configStoreKey(experimentIdentifier)
+  )
 
   if (lastTimeWeShowedNotice) {
     if (Date.now() - lastTimeWeShowedNotice < minimumIntervalBetweenNoticesMs) {
@@ -48,8 +50,6 @@ export function showExperimentNoticeAfterTimeout(
 
   const noticeTimeout = setTimeout(() => {
     noticesToShow.push({ noticeText, umbrellaLink, experimentIdentifier })
-
-    getConfigStore().set(configStoreKey, Date.now())
   }, showNoticeAfterMs)
 
   return function clearNoticeTimeout(): void {
@@ -80,6 +80,13 @@ const showNotices = (): void => {
     telemetry.trackCli(`InviteToTryExperiment`, {
       notices: showNotices.map(n => n.experimentIdentifier),
     })
+    // Store that we're showing the invite.
+    showNotices.forEach(notice =>
+      getConfigStore().set(
+        configStoreKey(notice.expermentIdentifier),
+        Date.now()
+      )
+    )
     const message = createNoticeMessage(noticesToShow)
     reporter.info(message)
   }
