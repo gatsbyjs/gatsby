@@ -40,7 +40,7 @@ export function lazyHydrate(
 
   const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
   // On first server hydration do nothing
-  if (hasNativeLazyLoadSupport && hasSSRHtml && !hydrated.current) {
+  if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
     return null
   }
 
