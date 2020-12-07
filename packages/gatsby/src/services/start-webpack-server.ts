@@ -126,11 +126,9 @@ export async function startWebpackServer({
 
       // Download css assets
       const cssAssets = statsToJson.assets.filter(asset => {
-        // console.log({ asset })
         return asset.name.endsWith(`.css`)
       })
 
-      console.log({ asset: cssAssets[0], port: program.port })
       // Stream to public directory so we can access during SSR.
       cssAssets.forEach(async asset => {
         console.log(

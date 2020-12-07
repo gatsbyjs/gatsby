@@ -21,7 +21,6 @@ exports.onCreateWebpackConfig = (
   const isSSR = stage.includes(`html`)
   const config = getConfig()
   const cssRules = findCssRules(config)
-  console.log(cssRules)
 
   delete postcssLoaderOptions.plugins
 
@@ -50,8 +49,6 @@ exports.onCreateWebpackConfig = (
       postcssLoader,
     ],
   }
-
-  console.log(postcssLoader, postcssRule, postcssRuleModules)
 
   if (!isSSR) {
     postcssRule.use.unshift(loaders.miniCssExtract())

@@ -231,7 +231,6 @@ module.exports = async (
             plugins.extractStats(),
           ])
           .filter(Boolean)
-        console.log(configPlugins)
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
@@ -703,15 +702,6 @@ module.exports = async (
     plugins,
     parentSpan,
   })
-
-  require(`util`).inspect.defaultOptions.depth = null
-  console.log(
-    process.cwd() + `/webpack-config-${stage}-${new Date().toJSON()}.json`
-  )
-  fs.writeFileSync(
-    process.cwd() + `/webpack-config-${stage}-${new Date().toJSON()}.json`,
-    require(`util`).inspect(getConfig())
-  )
 
   return getConfig()
 }
