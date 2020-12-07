@@ -95,9 +95,9 @@ Please pick a path to an existing directory.`,
         file,
         pagesDirectory,
         actions,
-        ignore,
         graphql,
         reporter,
+        ignore,
         slugifyOptions
       )
     })
@@ -114,9 +114,9 @@ Please pick a path to an existing directory.`,
               addedPath,
               pagesDirectory,
               actions,
-              ignore,
               graphql,
               reporter,
+              ignore,
               slugifyOptions
             )
             knownFiles.add(addedPath)
