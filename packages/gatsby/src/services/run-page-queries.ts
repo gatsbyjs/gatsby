@@ -54,7 +54,11 @@ export async function runPageQueries({
       `https://gatsby.dev/query-on-demand-feedback`,
       `which avoids running page queries in development until you visit a page — so a lot less upfront work. Here's how to try it:
 
-flags: { QUERY_ON_DEMAND: true }`,
+modules.exports = {
+  flags: { QUERY_ON_DEMAND: true },
+  plugins: [...]
+}
+`,
       ONE_MINUTE
     )
   }

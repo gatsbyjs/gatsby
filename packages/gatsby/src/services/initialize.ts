@@ -69,7 +69,10 @@ if (
     `gatsby.dev/dev-ssr-feedback`,
     `which helps surface issues with build errors more quickly. Here's how to try it:
 
-flags : { DEV_SSR: true, }`,
+module.exports = {
+  flags : { DEV_SSR: true, },
+  plugins: [...],
+}`,
     1 // Show this immediately to the subset of sites selected.
   )
 }

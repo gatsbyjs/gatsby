@@ -95,10 +95,13 @@ export async function startServer(
       `Preserve webpack's Cache`,
       `https://github.com/gatsbyjs/gatsby/discussions/28331`,
       `which changes Gatsby's cache clearing behavior to not clear webpack's
-      cache unless you run "gatsby clean" or delete the .cache folder manually.
-      Here's how to try it:
+cache unless you run "gatsby clean" or delete the .cache folder manually.
+Here's how to try it:
 
-flags: { PRESERVE_WEBPACK_CACHE: true }`,
+module.exports = {
+  flags: { PRESERVE_WEBPACK_CACHE: true },
+  plugins: [...]
+}`,
       THIRTY_SECONDS
     )
   }
