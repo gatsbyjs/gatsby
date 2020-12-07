@@ -94,8 +94,9 @@ export async function startServer(
     cancelDevJSNotice = showExperimentNoticeAfterTimeout(
       `Preserve webpack's Cache`,
       `https://github.com/gatsbyjs/gatsby/discussions/28331`,
-      `which changes Gatsby's cache clearing behavior to not clear webpack's cache unless really
-necessary. Here's how to try it:
+      `which changes Gatsby's cache clearing behavior to not clear webpack's
+      cache unless you run "gatsby clean" or delete the .cache folder manually.
+      Here's how to try it:
 
 flags: { PRESERVE_WEBPACK_CACHE: true }`,
       THIRTY_SECONDS
