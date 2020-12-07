@@ -87,7 +87,8 @@ export function getMainProps(
   loading?: "eager" | "lazy",
   toggleLoaded?: any,
   cacheKey?: string,
-  ref?: any
+  ref?: any,
+  style: CSSProperties = {}
 ): MainImageProps {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
     if (isLoaded) {
@@ -115,29 +116,32 @@ export function getMainProps(
     }
   }
 
+  // fallback when it's not configured in gatsby-config.
+  if (!global.GATSBY___IMAGE) {
+    style = {
+      height: `100%`,
+      left: 0,
+      position: `absolute`,
+      top: 0,
+      transform: `translateZ(0)`,
+      transition: `opacity 250ms linear`,
+      width: `100%`,
+      willChange: `opacity`,
+      ...style,
+    }
+  }
+
   const result = {
     ...images,
     loading,
     shouldLoad: isLoading,
     "data-main-image": ``,
     style: {
+      ...style,
       opacity: isLoaded ? 1 : 0,
     },
     onLoad,
     ref,
-  }
-
-  // fallback when it's not configured in gatsby-config.
-  if (!global.GATSBY___IMAGE) {
-    result.style.height = `100%`
-    result.style.left = 0
-    result.style.position = `absolute`
-    result.style.top = 0
-    result.style.transform = `translateZ(0)`
-    result.style.transition = `opacity 250ms linear`
-    result.style.width = `100%`
-    result.style.willChange = `opacity`
-    result.style.objectFit = `cover`
   }
 
   return result
