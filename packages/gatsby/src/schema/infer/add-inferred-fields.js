@@ -135,7 +135,8 @@ const addInferredFieldsImpl = ({
                       `Add the following type definition to fix this:\n\n` +
                       `  type ${typeComposer.getTypeName()} ${implementsNode}{\n` +
                       `    ${key}: ${field.type.toString()}${extension}\n` +
-                      `  }`
+                      `  }\n` +
+                      `https://www.gatsbyjs.com/docs/actions/#createTypes`
                   )
                 }
               })
