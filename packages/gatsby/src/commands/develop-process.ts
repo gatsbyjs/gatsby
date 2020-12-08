@@ -132,6 +132,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     program,
     parentSpan,
     app,
+    pendingQueryRuns: new Set([`/`]),
   })
 
   const service = interpret(machine)
