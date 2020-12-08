@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.29.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.3...gatsby@2.29.0-next.4) (2020-12-08)
+
+### Bug Fixes
+
+- **gatsby:** better text for missing inferred extension ([#28530](https://github.com/gatsbyjs/gatsby/issues/28530)) ([298110c](https://github.com/gatsbyjs/gatsby/commit/298110c28c7635114cab300f44180fd641ffce36))
+- **gatsby:** do not fail the build when eslint loader is removed ([#28494](https://github.com/gatsbyjs/gatsby/issues/28494)) ([b3c171f](https://github.com/gatsbyjs/gatsby/commit/b3c171f0d6dd5a91cdc9ecbe73606b503bd40bda))
+- **gatsby:** improve deprecation text for missing childOf directive ([#28532](https://github.com/gatsbyjs/gatsby/issues/28532)) ([f733f4e](https://github.com/gatsbyjs/gatsby/commit/f733f4e941198f4ac4378f141d87f9ad6cfec6a0))
+- **gatsby:** Wait for jobs to complete in onPostBuild ([#28534](https://github.com/gatsbyjs/gatsby/issues/28534)) ([98f22e7](https://github.com/gatsbyjs/gatsby/commit/98f22e702ee3defefd8e99d49aa50b080bbe0d6f))
+
+### Features
+
+- **gatsby:** add preload headers for critical resources so those can started fetching before common.js is fetched ([#28460](https://github.com/gatsbyjs/gatsby/issues/28460)) ([b4a76f5](https://github.com/gatsbyjs/gatsby/commit/b4a76f581d1f4e0f1f7f61f96eedd94703468116))
+- **gatsby:** Expose plugin-specific refresh endpoint in gatsby-serve ([#27931](https://github.com/gatsbyjs/gatsby/issues/27931)) ([903439b](https://github.com/gatsbyjs/gatsby/commit/903439bcb4c909c1881cb3139b7545b161ea580b))
+
 # [2.29.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.2...gatsby@2.29.0-next.3) (2020-12-04)
 
 ### Bug Fixes

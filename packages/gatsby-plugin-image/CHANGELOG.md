@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.2...gatsby-plugin-image@0.4.0-next.3) (2020-12-08)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
 # [0.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.1...gatsby-plugin-image@0.4.0-next.2) (2020-12-04)
 
 ### Bug Fixes
