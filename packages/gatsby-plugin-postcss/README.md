@@ -4,7 +4,7 @@ Gatsby plugin to handle PostCSS.
 
 ## Install
 
-`npm install --save gatsby-plugin-postcss`
+`npm install postcss gatsby-plugin-postcss`
 
 ## How to use
 

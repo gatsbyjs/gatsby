@@ -6,7 +6,10 @@ import Layout from "../components/layout"
 
 class BlogPostTemplate extends React.Component {
   render() {
-    const post = this.props.data.markdownRemark
+    const {
+      html,
+      frontmatter: { title, date },
+    } = this.props.data.markdownRemark
     const siteTitle = this.props.data.site.siteMetadata.title
     const { previous, next } = this.props.pageContext
 
@@ -14,29 +17,11 @@ class BlogPostTemplate extends React.Component {
       <Layout location={this.props.location} title={siteTitle}>
         <article>
           <header>
-            <h1
-              style={{
-                marginTop: '5px',
-                marginBottom: 0,
-              }}
-            >
-              {post.frontmatter.title}
-            </h1>
-            <p
-              style={{
-                display: `block`,
-                marginBottom: '5px',
-              }}
-            >
-              {post.frontmatter.date}
-            </p>
+            <h1 style={{ marginTop: "5px", marginBottom: 0 }}>{title}</h1>
+            <p style={{ display: `block`, marginBottom: "5px" }}>{date}</p>
           </header>
-          <section dangerouslySetInnerHTML={{ __html: post.html }} />
-          <hr
-            style={{
-              marginBottom: '5px',
-            }}
-          />
+          <section dangerouslySetInnerHTML={{ __html: html }} />
+          <hr style={{ marginBottom: "5px" }} />
           <footer>
             <Bio />
           </footer>
@@ -54,14 +39,14 @@ class BlogPostTemplate extends React.Component {
           >
             <li>
               {previous && (
-                <Link to={previous.fields.slug} rel="prev">
+                <Link to={"/" + previous.frontmatter.slug} rel="prev">
                   ← {previous.frontmatter.title}
                 </Link>
               )}
             </li>
             <li>
               {next && (
-                <Link to={next.fields.slug} rel="next">
+                <Link to={"/" + next.frontmatter.slug} rel="next">
                   {next.frontmatter.title} →
                 </Link>
               )}
@@ -83,13 +68,10 @@ export const pageQuery = graphql`
       }
     }
     markdownRemark(id: { eq: $id }) {
-      id
-      excerpt(pruneLength: 160)
       html
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
-        description
       }
     }
   }

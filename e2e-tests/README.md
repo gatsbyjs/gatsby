@@ -15,6 +15,11 @@ These are end to end tests triggered via a CI job. You can run these tests local
 - OPTIONAL: Use [gatsby-dev-cli][gatsby-dev-cli] to link current changes in packages
 - Run the `test` script, e.g. `yarn test` or `npm test`
 
+Alternatively you can do what the CI does:
+
+- From the gatsby root run `./scripts/e2e-test.sh "e2e-tests/gatsby-image" "yarn test"`
+- The script uses sudo to install -g gatsby-cli. You won't need to and you can ctrl+c the prompt away
+
 Thanks for contributing to Gatsby! 💜
 
 [gatsby-dev-cli]: https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-dev-cli

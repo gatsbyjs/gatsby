@@ -8,8 +8,8 @@ const Index = ({ data }) => {
       {data.site.siteMetadata.siteTitle}
       <ul>
         {data?.articles?.nodes.map((article) => (
-          <li key={article.fields.path}>
-            <Link to={article.fields.path}>{article.frontmatter.title}</Link>
+          <li key={article.slug}>
+            <Link to={'/' + article.slug}>{article.frontmatter.title}</Link>
           </li>
         ))}
       </ul>
@@ -20,7 +20,7 @@ const Index = ({ data }) => {
 export default Index
 
 export const query = graphql`
-  {
+  query {
     site {
       siteMetadata {
         siteTitle
@@ -31,9 +31,7 @@ export const query = graphql`
         frontmatter {
           title
         }
-        fields {
-          path
-        }
+        slug
       }
     }
   }

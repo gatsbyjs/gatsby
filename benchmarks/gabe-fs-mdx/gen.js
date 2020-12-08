@@ -6,9 +6,12 @@ const N = parseInt(process.env.N, 10) || 100;
 
 let n = 0;
 function createArticle(n, sentence, slug) {
+  const desc = faker.lorem.sentence();
+
   return `---
 articleNumber: ${n}
 title: "${sentence.replace(/"/g, '\\"')}"
+description: "${desc.replace(/"/g, '\\"')}"
 path: '${slug}'
 date: ${faker.date.recent(1000).toISOString().slice(0, 10)}
 ---
@@ -19,6 +22,10 @@ export const author = "Fred Flintstone"
 export default props => <main {...props} />
 
 <Link to="/">Go Home</Link>
+
+# ${sentence}
+
+> ${desc}
 
 ${faker.lorem.paragraphs(2)}
   `;

@@ -26,24 +26,28 @@ You should now have a Tracking ID; take note of it, as your website will need to
 
 You can find this tracking ID later by going to `Admin > Tracking Info > Tracking Code`.
 
-## Using `gatsby-plugin-google-analytics`
+## Using `gatsby-plugin-google-gtag`
 
 Now, it's time to configure Gatsby to send page views to your Google Analytics account.
 
-We are going to use `gatsby-plugin-google-analytics`. For other analytics options (including Google Analytics gtag.js and Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
+We are going to use `gatsby-plugin-google-gtag`. For other analytics options (including Google Tag Manager), check [other Gatsby analytics plugins](#other-gatsby-analytics-plugins).
 
 ```shell
-npm install gatsby-plugin-google-analytics
+npm install gatsby-plugin-google-gtag
 ```
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: `gatsby-plugin-google-gtag`,
       options: {
-        // replace "UA-XXXXXXXXX-X" with your own Tracking ID
-        trackingId: "UA-XXXXXXXXX-X",
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          "GA-TRACKING_ID", // Google Analytics / GA
+          "AW-CONVERSION_ID", // Google Ads / Adwords / AW
+          "DC-FLOODIGHT_ID", // Marketing Platform advertising products (Display & Video 360, Search Ads 360, and Campaign Manager)
+        ],
       },
     },
   ],
@@ -52,7 +56,7 @@ module.exports = {
 
 > Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
 
-Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-analytics/).
+Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-gtag/).
 
 There are a number of extra configuration options--both with the Gatsby plugin and also in your Google Analytics account--so you can tailor things to meet your website's needs.
 
@@ -60,8 +64,8 @@ Once this is configured you can deploy your site to test! If you navigate to the
 
 ## Other Gatsby analytics plugins
 
+- [Google Analytics](/packages/gatsby-plugin-google-analytics/)
 - [Google Tag Manager](/packages/gatsby-plugin-google-tagmanager/)
-- [Google Analytics gtag.js](/packages/gatsby-plugin-gtag/)
 - [Segment](/packages/gatsby-plugin-segment-js)
 - [Amplitude Analytics](/packages/gatsby-plugin-amplitude-analytics)
 - [Fathom](/packages/gatsby-plugin-fathom/)
@@ -72,3 +76,4 @@ Once this is configured you can deploy your site to test! If you navigate to the
 - [GoatCounter](/packages/gatsby-plugin-goatcounter/)
 - [PostHog](/packages/gatsby-plugin-posthog-analytics/)
 - [Plausible](/packages/gatsby-plugin-plausible/)
+- [Vercel](/packages/gatsby-plugin-vercel/)

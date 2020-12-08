@@ -2,7 +2,7 @@
 title: Winning Over Developers
 ---
 
-Developers are often the primary evangelists of Gatsby because they are the primary users of the framework. If you're a developer, you may find that simply talking to other developers about why _you_ like Gatsby is enough to get them interested. Here are some talking points to help support your conversations with developers.
+Developers are often the primary evangelists of Gatsby because they are the primary users of the framework. If you're a developer, you may find that talking to other developers about why _you_ like Gatsby is enough to get them interested. Here are some talking points to help support your conversations with developers.
 
 Some things that developers care about include:
 

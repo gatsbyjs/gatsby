@@ -14,7 +14,8 @@ const clean = dir => execa(`yarn`, ["del-cli", dir])
 describe(`gatsby new`, () => {
   // make folder for us to create sites into
   const dir = join(__dirname, "../execution-folder")
-  const originalPackageManager = getConfigStore().get("cli.packageManager")
+  const originalPackageManager =
+    getConfigStore().get("cli.packageManager") || `npm`
 
   beforeAll(async () => {
     await clean(dir)
@@ -23,11 +24,11 @@ describe(`gatsby new`, () => {
   })
 
   afterAll(async () => {
-    GatsbyCLI.from(cwd).invoke([`options`, `set`,`pm`, originalPackageManager])
+    GatsbyCLI.from(cwd).invoke([`options`, `set`, `pm`, originalPackageManager])
     await clean(dir)
   })
 
-  it(`a default starter creates a gatsby site`, () => {
+  it(`creates a gatsby site with the default starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([`new`, `gatsby-default`])
 
     logs.should.contain(
@@ -44,7 +45,7 @@ describe(`gatsby new`, () => {
     expect(code).toBe(0)
   })
 
-  it(`a theme starter creates a gatsby site`, () => {
+  it(`creates a gatsby site with the blog starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-blog`,
@@ -65,7 +66,7 @@ describe(`gatsby new`, () => {
     expect(code).toBe(0)
   })
 
-  it(`an invalid starter fails to create a gatsby site`, () => {
+  it(`fails to create a gatsby site with an invalid starter`, () => {
     const [code, logs] = GatsbyCLI.from(cwd).invoke([
       `new`,
       `gatsby-invalid`,
@@ -76,5 +77,11 @@ describe(`gatsby new`, () => {
     logs.should.contain(`starter tHiS-Is-A-fAkE-sTaRtEr doesn't exist`)
 
     expect(code).toBe(1)
+  })
+
+  it(`runs create-gatsby when no arguments are provided to gatsby new`, () => {
+    const [_, logs] = GatsbyCLI.from(cwd).invoke([`new`])
+
+    logs.should.contain(`Welcome to Gatsby!`)
   })
 })

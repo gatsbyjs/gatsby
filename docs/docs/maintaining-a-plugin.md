@@ -32,7 +32,7 @@ Every major version update should also be reflected in the README of the plugin 
 
 It would be great for users to be able to reference several versions of the plugin with the updated examples to see if they want to keep the current version or upgrade and also to understand what the new version offers. Although this is good:
 
-- Try to not clog your release repository with older versions of the plugin as you update, as they’re not often needed. Instead, simply keep the last few in place.
+- Try to not clog your release repository with older versions of the plugin as you update, as they’re not often needed. Instead, keep the last few in place.
 
 - Try not to push every iterative change from Git live
 
@@ -47,7 +47,7 @@ There are a couple of useful tools that can help with keeping dependencies up to
 1. Install the tool
 
 ```shell
- npm i -g npm-check-updates
+ npm install -g npm-check-updates
 ```
 
 2. Run the command to update dependencies

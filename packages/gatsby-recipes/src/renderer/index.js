@@ -1,14 +1,14 @@
-const React = require(`react`)
+import React from "react"
 
-const { render } = require(`./render`)
-const { resourceComponents } = require(`./resource-components`)
-const { RecipeStep, RecipeIntroduction } = require(`./step-component`)
-const Input = require(`./input`).default
-const { useInput, useInputByKey } = require(`./input-provider`)
-const { useResource } = require(`./resource-provider`)
-const { useProvider } = require(`./provider-provider`)
+import { render } from "./render"
+import { resourceComponents } from "./resource-components"
+import { RecipeStep, RecipeIntroduction } from "./step-component"
+import Input from "./input"
+import { useInput, useInputByKey } from "./input-provider"
+import { useResource } from "./resource-provider"
+import { useProvider } from "./provider-provider"
 
-const transformRecipeMDX = require(`../transform-recipe-mdx`).default
+import transformRecipeMDX from "../transform-recipe-mdx"
 
 const scope = {
   React,
@@ -35,7 +35,7 @@ const transformCodeForEval = code => {
   return newCode
 }
 
-module.exports = (mdxSrc, cb, context, isApply, isStream = false) => {
+export default function (mdxSrc, cb, context, isApply, isStream = false) {
   const scopeKeys = Object.keys(scope)
   const scopeValues = Object.values(scope)
 

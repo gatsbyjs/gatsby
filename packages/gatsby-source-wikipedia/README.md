@@ -8,7 +8,7 @@ https://guess-gatsby-wikipedia-demo.firebaseapp.com
 
 ## Install
 
-`npm install --save gatsby-source-wikipedia`
+`npm install gatsby-source-wikipedia`
 
 ## How to use
 

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.7.0-next.0...gatsby-image@2.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.6.0-next.0...gatsby-image@2.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.5.0-next.0...gatsby-image@2.5.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.20...gatsby-image@2.4.21) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.19...gatsby-image@2.4.20) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-image
+
 ## [2.4.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.18...gatsby-image@2.4.19) (2020-09-16)
 
 ### Bug Fixes

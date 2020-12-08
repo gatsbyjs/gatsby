@@ -12,6 +12,12 @@ import syncRequires from "$virtual/sync-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
+if (process.env.GATSBY_HOT_LOADER === `fast-refresh` && module.hot) {
+  module.hot.accept(`$virtual/sync-requires`, () => {
+    // Manually reload
+  })
+}
+
 window.___emitter = emitter
 
 const loader = new DevLoader(syncRequires, matchPaths)
@@ -19,6 +25,16 @@ setLoader(loader)
 loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
+
+// Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
+// bundle. This ensures hot reloading doesn't break when someone first adds
+// a dynamic import.
+//
+// Without this, the runtime breaks with a
+// "TypeError: __webpack_require__.e is not a function"
+// error.
+// eslint-disable-next-line
+import("./dummy")
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -36,7 +52,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       if (services.developstatusserver) {
         let isRestarting = false
         const parentSocket = io(
-          `http://${window.location.hostname}:${services.developstatusserver.port}`
+          `${window.location.protocol}//${window.location.hostname}:${services.developstatusserver.port}`
         )
 
         parentSocket.on(`structured-log`, msg => {
@@ -101,6 +117,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
+    // TODO replace with hydrate once dev SSR is ready
+    // but only for SSRed pages.
     ReactDOM.render
   )[0]
 
@@ -110,7 +128,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(window.location.pathname),
   ]).then(() => {
     const preferDefault = m => (m && m.default) || m
-    let Root = preferDefault(require(`./root`))
+    const Root = preferDefault(require(`./root`))
     domReady(() => {
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)

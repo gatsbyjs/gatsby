@@ -17,7 +17,7 @@ gatsby new emotion-tutorial https://github.com/gatsbyjs/gatsby-starter-hello-wor
 Second, install the necessary dependencies for Emotion and Gatsby.
 
 ```shell
-npm install gatsby-plugin-emotion @emotion/core @emotion/styled
+npm install gatsby-plugin-emotion @emotion/react @emotion/styled
 ```
 
 And then add the plugin to your site's `gatsby-config.js`:
@@ -35,7 +35,7 @@ Now create a sample Emotion page at `src/pages/index.js`:
 ```jsx:title=src/pages/index.js
 import React from "react"
 import styled from "@emotion/styled"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 
 const Container = styled.div`
   margin: 3rem auto;
@@ -123,7 +123,7 @@ To start, create a new Gatsby site with the [hello world starter](https://github
 ```shell
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
 cd global-styles
-npm install gatsby-plugin-emotion @emotion/core @emotion/styled
+npm install gatsby-plugin-emotion @emotion/react @emotion/styled
 ```
 
 Create `gatsby-config.js` and add the Emotion plugin:
@@ -138,7 +138,7 @@ Next, add a layout component at `src/components/layout.js`:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
-import { Global, css } from "@emotion/core"
+import { Global, css } from "@emotion/react"
 import styled from "@emotion/styled"
 
 const Wrapper = styled("div")`

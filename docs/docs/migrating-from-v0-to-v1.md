@@ -10,8 +10,7 @@ with various JavaScript tooling (e.g.
 [Prettier](https://github.com/prettier/prettier)) simpler.
 
 Everything related to webpack, loaders, Babel, React should work nearly
-identically under v1 of Gatsby compared to v0 so this part of the migration is
-super easy.
+identically under v1 of Gatsby compared to v0.
 
 ```shell
 mkdir src

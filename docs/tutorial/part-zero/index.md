@@ -110,7 +110,7 @@ nvm --version
 1. Make sure your distribution is ready to go:
 
 ```shell
-sudo pacman -Sy
+sudo pacman -Syu
 ```
 
 2. These distros come installed with curl, so you can use that to download nvm:

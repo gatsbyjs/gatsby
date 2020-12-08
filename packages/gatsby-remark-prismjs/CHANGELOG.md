@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.9.0-next.0...gatsby-remark-prismjs@3.10.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.8.0-next.0...gatsby-remark-prismjs@3.9.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.7.0-next.0...gatsby-remark-prismjs@3.7.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.6.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.5.16...gatsby-remark-prismjs@3.6.0) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-remark-prismjs:** Handle diff-language styling issue ([#27659](https://github.com/gatsbyjs/gatsby/issues/27659)) ([a33e7fb](https://github.com/gatsbyjs/gatsby/commit/a33e7fb1417d98f06df859e48b1a99ab697dbf6a))
+
+## [3.5.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.5.15...gatsby-remark-prismjs@3.5.16) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.5.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.5.14...gatsby-remark-prismjs@3.5.15) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+## [3.5.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.5.13...gatsby-remark-prismjs@3.5.14) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 ## [3.5.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.5.12...gatsby-remark-prismjs@3.5.13) (2020-09-15)
 
 **Note:** Version bump only for package gatsby-remark-prismjs

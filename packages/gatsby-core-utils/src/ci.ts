@@ -7,6 +7,7 @@ const CI_DEFINITIONS = [
   getEnvDetect({ key: `VERCEL_URL`, name: `Vercel Now` }),
   getEnvDetect({ key: `NOW_BUILDER`, name: `Vercel Now` }),
   getEnvDetect({ key: `VERCEL_BUILDER`, name: `Vercel Now` }),
+  getEnvDetect({ key: `CODESANDBOX_SSE`, name: `CodeSandbox` }),
   herokuDetect,
   getEnvFromCIInfo,
   envFromCIWithNoName,

@@ -8,33 +8,24 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
-    const posts = data.allGendataCsv.edges
+    const posts = data.allGendataCsv.nodes
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
         <Bio />
-        {posts.map(({ node }) => {
-          const title = node.title || node.slug
+        {posts.map(({ title, slug, date, description }) => {
           return (
-            <article key={node.slug}>
+            <article key={slug}>
               <header>
-                <h3
-                  style={{
-                    marginBottom: '5px',
-                  }}
-                >
-                  <Link style={{ boxShadow: `none` }} to={node.slug}>
+                <h3 style={{ marginBottom: "5px" }}>
+                  <Link style={{ boxShadow: `none` }} to={slug}>
                     {title}
                   </Link>
                 </h3>
-                <small>{node.date}</small>
+                <small>{date}</small>
               </header>
               <section>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: node.description,
-                  }}
-                />
+                <p dangerouslySetInnerHTML={{ __html: description }} />
               </section>
             </article>
           )
@@ -53,17 +44,12 @@ export const pageQuery = graphql`
         title
       }
     }
-    allGendataCsv(limit: 100) {
-      edges {
-        node {
-          articleNumber
-          title
-          description
-          slug
-          date
-          tags
-          body
-        }
+    allGendataCsv(limit: 100, sort: { fields: date, order: DESC }) {
+      nodes {
+        title
+        slug
+        date(formatString: "MMMM DD, YYYY")
+        description
       }
     }
   }

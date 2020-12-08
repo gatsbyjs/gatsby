@@ -18,7 +18,7 @@ exports.onRenderBody = (
     include_favicon: insertFaviconLinkTag,
     theme_color_in_head: insertMetaTag,
     theme_color,
-    crossOrigin,
+    crossOrigin = `anonymous`,
   }
 ) => {
   // We use this to build a final array to pass as the argument to setHeadComponents at the end of onRenderBody.
@@ -31,18 +31,6 @@ exports.onRenderBody = (
   // If icons were generated, also add a favicon link.
   if (srcIconExists) {
     if (insertFaviconLinkTag) {
-      if (icon?.endsWith(`.svg`)) {
-        headComponents.push(
-          <link
-            key={`gatsby-plugin-manifest-icon-link-svg`}
-            rel="icon"
-            href={withPrefix(
-              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
-            )}
-            type="image/svg+xml"
-          />
-        )
-      }
       favicons.forEach(favicon => {
         headComponents.push(
           <link
@@ -55,6 +43,18 @@ exports.onRenderBody = (
           />
         )
       })
+      if (icon?.endsWith(`.svg`)) {
+        headComponents.push(
+          <link
+            key={`gatsby-plugin-manifest-icon-link-svg`}
+            rel="icon"
+            href={withPrefix(
+              addDigestToPath(`favicon.svg`, cacheDigest, cacheBusting)
+            )}
+            type="image/svg+xml"
+          />
+        )
+      }
     }
   }
 

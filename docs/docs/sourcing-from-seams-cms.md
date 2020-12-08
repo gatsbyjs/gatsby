@@ -98,7 +98,7 @@ This will return the title, content, author name, and categories for each blog p
 
 ## Generating a blog post page
 
-You can create a simple site with just one page holding all blog posts. You can do this by creating a template blog index file at `src/templates/blog-index.js` with the following content:
+You can create a site with a single page holding all blog posts. You can do this by creating a template blog index file at `src/templates/blog-index.js` with the following content:
 
 ```javascript:title=src/templates/blog-index.js
 import React from "react"

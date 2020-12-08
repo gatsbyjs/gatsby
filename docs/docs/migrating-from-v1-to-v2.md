@@ -91,7 +91,7 @@ You need to update your `package.json` to use the latest version of Gatsby.
 Or run
 
 ```shell
-npm i gatsby@latest
+npm install gatsby@latest
 ```
 
 ### Update Gatsby related packages
@@ -105,7 +105,7 @@ npm outdated
 And compare "Wanted" and "Latest" versions and update `package.json` file manually or run
 
 ```shell
-npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
+npm install gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-plugin-sass@latest
 ```
 
 **NOTE**: The above command is only an example - adjust packages to ones you are using.
@@ -115,7 +115,7 @@ npm i gatsby-plugin-google-analytics@latest gatsby-plugin-netlify@latest gatsby-
 In v1, the `react` and `react-dom` packages were a part of the `gatsby` package. They are now `peerDependencies` in v2, so you need to install them into your project.
 
 ```shell
-npm i react react-dom
+npm install react react-dom
 ```
 
 ### Install plugins' peer dependencies
@@ -123,7 +123,7 @@ npm i react react-dom
 Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
 
 ```shell
-npm i typography react-typography
+npm install typography react-typography
 ```
 
 You should search for the plugins that you use in the [plugin library](/plugins). Then, check their installation instructions for extra packages that may need installation.

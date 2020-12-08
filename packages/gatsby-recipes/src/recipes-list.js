@@ -7,6 +7,10 @@ export default [
     label: `Add Jest`,
     value: `jest`,
   },
+  {
+    label: `Add Gatsby Image`,
+    value: `gatsby-image`,
+  },
   // Waiting on joi2graphql support for Joi.object().unknown()
   // with a JSON type.
   // {
@@ -32,6 +36,10 @@ export default [
   {
     label: `Add Theme UI`,
     value: `theme-ui`,
+  },
+  {
+    label: `Add Chakra UI`,
+    value: `chakra-ui`,
   },
   {
     label: `Add Emotion`,
@@ -84,6 +92,10 @@ export default [
   {
     label: `Add Headless WordPress integration`,
     value: `wordpress`,
+  },
+  {
+    label: `Add e-commerce powered by Snipcart`,
+    value: `snipcart.mdx`,
   },
   {
     label: `Add Storybook - JavaScript`,

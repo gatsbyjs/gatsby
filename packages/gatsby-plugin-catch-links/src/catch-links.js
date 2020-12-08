@@ -130,7 +130,10 @@ export const routeThroughBrowserOrApp = (
     destination.href = clickedAnchor.href
   }
 
-  if (clickedAnchor.href instanceof SVGAnimatedString) {
+  if (
+    `SVGAnimatedString` in window &&
+    clickedAnchor.href instanceof SVGAnimatedString
+  ) {
     destination.href = clickedAnchor.href.animVal
   }
 
