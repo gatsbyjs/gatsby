@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.7.0-next.0...gatsby-plugin-page-creator@2.7.0-next.1) (2020-12-08)
+
+### Features
+
+- **gatsby-plugin-page-creator:** Add slugify option ([#28485](https://github.com/gatsbyjs/gatsby/issues/28485)) ([721f42a](https://github.com/gatsbyjs/gatsby/commit/721f42aa210943a5cfe9b08fe93ad31ae315c447))
+
 # [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.6.0-next.0...gatsby-plugin-page-creator@2.7.0-next.0) (2020-11-26)
 
 ### Bug Fixes

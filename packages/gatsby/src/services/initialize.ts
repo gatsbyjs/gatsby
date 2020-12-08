@@ -65,20 +65,14 @@ if (
   sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
-    `devSSR`,
-    `
-Your dev experience is about to get better, faster, and stronger!
+    `Server Side Rendering (SSR) in Development`,
+    `gatsby.dev/dev-ssr-feedback`,
+    `which helps surface issues with build errors more quickly. Here's how to try it:
 
-We'll soon be shipping support for SSR in development.
-
-This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
-
-Try out develop SSR *today* by running your site with it enabled:
-
-GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop
-
-Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
-      `,
+module.exports = {
+  flags : { DEV_SSR: true },
+  plugins: [...]
+}`,
     1 // Show this immediately to the subset of sites selected.
   )
 }
@@ -104,8 +98,6 @@ export async function initialize({
   if (!args) {
     reporter.panic(`Missing program args`)
   }
-
-  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
   /* Time for a little story...
    * When running `gatsby develop`, the globally installed gatsby-cli starts
@@ -184,6 +176,24 @@ export async function initialize({
 
   // Setup flags
   if (config) {
+    // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
+    if (
+      config.flags?.FAST_REFRESH &&
+      process.env.GATSBY_HOT_LOADER &&
+      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+    ) {
+      delete config.flags.FAST_REFRESH
+      reporter.warn(
+        reporter.stripIndent(`
+          Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
+
+          Will use react-hot-loader.
+
+          To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
+        `)
+      )
+    }
+
     const availableFlags = require(`../utils/flags`).default
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
@@ -215,6 +225,8 @@ export async function initialize({
       telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
+
+  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
@@ -376,9 +388,85 @@ export async function initialize({
 
   if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      // Comment out inviet until we can test perf impact
+      //
+      // let sourceFileSystemVersion = flattenedPlugins.find(
+      // plugin => plugin.name === `gatsby-source-filesystem`
+      // )?.version
+
+      // // The site might be using a plugin which uses "createRemoteFileNode" but
+      // // doesn't have gatsby-source-filesystem in their gatsby-config.js. So lets
+      // // also try requiring it.
+      // if (!sourceFileSystemVersion) {
+      // try {
+      // sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
+      // ?.version
+      // } catch {
+      // // ignore require errors
+      // }
+      // }
+      // } else if (
+      // sourceFileSystemVersion &&
+      // semver.lt(sourceFileSystemVersion, `2.9.0`)
+      // ) {
+      // // If the site has more than 50 downloaded files in it, tell them
+      // // how to save time.
+      // try {
+      // // Divide by two as the directory as both cache files + the actual downloaded files so
+      // // two results / downloaded file.
+      // const filesCount =
+      // (await fs.readdir(`.cache/caches/gatsby-source-filesystem`))
+      // .length / 2
+      // if (filesCount > 50) {
+      // reporter.info(stripIndent`\n\n
+
+      // Your local development experience is about to get better, faster, and stronger!
+
+      // Your friendly Gatsby maintainers detected your site downloads quite a few files and that we're about to delete all ${Math.round(
+      // filesCount
+      // )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
+
+      // If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable the PRESERVE_FILE_DOWNLOAD_CACHE flag and run your develop server again.
+
+      // To do so, add to your gatsby-config.js:
+
+      // flags: {
+      // preserve_file_download_cache: true,
+      // }
+
+      // visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+      // `)
+      // }
+      // } catch {
+      // // ignore errors (mostly will just be directory not found).
+      // }
+      // }
+
+      if (
+        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
+        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
+      ) {
+        const deleteGlobs = [
+          // By default delete all files & subdirectories
+          `${cacheDirectory}/**`,
+          `${cacheDirectory}/*/`,
+        ]
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+          // Add gatsby-source-filesystem
+          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+        }
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          // Add webpack
+          deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        }
+        await del(deleteGlobs)
+      } else {
+        // Attempt to empty dir if remove fails,
+        // like when directory is mount point
+        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      }
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }

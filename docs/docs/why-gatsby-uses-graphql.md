@@ -256,7 +256,7 @@ GATSBY_GRAPHQL_IDE=playground gatsby develop
 
 You can explore the available data schema using the “Docs” tab at the right.
 
-One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”.
+One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”. The `allProductsJson` option was created by the JSON transformer plugin ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/)).
 
 The JSON transformer plugin has created one node for each product, and inside the node you can select the data you need for that product.
 

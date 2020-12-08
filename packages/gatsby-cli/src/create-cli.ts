@@ -22,6 +22,7 @@ import { whoami } from "./whoami"
 import { recipesHandler } from "./recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
+import pluginHandler from "./handlers/plugin"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
@@ -404,15 +405,21 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     builder: yargs =>
       yargs
         .positional(`cmd`, {
-          choices: [`docs`],
-          describe: "Valid commands include `docs`.",
+          choices: [`docs`, `ls`],
+          describe: "Valid commands include `docs`, `ls`.",
           type: `string`,
         })
         .positional(`plugins`, {
           describe: `The plugin names`,
           type: `string`,
         }),
-    handler: getCommandHandler(`plugin`),
+    handler: async ({
+      cmd,
+    }: yargs.Arguments<{
+      cmd: string | undefined
+    }>) => {
+      await pluginHandler(siteInfo.directory, cmd)
+    },
   })
 
   if (process.env.GATSBY_EXPERIMENTAL_CLOUD_CLI) {

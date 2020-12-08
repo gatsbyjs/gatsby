@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0-next.0...gatsby-recipes@0.6.0-next.1) (2020-12-01)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add isLocal to schema for GatsbyPlugin ([#28417](https://github.com/gatsbyjs/gatsby/issues/28417)) ([43b2f10](https://github.com/gatsbyjs/gatsby/commit/43b2f1071b1e465919d1f3a3a5caec36ac909d44))
+
 # [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.2...gatsby-recipes@0.6.0-next.0) (2020-11-26)
 
 ### Bug Fixes

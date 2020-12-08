@@ -141,7 +141,7 @@
     "prebootstrap": "yarn",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
     "prepublishOnly": "node scripts/check-publish-access",
-    "publish": "echo \"Use `yarn publish-next` or `yarn publish-release` instead of `yarn run publish`\"",
+    "publish": "echo \"Use 'yarn publish-next' or 'yarn publish-release' instead of 'yarn run publish'\"",
     "publish-canary": "lerna publish --canary --yes",
     "publish-preminor": "node scripts/clear-package-dir preminor --verbose && lerna publish preminor --pre-dist-tag=next --preid=next --force-publish --allow-branch=master --message=\"chore(release): Publish next pre-minor\"",
     "publish-next": "node scripts/clear-package-dir prerelease --verbose && lerna publish prerelease --pre-dist-tag=next --preid=next --allow-branch=master --message=\"chore(release): Publish next\"",

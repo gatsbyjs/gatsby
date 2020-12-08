@@ -15,12 +15,14 @@ import {
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
-import { Layout } from "../utils"
+import { Layout } from "../image-utils"
 
-export type GatsbyImageProps = Omit<
-  ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
-> & {
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+export interface GatsbyImageProps
+  extends Omit<
+    ImgHTMLAttributes<HTMLImageElement>,
+    "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
+  > {
   alt: string
   as?: ElementType
   className?: string
@@ -141,7 +143,13 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
       // On first server hydration do nothing
       if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
+        hydrated.current = true
         return
+      }
+
+      // When no ssrHtml is found (develop) we should force render instead of hydrate
+      if (!hasSSRHtml) {
+        hydrated.current = true
       }
 
       import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
