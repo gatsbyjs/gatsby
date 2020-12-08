@@ -112,6 +112,8 @@ export const pageQuery = graphql`
           ... on ContentfulAsset {
             # contentful_id is required to resolve the references
             contentful_id
+            # __typename is very important and must-have field for resolving embedded asset
+            __typename
             fluid(maxWidth: 600) {
               ...GatsbyContentfulFluid_withWebp
             }
