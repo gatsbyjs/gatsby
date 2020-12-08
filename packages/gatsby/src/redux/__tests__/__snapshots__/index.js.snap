@@ -71,7 +71,7 @@ Object {
     },
     "trackedQueries": Map {
       "/my-sweet-new-page/" => Object {
-        "dirty": 1,
+        "dirty": 8,
         "running": 0,
       },
     },
