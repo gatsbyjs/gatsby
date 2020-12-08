@@ -22,6 +22,10 @@ let unknownFlagMessage = ``
 export const getFlagInfo = (): {
   enabledConfigFlags: Array<IFlag>
 } => {
+  if (!enabledConfigFlags) {
+    throw new Error(`enabledConfigFlags is not yet created`)
+  }
+
   return {
     enabledConfigFlags,
   }
