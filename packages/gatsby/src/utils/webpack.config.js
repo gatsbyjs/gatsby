@@ -204,6 +204,7 @@ module.exports = async (
   function getPlugins() {
     let configPlugins = [
       plugins.moment(),
+
       // Add a few global variables. Set NODE_ENV to production (enables
       // optimizations for React) and what the link prefix is (__PATH_PREFIX__).
       plugins.define({
@@ -214,6 +215,7 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
+
       plugins.virtualModules(),
     ]
 
@@ -226,7 +228,8 @@ module.exports = async (
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
-            // plugins.extractText(),
+            // Don't use the default mini-css-extract-plugin setup as that
+            // breaks hmr.
             new MiniCssExtractPlugin({ filename: `[name].css` }),
             plugins.extractStats(),
           ])
@@ -281,13 +284,14 @@ module.exports = async (
     // prettier-ignore
     let configRules = [
       rules.js({
-        modulesThatUseGatsby
+        modulesThatUseGatsby,
       }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
       rules.media(),
       rules.miscAssets(),
+
       // This is a hack that exports one of @reach/router internals (BaseContext)
       // to export list. We need it to reset basepath and baseuri context after
       // Gatsby main router changes it, to keep v2 behaviour.
@@ -296,12 +300,10 @@ module.exports = async (
         test: require.resolve(`@reach/router/es/index`),
         type: `javascript/auto`,
         use: [{
-          loader: require.resolve(
-            `./reach-router-add-basecontext-export-loader`
-          )
-        }]
+          loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
+        }],
       }
-    ];
+    ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
     // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
@@ -367,10 +369,13 @@ module.exports = async (
           {
             oneOf: [
               rules.cssModules(),
-              rules.css()
-            ]
-          }
-        ]);
+              {
+                ...rules.css(),
+                use: [loaders.null()],
+              },
+            ],
+          },
+        ])
         break
 
       case `build-javascript`:
