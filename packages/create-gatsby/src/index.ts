@@ -167,16 +167,18 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 `
   )
 
-  reporter.info(
-    wrap(
-      `This command will generate a new Gatsby site for you in ${c.bold(
-        process.cwd()
-      )} with the setup you select. ${c.white.bold(
-        `Let's answer some questions:\n\n`
-      )}`,
-      process.stdout.columns
+  if (!yesFlag) {
+    reporter.info(
+      wrap(
+        `This command will generate a new Gatsby site for you in ${c.bold(
+          process.cwd()
+        )} with the setup you select. ${c.white.bold(
+          `Let's answer some questions:\n\n`
+        )}`,
+        process.stdout.columns
+      )
     )
-  )
+  }
 
   const enquirer = new Enquirer<IAnswers>()
 
@@ -312,15 +314,14 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
-
-  reporter.info(`
+  if (!yesFlag) {
+    reporter.info(`
 
 ${c.bold(`Thanks! Here's what we'll now do:`)}
 
     ${messages.join(`\n    `)}
   `)
 
-  if (!yesFlag) {
     const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
       type: `confirm`,
       name: `confirm`,
