@@ -320,19 +320,21 @@ ${c.bold(`Thanks! Here's what we'll now do:`)}
     ${messages.join(`\n    `)}
   `)
 
-  const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
-    type: `confirm`,
-    name: `confirm`,
-    initial: `Yes`,
-    message: `Shall we do this?`,
-    format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
-  })
+  if (!yesFlag) {
+    const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
+      type: `confirm`,
+      name: `confirm`,
+      initial: `Yes`,
+      message: `Shall we do this?`,
+      format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
+    })
 
-  if (!confirm) {
-    trackCli(`CREATE_GATSBY_CANCEL`)
+    if (!confirm) {
+      trackCli(`CREATE_GATSBY_CANCEL`)
 
-    reporter.info(`OK, bye!`)
-    return
+      reporter.info(`OK, bye!`)
+      return
+    }
   }
 
   await initStarter(
