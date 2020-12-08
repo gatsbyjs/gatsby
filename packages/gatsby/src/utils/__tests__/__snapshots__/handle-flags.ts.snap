@@ -36,6 +36,7 @@ Object {
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
+
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
@@ -85,6 +86,7 @@ Object {
     },
   ],
   "message": "
+
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
@@ -138,6 +140,7 @@ Object {
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
+
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
@@ -237,6 +240,7 @@ Object {
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
 - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
