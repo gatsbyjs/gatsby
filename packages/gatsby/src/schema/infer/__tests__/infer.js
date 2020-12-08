@@ -36,6 +36,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   report.error.mockClear()
+  report.warn.mockClear()
 })
 
 const makeNodes = () => [
@@ -1382,6 +1383,46 @@ Object {
       expect(result.errors.length).toEqual(1)
       expect(result.errors[0].message).toMatch(
         `Cannot query field "number" on type "Test".`
+      )
+    })
+  })
+
+  describe(`missing extension warning`, () => {
+    it(`warns when inferred extension is missing in type definition`, async () => {
+      const nodes = [
+        {
+          date: `2012-11-01`,
+          internal: { type: `Test` },
+          id: `1`,
+        },
+        {
+          linked___NODE: `foo`,
+          internal: { type: `Test` },
+          id: `2`,
+        },
+
+        // linked node:
+        { id: `foo`, internal: { type: `Foo` } },
+      ]
+      const typeDefs = [
+        {
+          typeOrTypeDef: `
+            type Test implements Node {
+              linked: Foo
+              date: Date
+            }
+          `,
+        },
+      ]
+      await buildTestSchema(nodes, {}, typeDefs)
+      expect(report.warn.mock.calls.length).toEqual(2)
+      expect(report.warn.mock.calls[0][0]).toEqual(
+        `Deprecation warning - adding inferred extension {"dateformat":{}} for field Test.date. ` +
+          `In Gatsby v3, only fields with an explicit directive/extension will get a resolver.`
+      )
+      expect(report.warn.mock.calls[1][0]).toEqual(
+        `Deprecation warning - adding inferred extension {"link":{"by":"id","from":"linked___NODE"}} for field Test.linked. ` +
+          `In Gatsby v3, only fields with an explicit directive/extension will get a resolver.`
       )
     })
   })

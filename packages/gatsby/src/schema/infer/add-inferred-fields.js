@@ -120,8 +120,11 @@ const addInferredFieldsImpl = ({
               .forEach(name => {
                 if (!typeComposer.hasFieldExtension(key, name)) {
                   typeComposer.setFieldExtension(key, name, extensions[name])
+                  const prettified = JSON.stringify({
+                    [name]: extensions[name],
+                  })
                   report.warn(
-                    `Deprecation warning - adding inferred resolver for field ` +
+                    `Deprecation warning - adding inferred extension ${prettified} for field ` +
                       `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
                       `only fields with an explicit directive/extension will ` +
                       `get a resolver.`
