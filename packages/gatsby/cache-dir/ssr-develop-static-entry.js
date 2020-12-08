@@ -166,12 +166,27 @@ export default (pagePath, isClientOnlyPage, port, callback) => {
       .reverse()
       .forEach(style => {
         headComponents.unshift(
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            // Immediately update the styles link with its actual URL as we can't
+            // know what host this will get served from & mini-css-extract-dev only
+            // works with absolute URLs
+            var scripts = document.getElementsByTagName('script')
+            var currentScript = scripts[scripts.length - 1]
+            var linkEl = currentScript.previousSibling
+            var newHref = new URL("${__PATH_PREFIX__}/${style.name}", location.href).href
+            linkEl.href = newHref
+            `,
+            }}
+          />
+        )
+        headComponents.unshift(
           <link
             data-identity={`gatsby-dev-css`}
             key={style.name}
             rel="stylesheet"
             type="text/css"
-            href={`http://localhost:${port}${__PATH_PREFIX__}/${style.name}`}
           />
         )
       })
