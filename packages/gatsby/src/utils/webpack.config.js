@@ -17,7 +17,6 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
-import MiniCssExtractPlugin from "mini-css-extract-plugin"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -228,12 +227,17 @@ module.exports = async (
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
-            // Don't use the default mini-css-extract-plugin setup as that
-            // breaks hmr.
-            new MiniCssExtractPlugin({ filename: `[name].css` }),
-            plugins.extractStats(),
           ])
           .filter(Boolean)
+        if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+          const MiniCssExtractPlugin = require(`mini-css-extract-plugin`)
+          // Don't use the default mini-css-extract-plugin setup as that
+          // breaks hmr.
+          configPlugins.push(
+            new MiniCssExtractPlugin({ filename: `[name].css` })
+          )
+          configPlugins.push(plugins.extractStats())
+        }
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
