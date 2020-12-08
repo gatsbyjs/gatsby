@@ -144,7 +144,7 @@ module.exports = async (
               return {
                 resolve: typeof plugin === `string` ? plugin : plugin.resolve,
                 options: plugin.options || {},
-                parentDir: themeDir,
+                parentDir: plugin.parentDir || themeDir,
               }
             }),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
