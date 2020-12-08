@@ -65,20 +65,14 @@ if (
   sampleSiteForExperiment(`DEV_SSR`, 5)
 ) {
   showExperimentNoticeAfterTimeout(
-    `devSSR`,
-    `
-Your dev experience is about to get better, faster, and stronger!
+    `Server Side Rendering (SSR) in Development`,
+    `gatsby.dev/dev-ssr-feedback`,
+    `which helps surface issues with build errors more quickly. Here's how to try it:
 
-We'll soon be shipping support for SSR in development.
-
-This will help the dev environment more closely mimic builds so you'll catch build errors earlier and fix them faster.
-
-Try out develop SSR *today* by running your site with it enabled:
-
-GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop
-
-Please let us know how it goes good, bad, or otherwise at gatsby.dev/dev-ssr-feedback
-      `,
+module.exports = {
+  flags : { DEV_SSR: true },
+  plugins: [...]
+}`,
     1 // Show this immediately to the subset of sites selected.
   )
 }

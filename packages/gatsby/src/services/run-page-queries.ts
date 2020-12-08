@@ -50,18 +50,15 @@ export async function runPageQueries({
     !isCI()
   ) {
     cancelNotice = showExperimentNoticeAfterTimeout(
-      `queryOnDemand`,
-      reporter.stripIndent(`
-        Your local development experience is about to get better, faster, and stronger!
+      `Query On Demand`,
+      `https://gatsby.dev/query-on-demand-feedback`,
+      `which avoids running page queries in development until you visit a page — so a lot less upfront work. Here's how to try it:
 
-        Your friendly Gatsby maintainers detected your site takes longer than ideal to run page queries. We're working right now to improve this.
-
-        If you're interested in trialing out one of these future improvements *today* which should make your local development experience faster, go ahead and run your site with QUERY_ON_DEMAND enabled.
-
-        You can enable it by adding "flags: { QUERY_ON_DEMAND: true }" to your gatsby-config.js
-
-        Please do let us know how it goes (good, bad, or otherwise) and learn more about it at https://gatsby.dev/query-on-demand-feedback
-      `),
+modules.exports = {
+  flags: { QUERY_ON_DEMAND: true },
+  plugins: [...]
+}
+`,
       ONE_MINUTE
     )
   }
