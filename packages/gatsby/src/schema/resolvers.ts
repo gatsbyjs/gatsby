@@ -25,6 +25,7 @@ import {
   IGatsbyConnection,
   IGatsbyResolverContext,
 } from "./type-definitions"
+import { IGatsbyNode } from "../redux/types"
 
 export function findMany<TSource, TArgs>(
   typeName: string
@@ -221,12 +222,56 @@ export function link<TSource, TArgs>(
     TArgs
   >
 ): GatsbyResolver<TSource, TArgs> {
-  return async function linkResolver(
+  return function linkResolver(
     source,
     args,
     context,
     info
-  ): Promise<any> {
+  ): IGatsbyNode | Array<IGatsbyNode> | null | Promise<any> {
+    if (
+      options.by === `id` &&
+      (fieldConfig.resolve || context.defaultFieldResolver) ===
+        defaultFieldResolver
+    ) {
+      return linkResolverDefaultId(source, args, context, info)
+    }
+
+    return linkResolverAsync(source, args, context, info)
+  }
+
+  function linkResolverDefaultId(
+    source,
+    args,
+    context,
+    info
+  ): IGatsbyNode | Array<IGatsbyNode> | null {
+    const fieldValue = defaultFieldResolver(source, args, context, {
+      ...info,
+      from: options.from || info.from,
+      fromNode: options.from ? options.fromNode : info.fromNode,
+    })
+
+    if (fieldValue == null) {
+      return null
+    }
+
+    const returnType = getNullableType(options.type || info.returnType)
+    const type = getNamedType(returnType)
+
+    if (Array.isArray(fieldValue)) {
+      return context.nodeModel.getNodesByIds(
+        { ids: fieldValue, type: type },
+        { path: context.path }
+      )
+    } else {
+      return context.nodeModel.getNodeById(
+        { id: fieldValue, type: type },
+        { path: context.path }
+      )
+    }
+  }
+
+  async function linkResolverAsync(source, args, context, info): Promise<any> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
     const fieldValue = await resolver(source, args, context, {
       ...info,
@@ -479,7 +524,7 @@ let WARNED_ABOUT_RESOLVERS = false
 function badResolverInvocationMessage(missingVar: string, path?: Path): string {
   const resolverName = path ? `${pathToArray(path)} ` : ``
   return `GraphQL Resolver ${resolverName}got called without "${missingVar}" argument. This might cause unexpected errors.
-  
+
 It's likely that this has happened in a schemaCustomization with manually invoked resolver. If manually invoking resolvers, it's best to invoke them as follows:
 
   resolve(parent, args, context, info)
@@ -490,7 +535,7 @@ It's likely that this has happened in a schemaCustomization with manually invoke
 export function wrappingResolver<TSource, TArgs>(
   resolver: GatsbyResolver<TSource, TArgs>
 ): GatsbyResolver<TSource, TArgs> {
-  return async function wrappedTracingResolver(
+  return function wrappedTracingResolver(
     parent,
     args,
     context,
