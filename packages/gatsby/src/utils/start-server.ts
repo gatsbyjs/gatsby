@@ -239,20 +239,26 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
-  const refresh = async (req: express.Request): Promise<void> => {
+  const refresh = async (
+    req: express.Request,
+    pluginName?: string
+  ): Promise<void> => {
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
+      pluginName,
     })
   }
-  app.use(REFRESH_ENDPOINT, express.json())
-  app.post(REFRESH_ENDPOINT, (req, res) => {
+
+  app.post(`${REFRESH_ENDPOINT}/:plugin_name?`, express.json(), (req, res) => {
+    const pluginName = req.params[`plugin_name`]
+
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      refresh(req)
+      refresh(req, pluginName)
     }
     res.end()
   })
