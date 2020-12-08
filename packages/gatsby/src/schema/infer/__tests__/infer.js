@@ -1422,7 +1422,7 @@ Object {
           `Add the following type definition to fix this:\n\n` +
           `  type Test implements Node {\n` +
           `    date: Date @dateformat\n` +
-          `  }\n` +
+          `  }\n\n` +
           `https://www.gatsbyjs.com/docs/actions/#createTypes`
       )
       expect(report.warn.mock.calls[1][0]).toEqual(
@@ -1431,7 +1431,7 @@ Object {
           `Add the following type definition to fix this:\n\n` +
           `  type Test implements Node {\n` +
           `    linked: Foo @link(by: "id", from: "linked___NODE")\n` +
-          `  }\n` +
+          `  }\n\n` +
           `https://www.gatsbyjs.com/docs/actions/#createTypes`
       )
     })
