@@ -207,6 +207,32 @@ export function paginate<NodeType>(
   }
 }
 
+export const defaultFieldResolver: GatsbyResolver<
+  any,
+  any
+> = function defaultFieldResolver(source, args, context, info) {
+  if (
+    (typeof source == `object` && source !== null) ||
+    typeof source === `function`
+  ) {
+    if (info.from) {
+      if (info.fromNode) {
+        const node = context.nodeModel.findRootNodeAncestor(source)
+        if (!node) return null
+        return getValueAt(node, info.from)
+      }
+      return getValueAt(source, info.from)
+    }
+    const property = source[info.fieldName]
+    if (typeof property === `function`) {
+      return source[info.fieldName](args, context, info)
+    }
+    return property
+  }
+
+  return null
+}
+
 export function link<TSource, TArgs>(
   options: {
     by: string
@@ -231,7 +257,7 @@ export function link<TSource, TArgs>(
     if (
       options.by === `id` &&
       (fieldConfig.resolve || context.defaultFieldResolver) ===
-        _defaultFieldResolver
+        defaultFieldResolver
     ) {
       return linkResolverDefaultId(source, args, context, info)
     }
@@ -245,7 +271,7 @@ export function link<TSource, TArgs>(
     context,
     info
   ): IGatsbyNode | Array<IGatsbyNode> | null {
-    const fieldValue = _defaultFieldResolver(source, args, context, {
+    const fieldValue = defaultFieldResolver(source, args, context, {
       ...info,
       from: options.from || info.from,
       fromNode: options.from ? options.fromNode : info.fromNode,
@@ -494,33 +520,6 @@ function getFieldNodeByNameInSelectionSet(
   )
 }
 
-function _defaultFieldResolver(source, args, context, info): any {
-  if (
-    (typeof source == `object` && source !== null) ||
-    typeof source === `function`
-  ) {
-    if (info.from) {
-      if (info.fromNode) {
-        const node = context.nodeModel.findRootNodeAncestor(source)
-        if (!node) return null
-        return getValueAt(node, info.from)
-      }
-      return getValueAt(source, info.from)
-    }
-    const property = source[info.fieldName]
-    if (typeof property === `function`) {
-      return source[info.fieldName](args, context, info)
-    }
-    return property
-  }
-
-  return null
-}
-export const defaultFieldResolver: GatsbyResolver<
-  any,
-  any
-> | null = _defaultFieldResolver
-
 let WARNED_ABOUT_RESOLVERS = false
 function badResolverInvocationMessage(missingVar: string, path?: Path): string {
   const resolverName = path ? `${pathToArray(path)} ` : ``
@@ -570,4 +569,4 @@ export function wrappingResolver<TSource, TArgs>(
   }
 }
 
-export const defaultResolver = wrappingResolver(_defaultFieldResolver)
+export const defaultResolver = wrappingResolver(defaultFieldResolver)
