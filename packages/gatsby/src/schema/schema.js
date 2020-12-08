@@ -1045,7 +1045,7 @@ const addImplicitConvenienceChildrenFields = ({
         report.warn(
           `Deprecation warning: ` +
             `In Gatsby v3 field \`${parentTypeName}.${fieldName}\` will not be added automatically because ` +
-            `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in childOf extension.\n` +
+            `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
             `Add the following type definition to fix this:\n\n` +
             `  type ${typeName} implements Node @childOf(types: ["${parentTypeName}"]) {\n` +
             `    id\n` +

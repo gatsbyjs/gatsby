@@ -176,7 +176,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     expect(report.warn).toBeCalledTimes(1)
     expect(report.warn.mock.calls[0][0]).toEqual(
       `Deprecation warning: In Gatsby v3 field \`Parent.childChild\` will not be added automatically ` +
-        `because type \`Child\` does not explicitly list type \`Parent\` in childOf extension.\n` +
+        `because type \`Child\` does not explicitly list type \`Parent\` in \`childOf\` extension.\n` +
         `Add the following type definition to fix this:\n\n` +
         `  type Child implements Node @childOf(types: ["Parent"]) {\n` +
         `    id\n` +
