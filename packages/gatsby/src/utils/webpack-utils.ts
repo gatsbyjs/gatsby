@@ -195,21 +195,30 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
+      let loader: any
+      let hmr = false
+      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        loader = MiniCssExtractPlugin.loader
+        if (stage === `develop`) {
+          hmr = true
+        }
+      } else {
+        loader = PRODUCTION
+          ? MiniCssExtractPlugin.loader
+          : require.resolve(`style-loader`)
+      }
+
       return {
-        options: { ...options, hmr: stage === `develop` },
-        loader: MiniCssExtractPlugin.loader,
-        // loader: PRODUCTION
-        // ? MiniCssExtractPlugin.loader
-        // : require.resolve(`style-loader`),
+        options: { ...options, hmr },
+        loader,
       }
     },
 
     css: (options = {}) => {
       return {
-        loader:
-          stage === `build-html`
-            ? require.resolve(`css-loader/locals`)
-            : require.resolve(`css-loader`),
+        loader: isSSR
+          ? require.resolve(`css-loader/locals`)
+          : require.resolve(`css-loader`),
         options: {
           sourceMap: !PRODUCTION,
           camelCase: `dashesOnly`,
@@ -537,22 +546,8 @@ export const createWebpackUtils = (
       ]
       if (!isSSR)
         use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION }) // && !restOptions.modules })
+          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
         )
-
-      // if (stage === `develop-html`) {
-      // use.unshift(
-      // loaders.miniCssExtract({ hmr: false && !restOptions.modules })
-      // )
-      // }
-      // if (stage === `develop`) {
-      // use
-      // .unshift
-      // // require.resolve(`style-loader`)
-      // // loaders.miniCssExtract({ hmr: false && !restOptions.modules })
-      // ()
-      // use.unshift(loaders.miniCssExtract())
-      // }
 
       return {
         use,
@@ -567,7 +562,7 @@ export const createWebpackUtils = (
     css.external = makeExternalOnly(css)
 
     const cssModules: IRuleUtils["cssModules"] = (options): RuleSetRule => {
-      const rule = css({ ...options, modules: true, hmr: !PRODUCTION })
+      const rule = css({ ...options, modules: true })
       delete rule.exclude
       rule.test = /\.module\.css$/
       return rule
