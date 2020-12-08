@@ -16,25 +16,25 @@ This guide assumes you already have a Gatsby project to deploy. If you need a pr
 
 2. Create a new service of type **Static Website**.
 
-3. Grant the permission needed for accessing the repo that we created in the previous step. Or if you prefer not to connect your GitHub account, you may select **Import URL** and provide your access token.
+3. Grant the permission needed for accessing the repo that you created in the previous step. Or if you prefer not to connect your GitHub account, you may select **Import URL** and provide your access token.
 
-4. Configure the service. Add the build command `yarn && yarn build` This command is actually doing the following:
+4. Configure the service. Add the build command `yarn && yarn build`. This command is actually doing the following:
 
-   - Install the dependencies
-   - Run the gatsby build
-   - Generate the contents to `./public` which is the default value of “Build Output Path”
+   - Install the dependencies.
+   - Run `gatsby build`.
+   - Put the generated site into the `./public` directory, which is the default value of “Build Output Path”.
 
 5. Everything is set up, now press the deploy button and wait until deployment is finished.
 
-6. Once the deployment is finished you can close the release logs, check the **Access tab** and copy the url there. Paste it to the browser and you will see your website is live!
+6. Once the deployment is finished you can close the release logs, check the **Access tab** and copy the URL there. Paste it to the browser and you will see your website is live!
 
 ### Custom domain
 
 1. Access the **Domains** tab.
-2. Enter your domain or subdomain you wish to map to your service
-3. Click **Add Domain**
-4. Follow the instructions to add a **CNAME** key and value to your DNS host provider
-5. Click **OK**
+2. Enter your domain or subdomain you wish to map to your service.
+3. Click **Add Domain**.
+4. Follow the instructions to add a **CNAME** key and value to your DNS host provider.
+5. Click **OK**.
 
 Wait for the certificate to be generated and access your new custom domain.  
 Note: your DNS might take some time to update your domain.
