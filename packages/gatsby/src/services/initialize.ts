@@ -70,7 +70,7 @@ if (
     `which helps surface issues with build errors more quickly. Here's how to try it:
 
 module.exports = {
-  flags : { DEV_SSR: true, },
+  flags : { DEV_SSR: true },
   plugins: [...],
 }`,
     1 // Show this immediately to the subset of sites selected.
