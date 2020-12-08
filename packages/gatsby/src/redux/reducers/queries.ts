@@ -10,10 +10,10 @@ type ComponentPath = string
 type NodeId = string
 type ConnectionName = string
 
-export const FLAG_DIRTY_PAGE_CONTEXT = 0b0001
+export const FLAG_DIRTY_NEW_PAGE = 0b0001
 export const FLAG_DIRTY_TEXT = 0b0010
 export const FLAG_DIRTY_DATA = 0b0100
-export const FLAG_DIRTY_NEW_PAGE = 0b1000
+export const FLAG_DIRTY_PAGE_CONTEXT = 0b1000
 
 export const FLAG_ERROR_EXTRACTION = 0b0001
 
