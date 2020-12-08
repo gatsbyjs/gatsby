@@ -4,13 +4,6 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
 import { Compiler } from "webpack"
 import { isEqual } from "lodash"
-import fs from "fs-extra"
-import path from "path"
-const stream = require("stream")
-const { promisify } = require("util")
-
-const pipeline = promisify(stream.pipeline)
-
 import { Stage } from "../commands/types"
 
 import {
@@ -95,8 +88,7 @@ export async function startWebpackServer({
       // We have switched off the default Webpack output in WebpackDevServer
       // options so we are going to "massage" the warnings and errors and present
       // them in a readable focused way.
-      const statsToJson = stats.toJson({}, true)
-      const messages = formatWebpackMessages(statsToJson)
+      const messages = formatWebpackMessages(stats.toJson({}, true))
       const urls = prepareUrls(
         program.https ? `https` : `http`,
         program.host,
