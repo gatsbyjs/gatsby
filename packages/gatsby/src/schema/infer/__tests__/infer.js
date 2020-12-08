@@ -1420,7 +1420,7 @@ Object {
         `Deprecation warning: adding inferred extension \`dateformat\` for field \`Test.date\`.\n` +
           `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
           `Add the following type definition to fix this:\n\n` +
-          `  type Test implements Node  {\n` +
+          `  type Test implements Node {\n` +
           `    date: Date @dateformat\n` +
           `  }`
       )
@@ -1428,7 +1428,7 @@ Object {
         `Deprecation warning: adding inferred extension \`link\` for field \`Test.linked\`.\n` +
           `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
           `Add the following type definition to fix this:\n\n` +
-          `  type Test implements Node  {\n` +
+          `  type Test implements Node {\n` +
           `    linked: Foo @link(by: "id", from: "linked___NODE")\n` +
           `  }`
       )

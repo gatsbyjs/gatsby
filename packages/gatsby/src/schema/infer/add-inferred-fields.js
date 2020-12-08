@@ -133,7 +133,7 @@ const addInferredFieldsImpl = ({
                     `Deprecation warning: adding inferred extension \`${name}\` for field \`${typeName}.${key}\`.\n` +
                       `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
                       `Add the following type definition to fix this:\n\n` +
-                      `  type ${typeComposer.getTypeName()} ${implementsNode} {\n` +
+                      `  type ${typeComposer.getTypeName()} ${implementsNode}{\n` +
                       `    ${key}: ${field.type.toString()}${extension}\n` +
                       `  }`
                   )
