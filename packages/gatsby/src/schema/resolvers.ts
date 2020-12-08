@@ -231,7 +231,7 @@ export function link<TSource, TArgs>(
     if (
       options.by === `id` &&
       (fieldConfig.resolve || context.defaultFieldResolver) ===
-        defaultFieldResolver
+        _defaultFieldResolver
     ) {
       return linkResolverDefaultId(source, args, context, info)
     }
@@ -245,7 +245,7 @@ export function link<TSource, TArgs>(
     context,
     info
   ): IGatsbyNode | Array<IGatsbyNode> | null {
-    const fieldValue = defaultFieldResolver(source, args, context, {
+    const fieldValue = _defaultFieldResolver(source, args, context, {
       ...info,
       from: options.from || info.from,
       fromNode: options.from ? options.fromNode : info.fromNode,
@@ -494,10 +494,7 @@ function getFieldNodeByNameInSelectionSet(
   )
 }
 
-export const defaultFieldResolver: GatsbyResolver<
-  any,
-  any
-> = function defaultFieldResolver(source, args, context, info) {
+function _defaultFieldResolver(source, args, context, info): any {
   if (
     (typeof source == `object` && source !== null) ||
     typeof source === `function`
@@ -519,6 +516,10 @@ export const defaultFieldResolver: GatsbyResolver<
 
   return null
 }
+export const defaultFieldResolver: GatsbyResolver<
+  any,
+  any
+> | null = _defaultFieldResolver
 
 let WARNED_ABOUT_RESOLVERS = false
 function badResolverInvocationMessage(missingVar: string, path?: Path): string {
@@ -569,4 +570,4 @@ export function wrappingResolver<TSource, TArgs>(
   }
 }
 
-export const defaultResolver = wrappingResolver(defaultFieldResolver)
+export const defaultResolver = wrappingResolver(_defaultFieldResolver)
