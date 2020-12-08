@@ -147,7 +147,7 @@ const handleFlags = (
     }
 
     if (optedInFlags.size > 0) {
-      message += `\n`
+      message += `\n\n`
       message += `We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 

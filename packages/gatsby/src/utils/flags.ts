@@ -7,22 +7,25 @@ type executingCommand = "build" | "develop" | "all"
 
 export const satisfiesSemvers = (
   semverConstraints: Record<string, string>
-): boolean =>
+): boolean => {
   // Check each semver check for the flag.
   // If any are false, then the flag doesn't pass
-  !_.toPairs(semverConstraints).some(([packageName, semverConstraint]) => {
-    let packageVersion
-    try {
-      packageVersion = require(`${packageName}/package.json`).version
-    } catch {
-      return true
-    }
-    // const passes = semver.satisfies(packageVersion, semverConstraint)
-    // console.log({ packageName, packageVersion, semverConstraint, passes })
+  const result = _.toPairs(semverConstraints).every(
+    ([packageName, semverConstraint]) => {
+      let packageVersion: string
+      try {
+        packageVersion = require(`${packageName}/package.json`).version
+      } catch (e) {
+        return false
+      }
 
-    // We care if the semver check doesn't pass.
-    return !semver.satisfies(packageVersion, semverConstraint)
-  })
+      // We care if the semver check doesn't pass.
+      return semver.satisfies(packageVersion, semverConstraint)
+    }
+  )
+
+  return result
+}
 
 export type fitnessEnum = true | false | "OPT_IN"
 
@@ -81,13 +84,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
-    testFitness: (myself): fitnessEnum => {
-      if (sampleSiteForExperiment(myself.name, 5)) {
-        return `OPT_IN`
-      } else {
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => true,
   },
   {
     name: `QUERY_ON_DEMAND`,
@@ -98,17 +95,66 @@ const activeFlags: Array<IFlag> = [
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
     umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
     noCI: true,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => {
+      // Take a 10% of slice of users.
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
+        let isPluginSharpNewEnoughOrNotInstalled = false
+        try {
+          // Try requiring plugin-sharp so we know if it's installed or not.
+          // If it does, we also check if it's new enough.
+          // eslint-disable-next-line
+          require(`gatsby-plugin-sharp`).version
+          const semverConstraints = {
+            // Because of this, this flag will never show up
+            "gatsby-plugin-sharp": `>=2.10.0`,
+          }
+          if (satisfiesSemvers(semverConstraints)) {
+            isPluginSharpNewEnoughOrNotInstalled = true
+          }
+        } catch (e) {
+          if (e.code === `MODULE_NOT_FOUND`) {
+            isPluginSharpNewEnoughOrNotInstalled = true
+          }
+        }
+
+        if (isPluginSharpNewEnoughOrNotInstalled) {
+          return `OPT_IN`
+        } else {
+          // Don't opt them in but they can still manually enable.
+          return true
+        }
+      } else {
+        // Don't opt them in but they can still manually enable.
+        return true
+      }
+    },
   },
   {
     name: `LAZY_IMAGES`,
     env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
     command: `develop`,
     telemetryId: `LazyImageProcessing`,
-    experimental: true,
+    experimental: false,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
     umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => {
+      // Take a 10% of slice of users.
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
+        const semverConstraints = {
+          // Because of this, this flag will never show up
+          "gatsby-plugin-sharp": `>=2.10.0`,
+        }
+        if (satisfiesSemvers(semverConstraints)) {
+          return `OPT_IN`
+        } else {
+          // gatsby-plugi-sharp is either not installed or not new enough so
+          // just disable — it won't work anyways.
+          return false
+        }
+      } else {
+        return true
+      }
+    },
   },
   {
     name: `PRESERVE_WEBPACK_CACHE`,

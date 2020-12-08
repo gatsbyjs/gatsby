@@ -10,6 +10,16 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
+describe(`satisfies semver`, () => {
+  it(`returns false if a module doesn't exist`, () => {
+    const semverConstraints = {
+      // Because of this, this flag will never show up
+      "gatsby-plugin-sharpy": `>=2.10.0`,
+    }
+    expect(satisfiesSemvers(semverConstraints)).toBeFalsy()
+  })
+})
+
 describe(`handle flags`, () => {
   const activeFlags: Array<IFlag> = [
     {
