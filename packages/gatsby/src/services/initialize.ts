@@ -71,7 +71,7 @@ if (
 
 module.exports = {
   flags : { DEV_SSR: true },
-  plugins: [...],
+  plugins: [...]
 }`,
     1 // Show this immediately to the subset of sites selected.
   )
