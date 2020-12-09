@@ -2,6 +2,13 @@ import React from "react"
 import Portal from "./portal"
 import Style from "./style"
 import { isLoadingIndicatorEnabled } from "$virtual/loading-indicator"
+import { debugLog } from "../debug-log"
+
+if (typeof window === `undefined`) {
+  throw new Error(
+    `Loading indicator should never be imported in code that doesn't target only browsers`
+  )
+}
 
 if (module.hot) {
   module.hot.accept(`$virtual/loading-indicator`, () => {
@@ -20,6 +27,14 @@ if (typeof window.___gatsbyDidShowLoadingIndicatorBefore === `undefined`) {
 export function Indicator() {
   if (!isLoadingIndicatorEnabled()) {
     return null
+  }
+
+  if (!window.___gatsbyDidShowLoadingIndicatorBefore) {
+    // not ideal to this in render function, but that's just console info
+    debugLog(
+      `You might have seen "gatsby develop" loading indicator in the bottom left corner.\n\nTo disable it you can visit ${window.location.origin}/___loading-indicator/disable (will disable it for current session).`
+    )
+    window.___gatsbyDidShowLoadingIndicatorBefore = true
   }
 
   return (
