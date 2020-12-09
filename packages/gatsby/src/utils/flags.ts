@@ -20,7 +20,9 @@ export const satisfiesSemvers = (
       }
 
       // We care if the semver check doesn't pass.
-      return semver.satisfies(packageVersion, semverConstraint)
+      return semver.satisfies(packageVersion, semverConstraint, {
+        includePrerelease: true,
+      })
     }
   )
 
