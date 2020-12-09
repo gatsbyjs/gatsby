@@ -152,7 +152,6 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       }
       timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
     }
-    let contentLength
     const responseStream = got.stream(url, {
       headers,
       timeout: {
@@ -181,7 +180,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
 
     responseStream.on(`response`, response => {
       resetTimeout()
-      contentLength =
+      const contentLength =
         response.headers && Number(response.headers[`content-length`])
 
       fsWriteStream.on(`finish`, () => {
