@@ -27,6 +27,8 @@ import {
 } from "./type-definitions"
 import { IGatsbyNode } from "../redux/types"
 
+type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
+
 export function findMany<TSource, TArgs>(
   typeName: string
 ): GatsbyResolver<TSource, TArgs> {
@@ -256,13 +258,7 @@ export function link<TSource, TArgs>(
     args,
     context,
     info
-  ):
-    | null
-    | IGatsbyNode
-    | Array<IGatsbyNode>
-    | Promise<null>
-    | Promise<IGatsbyNode>
-    | Promise<Array<IGatsbyNode>> {
+  ): ResolvedLink | Promise<ResolvedLink> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
     const fieldValue = resolver(source, args, context, {
       ...info,
@@ -286,13 +282,7 @@ export function link<TSource, TArgs>(
     args,
     context,
     info
-  ):
-    | null
-    | IGatsbyNode
-    | Array<IGatsbyNode>
-    | Promise<null>
-    | Promise<IGatsbyNode>
-    | Promise<Array<IGatsbyNode>> {
+  ): ResolvedLink | Promise<ResolvedLink> {
     if (fieldValue == null) {
       return null
     }
