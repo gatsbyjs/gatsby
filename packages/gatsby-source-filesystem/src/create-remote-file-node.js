@@ -181,7 +181,8 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
 
     responseStream.on(`response`, response => {
       resetTimeout()
-      contentLength = Number(response.headers[`content-length`])
+      contentLength =
+        response.headers && Number(response.headers[`content-length`])
 
       fsWriteStream.on(`finish`, () => {
         // We have an incomplete download
