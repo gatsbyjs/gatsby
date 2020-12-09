@@ -278,13 +278,22 @@ module.exports = {
 
       if (page) {
         try {
-          const pageData: IPageDataWithQueryResult = process.env
-            .GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-            ? await getPageDataExperimental(page.path)
-            : await readPageData(
-                path.join(store.getState().program.directory, `public`),
-                page.path
-              )
+          let pageData: IPageDataWithQueryResult
+          if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+            const start = Date.now()
+
+            pageData = await getPageDataExperimental(page.path)
+
+            telemetry.trackCli(`RUN_QUERY_ON_DEMAND`, {
+              name: `getPageData`,
+              duration: Date.now() - start,
+            })
+          } else {
+            pageData = await readPageData(
+              path.join(store.getState().program.directory, `public`),
+              page.path
+            )
+          }
 
           res.status(200).send(pageData)
           return
