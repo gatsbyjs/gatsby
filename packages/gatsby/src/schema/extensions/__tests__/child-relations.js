@@ -179,8 +179,9 @@ describe(`Define parent-child relationships with field extensions`, () => {
         `because type \`Child\` does not explicitly list type \`Parent\` in \`childOf\` extension.\n` +
         `Add the following type definition to fix this:\n\n` +
         `  type Child implements Node @childOf(types: ["Parent"]) {\n` +
-        `    id\n` +
-        `  }`
+        `    id: ID!\n` +
+        `  }\n\n` +
+        `https://www.gatsbyjs.com/docs/actions/#createTypes`
     )
   })
 
