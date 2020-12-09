@@ -248,64 +248,54 @@ export function link<TSource, TArgs>(
     TArgs
   >
 ): GatsbyResolver<TSource, TArgs> {
+  // Note: we explicitly make an attempt to prevent using the `async` keyword because often
+  //       it does not return a promise and this makes a significant difference at scale.
+
   return function linkResolver(
     source,
     args,
     context,
     info
-  ): IGatsbyNode | Array<IGatsbyNode> | null | Promise<any> {
-    if (
-      options.by === `id` &&
-      (fieldConfig.resolve || context.defaultFieldResolver) ===
-        defaultFieldResolver
-    ) {
-      return linkResolverDefaultId(source, args, context, info)
+  ):
+    | null
+    | IGatsbyNode
+    | Array<IGatsbyNode>
+    | Promise<null>
+    | Promise<IGatsbyNode>
+    | Promise<Array<IGatsbyNode>> {
+    const resolver = fieldConfig.resolve || context.defaultFieldResolver
+    const fieldValue = resolver(source, args, context, {
+      ...info,
+      from: options.from || info.from,
+      fromNode: options.from ? options.fromNode : info.fromNode,
+    })
+
+    // Note: for this function, at scale, conditional .then is more efficient than generic await
+    if (fieldValue?.then) {
+      return fieldValue.then(
+        fieldValue => linkResolverValue(fieldValue, args, context, info),
+        err => Promise.reject(err)
+      )
     }
 
-    return linkResolverAsync(source, args, context, info)
+    return linkResolverValue(fieldValue, args, context, info)
   }
 
-  function linkResolverDefaultId(
-    source,
+  function linkResolverValue(
+    fieldValue,
     args,
     context,
     info
-  ): IGatsbyNode | Array<IGatsbyNode> | null {
-    const fieldValue = defaultFieldResolver(source, args, context, {
-      ...info,
-      from: options.from || info.from,
-      fromNode: options.from ? options.fromNode : info.fromNode,
-    })
-
+  ):
+    | null
+    | IGatsbyNode
+    | Array<IGatsbyNode>
+    | Promise<null>
+    | Promise<IGatsbyNode>
+    | Promise<Array<IGatsbyNode>> {
     if (fieldValue == null) {
       return null
     }
-
-    const returnType = getNullableType(options.type || info.returnType)
-    const type = getNamedType(returnType)
-
-    if (Array.isArray(fieldValue)) {
-      return context.nodeModel.getNodesByIds(
-        { ids: fieldValue, type: type },
-        { path: context.path }
-      )
-    } else {
-      return context.nodeModel.getNodeById(
-        { id: fieldValue, type: type },
-        { path: context.path }
-      )
-    }
-  }
-
-  async function linkResolverAsync(source, args, context, info): Promise<any> {
-    const resolver = fieldConfig.resolve || context.defaultFieldResolver
-    const fieldValue = await resolver(source, args, context, {
-      ...info,
-      from: options.from || info.from,
-      fromNode: options.from ? options.fromNode : info.fromNode,
-    })
-
-    if (fieldValue == null) return null
 
     const returnType = getNullableType(options.type || info.returnType)
     const type = getNamedType(returnType)
@@ -324,27 +314,20 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const equals = (value: string): any => {
-      return { eq: value }
-    }
-    const oneOf = (value: string): any => {
-      return { in: value }
-    }
-
     // Return early if fieldValue is [] since { in: [] } doesn't make sense
     if (Array.isArray(fieldValue) && fieldValue.length === 0) {
       return fieldValue
     }
 
-    const operator = Array.isArray(fieldValue) ? oneOf : equals
-    const runQueryArgs = args as TArgs & { filter: any }
-    runQueryArgs.filter = options.by
-      .split(`.`)
-      .reduceRight((acc, key, i, { length }) => {
-        return {
-          [key]: i === length - 1 ? operator(acc) : acc,
-        }
-      }, fieldValue)
+    const runQueryArgs = args as TArgs & { filter: Record<string, any> }
+    runQueryArgs.filter = options.by.split(`.`).reduceRight(
+      (acc: Record<string, any>, key: string) => {
+        const obj = {}
+        obj[key] = acc
+        return obj
+      },
+      Array.isArray(fieldValue) ? { in: fieldValue } : { eq: fieldValue }
+    )
 
     const firstOnly = !(returnType instanceof GraphQLList)
 
@@ -355,7 +338,7 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const result = await context.nodeModel.runQuery(
+    const result = context.nodeModel.runQuery(
       {
         query: runQueryArgs,
         firstOnly,
@@ -365,16 +348,33 @@ export function link<TSource, TArgs>(
       },
       { path: context.path }
     )
+
+    // Note: for this function, at scale, conditional .then is more efficient than generic await
+    if (result?.then) {
+      return result.then(
+        result => linkResolverQueryResult(fieldValue, result, returnType),
+        err => Promise.reject(err)
+      )
+    }
+
+    return linkResolverQueryResult(fieldValue, result, returnType)
+  }
+
+  function linkResolverQueryResult(
+    fieldValue,
+    queryResult,
+    returnType
+  ): IGatsbyNode | Array<IGatsbyNode> {
     if (
       returnType instanceof GraphQLList &&
       Array.isArray(fieldValue) &&
-      Array.isArray(result)
+      Array.isArray(queryResult)
     ) {
       return fieldValue.map(value =>
-        result.find(obj => getValueAt(obj, options.by) === value)
+        queryResult.find(obj => getValueAt(obj, options.by) === value)
       )
     } else {
-      return result
+      return queryResult
     }
   }
 }
