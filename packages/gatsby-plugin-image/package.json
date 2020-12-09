@@ -58,7 +58,7 @@
     "@types/react-dom": "^16.9.8",
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-macros": "^2.8.0",
-    "cross-env": "^7.0.2",
+    "cross-env": "^7.0.3",
     "cssnano": "^4.1.10",
     "del-cli": "^3.0.1",
     "do-sync": "^2.2.0",
