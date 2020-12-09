@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 // @flow
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)

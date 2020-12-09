@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
