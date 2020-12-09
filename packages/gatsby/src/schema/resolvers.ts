@@ -525,6 +525,10 @@ It's likely that this has happened in a schemaCustomization with manually invoke
 export function wrappingResolver<TSource, TArgs>(
   resolver: GatsbyResolver<TSource, TArgs>
 ): GatsbyResolver<TSource, TArgs> {
+  // Note: we explicitly make an attempt to prevent using the `async` keyword because often
+  //       it does not return a promise and this makes a significant difference at scale.
+  //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
+
   return function wrappedTracingResolver(
     parent,
     args,
