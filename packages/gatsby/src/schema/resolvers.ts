@@ -234,21 +234,21 @@ export function link<TSource, TArgs>(
     info
   ): ResolvedLink | Promise<ResolvedLink> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
-    const fieldValue = resolver(source, args, context, {
+    const fieldValueOrPromise = resolver(source, args, context, {
       ...info,
       from: options.from || info.from,
       fromNode: options.from ? options.fromNode : info.fromNode,
     })
 
     // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (fieldValue?.then) {
-      return fieldValue.then(
+    if (fieldValueOrPromise?.then) {
+      return fieldValueOrPromise.then(
         fieldValue => linkResolverValue(fieldValue, args, context, info),
         err => Promise.reject(err)
       )
     }
 
-    return linkResolverValue(fieldValue, args, context, info)
+    return linkResolverValue(fieldValueOrPromise, args, context, info)
   }
 
   function linkResolverValue(
@@ -302,7 +302,7 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const result = context.nodeModel.runQuery(
+    const resultOrPromise = context.nodeModel.runQuery(
       {
         query: runQueryArgs,
         firstOnly,
@@ -314,14 +314,14 @@ export function link<TSource, TArgs>(
     )
 
     // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (result?.then) {
-      return result.then(
+    if (resultOrPromise?.then) {
+      return resultOrPromise.then(
         result => linkResolverQueryResult(fieldValue, result, returnType),
         err => Promise.reject(err)
       )
     }
 
-    return linkResolverQueryResult(fieldValue, result, returnType)
+    return linkResolverQueryResult(fieldValue, resultOrPromise, returnType)
   }
 
   function linkResolverQueryResult(
