@@ -74,7 +74,7 @@ const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
 const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
-  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+  concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 10,
 })
 
 // when the queue is empty we stop the progressbar
