@@ -241,10 +241,9 @@ export function link<TSource, TArgs>(
     })
 
     // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (fieldValueOrPromise?.then) {
-      return fieldValueOrPromise.then(
-        fieldValue => linkResolverValue(fieldValue, args, context, info),
-        err => Promise.reject(err)
+    if (typeof fieldValueOrPromise?.then === `function`) {
+      return fieldValueOrPromise.then(fieldValue =>
+        linkResolverValue(fieldValue, args, context, info)
       )
     }
 
@@ -314,10 +313,9 @@ export function link<TSource, TArgs>(
     )
 
     // Note: for this function, at scale, conditional .then is more efficient than generic await
-    if (resultOrPromise?.then) {
-      return resultOrPromise.then(
-        result => linkResolverQueryResult(fieldValue, result, returnType),
-        err => Promise.reject(err)
+    if (typeof resultOrPromise?.then === `function`) {
+      return resultOrPromise.then(result =>
+        linkResolverQueryResult(fieldValue, result, returnType)
       )
     }
 
