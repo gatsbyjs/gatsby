@@ -42,7 +42,7 @@ const generateQueryName = ({ def, hash, file }) => {
 // taken from `babel-plugin-remove-graphql-queries`, in the future import from
 // there
 function followVariableDeclarations(binding) {
-  const node = binding.path?.node
+  const node = binding?.path?.node
   if (
     node?.type === `VariableDeclarator` &&
     node?.id.type === `Identifier` &&
@@ -376,7 +376,7 @@ async function findGraphQLTags(
                 const binding = followVariableDeclarations(
                   path.scope.getBinding(path.node.local.name)
                 )
-                binding.path.traverse({ TaggedTemplateExpression })
+                binding?.path?.traverse({ TaggedTemplateExpression })
               },
             })
           },
