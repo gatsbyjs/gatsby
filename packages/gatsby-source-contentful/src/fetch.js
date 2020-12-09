@@ -11,8 +11,8 @@ module.exports = async function contentfulFetch({
 }) {
   // Fetch articles.
   let syncProgress
-  const pageLimit = pluginConfig.get(`pageLimit`)
   let syncItemCount = 0
+  const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
     accessToken: pluginConfig.get(`accessToken`),
@@ -21,6 +21,9 @@ module.exports = async function contentfulFetch({
     proxy: pluginConfig.get(`proxy`),
     responseLogger: response => {
       function createMetadataLog(response) {
+        if (process.env.gatsby_log_level === `verbose`) {
+          return ``
+        }
         return [
           response?.headers[`content-length`] &&
             `size: ${response.headers[`content-length`]}B`,
@@ -166,7 +169,6 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       ? { nextSyncToken: syncToken, ...basicSyncConfig }
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
-    syncProgress.done()
   } catch (e) {
     reporter.panic(
       {
@@ -177,6 +179,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       },
       e
     )
+  } finally {
+    syncProgress.done()
   }
 
   // We need to fetch content types with the non-sync API as the sync API
