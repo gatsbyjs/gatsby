@@ -28,7 +28,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0",
-    "node-sass": "^4.9.0"
+    "sass": "^1.30.0"
   },
   "repository": {
     "type": "git",
