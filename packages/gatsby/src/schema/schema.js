@@ -1049,8 +1049,9 @@ const addImplicitConvenienceChildrenFields = ({
             `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
             `Add the following type definition to fix this:\n\n` +
             `  type ${typeName} implements Node @childOf(types: ["${parentTypeName}"]${manyArg}) {\n` +
-            `    id\n` +
-            `  }`
+            `    id: ID!\n` +
+            `  }\n\n` +
+            `https://www.gatsbyjs.com/docs/actions/#createTypes`
         )
       }
     }
