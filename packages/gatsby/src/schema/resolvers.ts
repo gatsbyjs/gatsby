@@ -209,32 +209,6 @@ export function paginate<NodeType>(
   }
 }
 
-export const defaultFieldResolver: GatsbyResolver<
-  any,
-  any
-> = function defaultFieldResolver(source, args, context, info) {
-  if (
-    (typeof source == `object` && source !== null) ||
-    typeof source === `function`
-  ) {
-    if (info.from) {
-      if (info.fromNode) {
-        const node = context.nodeModel.findRootNodeAncestor(source)
-        if (!node) return null
-        return getValueAt(node, info.from)
-      }
-      return getValueAt(source, info.from)
-    }
-    const property = source[info.fieldName]
-    if (typeof property === `function`) {
-      return source[info.fieldName](args, context, info)
-    }
-    return property
-  }
-
-  return null
-}
-
 export function link<TSource, TArgs>(
   options: {
     by: string
@@ -508,6 +482,32 @@ function getFieldNodeByNameInSelectionSet(
     },
     []
   )
+}
+
+export const defaultFieldResolver: GatsbyResolver<
+  any,
+  any
+> = function defaultFieldResolver(source, args, context, info) {
+  if (
+    (typeof source == `object` && source !== null) ||
+    typeof source === `function`
+  ) {
+    if (info.from) {
+      if (info.fromNode) {
+        const node = context.nodeModel.findRootNodeAncestor(source)
+        if (!node) return null
+        return getValueAt(node, info.from)
+      }
+      return getValueAt(source, info.from)
+    }
+    const property = source[info.fieldName]
+    if (typeof property === `function`) {
+      return source[info.fieldName](args, context, info)
+    }
+    return property
+  }
+
+  return null
 }
 
 let WARNED_ABOUT_RESOLVERS = false
