@@ -215,8 +215,7 @@ exports.sourceNodes = async (
     // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
     // If present, do NOT contact contentful, skip the round trips entirely
     reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
-      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in \`${process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE}\``
     )
     ;({
       currentSyncData,
