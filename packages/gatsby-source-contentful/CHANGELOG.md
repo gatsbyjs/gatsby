@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.3.0-next.2...gatsby-source-contentful@4.4.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- improve error handling, always show API response status and message ([#27730](https://github.com/gatsbyjs/gatsby/issues/27730)) ([079bb3c](https://github.com/gatsbyjs/gatsby/commit/079bb3c4ef4a6815ff3d871ee263721a0e8d5dcf))
+
 # [4.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.3.0-next.1...gatsby-source-contentful@4.3.0-next.2) (2020-12-03)
 
 ### Performance Improvements

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-guess-js",
-  "version": "1.7.0-next.0",
+  "version": "1.8.0-next.0",
   "description": "Gatsby plugin providing drop-in integration with Guess.js to enabling using machine learning and analytics data to power prefetching",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.9.0-next.0",
+    "babel-preset-gatsby-package": "^0.10.0-next.0",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.4...create-gatsby@0.3.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package create-gatsby
+
 # [0.2.0-next.4](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.3...create-gatsby@0.2.0-next.4) (2020-12-08)
 
 ### Bug Fixes

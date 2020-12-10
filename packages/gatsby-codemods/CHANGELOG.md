@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.4...gatsby-codemods@1.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-codemods
+
 # [1.7.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.3...gatsby-codemods@1.7.0-next.4) (2020-12-08)
 
 **Note:** Version bump only for package gatsby-codemods
