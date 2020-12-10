@@ -33,8 +33,9 @@ window.___loader = publicLoader
 // Without this, the runtime breaks with a
 // "TypeError: __webpack_require__.e is not a function"
 // error.
-// eslint-disable-next-line
-import("./dummy")
+export function notCalledFunction() {
+  return import(`./dummy`)
+}
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {

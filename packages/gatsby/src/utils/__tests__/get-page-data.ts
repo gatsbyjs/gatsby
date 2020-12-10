@@ -1,6 +1,6 @@
 import { store } from "../../redux"
 import { getPageData, RETRY_INTERVAL } from "../get-page-data"
-import { fixedPagePath } from "../page-data"
+import { fixedPagePath, flush as flushPageData } from "../page-data"
 import {
   IGatsbyPage,
   IGatsbyPlugin,
@@ -13,26 +13,51 @@ let MOCK_FILE_INFO = {}
 
 jest.mock(`fs-extra`, () => {
   return {
-    readFile: jest.fn(path => {
-      if (MOCK_FILE_INFO[path]) {
-        return MOCK_FILE_INFO[path]
+    readFile: jest.fn(
+      async (path: string): Promise<any> => {
+        if (MOCK_FILE_INFO[path]) {
+          return MOCK_FILE_INFO[path]
+        }
+        throw new Error(`Cannot read file "${path}"`)
       }
-      throw new Error(`Cannot read file "${path}"`)
-    }),
+    ),
+    readJSON: jest.fn(
+      async (path: string): Promise<any> => {
+        if (MOCK_FILE_INFO[path]) {
+          return JSON.parse(MOCK_FILE_INFO[path])
+        }
+        throw new Error(`Cannot read file "${path}"`)
+      }
+    ),
+    outputFile: jest.fn(
+      async (path: string, content: string): Promise<any> => {
+        MOCK_FILE_INFO[path] = content
+      }
+    ),
   }
 })
 
 describe(`get-page-data-util`, () => {
-  const pageDataContent = {
-    result: {
+  const queryResultContent = {
+    data: {
       foo: `bar`,
     },
   }
 
-  const pageDataStaleContent = {
-    result: {
+  const pageDataContent = {
+    path: `/foo`,
+    result: queryResultContent,
+    staticQueryHashes: [],
+  }
+
+  const queryResultStaleContent = {
+    data: {
       foo: `I'm stale`,
     },
+  }
+
+  const pageDataStaleContent = {
+    result: queryResultStaleContent,
   }
 
   let Pages
@@ -64,8 +89,8 @@ describe(`get-page-data-util`, () => {
     // query did already run before
     createPage(Pages.foo)
     startPageQuery(Pages.foo)
-    finishQuery(Pages.foo)
-    writePageDataFileToFs(Pages.foo, pageDataContent)
+    finishQuery(Pages.foo, queryResultContent)
+    await flushPageData()
 
     const resultPromise = getPageData(Pages.foo.path)
     expect(await resultPromise).toEqual(pageDataContent)
@@ -76,8 +101,8 @@ describe(`get-page-data-util`, () => {
     const resultPromise = getPageData(Pages.foo.path)
 
     startPageQuery(Pages.foo)
-    finishQuery(Pages.foo)
-    writePageDataFileToFs(Pages.foo, pageDataContent)
+    finishQuery(Pages.foo, queryResultContent)
+    await flushPageData()
 
     expect(await resultPromise).toEqual(pageDataContent)
   })
@@ -158,8 +183,9 @@ describe(`get-page-data-util`, () => {
         RETRY_INTERVAL
       )
 
-      finishQuery(Pages.foo)
-      writePageDataFileToFs(Pages.foo, pageDataContent)
+      finishQuery(Pages.foo, queryResultContent)
+
+      await flushPageData()
 
       // we cancel second timeout
       expect(clearTimeout).toHaveBeenCalledTimes(1)
@@ -237,7 +263,7 @@ describe(`get-page-data-util`, () => {
         const resultPromise = getPageData(Pages.foo.path)
         startPageQuery(Pages.foo)
         deletePage(Pages.foo)
-        finishQuery(Pages.foo)
+        finishQuery(Pages.foo, queryResultContent)
 
         jest.runAllTimers()
 
@@ -252,7 +278,7 @@ describe(`get-page-data-util`, () => {
         createPage(Pages.foo)
         const resultPromise = getPageData(Pages.foo.path)
         startPageQuery(Pages.foo)
-        finishQuery(Pages.foo)
+        finishQuery(Pages.foo, queryResultContent)
         deletePage(Pages.foo)
 
         jest.runAllTimers()
@@ -263,13 +289,60 @@ describe(`get-page-data-util`, () => {
       })
     })
   })
+
+  describe(`Query on demand`, () => {
+    let programToRestore
+    beforeAll(() => {
+      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
+      programToRestore = store.getState().program
+      store.dispatch({
+        type: `SET_PROGRAM`,
+        payload: {
+          ...programToRestore,
+          _: [`develop`],
+        },
+      })
+    })
+    afterAll(() => {
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      store.dispatch({
+        type: `SET_PROGRAM`,
+        payload: programToRestore,
+      })
+    })
+
+    it(`Will resolve with fresh results if query result was marked dirty while resolving request`, async () => {
+      createPage(Pages.foo)
+      startPageQuery(Pages.foo)
+      finishQuery(Pages.foo, queryResultStaleContent)
+
+      const resultPromise = getPageData(Pages.foo.path)
+
+      // mark query as dirty
+      createPage(Pages.foo, true)
+
+      // this would cause callback in
+      await flushPageData()
+
+      startPageQuery(Pages.foo)
+      finishQuery(Pages.foo, queryResultContent)
+
+      await flushPageData()
+
+      expect(await resultPromise).toEqual(pageDataContent)
+    })
+  })
 })
 
-function createPage(page: Partial<IGatsbyPage>): void {
+function createPage(
+  page: Partial<IGatsbyPage>,
+  contextModified: boolean = false
+): void {
   store.dispatch({
     type: `CREATE_PAGE`,
     payload: { ...page, context: {} },
     plugin: { name: `get-page-data-test` },
+    contextModified,
   })
 }
 
@@ -292,12 +365,22 @@ function startPageQuery(page: Partial<IGatsbyPage>): void {
   )
 }
 
-function finishQuery(page: Partial<IGatsbyPage>): void {
+function finishQuery(page: Partial<IGatsbyPage>, jsonObject: object): void {
   const payload: IQueryStartAction["payload"] = {
     path: page.path!,
     componentPath: page.componentPath!,
     isPage: true,
   }
+
+  MOCK_FILE_INFO[
+    pathJoin(
+      __dirname,
+      `.cache`,
+      `json`,
+      `${page.path!.replace(/\//g, `_`)}.json`
+    )
+  ] = JSON.stringify(jsonObject)
+
   store.dispatch(
     pageQueryRun(payload, { name: `page-data-test` } as IGatsbyPlugin)
   )
