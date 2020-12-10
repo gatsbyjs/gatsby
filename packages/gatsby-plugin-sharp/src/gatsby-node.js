@@ -80,8 +80,8 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
 
     // We are going to run a job for a single operation only
     // and postpone all other operations
-    // This makes lazy images load at least 2+ times faster in the browser and
-    // also helps freeing browser connection queue earlier.
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
     const {
       matchingJob,
       jobWithRemainingOperations,
