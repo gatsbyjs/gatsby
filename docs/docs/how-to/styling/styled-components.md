@@ -116,7 +116,7 @@ export default function UsersList() {
 
 ## Creating Global Styles
 
-Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. It's advised to use `createGlobalStyle` in [Layout components](/docs/layout-components/), which are shared over multiple pages rather than using it on a single page.
+Styled-components are primarily used for a single CSS class that is isolated from other components. In some cases, you want to override global styling — for example, the default margins of your `body` element. Styled-components has your back. You can use the `createGlobalStyle` to accomplish this. It's advised to use `createGlobalStyle` in [Layout components](/docs/how-to/routing/layout-components/), which are shared over multiple pages rather than using it on a single page.
 
 The example below shows how to create a `GlobalStyle` (which is a StyledComponent) for the color purple by importing `createGlobalStyle` from `styled-components`.
 

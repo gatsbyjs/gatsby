@@ -273,8 +273,8 @@ With the example above, any `<h1>` or `<a>` elements rendered from an MDX file w
 To learn more about using Theme UI in your project, see the official [Theme UI][theme ui] website.
 
 [theme ui]: https://theme-ui.com
-[emotion]: /docs/emotion
-[mdx]: /docs/mdx
+[emotion]: /docs/how-to/styling/emotion
+[mdx]: /docs/how-to/routing/mdx/
 [typography.js]: /docs/typography-js
 [react context]: https://reactjs.org/docs/context.html
 [component shadowing api]: /docs/theme-api/#shadowing

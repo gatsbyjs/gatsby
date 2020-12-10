@@ -3,7 +3,7 @@ title: Using the Static Folder
 ---
 
 In general, every website needs assets: images, stylesheets, scripts, etc. When using Gatsby, we recommend
-[Importing Assets Directly](/docs/importing-assets-into-files/) in JavaScript files, because of the benefits it provides:
+[Importing Assets Directly](/docs/how-to/images-and-media/importing-assets-into-files/) in JavaScript files, because of the benefits it provides:
 
 - Scripts and stylesheets are minified and bundled together to avoid extra network requests.
 - Missing files cause compilation errors instead of 404 errors for your users.
@@ -43,7 +43,7 @@ Keep in mind the downsides of this approach:
 
 ## When to use the `static` folder
 
-Normally we recommend importing [stylesheets, images, and font assets](/docs/importing-assets-into-files/) from JavaScript. The `static`
+Normally we recommend importing [stylesheets, images, and font assets](/docs/how-to/images-and-media/importing-assets-into-files/) from JavaScript. The `static`
 folder is useful as a workaround for a number of less common cases:
 
 - You need a file with a specific name in the build output, such as

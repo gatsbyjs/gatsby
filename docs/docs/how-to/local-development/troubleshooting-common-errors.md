@@ -125,7 +125,7 @@ Some ideas for debugging these errors include verifying the following:
 
 Comparing your GraphQL query to your site's schema in `http://localhost:8000/___graphql` and whatever plugin or code you are using to source data is a great way to find these errors as they should all express the data in the same shape.
 
-- neither any source plugins you are using nor your own implementation of the [`sourceNodes` API](/docs/node-apis/#sourceNodes) are misconfigured
+- neither any source plugins you are using nor your own implementation of the [`sourceNodes` API](/docs/reference/builds/gatsby-node/#sourceNodes) are misconfigured
 
 ## Errors using gatsby-image and sharp
 
@@ -219,7 +219,7 @@ If updating these doesn't fix the issue, your project probably uses other plugin
 
 ## Errors building and deploying
 
-The process of building your site [varies slightly from the development process](/docs/overview-of-the-gatsby-build-process/). Some errors can arise when you build your site if you include references to the browser, though almost all problems should be caught by error messages in `develop` mode.
+The process of building your site [varies slightly from the development process](/docs/conceptual/overview-of-the-gatsby-build-process/). Some errors can arise when you build your site if you include references to the browser, though almost all problems should be caught by error messages in `develop` mode.
 
 For more information on common problems while building your site, refer to the [Debugging HTML Builds](/docs/debugging-html-builds/) guide.
 

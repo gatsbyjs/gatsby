@@ -18,4 +18,4 @@ More examples are described on the Gatsby blog:
 
 - [Google Sheets](/blog/2019-07-23-google-sheets-gatsby-acroyoga-video-explorer/)
 
-You can also [write your own source plugin](/docs/creating-a-source-plugin/) to integrate with a service that isn't already represented.
+You can also [write your own source plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) to integrate with a service that isn't already represented.

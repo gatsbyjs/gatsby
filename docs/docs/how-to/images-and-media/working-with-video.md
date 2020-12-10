@@ -12,7 +12,7 @@ There are numerous Gatsby plugins for working with hosted video in your Markdown
 
 ### Writing custom components for hosted video
 
-If you would like more control over how YouTube (or similar) videos are embedded into your Gatsby posts and pages, you can write a reusable custom `iframe` component and include it in a JSX template or in your content [with MDX](/docs/mdx/).
+If you would like more control over how YouTube (or similar) videos are embedded into your Gatsby posts and pages, you can write a reusable custom `iframe` component and include it in a JSX template or in your content [with MDX](/docs/how-to/routing/mdx/).
 
 In this reusable sample component, you could include props for video data like URL or title, any necessary markup for styling purposes, and the common `iframe` embed code:
 
@@ -63,7 +63,7 @@ export default NotFoundPage
 
 ## Querying video data from Markdown with GraphQL
 
-If a Markdown page or post has a featured video, you might want to include a video URL and title in [its frontmatter](/docs/adding-markdown-pages#note-on-creating-markdown-files). This allows you to pass those values into your custom component:
+If a Markdown page or post has a featured video, you might want to include a video URL and title in [its frontmatter](/docs/how-to/routing/adding-markdown-pages#note-on-creating-markdown-files). This allows you to pass those values into your custom component:
 
 ```markdown:title=my-first-post.md
 ---
@@ -130,7 +130,7 @@ To include your own video files that will work in multiple web browsers and plat
 
 HTML5 provides the `<video>` media element for working with videos. Inside the `<video>` element, you can provide multiple `<source>` elements that serve as different file formats the video player can use, with each browser electing to use a format it supports.
 
-If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, you can [include that video in your page with webpack](/docs/importing-assets-into-files) like you would other assets. Then reference it in a `<source>` element, which is wrapped by a `<video>` element:
+If you have a video called `dog.mp4` in your site under `src/assets/dog.mp4`, you can [include that video in your page with webpack](/docs/how-to/images-and-media/importing-assets-into-files) like you would other assets. Then reference it in a `<source>` element, which is wrapped by a `<video>` element:
 
 <!-- prettier-ignore -->
 ```jsx:title=src/pages/index.js

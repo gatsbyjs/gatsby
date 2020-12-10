@@ -53,7 +53,7 @@ Commit your changes and push your `heading-variation` branch to GitHub.
 
 ## Deploying your site with Netlify
 
-When you have created your two variations, it's time to [deploy your site to Netlify](/docs/deploying-to-netlify/)!
+When you have created your two variations, it's time to [deploy your site to Netlify](/docs/how-to/previews-deploys-hosting/deploying-to-netlify/)!
 
 After you have deployed your website, set up a [split test on Netlify](https://docs.netlify.com/site-deploys/split-testing/).
 

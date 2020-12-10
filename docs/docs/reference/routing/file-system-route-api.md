@@ -4,9 +4,9 @@ title: File System Route API
 
 Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can control the file path and queried data by adding some extra notation to the names of your files without touching or creating `gatsby-node.js` whatsoever.
 
-This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/node-apis#createPages) API.
+This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/reference/builds/gatsby-node#createPages) API.
 
-In short, these APIs enable you to programmatically create pages from Gatsby's [GraphQL data layer](/docs/graphql-concepts/) and to create [client-only routes](/docs/client-only-routes-and-user-authentication).
+In short, these APIs enable you to programmatically create pages from Gatsby's [GraphQL data layer](/docs/conceptual/graphql-concepts/) and to create [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication).
 
 A complete example showcasing all options can be found in [Gatsby's "examples" folder](https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api).
 
@@ -108,7 +108,7 @@ allMarkdownRemark {
 
 ### Component implementation
 
-Naming your file with the File System Route API will generate routes for each node and will automatically pass the field name via `props.params` to the React component and as a variable to the GraphQL query. As explained in [Querying data in pages with GraphQL](/docs/page-query/) you can render data from a node on the page by filtering only for the given `id` or field name.
+Naming your file with the File System Route API will generate routes for each node and will automatically pass the field name via `props.params` to the React component and as a variable to the GraphQL query. As explained in [Querying data in pages with GraphQL](/docs/how-to/querying-data/page-query/) you can render data from a node on the page by filtering only for the given `id` or field name.
 
 For example, in the component itself (e.g. `src/pages/products/{Product.name}.js`) you're able to access the `name` via `props.params` and as a variable in the GraphQL query (as `$name`). However, we recommend filtering by `id` as this is the fastest way to filter.
 
@@ -135,7 +135,7 @@ export const query = graphql`
 }
 ```
 
-If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/node-apis#createPages) API instead as File System Route API doesn't support this at the moment.
+If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/reference/builds/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
 ### Routing and linking
 
@@ -192,7 +192,7 @@ By using [aliasing](/docs/graphql-reference/#aliasing) you can use `gatsbyPath` 
 
 ## Creating client-only routes
 
-Use [client-only routes](/docs/client-only-routes-and-user-authentication) if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations, you will usually create a route with one or more dynamic segments to query data from a server in order to render your page.
+Use [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication) if you have dynamic data that does not live in Gatsby. This might be something like a user settings page, or some other dynamic content that isn't known to Gatsby at build time. In these situations, you will usually create a route with one or more dynamic segments to query data from a server in order to render your page.
 
 ### Syntax (client-only routes)
 
@@ -203,7 +203,7 @@ You can use square brackets (`[ ]`) in the file path to mark any dynamic segment
 
 #### Splat routes
 
-Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
+Gatsby also supports _splat_ (or wildcard) routes, which are routes that will match _anything_ after the splat. These are less common, but still have use cases. As an example, suppose that you are rendering images from [S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) and the URL is actually the key to the asset in AWS. Here is how you might create your file:
 
 - `src/pages/image/[...awsKey].js` will generate a route like `/image/*awsKey`
 - `src/pages/image/[...].js` will generate a route like `/image/*`

@@ -29,7 +29,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Security
 
-> Gatsby is a modern site generator that outputs static HTML pages at build time. That means you don't need a database or content management system running on your public servers, both of which are common sources of security breaches. Static content is much easier to secure. This does not, by any means, eliminate _all_ security vulnerabilities for Gatsby sites, but they will be significantly reduced. Learn more about Gatsby security in Alex Moon's article on [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/) and the Docs page on [Answering IT & Security Questions](/docs/answering-it-security/).
+> Gatsby is a modern site generator that outputs static HTML pages at build time. That means you don't need a database or content management system running on your public servers, both of which are common sources of security breaches. Static content is much easier to secure. This does not, by any means, eliminate _all_ security vulnerabilities for Gatsby sites, but they will be significantly reduced. Learn more about Gatsby security in Alex Moon's article on [Security for Modern Web Frameworks](/blog/2019-04-06-security-for-modern-web-frameworks/) and the Docs page on [Answering IT & Security Questions](/docs/using-gatsby-professionally/using-gatsby-professionally/answering-it-security/).
 
 ### Scalability
 
@@ -41,7 +41,7 @@ Gatsby has many benefits that will appeal to engineering leaders and help them m
 
 ### Improved development process
 
-> Gatsby [unifies your stack](/docs/sanitize-your-stack) and eliminates a lot of the complicated and time-consuming configuration steps that come with most development processes. This means happier developers and clearer division between frontend and backend tasks. Frontend developers can spend more time making great UIs and backend developers can focus on adding the features and integrations that make your product better. You can find more information on this subject in Sam Bhagwat's article [How Gatsby Changes Teams' Website Development Workflow](/blog/2018-04-25-how-gatsby-changes-teams-website-development-workflow/#architecture)
+> Gatsby [unifies your stack](/docs/using-gatsby-professionally/using-gatsby-professionally/sanitize-your-stack) and eliminates a lot of the complicated and time-consuming configuration steps that come with most development processes. This means happier developers and clearer division between frontend and backend tasks. Frontend developers can spend more time making great UIs and backend developers can focus on adding the features and integrations that make your product better. You can find more information on this subject in Sam Bhagwat's article [How Gatsby Changes Teams' Website Development Workflow](/blog/2018-04-25-how-gatsby-changes-teams-website-development-workflow/#architecture)
 
 ## Common concerns
 
@@ -71,4 +71,4 @@ For examples of Gatsby sites, [check out the Showcase](/showcase/).
 
 ## Conclusion
 
-When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites - don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/winning-over-developers/) page for more on that subject.)
+When you're trying to win over a stakeholder, your first instinct may be to focus completely on Gatsby's benefits. However, when you're speaking to engineering leaders and managers, it's important to be positive while still being honest about Gatsby's limitations. Setting expectations before they go out to do their own research will help them focus on finding solutions rather than faults. There is ample proof that Gatsby works well for many websites - don't be afraid to help your engineering leaders dig into pros and cons. (And it doesn't hurt to get a few of their team members on your side. Check out the [Winning Over Developers](/docs/using-gatsby-professionally/winning-over-developers/) page for more on that subject.)

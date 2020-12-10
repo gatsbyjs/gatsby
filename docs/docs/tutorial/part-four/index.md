@@ -43,7 +43,7 @@ and APIs of all sorts.
 
 Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby pages directly, rather than through the GraphQL data layer. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-See the [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+See the [Using Gatsby without GraphQL](/docs/how-to/sourcing-data/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
 
 ### When do I use unstructured data vs GraphQL?
 
@@ -79,7 +79,7 @@ Then install some other needed dependencies at the root of the project. You'll u
 npm install gatsby-plugin-typography typography react-typography typography-theme-kirkham gatsby-plugin-emotion @emotion/core
 ```
 
-Set up a site similar to what you ended with in [Part Three](/tutorial/part-three). This site will have a layout component and two page components:
+Set up a site similar to what you ended with in [Part Three](/docs/tutorial/part-three). This site will have a layout component and two page components:
 
 ```jsx:title=src/components/layout.js
 import React from "react"
@@ -224,7 +224,7 @@ Restart the development server.
 
 ### Use a page query
 
-Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/page-query):
+Now the site title is available to be queried; Add it to the `about.js` file using a [page query](/docs/how-to/querying-data/page-query):
 
 ```jsx:title=src/pages/about.js
 import React from "react"
@@ -273,13 +273,13 @@ The basic GraphQL query that retrieves the `title` in your `about.js` changes ab
 }
 ```
 
-> 💡 In [part five](/tutorial/part-five/#introducing-graphiql), you'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
+> 💡 In [part five](/docs/tutorial/part-five/#introducing-graphiql), you'll meet a tool that lets us interactively explore the data available through GraphQL, and help formulate queries like the one above.
 
 Page queries live outside of the component definition -- by convention at the end of a page component file -- and are only available on page components.
 
 ### Use a StaticQuery
 
-[StaticQuery](/docs/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/use-static-query/).
+[StaticQuery](/docs/how-to/sourcing-data/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/how-to/sourcing-data/use-static-query/).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:
 
@@ -344,7 +344,7 @@ Another success! 🎉
 
 ![Page title and layout title both pulling from siteMetadata](site-metadata-two-titles.png)
 
-Why use two different queries here? These examples were quick introductions to the query types, how they are formatted, and where they can be used. For now, keep in mind that only pages can make page queries. Non-page components, such as Layout, can use StaticQuery. [Part 7](/tutorial/part-seven/) of the tutorial explains these in greater depth.
+Why use two different queries here? These examples were quick introductions to the query types, how they are formatted, and where they can be used. For now, keep in mind that only pages can make page queries. Non-page components, such as Layout, can use StaticQuery. [Part 7](/docs/tutorial/part-seven/) of the tutorial explains these in greater depth.
 
 But let's restore the real title.
 
@@ -356,4 +356,4 @@ So almost everywhere, changes you make will immediately take effect. Edit the `g
 
 ## What's coming next?
 
-Next, you'll be learning about how to pull data into your Gatsby site using GraphQL with source plugins in [part five](/tutorial/part-five/) of the tutorial.
+Next, you'll be learning about how to pull data into your Gatsby site using GraphQL with source plugins in [part five](/docs/tutorial/part-five/) of the tutorial.

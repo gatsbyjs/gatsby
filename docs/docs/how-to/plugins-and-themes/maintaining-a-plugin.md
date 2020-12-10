@@ -2,7 +2,7 @@
 title: Maintaining a Plugin
 ---
 
-The Gatsby community thrives on the power of plugins. You often find that there is a plugin for almost everything ranging from source plugins to transformer plugins. A useful way of understanding the purpose of a plugin at a glance is by its name. Check out the [guide to naming conventions for plugins](/docs/naming-a-plugin/) to learn more.
+The Gatsby community thrives on the power of plugins. You often find that there is a plugin for almost everything ranging from source plugins to transformer plugins. A useful way of understanding the purpose of a plugin at a glance is by its name. Check out the [guide to naming conventions for plugins](/docs/how-to/plugins-and-themes/naming-a-plugin/) to learn more.
 
 > Wondering how to [create a plugin](/docs/creating-plugins)? Look no further. Start contributing.
 

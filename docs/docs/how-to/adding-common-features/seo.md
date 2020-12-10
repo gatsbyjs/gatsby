@@ -16,13 +16,13 @@ As a website owner, how do I test my site is serving its HTML correctly when `ga
 **on Windows (using PowerShell):**
 
 ```shell
-Invoke-WebRequest https://www.gatsbyjs.com/docs/seo | Select -ExpandProperty Content
+Invoke-WebRequest https://www.gatsbyjs.com/docs/how-to/adding-common-features/seo | Select -ExpandProperty Content
 ```
 
 **on macOS/Linux:**
 
 ```shell
-curl https://www.gatsbyjs.com/docs/seo
+curl https://www.gatsbyjs.com/docs/how-to/adding-common-features/seo
 ```
 
 ## Speed boost

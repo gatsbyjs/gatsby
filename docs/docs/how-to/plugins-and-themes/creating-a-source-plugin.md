@@ -7,9 +7,9 @@ In this tutorial, you'll create your own source plugin that will gather data fro
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
+Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/builds/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
 
-For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/creating-a-source-plugin/).
+For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
 
 ## Why create a source plugin?
 
@@ -94,7 +94,7 @@ Your plugin starts with a few files from the starter, which can be seen in the s
 └── README.md
 ```
 
-The biggest changes will be in **`gatsby-node.js`**. This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](/docs/node-apis/). These allow customization/extension of default Gatsby settings affecting pieces of the site build process. All the logic for sourcing data will live in this file.
+The biggest changes will be in **`gatsby-node.js`**. This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](/docs/reference/builds/gatsby-node/). These allow customization/extension of default Gatsby settings affecting pieces of the site build process. All the logic for sourcing data will live in this file.
 
 #### Install your plugin in the example site
 
@@ -173,7 +173,7 @@ exports.sourceNodes = async ({
 
 This code creates Gatsby nodes that are queryable in a site. The following bullets break down what is happening in the code:
 
-- You implemented Gatsby's [`sourceNodes` API](/docs/node-apis/#sourceNodes), which Gatsby will run as part of its bootstrap process, and pulled out some Gatsby helpers (like `createContentDigest` and `createNodeId`) to facilitate creating nodes.
+- You implemented Gatsby's [`sourceNodes` API](/docs/reference/builds/gatsby-node/#sourceNodes), which Gatsby will run as part of its bootstrap process, and pulled out some Gatsby helpers (like `createContentDigest` and `createNodeId`) to facilitate creating nodes.
 - You provided the required fields for the node like creating a node ID and a content digest (which Gatsby uses to track dirty nodes—or nodes that have changed). The content digest should include the whole content of the item (`post`, in this case).
 - Then you stored some data in an array and looped through it, calling `createNode` on each post in the array.
 
@@ -428,7 +428,7 @@ query {
 
 Each node of post data has an `imgUrl` field with the URL of an image on Unsplash. You could use that URL to load images on your site, but they will be large and take a long time to load. You can optimize the images with your source plugin so that a site using your plugin already has data for `gatsby-image` ready to go!
 
-You can read about [how to use Gatsby Image to prevent image bloat](/docs/using-gatsby-image/) if you are unfamiliar with it.
+You can read about [how to use Gatsby Image to prevent image bloat](/docs/how-to/images-and-media/using-gatsby-image/) if you are unfamiliar with it.
 
 #### Create `remoteFileNode`'s from a URL
 
@@ -521,7 +521,7 @@ query {
 }
 ```
 
-_**Note**: you can use [schema customization APIs](/docs/schema-customization) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
+_**Note**: you can use [schema customization APIs](/docs/reference/querying-data/schema-customization) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
 
 At this point you have created local image files from the remote locations and associated them with your posts, but you still need to transform the files into optimized versions.
 
@@ -706,7 +706,7 @@ export const query = graphql`
 `
 ```
 
-This code uses a [page query](/docs/page-query/) to fetch all posts and provide them to the component in the `data` prop at build time. The JSX code loops through the posts so they can be rendered to the DOM.
+This code uses a [page query](/docs/how-to/querying-data/page-query/) to fetch all posts and provide them to the component in the `data` prop at build time. The JSX code loops through the posts so they can be rendered to the DOM.
 
 ### Using plugin options to customize plugin usage
 
@@ -751,7 +751,7 @@ Options can be a good way of providing conditional paths to logic that you as a 
 
 The data sourced for your site was fetched using Apollo Client, which supports subscriptions. GraphQL subscriptions _listen_ for changes in data and return changes to the GraphQL client. Your source plugin is able to listen—or subscribe—to the new data that is incoming. That means if a post has something on it updated, your source plugin can listen for that change and update the data in your site without having to restart your site, neat!
 
-The API you connect to needs to provide support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/creating-a-source-plugin/).
+The API you connect to needs to provide support for live changes to data in order for this to be possible. You can read about other options for live data updates in the [creating a source plugin guide](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
 
 You already set up your client to handle subscriptions by providing a websocket link (`ws://localhost:4000` or `ws://gatsby-source-plugin-api.glitch.me/`). Now you need to add some logic to your `sourceNodes` function to handle updating and deleting nodes, rather than just creating them. The first step will be touching nodes, to make sure that Gatsby doesn't discard the nodes that don't get updated when `sourceNodes` gets called.
 
@@ -955,7 +955,7 @@ It's so fast that it's a blink and you'll miss it kind of moment, so try running
 
 Don't publish this particular plugin to npm or the Gatsby Plugin Library, because it's just a sample plugin for the tutorial. However, if you've built a local plugin for your project, and want to share it with others, npm allows you to publish your plugins. Check out the npm docs on [How to Publish & Update a Package](https://docs.npmjs.com/getting-started/publishing-npm-packages) for more info.
 
-> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/contributing/submit-to-plugin-library/).
+> **NOTE:** Once you have published your plugin on npm, don't forget to edit your plugin's `package.json` file to include info about your plugin. If you'd like to publish a plugin to the [Gatsby Plugin Library](/plugins/) (please do!), please [follow these steps](/docs/how-to/plugins-and-themes/submit-to-plugin-library/).
 
 ## Summary
 
@@ -974,4 +974,4 @@ Congratulations!
 ## Additional resources
 
 - [Example repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with all of this code implemented
-- Creating a [first class source plugin for Gatsby Cloud](https://www.gatsbyjs.com/docs/integration-guide/source-plugin/)
+- Creating a [first class source plugin for Gatsby Cloud](/docs/integration-guide/source-plugin/)

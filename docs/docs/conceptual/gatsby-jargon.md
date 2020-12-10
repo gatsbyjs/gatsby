@@ -22,7 +22,7 @@ To learn more about Gatsby’s plugin system, check out the [plugins section](/d
 
 ## Themes
 
-Gatsby themes are a type of plugin with their own `gatsby-config.js` file, effectively making them into Gatsby sites you can install from a package manager like npm. Themes provide a way to package up and distribute functionality for both Gatsby’s data layer and UI components. Since themes are a type of plugin, your Gatsby site can make use of multiple themes at the same time. They have the added benefit of maintaining their tie to the original source code, allowing you to update and receive changes to them. This is how themes differ from starters, which do not maintain a connection to their source. Themes also come with a powerful API called [Shadowing](/docs/themes/shadowing/), which allows you to structure themes in a customizable hierarchy.
+Gatsby themes are a type of plugin with their own `gatsby-config.js` file, effectively making them into Gatsby sites you can install from a package manager like npm. Themes provide a way to package up and distribute functionality for both Gatsby’s data layer and UI components. Since themes are a type of plugin, your Gatsby site can make use of multiple themes at the same time. They have the added benefit of maintaining their tie to the original source code, allowing you to update and receive changes to them. This is how themes differ from starters, which do not maintain a connection to their source. Themes also come with a powerful API called [Shadowing](/docs/how-to/plugins-and-themes/shadowing/), which allows you to structure themes in a customizable hierarchy.
 
 Themes for various use cases are added to the Gatsby ecosystem daily, such as documentation themes, UI library implementations, and more. It’s also possible to create your own theme and either distribute it for people in the community to use or keep it for internal use.
 
@@ -30,11 +30,11 @@ To learn more about Gatsby themes including themes available in the plugin libra
 
 ## Routing
 
-Gatsby sites are full React web applications, meaning they have access to client-side APIs including routing (a fancy word for matching a URL with a part of a web page using JavaScript). Gatsby creates paths to access content, handling dynamic [routing](/docs/glossary#routing) for you and providing performance benefits through [content prefetching](/docs/routing/#performance-and-prefetching). A lot of the work is done at build time for a site using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). To handle applications that include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible), including authentication or retrieving dynamic content, you can use [client-only routes](/docs/client-only-routes-and-user-authentication) using [@reach/router](/docs/reach-router-and-gatsby/) which is built into Gatsby.
+Gatsby sites are full React web applications, meaning they have access to client-side APIs including routing (a fancy word for matching a URL with a part of a web page using JavaScript). Gatsby creates paths to access content, handling dynamic [routing](/docs/glossary#routing) for you and providing performance benefits through [content prefetching](/docs/reference/routing/creating-routes/#performance-and-prefetching). A lot of the work is done at build time for a site using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). To handle applications that include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible), including authentication or retrieving dynamic content, you can use [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication) using [@reach/router](/docs/reach-router-and-gatsby/) which is built into Gatsby.
 
 Gatsby provides a few different ways to create HTML pages that hook into its routing system. Here are some examples of [how to create pages](/docs/creating-and-modifying-pages) in Gatsby:
 
-- In your site’s gatsby-node.js file by implementing the API [createPages](/docs/node-apis/#createPages)
+- In your site’s gatsby-node.js file by implementing the API [createPages](/docs/reference/builds/gatsby-node/#createPages)
 - Gatsby core automatically turns React components in src/pages into pages
 - Plugins can also implement `createPages` for you, which will create additional pages
 
@@ -42,13 +42,13 @@ When Gatsby sites get built static HTML pages are compiled. When a user initiall
 
 Routes in Gatsby are generated for you under the hood by creating pages. Changing a route would depend on how that page was created: either changing a filename in `src/pages`, updating a slug in a post’s frontmatter metadata for a dynamic blog route, or changing the path you chose when generating a page with the `createPages` API.
 
-Here is where you can find more information on [Routing in Gatsby](/docs/routing/), including details on how to customize and authenticate routes.
+Here is where you can find more information on [Routing in Gatsby](/docs/reference/routing/creating-routes/), including details on how to customize and authenticate routes.
 
 ## Redux
 
 Redux is a state container and is used inside Gatsby to keep its internal state in one place. Redux provides a predictable flow on how and when state updates are done. Gatsby can easily hook into these state transitions to update multiple actions to keep everything consistent.
 
-When you implement a Gatsby [Node API](/docs/node-apis/), you are passed a collection of [actions](/docs/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
+When you implement a Gatsby [Node API](/docs/reference/builds/gatsby-node/), you are passed a collection of [actions](/docs/reference/builds/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
 
 Once the build is complete, the work of Redux is done and it is not part of the bundle delivered to the browser unless required independently by the application itself.
 
@@ -60,15 +60,15 @@ GraphQL is a query language (the QL part of its name) that Gatsby uses to genera
 
 Using a special syntax, you describe the data you want in your component and then that data is given to you, such as site metadata from your `gatsby-config.js`, connected WordPress posts, Markdown files, images, and more. Gatsby uses GraphQL to enable components to declare the data they need and apply it to render on a page. Using GraphQL in Gatsby provides many [benefits](/docs/why-gatsby-uses-graphql/), such as the ability to return data from multiple sources in one query, and transform that data at the same time (such as using Gatsby Image).
 
-Here is how you get started using GraphQL in Gatsby: [/tutorial/part-four/](/tutorial/part-four/)
+Here is how you get started using GraphQL in Gatsby: [Tutorial - Part 4](/docs/tutorial/part-four/)
 
 ## webpack
 
-webpack is an open-source JavaScript module bundler that Gatsby uses under the hood to package up your site content and assets into a static bundle. You don’t have to do anything to webpack directly for it to work on your Gatsby site, but you do have the option to [customize](/docs/add-custom-webpack-config/) it if necessary to provide a special configuration.
+webpack is an open-source JavaScript module bundler that Gatsby uses under the hood to package up your site content and assets into a static bundle. You don’t have to do anything to webpack directly for it to work on your Gatsby site, but you do have the option to [customize](/docs/how-to/custom-configuration/add-custom-webpack-config/) it if necessary to provide a special configuration.
 
 When Gatsby creates its default webpack config, a function is called allowing you to modify the config using a package called webpack-merge. Gatsby does multiple webpack builds with a somewhat different configuration; each build type is referred to as a “stage”.
 
-You can learn more about [webpack](/docs/webpack-and-ssr/) including how to [add a custom webpack Config](/docs/add-custom-webpack-config/) in Gatsby by visiting the docs.
+You can learn more about [webpack](/docs/webpack-and-ssr/) including how to [add a custom webpack Config](/docs/how-to/custom-configuration/add-custom-webpack-config/) in Gatsby by visiting the docs.
 
 ## Gatsby Cloud
 

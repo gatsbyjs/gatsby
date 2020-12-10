@@ -71,7 +71,7 @@ Create demo sites and examples to provide more authoritative material that suppo
 
 Follow the [docs templates](/contributing/docs-templates/) to ensure you’re producing content in the right format for its purpose.
 
-Use the [Markdown syntax doc](/docs/mdx/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
+Use the [Markdown syntax doc](/docs/how-to/routing/mdx/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/conceptual/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
 
 Run the docs site locally to check formatting and functionality. There are instructions in the [contributing docs](/contributing/docs-contributions/).
 
@@ -89,7 +89,7 @@ Apply feedback from pull request reviews in order for them to be accepted. Furth
 - [Docs Templates](/contributing/docs-templates/)
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Markdown Syntax Doc](/docs/mdx/markdown-syntax/)
+- [Markdown Syntax Doc](/docs/how-to/routing/mdx/markdown-syntax/)
 - [Pair Programming](/contributing/pair-programming/) for interviewing the core team only
 - [Blog Post Guidelines](/contributing/blog-contributions/)
 - [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)

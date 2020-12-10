@@ -32,7 +32,7 @@ For an initial introduction to using plugins, we'll install and implement the Ga
 
 ### ✋ Create a new Gatsby site
 
-As we mentioned in [part two](/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
+As we mentioned in [part two](/docs/tutorial/part-two/), at this point it's probably a good idea to close the terminal window(s) and project files from previous parts of the tutorial, to keep things clean on your desktop. Then open a new terminal window and run the following commands to create a new Gatsby site in a directory called `tutorial-part-three` and then move to this new directory:
 
 ```shell
 gatsby new tutorial-part-three https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -68,7 +68,7 @@ module.exports = {
 
 The `gatsby-config.js` is another special file that Gatsby will automatically recognize. This is where you add plugins and other site configuration.
 
-> Check out the [doc on gatsby-config.js](/docs/gatsby-config/) to read more, if you wish.
+> Check out the [doc on gatsby-config.js](/docs/reference/plugins-and-themes/gatsby-config/) to read more, if you wish.
 
 3. Typography.js needs a configuration file. Create a new directory called `utils` in the `src` directory. Then add a new file called `typography.js` to `utils` and copy the following into the file:
 
@@ -294,4 +294,4 @@ _Challenge:_ With your new "layout component" powers, try adding headers, footer
 
 ## What's coming next?
 
-Continue on to [part four of the tutorial](/tutorial/part-four/) where you'll start learning about Gatsby's data layer and programmatically creating pages!
+Continue on to [part four of the tutorial](/docs/tutorial/part-four/) where you'll start learning about Gatsby's data layer and programmatically creating pages!

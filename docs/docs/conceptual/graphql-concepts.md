@@ -15,7 +15,7 @@ the data you want in your component and then that data is given
 to you.
 
 Gatsby uses GraphQL to enable [page and StaticQuery
-components](/docs/building-with-components/) to declare what data they and their
+components](/docs/conceptual/building-with-components/) to declare what data they and their
 sub-components need. Then, Gatsby makes that data available in
 the browser when needed by your components.
 
@@ -88,7 +88,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/static-query/).
+**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/how-to/sourcing-data/static-query/).
 
 ### Understanding the parts of a query
 
@@ -118,7 +118,7 @@ When starting out with GraphQL, we recommend the following two tutorials:
 - https://www.howtographql.com/
 - https://graphql.org/learn/
 
-[The official Gatsby tutorial](/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
+[The official Gatsby tutorial](/docs/tutorial/part-four/) also includes an introduction to using GraphQL specifically with Gatsby.
 
 ## How do GraphQL and Gatsby work together?
 

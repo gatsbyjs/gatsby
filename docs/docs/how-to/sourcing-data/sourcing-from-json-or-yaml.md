@@ -241,7 +241,7 @@ Breaking down this code excerpt into smaller parts:
 
 1. Import the `js-yaml` package you installed earlier.
 2. Load the `index.yaml` file and parse the content.
-3. Using Gatsby's [`createPage()` API](/docs/actions/#createPage), create some pages programmatically from the parsed file.
+3. Using Gatsby's [`createPage()` API](/docs/reference/builds/actions/#createPage), create some pages programmatically from the parsed file.
 4. Use the `context` property to pass your data into the page as a special prop named `pageContext`, allowing it to be consumed. You can read more about `context` in [creating and modifying pages](/docs/creating-and-modifying-pages/).
 
 ### Create a template

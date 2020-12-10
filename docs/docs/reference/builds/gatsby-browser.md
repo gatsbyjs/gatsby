@@ -30,4 +30,4 @@ exports.wrapPageElement = ({ element, props }) => {
 }
 ```
 
-> Note: The APIs `wrapPageElement` and `wrapRootElement` exist in both the browser and [Server-Side Rendering (SSR) APIs](/docs/ssr-apis). If you use one of them, consider if you should implement it in both `gatsby-ssr.js` and `gatsby-browser.js` so that pages generated through SSR with Node.js are the same after being [hydrated](/docs/glossary#hydration) with browser JavaScript.
+> Note: The APIs `wrapPageElement` and `wrapRootElement` exist in both the browser and [Server-Side Rendering (SSR) APIs](/docs/reference/builds/gatsby-ssr). If you use one of them, consider if you should implement it in both `gatsby-ssr.js` and `gatsby-browser.js` so that pages generated through SSR with Node.js are the same after being [hydrated](/docs/glossary#hydration) with browser JavaScript.

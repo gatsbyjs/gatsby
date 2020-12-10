@@ -30,7 +30,7 @@ One of the most straightforward ways to add global styles to a site is using a g
 
 #### ✋ Create a new Gatsby site
 
-Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for [part one](/tutorial/part-one/) and start a new terminal session for part two.
+Start by creating a new Gatsby site. It may be best (especially if you're new to the command line) to close the terminal windows you used for [part one](/docs/tutorial/part-one/) and start a new terminal session for part two.
 
 Open a new terminal window, create a new "hello world" Gatsby site in a directory called `tutorial-part-two`, and then move to this new directory:
 
@@ -103,7 +103,7 @@ Your project's file structure should now look like this:
 ├── gatsby-browser.js
 ```
 
-> 💡 What is `gatsby-browser.js`? Don't worry about this too much and for now, just know that `gatsby-browser.js` is one of a handful of special files that Gatsby looks for and uses (if they exist). Here, the naming of the file **is** important. If you do want to explore more now, check out [the docs](/docs/browser-apis/).
+> 💡 What is `gatsby-browser.js`? Don't worry about this too much and for now, just know that `gatsby-browser.js` is one of a handful of special files that Gatsby looks for and uses (if they exist). Here, the naming of the file **is** important. If you do want to explore more now, check out [the docs](/docs/reference/builds/gatsby-browser/).
 
 2. Import your recently-created stylesheet in the `gatsby-browser.js` file:
 
@@ -126,7 +126,7 @@ If you take a look at your project in the browser, you should see a lavender bac
 
 ![Lavender Hello World!](global-css.png)
 
-> Tip: This part of the tutorial has focused on the quickest and most straightforward way to get started styling a Gatsby site — importing standard CSS files directly, using `gatsby-browser.js`. In most cases, the best way to add global styles is with a shared layout component. [Check out the docs](/docs/global-css/) for more on that approach.
+> Tip: This part of the tutorial has focused on the quickest and most straightforward way to get started styling a Gatsby site — importing standard CSS files directly, using `gatsby-browser.js`. In most cases, the best way to add global styles is with a shared layout component. [Check out the docs](/docs/how-to/styling/global-css/) for more on that approach.
 
 ## Using component-scoped CSS
 
@@ -312,7 +312,7 @@ CSS-in-JS is a component-oriented styling approach. Most generally, it is a patt
 
 #### Using CSS-in-JS with Gatsby
 
-There are many different CSS-in-JS libraries and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries, in particular, [Emotion](/docs/emotion/) and [Styled Components](/docs/styled-components/).
+There are many different CSS-in-JS libraries and many of them have Gatsby plugins already. We won't cover an example of CSS-in-JS in this initial tutorial, but we encourage you to [explore](/docs/styling/) what the ecosystem has to offer. There are mini-tutorials for two libraries, in particular, [Emotion](/docs/how-to/styling/emotion/) and [Styled Components](/docs/how-to/styling/styled-components/).
 
 #### Suggested reading on CSS-in-JS
 
@@ -332,4 +332,4 @@ and more!
 
 ## What's coming next?
 
-Now continue on to [part three of the tutorial](/tutorial/part-three/), where you'll learn about Gatsby plugins and layout components.
+Now continue on to [part three of the tutorial](/docs/tutorial/part-three/), where you'll learn about Gatsby plugins and layout components.

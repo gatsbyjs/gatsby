@@ -42,7 +42,7 @@ However - if you were to deploy your application as-is, those assets would not b
 
 ### Using `onPostBuild`
 
-You expose an [`onPostBuild`](/docs/node-apis/#onPostBuild) API hook. This can be used to deploy your content to the CDN, like so:
+You expose an [`onPostBuild`](/docs/reference/builds/gatsby-node/#onPostBuild) API hook. This can be used to deploy your content to the CDN, like so:
 
 ```js:title=gatsby-node.js
 const assetsDirectory = `public`
@@ -74,7 +74,7 @@ Now whenever the `build` script is invoked, e.g. `npm run build`, the `postbuild
 
 ### Usage with `pathPrefix`
 
-The [`pathPrefix`](/docs/path-prefix/) feature can be thought of as semi-related to this feature. That feature allows _all_ your website content to be prefixed with some constant prefix, for example you may want your blog to be hosted from `/blog` rather than the project root.
+The [`pathPrefix`](/docs/how-to/previews-deploys-hosting/path-prefix/) feature can be thought of as semi-related to this feature. That feature allows _all_ your website content to be prefixed with some constant prefix, for example you may want your blog to be hosted from `/blog` rather than the project root.
 
 This feature works seamlessly with `pathPrefix`. Build out your application with the `--prefix-paths` flag and you'll be well on your way to hosting an application with its assets hosted on a CDN, and its core functionality available behind a path prefix.
 

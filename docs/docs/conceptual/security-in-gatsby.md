@@ -123,7 +123,7 @@ Similar to npm, you can use the `yarn audit` command. It is available starting w
 
 ## Key Security
 
-Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/environment-variables/). See the following example for fetching data from GitHub with an Authorization Header:
+Gatsby allows you to [fetch data from various APIs](/docs/content-and-data/) and those APIs often require a key to access them. These keys should be stored in your build environment using [Environment Variables](/docs/how-to/local-development/environment-variables/). See the following example for fetching data from GitHub with an Authorization Header:
 
 ```js
 {

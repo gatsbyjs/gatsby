@@ -86,7 +86,7 @@ Inside it you'll find:
 
 ## Publishing a Theme
 
-After building your theme, you may want to publish it for the Gatsby community. To do so, please [publish your theme plugin to the plugin library](/contributing/submit-to-plugin-library/#publishing-a-plugin-to-the-library).
+After building your theme, you may want to publish it for the Gatsby community. To do so, please [publish your theme plugin to the plugin library](/docs/how-to/plugins-and-themes/submit-to-plugin-library/#publishing-a-plugin-to-the-library).
 
 ## Further resources
 
@@ -104,7 +104,7 @@ Check out the [Theme API documentation](/docs/theme-api/).
 
 ### Accessibility
 
-A Gatsby theme is a Gatsby site, therefore building with accessibility in mind is critical. Check out these [tips on making your sites (and themes!) accessible](/docs/making-your-site-accessible/).
+A Gatsby theme is a Gatsby site, therefore building with accessibility in mind is critical. Check out these [tips on making your sites (and themes!) accessible](/docs/conceptual/making-your-site-accessible/).
 
 ### Read through source code
 

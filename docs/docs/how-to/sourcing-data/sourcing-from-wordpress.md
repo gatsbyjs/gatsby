@@ -2,7 +2,7 @@
 title: Sourcing from WordPress
 ---
 
-This guide will walk you through the process of using [Gatsby](/) with WordPress and [WPGraphQL](https://www.wpgraphql.com/).
+This guide will walk you through the process of using Gatsby with WordPress and [WPGraphQL](https://www.wpgraphql.com/).
 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress-experimental](/packages/gatsby-source-wordpress-experimental/?=wordpress). Let's begin!
 
@@ -81,13 +81,13 @@ module.exports = {
 
 ## Using WordPress data
 
-Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/graphql-concepts/#how-do-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress-experimental`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/graphql-concepts/#how-does-graphql-and-gatsby-work-together)" that you can query against.
+Once your source plugin is pulling data, you can construct your site pages by implementing the `createPages` API in `gatsby-node.js`. When this is called, your data has already been fetched and is available to query with GraphQL. Gatsby uses [GraphQL at build time](/docs/conceptual/graphql-concepts/#how-do-graphql-and-gatsby-work-together); Your source plugin (in this case, `gatsby-source-wordpress-experimental`) fetches your data, and Gatsby uses that data to "[automatically _infer_ a GraphQL schema](/docs/conceptual/graphql-concepts/#how-does-graphql-and-gatsby-work-together)" that you can query against.
 
 The `createPages` API exposes the `graphql` function:
 
 > The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/blob/master/gatsby-node.js#L21))
 
-You can use the [`gatsby-node.js`](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/blob/master/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/layout-components/).
+You can use the [`gatsby-node.js`](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental/blob/master/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/how-to/routing/layout-components/).
 
 For example:
 
@@ -132,7 +132,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-After fetching data from WordPress via the query, all posts are iterated over, calling [`createPage`](/docs/actions/#createPage) for each one.
+After fetching data from WordPress via the query, all posts are iterated over, calling [`createPage`](/docs/reference/builds/actions/#createPage) for each one.
 
 A [Gatsby page is defined](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and an _optional_ GraphQL query and Layout component."
 

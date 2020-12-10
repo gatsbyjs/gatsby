@@ -27,7 +27,7 @@ To gain a greater understanding of what happens when you run either command, it 
 
 ### Understanding `gatsby develop` (runtime)
 
-Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby’s [data explorer](/docs/running-queries-with-graphiql/).
+Using `gatsby develop` runs a server in the background, enabling useful features like live reloading and Gatsby’s [data explorer](/docs/how-to/querying-data/running-queries-with-graphiql/).
 
 `gatsby develop` is optimized for rapid feedback and extra debugging information. The output of running `gatsby develop` in a fresh install of the Gatsby default starter looks like this:
 
@@ -145,7 +145,7 @@ success run page queries - 0.033 s — 5/5 347.81 queries/second
 + info Done building in 16.143999152 sec
 ```
 
-_**Note**: the output of `gatsby develop` and `gatsby build` can vary based on plugins you've installed that can tap into the build lifecycle and the [Gatsby reporter](/docs/node-api-helpers/#reporter). The above output is from running the default Gatsby starter._
+_**Note**: the output of `gatsby develop` and `gatsby build` can vary based on plugins you've installed that can tap into the build lifecycle and the [Gatsby reporter](/docs/reference/builds/node-api-helpers/#reporter). The above output is from running the default Gatsby starter._
 
 There is only one difference in the bootstrap phase where HTML and CSS is deleted to prevent problems with previous builds. In the build phase, the build command skips setting up a dev server and goes into compiling the assets.
 
@@ -197,7 +197,7 @@ Plugins installed and included in the config of your site and your site's themes
 
 3. `onPreInit`
 
-Runs the [`onPreInit` node API](/docs/node-apis/#onPreInit) if it has been implemented by your site or any installed plugins.
+Runs the [`onPreInit` node API](/docs/reference/builds/gatsby-node/#onPreInit) if it has been implemented by your site or any installed plugins.
 
 4. `delete html and css files from previous builds`
 
@@ -213,21 +213,21 @@ Copies site files into the cache in the `.cache` folder.
 
 7. `onPreBootstrap`
 
-Calls the [`onPreBootstrap` node API](/docs/node-apis/#onPreBootstrap) in your site or plugins where it is implemented.
+Calls the [`onPreBootstrap` node API](/docs/reference/builds/gatsby-node/#onPreBootstrap) in your site or plugins where it is implemented.
 
 8. `source and transform nodes`
 
-Creates Node objects from your site and all plugins implementing the [`sourceNodes` API](/docs/node-apis/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
+Creates Node objects from your site and all plugins implementing the [`sourceNodes` API](/docs/reference/builds/gatsby-node/#sourceNodes), and warns about plugins that aren't creating any nodes. Nodes created by source or transformer plugins are cached.
 
 Node objects created at this stage are considered top level nodes, meaning they don't have a parent node that they are derived from.
 
 9. `Add explicit types`
 
-Adds types to the GraphQL schema for nodes that you have defined explicitly with Gatsby's [schema optimization APIs](/docs/schema-customization/#explicitly-defining-data-types).
+Adds types to the GraphQL schema for nodes that you have defined explicitly with Gatsby's [schema optimization APIs](/docs/reference/querying-data/schema-customization/#explicitly-defining-data-types).
 
 10. `Add inferred types`
 
-All other nodes not already defined are inspected and have types [inferred](/docs/schema-customization/#automatic-type-inference) by Gatsby.
+All other nodes not already defined are inspected and have types [inferred](/docs/reference/querying-data/schema-customization/#automatic-type-inference) by Gatsby.
 
 11. `Processing types`
 
@@ -239,17 +239,17 @@ Imports the composed GraphQL schema and builds it.
 
 13. `createPages`
 
-Calls the [`createPages` API](/docs/node-apis/#createPages) for your site and all plugins implementing it, like when you [create pages programmatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
+Calls the [`createPages` API](/docs/reference/builds/gatsby-node/#createPages) for your site and all plugins implementing it, like when you [create pages programmatically](/docs/programmatically-create-pages-from-data/) in your `gatsby-node.js`.
 
-Plugins can handle the [`onCreatePage` event](/docs/node-apis/#onCreatePage) at this point for use cases like manipulating the path of pages.
+Plugins can handle the [`onCreatePage` event](/docs/reference/builds/gatsby-node/#onCreatePage) at this point for use cases like manipulating the path of pages.
 
 14. `createPagesStatefully`
 
-Similar to the `createPages` step, but for the [`createPagesStatefully` API](/docs/node-apis/#createPagesStatefully) which is intended for plugins who want to manage creating and removing pages in response to changes in data not managed by Gatsby.
+Similar to the `createPages` step, but for the [`createPagesStatefully` API](/docs/reference/builds/gatsby-node/#createPagesStatefully) which is intended for plugins who want to manage creating and removing pages in response to changes in data not managed by Gatsby.
 
 15. `onPreExtractQueries`
 
-Calls the [`onPreExtractQueries` API](/docs/node-apis/#onPreExtractQueries) for your site and all plugins implementing it.
+Calls the [`onPreExtractQueries` API](/docs/reference/builds/gatsby-node/#onPreExtractQueries) for your site and all plugins implementing it.
 
 16. `update schema`
 
@@ -265,7 +265,7 @@ An internal Gatsby utility adds the code that files need to load/require.
 
 19. `write out redirect data`
 
-An internal Gatsby utility adds code for redirects, like implemented with [`createRedirect`](/docs/actions/#createRedirect).
+An internal Gatsby utility adds code for redirects, like implemented with [`createRedirect`](/docs/reference/builds/actions/#createRedirect).
 
 20. `Build manifest and related icons` - (from `gatsby-plugin-manifest`)
 
@@ -273,13 +273,13 @@ This step is activated by `gatsby-plugin-manifest` in the `gatsby-default-starte
 
 21. `onPostBootstrap`
 
-Calls the [`onPostBootstrap` API](/docs/node-apis/#onPostBootstrap) for your site and all plugins implementing it.
+Calls the [`onPostBootstrap` API](/docs/reference/builds/gatsby-node/#onPostBootstrap) for your site and all plugins implementing it.
 
 ### Steps of the build phase
 
 1. `run static queries`
 
-Static queries in [non-page components](/docs/building-with-components/#non-page-components) that were queued up earlier from query extraction are run to provide data to the components that need it.
+Static queries in [non-page components](/docs/conceptual/building-with-components/#non-page-components) that were queued up earlier from query extraction are run to provide data to the components that need it.
 
 2. `Generating image thumbnails — 6/6` - (from `gatsby-plugin-sharp`)
 

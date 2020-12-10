@@ -68,4 +68,4 @@ performance benefits like only bundling referenced code.
 
 ## How to build a page using CSS Modules
 
-Visit the [CSS Modules section of the tutorial](/tutorial/part-two/#css-modules) for a guided tour of building a page with CSS Modules.
+Visit the [CSS Modules section of the tutorial](/docs/tutorial/part-two/#css-modules) for a guided tour of building a page with CSS Modules.

@@ -115,5 +115,5 @@ In case you get stuck in dependencies conflicts, you can use the [npm-force-reso
 
 Check out these related guides for major upgrades of Gatsby:
 
-- [Migrating from v1 to v2](/docs/migrating-from-v1-to-v2/)
-- [Migrating from v0 to v1](/docs/migrating-from-v0-to-v1/)
+- [Migrating from v1 to v2](/docs/reference/release-notes/migrating-from-v1-to-v2/)
+- [Migrating from v0 to v1](/docs/reference/release-notes/migrating-from-v0-to-v1/)

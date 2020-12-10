@@ -26,7 +26,7 @@ These tools follow a process in order to verify a user on the client against an 
 
 1. First, a request is made from a Gatsby site (the client) to an authentication service to perform an action like register a new user or login.
 
-2. If the credentials (like a username and password) provided from the client match a user in the authentication service, it returns a token (like a JSON Web Token, abbreviated as JWT) so the user has a key they can use to prove they are who they say they are. The user data returned can be stored in the Gatsby app by passing it to components using a Provider component with the React Context API and [`wrapRootElement` API](/docs/browser-apis/#wrapRootElement) from Gatsby.
+2. If the credentials (like a username and password) provided from the client match a user in the authentication service, it returns a token (like a JSON Web Token, abbreviated as JWT) so the user has a key they can use to prove they are who they say they are. The user data returned can be stored in the Gatsby app by passing it to components using a Provider component with the React Context API and [`wrapRootElement` API](/docs/reference/builds/gatsby-browser/#wrapRootElement) from Gatsby.
 
 3. With the key, the client can make a request to an external data source like an API (the server) where protected data is stored. The key is unique to a specific user and allows the client to access their specific data.
 
@@ -53,7 +53,7 @@ Taking advantage of this client-side routing allows you to protect or customize 
 </Router>
 ```
 
-More specific code examples for this pattern are outlined in the [Client-only Routes & User Authentication guide](/docs/client-only-routes-and-user-authentication/#implementing-client-only-routes).
+More specific code examples for this pattern are outlined in the [Client-only Routes & User Authentication guide](/docs/how-to/routing/client-only-routes-and-user-authentication/#implementing-client-only-routes).
 
 ### Protecting code from accessing browser globals during build
 

@@ -32,7 +32,7 @@ By default, this is a string value as you haven't told Gatsby yet how to interpr
 
 In your `gatsby-node.js` file, you can do some processing to create file nodes for the custom `featuredImgUrl` Frontmatter field.
 
-As you may not want to require all blog posts to have a featured image, you can define some GraphQL types with Gatsby's [Schema Customization API](/docs/schema-customization/) to provide flexibility and control with your queries. Explicitly defining these types allows you to return `null` when a blog post does not contain a featured image in its frontmatter data. Even if there are no blog posts with these data fields, the type will still exist in the schema and can be used in your code.
+As you may not want to require all blog posts to have a featured image, you can define some GraphQL types with Gatsby's [Schema Customization API](/docs/reference/querying-data/schema-customization/) to provide flexibility and control with your queries. Explicitly defining these types allows you to return `null` when a blog post does not contain a featured image in its frontmatter data. Even if there are no blog posts with these data fields, the type will still exist in the schema and can be used in your code.
 
 ```js:title=gatsby-node.js
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
@@ -85,7 +85,7 @@ exports.onCreateNode = async ({
 
 Going step by step through the code:
 
-1. Define some types for `MarkdownRemark` using the Schema Customization API. For `featuredImg`, use the `from` argument to point the `link` extension to the correct field name (with a `___NODE` suffix), [more details about foreign-key fields here](/docs/schema-customization/#foreign-key-fields). Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
+1. Define some types for `MarkdownRemark` using the Schema Customization API. For `featuredImg`, use the `from` argument to point the `link` extension to the correct field name (with a `___NODE` suffix), [more details about foreign-key fields here](/docs/reference/querying-data/schema-customization/#foreign-key-fields). Defining a field for alternative text as `featuredImgAlt` can also improve accessibility, in addition to providing context for the image if it fails to load.
 2. Create an `onCreateNode` function so you can watch for when `MarkdownRemark` nodes are made.
 3. Use `createRemoteFileNode` by passing in the various required fields and get a reference to the file afterwards.
 4. If the Node is created, attach it as a child of the original Node. `___NODE` tells the GraphQL layer that the name before it is going to be a field on the parent Node that links to another Node. To do this, pass the `id` as the reference. Do note, this new node is now attached to the root of the `markdownRemark` node instead of the `frontmatter` field.
@@ -114,7 +114,7 @@ query {
 
 ![GraphiQL with above query inserted](./images/remote-file-node-graphiql-preview.png)
 
-You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/gatsby-image/).
+You can then use `gatsby-transformer-sharp` to fill in the query for a fixed image here. For more information on transforming images using parameters and fragments, check out the [Gatsby Image API docs](/docs/reference/images-and-media/gatsby-image/).
 
 ```graphql
 query {
@@ -132,7 +132,7 @@ query {
 }
 ```
 
-And finally, you can update the template for this blog post to include a featured image node. Note the alt text still comes from the post frontmatter. This template is based on the one in the [Programmatically create pages from data](/tutorial/part-seven/) section of the Gatsby Tutorial.
+And finally, you can update the template for this blog post to include a featured image node. Note the alt text still comes from the post frontmatter. This template is based on the one in the [Programmatically create pages from data](/docs/tutorial/part-seven/) section of the Gatsby Tutorial.
 
 ```jsx
 import React from "react"

@@ -4,7 +4,7 @@ title: Querying Data in Pages with GraphQL
 
 Gatsby's `graphql` tag enables page components to retrieve data via a GraphQL query.
 
-In this guide, you will learn [how to use the `graphql` tag](/docs/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/page-query#how-does-the-graphql-tag-work).
+In this guide, you will learn [how to use the `graphql` tag](/docs/how-to/querying-data/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/how-to/querying-data/page-query#how-does-the-graphql-tag-work).
 
 If you’re curious, you can also read more about [why Gatsby uses GraphQL](/docs/why-gatsby-uses-graphql/).
 
@@ -76,7 +76,7 @@ const HomePage = () => {
 
 The first part of writing the GraphQL query is including the operation (in this case "`query`") along with a name.
 
-From [browsing GraphiQL](/tutorial/part-five/#introducing-graphiql/), you'll find that one of the fields that you can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data provided in `gatsby-config.js`.
+From [browsing GraphiQL](/docs/tutorial/part-five/#introducing-graphiql/), you'll find that one of the fields that you can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data provided in `gatsby-config.js`.
 
 Putting this together, the completed query looks like:
 
@@ -147,7 +147,7 @@ This means that the `graphql` tag isn’t executed the way that JavaScript code 
 
 ## How to add query variables to a page query
 
-Variables can be added to _page queries_ (but not static queries) through the context object that is an argument of the [`createPage` API](/docs/actions/#createPage).
+Variables can be added to _page queries_ (but not static queries) through the context object that is an argument of the [`createPage` API](/docs/reference/builds/actions/#createPage).
 
 Consider the following query:
 

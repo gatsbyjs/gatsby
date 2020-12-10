@@ -4,11 +4,11 @@ title: Configuring Plugin Usage with Plugin Options
 
 Plugins loaded into a Gatsby site can have options passed in to customize how a plugin operates.
 
-_This guide refers to creating plugins, if you are looking for general information on using options with plugins refer to ["Using a Plugin in Your Site"](/docs/using-a-plugin-in-your-site/). If you are looking for options of a specific plugin, refer to its README._
+_This guide refers to creating plugins, if you are looking for general information on using options with plugins refer to ["Using a Plugin in Your Site"](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/). If you are looking for options of a specific plugin, refer to its README._
 
 ## Where to access plugin options
 
-A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/node-apis/), [Browser](/docs/browser-apis/), and [SSR APIs](/docs/ssr-apis/). Consider the following `gatsby-config` with a plugin called `gatsby-plugin-console-log`:
+A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/reference/builds/gatsby-node/), [Browser](/docs/reference/builds/gatsby-browser/), and [SSR APIs](/docs/reference/builds/gatsby-ssr/). Consider the following `gatsby-config` with a plugin called `gatsby-plugin-console-log`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -56,11 +56,11 @@ The following table lists possible options values and an example plugin that mak
 
 ## How to validate plugin options
 
-To help users [configure plugins](/docs/configuring-usage-with-plugin-options/) correctly, a plugin can optionally define a schema to enforce a type for each option. Gatsby will validate that the options users pass match the schema to help them correctly set up their site.
+To help users [configure plugins](/docs/how-to/plugins-and-themes/configuring-usage-with-plugin-options/) correctly, a plugin can optionally define a schema to enforce a type for each option. Gatsby will validate that the options users pass match the schema to help them correctly set up their site.
 
 ### How to define an options schema
 
-You should use the [`pluginOptionsSchema`](/docs/node-apis/#pluginOptionsSchema) API to define your plugins' options schema. It gets passed an instance of [Joi](https://joi.dev), which you use to return a [`Joi.object`](https://joi.dev/api/?v=17.3.0#object) schema for the options you expect users to pass.
+You should use the [`pluginOptionsSchema`](/docs/reference/builds/gatsby-node/#pluginOptionsSchema) API to define your plugins' options schema. It gets passed an instance of [Joi](https://joi.dev), which you use to return a [`Joi.object`](https://joi.dev/api/?v=17.3.0#object) schema for the options you expect users to pass.
 
 For example, imagine you were creating a plugin called `gatsby-plugin-console-log`. You decide you want users to configure your plugin using the following options:
 

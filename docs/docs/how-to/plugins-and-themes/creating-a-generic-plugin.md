@@ -4,7 +4,7 @@ title: Creating a Generic Plugin
 
 This section aims to explain the structure of a Gatsby plugin and the files you need to create one.
 
-The idea of a generic plugin is to lay more emphasis on the makeup of a plugin rather than the specific labels ([source](/docs/creating-a-source-plugin/), [transformer](/docs/creating-a-transformer-plugin/), [local](/docs/creating-a-local-plugin/)) that are [selected based on functionality](/docs/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
+The idea of a generic plugin is to lay more emphasis on the makeup of a plugin rather than the specific labels ([source](/docs/how-to/plugins-and-themes/creating-a-source-plugin/), [transformer](/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/), [local](/docs/creating-a-local-plugin/)) that are [selected based on functionality](/docs/how-to/plugins-and-themes/naming-a-plugin/). As seen in the [what is a plugin doc](/docs/what-is-a-plugin/), a plugin is a piece of software that acts as an add-on and gives a Gatsby site additional functionality.
 
 Plugins contain a file, usually in the project root, called `package.json` - this file holds various metadata relevant to the project. The `package.json` file is also used to provide information to npm that identifies the project and allows npm to handle the project's dependencies.
 
@@ -20,7 +20,7 @@ Once you've run the command you'll see a series of options listed in the command
 
 ## What happens in a generic plugin?
 
-In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/node-apis/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Node using the [createNode](/docs/actions/#createNode) action.
+In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/reference/builds/gatsby-node/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Node using the [createNode](/docs/reference/builds/actions/#createNode) action.
 
 In `gatsby-node.js` you can carry out functions with these APIs, such as:
 
@@ -33,7 +33,7 @@ In `gatsby-node.js` you can carry out functions with these APIs, such as:
 
 ### An example of a generic plugin
 
-[sourceNodes](/docs/node-apis/#sourceNodes) is a life-cycle API that a plugin can use to create Nodes. An example of how to implement a function using `sourceNodes` is shown below:
+[sourceNodes](/docs/reference/builds/gatsby-node/#sourceNodes) is a lifecycle API that a plugin can use to create Nodes. An example of how to implement a function using `sourceNodes` is shown below:
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -57,4 +57,4 @@ The above code block creates a node called `"Test Node"` as seen from the `title
 
 > Libraries like [Axios](https://www.npmjs.com/package/axios) can be used to handle calls in the `gatsby-node.js` file
 
-Though all plugins have the same structure, their name signals what functionality they provide. See the [naming a plugin](/docs/naming-a-plugin) section for more information.
+Though all plugins have the same structure, their name signals what functionality they provide. See the [naming a plugin](/docs/how-to/plugins-and-themes/naming-a-plugin) section for more information.

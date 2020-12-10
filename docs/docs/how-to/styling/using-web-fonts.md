@@ -63,7 +63,7 @@ Or with yarn:
 yarn add gatsby-plugin-web-font-loader
 ```
 
-Then, create an [environment variable](/docs/environment-variables/) to store your Adobe Fonts project ID. (Make sure this file is in your `.gitignore` file so your ID doesn't get committed!) For example, if your Adobe Fonts project ID is `abcdefg`, your `.env` file will look like this:
+Then, create an [environment variable](/docs/how-to/local-development/environment-variables/) to store your Adobe Fonts project ID. (Make sure this file is in your `.gitignore` file so your ID doesn't get committed!) For example, if your Adobe Fonts project ID is `abcdefg`, your `.env` file will look like this:
 
 ```text:title=.env
 TYPEKIT_ID=abcdefg

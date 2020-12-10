@@ -36,7 +36,7 @@ First, you need to create a production build of your Gatsby site. The Gatsby dev
 gatsby build
 ```
 
-> 💡 As you learned in [part 1](/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
+> 💡 As you learned in [part 1](/docs/tutorial/part-one/), this does a production build of your site and outputs the built static files into the `public` directory.
 
 2. View the production site locally. Run:
 
@@ -86,7 +86,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 npm install gatsby-plugin-manifest
 ```
 
-2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
+2. Add a favicon for your app under `src/images/icon.png`. For the purposes of this tutorial you can use [this example icon](https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/tutorial/part-eight/icon.png), should you not have one available. The icon is necessary to build all images for the manifest. For more information, look at the docs for [`gatsby-plugin-manifest`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/README.md).
 
 3. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
 
@@ -347,7 +347,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ### Official Documentation
 
-- [Official Documentation](https://www.gatsbyjs.com/docs/): View our Official Documentation for _[Quick Start](https://www.gatsbyjs.com/docs/quick-start/)_, _[Detailed Guides](https://www.gatsbyjs.com/docs/preparing-your-environment/)_, _[API References](https://www.gatsbyjs.com/docs/gatsby-link/)_, and much more.
+- [Official Documentation](/docs/): View our Official Documentation for step-by-step [How-To Guides](/docs/how-to/), big-picture [Conceptual Guides](/docs/conceptual), and technical [Reference Guides](/docs/reference).
 
 ### Official Plugins
 
@@ -361,7 +361,7 @@ Lighthouse is a great tool for site improvements and learning -- Continue lookin
 
 ## That's all, folks
 
-Well, not quite; just for this tutorial. There are [Additional Tutorials](/tutorial/additional-tutorials/) to check out for more guided use cases.
+Well, not quite; just for this tutorial. There are additional [How-To Guides](/docs/how-to/) to check out for more guided use cases.
 
 This is just the beginning. Keep going!
 

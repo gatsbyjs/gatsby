@@ -4,7 +4,7 @@ title: Routing
 
 Part of what makes Gatsby sites so fast is that a lot of the work is done at build time and the running site is using mostly [static content](/docs/adding-app-and-website-functionality/#static-pages). During that process, Gatsby creates paths to access that content, handling [routing](/docs/glossary#routing) for you. Navigating in a Gatsby app requires an understanding of what those paths are and how they're generated.
 
-Alternatively, your application may include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible). This includes things like authentication or retrieving dynamic content. To handle those pages, you can make use of [client-only routes](/docs/client-only-routes-and-user-authentication) using [`@reach/router`](/docs/reach-router-and-gatsby/) which is built into Gatsby.
+Alternatively, your application may include functionality that cannot be handled at build time or through [rehydration](/docs/adding-app-and-website-functionality/#how-hydration-makes-apps-possible). This includes things like authentication or retrieving dynamic content. To handle those pages, you can make use of [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication) using [`@reach/router`](/docs/reach-router-and-gatsby/) which is built into Gatsby.
 
 With Gatsby's file system routing, each file inside the `src/pages` directory will generate its own route in your Gatsby site. The path for those routes matches the file structure it's found in.
 
@@ -13,8 +13,8 @@ With Gatsby's file system routing, each file inside the `src/pages` directory wi
 Routes can be created in three ways:
 
 - By creating React components in `src/pages`. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
-- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
-- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/node-apis/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
+- By using the [File System Route API](/docs/reference/routing/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
+- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/reference/builds/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
 ### Routes defined in `src/pages`
 
@@ -29,7 +29,7 @@ The exception to this rule is any file named `index.js`. Files with this name ar
 | `src/pages/contact.js`             | `yoursite.com/contact`             |
 | `src/pages/information/contact.js` | `yoursite.com/information/contact` |
 
-Note that if a particular directory does not have an `index.js` file, then that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
+Note that if a particular directory does not have an `index.js` file, then that root page does not exist, and attempts to navigate to it will land you on a [404 page](/docs/how-to/adding-common-features/add-404-page/). For example, `yoursite.com/information/contact` may exist, but that does not guarantee `yoursite.com/information` exists.
 
 ### Using the File System Route API
 
@@ -41,11 +41,11 @@ For example, assuming you have a model called `Product`:
 
 - `src/pages/products/{Product.name}.js => /products/burger`
 
-See the [File System Route API](/docs/file-system-route-api/) documentation for more detail.
+See the [File System Route API](/docs/reference/routing/file-system-route-api/) documentation for more detail.
 
 ### Using `gatsby-node.js`
 
-The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/node-apis/), including the [`createPages`](/docs/node-apis/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
+The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/reference/builds/gatsby-node/), including the [`createPages`](/docs/reference/builds/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/builds/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {
@@ -83,19 +83,19 @@ Since there are multiple ways to create a page, different plugins, themes, or se
 
 If your goal is to define paths that are multiple levels deep, such as `/portfolio/art/item1`, that can be done directly when creating pages as mentioned in [Routes defined in `src/pages`](#pages-defined-in-srcpages).
 
-Alternatively, if you want to create pages that will display different subcomponents depending on the URL path (such as a specific sidebar widget), Gatsby can handle that at the page level using [layouts](/docs/layout-components/).
+Alternatively, if you want to create pages that will display different subcomponents depending on the URL path (such as a specific sidebar widget), Gatsby can handle that at the page level using [layouts](/docs/how-to/routing/layout-components/).
 
 ## Linking between routes
 
-In order to link between pages, you can use [`gatsby-link`](/docs/gatsby-link/). Using `gatsby-link` gives you built in [performance benefits](#performance-and-prefetching).
+In order to link between pages, you can use [`gatsby-link`](/docs/reference/routing/gatsby-link/). Using `gatsby-link` gives you built in [performance benefits](#performance-and-prefetching).
 
 Alternatively, you can navigate between pages using standard `<a>` tags, but you won't get the benefit of prefetching in this case.
 
-Gatsby will handle scroll restoration for you in most cases. To track and restore scroll position in additional containers, you can [use the `useScrollRestoration` hook](/docs/scroll-restoration/).
+Gatsby will handle scroll restoration for you in most cases. To track and restore scroll position in additional containers, you can [use the `useScrollRestoration` hook](/docs/how-to/routing/scroll-restoration/).
 
 ## Creating authentication-gated routes
 
-For pages dealing with sensitive information, or other dynamic behavior, you may want to handle that information server-side. Gatsby lets you create [client-only routes](/docs/client-only-routes-and-user-authentication) that live behind an authentication gate, ensuring that the information is only available to authorized users.
+For pages dealing with sensitive information, or other dynamic behavior, you may want to handle that information server-side. Gatsby lets you create [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication) that live behind an authentication gate, ensuring that the information is only available to authorized users.
 
 ## Performance and Prefetching
 

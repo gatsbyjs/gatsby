@@ -12,8 +12,8 @@ themes later.
 
 ## Layouts
 
-In Gatsby themes you can apply global layouts by using [`wrapRootElement`](/docs/browser-apis/#wrapRootElement)
-or [`wrapPageElement`](/docs/browser-apis/#wrapPageElement). For better theme
+In Gatsby themes you can apply global layouts by using [`wrapRootElement`](/docs/reference/builds/gatsby-browser/#wrapRootElement)
+or [`wrapPageElement`](/docs/reference/builds/gatsby-browser/#wrapPageElement). For better theme
 composition it's recommended to use this feature sparingly. It's a great fit for setting up any
 necessary [React Context](https://reactjs.org/docs/context.html) providers. You shouldn't typically
 add any layout components, such as headers or footers, because it will be applied globally which

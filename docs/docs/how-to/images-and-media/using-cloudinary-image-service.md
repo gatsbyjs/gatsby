@@ -6,7 +6,7 @@ Cloudinary is a cloud-based end-to-end media management platform that provides s
 
 In this guide you will take a look at the [gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/packages/gatsby-transformer-cloudinary/) plugins which you can use to improve the experience of handling images on Gatsby sites.
 
-Plugins are generally used to abstract functionality in Gatsby. In this case, the `gatsby-source-cloudinary` plugin is a [source plugin](/docs/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.
+Plugins are generally used to abstract functionality in Gatsby. In this case, the `gatsby-source-cloudinary` plugin is a [source plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.
 
 > Here's a [demo site that uses the gatsby-source-cloudinary](https://gsc-sample.netlify.app) showcasing optimized images in a masonry grid, served from Cloudinary.
 
@@ -19,7 +19,7 @@ Dealing with images on the web has always been a problem as unoptimized images c
 Cloudinary provides a couple of amazing solutions to this problem, namely:
 
 - Remote storage and delivery of images via CDN
-- Offers a wider range of transformations than [gatsby-image](/docs/using-gatsby-image/).
+- Offers a wider range of transformations than [gatsby-image](/docs/how-to/images-and-media/using-gatsby-image/).
 - [Digital Asset Management](https://cloudinary.com/documentation/digital_asset_management_overview) for enterprise assets
 
 ## Gatsby-source-cloudinary
@@ -86,7 +86,7 @@ Here's a [link to the README](https://github.com/Chuloo/gatsby-source-cloudinary
 
 ## Gatsby-transformer-cloudinary
 
-After sourcing media files from Cloudinary, you will be able to leverage Cloudinary’s media transformation capabilities. To do so, use `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/creating-a-transformer-plugin/) that is used to change image formats, styles and dimensions. It also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
+After sourcing media files from Cloudinary, you will be able to leverage Cloudinary’s media transformation capabilities. To do so, use `gatsby-transformer-cloudinary` which is a type of [transformer plugin](/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/) that is used to change image formats, styles and dimensions. It also optimizes images for minimal file size alongside high visual quality for an improved user experience and minimal bandwidth.
 
 Here's a [demo site that uses the gatsby-transformer-plugin](https://gatsby-transformer-cloudinary.netlify.app/fluid/)
 

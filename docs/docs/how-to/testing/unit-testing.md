@@ -243,7 +243,7 @@ Once this is changed, you can write your tests in TypeScript using the `.ts` or 
 If you need to make changes to your Babel config, you can edit the config in
 `jest-preprocess.js`. You may need to enable some of the plugins used by Gatsby,
 though remember you may need to install the Babel 7 versions. See
-[the Gatsby Babel config guide](/docs/babel) for some examples.
+[the Gatsby Babel config guide](/docs/how-to/custom-configuration/babel) for some examples.
 
 For more information on Jest testing, visit
 [the Jest site](https://jestjs.io/docs/en/getting-started).

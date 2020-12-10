@@ -54,7 +54,7 @@ module.exports = {
 }
 ```
 
-> Note: Read more about [gatsby-config.js](/docs/gatsby-config/)
+> Note: Read more about [gatsby-config.js](/docs/reference/plugins-and-themes/gatsby-config/)
 
 Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-gtag/).
 

@@ -65,7 +65,7 @@ module.exports = {
 
 This way you can store it in one place, and pull it whenever you need it. If you ever need to update the info, you only have to change it here.
 
-See a full description and sample usage in [Gatsby.js Tutorial Part Four](/tutorial/part-four/#data-in-gatsby).
+See a full description and sample usage in [Gatsby.js Tutorial Part Four](/docs/tutorial/part-four/#data-in-gatsby).
 
 ## Plugins
 
@@ -144,7 +144,7 @@ module.exports = {
 }
 ```
 
-See more about [Adding a Path Prefix](/docs/path-prefix/).
+See more about [Adding a Path Prefix](/docs/how-to/previews-deploys-hosting/path-prefix/).
 
 ## Polyfill
 
@@ -158,13 +158,13 @@ module.exports = {
 }
 ```
 
-See more about [Browser Support](/docs/browser-support/#polyfills) in Gatsby.
+See more about [Browser Support](/docs/how-to/custom-configuration/browser-support/#polyfills) in Gatsby.
 
 ## Mapping node types
 
 Gatsby includes an advanced feature that lets you create "mappings" between node types.
 
-> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/schema-customization/#foreign-key-fields).
+> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/reference/querying-data/schema-customization/#foreign-key-fields).
 
 For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a YAML file named `author.yaml`:
 

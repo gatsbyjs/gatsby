@@ -194,7 +194,7 @@ export default function CallToAction(props) {
 
 ## Using the CSS prop
 
-In addition to passing a different prop to a component you’re extending, you might want to apply CSS using the [Emotion CSS prop](/docs/emotion/). This will allow you to change the styling of a particular component without changing any of its functionality.
+In addition to passing a different prop to a component you’re extending, you might want to apply CSS using the [Emotion CSS prop](/docs/how-to/styling/emotion/). This will allow you to change the styling of a particular component without changing any of its functionality.
 
 ```jsx:title=src/gatsby-theme-blog/components/newsletter/call-to-action.js
 import { NewsletterCTA } from "gatsby-theme-blog/src/components/newsletter"

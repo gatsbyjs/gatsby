@@ -4,7 +4,7 @@ typora-copy-images-to: ./
 disableTableOfContents: true
 ---
 
-> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/tutorial/part-four/) and [part 5](/tutorial/part-five/) before continuing here.
+> This tutorial is part of a series about Gatsby’s data layer. Make sure you’ve gone through [part 4](/docs/tutorial/part-four/) and [part 5](/docs/tutorial/part-five/) before continuing here.
 
 ## What's in this tutorial?
 
@@ -185,4 +185,4 @@ Try creating a new page containing a blog post and see what happens to the list 
 
 This is great! You've just created a nice index page where you're querying your markdown files and producing a list of blog post titles and excerpts. But you don't want to just see excerpts, you want actual pages for your markdown files.
 
-You could continue to create pages by placing React components in `src/pages`. However, you'll next learn how to _programmatically_ create pages from _data_. Gatsby is _not_ limited to making pages from files like many static site generators. Gatsby lets you use GraphQL to query your _data_ and _map_ the query results to _pages_—all at build time. This is a really powerful idea. You'll be exploring its implications and ways to use it in the next tutorial, where you'll learn how to [programmatically create pages from data](/tutorial/part-seven/).
+You could continue to create pages by placing React components in `src/pages`. However, you'll next learn how to _programmatically_ create pages from _data_. Gatsby is _not_ limited to making pages from files like many static site generators. Gatsby lets you use GraphQL to query your _data_ and _map_ the query results to _pages_—all at build time. This is a really powerful idea. You'll be exploring its implications and ways to use it in the next tutorial, where you'll learn how to [programmatically create pages from data](/docs/tutorial/part-seven/).

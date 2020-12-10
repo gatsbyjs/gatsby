@@ -54,6 +54,6 @@ As you can see, Gatsby's performance is excellent out of the box but we're missi
 
 To improve your scores further, see the links below:
 
-- [Add a manifest file](/docs/add-a-manifest-file/)
-- [Add offline support](/docs/add-offline-support-with-a-service-worker/)
+- [Add a manifest file](/docs/how-to/performance/add-a-manifest-file/)
+- [Add offline support](/docs/how-to/performance/add-offline-support-with-a-service-worker/)
 - [Add page metadata](/docs/add-page-metadata/)

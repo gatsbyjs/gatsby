@@ -4,7 +4,7 @@ title: Migrating from v1 to v2
 
 Looking for the v1 docs? [Find them here](https://v1.gatsbyjs.org/).
 
-> This document is a work in progress. Have you run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/migrating-from-v1-to-v2.md)!
+> This document is a work in progress. Have you run into something that's not covered here? [Add your changes on GitHub](https://github.com/gatsbyjs/gatsby/edit/master/docs/docs/reference/release-notes/migrating-from-v1-to-v2.md)!
 
 ## Introduction
 
@@ -218,7 +218,7 @@ export default function Home(props) {
 
 #### 5. Change the query to use `StaticQuery`
 
-If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/static-query/). This is because a layout is now a normal component.
+If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/how-to/sourcing-data/static-query/). This is because a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 
@@ -335,7 +335,7 @@ The latest version of Gatsby uses Babel 7. Babel 7 introduced [a new behavior fo
 
 [This GitHub comment](https://github.com/facebook/jest/issues/1468#issuecomment-361260279) documents the steps needed to do that.
 
-More information on Gatsby and Babel configuration available [here](/docs/babel/#how-to-use-a-custom-babelrc-file).
+More information on Gatsby and Babel configuration available [here](/docs/how-to/custom-configuration/babel/#how-to-use-a-custom-babelrc-file).
 
 ### Restore v1 PostCSS Plugin Setup
 
@@ -591,11 +591,11 @@ import { Provider } from 'react-redux'
 
 Like with `replaceRouterComponent`, we no longer support custom histories. That is why we've also removed the `replaceHistory` API. The `replaceHistory()` method was used for tracking page views by registering listeners on route changes using `history.listen()`.
 
-Now, to track page views, you can use the [`onRouteUpdate`](/docs/browser-apis/#onRouteUpdate) API to track pages changes.
+Now, to track page views, you can use the [`onRouteUpdate`](/docs/reference/builds/gatsby-browser/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
-Use new [`wrapRootElement`](/docs/browser-apis/#wrapRootElement) API:
+Use new [`wrapRootElement`](/docs/reference/builds/gatsby-browser/#wrapRootElement) API:
 We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
@@ -767,7 +767,7 @@ plugins: [
 
 ### Update Jest configuration
 
-If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/unit-testing/) page of the docs.
+If you were using Jest with Gatsby V1, you will need to make some updates to your configuration when upgrading to Gatsby V2. You can view the complete details of setting up your test environment on the [Unit Testing](/docs/how-to/testing/unit-testing/) page of the docs.
 
 ### gatsby-image's `outerWrapperClassName` was removed
 
@@ -943,7 +943,7 @@ See an example in [this PR that upgrades the `using-remark` site to Gatsby v2](h
 
 ### Remove explicit polyfills
 
-If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with Babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's Babel docs for more details](/docs/babel).
+If your Gatsby v1 site included any polyfills, you can remove them. Gatsby v2 ships with Babel 7 and is configured to automatically include polyfills for your code. See [Gatsby's Babel docs for more details](/docs/how-to/custom-configuration/babel).
 
 ## For Plugin Maintainers
 
@@ -962,7 +962,7 @@ In most cases you won't have to do anything to be v2 compatible, but there are a
 
 ### Change `modifyBabelrc` to `onCreateBabelConfig`
 
-We renamed `modifyBabelrc` to [`onCreateBabelConfig`](/docs/node-apis/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
+We renamed `modifyBabelrc` to [`onCreateBabelConfig`](/docs/reference/builds/gatsby-node/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
 
 Use `onCreateBabelConfig`:
 
@@ -979,13 +979,13 @@ Use `onCreateBabelConfig`:
 }
 ```
 
-Note usage of the new [`setBabelPlugin` action](/docs/actions/#setBabelPlugins).
+Note usage of the new [`setBabelPlugin` action](/docs/reference/builds/actions/#setBabelPlugins).
 
-See [Gatsby's Babel docs for more details](/docs/babel) about configuring Babel.
+See [Gatsby's Babel docs for more details](/docs/how-to/custom-configuration/babel) about configuring Babel.
 
 ### Change `modifyWebpackConfig` to `onCreateWebpackConfig`
 
-We renamed `modifyWebpackConfig` to [`onCreateWebpackConfig`](/docs/node-apis/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
+We renamed `modifyWebpackConfig` to [`onCreateWebpackConfig`](/docs/reference/builds/gatsby-node/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
 
 Use `onCreateWebpackConfig`:
 
@@ -1005,9 +1005,9 @@ Use `onCreateWebpackConfig`:
 }
 ```
 
-Note usage of the new [`setWebpackConfig` action](/docs/actions/#setWebpackConfig).
+Note usage of the new [`setWebpackConfig` action](/docs/reference/builds/actions/#setWebpackConfig).
 
-See [Gatsby's webpack docs for more details](/docs/add-custom-webpack-config) about configuring webpack.
+See [Gatsby's webpack docs for more details](/docs/how-to/custom-configuration/add-custom-webpack-config) about configuring webpack.
 
 ### createRemoteFileNode
 
@@ -1019,7 +1019,7 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behavior we now validate against it for v2. Node data should be added as fields on the top-level node object.
 
-[Check the Node interface docs](https://www.gatsbyjs.com/docs/node-interface/) for allowed fields.
+[Check the Node interface docs](/docs/reference/builds/node-interface/) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 

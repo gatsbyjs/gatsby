@@ -53,7 +53,7 @@ Briefly, when a page loads, Reach Router looks at the `path` prop of each compon
 
 ### Adjusting routes to account for authenticated users
 
-With [authentication set up](/docs/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
+With [authentication set up](/docs/how-to/adding-common-features/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
 
 ```jsx:title=src/pages/app.js
 import React from "react"
@@ -132,7 +132,7 @@ The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updat
 
 _Without_ this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
 
-> Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/browser-apis/#shouldUpdateScroll) Browser API.
+> Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/reference/builds/gatsby-browser/#shouldUpdateScroll) Browser API.
 
 ## Configuring and handling client-only routes on a server
 

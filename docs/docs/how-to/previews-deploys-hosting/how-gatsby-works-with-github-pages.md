@@ -36,7 +36,7 @@ A custom script in your `package.json` makes it easier to build your site and mo
 
 ### Deploying to a path on GitHub Pages
 
-For sites deployed at a path like `username.github.io/reponame/`, the `--prefix-paths` flag is used because your website will end up inside a folder like `username.github.io/reponame/`. You'll need to add your `/reponame` [path prefix](/docs/path-prefix/) as an option to `gatsby-config.js`:
+For sites deployed at a path like `username.github.io/reponame/`, the `--prefix-paths` flag is used because your website will end up inside a folder like `username.github.io/reponame/`. You'll need to add your `/reponame` [path prefix](/docs/how-to/previews-deploys-hosting/path-prefix/) as an option to `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {

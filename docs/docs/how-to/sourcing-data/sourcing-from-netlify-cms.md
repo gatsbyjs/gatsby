@@ -182,7 +182,7 @@ Let's fix that.
 ## Processing Netlify CMS output with Gatsby
 
 Gatsby can be configured to process Markdown by following the [Adding Markdown
-Pages](/docs/adding-markdown-pages/) guide in the docs. Our `config.yml`
+Pages](/docs/how-to/routing/adding-markdown-pages/) guide in the docs. Our `config.yml`
 file for Netlify CMS is set up to use the same fields used in the guide, so you can follow the
 instructions to the letter and should work fine. **Note:** When configuring the
 `gatsby-source-filesystem` plugin in the Adding Markdown Pages Guide, the path to your markdown
