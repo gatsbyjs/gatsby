@@ -40,7 +40,5 @@ export const assignGraphQLRunners = assign<IDataLayerContext>(
 export const dataLayerActions: ActionFunctionMap<IDataLayerContext, any> = {
   assignChangedPages,
   assignGraphQLRunners,
-  callApi,
-  markNodesDirty,
   genericOnError,
 }
