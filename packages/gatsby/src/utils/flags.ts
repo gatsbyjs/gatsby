@@ -58,7 +58,6 @@ export interface IFlag {
   includedFlags?: Array<string>
   umbrellaIssue?: string
   noCI?: boolean
-  noCi?: boolean
 }
 
 const activeFlags: Array<IFlag> = [
@@ -99,7 +98,7 @@ const activeFlags: Array<IFlag> = [
     noCI: true,
     testFitness: (): fitnessEnum => {
       // Take a 10% of slice of users.
-      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 100)) {
         let isPluginSharpNewEnoughOrNotInstalled = false
         try {
           // Try requiring plugin-sharp so we know if it's installed or not.
@@ -139,9 +138,10 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
     umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
+    noCI: true,
     testFitness: (): fitnessEnum => {
       // Take a 10% of slice of users.
-      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 100)) {
         const semverConstraints = {
           // Because of this, this flag will never show up
           "gatsby-plugin-sharp": `>=2.10.0`,
