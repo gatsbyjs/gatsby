@@ -10,6 +10,10 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
+jest.mock("terminal-link", () => {
+  return (text, url) => `${text} (${url})`
+})
+
 describe(`satisfies semver`, () => {
   it(`returns false if a module doesn't exist`, () => {
     const semverConstraints = {
@@ -205,5 +209,26 @@ describe(`handle flags`, () => {
       `develop`
     )
     expect(response.enabledConfigFlags).toHaveLength(0)
+  })
+
+  it(`doesn't count unfit flags as unknown`, () => {
+    const response = handleFlags(
+      activeFlags,
+      {
+        PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH: true,
+        PARTIAL_RELEASE: false,
+        PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
+      },
+      `develop`
+    )
+
+    // it currently just silently disables it
+    expect(response).toMatchInlineSnapshot(`
+      Object {
+        "enabledConfigFlags": Array [],
+        "message": "",
+        "unknownFlagMessage": "",
+      }
+    `)
   })
 })

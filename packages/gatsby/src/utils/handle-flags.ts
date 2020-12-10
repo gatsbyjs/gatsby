@@ -1,18 +1,10 @@
 import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
-import realTerminalLink from "terminal-link"
+import terminalLink from "terminal-link"
 import { IFlag } from "./flags"
 import chalk from "chalk"
 import { commaListsAnd } from "common-tags"
 import { distance } from "fastest-levenshtein"
-
-const terminalLink = (text, url): string => {
-  if (process.env.NODE_ENV === `test`) {
-    return `${text} (${url})`
-  } else {
-    return realTerminalLink(text, url)
-  }
-}
 
 const handleFlags = (
   flags: Array<IFlag>,
@@ -27,9 +19,7 @@ const handleFlags = (
   // Filter out any flags that are set to false.
   const availableFlags = new Map<string, IFlag>()
   flags.forEach(flag => {
-    if (flag.testFitness(flag)) {
-      availableFlags.set(flag.name, flag)
-    }
+    availableFlags.set(flag.name, flag)
   })
 
   // Find unknown flags someone has in their config to warn them about.
@@ -70,19 +60,23 @@ const handleFlags = (
     )
   }
 
-  let enabledConfigFlags = Object.keys(configFlags)
+  let enabledConfigFlags: Array<IFlag> = Object.keys(configFlags)
     .filter(name => configFlags[name] && availableFlags.has(name))
-    .map(flagName => availableFlags.get(flagName))
+    .map(flagName => availableFlags.get(flagName)!)
 
   // Test flags to see if it wants opted in.
-  const optedInFlags = new Map()
+  const optedInFlags = new Map<string, IFlag>()
+  let applicableFlags = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
-    if (
-      configFlags[flag.name] !== false &&
-      flag.testFitness(flag) === `OPT_IN`
-    ) {
+    const fitness = flag.testFitness(flag)
+
+    if (configFlags[flag.name] !== false && fitness === `OPT_IN`) {
       enabledConfigFlags.push(flag)
       optedInFlags.set(flag.name, flag)
+    }
+
+    if (fitness) {
+      applicableFlags.set(flag.name, flag)
     }
   })
 
@@ -163,7 +157,7 @@ The following flags were automatically enabled on your site:`
       })
     }
 
-    const otherFlagsCount = availableFlags.size - enabledConfigFlags.length
+    const otherFlagsCount = applicableFlags.size - enabledConfigFlags.length
     // Check if there is other flags and if the user actually set any flags themselves.
     // Don't count flags they were automatically opted into.
     if (otherFlagsCount > 0 && Object.keys(configFlags).length > 0) {
@@ -175,7 +169,7 @@ The following flags were automatically enabled on your site:`
 
       const enabledFlagsSet = new Set()
       enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
-      availableFlags.forEach(flag => {
+      applicableFlags.forEach(flag => {
         if (!enabledFlagsSet.has(flag.name)) {
           message += generateFlagLine(flag)
         }
