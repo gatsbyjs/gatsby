@@ -98,7 +98,7 @@ const activeFlags: Array<IFlag> = [
     noCI: true,
     testFitness: (): fitnessEnum => {
       // Take a 10% of slice of users.
-      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 100)) {
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
         let isPluginSharpNewEnoughOrNotInstalled = false
         try {
           // Try requiring plugin-sharp so we know if it's installed or not.
@@ -141,7 +141,7 @@ const activeFlags: Array<IFlag> = [
     noCI: true,
     testFitness: (): fitnessEnum => {
       // Take a 10% of slice of users.
-      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 100)) {
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
         const semverConstraints = {
           // Because of this, this flag will never show up
           "gatsby-plugin-sharp": `>=2.10.0`,
