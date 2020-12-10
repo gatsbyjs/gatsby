@@ -227,21 +227,16 @@ export async function initialize({
 
   process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
-  // TODO: this should be handled in QUERY_ON_DEMAND flag configuration and not be one-off here
-  // disable loading indicator if flag is set to QUERY_ON_DEMAND: { loadingIndicator: false }
+  // TODO: figure out proper way of disabling loading indicator
+  // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // will work, but we don't want to force users into using env vars
   if (
-    config?.flags?.QUERY_ON_DEMAND &&
-    _.isPlainObject(config.flags.QUERY_ON_DEMAND) &&
-    !config.flags.QUERY_ON_DEMAND.loadingIndicator
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
   ) {
-    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `false`
-  } else if (!process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
-    // if env var for loading indicator was not explicitly set
-    // enable loading indicator if query on demand is enabled
-    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = process.env
-      .GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      ? `true`
-      : `false`
+    // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+    // enable loading indicator
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
   }
 
   // theme gatsby configs can be functions or objects
