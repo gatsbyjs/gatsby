@@ -148,6 +148,9 @@ const ConditionalFastRefreshOverlay = ({ children }) => {
 export default () => (
   <ConditionalFastRefreshOverlay>
     <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-    <LoadingIndicatorEventHandler />
+    {process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true` && (
+        <LoadingIndicatorEventHandler />
+      )}
   </ConditionalFastRefreshOverlay>
 )

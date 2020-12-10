@@ -227,6 +227,23 @@ export async function initialize({
 
   process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
+  // TODO: this should be handled in QUERY_ON_DEMAND flag configuration and not be one-off here
+  // disable loading indicator if flag is set to QUERY_ON_DEMAND: { loadingIndicator: false }
+  if (
+    config?.flags?.QUERY_ON_DEMAND &&
+    _.isPlainObject(config.flags.QUERY_ON_DEMAND) &&
+    !config.flags.QUERY_ON_DEMAND.loadingIndicator
+  ) {
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `false`
+  } else if (!process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
+    // if env var for loading indicator was not explicitly set
+    // enable loading indicator if query on demand is enabled
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = process.env
+      .GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      ? `true`
+      : `false`
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     reporter.warn(
