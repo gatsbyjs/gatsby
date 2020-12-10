@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.7.0...gatsby-remark-images@3.7.1) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** allow tracedSVG to accept object with settings ([#28242](https://github.com/gatsbyjs/gatsby/issues/28242)) ([#28552](https://github.com/gatsbyjs/gatsby/issues/28552)) ([9752489](https://github.com/gatsbyjs/gatsby/commit/97524891202985fb1c6ac57b7822742980ff54cd))
+
 # [3.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.7.0-next.0...gatsby-remark-images@3.7.0) (2020-12-02)
 
 **Note:** Version bump only for package gatsby-remark-images

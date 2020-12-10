@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.9.0...gatsby-source-drupal@3.9.1) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby-source-drupal:** Do not swallow errors ([#28549](https://github.com/gatsbyjs/gatsby/issues/28549)) ([#28558](https://github.com/gatsbyjs/gatsby/issues/28558)) ([2cbe229](https://github.com/gatsbyjs/gatsby/commit/2cbe229e6d4e9b0210cc7053b0eb0a4c0b9ce8b5))
+
 # [3.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.9.0-next.2...gatsby-source-drupal@3.9.0) (2020-12-02)
 
 **Note:** Version bump only for package gatsby-source-drupal

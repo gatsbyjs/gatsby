@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.28.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.1...gatsby@2.28.2) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby:** better text for missing inferred extension ([#28530](https://github.com/gatsbyjs/gatsby/issues/28530)) ([#28542](https://github.com/gatsbyjs/gatsby/issues/28542)) ([fd9d872](https://github.com/gatsbyjs/gatsby/commit/fd9d872fb1f08d781bcd24d8f2921c329fb34f52))
+- **gatsby:** correct GraphQL warning text ([#28563](https://github.com/gatsbyjs/gatsby/issues/28563)) ([#28567](https://github.com/gatsbyjs/gatsby/issues/28567)) ([0b306c5](https://github.com/gatsbyjs/gatsby/commit/0b306c55e7436741b3370296313f197e82886ebd))
+- **gatsby:** improve deprecation text for missing childOf directive ([#28532](https://github.com/gatsbyjs/gatsby/issues/28532)) ([#28543](https://github.com/gatsbyjs/gatsby/issues/28543)) ([7f10385](https://github.com/gatsbyjs/gatsby/commit/7f10385a8cf24213a145ca79af3d81f03b11cedd))
+- **gatsby:** show multiple invites together & at end where people are more likely to see them ([#28450](https://github.com/gatsbyjs/gatsby/issues/28450)) ([#28541](https://github.com/gatsbyjs/gatsby/issues/28541)) ([f8d5c9b](https://github.com/gatsbyjs/gatsby/commit/f8d5c9b745b6b50be67a2017c2779aa1d12b3d9c))
+- **gatsby:** Wait for jobs to complete in onPostBuild ([#28534](https://github.com/gatsbyjs/gatsby/issues/28534)) ([#28557](https://github.com/gatsbyjs/gatsby/issues/28557)) ([d0dce3f](https://github.com/gatsbyjs/gatsby/commit/d0dce3f0e842a17911192a2268c7e052f9936776))
+
+### Features
+
+- **gatsby:** track how long query-on-demand querying takes ([#28544](https://github.com/gatsbyjs/gatsby/issues/28544)) ([#28570](https://github.com/gatsbyjs/gatsby/issues/28570)) ([4dc4312](https://github.com/gatsbyjs/gatsby/commit/4dc431262de0be78d06388c5c89180304eef0eb1))
+
 ## [2.28.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0...gatsby@2.28.1) (2020-12-07)
 
 ### Bug Fixes
