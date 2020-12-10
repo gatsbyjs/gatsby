@@ -21,6 +21,11 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   style,
   image,
   loading = `lazy`,
+  imgClassName,
+  imgStyle,
+  backgroundColor,
+  objectFit,
+  objectPosition,
   ...props
 }) {
   if (!image) {
@@ -35,7 +40,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     images,
     placeholder,
     sizes,
-    backgroundColor,
+    backgroundColor: placeholderBackgroundColor,
   } = image
 
   const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
@@ -73,6 +78,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
       style={{
         ...wStyle,
         ...style,
+        backgroundColor,
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
     >
@@ -84,7 +90,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
             layout,
             width,
             height,
-            backgroundColor
+            placeholderBackgroundColor
           )}
         />
 
