@@ -32,7 +32,7 @@ export function Indicator({ visible = true }) {
   if (!window.___gatsbyDidShowLoadingIndicatorBefore) {
     // not ideal to this in render function, but that's just console info
     debugLog(
-      `You might have seen "gatsby develop" loading indicator in the bottom left corner.\n\nIf you want to disable it you can visit ${window.location.origin}/___loading-indicator/disable (will disable it for current session).`
+      `A loading indicator is displayed in-browser whenever content is being requested upon navigation (Query On Demand).\n\nYou can disable the loading indicator for your current session by visiting ${window.location.origin}/___loading-indicator/disable`
     )
     window.___gatsbyDidShowLoadingIndicatorBefore = true
   }
