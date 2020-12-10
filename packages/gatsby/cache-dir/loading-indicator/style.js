@@ -46,6 +46,7 @@ const Style = () => (
           justify-content: space-between;
           flex-wrap: nowrap;
           padding: 0.75em 1.15em;
+          min-width: 196px;
         }
 
         [data-gatsby-loading-indicator-visible="false"] {

@@ -24,7 +24,7 @@ if (typeof window.___gatsbyDidShowLoadingIndicatorBefore === `undefined`) {
   window.___gatsbyDidShowLoadingIndicatorBefore = false
 }
 
-export function Indicator({ visible }) {
+export function Indicator({ visible = true }) {
   if (!isLoadingIndicatorEnabled()) {
     return null
   }
@@ -56,7 +56,7 @@ export function Indicator({ visible }) {
           </svg>
         </div>
         <div data-gatsby-loading-indicator="text">
-          {visible ? `Preparing requested page` : `Finished loading page`}
+          {visible ? `Preparing requested page` : ``}
         </div>
       </div>
     </Portal>
