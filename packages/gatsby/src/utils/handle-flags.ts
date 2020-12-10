@@ -66,7 +66,7 @@ const handleFlags = (
 
   // Test flags to see if it wants opted in.
   const optedInFlags = new Map<string, IFlag>()
-  let applicableFlags = new Map<string, IFlag>()
+  const applicableFlags = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
     const fitness = flag.testFitness(flag)
 
