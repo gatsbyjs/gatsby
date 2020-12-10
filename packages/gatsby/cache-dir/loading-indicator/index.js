@@ -26,10 +26,6 @@ export class LoadingIndicatorEventHandler extends React.Component {
   }
 
   render() {
-    if (!this.state.visible) {
-      return null
-    }
-
-    return <Indicator />
+    return <Indicator visible={this.state.visible} />
   }
 }

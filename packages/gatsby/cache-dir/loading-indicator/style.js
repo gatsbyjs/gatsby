@@ -13,8 +13,10 @@ const Style = () => (
     dangerouslySetInnerHTML={{
       __html: css`
         :host {
-          --gatsby: #663399;
-          --gatsbyLight: #b17acc;
+          --purple-60: #663399;
+          --gatsby: var(--purple-60);
+          --purple-40: #b17acc;
+          --purple-20: #f1defa;
           --dimmedWhite: rgba(255, 255, 255, 0.8);
           --white: #ffffff;
           --black: #000000;
@@ -38,37 +40,70 @@ const Style = () => (
           box-shadow: var(--shadow);
           border-radius: var(--radii);
           z-index: var(--z-index-elevated);
-          border-left: 0.25em solid var(--gatsbyLight);
+          border-left: 0.25em solid var(--purple-40);
           display: flex;
           align-items: center;
           justify-content: space-between;
           flex-wrap: nowrap;
-          padding: 0.75em 1em;
+          padding: 0.75em 1.15em;
+        }
+
+        [data-gatsby-loading-indicator-visible="false"] {
+          opacity: 0;
+          visibility: hidden;
+          will-change: opacity, transform;
+          transform: translateY(45px);
+          transition: all 0.3s ease-in-out;
+        }
+
+        [data-gatsby-loading-indicator-visible="true"] {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0px);
+          transition: all 0.3s ease-in-out;
         }
 
         [data-gatsby-loading-indicator="spinner"] {
-          width: 20px;
-          height: 20px;
-          margin: 0 auto;
-          background-color: var(--gatsbyLight);
-
-          border-radius: 100%;
-          animation: scaleout 1s infinite ease-in-out;
+          animation: spin 1s linear infinite;
+          height: 18px;
+          width: 18px;
+          color: var(--gatsby);
         }
 
         [data-gatsby-loading-indicator="text"] {
-          margin-left: 1em;
+          margin-left: 0.75em;
+          line-height: 18px;
         }
 
-        @keyframes scaleout {
+        @keyframes spin {
           0% {
-            -webkit-transform: scale(0);
-            transform: scale(0);
+            transform: rotate(0);
           }
           100% {
-            -webkit-transform: scale(1);
-            transform: scale(1);
-            opacity: 0;
+            transform: rotate(360deg);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          [data-gatsby-loading-indicator="spinner"] {
+            animation: none;
+          }
+          [data-gatsby-loading-indicator-visible="false"] {
+            transition: none;
+          }
+
+          [data-gatsby-loading-indicator-visible="true"] {
+            transition: none;
+          }
+        }
+
+        @media (prefers-color-scheme: dark) {
+          [data-gatsby-loading-indicator="root"] {
+            background: var(--grey-90);
+            color: var(--white);
+          }
+          [data-gatsby-loading-indicator="spinner"] {
+            color: var(--purple-20);
           }
         }
       `,
