@@ -1,17 +1,15 @@
 ---
-title: "Recipes: Working with Starters"
+title: "Working with Starters"
 tableOfContentsDepth: 1
 ---
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-## Using a starter
-
-### Prerequisites
+## Prerequisites
 
 - The [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
 
-### Directions
+## Directions
 
 1. Find the starter you'd like to use. (_The [Starter Library](/starters/?v=2) is a good place to look!_)
 
@@ -30,7 +28,7 @@ cd {your-project-name}
 gatsby develop
 ```
 
-### Additional resources
+## Additional resources
 
 - Follow a [more detailed guide](/docs/starters/) on using Gatsby starters.
 - Learn how to use the [Gatsby CLI](/docs/reference/local-development/gatsby-cli) tool to use starters in [tutorial part one](/docs/tutorial/part-one/#using-gatsby-starters)
