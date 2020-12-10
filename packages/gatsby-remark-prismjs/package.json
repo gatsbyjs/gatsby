@@ -16,7 +16,7 @@
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^0.9.0-next.0",
     "cheerio": "^1.0.0-rc.3",
-    "cross-env": "^7.0.2",
+    "cross-env": "^7.0.3",
     "prismjs": "^1.21.0",
     "remark": "^9.0.0"
   },

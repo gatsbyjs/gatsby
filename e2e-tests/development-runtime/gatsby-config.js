@@ -33,6 +33,7 @@ module.exports = {
       },
     },
     `gatsby-source-fake-data`,
+    `gatsby-source-pinc-data`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {

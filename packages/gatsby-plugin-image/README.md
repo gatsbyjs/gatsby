@@ -224,35 +224,37 @@ export const query = graphql`
 `
 ```
 
+If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`. Note that `src` will be undefined if a .png or .jpg image is not available.
+
 ### Upgrading from the gatsby-image@2
 
-We will be releasing a codemod to automatically update your queries and imports. In the meantime, you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now, it allows you to try the component with your existing queries.
+We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
 
-```jsx
-import React from "react"
-import { graphql } from "gatsby"
-// Note the different import
-import { GatsbyImage } from "gatsby-plugin-image/compat"
-
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <GatsbyImage fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
-
-export const query = graphql`
-  query {
-    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
-      childImageSharp {
-        fixed(width: 125, height: 125) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-  }
-`
+```shell
+npx gatsby-codemods gatsby-plugin-image <path>
 ```
+
+`path` is not required and will default to the directory you're currently in.
+
+Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extensions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
+
+**If you have a custom babel config for your site, run in the root directory, otherwise `./src` is sufficient.**
+
+Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
+
+If you need to run with custom flags, you can install [jscodeshift](https://github.com/facebook/jscodeshift) globally and `gatsby-codemods` in your project. Then `jscodeshift -t node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js .` will transform your current directory and you can pass any valid jscodeshift flags.
+
+After the code is modified, be sure to install and configure everything needed to use `gatsby-plugin-image.`
+
+1. Install this package
+
+```shell
+npm install gatsby-plugin-image
+```
+
+2. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
+
+3. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
 
 ## Three types of responsive images
 

@@ -45,6 +45,7 @@ import * as path from "path"
 import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
+import { appendPreloadHeaders } from "./develop-preload-headers"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -92,20 +93,16 @@ export async function startServer(
     !isCI()
   ) {
     cancelDevJSNotice = showExperimentNoticeAfterTimeout(
-      `PRESERVE_WEBPACK_CACHE`,
-      report.stripIndent(`
-Your friendly Gatsby maintainers detected your site has more JavaScript than most sites! We're working to make your site's JS compile as quickly as possible by avoiding clearing your webpack cache as often.
+      `Preserve webpack's Cache`,
+      `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+      `which changes Gatsby's cache clearing behavior to not clear webpack's
+cache unless you run "gatsby clean" or delete the .cache folder manually.
+Here's how to try it:
 
-If you're interested in trialing this coming change *today* — which should make your local development experience faster — go ahead and enable the PRESERVE_WEBPACK_CACHE flag and run your develop server again.
-
-To do so, add to your gatsby-config.js:
-
-flags: {
-  PRESERVE_WEBPACK_CACHE: true,
-}
-
-Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
-      `),
+module.exports = {
+  flags: { PRESERVE_WEBPACK_CACHE: true },
+  plugins: [...]
+}`,
       THIRTY_SECONDS
     )
   }
@@ -238,20 +235,26 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
    * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
    **/
   const REFRESH_ENDPOINT = `/__refresh`
-  const refresh = async (req: express.Request): Promise<void> => {
+  const refresh = async (
+    req: express.Request,
+    pluginName?: string
+  ): Promise<void> => {
     emitter.emit(`WEBHOOK_RECEIVED`, {
       webhookBody: req.body,
+      pluginName,
     })
   }
-  app.use(REFRESH_ENDPOINT, express.json())
-  app.post(REFRESH_ENDPOINT, (req, res) => {
+
+  app.post(`${REFRESH_ENDPOINT}/:plugin_name?`, express.json(), (req, res) => {
+    const pluginName = req.params[`plugin_name`]
+
     const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
     const refreshToken = process.env.GATSBY_REFRESH_TOKEN
     const authorizedRefresh =
       !refreshToken || req.headers.authorization === refreshToken
 
     if (enableRefresh && authorizedRefresh) {
-      refresh(req)
+      refresh(req, pluginName)
     }
     res.end()
   })
@@ -442,6 +445,8 @@ Visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discu
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
+      await appendPreloadHeaders(req.path, res)
+
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         try {
           const { renderDevHTML } = require(`./dev-ssr/render-dev-html`)

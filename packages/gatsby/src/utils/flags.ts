@@ -45,7 +45,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `DevSsr`,
     experimental: false,
     description: `SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28138`,
+    umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
   },
   {
     name: `QUERY_ON_DEMAND`,
@@ -54,7 +54,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `QueryOnDemand`,
     experimental: false,
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27620`,
+    umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
     noCi: true,
   },
   {
@@ -64,7 +64,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `LazyImageProcessing`,
     experimental: true,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/27603`,
+    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
   },
   {
     name: `PRESERVE_WEBPACK_CACHE`,
@@ -73,7 +73,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `PreserveWebpackCache`,
     experimental: false,
     description: `Don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
   },
   {
     name: `PRESERVE_FILE_DOWNLOAD_CACHE`,
@@ -82,7 +82,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `PreserveFileDownloadCache`,
     experimental: false,
     description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28331`,
+    umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
   },
   {
     name: `FAST_REFRESH`,
@@ -91,7 +91,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `FastRefresh`,
     experimental: false,
     description: `Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28390`,
+    umbrellaIssue: `https://gatsby.dev/fast-refresh-feedback`,
   },
   {
     name: `PARALLEL_SOURCING`,
@@ -100,7 +100,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `ParallelSourcing`,
     experimental: true,
     description: `Run all source plugins at the same time instead of serially. For sites with multiple source plugins, this can speedup sourcing and transforming considerably.`,
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/28336`,
+    umbrellaIssue: `https://gatsby.dev/parallel-sourcing-feedback`,
   },
 ]
 

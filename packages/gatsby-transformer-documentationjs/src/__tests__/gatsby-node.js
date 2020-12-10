@@ -88,6 +88,24 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
       )
     })
 
+    it(`should extract out a captions from examples`, () => {
+      const pearNode = createdNodes.find(node => node.name === `pear`)
+
+      expect(pearNode.examples.length).toBe(2)
+      expect(pearNode.examples).toMatchSnapshot(`examplesWithCaptions`)
+
+      expect(pearNode.examples[1].caption).toBeDefined()
+
+      const pearDescriptionNode = createdNodes.find(
+        node => node.id === pearNode.description___NODE
+      )
+
+      expect(pearDescriptionNode).toBeDefined()
+      expect(pearDescriptionNode.internal.content).toMatchSnapshot(
+        `description content`
+      )
+    })
+
     it(`should extract code and docs location`, () => {
       const appleNode = createdNodes.find(node => node.name === `apple`)
 
