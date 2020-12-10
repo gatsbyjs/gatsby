@@ -46,6 +46,10 @@ import { Stage, IProgram } from "../commands/types"
 import JestWorker from "jest-worker"
 import { findOriginalSourcePositionAndContent } from "./stack-trace-utils"
 import { appendPreloadHeaders } from "./develop-preload-headers"
+import {
+  routeLoadingIndicatorRequests,
+  writeVirtualLoadingIndicatorModule,
+} from "./loading-indicator"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -443,6 +447,17 @@ module.exports = {
     // Setup HTML route.
     const { route } = require(`./dev-ssr/develop-html-route`)
     route({ app, program, store })
+  }
+
+  // loading indicator
+  // write virtual module always to not fail webpack compilation, but only add express route handlers when
+  // query on demand is enabled and loading indicator is not disabled
+  writeVirtualLoadingIndicatorModule()
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+  ) {
+    routeLoadingIndicatorRequests(app)
   }
 
   app.use(async (req, res) => {

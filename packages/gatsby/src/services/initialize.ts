@@ -227,6 +227,18 @@ export async function initialize({
 
   process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
+  // TODO: figure out proper way of disabling loading indicator
+  // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // will work, but we don't want to force users into using env vars
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
+  ) {
+    // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+    // enable loading indicator
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     reporter.warn(
