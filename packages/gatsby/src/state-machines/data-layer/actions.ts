@@ -5,6 +5,7 @@ import { IDataLayerContext } from "./types"
 import { callApi, markNodesDirty } from "../develop/actions"
 import { assertStore } from "../../utils/assert-store"
 import { GraphQLRunner } from "../../query/graphql-runner"
+import { genericOnError } from "../../utils/generic-on-error"
 
 const concatUnique = <T>(array1: T[] = [], array2: T[] = []): T[] =>
   Array.from(new Set(array1.concat(array2)))
@@ -40,4 +41,5 @@ export const dataLayerActions: ActionFunctionMap<IDataLayerContext, any> = {
   assignGraphQLRunners,
   callApi,
   markNodesDirty,
+  genericOnError,
 }

@@ -2,7 +2,6 @@ import { MachineConfig, Machine } from "xstate"
 import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
-import { genericOnError } from "../../utils/generic-on-error"
 
 /**
  * This is a child state machine, spawned to perform the query running
@@ -26,7 +25,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `writingRequires`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     writingRequires: {
@@ -36,7 +37,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `calculatingDirtyQueries`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     calculatingDirtyQueries: {
@@ -47,7 +50,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
           target: `runningStaticQueries`,
           actions: `assignDirtyQueries`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     runningStaticQueries: {
@@ -57,7 +62,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `runningPageQueries`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     runningPageQueries: {
@@ -68,7 +75,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
           target: `waitingForJobs`,
           actions: `flushPageData`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     // This waits for the jobs API to finish
@@ -79,7 +88,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `done`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     done: {

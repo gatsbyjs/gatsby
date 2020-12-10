@@ -113,7 +113,9 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
           }),
           target: `rebuild`,
         },
-        onError: genericOnError,
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     rebuild: {

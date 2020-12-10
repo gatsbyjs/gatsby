@@ -7,6 +7,7 @@ import {
 } from "xstate"
 import { IWaitingContext } from "./types"
 import { AnyAction } from "redux"
+import { genericOnError } from "../../utils/generic-on-error"
 
 /**
  * Event handler used when we're not ready to process node mutations.
@@ -29,4 +30,5 @@ export const extractQueries = sendParent<IWaitingContext, AnyEventObject>(
 export const waitingActions: ActionFunctionMap<IWaitingContext, AnyAction> = {
   addNodeMutation,
   extractQueries,
+  genericOnError,
 }

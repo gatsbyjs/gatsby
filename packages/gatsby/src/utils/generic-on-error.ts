@@ -1,8 +1,6 @@
 import reporter from "gatsby-cli/lib/reporter"
 
-export const genericOnError = {
-  actions: (_ctx, event): void => {
-    const error = event.data
-    reporter.panicOnBuild(error)
-  },
+export function genericOnError(_ctx, event): void {
+  const error = event.data
+  reporter.panicOnBuild(error)
 }
