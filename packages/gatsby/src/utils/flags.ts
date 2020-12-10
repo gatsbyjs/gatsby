@@ -104,7 +104,7 @@ const activeFlags: Array<IFlag> = [
           // Try requiring plugin-sharp so we know if it's installed or not.
           // If it does, we also check if it's new enough.
           // eslint-disable-next-line
-          require(`gatsby-plugin-sharp`).version
+          require.resolve(`gatsby-plugin-sharp`)
           const semverConstraints = {
             // Because of this, this flag will never show up
             "gatsby-plugin-sharp": `>=2.10.0`,
