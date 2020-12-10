@@ -37,10 +37,10 @@ export function writeVirtualLoadingIndicatorModule(): void {
 
 export function routeLoadingIndicatorRequests(app: Express): void {
   app.get(`/___loading-indicator/:method?`, (req, res) => {
-    if (req.params.method === `enable` && indicatorEnabled === false) {
+    if (req.params.method === `enable` && indicatorEnabled !== true) {
       indicatorEnabled = true
       writeVirtualLoadingIndicatorModule()
-    } else if (req.params.method === `disable` && indicatorEnabled === true) {
+    } else if (req.params.method === `disable` && indicatorEnabled !== false) {
       indicatorEnabled = false
       writeVirtualLoadingIndicatorModule()
     }
