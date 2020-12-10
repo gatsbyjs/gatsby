@@ -80,6 +80,8 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
 
     // We are going to run a job for a single operation only
     // and postpone all other operations
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
     const {
       matchingJob,
       jobWithRemainingOperations,
@@ -107,11 +109,11 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
 function splitOperationsByRequestedFile(job, requestedPathOnDisk) {
   const matchingJob = {
     ...job,
-    args: { ...job, operations: [] },
+    args: { ...job.args, operations: [] },
   }
   const jobWithRemainingOperations = {
     ...job,
-    args: { ...job, operations: [] },
+    args: { ...job.args, operations: [] },
   }
 
   job.args.operations.forEach(op => {

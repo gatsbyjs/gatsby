@@ -16,13 +16,13 @@ export interface IStaticImageProps extends Omit<GatsbyImageProps, "image"> {
   maxHeight?: number
   sizes?: string
   quality?: number
-  transformOptions: {
+  transformOptions?: {
     fit?: Fit
   }
   jpgOptions?: Record<string, unknown>
   pngOptions?: Record<string, unknown>
   webpOptions?: Record<string, unknown>
-  blurredOptions: Record<string, unknown>
+  blurredOptions?: Record<string, unknown>
 }
 
 // These values are added by Babel. Do not add them manually
@@ -38,6 +38,7 @@ export function _getStaticImage(
     src,
     __imageData: imageData,
     __error,
+    // We extract these because they're not meant to be passed-down to GatsbyImage
     /* eslint-disable @typescript-eslint/no-unused-vars */
     width,
     maxWidth,
