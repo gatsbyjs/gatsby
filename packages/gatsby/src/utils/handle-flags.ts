@@ -25,7 +25,7 @@ const handleFlags = (
 } => {
   // Prepare config flags.
   // Filter out any flags that are set to false.
-  const availableFlags = new Map()
+  const availableFlags = new Map<string, IFlag>()
   flags.forEach(flag => {
     if (flag.testFitness(flag)) {
       availableFlags.set(flag.name, flag)
@@ -33,7 +33,7 @@ const handleFlags = (
   })
 
   // Find unknown flags someone has in their config to warn them about.
-  const unknownConfigFlags: Array<any> = []
+  const unknownConfigFlags: Array<{ flag: string; didYouMean: string }> = []
   for (const flagName in configFlags) {
     if (availableFlags.has(flagName)) {
       continue
@@ -64,8 +64,8 @@ const handleFlags = (
     unknownFlagMessage = commaListsAnd`The following flag(s) found in your gatsby-config.js are not known:`
     unknownConfigFlags.forEach(
       flag =>
-        (unknownFlagMessage += `\n- ${flag?.flag}${
-          flag?.didYouMean ? ` (did you mean: ${flag?.didYouMean})` : ``
+        (unknownFlagMessage += `\n- ${flag.flag}${
+          flag.didYouMean ? ` (did you mean: ${flag.didYouMean})` : ``
         }`)
     )
   }
