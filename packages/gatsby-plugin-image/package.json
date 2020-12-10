@@ -22,6 +22,10 @@
     "clean": "del-cli dist/*"
   },
   "sideEffects": false,
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
   "main": "dist/gatsby-image.js",
   "module": "dist/gatsby-image.module.js",
   "esmodule": "dist/gatsby-image.modern.js",
