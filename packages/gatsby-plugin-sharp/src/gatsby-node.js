@@ -62,7 +62,7 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   finishProgressBar()
 
   app.use(async (req, res, next) => {
-    const decodedURI = decodeURI(req.url)
+    const decodedURI = decodeURIComponent(req.path)
     const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
 
     if (await pathExists(pathOnDisk)) {
