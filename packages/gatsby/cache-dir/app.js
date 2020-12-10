@@ -142,6 +142,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       clearTimeout(showIndicatorTimeout)
       if (indicatorMountElement) {
         ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        indicatorMountElement.remove()
       }
     }
   }
