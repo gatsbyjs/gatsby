@@ -44,7 +44,7 @@ const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const uuid = require(`uuid/v4`)
+const uuidv4 = require(`uuid/v4`)
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
@@ -83,7 +83,7 @@ describe(`Jobs manager`, () => {
     worker.TEST_JOB.mockReset()
     endActivity.mockClear()
     pDefer.mockClear()
-    uuid.mockClear()
+    uuidv4.mockClear()
     reporter.phantomActivity.mockImplementation(() => {
       return {
         start: jest.fn(),
@@ -151,7 +151,7 @@ describe(`Jobs manager`, () => {
       const internalJob = createInternalJob(createMockJob(), plugin)
       createInternalJob(internalJob, plugin)
 
-      expect(uuid).toHaveBeenCalledTimes(1)
+      expect(uuidv4).toHaveBeenCalledTimes(1)
     })
   })
 

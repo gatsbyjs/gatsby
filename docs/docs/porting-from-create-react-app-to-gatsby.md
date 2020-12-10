@@ -44,7 +44,7 @@ In order to transition your codebase over to using Gatsby, a few things need to 
 In order to use Gatsby, you have to install it:
 
 ```shell
-npm install --save gatsby
+npm install gatsby
 ```
 
 > **Note**: rather than using the `gatsby new` command like you would initializing a new Gatsby site, this will install Gatsby as a dependency in your project
@@ -55,7 +55,7 @@ After installation, the key things that need to change are:
 
 2. converting routes into pages in the `/pages` directory
 
-The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with just the above steps.
+The following sections explain the above steps as well as other changes that you might need to make depending on the complexity of your app. A default Create React App project is able to run with the above steps.
 
 ### Project structure
 

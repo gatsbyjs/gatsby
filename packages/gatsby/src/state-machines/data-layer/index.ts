@@ -54,7 +54,6 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
     },
   },
   creatingPages: {
-    on: { ADD_NODE_MUTATION: { actions: [`markNodesDirty`, `callApi`] } },
     invoke: {
       id: `creating-pages`,
       src: `createPages`,
@@ -118,7 +117,6 @@ const recreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
     },
   },
   creatingPages: {
-    on: { ADD_NODE_MUTATION: { actions: [`markNodesDirty`, `callApi`] } },
     invoke: {
       id: `creating-pages`,
       src: `createPages`,

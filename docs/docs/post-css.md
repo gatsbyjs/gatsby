@@ -11,7 +11,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 1. Install the Gatsby plugin [gatsby-plugin-postcss](/packages/gatsby-plugin-postcss/).
 
 ```shell
-npm install --save gatsby-plugin-postcss
+npm install postcss gatsby-plugin-postcss
 ```
 
 2. Include the plugin in your `gatsby-config.js` file.
@@ -42,7 +42,7 @@ import "./styles.css"
 
 ### With CSS modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.css -> App.module.css`. Any file with the module extension will use CSS modules.
+To use CSS modules, prepend `.module` to the extension. For example: `App.css -> App.module.css`. Any file with the module extension will use CSS modules.
 
 ### PostCSS plugins
 

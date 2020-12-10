@@ -6,7 +6,7 @@ _NOTE: This plugin only generates output when run in `production` mode! To test 
 
 ## Install
 
-`npm install --save gatsby-plugin-sitemap`
+`npm install gatsby-plugin-sitemap`
 
 ## How to Use
 
@@ -23,7 +23,7 @@ generated sitemap will include all of your site's pages, except the ones you exc
 
 ## Options
 
-The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L45) can be overridden.
+The `defaultOptions` [here](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sitemap/src/internals.js#L71) can be overridden.
 
 The options are as follows:
 

@@ -48,6 +48,8 @@ describe(`Gatsby Preview (Updating)`, () => {
   it(`can be triggered with webhook data`, () => {
     cy.exec(`npm run update:webhook`)
 
-    cy.findByText(`Hello World from a Webhook (999)`).should(`exist`)
+    cy
+      .get(`#fake-data`)
+      .findByText(`Hello World from a Webhook (999)`).should(`exist`)
   })
 })

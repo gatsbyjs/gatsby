@@ -4,7 +4,7 @@ Provides drop-in support for Stylus with or without CSS Modules
 
 ## Install
 
-`npm install --save gatsby-plugin-stylus`
+`npm install gatsby-plugin-stylus`
 
 ## How to use
 

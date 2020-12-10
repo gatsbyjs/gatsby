@@ -233,7 +233,7 @@ You have context about the text as well as what depth the heading is (for instan
 
 With the inner function of the `visit` call, you parse out all of the text and if it will map to a h1, you set the type of the node to `html` and set the node's value to be some custom HTML.
 
-```js
+```js:title=plugins/gatsby-remark-purple-headers/index.js
 const visit = require("unist-util-visit")
 const toString = require("mdast-util-to-string")
 
@@ -263,6 +263,42 @@ module.exports = ({ markdownAST }, pluginOptions) => {
 ```
 
 A small library [mdast-util-to-string](https://github.com/syntax-tree/mdast-util-to-string) by Unified was used to extract the plain text of the inner nodes. This would remove links or other types of nodes inside the heading, but given you have full access to the markdown AST, you can modify it however you wish.
+
+## Using asynchronous behavior
+
+Gatsby supports the usage of asynchronous behavior in plugins, and `gatsby-transformer-remark` uses [unified](https://github.com/unifiedjs/unified) under the hood. The following example shows how the `gatsby-remark-purple-headers` transformer can be converted to asynchronous by adding the `async` keyword to the function declaration.
+
+```js:title=plugins/gatsby-remark-purple-headers/index.js
+const visit = require("unist-util-visit")
+const toString = require("mdast-util-to-string")
+
+// highlight-next-line
+module.exports = async ({ markdownAST }, pluginOptions) => {
+  visit(markdownAST, "heading", node => {
+    let { depth } = node
+
+    // Skip if not an h1
+    if (depth !== 1) return
+
+    // Grab the innerText of the heading node
+    let text = toString(node)
+
+    const html = `
+        <h1 style="color: rebeccapurple">
+          ${text}
+        </h1>
+      `
+
+    node.type = "html"
+    node.children = undefined
+    node.value = html
+  })
+
+  return markdownAST
+}
+```
+
+A real-world example of this would be [`gatsby-remark-code-repls`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-code-repls/src/gatsby-node.js).
 
 ## Loading in changes and seeing effect
 

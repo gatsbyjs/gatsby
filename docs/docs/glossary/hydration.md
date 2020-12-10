@@ -36,7 +36,7 @@ With client-side rendering, most actions trigger local DOM updates instead of ne
 
 That's the drawback to client-side rendering: none of your site's content is visible or interactive until the client downloads JavaScript and builds the DOM. However, not all clients can construct a DOM. For example, client-side rendering can prevent search engine and social media crawlers from consuming and indexing your site's URLs. Browser users, on the other hand, may see a blank page or loading image while your JavaScript bundle downloads and executes.
 
-[Server-side rendering](/docs/glossary/server-side-rendering/) makes HTML available to the client _before_ JavaScript loads. Your site visitors can see and read your content even if it is not fully interactive. Server rendering eliminates the blank page problem. Rendered HTML also makes it easier for search engine and social media crawlers to consume your site. Of course, server-side rendering also has a drawback: every URL request requires another round trip to the server.
+[Server-side rendering](/docs/glossary/server-side-rendering/) makes HTML available to the client _before_ JavaScript loads. Your site visitors can see and read your content even if it is not fully interactive. Server rendering eliminates the blank page problem. Rendered HTML also makes it easier for search engine and social media crawlers to consume your site. Server-side rendering also has a drawback: every URL request requires another round trip to the server.
 
 Hydration lets us take a hybrid approach.
 

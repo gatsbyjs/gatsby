@@ -31,7 +31,7 @@ Fill out the prompts for the `package.json` file that is generated. If you'd lik
 Now, you'll need to install the necessary packages that Gatsby relies on to work its magic.
 
 ```shell
-npm install --save gatsby react react-dom
+npm install gatsby react react-dom
 ```
 
 Next, you'll add a `src` directory and a `pages` directory inside your project.

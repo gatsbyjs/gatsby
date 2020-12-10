@@ -1,4 +1,4 @@
-import uuidV4 from "uuid/v4"
+import uuidv4 from "uuid/v4"
 import os from "os"
 import { join } from "path"
 
@@ -13,7 +13,7 @@ export class InMemoryConfigStore {
   createBaseConfig(): Record<string, unknown> {
     return {
       "telemetry.enabled": true,
-      "telemetry.machineId": `not-a-machine-id-${uuidV4()}`,
+      "telemetry.machineId": `not-a-machine-id-${uuidv4()}`,
     }
   }
 

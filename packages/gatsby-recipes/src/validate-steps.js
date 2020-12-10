@@ -1,17 +1,9 @@
-const validate = require(`./parser/validate`)
-const render = require(`./renderer`)
+import render from "./renderer"
 
-module.exports = async steps => {
+export default async function validateSteps(steps) {
   const errors = []
-
-  steps.map((stepMdx, i) => {
-    const syntaxError = validate(stepMdx)
-    if (syntaxError) {
-      errors.push(syntaxError)
-    }
-  })
-
   const firstStepPlan = await render(steps[0])
+
   if (firstStepPlan.length) {
     errors.push({
       step: 0,

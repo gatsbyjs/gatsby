@@ -1,4 +1,4 @@
-const transform = require(`./transform-to-plan-structure`)
+import transform from "./transform-to-plan-structure"
 
 const fixture = {
   children: [

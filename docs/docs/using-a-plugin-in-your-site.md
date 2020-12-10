@@ -9,7 +9,7 @@ For example, `gatsby-transformer-json` is a package that adds support for JSON f
 To install it, in the root of your site you run:
 
 ```shell
-npm install --save gatsby-transformer-json
+npm install gatsby-transformer-json
 ```
 
 Then in your site's `gatsby-config.js` you add `gatsby-transformer-json` to the plugins array like:

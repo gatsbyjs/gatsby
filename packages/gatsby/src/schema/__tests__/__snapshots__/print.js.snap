@@ -80,6 +80,16 @@ type Directory implements Node @dontInfer {
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
 }
 
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
@@ -210,6 +220,16 @@ type Directory implements Node @dontInfer {
   ctime: Date! @dateformat
   birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
 }
 
 type SitePage implements Node @dontInfer {
@@ -344,6 +364,16 @@ type Directory implements Node @dontInfer {
   ctime: Date! @dateformat
   birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+}
+
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
 }
 
 type SitePage implements Node @dontInfer {

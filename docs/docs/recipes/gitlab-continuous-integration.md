@@ -54,7 +54,7 @@ install_dependencies:
 
 ## Additional resources
 
-- See how you can develop this simple file into something more real world [GitLab CI/CD Docs](https://docs.gitlab.com/ee/ci/README.html)
+- See how you can develop this file into something more real world [GitLab CI/CD Docs](https://docs.gitlab.com/ee/ci/README.html)
 - Check this especially to learn how to make your newly build available for a next job - [GitLab Job Artifacts Docs](https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html)
 
 - [Getting started with GitLab CI/CD](https://gitlab.com/help/ci/quick_start/README)

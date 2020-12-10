@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { IGatsbyState, IRedirect, ICreateRedirectAction } from "../types"
 
-const redirects = new Map<string, IRedirect[]>()
+const redirects = new Map<string, Array<IRedirect>>()
 
 function exists(newRedirect: IRedirect): boolean {
   const fromPathRedirects = redirects.get(newRedirect.fromPath)

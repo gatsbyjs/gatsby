@@ -23,7 +23,7 @@ type DateResolver = (
   args: any,
   context: any,
   info: any
-) => Promise<null | string | number | (string | number)[]>
+) => Promise<null | string | number | Array<string | number>>
 
 const ISO_8601_FORMAT = [
   `YYYY`,
@@ -147,7 +147,7 @@ const ISO_8601_FORMAT_AS_REGEX = ISO_8601_FORMAT.map(format => {
 // calculate all lengths of the formats, if a string is longer or smaller it can't be valid
 const ISO_8601_FORMAT_LENGTHS = [
   ...new Set(
-    ISO_8601_FORMAT.reduce((acc: number[], val: string) => {
+    ISO_8601_FORMAT.reduce((acc: Array<number>, val: string) => {
       if (!val.endsWith(`Z`)) {
         return acc.concat(val.length)
       }

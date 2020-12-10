@@ -48,9 +48,9 @@ See [Schema Root Fields and Utility Types](/docs/schema-root-fields) for a more 
 
 For each type, utility types are created. Those are input object types, used for searching, sorting and filtering, and types for paginated data (Connections and Edges).
 
-For searching and sorting, Gatsby goes through every field in the type and converts them to corresponding Input GraphQL types. Scalars are converted to objects with filter operator fields like "eq" or "ni". Object types are converted to Input Object types. For sorting, enums are created out of all fields so that one can use that to specify the sort.
+For searching and sorting, Gatsby goes through every field in the type and converts them to corresponding Input GraphQL types. Scalars are converted to objects with filter operator fields like `eq` or `ni`. Object types are converted to Input Object types. For sorting, enums are created out of all fields so that one can use that to specify the sort.
 
-Those types are used to create _root fields_ of the schema in `Query` type. For each node type a root field for querying one item and paginated items are created (for example, for type BlogPost it would be `blogPost` and `allBlogPost`).
+Those types are used to create _root fields_ of the schema in `Query` type. For each node type a root field for querying one item and paginated items are created (for example, for type `BlogPost` it would be `blogPost` and `allBlogPost`).
 
 ## 6. Merging in third-party schemas
 
@@ -60,8 +60,8 @@ If a plugin like `gatsby-source-graphql` is used, all third-party schemas that i
 
 [`createResolvers`](/docs/schema-customization/#createresolvers-api) API is called, allowing users to add additional customization on top of created schema. This is an "escape hatch" API, as it allows to modify any fields or types in the Schema, including Query type.
 
-## 8. Second schema build for SitePage
+## 8. Second schema build for `SitePage`
 
-Because SitePage nodes are created after a schema is first created (at `createPages`) API call, the type of the `SitePage.context` field can change based on which context was passed to pages. Therefore, an additional schema inference pass happens and then the schema is updated.
+Because `SitePage` nodes are created after a schema is first created (at `createPages`) API call, the type of the `SitePage.context` field can change based on which context was passed to pages. Therefore, an additional schema inference pass happens and then the schema is updated.
 
 Note that this behavior will be removed in Gatsby v3 and context will become a list of key/value pairs in GraphQL.

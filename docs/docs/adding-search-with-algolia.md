@@ -24,7 +24,7 @@ To build the user interface for searching, this guide will use [React InstantSea
 
 ## Setting up the project
 
-This guide will set up a search based on the [Gatsby starter blog](/starters/gatsbyjs/gatsby-starter-blog/). You can of course base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
+This guide will set up a search based on the [Gatsby starter blog](/starters/gatsbyjs/gatsby-starter-blog/). You can base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
 
 Create a new site using
 
@@ -559,7 +559,7 @@ const Layout = ({ location, title, children }) => {
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <a href="https://www.gatsbyjs.com">Gatsby</a>
       </footer>
     </div>
   )

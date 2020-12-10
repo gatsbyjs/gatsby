@@ -39,7 +39,7 @@ npx tailwindcss init
 1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
 
 ```shell
-npm install --save gatsby-plugin-postcss
+npm install postcss gatsby-plugin-postcss
 ```
 
 2. Include the plugin in your `gatsby-config.js` file.
@@ -71,7 +71,7 @@ These steps assume you have a CSS-in-JS library already installed, and the examp
 1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction)
 
 ```shell
-npm install -D twin.macro @emotion/core @emotion/styled gatsby-plugin-emotion
+npm install -D twin.macro @emotion/react @emotion/styled gatsby-plugin-emotion
 ```
 
 2. Import the Tailwind base styles
@@ -121,7 +121,7 @@ See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-roge
 1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass) and `node-sass`.
 
 ```shell
-npm install --save node-sass gatsby-plugin-sass
+npm install node-sass gatsby-plugin-sass
 ```
 
 2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCssPlugins` parameter in your `gatsby-config.js`.
@@ -191,7 +191,7 @@ From v1.4.0 onwards PurgeCSS is built into Tailwind CSS, but the approaches need
 
 **1.4.0 and above**
 
-In 1.4.0 you can purge your CSS directly from your Tailwind config. You simply need to provide an array of strings telling it which files to process.
+In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to provide an array of strings telling it which files to process.
 
 ```js:title=tailwind.config.js
 module.exports = {

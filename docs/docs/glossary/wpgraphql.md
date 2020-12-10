@@ -42,7 +42,7 @@ You'll need to do two more things before you can use your WordPress-backed Graph
 Use [npm](/docs/glossary#npm) to install [gatsby-source-graphql](/docs/third-party-graphql/).
 
 ```shell
-npm install --save gatsby-source-graphql
+npm install gatsby-source-graphql
 ```
 
 Then update `gatsby-config.js`. Add the plugin to your Gatsby instance. Specify the URL of the GraphQL endpoint and set other [configuration options](/packages/gatsby-source-graphql/).

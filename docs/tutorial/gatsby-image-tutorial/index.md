@@ -256,19 +256,20 @@ This example is attempting to query for all the data in `speaking.yaml` and the 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
 ```graphql
-talks: allSpeakingYaml {
-        edges {
-            node {
-                image {
-                    childImageSharp {
-                        fluid {
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
+{
+  talks: allSpeakingYaml {
+    edges {
+      node {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
             }
+          }
         }
+      }
     }
+  }
 }
 ```
 

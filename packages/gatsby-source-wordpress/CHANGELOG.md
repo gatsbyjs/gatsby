@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.2...gatsby-source-wordpress@3.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.1...gatsby-source-wordpress@3.7.0-next.2) (2020-11-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.0...gatsby-source-wordpress@3.7.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.6.0-next.0...gatsby-source-wordpress@3.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.5.0-next.1...gatsby-source-wordpress@3.5.0-next.2) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.5.0-next.0...gatsby-source-wordpress@3.5.0-next.1) (2020-11-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.41...gatsby-source-wordpress@3.4.0) (2020-11-02)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.40...gatsby-source-wordpress@3.3.41) (2020-10-27)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.39...gatsby-source-wordpress@3.3.40) (2020-10-26)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-wordpress ([#27655](https://github.com/gatsbyjs/gatsby/issues/27655)) ([b33f403](https://github.com/gatsbyjs/gatsby/commit/b33f403535c719b1b85698820abea21c5ae89a25))
+
+## [3.3.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.38...gatsby-source-wordpress@3.3.39) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.37...gatsby-source-wordpress@3.3.38) (2020-10-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.36...gatsby-source-wordpress@3.3.37) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.35...gatsby-source-wordpress@3.3.36) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.34...gatsby-source-wordpress@3.3.35) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.33...gatsby-source-wordpress@3.3.34) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.32...gatsby-source-wordpress@3.3.33) (2020-09-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.31...gatsby-source-wordpress@3.3.32) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.30...gatsby-source-wordpress@3.3.31) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+## [3.3.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.29...gatsby-source-wordpress@3.3.30) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 ## [3.3.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.3.28...gatsby-source-wordpress@3.3.29) (2020-08-24)
 
 **Note:** Version bump only for package gatsby-source-wordpress

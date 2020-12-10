@@ -47,13 +47,13 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
   if (process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL) {
     const cloudJob = got
       .post(process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL, {
-        body: {
+        json: {
           file: job.inputPaths[0],
           hash: createContentDigest(job),
           transforms: job.args.operations,
           options: job.args.pluginOptions,
         },
-        json: true,
+        responseType: `json`,
       })
       .then(() => {})
 

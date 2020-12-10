@@ -107,7 +107,7 @@ Now, transform the newly created `File` nodes by hooking into the `onCreateNode`
 If you're following along in an example project, install the following packages:
 
 ```shell
-npm install --save js-yaml lodash
+npm install js-yaml lodash
 ```
 
 Now, in `gatsby-node.js`:

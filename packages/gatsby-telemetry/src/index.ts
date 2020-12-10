@@ -3,9 +3,11 @@ import {
   IAggregateStats,
   ITelemetryTagsPayload,
   ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
 } from "./telemetry"
-import * as express from "express"
+import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
+import time, { TimeUnit } from "@turist/time"
 
 const instance = new AnalyticsTracker()
 
@@ -21,7 +23,7 @@ const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
 const interval =
   intervalDuration && Number.isFinite(+intervalDuration)
     ? Math.max(Number(intervalDuration), 1000)
-    : 10 * 60 * 1000 // 10 min
+    : time(10, TimeUnit.Minute)
 
 function tick(): void {
   flush()
@@ -32,31 +34,46 @@ function tick(): void {
 export function trackFeatureIsUsed(name: string): void {
   instance.trackFeatureIsUsed(name)
 }
+
 export function trackCli(
-  input: string | string[],
+  input: string | Array<string>,
+  tags?: ITelemetryTagsPayload,
+  opts?: ITelemetryOptsPayload
+): void {
+  instance.trackCli(input, tags, opts)
+}
+
+export function captureEvent(
+  input: string | Array<string>,
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload
 ): void {
   instance.captureEvent(input, tags, opts)
 }
 
-export function trackError(input, tags): void {
+export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
   instance.captureError(input, tags)
 }
 
-export function trackBuildError(input, tags): void {
+export function trackBuildError(
+  input: string,
+  tags?: ITelemetryTagsPayload
+): void {
   instance.captureBuildError(input, tags)
 }
 
-export function setDefaultTags(tags): void {
+export function setDefaultTags(tags: IDefaultTelemetryTagsPayload): void {
   instance.decorateAll(tags)
 }
 
-export function decorateEvent(event, tags): void {
+export function decorateEvent(
+  event: string,
+  tags?: Record<string, unknown>
+): void {
   instance.decorateNextEvent(event, tags)
 }
 
-export function setTelemetryEnabled(enabled): void {
+export function setTelemetryEnabled(enabled: boolean): void {
   instance.setTelemetryEnabled(enabled)
 }
 
@@ -68,18 +85,20 @@ export function isTrackingEnabled(): boolean {
   return instance.isTrackingEnabled()
 }
 
-export function aggregateStats(data): IAggregateStats {
+export function aggregateStats(data: Array<number>): IAggregateStats {
   return instance.aggregateStats(data)
 }
 
-export function addSiteMeasurement(event, obj): void {
+export function addSiteMeasurement(event: string, obj): void {
   instance.addSiteMeasurement(event, obj)
 }
 
 export function expressMiddleware(source: string) {
-  return function (_req: express.Request, _res: express.Response, next): void {
+  return function (req: Request, _res: Response, next): void {
     try {
-      instance.trackActivity(`${source}_ACTIVE`)
+      instance.trackActivity(`${source}_ACTIVE`, {
+        userAgent: req.headers[`user-agent`],
+      })
     } catch (e) {
       // ignore
     }
@@ -88,12 +107,20 @@ export function expressMiddleware(source: string) {
 }
 
 // Internal
-export function setDefaultComponentId(componentId): void {
+export function setDefaultComponentId(componentId: string): void {
   instance.componentId = componentId
 }
 
-export function setGatsbyCliVersion(version): void {
+export function setGatsbyCliVersion(version: string): void {
   instance.gatsbyCliVersion = version
+}
+
+export {
+  AnalyticsTracker,
+  IAggregateStats,
+  ITelemetryTagsPayload,
+  ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
 }
 
 module.exports = {
@@ -109,4 +136,6 @@ module.exports = {
   aggregateStats,
   addSiteMeasurement,
   expressMiddleware,
+  setDefaultComponentId,
+  setGatsbyCliVersion,
 }

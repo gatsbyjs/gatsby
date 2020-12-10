@@ -12,7 +12,7 @@ Example use cases:
 ## Installation
 
 ```shell
-npm install --save gatsby-plugin-catch-links
+npm install gatsby-plugin-catch-links
 ```
 
 ## How to use

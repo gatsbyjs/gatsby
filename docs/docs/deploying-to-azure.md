@@ -94,7 +94,7 @@ Next, add configuration details specific to your Gatsby project.
 
 The `App location` is the location of your front end app code. If you have a frontend app and an API in different directories but in the same repository, you will need to point out under which sub directory your front end app lives. You can leave this blank if you have a Gatsby project at the root.
 
-The default value for `Api location` is `/api`. As we don't have an API in an `/api` directory we can leave this blank and the Static Web App Service will ignore it during build. If you wish you can add an API at a later stage. Refer to the links at the bottom of this doc that describes how to do just that.
+The default value for `Api location` is `/api`. As we don't have an API in an `/api` directory we can leave this blank and the Static Web App Service will ignore it during build. If you wish you can add an API at a later stage. Refer to the links at the bottom of this doc that describes how to do that.
 
 The really important field to specify is the `App artifact location`, this should point to the folder where your Gatsby project is built, this would be `public` directory.
 

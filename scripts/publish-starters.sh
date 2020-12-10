@@ -4,6 +4,7 @@ GLOB=$1
 IS_CI="${CI:-false}"
 BASE=$(pwd)
 COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+MINIMAL_STARTER=gatsby-starter-minimal
 
 if [ "$IS_CI" = true ]; then
   sudo apt-get update && sudo apt-get install jq
@@ -27,8 +28,10 @@ for folder in $GLOB; do
   cp -r "$BASE/$folder/." .
 
   if [ "$IS_WORKSPACE" = null ]; then
-    rm -rf yarn.lock
-    yarn import # generate a new yarn.lock file based on package-lock.json
+    rm -f yarn.lock
+    if [ "$MINIMAL_STARTER" != "$NAME" ]; then # ignore minimal starter because we don't want any lock files for create-gatsby
+      yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
+    fi
   fi
 
   if [ -n "$(git status --porcelain)" ]; then

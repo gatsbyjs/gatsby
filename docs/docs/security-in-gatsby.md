@@ -71,7 +71,7 @@ A malicious website could inspect your site and copy this snippet to theirs. If 
 
 #### Don't use GET requests to modify data
 
-Actions that do not simply read data should be handled in a POST request. In the example above, if the `/blog/addcomment` endpoint accepts a GET request, the CSRF attack can be done using an `<img />` tag:
+Actions that do not read data should be handled in a POST request. In the example above, if the `/blog/addcomment` endpoint accepts a GET request, the CSRF attack can be done using an `<img />` tag:
 
 ```html
 <img src="http://mywebsite.com/blog/addcomment?comment=unwanted%20comment" />
