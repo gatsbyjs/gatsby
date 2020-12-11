@@ -429,7 +429,7 @@ body {
 ### Additional resources
 
 - [Fontsource repo on GitHub](https://github.com/fontsource/fontsource)
-- [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
+- [Typography.js](/docs/using-typography-js/) - Another option for using Google fonts on a Gatsby site
 
 ## Using Font Awesome
 
