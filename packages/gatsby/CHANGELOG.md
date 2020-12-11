@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.30.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.0...gatsby@2.30.0-next.1) (2020-12-11)
+
+### Bug Fixes
+
+- **gatsby:** correct opt-in percentage for QUERY_ON_DEMAND and LAZY_IMAGES ([#28579](https://github.com/gatsbyjs/gatsby/issues/28579)) ([c21dac9](https://github.com/gatsbyjs/gatsby/commit/c21dac9e8cf97093e00889e850c5a441aef46bda))
+
 # [2.30.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.4...gatsby@2.30.0-next.0) (2020-12-10)
 
 ### Bug Fixes
