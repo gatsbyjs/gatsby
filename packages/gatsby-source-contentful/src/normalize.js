@@ -230,10 +230,10 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
 
 exports.createNodesForContentType = ({
   contentTypeItem,
-  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
+  getNode,
   createNode,
   createNodeId,
   resolvable,
@@ -282,6 +282,12 @@ exports.createNodesForContentType = ({
 
     // First create nodes for each of the entries of that content type
     const entryNodes = entries.map(entryItem => {
+      const id = mId(space.sys.id, entryItem.sys.id, entryItem.sys.type)
+
+      if (getNode(id)?.internal?.contentDigest === entryItem.sys.updatedAt) {
+        return null
+      }
+
       // Get localized fields.
       const entryItemFields = _.mapValues(entryItem.fields, (v, k) => {
         const fieldProps = contentTypeItem.fields.find(field => field.id === k)
@@ -395,7 +401,7 @@ exports.createNodesForContentType = ({
       }
 
       let entryNode = {
-        id: mId(space.sys.id, entryItem.sys.id, entryItem.sys.type),
+        id,
         spaceId: space.sys.id,
         contentful_id: entryItem.sys.id,
         createdAt: entryItem.sys.createdAt,
@@ -553,7 +559,7 @@ exports.createNodesForContentType = ({
     contentTypeNode.internal.contentDigest = contentDigest
 
     createNodePromises.push(createNode(contentTypeNode))
-    entryNodes.forEach(entryNode => {
+    entryNodes.filter(Boolean).forEach(entryNode => {
       createNodePromises.push(createNode(entryNode))
     })
     childrenNodes.forEach(entryNode => {

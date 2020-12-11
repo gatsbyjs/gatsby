@@ -561,6 +561,7 @@ exports.sourceNodes = async (
         restrictedNodeFields,
         conflictFieldPrefix,
         entries: entryList[i],
+        getNode,
         createNode,
         createNodeId,
         resolvable,
