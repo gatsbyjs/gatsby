@@ -3,5 +3,6 @@
   "failOnStatusCode": false,
   "chromeWebSecurity": false,
   "defaultCommandTimeout": 30000,
-  "retries": 2
+  "retries": 2,
+  "videoUploadOnPasses": false
 }
