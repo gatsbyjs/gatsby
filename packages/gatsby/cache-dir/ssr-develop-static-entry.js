@@ -131,7 +131,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
         }
 
         const pageElement = createElement(
-          syncRequires.components[componentChunkName],
+          syncRequires.ssrComponents[componentChunkName],
           props
         )
 

@@ -1098,7 +1098,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/core @emotion/styled @mdx-js/react
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/react @emotion/styled @mdx-js/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1344,8 +1344,8 @@ It's important to namespace your theme. It helps differentiate between published
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.14",
-    "@emotion/styled": "^10.0.14",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "@mdx-js/react": "^1.0.27",
     "gatsby-plugin-theme-ui": "^0.2.6",
     "gatsby-source-filesystem": "^2.1.5",

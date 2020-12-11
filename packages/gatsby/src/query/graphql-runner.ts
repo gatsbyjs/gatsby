@@ -184,7 +184,7 @@ export class GraphQLRunner {
 
     try {
       // `execute` will return a promise
-      return execute({
+      return await execute({
         schema,
         document,
         rootValue: context,

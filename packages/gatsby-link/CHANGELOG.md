@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.8.0-next.0...gatsby-link@2.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-link
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.7.0-next.0...gatsby-link@2.8.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-link:** don't prefetch same page ([#28307](https://github.com/gatsbyjs/gatsby/issues/28307)) ([3666130](https://github.com/gatsbyjs/gatsby/commit/36661308db47696a3b29d2348c190817d81f1595))
+
 # [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.6.0-next.0...gatsby-link@2.7.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-link

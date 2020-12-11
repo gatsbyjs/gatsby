@@ -182,7 +182,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
-  await attachTracingResolver({ schemaComposer, parentSpan: activity.span })
+  attachTracingResolver({ schemaComposer, parentSpan: activity.span })
   activity.end()
 }
 
@@ -1042,14 +1042,16 @@ const addImplicitConvenienceChildrenFields = ({
         const fieldName = many
           ? fieldNames.convenienceChildren(typeName)
           : fieldNames.convenienceChild(typeName)
+        const manyArg = many ? `, many: true` : ``
         report.warn(
-          `The type \`${parentTypeName}\` does not explicitly define ` +
-            `the field \`${fieldName}\`.\n` +
-            `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
-            `extension set to \`false\`, automatically adding fields for ` +
-            `children types is deprecated.\n` +
-            `In Gatsby v3, only children fields explicitly set with the ` +
-            `\`childOf\` extension will be added.\n`
+          `Deprecation warning: ` +
+            `In Gatsby v3 field \`${parentTypeName}.${fieldName}\` will not be added automatically because ` +
+            `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
+            `Add the following type definition to fix this:\n\n` +
+            `  type ${typeName} implements Node @childOf(types: ["${parentTypeName}"]${manyArg}) {\n` +
+            `    id: ID!\n` +
+            `  }\n\n` +
+            `https://www.gatsbyjs.com/docs/actions/#createTypes`
         )
       }
     }
@@ -1081,9 +1083,9 @@ const createChildField = typeName => {
   return {
     [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
-      async resolve(source, args, context) {
+      resolve(source, args, context) {
         const { path } = context
-        const result = await context.nodeModel.getNodesByIds(
+        const result = context.nodeModel.getNodesByIds(
           { ids: source.children, type: typeName },
           { path }
         )

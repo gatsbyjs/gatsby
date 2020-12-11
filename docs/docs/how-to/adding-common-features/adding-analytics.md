@@ -76,3 +76,4 @@ Once this is configured you can deploy your site to test! If you navigate to the
 - [GoatCounter](/packages/gatsby-plugin-goatcounter/)
 - [PostHog](/packages/gatsby-plugin-posthog-analytics/)
 - [Plausible](/packages/gatsby-plugin-plausible/)
+- [Vercel](/packages/gatsby-plugin-vercel/)
