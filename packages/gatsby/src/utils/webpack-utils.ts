@@ -685,9 +685,7 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: `whm`,
-      },
+      overlay: false,
     })
 
   plugins.extractText = (options: any): Plugin =>
@@ -715,7 +713,7 @@ export const createWebpackUtils = (
   }
 }
 
-function reactHasJsxRuntime(): boolean {
+export function reactHasJsxRuntime(): boolean {
   // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
   // People can use a custom babelrc file to support it
   // try {

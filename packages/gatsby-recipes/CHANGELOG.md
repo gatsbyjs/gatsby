@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0-next.1...gatsby-recipes@0.7.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add postcss as a dependency ([#28556](https://github.com/gatsbyjs/gatsby/issues/28556)) ([c5bf981](https://github.com/gatsbyjs/gatsby/commit/c5bf9811e20306fced1a1415e9f842135cd49750))
+
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0-next.0...gatsby-recipes@0.6.0-next.1) (2020-12-01)
+
+### Bug Fixes
+
+- **gatsby-recipes:** add isLocal to schema for GatsbyPlugin ([#28417](https://github.com/gatsbyjs/gatsby/issues/28417)) ([43b2f10](https://github.com/gatsbyjs/gatsby/commit/43b2f1071b1e465919d1f3a3a5caec36ac909d44))
+
+# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.2...gatsby-recipes@0.6.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-recipes:** updated chakra ui recipe after v1 release ([#28270](https://github.com/gatsbyjs/gatsby/issues/28270)) ([9c7c1a2](https://github.com/gatsbyjs/gatsby/commit/9c7c1a275b0fce75ae971eb85a48845df62d0e10))
+
+# [0.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.1...gatsby-recipes@0.5.0-next.2) (2020-11-23)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.5.0-next.0...gatsby-recipes@0.5.0-next.1) (2020-11-22)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.1...gatsby-recipes@0.5.0-next.0) (2020-11-18)
+
+### Features
+
+- **gatsby:** SSR pages during development ([#27432](https://github.com/gatsbyjs/gatsby/issues/27432)) ([23da2c3](https://github.com/gatsbyjs/gatsby/commit/23da2c3fb2e16b7e3fe1e15c19decd799000a212))
+- **recipes-list:** add chakra-ui ([#28013](https://github.com/gatsbyjs/gatsby/issues/28013)) ([51b9041](https://github.com/gatsbyjs/gatsby/commit/51b9041d1f5977f22ee23c7e68bcd6b12999c2c4))
+
+# [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.4.0-next.0...gatsby-recipes@0.4.0-next.1) (2020-11-16)
+
+### Features
+
+- **create-gatsby:** Add create-gatsby ([#27703](https://github.com/gatsbyjs/gatsby/issues/27703)) ([2371fd5](https://github.com/gatsbyjs/gatsby/commit/2371fd584d6824444d93f8667c45421c34aa5f54)), closes [#27801](https://github.com/gatsbyjs/gatsby/issues/27801) [#27995](https://github.com/gatsbyjs/gatsby/issues/27995)
+- **gatsby-recipes:** add Chakra UI recipe ([#27721](https://github.com/gatsbyjs/gatsby/issues/27721)) ([d0c94e9](https://github.com/gatsbyjs/gatsby/commit/d0c94e98f013e53d946e0e75a3e4c1df20ae4c04))
+
 # [0.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.3.0-next.2...gatsby-recipes@0.3.0-next.3) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-recipes

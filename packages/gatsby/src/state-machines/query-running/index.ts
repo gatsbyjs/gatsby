@@ -1,4 +1,4 @@
-import { MachineConfig, Machine } from "xstate"
+import { MachineConfig, Machine, assign } from "xstate"
 import { IQueryRunningContext } from "./types"
 import { queryRunningServices } from "./services"
 import { queryActions } from "./actions"
@@ -15,6 +15,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
   on: {
     SOURCE_FILE_CHANGED: {
       actions: `markSourceFilesDirty`,
+    },
+    QUERY_RUN_REQUESTED: {
+      actions: `trackRequestedQueryRun`,
     },
   },
   context: {},
@@ -59,12 +62,21 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       },
     },
     calculatingDirtyQueries: {
+      entry: assign<IQueryRunningContext>(({ pendingQueryRuns }) => {
+        return {
+          pendingQueryRuns: new Set(),
+          currentlyHandledPendingQueryRuns: pendingQueryRuns,
+        }
+      }),
       invoke: {
         id: `calculating-dirty-queries`,
         src: `calculateDirtyQueries`,
         onDone: {
           target: `runningStaticQueries`,
-          actions: `assignDirtyQueries`,
+          actions: [
+            `assignDirtyQueries`,
+            `clearCurrentlyHandledPendingQueryRuns`,
+          ],
         },
       },
     },
@@ -90,10 +102,17 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     // This waits for the jobs API to finish
     waitingForJobs: {
       // If files are dirty go and extract again
-      always: {
-        cond: (ctx): boolean => !!ctx.filesDirty,
-        target: `extractingQueries`,
-      },
+      always: [
+        {
+          cond: (ctx): boolean => !!ctx.filesDirty,
+          target: `extractingQueries`,
+        },
+        {
+          cond: ({ pendingQueryRuns }): boolean =>
+            !!pendingQueryRuns && pendingQueryRuns.size > 0,
+          target: `calculatingDirtyQueries`,
+        },
+      ],
       invoke: {
         src: `waitUntilAllJobsComplete`,
         id: `waiting-for-jobs`,

@@ -38,6 +38,10 @@ export default [
     value: `theme-ui`,
   },
   {
+    label: `Add Chakra UI`,
+    value: `chakra-ui`,
+  },
+  {
     label: `Add Emotion`,
     value: `emotion`,
   },

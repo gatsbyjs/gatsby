@@ -81,10 +81,16 @@ const staticallyAnalyzeExports = (
     // get foo from `export { foo } from 'bar'`
     // get foo from `export { foo }`
     ExportSpecifier: function ExportSpecifier(astPath) {
-      const exportName = astPath?.node?.exported?.name
       isES6 = true
-      if (exportName) {
-        exportNames.push(exportName)
+      const exp = astPath?.node?.exported
+      if (!exp) {
+        return
+      }
+      if (exp.type === `Identifier`) {
+        const exportName = exp.name
+        if (exportName) {
+          exportNames.push(exportName)
+        }
       }
     },
 

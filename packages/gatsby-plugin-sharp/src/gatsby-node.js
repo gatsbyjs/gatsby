@@ -2,10 +2,45 @@ const {
   setBoundActionCreators,
   // queue: jobQueue,
   // reportError,
+  _unstable_createJob,
 } = require(`./index`)
+const { pathExists } = require(`fs-extra`)
+const { slash, isCI } = require(`gatsby-core-utils`)
+const { trackFeatureIsUsed } = require(`gatsby-telemetry`)
 const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
+const path = require(`path`)
+
+function prepareLazyImagesExperiment(reporter) {
+  if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
+    return
+  }
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // We don't want to ever have this flag enabled for anything other than develop
+    // in case someone have this env var globally set
+    delete process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES
+    return
+  }
+  if (isCI()) {
+    delete process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES
+    reporter.warn(
+      `Lazy Image Processing experiment is not available in CI environment. Continuing with regular mode.`
+    )
+    return
+  }
+  // We show a different notice for GATSBY_EXPERIMENTAL_FAST_DEV umbrella
+  if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
+    reporter.info(
+      `[gatsby-plugin-sharp] The lazy image processing experiment is enabled`
+    )
+  }
+  trackFeatureIsUsed(`LazyImageProcessing`)
+}
+
+exports.onPreInit = ({ reporter }) => {
+  prepareLazyImagesExperiment(reporter)
+}
 
 // create the progressbar once and it will be killed in another lifecycle
 const finishProgressBar = () => {
@@ -16,9 +51,108 @@ const finishProgressBar = () => {
 }
 
 exports.onPostBuild = () => finishProgressBar()
-exports.onCreateDevServer = () => finishProgressBar()
 
-exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
+exports.onCreateDevServer = async ({ app, cache, reporter }) => {
+  if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
+    finishProgressBar()
+    return
+  }
+
+  createOrGetProgressBar()
+  finishProgressBar()
+
+  app.use(async (req, res, next) => {
+    const decodedURI = decodeURIComponent(req.path)
+    const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
+
+    if (await pathExists(pathOnDisk)) {
+      return res.sendFile(pathOnDisk)
+    }
+
+    const jobContentDigest = await cache.get(decodedURI)
+    const cacheResult = jobContentDigest
+      ? await cache.get(jobContentDigest)
+      : null
+
+    if (!cacheResult) {
+      return next()
+    }
+
+    // We are going to run a job for a single operation only
+    // and postpone all other operations
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
+    const {
+      matchingJob,
+      jobWithRemainingOperations,
+    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+
+    await _unstable_createJob(matchingJob, { reporter })
+    await cache.cache.del(decodedURI)
+
+    if (jobWithRemainingOperations.args.operations.length > 0) {
+      // There are still some operations pending for this job - replace the cached job
+      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+    } else {
+      // No operations left to process - purge the cache
+      await cache.cache.del(jobContentDigest)
+    }
+
+    return res.sendFile(pathOnDisk)
+  })
+}
+
+// Split the job into two jobs:
+//  - first job with a single operation matching requestedPathOnDisk
+//  - second job with all other operations
+// so the two resulting jobs are only different by their operations
+function splitOperationsByRequestedFile(job, requestedPathOnDisk) {
+  const matchingJob = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+  const jobWithRemainingOperations = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+
+  job.args.operations.forEach(op => {
+    const operationPath = path.resolve(path.join(job.outputDir, op.outputPath))
+    if (operationPath === requestedPathOnDisk) {
+      matchingJob.args.operations.push(op)
+    } else {
+      jobWithRemainingOperations.args.operations.push(op)
+    }
+  })
+  if (matchingJob.args.operations.length === 0) {
+    throw new Error(
+      `Could not find matching operation for ${requestedPathOnDisk}`
+    )
+  }
+  return { matchingJob, jobWithRemainingOperations }
+}
+
+// So something is wrong with the reporter, when I do this in preBootstrap,
+// the progressbar gets not updated
+exports.onPostBootstrap = async ({ reporter, cache, store }) => {
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // recreate jobs that haven't been triggered by develop yet
+    // removing stale jobs has already kicked in so we know these still need to process
+    for (const [contentDigest] of store.getState().jobsV2.complete) {
+      const job = await cache.get(contentDigest)
+
+      if (job) {
+        // we dont have to await, gatsby does this for us
+        _unstable_createJob(job, { reporter })
+      }
+    }
+  }
+}
+
+exports.onPreBootstrap = async (
+  { actions, emitter, reporter, cache, store },
+  pluginOptions
+) => {
   setBoundActionCreators(actions)
   setPluginOptions(pluginOptions)
 
@@ -40,6 +174,33 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
 
     emitter.on(`CREATE_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
+        if (action.payload.job.args.isLazy) {
+          // we have to remove some internal pieces
+          const job = {
+            name: action.payload.job.name,
+            inputPaths: action.payload.job.inputPaths.map(input => input.path),
+            outputDir: action.payload.job.outputDir,
+            args: {
+              ...action.payload.job.args,
+              isLazy: false,
+            },
+          }
+          cache.set(action.payload.job.contentDigest, job)
+
+          action.payload.job.args.operations.forEach(op => {
+            const cacheKey = slash(
+              path.relative(
+                path.join(process.cwd(), `public`),
+                path.join(action.payload.job.outputDir, op.outputPath)
+              )
+            )
+
+            cache.set(`/${cacheKey}`, action.payload.job.contentDigest)
+          })
+
+          return
+        }
+
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
@@ -51,6 +212,12 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
     emitter.on(`END_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
         const jobContentDigest = action.payload.jobContentDigest
+
+        // when it's lazy we didn't set it
+        if (!imageCountInJobsMap.has(jobContentDigest)) {
+          return
+        }
+
         const imageCount = imageCountInJobsMap.get(jobContentDigest)
         const progress = createOrGetProgressBar(reporter)
         progress.tick(imageCount)
