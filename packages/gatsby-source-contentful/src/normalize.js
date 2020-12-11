@@ -1,5 +1,6 @@
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
+const { GraphQLString } = require(`gatsby/graphql`)
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
@@ -514,9 +515,19 @@ exports.createNodesForContentType = ({
                 )
               })
 
+            const deprecationReason = `This field got removed due to performance reasons. Please use the new "raw" and "references" fields. See: https://www.gatsbyjs.com/plugins/gatsby-source-contentful/#contentful-rich-text`
+
             entryItemFields[entryItemFieldKey] = {
               raw: stringify(fieldValue),
               references___NODE: [...resolvableReferenceIds],
+              nodeType: {
+                type: GraphQLString,
+                deprecationReason,
+              },
+              json: {
+                type: GraphQLString,
+                deprecationReason,
+              },
             }
           } else if (
             fieldType === `Object` &&
