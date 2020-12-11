@@ -64,7 +64,7 @@ export default function Home() {
 
 Run `npm run develop` and you’ll see the global styles applied.
 
-![Global styles](./images/global-styles.png)
+![Global styles](../../images/global-styles.png)
 
 ## Adding global styles without a layout component
 
@@ -108,7 +108,7 @@ import "./src/styles/global.css"
 
 You should see your global styles taking effect across your site:
 
-![Global styles example site](./images/global-styles-example.png)
+![Global styles example site](../../images/global-styles-example.png)
 
 ### Importing CSS files into components
 

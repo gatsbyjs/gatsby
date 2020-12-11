@@ -114,4 +114,4 @@ Starters will include components to render data, but they are tied to the starte
 
 As an aid to help try and guide you to which of the 3 options is right for your use case, consider this flowchart:
 
-![Flowchart walking through options for plugins, starters, and themes](./images/plugin-starter-theme-flowchart.png)
+![Flowchart walking through options for plugins, starters, and themes](../images/plugin-starter-theme-flowchart.png)

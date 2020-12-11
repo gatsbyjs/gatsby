@@ -12,7 +12,7 @@ Client-only routes will exist on the client only and will not correspond to `ind
 
 A sample site might be set up like this:
 
-![Site with a static homepage and client-only routes](./images/client-only-routes.png)
+![Site with a static homepage and client-only routes](../../images/client-only-routes.png)
 
 Gatsby converts components in the `pages` folder into static HTML files for the Home page and the App page. A `<Router />` is added to the App page so that the profile and details components can be rendered from the App page; they don't have static assets built for them because they exist only on the client. The profile page can `POST` data about a user back to an API, and the details page can dynamically load data about a user with a specific id from an API.
 

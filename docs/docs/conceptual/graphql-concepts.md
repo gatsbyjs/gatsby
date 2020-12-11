@@ -94,7 +94,7 @@ immediately start using it.
 
 The following diagram shows a GraphQL query, with each word highlighted in a color corresponding to its name on the legend:
 
-![GraphQL query diagram](./images/basic-query.png)
+![GraphQL query diagram](../images/basic-query.png)
 
 #### Query operation type
 

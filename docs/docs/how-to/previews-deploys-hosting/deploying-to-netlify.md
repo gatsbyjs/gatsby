@@ -57,7 +57,7 @@ Once the build is complete, you are ready to upload your site to Netlify. Go to 
 
 To start the deploy process, you need only drag and drop the `public` folder over the above area on the Netlify website. Netlify will create a new site with a random name, then start uploading and hosting the application files. After a few moments, it will give you a live site URL e.g. `random-name.netlify.com`.
 
-![alt text](./images/gatsby-default-starter.png "Gatsby Default Starter")
+![Gatsby Default Starter](../../images/gatsby-default-starter.png)
 
 ## Domain setup
 

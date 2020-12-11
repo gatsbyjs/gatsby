@@ -36,17 +36,17 @@ Now run your first Lighthouse test.
 
 2. Click on the "Audits" tab, this may be a "Lighthouse" tab depending on which version you are using. You should see a screen that looks like:
 
-![Lighthouse audit start](./images/lighthouse-audit.png)
+![Lighthouse audit start](../../images/lighthouse-audit.png)
 
 3. Choose whether to audit on Mobile or Desktop and then click "Generate Report". You will also see a list of all available audits that you can choose to run for this report. Once the audit starts it'll take around a minute depending on the site speed and which audits were selected. When that is complete, you should see results that look like this:
 
-![Lighthouse audit results](./images/lighthouse-audit-results.png)
+![Lighthouse audit results](../../images/lighthouse-audit-results.png)
 
 ## Using Gatsby Cloud
 
 If you use [Gatsby Cloud](https://www.gatsbyjs.com/cloud), a Lighthouse audit runs automatically every time your site builds. In Cloud, every code commit to GitHub triggers a build, allowing you to see any shifts in your scores and what code changes caused them.
 
-![Lighthouse audit in Cloud](./images/cloud-lighthouse.png)
+![Lighthouse audit in Cloud](../../images/cloud-lighthouse.png)
 
 ## Next steps
 

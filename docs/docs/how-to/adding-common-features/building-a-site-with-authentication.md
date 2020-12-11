@@ -22,7 +22,7 @@ Another option are third party technologies like:
 
 These tools follow a process in order to verify a user on the client against an authentication service. The service returns a token that the client can use to access protected data. This diagram visualizes the process:
 
-![Diagram of Gatsby using an authentication service to get data from an API](./images/basic-auth.png)
+![Diagram of Gatsby using an authentication service to get data from an API](../../images/basic-auth.png)
 
 1. First, a request is made from a Gatsby site (the client) to an authentication service to perform an action like register a new user or login.
 

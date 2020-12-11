@@ -59,7 +59,7 @@ After you have deployed your website, set up a [split test on Netlify](https://d
 
 When you are setting up your split test on Netlify, navigate to the homepage of your project. Scroll down to 'Active Split Test'. Choose 'Start a Split Test'. On the next page, pick which branches you would like to include in the split test and start the test.
 
-![Activate split test feature in Netlify](./images/start-split-test.gif)
+![Activate split test feature in Netlify](../../images/start-split-test.gif)
 
 ## Creating a Google Analytics custom dimension
 
@@ -69,7 +69,7 @@ Go to [analytics.google.com](https://analytics.google.com). If you have not alre
 
 After you've created an account, you'll need to create a custom dimension. Head over to the bottom left navigation panel and choose "Admin". On the next page, under Admin, you will see three columns: "Account", "Property", and "View". Go to "Property" and select "Custom Dimension". A submenu will appear. Choose "Custom Dimension" again. On the next page, select "+ New Custom Dimension" and create a new custom dimension.
 
-![Create a custom dimension in Google Analytics](./images/create-custom-dimension.gif)
+![Create a custom dimension in Google Analytics](../../images/create-custom-dimension.gif)
 
 ## Injecting your Google Analytics script
 
@@ -79,7 +79,7 @@ Choose "Build & Deploy" and scroll down to "Post Processing". Post Processing is
 
 When you have pasted the GA Script into Post Processing, be sure to add your custom dimension, and set it to the name of your branch. Let’s say you have two custom dimensions, and you want to use `gatsby`.
 
-![Two custom dimensions created in Google Analytics](./images/custom-dimensions-screenshot.png)
+![Two custom dimensions created in Google Analytics](../../images/custom-dimensions-screenshot.png)
 
 ```javascript
 ga("send", "pageview", {
@@ -107,7 +107,7 @@ ga('send', 'pageview', {
 </script>
 ```
 
-![Add Google Analytics script via Netlify's post processing feature](./images/netlify-post-processing.gif)
+![Add Google Analytics script via Netlify's post processing feature](../../images/netlify-post-processing.gif)
 
 ## Checking your results on Google Analytics
 
@@ -115,7 +115,7 @@ It takes some time for Google Analytics to record the results of the A/B test. W
 
 You should see a line graph under "All Pages". Below the line graph on the left-hand side, there is a "Secondary dimension" button. Select the "Secondary dimension" button and select "Custom Dimensions". Choose the custom dimension that you created earlier and you should see the names of the branches you created in Netlify. In this example, the `master` and `heading-variation` branches are displayed in the table.
 
-![Check to see if custom dimension appears on Google Analytics platform](./images/checking-custom-dimension.gif)
+![Check to see if custom dimension appears on Google Analytics platform](../../images/checking-custom-dimension.gif)
 
 ## Other resources
 
