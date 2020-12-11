@@ -404,6 +404,7 @@ exports.createNodesForContentType = ({
         children: [],
         internal: {
           type: `${makeTypeName(contentTypeItemId)}`,
+          contentDigest: entryItem.sys.updatedAt,
         },
         sys: {
           type: entryItem.sys.type,
@@ -526,11 +527,6 @@ exports.createNodesForContentType = ({
       })
 
       entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }
-
-      // Get content digest of node.
-      const contentDigest = digest(entryNode.updatedAt)
-
-      entryNode.internal.contentDigest = contentDigest
 
       return entryNode
     })
