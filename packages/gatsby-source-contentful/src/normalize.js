@@ -528,7 +528,7 @@ exports.createNodesForContentType = ({
       entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }
 
       // Get content digest of node.
-      const contentDigest = digest(stringify(entryNode))
+      const contentDigest = digest(entryNode.updatedAt)
 
       entryNode.internal.contentDigest = contentDigest
 
