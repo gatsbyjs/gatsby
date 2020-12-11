@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Text } from "ink"
-import InkSpinner from "ink-spinner"
+import * as InkSpinner from "ink-spinner"
 
 interface ISpinnerProps {
   text: string
@@ -15,7 +15,7 @@ export function Spinner({ text, statusText }: ISpinnerProps): JSX.Element {
   return (
     <Box>
       <Text>
-        <InkSpinner type="dots" /> {label}
+        <InkSpinner.default type="dots" /> {label}
       </Text>
     </Box>
   )
