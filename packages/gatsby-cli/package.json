@@ -45,7 +45,7 @@
     "strip-ansi": "^5.2.0",
     "update-notifier": "^5.0.1",
     "uuid": "3.4.0",
-    "yargs": "^15.4.1",
+    "yargs": "^16.1.1",
     "yoga-layout-prebuilt": "^1.9.6",
     "yurnalist": "^1.1.2"
   },
