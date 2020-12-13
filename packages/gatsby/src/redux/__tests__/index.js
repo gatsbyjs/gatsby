@@ -1,11 +1,15 @@
 const _ = require(`lodash`)
 const path = require(`path`)
+const v8 = require(`v8`)
 
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
+const v8Serialize = jest.spyOn(v8, `serialize`)
+const v8Deserialize = jest.spyOn(v8, `deserialize`)
+
 const { saveState, store, readState } = require(`../index`)
 
 const {
-  actions: { createPage },
+  actions: { createPage, createNode },
 } = require(`../actions`)
 
 const mockWrittenContent = new Map()
@@ -123,6 +127,9 @@ describe(`redux db`, () => {
   }
 
   beforeEach(() => {
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
     writeToCache.mockClear()
     mockWrittenContent.clear()
   })
@@ -171,5 +178,179 @@ describe(`redux db`, () => {
 
       expect(writeToCache).not.toBeCalled()
     })
+  })
+
+  describe(`Sharding`, () => {
+    afterAll(() => {
+      v8Serialize.mockRestore()
+      v8Deserialize.mockRestore()
+    })
+
+    // we set limit to 1.5 * 1024 * 1024 * 1024 per shard
+    // simulating size for page and nodes will allow us to see if we create expected amount of shards
+    // and that we stitch them back together correctly
+    const nodeShardsScenarios = [
+      {
+        numberOfNodes: 50,
+        simulatedNodeObjectSize: 5 * 1024 * 1024,
+        expectedNumberOfNodeShards: 1,
+      },
+      {
+        numberOfNodes: 5,
+        simulatedNodeObjectSize: 0.6 * 1024 * 1024 * 1024,
+        expectedNumberOfNodeShards: 3,
+      },
+    ]
+    const pageShardsScenarios = [
+      {
+        numberOfPages: 50,
+        simulatedPageObjectSize: 10 * 1024 * 1024,
+        expectedNumberOfPageShards: 1,
+      },
+      {
+        numberOfPages: 5,
+        simulatedPageObjectSize: 0.9 * 1024 * 1024 * 1024,
+        expectedNumberOfPageShards: 5,
+      },
+    ]
+
+    const scenarios = []
+    for (let nodeShardsParams of nodeShardsScenarios) {
+      for (let pageShardsParams of pageShardsScenarios) {
+        scenarios.push([
+          nodeShardsParams.numberOfNodes,
+          nodeShardsParams.simulatedNodeObjectSize,
+          nodeShardsParams.expectedNumberOfNodeShards,
+          pageShardsParams.numberOfPages,
+          pageShardsParams.simulatedPageObjectSize,
+          pageShardsParams.expectedNumberOfPageShards,
+        ])
+      }
+    }
+
+    it.each(scenarios)(
+      `Scenario Nodes %i x %i bytes = %i shards / Pages %i x %i bytes = %i shards`,
+      async (
+        numberOfNodes,
+        simulatedNodeObjectSize,
+        expectedNumberOfNodeShards,
+        numberOfPages,
+        simulatedPageObjectSize,
+        expectedNumberOfPageShards
+      ) => {
+        // just some baseline checking to make sure test setup is correct - check both in-memory state and persisted state
+        // and make sure it's empty
+        const initialStateInMemory = store.getState()
+        expect(initialStateInMemory.pages).toEqual(new Map())
+        expect(initialStateInMemory.nodes).toEqual(new Map())
+
+        // we expect to have no persisted state yet - this returns empty object
+        // and let redux to use initial states for all redux slices
+        const initialPersistedState = readState()
+        expect(initialPersistedState.pages).toBeUndefined()
+        expect(initialPersistedState.nodes).toBeUndefined()
+        expect(initialPersistedState).toEqual({})
+
+        for (let nodeIndex = 0; nodeIndex < numberOfNodes; nodeIndex++) {
+          store.dispatch(
+            createNode(
+              {
+                id: `node-${nodeIndex}`,
+                context: {
+                  objectType: `node`,
+                },
+                internal: {
+                  type: `Foo`,
+                  contentDigest: `contentDigest-${nodeIndex}`,
+                },
+              },
+              { name: `gatsby-source-test` }
+            )
+          )
+        }
+
+        createPages(
+          new Array(numberOfPages).fill(undefined).map((_, index) => {
+            return {
+              path: `/page-${index}/`,
+              component: `/Users/username/dev/site/src/templates/my-sweet-new-page.js`,
+              context: {
+                objectType: `page`,
+                possiblyHugeField: `let's pretend this field is huge (we will simulate that by mocking some things used to asses size of object)`,
+              },
+            }
+          })
+        )
+
+        const currentStateInMemory = store.getState()
+        expect(currentStateInMemory.nodes.size).toEqual(numberOfNodes)
+        expect(currentStateInMemory.pages.size).toEqual(numberOfPages)
+
+        // this is just to make sure that any implementation changes in readState
+        // won't affect this test - so we clone current state of things and will
+        // use that for assertions
+        const clonedCurrentNodes = new Map(currentStateInMemory.nodes)
+        const clonedCurrentPages = new Map(currentStateInMemory.pages)
+
+        // we expect to have no persisted state yet and that current in-memory state doesn't affect it
+        const persistedStateBeforeSaving = readState()
+        expect(persistedStateBeforeSaving.pages).toBeUndefined()
+        expect(persistedStateBeforeSaving.nodes).toBeUndefined()
+        expect(persistedStateBeforeSaving).toEqual({})
+
+        // simulate that nodes/pages have sizes set in scenario parameters
+        // it changes implementation to JSON.stringify because calling v8.serialize
+        // again cause max stack size errors :shrug: - this also requires adjusting
+        // deserialize implementation
+        v8Serialize.mockImplementation(obj => {
+          if (obj?.[1]?.context?.objectType === `node`) {
+            return {
+              toString: () => JSON.stringify(obj),
+              length: simulatedNodeObjectSize,
+            }
+          } else if (obj?.[1]?.context?.objectType === `page`) {
+            return {
+              toString: () => JSON.stringify(obj),
+              length: simulatedPageObjectSize,
+            }
+          } else {
+            return JSON.stringify(obj)
+          }
+        })
+        v8Deserialize.mockImplementation(obj => JSON.parse(obj.toString()))
+
+        await saveState()
+
+        const shardsWritten = {
+          rest: 0,
+          node: 0,
+          page: 0,
+        }
+
+        for (let fileWritten of mockWrittenContent.keys()) {
+          const basename = path.basename(fileWritten)
+          if (basename.startsWith(`redux.rest`)) {
+            shardsWritten.rest++
+          } else if (basename.startsWith(`redux.node`)) {
+            shardsWritten.node++
+          } else if (basename.startsWith(`redux.page`)) {
+            shardsWritten.page++
+          }
+        }
+
+        expect(writeToCache).toBeCalled()
+
+        expect(shardsWritten.rest).toEqual(1)
+        expect(shardsWritten.node).toEqual(expectedNumberOfNodeShards)
+        expect(shardsWritten.page).toEqual(expectedNumberOfPageShards)
+
+        // and finally - let's make sure that reading shards stitches it back together
+        // correctly
+        const persistedStateAfterSaving = readState()
+
+        expect(persistedStateAfterSaving.nodes).toEqual(clonedCurrentNodes)
+        expect(persistedStateAfterSaving.pages).toEqual(clonedCurrentPages)
+      }
+    )
   })
 })
