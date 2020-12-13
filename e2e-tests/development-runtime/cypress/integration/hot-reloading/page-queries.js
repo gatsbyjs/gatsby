@@ -4,6 +4,10 @@ beforeEach(() => {
   cy.visit(`/page-query/`).waitForRouteChange()
 })
 
+after(() => {
+  cy.exec(`npm run reset`)
+})
+
 describe(`hot-reloading page queries`, () => {
   it(`displays placeholder content on launch`, () => {
     cy.getTestElement(`hot`).invoke(`text`).should(`not.contain`, author)
