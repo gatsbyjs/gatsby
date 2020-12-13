@@ -175,6 +175,14 @@ export const clearPendingQueryRuns = assign<IBuildContext>(() => {
   }
 })
 
+export const markSchemaDirty = assign<IBuildContext>({
+  schemaDirty: true,
+})
+
+export const markSchemaClean = assign<IBuildContext>({
+  schemaDirty: false,
+})
+
 export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   callApi,
   markNodesDirty,
@@ -200,4 +208,6 @@ export const buildActions: ActionFunctionMap<IBuildContext, AnyEventObject> = {
   logError,
   trackRequestedQueryRun,
   clearPendingQueryRuns,
+  markSchemaDirty,
+  markSchemaClean,
 }

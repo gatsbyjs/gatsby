@@ -21,4 +21,5 @@ export interface IQueryRunningContext {
   filesDirty?: boolean
   pendingQueryRuns?: Set<string>
   currentlyHandledPendingQueryRuns?: Set<string>
+  schemaDirty?: boolean
 }

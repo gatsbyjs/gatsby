@@ -34,6 +34,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     QUERY_RUN_REQUESTED: {
       actions: `trackRequestedQueryRun`,
     },
+    SCHEMA_CHANGED: {
+      actions: `markSchemaDirty`,
+    },
   },
   states: {
     // Here we handle the initial bootstrap
@@ -112,6 +115,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         QUERY_RUN_REQUESTED: {
           actions: forwardTo(`run-queries`),
         },
+        SCHEMA_CHANGED: {
+          actions: forwardTo(`run-queries`),
+        },
       },
       invoke: {
         id: `run-queries`,
@@ -125,6 +131,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           graphqlRunner,
           websocketManager,
           pendingQueryRuns,
+          schemaDirty,
+          sourceFilesDirty,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -134,6 +142,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             graphqlRunner,
             websocketManager,
             pendingQueryRuns,
+            schemaDirty,
+            filesDirty: sourceFilesDirty,
           }
         },
         onDone: [
@@ -157,13 +167,18 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
               `markNodesClean`,
               `incrementRecompileCount`,
               `clearPendingQueryRuns`,
+              `markSchemaClean`,
             ],
           },
           {
             // If we have no compiler (i.e. it's first run), then spin up the
             // webpack and socket.io servers
             target: `startingDevServers`,
-            actions: [`setQueryRunningFinished`, `clearPendingQueryRuns`],
+            actions: [
+              `setQueryRunningFinished`,
+              `clearPendingQueryRuns`,
+              `markSchemaClean`,
+            ],
             cond: ({ compiler }: IBuildContext): boolean => !compiler,
           },
           {
@@ -171,16 +186,16 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `recompiling`,
             cond: ({ sourceFilesDirty }: IBuildContext): boolean =>
               !!sourceFilesDirty,
-            actions: [`clearPendingQueryRuns`],
+            actions: [`clearPendingQueryRuns`, `markSchemaClean`],
           },
           {
             // ...otherwise just wait.
             target: `waiting`,
-            actions: [`clearPendingQueryRuns`],
+            actions: [`clearPendingQueryRuns`, `markSchemaClean`],
           },
         ],
         onError: {
-          actions: [`logError`, `clearPendingQueryRuns`],
+          actions: [`logError`, `clearPendingQueryRuns`, `markSchemaClean`],
           target: `waiting`,
         },
       },

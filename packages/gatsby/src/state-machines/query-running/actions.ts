@@ -29,6 +29,14 @@ export const markSourceFilesClean = assign<IQueryRunningContext>({
   filesDirty: false,
 })
 
+export const markSchemaDirty = assign<IQueryRunningContext>({
+  schemaDirty: true,
+})
+
+export const markSchemaClean = assign<IQueryRunningContext>({
+  schemaDirty: false,
+})
+
 export const trackRequestedQueryRun = assign<
   IQueryRunningContext,
   AnyEventObject
@@ -55,4 +63,6 @@ export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   markSourceFilesClean,
   trackRequestedQueryRun,
   clearCurrentlyHandledPendingQueryRuns,
+  markSchemaDirty,
+  markSchemaClean,
 }

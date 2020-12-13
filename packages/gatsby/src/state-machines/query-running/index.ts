@@ -19,10 +19,21 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
     QUERY_RUN_REQUESTED: {
       actions: `trackRequestedQueryRun`,
     },
+    SCHEMA_CHANGED: {
+      actions: `markSchemaDirty`,
+    },
   },
   context: {},
   states: {
     extractingQueries: {
+      always: [
+        {
+          // skip query extraction if schema didn't change and files didn't change
+          target: `writingRequires`,
+          cond: ({ schemaDirty, filesDirty }: IQueryRunningContext): boolean =>
+            !schemaDirty && !filesDirty,
+        },
+      ],
       id: `extracting-queries`,
       invoke: {
         id: `extracting-queries`,
@@ -48,7 +59,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       after: {
         [PAGE_QUERY_ENQUEUING_TIMEOUT]: {
           target: `writingRequires`,
-          actions: `markSourceFilesClean`,
+          actions: [`markSourceFilesClean`, `markSchemaClean`],
         },
       },
     },
@@ -104,7 +115,7 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
       // If files are dirty go and extract again
       always: [
         {
-          cond: (ctx): boolean => !!ctx.filesDirty,
+          cond: (ctx): boolean => !!ctx.filesDirty || !!ctx.schemaDirty,
           target: `extractingQueries`,
         },
         {
