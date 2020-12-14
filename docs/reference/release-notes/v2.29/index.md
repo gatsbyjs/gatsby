@@ -59,7 +59,7 @@ Similarily as with Query on Demand also Lazy Images will be automatically delive
 
 > As more and more images are added to a Gatsby site, the slower the local development experience oftentimes becomes. You spend time waiting for images to process, instead of you know, developing! No longer! This experimental version of `gatsby-plugin-sharp` only does image processing when the page gets requested.
 
-By slowly rolling out this feature to more and more users we'll be getting closer to a GA (general availability) release that will benefit all users of Gatsby. Please give us your feedback in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/27603).
+By slowly rolling out this feature to more and more users we'll be getting closer to a GA release that will benefit all users of Gatsby. Please give us your feedback in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/27603).
 
 If you want to turn it on/off, you can set the corresponding flag inside `gatsby-config.js`:
 
@@ -81,7 +81,7 @@ A couple of papercuts were fixed but we also added new features:
 
 - Prompt for your site name instead of a folder name
 - Automatically add this name to your `siteMetadata` and `package.json`
-- Add `-y` flag. This flag bypasses all prompts other than namin your site
+- Add `-y` flag. This flag bypasses all prompts other than naming your site
 
 The regular `gatsby-cli` received a new command to list out all plugins in your site by running `gatsby plugin ls`.
 
@@ -110,7 +110,7 @@ Please give us your feedback in the [umbrella discussion](https://github.com/gat
 We were able to ship a bunch of performance improvements both to Gatsby itself and its plugins:
 
 - The PR [#28375](https://github.com/gatsbyjs/gatsby/pull/28375) fixed an unguided search in `gatsby-source-contentful` that can significantly drop your time for an incremental build (and perhaps others). In this case (for a site with 80k elements) it dropped the time from 5 minutes to sub-second.
-- The PR [#28438](https://github.com/gatsbyjs/gatsby/pull/28438) prevents some redudant calculations resulting in 5% improvements for bigger sites
+- The PR [#28438](https://github.com/gatsbyjs/gatsby/pull/28438) prevents some redudant calculations resulting in 5% improvements for bigger sites using `gatsby-source-contentful`
 - The PR [#28525](https://github.com/gatsbyjs/gatsby/pull/28525) drops the `async` keyword from the `wrappingResolver` that wraps all resolvers passed on to GraphQL. In practice this means a 5-10% overall improvement to the runtime of a site.
 
 ## Slugify option for File System Route API
