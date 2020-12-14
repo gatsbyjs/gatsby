@@ -11,9 +11,10 @@ Welcome to `gatsby@2.29.0` release (December 2020 #2)
 
 Key highlights of this release:
 
-- [Query on Demand](#query-on-demand) - TODO
-- [Lazy Images](#lazy-images) - TODO
+- [Query on Demand](#query-on-demand) - improves `gatsby develop` bootup time
+- [Lazy Images](#lazy-images) - only do image processing when a page gets reqested
 - [Improvements to our CLI](#improvements-to-our-cli) - improved `create-gatsby` & new `plugin` command
+- [Experimental: Parallel data sourcing](#experimental-parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
 
 Other notable changes:
 
@@ -34,11 +35,43 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Query on Demand
 
-TODO
+Starting with v2.29, 10% of our users are automatically opt-in to this feature. We've first shipped this feature behind a flag in [v2.27](../v2.27/index.md#experimental-queries-on-demand) and feel confident now that more people can try it out. Opt-in users will receive a notice in their terminal about that opt-in in addition to a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Query on Demand will improve:
+
+> Gatsby will run queries for pages as they're requested by a browser. Think of it like lazily loading the data your pages need, when they need it! This avoids having to wait for slower queries (like image processing) if you're editing an unrelated part of a site. What this means for you: faster local development experience, up to 2x faster in many cases!
+
+By slowly rolling out this feature to more and more users we'll be getting closer to a GA (general availability) release that will benefit all users of Gatsby. Please give us your feedback in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/27620).
+
+If you want to turn it on/off, you can set the corresponding flag inside `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  flags: {
+    QUERY_ON_DEMAND: true,
+  },
+  plugins: [], // your plugins stay the same
+}
+```
 
 ## Lazy Images
 
-TODO
+Similarily as with Query on Demand also Lazy Images will be automatically delivered to 10% of our users with this v2.29 release. We've first shipped this feature behind a flag in [v2.28](../v2.28/index.md#experimental-lazy-images-in-develop). Opt-in users will receive a notice in their terminal about that opt-in in addition to a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Lazy Images will improve:
+
+> As more and more images are added to a Gatsby site, the slower the local development experience oftentimes becomes. You spend time waiting for images to process, instead of you know, developing! No longer! This experimental version of `gatsby-plugin-sharp` only does image processing when the page gets requested.
+
+By slowly rolling out this feature to more and more users we'll be getting closer to a GA (general availability) release that will benefit all users of Gatsby. Please give us your feedback in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/27603).
+
+If you want to turn it on/off, you can set the corresponding flag inside `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  flags: {
+    LAZY_IMAGES: true,
+  },
+  plugins: [], // your plugins stay the same
+}
+```
 
 ## Improvements to our CLI
 
@@ -51,6 +84,26 @@ A couple of papercuts were fixed but we also added new features:
 - Add `-y` flag. This flag bypasses all prompts other than namin your site
 
 The regular `gatsby-cli` received a new command to list out all plugins in your site by running `gatsby plugin ls`.
+
+## Experimental: Parallel data sourcing
+
+In [v2.28](../v2.28/index.md#experimental-parallel-data-sourcing) we gave a sneak peak at a new feature that enables parallel data sourcing. As a recap:
+
+> Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
+
+You're now able to activate this experiment in the stable release of Gatsby by adding a flag to your `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  flags: {
+    PARALLEL_SOURCING: true,
+  },
+  plugins: [], // your plugins stay the same
+}
+```
+
+Please give us your feedback in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/28336).
 
 ## Performance improvements
 
@@ -73,6 +126,7 @@ If you want to try out the new `gatsby-plugin-image` that we introduced in [v2.2
 - Scroll restoration issue in the browser API was fixed in [#27384](https://github.com/gatsbyjs/gatsby/pull/27384) that affected e.g. page transitions
 - Do not fail in develop when eslint loader is removed in [#28494](https://github.com/gatsbyjs/gatsby/pull/28494)
 - Respect hash as source of truth for scroll position in [#28555](https://github.com/gatsbyjs/gatsby/pull/28555)
+- Wait for jobs to complete in `onPostBuild` in [#28534](https://github.com/gatsbyjs/gatsby/pull/28534)
 
 ## Contributors
 
