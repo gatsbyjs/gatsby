@@ -125,15 +125,10 @@ export const propTypes = {
     if (props.layout === undefined) {
       return undefined
     }
-    if (validLayouts.has(props.layout)) {
+    if (validLayouts.has(props.layout.toLowerCase())) {
       return undefined
     }
-    const lower = props.layout.toLowerCase()
-    if (validLayouts.has(lower)) {
-      return new Error(
-        `Invalid value "${props.layout}" provided for prop "layout". Defaulting to "fixed". Did you mean "${lower}"?`
-      )
-    }
+
     return new Error(
       `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fluid" or "constrained"`
     )
