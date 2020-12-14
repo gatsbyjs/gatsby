@@ -130,4 +130,22 @@ We introduced some API changes for working with images when we published the new
 
 ## Contributors
 
-A big **Thank You** to [everyone who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0) to this release 💜
+
+- [bappr](https://github.com/bappr): Update kintohub documentation with kintohub V1 deployment [PR #27016](https://github.com/gatsbyjs/gatsby/pull/27016)
+
+- [axe312ger](https://github.com/axe312ger)
+
+  - fix: improve error handling, always show API response status and message [PR #27730](https://github.com/gatsbyjs/gatsby/pull/27730)
+  - fix(documentationjs): fix example caption string [PR #27365](https://github.com/gatsbyjs/gatsby/pull/27365)
+
+- [olisteadman](https://github.com/olisteadman): Tell user to supply BOTH keys in .env.development. [PR #28405](https://github.com/gatsbyjs/gatsby/pull/28405)
+- [galihmelon](https://github.com/galihmelon): [docs][guides] improvements to Why Gatsby Uses GraphQL #15235 [PR #27640](https://github.com/gatsbyjs/gatsby/pull/27640)
+- [sreeharisj23](https://github.com/sreeharisj23): Remove Broken Link. [PR #28412](https://github.com/gatsbyjs/gatsby/pull/28412)
+- [vrabe](https://github.com/vrabe): fix(gatsby): scroll restoration issue in browser API [PR #27384](https://github.com/gatsbyjs/gatsby/pull/27384)
+- [WillMayger](https://github.com/WillMayger): fix(gatsby): re-render route when location state changes [PR #28346](https://github.com/gatsbyjs/gatsby/pull/28346)
+- [kasipavankumar](https://github.com/kasipavankumar): chore(gatsby-plugin-manifest): Update pluginOptionsSchema link [PR #28344](https://github.com/gatsbyjs/gatsby/pull/28344)
+- [rburgst](https://github.com/rburgst): fix: avoid joi validation error when using reporter.panic [PR #28291](https://github.com/gatsbyjs/gatsby/pull/28291)
+- [davidmauskop](https://github.com/davidmauskop): chore(docs): Update Deploying to Render guide [PR #28272](https://github.com/gatsbyjs/gatsby/pull/28272)
+- [saintmalik](https://github.com/saintmalik): chore(docs): fix broken url [PR #28197](https://github.com/gatsbyjs/gatsby/pull/28197)
+- [muescha](https://github.com/muescha): fix(docs): document pluginOptionsSchema - add file extension, code block language, quotation marks [PR #27844](https://github.com/gatsbyjs/gatsby/pull/27844)
