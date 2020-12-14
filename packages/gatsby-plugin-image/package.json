@@ -55,7 +55,7 @@
     "@testing-library/react": "^11.1.2",
     "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.0.15",
-    "@types/fs-extra": "^8.1.0",
+    "@types/fs-extra": "^8.1.1",
     "@types/node": "^14.10.2",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.56",
