@@ -132,7 +132,7 @@ export const query = graphql`
       }
     }
   }
-}
+`
 ```
 
 If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/node-apis#createPages) API instead as File System Route API doesn't support this at the moment.
@@ -185,7 +185,7 @@ export const query = graphql`
       discountPath: gatsbyPath(filePath: "/discounts/{Product.name}") // highlight-line
     }
   }
-}
+`
 ```
 
 By using [aliasing](/docs/graphql-reference/#aliasing) you can use `gatsbyPath` multiple times.
