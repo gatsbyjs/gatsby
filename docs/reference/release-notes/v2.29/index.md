@@ -35,7 +35,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Query on Demand
 
-Starting with v2.29, 10% of our users are automatically opt-in to this feature. We've first shipped this feature behind a flag in [v2.27](../v2.27/index.md#experimental-queries-on-demand) and feel confident now that more people can try it out. Opt-in users will receive a notice in their terminal about that opt-in in addition to a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Query on Demand will improve:
+Starting with v2.29, 10% of our users are automatically opt-in to this feature. We've first shipped this feature behind a flag in [v2.27](../v2.27/index.md#experimental-queries-on-demand) and feel confident now that more people can try it out. Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Query on Demand will improve:
 
 > Gatsby will run queries for pages as they're requested by a browser. Think of it like lazily loading the data your pages need, when they need it! This avoids having to wait for slower queries (like image processing) if you're editing an unrelated part of a site. What this means for you: faster local development experience, up to 2x faster in many cases!
 
@@ -55,7 +55,7 @@ module.exports = {
 
 ## Lazy Images
 
-Similarily as with Query on Demand also Lazy Images will be automatically delivered to 10% of our users with this v2.29 release. We've first shipped this feature behind a flag in [v2.28](../v2.28/index.md#experimental-lazy-images-in-develop). Opt-in users will receive a notice in their terminal about that opt-in in addition to a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Lazy Images will improve:
+Similarily as with Query on Demand also Lazy Images will be automatically delivered to 10% of our users with this v2.29 release. We've first shipped this feature behind a flag in [v2.28](../v2.28/index.md#experimental-lazy-images-in-develop). Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Lazy Images will improve:
 
 > As more and more images are added to a Gatsby site, the slower the local development experience oftentimes becomes. You spend time waiting for images to process, instead of you know, developing! No longer! This experimental version of `gatsby-plugin-sharp` only does image processing when the page gets requested.
 
