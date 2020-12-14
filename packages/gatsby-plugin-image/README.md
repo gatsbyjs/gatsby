@@ -230,39 +230,31 @@ If you need the image `src` directly you can import the `getSrc` helper function
 
 We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
 
-1. Install JSCodeshift as a global module
-
-```shell
-npm install -g jscodeshift
-```
-
-2. Install the gatsby-codemods package
-
-```shell
-npm install gatsby-codemods
-```
-
-3. Run a transform from this package on your project. Note that the paths are relative to the root of your project.
-
 ```shell
 npx gatsby-codemods gatsby-plugin-image <path>
 ```
 
-**If you have a custom babel config for your site, run relative to the root directory, e.g. `./`, otherwise `./src` is sufficient.**
+`path` is not required and will default to the directory you're currently in.
+
+Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extensions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
+
+**If you have a custom babel config for your site, run in the root directory, otherwise `./src` is sufficient.**
 
 Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
 
-If you need to run with custom flags, you run with [jscodeshift](https://github.com/facebook/jscodeshift) directly and reference `node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js` as your transform path.
+If you need to run with custom flags, you can install [jscodeshift](https://github.com/facebook/jscodeshift) globally and `gatsby-codemods` in your project. Then `jscodeshift -t node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js .` will transform your current directory and you can pass any valid jscodeshift flags.
 
-4. Install this package
+After the code is modified, be sure to install and configure everything needed to use `gatsby-plugin-image.`
+
+1. Install this package
 
 ```shell
 npm install gatsby-plugin-image
 ```
 
-5. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
+2. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
 
-6. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
+3. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
 
 ## Three types of responsive images
 

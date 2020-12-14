@@ -62,7 +62,7 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   finishProgressBar()
 
   app.use(async (req, res, next) => {
-    const decodedURI = decodeURI(req.url)
+    const decodedURI = decodeURIComponent(req.path)
     const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
 
     if (await pathExists(pathOnDisk)) {
@@ -78,13 +78,58 @@ exports.onCreateDevServer = async ({ app, cache, reporter }) => {
       return next()
     }
 
-    await _unstable_createJob(cacheResult, { reporter })
-    // we should implement cache.del inside our abstraction
-    await cache.cache.del(jobContentDigest)
+    // We are going to run a job for a single operation only
+    // and postpone all other operations
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
+    const {
+      matchingJob,
+      jobWithRemainingOperations,
+    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+
+    await _unstable_createJob(matchingJob, { reporter })
     await cache.cache.del(decodedURI)
+
+    if (jobWithRemainingOperations.args.operations.length > 0) {
+      // There are still some operations pending for this job - replace the cached job
+      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+    } else {
+      // No operations left to process - purge the cache
+      await cache.cache.del(jobContentDigest)
+    }
 
     return res.sendFile(pathOnDisk)
   })
+}
+
+// Split the job into two jobs:
+//  - first job with a single operation matching requestedPathOnDisk
+//  - second job with all other operations
+// so the two resulting jobs are only different by their operations
+function splitOperationsByRequestedFile(job, requestedPathOnDisk) {
+  const matchingJob = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+  const jobWithRemainingOperations = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+
+  job.args.operations.forEach(op => {
+    const operationPath = path.resolve(path.join(job.outputDir, op.outputPath))
+    if (operationPath === requestedPathOnDisk) {
+      matchingJob.args.operations.push(op)
+    } else {
+      jobWithRemainingOperations.args.operations.push(op)
+    }
+  })
+  if (matchingJob.args.operations.length === 0) {
+    throw new Error(
+      `Could not find matching operation for ${requestedPathOnDisk}`
+    )
+  }
+  return { matchingJob, jobWithRemainingOperations }
 }
 
 // So something is wrong with the reporter, when I do this in preBootstrap,

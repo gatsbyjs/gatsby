@@ -27,12 +27,24 @@ export function lazyHydrate(
     isLoaded,
     toggleIsLoaded,
     ref,
+    imgClassName,
+    imgStyle = {},
+    objectPosition,
+    backgroundColor,
+    objectFit = `cover`,
     ...props
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>
 ): (() => void) | null {
-  const { width, height, layout, images, placeholder, backgroundColor } = image
+  const {
+    width,
+    height,
+    layout,
+    images,
+    placeholder,
+    backgroundColor: wrapperBackgroundColor,
+  } = image
 
   if (!root.current) {
     return null
@@ -47,6 +59,13 @@ export function lazyHydrate(
   const cacheKey = JSON.stringify(images)
   const hasLoaded = !hydrated.current && hasImageLoaded(cacheKey)
 
+  imgStyle = {
+    objectFit,
+    objectPosition,
+    backgroundColor,
+    ...imgStyle,
+  }
+
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
       {!hasLoaded && (
@@ -57,12 +76,13 @@ export function lazyHydrate(
             layout,
             width,
             height,
-            backgroundColor
+            wrapperBackgroundColor
           )}
         />
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
+        className={imgClassName}
         {...getMainProps(
           isLoading,
           hasLoaded || isLoaded,
@@ -70,7 +90,8 @@ export function lazyHydrate(
           loading,
           toggleIsLoaded,
           cacheKey,
-          ref
+          ref,
+          imgStyle
         )}
       />
     </LayoutWrapper>
