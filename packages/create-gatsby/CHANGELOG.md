@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.4...create-gatsby@0.2.0) (2020-12-15)
+
+### Bug Fixes
+
+- **create-gatsby:** Default to gatsby-image until the plugin is GA ([#28607](https://github.com/gatsbyjs/gatsby/issues/28607)) ([#28633](https://github.com/gatsbyjs/gatsby/issues/28633)) ([a96c05c](https://github.com/gatsbyjs/gatsby/commit/a96c05c47dc9418c083f54a99f70a91bcb07bc80))
+
 # [0.2.0-next.4](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.3...create-gatsby@0.2.0-next.4) (2020-12-08)
 
 ### Bug Fixes
