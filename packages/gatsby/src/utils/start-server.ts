@@ -262,7 +262,7 @@ module.exports = {
       res.status(200)
       res.setHeader(`content-type`, `application/json`)
     } else {
-      res.status(404)
+      res.status(authorizedRefresh ? 404 : 403)
       res.json({
         error: `Refresh failed`,
         isEnabled: !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
@@ -469,6 +469,12 @@ module.exports = {
   }
 
   app.use(async (req, res) => {
+    // in this catch-all block we don't support POST so we should 404
+    if (req.method === `POST`) {
+      res.status(404).end()
+      return
+    }
+
     const fullUrl = req.protocol + `://` + req.get(`host`) + req.originalUrl
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {
