@@ -6,6 +6,7 @@ import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
+import { reportError } from './report-error';
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
@@ -48,7 +49,7 @@ const metadataCache = new Map<string, IImageMetadata>()
 export async function getImageMetadata(
   file: FileNode,
   getDominantColor?: boolean
-): Promise<IImageMetadata> {
+): Promise<IImageMetadata | undefined> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
     const { width, height, type } = await getImageSizeAsync(file)
@@ -58,19 +59,25 @@ export async function getImageMetadata(
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
-  const pipeline = sharp(file.absolutePath)
 
-  const { width, height, density, format } = await pipeline.metadata()
+  try {
+    const pipeline = sharp(file.absolutePath)
 
-  const { dominant } = await pipeline.stats()
-  // Fallback in case sharp doesn't support dominant
-  const dominantColor = dominant
-    ? rgbToHex(dominant.r, dominant.g, dominant.b)
-    : `#000000`
+    const { width, height, density, format } = await pipeline.metadata()
 
-  metadata = { width, height, density, format, dominantColor }
-  metadataCache.set(file.internal.contentDigest, metadata)
-  return metadata
+    const { dominant } = await pipeline.stats()
+    // Fallback in case sharp doesn't support dominant
+    const dominantColor = dominant
+      ? rgbToHex(dominant.r, dominant.g, dominant.b)
+      : `#000000`
+
+    metadata = { width, height, density, format, dominantColor }
+    metadataCache.set(file.internal.contentDigest, metadata)
+    return metadata
+  } catch (err) {
+    reportError(`Failed to process image ${file.absolutePath}`, err)
+    return;
+  }
 }
 
 export interface IImageDataProps {
@@ -132,7 +139,7 @@ export async function generateImageData({
   let primaryFormat: ImageFormat | undefined
   let options: Record<string, unknown> | undefined
   if (useAuto) {
-    primaryFormat = normalizeFormat(metadata.format || file.extension)
+    primaryFormat = normalizeFormat(metadata?.format || file.extension)
   } else if (formats.has(`png`)) {
     primaryFormat = `png`
     options = args.pngOptions
@@ -275,7 +282,7 @@ export async function generateImageData({
     imageProps.placeholder = {
       fallback,
     }
-  } else if (metadata.dominantColor) {
+  } else if (metadata?.dominantColor) {
     imageProps.backgroundColor = metadata.dominantColor
   }
 
