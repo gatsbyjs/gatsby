@@ -26,7 +26,7 @@ Other notable changes:
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
-[Previous release notes](../v2.28/index.md)<br>
+[Previous release notes](../v2.28/index.md)
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0)
 
 ## Query on Demand
