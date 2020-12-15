@@ -87,7 +87,7 @@ const setNameInPackage = async (
   const packageJson = await fs.readJSON(packageJsonPath)
   packageJson.name = makeNpmSafe(name)
   packageJson.description = name
-  if (packageJson.license) delete packageJson.license
+  delete packageJson.license
   try {
     const result = await execa(`git`, [`config`, `user.name`])
     if (result.failed) {
