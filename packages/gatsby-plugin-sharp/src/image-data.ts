@@ -218,9 +218,10 @@ export async function generateImageData({
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
         quality,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         ...args.webpOptions,
-        tracedSVGOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
@@ -250,6 +251,8 @@ export async function generateImageData({
       args: {
         ...options,
         ...args.transformOptions,
+        fit,
+        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),
