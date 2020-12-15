@@ -180,10 +180,10 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(node, key, text, createNodeId) {
+function prepareTextNode(textNodeId, node, key, text) {
   const str = _.isString(text) ? text : ``
   const textNode = {
-    id: createNodeId(`${node.id}${key}TextNode`),
+    id: textNodeId,
     parent: node.id,
     children: [],
     [key]: str,
@@ -204,11 +204,11 @@ function prepareTextNode(node, key, text, createNodeId) {
   return textNode
 }
 
-function prepareJSONNode(node, key, content, createNodeId, i = ``) {
+function prepareJSONNode(id, node, key, content) {
   const str = JSON.stringify(content)
   const JSONNode = {
     ...(_.isPlainObject(content) ? { ...content } : { content: content }),
-    id: createNodeId(`${node.id}${key}${i}JSONNode`),
+    id,
     parent: node.id,
     children: [],
     internal: {
@@ -223,7 +223,7 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
     },
   }
 
-  node.children = node.children.concat([JSONNode.id])
+  node.children = node.children.concat([id])
 
   return JSONNode
 }
@@ -454,16 +454,29 @@ exports.createNodesForContentType = ({
                 : f.id) === entryItemFieldKey
           ).type
           if (fieldType === `Text`) {
-            const textNode = prepareTextNode(
-              entryNode,
-              entryItemFieldKey,
-              entryItemFields[entryItemFieldKey],
-              createNodeId
+            const textNodeId = createNodeId(
+              `${entryNodeId}${entryItemFieldKey}TextNode`
             )
 
-            childrenNodes.push(textNode)
-            entryItemFields[`${entryItemFieldKey}___NODE`] = textNode.id
+            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+            // of an entry did not change, then we can trust that none of its children were changed either.
+            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
+            const existingNode = getNode(textNodeId)
+            if (
+              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
+            ) {
+              const textNode = prepareTextNode(
+                textNodeId,
+                entryNode,
+                entryItemFieldKey,
+                entryItemFields[entryItemFieldKey],
+                createNodeId
+              )
 
+              childrenNodes.push(textNode)
+            }
+
+            entryItemFields[`${entryItemFieldKey}___NODE`] = textNodeId
             delete entryItemFields[entryItemFieldKey]
           } else if (
             fieldType === `RichText` &&
@@ -509,16 +522,28 @@ exports.createNodesForContentType = ({
             fieldType === `Object` &&
             _.isPlainObject(entryItemFields[entryItemFieldKey])
           ) {
-            const jsonNode = prepareJSONNode(
-              entryNode,
-              entryItemFieldKey,
-              entryItemFields[entryItemFieldKey],
-              createNodeId
+            const jsonNodeId = createNodeId(
+              `${entryNodeId}${entryItemFieldKey}JSONNode`
             )
 
-            childrenNodes.push(jsonNode)
-            entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNode.id
+            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+            // of an entry did not change, then we can trust that none of its children were changed either.
+            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
+            const existingNode = getNode(jsonNodeId)
+            if (
+              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
+            ) {
+              const jsonNode = prepareJSONNode(
+                jsonNodeId,
+                entryNode,
+                entryItemFieldKey,
+                entryItemFields[entryItemFieldKey],
+                createNodeId
+              )
+              childrenNodes.push(jsonNode)
+            }
 
+            entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNodeId
             delete entryItemFields[entryItemFieldKey]
           } else if (
             fieldType === `Object` &&
@@ -527,16 +552,30 @@ exports.createNodesForContentType = ({
             entryItemFields[`${entryItemFieldKey}___NODE`] = []
 
             entryItemFields[entryItemFieldKey].forEach((obj, i) => {
-              const jsonNode = prepareJSONNode(
-                entryNode,
-                entryItemFieldKey,
-                obj,
-                createNodeId,
-                i
+              const jsonNodeId = createNodeId(
+                `${entryNodeId}${entryItemFieldKey}${i}JSONNode`
               )
 
-              childrenNodes.push(jsonNode)
-              entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNode.id)
+              // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+              // of an entry did not change, then we can trust that none of its children were changed either.
+              // (That's why child nodes use the updatedAt of the parent node as their digest, too)
+              const existingNode = getNode(jsonNodeId)
+              if (
+                existingNode?.internal?.contentDigest !==
+                entryItem.sys.updatedAt
+              ) {
+                const jsonNode = prepareJSONNode(
+                  jsonNodeId,
+                  entryNode,
+                  entryItemFieldKey,
+                  obj,
+                  createNodeId,
+                  i
+                )
+                childrenNodes.push(jsonNode)
+              }
+
+              entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNodeId)
             })
 
             delete entryItemFields[entryItemFieldKey]
