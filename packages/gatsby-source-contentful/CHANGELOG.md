@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.0...gatsby-source-contentful@4.4.0-next.1) (2020-12-15)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** use updatedAt field for digest verbatim ([#28609](https://github.com/gatsbyjs/gatsby/issues/28609)) ([756f437](https://github.com/gatsbyjs/gatsby/commit/756f4373c86aa9c481168cb751b79c86f12fb64a))
+
 # [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.3.0-next.2...gatsby-source-contentful@4.4.0-next.0) (2020-12-10)
 
 ### Bug Fixes

@@ -172,4 +172,15 @@ module.exports = {
 
 ## Contributors
 
-A big **Thank You** to [everyone who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.0...gatsby@2.28.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.0...gatsby@2.28.0) to this release 💜
+
+- [styxlab](https://github.com/styxlab): fix(gatsby-source-filesystem): fix race condition when using `publicURL` field [PR #28176](https://github.com/gatsbyjs/gatsby/pull/28176)
+- [visualfanatic](https://github.com/visualfanatic): link to issue fixed inside release notes [PR #28193](https://github.com/gatsbyjs/gatsby/pull/28193)
+- [oorestisime](https://github.com/oorestisime): feat(gatsby-plugin-sitemap): allow `serialize` plugin option to be async function [PR #28207](https://github.com/gatsbyjs/gatsby/pull/28207)
+- [theskillwithin](https://github.com/theskillwithin): breaking(gatsby-plugin-emotion): update to emotion@11 [PR #27981](https://github.com/gatsbyjs/gatsby/pull/27981)
+- [hassankhan](https://github.com/hassankhan): fix(gatsby-transformer-remark): ensure `getNodesByType()` is passed through [PR #28218](https://github.com/gatsbyjs/gatsby/pull/28218)
+- [nina-py](https://github.com/nina-py): chore(gatsby-cli): Bump up update-notifier version to 5.0.1 [PR #28273](https://github.com/gatsbyjs/gatsby/pull/28273)
+- [leerob](https://github.com/leerob): Add Vercel Analytics to documentation. [PR #27841](https://github.com/gatsbyjs/gatsby/pull/27841)
+- [KKVANONYMOUS](https://github.com/KKVANONYMOUS): chore(docs): Fix link to inc builds [PR #28306](https://github.com/gatsbyjs/gatsby/pull/28306)
+- [jmiazga](https://github.com/jmiazga): fix(gatsby-recipes): updated chakra ui recipe after v1 release [PR #28270](https://github.com/gatsbyjs/gatsby/pull/28270)
+- [blainekasten](https://github.com/blainekasten): feat(gatsby): Add preliminary fast-refresh integration [PR #26664](https://github.com/gatsbyjs/gatsby/pull/26664)

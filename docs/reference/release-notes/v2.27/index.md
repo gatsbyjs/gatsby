@@ -124,4 +124,21 @@ And that means having documentation that helps y’all find the information you 
 
 ## Contributors
 
-A big **Thank You** to [everyone who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0) to this release 💜
+
+- [jerrydevs](https://github.com/jerrydevs): fix(gatsby-transformer-asciidoc): fails when doc doesn't have title [PR #27865](https://github.com/gatsbyjs/gatsby/pull/27865)
+- [shoxton](https://github.com/shoxton)
+  - feat(gatsby-recipes): add Chakra UI recipe [PR #27721](https://github.com/gatsbyjs/gatsby/pull/27721)
+  - feat(recipes-list): add chakra-ui [PR #28013](https://github.com/gatsbyjs/gatsby/pull/28013)
+- [vhiairrassary](https://github.com/vhiairrassary): Fix #26359: Support HTTPS for the develop status server [PR #27955](https://github.com/gatsbyjs/gatsby/pull/27955)
+- [stefanjudis](https://github.com/stefanjudis): docs(gatsby-source-contentful): clean up changelog [PR #28000](https://github.com/gatsbyjs/gatsby/pull/28000)
+- [lellky](https://github.com/lellky): chore(docs): Update add-seo-component [PR #28022](https://github.com/gatsbyjs/gatsby/pull/28022)
+- [MichaelDeBoey](https://github.com/MichaelDeBoey)
+  - chore(gatsby-plugin-glamor): Add pluginOptionsSchema validation [PR #27602](https://github.com/gatsbyjs/gatsby/pull/27602)
+  - chore(gatsby-plugin-twitter): Add pluginOptionsSchema validation [PR #27601](https://github.com/gatsbyjs/gatsby/pull/27601)
+- [trevorblades](https://github.com/trevorblades): Make optional SVG favicon come after the fallback [PR #27843](https://github.com/gatsbyjs/gatsby/pull/27843)
+- [moonmeister](https://github.com/moonmeister): fix(plugin-manifest): Allow for all valid WebAppManifest properties [PR #27951](https://github.com/gatsbyjs/gatsby/pull/27951)
+- [nm123github](https://github.com/nm123github): add query pluginOption for mongodb plugin [PR #27756](https://github.com/gatsbyjs/gatsby/pull/27756)
+- [sreeharisj23](https://github.com/sreeharisj23): chore: change .org to .com [PR #28053](https://github.com/gatsbyjs/gatsby/pull/28053)
+- [DecliningLotus](https://github.com/DecliningLotus): chore(docs): replace typefaces with fontsource [PR #27313](https://github.com/gatsbyjs/gatsby/pull/27313)
+- [yaacovCR](https://github.com/yaacovCR): chore(gatsby-source-graphql): upgrade graphql-tools to v7 [PR #27792](https://github.com/gatsbyjs/gatsby/pull/27792)

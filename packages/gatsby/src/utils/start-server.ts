@@ -259,6 +259,16 @@ module.exports = {
 
     if (enableRefresh && authorizedRefresh) {
       refresh(req, pluginName)
+      res.status(200)
+      res.setHeader(`content-type`, `application/json`)
+    } else {
+      res.status(authorizedRefresh ? 404 : 403)
+      res.json({
+        error: enableRefresh
+          ? `Authorization failed. Make sure you add authorization header to your refresh requests`
+          : `Refresh endpoint is not enabled. Run gatsby with "ENABLE_GATSBY_REFRESH_ENDPOINT=true" environment variable set.`,
+        isEnabled: !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+      })
     }
     res.end()
   })
@@ -461,6 +471,12 @@ module.exports = {
   }
 
   app.use(async (req, res) => {
+    // in this catch-all block we don't support POST so we should 404
+    if (req.method === `POST`) {
+      res.status(404).end()
+      return
+    }
+
     const fullUrl = req.protocol + `://` + req.get(`host`) + req.originalUrl
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {

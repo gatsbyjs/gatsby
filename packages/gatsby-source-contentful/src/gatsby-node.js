@@ -296,8 +296,17 @@ exports.sourceNodes = async (
   const allLocales = locales
   locales = locales.filter(pluginConfig.get(`localeFilter`))
   reporter.verbose(
-    `All locales: ${allLocales}, default: ${defaultLocale}, after plugin.options.localeFilter: ${locales}`
+    `Default locale: ${defaultLocale}.   All locales: ${allLocales
+      .map(({ code }) => code)
+      .join(`, `)}`
   )
+  if (allLocales.length !== locales.length) {
+    reporter.verbose(
+      `After plugin.options.localeFilter: ${locales
+        .map(({ code }) => code)
+        .join(`, `)}`
+    )
+  }
   if (locales.length === 0) {
     reporter.panic({
       id: CODES.LocalesMissing,
