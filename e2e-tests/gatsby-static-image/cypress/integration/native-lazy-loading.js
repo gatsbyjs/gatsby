@@ -11,7 +11,7 @@ describe(`gatsby-plugin-image / native lazy loading`, () => {
     // can resolve. This is necessary because the assertion
     // is done outside the Cypress scheduler and so, Cypress is not able
     // to ping for the specific assertion to be truthy.
-    cy.wait(1000)
+    cy.wait(500)
     cy.get(`[data-cy=already-loaded]`)
       .should(`be.visible`)
       .then($img => {
