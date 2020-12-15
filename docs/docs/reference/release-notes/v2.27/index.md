@@ -23,8 +23,7 @@ Sneak peek to next releases:
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop)
 - [Documentation Reorganization](#documentation-reorganization)
 
-**Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
-if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
+**Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 [Previous release notes](../v2.26/index.md)<br>
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0)
