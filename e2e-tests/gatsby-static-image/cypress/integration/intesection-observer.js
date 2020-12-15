@@ -1,5 +1,6 @@
 describe(`gatsby-plugin-image / intersection observer`, () => {
   beforeEach(() => {
+    cy.viewport(1000, 500)
     cy.visit(`/lazy-loading`)
     cy.window().then(win => {
       // Removing the native lazy loading capabilities
