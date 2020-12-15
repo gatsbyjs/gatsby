@@ -53,6 +53,16 @@ module.exports = {
 }
 ```
 
+In v2.29 we improved the UX around it by adding a loading indicator and message to the browser console (only in `gatsby develop`). If you want or need to de-activate this indicator, you can! For more details please see the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/27620). Here's a preview of them in action:
+
+### Loading indicator
+
+![loading-indiactor](https://user-images.githubusercontent.com/16143594/102206937-9e4d0e80-3ecd-11eb-8a3f-3436f1b02a4d.gif)
+
+### Browser console
+
+![console](https://user-images.githubusercontent.com/16143594/102207048-c3da1800-3ecd-11eb-9caf-21c4e54c7f76.png)
+
 ## Lazy Images
 
 Similarily as with Query on Demand also Lazy Images will be automatically delivered to 10% of our users with this v2.29 release. We've first shipped this feature behind a flag in [v2.28](../v2.28/index.md#experimental-lazy-images-in-develop). Opt-in users will receive a notice in their terminal about that opt-in behavior and a hint on how to turn it off (in case it disturbs your workflow). As a recap of what Lazy Images will improve:
