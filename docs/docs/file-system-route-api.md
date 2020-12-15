@@ -125,7 +125,7 @@ export default function Component(props) {
 // to connect to this GraphQL query.
 
 export const query = graphql`
-  query ($id: String) {
+  query($id: String) {
     product(id: { eq: $id }) {
       fields {
         sku
@@ -170,7 +170,8 @@ export default function HomePage(props) {
     <ul>
       {props.data.allProduct.map(product => (
         <li key={product.name}>
-          <Link to={product.productPath}>{product.name}</Link> (<Link to={product.discountPath}>Discount</Link>) // highlight-line
+          <Link to={product.productPath}>{product.name}</Link> (
+          <Link to={product.discountPath}>Discount</Link>) // highlight-line
         </li>
       ))}
     </ul>
