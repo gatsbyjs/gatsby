@@ -43,6 +43,12 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
+    if (
+      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+    ) {
+      emitter.emit(`onRouteUpdate`, { location, prevLocation })
+    }
   }
 }
 

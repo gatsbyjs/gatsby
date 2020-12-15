@@ -40,15 +40,17 @@
     "reset:preview": "curl -X POST http://localhost:8000/__refresh",
     "update": "node scripts/update.js",
     "update:webhook": "node scripts/webhook.js",
+    "update:cms-webhook": "node scripts/cms-webhook.js",
     "update:preview": "curl -X POST -d '{ \"fake-data-update\": true }' -H \"Content-Type: application/json\" http://localhost:8000/__refresh",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
+    "start-server-and-debug": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
     "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^6.0.0",
+    "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
-    "cypress": "3.4.1",
+    "cypress": "6.1.0",
     "fs-extra": "^7.0.1",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
@@ -61,6 +63,6 @@
     "url": "https://github.com/gatsbyjs/gatsby"
   },
   "resolutions": {
-    "cypress": "3.4.1"
+    "cypress": "6.1.0"
   }
 }

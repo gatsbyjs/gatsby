@@ -356,7 +356,7 @@ describe(`Keeping caches up-to-date when updating data`, () => {
 
 describe(`Keeping caches up to date when modifying list of static query hashes assigned to a template`, () => {
   describe(`using gatsby-link`, () => {
-    it.only(`Navigate from page A to page B, add static query to page A, navigate back to page A`, () => {
+    it(`Navigate from page A to page B, add static query to page A, navigate back to page A`, () => {
       const config = {
         slug: `adding-static-query-A-to-B-to-A-link`,
         queryType: `static`,

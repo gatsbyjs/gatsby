@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.7.0-next.0...gatsby-recipes@0.7.0-next.1) (2020-12-15)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0-next.1...gatsby-recipes@0.7.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby-recipes:** Add postcss as a dependency ([#28556](https://github.com/gatsbyjs/gatsby/issues/28556)) ([c5bf981](https://github.com/gatsbyjs/gatsby/commit/c5bf9811e20306fced1a1415e9f842135cd49750))
+
 # [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.6.0-next.0...gatsby-recipes@0.6.0-next.1) (2020-12-01)
 
 ### Bug Fixes

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.0...gatsby-plugin-image@0.5.0-next.1) (2020-12-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better propType handling for StaticImage ([#28606](https://github.com/gatsbyjs/gatsby/issues/28606)) ([52027db](https://github.com/gatsbyjs/gatsby/commit/52027db80559a728d4a85c729d282ec3abccf5b2))
+- **gatsby-plugin-image:** Correctly handle formats in StaticImage ([#28618](https://github.com/gatsbyjs/gatsby/issues/28618)) ([912f30c](https://github.com/gatsbyjs/gatsby/commit/912f30c099f98fa382fe653a3a2c07253bd6b452))
+
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.3...gatsby-plugin-image@0.5.0-next.0) (2020-12-10)
+
+### Features
+
+- **gatsby-plugin-image:** Add extra props to GatsbyImage ([#28520](https://github.com/gatsbyjs/gatsby/issues/28520)) ([2ab320a](https://github.com/gatsbyjs/gatsby/commit/2ab320aae4dd8c9ce918bd0a4f88b34ad3bf6d85))
+- **gatsby-plugin-image:** add keywords to package.json so it shows up in the plugin search ([#28577](https://github.com/gatsbyjs/gatsby/issues/28577)) ([6297917](https://github.com/gatsbyjs/gatsby/commit/6297917d4908a47c79eb44cae9c4dc85ce365ead))
+
+# [0.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.2...gatsby-plugin-image@0.4.0-next.3) (2020-12-08)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
 # [0.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.1...gatsby-plugin-image@0.4.0-next.2) (2020-12-04)
 
 ### Bug Fixes

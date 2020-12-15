@@ -7,6 +7,7 @@ import React, {
   ImgHTMLAttributes,
   useState,
   RefObject,
+  CSSProperties,
 } from "react"
 import {
   getWrapperProps,
@@ -26,7 +27,12 @@ export interface GatsbyImageProps
   alt: string
   as?: ElementType
   className?: string
+  imgClassName?: string
   image: IGatsbyImageData
+  imgStyle?: CSSProperties
+  backgroundColor?: string
+  objectFit?: CSSProperties["objectFit"]
+  objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
   onError?: () => void
   onStartLoad?: Function
@@ -53,6 +59,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   onStartLoad,
   image,
   onLoad: customOnLoad,
+  backgroundColor,
   ...props
 }) {
   if (!image) {
@@ -61,7 +68,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     }
     return null
   }
-  const { width, height, layout, images, backgroundColor } = image
+  const { width, height, layout, images } = image
 
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
@@ -188,6 +195,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       style={{
         ...wStyle,
         ...style,
+        backgroundColor,
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
       ref={root}

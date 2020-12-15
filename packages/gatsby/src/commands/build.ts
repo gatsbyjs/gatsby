@@ -296,6 +296,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   })
   postBuildActivityTimer.end()
 
+  // Wait for any jobs that were started in onPostBuild
+  // This could occur due to queries being run which invoke sharp for instance
+  await waitUntilAllJobsComplete()
+
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
 

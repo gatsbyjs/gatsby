@@ -120,10 +120,12 @@ export const spawnWebpackListener = assign<IBuildContext, AnyEventObject>({
 
 export const assignWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: (_context, { payload }) => payload?.webhookBody,
+  webhookSourcePluginName: (_context, { payload }) => payload?.pluginName,
 })
 
 export const clearWebhookBody = assign<IBuildContext, AnyEventObject>({
   webhookBody: undefined,
+  webhookSourcePluginName: undefined,
 })
 
 export const finishParentSpan = ({ parentSpan }: IBuildContext): void =>

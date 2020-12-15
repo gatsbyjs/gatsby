@@ -110,6 +110,8 @@ export async function generateImageData({
     quality,
   } = args
 
+  args.formats = args.formats || [`auto`, `webp`]
+
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,
@@ -218,9 +220,10 @@ export async function generateImageData({
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
         quality,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         ...args.webpOptions,
-        tracedSVGOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
@@ -249,7 +252,9 @@ export async function generateImageData({
       file,
       args: {
         ...options,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),
