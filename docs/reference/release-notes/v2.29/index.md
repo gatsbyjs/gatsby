@@ -109,9 +109,14 @@ Please give us your feedback in the [umbrella discussion](https://github.com/gat
 
 We were able to ship a bunch of performance improvements both to Gatsby itself and its plugins:
 
-- The PR [#28375](https://github.com/gatsbyjs/gatsby/pull/28375) fixed an unguided search in `gatsby-source-contentful` that can significantly drop your time for an incremental build (and perhaps others). In this case (for a site with 80k elements) it dropped the time from 5 minutes to sub-second.
-- The PR [#28438](https://github.com/gatsbyjs/gatsby/pull/28438) prevents some redudant calculations resulting in 5% improvements for bigger sites using `gatsby-source-contentful`
-- The PR [#28525](https://github.com/gatsbyjs/gatsby/pull/28525) drops the `async` keyword from the `wrappingResolver` that wraps all resolvers passed on to GraphQL. In practice this means a 5-10% overall improvement to the runtime of a site.
+### `gatsby`
+
+- Improve query running performance for sites with large amount of data (up to 10% in our tests). See https://github.com/gatsbyjs/gatsby/pull/28525 for details.
+
+### `gatsby-source-contentful`
+
+- Improve performance of data sourcing for large Contentful spaces. See https://github.com/gatsbyjs/gatsby/pull/28375 for details.
+- Prevent concurrent requests to Contentful's image processing API. See https://github.com/gatsbyjs/gatsby/pull/28438 for details.
 
 ## Slugify option for File System Route API
 
