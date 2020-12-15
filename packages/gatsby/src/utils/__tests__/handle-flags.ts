@@ -205,7 +205,10 @@ describe(`handle flags`, () => {
   it(`removes flags people explicitly opt out of and ignores flags that don't pass semver`, () => {
     const response = handleFlags(
       activeFlags,
-      { PARTIAL_RELEASE: false, PARTIAL_RELEASE_ONLY_NEW_LODASH: false },
+      {
+        PARTIAL_RELEASE: false,
+        PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
+      },
       `develop`
     )
     expect(response.enabledConfigFlags).toHaveLength(0)
@@ -229,6 +232,48 @@ describe(`handle flags`, () => {
         "message": "",
         "unknownFlagMessage": "",
       }
+    `)
+  })
+
+  it(`Prefers explicit opt-in over auto opt-in (for terminal message)`, () => {
+    const response = handleFlags(
+      activeFlags.concat([
+        {
+          name: `ALWAYS_OPT_IN`,
+          env: `GATSBY_ALWAYS_OPT_IN`,
+          command: `all`,
+          description: `test`,
+          umbrellaIssue: `test`,
+          telemetryId: `test`,
+          experimental: false,
+          // this will always OPT IN
+          testFitness: (): fitnessEnum => `OPT_IN`,
+        },
+      ]),
+      {
+        ALWAYS_OPT_IN: true,
+        DEV_SSR: true,
+        PARTIAL_RELEASE: false,
+        PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
+      },
+      `develop`
+    )
+
+    expect(response.message).not.toContain(`automatically enabled`)
+    expect(response.message).toMatchInlineSnapshot(`
+      "The following flags are active:
+      - ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
+      - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+
+      There are 7 other flags available that you might be interested in:
+      - FAST_DEV · Enable all experiments aimed at improving develop server start time
+      - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+      - ONLY_BUILDS · (Umbrella Issue (test)) · test
+      - ALL_COMMANDS · (Umbrella Issue (test)) · test
+      - YET_ANOTHER · (Umbrella Issue (test)) · test
+      - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+      - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+      "
     `)
   })
 })
