@@ -35,27 +35,18 @@ const IndexPage = () => {
         <span role="img" aria-label="Pensive emoji">
           😔
         </span>{" "}
-        we couldn’t find what you were looking for. <Link to="/">Go home</Link>.
+        we couldn’t find what you were looking for. 
+        <br/>
+        {process.env.NODE_ENV === "development" ? (
+          <>
+            <br/>
+              Try creating a page in <code style={codeStyles}>src/pages/</code>.
+            <br/>
+          </>
+        ) : null}
+      <br/>
+        <Link to="/">Go home</Link>.
       </p>
-      {process.env.NODE_ENV === "development" ? (
-        <>
-          <p>
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-          </p>
-          <ul style={listStyles}>
-            {links.map(link => (
-              <li style={listItemStyles}>
-                <a
-                  style={linkStyles}
-                  href={`${link.url}?utm_source=starter&utm_medium=404-page&utm_campaign=minimal-starter`}
-                >
-                  {link.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : null}
     </main>
   )
 }
