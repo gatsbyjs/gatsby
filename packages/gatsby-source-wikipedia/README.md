@@ -25,6 +25,7 @@ module.exports = {
           {
             query: `progressive web app`,
             limit: 5,
+            lang: 'en'
           },
           {
             query: `cheese`,
@@ -34,6 +35,11 @@ module.exports = {
             query: `developers`,
             limit: 10,
           },
+          {
+            query: `frommage`, 
+            limit: 10, 
+            lang: 'fr'
+          }
         ],
       },
     },
