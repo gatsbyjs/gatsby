@@ -142,6 +142,7 @@ We introduced some API changes for working with images when we published the new
 - Do not fail in develop when eslint loader is removed in [#28494](https://github.com/gatsbyjs/gatsby/pull/28494)
 - Respect hash as source of truth for scroll position in [#28555](https://github.com/gatsbyjs/gatsby/pull/28555)
 - Wait for jobs to complete in `onPostBuild` in [#28534](https://github.com/gatsbyjs/gatsby/pull/28534)
+- Truncated long terminal messages fixed in [#26190](https://github.com/gatsbyjs/gatsby/pull/26190)
 
 ## Contributors
 
