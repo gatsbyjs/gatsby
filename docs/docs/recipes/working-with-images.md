@@ -297,7 +297,7 @@ return (
 ### Additional resources
 
 - [Example repository illustrating these examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
-- [Gatsby Image API](/docs/reference/images-and-media/gatsby-image/)
+- [Gatsby Image API](/docs/reference/built-in-components/gatsby-image/)
 - [Using Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image)
 - [More on working with images in Gatsby](/docs/working-with-images/)
 - [Free egghead.io videos explaining these steps](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e)
@@ -313,7 +313,7 @@ To inline images in markdown (using the `![]()` syntax), consider using a plugin
 - The `gatsby-image`, `gatsby-transformer-sharp`, and `gatsby-plugin-sharp` packages installed and added to the plugins array in `gatsby-config`
 - [Images sourced](/packages/gatsby-image/#install) in your `gatsby-config` using a plugin like `gatsby-source-filesystem`
 - Markdown files sourced in your `gatsby-config` with image URLs in frontmatter
-- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](/docs/reference/builds/gatsby-node/#createPages)
+- [Pages created](/docs/creating-and-modifying-pages/) from Markdown using [`createPages`](/docs/reference/config-files/gatsby-node/#createPages)
 
 ### Directions
 
@@ -397,6 +397,6 @@ export const pageQuery = graphql`
 
 - [Example repository using this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipes-gatsby-image)
 - [Featured images with frontmatter](/docs/working-with-images-in-markdown/#featured-images-with-frontmatter-metadata)
-- [Gatsby Image API](/docs/reference/images-and-media/gatsby-image/)
+- [Gatsby Image API](/docs/reference/built-in-components/gatsby-image/)
 - [Using Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image)
 - [More on working with images in Gatsby](/docs/working-with-images/)

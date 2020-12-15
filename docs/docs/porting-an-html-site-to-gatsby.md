@@ -143,7 +143,7 @@ Gatsby projects have a config file at `/gatsby-config.js` where site metadata an
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.com/docs/reference/plugins-and-themes/gatsby-config/
+ * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 
 module.exports = {
@@ -244,7 +244,7 @@ Opening the site in a browser again at `http://localhost:8000`, you should have 
 
 The code for Gatsby pages looks like a hybrid of JavaScript and HTML. The code for each page is typically a JavaScript function describing a block of HTML given a set of inputs, or "props". Gatsby runs each page's JavaScript function during the build process to produce a static HTML file.
 
-The appearance of a Gatsby component depends on how dynamic the content and behavior is. The code for a very static page will include mostly all HTML markup wrapped in a bit of JavaScript for Gatsby to assemble. The code for a component with props (a.k.a. "inputs"), and logic applied to those props, will interweave more JavaScript through JSX: examples could include data [sourced with GraphQL](/docs/reference/querying-data/graphql-api/) or [imported from a file](/docs/how-to/sourcing-data/sourcing-from-json-or-yaml/) to produce dynamic markup, such as a list of related links.
+The appearance of a Gatsby component depends on how dynamic the content and behavior is. The code for a very static page will include mostly all HTML markup wrapped in a bit of JavaScript for Gatsby to assemble. The code for a component with props (a.k.a. "inputs"), and logic applied to those props, will interweave more JavaScript through JSX: examples could include data [sourced with GraphQL](/docs/reference/graphql-data-layer/graphql-api/) or [imported from a file](/docs/how-to/sourcing-data/sourcing-from-json-or-yaml/) to produce dynamic markup, such as a list of related links.
 
 This guide will stay on the HTML side of the balance to suit a more static site. Using Gatsby to arrange the necessary client-side JavaScript with React early can open many future possibilities though. While Gatsby produces static pages from your components, it can also deliver dynamic client-side JavaScript after the page loads and the site [hydrates](/docs/glossary#hydration) into a full React web application.
 
@@ -502,7 +502,7 @@ If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`,
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.com/docs/reference/plugins-and-themes/gatsby-config/
+ * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 
 module.exports = {
@@ -560,7 +560,7 @@ website-domain
 
 ## Next steps
 
-Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/reference/images-and-media/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/reference/built-in-components/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
 The [building with components doc](/docs/conceptual/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 

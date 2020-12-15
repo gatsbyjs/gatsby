@@ -33,7 +33,7 @@ Because all Gatsby pages are hydrated into React, **any of the following pattern
 
 ### Static pages
 
-Static files are output by running `gatsby build` from exported components in your `src/pages` folder or from pages created using the [`createPage` API](/docs/reference/builds/gatsby-node/#createPages), as shown in this diagram:
+Static files are output by running `gatsby build` from exported components in your `src/pages` folder or from pages created using the [`createPage` API](/docs/reference/config-files/gatsby-node/#createPages), as shown in this diagram:
 
 ![Static Site diagram with pages created from Gatsby automatically and programmatically](./images/simple-static-site.png)
 
@@ -78,7 +78,7 @@ There is a bit of a paradigm shift to overcome in understanding how a Gatsby app
 
 ### The global `App.js` component
 
-One main distinction explained in the diagrams in the section on [common patterns for Gatsby apps](#common-patterns-for-gatsby-apps) is the combination of hybrid and static pages that Gatsby offers vs one global `App.js` component. An app from Create React App will have exclusively client routes set up on one `App.js` component rendered at the root, which isn't unmounted. The `App.js` component is often the place in a React app where Theme Providers and Context are wrapped around the entire app so some data can be provided to all components or preserved between route changes. Gatsby has a root element that can be wrapped to preserve state or data between page navigation as well, but it is accessed through the [`wrapRootElement` API](/docs/reference/builds/gatsby-browser/#wrapRootElement) instead of being in a file in your `src` folder. Persistent UI elements can be wrapped around pages with the [`wrapPageElement` API](/docs/reference/builds/gatsby-browser/#wrapPageElement).
+One main distinction explained in the diagrams in the section on [common patterns for Gatsby apps](#common-patterns-for-gatsby-apps) is the combination of hybrid and static pages that Gatsby offers vs one global `App.js` component. An app from Create React App will have exclusively client routes set up on one `App.js` component rendered at the root, which isn't unmounted. The `App.js` component is often the place in a React app where Theme Providers and Context are wrapped around the entire app so some data can be provided to all components or preserved between route changes. Gatsby has a root element that can be wrapped to preserve state or data between page navigation as well, but it is accessed through the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) instead of being in a file in your `src` folder. Persistent UI elements can be wrapped around pages with the [`wrapPageElement` API](/docs/reference/config-files/gatsby-browser/#wrapPageElement).
 
 ### Page and route creation
 

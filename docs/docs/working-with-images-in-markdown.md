@@ -94,7 +94,7 @@ Content goes here!
 
 Now that you've sourced Markdown and image data, you can query for featured images in GraphQL. If a filepath points to an actual image, it will be transformed into a `File` node in GraphQL and then you can get the image data out of it by using the `childImageSharp` field.
 
-This can be added to the GraphQL query in a Markdown template file. In this example, a [Fluid query](/docs/reference/images-and-media/gatsby-image#images-that-stretch-across-a-fluid-container) is used to make a responsive image.
+This can be added to the GraphQL query in a Markdown template file. In this example, a [Fluid query](/docs/reference/built-in-components/gatsby-image#images-that-stretch-across-a-fluid-container) is used to make a responsive image.
 
 ```jsx:title=src/templates/blog-post.js
 export const query = graphql`

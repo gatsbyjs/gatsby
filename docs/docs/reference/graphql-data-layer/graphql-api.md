@@ -222,7 +222,7 @@ For examples, refer to the [query recipes](/docs/recipes/querying-data) and [Gra
 
 Fragments allow you to reuse parts of GraphQL queries. They also allow you to split up complex queries into smaller, easier to understand components.
 
-For more information, check out the docs guide on [using fragments in Gatsby](/docs/reference/querying-data/using-graphql-fragments/).
+For more information, check out the docs guide on [using fragments in Gatsby](/docs/reference/graphql-data-layer/using-graphql-fragments/).
 
 ### Gatsby fragments
 
@@ -230,6 +230,6 @@ Some fragments come included in Gatsby plugins, such as fragments for returning 
 
 ## Advanced customizations
 
-You can customize sourced data in the GraphQL layer and create relationships between nodes with the [Gatsby Node APIs](/docs/reference/builds/gatsby-node/).
+You can customize sourced data in the GraphQL layer and create relationships between nodes with the [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/).
 
-The GraphQL schema can be customized for more advanced use cases: read more about it in the [schema customization API docs](/docs/reference/querying-data/schema-customization/).
+The GraphQL schema can be customized for more advanced use cases: read more about it in the [schema customization API docs](/docs/reference/graphql-data-layer/schema-customization/).

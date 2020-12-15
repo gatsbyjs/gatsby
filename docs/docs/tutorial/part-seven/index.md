@@ -27,7 +27,7 @@ Creating new pages has two steps:
 
 _**Note**: Often data sources will directly provide a slug or pathname for content — when working with one of those systems (e.g. a CMS), you don't need to create the slugs yourself as you do with markdown files._
 
-To create your markdown pages, you'll learn to use two Gatsby APIs: [`onCreateNode`](/docs/reference/builds/gatsby-node/#onCreateNode) and [`createPages`](/docs/reference/builds/gatsby-node/#createPages). These are two workhorse APIs you'll see used in many sites and plugins.
+To create your markdown pages, you'll learn to use two Gatsby APIs: [`onCreateNode`](/docs/reference/config-files/gatsby-node/#onCreateNode) and [`createPages`](/docs/reference/config-files/gatsby-node/#createPages). These are two workhorse APIs you'll see used in many sites and plugins.
 
 We do our best to make Gatsby APIs simple to implement. To implement an API, you export a function with the name of the API from `gatsby-node.js`.
 
@@ -57,7 +57,7 @@ exports.onCreateNode = ({ node }) => {
 }
 ```
 
-You want to use each markdown file name to create the page slug. So `pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do you get the file name from the `MarkdownRemark` node? To get it, you need to _traverse_ the "node graph" to its _parent_ `File` node, as `File` nodes contain data you need about files on disk. To do that, you'll use the [`getNode()`](/docs/reference/builds/node-api-helpers/#getNode) helper. Add it to `onCreateNode`'s function parameters, and call it to get the file node:
+You want to use each markdown file name to create the page slug. So `pandas-and-bananas.md` will become `/pandas-and-bananas/`. But how do you get the file name from the `MarkdownRemark` node? To get it, you need to _traverse_ the "node graph" to its _parent_ `File` node, as `File` nodes contain data you need about files on disk. To do that, you'll use the [`getNode()`](/docs/reference/config-files/node-api-helpers/#getNode) helper. Add it to `onCreateNode`'s function parameters, and call it to get the file node:
 
 ```javascript:title=gatsby-node.js
 // highlight-next-line
@@ -91,7 +91,7 @@ The function handles finding the parent `File` node along with creating the slug
 
 Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is powerful, as any data you add to nodes is available to query later with GraphQL. So, it'll be easy to get the slug when it comes time to create the pages.
 
-To do so, you'll use a function passed to your API implementation called [`createNodeField`](/docs/reference/builds/actions/#createNodeField). This function allows you to create additional fields on nodes created by other plugins. Only the original creator of a node can directly modify the node—all other plugins (including your `gatsby-node.js`) must use this function to create additional fields.
+To do so, you'll use a function passed to your API implementation called [`createNodeField`](/docs/reference/config-files/actions/#createNodeField). This function allows you to create additional fields on nodes created by other plugins. Only the original creator of a node can directly modify the node—all other plugins (including your `gatsby-node.js`) must use this function to create additional fields.
 
 ```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)
@@ -171,7 +171,7 @@ exports.createPages = async ({ graphql, actions }) => {
 // highlight-end
 ```
 
-You've added an implementation of the [`createPages`](/docs/reference/builds/gatsby-node/#createPages) API which Gatsby calls so plugins can add pages.
+You've added an implementation of the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) API which Gatsby calls so plugins can add pages.
 
 As mentioned in the intro to this part of the tutorial, the steps to programmatically creating pages are:
 
@@ -398,4 +398,4 @@ Now that you've built a Gatsby site, where do you go next?
 - You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
 - Explore more [plugins](/docs/plugins/)
 - See what [other people are building with Gatsby](/showcase/)
-- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/reference/builds/node-interface/), or [GraphQL](/docs/graphql-reference/)
+- Check out the documentation on [Gatsby's APIs](/docs/api-specification/), [nodes](/docs/reference/graphql-data-layer/node-interface/), or [GraphQL](/docs/graphql-reference/)

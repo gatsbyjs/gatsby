@@ -132,7 +132,7 @@ The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updat
 
 _Without_ this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
 
-> Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/reference/builds/gatsby-browser/#shouldUpdateScroll) Browser API.
+> Tip: For applications with complex routing, you may want to override Gatsby's default scroll behavior with the [shouldUpdateScroll](/docs/reference/config-files/gatsby-browser/#shouldUpdateScroll) Browser API.
 
 ## Configuring and handling client-only routes on a server
 

@@ -23,12 +23,12 @@ Taking the default Gatsby starter as an example, dedicate some time to looking t
 ![Default starter file structure in VS Code](./images/default-files-zoom.png)
 
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
-- `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/reference/plugins-and-themes/gatsby-config/) for more information.
+- `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/reference/config-files/gatsby-config/) for more information.
 - `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [default starter's package.json](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/package.json) file.
 - `README.md`: this should include instructions for how to install and configure the starter, a list of its features or structure, and helpful tips. If you plan to share the source code for your site with other people, you can replace this information with documentation for your specific project.
 - `static`: a directory for static assets, such as a `favicon.ico` file. You can add whatever static files you need in here and they'll be copied to the `public` folder. If you're not sure which files belong here, check out the [How-To Guide about the static folder](/docs/how-to/images-and-media/static-folder/).
 
-If you'd like to read descriptions of all of these files, as well as the other files that make up a Gatsby site, check out the [Gatsby project structure](/docs/reference/local-development/gatsby-project-structure/) documentation.
+If you'd like to read descriptions of all of these files, as well as the other files that make up a Gatsby site, check out the [Gatsby project structure](/docs/reference/gatsby-project-structure/) documentation.
 
 ## Adding content
 

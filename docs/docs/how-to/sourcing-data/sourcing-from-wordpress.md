@@ -132,7 +132,7 @@ exports.createPages = async ({ graphql, actions }) => {
 }
 ```
 
-After fetching data from WordPress via the query, all posts are iterated over, calling [`createPage`](/docs/reference/builds/actions/#createPage) for each one.
+After fetching data from WordPress via the query, all posts are iterated over, calling [`createPage`](/docs/reference/config-files/actions/#createPage) for each one.
 
 A [Gatsby page is defined](/docs/api-specification/#concepts) as "a site page with a pathname, a template component, and an _optional_ GraphQL query and Layout component."
 

@@ -8,9 +8,9 @@ Pages can be created in three ways:
 
 - By creating React components in the `src/pages` directory. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
 - By using the [File System Route API](/docs/reference/routing/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
-- In your site's `gatsby-node.js` file, by implementing the API [`createPages`](/docs/reference/builds/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
+- In your site's `gatsby-node.js` file, by implementing the API [`createPages`](/docs/reference/config-files/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
-Pages can also be modified by you after their creation. For example, you could change the `path` to create internationalized routes (see [gatsby-theme-i18n](https://github.com/gatsbyjs/themes/blob/1ddd07c4248239e6323833c6d6d572ac0a0d57a1/packages/gatsby-theme-i18n/gatsby-node.js#L132-L172) for instance) by implementing the API [`onCreatePage`](/docs/reference/builds/gatsby-node/#onCreatePage).
+Pages can also be modified by you after their creation. For example, you could change the `path` to create internationalized routes (see [gatsby-theme-i18n](https://github.com/gatsbyjs/themes/blob/1ddd07c4248239e6323833c6d6d572ac0a0d57a1/packages/gatsby-theme-i18n/gatsby-node.js#L132-L172) for instance) by implementing the API [`onCreatePage`](/docs/reference/config-files/gatsby-node/#onCreatePage).
 
 > **Note:** For most use cases you'll be able to use the [File System Route API](/docs/reference/routing/file-system-route-api/) to create pages. Please read on if you need more control over the page creation or consume data outside of Gatsby's GraphQL data layer.
 

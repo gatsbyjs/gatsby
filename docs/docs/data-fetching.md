@@ -29,7 +29,7 @@ In order to fetch data at build time, you can use a source plugin or source data
 
 #### Source data to be queried at build time
 
-To source data using an existing source plugin you need to install a plugin and add it to your [Gatsby config file](/docs/reference/plugins-and-themes/gatsby-config/). To use `gatsby-source-graphql`, first install it:
+To source data using an existing source plugin you need to install a plugin and add it to your [Gatsby config file](/docs/reference/config-files/gatsby-config/). To use `gatsby-source-graphql`, first install it:
 
 ```shell
 npm install gatsby-source-graphql
@@ -57,7 +57,7 @@ module.exports = {
 
 > Because the GitHub GraphQL API requires you to be authenticated to make requests, you need to create a token and replace the "your-github-token" text in the header for Authorization with that token. You can [secure your key using environment variables](/docs/how-to/local-development/environment-variables/) if you're pushing code to a public repository.
 
-Alternately, if you want to source data yourself you can use APIs Gatsby provides. Source plugins take advantage of the [`sourceNodes` API](/docs/reference/builds/gatsby-node/#sourceNodes) and the [`createNode` action](/docs/reference/builds/actions/#createNode) provided by Gatsby to make your data queryable during the build process. If you want to source data yourself you can add a section of code like this using the `createNode` API to add a node to your data layer manually:
+Alternately, if you want to source data yourself you can use APIs Gatsby provides. Source plugins take advantage of the [`sourceNodes` API](/docs/reference/config-files/gatsby-node/#sourceNodes) and the [`createNode` action](/docs/reference/config-files/actions/#createNode) provided by Gatsby to make your data queryable during the build process. If you want to source data yourself you can add a section of code like this using the `createNode` API to add a node to your data layer manually:
 
 ```js:title=gatsby-node.js
 const fetch = require(`node-fetch`)

@@ -154,7 +154,7 @@ export const pageQuery = graphql`
 
 ## Modify `gatsby-node.js` to render pages using that template
 
-Now you've got a template. Great! Assuming you followed the How-To Guide for [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/reference/builds/gatsby-node/#createPages) looks something like this:
+Now you've got a template. Great! Assuming you followed the How-To Guide for [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) looks something like this:
 
 ```js:title=gatsby-node.js
 const path = require("path")

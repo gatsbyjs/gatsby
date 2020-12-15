@@ -45,7 +45,7 @@ If this flag is not passed, Gatsby will ignore your `pathPrefix`.
 
 ## In-app linking
 
-Gatsby provides APIs and libraries to make using this feature seamless. Specifically, the [`Link`](/docs/reference/routing/gatsby-link/) component has built-in functionality to handle path prefixing.
+Gatsby provides APIs and libraries to make using this feature seamless. Specifically, the [`Link`](/docs/reference/built-in-components/gatsby-link/) component has built-in functionality to handle path prefixing.
 
 For example, if you want to link to the location `/page-2`, but the actual link will be prefixed (e.g. `/blog/page-2`); you don't need to hard code the prefix into your links. By using the Gatsby `Link` component, paths will automatically be prefixed with the `pathPrefix` value assigned in your `gatsby-config.js` file. If you later migrate away from using a path prefix, your links will _still_ work seamlessly.
 
@@ -88,7 +88,7 @@ export default function Index() {
 
 ## Add the path prefix to paths using `withPrefix`
 
-For pathnames you construct manually, there’s a helper function, [`withPrefix`](/docs/reference/routing/gatsby-link/#add-the-path-prefix-to-paths-using-withprefix) that prepends your path prefix in production (but doesn’t during development where paths don’t need to be prefixed).
+For pathnames you construct manually, there’s a helper function, [`withPrefix`](/docs/reference/built-in-components/gatsby-link/#add-the-path-prefix-to-paths-using-withprefix) that prepends your path prefix in production (but doesn’t during development where paths don’t need to be prefixed).
 
 ### Additional considerations
 

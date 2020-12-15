@@ -7,7 +7,7 @@ contentsHeading: Shared helpers
 showTopLevelSignatures: true
 ---
 
-The first argument passed to each of [Gatsby’s Node APIs](/docs/reference/builds/gatsby-node/) is an object containing a set of helpers. Helpers shared by all Gatsby’s Node APIs are documented in [Shared helpers](#apis) section.
+The first argument passed to each of [Gatsby’s Node APIs](/docs/reference/config-files/gatsby-node/) is an object containing a set of helpers. Helpers shared by all Gatsby’s Node APIs are documented in [Shared helpers](#apis) section.
 
 ```javascript
 // in gatsby-node.js
@@ -28,4 +28,4 @@ exports.createPages = ({ actions, reporter }) => {
 
 ## Note
 
-Some APIs provide additional helpers. For example `createPages` provides `graphql` function. Check documentation of specific APIs in [Gatsby Node APIs](/docs/reference/builds/gatsby-node/) for details.
+Some APIs provide additional helpers. For example `createPages` provides `graphql` function. Check documentation of specific APIs in [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/) for details.

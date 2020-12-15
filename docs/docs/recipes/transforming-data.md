@@ -143,6 +143,6 @@ export default function Home() {
 
 ### Additional resources
 
-- [API docs, including grayscale and duotone query tips](/docs/reference/images-and-media/gatsby-image/#shared-query-parameters)
-- [Gatsby Image docs](/docs/reference/images-and-media/gatsby-image/)
+- [API docs, including grayscale and duotone query tips](/docs/reference/built-in-components/gatsby-image/#shared-query-parameters)
+- [Gatsby Image docs](/docs/reference/built-in-components/gatsby-image/)
 - [Image processing examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)

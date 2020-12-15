@@ -50,7 +50,7 @@ A storage of information locally that might be used again, so computations and l
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/local-development/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
 
 ### Client-side
 
@@ -190,7 +190,7 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 ### Inference
 
-As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/reference/querying-data/schema-customization/).
+As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/reference/graphql-data-layer/schema-customization/).
 
 ### [Infrastructure as Code](/docs/glossary/infrastructure-as-code/)
 
@@ -236,7 +236,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ### Node
 
-Gatsby uses [data nodes](/docs/reference/builds/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
+Gatsby uses [data nodes](/docs/reference/graphql-data-layer/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
 ### [Node.js](/docs/glossary/node/)
 

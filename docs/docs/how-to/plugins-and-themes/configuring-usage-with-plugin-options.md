@@ -8,7 +8,7 @@ _This guide refers to creating plugins, if you are looking for general informati
 
 ## Where to access plugin options
 
-A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/reference/builds/gatsby-node/), [Browser](/docs/reference/builds/gatsby-browser/), and [SSR APIs](/docs/reference/builds/gatsby-ssr/). Consider the following `gatsby-config.js` with a plugin called `gatsby-plugin-console-log`:
+A Gatsby plugin with options included makes those options available in the second argument of Gatsby [Node](/docs/reference/config-files/gatsby-node/), [Browser](/docs/reference/config-files/gatsby-browser/), and [SSR APIs](/docs/reference/config-files/gatsby-ssr/). Consider the following `gatsby-config.js` with a plugin called `gatsby-plugin-console-log`:
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -60,7 +60,7 @@ To help users [configure plugins](/docs/how-to/plugins-and-themes/configuring-us
 
 ### How to define an options schema
 
-You should use the [`pluginOptionsSchema`](/docs/reference/builds/gatsby-node/#pluginOptionsSchema) API to define your plugins' options schema. It gets passed an instance of [Joi](https://joi.dev), which you use to return a [`Joi.object`](https://joi.dev/api/?v=17.3.0#object) schema for the options you expect users to pass.
+You should use the [`pluginOptionsSchema`](/docs/reference/config-files/gatsby-node/#pluginOptionsSchema) API to define your plugins' options schema. It gets passed an instance of [Joi](https://joi.dev), which you use to return a [`Joi.object`](https://joi.dev/api/?v=17.3.0#object) schema for the options you expect users to pass.
 
 For example, imagine you were creating a plugin called `gatsby-plugin-console-log`. You decide you want users to configure your plugin using the following options:
 

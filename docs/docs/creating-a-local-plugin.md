@@ -30,7 +30,7 @@ module.exports = {
 }
 ```
 
-Then the plugin can begin to hook into Gatsby through [Node](/docs/reference/builds/gatsby-node/) and [SSR](/docs/reference/builds/gatsby-ssr/) APIs.
+Then the plugin can begin to hook into Gatsby through [Node](/docs/reference/config-files/gatsby-node/) and [SSR](/docs/reference/config-files/gatsby-ssr/) APIs.
 
 ## Developing a local plugin that is outside your project
 

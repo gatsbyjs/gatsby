@@ -33,8 +33,8 @@ Some notable files and their definitions:
 
 ### Additional resources
 
-- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/reference/local-development/gatsby-project-structure/)
-- For common commands, check out the [Gatsby CLI docs](/docs/reference/local-development/gatsby-cli)
+- For a tour of all the common folders and files, read the docs on [Gatsby's Project Structure](/docs/reference/gatsby-project-structure/)
+- For common commands, check out the [Gatsby CLI docs](/docs/reference/gatsby-cli)
 - Check out the [Gatsby Cheat Sheet](/docs/cheat-sheet/) for downloadable info at a glance
 
 ## Creating pages automatically
@@ -45,7 +45,7 @@ For example, components at `src/pages/index.js` and `src/pages/about.js` would a
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -79,7 +79,7 @@ Routing for links internal to your Gatsby site relies on the `<Link />` componen
 ### Prerequisites
 
 - A Gatsby site with two page components: `index.js` and `contact.js`
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli/) to run `gatsby develop`
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) to run `gatsby develop`
 
 ### Directions
 
@@ -103,12 +103,12 @@ export default function Home() {
 
 2. Run `gatsby develop` and navigate to the index page. You should have a link that takes you to the contact page when clicked!
 
-> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](/docs/reference/routing/gatsby-link/).
+> **Note**: Gatsby's `<Link />` component is a wrapper around [`@reach/router`'s Link component](https://reach.tech/router/api/Link). It outputs an HTML anchor when rendered in a browser, with built-in JavaScript functionality for performance. For more information, consult the [API reference for `<Link />`](/docs/reference/built-in-components/gatsby-link/).
 
 ### Additional resources
 
 - [Linking Between Pages guide](/docs/linking-between-pages)
-- [Gatsby Link API](/docs/reference/routing/gatsby-link)
+- [Gatsby Link API](/docs/reference/built-in-components/gatsby-link)
 
 ## Creating a layout component
 

@@ -401,7 +401,7 @@ In order to prevent this staleness, Gatsby requests an additional resource on ea
 
 However, if the page has previously loaded, it will not re-request `app-data.json`. In that case, the hash comparison will not occur and the previously loaded content will be used.
 
-> **Note:** Any state will be lost during the `window.location` transition. This can have an impact if there is a reliance on state management, e.g. tracking state in [wrapPageElement](/docs/reference/builds/gatsby-browser/#wrapPageElement) or via a library like Redux.
+> **Note:** Any state will be lost during the `window.location` transition. This can have an impact if there is a reliance on state management, e.g. tracking state in [wrapPageElement](/docs/reference/config-files/gatsby-browser/#wrapPageElement) or via a library like Redux.
 
 ## Additional resources
 

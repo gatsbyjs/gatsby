@@ -7,7 +7,7 @@ In this tutorial, you'll create your own source plugin that will gather data fro
 
 ## What is a source plugin?
 
-Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/builds/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
+Source plugins "source" data from remote or local locations into what Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/). This tutorial uses a demo API so that you can see how the data works on both the frontend and backend, but the same principles apply if you would like to source data from another API.
 
 For more background on source plugins, check out [Gatsby's source plugin documentation](/docs/how-to/plugins-and-themes/creating-a-source-plugin/).
 
@@ -94,7 +94,7 @@ Your plugin starts with a few files from the starter, which can be seen in the s
 └── README.md
 ```
 
-The biggest changes will be in **`gatsby-node.js`**. This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](/docs/reference/builds/gatsby-node/). These allow customization/extension of default Gatsby settings affecting pieces of the site build process. All the logic for sourcing data will live in this file.
+The biggest changes will be in **`gatsby-node.js`**. This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/). These allow customization/extension of default Gatsby settings affecting pieces of the site build process. All the logic for sourcing data will live in this file.
 
 #### Install your plugin in the example site
 
@@ -173,7 +173,7 @@ exports.sourceNodes = async ({
 
 This code creates Gatsby nodes that are queryable in a site. The following bullets break down what is happening in the code:
 
-- You implemented Gatsby's [`sourceNodes` API](/docs/reference/builds/gatsby-node/#sourceNodes), which Gatsby will run as part of its bootstrap process, and pulled out some Gatsby helpers (like `createContentDigest` and `createNodeId`) to facilitate creating nodes.
+- You implemented Gatsby's [`sourceNodes` API](/docs/reference/config-files/gatsby-node/#sourceNodes), which Gatsby will run as part of its bootstrap process, and pulled out some Gatsby helpers (like `createContentDigest` and `createNodeId`) to facilitate creating nodes.
 - You provided the required fields for the node like creating a node ID and a content digest (which Gatsby uses to track dirty nodes—or nodes that have changed). The content digest should include the whole content of the item (`post`, in this case).
 - Then you stored some data in an array and looped through it, calling `createNode` on each post in the array.
 
@@ -521,7 +521,7 @@ query {
 }
 ```
 
-_**Note**: you can use [schema customization APIs](/docs/reference/querying-data/schema-customization) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
+_**Note**: you can use [schema customization APIs](/docs/reference/graphql-data-layer/schema-customization) to create these kinds of connections between nodes as well as sturdier and more strictly typed ones._
 
 At this point you have created local image files from the remote locations and associated them with your posts, but you still need to transform the files into optimized versions.
 

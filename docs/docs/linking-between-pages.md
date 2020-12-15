@@ -60,4 +60,4 @@ It is also recommended to include a [visual icon](https://thenounproject.com/ter
 ## Other resources
 
 - For the complete example of how to link between pages, see [Part One](/docs/tutorial/part-one/#linking-between-pages/) in the Tutorial
-- Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/reference/routing/gatsby-link/).
+- Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/reference/built-in-components/gatsby-link/).

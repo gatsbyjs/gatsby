@@ -20,7 +20,7 @@ The `hydrate()` method is called internally by Gatsby from `ReactDOM`, which acc
 
 > Same as [render()](https://reactjs.org/docs/react-dom.html#render), but is used to hydrate a container whose HTML contents were rendered by [ReactDOMServer](https://reactjs.org/docs/react-dom-server.html).
 
-_**Note**: if you need to, the hydrate method can be replaced with a custom function by using the [`replaceHydrationFunction` Browser API](/docs/reference/builds/gatsby-browser/#replaceHydrateFunction)._
+_**Note**: if you need to, the hydrate method can be replaced with a custom function by using the [`replaceHydrationFunction` Browser API](/docs/reference/config-files/gatsby-browser/#replaceHydrateFunction)._
 
 This means that the browser can "pick up" where the server left off with the contents created by Gatsby in the `/public` folder and render the site in the browser like any other React app would. Since the data and structure of the pages is already written out, it's not necessary for Gatsby to go to another server asking for HTML or other data.
 

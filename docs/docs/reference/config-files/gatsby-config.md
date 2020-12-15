@@ -179,7 +179,7 @@ See more about [Browser Support](/docs/how-to/custom-configuration/browser-suppo
 
 Gatsby includes an advanced feature that lets you create "mappings" between node types.
 
-> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/reference/querying-data/schema-customization/#foreign-key-fields).
+> Note: Gatsby v2.2 introduced a new way to create foreign-key relations between node types with [the `@link` GraphQL field extension](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields).
 
 For instance, imagine you have a multi-author markdown blog where you want to "link" from each blog post to the author information stored in a YAML file named `author.yaml`:
 

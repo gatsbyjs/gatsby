@@ -20,7 +20,7 @@ Once you've run the command you'll see a series of options listed in the command
 
 ## What happens in a generic plugin?
 
-In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/reference/builds/gatsby-node/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Node using the [createNode](/docs/reference/builds/actions/#createNode) action.
+In a generic plugin the `gatsby-node.js` file enables the use of [gatsby node APIs](/docs/reference/config-files/gatsby-node/). These APIs, such as `createPage`, `createResolvers`, and `sourceNodes`, manipulate the Node(s) in a Gatsby site. A [Node](/docs/node-creation/) is the smallest unit of data in Gatsby. You can create a Node using the [createNode](/docs/reference/config-files/actions/#createNode) action.
 
 In `gatsby-node.js` you can carry out functions with these APIs, such as:
 
@@ -33,7 +33,7 @@ In `gatsby-node.js` you can carry out functions with these APIs, such as:
 
 ### An example of a generic plugin
 
-[sourceNodes](/docs/reference/builds/gatsby-node/#sourceNodes) is a lifecycle API that a plugin can use to create Nodes. An example of how to implement a function using `sourceNodes` is shown below:
+[sourceNodes](/docs/reference/config-files/gatsby-node/#sourceNodes) is a lifecycle API that a plugin can use to create Nodes. An example of how to implement a function using `sourceNodes` is shown below:
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {

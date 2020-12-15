@@ -113,7 +113,7 @@ success onPreInit - 0.016s
 ...
 ```
 
-4. Now you can implement [browser](/docs/reference/builds/gatsby-browser/), [server-side rendering](/docs/reference/builds/gatsby-ssr/), or [node APIs](/docs/reference/builds/gatsby-node/) and your site will run them each time it loads your plugin!
+4. Now you can implement [browser](/docs/reference/config-files/gatsby-browser/), [server-side rendering](/docs/reference/config-files/gatsby-ssr/), or [node APIs](/docs/reference/config-files/gatsby-node/) and your site will run them each time it loads your plugin!
 
 ### Additional resources
 

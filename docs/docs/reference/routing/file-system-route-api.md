@@ -4,7 +4,7 @@ title: File System Route API
 
 Use the File System Route API when you want to programmatically create pages from your GraphQL data, e.g. to create individual blog post pages for your blog. With this API you can control the file path and queried data by adding some extra notation to the names of your files without touching or creating `gatsby-node.js` whatsoever.
 
-This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/reference/builds/gatsby-node#createPages) API.
+This page documents the APIs and conventions for using the file system as the primary way of creating pages. You should be able to accomplish most common tasks with this file-based API. If you want more control over the page creation you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API.
 
 In short, these APIs enable you to programmatically create pages from Gatsby's [GraphQL data layer](/docs/conceptual/graphql-concepts/) and to create [client-only routes](/docs/how-to/routing/client-only-routes-and-user-authentication).
 
@@ -135,7 +135,7 @@ export const query = graphql`
 `
 ```
 
-If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/reference/builds/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
+If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
 ### Routing and linking
 

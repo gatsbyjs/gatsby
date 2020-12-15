@@ -60,18 +60,18 @@ query MyPokemonQuery {
 - Walk through an example using the `gatsby-source-filesystem` plugin in [tutorial part five](/docs/tutorial/part-five/#source-plugins)
 - Search available source plugins in the [Gatsby library](/plugins/?=source)
 - Understand source plugins by building one in the [source plugin tutorial](/docs/how-to/plugins-and-themes/creating-a-source-plugin/)
-- The createNode function [documentation](/docs/reference/builds/actions/#createNode)
+- The createNode function [documentation](/docs/reference/config-files/actions/#createNode)
 
 ## Sourcing Markdown data for blog posts and pages with GraphQL
 
-You can source Markdown data and use Gatsby's [`createPages` API](/docs/reference/builds/actions/#createPage) to create pages dynamically.
+You can source Markdown data and use Gatsby's [`createPages` API](/docs/reference/config-files/actions/#createPage) to create pages dynamically.
 
 This recipe shows how to create pages from Markdown files on your local filesystem using Gatsby's GraphQL data layer.
 
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 - The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
 - The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
 - A `gatsby-node.js` file
@@ -475,7 +475,7 @@ In this recipe, you'll create dynamic pages from data fetched from the [PokéAPI
 ### Prerequisites
 
 - A Gatsby Site with a `gatsby-node.js` file
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 - The [axios](https://www.npmjs.com/package/axios) package installed through npm
 
 ### Directions

@@ -591,11 +591,11 @@ import { Provider } from 'react-redux'
 
 Like with `replaceRouterComponent`, we no longer support custom histories. That is why we've also removed the `replaceHistory` API. The `replaceHistory()` method was used for tracking page views by registering listeners on route changes using `history.listen()`.
 
-Now, to track page views, you can use the [`onRouteUpdate`](/docs/reference/builds/gatsby-browser/#onRouteUpdate) API to track pages changes.
+Now, to track page views, you can use the [`onRouteUpdate`](/docs/reference/config-files/gatsby-browser/#onRouteUpdate) API to track pages changes.
 
 ### Browser API `wrapRootComponent` was replaced with `wrapRootElement`
 
-Use new [`wrapRootElement`](/docs/reference/builds/gatsby-browser/#wrapRootElement) API:
+Use new [`wrapRootElement`](/docs/reference/config-files/gatsby-browser/#wrapRootElement) API:
 We now pass `component` Element instead of `Root` Component and expect that `wrapRootElement` will return Element and not Component. This change was needed to keep all wrapping APIs uniform.
 
 ```diff
@@ -962,7 +962,7 @@ In most cases you won't have to do anything to be v2 compatible, but there are a
 
 ### Change `modifyBabelrc` to `onCreateBabelConfig`
 
-We renamed `modifyBabelrc` to [`onCreateBabelConfig`](/docs/reference/builds/gatsby-node/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
+We renamed `modifyBabelrc` to [`onCreateBabelConfig`](/docs/reference/config-files/gatsby-node/#modifyBabelrc) to bring it in line with the rest of Gatsby's API names.
 
 Use `onCreateBabelConfig`:
 
@@ -979,13 +979,13 @@ Use `onCreateBabelConfig`:
 }
 ```
 
-Note usage of the new [`setBabelPlugin` action](/docs/reference/builds/actions/#setBabelPlugins).
+Note usage of the new [`setBabelPlugin` action](/docs/reference/config-files/actions/#setBabelPlugins).
 
 See [Gatsby's Babel docs for more details](/docs/how-to/custom-configuration/babel) about configuring Babel.
 
 ### Change `modifyWebpackConfig` to `onCreateWebpackConfig`
 
-We renamed `modifyWebpackConfig` to [`onCreateWebpackConfig`](/docs/reference/builds/gatsby-node/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
+We renamed `modifyWebpackConfig` to [`onCreateWebpackConfig`](/docs/reference/config-files/gatsby-node/#onCreateWebpackConfig) to bring it in line with the rest of Gatsby's API names.
 
 Use `onCreateWebpackConfig`:
 
@@ -1005,7 +1005,7 @@ Use `onCreateWebpackConfig`:
 }
 ```
 
-Note usage of the new [`setWebpackConfig` action](/docs/reference/builds/actions/#setWebpackConfig).
+Note usage of the new [`setWebpackConfig` action](/docs/reference/config-files/actions/#setWebpackConfig).
 
 See [Gatsby's webpack docs for more details](/docs/how-to/custom-configuration/add-custom-webpack-config) about configuring webpack.
 
@@ -1019,7 +1019,7 @@ The signature for using createRemoteFileNode changed in v2, it now expects a new
 
 The node `internal` object isn't meant for adding node data. While Gatsby v1 allows this behavior we now validate against it for v2. Node data should be added as fields on the top-level node object.
 
-[Check the Node interface docs](/docs/reference/builds/node-interface/) for allowed fields.
+[Check the Node interface docs](/docs/reference/graphql-data-layer/node-interface/) for allowed fields.
 
 ### Import `graphql` types from `gatsby/graphql`
 

@@ -101,11 +101,11 @@ Whereas a default Gatsby project will look something like this (files that are d
   └── yarn.lock
 ```
 
-The structure of a [Gatsby project](/docs/reference/local-development/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/reference/builds/gatsby-browser/) and for [server-side rendering](/docs/reference/builds/gatsby-ssr/), though much of the project structure is similar enough to feel comfortable quickly.
+The structure of a [Gatsby project](/docs/reference/gatsby-project-structure/) adds some additional configuration files to hook into specific Gatsby APIs for the [browser](/docs/reference/config-files/gatsby-browser/) and for [server-side rendering](/docs/reference/config-files/gatsby-ssr/), though much of the project structure is similar enough to feel comfortable quickly.
 
 An important difference to note is the `/pages` folder in the Gatsby project structure where components will automatically be turned into static pages by Gatsby. This is discussed more in the [routing](#routing) section below.
 
-The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/reference/builds/gatsby-browser/#wrapRootElement) Gatsby API.
+The `src/pages/index.js` file in Gatsby is a little different from the `src/index.js` file in Create React App where the root React element mounts, because it is a sibling to other pages in the app -- rather than a parent like Create React App. This means in order to share state or wrap multiple pages you should use the [wrapRootElement](/docs/reference/config-files/gatsby-browser/#wrapRootElement) Gatsby API.
 
 ### Server-side rendering and browser APIs
 
@@ -237,7 +237,7 @@ const App = () => (
 export default App
 ```
 
-Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/reference/routing/gatsby-link/).
+Gatsby provides a `<Link />` component and a `navigate` function to help you direct users through pages on your site. You can read about how to use each in the [`gatsby-link` doc](/docs/reference/built-in-components/gatsby-link/).
 
 ### Handling state
 

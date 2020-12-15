@@ -26,7 +26,7 @@ These tools follow a process in order to verify a user on the client against an 
 
 1. First, a request is made from a Gatsby site (the client) to an authentication service to perform an action like register a new user or login.
 
-2. If the credentials (like a username and password) provided from the client match a user in the authentication service, it returns a token (like a JSON Web Token, abbreviated as JWT) so the user has a key they can use to prove they are who they say they are. The user data returned can be stored in the Gatsby app by passing it to components using a Provider component with the React Context API and [`wrapRootElement` API](/docs/reference/builds/gatsby-browser/#wrapRootElement) from Gatsby.
+2. If the credentials (like a username and password) provided from the client match a user in the authentication service, it returns a token (like a JSON Web Token, abbreviated as JWT) so the user has a key they can use to prove they are who they say they are. The user data returned can be stored in the Gatsby app by passing it to components using a Provider component with the React Context API and [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) from Gatsby.
 
 3. With the key, the client can make a request to an external data source like an API (the server) where protected data is stored. The key is unique to a specific user and allows the client to access their specific data.
 

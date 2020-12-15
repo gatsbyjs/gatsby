@@ -394,7 +394,7 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 - A chosen font package from [Fontsource](https://github.com/fontsource/fontsource)
 
 ### Directions
@@ -437,7 +437,7 @@ Using [Font Awesome](https://fontawesome.com/) gives you access to thousands of 
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 - A [Gatsby site](/docs/quick-start)
 
 ### Directions

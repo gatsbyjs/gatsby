@@ -195,7 +195,7 @@ To limit data, you'll need a Gatsby site with some nodes in the GraphQL data lay
 
 ### Additional resources
 
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/reference/builds/node-interface/)
+- Learn about [nodes in Gatsby's GraphQL data API](/docs/reference/graphql-data-layer/node-interface/)
 - [Gatsby GraphQL reference for limiting](/docs/graphql-reference/#limit)
 - Live example:
 
@@ -257,7 +257,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to sort in
 ### Additional resources
 
 - [Gatsby GraphQL reference for sorting](/docs/graphql-reference/#sort)
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/reference/builds/node-interface/)
+- Learn about [nodes in Gatsby's GraphQL data API](/docs/reference/graphql-data-layer/node-interface/)
 - Live example:
 
 <iframe
@@ -322,7 +322,7 @@ For this recipe, you'll need a Gatsby site with a collection of nodes to filter 
 
 - [Gatsby GraphQL reference for filtering](/docs/graphql-reference/#filter)
 - [Complete list of possible operators](/docs/graphql-reference/#complete-list-of-possible-operators)
-- Learn about [nodes in Gatsby's GraphQL data API](/docs/reference/builds/node-interface/)
+- Learn about [nodes in Gatsby's GraphQL data API](/docs/reference/graphql-data-layer/node-interface/)
 - Live example:
 
 <iframe
@@ -429,7 +429,7 @@ Fragments can be nested inside other fragments, and multiple fragments can be us
 
 - [Example repo using fragments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-fragments)
 - [Gatsby GraphQL reference for fragments](/docs/graphql-reference/#fragments)
-- [Gatsby image fragments](/docs/reference/images-and-media/gatsby-image/#image-query-fragments)
+- [Gatsby image fragments](/docs/reference/built-in-components/gatsby-image/#image-query-fragments)
 - [Example repo with co-located data](https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram)
 
 ## Querying data client-side with `fetch`

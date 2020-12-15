@@ -42,7 +42,7 @@ However - if you were to deploy your application as-is, those assets would not b
 
 ### Using `onPostBuild`
 
-You expose an [`onPostBuild`](/docs/reference/builds/gatsby-node/#onPostBuild) API hook. This can be used to deploy your content to the CDN, like so:
+You expose an [`onPostBuild`](/docs/reference/config-files/gatsby-node/#onPostBuild) API hook. This can be used to deploy your content to the CDN, like so:
 
 ```js:title=gatsby-node.js
 const assetsDirectory = `public`

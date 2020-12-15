@@ -13,7 +13,7 @@ Found a theme you'd like to use on your project? Awesome! You can configure it f
 
 ### Prerequisites
 
-- Make sure you have the [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -68,7 +68,7 @@ Creating a site based on a starter that configures a theme follows the same proc
 
 ### Prerequisites
 
-- Make sure you have the [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -98,7 +98,7 @@ gatsby develop
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/reference/local-development/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 - [Yarn](https://yarnpkg.com/lang/en/docs/install/#mac-stable) installed
 
 ### Directions

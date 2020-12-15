@@ -20,7 +20,7 @@ Here's a [demo site that uses the gatsby-image plugin](https://using-gatsby-imag
 - holds an image’s position so your page doesn’t jump around as images load
 - makes it possible to add a placeholder—either a gray background or a blurry version of the image.
 
-_For more complete API information, check out the [Gatsby Image API](/docs/reference/images-and-media/gatsby-image/) docs._
+_For more complete API information, check out the [Gatsby Image API](/docs/reference/built-in-components/gatsby-image/) docs._
 
 ## Problem
 
@@ -168,7 +168,7 @@ So this is all very nice and it’s far better to be able to use this from npm v
 
 ### Additional resources
 
-- [Gatsby Image API docs](/docs/reference/images-and-media/gatsby-image/)
+- [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/)
 - [gatsby-image plugin README file](/packages/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)

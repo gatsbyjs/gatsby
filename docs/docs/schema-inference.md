@@ -4,7 +4,7 @@ title: Schema Inference
 
 > This used to be called GraphQL Node Types Creation and should contain info about schema inference and inference > metadata
 >
-> This documentation isn't up to date with the latest [schema customization changes](/docs/reference/querying-data/schema-customization).
+> This documentation isn't up to date with the latest [schema customization changes](/docs/reference/graphql-data-layer/schema-customization).
 >
 > Outdated areas are:
 >
@@ -34,7 +34,7 @@ When running a GraphQL query, there are a variety of fields that you will want t
 
 When GraphQL runs, it will query all `file` nodes by their relativePath and return the first node that satisfies that query. Then, it will filter down the fields to return by the inner expression. I.e `{ childMarkdownRemark ... }`. The building of the query arguments is covered by the [Inferring Input Filters](/docs/schema-input-gql) doc. This section instead explains how the inner filter schema is generated (it must be generated before input filters are inferred).
 
-During the [sourceNodes](/docs/reference/builds/gatsby-node/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/packages/gatsby-source-filesystem) ran and created a bunch of `File` nodes. Then, different transformers react via [onCreateNode](/docs/reference/builds/gatsby-node/#onCreateNode), resulting in children of different `node.internal.type`s being created.
+During the [sourceNodes](/docs/reference/config-files/gatsby-node/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/packages/gatsby-source-filesystem) ran and created a bunch of `File` nodes. Then, different transformers react via [onCreateNode](/docs/reference/config-files/gatsby-node/#onCreateNode), resulting in children of different `node.internal.type`s being created.
 
 There are 3 categories of node fields that we can query.
 
@@ -86,13 +86,13 @@ Fields on the node that were created directly by the source and transform plugin
 
 The creation of these fields is handled by the [`inferObjectStructureFromNodes`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js#L317) function in [infer-graphql-type.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/schema/infer-graphql-type.js). Given an object, a field could be in one of 3 sub-categories:
 
-1. It involves a mapping in [gatsby-config.js](/docs/reference/plugins-and-themes/gatsby-config/#mapping-node-types)
+1. It involves a mapping in [gatsby-config.js](/docs/reference/config-files/gatsby-config/#mapping-node-types)
 2. It's value is a foreign key reference to some other node (ends in `___NODE`)
 3. It's a plain object or value (e.g. String, number, etc)
 
 #### Mapping field
 
-Mappings are explained in the [gatsby-config.js docs](/docs/reference/plugins-and-themes/gatsby-config/#mapping-node-types). If the object field we're generating a GraphQL type for is configured in the gatsby-config mapping, then we handle it specially.
+Mappings are explained in the [gatsby-config.js docs](/docs/reference/config-files/gatsby-config/#mapping-node-types). If the object field we're generating a GraphQL type for is configured in the gatsby-config mapping, then we handle it specially.
 
 Imagine our top level Type we're currently generating fields for is `MarkdownRemark.frontmatter`. And the field we are creating a GraphQL field for is called `author`. And, that we have a mapping setup of:
 
@@ -174,7 +174,7 @@ When a node is created as a child of some node (parent), that fact is stored in 
 
 ### Plugin fields
 
-These are fields created by plugins that implement the [setFieldsOnGraphQLNodeType](/docs/reference/builds/gatsby-node/#setFieldsOnGraphQLNodeType) API. These plugins return full GraphQL Field declarations, complete with type and resolve functions.
+These are fields created by plugins that implement the [setFieldsOnGraphQLNodeType](/docs/reference/config-files/gatsby-node/#setFieldsOnGraphQLNodeType) API. These plugins return full GraphQL Field declarations, complete with type and resolve functions.
 
 ### File types
 

@@ -147,7 +147,7 @@ This means that the `graphql` tag isn’t executed the way that JavaScript code 
 
 ## How to add query variables to a page query
 
-Variables can be added to _page queries_ (but not static queries) through the context object that is an argument of the [`createPage` API](/docs/reference/builds/actions/#createPage).
+Variables can be added to _page queries_ (but not static queries) through the context object that is an argument of the [`createPage` API](/docs/reference/config-files/actions/#createPage).
 
 Consider the following query:
 

@@ -17,10 +17,10 @@ create pages from Markdown files (following after the example introduced in
 ## Creating pages
 
 The Gatsby Node API provides the
-[`createPages`](/docs/reference/builds/gatsby-node/#createPages)
+[`createPages`](/docs/reference/config-files/gatsby-node/#createPages)
 extension point which you'll use to add pages. This function will give you
 access to the
-[`createPage`](/docs/reference/builds/actions/#createPage) action
+[`createPage`](/docs/reference/config-files/actions/#createPage) action
 which is at the core of programmatically creating a page.
 
 ```js:title=gatsby-node.js

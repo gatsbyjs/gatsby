@@ -53,7 +53,7 @@ After installing `gatsby-plugin-mdx`, MDX files located in the `src/pages` direc
 
 Pages are rendered at a URL that is constructed from the filesystem path inside `src/pages`. For example, an MDX file at `src/pages/awesome.mdx` will result in a page being rendered at `yoursite.com/awesome`.
 
-**Create a new `.mdx` file** in the `src/pages` directory. You can use [Markdown syntax](/docs/reference/routing/markdown-syntax) to add different HTML elements.
+**Create a new `.mdx` file** in the `src/pages` directory. You can use [Markdown syntax](/docs/reference/markdown-syntax) to add different HTML elements.
 
 ### Using frontmatter in MDX
 

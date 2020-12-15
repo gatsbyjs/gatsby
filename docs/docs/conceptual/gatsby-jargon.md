@@ -34,7 +34,7 @@ Gatsby sites are full React web applications, meaning they have access to client
 
 Gatsby provides a few different ways to create HTML pages that hook into its routing system. Here are some examples of [how to create pages](/docs/creating-and-modifying-pages) in Gatsby:
 
-- In your site’s gatsby-node.js file by implementing the API [createPages](/docs/reference/builds/gatsby-node/#createPages)
+- In your site’s gatsby-node.js file by implementing the API [createPages](/docs/reference/config-files/gatsby-node/#createPages)
 - Gatsby core automatically turns React components in src/pages into pages
 - Plugins can also implement `createPages` for you, which will create additional pages
 
@@ -48,7 +48,7 @@ Here is where you can find more information on [Routing in Gatsby](/docs/referen
 
 Redux is a state container and is used inside Gatsby to keep its internal state in one place. Redux provides a predictable flow on how and when state updates are done. Gatsby can easily hook into these state transitions to update multiple actions to keep everything consistent.
 
-When you implement a Gatsby [Node API](/docs/reference/builds/gatsby-node/), you are passed a collection of [actions](/docs/reference/builds/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
+When you implement a Gatsby [Node API](/docs/reference/config-files/gatsby-node/), you are passed a collection of [actions](/docs/reference/config-files/actions/). When using the supplied actions, you are manipulating state that is created, and relied upon, by Gatsby itself such as created pages and webpack config.
 
 Once the build is complete, the work of Redux is done and it is not part of the bundle delivered to the browser unless required independently by the application itself.
 

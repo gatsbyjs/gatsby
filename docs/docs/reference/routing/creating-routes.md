@@ -14,7 +14,7 @@ Routes can be created in three ways:
 
 - By creating React components in `src/pages`. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
 - By using the [File System Route API](/docs/reference/routing/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
-- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/reference/builds/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
+- In your site's `gatsby-node.js` by implementing the API [`createPages`](/docs/reference/config-files/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
 ### Routes defined in `src/pages`
 
@@ -45,7 +45,7 @@ See the [File System Route API](/docs/reference/routing/file-system-route-api/) 
 
 ### Using `gatsby-node.js`
 
-The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/reference/builds/gatsby-node/), including the [`createPages`](/docs/reference/builds/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/builds/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
+The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), including the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/config-files/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {
@@ -87,7 +87,7 @@ Alternatively, if you want to create pages that will display different subcompon
 
 ## Linking between routes
 
-In order to link between pages, you can use [`gatsby-link`](/docs/reference/routing/gatsby-link/). Using `gatsby-link` gives you built in [performance benefits](#performance-and-prefetching).
+In order to link between pages, you can use [`gatsby-link`](/docs/reference/built-in-components/gatsby-link/). Using `gatsby-link` gives you built in [performance benefits](#performance-and-prefetching).
 
 Alternatively, you can navigate between pages using standard `<a>` tags, but you won't get the benefit of prefetching in this case.
 

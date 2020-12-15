@@ -6,7 +6,7 @@ There are two types of plugins that work within Gatsby's data system, "source"
 and "transformer" plugins.
 
 - **Source** plugins "source" data from remote or local locations into what
-  Gatsby calls [nodes](/docs/reference/builds/node-interface/).
+  Gatsby calls [nodes](/docs/reference/graphql-data-layer/node-interface/).
 - **Transformer** plugins "transform" data provided by source plugins into new
   nodes and/or node fields.
 
@@ -170,7 +170,7 @@ function transformObject(obj, id, type) {
 }
 ```
 
-Above, you create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/reference/builds/actions/#createNode).
+Above, you create a `yamlNode` object with the shape expected by the [`createNode` action](/docs/reference/config-files/actions/#createNode).
 
 #### Creating the transformer relationship
 
@@ -193,7 +193,7 @@ function transformObject(obj, id, type) {
 }
 ```
 
-Another example of a transformation relationship is the `gatsby-source-filesystem` plugin used with the `gatsby-transformer-remark` plugin. This combination transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/reference/builds/actions/#createParentChildLink). Transformation relationships like this are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and would not exist if the parent `File` node hadn't been created.
+Another example of a transformation relationship is the `gatsby-source-filesystem` plugin used with the `gatsby-transformer-remark` plugin. This combination transforms a parent `File` node's markdown string into a `MarkdownRemark` node. The remark transformer plugin adds its newly created child node as a child of the parent node using the action [`createParentChildLink`](/docs/reference/config-files/actions/#createParentChildLink). Transformation relationships like this are used when a new node is _completely_ derived from a single parent node. E.g. the markdown node is derived from the parent `File` node and would not exist if the parent `File` node hadn't been created.
 
 Because all children nodes are derived from their parent, when a parent node is deleted or changed, Gatsby deletes all of the child nodes (and their child nodes, and so on). Gatsby does so with the expectation that they'll be recreated again by transformer plugins. This is done to ensure there are no nodes left over that were derived from older versions of data but should no longer exist.
 
