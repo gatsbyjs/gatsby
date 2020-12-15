@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.0...gatsby-plugin-image@0.5.0-next.1) (2020-12-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better propType handling for StaticImage ([#28606](https://github.com/gatsbyjs/gatsby/issues/28606)) ([52027db](https://github.com/gatsbyjs/gatsby/commit/52027db80559a728d4a85c729d282ec3abccf5b2))
+- **gatsby-plugin-image:** Correctly handle formats in StaticImage ([#28618](https://github.com/gatsbyjs/gatsby/issues/28618)) ([912f30c](https://github.com/gatsbyjs/gatsby/commit/912f30c099f98fa382fe653a3a2c07253bd6b452))
+
 # [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.4.0-next.3...gatsby-plugin-image@0.5.0-next.0) (2020-12-10)
 
 ### Features

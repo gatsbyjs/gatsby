@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.0...gatsby-plugin-sharp@2.12.0-next.1) (2020-12-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correctly handle formats in StaticImage ([#28618](https://github.com/gatsbyjs/gatsby/issues/28618)) ([912f30c](https://github.com/gatsbyjs/gatsby/commit/912f30c099f98fa382fe653a3a2c07253bd6b452))
+- **gatsby-plugin-sharp:** catch errors when writing base64 images ([#28614](https://github.com/gatsbyjs/gatsby/issues/28614)) ([02860da](https://github.com/gatsbyjs/gatsby/commit/02860da8f8871c21c647fae5c0e81380f6809166))
+- **gatsby-plugin-sharp:** Include default transform options for webp ([#28620](https://github.com/gatsbyjs/gatsby/issues/28620)) ([1c750b6](https://github.com/gatsbyjs/gatsby/commit/1c750b618e069c684b5cba49324449389934f050))
+
 # [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.4...gatsby-plugin-sharp@2.12.0-next.0) (2020-12-10)
 
 ### Bug Fixes
