@@ -6,7 +6,7 @@ import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
-import { reportError } from './report-error';
+import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
@@ -73,11 +73,11 @@ export async function getImageMetadata(
 
     metadata = { width, height, density, format, dominantColor }
     metadataCache.set(file.internal.contentDigest, metadata)
-    return metadata
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err)
-    return;
   }
+
+  return metadata
 }
 
 export interface IImageDataProps {
