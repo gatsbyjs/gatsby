@@ -443,7 +443,7 @@ exports.createNodesForContentType = ({
         Object.keys(entryItemFields).forEach(entryItemFieldKey => {
           // Ignore fields with "___node" as they're already handled
           // and won't be a text field.
-          if (entryItemFieldKey.split(`___`).length > 1) {
+          if (entryItemFieldKey.includes(`___`)) {
             return
           }
 
