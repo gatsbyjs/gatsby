@@ -36,6 +36,9 @@ export function normalizeProps(
 
   if (out.placeholder) {
     out.placeholder = camelCase(out.placeholder as string)
+    if (out.placeholder === `tracedSvg`) {
+      out.placeholder = `tracedSVG`
+    }
   }
 
   if (Array.isArray(out.formats)) {

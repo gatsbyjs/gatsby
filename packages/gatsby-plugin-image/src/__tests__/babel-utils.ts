@@ -13,4 +13,30 @@ describe(`static-image babel parser`, () => {
       placeholder: `dominantColor`,
     })
   })
+
+  it(`handles tracedSvg`, () => {
+    expect(
+      normalizeProps({
+        placeholder: `TRACED_SVG`,
+      })
+    ).toEqual({
+      placeholder: `tracedSVG`,
+    })
+
+    expect(
+      normalizeProps({
+        placeholder: `tracedSVG`,
+      })
+    ).toEqual({
+      placeholder: `tracedSVG`,
+    })
+
+    expect(
+      normalizeProps({
+        placeholder: `tracedSvg`,
+      })
+    ).toEqual({
+      placeholder: `tracedSVG`,
+    })
+  })
 })
