@@ -33,12 +33,22 @@ Object {
       "testFitness": [Function],
       "umbrellaIssue": "test",
     },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_ALWAYS_OPT_IN",
+      "experimental": false,
+      "name": "ALWAYS_OPT_IN",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
 
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
-and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
 We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
 
@@ -49,6 +59,7 @@ flags: {
 The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+- ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
 
 There are 5 other flags available that you might be interested in:
 - FAST_DEV · Enable all experiments aimed at improving develop server start time
@@ -84,11 +95,21 @@ Object {
       "testFitness": [Function],
       "umbrellaIssue": "test",
     },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_ALWAYS_OPT_IN",
+      "experimental": false,
+      "name": "ALWAYS_OPT_IN",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
   ],
   "message": "
 
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
-and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
 We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
 
@@ -99,6 +120,7 @@ flags: {
 The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+- ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
 ",
   "unknownFlagMessage": "",
 }
@@ -137,12 +159,22 @@ Object {
       "testFitness": [Function],
       "umbrellaIssue": "test",
     },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_ALWAYS_OPT_IN",
+      "experimental": false,
+      "name": "ALWAYS_OPT_IN",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
   ],
   "message": "The following flags are active:
 - ALL_COMMANDS · (Umbrella Issue (test)) · test
 
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
-and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
 We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
 
@@ -153,6 +185,7 @@ flags: {
 The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+- ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
 
 There are 5 other flags available that you might be interested in:
 - FAST_DEV · Enable all experiments aimed at improving develop server start time
@@ -214,6 +247,16 @@ Object {
       "umbrellaIssue": "test",
     },
     Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_ALWAYS_OPT_IN",
+      "experimental": false,
+      "name": "ALWAYS_OPT_IN",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
       "command": "develop",
       "description": "SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.",
       "env": "GATSBY_EXPERIMENTAL_DEV_SSR",
@@ -242,7 +285,7 @@ Object {
 - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
 
 We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
-and your site was automatically choosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
 We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
 
@@ -253,6 +296,7 @@ flags: {
 The following flags were automatically enabled on your site:
 - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
 - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+- ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
 
 There are 2 other flags available that you might be interested in:
 - ONLY_BUILDS · (Umbrella Issue (test)) · test
