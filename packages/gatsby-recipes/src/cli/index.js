@@ -92,7 +92,7 @@ const RecipesList = ({ setRecipe }) => {
   const items = recipesList
 
   return (
-    <SelectInput.default
+    <SelectInput
       items={items}
       onSelect={setRecipe}
       indicatorComponent={item => (
@@ -341,7 +341,7 @@ export default async ({
             key={`${p.resourceName}-${i}`}
           >
             <Text>
-              {p.isDone ? `✔ ` : <Spinner.default />}
+              {p.isDone ? `✔ ` : <Spinner />}
               {` `}
               <Text italic>{p.resourceName}:</Text>
               {` `}
@@ -534,7 +534,7 @@ export default async ({
       if (!isReady) {
         return (
           <Text>
-            <Spinner.default /> Loading recipe
+            <Spinner /> Loading recipe
           </Text>
         )
       }
