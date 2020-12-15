@@ -110,6 +110,8 @@ export async function generateImageData({
     quality,
   } = args
 
+  args.formats = args.formats || [`auto`, `webp`]
+
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,

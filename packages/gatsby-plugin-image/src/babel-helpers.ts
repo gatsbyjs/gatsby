@@ -7,6 +7,7 @@ import camelCase from "camelcase"
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
   `layout`,
+  `formats`,
   `maxWidth`,
   `maxHeight`,
   `quality`,
