@@ -26,6 +26,13 @@ const getLabel = (
 const useTerminalResize = (): Array<number> => {
   const { stdout } = useStdout()
 
+  // stdout type is nullable, so we need to handle case where it is undefined for type checking.
+  // In practice this shouldn't happen ever, because AFAIK type is only nullable
+  // because Ink's StdoutContext is initiated with `undefined`:
+  // https://github.com/vadimdemedes/ink/blob/83894963727cf40ccac2256ec346e5ff3381c918/src/components/StdoutContext.ts#L20-L23
+  // but ContextProvider requires stdout to be set:
+  // https://github.com/vadimdemedes/ink/blob/83894963727cf40ccac2256ec346e5ff3381c918/src/components/App.tsx#L18
+  // https://github.com/vadimdemedes/ink/blob/83894963727cf40ccac2256ec346e5ff3381c918/src/components/App.tsx#L79-L84
   if (!stdout) {
     return [0]
   }
