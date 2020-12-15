@@ -12,7 +12,7 @@ Welcome to `gatsby@2.29.0` release (December 2020 #2)
 Key highlights of this release:
 
 - [Query on Demand](#query-on-demand) - improves `gatsby develop` bootup time
-- [Lazy Images](#lazy-images) - only do image processing when a page gets reqested
+- [Lazy Images](#lazy-images) - do not wait for all images to be processed to start the development
 - [Improvements to our CLI](#improvements-to-our-cli) - improved `create-gatsby` & new `plugin` command
 - [Experimental: Parallel data sourcing](#experimental-parallel-data-sourcing) - run source plugins in parallel to speedup sourcing on sites with multiple source plugins
 
