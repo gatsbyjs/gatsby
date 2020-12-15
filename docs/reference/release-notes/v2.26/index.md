@@ -182,4 +182,21 @@ And that means having documentation that helps y’all find the information you 
 
 ## Contributors
 
-A big **Thank You** to [everyone who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.26.0-next.0...gatsby@2.26.0) to this release 💜
+
+- [muescha](https://github.com/muescha)
+  - fix(docs): Gatsby README - fix brand name GatsbyJS -> Gatsby [PR #27815](https://github.com/gatsbyjs/gatsby/pull/27815)
+  - fix(docs): Update gatsby-plugin-guess-js README [PR #27814](https://github.com/gatsbyjs/gatsby/pull/27814)
+  - fix(recipe): add brackets to directory names [PR #27812](https://github.com/gatsbyjs/gatsby/pull/27812)
+- [MichaelDeBoey](https://github.com/MichaelDeBoey): chore(gatsby-plugin-cxs): Add pluginOptionsSchema validation [PR #27600](https://github.com/gatsbyjs/gatsby/pull/27600)
+- [davad](https://github.com/davad): fix(docs): Update documentation for createPages [PR #27735](https://github.com/gatsbyjs/gatsby/pull/27735)
+- [me4502](https://github.com/me4502): fix(gatsby-plugin-sitemap): fixed missing sitemapSize config entry [PR #27866](https://github.com/gatsbyjs/gatsby/pull/27866)
+- [axe312ger](https://github.com/axe312ger)
+  - Refactor Rich Text implementation in gatsby-source-contentful [PR #25249](https://github.com/gatsbyjs/gatsby/pull/25249)
+- [ARKEOLOGIST](https://github.com/ARKEOLOGIST): fix(gatsby-plugin-google-tagmanager): allow functions for defaultDataLayer option [PR #27886](https://github.com/gatsbyjs/gatsby/pull/27886)
+- [hoobdeebla](https://github.com/hoobdeebla): fix(renovate): move express-graphql and react-reconciler from minor to major update groups [PR #27101](https://github.com/gatsbyjs/gatsby/pull/27101)
+- [StephanWeinhold](https://github.com/StephanWeinhold): chore(docs): Add required `path` import to modifying-pages doc [PR #27883](https://github.com/gatsbyjs/gatsby/pull/27883)
+- [ervasive](https://github.com/ervasive): fix(gatsby): Update TS types to allow Node 'parent' to be nullable [PR #26570](https://github.com/gatsbyjs/gatsby/pull/26570)
+- [manavm1990](https://github.com/manavm1990): chore(docs): Add children to styled-components doc [PR #27011](https://github.com/gatsbyjs/gatsby/pull/27011)
+- [kadhirash](https://github.com/kadhirash): fix(docs): dictionary.txt -> KintoBlock-kintoblock [PR #27580](https://github.com/gatsbyjs/gatsby/pull/27580)
+- [jerrydevs](https://github.com/jerrydevs): fix(gatsby-transformer-asciidoc): fails when doc doesn't have title [PR #27865](https://github.com/gatsbyjs/gatsby/pull/27865)
