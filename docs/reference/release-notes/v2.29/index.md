@@ -132,7 +132,7 @@ The File System Route API uses [slugify](https://github.com/sindresorhus/slugify
 
 ## gatsby-image codemod
 
-We introduced some API changes for working with images when we published the new `gatsby-plugin-image` in [v2.26](../v2.26/index.md#gatsby-plugin-image010-beta). In order to make it easier to migrate your code to work with the new plugin, we've created a codemod.Follow the migration instructions in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#upgrading-from-the-gatsby-image2) in order to run the codemod against your project.
+We introduced some API changes for working with images when we published the new `gatsby-plugin-image` in [v2.26](../v2.26/index.md#gatsby-plugin-image010-beta). In order to make it easier to migrate your code to work with the new plugin, we've created a codemod. Follow the migration instructions in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#upgrading-from-the-gatsby-image2) in order to run the codemod against your project.
 
 ## Notable bugfixes
 
