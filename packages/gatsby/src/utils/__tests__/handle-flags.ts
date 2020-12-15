@@ -149,17 +149,6 @@ describe(`handle flags`, () => {
         }
       },
     },
-    {
-      name: `ALWAYS_OPT_IN`,
-      env: `GATSBY_ALWAYS_OPT_IN`,
-      command: `all`,
-      description: `test`,
-      umbrellaIssue: `test`,
-      telemetryId: `test`,
-      experimental: false,
-      // this will always OPT IN
-      testFitness: (): fitnessEnum => `OPT_IN`,
-    },
   ]
 
   const configFlags = {
@@ -181,7 +170,7 @@ describe(`handle flags`, () => {
 
   it(`filters out flags marked false`, () => {
     const result = handleFlags(activeFlags, configFlagsWithFalse, `develop`)
-    expect(result.enabledConfigFlags).toHaveLength(4)
+    expect(result.enabledConfigFlags).toHaveLength(3)
     expect(result).toMatchSnapshot()
   })
 
@@ -189,13 +178,13 @@ describe(`handle flags`, () => {
     expect(
       handleFlags(activeFlags, configWithFlagsNoCi, `develop`)
         .enabledConfigFlags
-    ).toHaveLength(4)
+    ).toHaveLength(3)
   })
 
   it(`filters out flags that aren't for the current command`, () => {
     expect(
       handleFlags(activeFlags, configFlags, `build`).enabledConfigFlags
-    ).toHaveLength(4)
+    ).toHaveLength(3)
   })
 
   it(`returns a message about unknown flags in the config`, () => {
@@ -219,7 +208,6 @@ describe(`handle flags`, () => {
       {
         PARTIAL_RELEASE: false,
         PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
-        ALWAYS_OPT_IN: false,
       },
       `develop`
     )
@@ -233,7 +221,6 @@ describe(`handle flags`, () => {
         PARTIAL_RELEASE_ONLY_VERY_OLD_LODASH: true,
         PARTIAL_RELEASE: false,
         PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
-        ALWAYS_OPT_IN: false,
       },
       `develop`
     )
@@ -250,7 +237,19 @@ describe(`handle flags`, () => {
 
   it(`Prefers explicit opt-in over auto opt-in (for terminal message)`, () => {
     const response = handleFlags(
-      activeFlags,
+      activeFlags.concat([
+        {
+          name: `ALWAYS_OPT_IN`,
+          env: `GATSBY_ALWAYS_OPT_IN`,
+          command: `all`,
+          description: `test`,
+          umbrellaIssue: `test`,
+          telemetryId: `test`,
+          experimental: false,
+          // this will always OPT IN
+          testFitness: (): fitnessEnum => `OPT_IN`,
+        },
+      ]),
       {
         ALWAYS_OPT_IN: true,
         DEV_SSR: true,
