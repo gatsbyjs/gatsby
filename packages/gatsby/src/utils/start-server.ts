@@ -264,7 +264,9 @@ module.exports = {
     } else {
       res.status(authorizedRefresh ? 404 : 403)
       res.json({
-        error: `Refresh failed`,
+        error: enableRefresh
+          ? `Authorization failed. Make sure you add authorization header to your refresh requests`
+          : `Refresh endpoint is not enabled. Run gatsby with "ENABLE_GATSBY_REFRESH_ENDPOINT=true" environment variable set.`,
         isEnabled: !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
       })
     }
