@@ -180,10 +180,10 @@ exports.buildForeignReferenceMap = ({
   return foreignReferenceMap
 }
 
-function prepareTextNode(textNodeId, node, key, text) {
+function prepareTextNode(id, node, key, text) {
   const str = _.isString(text) ? text : ``
   const textNode = {
-    id: textNodeId,
+    id,
     parent: node.id,
     children: [],
     [key]: str,
@@ -199,7 +199,7 @@ function prepareTextNode(textNodeId, node, key, text) {
     },
   }
 
-  node.children = node.children.concat([textNode.id])
+  node.children = node.children.concat([id])
 
   return textNode
 }
