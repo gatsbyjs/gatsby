@@ -125,14 +125,14 @@ export default function Component(props) {
 // to connect to this GraphQL query.
 
 export const query = graphql`
-  query ($id: String) {
+  query($id: String) {
     product(id: { eq: $id }) {
       fields {
         sku
       }
     }
   }
-}
+`
 ```
 
 If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/node-apis#createPages) API instead as File System Route API doesn't support this at the moment.
@@ -170,7 +170,8 @@ export default function HomePage(props) {
     <ul>
       {props.data.allProduct.map(product => (
         <li key={product.name}>
-          <Link to={product.productPath}>{product.name}</Link> (<Link to={product.discountPath}>Discount</Link>) // highlight-line
+          <Link to={product.productPath}>{product.name}</Link> (
+          <Link to={product.discountPath}>Discount</Link>) // highlight-line
         </li>
       ))}
     </ul>
@@ -185,7 +186,7 @@ export const query = graphql`
       discountPath: gatsbyPath(filePath: "/discounts/{Product.name}") // highlight-line
     }
   }
-}
+`
 ```
 
 By using [aliasing](/docs/graphql-reference/#aliasing) you can use `gatsbyPath` multiple times.
