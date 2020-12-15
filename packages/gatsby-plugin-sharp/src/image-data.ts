@@ -252,7 +252,7 @@ export async function generateImageData({
       file,
       args: {
         ...options,
-        ...args.transformOptions,
+        ...transformOptions,
         fit,
         cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
