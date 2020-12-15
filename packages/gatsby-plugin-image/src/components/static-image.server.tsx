@@ -111,6 +111,8 @@ const checkDimensionProps: PropTypes.Validator<number> = (
   return PropTypes.number(props, propName, ...rest)
 }
 
+const validLayouts = new Set([`fixed`, `fluid`, `constrained`])
+
 export const propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
@@ -119,6 +121,18 @@ export const propTypes = {
   maxHeight: checkDimensionProps,
   maxWidth: checkDimensionProps,
   sizes: PropTypes.string,
+  layout: (props: IStaticImageProps & IPrivateProps): Error | undefined => {
+    if (props.layout === undefined) {
+      return undefined
+    }
+    if (validLayouts.has(props.layout.toLowerCase())) {
+      return undefined
+    }
+
+    return new Error(
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fluid" or "constrained"`
+    )
+  },
 }
 
 StaticImage.displayName = `StaticImage`
