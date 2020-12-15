@@ -160,3 +160,4 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
 - [davidmauskop](https://github.com/davidmauskop): chore(docs): Update Deploying to Render guide [PR #28272](https://github.com/gatsbyjs/gatsby/pull/28272)
 - [saintmalik](https://github.com/saintmalik): chore(docs): fix broken url [PR #28197](https://github.com/gatsbyjs/gatsby/pull/28197)
 - [muescha](https://github.com/muescha): fix(docs): document pluginOptionsSchema - add file extension, code block language, quotation marks [PR #27844](https://github.com/gatsbyjs/gatsby/pull/27844)
+- [herecydev](https://github.com/herecydev) & [hoobdeebla](https://github.com/hoobdeebla): chore: update ink to v3 [PR #26190](https://github.com/gatsbyjs/gatsby/pull/26190)
