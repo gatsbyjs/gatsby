@@ -66,6 +66,10 @@ interface IDevelopArgs extends IProgram {
 }
 
 const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (inspector.url() !== undefined) {
+    return // fixes #26708
+  }
+
   if (debugInfo.break) {
     inspector.open(debugInfo.port, undefined, true)
     // eslint-disable-next-line no-debugger
