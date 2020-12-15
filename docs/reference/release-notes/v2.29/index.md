@@ -47,7 +47,7 @@ If you want to turn it on/off, you can set the corresponding flag inside `gatsby
 // In your gatsby-config.js
 module.exports = {
   flags: {
-    QUERY_ON_DEMAND: true,
+    QUERY_ON_DEMAND: false,
   },
   plugins: [], // your plugins stay the same
 }
@@ -67,7 +67,7 @@ If you want to turn it on/off, you can set the corresponding flag inside `gatsby
 // In your gatsby-config.js
 module.exports = {
   flags: {
-    LAZY_IMAGES: true,
+    LAZY_IMAGES: false,
   },
   plugins: [], // your plugins stay the same
 }
@@ -138,12 +138,9 @@ We introduced some API changes for working with images when we published the new
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0-next.0...gatsby@2.29.0) to this release 💜
 
 - [bappr](https://github.com/bappr): Update kintohub documentation with kintohub V1 deployment [PR #27016](https://github.com/gatsbyjs/gatsby/pull/27016)
-
 - [axe312ger](https://github.com/axe312ger)
-
   - fix: improve error handling, always show API response status and message [PR #27730](https://github.com/gatsbyjs/gatsby/pull/27730)
   - fix(documentationjs): fix example caption string [PR #27365](https://github.com/gatsbyjs/gatsby/pull/27365)
-
 - [olisteadman](https://github.com/olisteadman): Tell user to supply BOTH keys in .env.development. [PR #28405](https://github.com/gatsbyjs/gatsby/pull/28405)
 - [galihmelon](https://github.com/galihmelon): [docs][guides] improvements to Why Gatsby Uses GraphQL #15235 [PR #27640](https://github.com/gatsbyjs/gatsby/pull/27640)
 - [sreeharisj23](https://github.com/sreeharisj23): Remove Broken Link. [PR #28412](https://github.com/gatsbyjs/gatsby/pull/28412)
