@@ -259,6 +259,14 @@ module.exports = {
 
     if (enableRefresh && authorizedRefresh) {
       refresh(req, pluginName)
+      res.status(200)
+      res.setHeader(`content-type`, `application/json`)
+    } else {
+      res.status(404)
+      res.json({
+        error: `Refresh failed`,
+        isEnabled: !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+      })
     }
     res.end()
   })
