@@ -340,7 +340,8 @@ async function generateBase64({ file, args = {}, reporter }) {
     buffer = result.data
     info = result.info
   } catch (err) {
-    reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
+    reportError(`Failed to process image ${file.absolutePath}. 
+It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`, err, reporter)
     return null
   }
 
