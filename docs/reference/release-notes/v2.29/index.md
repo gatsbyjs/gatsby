@@ -23,10 +23,6 @@ Other notable changes:
 - [gatsby-image codemod](#gatsby-image-codemod)
 - [Notable bugfixes](#notable-bugfixes)
 
-Sneak peak to next releases:
-
-- TODO
-
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
@@ -57,11 +53,13 @@ In v2.29 we improved the UX around it by adding a loading indicator and message 
 
 ### Loading indicator
 
-![loading-indiactor](https://user-images.githubusercontent.com/16143594/102206937-9e4d0e80-3ecd-11eb-8a3f-3436f1b02a4d.gif)
+The loading indicator respects the user's settings for `prefers-reduced-motion` and `prefers-color-scheme`. It also announces itself to screen readers.
+
+![Short gif demonstrating the loading indicator for Query on Demand -- this is shown when the requested page takes a bit longer](https://user-images.githubusercontent.com/16143594/102206937-9e4d0e80-3ecd-11eb-8a3f-3436f1b02a4d.gif)
 
 ### Browser console
 
-![console](https://user-images.githubusercontent.com/16143594/102207048-c3da1800-3ecd-11eb-9caf-21c4e54c7f76.png)
+![Picture showing a note in the browser console that explains on how to disable it](https://user-images.githubusercontent.com/16143594/102207048-c3da1800-3ecd-11eb-9caf-21c4e54c7f76.png)
 
 ## Lazy Images
 
