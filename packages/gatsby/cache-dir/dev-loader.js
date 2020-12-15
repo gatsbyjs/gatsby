@@ -67,7 +67,7 @@ class DevLoader extends BaseLoader {
         rawPath !== `/dev-404-page/`
       ) {
         console.error(
-          `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
+          `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
         )
         return this.loadPageDataJson(`/dev-404-page/`).then(result =>
           Object.assign({}, data, result)
