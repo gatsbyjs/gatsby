@@ -6,7 +6,6 @@ import { getAttributeValues } from "babel-jsx-utils"
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
   `layout`,
-  `formats`,
   `maxWidth`,
   `maxHeight`,
   `quality`,
