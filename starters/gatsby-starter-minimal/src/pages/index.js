@@ -37,7 +37,7 @@ const linkStyle = {
   color: "#8954A8",
   fontWeight: "bold",
   fontSize: "16px",
-  verticalAlign: "15%",
+  verticalAlign: "5%",
 }
 
 const docLinkStyle = {
