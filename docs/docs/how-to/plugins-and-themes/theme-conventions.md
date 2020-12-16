@@ -34,7 +34,7 @@ exports.onPreBootstrap = ({ store, reporter }) => {
 
 ## Separating queries and presentational components
 
-As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/how-to/querying-data/page-query) or [StaticQuery](/docs/how-to/sourcing-data/static-query).
+As a theme author, it's preferable to separate your data gathering and the components that render the data. This makes it easier for end users to be able to shadow a component like `PostList` or `AuthorCard` without having to write a [pageQuery](/docs/how-to/querying-data/page-query) or [StaticQuery](/docs/how-to/querying-data/static-query).
 
 ### Page queries
 

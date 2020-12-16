@@ -218,7 +218,7 @@ export default function Home(props) {
 
 #### 5. Change the query to use `StaticQuery`
 
-If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/how-to/sourcing-data/static-query/). This is because a layout is now a normal component.
+If you were using the `data` prop in your Gatsby v1 layout, you now need to use Gatsby v2’s [StaticQuery feature](/docs/how-to/querying-data/static-query/). This is because a layout is now a normal component.
 
 Replacing a layout's query with `StaticQuery`:
 

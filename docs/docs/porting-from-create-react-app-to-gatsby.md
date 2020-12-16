@@ -33,7 +33,7 @@ Plugins can also pull in data from any number of sources like APIs, CMSs, or the
 
 This data layer simplifies the process of pulling data from different sources and providing them in your pages and components. This combination of data from different sources stitched together in a modern workflow is referred to as [the content mesh](/blog/2018-10-04-journey-to-the-content-mesh/).
 
-> **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/how-to/sourcing-data/using-gatsby-without-graphql/) as well
+> **Note**: GraphQL isn't required for managing data in a Gatsby app. Feel free to look over the guide on [using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/) as well
 
 ---
 

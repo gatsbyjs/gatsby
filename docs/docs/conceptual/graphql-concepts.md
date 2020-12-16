@@ -88,7 +88,7 @@ The result of the query is automatically inserted into your React component
 on the `data` prop. GraphQL and Gatsby let you ask for data and then
 immediately start using it.
 
-**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/how-to/sourcing-data/static-query/).
+**Note:** To run GraphQL queries in non-page components you'll need to use [Gatsby's Static Query feature](/docs/how-to/querying-data/static-query/).
 
 ### Understanding the parts of a query
 

@@ -43,7 +43,7 @@ and APIs of all sorts.
 
 Absolutely not! You can use the node `createPages` API to pull unstructured data into Gatsby pages directly, rather than through the GraphQL data layer. This is a great choice for small sites, while GraphQL and source plugins can help save time with more complex sites.
 
-See the [Using Gatsby without GraphQL](/docs/how-to/sourcing-data/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
+See the [Using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/) guide to learn how to pull data into your Gatsby site using the node `createPages` API and to see an example site!
 
 ### When do I use unstructured data vs GraphQL?
 
@@ -279,7 +279,7 @@ Page queries live outside of the component definition -- by convention at the en
 
 ### Use a StaticQuery
 
-[StaticQuery](/docs/how-to/sourcing-data/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/how-to/sourcing-data/use-static-query/).
+[StaticQuery](/docs/how-to/querying-data/static-query/) is a new API introduced in Gatsby v2 that allows non-page components (like your `layout.js` component), to retrieve data via GraphQL queries. Let's use its newly introduced hook version — [`useStaticQuery`](/docs/how-to/querying-data/use-static-query/).
 
 Go ahead and make some changes to your `src/components/layout.js` file to use the `useStaticQuery` hook and a `{data.site.siteMetadata.title}` reference that uses this data. When you are done, your file will look like this:
 
