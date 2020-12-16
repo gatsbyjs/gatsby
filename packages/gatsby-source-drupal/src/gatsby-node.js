@@ -62,7 +62,7 @@ exports.sourceNodes = async (
     changesActivity.start()
 
     try {
-      const { secret, action, id, data } = webhookBody
+      const { secret, action, id, data, included } = webhookBody
       if (pluginOptions.secret && pluginOptions.secret !== secret) {
         reporter.warn(
           `The secret in this request did not match your plugin options secret.`
@@ -82,22 +82,20 @@ exports.sourceNodes = async (
         nodesToUpdate = [data]
       }
 
-      for (const nodeToUpdate of nodesToUpdate) {
-        await handleWebhookUpdate(
-          {
-            nodeToUpdate,
-            actions,
-            cache,
-            createNodeId,
-            createContentDigest,
-            getCache,
-            getNode,
-            reporter,
-            store,
-          },
-          pluginOptions
-        )
-      }
+      await handleWebhookUpdate(
+        {
+          nodeToUpdate: nodesToUpdate.concat(included ?? []),
+          actions,
+          cache,
+          createNodeId,
+          createContentDigest,
+          getCache,
+          getNode,
+          reporter,
+          store,
+        },
+        pluginOptions
+      )
     } catch (e) {
       gracefullyRethrow(changesActivity, e)
       return
@@ -152,26 +150,25 @@ exports.sourceNodes = async (
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
             let nodesToUpdate = nodeSyncData.data
+            let included = nodeSyncData.included
             if (!Array.isArray(nodeSyncData.data)) {
               nodesToUpdate = [nodeSyncData.data]
             }
 
-            for (const nodeToUpdate of nodesToUpdate) {
-              await handleWebhookUpdate(
-                {
-                  nodeToUpdate,
-                  actions,
-                  cache,
-                  createNodeId,
-                  createContentDigest,
-                  getCache,
-                  getNode,
-                  reporter,
-                  store,
-                },
-                pluginOptions
-              )
-            }
+            await handleWebhookUpdate(
+              {
+                nodeToUpdate: nodesToUpdate.concat(included ?? []),
+                actions,
+                cache,
+                createNodeId,
+                createContentDigest,
+                getCache,
+                getNode,
+                reporter,
+                store,
+              },
+              pluginOptions
+            )
           }
         }
 
