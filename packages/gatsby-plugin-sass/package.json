@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "sass-loader": "^7.3.1"
+    "sass-loader": "^10.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -28,7 +28,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^2.0.0",
-    "node-sass": "^4.9.0"
+    "sass": "^1.30.0"
   },
   "repository": {
     "type": "git",
