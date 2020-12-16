@@ -331,9 +331,24 @@ async function generateBase64({ file, args = {}, reporter }) {
   if (options.duotone) {
     pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
-  const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
-  })
+  let buffer
+  let info
+  try {
+    const result = await pipeline.toBuffer({
+      resolveWithObject: true,
+    })
+    buffer = result.data
+    info = result.info
+  } catch (err) {
+    reportError(
+      `Failed to process image ${file.absolutePath}. 
+It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`,
+      err,
+      reporter
+    )
+    return null
+  }
+
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
