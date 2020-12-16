@@ -101,7 +101,7 @@ query {
 
 #### Writing a query to gather the static data needed for a page
 
-With the source plugin installed and added to your config, you can write a [static query](/docs/how-to/sourcing-data/use-static-query/) that will retrieve the necessary data from Gatsby's data layer while building the site.
+With the source plugin installed and added to your config, you can write a [static query](/docs/how-to/querying-data/use-static-query/) that will retrieve the necessary data from Gatsby's data layer while building the site.
 
 ```jsx:title=src/pages/index.js
 import React from "react"

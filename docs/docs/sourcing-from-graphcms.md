@@ -138,7 +138,7 @@ Using the generated schema, we can begin to write GraphQL queries for Gatsby dat
 
 ### Query implementation
 
-Gatsby offers two means of data querying: [page queries](/docs/how-to/querying-data/page-query) and [static queries](/docs/how-to/sourcing-data/static-query).
+Gatsby offers two means of data querying: [page queries](/docs/how-to/querying-data/page-query) and [static queries](/docs/how-to/querying-data/static-query).
 
 #### Page query
 

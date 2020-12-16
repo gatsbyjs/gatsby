@@ -15,7 +15,7 @@ GraphQL is available in Gatsby without a special install: a schema is automatica
 
 Data needs to be [sourced](/docs/content-and-data/) — or added to the GraphQL schema — to be queried and pulled into pages using GraphQL. Gatsby uses [source plugins](/plugins/?=gatsby-source) to pull in data.
 
-**Note**: GraphQL isn't required: you can still [use Gatsby without GraphQL](/docs/how-to/sourcing-data/using-gatsby-without-graphql/).
+**Note**: GraphQL isn't required: you can still [use Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/).
 
 To source data with an existing plugin you have to install all needed packages. Furthermore you have to add the plugin to the plugins array in the `gatsby-config` with any optional configurations. If you want to source data from the filesystem for use with GraphQL, such as Markdown files, images, and more, refer to the [filesystem data sourcing docs](/docs/how-to/sourcing-data/sourcing-from-the-filesystem) and [recipes](/docs/recipes/sourcing-data).
 
@@ -84,7 +84,7 @@ StaticQuery is a built-in component for retrieving data from Gatsby’s data lay
 
 You can only have one `StaticQuery` per page: in order to include the data you need from multiple sources, you can use one query with multiple [root fields](/docs/conceptual/graphql-concepts/#query-fields). It cannot take variables as arguments.
 
-Also, refer to the [guide on querying data in components with static query](/docs/how-to/sourcing-data/static-query/).
+Also, refer to the [guide on querying data in components with static query](/docs/how-to/querying-data/static-query/).
 
 #### Params
 
@@ -137,7 +137,7 @@ The `useStaticQuery` hook can be used similar to `StaticQuery` in any component 
 
 Because it is a React hook, the [rules of hooks](https://reactjs.org/docs/hooks-rules.html) apply and you'll need to use it with React and ReactDOM version 16.8.0 or later. Because of how queries currently work in Gatsby, only one instance of `useStaticQuery` is supported in each file.
 
-Also, refer to the [guide on querying data in components with useStaticQuery](/docs/how-to/sourcing-data/use-static-query/).
+Also, refer to the [guide on querying data in components with useStaticQuery](/docs/how-to/querying-data/use-static-query/).
 
 #### Params
 
