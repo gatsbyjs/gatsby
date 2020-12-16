@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0...gatsby-plugin-sharp@2.11.1) (2020-12-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** catch errors when writing base64 images ([#28614](https://github.com/gatsbyjs/gatsby/issues/28614)) ([#28659](https://github.com/gatsbyjs/gatsby/issues/28659)) ([ea741c3](https://github.com/gatsbyjs/gatsby/commit/ea741c39144ec26efcfcca66c4f3dd7ac2f1e86d))
+
 # [2.11.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.4...gatsby-plugin-sharp@2.11.0) (2020-12-15)
 
 ### Bug Fixes

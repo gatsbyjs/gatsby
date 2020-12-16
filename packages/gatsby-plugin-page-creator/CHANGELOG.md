@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.7.0...gatsby-plugin-page-creator@2.7.1) (2020-12-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** add missing telemetry dependency ([#28652](https://github.com/gatsbyjs/gatsby/issues/28652)) ([#28658](https://github.com/gatsbyjs/gatsby/issues/28658)) ([e43675e](https://github.com/gatsbyjs/gatsby/commit/e43675e8413fb765ef46f65fe8a2e71f1524d6d5))
+
 # [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.7.0-next.1...gatsby-plugin-page-creator@2.7.0) (2020-12-15)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
