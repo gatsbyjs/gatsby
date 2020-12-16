@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.1...create-gatsby@0.3.0-next.2) (2020-12-16)
+
+### Bug Fixes
+
+- **create-gatsby:** Adds a default icon so plugin-manifest works out of the box ([#28635](https://github.com/gatsbyjs/gatsby/issues/28635)) ([4dc8ab7](https://github.com/gatsbyjs/gatsby/commit/4dc8ab79c194fe5c56a1d2bd794ff9c8e03ad927))
+
 # [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.0...create-gatsby@0.3.0-next.1) (2020-12-15)
 
 ### Bug Fixes
