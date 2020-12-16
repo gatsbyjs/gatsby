@@ -58,7 +58,7 @@ const typeExtensions = {
   childOf: {
     description:
       `Define parent-child relations between types. This is used to add ` +
-      `\`child*\` or \`children*\` convenience fields like \`childImageSharp\`.`,
+      `\`child*\` and \`children*\` convenience fields like \`childImageSharp\`.`,
     args: {
       mimeTypes: {
         type: `[String!]!`,
@@ -78,6 +78,7 @@ const typeExtensions = {
         type: `Boolean!`,
         defaultValue: false,
         description: `Specifies whether a parent can have multiple children of this type or not.`,
+        deprecationReason: `No-op. We always add both \`child[Field]\` and \`children[Field]\` to the parent type`,
       },
     },
   },
