@@ -29,7 +29,6 @@ const listStyles = {
   paddingLeft: 0,
 }
 const listItemStyles = {
-  marginBottom: 12,
   fontWeight: "300",
   letterSpacing: 1,
   fontSize: "25px",
@@ -39,6 +38,7 @@ const linkStyle = {
   color: "#8954A8",
   fontWeight: "bold",
   fontSize: "15px",
+  verticalAlign: "15%",
 }
 
 const docLinkStyle = {
