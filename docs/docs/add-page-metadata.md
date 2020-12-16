@@ -2,7 +2,7 @@
 title: Adding Page Metadata
 ---
 
-If you've run an [audit with Lighthouse](/docs/audit-with-lighthouse/), you may have noticed a lackluster score in the "SEO" category. Let's address how you can improve that score.
+If you've run an [audit with Lighthouse](/docs/how-to/performance/audit-with-lighthouse/), you may have noticed a lackluster score in the "SEO" category. Let's address how you can improve that score.
 
 Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content, and decide when to surface it in search results.
 

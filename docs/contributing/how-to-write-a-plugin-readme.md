@@ -28,7 +28,7 @@ Please include installation instructions here.
 
 Gatsby documentation uses `npm` for installation. This is the recommended approach for plugins as well.
 
-If the plugin is a theme that needs to use `yarn`, please point to [the documentation for switching package managers](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) in addition to the `yarn`-based instructions.
+If the plugin is a theme that needs to use `yarn`, please point to [the documentation for switching package managers](/docs/reference/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) in addition to the `yarn`-based instructions.
 
 ## Available options (if any)
 

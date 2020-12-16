@@ -22,7 +22,7 @@ You can import your own components.
 <Message>MDX gives you JSX in Markdown!</Message> // highlight-line
 ```
 
-**Note**: steps for importing custom components or MDX documents from a relative location in your project are also covered in the [Writing Pages in MDX guide](/docs/mdx/writing-pages/).
+**Note**: steps for importing custom components or MDX documents from a relative location in your project are also covered in the [Writing Pages in MDX guide](/docs/how-to/routing/mdx/writing-pages/).
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-import-and-use-a-react-component-in-markdown-with-mdx"
