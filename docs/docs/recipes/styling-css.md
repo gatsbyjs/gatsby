@@ -230,9 +230,9 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 
 ### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby plugin [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/) and `sass`.
 
-`npm install node-sass gatsby-plugin-sass`
+`npm install sass gatsby-plugin-sass`
 
 2. Include the plugin in your `gatsby-config.js` file.
 
