@@ -119,6 +119,10 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
+  if (layout === `fixed` && !args.width && !args.height) {
+    args.width = metadata.width
+  }
+
   if (
     layout !== `fixed` &&
     !args.maxWidth &&
