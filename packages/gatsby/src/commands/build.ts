@@ -4,7 +4,7 @@ import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
 
-import { buildHTML } from "./build-html"
+import { doBuildPages, buildRenderer, deleteRenderer } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -231,6 +231,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
+  const buildSSRBundleActivityProgress = report.activityTimer(
+    `Building HTML renderer`,
+    { parentSpan: buildSpan }
+  )
+  buildSSRBundleActivityProgress.start()
+  let pageRenderer: string
+  try {
+    pageRenderer = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildSSRBundleActivityProgress.end()
+  }
+
   const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
@@ -241,13 +255,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildHTMLActivityProgress.start()
   try {
-    await buildHTML({
-      program,
-      stage: Stage.BuildHTML,
+    await doBuildPages(
+      pageRenderer,
       pagePaths,
-      activity: buildHTMLActivityProgress,
-      workerPool,
-    })
+      buildHTMLActivityProgress,
+      workerPool
+    )
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
     const context = {
@@ -270,6 +283,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
   buildHTMLActivityProgress.end()
+
+  try {
+    await deleteRenderer(pageRenderer)
+  } catch (err) {
+    // pass through
+  }
 
   let deletedPageKeys: Array<string> = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
