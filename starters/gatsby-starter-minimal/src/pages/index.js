@@ -49,7 +49,7 @@ const docLinkStyle = {
 
 const descriptionStyle = {
   color: "#232129",
-  fontSize: "13px",
+  fontSize: "14px",
 }
 
 const docLink = {
