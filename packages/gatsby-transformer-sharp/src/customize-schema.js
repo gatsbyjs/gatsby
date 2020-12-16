@@ -385,7 +385,7 @@ const fluidNodeType = ({
   }
 }
 
-let warnedForAlpha = false
+let warnedForBeta = false
 
 const imageNodeType = ({
   pathPrefix,
@@ -511,13 +511,12 @@ const imageNodeType = ({
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
         return null
       }
-      if (!warnedForAlpha) {
+      if (!warnedForBeta) {
         reporter.warn(
           stripIndent`
-        You are using the alpha version of the \`gatsbyImageData\` sharp API, which is unstable and will change without notice. 
-        Please do not use it in production.`
+        Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
         )
-        warnedForAlpha = true
+        warnedForBeta = true
       }
       const imageData = await generateImageData({
         file,

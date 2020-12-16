@@ -18,7 +18,7 @@ Throughout the Gatsby code, you'll see the below object fields and variables men
 
 ### Page Object
 
-created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
+created by calls to [createPage](/docs/reference/config-files/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
 #### path
 

@@ -145,7 +145,7 @@ function createJob(job, { reporter }) {
   }
 
   promise.catch(err => {
-    reporter.panic(err)
+    reporter.panic(`error converting image`, err)
   })
 
   return promise
@@ -170,6 +170,13 @@ function queueImageResizing({ file, args = {}, reporter }) {
       inputPaths: [file.absolutePath],
       outputDir,
       args: {
+        isLazy:
+          !(
+            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+          ) &&
+          process.env.gatsby_executing_command === `develop` &&
+          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
         operations: [
           {
             outputPath: relativePath,
@@ -237,6 +244,13 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         file.internal.contentDigest
       ),
       args: {
+        isLazy:
+          !(
+            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+          ) &&
+          process.env.gatsby_executing_command === `develop` &&
+          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
         operations,
         pluginOptions: getPluginOptions(),
       },
@@ -317,9 +331,24 @@ async function generateBase64({ file, args = {}, reporter }) {
   if (options.duotone) {
     pipeline = await duotone(options.duotone, options.toFormat, pipeline)
   }
-  const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
-  })
+  let buffer
+  let info
+  try {
+    const result = await pipeline.toBuffer({
+      resolveWithObject: true,
+    })
+    buffer = result.data
+    info = result.info
+  } catch (err) {
+    reportError(
+      `Failed to process image ${file.absolutePath}. 
+It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`,
+      err,
+      reporter
+    )
+    return null
+  }
+
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
@@ -743,3 +772,4 @@ exports.fixed = fixed
 exports.getImageSize = getImageSize
 exports.getImageSizeAsync = getImageSizeAsync
 exports.stats = stats
+exports._unstable_createJob = createJob

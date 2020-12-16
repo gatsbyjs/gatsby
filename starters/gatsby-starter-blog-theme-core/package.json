@@ -11,7 +11,7 @@
   "license": "0BSD",
   "dependencies": {
     "@mdx-js/react": "^1.6.19",
-    "gatsby": "^2.25.3",
+    "gatsby": "^2.26.1",
     "gatsby-theme-blog-core": "^2.0.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
