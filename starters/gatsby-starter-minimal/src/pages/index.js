@@ -31,6 +31,7 @@ const listStyles = {
 const listItemStyles = {
   fontWeight: "300",
   fontSize: "24px",
+  maxWidth: "560px",
 }
 
 const linkStyle = {
