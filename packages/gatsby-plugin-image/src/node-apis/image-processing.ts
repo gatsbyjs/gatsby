@@ -14,6 +14,8 @@ import { ImageProps, SharpProps } from "../utils"
 import { watchImage } from "./watcher"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
+const supportedTypes = [`png`, `jpeg`, `webp`]
+
 export interface IImageMetadata {
   isFixed: boolean
   contentDigest?: string
@@ -88,9 +90,12 @@ export async function writeImages({
           reporter.error(`Error loading image ${src}`)
           return
         }
-        if (!file.internal.mediaType?.startsWith(`image/`)) {
+        const type = file.internal.mediaType?.split(`/`)[1]
+        if (!type || supportedTypes.includes(type)) {
           reporter.error(
-            `The file loaded from ${src} is not a valid image type. Found ${file.internal.mediaType}`
+            `The file loaded from ${src} is not a valid image type. Found "${
+              file.internal.mediaType || `unknown`
+            }"`
           )
           return
         }
