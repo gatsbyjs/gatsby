@@ -30,7 +30,6 @@ const listStyles = {
 }
 const listItemStyles = {
   fontWeight: "300",
-  letterSpacing: 1,
   fontSize: "24px",
 }
 
