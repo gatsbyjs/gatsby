@@ -142,7 +142,7 @@ export function generateImageData(
     pluginName,
     sourceMetadata,
     generateImageSource,
-    layout = `fixed`,
+    layout = `constrained`,
     fit,
     options,
     width,
@@ -279,7 +279,7 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
     height,
     maxHeight,
     filename,
-    layout = `fixed`,
+    layout = `constrained`,
     sourceMetadata: imgDimensions,
     reporter = { warn },
   } = args

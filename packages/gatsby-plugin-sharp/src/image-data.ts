@@ -103,7 +103,7 @@ export async function generateImageData({
   cache,
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
-    layout = `fixed`,
+    layout = `constrained`,
     placeholder = `blurred`,
     tracedSVGOptions = {},
     transformOptions = {},
