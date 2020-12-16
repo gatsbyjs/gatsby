@@ -1028,7 +1028,7 @@ const addImplicitConvenienceChildrenFields = ({
       ) {
         const childField = fieldNames.convenienceChild(typeName)
         const childrenField = fieldNames.convenienceChildren(typeName)
-        const childOfTypes = childOfExtension.type
+        const childOfTypes = (childOfExtension?.types ?? [])
           .concat(parentTypeName)
           .map(name => `"${name}"`)
           .join(`,`)
