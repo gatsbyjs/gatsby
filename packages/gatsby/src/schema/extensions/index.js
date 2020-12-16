@@ -75,6 +75,7 @@ const typeExtensions = {
           `types handled by a transformer plugin.`,
       },
       many: {
+        // TODO: Remove in Gatsby v3
         type: `Boolean!`,
         defaultValue: false,
         description: `Specifies whether a parent can have multiple children of this type or not.`,
