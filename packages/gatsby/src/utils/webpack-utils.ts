@@ -499,7 +499,7 @@ export const createWebpackUtils = (
   rules.images = (): RuleSetRule => {
     return {
       use: [loaders.url()],
-      test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/,
+      test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
     }
   }
 
