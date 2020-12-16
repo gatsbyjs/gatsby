@@ -6,6 +6,7 @@ import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
+import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 
 import { IExecutionResult } from "../query/types"
 
@@ -159,8 +160,8 @@ export async function flush(): Promise<void> {
           )
         }
 
-        if (query.dirty !== 0) {
-          // query results are not up to date, it's not safe to write page-data and emit results
+        if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
+          // query results are not written yet
           continue
         }
       }

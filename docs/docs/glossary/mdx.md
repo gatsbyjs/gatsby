@@ -67,5 +67,5 @@ MDX enhances Markdown's capabilities so that you can use React components anywhe
 
 - [MDX](https://mdxjs.com/) official site
 - [What is MDX](https://www.youtube.com/watch?v=d2sQiI5NFAM) (video)
-- [Adding Components to Markdown with MDX](/docs/mdx/) from the Gatsby docs
+- [Adding Components to Markdown with MDX](/docs/how-to/routing/mdx/) from the Gatsby docs
 - [Introducing JSX](https://reactjs.org/docs/introducing-jsx.html) from the React documentation

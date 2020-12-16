@@ -1,5 +1,5 @@
 import React from "react"
-import { Box } from "ink"
+import { Box, Text } from "ink"
 import { createLabel } from "./utils"
 
 import { ActivityLogLevels, LogLevels } from "../../../constants"
@@ -44,16 +44,18 @@ export const Message = React.memo<IMessageProps>(
       message += ` - ${statusText}`
     }
     if (!level || level === `LOG`) {
-      return <>{message}</>
+      return <Text>{message}</Text>
     }
 
     const TextLabel = getLabel(level)
 
     return (
-      <Box textWrap="wrap" flexDirection="row">
-        <TextLabel />
-        {` `}
-        {message}
+      <Box flexDirection="row">
+        <Text wrap="wrap">
+          <TextLabel />
+          {` `}
+          {message}
+        </Text>
       </Box>
     )
   }

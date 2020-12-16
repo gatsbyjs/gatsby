@@ -43,6 +43,12 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
+    if (
+      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+    ) {
+      emitter.emit(`onRouteUpdate`, { location, prevLocation })
+    }
   }
 }
 
@@ -128,7 +134,10 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    getSavedScrollPosition: args => this._stateStorage.read(args),
+    getSavedScrollPosition: args => [
+      0,
+      this._stateStorage.read(args, args.key),
+    ],
   })
   if (results.length > 0) {
     // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
@@ -195,6 +204,18 @@ class RouteAnnouncer extends React.Component {
   }
 }
 
+const compareLocationProps = (prevLocation, nextLocation) => {
+  if (prevLocation.href !== nextLocation.href) {
+    return true
+  }
+
+  if (prevLocation?.state?.key !== nextLocation?.state?.key) {
+    return true
+  }
+
+  return false
+}
+
 // Fire on(Pre)RouteUpdate APIs
 class RouteUpdates extends React.Component {
   constructor(props) {
@@ -207,16 +228,15 @@ class RouteUpdates extends React.Component {
   }
 
   shouldComponentUpdate(prevProps) {
-    if (this.props.location.href !== prevProps.location.href) {
+    if (compareLocationProps(prevProps.location, this.props.location)) {
       onPreRouteUpdate(this.props.location, prevProps.location)
       return true
     }
-
     return false
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location.href !== prevProps.location.href) {
+    if (compareLocationProps(prevProps.location, this.props.location)) {
       onRouteUpdate(this.props.location, prevProps.location)
     }
   }

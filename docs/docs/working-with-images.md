@@ -2,9 +2,9 @@
 title: Working with Images in Gatsby
 ---
 
-Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/building-with-components/#page-components).
+Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/conceptual/building-with-components/#page-components).
 
-The recommended approach is to use [GraphQL queries](/docs/graphql-concepts/) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/packages/gatsby-image/) component.
+The recommended approach is to use [GraphQL queries](/docs/conceptual/graphql-concepts/) to get images of the optimal size or resolution, then, display them with the [`gatsby-image`](/packages/gatsby-image/) component.
 
 ## Query images with GraphQL
 
@@ -12,7 +12,7 @@ Querying images with GraphQL allows you to access the image's data as well as pe
 
 You'll need a few plugins for this:
 
-- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](/docs/graphql-concepts/#images)
+- [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin allows you to [query files with GraphQL](/docs/conceptual/graphql-concepts/#images)
 - [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp) powers the connections between Sharp and Gatsby Plugins
 - [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) allows you to create multiples images of the right sizes and resolutions with a query
 
@@ -93,7 +93,7 @@ export const query = graphql`
 
 ### Additional resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
+- [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/)
 - [Using gatsby-image with Gatsby](https://egghead.io/playlists/using-gatsby-image-with-gatsby-ea85129e), free egghead.io playlist
 - [gatsby-image plugin README file](/packages/gatsby-image/)
 - [gatsby-plugin-sharp README file](/packages/gatsby-plugin-sharp/)

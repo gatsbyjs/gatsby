@@ -6,6 +6,20 @@ A collection of codemod scripts for use with [JSCodeshift](https://github.com/fa
 
 ### Setup & Run
 
+There are two ways to run codemods on this package.
+
+1. Run via npx
+
+```shell
+npx gatsby-codemods <codemod-name> <filepath>
+```
+
+`filepath` is not required and will default to the directory you're currently in.
+
+Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extenstions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
+
+2. Use JSCodeshift directly
+
 - Install JSCodeshift as a global module
 
 ```shell

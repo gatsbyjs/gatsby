@@ -7,20 +7,21 @@ import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
+import { Indicator } from "./loading-indicator/indicator"
 import DevLoader from "./dev-loader"
+import syncRequires from "$virtual/sync-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
-window.___emitter = emitter
-
-let pageComponentRequires
-if (process.env.GATSBY_EXPERIMENTAL_LAZY_DEVJS) {
-  pageComponentRequires = require(`$virtual/lazy-client-sync-requires`)
-} else {
-  pageComponentRequires = require(`$virtual/sync-requires`)
+if (process.env.GATSBY_HOT_LOADER === `fast-refresh` && module.hot) {
+  module.hot.accept(`$virtual/sync-requires`, () => {
+    // Manually reload
+  })
 }
 
-const loader = new DevLoader(pageComponentRequires, matchPaths)
+window.___emitter = emitter
+
+const loader = new DevLoader(syncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
@@ -33,8 +34,9 @@ window.___loader = publicLoader
 // Without this, the runtime breaks with a
 // "TypeError: __webpack_require__.e is not a function"
 // error.
-// eslint-disable-next-line
-import("./dummy")
+export function notCalledFunction() {
+  return import(`./dummy`)
+}
 
 // Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
@@ -122,6 +124,30 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ReactDOM.render
   )[0]
 
+  let dismissLoadingIndicator
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+  ) {
+    let indicatorMountElement
+
+    const showIndicatorTimeout = setTimeout(() => {
+      indicatorMountElement = document.createElement(
+        `first-render-loading-indicator`
+      )
+      document.body.append(indicatorMountElement)
+      ReactDOM.render(<Indicator />, indicatorMountElement)
+    }, 1000)
+
+    dismissLoadingIndicator = () => {
+      clearTimeout(showIndicatorTimeout)
+      if (indicatorMountElement) {
+        ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        indicatorMountElement.remove()
+      }
+    }
+  }
+
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
@@ -130,6 +156,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const preferDefault = m => (m && m.default) || m
     const Root = preferDefault(require(`./root`))
     domReady(() => {
+      if (dismissLoadingIndicator) {
+        dismissLoadingIndicator()
+      }
+
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
       })
