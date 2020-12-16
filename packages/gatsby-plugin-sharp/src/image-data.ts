@@ -119,6 +119,19 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
+  if (
+    layout !== `fixed` &&
+    !args.maxWidth &&
+    !args.maxHeight &&
+    metadata.width
+  ) {
+    if (layout === `constrained`) {
+      args.maxWidth = metadata.width
+    } else if (layout === `fluid`) {
+      args.maxWidth = Math.round(metadata.width / 2)
+    }
+  }
+
   const formats = new Set(args.formats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
 
