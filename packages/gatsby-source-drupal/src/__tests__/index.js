@@ -351,6 +351,38 @@ describe(`gatsby-source-drupal`, () => {
         })
       })
     })
+
+    describe(`Handle multiple nodes`, () => {
+      it(`Added image does not exist before webhook`, () => {
+        expect(nodes[createNodeId(`file-added`)]).not.toBeDefined()
+      })
+      it(`Tag #1 is not modified before webhook`, () => {
+        expect(nodes[createNodeId(`tag-1`)].name).toEqual(`Tag #1`)
+      })
+
+      describe(`After webhook update`, () => {
+        beforeAll(async () => {
+          const {
+            data: nodeToUpdate,
+            included: includedNodes,
+          } = require(`./fixtures/webhook-included.json`)
+
+          await handleWebhookUpdate({
+            nodeToUpdate: includedNodes.concat([nodeToUpdate]),
+            ...args,
+          })
+        })
+
+        it(`New image is added and related to article after webhook`, () => {
+          expect(nodes[createNodeId(`file-added`)]).toBeDefined()
+          expect(
+            nodes[createNodeId(`article-3`)].relationships[
+              `field_main_image___NODE`
+            ]
+          ).toContain(createNodeId(`file-added`))
+        })
+      })
+    })
   })
 
   it(`Control disallowed link types`, async () => {
