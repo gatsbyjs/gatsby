@@ -57,7 +57,7 @@ export default IndexPage
 
 ## Querying data with the StaticQuery Component
 
-`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/how-to/sourcing-data/static-query/), such as a header, navigation, or any other child component.
+`StaticQuery` is a component for retrieving data from Gatsby's data layer in [non-page components](/docs/how-to/querying-data/static-query/), such as a header, navigation, or any other child component.
 
 ### Directions
 
@@ -142,9 +142,9 @@ export default NonPageComponent
 
 ### Additional resources
 
-- [More on Static Query for querying data in components](/docs/how-to/sourcing-data/static-query/)
-- [The difference between a static query and a page query](/docs/how-to/sourcing-data/static-query/#how-staticquery-differs-from-page-query)
-- [More on the useStaticQuery hook](/docs/how-to/sourcing-data/use-static-query/)
+- [More on Static Query for querying data in components](/docs/how-to/querying-data/static-query/)
+- [The difference between a static query and a page query](/docs/how-to/querying-data/static-query/#how-staticquery-differs-from-page-query)
+- [More on the useStaticQuery hook](/docs/how-to/querying-data/use-static-query/)
 - [Visualize your data with GraphiQL](/docs/introducing-graphiql/)
 
 ## Limiting with GraphQL

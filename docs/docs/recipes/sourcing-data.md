@@ -534,7 +534,7 @@ export default function AllPokemon({ pageContext: { allPokemon } }) {
 ### Additional resources
 
 - [Full Pokemon data repo](https://github.com/jlengstorf/gatsby-with-unstructured-data/)
-- More on using unstructured data in [Using Gatsby without GraphQL](/docs/how-to/sourcing-data/using-gatsby-without-graphql/)
+- More on using unstructured data in [Using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/)
 - When and how to [query data with GraphQL](/docs/conceptual/graphql-concepts/) for more complex Gatsby sites
 
 ## Sourcing content from Drupal

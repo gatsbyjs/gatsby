@@ -34,7 +34,7 @@ Here are some examples of plugins that require you to install more than just the
 
 - [gatsby-plugin-emotion](/packages/gatsby-plugin-emotion/): `@emotion/react`, and `@emotion/styled`
 - [gatsby-plugin-styled-components](/packages/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
-- [gatsby-plugin-sass](/packages/gatsby-plugin-sass/): `node-sass`, or `dart-sass`
+- [gatsby-plugin-sass](/packages/gatsby-plugin-sass/): `node-sass`, or `sass`
 - [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/): `@material-ui/styles`
 - [gatsby-image](/packages/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
