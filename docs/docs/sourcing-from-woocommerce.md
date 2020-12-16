@@ -6,7 +6,7 @@ WooCommerce is the e-commerce platform for WordPress. This guide will serve as a
 
 ## Prerequisites
 
-This guide assumes some familiarity with WordPress. You may want to read about [Sourcing from WordPress](/docs/sourcing-from-wordpress/) or step through a [tutorial on how to build a blog with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1) before diving in.
+This guide assumes some familiarity with WordPress. You may want to read about [Sourcing from WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/) or step through a [tutorial on how to build a blog with WordPress and Gatsby](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1) before diving in.
 
 You’ll need a WordPress site with the [WooCommerce](https://woocommerce.com/) plugin installed and activated.
 
@@ -40,7 +40,7 @@ Configure its options:
 },
 ```
 
-The `consumer_key` and `consumer_secret` come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/environment-variables/)!
+The `consumer_key` and `consumer_secret` come from WooCommerce. From your dashboard, go to WooCommerce > Settings > Advanced > REST API and then add a key. You can then copy and paste both the key and secret. Make sure to store any sensitive information in [environment variables](/docs/how-to/local-development/environment-variables/)!
 
 It's worth noting that the official WordPress source plugin is in active development. Knowing that this work is in-progress, if you're interested in working with a GraphQL endpoint directly in your WordPress installation, see the section below on [pending changes](#pending-changes) to get started with WPGraphQL and WooCommerce.
 
@@ -67,7 +67,7 @@ allWcProducts {
 
 ### Using GraphiQL
 
-You can explore the data available to your site [using GraphiQL](/docs/running-queries-with-graphiql/). This is dependent on the fields you have specified in `gatsby-config.js`. The plugin documentation has tons of [suggested GraphQL queries](/packages/@pasdo501/gatsby-source-woocommerce/#some-graphql-query-examples). If you don't see the options listed there, try adjusting the `fields` array and/or refreshing your GraphiQL tab.
+You can explore the data available to your site [using GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/). This is dependent on the fields you have specified in `gatsby-config.js`. The plugin documentation has tons of [suggested GraphQL queries](/packages/@pasdo501/gatsby-source-woocommerce/#some-graphql-query-examples). If you don't see the options listed there, try adjusting the `fields` array and/or refreshing your GraphiQL tab.
 
 ### Using WPGraphQL
 
@@ -87,4 +87,4 @@ The WPGraphQL plugin is also undergoing significant changes. It has not yet hit 
 - [`gatsby-theme-woocommerce`](/packages/@ccerda0520/gatsby-theme-woocommerce/)
 - [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce)
 - [experimental `gatsby-source-wordpress` starter](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
-- [Sourcing from WordPress](/docs/sourcing-from-wordpress/)
+- [Sourcing from WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/)

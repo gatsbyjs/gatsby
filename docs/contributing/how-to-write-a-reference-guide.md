@@ -22,7 +22,7 @@ The Gatsby docs include multiple types of guides. They mostly follow the same fo
 - [Conceptual Guides](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
   - As an example, "Plugins, Themes, and Starters" would be an overarching concept article, with individual reference guide sections for Plugin, Theme, and Starter docs.
 - [Gatsby Internals](/docs/gatsby-internals/): previously titled Behind the Scenes, these docs go in depth into how Gatsby works under the hood.
-- [Using Gatsby Professionally](/docs/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
+- [Using Gatsby Professionally](/docs/using-gatsby-professionally/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
 
 ## What should a reference guide be about?
 

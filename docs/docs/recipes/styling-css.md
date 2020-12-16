@@ -40,7 +40,7 @@ import "./src/styles/global.css"
 
 ### Additional resources
 
-- More on [adding global styles without a layout component](/docs/global-css/#adding-global-styles-without-a-layout-component)
+- More on [adding global styles without a layout component](/docs/how-to/styling/global-css/#adding-global-styles-without-a-layout-component)
 
 ## Using global styles in a layout component
 
@@ -50,7 +50,7 @@ import "./src/styles/global.css"
 
 ### Directions
 
-You can add global styles to a [shared layout component](/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
+You can add global styles to a [shared layout component](/docs/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
 
 1. If you don't already have one, create a new directory in your site at `/src/components`.
 
@@ -88,8 +88,8 @@ export default function Home() {
 
 ### Additional resources
 
-- [Standard Styling with Global CSS Files](/docs/global-css/)
-- [More about layout components](/tutorial/part-three)
+- [Standard Styling with Global CSS Files](/docs/how-to/styling/global-css/)
+- [More about layout components](/docs/tutorial/part-three)
 
 ## Using Styled Components
 
@@ -168,7 +168,7 @@ export default function UsersList() {
 
 ### Additional resources
 
-- [More on Using Styled Components](/docs/styled-components/)
+- [More on Using Styled Components](/docs/how-to/styling/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
 ## Using CSS Modules
@@ -213,7 +213,7 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 ### Additional resources
 
-- More on [Using CSS Modules](/tutorial/part-two/#css-modules)
+- More on [Using CSS Modules](/docs/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ## Using Sass/SCSS
@@ -272,7 +272,7 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 - [Difference between `.sass` and `.scss`](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A more complete installation tutorial on Sass with some more explanations and more resources](/docs/sass/)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](/docs/how-to/styling/sass/)
 
 ## Adding a Local Font
 
@@ -308,7 +308,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Additional resources
 
-- More on [importing assets into files](/docs/importing-assets-into-files/)
+- More on [importing assets into files](/docs/how-to/images-and-media/importing-assets-into-files/)
 
 ## Using Emotion
 
@@ -383,7 +383,7 @@ export default function EmotionSample() {
 
 ### Additional resources
 
-- [Using Emotion in Gatsby](/docs/emotion/)
+- [Using Emotion in Gatsby](/docs/how-to/styling/emotion/)
 - [Emotion website](https://emotion.sh)
 - [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
 
@@ -394,7 +394,7 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 - A chosen font package from [Fontsource](https://github.com/fontsource/fontsource)
 
 ### Directions
@@ -437,7 +437,7 @@ Using [Font Awesome](https://fontawesome.com/) gives you access to thousands of 
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 - A [Gatsby site](/docs/quick-start)
 
 ### Directions
