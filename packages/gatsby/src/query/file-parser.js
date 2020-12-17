@@ -92,10 +92,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
         ast = tmp
         break
       } catch (error) {
-        boundActionCreators.queryExtractionGraphQLError({
-          componentPath: filePath,
-        })
-        continue
+        // We emit the actual error below if every transpiled variant fails to parse
       }
     }
     if (ast === undefined) {
