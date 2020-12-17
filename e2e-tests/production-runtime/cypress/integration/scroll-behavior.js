@@ -48,7 +48,7 @@ describe(`Scroll behaviour`, () => {
       cy.go(`forward`).waitForRouteChange()
 
       cy.window().then(updatedWindow => {
-        expect(updatedWindow.scrollY).not.to.eq(idScrollY)
+        expect(updatedWindow.scrollY).to.eq(idScrollY)
       })
     })
   })

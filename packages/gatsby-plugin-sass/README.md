@@ -4,7 +4,7 @@ Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
-`npm install node-sass gatsby-plugin-sass`
+`npm install sass gatsby-plugin-sass`
 
 ## How to use
 
@@ -64,10 +64,10 @@ plugins: [
 
 ### Alternative Sass Implementations
 
-By default the node implementation of Sass (`node-sass`) is used. To use the implementation written in Dart (`dart-sass`), you can install `sass` instead of `node-sass` and pass it into the options as the implementation:
+By default, the Dart implementation of Sass (`sass`) is used. To use the implementation written in Node (`node-sass`), you can install `node-sass` instead of `sass` and pass it into the options as the implementation:
 
 ```shell
-npm install --save-dev sass
+npm install node-sass
 ```
 
 ```javascript:title=gatsby-config.js
@@ -75,7 +75,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      implementation: require("sass"),
+      implementation: require("node-sass"),
     },
   },
 ]
@@ -209,6 +209,10 @@ plugins: [
 ## Breaking changes history
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
+
+### v3.0.0
+
+- `sass-loader` is updated to v10 which adds support for `node-sass@^5.0.0` but also switches the default `implementation` to `sass`. webpack also recommends using `sass` so this is reflected in the documentation here, too. In the [deprecation notice of node-sass](https://sass-lang.com/blog/libsass-is-deprecated#how-do-i-migrate) it is noted that switching from `node-sass` to `sass` is straightforward as both packages use the same JavaScript API.
 
 ### v2.0.0
 

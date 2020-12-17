@@ -16,9 +16,13 @@ import report from "./reporter"
 import { setStore } from "./reporter/redux"
 import { getLocalGatsbyVersion } from "./util/version"
 import { initStarter } from "./init-starter"
+import { login } from "./login"
+import { logout } from "./logout"
+import { whoami } from "./whoami"
 import { recipesHandler } from "./recipes"
 import { getPackageManager, setPackageManager } from "./util/package-manager"
 import reporter from "./reporter"
+import pluginHandler from "./handlers/plugin"
 
 const handlerP = (fn: Function) => (...args: Array<unknown>): void => {
   Promise.resolve(fn(...args)).then(
@@ -401,16 +405,48 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     builder: yargs =>
       yargs
         .positional(`cmd`, {
-          choices: [`docs`],
-          describe: "Valid commands include `docs`.",
+          choices: [`docs`, `ls`],
+          describe: "Valid commands include `docs`, `ls`.",
           type: `string`,
         })
         .positional(`plugins`, {
           describe: `The plugin names`,
           type: `string`,
         }),
-    handler: getCommandHandler(`plugin`),
+    handler: async ({
+      cmd,
+    }: yargs.Arguments<{
+      cmd: string | undefined
+    }>) => {
+      await pluginHandler(siteInfo.directory, cmd)
+    },
   })
+
+  if (process.env.GATSBY_EXPERIMENTAL_CLOUD_CLI) {
+    cli.command({
+      command: `login`,
+      describe: `Log in to Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await login()
+      }),
+    })
+
+    cli.command({
+      command: `logout`,
+      describe: `Sign out of Gatsby Cloud.`,
+      handler: handlerP(async () => {
+        await logout()
+      }),
+    })
+
+    cli.command({
+      command: `whoami`,
+      describe: `Gives the username of the current logged in user.`,
+      handler: handlerP(async () => {
+        await whoami()
+      }),
+    })
+  }
 }
 
 function isLocalGatsbySite(): boolean {
@@ -504,11 +540,7 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
         const rootPathStr = rootPath ? String(rootPath) : undefined
 
         // We only run the interactive CLI when there are no arguments passed in
-        if (
-          process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW &&
-          !starterStr &&
-          !rootPathStr
-        ) {
+        if (!starterStr && !rootPathStr) {
           await runCreateGatsby()
         } else {
           await initStarter(starterStr, rootPathStr)

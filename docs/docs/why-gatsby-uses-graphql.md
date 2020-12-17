@@ -13,7 +13,7 @@ Without providing some context, it can seem like GraphQL is overkill for somethi
   lessonTitle="Create a Gatsby Page Without Any Data"
 />
 
-For any kind of pages that aren’t directly created in `src/pages/`, you’ll need Gatsby’s [`createPages` Node API](/docs/node-apis/#createPages) to create pages programmatically.
+For any kind of pages that aren’t directly created in `src/pages/`, you’ll need Gatsby’s [`createPages` Node API](/docs/reference/config-files/gatsby-node/#createPages) to create pages programmatically.
 
 All that’s required to create a page is a `path` where it should be created and the component that should be rendered there.
 
@@ -256,7 +256,7 @@ GATSBY_GRAPHQL_IDE=playground gatsby develop
 
 You can explore the available data schema using the “Docs” tab at the right.
 
-One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”.
+One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”. The `allProductsJson` option was created by the JSON transformer plugin ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/)).
 
 The JSON transformer plugin has created one node for each product, and inside the node you can select the data you need for that product.
 
@@ -317,7 +317,7 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
 }
 ```
 
-You need to use the `graphql` helper that’s available to the [`createPages` Node API](/docs/node-apis/#createPages) to execute the query. To make sure that the result of the query comes back before continuing, use [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
+You need to use the `graphql` helper that’s available to the [`createPages` Node API](/docs/reference/config-files/gatsby-node/#createPages) to execute the query. To make sure that the result of the query comes back before continuing, use [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
 
 The results that come back are very similar to the contents of `data/products.json`, so you can loop through the results and create a page for each.
 

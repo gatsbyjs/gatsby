@@ -58,4 +58,4 @@ A Node for each plugin in your `gatsby-config.js` that contains the full content
 
 ### SitePage
 
-Internal Data Bridge implements [onCreatePage](/docs/node-apis/#onCreatePage) and creates a node of type `SitePage` that represents the created Page. Which allows you to introspect all pages created for your site.
+Internal Data Bridge implements [onCreatePage](/docs/reference/config-files/gatsby-node/#onCreatePage) and creates a node of type `SitePage` that represents the created Page. Which allows you to introspect all pages created for your site.

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.8.0-next.0...gatsby-plugin-page-creator@2.8.0-next.1) (2020-12-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** add missing telemetry dependency ([#28652](https://github.com/gatsbyjs/gatsby/issues/28652)) ([a13827f](https://github.com/gatsbyjs/gatsby/commit/a13827f1bea8282fa3ba85f73b4cdc910338b066))
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.7.0-next.1...gatsby-plugin-page-creator@2.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.7.0-next.0...gatsby-plugin-page-creator@2.7.0-next.1) (2020-12-08)
+
+### Features
+
+- **gatsby-plugin-page-creator:** Add slugify option ([#28485](https://github.com/gatsbyjs/gatsby/issues/28485)) ([721f42a](https://github.com/gatsbyjs/gatsby/commit/721f42aa210943a5cfe9b08fe93ad31ae315c447))
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.6.0-next.0...gatsby-plugin-page-creator@2.7.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** use graphql from gatsby ([#28256](https://github.com/gatsbyjs/gatsby/issues/28256)) ([e797658](https://github.com/gatsbyjs/gatsby/commit/e7976580111c4baa15db8170abf2ae792f94bb9c))
+
 # [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.5.0-next.0...gatsby-plugin-page-creator@2.6.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

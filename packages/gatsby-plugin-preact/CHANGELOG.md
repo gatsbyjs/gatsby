@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.5.0-next.0...gatsby-plugin-preact@4.5.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.4.0-next.0...gatsby-plugin-preact@4.5.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.3.0-next.0...gatsby-plugin-preact@4.4.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
 # [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.2.0-next.0...gatsby-plugin-preact@4.3.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-preact

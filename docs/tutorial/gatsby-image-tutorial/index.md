@@ -372,6 +372,6 @@ So that's it. This post included a number of different possible use cases, so do
 
 ## Other resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
+- [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image/)
 - [Other image and media techniques in Gatsby](/docs/images-and-files/)

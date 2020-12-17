@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
-    "gatsby": "^2.4.4",
+    "gatsby": "^2.27.1",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-image": "^0.0.2",
     "gatsby-plugin-manifest": "^2.0.17",
@@ -18,8 +18,8 @@
     "gatsby-transformer-sharp": "^2.1.19",
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.2",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [
@@ -30,6 +30,7 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop:fast-refresh": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true GATSBY_HOT_LOADER=fast-refresh gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
@@ -39,15 +40,17 @@
     "reset:preview": "curl -X POST http://localhost:8000/__refresh",
     "update": "node scripts/update.js",
     "update:webhook": "node scripts/webhook.js",
+    "update:cms-webhook": "node scripts/cms-webhook.js",
     "update:preview": "curl -X POST -d '{ \"fake-data-update\": true }' -H \"Content-Type: application/json\" http://localhost:8000/__refresh",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
+    "start-server-and-debug": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
     "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^6.0.0",
+    "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
-    "cypress": "3.4.1",
+    "cypress": "6.1.0",
     "fs-extra": "^7.0.1",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
@@ -60,6 +63,6 @@
     "url": "https://github.com/gatsbyjs/gatsby"
   },
   "resolutions": {
-    "cypress": "3.4.1"
+    "cypress": "6.1.0"
   }
 }

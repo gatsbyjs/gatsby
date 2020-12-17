@@ -202,7 +202,8 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`,
         icon_options: {
-          // For all the options available, please see the additional resources below.
+          // For all the options available,
+          // please see the section "Additional Resources" below.
           purpose: `any maskable`,
         },
       },
@@ -444,11 +445,11 @@ Internet Explorer is the only other major browser that doesn't support the web a
 This article from the Chrome DevRel team is a good intro to the web app
 manifest — https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/).
+For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/). More information about `icon_options` can be found in [this Web.Dev guide](https://web.dev/maskable-icon/).
 
 ### Plugin options validation
 
-This plugin validates plugin options set in the `gatsby-config.js`. It validates the options used by the plugin and the entire WebAppManifest spec. To see the exact implementation of the validator see [src/pluginOptionsSchema.js](src/pluginOptionsSchema.js).
+This plugin validates plugin options set in the `gatsby-config.js`. It validates the options used by the plugin and the entire WebAppManifest spec. To see the exact implementation of the validator see [src/pluginOptionsSchema.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/src/pluginOptionsSchema.js).
 
 The WebAppManifest spec is not stable at the time of writing. This version of the validator adheres the [most recent](https://www.w3.org/TR/2020/WD-appmanifest-20201019/) version of the specification available.
 

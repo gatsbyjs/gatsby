@@ -117,23 +117,6 @@ aliases:
       - notify-status:
           condition: << parameters.nightly >>
 
-  e2e_tests_development_runtime_lazy_alias:
-    &e2e_tests_development_runtime_lazy_alias
-    <<: *e2e-executor
-    parameters:
-      nightly:
-        type: boolean
-        default: false
-    environment:
-      CYPRESS_PROJECT_ID: ihj5mz
-      CYPRESS_RECORD_KEY: 01acdce8-75bd-4280-9839-6cb215b2c84b
-    steps:
-      - e2e-test:
-          test_path: e2e-tests/lazy-development-runtime
-          skip_file_change_test: << parameters.nightly >>
-      - notify-status:
-          condition: << parameters.nightly >>
-
   e2e_tests_gatsby-image_alias: &e2e_tests_gatsby-image_alias
     <<: *e2e-executor
     parameters:
@@ -318,9 +301,6 @@ jobs:
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: ~/project/e2e-tests/gatsby-pnp
-      - run: # Pins the Yarn version
-          command: yarn set version 2.0.0-rc.32
-          working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ../..
           working_directory: ~/project/e2e-tests/gatsby-pnp
@@ -349,12 +329,13 @@ jobs:
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
 
-  e2e_tests_development_runtime_lazy_devjs:
+  e2e_tests_development_runtime_fast_refresh:
     <<: *e2e_tests_development_runtime_alias
     environment:
-      GATSBY_EXPERIMENT_LAZY_DEVJS: true
-      CYPRESS_PROJECT_ID: ihj5mz
-      CYPRESS_RECORD_KEY: 01acdce8-75bd-4280-9839-6cb215b2c84b
+      GATSBY_HOT_LOADER: fast-refresh
+      CYPRESS_HOT_LOADER: fast-refresh
+      CYPRESS_PROJECT_ID: 917bea
+      CYPRESS_RECORD_KEY: 4750fb36-4576-4638-a617-d243a381acef
 
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
@@ -393,6 +374,9 @@ jobs:
 
   mdx_e2e_tests:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: spbj28
+      CYPRESS_RECORD_KEY: af30ea46-121f-4fb7-97dd-f17ec224402e
     steps:
       - e2e-test:
           test_path: e2e-tests/mdx
@@ -400,6 +384,9 @@ jobs:
 
   e2e_tests_gatsby-static-image:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: zstawi
+      CYPRESS_RECORD_KEY: 389326a6-c0d2-4215-bc5e-3be29483ed13
     steps:
       - e2e-test:
           test_path: e2e-tests/gatsby-static-image
@@ -407,6 +394,9 @@ jobs:
 
   e2e_tests_visual-regression:
     <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: nz99aw
+      CYPRESS_RECORD_KEY: ed4b1af1-bd97-47d4-bb09-3cab2435a147
     steps:
       - e2e-test:
           test_path: e2e-tests/visual-regression
@@ -472,6 +462,9 @@ jobs:
       #     keys:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
+      - run:
+          name: Set yarn timeout
+          command: yarn config set network-timeout 300000
       - run:
           name: Install node modules
           command: yarn --frozen-lockfile
@@ -629,7 +622,7 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
-      - e2e_tests_development_runtime_lazy_devjs:
+      - e2e_tests_development_runtime_fast_refresh:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow
