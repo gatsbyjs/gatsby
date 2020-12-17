@@ -21,7 +21,7 @@ export const MainImage = forwardRef<HTMLImageElement, MainImageProps>(
         )}
         <Picture ref={ref} {...props} />
         <noscript>
-          <Picture ref={ref} {...props} shouldLoad={true} />
+          <Picture {...props} shouldLoad={true} />
         </noscript>
       </>
     )
