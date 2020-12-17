@@ -5,7 +5,7 @@ const searchIndex = client.initIndex(`npm-search`)
 exports.browse = ({ ...params }) => {
   let hits = []
 
-  searchIndex
+  return searchIndex
     .browseObjects({
       batch: batch => (hits = hits.concat(batch)),
       ...params,
