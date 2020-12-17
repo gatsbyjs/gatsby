@@ -57,6 +57,7 @@ describe(`Process contentful data (by name)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(id => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createNodesForContentType({
         contentTypeItem,
@@ -65,6 +66,7 @@ describe(`Process contentful data (by name)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -133,6 +135,7 @@ describe(`Process contentful data (by id)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(id => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createNodesForContentType({
         contentTypeItem,
@@ -141,6 +144,7 @@ describe(`Process contentful data (by id)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
