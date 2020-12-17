@@ -1056,6 +1056,7 @@ const createChildrenField = typeName => {
   return {
     [fieldNames.convenienceChildren(typeName)]: {
       type: () => [typeName],
+      description: `Returns all children nodes filtered by type ${typeName}`,
       resolve(source, args, context) {
         const { path } = context
         return context.nodeModel.getNodesByIds(
@@ -1071,6 +1072,7 @@ const createChildField = typeName => {
   return {
     [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
+      description: `Returns the first child node of type ${typeName}`,
       resolve(source, args, context) {
         const { path } = context
         const result = context.nodeModel.getNodesByIds(
