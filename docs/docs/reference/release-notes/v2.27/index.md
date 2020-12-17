@@ -82,7 +82,7 @@ We knew we needed to make this lazy and have shipped experimental support for th
 
 Now when you run `GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop`, webpack won't look at any of your page components until you visit them. You'll notice a slight (generally under 0.5s) delay when you first visit a page while webpack compiles it but thereafter, it'll be instantaneous.
 
-All sites should see some speedups but it's especially noticible for larger sites like gatsbyjs.com which now starts webpack 81% faster than before! Please test it out and tell us how fast your dev server boots up over at the [umbrella issue](https://github.com/gatsbyjs/gatsby/discussions/28137) along with any bugs you might run across.
+All sites should see some speedups but it's especially noticeable for larger sites like gatsbyjs.com which now starts webpack 81% faster than before! Please test it out and tell us how fast your dev server boots up over at the [umbrella issue](https://github.com/gatsbyjs/gatsby/discussions/28137) along with any bugs you might run across.
 
 ## gatsby-plugin-mdx@1.5.0
 
