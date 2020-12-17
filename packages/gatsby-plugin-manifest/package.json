@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-manifest",
   "description": "Gatsby plugin which adds a manifest.webmanifest to make sites progressive web apps",
-  "version": "2.10.0-next.0",
+  "version": "2.10.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "gatsby-core-utils": "^1.8.0-next.0",
-    "gatsby-plugin-utils": "^0.7.0-next.0",
+    "gatsby-plugin-utils": "^0.7.0-next.1",
     "semver": "^7.3.2",
     "sharp": "^0.26.3"
   },
