@@ -421,14 +421,10 @@ git remote add origin [GITHUB_REPOSITORY_URL]
 
 When you created a new Gatsby project with a starter, it automatically made an initial `git commit`, or a set of changes. 
 
-Since we created new files, you can add them to git.
+Since you created new files, you need to make a new commit to track those changes.
 
 ```shell
 git add .
-```
-
-And commit your changes.
-```shell
 git commit -m 'part one of tutorial'
 ```
 
