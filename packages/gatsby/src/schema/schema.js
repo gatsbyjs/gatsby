@@ -1072,7 +1072,9 @@ const createChildField = typeName => {
   return {
     [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
-      description: `Returns the first child node of type ${typeName}`,
+      description:
+        `Returns the first child node of type ${typeName} ` +
+        `or null if there are no children of given type on this node`,
       resolve(source, args, context) {
         const { path } = context
         const result = context.nodeModel.getNodesByIds(
