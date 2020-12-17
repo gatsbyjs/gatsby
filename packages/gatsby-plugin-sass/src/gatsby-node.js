@@ -19,7 +19,9 @@ exports.onCreateWebpackConfig = (
     loader: resolve(`sass-loader`),
     options: {
       sourceMap: useResolveUrlLoader ? true : !PRODUCTION,
-      ...sassOptions,
+      sassOptions: {
+        ...sassOptions,
+      },
     },
   }
 
