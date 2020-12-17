@@ -98,15 +98,15 @@ async function startQueryJob(
     }
   }, 15000)
 
-  try {
-    return await graphqlRunner.query(queryJob.query, queryJob.context, {
+  return graphqlRunner
+    .query(queryJob.query, queryJob.context, {
       parentSpan,
       queryName: queryJob.id,
     })
-  } finally {
-    isPending = false
-    clearTimeout(timeoutId)
-  }
+    .finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
 }
 
 export async function queryRunner(
