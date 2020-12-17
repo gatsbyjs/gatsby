@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.1...gatsby-plugin-image@0.5.0-next.2) (2020-12-17)
+
+### Features
+
+- **gatsby-plugin-image:** Make dimensions optional and default to constrained ([#28662](https://github.com/gatsbyjs/gatsby/issues/28662)) ([f24a23d](https://github.com/gatsbyjs/gatsby/commit/f24a23d5b1f24ab33aec7a8ac882dbbccdf7d01e))
+
+### Performance Improvements
+
+- **gatsby-plugin-image:** Handle disabled js, and add preload link ([#28669](https://github.com/gatsbyjs/gatsby/issues/28669)) ([8300236](https://github.com/gatsbyjs/gatsby/commit/83002365c4b9e7efdb69c354eee6894cbde975e4))
+
 # [0.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.0...gatsby-plugin-image@0.5.0-next.1) (2020-12-15)
 
 ### Bug Fixes

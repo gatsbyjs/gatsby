@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.1...gatsby-plugin-sharp@2.12.0-next.2) (2020-12-17)
+
+### Features
+
+- **gatsby-plugin-image:** Make dimensions optional and default to constrained ([#28662](https://github.com/gatsbyjs/gatsby/issues/28662)) ([f24a23d](https://github.com/gatsbyjs/gatsby/commit/f24a23d5b1f24ab33aec7a8ac882dbbccdf7d01e))
+
 # [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.0...gatsby-plugin-sharp@2.12.0-next.1) (2020-12-15)
 
 ### Bug Fixes

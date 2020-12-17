@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.2...create-gatsby@0.3.0-next.3) (2020-12-17)
+
+### Bug Fixes
+
+- **create-gatsby:** Switch dependency to sass ([#28655](https://github.com/gatsbyjs/gatsby/issues/28655)) ([a1f6e79](https://github.com/gatsbyjs/gatsby/commit/a1f6e79a4c8bb444381503fae0fadfe3bc4cbf9c))
+
 # [0.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.1...create-gatsby@0.3.0-next.2) (2020-12-16)
 
 ### Bug Fixes
