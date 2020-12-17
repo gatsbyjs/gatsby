@@ -25,10 +25,10 @@ Before you begin writing, make sure to read the rest of this style guide.
 Docs can cover a broad range of topics. Please see the following
 examples:
 
-- [Reference guides](/docs/add-404-page/)
+- [Reference guides](/docs/how-to/adding-common-features/add-404-page/)
 - [Reference guide overviews](/docs/styling/)
 - [Recipes](/docs/recipes/)
-- [Tutorials](/tutorial/part-one/)
+- [Tutorials](/docs/tutorial/part-one/)
 - [Plugin README](/packages/gatsby-source-filesystem/)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
@@ -170,7 +170,7 @@ When referencing another page within [gatsbyjs.com](https://www.gatsbyjs.com/) h
 
 <!-- Bad -->
 
-[Gatsby's glossary](https://www.gatsbyjs.com/docs/glossary)
+[Gatsby's glossary](/docs/glossary)
 ```
 
 Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)

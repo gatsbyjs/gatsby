@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.9.0-next.0...gatsby-remark-images@3.9.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.8.0-next.0...gatsby-remark-images@3.9.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** allow tracedSVG to accept object with settings ([#28242](https://github.com/gatsbyjs/gatsby/issues/28242)) ([23ecf2d](https://github.com/gatsbyjs/gatsby/commit/23ecf2d1daaeb8cce8f9530355f42aeea8e803fc))
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.7.0-next.0...gatsby-remark-images@3.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.6.0-next.1...gatsby-remark-images@3.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-remark-images
+
+# [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.6.0-next.0...gatsby-remark-images@3.6.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** adding missing plugin options ([#27944](https://github.com/gatsbyjs/gatsby/issues/27944)) ([08447bd](https://github.com/gatsbyjs/gatsby/commit/08447bd4d13b1f2246daca158d828c2b04482067))
+- **gatsby-remark-images:** allow showCaptions to accept array of valid strings ([#27998](https://github.com/gatsbyjs/gatsby/issues/27998)) ([3675467](https://github.com/gatsbyjs/gatsby/commit/367546756c9b2bd78ced98192acbe11c07d815cb))
+
 # [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@3.5.0-next.0...gatsby-remark-images@3.5.0-next.1) (2020-11-10)
 
 ### Bug Fixes

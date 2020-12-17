@@ -18,4 +18,4 @@ This means that the configuration and functionality isn’t directly written int
 
 - [Gatsby theme tutorials](/tutorial/plugin-and-theme-tutorials/)
 - [Gatsby blog posts on themes](/blog/tags/themes)
-- [Plugins, Themes, and Starters](/docs/plugins-themes-and-starters/)
+- [Plugins, Themes, and Starters](/docs/conceptual/plugins-themes-and-starters/)

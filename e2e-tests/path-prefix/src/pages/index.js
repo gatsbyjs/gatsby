@@ -7,7 +7,11 @@ import Layout from "../components/layout"
 const IndexPage = () => (
   <Layout>
     <h1>Hi people</h1>
-    <StaticImage src="../images/gatsby-icon.png" alt="Gatsby icon"/>
+    <StaticImage
+      src="../images/gatsby-icon.png"
+      alt="Gatsby icon"
+      layout="fixed"
+    />
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <Link data-testid="page-2-link" to="/page-2/">

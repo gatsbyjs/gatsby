@@ -174,13 +174,14 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
     await buildSchema()
     expect(report.warn).toBeCalledTimes(1)
-    expect(report.warn).toBeCalledWith(
-      `The type \`Parent\` does not explicitly define the field \`childChild\`.\n` +
-        `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
-        `extension set to \`false\`, automatically adding fields for ` +
-        `children types is deprecated.\n` +
-        `In Gatsby v3, only children fields explicitly set with the ` +
-        `\`childOf\` extension will be added.\n`
+    expect(report.warn.mock.calls[0][0]).toEqual(
+      `Deprecation warning: In Gatsby v3 field \`Parent.childChild\` will not be added automatically ` +
+        `because type \`Child\` does not explicitly list type \`Parent\` in \`childOf\` extension.\n` +
+        `Add the following type definition to fix this:\n\n` +
+        `  type Child implements Node @childOf(types: ["Parent"]) {\n` +
+        `    id: ID!\n` +
+        `  }\n\n` +
+        `https://www.gatsbyjs.com/docs/actions/#createTypes`
     )
   })
 

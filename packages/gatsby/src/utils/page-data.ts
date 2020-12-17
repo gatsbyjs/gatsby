@@ -6,6 +6,7 @@ import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
+import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
 
 import { IExecutionResult } from "../query/types"
 
@@ -22,6 +23,10 @@ export interface IPageDataWithQueryResult extends IPageData {
 
 export function fixedPagePath(pagePath: string): string {
   return pagePath === `/` ? `index` : pagePath
+}
+
+export function reverseFixedPagePath(pageDataRequestPath: string): string {
+  return pageDataRequestPath === `index` ? `/` : pageDataRequestPath
 }
 
 function getFilePath(publicDir: string, pagePath: string): string {
@@ -76,6 +81,7 @@ export async function writePageData(
     `json`,
     `${pagePath.replace(/\//g, `_`)}.json`
   )
+
   const outputFilePath = getFilePath(publicDir, pagePath)
   const result = await fs.readJSON(inputFilePath)
   const body = {
@@ -85,6 +91,7 @@ export async function writePageData(
     result,
     staticQueryHashes,
   }
+
   const bodyStr = JSON.stringify(body)
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
@@ -120,6 +127,7 @@ export async function flush(): Promise<void> {
     pages,
     program,
     staticQueriesByTemplate,
+    queries,
   } = store.getState()
 
   const { pagePaths } = pendingPageDataWrites
@@ -136,6 +144,28 @@ export async function flush(): Promise<void> {
     // them, a page might not exist anymore щ（ﾟДﾟщ）
     // This is why we need this check
     if (page) {
+      if (
+        program?._?.[0] === `develop` &&
+        process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      ) {
+        // check if already did run query for this page
+        // with query-on-demand we might have pending page-data write due to
+        // changes in static queries assigned to page template, but we might not
+        // have query result for it
+        const query = queries.trackedQueries.get(page.path)
+        if (!query) {
+          // this should not happen ever
+          throw new Error(
+            `We have a page, but we don't have registered query for it (???)`
+          )
+        }
+
+        if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
+          // query results are not written yet
+          continue
+        }
+      }
+
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 

@@ -13,6 +13,12 @@ Object {
     },
   },
   "deletedQueries": Set {},
+  "dirtyQueriesListToEmitViaWebsocket": Array [],
+  "queryNodes": Map {
+    "/hi/" => Set {
+      "SuperCoolNode",
+    },
+  },
   "trackedComponents": Map {},
   "trackedQueries": Map {},
 }

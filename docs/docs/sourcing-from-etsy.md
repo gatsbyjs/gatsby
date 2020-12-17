@@ -43,7 +43,7 @@ plugins: [
 
 ### Testing your queries
 
-Once you have everything set up, run `gatsby develop` to start your site locally. At that point, you should be able to query for data related to your featured listings in [GraphiQL](/docs/running-queries-with-graphiql/). As an example, the following query gets the total number of featured listings in the shop as well as the price, title, and description of each item.
+Once you have everything set up, run `gatsby develop` to start your site locally. At that point, you should be able to query for data related to your featured listings in [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/). As an example, the following query gets the total number of featured listings in the shop as well as the price, title, and description of each item.
 
 ```graphql
 allFeaturedEtsyListing {

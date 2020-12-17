@@ -1,3 +1,5 @@
+const { Potrace } = require(`potrace`)
+
 exports.pluginOptionsSchema = function ({ Joi }) {
   return Joi.object({
     maxWidth: Joi.number()
@@ -10,7 +12,14 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Add a link to each image to the original image. Sometimes people want to see a full-sized version of an image e.g. to see extra detail on a part of the image and this is a convenient and common pattern for enabling this. Set this option to false to disable this behavior.`
       ),
-    showCaptions: Joi.boolean()
+    showCaptions: Joi.alternatives()
+      .try(
+        Joi.boolean(),
+        Joi.array().items(
+          Joi.string().valid(`title`),
+          Joi.string().valid(`alt`)
+        )
+      )
       .default(false)
       .description(
         `Add a caption to each image with the contents of the title attribute, when this is not empty. If the title attribute is empty but the alt attribute is not, it will be used instead. Set this option to true to enable this behavior. You can also pass an array instead to specify which value should be used for the caption — for example, passing ['alt', 'title'] would use the alt attribute first, and then the title. When this is set to true it is the same as passing ['title', 'alt']. If you just want to use the title (and omit captions for images that have alt attributes but no title), pass ['title'].`
@@ -39,12 +48,49 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     quality: Joi.number()
       .default(50)
       .description(`The quality level of the generated files.`),
-    withWebp: Joi.boolean()
+    withWebp: Joi.alternatives()
+      .try(Joi.object({ quality: Joi.number() }), Joi.boolean())
       .default(false)
       .description(
         `Additionally generate WebP versions alongside your chosen file format. They are added as a srcset with the appropriate mimetype and will be loaded in browsers that support the format. Pass true for default support, or an object of options to specifically override those for the WebP files. For example, pass { quality: 80 } to have the WebP images be at quality level 80.`
       ),
-    tracedSVG: Joi.boolean()
+    tracedSVG: Joi.alternatives()
+      .try(
+        Joi.boolean(),
+        Joi.object({
+          turnPolicy: Joi.string()
+            .valid(
+              // this plugin also allow to use key names and not exact values
+              `TURNPOLICY_BLACK`,
+              `TURNPOLICY_WHITE`,
+              `TURNPOLICY_LEFT`,
+              `TURNPOLICY_RIGHT`,
+              `TURNPOLICY_MINORITY`,
+              `TURNPOLICY_MAJORITY`,
+              // it also allow using actual policy values
+              Potrace.TURNPOLICY_BLACK,
+              Potrace.TURNPOLICY_WHITE,
+              Potrace.TURNPOLICY_LEFT,
+              Potrace.TURNPOLICY_RIGHT,
+              Potrace.TURNPOLICY_MINORITY,
+              Potrace.TURNPOLICY_MAJORITY
+            )
+            .default(Potrace.TURNPOLICY_MAJORITY),
+          turdSize: Joi.number().default(100),
+          alphaMax: Joi.number(),
+          optCurve: Joi.boolean().default(true),
+          optTolerance: Joi.number().default(0.4),
+          threshold: Joi.alternatives()
+            .try(
+              Joi.number().min(0).max(255),
+              Joi.number().valid(Potrace.THRESHOLD_AUTO)
+            )
+            .default(Potrace.THRESHOLD_AUTO),
+          blackOnWhite: Joi.boolean().default(true),
+          color: Joi.string().default(`lightgray`),
+          background: Joi.string().default(`transparent`),
+        })
+      )
       .default(false)
       .description(
         `Use traced SVGs for placeholder images instead of the “blur up” effect. Pass true for traced SVGs with the default settings (seen here), or an object of options to override the default. For example, pass { color: "#F00", turnPolicy: "TURNPOLICY_MAJORITY" } to change the color of the trace to red and the turn policy to TURNPOLICY_MAJORITY. See node-potrace parameter documentation for a full listing and explanation of the available options.`

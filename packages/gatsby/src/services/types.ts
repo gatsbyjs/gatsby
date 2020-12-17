@@ -28,6 +28,7 @@ export interface IBuildContext {
   graphqlRunner?: GraphQLRunner
   queryIds?: IGroupedQueryIds
   webhookBody?: Record<string, unknown>
+  webhookSourcePluginName?: string
   refresh?: boolean
   workerPool?: JestWorker
   app?: Express
@@ -41,4 +42,5 @@ export interface IBuildContext {
   webpackListener?: Actor<unknown, AnyEventObject>
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
+  pendingQueryRuns?: Set<string>
 }

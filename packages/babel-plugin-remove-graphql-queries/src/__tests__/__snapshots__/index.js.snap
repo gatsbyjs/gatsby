@@ -23,7 +23,7 @@ const Test = () => /*#__PURE__*/React.createElement(StaticQuery, {
 });
 
 export default Test;
-export const fragment = \\"4176178832\\";"
+const fragment = \\"4176178832\\";"
 `;
 
 exports[`Handles closing StaticQuery tag 1`] = `
@@ -58,8 +58,8 @@ export default (() => {
 
 exports[`Removes all gatsby queries 1`] = `
 "export default (() => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title));
-export const siteMetaQuery = \\"504726680\\";
-export const query = \\"3211238532\\";"
+const siteMetaQuery = \\"504726680\\";
+const query = \\"3211238532\\";"
 `;
 
 exports[`Transformation does not break custom hooks 1`] = `
@@ -158,7 +158,7 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 }));"
 `;
 
-exports[`Transforms queries in page components 1`] = `"export const query = \\"426988268\\";"`;
+exports[`Transforms queries in page components 1`] = `"const query = \\"426988268\\";"`;
 
 exports[`Transforms queries in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
@@ -169,7 +169,7 @@ export default (() => {
 });"
 `;
 
-exports[`allows the global tag 1`] = `"export const query = \\"426988268\\";"`;
+exports[`allows the global tag 1`] = `"const query = \\"426988268\\";"`;
 
 exports[`distinguishes between the right tags 1`] = `
 "const foo = styled('div')\`
@@ -195,16 +195,16 @@ const pulse = keyframes\`
       animation-timing-function: ease-out;
     }
   \`;
-export const query = \\"426988268\\";"
+const query = \\"426988268\\";"
 `;
 
-exports[`handles import aliasing 1`] = `"export const query = \\"426988268\\";"`;
+exports[`handles import aliasing 1`] = `"const query = \\"426988268\\";"`;
 
-exports[`handles require 1`] = `"export const query = \\"426988268\\";"`;
+exports[`handles require 1`] = `"const query = \\"426988268\\";"`;
 
-exports[`handles require alias 1`] = `"export const query = \\"426988268\\";"`;
+exports[`handles require alias 1`] = `"const query = \\"426988268\\";"`;
 
-exports[`handles require namespace 1`] = `"export const query = \\"426988268\\";"`;
+exports[`handles require namespace 1`] = `"const query = \\"426988268\\";"`;
 
 exports[`transforms exported variable queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";

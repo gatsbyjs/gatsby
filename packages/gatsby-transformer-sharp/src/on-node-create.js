@@ -1,7 +1,7 @@
 const { supportedExtensions } = require(`./supported-extensions`)
 
 function unstable_shouldOnCreateNode({ node }) {
-  return !!supportedExtensions[node.extension]
+  return node.internal.type === `File` && !!supportedExtensions[node.extension]
 }
 
 module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode

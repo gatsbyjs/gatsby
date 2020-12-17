@@ -1,5 +1,6 @@
 import execa, { sync } from "execa"
 import { join } from "path"
+import strip from "strip-ansi"
 import { createLogsMatcher } from "./matcher"
 
 const gatsbyBinLocation = join(
@@ -23,12 +24,12 @@ export const GatsbyCLI = {
 
           return [
             results.exitCode,
-            createLogsMatcher(results.stdout.toString().split("\n")),
+            createLogsMatcher(strip(results.stdout.toString())),
           ]
         } catch (err) {
           return [
             err.exitCode,
-            createLogsMatcher(err.stdout?.toString().split("\n") || ``),
+            createLogsMatcher(strip(err.stdout?.toString() || ``)),
           ]
         }
       },
@@ -40,13 +41,13 @@ export const GatsbyCLI = {
           env: { NODE_ENV, CI: 1, GATSBY_LOGGER: `ink` },
         })
 
-        const logs = []
+        let logs = ``
         res.stdout.on("data", data => {
           if (!res.killed) {
-            logs.push(data.toString())
+            logs += data.toString()
           }
 
-          if (onExit && onExit(data.toString())) {
+          if (onExit && onExit(strip(logs))) {
             res.cancel()
           }
         })
@@ -59,7 +60,7 @@ export const GatsbyCLI = {
 
             throw err
           }),
-          () => createLogsMatcher(logs),
+          () => createLogsMatcher(strip(logs)),
         ]
       },
     }
