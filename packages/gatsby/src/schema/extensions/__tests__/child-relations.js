@@ -167,7 +167,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node {
           id: ID!
         }
-        type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
+        type AnotherChild implements Node @childOf(types: ["Parent"]) {
           id: ID!
         }
       `)
@@ -175,7 +175,8 @@ describe(`Define parent-child relationships with field extensions`, () => {
     await buildSchema()
     expect(report.warn).toBeCalledTimes(1)
     expect(report.warn.mock.calls[0][0]).toEqual(
-      `Deprecation warning: In Gatsby v3 field \`Parent.childChild\` will not be added automatically ` +
+      `Deprecation warning: In Gatsby v3 fields \`Parent.childChild\` and \`Parent.childrenChild\` ` +
+        `will not be added automatically ` +
         `because type \`Child\` does not explicitly list type \`Parent\` in \`childOf\` extension.\n` +
         `Add the following type definition to fix this:\n\n` +
         `  type Child implements Node @childOf(types: ["Parent"]) {\n` +
@@ -185,19 +186,19 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
   })
 
-  it(`adds child fields to parent type with childOf(many: true) extension`, async () => {
+  it(`adds children[Field] field to parent type with childOf extension`, async () => {
     dispatch(
       createTypes(`
         type Parent implements Node @dontInfer {
           id: ID!
         }
-        type Child implements Node @childOf(types: ["Parent"], many: true) {
+        type Child implements Node @childOf(types: ["Parent"]) {
           id: ID!
         }
-        type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
+        type AnotherChild implements Node @childOf(types: ["Parent"]) {
           id: ID!
         }
-        type ChildWithoutNodes implements Node @childOf(types: ["Parent"], many: true) {
+        type ChildWithoutNodes implements Node @childOf(types: ["Parent"]) {
           id: ID!
         }
       `)
@@ -209,10 +210,12 @@ describe(`Define parent-child relationships with field extensions`, () => {
     // expect(parentFields.childChild).toBeUndefined() // Deprecated, see above
     expect(parentFields.childrenAnotherChild).toBeDefined()
     expect(parentFields.childrenAnotherChild.resolve).toBeDefined()
-    expect(parentFields.childAnotherChild).toBeUndefined()
+    expect(parentFields.childAnotherChild).toBeDefined()
+    expect(parentFields.childAnotherChild.resolve).toBeDefined()
     expect(parentFields.childrenChildWithoutNodes).toBeDefined()
     expect(parentFields.childrenChildWithoutNodes.resolve).toBeDefined()
-    expect(parentFields.childChildWithoutNodes).toBeUndefined()
+    expect(parentFields.childChildWithoutNodes).toBeDefined()
+    expect(parentFields.childChildWithoutNodes.resolve).toBeDefined()
   })
 
   it(`shows error when childOf extension is used on type that does not implement the Node interface`, async () => {
@@ -239,7 +242,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(types: ["Parent"]) {
           name: String
         }
-        type AnotherChild implements Node @childOf(types: ["Parent"], many: true) {
+        type AnotherChild implements Node @childOf(types: ["Parent"]) {
           name: String
         }
         type ChildWithoutNodes implements Node @childOf(types: ["Parent"]) {
@@ -330,7 +333,6 @@ describe(`Define parent-child relationships with field extensions`, () => {
           extensions: {
             childOf: {
               types: [`Parent`],
-              many: true,
             },
           },
         }),
@@ -411,7 +413,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           id: ID!
         }
-        type AnotherChild implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"], many: true) {
+        type AnotherChild implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           id: ID!
         }
         type ChildWithoutNodes implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
@@ -423,23 +425,29 @@ describe(`Define parent-child relationships with field extensions`, () => {
     const parentFields = schema.getType(`Parent`).getFields()
     expect(parentFields.childChild).toBeDefined()
     expect(parentFields.childChild.resolve).toBeDefined()
-    expect(parentFields.childrenChild).toBeUndefined()
+    expect(parentFields.childrenChild).toBeDefined()
+    expect(parentFields.childrenChild.resolve).toBeDefined()
     expect(parentFields.childrenAnotherChild).toBeDefined()
     expect(parentFields.childrenAnotherChild.resolve).toBeDefined()
-    expect(parentFields.childAnotherChild).toBeUndefined()
+    expect(parentFields.childAnotherChild).toBeDefined()
+    expect(parentFields.childAnotherChild.resolve).toBeDefined()
     expect(parentFields.childChildWithoutNodes).toBeDefined()
     expect(parentFields.childChildWithoutNodes.resolve).toBeDefined()
-    expect(parentFields.childChildrenWithoutNodes).toBeUndefined()
+    expect(parentFields.childrenChildWithoutNodes).toBeDefined()
+    expect(parentFields.childrenChildWithoutNodes.resolve).toBeDefined()
     const relativeFields = schema.getType(`Relative`).getFields()
     expect(relativeFields.childChild).toBeDefined()
     expect(relativeFields.childChild.resolve).toBeDefined()
-    expect(relativeFields.childrenChild).toBeUndefined()
+    expect(relativeFields.childrenChild).toBeDefined()
+    expect(relativeFields.childrenChild.resolve).toBeDefined()
     expect(relativeFields.childrenAnotherChild).toBeDefined()
     expect(relativeFields.childrenAnotherChild.resolve).toBeDefined()
-    expect(relativeFields.childAnotherChild).toBeUndefined()
+    expect(relativeFields.childAnotherChild).toBeDefined()
+    expect(relativeFields.childAnotherChild.resolve).toBeDefined()
     expect(relativeFields.childChildWithoutNodes).toBeDefined()
     expect(relativeFields.childChildWithoutNodes.resolve).toBeDefined()
-    expect(relativeFields.childChildrenWithoutNodes).toBeUndefined()
+    expect(relativeFields.childrenChildWithoutNodes).toBeDefined()
+    expect(relativeFields.childrenChildWithoutNodes.resolve).toBeDefined()
   })
 
   it(`returns correct query results for mime-types`, async () => {
@@ -454,7 +462,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           name: String
         }
-        type AnotherChild implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"], many: true) {
+        type AnotherChild implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           name: String
         }
         type ChildWithoutNodes implements Node @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
@@ -533,7 +541,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Child implements Node @childOf(types: ["Relative"], mimeTypes: ["application/listenup"]) {
           name: String
         }
-        type AnotherChild implements Node @childOf(types: ["Relative"], mimeTypes: ["multipart/related"], many: true) {
+        type AnotherChild implements Node @childOf(types: ["Relative"], mimeTypes: ["multipart/related"]) {
           name: String
         }
       `)
@@ -598,7 +606,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Relative implements Node @dontInfer @mimeTypes(types: ["multipart/related"]) {
           id: ID!
         }
-        interface NextGeneration @nodeInterface @childOf(mimeTypes: ["application/listenup", "multipart/related"], many: true) {
+        interface NextGeneration @nodeInterface @childOf(mimeTypes: ["application/listenup", "multipart/related"]) {
           id: ID!
           name: String
         }
@@ -688,7 +696,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
         type Parent implements Node & Ancestors {
           id: ID!
         }
-        type AnotherChild implements Node @childOf(types: ["Ancestors"], many: true) {
+        type AnotherChild implements Node @childOf(types: ["Ancestors"]) {
           name: String
         }
       `)
