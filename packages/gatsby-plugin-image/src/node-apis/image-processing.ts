@@ -91,7 +91,7 @@ export async function writeImages({
           return
         }
         const type = file.internal.mediaType?.split(`/`)[1]
-        if (!type || supportedTypes.includes(type)) {
+        if (!type || !supportedTypes.includes(type)) {
           reporter.error(
             `The file loaded from ${src} is not a valid image type. Found "${
               file.internal.mediaType || `unknown`
