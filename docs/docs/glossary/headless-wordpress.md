@@ -7,7 +7,7 @@ Learn what <q>headless WordPress</q> means, how it differs from other ways of us
 
 ## What is Headless WordPress?
 
-_Headless WordPress_ is the practice of using WordPress as a [headless CMS](/docs/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Headless WordPress takes advantage of the WordPress REST API to separate its content from the frontend that displays it.
+_Headless WordPress_ is the practice of using WordPress as a [headless CMS](/docs/how-to/sourcing-data/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Headless WordPress takes advantage of the WordPress REST API to separate its content from the frontend that displays it.
 
 > Note: WordPress has two products: an open source, self-hosted package that you can [download](https://wordpress.org/) from WordPress.org; and a hosted service, [WordPress.com](https://wordpress.com/). This article applies to both.
 
@@ -15,7 +15,7 @@ Most WordPress installations use _themes_, which are a collection of template fi
 
 The WordPress REST API, on the other hand, returns JSON instead of HTML. Using a content API gives you more flexibility around what kind of frontend you use: vanilla JavaScript, a native mobile application, your Gatsby site, or all of the above.
 
-Gatsby [supports WordPress](/docs/sourcing-from-wordpress/) as a content source with the [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/) plugin. As with Gatsby, you can install the `gatsby-source-wordpress` plugin using [npm](/docs/glossary/#npm):
+Gatsby [supports WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/) as a content source with the [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/) plugin. As with Gatsby, you can install the `gatsby-source-wordpress` plugin using [npm](/docs/glossary/#npm):
 
 ```shell
 npm install gatsby-source-wordpress

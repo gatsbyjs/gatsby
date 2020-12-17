@@ -111,7 +111,7 @@ const width = 300
 
 ### API
 
-The only required prop is `src`. The default type is `fixed`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
+The only required prop is `src`. The default type is `constrained`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
 
 ## GatsbyImage
 
@@ -119,7 +119,7 @@ Speedy, optimized images without the work.
 
 GatsbyImage is a React component specially designed to give your users a great image experience. It combines speed and best practices.
 
-Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. You can also build your own GatsbyImage component with the utilities we export from this package.
+Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container.
 
 ## Table of Contents
 
@@ -224,35 +224,37 @@ export const query = graphql`
 `
 ```
 
+If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`. Note that `src` will be undefined if a .png or .jpg image is not available.
+
 ### Upgrading from the gatsby-image@2
 
-We will be releasing a codemod to automatically update your queries and imports. In the meantime, you can use the compat layer to make the transformation easier. This will be removed when we leave beta, but for now, it allows you to try the component with your existing queries.
+We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
 
-```jsx
-import React from "react"
-import { graphql } from "gatsby"
-// Note the different import
-import { GatsbyImage } from "gatsby-plugin-image/compat"
-
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <GatsbyImage fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
-
-export const query = graphql`
-  query {
-    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
-      childImageSharp {
-        fixed(width: 125, height: 125) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-  }
-`
+```shell
+npx gatsby-codemods gatsby-plugin-image <path>
 ```
+
+`path` is not required and will default to the directory you're currently in.
+
+Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extensions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
+
+**If you have a custom babel config for your site, run in the root directory, otherwise `./src` is sufficient.**
+
+Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
+
+If you need to run with custom flags, you can install [jscodeshift](https://github.com/facebook/jscodeshift) globally and `gatsby-codemods` in your project. Then `jscodeshift -t node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js .` will transform your current directory and you can pass any valid jscodeshift flags.
+
+After the code is modified, be sure to install and configure everything needed to use `gatsby-plugin-image.`
+
+1. Install this package
+
+```shell
+npm install gatsby-plugin-image
+```
+
+2. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
+
+3. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
 
 ## Three types of responsive images
 
@@ -327,9 +329,9 @@ These arguments can be passed to the `gatsbyImageData()` resolver:
   - `NONE`: no placeholder. Set "background" to use a fixed background color.
   - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
 - **layout**: The layout for the image.
-  - `FIXED`: (default) A static image size, that does not resize according to the screen width
+  - `CONSTRAINED`: (default) Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+  - `FIXED`: A static image size, that does not resize according to the screen width
   - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
-  - `CONSTRAINED`: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
 - **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
   Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
 - **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.

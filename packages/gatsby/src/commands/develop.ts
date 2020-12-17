@@ -204,6 +204,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
 
+  const rootFile = (file: string): string => path.join(program.directory, file)
+
+  // Require gatsby-config.js before accessing process.env, to enable the user to change
+  // environment variables from the config file.
+  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+
   // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
   // when the browser should prompt the user to restart the develop process.
   // This port is randomized by default and in most cases should never be required to configure.
@@ -403,10 +409,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
-  const rootFile = (file: string): string => path.join(program.directory, file)
-
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
-  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
   let watcher: chokidar.FSWatcher = null
 
   if (!isCI()) {

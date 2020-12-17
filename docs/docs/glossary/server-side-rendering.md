@@ -40,7 +40,7 @@ Instead of purely server-side rendering, Gatsby uses the same APIs to create sta
 
 ### Learn more
 
-- [Gatsby Server Rendering APIs](/docs/ssr-apis/)
+- [Gatsby Server Rendering APIs](/docs/reference/config-files/gatsby-ssr/)
 
 - [Why server-side render?](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#why-server-side-render) from _Behind the Scenes: What makes Gatsby Great_
 

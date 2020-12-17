@@ -463,6 +463,9 @@ jobs:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
       - run:
+          name: Set yarn timeout
+          command: yarn config set network-timeout 300000
+      - run:
           name: Install node modules
           command: yarn --frozen-lockfile
       # Caching is slow, so disabling

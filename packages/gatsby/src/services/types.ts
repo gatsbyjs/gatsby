@@ -28,6 +28,7 @@ export interface IBuildContext {
   graphqlRunner?: GraphQLRunner
   queryIds?: IGroupedQueryIds
   webhookBody?: Record<string, unknown>
+  webhookSourcePluginName?: string
   refresh?: boolean
   workerPool?: JestWorker
   app?: Express

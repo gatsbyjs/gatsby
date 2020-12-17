@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.7.0-next.0...gatsby-transformer-documentationjs@4.8.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- **documentationjs:** fix example caption string ([#27365](https://github.com/gatsbyjs/gatsby/issues/27365)) ([dd3c402](https://github.com/gatsbyjs/gatsby/commit/dd3c402689457a73a66a4de8a3a811dd3856b835))
+
 # [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.6.0-next.0...gatsby-transformer-documentationjs@4.7.0-next.0) (2020-11-26)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

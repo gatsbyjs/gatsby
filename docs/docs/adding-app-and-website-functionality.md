@@ -17,13 +17,13 @@ Gatsby allows you to orchestrate data fetching, transforming, and usage in pages
 
 ## How hydration makes apps possible
 
-Even though Gatsby generates static files, Gatsby apps [rehydrate](/docs/glossary#hydration) from static HTML rendered by ReactDOM APIs into an app running client-side JavaScript. The general approach as outlined in the [React Hydration guide](/docs/react-hydration) is as follows:
+Even though Gatsby generates static files, Gatsby apps [rehydrate](/docs/glossary#hydration) from static HTML rendered by ReactDOM APIs into an app running client-side JavaScript. The general approach as outlined in the [React Hydration guide](/docs/conceptual/react-hydration) is as follows:
 
 1. Build and render static HTML, creating content and pages with data injected at build time
 2. Invoke `ReactDOM.hydrate()` method to pick up where the static HTML was left
 3. Transfer rendering to the React reconciler
 
-It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching/), [authenticate users](/docs/building-a-site-with-authentication/), and perform all the app-like functionality you desire because the page is running a React application.
+It's this last phase that bridges the gap between static sites and full-fledged applications. In this phase you can make calls for [dynamic data](/docs/client-data-fetching/), [authenticate users](/docs/how-to/adding-common-features/building-a-site-with-authentication/), and perform all the app-like functionality you desire because the page is running a React application.
 
 ## Common patterns for Gatsby apps
 
@@ -33,7 +33,7 @@ Because all Gatsby pages are hydrated into React, **any of the following pattern
 
 ### Static pages
 
-Static files are output by running `gatsby build` from exported components in your `src/pages` folder or from pages created using the [`createPage` API](/docs/node-apis/#createPages), as shown in this diagram:
+Static files are output by running `gatsby build` from exported components in your `src/pages` folder or from pages created using the [`createPage` API](/docs/reference/config-files/gatsby-node/#createPages), as shown in this diagram:
 
 ![Static Site diagram with pages created from Gatsby automatically and programmatically](./images/simple-static-site.png)
 
@@ -62,7 +62,7 @@ Following a pattern like this means you are relying on a [backend](/docs/glossar
 
 Using a React-based client-side router is also supported by Gatsby. This pattern is often referred to as client only routes, which are routes not reflected in your statically rendered files. Gatsby ships with `@reach/router`, so it is a great option to keep your site from having to ship additional JavaScript with another routing library.
 
-With Gatsby, you can import a router and set up routes for navigation the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder. As a result, in order to allow users to access that URL directly, you can use a plugin to create those pages. This is covered in the [Client Only Routes](/docs/client-only-routes-and-user-authentication/) guide.
+With Gatsby, you can import a router and set up routes for navigation the same way you would in traditional React apps. The only difference is Gatsby doesn't build those routes into individual pages in the `/public` folder. As a result, in order to allow users to access that URL directly, you can use a plugin to create those pages. This is covered in the [Client Only Routes](/docs/how-to/routing/client-only-routes-and-user-authentication/) guide.
 
 The following diagram shows how a `<Router />` component can be mounted on a page. In this example, `src/pages/app` references `<Route />`s.
 
@@ -78,7 +78,7 @@ There is a bit of a paradigm shift to overcome in understanding how a Gatsby app
 
 ### The global `App.js` component
 
-One main distinction explained in the diagrams in the section on [common patterns for Gatsby apps](#common-patterns-for-gatsby-apps) is the combination of hybrid and static pages that Gatsby offers vs one global `App.js` component. An app from Create React App will have exclusively client routes set up on one `App.js` component rendered at the root, which isn't unmounted. The `App.js` component is often the place in a React app where Theme Providers and Context are wrapped around the entire app so some data can be provided to all components or preserved between route changes. Gatsby has a root element that can be wrapped to preserve state or data between page navigation as well, but it is accessed through the [`wrapRootElement` API](/docs/browser-apis/#wrapRootElement) instead of being in a file in your `src` folder. Persistent UI elements can be wrapped around pages with the [`wrapPageElement` API](/docs/browser-apis/#wrapPageElement).
+One main distinction explained in the diagrams in the section on [common patterns for Gatsby apps](#common-patterns-for-gatsby-apps) is the combination of hybrid and static pages that Gatsby offers vs one global `App.js` component. An app from Create React App will have exclusively client routes set up on one `App.js` component rendered at the root, which isn't unmounted. The `App.js` component is often the place in a React app where Theme Providers and Context are wrapped around the entire app so some data can be provided to all components or preserved between route changes. Gatsby has a root element that can be wrapped to preserve state or data between page navigation as well, but it is accessed through the [`wrapRootElement` API](/docs/reference/config-files/gatsby-browser/#wrapRootElement) instead of being in a file in your `src` folder. Persistent UI elements can be wrapped around pages with the [`wrapPageElement` API](/docs/reference/config-files/gatsby-browser/#wrapPageElement).
 
 ### Page and route creation
 
