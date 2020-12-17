@@ -82,29 +82,24 @@ const checkDimensionProps: PropTypes.Validator<number> = (
   propName: keyof IStaticImageProps & IPrivateProps,
   ...rest
 ) => {
-  if (props.layout === `fluid` || props.layout === `constrained`) {
-    if (propName === `maxWidth` && !props[propName]) {
-      return new Error(
-        `The prop "${propName}" is required when layout is "${props.layout}"`
-      )
-    }
-    if ((propName === `width` || propName === `height`) && props[propName]) {
-      return new Error(
-        `"${propName}" ${props[propName]} may not be passed when layout is "${props.layout}"`
-      )
-    }
+  if (
+    props.layout !== `fixed` &&
+    (propName === `width` || propName === `height`) &&
+    props[propName]
+  ) {
+    return new Error(
+      `"${propName}" ${props[propName]} may not be passed when layout is "${
+        props.layout || `constrained`
+      }"`
+    )
   } else {
     if (
+      props.layout === `fixed` &&
       (propName === `maxWidth` || propName === `maxHeight`) &&
       props[propName]
     ) {
       return new Error(
         `"${propName}" may not be passed when layout is "${props.layout}"`
-      )
-    }
-    if (propName === `width` && !props[propName]) {
-      return new Error(
-        `The prop "${propName}" is required when layout is "${props.layout}"`
       )
     }
   }

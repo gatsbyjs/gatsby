@@ -103,7 +103,7 @@ export async function generateImageData({
   cache,
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
-    layout = `fixed`,
+    layout = `constrained`,
     placeholder = `blurred`,
     tracedSVGOptions = {},
     transformOptions = {},
@@ -118,6 +118,23 @@ export async function generateImageData({
   } = transformOptions
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+
+  if (layout === `fixed` && !args.width && !args.height) {
+    args.width = metadata.width
+  }
+
+  if (
+    layout !== `fixed` &&
+    !args.maxWidth &&
+    !args.maxHeight &&
+    metadata.width
+  ) {
+    if (layout === `constrained`) {
+      args.maxWidth = metadata.width
+    } else if (layout === `fluid`) {
+      args.maxWidth = Math.round(metadata.width / 2)
+    }
+  }
 
   const formats = new Set(args.formats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0

@@ -113,16 +113,15 @@ module.exports = {
 
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
-  const { buildHTML } = require(`../commands/build-html`)
+  const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      await buildHTML({
+      const rendererPath = await buildRenderer(
         program,
-        stage: Stage.DevelopHTML,
-        pagePaths: [`/`],
-        workerPool,
-        activity,
-      })
+        Stage.DevelopHTML,
+        activity.span
+      )
+      await doBuildPages(rendererPath, [`/`], activity, workerPool)
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -139,9 +138,10 @@ module.exports = {
   }
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
 
+  let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    await buildRenderer(program, Stage.DevelopHTML)
+    pageRenderer = await buildRenderer(program, Stage.DevelopHTML)
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
   } else {
@@ -495,7 +495,7 @@ module.exports = {
             // Let renderDevHTML figure it out.
             page: undefined,
             store,
-            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
           })
           const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
