@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.3...gatsby-plugin-sharp@2.12.0-next.4) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-sharp ([#28509](https://github.com/gatsbyjs/gatsby/issues/28509)) ([0ce0f69](https://github.com/gatsbyjs/gatsby/commit/0ce0f69863d92cf104185667980e04c1a31837aa))
+
 # [2.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.2...gatsby-plugin-sharp@2.12.0-next.3) (2020-12-17)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.3...gatsby-plugin-image@0.5.0-next.4) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** Revert postcss upgrade which broke css macro ([#28672](https://github.com/gatsbyjs/gatsby/issues/28672)) ([cde7885](https://github.com/gatsbyjs/gatsby/commit/cde7885f39eab846a8cdd9d3d08b9b5d299cfd76))
+
 # [0.5.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.2...gatsby-plugin-image@0.5.0-next.3) (2020-12-17)
 
 **Note:** Version bump only for package gatsby-plugin-image

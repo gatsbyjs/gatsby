@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.1...gatsby-transformer-sharp@2.10.0-next.2) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-sharp ([#28510](https://github.com/gatsbyjs/gatsby/issues/28510)) ([b712950](https://github.com/gatsbyjs/gatsby/commit/b712950af10fbf31eb21f3bf6452c8761e7bb2df))
+
 # [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.0...gatsby-transformer-sharp@2.10.0-next.1) (2020-12-17)
 
 ### Features
