@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { ISharpGatsbyImageData } from "gatsby-plugin-image"
+import { IGatsbyImageData } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
@@ -101,19 +101,40 @@ export async function generateImageData({
   pathPrefix,
   reporter,
   cache,
-}: IImageDataArgs): Promise<ISharpGatsbyImageData | undefined> {
+}: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
-    layout = `fixed`,
+    layout = `constrained`,
     placeholder = `blurred`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
   } = args
 
+  args.formats = args.formats || [`auto`, `webp`]
+
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,
   } = transformOptions
+
+  const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+
+  if (layout === `fixed` && !args.width && !args.height) {
+    args.width = metadata.width
+  }
+
+  if (
+    layout !== `fixed` &&
+    !args.maxWidth &&
+    !args.maxHeight &&
+    metadata.width
+  ) {
+    if (layout === `constrained`) {
+      args.maxWidth = metadata.width
+    } else if (layout === `fluid`) {
+      args.maxWidth = Math.round(metadata.width / 2)
+    }
+  }
 
   const formats = new Set(args.formats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
@@ -124,8 +145,6 @@ export async function generateImageData({
     )
     useAuto = true
   }
-
-  const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
   let primaryFormat: ImageFormat | undefined
   let options: Record<string, unknown> | undefined
@@ -200,7 +219,7 @@ export async function generateImageData({
   if (!images?.length) {
     return undefined
   }
-  const imageProps: ISharpGatsbyImageData = {
+  const imageProps: IGatsbyImageData = {
     layout,
     placeholder: undefined,
     images: {
@@ -218,9 +237,10 @@ export async function generateImageData({
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
         quality,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         ...args.webpOptions,
-        tracedSVGOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
@@ -249,7 +269,9 @@ export async function generateImageData({
       file,
       args: {
         ...options,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),

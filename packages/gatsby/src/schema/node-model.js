@@ -383,11 +383,10 @@ class LocalNodeModel {
           queryFields,
           actualFieldsToResolve
         )
-        const mergedResolved = _.merge(
-          node.__gatsby_resolved || {},
-          resolvedFields
-        )
-        return mergedResolved
+        if (!node.__gatsby_resolved) {
+          node.__gatsby_resolved = {}
+        }
+        return _.merge(node.__gatsby_resolved, resolvedFields)
       })
       this._preparedNodesCache.set(
         typeName,

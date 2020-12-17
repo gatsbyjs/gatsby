@@ -18,7 +18,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
       key="gatsby-image-style"
       dangerouslySetInnerHTML={generateHtml(cssNanoMacro`
   .gatsby-image-wrapper img {
-    all: initial;
+    all: inherit;
     bottom: 0;
     height: 100%;
     left: 0;
@@ -44,9 +44,13 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
       dangerouslySetInnerHTML={generateHtml(
         `<style>` +
           cssNanoMacro`
-  .gatsby-image-wrapper [data-main-image] {
+  .gatsby-image-wrapper noscript [data-main-image] {
     opacity: 1 !important;
-  }` +
+  }
+  .gatsby-image-wrapper [data-placeholder-image] {
+    opacity: 0 !important;
+  }
+  ` +
           `</style>`
       )}
     />,

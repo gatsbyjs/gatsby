@@ -173,11 +173,12 @@ module.exports = async (
         return {
           polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=${getHmrPath()}`,
+            process.env.GATSBY_HOT_LOADER !== `fast-refresh` &&
+              `${require.resolve(
+                `webpack-hot-middleware/client`
+              )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
-          ],
+          ].filter(Boolean),
         }
       case `develop-html`:
         return {
@@ -246,7 +247,9 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `cheap-module-source-map`
+        return process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+          ? `cheap-module-source-map`
+          : `eval-cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:

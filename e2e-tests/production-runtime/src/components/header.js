@@ -17,7 +17,11 @@ const Header = ({ siteTitle }) => (
         padding: `1.45rem 1.0875rem`,
       }}
     >
-      <StaticImage src="../images/gatsby-icon.png" alt="Gatsby icon"/>
+      <StaticImage
+        src="../images/gatsby-icon.png"
+        alt="Gatsby icon"
+        layout="fixed"
+      />
       <h1 style={{ margin: 0 }}>
         <Link
           data-testid="index-link"

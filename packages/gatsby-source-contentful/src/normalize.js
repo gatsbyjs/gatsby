@@ -1,8 +1,6 @@
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
-const { createContentDigest } = require(`gatsby-core-utils`)
 
-const digest = str => createContentDigest(str)
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -193,7 +191,8 @@ function prepareTextNode(node, key, text, createNodeId) {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
       mediaType: `text/markdown`,
       content: str,
-      contentDigest: digest(str),
+      // entryItem.sys.updatedAt is source of truth from contentful
+      contentDigest: node.updatedAt,
     },
     sys: {
       type: node.sys.type,
@@ -216,7 +215,8 @@ function prepareJSONNode(node, key, content, createNodeId, i = ``) {
       type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
       mediaType: `application/json`,
       content: str,
-      contentDigest: digest(str),
+      // entryItem.sys.updatedAt is source of truth from contentful
+      contentDigest: node.updatedAt,
     },
     sys: {
       type: node.sys.type,
@@ -527,10 +527,8 @@ exports.createNodesForContentType = ({
 
       entryNode = { ...entryItemFields, ...entryNode, node_locale: locale.code }
 
-      // Get content digest of node.
-      const contentDigest = digest(stringify(entryNode))
-
-      entryNode.internal.contentDigest = contentDigest
+      // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+      entryNode.internal.contentDigest = entryItem.sys.updatedAt
 
       return entryNode
     })
@@ -551,10 +549,8 @@ exports.createNodesForContentType = ({
       },
     }
 
-    // Get content digest of node.
-    const contentDigest = digest(stringify(contentTypeNode))
-
-    contentTypeNode.internal.contentDigest = contentDigest
+    // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+    contentTypeNode.internal.contentDigest = contentTypeItem.sys.updatedAt
 
     createNodePromises.push(createNode(contentTypeNode))
     entryNodes.forEach(entryNode => {
@@ -616,10 +612,8 @@ exports.createAssetNodes = ({
       assetNode.sys.revision = assetItem.sys.revision
     }
 
-    // Get content digest of node.
-    const contentDigest = digest(stringify(assetNode))
-
-    assetNode.internal.contentDigest = contentDigest
+    // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+    assetNode.internal.contentDigest = assetItem.sys.updatedAt
 
     createNodePromises.push(createNode(assetNode))
   })

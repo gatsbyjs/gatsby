@@ -201,7 +201,7 @@ Doing so will break localized versions of the page, which are stored in other re
 
 New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
 
-You can read more about writing in Markdown in the [Markdown syntax guide](/docs/mdx/markdown-syntax).
+You can read more about writing in Markdown in the [Markdown syntax guide](/docs/how-to/routing/mdx/markdown-syntax).
 
 ### Frontmatter
 

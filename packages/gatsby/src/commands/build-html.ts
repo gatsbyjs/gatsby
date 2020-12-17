@@ -88,7 +88,7 @@ export const buildRenderer = async (
   return doBuildRenderer(program, config, stage)
 }
 
-const deleteRenderer = async (rendererPath: string): Promise<void> => {
+export const deleteRenderer = async (rendererPath: string): Promise<void> => {
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
@@ -143,7 +143,7 @@ class BuildHTMLError extends Error {
   }
 }
 
-const doBuildPages = async (
+export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
@@ -166,6 +166,7 @@ const doBuildPages = async (
   }
 }
 
+// TODO remove in v4 - this could be a "public" api
 export const buildHTML = async ({
   program,
   stage,
@@ -181,7 +182,5 @@ export const buildHTML = async ({
 }): Promise<void> => {
   const rendererPath = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool)
-  if (stage !== `develop-html`) {
-    await deleteRenderer(rendererPath)
-  }
+  await deleteRenderer(rendererPath)
 }

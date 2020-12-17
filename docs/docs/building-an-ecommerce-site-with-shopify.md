@@ -15,7 +15,7 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 
 ## Set up the Gatsby Shopify plugin
 
-1. If you do not already have one ready, [create a Gatsby site](https://www.gatsbyjs.com/docs/quick-start).
+1. If you do not already have one ready, [create a Gatsby site](/docs/quick-start).
 
 2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
 
@@ -122,7 +122,7 @@ export const query = graphql`
 
 ## Generating a page for each product
 
-You can [programmatically create pages](/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
+You can [programmatically create pages](/docs/tutorial/part-seven/) in Gatsby for every product in your Shopify store.
 
 Create a template for your product pages by adding a new file, `/src/templates/product.js`.
 

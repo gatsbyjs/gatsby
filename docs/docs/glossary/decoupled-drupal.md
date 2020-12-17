@@ -7,7 +7,7 @@ Learn what <q>decoupled Drupal</q> means, how it differs from other ways of usin
 
 ## What is Decoupled Drupal?
 
-_Decoupled Drupal_ is the practice of using Drupal as a [headless CMS](/docs/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Decoupled Drupal separates the content layer from the presentation layer, so that you can use Drupal with whatever frontend you choose.
+_Decoupled Drupal_ is the practice of using Drupal as a [headless CMS](/docs/how-to/sourcing-data/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Decoupled Drupal separates the content layer from the presentation layer, so that you can use Drupal with whatever frontend you choose.
 
 In a tightly coupled Drupal architecture, themes control your site's appearance. A theme is a collection of HTML-based template files, each of which manages the layout for a particular Drupal node or content type.
 
@@ -32,4 +32,4 @@ A decoupled Drupal architecture lets you use the full power of Drupal's content 
 
 - Watch [Kyle Mathews’ presentation on Gatsby + Drupal](https://2017.badcamp.net/session/coding-development/beginner/headless-drupal-building-blazing-fast-websites-reactgatsbyjs)
 - Documentation for the [GraphQL Drupal module](https://drupal-graphql.gitbook.io/graphql/)
-- [Sourcing from Drupal](/docs/sourcing-from-drupal/) in the Gatsby docs
+- [Sourcing from Drupal](/docs/how-to/sourcing-data/sourcing-from-drupal/) in the Gatsby docs

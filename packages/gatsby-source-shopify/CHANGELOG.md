@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.7.0-next.1...gatsby-source-shopify@3.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.7.0-next.0...gatsby-source-shopify@3.7.0-next.1) (2020-12-01)
+
+### Features
+
+- **gatsby-source-shopify:** add "priceNumber" field that will allow for proper sorting ([#28243](https://github.com/gatsbyjs/gatsby/issues/28243)) ([11a0a16](https://github.com/gatsbyjs/gatsby/commit/11a0a1642c699a14dc0e8747d03e2a42fe70a679))
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.6.0-next.2...gatsby-source-shopify@3.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [3.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.6.0-next.1...gatsby-source-shopify@3.6.0-next.2) (2020-11-22)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
+# [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.6.0-next.0...gatsby-source-shopify@3.6.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-shopify
+
 # [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.5.0-next.0...gatsby-source-shopify@3.6.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-source-shopify
