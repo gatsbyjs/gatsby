@@ -76,7 +76,7 @@ export async function writeImages({
     async ([hash, { src, ...args }]) => {
       let file: Node | undefined
       let fullPath
-      if (isRemoteURL(src)) {
+      if (process.env.GATSBY_EXPERIMENTAL_REMOTE_IMAGES && isRemoteURL(src)) {
         try {
           file = await createRemoteFileNode({
             url: src,
