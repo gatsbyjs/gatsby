@@ -720,11 +720,12 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
-                        "includePaths": Array [
-                          "absolute/path/a",
-                          "absolute/path/b",
-                        ],
-                        "sassOptions": Object {},
+                        "sassOptions": Object {
+                          "includePaths": Array [
+                            "absolute/path/a",
+                            "absolute/path/b",
+                          ],
+                        },
                         "sourceMap": true,
                       },
                     },
@@ -739,11 +740,12 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
-                        "includePaths": Array [
-                          "absolute/path/a",
-                          "absolute/path/b",
-                        ],
-                        "sassOptions": Object {},
+                        "sassOptions": Object {
+                          "includePaths": Array [
+                            "absolute/path/a",
+                            "absolute/path/b",
+                          ],
+                        },
                         "sourceMap": true,
                       },
                     },

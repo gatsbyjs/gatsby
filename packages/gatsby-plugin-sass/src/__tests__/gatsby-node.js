@@ -27,7 +27,9 @@ describe(`gatsby-plugin-sass`, () => {
     options: {
       "No options": {},
       "Sass options": {
-        includePaths: [`absolute/path/a`, `absolute/path/b`],
+        sassOptions: {
+          includePaths: [`absolute/path/a`, `absolute/path/b`],
+        },
       },
       "PostCss plugins": {
         postCssPlugins: [`test1`],
