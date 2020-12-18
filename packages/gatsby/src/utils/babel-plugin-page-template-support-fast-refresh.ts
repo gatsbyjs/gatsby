@@ -13,7 +13,7 @@ export default function ({ types: t, ...rest }): PluginObj {
           return
         }
 
-        function makeWarning(path: NodePath<any>, message: string) {
+        function makeWarning(path: NodePath<any>, message: string): void {
           reporter.warn(
             path.buildCodeFrameError(`${message}\n\nFilename: ${filename}\n\n`)
               .message
