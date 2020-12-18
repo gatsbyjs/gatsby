@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.30.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.6...gatsby@2.30.0-next.7) (2020-12-18)
+
+### Bug Fixes
+
+- **gatsby:** always add both `childField` and `childrenField` in GraphQL ([#28656](https://github.com/gatsbyjs/gatsby/issues/28656)) ([739df13](https://github.com/gatsbyjs/gatsby/commit/739df134adbffddab58d9f85032579169362a348))
+- **gatsby:** remove redundant dispatch of query extraction error ([#28676](https://github.com/gatsbyjs/gatsby/issues/28676)) ([1d7dc76](https://github.com/gatsbyjs/gatsby/commit/1d7dc76a18de379e0004bd62a26d7630e0a060fe))
+
 # [2.30.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.5...gatsby@2.30.0-next.6) (2020-12-17)
 
 **Note:** Version bump only for package gatsby
