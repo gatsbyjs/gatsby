@@ -159,6 +159,7 @@ for an excellent explanation of how it works.
 Quick example of the http link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
 
 ```js
+// gatsby-config.js
 const { createHttpLink } = require(`apollo-link-http`)
 const { RetryLink } = require(`apollo-link-retry`)
 
