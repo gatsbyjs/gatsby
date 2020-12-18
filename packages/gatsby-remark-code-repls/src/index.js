@@ -15,8 +15,18 @@ const {
   PROTOCOL_CODEPEN,
   PROTOCOL_CODE_SANDBOX,
   PROTOCOL_RAMDA,
+  PROTOCOL_STACKBLITZ,
   OPTION_DEFAULT_CODESANDBOX,
+  OPTION_DEFAULT_STACKBLITZ,
 } = require(`./constants`)
+
+function uuidv4() {
+  return `xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx`.replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == `x` ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
 
 // Matches compression used in Babel and CodeSandbox REPLs
 // https://github.com/babel/website/blob/master/js/repl/UriUtils.js
@@ -47,7 +57,11 @@ module.exports = (
     codesandbox = OPTION_DEFAULT_CODESANDBOX,
   } = {}
 ) => {
-  codesandbox = { ...OPTION_DEFAULT_CODESANDBOX, ...codesandbox }
+  codesandbox = {
+    ...OPTION_DEFAULT_CODESANDBOX,
+    ...OPTION_DEFAULT_STACKBLITZ,
+    ...codesandbox,
+  }
   if (!directory) {
     throw Error(`Required REPL option "directory" not specified`)
   } else if (!fs.existsSync(directory)) {
@@ -81,13 +95,17 @@ module.exports = (
       })
 
   const verifyFile = (path, protocol) => {
-    if (protocol !== PROTOCOL_CODE_SANDBOX && path.split(`,`).length > 1) {
+    if (
+      (protocol !== PROTOCOL_CODE_SANDBOX ||
+        protocol !== PROTOCOL_STACKBLITZ) &&
+      path.split(`,`).length > 1
+    ) {
       throw Error(
         `Code example path should only contain a single file, but found more than one: ${path.replace(
           directory,
           ``
         )}. ` +
-          `Only CodeSandbox REPL supports multiple files entries, the protocol prefix of which starts with ${PROTOCOL_CODE_SANDBOX}`
+          `Only CodeSandbox and StackBlitz REPLs supports multiple files entries, the protocol prefixes of which starts with ${PROTOCOL_CODE_SANDBOX} and ${PROTOCOL_STACKBLITZ}, respectively`
       )
     }
     if (!fs.existsSync(path)) {
@@ -179,6 +197,61 @@ module.exports = (
         const text =
           node.children.length === 0 ? defaultText : node.children[0].value
         convertNodeToLink(node, text, href, target)
+      } else if (node.url.startsWith(PROTOCOL_STACKBLITZ)) {
+        const filesPaths = getMultipleFilesPaths(
+          node.url,
+          PROTOCOL_STACKBLITZ,
+          directory
+        )
+        verifyMultipleFiles(filesPaths, PROTOCOL_STACKBLITZ)
+
+        let parameters = {
+          files: {},
+          dependencies: JSON.stringify(codesandbox.dependencies),
+          template: codesandbox.template,
+        }
+
+        filesPaths.forEach(path => {
+          const code = fs.readFileSync(path.filePath, `utf8`)
+          // Escape " so that it can safely fit in attributes
+          parameters.files[path.url] = code.replace(/"/g, `&#34;`)
+        })
+
+        const href = `https://stackblitz.com/run`
+        const text =
+          node.children.length === 0 ? defaultText : node.children[0].value
+
+        function convertNodeToForm(node, text, href, target) {
+          const formId = uuidv4()
+          target = target
+            ? `target="${target}" rel="noreferrer"`
+            : `target="_self"`
+
+          delete node.children
+          delete node.position
+          delete node.title
+          delete node.url
+
+          const filesInputs = Object.entries(parameters.files)
+            .map(
+              ([filename, code]) => `
+             <input type="hidden" name="project[files][${filename}]" value="${code}">
+          `
+            )
+            .join(`\n`)
+
+          node.type = `html`
+          node.value = `
+          <form id="sb_hidden_form${formId}" method="post" action="${href}" ${target}>
+            ${filesInputs}
+            <input type="hidden" name="project[dependencies]" value="${parameters.dependencies}">
+            <input type="hidden" name="project[template]" value="${parameters.template}">
+          </form>
+          <a href="${href}" onclick="event.preventDefault();document.getElementById('sb_hidden_form${formId}').submit()">${text}</a>
+          `
+        }
+
+        convertNodeToForm(node, text, href, target)
       }
     }
 

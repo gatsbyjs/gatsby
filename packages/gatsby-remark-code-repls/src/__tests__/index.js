@@ -14,6 +14,7 @@ const {
   PROTOCOL_CODEPEN,
   PROTOCOL_CODE_SANDBOX,
   PROTOCOL_RAMDA,
+  PROTOCOL_STACKBLITZ,
 } = require(`../constants`)
 
 const REMARK_TESTS = {
@@ -21,6 +22,7 @@ const REMARK_TESTS = {
   Codepen: PROTOCOL_CODEPEN,
   CodeSandbox: PROTOCOL_CODE_SANDBOX,
   Ramda: PROTOCOL_RAMDA,
+  StackBlitz: PROTOCOL_STACKBLITZ,
 }
 
 const remark = new Remark()
@@ -130,7 +132,10 @@ describe(`gatsby-remark-code-repls`, () => {
         const runPlugin = () =>
           plugin({ markdownAST }, { directory: `examples` })
 
-        if (protocol !== PROTOCOL_CODE_SANDBOX) {
+        if (
+          protocol !== PROTOCOL_CODE_SANDBOX ||
+          protocol !== PROTOCOL_STACKBLITZ
+        ) {
           expect(runPlugin).toThrow(
             `Code example path should only contain a single file, but found more than one: ` +
               `path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css. ` +
@@ -157,6 +162,19 @@ describe(`gatsby-remark-code-repls`, () => {
           )
         expect(runPlugin).not.toThrow()
       })
+
+      if (
+        protocol === PROTOCOL_CODE_SANDBOX ||
+        protocol === PROTOCOL_STACKBLITZ
+      ) {
+        it(`supports importing multiple files`, () => {
+          const markdownAST = remark.parse(
+            `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
+          )
+          const transformed = plugin({ markdownAST }, { directory: `examples` })
+          expect(transformed).toMatchSnapshot()
+        })
+      }
 
       if (protocol === PROTOCOL_CODE_SANDBOX) {
         it(`supports custom html config option for index html`, () => {
@@ -213,14 +231,6 @@ describe(`gatsby-remark-code-repls`, () => {
               }),
             })
           )
-          expect(transformed).toMatchSnapshot()
-        })
-
-        it(`supports importing multiple files`, () => {
-          const markdownAST = remark.parse(
-            `[](${protocol}path/to/nested/file.js,path/to/nested/anotherFile.js,path/to/nested/file.css)`
-          )
-          const transformed = plugin({ markdownAST }, { directory: `examples` })
           expect(transformed).toMatchSnapshot()
         })
       }
