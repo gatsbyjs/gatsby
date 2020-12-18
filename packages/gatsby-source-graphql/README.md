@@ -195,7 +195,7 @@ module.exports = {
         fieldName: "swapi",
         url: "https://api.graphcms.com/simple/v1/swapi",
 
-        // `options`: all plugin options
+        // `pluginOptions`: all plugin options
         //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
         createLink: pluginOptions =>
           ApolloLink.from([
