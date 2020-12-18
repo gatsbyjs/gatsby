@@ -56,6 +56,14 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
           type: `plugin`,
         })
       )
+      requiredPlugins.push(
+        babel.createConfigItem(
+          [resolve(`./babel-plugin-page-template-support-fast-refresh`)],
+          {
+            type: `plugin`,
+          }
+        )
+      )
     }
     // TODO: Remove entire block when we make fast-refresh the default
     else {

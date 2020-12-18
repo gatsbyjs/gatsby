@@ -1,0 +1,58 @@
+import { NodePath, PluginObj } from "@babel/core"
+import { store } from "../redux"
+import reporter from "gatsby-cli/lib/reporter"
+
+export default function ({ types: t, ...rest }): PluginObj {
+  return {
+    visitor: {
+      Program(path, state): void {
+        const filename = state.file.opts.filename
+        // TODO: verify on windows due to slashes hell
+        const isPageTemplate = store.getState().components.has(filename)
+        if (!isPageTemplate) {
+          return
+        }
+
+        function makeWarning(path: NodePath<any>, message: string) {
+          const codeFrame = path.buildCodeFrameError(message).message
+          reporter.warn(`${codeFrame}\n\nFilename: ${filename}`)
+        }
+
+        path.traverse({
+          ExportDefaultDeclaration: path => {
+            const declaration = path.node.declaration
+            if (declaration.type === `FunctionDeclaration`) {
+              if (!declaration.id) {
+                makeWarning(path, `I need a name`)
+              } else if (
+                declaration.id?.name[0] !==
+                declaration.id?.name[0].toLocaleUpperCase()
+              ) {
+                makeWarning(
+                  path,
+                  `I need upper case. Change "${
+                    declaration.id.name
+                  }" to "${declaration.id.name[0].toLocaleUpperCase()}${declaration.id.name.substring(
+                    1
+                  )}"`
+                )
+              }
+            } else if (declaration.type === `ArrowFunctionExpression`) {
+              makeWarning(
+                path,
+                `Arrow function - do "const Blah = () => {}; export default Blah;". `
+              )
+            }
+          },
+          ExportNamedDeclaration: path => {
+            // At this point page query export is already removed
+            makeWarning(
+              path,
+              `There are more exports than default (react template) and page query. Fast refresh won't work`
+            )
+          },
+        })
+      },
+    },
+  }
+}
