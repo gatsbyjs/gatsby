@@ -93,7 +93,7 @@ export function initializeYurnalistLogger(): void {
           activities[action.payload.id] = activity
         } else if (action.payload.type === ActivityTypes.Progress) {
           const bar = new ProgressBar(
-            ` [:bar] :current/:total :elapsed s :percent ${action.payload.text}`,
+            ` [:bar] :current/:total :elapsed s :rate /s :percent ${action.payload.text}`,
             {
               total: action.payload.total,
               // curr: action.payload.current, // see below
