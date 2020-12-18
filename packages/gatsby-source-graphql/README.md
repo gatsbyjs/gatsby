@@ -153,7 +153,7 @@ module.exports = {
 ## Composing Apollo Links for production network setup
 
 The plugin provides a `createLink` option that you can use to enhance your network stack:
-add error handling, retries, timeouts, etc. Check out [this article](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb)
+add error handling, retries, timeouts, etc. Check out this [Medium article, Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb),
 for an excellent explanation of how it works.
 
 Quick example of the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
