@@ -715,17 +715,16 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                   "test": /\\\\\\.module\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
-                    "css({\\"modules\\":true,\\"importLoaders\\":2})",
+                    "css({\\"importLoaders\\":2,\\"modules\\":true})",
                     "postcss({})",
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
-                        "sassOptions": Object {
-                          "includePaths": Array [
-                            "absolute/path/a",
-                            "absolute/path/b",
-                          ],
-                        },
+                        "includePaths": Array [
+                          "absolute/path/a",
+                          "absolute/path/b",
+                        ],
+                        "sassOptions": Object {},
                         "sourceMap": true,
                       },
                     },
@@ -740,12 +739,11 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                     Object {
                       "loader": "<PROJECT_ROOT>/node_modules/sass-loader/dist/cjs.js",
                       "options": Object {
-                        "sassOptions": Object {
-                          "includePaths": Array [
-                            "absolute/path/a",
-                            "absolute/path/b",
-                          ],
-                        },
+                        "includePaths": Array [
+                          "absolute/path/a",
+                          "absolute/path/b",
+                        ],
+                        "sassOptions": Object {},
                         "sourceMap": true,
                       },
                     },
