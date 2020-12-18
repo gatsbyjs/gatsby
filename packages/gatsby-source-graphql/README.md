@@ -152,11 +152,21 @@ module.exports = {
 
 ## Composing Apollo Links for production network setup
 
-The plugin provides a `createLink` option that you can use to enhance your network stack:
-add error handling, retries, timeouts, etc. Check out this [Medium article, Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb),
-for an excellent explanation of how it works.
+Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/link/) to
+add retries, error handling, logging and more to your GraphQL requests.
 
-Quick example of the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL requests.
+
+You can compose different types of links, depending on the functionality you're trying to achieve.
+The most common links are:
+
+- `apollo-link-retry` for retrying queries that fail or time out
+- `apollo-link-error` for error handling
+- `apollo-link-http` for sending queries in http requests (used by default)
+
+For more explanation of how Apollo Links work together, check out this Medium article: [Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb).
+
+Here's an example of using the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
 
 ```js
 // gatsby-config.js
@@ -185,8 +195,10 @@ module.exports = {
         fieldName: "swapi",
         url: "https://api.graphcms.com/simple/v1/swapi",
 
+        // `options`: all plugin options
+        //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
         createLink: options =>
-          ApolloLink.from([retryLink, createHttpLink(options)]),
+          ApolloLink.from([retryLink, createHttpLink({ url: options.url })]),
       },
     },
   ],
