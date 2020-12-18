@@ -152,7 +152,7 @@ module.exports = {
 
 ## Composing Apollo Links for production network setup
 
-The plugin provides `createLink` option that you can use to enhance your network stack:
+The plugin provides a `createLink` option that you can use to enhance your network stack:
 add error handling, retries, timeouts, etc. Check out [this article](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb)
 for an excellent explanation of how it works.
 
