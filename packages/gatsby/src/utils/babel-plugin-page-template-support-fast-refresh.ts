@@ -14,8 +14,10 @@ export default function ({ types: t, ...rest }): PluginObj {
         }
 
         function makeWarning(path: NodePath<any>, message: string) {
-          const codeFrame = path.buildCodeFrameError(message).message
-          reporter.warn(`${codeFrame}\n\nFilename: ${filename}`)
+          reporter.warn(
+            path.buildCodeFrameError(`${message}\n\nFilename: ${filename}\n\n`)
+              .message
+          )
         }
 
         path.traverse({
