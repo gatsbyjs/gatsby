@@ -156,7 +156,7 @@ The plugin provides a `createLink` option that you can use to enhance your netwo
 add error handling, retries, timeouts, etc. Check out [this article](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb)
 for an excellent explanation of how it works.
 
-Quick example of the http link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+Quick example of the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
 
 ```js
 // gatsby-config.js
