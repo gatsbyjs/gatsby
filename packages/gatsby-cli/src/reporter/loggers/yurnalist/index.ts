@@ -96,11 +96,17 @@ export function initializeYurnalistLogger(): void {
             ` [:bar] :current/:total :elapsed s :percent ${action.payload.text}`,
             {
               total: action.payload.total,
-              curr: action.payload.current,
+              // curr: action.payload.current, // see below
               width: 30,
               clear: true,
             }
           )
+          // There is a bug in the `progress` package where the timer doesn't
+          // start until the first tick and setting `curr` will cause the
+          // time/eta to remain zero: https://github.com/visionmedia/node-progress/issues/81
+          // This is a workaround although the eta will initially be wrong
+          // until it settles, if starting at non-zero.
+          bar.tick(action.payload.current)
 
           activities[action.payload.id] = {
             text: undefined,
