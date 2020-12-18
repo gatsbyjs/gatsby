@@ -219,7 +219,8 @@ plugins: [
 ### v3.0.0
 
 - `sass-loader` is updated to v10 which adds support for `node-sass@^5.0.0` but also switches the default `implementation` to `sass`. webpack also recommends using `sass` so this is reflected in the documentation here, too. In the [deprecation notice of node-sass](https://sass-lang.com/blog/libsass-is-deprecated#how-do-i-migrate) it is noted that switching from `node-sass` to `sass` is straightforward as both packages use the same JavaScript API.
-- all options for both `node-sass` & `sass` are moved into the `sassOptions` object
+- All options for both [`node-sass`](https://github.com/sass/node-sass#options) & [`sass`](https://github.com/sass/dart-sass/blob/master/README.md#javascript-api) are moved into the `sassOptions` object
+- You're now able to override the `importLoaders` option. If you have this in your options but don't intend to override it, you'll need to remove it
 
 ### v2.0.0
 
