@@ -41,6 +41,7 @@ export async function preprocessSource({
     sourceDir,
     createNodeId,
     createNode,
+    store,
   })
 
   return
