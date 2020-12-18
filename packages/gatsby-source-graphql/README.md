@@ -150,6 +150,48 @@ module.exports = {
 }
 ```
 
+## Composing Apollo Links for production network setup
+
+The plugin provides `createLink` option that you can use to enhance your network stack:
+add error handling, retries, timeouts, etc. Check out [this article](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb)
+for an excellent explanation of how it works.
+
+Quick example of the http link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+
+```js
+const { createHttpLink } = require(`apollo-link-http`)
+const { RetryLink } = require(`apollo-link-retry`)
+
+const retryLink = new RetryLink({
+  delay: {
+    initial: 100,
+    max: 2000,
+    jitter: true,
+  },
+  attempts: {
+    max: 5,
+    retryIf: (error, operation) =>
+      Boolean(error) && ![500, 400].includes(error.statusCode),
+  },
+})
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+
+        createLink: options =>
+          ApolloLink.from([retryLink, createHttpLink(options)]),
+      },
+    },
+  ],
+}
+```
+
 ## Custom transform schema function (advanced)
 
 It's possible to modify the remote schema, via a `transformSchema` option which customizes the way the default schema is transformed before it is merged on the Gatsby schema by the stitching process.
