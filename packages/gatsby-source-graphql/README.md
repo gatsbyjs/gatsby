@@ -197,8 +197,11 @@ module.exports = {
 
         // `options`: all plugin options
         //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
-        createLink: options =>
-          ApolloLink.from([retryLink, createHttpLink({ url: options.url })]),
+        createLink: pluginOptions =>
+          ApolloLink.from([
+            retryLink,
+            createHttpLink({ url: pluginOptions.url }),
+          ]),
       },
     },
   ],
