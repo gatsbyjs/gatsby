@@ -1,10 +1,13 @@
 const _ = require(`lodash`)
 const path = require(`path`)
 const v8 = require(`v8`)
+const reporter = require(`gatsby-cli/lib/reporter`)
 
 const writeToCache = jest.spyOn(require(`../persist`), `writeToCache`)
 const v8Serialize = jest.spyOn(v8, `serialize`)
 const v8Deserialize = jest.spyOn(v8, `deserialize`)
+const reporterInfo = jest.spyOn(reporter, `info`).mockImplementation(jest.fn)
+const reporterWarn = jest.spyOn(reporter, `warn`).mockImplementation(jest.fn)
 
 const { saveState, store, readState } = require(`../index`)
 
@@ -132,6 +135,8 @@ describe(`redux db`, () => {
     })
     writeToCache.mockClear()
     mockWrittenContent.clear()
+    reporterWarn.mockClear()
+    reporterInfo.mockClear()
   })
 
   it(`should write redux cache to disk`, async () => {
@@ -191,6 +196,11 @@ describe(`redux db`, () => {
     // and that we stitch them back together correctly
     const nodeShardsScenarios = [
       {
+        numberOfNodes: 50000,
+        simulatedNodeObjectSize: 5 * 1024,
+        expectedNumberOfNodeShards: 1,
+      },
+      {
         numberOfNodes: 50,
         simulatedNodeObjectSize: 5 * 1024 * 1024,
         expectedNumberOfNodeShards: 1,
@@ -203,14 +213,22 @@ describe(`redux db`, () => {
     ]
     const pageShardsScenarios = [
       {
+        numberOfPages: 50 * 1000,
+        simulatedPageObjectSize: 10 * 1024,
+        expectedNumberOfPageShards: 1,
+        expectedPageContextSizeWarning: false,
+      },
+      {
         numberOfPages: 50,
         simulatedPageObjectSize: 10 * 1024 * 1024,
         expectedNumberOfPageShards: 1,
+        expectedPageContextSizeWarning: true,
       },
       {
         numberOfPages: 5,
         simulatedPageObjectSize: 0.9 * 1024 * 1024 * 1024,
         expectedNumberOfPageShards: 5,
+        expectedPageContextSizeWarning: true,
       },
     ]
 
@@ -224,19 +242,25 @@ describe(`redux db`, () => {
           pageShardsParams.numberOfPages,
           pageShardsParams.simulatedPageObjectSize,
           pageShardsParams.expectedNumberOfPageShards,
+          pageShardsParams.expectedPageContextSizeWarning
+            ? `with page context size warning`
+            : `without page context size warning`,
+          pageShardsParams.expectedPageContextSizeWarning,
         ])
       }
     }
 
     it.each(scenarios)(
-      `Scenario Nodes %i x %i bytes = %i shards / Pages %i x %i bytes = %i shards`,
+      `Scenario Nodes %i x %i bytes = %i shards / Pages %i x %i bytes = %i shards (%s)`,
       async (
         numberOfNodes,
         simulatedNodeObjectSize,
         expectedNumberOfNodeShards,
         numberOfPages,
         simulatedPageObjectSize,
-        expectedNumberOfPageShards
+        expectedNumberOfPageShards,
+        _expectedPageContextSizeWarningLabelForTestName,
+        expectedPageContextSizeWarning
       ) => {
         // just some baseline checking to make sure test setup is correct - check both in-memory state and persisted state
         // and make sure it's empty
@@ -321,6 +345,14 @@ describe(`redux db`, () => {
 
         await saveState()
 
+        if (expectedPageContextSizeWarning) {
+          expect(reporterWarn).toBeCalledWith(
+            `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
+          )
+        } else {
+          expect(reporterWarn).not.toBeCalled()
+        }
+
         const shardsWritten = {
           rest: 0,
           node: 0,
@@ -351,6 +383,87 @@ describe(`redux db`, () => {
         expect(persistedStateAfterSaving.nodes).toEqual(clonedCurrentNodes)
         expect(persistedStateAfterSaving.pages).toEqual(clonedCurrentPages)
       }
+    )
+  })
+
+  it(`doesn't discard persisted cache if no pages`, () => {
+    expect(store.getState().nodes.size).toEqual(0)
+    expect(store.getState().pages.size).toEqual(0)
+
+    store.dispatch(
+      createNode(
+        {
+          id: `node-test`,
+          context: {
+            objectType: `node`,
+          },
+          internal: {
+            type: `Foo`,
+            contentDigest: `contentDigest-test`,
+          },
+        },
+        { name: `gatsby-source-test` }
+      )
+    )
+
+    expect(store.getState().nodes.size).toEqual(1)
+    expect(store.getState().pages.size).toEqual(0)
+
+    let persistedState = readState()
+
+    expect(persistedState.nodes?.size ?? 0).toEqual(0)
+    expect(persistedState.pages?.size ?? 0).toEqual(0)
+
+    saveState()
+
+    // reset state in memory
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
+
+    expect(store.getState().nodes.size).toEqual(0)
+    expect(store.getState().pages.size).toEqual(0)
+
+    persistedState = readState()
+
+    expect(persistedState.nodes?.size ?? 0).toEqual(1)
+    expect(persistedState.pages?.size ?? 0).toEqual(0)
+  })
+
+  it(`discards persisted cache if no nodes are stored there`, () => {
+    expect(store.getState().nodes.size).toEqual(0)
+    expect(store.getState().pages.size).toEqual(0)
+
+    createPages(defaultPage)
+
+    expect(store.getState().nodes.size).toEqual(0)
+    expect(store.getState().pages.size).toEqual(1)
+
+    let persistedState = readState()
+
+    expect(persistedState.nodes?.size ?? 0).toEqual(0)
+    expect(persistedState.pages?.size ?? 0).toEqual(0)
+
+    saveState()
+
+    // reset state in memory
+    store.dispatch({
+      type: `DELETE_CACHE`,
+    })
+
+    expect(store.getState().nodes.size).toEqual(0)
+    expect(store.getState().pages.size).toEqual(0)
+
+    persistedState = readState()
+
+    expect(persistedState.nodes?.size ?? 0).toEqual(0)
+    // we expect state to be discarded because gatsby creates it least few nodes of it's own
+    // (particularly `Site` node). If there was nodes read this likely means something went wrong
+    // and state is not consistent
+    expect(persistedState.pages?.size ?? 0).toEqual(0)
+
+    expect(reporterInfo).toBeCalledWith(
+      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
     )
   })
 })

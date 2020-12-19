@@ -70,7 +70,8 @@ export function readFromCache(): ICachedReduxState {
 }
 
 export function guessSafeChunkSize(
-  values: Array<[string, IGatsbyNode]> | Array<[string, IGatsbyPage]>
+  values: Array<[string, IGatsbyNode]> | Array<[string, IGatsbyPage]>,
+  showMaxSizeWarning: boolean = false
 ): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
@@ -88,7 +89,7 @@ export function guessSafeChunkSize(
   }
 
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
-  if (maxSize > 500000) {
+  if (showMaxSizeWarning && maxSize > 500000) {
     report.warn(
       `The size of at least one page context chunk exceeded 500kb, which could lead to degraded performance. Consider putting less data in the page context.`
     )
@@ -134,7 +135,7 @@ function prepareCacheFolder(
   if (pagesMap) {
     // Now store the nodes separately, chunk size determined by a heuristic
     const values: Array<[string, IGatsbyPage]> = [...pagesMap.entries()]
-    const chunkSize = guessSafeChunkSize(values)
+    const chunkSize = guessSafeChunkSize(values, true)
     const chunks = Math.ceil(values.length / chunkSize)
 
     for (let i = 0; i < chunks; ++i) {
