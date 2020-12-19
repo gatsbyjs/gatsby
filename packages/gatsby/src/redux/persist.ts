@@ -64,14 +64,6 @@ export function readFromCache(): ICachedReduxState {
 
   const pages: Array<[string, IGatsbyPage]> = [].concat(...pagesChunks)
 
-  if (!pagesChunks.length) {
-    report.info(
-      `Cache exists but contains no pages. There should be at least some pages available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
-    )
-    // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
-    return {} as ICachedReduxState
-  }
-
   obj.pages = new Map(pages)
 
   return obj
