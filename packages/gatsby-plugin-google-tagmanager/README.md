@@ -4,7 +4,7 @@ Easily add Google Tagmanager to your Gatsby site.
 
 ## Install
 
-`npm install --save gatsby-plugin-google-tagmanager`
+`npm install gatsby-plugin-google-tagmanager`
 
 ## How to use
 

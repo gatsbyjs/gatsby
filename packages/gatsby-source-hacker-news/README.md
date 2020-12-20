@@ -5,7 +5,7 @@ Source plugin for pulling data into Gatsby from the
 
 ## Install
 
-`npm install --save gatsby-source-hacker-news`
+`npm install gatsby-source-hacker-news`
 
 ## How to use
 

@@ -30,7 +30,7 @@ describe(`requires-writer`, () => {
   const program = {
     directory: `/dir`,
   }
-  let originalDateNow = global.Date.now
+  const originalDateNow = global.Date.now
 
   beforeEach(() => {
     global.Date.now = () => now

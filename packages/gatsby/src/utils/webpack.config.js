@@ -85,6 +85,15 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
+    envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
+      !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    )
+
+    if (stage === `develop`) {
+      envObject.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT = JSON.stringify(
+        process.env.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT || `websocket`
+      )
+    }
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
@@ -135,7 +144,7 @@ module.exports = async (
         }
       case `build-html`:
       case `develop-html`:
-        // A temp file required by static-site-generator-plugin. See plugins() below.
+        // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
@@ -164,15 +173,18 @@ module.exports = async (
         return {
           polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=${getHmrPath()}`,
+            process.env.GATSBY_HOT_LOADER !== `fast-refresh` &&
+              `${require.resolve(
+                `webpack-hot-middleware/client`
+              )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
-          ],
+          ].filter(Boolean),
         }
       case `develop-html`:
         return {
-          main: directoryPath(`.cache/develop-static-entry`),
+          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+            ? directoryPath(`.cache/ssr-develop-static-entry`)
+            : directoryPath(`.cache/develop-static-entry`),
         }
       case `build-html`:
         return {
@@ -235,7 +247,9 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `cheap-module-source-map`
+        return process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+          ? `cheap-module-source-map`
+          : `eval-cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:

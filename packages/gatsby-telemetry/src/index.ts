@@ -7,6 +7,7 @@ import {
 } from "./telemetry"
 import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
+import time, { TimeUnit } from "@turist/time"
 
 const instance = new AnalyticsTracker()
 
@@ -22,7 +23,7 @@ const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
 const interval =
   intervalDuration && Number.isFinite(+intervalDuration)
     ? Math.max(Number(intervalDuration), 1000)
-    : 10 * 60 * 1000 // 10 min
+    : time(10, TimeUnit.Minute)
 
 function tick(): void {
   flush()
@@ -33,7 +34,16 @@ function tick(): void {
 export function trackFeatureIsUsed(name: string): void {
   instance.trackFeatureIsUsed(name)
 }
+
 export function trackCli(
+  input: string | Array<string>,
+  tags?: ITelemetryTagsPayload,
+  opts?: ITelemetryOptsPayload
+): void {
+  instance.trackCli(input, tags, opts)
+}
+
+export function captureEvent(
   input: string | Array<string>,
   tags?: ITelemetryTagsPayload,
   opts?: ITelemetryOptsPayload
@@ -84,9 +94,11 @@ export function addSiteMeasurement(event: string, obj): void {
 }
 
 export function expressMiddleware(source: string) {
-  return function (_req: Request, _res: Response, next): void {
+  return function (req: Request, _res: Response, next): void {
     try {
-      instance.trackActivity(`${source}_ACTIVE`)
+      instance.trackActivity(`${source}_ACTIVE`, {
+        userAgent: req.headers[`user-agent`],
+      })
     } catch (e) {
       // ignore
     }
@@ -101,6 +113,14 @@ export function setDefaultComponentId(componentId: string): void {
 
 export function setGatsbyCliVersion(version: string): void {
   instance.gatsbyCliVersion = version
+}
+
+export {
+  AnalyticsTracker,
+  IAggregateStats,
+  ITelemetryTagsPayload,
+  ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
 }
 
 module.exports = {

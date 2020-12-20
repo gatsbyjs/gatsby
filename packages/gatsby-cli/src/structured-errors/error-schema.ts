@@ -20,6 +20,7 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
         })
       )
       .allow(null),
+    category: Joi.string().valid([`USER`, `SYSTEM`, `THIRD_PARTY`]),
     level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
     type: Joi.string().valid([`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`]),
     filePath: Joi.string(),
@@ -35,5 +36,6 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     context: Joi.object({}).unknown(),
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
+    pluginName: Joi.string(),
   }
 )

@@ -5,7 +5,7 @@ A list of utilities used in multiple gatsby packages.
 ## Usage
 
 ```shell
-npm install --save gatsby-core-utils
+npm install gatsby-core-utils
 ```
 
 ### createContentDigest

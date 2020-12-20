@@ -1,5 +1,9 @@
-export interface ISiteConfig {
+export interface IRawSiteConfig {
   plugins?: Array<PluginRef>
+}
+
+export interface ISiteConfig extends IRawSiteConfig {
+  plugins?: Array<IPluginRefObject>
 }
 
 // There are two top-level "Plugin" concepts:

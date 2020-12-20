@@ -182,7 +182,7 @@ const updateSchemaComposer = async ({
     parentSpan: activity.span,
   })
   await addCustomResolveFunctions({ schemaComposer, parentSpan: activity.span })
-  await attachTracingResolver({ schemaComposer, parentSpan: activity.span })
+  attachTracingResolver({ schemaComposer, parentSpan: activity.span })
   activity.end()
 }
 
@@ -938,18 +938,19 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
         return
       }
 
-      const { types, mimeTypes, many } = type.getExtension(`childOf`)
+      const { types, mimeTypes } = type.getExtension(`childOf`)
+      // TODO: deprecate `many` argument
       new Set(types).forEach(parentType => {
         if (!parentTypesToChildren.has(parentType)) {
-          parentTypesToChildren.set(parentType, new Map())
+          parentTypesToChildren.set(parentType, new Set())
         }
-        parentTypesToChildren.get(parentType).set(type, many)
+        parentTypesToChildren.get(parentType).add(type)
       })
       new Set(mimeTypes).forEach(mimeType => {
         if (!mimeTypesToChildren.has(mimeType)) {
-          mimeTypesToChildren.set(mimeType, new Map())
+          mimeTypesToChildren.set(mimeType, new Set())
         }
-        mimeTypesToChildren.get(mimeType).set(type, many)
+        mimeTypesToChildren.get(mimeType).add(type)
       })
     }
   })
@@ -968,12 +969,9 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       )
       return
     }
-    children.forEach((many, child) => {
-      if (many) {
-        typeComposer.addFields(createChildrenField(child.getTypeName()))
-      } else {
-        typeComposer.addFields(createChildField(child.getTypeName()))
-      }
+    children.forEach(child => {
+      typeComposer.addFields(createChildrenField(child.getTypeName()))
+      typeComposer.addFields(createChildField(child.getTypeName()))
     })
   })
 
@@ -992,12 +990,9 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
           )
           return
         }
-        children.forEach((many, child) => {
-          if (many) {
-            typeComposer.addFields(createChildrenField(child.getTypeName()))
-          } else {
-            typeComposer.addFields(createChildField(child.getTypeName()))
-          }
+        children.forEach(child => {
+          typeComposer.addFields(createChildrenField(child.getTypeName()))
+          typeComposer.addFields(createChildField(child.getTypeName()))
         })
       })
     }
@@ -1021,44 +1016,39 @@ const addImplicitConvenienceChildrenFields = ({
   const childNodesByType = groupChildNodesByType({ nodes })
 
   Object.keys(childNodesByType).forEach(typeName => {
-    const typeChildren = childNodesByType[typeName]
-    const maxChildCount = _.maxBy(
-      _.values(_.groupBy(typeChildren, c => c.parent)),
-      g => g.length
-    ).length
-
     // Adding children fields to types with the `@dontInfer` extension is deprecated
     if (shouldInfer === false) {
       const childTypeComposer = schemaComposer.getAnyTC(typeName)
       const childOfExtension = childTypeComposer.getExtension(`childOf`)
-      const many = maxChildCount > 1
 
       // Only warn when the parent-child relation has not been explicitly set with
       if (
         !childOfExtension ||
-        !childOfExtension.types.includes(parentTypeName) ||
-        !childOfExtension.many === many
+        !childOfExtension.types.includes(parentTypeName)
       ) {
-        const fieldName = many
-          ? fieldNames.convenienceChildren(typeName)
-          : fieldNames.convenienceChild(typeName)
+        const childField = fieldNames.convenienceChild(typeName)
+        const childrenField = fieldNames.convenienceChildren(typeName)
+        const childOfTypes = (childOfExtension?.types ?? [])
+          .concat(parentTypeName)
+          .map(name => `"${name}"`)
+          .join(`,`)
+
         report.warn(
-          `The type \`${parentTypeName}\` does not explicitly define ` +
-            `the field \`${fieldName}\`.\n` +
-            `On types with the \`@dontInfer\` directive, or with the \`infer\` ` +
-            `extension set to \`false\`, automatically adding fields for ` +
-            `children types is deprecated.\n` +
-            `In Gatsby v3, only children fields explicitly set with the ` +
-            `\`childOf\` extension will be added.\n`
+          `Deprecation warning: ` +
+            `In Gatsby v3 fields \`${parentTypeName}.${childField}\` and \`${parentTypeName}.${childrenField}\` ` +
+            `will not be added automatically because ` +
+            `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
+            `Add the following type definition to fix this:\n\n` +
+            `  type ${typeName} implements Node @childOf(types: [${childOfTypes}]) {\n` +
+            `    id: ID!\n` +
+            `  }\n\n` +
+            `https://www.gatsbyjs.com/docs/actions/#createTypes`
         )
       }
     }
 
-    if (maxChildCount > 1) {
-      typeComposer.addFields(createChildrenField(typeName))
-    } else {
-      typeComposer.addFields(createChildField(typeName))
-    }
+    typeComposer.addFields(createChildrenField(typeName))
+    typeComposer.addFields(createChildField(typeName))
   })
 }
 
@@ -1066,6 +1056,7 @@ const createChildrenField = typeName => {
   return {
     [fieldNames.convenienceChildren(typeName)]: {
       type: () => [typeName],
+      description: `Returns all children nodes filtered by type ${typeName}`,
       resolve(source, args, context) {
         const { path } = context
         return context.nodeModel.getNodesByIds(
@@ -1081,9 +1072,12 @@ const createChildField = typeName => {
   return {
     [fieldNames.convenienceChild(typeName)]: {
       type: () => typeName,
-      async resolve(source, args, context) {
+      description:
+        `Returns the first child node of type ${typeName} ` +
+        `or null if there are no children of given type on this node`,
+      resolve(source, args, context) {
         const { path } = context
-        const result = await context.nodeModel.getNodesByIds(
+        const result = context.nodeModel.getNodesByIds(
           { ids: source.children, type: typeName },
           { path }
         )

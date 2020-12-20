@@ -190,8 +190,8 @@ it(`Doesn't initialize cache in onPreInit API`, async () => {
     `test-plugin-on-preinit-fails/gatsby-node`,
     () => {
       return {
-        onPreInit: ({ cache }) => {
-          cache.get(`foo`)
+        onPreInit: async ({ cache }) => {
+          await cache.get(`foo`)
         },
       }
     },

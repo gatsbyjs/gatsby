@@ -1,9 +1,9 @@
-import Joi from "@hapi/joi"
+import * as Joi from "@hapi/joi"
 
 import client from "./client"
 import resourceSchema from "../resource-schema"
 import getGraphqlFields from "../utils/get-graphql-fields"
-const getDiff = require(`../utils/get-diff`)
+import getDiff from "../utils/get-diff"
 
 const GRAPHQL_FIELD_OPTIONS = {
   metadata: [`type`, `name`],
@@ -65,11 +65,4 @@ const plan = async (context, { id, schema }) => {
 
 const message = resource => `Created Contentful type "${resource.name}"`
 
-module.exports.schema = schema
-module.exports.validate = validate
-module.exports.plan = plan
-module.exports.create = create
-module.exports.read = read
-module.exports.update = create
-module.exports.destroy = destroy
-module.exports.all = all
+export { schema, validate, plan, create, create as update, read, destroy, all }

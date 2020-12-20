@@ -8,10 +8,13 @@ import { initTracer } from "../utils/tracer"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
 import onExit from "signal-exit"
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import { markWebpackStatusAsPending } from "../utils/webpack-status"
+import { store } from "../redux"
 
 import { IProgram, IDebugInfo } from "./types"
 import { interpret } from "xstate"
@@ -45,7 +48,11 @@ if (process.send) {
 }
 
 onExit(() => {
-  telemetry.trackCli(`DEVELOP_STOP`)
+  telemetry.trackCli(`DEVELOP_STOP`, {
+    siteMeasurements: {
+      pagesCount: store.getState().pages.size,
+    },
+  })
 })
 
 process.on(`message`, msg => {
@@ -59,6 +66,10 @@ interface IDevelopArgs extends IProgram {
 }
 
 const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (inspector.url() !== undefined) {
+    return // fixes #26708
+  }
+
   if (debugInfo.break) {
     inspector.open(debugInfo.port, undefined, true)
     // eslint-disable-next-line no-debugger
@@ -81,7 +92,9 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
   process.on(
     `SIGINT`,
     async (): Promise<void> => {
-      if (await userPassesFeedbackRequestHeuristic()) {
+      if (await userGetsSevenDayFeedback()) {
+        showSevenDayFeedbackRequest()
+      } else if (await userPassesFeedbackRequestHeuristic()) {
         showFeedbackRequest()
       }
       process.exit(0)
@@ -123,6 +136,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     program,
     parentSpan,
     app,
+    pendingQueryRuns: new Set([`/`]),
   })
 
   const service = interpret(machine)

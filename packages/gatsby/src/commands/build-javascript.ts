@@ -62,6 +62,7 @@ export const buildProductionBundle = async (
                 type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
                 payload: {
                   componentPath,
+                  pages: state.components.get(componentPath)?.pages ?? [],
                 },
               })
               store.dispatch({

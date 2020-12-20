@@ -16,6 +16,7 @@ module.exports = {
     {
       resolve: `gatsby-source-mongodb`,
       options: { dbName: `local`, collection: `documents` },
+      query: { documents: { as_of: { $gte: 1604397088013 } } },
     },
   ],
 }
@@ -41,6 +42,7 @@ module.exports = {
 - **dbName**: indicates the database name that you want to use
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
+- **query**: add a query when retriving a collection. This is a key value object where key's are collection names, and value is the query object. Defaults to {} (i.e. the whole collection)
 - **server**: contains the server info, with sub properties address and port ex.
   server: { address: `ds143532.mlab.com`, port: 43532 }. Defaults to a server
   running locally on the default port.

@@ -18,6 +18,9 @@ import {
   ISetSiteConfig,
   IDefinitionMeta,
   ISetGraphQLDefinitionsAction,
+  IQueryStartAction,
+  IApiFinishedAction,
+  IQueryClearDirtyQueriesListToEmitViaWebsocket,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -81,6 +84,15 @@ export const replaceComponentQuery = ({
       query,
       componentPath,
     },
+  }
+}
+
+export const apiFinished = (
+  payload: IApiFinishedAction["payload"]
+): IApiFinishedAction => {
+  return {
+    type: `API_FINISHED`,
+    payload,
   }
 }
 
@@ -222,6 +234,25 @@ export const pageQueryRun = (
     plugin,
     traceId,
     payload: { path, componentPath, isPage },
+  }
+}
+
+export const queryStart = (
+  { path, componentPath, isPage },
+  plugin: IGatsbyPlugin,
+  traceId?: string
+): IQueryStartAction => {
+  return {
+    type: `QUERY_START`,
+    plugin,
+    traceId,
+    payload: { path, componentPath, isPage },
+  }
+}
+
+export const clearDirtyQueriesListToEmitViaWebsocket = (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
+  return {
+    type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
   }
 }
 

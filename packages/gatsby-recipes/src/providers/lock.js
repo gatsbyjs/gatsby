@@ -1,10 +1,11 @@
-const lock = require(`lock`).Lock
-const lockInstance = lock()
+import { Lock as lockInner } from "lock"
+const lockInstance = lockInner()
 
-module.exports = resources =>
-  new Promise(resolve =>
+export default function lock(resources) {
+  return new Promise(resolve =>
     lockInstance(resources, release => {
       const releaseLock = release(() => {})
       resolve(releaseLock)
     })
   )
+}
