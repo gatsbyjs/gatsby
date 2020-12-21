@@ -22,7 +22,7 @@ export interface IWebpackWatchingPauseResume extends webpack.Watching {
 
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
-let needToRecompileSSRBundle: boolean = true
+let needToRecompileSSRBundle = true
 export const getDevSSRWebpack = (): Record<
   IWebpackWatchingPauseResume,
   webpack.Compiler,
