@@ -127,7 +127,6 @@ exports.parseError = parseError
 exports.renderHTML = ({
   path,
   componentPath,
-  port,
   htmlComponentRendererPath,
   isClientOnlyPage = false,
   directory,
@@ -139,7 +138,6 @@ exports.renderHTML = ({
         htmlComponentRenderer.default(
           path,
           isClientOnlyPage,
-          port,
           (_throwAway, htmlString) => {
             resolve(htmlString)
           }
