@@ -29,7 +29,7 @@ export const getDevSSRWebpack = (): Record<
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
-  return { devssrWebpackWatcher, devssrWebpackCompilier }
+  return { devssrWebpackWatcher, devssrWebpackCompiler }
 }
 
 let oldHash = ``
@@ -52,8 +52,8 @@ const runWebpack = (
       process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
       stage === `develop-html`
     ) {
-      devssrWebpackCompilier = webpack(compilerConfig)
-      devssrWebpackWatcher = devssrWebpackCompilier.watch(
+      devssrWebpackCompiler = webpack(compilerConfig)
+      devssrWebpackWatcher = devssrWebpackCompiler.watch(
         {
           ignored: /node_modules/,
         },
