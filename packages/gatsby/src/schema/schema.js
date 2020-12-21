@@ -1025,13 +1025,12 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
   const childNodesByType = groupChildNodesByType({ nodes })
 
   Object.keys(childNodesByType).forEach(typeName => {
-    // Adding children fields to types with the `@dontInfer` extension is deprecated
     const childTypeComposer = schemaComposer.getAnyTC(typeName)
     let childOfExtension = childTypeComposer.getExtension(`childOf`)
 
     if (shouldInfer === false) {
       // Adding children fields to types with the `@dontInfer` extension is deprecated
-      // Only warn when the parent-child relation has not been explicitly set with
+      // Only warn when the parent-child relation has not been explicitly set with `childOf` directive
       if (
         !childOfExtension ||
         !childOfExtension.types.includes(parentTypeName)
