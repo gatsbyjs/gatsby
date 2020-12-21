@@ -195,22 +195,28 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
-      let loader: any
-      let hmr = false
-      if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-        loader = MiniCssExtractPlugin.loader
-        if (stage === `develop`) {
-          hmr = true
+      if (PRODUCTION) {
+        // production always uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options,
+        }
+      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        // develop with ssr also uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            ...options,
+            // enable hmr for browser bundle, ssr bundle doesn't need it
+            hmr: stage === `develop`,
+          },
         }
       } else {
-        loader = PRODUCTION
-          ? MiniCssExtractPlugin.loader
-          : require.resolve(`style-loader`)
-      }
-
-      return {
-        options: { ...options, hmr },
-        loader,
+        // develop without ssr is using style-loader
+        return {
+          loader: require.resolve(`style-loader`),
+          options,
+        }
       }
     },
 
