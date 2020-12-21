@@ -63,9 +63,6 @@ const runWebpack = (
       devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, file => {
         needToRecompileSSRBundle = true
       })
-      devssrWebpackCompiler.hooks.watchRun.tap(`ssr watch run`, file => {
-        needToRecompileSSRBundle = true
-      })
       devssrWebpackWatcher = devssrWebpackCompiler.watch(
         {
           ignored: /node_modules/,
