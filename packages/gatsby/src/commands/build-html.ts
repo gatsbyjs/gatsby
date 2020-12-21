@@ -22,14 +22,21 @@ export interface IWebpackWatchingPauseResume extends webpack.Watching {
 
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
+let needToRecompileSSRBundle: boolean = true
 export const getDevSSRWebpack = (): Record<
   IWebpackWatchingPauseResume,
-  webpack.Compiler
+  webpack.Compiler,
+  needToRecompileSSRBundle
 > => {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
-  return { devssrWebpackWatcher, devssrWebpackCompiler }
+
+  return {
+    devssrWebpackWatcher,
+    devssrWebpackCompiler,
+    needToRecompileSSRBundle,
+  }
 }
 
 let oldHash = ``
@@ -53,11 +60,18 @@ const runWebpack = (
       stage === `develop-html`
     ) {
       devssrWebpackCompiler = webpack(compilerConfig)
+      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, file => {
+        needToRecompileSSRBundle = true
+      })
+      devssrWebpackCompiler.hooks.watchRun.tap(`ssr watch run`, file => {
+        needToRecompileSSRBundle = true
+      })
       devssrWebpackWatcher = devssrWebpackCompiler.watch(
         {
           ignored: /node_modules/,
         },
         (err, stats) => {
+          needToRecompileSSRBundle = false
           emitter.emit(`DEV_SSR_COMPILATION_DONE`)
           devssrWebpackWatcher.suspend()
 

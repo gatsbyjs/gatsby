@@ -150,8 +150,16 @@ export const renderDevHTML = ({
     // We timeout after 1.5s as the user might not care per se about SSR.
     //
     // We pause and resume so there's no excess webpack activity during normal development.
-    const { devssrWebpackCompiler, devssrWebpackWatcher } = getDevSSRWebpack()
-    if (devssrWebpackWatcher && devssrWebpackCompiler) {
+    const {
+      devssrWebpackCompiler,
+      devssrWebpackWatcher,
+      needToRecompileSSRBundle,
+    } = getDevSSRWebpack()
+    if (
+      devssrWebpackWatcher &&
+      devssrWebpackCompiler &&
+      needToRecompileSSRBundle
+    ) {
       let isResolved = false
       await new Promise(resolve => {
         function finish(stats: Stats): void {
