@@ -20,7 +20,7 @@ export interface IWebpackWatchingPauseResume extends webpack.Watching {
   resume: () => void
 }
 
-let devssrWebpackCompilier: webpack.Compiler
+let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
 export const getDevSSRWebpack = (): Record<
   IWebpackWatchingPauseResume,
