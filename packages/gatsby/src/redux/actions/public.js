@@ -1398,6 +1398,12 @@ actions.removePageData = (id: PageDataRemove) => {
  * @param {string} $0.id the chunkName for the page component.
  */
 actions.createServerVisitedPage = (chunkName: string) => {
+  if (store.getState().visitedPages.get(`server`)?.has(chunkName)) {
+    // we already have given chunk tracked, let's not emit `CREATE_SERVER_VISITED_PAGE`
+    // action to not cause any additional work
+    return []
+  }
+
   return {
     type: `CREATE_SERVER_VISITED_PAGE`,
     payload: { componentChunkName: chunkName },
