@@ -6,7 +6,6 @@ import telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"
 
-import { emitter } from "../redux"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
@@ -14,23 +13,6 @@ import { IProgram, Stage } from "./types"
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
-
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
-  suspend: () => void
-  resume: () => void
-}
-
-let devssrWebpackCompilier: webpack.Compiler
-let devssrWebpackWatcher: IWebpackWatchingPauseResume
-export const getDevSSRWebpack = (): Record<
-  IWebpackWatchingPauseResume,
-  webpack.Compiler
-> => {
-  if (process.env.gatsby_executing_command !== `develop`) {
-    throw new Error(`This function can only be called in development`)
-  }
-  return { devssrWebpackWatcher, devssrWebpackCompilier }
-}
 
 let oldHash = ``
 let newHash = ``
@@ -52,15 +34,11 @@ const runWebpack = (
       process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
       stage === `develop-html`
     ) {
-      devssrWebpackCompilier = webpack(compilerConfig)
-      devssrWebpackWatcher = devssrWebpackCompilier.watch(
+      webpack(compilerConfig).watch(
         {
           ignored: /node_modules/,
         },
         (err, stats) => {
-          emitter.emit(`DEV_SSR_COMPILATION_DONE`)
-          devssrWebpackWatcher.suspend()
-
           if (err) {
             return reject(err)
           } else {
