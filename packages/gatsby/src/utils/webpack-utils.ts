@@ -706,8 +706,6 @@ export const createWebpackUtils = (
 
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
-      filename: `[name].[contenthash].css`,
-      chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 
