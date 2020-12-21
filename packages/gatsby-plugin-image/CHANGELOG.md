@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.4...gatsby-plugin-image@0.5.0-next.5) (2020-12-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** do not return from preprocessSource if nothing is changed ([#28678](https://github.com/gatsbyjs/gatsby/issues/28678)) ([9a49286](https://github.com/gatsbyjs/gatsby/commit/9a492868b4f28179a86204bc393051f0bf96fe9b))
+
+### Features
+
+- **gatsby-plugin-image:** Add remote image support ([#28647](https://github.com/gatsbyjs/gatsby/issues/28647)) ([a91825d](https://github.com/gatsbyjs/gatsby/commit/a91825d0e8896c90aaa69e8929fe1da07cb90751))
+
 # [0.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.3...gatsby-plugin-image@0.5.0-next.4) (2020-12-17)
 
 ### Bug Fixes

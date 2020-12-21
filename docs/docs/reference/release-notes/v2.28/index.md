@@ -31,12 +31,13 @@ Sneak peek to next releases:
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
-[Previous release notes](../v2.27/index.md)
+[Previous release notes](/docs/reference/release-notes/v2.27)
+
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.28.0-next.0...gatsby@2.28.0)
 
 ## New `gatsby new`
 
-In previous release we added [interactive way of scaffolding new gatsby project](../v2.27/index.md#create-gatsby) (with `npm init gatsby`). As of this release, `gatsby new` (without any addition arguments) will use the same flow.
+In previous release we added [interactive way of scaffolding new gatsby project](/docs/reference/release-notes/v2.27#create-gatsby) (with `npm init gatsby`). As of this release, `gatsby new` (without any addition arguments) will use the same flow.
 
 ## Feature flags in `gatsby-config`
 
@@ -143,7 +144,7 @@ The plugin is updated to the new major version of emotion: v11. Check out [this 
 
 ## Removed experimental lazy page bundling
 
-In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](../v2.27/index.md#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [(experimental) new cache clearing behaviors](#experimental-new-cache-clearing-behaviors).
+In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](/docs/reference/release-notes/v2.27#experimental-lazy-page-bundling-in-development) mode for `gatsby develop` that would delay compiling page templates until it was needed. While preliminary tests were very promising, we discovered few showstoppers that degraded development experience. [We decided to end the experiment](https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998) for now and shift our efforts to [(experimental) new cache clearing behaviors](#experimental-new-cache-clearing-behaviors).
 
 ## Notable bugfixes
 
