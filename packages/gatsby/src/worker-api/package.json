@@ -1,0 +1,16 @@
+{
+  "name": "worker-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@bnaya/objectbuffer": "^0.30.1",
+    "microjob": "^0.7.0",
+    "shared-array-buffer-store": "^1.0.0"
+  }
+}
