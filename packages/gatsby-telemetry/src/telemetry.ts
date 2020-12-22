@@ -108,6 +108,7 @@ export interface ITelemetryTagsPayload {
   valueString?: string
   valueStringArray?: Array<string>
   valueInteger?: number
+  valueBoolean?: boolean
 }
 
 export interface IDefaultTelemetryTagsPayload extends ITelemetryTagsPayload {
