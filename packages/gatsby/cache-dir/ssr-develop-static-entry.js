@@ -1,4 +1,6 @@
+import React from "react"
 import fs from "fs"
+import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { merge } from "lodash"
 import { join } from "path"
 import apiRunner from "./api-runner-ssr"
@@ -7,16 +9,6 @@ import syncRequires from "$virtual/ssr-sync-requires"
 
 import { RouteAnnouncerProps } from "./route-announcer-props"
 import { ServerLocation, Router, isRedirect } from "@reach/router"
-
-let React
-let ReactDom
-if (process.env.CI) {
-  React = require(`react/cjs/react.production.min.js`)
-  ReactDom = require(`react-dom/cjs/react-dom-server.node.production.min.js`)
-} else {
-  React = require(`react`)
-  ReactDom = require(`react-dom/server`)
-}
 
 // import testRequireError from "./test-require-error"
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -191,7 +183,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     // If no one stepped up, we'll handle it.
     if (!bodyHtml) {
       try {
-        bodyHtml = ReactDom.renderToString(bodyComponent)
+        bodyHtml = renderToString(bodyComponent)
       } catch (e) {
         // ignore @reach/router redirect errors
         if (!isRedirect(e)) throw e
@@ -237,7 +229,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
       <script key={`commons`} src="/commons.js" />,
     ]),
   })
-  let htmlStr = ReactDom.renderToStaticMarkup(htmlElement)
+  let htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
   callback(null, htmlStr)
