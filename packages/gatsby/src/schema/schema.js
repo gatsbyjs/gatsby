@@ -1059,8 +1059,11 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
     // This will cause convenience children fields like `childImageSharp`
     // to be added in `addConvenienceChildrenFields` method.
     // Also required for proper printing of the `@childOf` directive in the snapshot plugin
-    if (!childOfExtension?.types) {
-      childOfExtension = { types: [] }
+    if (!childOfExtension) {
+      childOfExtension = {}
+    }
+    if (!childOfExtension.types) {
+      childOfExtension.types = []
     }
     childOfExtension.types.push(parentTypeName)
     childTypeComposer.setExtension(`childOf`, childOfExtension)
