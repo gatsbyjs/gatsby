@@ -14,7 +14,9 @@ const {
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
-const { getGatsbyImageFieldConfig } = require(`gatsby-plugin-image/graphql`)
+const {
+  getGatsbyImageFieldConfig,
+} = require(`gatsby-plugin-image/dist/resolver-utils`)
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
@@ -204,28 +206,6 @@ const fitMap = new Map([
   [`crop`, `cover`],
   [`thumb`, `cover`],
 ])
-
-const resolveGatsbyImageData = async (image, options) => {
-  const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
-
-  return generateImageData({
-    ...options,
-    pluginName: `gatsby-source-contentful`,
-    sourceMetadata,
-    filename: baseUrl,
-    placeholderURL:
-      options.placeholder === `blurred`
-        ? await getBase64Image({
-            baseUrl,
-          })
-        : undefined,
-    generateImageSource,
-    fit: fitMap.get(options.resizingBehavior),
-    options,
-  })
-}
-
-exports.resolveGatsbyImageData = resolveGatsbyImageData
 
 const resolveFixed = (image, options) => {
   if (!isImage(image)) return null
@@ -689,6 +669,43 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       args: { toFormat: `` },
       fileArgs: options,
     })
+  }
+
+  const resolveGatsbyImageData = async (image, options) => {
+    const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
+
+    const imageProps = generateImageData({
+      ...options,
+      pluginName: `gatsby-source-contentful`,
+      sourceMetadata,
+      filename: baseUrl,
+      generateImageSource,
+      fit: fitMap.get(options.resizingBehavior),
+      options,
+    })
+
+    let placeholderDataURI = null
+
+    if (options.placeholder === `blurred`) {
+      placeholderDataURI = await getBase64Image({
+        baseUrl,
+      })
+    }
+
+    if (options.placeholder === `tracedSVG`) {
+      placeholderDataURI = await getTracedSVG({
+        image,
+        options,
+      })
+    }
+
+    if (placeholderDataURI) {
+      imageProps.placeholder = { fallback: placeholderDataURI }
+    }
+
+    console.log({ imageProps })
+
+    return imageProps
   }
 
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
