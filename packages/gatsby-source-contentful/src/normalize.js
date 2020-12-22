@@ -520,14 +520,8 @@ exports.createNodesForContentType = ({
             entryItemFields[entryItemFieldKey] = {
               raw: stringify(fieldValue),
               references___NODE: [...resolvableReferenceIds],
-              nodeType: {
-                type: GraphQLString,
-                deprecationReason,
-              },
-              json: {
-                type: GraphQLString,
-                deprecationReason,
-              },
+              nodeType: deprecationReason,
+              json: deprecationReason,
             }
           } else if (
             fieldType === `Object` &&
