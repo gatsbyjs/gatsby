@@ -2,21 +2,16 @@
 title: Adding Search
 ---
 
-See below for a list of guides in this section, or keep reading for an overview on adding search functionality to your site.
-
-<GuideList slug={props.slug} />
-
-## Site search overview
-
-Before going through the steps for adding search to your Gatsby website, examine the components needed for adding search to a website.
-
-There are three required components for adding search to your Gatsby website:
-
-1. index
-2. engine
-3. UI
+There are three required components for adding search to your Gatsby website: the **search index**, the **search engine**, and **search UI**.
 
 ## Site search components
+
+| ----------- | ----------- |
+| **Search index**  | The search index is a copy of your data stored in a search-friendly format. An index is for optimizing speed and performance when executing a search query. Without an index, every search would need to scan every page in your site—which quickly becomes inefficient.       |
+| **Search engine**   | The search engine indexes your content, takes a search query, runs it through theindex, and returns any matching documents. Search engines can be hosted services (like Algolia) or open-source that you can self-host (like Elastic) |
+| **Search UI** | A UI component on your site that allows users to write search queries and view the results of each query. Some search providers provide out of the box React components that you can drop into Gatsby sites. |
+| ----------- | ----------- |
+
 
 ### Search index
 
