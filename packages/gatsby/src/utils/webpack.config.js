@@ -233,7 +233,7 @@ module.exports = async (
           // Don't use the default mini-css-extract-plugin setup as that
           // breaks hmr.
           configPlugins.push(
-            plutins.extractText({ filename: `[name].css` }),
+            plugins.extractText({ filename: `[name].css` }),
             plugins.extractStats()
           )
         }
