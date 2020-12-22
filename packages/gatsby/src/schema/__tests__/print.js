@@ -59,9 +59,19 @@ describe(`Print type definitions`, () => {
       },
       bar: `bar`,
     }
+    const node3 = {
+      id: `test3`,
+      parent: `test1`,
+      internal: {
+        type: `BarChild`,
+      },
+      bar: `bar`,
+    }
     store.dispatch({ type: `CREATE_NODE`, payload: { ...node1 } })
     store.dispatch({ type: `CREATE_NODE`, payload: { ...node2 } })
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node3 } })
     createParentChildLink({ parent: node1, child: node2 })
+    createParentChildLink({ parent: node1, child: node3 })
     const typeDefs = []
     typeDefs.push(`
       type AnotherTest implements Node & ITest {
@@ -109,6 +119,18 @@ describe(`Print type definitions`, () => {
             types: [`OneMoreTest`],
           },
         },
+      }),
+      buildObjectType({
+        name: `BarChild`,
+        fields: {
+          id: `ID!`,
+        },
+        interfaces: [`Node`],
+        extensions: {
+          childOf: {
+            types: [`Test`],
+          },
+        },
       })
     )
     store.dispatch({
@@ -119,6 +141,11 @@ describe(`Print type definitions`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: typeDefs[1],
+      plugin: { name: `gatsby-plugin-another-test` },
+    })
+    store.dispatch({
+      type: `CREATE_TYPES`,
+      payload: typeDefs[2],
       plugin: { name: `gatsby-plugin-another-test` },
     })
   })

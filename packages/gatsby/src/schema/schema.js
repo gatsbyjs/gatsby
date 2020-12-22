@@ -1028,32 +1028,30 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
     const childTypeComposer = schemaComposer.getAnyTC(typeName)
     let childOfExtension = childTypeComposer.getExtension(`childOf`)
 
+    if (childOfExtension?.types.includes(parentTypeName)) {
+      return
+    }
     if (shouldInfer === false) {
       // Adding children fields to types with the `@dontInfer` extension is deprecated
       // Only warn when the parent-child relation has not been explicitly set with `childOf` directive
-      if (
-        !childOfExtension ||
-        !childOfExtension.types.includes(parentTypeName)
-      ) {
-        const childField = fieldNames.convenienceChild(typeName)
-        const childrenField = fieldNames.convenienceChildren(typeName)
-        const childOfTypes = (childOfExtension?.types ?? [])
-          .concat(parentTypeName)
-          .map(name => `"${name}"`)
-          .join(`,`)
+      const childField = fieldNames.convenienceChild(typeName)
+      const childrenField = fieldNames.convenienceChildren(typeName)
+      const childOfTypes = (childOfExtension?.types ?? [])
+        .concat(parentTypeName)
+        .map(name => `"${name}"`)
+        .join(`,`)
 
-        report.warn(
-          `Deprecation warning: ` +
-            `In Gatsby v3 fields \`${parentTypeName}.${childField}\` and \`${parentTypeName}.${childrenField}\` ` +
-            `will not be added automatically because ` +
-            `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
-            `Add the following type definition to fix this:\n\n` +
-            `  type ${typeName} implements Node @childOf(types: [${childOfTypes}]) {\n` +
-            `    id: ID!\n` +
-            `  }\n\n` +
-            `https://www.gatsbyjs.com/docs/actions/#createTypes`
-        )
-      }
+      report.warn(
+        `Deprecation warning: ` +
+          `In Gatsby v3 fields \`${parentTypeName}.${childField}\` and \`${parentTypeName}.${childrenField}\` ` +
+          `will not be added automatically because ` +
+          `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
+          `Add the following type definition to fix this:\n\n` +
+          `  type ${typeName} implements Node @childOf(types: [${childOfTypes}]) {\n` +
+          `    id: ID!\n` +
+          `  }\n\n` +
+          `https://www.gatsbyjs.com/docs/actions/#createTypes`
+      )
     }
     // Set `@childOf` extension automatically
     // This will cause convenience children fields like `childImageSharp`
