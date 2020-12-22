@@ -997,6 +997,22 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
   })
 }
 
+const isExplicitChild = ({ typeComposer, childTypeComposer }) => {
+  if (!childTypeComposer.hasExtension(`childOf`)) {
+    return false
+  }
+  const childOfExtension = childTypeComposer.getExtension(`childOf`)
+  const { types: parentMimeTypes = [] } =
+    typeComposer.getExtension(`mimeTypes`) ?? {}
+
+  return (
+    childOfExtension?.types?.includes(typeComposer.getTypeName()) ||
+    childOfExtension?.mimeTypes?.some(mimeType =>
+      parentMimeTypes.includes(mimeType)
+    )
+  )
+}
+
 const addInferredChildOfExtensions = ({ schemaComposer }) => {
   schemaComposer.forEach(typeComposer => {
     if (
@@ -1028,7 +1044,7 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
     const childTypeComposer = schemaComposer.getAnyTC(typeName)
     let childOfExtension = childTypeComposer.getExtension(`childOf`)
 
-    if (childOfExtension?.types.includes(parentTypeName)) {
+    if (isExplicitChild({ typeComposer, childTypeComposer })) {
       return
     }
     if (shouldInfer === false) {
