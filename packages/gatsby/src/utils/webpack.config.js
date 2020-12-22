@@ -96,10 +96,6 @@ module.exports = async (
       )
     }
 
-    if (stage === `develop-html`) {
-      envObject.CI = JSON.stringify(process.env.CI || `false`)
-    }
-
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
     return Object.keys(mergedEnvVars).reduce(
