@@ -1060,7 +1060,7 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
     // to be added in `addConvenienceChildrenFields` method.
     // Also required for proper printing of the `@childOf` directive in the snapshot plugin
     if (!childOfExtension) {
-      childOfExtension = {}
+      childOfExtension = { types: [], mimeTypes: [] }
     }
     if (!childOfExtension.types) {
       childOfExtension.types = []
