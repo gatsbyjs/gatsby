@@ -13,6 +13,9 @@ const {
   GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
+const { generateImageData } = require(`gatsby-plugin-image`)
+const { getGatsbyImageFieldConfig } = require(`gatsby-plugin-image/graphql`)
+const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
 
@@ -203,7 +206,6 @@ const fitMap = new Map([
 ])
 
 const resolveGatsbyImageData = async (image, options) => {
-  const { generateImageData } = require(`gatsby-plugin-image`)
   const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
 
   return generateImageData({
@@ -655,7 +657,9 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store }) => {
+let warnedForBeta = false
+
+exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -699,19 +703,15 @@ exports.extendNodeType = ({ type, store }) => {
   const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
-  // gatsby-pugin-image
+  // gatsby-plugin-image
   const getGatsbyImageData = () => {
-    // @todo check if gatsby-plugin-image is enabled
-    const gatsbyImageEnabled = false
-    if (!gatsbyImageEnabled) {
-      return {
-        type: GraphQLString,
-        deprecated: true,
-        deprecationReason: `Enable gatsby-plugin-image to use this field.`,
-        resolve: () => null,
-      }
+    if (!warnedForBeta) {
+      reporter.warn(
+        stripIndent`
+      Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
+      )
+      warnedForBeta = true
     }
-    const { getGatsbyImageFieldConfig } = require(`gatsby-plugin-image/graphql`)
 
     return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
