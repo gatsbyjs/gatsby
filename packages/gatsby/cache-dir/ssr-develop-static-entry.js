@@ -166,21 +166,6 @@ export default (pagePath, isClientOnlyPage, callback) => {
       .reverse()
       .forEach(style => {
         headComponents.unshift(
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-            // Immediately update the styles link with its absolute URL so HMR
-            // will work
-            var scripts = document.getElementsByTagName('script')
-            var currentScript = scripts[scripts.length - 1]
-            var linkEl = currentScript.previousSibling
-            var newHref = new URL("${__PATH_PREFIX__}/${style.name}", location.href).href
-            linkEl.href = newHref
-            `,
-            }}
-          />
-        )
-        headComponents.unshift(
           <link
             data-identity={`gatsby-dev-css`}
             key={style.name}
