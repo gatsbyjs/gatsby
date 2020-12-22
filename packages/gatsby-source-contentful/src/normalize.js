@@ -1,6 +1,5 @@
 const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
-const { GraphQLString } = require(`gatsby/graphql`)
 
 const typePrefix = `Contentful`
 const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
