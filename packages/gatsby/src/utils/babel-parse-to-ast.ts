@@ -1,61 +1,17 @@
-import { parse, ParserOptions } from "@babel/parser"
-import { File } from "@babel/types"
+const { runTask } = require(`../worker-api`)
+const path = require(`path`)
 
-const PARSER_OPTIONS: ParserOptions = {
-  allowImportExportEverywhere: true,
-  allowReturnOutsideFunction: true,
-  allowSuperOutsideMethod: true,
-  sourceType: `unambiguous`,
-  plugins: [
-    `jsx`,
-    `flow`,
-    `doExpressions`,
-    `objectRestSpread`,
-    [
-      `decorators`,
-      {
-        decoratorsBeforeExport: true,
-      },
-    ],
-    `classProperties`,
-    `classPrivateProperties`,
-    `classPrivateMethods`,
-    `exportDefaultFrom`,
-    `exportNamespaceFrom`,
-    `asyncGenerators`,
-    `functionBind`,
-    `functionSent`,
-    `dynamicImport`,
-    `numericSeparator`,
-    `optionalChaining`,
-    `importMeta`,
-    `bigInt`,
-    `optionalCatchBinding`,
-    `throwExpressions`,
-    [
-      `pipelineOperator`,
-      {
-        proposal: `minimal`,
-      },
-    ],
-    `nullishCoalescingOperator`,
-  ],
-}
+export async function babelParseToAst(
+  contents: string,
+  filePath: string
+): File {
+  console.time(`parse ${filePath}`)
+  const result = await runTask(
+    require.resolve(`./babel-parse-to-ast-worker`),
+    contents,
+    filePath
+  )
+  console.timeEnd(`parse ${filePath}`)
 
-export function getBabelParserOptions(filePath: string): ParserOptions {
-  // Flow and TypeScript plugins can't be enabled simultaneously
-  if (/\.tsx?/.test(filePath)) {
-    const { plugins } = PARSER_OPTIONS
-    return {
-      ...PARSER_OPTIONS,
-      plugins: plugins!.map(plugin =>
-        plugin === `flow` ? `typescript` : plugin
-      ),
-    }
-  }
-  return PARSER_OPTIONS
-}
-
-export function babelParseToAst(contents: string, filePath: string): File {
-  return parse(contents, getBabelParserOptions(filePath))
+  return result
 }
