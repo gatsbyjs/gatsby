@@ -3,44 +3,14 @@ const {
   // queue: jobQueue,
   // reportError,
   _unstable_createJob,
+  _lazyJobsEnabled,
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
-const { slash, isCI } = require(`gatsby-core-utils`)
-const { trackFeatureIsUsed } = require(`gatsby-telemetry`)
+const { slash } = require(`gatsby-core-utils`)
 const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
-
-function prepareLazyImagesExperiment(reporter) {
-  if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
-    return
-  }
-  if (process.env.gatsby_executing_command !== `develop`) {
-    // We don't want to ever have this flag enabled for anything other than develop
-    // in case someone have this env var globally set
-    delete process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES
-    return
-  }
-  if (isCI()) {
-    delete process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES
-    reporter.warn(
-      `Lazy Image Processing experiment is not available in CI environment. Continuing with regular mode.`
-    )
-    return
-  }
-  // We show a different notice for GATSBY_EXPERIMENTAL_FAST_DEV umbrella
-  if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
-    reporter.info(
-      `[gatsby-plugin-sharp] The lazy image processing experiment is enabled`
-    )
-  }
-  trackFeatureIsUsed(`LazyImageProcessing`)
-}
-
-exports.onPreInit = ({ reporter }) => {
-  prepareLazyImagesExperiment(reporter)
-}
 
 // create the progressbar once and it will be killed in another lifecycle
 const finishProgressBar = () => {
@@ -53,7 +23,7 @@ const finishProgressBar = () => {
 exports.onPostBuild = () => finishProgressBar()
 
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
-  if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
+  if (!_lazyJobsEnabled()) {
     finishProgressBar()
     return
   }

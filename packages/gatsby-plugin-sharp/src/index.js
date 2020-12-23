@@ -151,6 +151,16 @@ function createJob(job, { reporter }) {
   return promise
 }
 
+function lazyJobsEnabled() {
+  return (
+    process.env.gatsby_executing_command === `develop` &&
+    !(
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+    )
+  )
+}
+
 function queueImageResizing({ file, args = {}, reporter }) {
   const fullOptions = healOptions(getPluginOptions(), args, file.extension)
   const {
@@ -170,13 +180,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
       inputPaths: [file.absolutePath],
       outputDir,
       args: {
-        isLazy:
-          !(
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
-          ) &&
-          process.env.gatsby_executing_command === `develop` &&
-          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
+        isLazy: lazyJobsEnabled(),
         operations: [
           {
             outputPath: relativePath,
@@ -244,13 +248,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         file.internal.contentDigest
       ),
       args: {
-        isLazy:
-          !(
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
-            process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
-          ) &&
-          process.env.gatsby_executing_command === `develop` &&
-          !!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES,
+        isLazy: lazyJobsEnabled(),
         operations,
         pluginOptions: getPluginOptions(),
       },
@@ -341,7 +339,7 @@ async function generateBase64({ file, args = {}, reporter }) {
     info = result.info
   } catch (err) {
     reportError(
-      `Failed to process image ${file.absolutePath}. 
+      `Failed to process image ${file.absolutePath}.
 It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`,
       err,
       reporter
@@ -773,3 +771,4 @@ exports.getImageSize = getImageSize
 exports.getImageSizeAsync = getImageSizeAsync
 exports.stats = stats
 exports._unstable_createJob = createJob
+exports._lazyJobsEnabled = lazyJobsEnabled
