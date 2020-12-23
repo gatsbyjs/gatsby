@@ -2,16 +2,24 @@
 const io = require("socket.io")(3000)
 const fs = require(`fs-extra`)
 
+let lastTaskRunner = Buffer.alloc(1)
+
 io.on("connection", socket => {
-  socket.on(`setTaskRunner`, function (taskRunner) {
+  console.log(`connection`)
+  let taskRunner
+  socket.on(`setTaskRunner`, function (taskRunnerStr) {
     fs.ensureDirSync(`./.cache/`)
-    fs.writeFileSync(`./.cache/task-runner.js`, taskRunner)
-    delete require.cache[require.resolve(`./.cache/task-runner.js`)]
+    if (Buffer.compare(lastTaskRunner, taskRunnerStr)) {
+      lastTaskRunner = taskRunnerStr
+      fs.writeFileSync(`./.cache/task-runner.js`, taskRunnerStr)
+      delete require.cache[require.resolve(`./.cache/task-runner.js`)]
+    }
+    taskRunner = require(`./.cache/task-runner.js`)
+    taskRunner.init(socket)
+    socket.emit(`serverReady`)
   })
 
-  socket.on(`runTask`, function (task) {
-    const taskRunner = require(`./.cache/task-runner.js`)
-    console.log({ task, taskRunner })
-    socket.emit(`response`, taskRunner.runTask(task))
+  socket.on(`runTask`, async function (task) {
+    taskRunner.runTask(task)
   })
 })
