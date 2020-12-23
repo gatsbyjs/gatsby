@@ -39,6 +39,7 @@ const {
   WebPOptionsType,
   BlurredOptionsType,
   TransformOptionsType,
+  AVIFOptionsType,
 } = require(`./types`)
 const { stripIndent } = require(`common-tags`)
 const { prefixId, CODES } = require(`./error-utils`)
@@ -492,6 +493,10 @@ const imageNodeType = ({
       webpOptions: {
         type: WebPOptionsType,
         description: `Options to pass to sharp when generating WebP images.`,
+      },
+      avifOptions: {
+        type: AVIFOptionsType,
+        description: `Options to pass to sharp when generating AVIF images.`,
       },
       transformOptions: {
         type: TransformOptionsType,

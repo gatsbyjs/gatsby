@@ -9,7 +9,7 @@ import { createTransformObject } from "./plugin-options"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
-type ImageFormat = "jpg" | "png" | "webp" | "" | "auto"
+type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 export interface ISharpGatsbyImageArgs {
   layout?: "fixed" | "fluid" | "constrained"
   formats?: Array<ImageFormat>
@@ -28,6 +28,7 @@ export interface ISharpGatsbyImageArgs {
   jpgOptions: Record<string, unknown>
   pngOptions: Record<string, unknown>
   webpOptions: Record<string, unknown>
+  avifOptions: Record<string, unknown>
   blurredOptions: { width?: number; toFormat?: ImageFormat }
 }
 export type FileNode = Node & {
@@ -232,6 +233,35 @@ export async function generateImageData({
     },
   }
 
+  if (formats.has(`avif`)) {
+    const transforms = imageSizes.sizes.map(outputWidth => {
+      const width = Math.round(outputWidth)
+      const transform = createTransformObject({
+        quality,
+        ...transformOptions,
+        fit,
+        cropFocus,
+        ...args.avifOptions,
+        width,
+        height: Math.round(width / imageSizes.aspectRatio),
+        toFormat: `avif`,
+      })
+      return transform
+    })
+
+    const avifImages = batchQueueImageResizing({
+      file,
+      transforms,
+      reporter,
+    })
+
+    imageProps.images.sources?.push({
+      srcSet: getSrcSet(avifImages),
+      type: `image/avif`,
+      sizes,
+    })
+  }
+
   if (primaryFormat !== `webp` && formats.has(`webp`)) {
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
@@ -253,10 +283,9 @@ export async function generateImageData({
       transforms,
       reporter,
     })
-    const webpSrcSet = getSrcSet(webpImages)
 
     imageProps.images.sources?.push({
-      srcSet: webpSrcSet,
+      srcSet: getSrcSet(webpImages),
       type: `image/webp`,
       sizes,
     })

@@ -129,6 +129,23 @@ export const WebPOptionsType = new GraphQLInputObjectType({
   },
 })
 
+export const AVIFOptionsType = new GraphQLInputObjectType({
+  name: `AVIFOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      quality: {
+        type: GraphQLInt,
+      },
+      lossless: {
+        type: GraphQLBoolean,
+      },
+      speed: {
+        type: GraphQLInt,
+      },
+    }
+  },
+})
+
 export const DuotoneGradientType = new GraphQLInputObjectType({
   name: `DuotoneGradient`,
   fields: (): GraphQLInputFieldConfigMap => {
