@@ -1,6 +1,7 @@
 const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const _ = require(`lodash`)
 
 const functionDir = path.join(__dirname, `worker-tasks`)
 const filesDir = path.join(__dirname, `files`)
@@ -16,8 +17,8 @@ const knownTaskFunctions = new Set()
 
 const downloadedFiles = new Map()
 const inFlightDownloads = new Map()
-const getFile = file => {
-  console.log({ downloadedFiles })
+const getFile = ([name, file]) => {
+  console.log({ downloadedFiles, name, file })
   if (downloadedFiles.has(file.hash)) {
     return downloadedFiles.get(file.hash)
   } else if (inFlightDownloads.has(file.hash)) {
@@ -27,15 +28,16 @@ const getFile = file => {
       socket.emit(`sendFile`, file)
       socket.once(file.hash, async fileBlob => {
         // Make path
-        const downloadedFilePath = path.join(filesDir, file.hash)
-        console.log({ downloadedFilePath })
-        await fs.writeFile(downloadedFilePath, fileBlob)
+        const localPath = path.join(filesDir, file.hash)
+        console.log({ localPath })
+        await fs.writeFile(localPath, fileBlob)
 
+        const fileObject = { ...file, name, localPath }
         // set on downloadedFiles
-        downloadedFiles.set(file.hash, downloadedFilePath)
+        downloadedFiles.set(file.hash, fileObject)
         console.log({ downloadedFiles })
 
-        resolve(downloadedFilePath)
+        resolve(fileObject)
       })
     })
 
@@ -44,7 +46,12 @@ const getFile = file => {
   }
 }
 const getFiles = async files => {
-  return Promise.all(files.map(file => getFile(file)))
+  const pairs = await Promise.all(_.toPairs(files).map(pair => getFile(pair)))
+  console.log({ pairs })
+  // Recreate object
+  const filesObj = {}
+  pairs.forEach(pair => (filesObj[pair.name] = pair))
+  return filesObj
 }
 
 // const waiting
@@ -64,7 +71,7 @@ exports.runTask = async task => {
   if (task.files) {
     files = await getFiles(task.files)
   }
-  console.log(files)
+  console.log(`the files`, files)
 
   actuallyRunTask({
     handlerPath,

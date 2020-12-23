@@ -60,32 +60,42 @@ async function md5File(filePath) {
 }
 
 const runTask = async task => {
-  // preprocess and then add to the queue
-  task.traceId = uuid.v4()
-  if (task.files && task.files.length > 0) {
-    task.files = await Promise.all(
-      task.files.map(async file => {
-        const hash = await md5File(file)
-        return {
-          filePath: file,
-          hash,
-        }
-      })
-    )
-  }
-  const taskFn = () => {
-    return new Promise(resolve => {
-      console.time(`runTask ${task.traceId}`)
-      socket.emit(`runTask`, task)
-      socket.once(`response-${task.traceId}`, res => {
-        console.log(res)
-        console.timeEnd(`runTask ${task.traceId}`)
-        resolve()
-      })
-    })
-  }
+  return new Promise(async runTaskResolve => {
+    // preprocess and then add to the queue
+    task.traceId = uuid.v4()
 
-  queue.add(taskFn)
+    if (_.isFunction(task.handler)) {
+      task.handler = task.handler.toString()
+    }
+
+    console.log(task.files, _.isEmpty(task.files), _.toPairs(task.files))
+    if (task.files && !_.isEmpty(task.files)) {
+      await Promise.all(
+        _.toPairs(task.files).map(async ([name, file]) => {
+          console.log(`inside`, { name, file })
+          const hash = await md5File(file.originPath)
+          // Discard the file path
+          task.files[name] = { ...file, hash }
+        })
+      )
+    }
+    console.log(task)
+    // TODO only send hash of the handler function.
+    const taskFn = () => {
+      return new Promise(resolve => {
+        console.time(`runTask ${task.traceId}`)
+        socket.emit(`runTask`, task)
+        socket.once(`response-${task.traceId}`, res => {
+          console.log(res)
+          console.timeEnd(`runTask ${task.traceId}`)
+          runTaskResolve(res)
+          resolve()
+        })
+      })
+    }
+
+    queue.add(taskFn)
+  })
 }
 
 exports.runTask = runTask
@@ -94,7 +104,8 @@ const handler = async (args, { files }) => {
   const path = require(`path`)
   const fs = require(`fs-extra`)
 
-  const jsonData = JSON.parse(await fs.readFile(files[0], `utf-8`))
+  console.log({ files })
+  const jsonData = JSON.parse(await fs.readFile(files.data.localPath, `utf-8`))
   jsonData.super = jsonData.super += 10
   const newPath = path.join(`blue`, `moon`)
   return { "Math!": args.a + args.b * Math.random(), path: newPath, jsonData }
@@ -104,11 +115,15 @@ const args = { a: 2111, b: 2 }
 
 const filePath = path.resolve(`./data.json`)
 const filePath2 = path.resolve(`./data2.json`)
-_.range(3).forEach(i => {
+_.range(1).forEach(i => {
   runTask({
-    handler: handler.toString(),
+    handler: handler,
     args: { ...args, b: i },
-    files: [Math.random() > 0.5 ? filePath : filePath2],
+    files: {
+      data: {
+        originPath: Math.random() > 0.5 ? filePath : filePath2,
+      },
+    },
   })
 })
 
@@ -117,8 +132,10 @@ const anotherHandler = args => {
 }
 
 runTask({
-  handler: anotherHandler.toString(),
+  handler: anotherHandler,
   args: { name: `Jack` },
+}).then(result => {
+  console.log(`the result`, result)
 })
 
 socket.on(`connect`, async function () {
@@ -134,7 +151,7 @@ socket.on(`connect`, async function () {
 
   socket.on(`sendFile`, async file => {
     console.log(`sendFile`, file)
-    const fileContents = await fs.readFile(file.filePath)
+    const fileContents = await fs.readFile(file.originPath)
     socket.emit(file.hash, fileContents)
   })
 })
