@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.10.0...gatsby-source-drupal@3.10.1) (2020-12-23)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
 # [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.10.0-next.0...gatsby-source-drupal@3.10.0) (2020-12-15)
 
 ### Bug Fixes

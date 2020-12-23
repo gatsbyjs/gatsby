@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.29.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.1...gatsby@2.29.2) (2020-12-23)
+
+### Bug Fixes
+
+- **gatsby:** remove redundant dispatch of query extraction error ([#28676](https://github.com/gatsbyjs/gatsby/issues/28676)) ([#28744](https://github.com/gatsbyjs/gatsby/issues/28744)) ([0b8ea51](https://github.com/gatsbyjs/gatsby/commit/0b8ea518949d73b8ce53b6edf795fed2232669fb))
+
 ## [2.29.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.0...gatsby@2.29.1) (2020-12-16)
 
 **Note:** Version bump only for package gatsby
