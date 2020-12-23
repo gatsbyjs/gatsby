@@ -18,28 +18,28 @@ const downloadedFiles = new Map()
 const inFlightDownloads = new Map()
 const getFile = file => {
   console.log({ downloadedFiles })
-  if (downloadedFiles.has(file)) {
-    return downloadedFiles.get(file)
-  } else if (inFlightDownloads.has(file)) {
-    return inFlightDownloads.get(file)
+  if (downloadedFiles.has(file.hash)) {
+    return downloadedFiles.get(file.hash)
+  } else if (inFlightDownloads.has(file.hash)) {
+    return inFlightDownloads.get(file.hash)
   } else {
     const downloadPromise = new Promise(resolve => {
       socket.emit(`sendFile`, file)
-      socket.on(file, async fileBlob => {
+      socket.once(file.hash, async fileBlob => {
         // Make path
-        const downloadedFilePath = path.join(filesDir, file)
+        const downloadedFilePath = path.join(filesDir, file.hash)
         console.log({ downloadedFilePath })
         await fs.writeFile(downloadedFilePath, fileBlob)
 
         // set on downloadedFiles
-        downloadedFiles.set(file, downloadedFilePath)
+        downloadedFiles.set(file.hash, downloadedFilePath)
         console.log({ downloadedFiles })
 
         resolve(downloadedFilePath)
       })
     })
 
-    inFlightDownloads.set(file, downloadPromise)
+    inFlightDownloads.set(file.hash, downloadPromise)
     return downloadPromise
   }
 }
@@ -85,7 +85,7 @@ const actuallyRunTask = async ({ handlerPath, args, files, traceId }) => {
   const result = await Promise.resolve(
     taskRunner(args, { traceId: copyOfTraceId, files })
   )
-  socket.emit(`response`, { result, traceId })
+  socket.emit(`response-${traceId}`, { result, traceId })
 }
 
 exports.warmup = () => {}
