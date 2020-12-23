@@ -23,8 +23,12 @@ const { getBrowsersList } = require(`./browserslist`)
  *
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
+
+const customOptionsCache = new Map()
+const configCache = new Map()
+
 module.exports = babelLoader.custom(babel => {
-  const toReturn = {
+  return {
     // Passed the loader options.
     customOptions({
       stage = `test`,
@@ -32,7 +36,11 @@ module.exports = babelLoader.custom(babel => {
       rootDir = process.cwd(),
       ...options
     }) {
-      return {
+      if (customOptionsCache.has(stage)) {
+        return customOptionsCache.get(stage)
+      }
+
+      const toReturn = {
         custom: {
           stage,
           reactRuntime,
@@ -49,11 +57,27 @@ module.exports = babelLoader.custom(babel => {
           ...options,
         },
       }
+
+      customOptionsCache.set(stage, toReturn)
+
+      return toReturn
     },
 
     // Passed Babel's 'PartialConfig' object.
     config(partialConfig, { customOptions }) {
+      let configCacheKey = customOptions.stage
+      if (partialConfig.hasFilesystemConfig()) {
+        // partialConfig.files is a Set that accumulates used config files (absolute paths)
+        partialConfig.files.forEach(configFilePath => {
+          configCacheKey += `_${configFilePath}`
+        })
+      }
+
       let { options } = partialConfig
+      if (configCache.has(configCacheKey)) {
+        return { ...options, ...configCache.get(configCacheKey) }
+      }
+
       const [
         reduxPresets,
         reduxPlugins,
@@ -101,9 +125,16 @@ module.exports = babelLoader.custom(babel => {
         })
       })
 
+      // cache just plugins and presets, because config also includes things like
+      // filenames - this is mostly to not call `mergeConfigItemOptions` for each file
+      // as that function call `babel.createConfigItem` and is quite expensive but also
+      // skips quite a few nested loops on top of that
+      configCache.set(configCacheKey, {
+        plugins: options.plugins,
+        presets: options.presets,
+      })
+
       return options
     },
   }
-
-  return toReturn
 })
