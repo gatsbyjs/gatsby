@@ -55,6 +55,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   }
   if (images.fallback) {
     cleanedImages.fallback = {
+      sizes: images.fallback.sizes,
       src: images.fallback.src,
       srcSet: images.fallback.srcSet
         ? removeNewLines(images.fallback.srcSet)
