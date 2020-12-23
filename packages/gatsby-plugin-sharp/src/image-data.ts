@@ -160,6 +160,12 @@ export async function generateImageData({
   } else if (formats.has(`webp`)) {
     primaryFormat = `webp`
     options = args.webpOptions
+  } else if (formats.has(`avif`)) {
+    reporter.warn(
+      `Image ${file.relativePath} specified only AVIF format, with no fallback format. This will mean your site cannot be viewed in all browsers.`
+    )
+    primaryFormat = `avif`
+    options = args.webpOptions
   }
 
   const imageSizes: {
@@ -233,7 +239,7 @@ export async function generateImageData({
     },
   }
 
-  if (formats.has(`avif`)) {
+  if (primaryFormat !== `avif` && formats.has(`avif`)) {
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
