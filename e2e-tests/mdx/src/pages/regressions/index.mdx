@@ -1,0 +1,10 @@
+This is a regression test for query extraction bug in Gatsby.
+
+All of the following is required to hit this bug:
+
+1. There should be at least one other plugin implementing `preprocessSource`
+2. This plugin must be listed before `gatsby-plugin-mdx` in `gatsby-config.js`
+3. MDX file must contain word `graphql`
+
+!Important, do not remove the next line!
+`graphql`
