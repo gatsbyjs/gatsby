@@ -18,13 +18,16 @@ Some things an optimized image experience would do:
 * Defer loading of offscreen images for the [almost 30% of users on browsers](https://caniuse.com/loading-lazy-attr) that don't support native lazy loading
 * Blur-up images while they are loading for a pleasant initial viewer experience ([example](https://using-gatsby-image.gatsbyjs.org/blur-up/))
 * Automatically resize images to the size needed by your design
-* Generate multiple smaller images so smartphones and tablets don’t download desktop-sized images
+* Generate multiple smaller images so smartphones and tablets don’t download desktop-sized images ("[responsive images](https://www.smashingmagazine.com/2014/05/responsive-images-done-right-guide-picture-srcset/)")
 * In React apps, pre-load images before React "hydrates" so the browser doesn't have to wait (typically 0.2s to 0.5s) for React to load before loading the image. 
 * Hold the image position so your page doesn’t jump while the images load
 * Strip all unnecessary metadata and optimize JPEG and PNG compression
 
-These are all complex tasks, and doing this consistently across a site feels like it can never be completed. That's especially true when images are created or uploaded by teams that may be less aware of appropriate web image sizes and formats. 
+These are all complex tasks, and doing this consistently across a site feels like a job that can never be completed. That's especially true when images are created or uploaded by teams that may be less aware of appropriate web image sizes and formats. 
 
+One option is to create and maintain a custom image processing pipeline, either before code check-in or during deployment, whether your team writes all of the code themselves or offloads some of the work to a third-party service like Cloudinary. 
+
+While these are all options, they are expensive in terms of developer time and sometimes financial cost.
 ### Build-time vs runtime
 
 Some of these tasks can be handled client-side, that is, in the browser. Gatsby takes the approach that these should be handled in advance, we don’t make users wait for the images to be optimised.
