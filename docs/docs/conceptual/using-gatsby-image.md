@@ -2,7 +2,7 @@
 title: Why Gatsby's Automatic Image Optimizations Matter
 ---
 
-The web has come a long way since 1995, when `<img src="....">` syntax was invented. Our visual standards for what we've come to expect has risen. 
+The web has come a long way since 1995, when `<img src="....">` syntax was invented. Our visual standards for what we've come to expect have risen -- a lot. 
 
 Especially when visiting unfamiliar pages for the first time, like a company website or an e-commerce site, users expect pages to load near-instantly, with a smooth experience. A delay of 100ms is associated with a 3% increased bounce rate.
 
