@@ -1,20 +1,20 @@
 ---
-title: Using Gatsby Image
+title: Why Gatsby's Automatic Image Optimizations Matter
 ---
 
-Images are are one of the best parts for the web. But one of the key challenges of images comes in cases, like marketing sites and e-commerce, where page performance is crucial for the business. These pages often use rich images to showcase their organization. But these images can come at the cost of page loading -- and when users wait, they often bounce. 
+The web has come a long way since 1995, when `<img src="....">` syntax was invented. Our visual standards for what we've come to expect has risen. 
 
-<!---[Would recommend starting with a quick numerical comparison, eg: “if you have a page with text and 10 images that are 300kb each, using Gatsby image increases your load time from around 2 seconds to around 1 second on a typical desktop connection, and 5 seconds to 2 seconds on a typical US 4G connection” ]--->
+Especially when visiting unfamiliar pages for the first time, like a company website or an e-commerce site, users expect pages to load near-instantly, with a smooth experience. A delay of 100ms is associated with a 3% increased bounce rate.
 
-It's easy to use images: just drop in `<img src="....">`. 
+Today, users have come to expect a better loading experience -- a gradual fade-in rather than a jarring frame-to-fame switch from empty background to present image. And they expect images to load quickly, which tends to mean a number of things: sending different sizes of image depending on the page width and device type, using the best compression format the user's browser supported, and starting fetching immediately like a vanilla HTML site, even if the site is built with React.
 
-But creating optimized images? That's complex. 
+You can build all of this on your own; the standards and libraries exist. But creating and maintain a custom image processing pipeline tends to be expensive in terms of developer time and sometimes financial cost. And it tends to be a ton more complex than `img src`.
 
-An optimized image experience would have a better loading experience rather than jarringly go from 0 to 100%. It would never send unnecessary data over the wire to slow down the page; no matter what size of image is in the system, this would send the right size of image depending on the page width and device type. It would use the best compression format the user's browser supported. And it would start fetching immediately like a vanilla HTML site, even if it was built with React.
+Part of Gatsby's vision is to construct [new, higher-level building blocks for the web](https://www.gatsbyjs.com/docs/conceptual/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks). Part of what that means for images is to get all the richness we've come to expect, with the API simplicity we love.
 
-You can build all of this on your own; the standards and libraries exist. But creating and maintain a custom image processing pipeline tends to be expensive in terms of developer time and sometimes financial cost.
+Gatsby Image gives you these benefits out of the box, with a simple API and without tedious engineering work.
 
-Gatsby's image plugin gives you these benefits out of the box, without tedious engineering work; it has simple APIs that support these.
+While the how-to is a practical guide on how to use Gatsby Image, and the reference guide provides canonical information on its API, this conceptual guide walks through why it matters -- explaining the emerging expectations for images on the web and how Gatsby supports each one.
 ### Better image loading: preventing reflows, gradual fade-in
 
 One of the challenges when images load alongside text is preventing what's known as "browser reflow". That is the jankiness that results when an image appears next to text, bumping the text to the right, or above text, bumping it below. 
