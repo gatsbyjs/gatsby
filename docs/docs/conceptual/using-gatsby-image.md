@@ -23,7 +23,7 @@ When a browser doesn't know how big an image is going to be, either because the 
 
 In addition, when an image appears, it goes from blank background to fully there from one frame to another. This can also be visually jarring. Like css has a `transition` prop to help position shifts feel gradual, images feel more aesthetically pleasing when they have placeholders.
 
-Gatsby's image plugin both holds the spot for your image (whether it's a fixed or fluid size), and provides a background -- blurred, a background color, or traced SVG.
+Gatsby Image's will hold the spot for your image automatically when you specify `width` prop, and depending on your preference, will provide a background -- blurred, a background color, or traced SVG, while the image loads.
 
 ![../images/gatsby-image-gif.gif]
 ### Cropping and compressing overly large images
@@ -32,7 +32,7 @@ A common problem in larger projects is that images are uploaded into a CMS by co
 
 For example, a support staff member may take a 1600x2000 pixel screenshot, save it as a PNG, and upload it alongside a helpdesk article. While this is a quite reasonable action, it may degrade page performance significantly. If the article has a 800px maximum width, a 640 x 800 pixel JPG would have displayed at the same quality but a tenth of the size; the extra weight may delay page load by a second or two. 
 
-When you specify the width any "templated" image should have, Gatsby image automatically resizes that image if it's larger.
+By using the `width` prop, Gatsby Image will automatically resize that image if it's larger. That's right, not just display a smaller image, but resize the underlying asset that is being loaded into a user's browser/
 ### Generating "responsive images" for different device sizes
 
 Different devices have different screen sizes and resolutions, which means it may make sense to send smaller (or larger) objects. 
@@ -41,7 +41,7 @@ Sending an image with a width of 800px to a  mobile phone with a 400px wide scre
 
 Conversely, some laptops, like Macbook Pros, have a higher pixel-to-density ratio, so need "2x"-size images. 
 
-In order to support responsive images, you need to do the image processing beforehand, as well as generate the markup necessary. Gatsby will do this with a relatively straightforward API.
+In order to support responsive images, you need to do the image processing beforehand, as well as generate the markup necessary. Gatsby Image has a `fluid` option that will transform images with a relatively straightforward API.
 ### Better compression and more well-scheduled work
 
 The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. It's possible to support this standard, but the challenge is to also fall back for older browsers that don't support this.
@@ -50,7 +50,7 @@ A similar technique is to defer loading of offscreen images. In other words, don
 
 Browsers have begun to support lazy loading natively in HTML tags, but right now, [almost 30% of users are on browsers](https://caniuse.com/loading-lazy-attr) that don't support it.
 
-Gatsby generates the native component for use in browsers that can use it, and creates the same effect manually for browsers than haven't yet implemented lazy loading. 
+Gatsby generates the native component for use in browsers that can use it, and creates the same effect manually for browsers than haven't yet implemented lazy loading via the IntersectionObserver API. 
 ### Avoid hydration lag for React apps
 
 A client-side React app, where the browser needs to parse React before executing the app, is blocked on all other work until it can evaluate React, so it can traverse the DOM React is giving. 
