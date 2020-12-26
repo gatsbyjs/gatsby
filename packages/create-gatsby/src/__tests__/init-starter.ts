@@ -161,7 +161,7 @@ describe(`init-starter`, () => {
     it(`gently informs the user that yarn is not available when trying to use it`, async () => {
       process.env.npm_config_user_agent = `yarn`
       ;(execSync as any).mockImplementation(() => {
-        throw new Error(`Something wrong occured when trying to use yarn`)
+        throw new Error(`Something wrong occurred when trying to use yarn`)
       })
       ;(path as any).join.mockImplementation(() => `/somewhere-here`)
       ;(execa as any).mockImplementation(() => Promise.resolve())

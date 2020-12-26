@@ -64,7 +64,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
         type: GraphQLInt,
         description: stripIndent`
             Maximum display width of generated files. 
-            The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+            The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
             This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
       },
       maxHeight: {
@@ -78,7 +78,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
         type: GraphQLInt,
         description: stripIndent`
             The display width of the generated image. 
-            The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+            The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
             Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
             `,
       },

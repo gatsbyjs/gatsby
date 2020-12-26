@@ -330,7 +330,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   })
 
   // When there's no resources, renderResources finishes synchronously
-  // so wait for the next tick so the emitter listners can be setup first.
+  // so wait for the next tick so the emitter listeners can be setup first.
   process.nextTick(() => renderResources())
 
   if (isStream) {
