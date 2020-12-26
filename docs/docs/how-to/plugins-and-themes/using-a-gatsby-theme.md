@@ -2,7 +2,7 @@
 title: How to Use a Theme in an Existing Site
 ---
 
-While you can [get started quickly with a Gatsby theme starter](/docs/how-to/new-site-with-theme/), you can also install a Gatsby theme directly to an existing Gatsby site. Gatsby themes are plugins, so you can [install and use them like any other Gatsby plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/).
+While you can [get started quickly with a Gatsby theme starter](/docs/how-to/plugins-and-themes/new-site-with-theme/), you can also install a Gatsby theme directly to an existing Gatsby site. Gatsby themes are plugins, so you can [install and use them like any other Gatsby plugin](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/).
 
 ## Installing a Theme
 
