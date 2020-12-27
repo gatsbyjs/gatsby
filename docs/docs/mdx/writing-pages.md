@@ -2,7 +2,7 @@
 title: Writing Pages in MDX
 ---
 
-After [installing](/docs/how-to/routing/mdx/getting-started) `gatsby-plugin-mdx`, MDX files
+After [installing](/docs/how-to/routing/mdx/#part-1-getting-started-with-mdx) `gatsby-plugin-mdx`, MDX files
 located in `src/pages` will turn into pages.
 
 Pages are rendered at a URL that is constructed from the filesystem
