@@ -4,8 +4,8 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
-const fetch = require(`node-fetch`)
 const { CODES } = require(`./report`)
+const axios = require(`axios`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -25,30 +25,6 @@ const restrictedNodeFields = [
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
-
-const validateContentfulAccess = async pluginOptions => {
-  if (process.env.NODE_ENV === `test`) return undefined
-
-  await fetch(`https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}`, {
-    headers: {
-      Authorization: `Bearer ${pluginOptions.accessToken}`,
-      "Content-Type": `application/json`,
-    },
-  })
-    .then(res => res.ok)
-    .then(ok => {
-      if (!ok)
-        throw new Error(
-          `Cannot access Contentful space "${maskText(
-            pluginOptions.spaceId
-          )}" with access token "${maskText(
-            pluginOptions.accessToken
-          )}". Make sure to double check them!`
-        )
-    })
-
-  return undefined
-}
 
 const pluginOptionsSchema = ({ Joi }) =>
   Joi.object()
@@ -131,7 +107,6 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
-    .external(validateContentfulAccess)
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
