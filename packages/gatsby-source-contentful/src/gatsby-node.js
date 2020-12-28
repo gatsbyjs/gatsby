@@ -5,7 +5,6 @@ const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
 const { CODES } = require(`./report`)
-const axios = require(`axios`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
