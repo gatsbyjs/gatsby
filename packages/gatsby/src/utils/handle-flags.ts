@@ -159,7 +159,7 @@ const handleFlags = (
       if (message.length > 0) {
         message += `\n\n`
       }
-      message += `Some features you configured with flags are now only and not configurable behavior.
+      message += `Some features you configured with flags are used natively now.
 Those flags no longer have any effect and you can remove them from config:`
       lockedInFlagsThatAreInConfig.forEach(flag => {
         message += generateFlagLine(flag)
