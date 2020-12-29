@@ -8,6 +8,7 @@ const { buildSchema, rebuildSchemaWithSitePage } = require(`./schema`)
 const { builtInFieldExtensions } = require(`./extensions`)
 const { builtInTypeDefinitions } = require(`./types/built-in-types`)
 const { TypeConflictReporter } = require(`./infer/type-conflict-reporter`)
+const { buildRemoteSchema } = require(`./remote-schema`)
 
 const getAllTypeDefinitions = () => {
   const {
@@ -81,7 +82,7 @@ const buildInferenceMetadata = ({ types }) =>
 const build = async ({ parentSpan, fullMetadataBuild = true }) => {
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(`build schema`, spanArgs)
-
+  /*
   if (fullMetadataBuild) {
     // Build metadata for type inference and start updating it incrementally
     // except for SitePage type: we rebuild it in rebuildWithSitePage anyway
@@ -120,6 +121,9 @@ const build = async ({ parentSpan, fullMetadataBuild = true }) => {
     type: `SET_SCHEMA_COMPOSER`,
     payload: schemaComposer,
   })
+ */
+  const schema = await buildRemoteSchema()
+
   store.dispatch({
     type: `SET_SCHEMA`,
     payload: schema,
@@ -132,6 +136,7 @@ const rebuild = async ({ parentSpan }) =>
   await build({ parentSpan, fullMetadataBuild: false })
 
 const rebuildWithSitePage = async ({ parentSpan }) => {
+  return
   const spanArgs = parentSpan ? { childOf: parentSpan } : {}
   const span = tracer.startSpan(
     `rebuild schema with SitePage context`,

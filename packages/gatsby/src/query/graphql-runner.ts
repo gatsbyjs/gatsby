@@ -187,6 +187,7 @@ export class GraphQLRunner {
       return await execute({
         schema,
         document,
+        /*
         rootValue: context,
         contextValue: withResolverContext({
           schema,
@@ -197,6 +198,7 @@ export class GraphQLRunner {
           stats: this.stats,
           tracer,
         }),
+         */
         variableValues: context,
       })
     } finally {

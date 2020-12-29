@@ -13,7 +13,8 @@ class Dev404Page extends React.Component {
   constructor(props) {
     super(props)
     const { data, location } = this.props
-    const pagePaths = data.allSitePage.nodes.map(node => node.path)
+    // const pagePaths = data.allSitePage.nodes.map(node => node.path)
+    const pagePaths = []
     const urlState = queryString.parse(location.search)
 
     const initialPagePathSearchTerms = urlState.filter ? urlState.filter : ``
@@ -168,6 +169,7 @@ class Dev404Page extends React.Component {
 
 export default Dev404Page
 
+/*
 export const pagesQuery = graphql`
   query PagesQuery {
     allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {
@@ -177,3 +179,4 @@ export const pagesQuery = graphql`
     }
   }
 `
+*/
