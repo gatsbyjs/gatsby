@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.5...gatsby-plugin-image@0.5.0-next.6) (2020-12-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Preload lazy-hydrator ([#28690](https://github.com/gatsbyjs/gatsby/issues/28690)) ([6af620c](https://github.com/gatsbyjs/gatsby/commit/6af620c146d380da7e3748bf52ae527c0c167e36))
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
 # [0.5.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.4...gatsby-plugin-image@0.5.0-next.5) (2020-12-18)
 
 ### Bug Fixes
