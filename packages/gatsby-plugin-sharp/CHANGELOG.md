@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.5...gatsby-plugin-sharp@2.12.0-next.6) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
 # [2.12.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.4...gatsby-plugin-sharp@2.12.0-next.5) (2020-12-18)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

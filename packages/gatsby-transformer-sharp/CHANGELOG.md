@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.2...gatsby-transformer-sharp@2.10.0-next.3) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
 # [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.1...gatsby-transformer-sharp@2.10.0-next.2) (2020-12-17)
 
 ### Bug Fixes
