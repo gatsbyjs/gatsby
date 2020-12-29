@@ -1,6 +1,7 @@
 const sharp = require(`./safe-sharp`)
 const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
+const { isCI } = require(`gatsby-core-utils`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -154,6 +155,7 @@ function createJob(job, { reporter }) {
 function lazyJobsEnabled() {
   return (
     process.env.gatsby_executing_command === `develop` &&
+    !isCI() &&
     !(
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
       process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
