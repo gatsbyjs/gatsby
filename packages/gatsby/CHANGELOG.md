@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.29.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.2...gatsby@2.29.3) (2020-12-29)
+
+### Features
+
+- **gatsby:** use production React for dev-ssr when CI=true ([#28728](https://github.com/gatsbyjs/gatsby/issues/28728)) ([#28792](https://github.com/gatsbyjs/gatsby/issues/28792)) ([ad8e4cb](https://github.com/gatsbyjs/gatsby/commit/ad8e4cb1b388e2c36dc2a0d376e96e0122bc04df))
+
 ## [2.29.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.29.1...gatsby@2.29.2) (2020-12-23)
 
 ### Bug Fixes
