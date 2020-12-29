@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.5...gatsby-plugin-image@0.5.0-next.6) (2020-12-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Preload lazy-hydrator ([#28690](https://github.com/gatsbyjs/gatsby/issues/28690)) ([6af620c](https://github.com/gatsbyjs/gatsby/commit/6af620c146d380da7e3748bf52ae527c0c167e36))
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
+# [0.5.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.4...gatsby-plugin-image@0.5.0-next.5) (2020-12-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** do not return from preprocessSource if nothing is changed ([#28678](https://github.com/gatsbyjs/gatsby/issues/28678)) ([9a49286](https://github.com/gatsbyjs/gatsby/commit/9a492868b4f28179a86204bc393051f0bf96fe9b))
+
+### Features
+
+- **gatsby-plugin-image:** Add remote image support ([#28647](https://github.com/gatsbyjs/gatsby/issues/28647)) ([a91825d](https://github.com/gatsbyjs/gatsby/commit/a91825d0e8896c90aaa69e8929fe1da07cb90751))
+
+# [0.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.3...gatsby-plugin-image@0.5.0-next.4) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** Revert postcss upgrade which broke css macro ([#28672](https://github.com/gatsbyjs/gatsby/issues/28672)) ([cde7885](https://github.com/gatsbyjs/gatsby/commit/cde7885f39eab846a8cdd9d3d08b9b5d299cfd76))
+
+# [0.5.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.2...gatsby-plugin-image@0.5.0-next.3) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [0.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.1...gatsby-plugin-image@0.5.0-next.2) (2020-12-17)
+
+### Features
+
+- **gatsby-plugin-image:** Make dimensions optional and default to constrained ([#28662](https://github.com/gatsbyjs/gatsby/issues/28662)) ([f24a23d](https://github.com/gatsbyjs/gatsby/commit/f24a23d5b1f24ab33aec7a8ac882dbbccdf7d01e))
+
+### Performance Improvements
+
+- **gatsby-plugin-image:** Handle disabled js, and add preload link ([#28669](https://github.com/gatsbyjs/gatsby/issues/28669)) ([8300236](https://github.com/gatsbyjs/gatsby/commit/83002365c4b9e7efdb69c354eee6894cbde975e4))
+
 # [0.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.0...gatsby-plugin-image@0.5.0-next.1) (2020-12-15)
 
 ### Bug Fixes
