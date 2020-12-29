@@ -77,8 +77,6 @@ const activeFlags: Array<IFlag> = [
     description: `Enable all experiments aimed at improving develop server start time`,
     includedFlags: [
       `DEV_SSR`,
-      `QUERY_ON_DEMAND`,
-      `LAZY_IMAGES`,
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `PRESERVE_WEBPACK_CACHE`,
     ],
@@ -103,39 +101,7 @@ const activeFlags: Array<IFlag> = [
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
     umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
     noCI: true,
-    testFitness: (): fitnessEnum => {
-      // Take a 10% of slice of users.
-      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
-        let isPluginSharpNewEnoughOrNotInstalled = false
-        try {
-          // Try requiring plugin-sharp so we know if it's installed or not.
-          // If it does, we also check if it's new enough.
-          // eslint-disable-next-line
-          require.resolve(`gatsby-plugin-sharp`)
-          const semverConstraints = {
-            // Because of this, this flag will never show up
-            "gatsby-plugin-sharp": `>=2.10.0`,
-          }
-          if (satisfiesSemvers(semverConstraints)) {
-            isPluginSharpNewEnoughOrNotInstalled = true
-          }
-        } catch (e) {
-          if (e.code === `MODULE_NOT_FOUND`) {
-            isPluginSharpNewEnoughOrNotInstalled = true
-          }
-        }
-
-        if (isPluginSharpNewEnoughOrNotInstalled) {
-          return `OPT_IN`
-        } else {
-          // Don't opt them in but they can still manually enable.
-          return true
-        }
-      } else {
-        // Don't opt them in but they can still manually enable.
-        return true
-      }
-    },
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `LAZY_IMAGES`,
@@ -147,21 +113,16 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
     noCI: true,
     testFitness: (): fitnessEnum => {
-      // Take a 10% of slice of users.
-      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
-        const semverConstraints = {
-          // Because of this, this flag will never show up
-          "gatsby-plugin-sharp": `>=2.10.0`,
-        }
-        if (satisfiesSemvers(semverConstraints)) {
-          return `OPT_IN`
-        } else {
-          // gatsby-plugi-sharp is either not installed or not new enough so
-          // just disable — it won't work anyways.
-          return false
-        }
+      const semverConstraints = {
+        // Because of this, this flag will never show up
+        "gatsby-plugin-sharp": `>=2.10.0`,
+      }
+      if (satisfiesSemvers(semverConstraints)) {
+        return `LOCKED_IN`
       } else {
-        return true
+        // gatsby-plugin-sharp is either not installed or not new enough so
+        // just disable — it won't work anyways.
+        return false
       }
     },
   },

@@ -41,18 +41,17 @@ if (
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
   !isCI()
 ) {
-  process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES = `true`
-  process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
+  process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
+  process.env.PRESERVE_WEBPACK_CACHE = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images (only with gatsby-plugin-sharp@^2.10.0).
+Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
 
 Please give feedback on their respective umbrella issues!
 
-- https://gatsby.dev/query-on-demand-feedback
 - https://gatsby.dev/dev-ssr-feedback
-- https://gatsby.dev/lazy-images-feedback
+- https://gatsby.dev/cache-clearing-feedback
   `)
 
   telemetry.trackFeatureIsUsed(`FastDev`)
@@ -282,14 +281,10 @@ export async function initialize({
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
     } else if (isCI()) {
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      reporter.warn(
-        `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
+      reporter.verbose(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
       )
     } else {
-      // We already show a notice for this flag.
-      if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
-        reporter.info(`Using experimental Query on Demand feature`)
-      }
       telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
