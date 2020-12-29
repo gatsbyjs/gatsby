@@ -1,4 +1,3 @@
-import sampleSiteForExperiment from "./sample-site-for-experiment"
 import _ from "lodash"
 import semver from "semver"
 
