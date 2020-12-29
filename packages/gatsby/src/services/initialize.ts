@@ -28,7 +28,7 @@ import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
-import availableFlags, { DO_NOT_TRACK_THIS_FLAG } from "../utils/flags"
+import availableFlags from "../utils/flags"
 
 interface IPluginResolution {
   resolve: string
@@ -216,7 +216,7 @@ export async function initialize({
 
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
-      if (flag.telemetryId !== DO_NOT_TRACK_THIS_FLAG) {
+      if (flag.telemetryId) {
         telemetry.trackFeatureIsUsed(flag.telemetryId)
       }
     })
