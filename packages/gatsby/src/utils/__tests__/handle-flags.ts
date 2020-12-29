@@ -329,7 +329,7 @@ describe(`handle flags`, () => {
         expect.objectContaining({ name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG` })
       )
       expect(response.message).toMatchInlineSnapshot(`
-        "Some features you configured with flags are now only and not configurable behavior.
+        "Some features you configured with flags are used natively now.
         Those flags no longer have any effect and you can remove them from config:
         - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
         "
@@ -385,7 +385,7 @@ describe(`handle flags`, () => {
         "The following flags are active:
         - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 
-        Some features you configured with flags are now only and not configurable behavior.
+        Some features you configured with flags are used natively now.
         Those flags no longer have any effect and you can remove them from config:
         - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
 
