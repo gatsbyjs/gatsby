@@ -28,6 +28,7 @@ import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
+import availableFlags, { DO_NOT_TRACK_THIS_FLAG } from "../utils/flags"
 
 interface IPluginResolution {
   resolve: string
@@ -193,7 +194,6 @@ export async function initialize({
       )
     }
 
-    const availableFlags = require(`../utils/flags`).default
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
       availableFlags,
@@ -216,7 +216,9 @@ export async function initialize({
 
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
-      telemetry.trackFeatureIsUsed(flag.telemetryId)
+      if (flag.telemetryId !== DO_NOT_TRACK_THIS_FLAG) {
+        telemetry.trackFeatureIsUsed(flag.telemetryId)
+      }
     })
 
     // Track the usage of config.flags
@@ -284,8 +286,6 @@ export async function initialize({
       reporter.verbose(
         `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
       )
-    } else {
-      telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
 

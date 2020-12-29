@@ -30,12 +30,14 @@ export const satisfiesSemvers = (
 
 export type fitnessEnum = true | false | "OPT_IN" | "LOCKED_IN"
 
+export const DO_NOT_TRACK_THIS_FLAG = Symbol(`DO_NOT_TRACK_THIS_FLAG`)
+
 export interface IFlag {
   name: string
   env: string
   description: string
   command: executingCommand
-  telemetryId: string
+  telemetryId: string | typeof DO_NOT_TRACK_THIS_FLAG
   // Heuristics for deciding if a flag is experimental:
   // - there are known bugs most people will encounter and that block being
   // able to use Gatsby normally
@@ -95,7 +97,7 @@ const activeFlags: Array<IFlag> = [
     name: `QUERY_ON_DEMAND`,
     env: `GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND`,
     command: `develop`,
-    telemetryId: `QueryOnDemand`,
+    telemetryId: DO_NOT_TRACK_THIS_FLAG,
     experimental: false,
     description: `Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.`,
     umbrellaIssue: `https://gatsby.dev/query-on-demand-feedback`,
@@ -106,7 +108,7 @@ const activeFlags: Array<IFlag> = [
     name: `LAZY_IMAGES`,
     env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
     command: `develop`,
-    telemetryId: `LazyImageProcessing`,
+    telemetryId: DO_NOT_TRACK_THIS_FLAG,
     experimental: false,
     description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
     umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
