@@ -71,6 +71,7 @@ const activeFlags: Array<IFlag> = [
     includedFlags: [
       `DEV_SSR`,
       `QUERY_ON_DEMAND`,
+      `LAZY_IMAGES`,
       `PRESERVE_FILE_DOWNLOAD_CACHE`,
       `PRESERVE_WEBPACK_CACHE`,
     ],
@@ -125,6 +126,34 @@ const activeFlags: Array<IFlag> = [
         }
       } else {
         // Don't opt them in but they can still manually enable.
+        return true
+      }
+    },
+  },
+  {
+    name: `LAZY_IMAGES`,
+    env: `GATSBY_EXPERIMENTAL_LAZY_IMAGES`,
+    command: `develop`,
+    telemetryId: `LazyImageProcessing`,
+    experimental: false,
+    description: `Don't process images during development until they're requested from the browser. Speeds starting the develop server. Requires gatsby-plugin-sharp@2.10.0 or above.`,
+    umbrellaIssue: `https://gatsby.dev/lazy-images-feedback`,
+    noCI: true,
+    testFitness: (): fitnessEnum => {
+      // Take a 10% of slice of users.
+      if (sampleSiteForExperiment(`QUERY_ON_DEMAND`, 10)) {
+        const semverConstraints = {
+          // Because of this, this flag will never show up
+          "gatsby-plugin-sharp": `>=2.10.0`,
+        }
+        if (satisfiesSemvers(semverConstraints)) {
+          return `OPT_IN`
+        } else {
+          // gatsby-plugi-sharp is either not installed or not new enough so
+          // just disable — it won't work anyways.
+          return false
+        }
+      } else {
         return true
       }
     },
