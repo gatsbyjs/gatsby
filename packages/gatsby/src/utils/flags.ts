@@ -29,7 +29,7 @@ export const satisfiesSemvers = (
   return result
 }
 
-export type fitnessEnum = true | false | "OPT_IN"
+export type fitnessEnum = true | false | "OPT_IN" | "LOCKED_IN"
 
 export interface IFlag {
   name: string
@@ -47,13 +47,20 @@ export interface IFlag {
   // resolved and ~50+ people have tested it, experimental should be set to
   // false.
   experimental: boolean
-  // Generally just return true.
-  //
-  // False means it'll be disabled despite the user setting it true e.g.
-  // it just won't work e.g. it doesn't have new enough version for something.
-  //
-  // OPT_IN means the gatsby will enable the flag (unless the user explicitly
-  // disablees it.
+  /**
+   * True means conditions for the feature are met and can be opted in by user.
+   *
+   * False means it'll be disabled despite the user setting it true e.g.
+   * it just won't work e.g. it doesn't have new enough version for something.
+   *
+   * OPT_IN means the gatsby will enable the flag (unless the user explicitly
+   * disables it.
+   *
+   * LOCKED_IN means that feature is enabled always (unless `noCI` condition is met).
+   * This is mostly to provide more meaningful terminal messages instead of removing
+   * flag from the flag list when users has the flag set in configuration
+   * (avoids showing unknown flag message and shows "no longer needed" message).
+   */
   testFitness: (flag: IFlag) => fitnessEnum
   includedFlags?: Array<string>
   umbrellaIssue?: string
