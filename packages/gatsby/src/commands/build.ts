@@ -57,6 +57,7 @@ interface IBuildArgs extends IProgram {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  keepPageRenderer: boolean
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -284,10 +285,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
   buildHTMLActivityProgress.end()
 
-  try {
-    await deleteRenderer(pageRenderer)
-  } catch (err) {
-    // pass through
+  if (!program.keepPageRenderer) {
+    try {
+      await deleteRenderer(pageRenderer)
+    } catch (err) {
+      // pass through
+    }
   }
 
   let deletedPageKeys: Array<string> = []
