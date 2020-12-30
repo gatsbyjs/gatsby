@@ -20,9 +20,9 @@ const {
   truncatePath,
   tooLongSegmentsInPath,
 } = require(`../../utils/path`)
-const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+import { scheduleOnCreateNode } from "./schedule-on-create-node"
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -822,7 +822,7 @@ actions.createNode = (...args) => dispatch => {
   }
 
   const { payload: node, traceId, parentSpan } = createNodeAction
-  return apiRunnerNode(`onCreateNode`, {
+  return scheduleOnCreateNode({
     node,
     traceId,
     parentSpan,
