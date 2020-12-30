@@ -55,7 +55,7 @@ As mentioned earlier, Gatsby does not, by default, automatically wrap pages in a
 
 If you need to set a wrapper component around page components that won't get unmounted on page changes, use the **`wrapPageElement`** [browser API](/docs/reference/config-files/gatsby-browser/#wrapPageElement) and the [SSR equivalent](/docs/reference/config-files/gatsby-ssr/#wrapPageElement).
 
-Alternatively, you can prevent your layout component from unmounting by using [gatsby-plugin-layout](/packages/gatsby-plugin-layout/), which implements the `wrapPageElement` APIs for you.
+Alternatively, you can prevent your layout component from unmounting by using [gatsby-plugin-layout](/plugins/gatsby-plugin-layout/), which implements the `wrapPageElement` APIs for you.
 
 ## Other resources
 
