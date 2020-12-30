@@ -165,11 +165,19 @@ export class AnalyticsTracker {
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
-  // Hence we need to use process level globals that are not scoped to this module
+  // Hence we need to use process level globals that are not scoped to this module.
+  // Due to the forking on develop process, we also need to pass this via process.env so that child processes have the same sessionId
   getSessionId(): string {
     const p = process as any
     if (!p.gatsbyTelemetrySessionId) {
-      p.gatsbyTelemetrySessionId = uuidv4()
+      const inherited = process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID
+      if (inherited) {
+        p.gatsbyTelemetrySessionId = inherited
+      } else {
+        p.gatsbyTelemetrySessionId = uuidv4()
+        process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
+          p.gatsbyTelemetrySessionId
+      }
     }
     return p.gatsbyTelemetrySessionId
   }
