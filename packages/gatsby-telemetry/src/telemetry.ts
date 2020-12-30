@@ -178,7 +178,13 @@ export class AnalyticsTracker {
         process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
           p.gatsbyTelemetrySessionId
       }
+    } else if (!process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID) {
+      // in case older `gatsby-telemetry` already set `gatsbyTelemetrySessionId` property on process
+      // but didn't set env var - let's make sure env var is set
+      process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
+        p.gatsbyTelemetrySessionId
     }
+
     return p.gatsbyTelemetrySessionId
   }
 
