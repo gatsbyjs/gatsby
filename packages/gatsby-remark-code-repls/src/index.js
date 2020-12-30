@@ -55,12 +55,16 @@ module.exports = (
     target,
     defaultText = OPTION_DEFAULT_LINK_TEXT,
     codesandbox = OPTION_DEFAULT_CODESANDBOX,
+    stackblitz = OPTION_DEFAULT_STACKBLITZ,
   } = {}
 ) => {
   codesandbox = {
     ...OPTION_DEFAULT_CODESANDBOX,
-    ...OPTION_DEFAULT_STACKBLITZ,
     ...codesandbox,
+  }
+  stackblitz = {
+    ...OPTION_DEFAULT_STACKBLITZ,
+    ...stackblitz,
   }
   if (!directory) {
     throw Error(`Required REPL option "directory" not specified`)
@@ -207,8 +211,12 @@ module.exports = (
 
         let parameters = {
           files: {},
-          dependencies: JSON.stringify(codesandbox.dependencies),
-          template: codesandbox.template,
+          dependencies: stackblitz.dependencies.reduce((map, dependency) => {
+            const { name, fetchSpec } = npa(dependency)
+            map[name] = fetchSpec
+            return map
+          }, {}),
+          template: stackblitz.template,
         }
 
         filesPaths.forEach(path => {

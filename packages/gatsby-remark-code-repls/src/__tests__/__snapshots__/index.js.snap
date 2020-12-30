@@ -965,3 +965,315 @@ Object {
   "type": "root",
 }
 `;
+
+exports[`gatsby-remark-code-repls StackBlitz remark transform generates a link for files in nested directories 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "
+          <form id=\\"sb_hidden_forma38e1368-812c-4c96-8b83-d7840462920b\\" method=\\"post\\" action=\\"https://stackblitz.com/run\\" target=\\"_self\\">
+            
+             <input type=\\"hidden\\" name=\\"project[files][path/to/nested/file.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+            <input type=\\"hidden\\" name=\\"project[dependencies]\\" value=\\"[object Object]\\">
+            <input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\">
+          </form>
+          <a href=\\"https://stackblitz.com/run\\" onclick=\\"event.preventDefault();document.getElementById('sb_hidden_forma38e1368-812c-4c96-8b83-d7840462920b').submit()\\">REPL</a>
+          ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 40,
+          "line": 1,
+          "offset": 39,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 40,
+      "line": 1,
+      "offset": 39,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls StackBlitz remark transform generates a link for the specified example file 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "
+          <form id=\\"sb_hidden_formcfc6edf7-a7a6-401b-a748-a6d5e7825293\\" method=\\"post\\" action=\\"https://stackblitz.com/run\\" target=\\"_self\\">
+            
+             <input type=\\"hidden\\" name=\\"project[files][file.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+            <input type=\\"hidden\\" name=\\"project[dependencies]\\" value=\\"[object Object]\\">
+            <input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\">
+          </form>
+          <a href=\\"https://stackblitz.com/run\\" onclick=\\"event.preventDefault();document.getElementById('sb_hidden_formcfc6edf7-a7a6-401b-a748-a6d5e7825293').submit()\\">REPL</a>
+          ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 25,
+      "line": 1,
+      "offset": 24,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls StackBlitz remark transform generates a link with the specified default text 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "
+          <form id=\\"sb_hidden_form37cecf0e-c812-47cf-9bf5-0db83963ffc3\\" method=\\"post\\" action=\\"https://stackblitz.com/run\\" target=\\"_self\\">
+            
+             <input type=\\"hidden\\" name=\\"project[files][file.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+            <input type=\\"hidden\\" name=\\"project[dependencies]\\" value=\\"[object Object]\\">
+            <input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\">
+          </form>
+          <a href=\\"https://stackblitz.com/run\\" onclick=\\"event.preventDefault();document.getElementById('sb_hidden_form37cecf0e-c812-47cf-9bf5-0db83963ffc3').submit()\\">Click me</a>
+          ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 25,
+      "line": 1,
+      "offset": 24,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls StackBlitz remark transform generates a link with the specified inline text even if default text is specified 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "
+          <form id=\\"sb_hidden_form21b8ffef-61b8-4a91-825f-392edf53641a\\" method=\\"post\\" action=\\"https://stackblitz.com/run\\" target=\\"_self\\">
+            
+             <input type=\\"hidden\\" name=\\"project[files][file.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+            <input type=\\"hidden\\" name=\\"project[dependencies]\\" value=\\"[object Object]\\">
+            <input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\">
+          </form>
+          <a href=\\"https://stackblitz.com/run\\" onclick=\\"event.preventDefault();document.getElementById('sb_hidden_form21b8ffef-61b8-4a91-825f-392edf53641a').submit()\\">Custom link text</a>
+          ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 41,
+          "line": 1,
+          "offset": 40,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 41,
+      "line": 1,
+      "offset": 40,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls StackBlitz remark transform generates a link with the specified target 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "
+          <form id=\\"sb_hidden_form4c4223ef-784b-4f9d-82f4-596a99d28bcc\\" method=\\"post\\" action=\\"https://stackblitz.com/run\\" target=\\"_blank\\" rel=\\"noreferrer\\">
+            
+             <input type=\\"hidden\\" name=\\"project[files][file.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+            <input type=\\"hidden\\" name=\\"project[dependencies]\\" value=\\"[object Object]\\">
+            <input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\">
+          </form>
+          <a href=\\"https://stackblitz.com/run\\" onclick=\\"event.preventDefault();document.getElementById('sb_hidden_form4c4223ef-784b-4f9d-82f4-596a99d28bcc').submit()\\">REPL</a>
+          ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 25,
+          "line": 1,
+          "offset": 24,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 25,
+      "line": 1,
+      "offset": 24,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-code-repls StackBlitz remark transform supports importing multiple files 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "type": "html",
+          "value": "
+          <form id=\\"sb_hidden_form5a397345-c8c7-49b9-80a4-2c462a80cd7b\\" method=\\"post\\" action=\\"https://stackblitz.com/run\\" target=\\"_self\\">
+            
+             <input type=\\"hidden\\" name=\\"project[files][path/to/nested/file.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+
+             <input type=\\"hidden\\" name=\\"project[files][path/to/nested/anotherFile.js]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+
+             <input type=\\"hidden\\" name=\\"project[files][path/to/nested/file.css]\\" value=\\"const foo = &#34;bar&#34;;\\">
+          
+            <input type=\\"hidden\\" name=\\"project[dependencies]\\" value=\\"[object Object]\\">
+            <input type=\\"hidden\\" name=\\"project[template]\\" value=\\"javascript\\">
+          </form>
+          <a href=\\"https://stackblitz.com/run\\" onclick=\\"event.preventDefault();document.getElementById('sb_hidden_form5a397345-c8c7-49b9-80a4-2c462a80cd7b').submit()\\">REPL</a>
+          ",
+        },
+      ],
+      "position": Position {
+        "end": Object {
+          "column": 94,
+          "line": 1,
+          "offset": 93,
+        },
+        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 94,
+      "line": 1,
+      "offset": 93,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
