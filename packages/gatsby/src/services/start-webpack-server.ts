@@ -175,6 +175,8 @@ export async function startWebpackServer({
       done()
       emitter.emit(`COMPILATION_DONE`, stats)
       resolve({ compiler, websocketManager, webpackWatching })
+
+      report.info(`Dev server booted in ${process.uptime()} sec`)
     })
   })
 }
