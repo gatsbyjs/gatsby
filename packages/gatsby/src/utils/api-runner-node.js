@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { bindActionCreators } = require(`redux`)
@@ -127,6 +126,54 @@ function getLocalReporter({ activity, reporter }) {
   }
 
   return reporter
+}
+
+function runPromiseSeries(input, concurrency, iteratorFn) {
+  return new Promise((resolve, reject) => {
+    if (input.length === 0) {
+      resolve([])
+      return
+    }
+
+    let finished = 0
+    let shouldStop = false
+    const results = new Array(input.length)
+
+    function runNext() {
+      finished++
+
+      if (current < input.length) {
+        runTask(current++)
+      } else if (finished === input.length) {
+        resolve(results)
+      }
+    }
+
+    function runTask(index) {
+      const item = input[index]
+      const maybePromise = iteratorFn(item)
+
+      if (maybePromise === null) {
+        results[index] = null
+        runNext()
+      } else {
+        maybePromise
+          .then(itemResult => {
+            results[index] = itemResult
+            runNext()
+          })
+          .catch(e => {
+            shouldStop = true
+            reject(e)
+          })
+      }
+    }
+
+    let current = 0
+    while (current < concurrency && current < input.length && !shouldStop) {
+      runTask(current++)
+    }
+  })
 }
 
 function extendErrorIdWithPluginName(pluginName, errorMeta) {
@@ -437,12 +484,13 @@ const runAPI = async (plugin, api, args, activity) => {
     // If the plugin is using a callback use that otherwise
     // expect a Promise to be returned.
     if (gatsbyNode[api].length === 3) {
-      return Promise.fromCallback(callback => {
+      return new Promise((resolve, reject) => {
         const cb = (err, val) => {
           pluginSpan.finish()
           apiFinished = true
           endInProgressActivitiesCreatedByThisRun()
-          callback(err, val)
+          if (err) reject(err)
+          else resolve(val)
         }
 
         try {
@@ -564,21 +612,12 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    let apiRunPromiseOptions = {}
-    let runPromise
-    if (
-      api === `sourceNodes` &&
-      process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING
-    ) {
-      runPromise = Promise.map
-      apiRunPromiseOptions.concurrency = 20
-    } else {
-      runPromise = Promise.mapSeries
-      apiRunPromiseOptions = undefined
-    }
-
-    runPromise(
+    runPromiseSeries(
       implementingPlugins,
+      // concurrency - set to 1 unless Parallel Sourcing is enabled and it's sourceNodes API
+      api === `sourceNodes` && process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING
+        ? 20
+        : 1,
       plugin => {
         if (stopQueuedApiRuns) {
           return null
@@ -664,8 +703,7 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
 
           return null
         })
-      },
-      apiRunPromiseOptions
+      }
     ).then(results => {
       if (onAPIRunComplete) {
         onAPIRunComplete()
