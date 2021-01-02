@@ -354,4 +354,4 @@ plugins: [
 ]
 ```
 
-Line numbers and line highlighting can be added to code blocks as well, and is explained in detail in the [`gatsby-remark-prismjs` README](/packages/gatsby-remark-prismjs/?=remark#optional-add-line-highlighting-styles).
+Line numbers and line highlighting can be added to code blocks as well, and is explained in detail in the [`gatsby-remark-prismjs` README](/plugins/gatsby-remark-prismjs/?=remark#optional-add-line-highlighting-styles).

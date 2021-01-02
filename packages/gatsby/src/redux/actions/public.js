@@ -1137,7 +1137,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
@@ -1157,7 +1157,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
@@ -1287,9 +1287,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/). Alternatively, you can use
- * [this plugin](/packages/gatsby-plugin-meta-redirect/) to generate meta redirect
+ * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
+ * [this plugin](/plugins/gatsby-plugin-meta-redirect/) to generate meta redirect
  * html files for redirecting on any static file host.
  *
  * @param {Object} redirect Redirect data

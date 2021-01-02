@@ -14,7 +14,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 > The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when 'installed' on the user's mobile device or desktop.
 
-[Gatsby's manifest plugin](/packages/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
+[Gatsby's manifest plugin](/plugins/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
 ## Using `gatsby-plugin-manifest`
 
@@ -53,4 +53,4 @@ npm install gatsby-plugin-manifest
 }
 ```
 
-That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- check out the [plugin reference](/packages/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
+That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- check out the [plugin reference](/plugins/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
