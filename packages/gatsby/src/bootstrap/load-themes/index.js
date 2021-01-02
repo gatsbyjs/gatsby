@@ -90,6 +90,10 @@ const processTheme = (
   const themesList = useLegacyThemes
     ? themeConfig && themeConfig.__experimentalThemes
     : themeConfig && themeConfig.plugins
+
+  const parentDir =
+    themeSpec && themeSpec.parentDir ? themeSpec.parentDir : rootDir
+
   // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
@@ -100,13 +104,11 @@ const processTheme = (
       const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
       return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
     }).then(arr =>
-      arr.concat([
-        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
-      ])
+      arr.concat([{ themeName, themeConfig, themeSpec, themeDir, parentDir }])
     )
   } else {
     // if a theme doesn't define additional themes, return the original theme
-    return [{ themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir }]
+    return [{ themeName, themeConfig, themeSpec, themeDir, parentDir }]
   }
 }
 
