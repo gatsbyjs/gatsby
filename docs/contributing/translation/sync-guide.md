@@ -126,7 +126,7 @@ The only necessary change is to ensure the translated content carries over these
 These changes involve updating the URL of a link:
 
 ```diff
-- Please see our [plugins page](/packages).
+- Please see our [plugins page](/plugins).
 + Please see our [plugins page](/plugins).
 ```
 
