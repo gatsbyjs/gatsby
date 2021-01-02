@@ -101,8 +101,14 @@ const processTheme = (
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
-      return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
+      const nextThemeDir = spec.parentDir || themeDir
+      const themeObj = await resolveTheme(
+        spec,
+        configFilePath,
+        false,
+        nextThemeDir
+      )
+      return processTheme(themeObj, { useLegacyThemes, rootDir: nextThemeDir })
     }).then(arr =>
       arr.concat([{ themeName, themeConfig, themeSpec, themeDir, parentDir }])
     )
