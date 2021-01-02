@@ -12,7 +12,7 @@ You’ll need a WordPress site with the [WooCommerce](https://woocommerce.com/) 
 
 ## Existing plugins
 
-This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/).
+This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/plugins/@pasdo501/gatsby-source-woocommerce/).
 
 Install it:
 
@@ -67,7 +67,7 @@ allWcProducts {
 
 ### Using GraphiQL
 
-You can explore the data available to your site [using GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/). This is dependent on the fields you have specified in `gatsby-config.js`. The plugin documentation has tons of [suggested GraphQL queries](/packages/@pasdo501/gatsby-source-woocommerce/#some-graphql-query-examples). If you don't see the options listed there, try adjusting the `fields` array and/or refreshing your GraphiQL tab.
+You can explore the data available to your site [using GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/). This is dependent on the fields you have specified in `gatsby-config.js`. The plugin documentation has tons of [suggested GraphQL queries](/plugins/@pasdo501/gatsby-source-woocommerce/#some-graphql-query-examples). If you don't see the options listed there, try adjusting the `fields` array and/or refreshing your GraphiQL tab.
 
 ### Using WPGraphQL
 
@@ -83,8 +83,8 @@ The WPGraphQL plugin is also undergoing significant changes. It has not yet hit 
 
 ## Other resources
 
-- [`gatsby-source-woocommerce`](/packages/@pasdo501/gatsby-source-woocommerce/)
-- [`gatsby-theme-woocommerce`](/packages/@ccerda0520/gatsby-theme-woocommerce/)
+- [`gatsby-source-woocommerce`](/plugins/@pasdo501/gatsby-source-woocommerce/)
+- [`gatsby-theme-woocommerce`](/plugins/@ccerda0520/gatsby-theme-woocommerce/)
 - [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce)
 - [experimental `gatsby-source-wordpress` starter](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
 - [Sourcing from WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/)
