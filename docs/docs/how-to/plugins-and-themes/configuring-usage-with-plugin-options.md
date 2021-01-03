@@ -45,8 +45,8 @@ Any JavaScript data type can be passed in as an option.
 
 The following table lists possible options values and an example plugin that makes use of them.
 
-| Data Type | Sample Value                     | Example Plugin                                                    |
-| --------- | -------------------------------- | ----------------------------------------------------------------- |
+| Data Type | Sample Value                     | Example Plugin                                                   |
+| --------- | -------------------------------- | ---------------------------------------------------------------- |
 | Boolean   | `true`                           | [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/)           |
 | String    | `/src/data/`                     | [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) |
 | Array     | `["/about-us/", "/projects/*"]`  | [`gatsby-plugin-offline`](/plugins/gatsby-plugin-offline/)       |
