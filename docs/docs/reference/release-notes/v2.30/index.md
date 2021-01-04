@@ -97,7 +97,7 @@ TODOC
 - Always add both `childField` and `childrenField` in GraphQL to avoid schema inference errors, via [#28656](https://github.com/gatsbyjs/gatsby/pull/28656)
 - Fix obscure `undefined failed` message for webpack compilation errors, via [#28701](https://github.com/gatsbyjs/gatsby/pull/28701)
 - `gatsby-source-graphql`: add HTTP error reporting, via [#28786](https://github.com/gatsbyjs/gatsby/pull/28786)
-- `gatsby-source-filesystem`: Retry a download in `createRemoteFileNode` if a file is incomplete, via [#28547](https://github.com/gatsbyjs/gatsby/pull/28547)
+- `gatsby-source-filesystem`: retry a download in `createRemoteFileNode` if a file is incomplete, via [#28547](https://github.com/gatsbyjs/gatsby/pull/28547)
 - `gatsby-plugin-schema-snapshot`: fix warning `The type Foo does not explicitly define the field childBar`, via [#28483](https://github.com/gatsbyjs/gatsby/pull/28483)
 - `gatsby-source-contentful`: dont re-create nodes unnecessarily, via [#28642](https://github.com/gatsbyjs/gatsby/pull/28642)
 
