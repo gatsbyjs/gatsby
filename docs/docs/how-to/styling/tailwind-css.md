@@ -114,7 +114,7 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/how-to/styling/emotion/gatsby.md) for more information.
+See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.examples/tree/master/gatsby-emotion) for more information.
 
 #### Option #3: SCSS
 
