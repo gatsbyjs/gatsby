@@ -28,7 +28,7 @@ module.exports = {
 }
 ```
 
-### Configuration
+### Configuration
 
 The example above is the minimal configuration required to begin working. Additional
 customization of the parsing process is possible using the parameters listed in
