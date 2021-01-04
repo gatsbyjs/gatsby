@@ -4,25 +4,33 @@ const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit(`/`).waitForRouteChange()
+    cy.visit(`/`)
   })
 
-  it(`returns 200 on base route`, () => {
-    cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
-  })
+  // it(`returns 200 on base route`, () => {
+  //   cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
+  // })
 
   it(`renders static image`, () => {
+    // cy.visit(withTrailingSlash(pathPrefix)).waitForRouteChange()
     cy.getTestElement(`static-image`)
-      .find(`.gatsby-image-wrapper > picture > source`)
       .should(`have.attr`, `srcset`)
-      .and(`include`, /blog/)
+      .and(srcset => {
+        srcset.split(/\s*,\s*/).forEach(part => {
+          expect(part).to.contain(`/blog`)
+        })
+      })
   })
 
   it(`renders dynamic image`, () => {
+    // cy.visit(withTrailingSlash(pathPrefix)).waitForRouteChange()
     cy.getTestElement(`gatsby-image`)
-      .find(`.gatsby-image-wrapper > picture > source`)
       .should(`have.attr`, `srcset`)
-      .and(`include`, /blog/)
+      .and(srcset => {
+        srcset.split(/\s*,\s*/).forEach(part => {
+          expect(part).to.contain(`/blog`)
+        })
+      })
   })
 
   describe(`navigation`, () => {
