@@ -226,7 +226,7 @@ describe(`Jobs manager`, () => {
           Promise.reject(new Error(`An error occurred`))
         )
         .mockImplementationOnce(() =>
-          Promise.reject({ message: `An error occured` })
+          Promise.reject({ message: `An error occurred` })
         )
         .mockImplementationOnce(() =>
           Promise.reject({ key: `weird error object` })
@@ -247,7 +247,7 @@ describe(`Jobs manager`, () => {
       try {
         await enqueueJob(jobArgs3)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occurred]`)
       }
 
       try {

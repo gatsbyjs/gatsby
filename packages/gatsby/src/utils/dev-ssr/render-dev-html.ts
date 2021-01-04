@@ -146,6 +146,41 @@ export const renderDevHTML = ({
       return reject(`404 page`)
     }
 
+    // Resume the webpack watcher and wait for any compilation necessary to happen.
+    // We timeout after 1.5s as the user might not care per se about SSR.
+    //
+    // We pause and resume so there's no excess webpack activity during normal development.
+    const {
+      devssrWebpackCompiler,
+      devssrWebpackWatcher,
+      needToRecompileSSRBundle,
+    } = getDevSSRWebpack()
+    if (
+      devssrWebpackWatcher &&
+      devssrWebpackCompiler &&
+      needToRecompileSSRBundle
+    ) {
+      let isResolved = false
+      await new Promise(resolve => {
+        function finish(stats: Stats): void {
+          emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
+          if (!isResolved) {
+            resolve(stats)
+          }
+        }
+        emitter.on(`DEV_SSR_COMPILATION_DONE`, finish)
+        devssrWebpackWatcher.resume()
+        // Suspending is just a flag, so it's safe to re-suspend right away
+        devssrWebpackWatcher.suspend()
+
+        // Timeout after 1.5s.
+        setTimeout(() => {
+          isResolved = true
+          resolve()
+        }, 1500)
+      })
+    }
+
     // Wait for public/render-page.js to update w/ the page component.
     const found = await ensurePathComponentInSSRBundle(pageObj, directory)
 

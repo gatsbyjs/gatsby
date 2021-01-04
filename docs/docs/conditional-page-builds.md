@@ -4,7 +4,7 @@ title: Conditional Page Builds
 
 If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [Incremental Builds](https://support.gatsbyjs.com/hc/en-us/articles/360056151214-Incremental-Builds) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for pages with unchanged data. This feature is experimental, but _may_ improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
 
-For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/overview-of-the-gatsby-build-process/).
+For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/conceptual/overview-of-the-gatsby-build-process/).
 
 > ❗ Conditional page builds do not currently account for static queries. Any query result differences will not trigger pages to rebuild.
 

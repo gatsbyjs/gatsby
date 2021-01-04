@@ -25,6 +25,9 @@ import {
   IGatsbyConnection,
   IGatsbyResolverContext,
 } from "./type-definitions"
+import { IGatsbyNode } from "../redux/types"
+
+type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
 export function findMany<TSource, TArgs>(
   typeName: string
@@ -221,20 +224,41 @@ export function link<TSource, TArgs>(
     TArgs
   >
 ): GatsbyResolver<TSource, TArgs> {
-  return async function linkResolver(
+  // Note: we explicitly make an attempt to prevent using the `async` keyword because often
+  //       it does not return a promise and this makes a significant difference at scale.
+
+  return function linkResolver(
     source,
     args,
     context,
     info
-  ): Promise<any> {
+  ): ResolvedLink | Promise<ResolvedLink> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
-    const fieldValue = await resolver(source, args, context, {
+    const fieldValueOrPromise = resolver(source, args, context, {
       ...info,
       from: options.from || info.from,
       fromNode: options.from ? options.fromNode : info.fromNode,
     })
 
-    if (fieldValue == null) return null
+    // Note: for this function, at scale, conditional .then is more efficient than generic await
+    if (typeof fieldValueOrPromise?.then === `function`) {
+      return fieldValueOrPromise.then(fieldValue =>
+        linkResolverValue(fieldValue, args, context, info)
+      )
+    }
+
+    return linkResolverValue(fieldValueOrPromise, args, context, info)
+  }
+
+  function linkResolverValue(
+    fieldValue,
+    args,
+    context,
+    info
+  ): ResolvedLink | Promise<ResolvedLink> {
+    if (fieldValue == null) {
+      return null
+    }
 
     const returnType = getNullableType(options.type || info.returnType)
     const type = getNamedType(returnType)
@@ -253,27 +277,20 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const equals = (value: string): any => {
-      return { eq: value }
-    }
-    const oneOf = (value: string): any => {
-      return { in: value }
-    }
-
     // Return early if fieldValue is [] since { in: [] } doesn't make sense
     if (Array.isArray(fieldValue) && fieldValue.length === 0) {
       return fieldValue
     }
 
-    const operator = Array.isArray(fieldValue) ? oneOf : equals
-    const runQueryArgs = args as TArgs & { filter: any }
-    runQueryArgs.filter = options.by
-      .split(`.`)
-      .reduceRight((acc, key, i, { length }) => {
-        return {
-          [key]: i === length - 1 ? operator(acc) : acc,
-        }
-      }, fieldValue)
+    const runQueryArgs = args as TArgs & { filter: Record<string, any> }
+    runQueryArgs.filter = options.by.split(`.`).reduceRight(
+      (acc: Record<string, any>, key: string) => {
+        const obj = {}
+        obj[key] = acc
+        return obj
+      },
+      Array.isArray(fieldValue) ? { in: fieldValue } : { eq: fieldValue }
+    )
 
     const firstOnly = !(returnType instanceof GraphQLList)
 
@@ -284,7 +301,7 @@ export function link<TSource, TArgs>(
       }
     }
 
-    const result = await context.nodeModel.runQuery(
+    const resultOrPromise = context.nodeModel.runQuery(
       {
         query: runQueryArgs,
         firstOnly,
@@ -294,16 +311,32 @@ export function link<TSource, TArgs>(
       },
       { path: context.path }
     )
+
+    // Note: for this function, at scale, conditional .then is more efficient than generic await
+    if (typeof resultOrPromise?.then === `function`) {
+      return resultOrPromise.then(result =>
+        linkResolverQueryResult(fieldValue, result, returnType)
+      )
+    }
+
+    return linkResolverQueryResult(fieldValue, resultOrPromise, returnType)
+  }
+
+  function linkResolverQueryResult(
+    fieldValue,
+    queryResult,
+    returnType
+  ): IGatsbyNode | Array<IGatsbyNode> {
     if (
       returnType instanceof GraphQLList &&
       Array.isArray(fieldValue) &&
-      Array.isArray(result)
+      Array.isArray(queryResult)
     ) {
       return fieldValue.map(value =>
-        result.find(obj => getValueAt(obj, options.by) === value)
+        queryResult.find(obj => getValueAt(obj, options.by) === value)
       )
     } else {
-      return result
+      return queryResult
     }
   }
 }
@@ -479,7 +512,7 @@ let WARNED_ABOUT_RESOLVERS = false
 function badResolverInvocationMessage(missingVar: string, path?: Path): string {
   const resolverName = path ? `${pathToArray(path)} ` : ``
   return `GraphQL Resolver ${resolverName}got called without "${missingVar}" argument. This might cause unexpected errors.
-  
+
 It's likely that this has happened in a schemaCustomization with manually invoked resolver. If manually invoking resolvers, it's best to invoke them as follows:
 
   resolve(parent, args, context, info)
@@ -490,7 +523,11 @@ It's likely that this has happened in a schemaCustomization with manually invoke
 export function wrappingResolver<TSource, TArgs>(
   resolver: GatsbyResolver<TSource, TArgs>
 ): GatsbyResolver<TSource, TArgs> {
-  return async function wrappedTracingResolver(
+  // Note: we explicitly make an attempt to prevent using the `async` keyword because often
+  //       it does not return a promise and this makes a significant difference at scale.
+  //       GraphQL will gracefully handle the resolver result of a promise or non-promise.
+
+  return function wrappedTracingResolver(
     parent,
     args,
     context,

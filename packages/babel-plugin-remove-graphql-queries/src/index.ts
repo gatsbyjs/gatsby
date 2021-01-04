@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
@@ -103,7 +104,7 @@ const isGlobalIdentifier = (
   tag.isIdentifier({ name: tagName }) && tag.scope.hasGlobal(tagName)
 
 export function followVariableDeclarations(binding: Binding): Binding {
-  const node = binding.path?.node
+  const node = binding?.path?.node
   if (
     node?.type === `VariableDeclarator` &&
     node?.id.type === `Identifier` &&
@@ -493,7 +494,7 @@ export default function ({ types: t }): PluginObj {
               const binding = hookPath.scope.getBinding(varName)
 
               if (binding) {
-                followVariableDeclarations(binding).path.traverse({
+                followVariableDeclarations(binding)?.path?.traverse({
                   TaggedTemplateExpression,
                 })
               }

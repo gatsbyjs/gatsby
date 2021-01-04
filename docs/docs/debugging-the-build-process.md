@@ -61,7 +61,7 @@ exports.onCreateNode = args => {
 }
 ```
 
-To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/conceptual/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 

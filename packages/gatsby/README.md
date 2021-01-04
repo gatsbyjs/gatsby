@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://gatsbyjs.org">
+  <a href="https://gatsbyjs.com">
     <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
@@ -27,23 +27,23 @@
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
     <img src="https://img.shields.io/npm/dm/gatsby.svg" alt="Downloads per month on npm." />
   </a>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">
+  <a href="https://gatsbyjs.com/contributing/how-to-contribute/">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
 </p>
 
 <h3 align="center">
-  <a href="https://gatsbyjs.org/docs/">Quickstart</a>
+  <a href="https://gatsbyjs.com/docs/">Quickstart</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/tutorial/">Tutorial</a>
+  <a href="https://gatsbyjs.com/tutorial/">Tutorial</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/plugins/">Plugins</a>
+  <a href="https://gatsbyjs.com/plugins/">Plugins</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/docs/gatsby-starters/">Starters</a>
+  <a href="https://gatsbyjs.com/docs/gatsby-starters/">Starters</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/showcase/">Showcase</a>
+  <a href="https://gatsbyjs.com/showcase/">Showcase</a>
   <span> · </span>
-  <a href="https://gatsbyjs.org/contributing/how-to-contribute/">Contribute</a>
+  <a href="https://gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
   <span> · </span>
   Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
   <span> & </span>
@@ -72,7 +72,7 @@ Gatsby is a modern framework for blazing fast websites.
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
   hosted entirely free on services like GitHub Pages and Netlify.
 
-[**Learn how to use Gatsby for your next project.**](https://gatsbyjs.org/docs/)
+[**Learn how to use Gatsby for your next project.**](https://gatsbyjs.com/docs/)
 
 ## What’s In This Document
 
@@ -108,44 +108,44 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
     Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
-At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.org/plugins/) and [the official tutorial](https://gatsbyjs.org/tutorial/).
+At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://gatsbyjs.com/tutorial/).
 
 ## 🎓 Learning Gatsby
 
-Full documentation for Gatsby lives [on the website](https://gatsbyjs.org/).
+Full documentation for Gatsby lives [on the website](https://gatsbyjs.com/).
 
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples head [to our documentation](https://gatsbyjs.org/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
+- **To dive straight into code samples head [to our documentation](https://gatsbyjs.com/docs/).** In particular, check out the “Guides”, API reference, and “Advanced Tutorials” sections in the sidebar.
 
-We welcome suggestions for improving our docs. See the [“how to contribute”](https://gatsbyjs.org/contributing/how-to-contribute/) documentation for more details.
+We welcome suggestions for improving our docs. See the [“how to contribute”](https://gatsbyjs.com/contributing/how-to-contribute/) documentation for more details.
 
-**Start Learning Gatsby: [Follow the Tutorial](https://gatsbyjs.org/tutorial/) · [Read the Docs](https://gatsbyjs.org/docs/)**
+**Start Learning Gatsby: [Follow the Tutorial](https://gatsbyjs.com/tutorial/) · [Read the Docs](https://gatsbyjs.com/docs/)**
 
 ## 💼 Migration Guides
 
 Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v2 to your site without starting from scratch!
 
-- [Migrate a Gatsby site from v1 to v2](https://gatsbyjs.org/docs/migrating-from-v1-to-v2/)
-- Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://gatsbyjs.org/docs/migrating-from-v0-to-v1/)
+- [Migrate a Gatsby site from v1 to v2](https://gatsbyjs.com/docs/migrating-from-v1-to-v2/)
+- Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://gatsbyjs.com/docs/migrating-from-v0-to-v1/)
 
 ## 🤝 How to Contribute
 
 Whether you're helping us fix bugs, improve the docs, or spread the word, we'd love to have you as part of the Gatsby community! :muscle::purple_heart:
 
-Check out our [contributor onboarding docs](https://gatsbyjs.org/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
+Check out our [contributor onboarding docs](https://gatsbyjs.com/contributing/how-to-contribute/) for ideas on contributing and setup steps for getting our repos up and running on your local machine.
 
-[**Read the Contributing Guide**](https://gatsbyjs.org/contributing/how-to-contribute/)
+[**Read the Contributing Guide**](https://gatsbyjs.com/contributing/how-to-contribute/)
 
 ### Code of Conduct
 
-Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://gatsbyjs.org/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
+Gatsby is dedicated to building a welcoming, diverse, safe community. We expect everyone participating in the Gatsby community to abide by our [Code of Conduct](https://gatsbyjs.com/contributing/code-of-conduct/). Please read it. Please follow it. In the Gatsby community, we work hard to build each other up and create amazing things together. 💪💜
 
-[**Read the Code of Conduct**](https://gatsbyjs.org/contributing/code-of-conduct/)
+[**Read the Code of Conduct**](https://gatsbyjs.com/contributing/code-of-conduct/)
 
 ### A note on how this repository is organized
 
-This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
+This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/plugins) managed in this codebase, even though we publish them to NPM as separate packages.
 
 ### Contributing to Gatsby v1
 
