@@ -12,9 +12,9 @@ Welcome to `gatsby@2.30.0` release (January 2021 #1)
 Key highlights of this release:
 
 - [Query on Demand and Lazy Images: Generally available](#query-on-demand-and-lazy-images-generally-available) - improves `gatsby develop` bootup time
-- [gatsby-plugin-sass v3](#gatsby-plugin-sass) - use the latest `sass-loader` and `Dart Sass` by default
+- [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
 
-And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050) (beta):
+And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050-beta) (beta):
 
 - [AVIF support](#avif-support) - enjoy next-gen image format
 - [Support remote static images](#support-static-image-urls-experimental) - download, transform and optimize remote images with a single line
