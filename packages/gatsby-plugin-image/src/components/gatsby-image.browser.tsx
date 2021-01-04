@@ -17,6 +17,7 @@ import {
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
+import { LayoutWrapper } from "./layout-wrapper"
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface GatsbyImageProps
@@ -203,10 +204,11 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
         backgroundColor,
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
-      ref={root}
-      dangerouslySetInnerHTML={{ __html: `` }}
       suppressHydrationWarning
-    />
+    >
+      <LayoutWrapper layout={layout} width={width} height={height} />
+      <Type ref={root} dangerouslySetInnerHTML={{ __html: `` }} />
+    </Type>
   )
 }
 
