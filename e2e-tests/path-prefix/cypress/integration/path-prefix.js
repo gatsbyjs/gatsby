@@ -11,6 +11,20 @@ describe(`Production pathPrefix`, () => {
     cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
   })
 
+  it(`renders static image`, () => {
+    cy.getTestElement(`static-image`)
+      .find(`.gatsby-image-wrapper > picture > source`)
+      .should(`have.attr`, `srcset`)
+      .and(`include`, /blog/)
+  })
+
+  it(`renders dynamic image`, () => {
+    cy.getTestElement(`gatsby-image`)
+      .find(`.gatsby-image-wrapper > picture > source`)
+      .should(`have.attr`, `srcset`)
+      .and(`include`, /blog/)
+  })
+
   describe(`navigation`, () => {
     it(`prefixes link with /blog`, () => {
       cy.getTestElement(`page-2-link`)
