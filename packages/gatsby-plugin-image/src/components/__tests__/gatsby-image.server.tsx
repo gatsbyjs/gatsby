@@ -186,14 +186,15 @@ describe(`GatsbyImage server`, () => {
           data-main-image=""
           decoding="async"
           loading="lazy"
-          sizes="192x192"
           style="opacity: 0;"
         />
       `)
     })
 
     it(`has a valid src value when fallback is provided in images`, () => {
-      const images = { fallback: { src: `some-src-fallback.jpg` } }
+      const images = {
+        fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` },
+      }
 
       const image: IGatsbyImageData = {
         width: 100,
@@ -233,6 +234,7 @@ icon64px.png 64w,
 icon-retina.png 2x,
 icon-ultra.png 3x,
 icon.svg`,
+          sizes: `192x192`,
         },
       }
 
@@ -242,7 +244,6 @@ icon.svg`,
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -294,7 +295,6 @@ icon.svg`,
           data-main-image=""
           decoding="async"
           loading="lazy"
-          sizes="192x192"
           style="opacity: 0;"
         />
       `)
@@ -317,9 +317,11 @@ icon.svg`,
         width: 100,
         height: 100,
         layout: `constrained`,
-        images: { sources },
+        images: {
+          sources,
+          fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` },
+        },
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -339,6 +341,7 @@ icon.svg`,
             alt="A fake image for testing purpose"
             data-gatsby-image-ssr=""
             data-main-image=""
+            data-src="some-src-fallback.jpg"
             decoding="async"
             loading="lazy"
             sizes="192x192"
