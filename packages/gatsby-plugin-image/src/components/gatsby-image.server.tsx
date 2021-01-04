@@ -49,7 +49,6 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     layout,
     images,
     placeholder,
-    sizes,
     backgroundColor: placeholderBackgroundColor,
   } = image
 
@@ -65,7 +64,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   }
   if (images.fallback) {
     cleanedImages.fallback = {
-      src: images.fallback.src,
+      ...images.fallback,
       srcSet: images.fallback.srcSet
         ? removeNewLines(images.fallback.srcSet)
         : undefined,
@@ -106,7 +105,6 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
 
         <MainImage
           data-gatsby-image-ssr=""
-          sizes={sizes}
           className={imgClassName}
           style={imgStyle}
           {...(props as Omit<MainImageProps, "images" | "fallback">)}
