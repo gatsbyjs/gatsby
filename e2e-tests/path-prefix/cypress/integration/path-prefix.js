@@ -4,15 +4,14 @@ const withTrailingSlash = url => `${url}/`
 
 describe(`Production pathPrefix`, () => {
   beforeEach(() => {
-    cy.visit(`/`)
+    cy.visit(`/`).waitForRouteChange()
   })
 
-  // it(`returns 200 on base route`, () => {
-  //   cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
-  // })
+  it(`returns 200 on base route`, () => {
+    cy.location(`pathname`).should(`eq`, withTrailingSlash(pathPrefix))
+  })
 
   it(`renders static image`, () => {
-    // cy.visit(withTrailingSlash(pathPrefix)).waitForRouteChange()
     cy.getTestElement(`static-image`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
@@ -23,7 +22,6 @@ describe(`Production pathPrefix`, () => {
   })
 
   it(`renders dynamic image`, () => {
-    // cy.visit(withTrailingSlash(pathPrefix)).waitForRouteChange()
     cy.getTestElement(`gatsby-image`)
       .should(`have.attr`, `srcset`)
       .and(srcset => {
