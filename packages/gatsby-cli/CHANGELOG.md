@@ -770,7 +770,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- **gatsby-cli:** avoid unnecesary rerenders for static messages in CLI ([#21955](https://github.com/gatsbyjs/gatsby/issues/21955)) ([5aff49d](https://github.com/gatsbyjs/gatsby/commit/5aff49d))
+- **gatsby-cli:** avoid unnecessary rerenders for static messages in CLI ([#21955](https://github.com/gatsbyjs/gatsby/issues/21955)) ([5aff49d](https://github.com/gatsbyjs/gatsby/commit/5aff49d))
 
 ## [2.10.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.1...gatsby-cli@2.10.2) (2020-03-06)
 

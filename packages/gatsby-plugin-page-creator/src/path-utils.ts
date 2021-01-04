@@ -38,7 +38,7 @@ export function extractAllCollectionSegments(
   // This shouldn't happen - but TS requires us to validate
   if (!slugParts) {
     throw new Error(
-      `An error occured building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
+      `An error occurred building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
     )
   }
 
