@@ -148,25 +148,29 @@ export async function generateImageData({
   }
 
   let primaryFormat: ImageFormat | undefined
-  let options: Record<string, unknown> | undefined
   if (useAuto) {
     primaryFormat = normalizeFormat(metadata.format || file.extension)
   } else if (formats.has(`png`)) {
     primaryFormat = `png`
-    options = args.pngOptions
   } else if (formats.has(`jpg`)) {
     primaryFormat = `jpg`
-    options = args.jpgOptions
   } else if (formats.has(`webp`)) {
     primaryFormat = `webp`
-    options = args.webpOptions
   } else if (formats.has(`avif`)) {
     reporter.warn(
       `Image ${file.relativePath} specified only AVIF format, with no fallback format. This will mean your site cannot be viewed in all browsers.`
     )
     primaryFormat = `avif`
-    options = args.webpOptions
   }
+
+  const optionsMap = {
+    jpg: args.jpgOptions,
+    png: args.pngOptions,
+    webp: args.webpOptions,
+    avif: args.avifOptions,
+  }
+
+  const options = primaryFormat ? optionsMap[primaryFormat] : undefined
 
   const imageSizes: {
     sizes: Array<number>

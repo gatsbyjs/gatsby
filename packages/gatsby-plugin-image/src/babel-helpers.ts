@@ -12,7 +12,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `maxHeight`,
   `quality`,
   `avifOptions`,
-  `jpegOptions`,
+  `jpgOptions`,
   `pngOptions`,
   `webpOptions`,
   `blurredOptions`,
