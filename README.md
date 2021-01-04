@@ -157,7 +157,7 @@ Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how
 
 ### A note on how this repository is organized
 
-This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/plugins) managed in this codebase, even though we publish them to NPM as separate packages.
+This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
 
 ### Contributing to Gatsby v1
 
