@@ -27,9 +27,9 @@ describe(`GatsbyImage browser`, () => {
       width: 100,
       height: 100,
       layout: `fluid`,
-      images: { fallback: { src: `some-src-fallback.jpg` } },
+      images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
       placeholder: { sources: [] },
-      sizes: `192x192`,
+
       backgroundColor: `red`,
     }
 
@@ -168,7 +168,7 @@ describe(`GatsbyImage browser`, () => {
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
     expect(hooks.storeImageloaded).toBeCalledWith(
-      `{"fallback":{"src":"some-src-fallback.jpg"}}`
+      `{"fallback":{"src":"some-src-fallback.jpg","sizes":"192x192"}}`
     )
   })
 
