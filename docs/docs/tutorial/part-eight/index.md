@@ -56,7 +56,7 @@ Now you're going to run your first Lighthouse test.
 
 ![Lighthouse audit start](./lighthouse-audit.png)
 
-3. Click "Generate report" (All available audit types should be selected by default).  (It'll then take a minute or so to generate the report). Once the report is complete, you should see results that look like this:
+3. Click "Generate report" (All available audit types should be selected by default). (It'll then take a minute or so to generate the report). Once the report is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
