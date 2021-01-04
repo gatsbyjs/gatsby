@@ -170,7 +170,6 @@ describe(`GatsbyImage server`, () => {
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -202,7 +201,6 @@ describe(`GatsbyImage server`, () => {
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -279,7 +277,6 @@ icon.svg`,
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -360,7 +357,6 @@ icon.svg`,
         layout: `fluid`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -386,7 +382,6 @@ icon.svg`,
         layout: `fixed`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -412,7 +407,6 @@ icon.svg`,
         layout: `constrained`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 

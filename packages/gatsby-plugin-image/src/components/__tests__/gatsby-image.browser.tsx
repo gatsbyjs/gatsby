@@ -1,5 +1,5 @@
 import React from "react"
-import { GatsbyImage, ISharpGatsbyImageData } from "../gatsby-image.browser"
+import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
@@ -14,7 +14,7 @@ jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
-  let image: ISharpGatsbyImageData
+  let image: IGatsbyImageData
 
   beforeEach(() => {
     console.warn = jest.fn()
