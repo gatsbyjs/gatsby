@@ -21,8 +21,10 @@
       const $ = cheerio.load(htmlStr)
       // There are many script tag differences
       $(`script`).remove()
-      // Only added in production. Dev uses css-loader
+      // Only added in production
       $(`#gatsby-global-css`).remove()
+      // Only added in development
+      $(`link[data-identity='gatsby-dev-css']`).remove()
       // Only in prod
       $(`link[rel="preload"]`).remove()
       // Only in prod
