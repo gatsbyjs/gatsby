@@ -32,6 +32,16 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     console.warn(`[gatsby-plugin-image] Missing image prop`)
     return null
   }
+  if (`class` in props) {
+    className = props.class
+    delete props.class
+  }
+  imgStyle = {
+    objectFit,
+    objectPosition,
+    backgroundColor,
+    ...imgStyle,
+  }
 
   const {
     width,
@@ -97,6 +107,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
         <MainImage
           data-gatsby-image-ssr=""
           sizes={sizes}
+          className={imgClassName}
+          style={imgStyle}
           {...(props as Omit<MainImageProps, "images" | "fallback">)}
           // When eager is set we want to start the isLoading state on true (we want to load the img without react)
           {...getMainProps(loading === `eager`, false, cleanedImages, loading)}

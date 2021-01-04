@@ -27,6 +27,7 @@ export interface GatsbyImageProps
   alt: string
   as?: ElementType
   className?: string
+  class?: string
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
@@ -67,6 +68,10 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       console.warn(`[gatsby-plugin-image] Missing image prop`)
     }
     return null
+  }
+  if (`class` in props) {
+    className = props.class
+    delete props.class
   }
   const { width, height, layout, images } = image
 
