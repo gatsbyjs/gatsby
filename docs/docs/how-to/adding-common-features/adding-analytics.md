@@ -56,7 +56,7 @@ module.exports = {
 
 > Note: Read more about [gatsby-config.js](/docs/reference/config-files/gatsby-config/)
 
-Full documentation for the plugin can be found [here](/packages/gatsby-plugin-google-gtag/).
+Full documentation for the plugin can be found [here](/plugins/gatsby-plugin-google-gtag).
 
 There are a number of extra configuration options--both with the Gatsby plugin and also in your Google Analytics account--so you can tailor things to meet your website's needs.
 
