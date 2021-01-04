@@ -15,7 +15,7 @@ Here are the steps Gatsby follows for making this happen.
 
 ## Read files into Gatsby from the filesystem
 
-Use the plugin [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/#gatsby-source-filesystem) to read files.
+Use the plugin [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/#gatsby-source-filesystem) to read files.
 
 ### Install
 
@@ -43,7 +43,7 @@ Completing the above step means that you've "sourced" the Markdown files from th
 
 ## Transform Markdown to HTML and frontmatter to data using `gatsby-transformer-remark`
 
-You'll use the plugin [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/) to recognize files which are Markdown and read their content. The plugin will convert the frontmatter metadata part of your Markdown files as `frontmatter` and the content part as HTML.
+You'll use the plugin [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/) to recognize files which are Markdown and read their content. The plugin will convert the frontmatter metadata part of your Markdown files as `frontmatter` and the content part as HTML.
 
 ### Install transformer plugin
 

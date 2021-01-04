@@ -29,7 +29,7 @@ module.exports = {
         url: "https://api.graphcms.com/simple/v1/swapi",
       },
     },
-    // Passing paramaters (passed to apollo-link)
+    // Passing parameters (passed to apollo-link)
     {
       resolve: "gatsby-source-graphql",
       options: {

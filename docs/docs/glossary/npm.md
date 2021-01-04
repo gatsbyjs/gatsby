@@ -41,7 +41,7 @@ This will download and install the latest version of Gatsby, then create a new G
 
 ### Using npm to install Gatsby plugins
 
-Gatsby has a robust collection of [plugins](/plugins/) that add functionality or data sourcing to your Gatsby sites. Adding a plugin as a project dependency uses the same process as installing Gatsby itself. Use `npm install <package-name>`. To add the [gatsby-source-filesystem](/packages/gatsby-source-filesystem), plugin, for example, you'd use the following command.
+Gatsby has a robust collection of [plugins](/plugins/) that add functionality or data sourcing to your Gatsby sites. Adding a plugin as a project dependency uses the same process as installing Gatsby itself. Use `npm install <package-name>`. To add the [gatsby-source-filesystem](/plugins/gatsby-source-filesystem), plugin, for example, you'd use the following command.
 
 ```shell
 npm install gatsby-source-filesystem

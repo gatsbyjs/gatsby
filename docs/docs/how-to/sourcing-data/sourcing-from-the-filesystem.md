@@ -102,4 +102,4 @@ Once files have been sourced, various "transformer" plugins in the Gatsby ecosys
 
 ## Further reference and examples
 
-For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](/packages/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).
+For further reference, you may be interested in checking out the `gatsby-source-filesystem` [package README](/plugins/gatsby-source-filesystem/), and various official and community [starters that use the plugin](/starters/?d=gatsby-source-filesystem).

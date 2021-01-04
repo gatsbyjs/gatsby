@@ -184,6 +184,9 @@ describe(`build-node-connections`, () => {
               childRelative { # lol
                 id
               }
+              childrenRelative {
+                id
+              }
             }
           }
         }
@@ -193,6 +196,9 @@ describe(`build-node-connections`, () => {
 
     expect(allParent.edges[0].node.childRelative).toBeDefined()
     expect(allParent.edges[0].node.childRelative.id).toEqual(`r1`)
+
+    expect(allParent.edges[0].node.childrenRelative).toBeDefined()
+    expect(allParent.edges[0].node.childrenRelative).toEqual([{ id: `r1` }])
   })
 
   it(`should create page dependency`, async () => {

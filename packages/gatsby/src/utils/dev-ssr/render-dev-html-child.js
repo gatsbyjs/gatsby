@@ -60,7 +60,7 @@ const parseError = function ({ err, directory, componentPath }) {
   const filename = sysPath.join(
     directory,
     // Don't need to use path.sep as webpack always uses a single forward slash
-    // as a path seperator.
+    // as a path separator.
     ...position.filename.split(`/`).slice(2)
   )
 

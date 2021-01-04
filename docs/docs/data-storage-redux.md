@@ -12,7 +12,7 @@ The namespaces in Gatsby's Redux store are a great overview of the Gatsby intern
 - **[Schema](/docs/schema-generation/)** - GraphQL [schema](/docs/glossary#schema) [inferred](/docs/glossary#inference) from Nodes, available for querying by page and static queries.
 - **[Pages](/docs/gatsby-internals-terminology/#page)** - A `Map` of page paths to page objects. Objects made via [Page Creation](/docs/page-creation) contain information needed to render a page such as component file path, page query and context.
 - **[Components](/docs/gatsby-internals-terminology/#component)** - A `Map` of component file paths to page objects.
-- **[Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores)** - A `Map` of any components detected with a [static query](/docs/how-to/sourcing-data/static-query/).
+- **[Static Query Components](/docs/static-vs-normal-queries/#keeping-track-of-site-queries-during-build-in-redux-stores)** - A `Map` of any components detected with a [static query](/docs/how-to/querying-data/static-query/).
 - **Jobs** - Long-running and CPU-intensive processes, generally started as a side-effect to a GraphQL query. Gatsby doesn’t finish its process until all jobs are ended.
 - **webpack** - Config for the [webpack](/docs/webpack-and-ssr/) bundler which handles code optimization and splitting of delivered JavaScript bundles.
 

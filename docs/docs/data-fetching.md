@@ -16,7 +16,7 @@ Compiling pages at build time is useful when your website content won't change o
 
 ## Combining build time and client runtime data
 
-To illustrate a combination of build time and client runtime data, this guide uses code from a small [example site]. It uses the [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
+To illustrate a combination of build time and client runtime data, this guide uses code from a small [example site]. It uses the [`gatsby-source-graphql`](/plugins/gatsby-source-graphql/) plugin to fetch data from GitHub's GraphQL API at build time for static content like the name and URL to a repository, and the [`fetch` API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to retrieve more dynamic data from the GitHub API on the [client-side](/docs/glossary#client-side) like star counts when the page loads in the browser.
 Reasons to fetch certain data at build time vs. client runtime will vary, but in this example the repo's name and URL are much less likely to change between builds of the site. The repo's star counts, on the other hand, are likely to change often and would benefit from a client-side request to the GitHub API to stay current between static site builds.
 
 > Check out the code from the [full example here](https://github.com/gatsbyjs/gatsby/tree/master/examples/data-fetching).
@@ -101,7 +101,7 @@ query {
 
 #### Writing a query to gather the static data needed for a page
 
-With the source plugin installed and added to your config, you can write a [static query](/docs/how-to/sourcing-data/use-static-query/) that will retrieve the necessary data from Gatsby's data layer while building the site.
+With the source plugin installed and added to your config, you can write a [static query](/docs/how-to/querying-data/use-static-query/) that will retrieve the necessary data from Gatsby's data layer while building the site.
 
 ```jsx:title=src/pages/index.js
 import React from "react"

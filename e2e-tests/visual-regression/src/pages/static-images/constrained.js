@@ -10,7 +10,6 @@ const Page = () => {
       <TestWrapper>
         <StaticImage
           src="../../images/cornwall.jpg"
-          layout="constrained"
           alt="cornwall"
           maxWidth={1024}
         />

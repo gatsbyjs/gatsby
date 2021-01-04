@@ -126,6 +126,9 @@ describe(`Kitchen sink schema test`, () => {
                   childImageSharp {
                     id
                   }
+                  childrenImageSharp {
+                    id
+                  }
                 }
               }
             }
@@ -144,6 +147,9 @@ describe(`Kitchen sink schema test`, () => {
                 comment
                 image {
                   childImageSharp {
+                    id
+                  }
+                  childrenImageSharp {
                     id
                   }
                 }
