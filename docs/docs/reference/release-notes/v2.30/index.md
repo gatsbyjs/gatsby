@@ -72,6 +72,7 @@ See also:
 - https://github.com/gatsbyjs/gatsby/pull/27991
 
 ## Server Side Rendering (SSR) in development
+
 There are certain types of build errors that currently are only discoverable when doing a build. The most common is code that tries to access browser globals (like `window`) that don't exist in Node.js when SSRing your Gatsby site.
 
 This causes a lot of frustration as you might develop for days before running a build and it’s not fun to discover problems after a lot of development. Then actually fixing the problems is painful as the feedback cycle is slow as you have to run a build after each code change.
@@ -90,7 +91,6 @@ module.exports = {
   plugins: [...]
 }`,
 ```
-
 
 ## gatsby-plugin-image@0.5.0 (beta)
 
