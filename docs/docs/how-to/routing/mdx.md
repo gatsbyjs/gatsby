@@ -10,7 +10,7 @@ This is useful in content-driven sites where you want the ability to introduce c
 
 ## Part 1: Getting Started with MDX
 
-If you already have a Gatsby site that you'd like to add MDX to, you can follow these steps for configuring the [gatsby-plugin-mdx](/packages/gatsby-plugin-mdx/) plugin.
+If you already have a Gatsby site that you'd like to add MDX to, you can follow these steps for configuring the [gatsby-plugin-mdx](/plugins/gatsby-plugin-mdx/) plugin.
 
 > **Starting a new project?** Skip the setup and create a new project using the [MDX
 > starter](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic):
@@ -155,7 +155,7 @@ export default function Layout({ children }) {
 }
 ```
 
-All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX documents that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
+All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX documents that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/plugins/gatsby-plugin-mdx/#default-layouts).
 
 Now, you can include components in your MDX without importing them:
 

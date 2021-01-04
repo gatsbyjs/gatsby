@@ -72,8 +72,8 @@ This recipe shows how to create pages from Markdown files on your local filesyst
 
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file
 - The [Gatsby CLI](/docs/reference/gatsby-cli) installed
-- The [gatsby-source-filesystem plugin](/packages/gatsby-source-filesystem) installed
-- The [gatsby-transformer-remark plugin](/packages/gatsby-transformer-remark) installed
+- The [gatsby-source-filesystem plugin](/plugins/gatsby-source-filesystem) installed
+- The [gatsby-transformer-remark plugin](/plugins/gatsby-transformer-remark) installed
 - A `gatsby-node.js` file
 
 ### Directions
@@ -245,7 +245,7 @@ module.exports = {
 }
 ```
 
-> **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/packages/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
+> **Note:** Refer to the [`gatsby-source-wordpress` plugin docs](/plugins/gatsby-source-wordpress/?=wordpre#how-to-use) to know more about configuring your plugins.
 
 3. Create a template component such as `src/templates/post.js` with the following code in it:
 
@@ -462,8 +462,8 @@ To continue building out your Contentful site including post detail pages, check
 
 - [Building a Site with React and Contentful](/blog/2018-1-25-building-a-site-with-react-and-contentful/)
 - [More on Sourcing from Contentful](/docs/how-to/sourcing-data/sourcing-from-contentful/)
-- [Contentful source plugin](/packages/gatsby-source-contentful/)
-- [Long-text field types returned as objects](/packages/gatsby-source-contentful/#a-note-about-longtext-fields)
+- [Contentful source plugin](/plugins/gatsby-source-contentful/)
+- [Long-text field types returned as objects](/plugins/gatsby-source-contentful/#a-note-about-longtext-fields)
 - [Example repository for this recipe](https://github.com/gatsbyjs/gatsby/tree/master/examples/recipe-sourcing-contentful)
 
 ## Pulling data from an external source and creating pages without GraphQL

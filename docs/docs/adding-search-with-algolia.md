@@ -191,7 +191,7 @@ The guide will use the following frameworks:
 
 - [React InstantSearch](https://community.algolia.com/react-instantsearch), a component library provided by Algolia for easily building search interfaces.
 - [Algolia Search](https://www.npmjs.com/package/algoliasearch) provides the API client for calling Algolia.
-- [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/packages/gatsby-plugin-styled-components/).
+- [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/plugins/gatsby-plugin-styled-components/).
 - [Styled Icons](https://styled-icons.js.org/) provides the magnifying glass icon for the search bar.
 
 Styled Components can also be replaced by any other CSS solution you prefer.

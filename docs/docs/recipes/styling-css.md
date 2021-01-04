@@ -96,7 +96,7 @@ export default function Home() {
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/plugins/gatsby-plugin-styled-components/) installed in `package.json`
 
 ### Directions
 
@@ -320,7 +320,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Directions
 
-1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+1. Install the [Gatsby Emotion plugin](/plugins/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
 npm install gatsby-plugin-emotion @emotion/react @emotion/styled

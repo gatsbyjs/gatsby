@@ -20,7 +20,7 @@ npm install gatsby-theme-blog
 
 Depending on the theme, there may be theme options that can be configured via `gatsby-config.js`.
 
-For example, `gatsby-theme-blog` can take a number of different options. All of them are documented in the [theme's README](/packages/gatsby-theme-blog/) file.
+For example, `gatsby-theme-blog` can take a number of different options. All of them are documented in the [theme's README](/plugins/gatsby-theme-blog/) file.
 
 ```javascript:title=gatsby-config.js
 module.exports = {

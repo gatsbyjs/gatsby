@@ -8,7 +8,7 @@ Using images in Gatsby components and pages requires four steps to take advantag
 
 <ImageModel initialLayer="Install" />
 
-`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/packages/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) to power its image transformations.
+`gatsby-image` is a React component designed to work seamlessly with Gatsby’s GraphQL queries ([`gatsby-image` plugin README](/plugins/gatsby-image/)). It combines [Gatsby’s native image processing](https://image-processing.gatsbyjs.org/) capabilities with advanced image loading techniques to easily and completely optimize image loading for your sites. `gatsby-image` uses [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) to power its image transformations.
 
 > _Warning: gatsby-image is **not** a drop-in replacement for `<img />`. It’s optimized for fixed width/height images and images that stretch the full width of a container. Some ways you can use `<img />` won’t work with gatsby-image._
 
@@ -85,7 +85,7 @@ module.exports = {
   lessonTitle="Install gatsby-image and source local images from the filesystem"
 />
 
-4. Write a GraphQL query using one of the included [GraphQL “fragments”](/packages/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
+4. Write a GraphQL query using one of the included [GraphQL “fragments”](/plugins/gatsby-image/#fragments) which specify the fields needed by `gatsby-image` to create a responsive, optimized image. This example queries for an image at a path relative to the location specified in the `gatsby-source-filesystem` options using the `GatsbyImageSharpFluid` fragment.
 
 ```jsx:title=src/pages/my-dogs.js
 import React from "react"
@@ -169,7 +169,7 @@ So this is all very nice and it’s far better to be able to use this from npm v
 ### Additional resources
 
 - [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/)
-- [gatsby-image plugin README file](/packages/gatsby-image/)
+- [gatsby-image plugin README file](/plugins/gatsby-image/)
 - [Source code for an example site using gatsby-image](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image)
 - [Blog articles about gatsby-image](/blog/tags/gatsby-image/)
 - [Starters that use gatsby-image](/starters/?d=gatsby-image&v=2)
