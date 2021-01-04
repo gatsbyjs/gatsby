@@ -74,21 +74,57 @@ See also:
 
 ### AVIF support
 
-TODOC
+This release adds beta support for generating and displaying [AVIF images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4). AVIF is a brand new image format, which offers considerably better filesizes and quality than JPG and even WebP. It is currently [only supported in Chrome](https://caniuse.com/avif), with Firefox support coming soon. However it is safe to use today, because unsupported browsers will fall back to using a supported format.
 
-### Support static image URLs (experimental)
+AVIF is not currently enabled by default, so to use it in your site you need to add it to the `formats` array. You should also include auto and WebP to support other browsers. Ensure that you have upgraded to the latest version of `gatsby-plugin-sharp`, `gatsby-transformer-sharp` and `gatsby-plugin-image`, and then use the following syntax:
 
-Adds initial remote image support to `StaticImage`. To enable, pass `GATSBY_EXPERIMENTAL_REMOTE_IMAGES`
+In `StaticImage`:
 
-API:
+```jsx
+<StaticImage
+  src="./cornwall.jpg"
+  formats={["auto", "webp", "avif"]}
+  alt="Cornwall"
+/>
+```
+
+...or in GraphQL:
+
+```graphql
+query {
+  file(relativePath: { eq: "cornwall.jpg" }) {
+    childImageSharp {
+      gatsbyImageData(maxWidth: 720, formats: [AUTO, WEBP, AVIF])
+    }
+  }
+}
+```
+
+This is possible thanks to the incredible work by the [sharp](https://sharp.pixelplumbing.com/) and [libvips](https://libvips.github.io/libvips/) contributors.
+
+### Support remote image URLs (experimental)
+
+This release enables experimental support for remote URLs in the `StaticImage` component. This means that you can pass an absolute URL in the `src` prop and Gatsby will download the file and process it at build time. It is currently experimental, but you can try it out today and let us know how you find it.
+
+To enable, set the `GATSBY_EXPERIMENTAL_REMOTE_IMAGES` environment variable to `1` when building:
+
+```shell
+GATSBY_EXPERIMENTAL_REMOTE_IMAGES=1 gatsby develop
+```
+
+or...
+
+```shell
+GATSBY_EXPERIMENTAL_REMOTE_IMAGES=1 gatsby build
+```
+
+You can then pass absolute URLs to `StaticImage`:
 
 ```js
 <StaticImage src="https://placekitten.com/400/400" alt="Kittin" />
 ```
 
-### New defaults
-
-TODOC
+Please note that this is only supported in `StaticImage`.
 
 ## Notable bugfixes
 
