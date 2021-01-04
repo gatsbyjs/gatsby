@@ -57,6 +57,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   as: Type = `div`,
   style,
   className,
+  class: preactClass,
   onStartLoad,
   image,
   onLoad: customOnLoad,
@@ -69,9 +70,8 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     }
     return null
   }
-  if (`class` in props) {
-    className = props.class
-    delete props.class
+  if (preactClass) {
+    className = preactClass
   }
   const { width, height, layout, images } = image
 

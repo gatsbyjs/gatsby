@@ -18,6 +18,7 @@ export const GatsbyImageHydrator: FunctionComponent<{
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage({
   as,
   className,
+  class: preactClass,
   style,
   image,
   loading = `lazy`,
@@ -32,9 +33,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     console.warn(`[gatsby-plugin-image] Missing image prop`)
     return null
   }
-  if (`class` in props) {
-    className = props.class
-    delete props.class
+  if (preactClass) {
+    className = preactClass
   }
   imgStyle = {
     objectFit,
