@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "postcss-loader": "^4.0.4"
+    "postcss-loader": "^4.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
