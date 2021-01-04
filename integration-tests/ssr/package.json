@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "gatsby": "^2.27.0",
+    "gatsby-plugin-postcss": "^3.3.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "tailwindcss": "1"
   },
   "devDependencies": {
     "cross-env": "^5.0.2",
