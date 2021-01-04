@@ -1,6 +1,5 @@
 # Client-only paths
 
-
 Example site that demonstrates how to build Gatsby sites with paths that are
 client-only.
 
