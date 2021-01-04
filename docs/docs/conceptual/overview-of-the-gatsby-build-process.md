@@ -152,7 +152,7 @@ There is only one difference in the bootstrap phase where HTML and CSS is delete
 
 By omitting these later steps, `gatsby develop` can speed up your ability to make live edits without page reloads using features like [hot module replacement](/docs/glossary#hot-module-replacement). It also saves time with the more CPU intensive processes that aren't necessary to perform in rapid development.
 
-There is also difference in amount of page queries that will run. `gatsby develop` will run at most 3 page queries (index page, actual 404 and develop 404) initially. Rest of the queries will run when they will be needed (when browser requests them). In contrast, `gatsby build` will run page queries for every page that doesn't have cached and up to date results already.
+There is also a difference in the number of page queries that will run. `gatsby develop` will run at most 3 page queries (index page, actual 404 and develop 404) initially. The rest of the queries will run when they are needed (when the browser requests them). In contrast, `gatsby build` will run page queries for every page that doesn't have cached and up to date results already.
 
 A [cache](/docs/glossary#cache) is also used to detect changes to `gatsby-*.js` files (like `gatsby-node.js`, or `gatsby-config.js`) or dependencies. It can be cleared manually with the `gatsby clean` command to work through issues caused by outdated references and a stale cache.
 
