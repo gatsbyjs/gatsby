@@ -10,8 +10,6 @@ import telemetry from "gatsby-telemetry"
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
-import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
-import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
@@ -56,25 +54,6 @@ Please give feedback on their respective umbrella issues!
   `)
 
   telemetry.trackFeatureIsUsed(`FastDev`)
-}
-
-if (
-  process.env.gatsby_executing_command === `develop` &&
-  !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
-  !isCI() &&
-  sampleSiteForExperiment(`DEV_SSR`, 5)
-) {
-  showExperimentNoticeAfterTimeout(
-    `Server Side Rendering (SSR) in Development`,
-    `gatsby.dev/dev-ssr-feedback`,
-    `which helps surface issues with build errors more quickly. Here's how to try it:
-
-module.exports = {
-  flags : { DEV_SSR: true },
-  plugins: [...]
-}`,
-    1 // Show this immediately to the subset of sites selected.
-  )
 }
 
 // Show stack trace on unhandled promises.
