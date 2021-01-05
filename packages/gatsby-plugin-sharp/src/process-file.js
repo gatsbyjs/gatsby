@@ -8,7 +8,7 @@ const imageminMozjpeg = require(`imagemin-mozjpeg`)
 const imageminPngquant = require(`imagemin-pngquant`)
 const { healOptions } = require(`./plugin-options`)
 const { SharpError } = require(`./sharp-error`)
-const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 // Try to enable the use of SIMD instructions. Seems to provide a smallish
 // speedup on resizing heavy loads (~10%). Sharp disables this feature by
@@ -16,10 +16,8 @@ const { cpuCoreCount, createContentDigest } = require(`gatsby-core-utils`)
 // adventurous and see what happens with it on.
 sharp.simd(true)
 
-// Handle Sharp's concurrency based on the Gatsby CPU count
-// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-// See: https://www.gatsbyjs.org/docs/multi-core-builds/
-sharp.concurrency(cpuCoreCount())
+// Concurrency is handled in gatsby-worker queue instead
+sharp.concurrency(1)
 
 /**
  * @typedef DuotoneArgs
