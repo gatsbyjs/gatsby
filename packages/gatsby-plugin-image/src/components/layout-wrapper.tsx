@@ -39,6 +39,23 @@ if (hasNativeLazyLoadSupport) {
   />
 )
 
+export function getSizer(
+  layout: Layout,
+  width: number,
+  height: number
+): string {
+  let sizer: string | null = null
+  if (layout === `fluid`) {
+    sizer = `<div aria-hidden="true" style="padding-top: ${
+      (height / width) * 100
+    }%;"></div>`
+  }
+  if (layout === `constrained`) {
+    sizer = `<div style="max-width: ${width}px; display: block;"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E" style="max-width: 100%; display: block; position: static;"></div>`
+  }
+  return sizer
+}
+
 export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
   layout,
   width,
@@ -68,7 +85,6 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
       </div>
     )
   }
-
   return (
     <Fragment>
       {sizer}
