@@ -123,6 +123,10 @@ exports.processFile = (file, transforms, options = {}) => {
           quality: transformArgs.quality,
           force: transformArgs.toFormat === `tiff`,
         })
+        .avif({
+          quality: transformArgs.quality,
+          force: transformArgs.toFormat === `avif`,
+        })
 
       // jpeg
       if (!options.useMozJpeg) {
