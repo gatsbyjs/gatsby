@@ -11,7 +11,7 @@ import {
   CreateDevServerArgs,
 } from "gatsby"
 
-export async function onPreInit(
+export async function onPreBootstrap(
   { reporter }: ParentSpanPluginArgs,
   { path: functionsDirectoryPath }: PluginOptions
 ): Promise<void> {
