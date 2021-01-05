@@ -230,10 +230,21 @@ module.exports = async (
             plugins.eslintGraphqlSchemaReload(),
           ])
           .filter(Boolean)
+        if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+          // Don't use the default mini-css-extract-plugin setup as that
+          // breaks hmr.
+          configPlugins.push(
+            plugins.extractText({ filename: `[name].css` }),
+            plugins.extractStats()
+          )
+        }
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
-          plugins.extractText(),
+          plugins.extractText({
+            filename: `[name].[contenthash].css`,
+            chunkFilename: `[name].[contenthash].css`,
+          }),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           plugins.extractStats(),
