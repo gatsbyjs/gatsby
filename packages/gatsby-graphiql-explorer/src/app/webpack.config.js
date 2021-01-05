@@ -35,7 +35,7 @@ module.exports = {
                 {
                   useBuiltIns: true,
                   pragma: `React.createElement`,
-                  development: false,
+                  development: mode !== `production`,
                 },
               ],
             ],
@@ -68,5 +68,17 @@ module.exports = {
   ],
   stats: {
     warnings: false,
+  },
+  // below are temporary aliases that link to not yet published upcoming graphiql feature ( https://github.com/graphql/graphiql/pull/1750 )
+  resolve: {
+    alias: {
+      graphiql: `/Users/misiek/dev/graphiql/packages/graphiql`,
+      "codemirror-graphql": `/Users/misiek/dev/graphiql/packages/codemirror-graphql`,
+      "graphql-language-service-interface": `/Users/misiek/dev/graphiql/packages/graphql-language-service-interface`,
+      "graphql-language-service": `/Users/misiek/dev/graphiql/packages/graphql-language-service`,
+      // just to fix "Cannot use GraphQLSchema "[object GraphQLSchema]" from another module or realm" as some pieces of the app
+      // use graphql from monorepo (I'm guessing explorer), while rest will use graphql instance from graphiql monorepo
+      graphql: path.dirname(require.resolve(`graphql/package.json`)),
+    },
   },
 }
