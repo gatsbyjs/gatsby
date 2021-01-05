@@ -1,6 +1,6 @@
-const render = require(`./renderer`)
+import render from "./renderer"
 
-module.exports = async steps => {
+export default async function validateSteps(steps) {
   const errors = []
   const firstStepPlan = await render(steps[0])
 

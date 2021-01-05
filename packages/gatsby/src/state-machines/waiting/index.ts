@@ -4,7 +4,8 @@ import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
 
 const NODE_MUTATION_BATCH_SIZE = 100
-const NODE_MUTATION_BATCH_TIMEOUT = 1000
+const NODE_MUTATION_BATCH_TIMEOUT = 500
+const FILE_CHANGE_AGGREGATION_TIMEOUT = 200
 
 export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 
@@ -21,12 +22,21 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
   },
   states: {
     idle: {
-      always: {
-        // If we already have queued node mutations, move
-        // immediately to batching
-        cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
-        target: `batchingNodeMutations`,
-      },
+      always: [
+        {
+          // If we already have queued node mutations, move
+          // immediately to batching
+          cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
+          target: `batchingNodeMutations`,
+        },
+        {
+          // If source files are dirty upon entering this state,
+          // move immediately to aggregatingFileChanges to force re-compilation
+          // See https://github.com/gatsbyjs/gatsby/issues/27609
+          target: `aggregatingFileChanges`,
+          cond: ({ sourceFilesDirty }): boolean => Boolean(sourceFilesDirty),
+        },
+      ],
       on: {
         ADD_NODE_MUTATION: {
           actions: `addNodeMutation`,
@@ -45,7 +55,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       // we won't pick up the changed files
       after: {
         // The aggregation timeout
-        200: {
+        [FILE_CHANGE_AGGREGATION_TIMEOUT]: {
           actions: `extractQueries`,
           target: `idle`,
         },
@@ -53,6 +63,7 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
       on: {
         ADD_NODE_MUTATION: {
           actions: `addNodeMutation`,
+          target: `batchingNodeMutations`,
         },
         SOURCE_FILE_CHANGED: {
           target: undefined,
@@ -98,9 +109,9 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
         }
       }),
       on: {
-        // While we're running the batch we need to batch any incoming mutations too
+        // While we're running the batch we will also run new actions, as these may be cascades
         ADD_NODE_MUTATION: {
-          actions: `addNodeMutation`,
+          actions: `callApi`,
         },
       },
       invoke: {

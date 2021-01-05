@@ -360,6 +360,7 @@ describe(`Filter fields`, () => {
         hair: { eq: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair === needle).length
       )
@@ -373,6 +374,7 @@ describe(`Filter fields`, () => {
         boolean: { eq: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.boolean === needle).length
       )
@@ -386,6 +388,7 @@ describe(`Filter fields`, () => {
         hair: { eq: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair === needle).length
       )
@@ -400,6 +403,7 @@ describe(`Filter fields`, () => {
       })
 
       // Also returns nodes that do not have the property at all (NULL in db)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil == needle).length
       )
@@ -411,6 +415,7 @@ describe(`Filter fields`, () => {
     // it(`handles eq operator with undefined`, async () => {
     //   const [result, allNodes] = await runFastFilter{ undef: { eq: undefined } })
     //
+    //   expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
     //   expect(result.length).toEqual(?)
     //   expect(result[0].hair).toEqual(?)
     // })
@@ -421,6 +426,7 @@ describe(`Filter fields`, () => {
         strArray: { eq: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.strArray === needle).length
       )
@@ -434,6 +440,7 @@ describe(`Filter fields`, () => {
         anArray: { eq: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.anArray?.includes(needle)).length
       )
@@ -449,6 +456,7 @@ describe(`Filter fields`, () => {
         singleArray: { eq: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.singleArray?.includes(needle)).length
       )
@@ -476,6 +484,7 @@ describe(`Filter fields`, () => {
         hair: { ne: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair !== needle).length
       )
@@ -487,6 +496,7 @@ describe(`Filter fields`, () => {
       const needle = 2 // Note: `id` is a numstr
       const [result, allNodes] = await runFilter({ id: { ne: needle } })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.id !== needle).length
       )
@@ -509,6 +519,7 @@ describe(`Filter fields`, () => {
         boolean: { ne: true },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.boolean !== needle).length
       )
@@ -530,6 +541,7 @@ describe(`Filter fields`, () => {
 
         // For legacy reasons, apply strict check; only return id=6,7, where a.b.c===true/false.
 
+        expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
         expect(result?.length).toEqual(
           allNodes.filter(node => !(node?.a?.b?.c == null)).length
         )
@@ -547,6 +559,7 @@ describe(`Filter fields`, () => {
 
         // For legacy reasons, apply strict check; only omit id=6, where a.b.c===true (contrary to searching for null)
 
+        expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
         expect(result?.length).toEqual(
           allNodes.filter(node => node?.a?.b?.c !== needle).length
         )
@@ -564,6 +577,7 @@ describe(`Filter fields`, () => {
 
         // For legacy reasons, apply strict check; only omit id=7, where a.b.c===false (contrary to searching for null)
 
+        expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
         expect(result?.length).toEqual(
           allNodes.filter(node => node?.a?.b?.c !== needle).length
         )
@@ -580,6 +594,7 @@ describe(`Filter fields`, () => {
 
       // Note: one node has this, one node has waxOnly=null, one node does not have the waxOnly property at all.
       // Redux seems to return only the node that doesn't have the property at all (node.id=0)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.waxOnly?.foo !== needle).length
       )
@@ -593,6 +608,7 @@ describe(`Filter fields`, () => {
         hair: { ne: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair !== needle).length
       )
@@ -607,6 +623,7 @@ describe(`Filter fields`, () => {
       })
 
       // Should only return nodes who do have the property, not set to null
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil !== needle).length
       )
@@ -618,6 +635,7 @@ describe(`Filter fields`, () => {
     // it(`handles ne operator with undefined`, async () => {
     //   const [result, allNodes] = await runFastFilter({ undef: { ne: undefined } })
     //
+    //   expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
     //   expect(result.length).toEqual(?)
     //   expect(result?.length).toEqual(allNodes.filter(node => node.nil !== needle).length)
     //   expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
@@ -630,6 +648,7 @@ describe(`Filter fields`, () => {
         waxOnly: { bar: { baz: { ne: needle } } },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.waxOnly?.bar?.baz !== needle).length
       )
@@ -645,6 +664,7 @@ describe(`Filter fields`, () => {
 
       // For legacy reasons; return only the node that doesn't have the property at all (the other two arrays contain 1)
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => !node.anArray?.includes(needle)).length
       )
@@ -662,6 +682,7 @@ describe(`Filter fields`, () => {
         hair: { lt: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair < needle).length
       )
@@ -677,6 +698,7 @@ describe(`Filter fields`, () => {
 
       // Just check whether the reported count is equal to the actual count
       // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length ?? 0).toEqual(
         allNodes.filter(node => node.exh < needle).length
       )
@@ -730,6 +752,7 @@ describe(`Filter fields`, () => {
         float: { lt: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.float < needle).length
       )
@@ -760,6 +783,7 @@ describe(`Filter fields`, () => {
         hair: { lte: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair <= needle).length
       )
@@ -775,6 +799,7 @@ describe(`Filter fields`, () => {
 
       // Just check whether the reported count is equal to the actual count
       // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length ?? 0).toEqual(
         allNodes.filter(node => node.exh <= needle).length
       )
@@ -828,6 +853,7 @@ describe(`Filter fields`, () => {
         float: { lte: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.float <= needle).length
       )
@@ -842,6 +868,7 @@ describe(`Filter fields`, () => {
       })
 
       // lte null matches null but no nodes without the property (NULL)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil === needle).length
       )
@@ -857,6 +884,7 @@ describe(`Filter fields`, () => {
         hair: { gt: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair > needle).length
       )
@@ -872,6 +900,7 @@ describe(`Filter fields`, () => {
 
       // Just check whether the reported count is equal to the actual count
       // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length ?? 0).toEqual(
         allNodes.filter(node => node.exh > needle).length
       )
@@ -925,6 +954,7 @@ describe(`Filter fields`, () => {
         float: { gt: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.float > needle).length
       )
@@ -941,6 +971,7 @@ describe(`Filter fields`, () => {
 
       // Nothing is gt null so zero nodes should match
       // (Note: this is different from `gte`, which does return nulls here!)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result).toEqual(null)
       expect(
         allNodes.filter(node => node.nil === needle).length
@@ -955,6 +986,7 @@ describe(`Filter fields`, () => {
         hair: { gte: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.hair >= needle).length
       )
@@ -970,6 +1002,7 @@ describe(`Filter fields`, () => {
 
       // Just check whether the reported count is equal to the actual count
       // We prepend the "hint" to make debugging easier; this way you know whether it's even/uneven and needle
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length ?? 0).toEqual(
         allNodes.filter(node => node.exh >= needle).length
       )
@@ -1023,6 +1056,7 @@ describe(`Filter fields`, () => {
         float: { gte: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.float >= needle).length
       )
@@ -1037,6 +1071,7 @@ describe(`Filter fields`, () => {
       })
 
       // gte null matches null but no nodes without the property (NULL)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil === needle).length
       )
@@ -1053,6 +1088,7 @@ describe(`Filter fields`, () => {
         name: { regex: needleStr },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => needleRex.test(node.name)).length
       )
@@ -1068,6 +1104,7 @@ describe(`Filter fields`, () => {
         name: { regex: needleStr },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => needleRex.test(node.name)).length
       )
@@ -1105,6 +1142,7 @@ describe(`Filter fields`, () => {
         name: { regex: needleStr },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => needleRex.test(node.name)).length
       )
@@ -1127,6 +1165,7 @@ describe(`Filter fields`, () => {
         nestedRegex: { field: { regex: needleStr } },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(
           node =>
@@ -1161,6 +1200,7 @@ describe(`Filter fields`, () => {
         string: { in: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => needle.includes(node.string)).length
       )
@@ -1174,6 +1214,7 @@ describe(`Filter fields`, () => {
         index: { in: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => needle.includes(node.index)).length
       )
@@ -1187,6 +1228,7 @@ describe(`Filter fields`, () => {
         float: { in: needle },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => needle.includes(node.float)).length
       )
@@ -1200,6 +1242,7 @@ describe(`Filter fields`, () => {
       })
 
       // May not have the property, or must be null
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil === undefined || node.nil === null)
           .length
@@ -1216,6 +1259,7 @@ describe(`Filter fields`, () => {
       })
 
       // May not have the property, or must be null
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil === undefined || node.nil === null)
           .length
@@ -1232,6 +1276,7 @@ describe(`Filter fields`, () => {
       })
 
       // Include the nodes without a `nil` property
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.nil === undefined || node.nil === null)
           .length
@@ -1248,6 +1293,7 @@ describe(`Filter fields`, () => {
       })
 
       // Include the nodes without a `index` property (there aren't any)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(
           node =>
@@ -1267,6 +1313,7 @@ describe(`Filter fields`, () => {
         boolean: { in: [true] },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.boolean === true).length
       )
@@ -1283,6 +1330,7 @@ describe(`Filter fields`, () => {
       // The first one has a 5, the second one does not have a 5, the third does
       // not have the property at all (NULL). It should return the first and last.
       // (If the target value has `null` then the third should be omitted)
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node => node.anArray?.includes(5)).length
       )
@@ -1297,6 +1345,27 @@ describe(`Filter fields`, () => {
         anArray: { in: needle },
       })
 
+      // Same as the test for just `[5]`. 20 and 300 do not appear anywhere.
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
+      expect(result?.length).toEqual(
+        allNodes.filter(node => node.anArray?.some(n => needle.includes(n)))
+          .length
+      )
+      expect(result?.length).toBeGreaterThan(0) // Make sure there _are_ results, don't let this be zero
+      result.forEach(node =>
+        expect(
+          node.anArray && needle.some(n => node.anArray.includes(n))
+        ).toEqual(true)
+      )
+    })
+
+    it(`handles the in operator and return a unique list even if multiple requested elements match the same array`, async () => {
+      const needle = [1, 2] // both elements appear in each node's ainArray list, but it should still return each node once
+      const [result, allNodes] = await runFilter({
+        anArray: { in: needle },
+      })
+
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       // Same as the test for just `[5]`. 20 and 300 do not appear anywhere.
       expect(result?.length).toEqual(
         allNodes.filter(node => node.anArray?.some(n => needle.includes(n)))
@@ -1316,6 +1385,7 @@ describe(`Filter fields`, () => {
         frontmatter: { tags: { in: needle } },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result?.length).toEqual(
         allNodes.filter(node =>
           node.frontmatter.tags?.some(n => needle.includes(n))
@@ -1372,6 +1442,7 @@ describe(`Filter fields`, () => {
         },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(
         result[0]?.singleElem?.things.some(e => e?.one?.two?.three === 123)
@@ -1393,6 +1464,7 @@ describe(`Filter fields`, () => {
         },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       // Should contain the entire array even only one matched
       expect(result[0].singleElem.things[0].one.two.three).toEqual(123)
@@ -1417,6 +1489,7 @@ describe(`Filter fields`, () => {
       // The `elemMatch` operator only returns the first nodde that matches so
       // even though the `lt 1000` would match two elements in the `things` array
       // it will return one node.
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].singleElem.things[0].one.two.three).toEqual(123)
       expect(result[0].singleElem.things[2].one.two.three).toEqual(404)
@@ -1455,6 +1528,7 @@ describe(`Filter fields`, () => {
         },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].index).toEqual(2)
     })
@@ -1478,6 +1552,7 @@ describe(`Filter fields`, () => {
         },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].index).toEqual(2)
     })
@@ -1492,6 +1567,7 @@ describe(`Filter fields`, () => {
       })
 
       // Does NOT contain nodes that do not have the field
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].boolean).toEqual(true)
     })
@@ -1506,6 +1582,7 @@ describe(`Filter fields`, () => {
       })
 
       // Does NOT contain nodes that do not have the field so returns 2nd node
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].boolSecondOnly).toEqual(false)
     })
@@ -1520,6 +1597,7 @@ describe(`Filter fields`, () => {
       })
 
       // Does NOT contain nodes that do not have the field
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].string).toEqual(`a`)
     })
@@ -1535,6 +1613,7 @@ describe(`Filter fields`, () => {
 
       // Can return more than one node
       // Does NOT contain nodes that do not have the field
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(2)
       expect(result[0].name).toEqual(`The Mad Wax`)
       expect(result[1].name).toEqual(`The Mad Wax`)
@@ -1550,6 +1629,7 @@ describe(`Filter fields`, () => {
       })
 
       // Does NOT contain nodes that do not have the field so returns 2nd node
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].strSecondOnly).toEqual(`needle`)
     })
@@ -1564,6 +1644,7 @@ describe(`Filter fields`, () => {
       })
 
       // Does NOT contain nodes that do not have the field
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].float).toEqual(1.5)
     })
@@ -1576,6 +1657,7 @@ describe(`Filter fields`, () => {
       // Since the array does not contain `null`, the query should also return the
       // nodes that do not have the field at all (NULL).
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(2)
       // Either does not exist or does not contain
       result
@@ -1595,6 +1677,7 @@ describe(`Filter fields`, () => {
       // Since the array contains `null`, the query should NOT return the
       // nodes that do not have the field at all (NULL).
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       expect(result[0].nullArray.includes(null)).toBe(false)
     })
@@ -1604,6 +1687,7 @@ describe(`Filter fields`, () => {
         string: { nin: [`b`, `c`] },
       })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       result.forEach(node => {
         expect(node.string).not.toEqual(`b`)
@@ -1614,6 +1698,7 @@ describe(`Filter fields`, () => {
     it(`handles the nin operator for ints`, async () => {
       const [result] = await runFilter({ index: { nin: [0, 2] } })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       result.forEach(node => {
         expect(node.index).not.toEqual(0)
@@ -1624,6 +1709,7 @@ describe(`Filter fields`, () => {
     it(`handles the nin operator for floats`, async () => {
       const [result] = await runFilter({ float: { nin: [1.5] } })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(2)
       result.forEach(node => {
         // Might not have the property (-> undefined), must not be 1.5
@@ -1637,6 +1723,7 @@ describe(`Filter fields`, () => {
       })
 
       // Do not return the node that does not have the field because of `null`
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       result.forEach(node => {
         // Must have the property, must not be true nor null
@@ -1651,6 +1738,7 @@ describe(`Filter fields`, () => {
       })
 
       // Do not return the node that does not have the field because of `null`
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       result.forEach(node => {
         // Must have the property, must not be null
@@ -1665,6 +1753,7 @@ describe(`Filter fields`, () => {
       })
 
       // Do not return the node that does not have the field because of `null`
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(1)
       result.forEach(node => {
         // Must have the property, must not be 5 nor null
@@ -1679,6 +1768,7 @@ describe(`Filter fields`, () => {
       })
 
       // Do not return the node that does not have the field because of `null`
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(2)
       result.forEach(node => {
         // Must have the property, must not be 2 nor null
@@ -1694,6 +1784,7 @@ describe(`Filter fields`, () => {
     it(`handles the glob operator`, async () => {
       const [result] = await runFilter({ name: { glob: `*Wax` } })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(2)
       expect(result[0].name).toEqual(`The Mad Wax`)
     })
@@ -1703,6 +1794,7 @@ describe(`Filter fields`, () => {
     it(`filters date fields`, async () => {
       const [result] = await runFilter({ date: { ne: null } })
 
+      expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
       expect(result.length).toEqual(2)
       expect(result[0].index).toEqual(0)
       expect(result[1].index).toEqual(2)

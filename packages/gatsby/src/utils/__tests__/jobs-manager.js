@@ -35,18 +35,16 @@ jest.mock(
   { virtual: true }
 )
 
-jest.mock(`uuid`, () => {
-  return {
-    v4: jest.fn().mockImplementation(jest.requireActual(`uuid`).v4),
-  }
-})
+jest.mock(`uuid/v4`, () =>
+  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
+)
 
 const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const { v4: uuidv4 } = require(`uuid`)
+const uuidv4 = require(`uuid/v4`)
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
@@ -228,7 +226,7 @@ describe(`Jobs manager`, () => {
           Promise.reject(new Error(`An error occurred`))
         )
         .mockImplementationOnce(() =>
-          Promise.reject({ message: `An error occured` })
+          Promise.reject({ message: `An error occurred` })
         )
         .mockImplementationOnce(() =>
           Promise.reject({ key: `weird error object` })
@@ -249,7 +247,7 @@ describe(`Jobs manager`, () => {
       try {
         await enqueueJob(jobArgs3)
       } catch (err) {
-        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occured]`)
+        expect(err).toMatchInlineSnapshot(`[WorkerError: An error occurred]`)
       }
 
       try {

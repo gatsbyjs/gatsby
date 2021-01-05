@@ -10,7 +10,7 @@ https://using-contentful.gatsbyjs.org/
 ## Install
 
 ```shell
-npm install --save gatsby-source-contentful
+npm install gatsby-source-contentful
 ```
 
 ## How to use
@@ -80,36 +80,39 @@ module.exports = {
 Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
 
 ```graphql
-  query MyQuery {
-    # Example is for a `ContentType` with a `ContentfulAsset` field
-    # You could also query an asset directly via
-    # `allContentfulAsset { edges{ node { } } }`
-    # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
-    contentfulMyContentType {
-      myContentfulAssetField {
-        # Direct URL to Contentful CDN for this asset
-        file { url }
+query MyQuery {
+  # Example is for a `ContentType` with a `ContentfulAsset` field
+  # You could also query an asset directly via
+  # `allContentfulAsset { edges{ node { } } }`
+  # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+  contentfulMyContentType {
+    myContentfulAssetField {
+      # Direct URL to Contentful CDN for this asset
+      file {
+        url
+      }
 
-        # Query for a fluid image resource on this `ContentfulAsset` node
-        fluid(maxWidth: 500){
-          ...GatsbyContentfulFluid_withWebp
-        }
+      # Query for a fluid image resource on this `ContentfulAsset` node
+      fluid(maxWidth: 500) {
+        ...GatsbyContentfulFluid_withWebp
+      }
 
-        # Query for locally stored file(e.g. An image) - `File` node
-        localFile {
-          # Where the asset is downloaded into cache, don't use this
-          absolutePath
-          # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
-          publicURL
-          # Use `gatsby-image` to create fluid image resource
-          childImageSharp {
-            fluid(maxWidth: 500) {
-              ...GatsbyImageSharpFluid
+      # Query for locally stored file(e.g. An image) - `File` node
+      localFile {
+        # Where the asset is downloaded into cache, don't use this
+        absolutePath
+        # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
+        publicURL
+        # Use `gatsby-image` to create fluid image resource
+        childImageSharp {
+          fluid(maxWidth: 500) {
+            ...GatsbyImageSharpFluid
           }
         }
       }
     }
   }
+}
 ```
 
 Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
@@ -174,17 +177,17 @@ If you are confident your Content Types will have natural-language IDs (e.g. `bl
 
 Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g `50`.
 
-**`richText.resolveFieldLocales`** [boolean][optional] [default: `false`]
+**`assetDownloadWorkers`** [number][optional] [default: `50`]
 
-If you want to resolve the locales in fields of assets and entries that are referenced by rich text (e.g., via embedded entries or entry hyperlinks), set this to `true`. Otherwise, fields of referenced assets or entries will be objects keyed by locale.
+Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
 
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
 
-1.  At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
+1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
 
-2.  When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
@@ -357,13 +360,31 @@ It is strongly recommended that you take a look at how data flows in a real Cont
 
 Rich Text feature is supported in this source plugin, you can use the following query to get the json output:
 
+### Query Rich Text content and references
+
 ```graphql
 {
   allContentfulBlogPost {
     edges {
       node {
         bodyRichText {
-          json
+          raw
+          references {
+            ... on ContentfulAsset {
+              contentful_id
+              fixed(width: 1600) {
+                width
+                height
+                src
+                srcSet
+              }
+            }
+            ... on ContentfulBlogPost {
+              contentful_id
+              title
+              slug
+            }
+          }
         }
       }
     }
@@ -371,11 +392,11 @@ Rich Text feature is supported in this source plugin, you can use the following 
 }
 ```
 
-To define a way Rich Text document is rendered, you can use `@contentful/rich-text-react-renderer` package:
+### Rendering
 
 ```jsx
 import { BLOCKS, MARKS } from "@contentful/rich-text-types"
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
+import { renderRichText } from "gatsby-source-contentful/rich-text"
 
 const Bold = ({ children }) => <span className="bold">{children}</span>
 const Text = ({ children }) => <p className="align-center">{children}</p>
@@ -386,10 +407,24 @@ const options = {
   },
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
+    [BLOCKS.EMBEDDED_ASSET]: node => {
+      return (
+        <>
+          <h2>Embedded Asset</h2>
+          <pre>
+            <code>{JSON.stringify(node, null, 2)}</code>
+          </pre>
+        </>
+      )
+    },
   },
 }
 
-documentToReactComponents(node.bodyRichText.json, options)
+function BlogPostTemplate({ data, pageContext }) {
+  const { bodyRichText } = data.contentfulBlogPost
+
+  return <div>{bodyRichText && renderRichText(richTextField, options)}</div>
+}
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).

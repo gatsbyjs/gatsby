@@ -1,6 +1,4 @@
-"use strict"
+import joiToGraphql from "./joi-to-graphql"
+import * as typeDictionary from "./type-dictionary"
 
-module.exports = {
-  joiToGraphql: require(`./joi-to-graphql`),
-  typeDictionary: require(`./type-dictionary`),
-}
+export { joiToGraphql, typeDictionary }

@@ -11,8 +11,10 @@ import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
+import FastRefreshOverlay from "./fast-refresh-overlay"
 
 import { reportError, clearError } from "./error-overlay-handler"
+import { LoadingIndicatorEventHandler } from "./loading-indicator"
 
 // TODO: Remove entire block when we make fast-refresh the default
 // In fast-refresh, this logic is all moved into the `error-overlay-handler`
@@ -135,4 +137,20 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
+const ConditionalFastRefreshOverlay = ({ children }) => {
+  if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
+    return <FastRefreshOverlay>{children}</FastRefreshOverlay>
+  }
+
+  return <React.Fragment>{children}</React.Fragment>
+}
+
+export default () => (
+  <ConditionalFastRefreshOverlay>
+    <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
+    {process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true` && (
+        <LoadingIndicatorEventHandler />
+      )}
+  </ConditionalFastRefreshOverlay>
+)

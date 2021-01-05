@@ -4,7 +4,7 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 ## Install
 
-`npm install --save gatsby-transformer-remark`
+`npm install gatsby-transformer-remark`
 
 ## How to use
 

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.8.0-next.0...gatsby-plugin-layout@1.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.7.0-next.0...gatsby-plugin-layout@1.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.6.0-next.0...gatsby-plugin-layout@1.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.5.0-next.0...gatsby-plugin-layout@1.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.4.0-next.0...gatsby-plugin-layout@1.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+## [1.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.3.12...gatsby-plugin-layout@1.3.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+## [1.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.3.11...gatsby-plugin-layout@1.3.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
+## [1.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.3.10...gatsby-plugin-layout@1.3.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
 ## [1.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@1.3.9...gatsby-plugin-layout@1.3.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-plugin-layout

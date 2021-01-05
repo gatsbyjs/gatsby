@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.7.0-next.0...gatsby-plugin-no-sourcemaps@2.8.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-no-sourcemaps
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.6.0-next.0...gatsby-plugin-no-sourcemaps@2.7.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-no-sourcemaps
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.5.0-next.0...gatsby-plugin-no-sourcemaps@2.6.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-no-sourcemaps
+
+# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.4.0-next.0...gatsby-plugin-no-sourcemaps@2.5.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-no-sourcemaps
+
+## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.2.0...gatsby-plugin-no-sourcemaps@2.2.1) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-no-sourcemaps
+
 # [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-no-sourcemaps@2.1.2...gatsby-plugin-no-sourcemaps@2.2.0) (2020-03-20)
 
 ### Features

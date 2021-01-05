@@ -171,6 +171,10 @@ export const ProductVariantNode = (imageArgs, productNode) =>
         imageArgs
       )
 
+    if (!isNaN(node.price)) {
+      node.priceNumber = parseFloat(node.price)
+    }
+
     node.product___NODE = productNode.id
     return node
   })

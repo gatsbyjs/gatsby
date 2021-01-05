@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 import { FaGithub } from "react-icons/fa"
 
 import Layout from "../components/layout"
@@ -29,7 +29,7 @@ const Index = ({ data, location }) => (
     imageBackgroundColor={colors.ui.whisper}
   >
     <p>
-      <a href="https://www.gatsbyjs.org/packages/gatsby-image/">gatsby-image</a>
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">gatsby-image</a>
       {` `}
       is the official Image component for use in building Gatsby websites. It
       provides the fastest, most optimized image loading performance possible
@@ -53,7 +53,7 @@ const Index = ({ data, location }) => (
     <p>
       See the
       {` `}
-      <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+      <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
         component’s documentation
       </a>
       {` `}

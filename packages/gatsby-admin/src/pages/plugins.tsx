@@ -3,7 +3,7 @@ import { jsx, Flex } from "strict-ui"
 import { PageProps } from "gatsby"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
-import { Global } from "@emotion/core"
+import { Global } from "@emotion/react"
 import { useMutation } from "urql"
 import { useState, Fragment, useEffect } from "react"
 import {
@@ -23,8 +23,9 @@ import Highlight, { defaultProps } from "prism-react-renderer"
 import useNpmPackageData from "../utils/use-npm-data"
 import prismThemeCss from "../prism-theme"
 import gitHubIcon from "../github.svg"
-import isOfficialPackage from "../../../../www/src/utils/is-official-package"
-import GatsbyIcon from "../../../../www/src/components/gatsby-monogram"
+import isOfficialPackage from "../utils/is-official-package"
+import GatsbyIcon from "../components/gatsby-monogram"
+import { useTelemetry } from "../utils/use-telemetry"
 
 const markdownRenderers = {
   paragraph: (props: any): JSX.Element => (
@@ -185,6 +186,8 @@ export default function PluginView(
     )
   }, [fetching])
 
+  const telemetry = useTelemetry()
+
   if (error) {
     const errMsg =
       (error.networkError && error.networkError.message) ||
@@ -265,6 +268,9 @@ export default function PluginView(
                         `Are you sure you want to uninstall ${pluginName}?`
                       )
                     ) {
+                      telemetry.trackEvent(`PLUGIN_UNINSTALL`, {
+                        pluginName,
+                      })
                       deleteGatsbyPlugin({ name: pluginName }).then(() =>
                         navigate(`/`)
                       )
@@ -280,6 +286,9 @@ export default function PluginView(
                   onClick={(evt): void => {
                     evt.preventDefault()
                     installGatsbyPlugin({ name: pluginName })
+                    telemetry.trackEvent(`PLUGIN_INSTALL`, {
+                      pluginName,
+                    })
                   }}
                 >
                   Install
@@ -324,6 +333,9 @@ export default function PluginView(
                 setValidationError(err)
                 return
               }
+              telemetry.trackEvent(`PLUGIN_CONFIGURE`, {
+                pluginName,
+              })
               updateGatsbyPlugin({
                 name: props[`*`],
                 options: json,

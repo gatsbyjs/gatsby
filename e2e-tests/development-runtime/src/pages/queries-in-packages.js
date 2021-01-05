@@ -3,7 +3,7 @@ import SEO from "gatsby-seo"
 
 import Layout from "../components/layout"
 
-export default () => (
+const QueriesInPackages = () => (
   <Layout>
     <SEO
       title="Testing queries in packages"
@@ -11,3 +11,5 @@ export default () => (
     />
   </Layout>
 )
+
+export default QueriesInPackages

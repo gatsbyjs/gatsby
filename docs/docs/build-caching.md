@@ -13,7 +13,7 @@ Build outputs are stored in the `.cache` and `public` directories relative to yo
 
 ## The cache API
 
-The cache API is passed to [Gatsby's Node APIs](/docs/node-apis/) which is typically implemented by plugins.
+The cache API is passed to [Gatsby's Node APIs](/docs/reference/config-files/gatsby-node/) which is typically implemented by plugins.
 
 ```js
 exports.onPostBootstrap = async function ({ cache, store, graphql }) {}
@@ -33,22 +33,23 @@ Retrieve cached value
 
 `cache.get(key: string) => Promise<any>`
 
-The [Node API helpers](/docs/node-api-helpers/#cache) documentation offers more detailed information on the API.
+The [Node API helpers](/docs/reference/config-files/node-api-helpers/#cache) documentation offers more detailed information on the API.
 
 ## Plugin Example
 
 In your plugin's `gatsby-node.js` file, you can access the `cache` argument like so:
 
 ```js:title=gatsby-node.js
-exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
+exports.onPostBuild = async function ({ cache, graphql }, { query }) {
   const cacheKey = "some-key-name"
+  const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000 // 86400000
   let obj = await cache.get(cacheKey)
 
   if (!obj) {
     obj = { created: Date.now() }
     const data = await graphql(query)
     obj.data = data
-  } else if (Date.now() > obj.lastChecked + 3600000) {
+  } else if (Date.now() > obj.lastChecked + twentyFourHoursInMilliseconds) {
     /* Reload after a day */
     const data = await graphql(query)
     obj.data = data
@@ -64,7 +65,7 @@ exports.onPostBuild = async function ({ cache, store, graphql }, { query }) {
 
 ## Clearing cache
 
-Since cache files are stored within the `.cache` directory, deleting it will clear all cache. You can also use [`gatsby clean`](/docs/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
+Since cache files are stored within the `.cache` directory, deleting it will clear all cache. You can also use [`gatsby clean`](/docs/reference/gatsby-cli/#clean) to delete the `.cache` and `public` folders.
 The cache is also invalidated by Gatsby in a few cases, specifically:
 
 - If `package.json` changes, for example a dependency is updated or added

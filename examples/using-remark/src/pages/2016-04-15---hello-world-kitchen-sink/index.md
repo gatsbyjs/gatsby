@@ -389,10 +389,10 @@ paragraph_.
 
 [^1]: The footnote appears at the bottom of the page
 
-[1]: https://www.gatsbyjs.org/packages/gatsby-transformer-remark/
+[1]: https://www.gatsbyjs.com/plugins/gatsby-transformer-remark/
 [2]: http://remark.js.org/
 [3]: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 [4]: https://creativecommons.org/licenses/by/3.0/
-[5]: https://www.gatsbyjs.org/packages/gatsby-remark-autolink-headers/
-[6]: https://www.gatsbyjs.org/packages/gatsby-remark-smartypants/
+[5]: https://www.gatsbyjs.com/plugins/gatsby-remark-autolink-headers/
+[6]: https://www.gatsbyjs.com/plugins/gatsby-remark-smartypants/
 [7]: https://github.com/wooorm/retext-smartypants

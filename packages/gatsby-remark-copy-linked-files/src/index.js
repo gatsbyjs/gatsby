@@ -58,10 +58,7 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
-    lpath ? true : false
-  )
-  return path.posix.join(...linkPaths)
+  return `${pathPrefix ? pathPrefix : ``}/${destination}`
 }
 
 function toArray(buf) {

@@ -34,7 +34,7 @@ const Layout = ({ children }) => (
           <footer>
             <div>
               Built by <a href="https://twitter.com/thorwebdev">Thor</a> with{" "}
-              <a href="https://www.gatsbyjs.org">Gatsby</a> | View{" "}
+              <a href="https://www.gatsbyjs.com">Gatsby</a> | View{" "}
               <a href="https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe">
                 source
               </a>

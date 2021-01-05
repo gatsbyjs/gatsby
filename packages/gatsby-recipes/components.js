@@ -1,3 +1,2 @@
-const StepRenderer = require(`./dist/components/step-renderer`).default
-console.log(StepRenderer)
-module.exports.StepRenderer = StepRenderer
+const components = require(`./dist/web/components`)
+module.exports = components

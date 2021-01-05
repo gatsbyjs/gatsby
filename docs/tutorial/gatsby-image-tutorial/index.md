@@ -91,7 +91,7 @@ export const query = graphql`
 `
 ```
 
-_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/packages/gatsby-image/#fragments)._
+_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/plugins/gatsby-image/#fragments)._
 
 There are a couple of things to note here.
 
@@ -157,7 +157,7 @@ export default HomePage
 
 ## Querying for multiple images from YAML data
 
-Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/packages/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
+Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/plugins/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
 
 Here's an example of a query from a list of conferences in a YAML file with an image for each one:
 
@@ -256,19 +256,20 @@ This example is attempting to query for all the data in `speaking.yaml` and the 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
 ```graphql
-talks: allSpeakingYaml {
-        edges {
-            node {
-                image {
-                    childImageSharp {
-                        fluid {
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
+{
+  talks: allSpeakingYaml {
+    edges {
+      node {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
             }
+          }
         }
+      }
     }
+  }
 }
 ```
 
@@ -371,6 +372,6 @@ So that's it. This post included a number of different possible use cases, so do
 
 ## Other resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
+- [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image/)
 - [Other image and media techniques in Gatsby](/docs/images-and-files/)

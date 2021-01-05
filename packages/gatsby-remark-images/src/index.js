@@ -1,5 +1,6 @@
 const {
   DEFAULT_OPTIONS,
+  EMPTY_ALT,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -168,10 +169,13 @@ module.exports = (
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    const isEmptyAlt = node.alt === EMPTY_ALT
 
-    const alt = _.escape(
-      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
-    )
+    const alt = isEmptyAlt
+      ? ``
+      : _.escape(
+          overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+        )
 
     const title = node.title ? _.escape(node.title) : alt
 

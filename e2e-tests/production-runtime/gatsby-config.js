@@ -20,5 +20,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-local-worker`,
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`
   ].concat(process.env.TEST_PLUGIN_OFFLINE ? [`gatsby-plugin-offline`] : []),
 }
