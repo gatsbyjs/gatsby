@@ -47,7 +47,7 @@ plugins: [
 You can reference an image using the relative path, where that path is relative to the location of the Markdown file you're typing in.
 
 ```md
-![Alt text here](./my-awesome-image.jpg)
+![Alt text here](./my-awesome-image.png)
 ```
 
 By default, the text `my awesome image` will be used as the alt attribute of the generated `img` tag. If an empty alt attribute like `alt=""` is wished,
