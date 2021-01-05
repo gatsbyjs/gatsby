@@ -23,4 +23,11 @@ describe(`fluid`, () => {
       .should(`have.attr`, `style`)
       .and(`match`, /padding/)
   })
+
+  it(`includes sizes attribute`, () => {
+    cy.getTestElement(fluidTestId)
+      .find(`[data-main-image]`)
+      .should(`have.attr`, `sizes`)
+      .should(`equal`, `100vw`)
+  })
 })
