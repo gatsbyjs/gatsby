@@ -23,4 +23,11 @@ describe(`constrained`, () => {
       .should(`have.attr`, `sizes`)
       .and(`equal`, `(min-width: 500px) 500px, 100vw`)
   })
+
+  it(`overrides sizes`, () => {
+    cy.getTestElement(`image-constrained-override`)
+      .find(`[data-main-image]`)
+      .should(`have.attr`, `sizes`)
+      .and(`equal`, `100vw`)
+  })
 })

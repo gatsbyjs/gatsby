@@ -15,7 +15,15 @@ const ConstrainedPage = () => (
         alt="Citrus fruits"
       />
     </div>
+    <div data-testid="image-constrained-override">
+      <StaticImage
+        src="../images/citrus-fruits.jpg"
+        maxWidth={500}
+        sizes="100vw"
+        alt="Citrus fruits"
+      />
+    </div>
   </Layout>
 )
 
-export default FluidPage
+export default ConstrainedPage
