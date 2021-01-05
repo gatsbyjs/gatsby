@@ -5,6 +5,7 @@ const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
 const fetch = require(`node-fetch`)
+const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -292,6 +293,31 @@ exports.sourceNodes = async (
     }
   }
 
+  const allLocales = locales
+  locales = locales.filter(pluginConfig.get(`localeFilter`))
+  reporter.verbose(
+    `Default locale: ${defaultLocale}.   All locales: ${allLocales
+      .map(({ code }) => code)
+      .join(`, `)}`
+  )
+  if (allLocales.length !== locales.length) {
+    reporter.verbose(
+      `After plugin.options.localeFilter: ${locales
+        .map(({ code }) => code)
+        .join(`, `)}`
+    )
+  }
+  if (locales.length === 0) {
+    reporter.panic({
+      id: CODES.LocalesMissing,
+      context: {
+        sourceMessage: `Please check if your localeFilter is configured properly. Locales '${allLocales
+          .map(item => item.code)
+          .join(`,`)}' were found but were filtered down to none.`,
+      },
+    })
+  }
+
   createTypes(`
   interface ContentfulEntry @nodeInterface {
     contentful_id: String!
@@ -563,6 +589,7 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,

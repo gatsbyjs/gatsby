@@ -1,5 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
+const lazyImport = import(`../test`)
 
 export default function Inline() {
   const { site } = useStaticQuery(graphql`
@@ -11,5 +12,9 @@ export default function Inline() {
       }
     }
   `)
-  return <div>{site.siteMetadata.title}</div>
+  return (
+    <div>
+      <h1 className="hi">{site.siteMetadata.title}</h1>
+    </div>
+  )
 }

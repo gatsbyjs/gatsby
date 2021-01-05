@@ -4,11 +4,11 @@ title: Debugging replaceRenderer API
 
 ## Prerequisites
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/conceptual/gatsby-lifecycle-apis/).
 
 ## What is the `replaceRenderer` API?
 
-The `replaceRenderer` API is one of [Gatsby's Server Side Rendering (SSR) extension APIs](/docs/ssr-apis/#replaceRenderer). This API is called when you run `gatsby build` and is used to customize how Gatsby renders your static content. It can be implemented by any Gatsby plugin or your `gatsby-ssr.js` file - adding support for Redux, CSS-in-JS libraries or any code that needs to change Gatsby's default HTML output.
+The `replaceRenderer` API is one of [Gatsby's Server Side Rendering (SSR) extension APIs](/docs/reference/config-files/gatsby-ssr/#replaceRenderer). This API is called when you run `gatsby build` and is used to customize how Gatsby renders your static content. It can be implemented by any Gatsby plugin or your `gatsby-ssr.js` file - adding support for Redux, CSS-in-JS libraries or any code that needs to change Gatsby's default HTML output.
 
 ## Why does it cause build errors?
 

@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.6...gatsby-plugin-sharp@2.13.0-next.0) (2020-12-29)
+
+### Features
+
+- **gatsby:** enable lazy images by default ([#28743](https://github.com/gatsbyjs/gatsby/issues/28743)) ([3b40d80](https://github.com/gatsbyjs/gatsby/commit/3b40d8025356f5141625234d1781bd80985fb5a3))
+
+# [2.12.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.5...gatsby-plugin-sharp@2.12.0-next.6) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
+# [2.12.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.4...gatsby-plugin-sharp@2.12.0-next.5) (2020-12-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.12.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.3...gatsby-plugin-sharp@2.12.0-next.4) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-sharp ([#28509](https://github.com/gatsbyjs/gatsby/issues/28509)) ([0ce0f69](https://github.com/gatsbyjs/gatsby/commit/0ce0f69863d92cf104185667980e04c1a31837aa))
+
+# [2.12.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.2...gatsby-plugin-sharp@2.12.0-next.3) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.12.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.1...gatsby-plugin-sharp@2.12.0-next.2) (2020-12-17)
+
+### Features
+
+- **gatsby-plugin-image:** Make dimensions optional and default to constrained ([#28662](https://github.com/gatsbyjs/gatsby/issues/28662)) ([f24a23d](https://github.com/gatsbyjs/gatsby/commit/f24a23d5b1f24ab33aec7a8ac882dbbccdf7d01e))
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.0...gatsby-plugin-sharp@2.12.0-next.1) (2020-12-15)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correctly handle formats in StaticImage ([#28618](https://github.com/gatsbyjs/gatsby/issues/28618)) ([912f30c](https://github.com/gatsbyjs/gatsby/commit/912f30c099f98fa382fe653a3a2c07253bd6b452))
+- **gatsby-plugin-sharp:** catch errors when writing base64 images ([#28614](https://github.com/gatsbyjs/gatsby/issues/28614)) ([02860da](https://github.com/gatsbyjs/gatsby/commit/02860da8f8871c21c647fae5c0e81380f6809166))
+- **gatsby-plugin-sharp:** Include default transform options for webp ([#28620](https://github.com/gatsbyjs/gatsby/issues/28620)) ([1c750b6](https://github.com/gatsbyjs/gatsby/commit/1c750b618e069c684b5cba49324449389934f050))
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.4...gatsby-plugin-sharp@2.12.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** fix image url decoding for lazy images ([#28576](https://github.com/gatsbyjs/gatsby/issues/28576)) ([592d3d1](https://github.com/gatsbyjs/gatsby/commit/592d3d1914413435a9a202cdfc2cd4ac84486a71))
+
+### Features
+
+- **gatsby-plugin-sharp:** run a single transformation for lazy images ([#28574](https://github.com/gatsbyjs/gatsby/issues/28574)) ([498fbbf](https://github.com/gatsbyjs/gatsby/commit/498fbbfc5ecdd3da5d8f3dbe6a10ae908af2786a))
+
 # [2.11.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.11.0-next.3...gatsby-plugin-sharp@2.11.0-next.4) (2020-12-08)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

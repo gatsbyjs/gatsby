@@ -6,6 +6,8 @@ import report from "gatsby-cli/lib/reporter"
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
+import { getDevSSRWebpack } from "../../commands/build-html"
+import { emitter } from "../../redux"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -142,6 +144,41 @@ export const renderDevHTML = ({
       // If we can't get the page, it was probably deleted recently
       // so let's just do a 404 page.
       return reject(`404 page`)
+    }
+
+    // Resume the webpack watcher and wait for any compilation necessary to happen.
+    // We timeout after 1.5s as the user might not care per se about SSR.
+    //
+    // We pause and resume so there's no excess webpack activity during normal development.
+    const {
+      devssrWebpackCompiler,
+      devssrWebpackWatcher,
+      needToRecompileSSRBundle,
+    } = getDevSSRWebpack()
+    if (
+      devssrWebpackWatcher &&
+      devssrWebpackCompiler &&
+      needToRecompileSSRBundle
+    ) {
+      let isResolved = false
+      await new Promise(resolve => {
+        function finish(stats: Stats): void {
+          emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
+          if (!isResolved) {
+            resolve(stats)
+          }
+        }
+        emitter.on(`DEV_SSR_COMPILATION_DONE`, finish)
+        devssrWebpackWatcher.resume()
+        // Suspending is just a flag, so it's safe to re-suspend right away
+        devssrWebpackWatcher.suspend()
+
+        // Timeout after 1.5s.
+        setTimeout(() => {
+          isResolved = true
+          resolve()
+        }, 1500)
+      })
     }
 
     // Wait for public/render-page.js to update w/ the page component.

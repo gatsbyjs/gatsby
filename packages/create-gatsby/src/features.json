@@ -2,13 +2,10 @@
   "gatsby-plugin-google-analytics": {
     "message": "Add the Google Analytics tracking script"
   },
-  "gatsby-plugin-image": {
+  "gatsby-plugin-sharp": {
     "message": "Add responsive images",
-    "plugins": [
-      "gatsby-plugin-sharp",
-      "gatsby-transformer-sharp",
-      "gatsby-source-filesystem:images"
-    ],
+    "plugins": ["gatsby-transformer-sharp", "gatsby-source-filesystem:images"],
+    "dependencies": ["gatsby-image"],
     "options": {
       "gatsby-source-filesystem:images": {
         "name": "images",
@@ -22,7 +19,12 @@
   },
   "gatsby-plugin-sitemap": { "message": "Add an automatic sitemap" },
   "gatsby-plugin-offline": { "message": "Enable offline functionality" },
-  "gatsby-plugin-manifest": { "message": "Generate a manifest file" },
+  "gatsby-plugin-manifest": {
+    "message": "Generate a manifest file",
+    "options": {
+      "gatsby-plugin-manifest": { "icon": "src/images/icon.png" }
+    }
+  },
   "gatsby-transformer-remark": {
     "message": "Add Markdown support (without MDX)",
     "plugins": ["gatsby-source-filesystem:pages"],

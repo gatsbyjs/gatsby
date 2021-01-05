@@ -48,9 +48,9 @@
     "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^6.0.0",
+    "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
-    "cypress": "3.4.1",
+    "cypress": "6.1.0",
     "fs-extra": "^7.0.1",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
@@ -63,6 +63,6 @@
     "url": "https://github.com/gatsbyjs/gatsby"
   },
   "resolutions": {
-    "cypress": "3.4.1"
+    "cypress": "6.1.0"
   }
 }

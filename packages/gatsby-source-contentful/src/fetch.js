@@ -86,23 +86,10 @@ module.exports = async function contentfulFetch({
   try {
     reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
-    let contentfulLocales = await client
-      .getLocales()
-      .then(response => response.items)
-    defaultLocale = _.find(contentfulLocales, { default: true }).code
-    locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
-    if (locales.length === 0) {
-      reporter.panic({
-        id: CODES.LocalesMissing,
-        context: {
-          sourceMessage: `Please check if your localeFilter is configured properly. Locales '${contentfulLocales
-            .map(item => item.code)
-            .join(`,`)}' were found but were filtered down to none.`,
-        },
-      })
-    }
+    locales = await client.getLocales().then(response => response.items)
+    defaultLocale = _.find(locales, { default: true }).code
     reporter.verbose(
-      `Default locale is: ${defaultLocale}. There are ${contentfulLocales.length} locales in total.`
+      `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`
     )
   } catch (e) {
     let details

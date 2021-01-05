@@ -10,8 +10,6 @@ import telemetry from "gatsby-telemetry"
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
-import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
-import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
@@ -28,6 +26,7 @@ import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
+import availableFlags from "../utils/flags"
 
 interface IPluginResolution {
   resolve: string
@@ -41,40 +40,20 @@ if (
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
   !isCI()
 ) {
-  process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES = `true`
-  process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
+  process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
+  process.env.PRESERVE_WEBPACK_CACHE = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images (only with gatsby-plugin-sharp@^2.10.0).
+Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
 
 Please give feedback on their respective umbrella issues!
 
-- https://gatsby.dev/query-on-demand-feedback
 - https://gatsby.dev/dev-ssr-feedback
-- https://gatsby.dev/lazy-images-feedback
+- https://gatsby.dev/cache-clearing-feedback
   `)
 
   telemetry.trackFeatureIsUsed(`FastDev`)
-}
-
-if (
-  process.env.gatsby_executing_command === `develop` &&
-  !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
-  !isCI() &&
-  sampleSiteForExperiment(`DEV_SSR`, 5)
-) {
-  showExperimentNoticeAfterTimeout(
-    `Server Side Rendering (SSR) in Development`,
-    `gatsby.dev/dev-ssr-feedback`,
-    `which helps surface issues with build errors more quickly. Here's how to try it:
-
-module.exports = {
-  flags : { DEV_SSR: true },
-  plugins: [...]
-}`,
-    1 // Show this immediately to the subset of sites selected.
-  )
 }
 
 // Show stack trace on unhandled promises.
@@ -175,10 +154,10 @@ export async function initialize({
   }
 
   // Setup flags
-  if (config && config.flags) {
+  if (config) {
     // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
     if (
-      config.flags.FAST_REFRESH &&
+      config.flags?.FAST_REFRESH &&
       process.env.GATSBY_HOT_LOADER &&
       process.env.GATSBY_HOT_LOADER !== `fast-refresh`
     ) {
@@ -186,14 +165,14 @@ export async function initialize({
       reporter.warn(
         reporter.stripIndent(`
           Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
-          
+
           Will use react-hot-loader.
-          
+
           To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
         `)
       )
     }
-    const availableFlags = require(`../utils/flags`).default
+
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
       availableFlags,
@@ -216,16 +195,30 @@ export async function initialize({
 
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
-      telemetry.trackFeatureIsUsed(flag.telemetryId)
+      if (flag.telemetryId) {
+        telemetry.trackFeatureIsUsed(flag.telemetryId)
+      }
     })
 
     // Track the usage of config.flags
-    if (enabledConfigFlags.length > 0) {
+    if (config.flags) {
       telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
 
   process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
+
+  // TODO: figure out proper way of disabling loading indicator
+  // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // will work, but we don't want to force users into using env vars
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
+  ) {
+    // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+    // enable loading indicator
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
+  }
 
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
@@ -269,15 +262,9 @@ export async function initialize({
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
     } else if (isCI()) {
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      reporter.warn(
-        `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
+      reporter.verbose(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
       )
-    } else {
-      // We already show a notice for this flag.
-      if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
-        reporter.info(`Using experimental Query on Demand feature`)
-      }
-      telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
 

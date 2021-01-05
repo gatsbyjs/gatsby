@@ -34,13 +34,29 @@ const args = yargs
     `
     ).trim(),
     type: `string`,
+  })
+  .option(`restore`, {
+    default: false,
+    type: `boolean`,
   }).argv
 
 async function update() {
   const history = await getHistory()
 
-  const { file: fileArg, replacements } = args
+  const { file: fileArg, replacements, restore } = args
   const filePath = path.resolve(fileArg)
+  if (restore) {
+    const original = history.get(filePath)
+    if (original) {
+      await fs.writeFile(filePath, original, `utf-8`)
+    } else if (original === false) {
+      await fs.remove(filePath)
+    } else {
+      console.log(`Didn't make changes to "${fileArg}". Nothing to restore.`)
+    }
+    history.delete(filePath)
+    return
+  }
   let exists = true
   if (!fs.existsSync(filePath)) {
     exists = false

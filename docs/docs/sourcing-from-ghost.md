@@ -6,7 +6,7 @@ title: Sourcing from Ghost
 
 It comes with all the benefits of modern, centralized Headless CMS platforms, with the added benefit of being released completely for free under an MIT license, so you have total ownership and control of it without needing to depend on a third party backend.
 
-This guide will walk you through using [Gatsby](/) with the [Ghost Content API](https://docs.ghost.org/api/content/).
+This guide will walk you through using Gatsby with the [Ghost Content API](https://docs.ghost.org/api/content/).
 
 ---
 
@@ -51,7 +51,7 @@ module.exports = {
 
 ## Generating pages
 
-Once the source plugin is set up, you can use the [`createPages` API](/docs/node-apis/#createPages) in `gatsby-node.js` to run queries against your Ghost data with GraphQL. In this example, Gatsby iterates over each post returned by the Ghost API and generates a new page with that data, using the `post.js` template file.
+Once the source plugin is set up, you can use the [`createPages` API](/docs/reference/config-files/gatsby-node/#createPages) in `gatsby-node.js` to run queries against your Ghost data with GraphQL. In this example, Gatsby iterates over each post returned by the Ghost API and generates a new page with that data, using the `post.js` template file.
 
 There are several ways to structure queries depending on how you prefer to work, but here's a very minimal example:
 
@@ -154,5 +154,5 @@ Here are some further resources and reading material to help you get started wit
 - [Gatsby + Ghost announcement post](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
 - [More info about Ghost as a Headless CMS](https://blog.ghost.org/jamstack/)
 - [Official Gatsby Starter for Ghost](https://github.com/tryghost/gatsby-starter-ghost)
-- [Official Gatsby Source Plugin for Ghost](/packages/gatsby-source-ghost/)
+- [Official Gatsby Source Plugin for Ghost](/plugins/gatsby-source-ghost/)
 - [Official Ghost developer docs](https://docs.ghost.org/api/)

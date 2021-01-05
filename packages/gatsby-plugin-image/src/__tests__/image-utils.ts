@@ -24,6 +24,7 @@ const args: IGatsbyImageHelperArgs = {
   filename: `afile.jpg`,
   generateImageSource,
   width: 400,
+  layout: `fixed`,
   sourceMetadata: {
     width: 800,
     height: 600,

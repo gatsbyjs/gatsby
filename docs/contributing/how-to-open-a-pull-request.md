@@ -157,4 +157,4 @@ For more information on working with upstream repos, [visit the GitHub docs](htt
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
-- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)
+- [Guide on Markdown Syntax](/docs/how-to/routing/mdx/markdown-syntax/)

@@ -111,7 +111,7 @@ const width = 300
 
 ### API
 
-The only required prop is `src`. The default type is `fixed`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
+The only required prop is `src`. The default type is `constrained`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
 
 ## GatsbyImage
 
@@ -119,7 +119,7 @@ Speedy, optimized images without the work.
 
 GatsbyImage is a React component specially designed to give your users a great image experience. It combines speed and best practices.
 
-Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container. You can also build your own GatsbyImage component with the utilities we export from this package.
+Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container.
 
 ## Table of Contents
 
@@ -316,11 +316,11 @@ The optional helper function `getImage` takes a file node and returns `file?.chi
 
 These arguments can be passed to the `gatsbyImageData()` resolver:
 
-- **width**: The display width of the generated image. The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities. Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+- **width**: The display width of the generated image. The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities. Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
 - **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.
 - **maxWidth**:
   Maximum display width of generated files.
-  The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+  The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
   This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"
 - **maxHeight**: If set, the generated image is a maximum of this height, cropping if necessary. If the image layout is "constrained" then the image will be limited to this height. If the aspect ratio of the image is different than the source, then the image will be cropped.`,
 - **placeholder**: Format of generated placeholder image.
@@ -329,14 +329,14 @@ These arguments can be passed to the `gatsbyImageData()` resolver:
   - `NONE`: no placeholder. Set "background" to use a fixed background color.
   - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
 - **layout**: The layout for the image.
-  - `FIXED`: (default) A static image size, that does not resize according to the screen width
+  - `CONSTRAINED`: (default) Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+  - `FIXED`: A static image size, that does not resize according to the screen width
   - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
-  - `CONSTRAINED`: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
 - **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
   Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
 - **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
 - **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
-- **quality**: The default quality. This is overriden by any format-specific options
+- **quality**: The default quality. This is overridden by any format-specific options
 - **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this
   - width
   - toFormat

@@ -7,6 +7,7 @@ import socketIo from "./socketIo"
 import emitter from "./emitter"
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
+import { Indicator } from "./loading-indicator/indicator"
 import DevLoader from "./dev-loader"
 import syncRequires from "$virtual/sync-requires"
 // Generated during bootstrap
@@ -123,6 +124,30 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     ReactDOM.render
   )[0]
 
+  let dismissLoadingIndicator
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+  ) {
+    let indicatorMountElement
+
+    const showIndicatorTimeout = setTimeout(() => {
+      indicatorMountElement = document.createElement(
+        `first-render-loading-indicator`
+      )
+      document.body.append(indicatorMountElement)
+      ReactDOM.render(<Indicator />, indicatorMountElement)
+    }, 1000)
+
+    dismissLoadingIndicator = () => {
+      clearTimeout(showIndicatorTimeout)
+      if (indicatorMountElement) {
+        ReactDOM.unmountComponentAtNode(indicatorMountElement)
+        indicatorMountElement.remove()
+      }
+    }
+  }
+
   Promise.all([
     loader.loadPage(`/dev-404-page/`),
     loader.loadPage(`/404.html`),
@@ -131,6 +156,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     const preferDefault = m => (m && m.default) || m
     const Root = preferDefault(require(`./root`))
     domReady(() => {
+      if (dismissLoadingIndicator) {
+        dismissLoadingIndicator()
+      }
+
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
       })
