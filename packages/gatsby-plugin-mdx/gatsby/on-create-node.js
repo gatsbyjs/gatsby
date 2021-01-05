@@ -1,4 +1,4 @@
-const fs = require(`fs-extra`)
+const fs = require(`fs`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -201,7 +201,7 @@ export default { ${scopeIdentifiers.join(`, `)} }`
     `${createContentDigest(scopeFileContent)}.js`
   )
 
-  await fs.writeFile(filePath, scopeFileContent)
+  fs.writeFileSync(filePath, scopeFileContent)
 }
 
 const declare = require(`@babel/helper-plugin-utils`).declare
