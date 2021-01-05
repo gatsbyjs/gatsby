@@ -3,7 +3,7 @@ import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 
-const FluidPage = () => (
+const ConstrainedPage = () => (
   <Layout>
     <div data-testid="image-constrained">
       <StaticImage src="../images/citrus-fruits.jpg" alt="Citrus fruits" />
