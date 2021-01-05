@@ -13,14 +13,13 @@ Key highlights of this release:
 
 - [Query on Demand and Lazy Images: Generally available](#query-on-demand-and-lazy-images-generally-available) - improves `gatsby develop` bootup time
 - [Server Side Rendering (SSR) in development](#server-side-rendering-ssr-in-development) — helps you find and fix many build errors in development. We're starting a partial release of this feature to 5% of users.
-- [Image transformations up to 30% faster](#gatsby-plugin-sharp2120)
 - [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
+- [Image transformations up to 30% faster](#gatsby-plugin-sharp2120)
 
 And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050-beta) (beta):
 
 - [AVIF support](#avif-support) - enjoy next-gen image format
 - [Support remote static images](#support-static-image-urls-experimental) - download, transform and optimize remote images with a single line
-- [New defaults](#new-defaults) - less configuration for most common image setups
 
 Also check out [notable bugfixes](#notable-bugfixes).
 
