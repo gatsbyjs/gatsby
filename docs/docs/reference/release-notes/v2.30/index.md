@@ -133,6 +133,8 @@ query {
 }
 ```
 
+This does not currently work in Gatsby Cloud, but will be enabled later this week.
+
 This is possible thanks to the incredible work by the [sharp](https://sharp.pixelplumbing.com/) and [libvips](https://libvips.github.io/libvips/) contributors.
 
 ### Support remote image URLs (experimental)
