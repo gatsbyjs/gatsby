@@ -57,13 +57,13 @@ In v2.29 we improved the UX around long-running queries by adding a loading indi
 
 ## Server Side Rendering (SSR) in development
 
-There are certain types of build errors that currently are only discoverable when doing a build. The most common is code that tries to access browser globals (like `window`) that don't exist in Node.js when SSRing your Gatsby site.
+There are certain types of build errors that haven't been detectable while developing. The most common is code that tries to access browser globals (like `window`) that don't exist in Node.js when SSRing your Gatsby site.
 
-This causes a lot of frustration as you might develop for days before running a build and it’s not fun to discover problems long after they were created. Then actually fixing the problems is painful as the feedback cycle is slow as you have to run a build after each code change.
+This is frustrating as you might develop for a while before building and only then discover the errir. Then actually fixing the problems is painful as the feedback cycle is slow as you have to run a build after each code change.
 
-We've been working to add SSR support to the develop server so that you can immediately see SSR bugs and get quick feedback as you fix them. With this change, whenever you do a full reload, the Gatsby dev server will deliver a SSRed HTML file along with your React code mimicking how production Gatsby sites work.
+We've been working to add SSR support to the develop server so that you can immediately see SSR bugs and get quick feedback as you fix them. With this change, whenever you do a full reload, the Gatsby dev server will deliver a SSRed HTML file along with your React code, mimicking how production Gatsby sites work.
 
-This is related to our general efforts to make the develop and build environment identical!
+This is related to our general efforts to make the develop and build environment identical.
 
 Like the recent Query on Demand and Lazy Images changes, we released this change first behind a flag for early testing and now, we’re rolling this out to a small percentage of users (5%) for more real-world testing before the final release to 100% of users.
 
