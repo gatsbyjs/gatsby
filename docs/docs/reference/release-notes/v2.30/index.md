@@ -59,7 +59,7 @@ In v2.29 we improved the UX around long-running queries by adding a loading indi
 
 There are certain types of build errors that haven't been detectable while developing. The most common is code that tries to access browser globals (like `window`) that don't exist in Node.js when SSRing your Gatsby site.
 
-This is frustrating as you might develop for a while before building and only then discover the errir. Then actually fixing the problems is painful as the feedback cycle is slow as you have to run a build after each code change.
+This is frustrating as you might develop for a while before building and only then discover the error. Then actually fixing the problems is painful as the feedback cycle is slow as you have to run a build after each code change.
 
 We've been working to add SSR support to the develop server so that you can immediately see SSR bugs and get quick feedback as you fix them. With this change, whenever you do a full reload, the Gatsby dev server will deliver a SSRed HTML file along with your React code, mimicking how production Gatsby sites work.
 
