@@ -53,6 +53,7 @@ export function _getStaticImage(
     jpgOptions,
     pngOptions,
     webpOptions,
+    avifOptions,
     blurredOptions,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...props
