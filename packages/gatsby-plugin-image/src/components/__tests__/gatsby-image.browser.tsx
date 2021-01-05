@@ -1,5 +1,5 @@
 import React from "react"
-import { GatsbyImage, ISharpGatsbyImageData } from "../gatsby-image.browser"
+import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
@@ -14,7 +14,7 @@ jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
-  let image: ISharpGatsbyImageData
+  let image: IGatsbyImageData
 
   beforeEach(() => {
     console.warn = jest.fn()
@@ -27,9 +27,9 @@ describe(`GatsbyImage browser`, () => {
       width: 100,
       height: 100,
       layout: `fluid`,
-      images: { fallback: { src: `some-src-fallback.jpg` } },
+      images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
       placeholder: { sources: [] },
-      sizes: `192x192`,
+
       backgroundColor: `red`,
     }
 
@@ -168,7 +168,7 @@ describe(`GatsbyImage browser`, () => {
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
     expect(hooks.storeImageloaded).toBeCalledWith(
-      `{"fallback":{"src":"some-src-fallback.jpg"}}`
+      `{"fallback":{"src":"some-src-fallback.jpg","sizes":"192x192"}}`
     )
   })
 

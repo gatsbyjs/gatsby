@@ -17,7 +17,7 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 
 1. If you do not already have one ready, [create a Gatsby site](/docs/quick-start).
 
-2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
+2. Install the [`gatsby-source-shopify`](/plugins/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
 
 ```shell
 npm install gatsby-source-shopify shopify-buy

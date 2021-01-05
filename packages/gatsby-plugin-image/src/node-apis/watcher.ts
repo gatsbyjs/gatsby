@@ -1,12 +1,7 @@
 import chokidar, { FSWatcher } from "chokidar"
-import {
-  Actions,
-  ParentSpanPluginArgs,
-  GatsbyCache,
-  Reporter,
-  Node,
-} from "gatsby"
+import { Actions, ParentSpanPluginArgs, GatsbyCache, Reporter } from "gatsby"
 import { createImageNode, IImageMetadata, writeImage } from "./image-processing"
+import { FileSystemNode } from "gatsby-source-filesystem"
 
 let watcher: FSWatcher | undefined
 
@@ -62,7 +57,7 @@ async function updateImages({
   reporter,
 }: {
   cache: GatsbyCache
-  node: Node
+  node: FileSystemNode
   pathPrefix: string
   reporter: Reporter
 }): Promise<void> {

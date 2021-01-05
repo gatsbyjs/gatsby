@@ -27,6 +27,7 @@ export interface GatsbyImageProps
   alt: string
   as?: ElementType
   className?: string
+  class?: string
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
@@ -42,7 +43,6 @@ export interface IGatsbyImageData {
   layout: Layout
   height?: number
   backgroundColor?: string
-  sizes?: string
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
   width?: number
@@ -56,6 +56,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   as: Type = `div`,
   style,
   className,
+  class: preactClass,
   onStartLoad,
   image,
   onLoad: customOnLoad,
@@ -67,6 +68,9 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       console.warn(`[gatsby-plugin-image] Missing image prop`)
     }
     return null
+  }
+  if (preactClass) {
+    className = preactClass
   }
   const { width, height, layout, images } = image
 

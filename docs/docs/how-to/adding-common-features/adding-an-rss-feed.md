@@ -10,13 +10,13 @@ Think of it as a syndicated distribution channel for your site's content.
 
 ## Install
 
-To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/packages/gatsby-plugin-feed/) package. To install this package, run the following command:
+To generate an RSS feed, you can use the [`gatsby-plugin-feed`](/plugins/gatsby-plugin-feed/) package. To install this package, run the following command:
 
 ```shell
 npm install gatsby-plugin-feed
 ```
 
-## How to use [gatsby-plugin-feed](/packages/gatsby-plugin-feed/)
+## How to use [gatsby-plugin-feed](/plugins/gatsby-plugin-feed/)
 
 Once installation is complete, you can now add this plugin to your site's config file, like so:
 
@@ -183,7 +183,7 @@ module.exports = {
 
 ## Happy blogging!
 
-With the [Gatsby feed plugin](/packages/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
+With the [Gatsby feed plugin](/plugins/gatsby-plugin-feed/), you can share your writing easily with people subscribed through RSS readers like Feedly or RSS Feed Reader. Now that your feed is set up, you won't really have to think about it; publish a new post, and your RSS feed will automatically update with your Gatsby build. Voilà!
 
 ## More resources
 

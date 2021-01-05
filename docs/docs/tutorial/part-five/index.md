@@ -38,7 +38,7 @@ Data in Gatsby sites can come from anywhere: APIs, databases, CMSs, local files,
 
 Source plugins fetch data from their source. E.g. the filesystem source plugin knows how to fetch data from the file system. The WordPress plugin knows how to fetch data from the WordPress API.
 
-Add [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) and explore how it works.
+Add [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) and explore how it works.
 
 First, install the plugin at the root of the project:
 

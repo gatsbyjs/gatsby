@@ -150,6 +150,64 @@ module.exports = {
 }
 ```
 
+## Composing Apollo Links for production network setup
+
+Network requests can fail, return errors or take too long. Use [Apollo Link](https://www.apollographql.com/docs/link/) to
+add retries, error handling, logging and more to your GraphQL requests.
+
+Use the plugin's `createLink` option to add a custom Apollo Link to your GraphQL requests.
+
+You can compose different types of links, depending on the functionality you're trying to achieve.
+The most common links are:
+
+- `apollo-link-retry` for retrying queries that fail or time out
+- `apollo-link-error` for error handling
+- `apollo-link-http` for sending queries in http requests (used by default)
+
+For more explanation of how Apollo Links work together, check out this Medium article: [Productionizing Apollo Links](https://medium.com/@joanvila/productionizing-apollo-links-4cdc11d278eb).
+
+Here's an example of using the HTTP link with retries (using [apollo-link-retry](https://www.npmjs.com/package/apollo-link-retry)):
+
+```js
+// gatsby-config.js
+const { createHttpLink } = require(`apollo-link-http`)
+const { RetryLink } = require(`apollo-link-retry`)
+
+const retryLink = new RetryLink({
+  delay: {
+    initial: 100,
+    max: 2000,
+    jitter: true,
+  },
+  attempts: {
+    max: 5,
+    retryIf: (error, operation) =>
+      Boolean(error) && ![500, 400].includes(error.statusCode),
+  },
+})
+
+module.exports = {
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "SWAPI",
+        fieldName: "swapi",
+        url: "https://api.graphcms.com/simple/v1/swapi",
+
+        // `pluginOptions`: all plugin options
+        //   (i.e. in this example object with keys `typeName`, `fieldName`, `url`, `createLink`)
+        createLink: pluginOptions =>
+          ApolloLink.from([
+            retryLink,
+            createHttpLink({ url: pluginOptions.url }),
+          ]),
+      },
+    },
+  ],
+}
+```
+
 ## Custom transform schema function (advanced)
 
 It's possible to modify the remote schema, via a `transformSchema` option which customizes the way the default schema is transformed before it is merged on the Gatsby schema by the stitching process.

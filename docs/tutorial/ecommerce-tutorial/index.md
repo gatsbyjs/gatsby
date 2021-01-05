@@ -25,7 +25,7 @@ Benefits of using Gatsby for e-commerce sites include the following:
 
 Stripe is a payment processing service that allows you to securely collect and process payment information from your customers. To try out Stripe for yourself, go to [Stripe’s Quick Start Guide](https://stripe.com/docs/payments/checkout#try-now).
 
-Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, prices, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's price ID in your Gatsby site. If you're selling multiple products, you can use the [Stripe source plugin](/packages/gatsby-source-stripe/) to retrieve all prices at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or price is added.
+Stripe offers a [hosted checkout](https://stripe.com/docs/payments/checkout) that doesn't require any backend component. You can configure products, prices, and subscription plans in the [Stripe Dashboard](https://stripe.com/docs/payments/checkout#configure). If you're selling a single product or subscription (like an eBook) you can hardcode the product's price ID in your Gatsby site. If you're selling multiple products, you can use the [Stripe source plugin](/plugins/gatsby-source-stripe/) to retrieve all prices at build time. If you want your Gatsby site to automatically update, you can use the Stripe webhook event to [trigger a redeploy](https://www.netlify.com/docs/webhooks/) when a new product or price is added.
 
 ## Setting up a Gatsby site
 
@@ -268,11 +268,11 @@ If you go back to `http://localhost:8000/` in your browser and you have `gatsby 
 
 ### Example 2: Import products and prices via source plugin
 
-Instead of hardcoding the price IDs, you can use the [gatsby-source-stripe plugin](/packages/gatsby-source-stripe/) to retrieve your prices at build time.
+Instead of hardcoding the price IDs, you can use the [gatsby-source-stripe plugin](/plugins/gatsby-source-stripe/) to retrieve your prices at build time.
 
 #### Add the Stripe source plugin
 
-Add the [gatsby-source-stripe plugin](/packages/gatsby-source-stripe/) which you can use to pull in the prices from your Stripe account.
+Add the [gatsby-source-stripe plugin](/plugins/gatsby-source-stripe/) which you can use to pull in the prices from your Stripe account.
 
 ```shell
 npm install gatsby-source-stripe

@@ -52,11 +52,11 @@ Now you're going to run your first Lighthouse test.
 
 1. If you haven't already done so, open the site in Chrome Incognito Mode so no extensions interfere with the test. Then, open up the Chrome DevTools.
 
-2. Click on the "Audits" tab where you'll see a screen that looks like:
+2. Click on the "Lighthouse" tab where you'll see a screen that looks like:
 
 ![Lighthouse audit start](./lighthouse-audit.png)
 
-3. Click "Perform an audit..." (All available audit types should be selected by default). Then click "Run audit". (It'll then take a minute or so to run the audit). Once the audit is complete, you should see results that look like this:
+3. Click "Generate report" (All available audit types should be selected by default). (It'll then take a minute or so to generate the report). Once the report is complete, you should see results that look like this:
 
 ![Lighthouse audit results](./lighthouse-audit-results.png)
 
@@ -76,7 +76,7 @@ Quoting [Google](https://developers.google.com/web/fundamentals/web-app-manifest
 
 > The web app manifest is a simple JSON file that tells the browser about your web application and how it should behave when 'installed' on the user's mobile device or desktop.
 
-[Gatsby's manifest plugin](/packages/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
+[Gatsby's manifest plugin](/plugins/gatsby-plugin-manifest/) configures Gatsby to create a `manifest.webmanifest` file on every site build.
 
 ### ✋ Using `gatsby-plugin-manifest`
 
@@ -111,13 +111,13 @@ npm install gatsby-plugin-manifest
 }
 ```
 
-That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- Check out the [plugin reference](/packages/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
+That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- Check out the [plugin reference](/plugins/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
 
 ## Add offline support
 
 Another requirement for a website to qualify as a PWA is the use of a [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). A service worker runs in the background, deciding to serve network or cached content based on connectivity, allowing for a seamless, managed offline experience.
 
-[Gatsby's offline plugin](/packages/gatsby-plugin-offline/) makes a Gatsby site work offline and more resistant to bad network conditions by creating a service worker for your site.
+[Gatsby's offline plugin](/plugins/gatsby-plugin-offline/) makes a Gatsby site work offline and more resistant to bad network conditions by creating a service worker for your site.
 
 ### ✋ Using `gatsby-plugin-offline`
 
@@ -162,7 +162,7 @@ Adding metadata to pages (such as a title or description) is key in helping sear
 
 [React Helmet](https://github.com/nfl/react-helmet) is a package that provides a React component interface for you to manage your [document head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head).
 
-Gatsby's [react helmet plugin](/packages/gatsby-plugin-react-helmet/) provides drop-in support for server rendering data added with React Helmet. Using the plugin, attributes you add to React Helmet will be added to the static HTML pages that Gatsby builds.
+Gatsby's [react helmet plugin](/plugins/gatsby-plugin-react-helmet/) provides drop-in support for server rendering data added with React Helmet. Using the plugin, attributes you add to React Helmet will be added to the static HTML pages that Gatsby builds.
 
 ### ✋ Using `React Helmet` and `gatsby-plugin-react-helmet`
 

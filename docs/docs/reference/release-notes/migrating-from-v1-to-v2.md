@@ -120,7 +120,7 @@ npm install react react-dom
 
 ### Install plugins' peer dependencies
 
-Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to install:
+Some plugins had dependencies that were also made `peerDependencies`. For example, if you use [`gatsby-plugin-typography`](/plugins/gatsby-plugin-typography/), you now need to install:
 
 ```shell
 npm install typography react-typography
@@ -138,7 +138,7 @@ There are some implications to this change:
 
 - Rendering different layouts for different pages is different. Use the standard React inheritance model. Gatsby no longer maintains, or needs to maintain, separate behavior for handling layouts.
 
-- Because the "top-level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires a layout component to not unmount use [`gatsby-plugin-layout`](/packages/gatsby-plugin-layout/).
+- Because the "top-level component" changes between each page, React will rerender all children. This means that shared components previously in a Gatsby v1 layout-- like navigations-- will unmount and remount. This will break CSS transitions or React state within those shared components. If your use case requires a layout component to not unmount use [`gatsby-plugin-layout`](/plugins/gatsby-plugin-layout/).
 
 - To learn more about the decision behind this removal, read the [RFC for removing the special layout component](https://github.com/gatsbyjs/rfcs/blob/master/text/0002-remove-special-layout-components.md).
 
@@ -661,7 +661,7 @@ We changed the GraphQL root type from `RootQueryType` to `Query`. This is only l
 
 ### Typography.js Plugin Config Changes
 
-If you use [`gatsby-plugin-typography`](/packages/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
+If you use [`gatsby-plugin-typography`](/plugins/gatsby-plugin-typography/), you now need to explicitly export `scale` and `rhythm` as named exports from your typography config module.
 
 ```diff:title=src/utils/typography.js
 - const typography = new Typography();
@@ -749,7 +749,7 @@ exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
 }
 ```
 
-If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/packages/gatsby-plugin-sass/#how-to-use) or [`gatsby-plugin-less`](/packages/gatsby-plugin-less/#how-to-use):
+If you're using a preprocessor, you can pass in CSS Loader options when configuring [`gatsby-plugin-sass`](/plugins/gatsby-plugin-sass/#how-to-use) or [`gatsby-plugin-less`](/plugins/gatsby-plugin-less/#how-to-use):
 
 ```javascript
 // in gatsby-config.js
@@ -1032,7 +1032,7 @@ Import GraphQL types from `gatsby/graphql` to prevent `Schema must contain uniqu
 
 ### Add `gatsby-plugin-flow` if you are using Flowtype
 
-We removed `@babel/preset-flow` from Gatsby's default Babel configuration to make it easier to allow users to choose their own transpiler. If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary. Otherwise, you should install [`gatsby-plugin-flow`](/packages/gatsby-plugin-flow).
+We removed `@babel/preset-flow` from Gatsby's default Babel configuration to make it easier to allow users to choose their own transpiler. If your site has its own `.babelrc` that already includes the Flow preset, no changes are necessary. Otherwise, you should install [`gatsby-plugin-flow`](/plugins/gatsby-plugin-flow).
 
 ## For Explorers
 

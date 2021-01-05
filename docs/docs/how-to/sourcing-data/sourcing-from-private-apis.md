@@ -8,7 +8,7 @@ From the Gatsby perspective, there is no difference between sourcing from a publ
 
 There are 3 approaches that you can use to source data from your private API:
 
-1. If your private API is a GraphQL API, you can use [`gatsby-source-graphql`](/packages/gatsby-source-graphql/).
+1. If your private API is a GraphQL API, you can use [`gatsby-source-graphql`](/plugins/gatsby-source-graphql/).
 2. If your private API is not a GraphQL API and you are new to GraphQL, treat the data as unstructured data and fetch it during build time, as described by the guide "[Using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/)". However, as highlighted in the guide, this approach comes with some tradeoffs.
 3. Create a source plugin, as described in the tutorial "[Source plugin tutorial](/docs/how-to/plugins-and-themes/creating-a-source-plugin/)".
 
@@ -16,7 +16,7 @@ There are 3 approaches that you can use to source data from your private API:
 
 1. If the data of your private API is updated very frequently or the expectation of the site is to be updated in real-time, it may make more sense to query the data directly during runtime.
 
-2. If you can source the data through a plugin, consider that as an alternative to sourcing via the API. For instance, if you have access to the MongoDB database that stores the data, [`gatsby-source-mongodb`](/packages/gatsby-source-mongodb/) will be handy. Browse the [Gatsby Plugin Library](/plugins/) to see what plugins that you could utilize.
+2. If you can source the data through a plugin, consider that as an alternative to sourcing via the API. For instance, if you have access to the MongoDB database that stores the data, [`gatsby-source-mongodb`](/plugins/gatsby-source-mongodb/) will be handy. Browse the [Gatsby Plugin Library](/plugins/) to see what plugins that you could utilize.
 
 3. Depending on your build process and the availability of your private API, you may need to make other adjustments accordingly.
 

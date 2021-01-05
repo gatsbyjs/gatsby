@@ -25,7 +25,7 @@ const codeStyles = {
 }
 
 // markup
-const IndexPage = () => {
+const NotFoundPage = () => {
   return (
     <main style={pageStyles}>
       <title>Not found</title>
@@ -35,20 +35,20 @@ const IndexPage = () => {
         <span role="img" aria-label="Pensive emoji">
           😔
         </span>{" "}
-        we couldn’t find what you were looking for. 
-        <br/>
+        we couldn’t find what you were looking for.
+        <br />
         {process.env.NODE_ENV === "development" ? (
           <>
-            <br/>
-              Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br/>
+            <br />
+            Try creating a page in <code style={codeStyles}>src/pages/</code>.
+            <br />
           </>
         ) : null}
-      <br/>
+        <br />
         <Link to="/">Go home</Link>.
       </p>
     </main>
   )
 }
 
-export default IndexPage
+export default NotFoundPage

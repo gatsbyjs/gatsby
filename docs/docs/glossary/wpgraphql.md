@@ -45,7 +45,7 @@ Use [npm](/docs/glossary#npm) to install [gatsby-source-graphql](/docs/third-par
 npm install gatsby-source-graphql
 ```
 
-Then update `gatsby-config.js`. Add the plugin to your Gatsby instance. Specify the URL of the GraphQL endpoint and set other [configuration options](/packages/gatsby-source-graphql/).
+Then update `gatsby-config.js`. Add the plugin to your Gatsby instance. Specify the URL of the GraphQL endpoint and set other [configuration options](/plugins/gatsby-source-graphql/).
 
 ```javascript
 module.exports = {

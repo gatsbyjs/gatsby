@@ -80,7 +80,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 ### Additional resources
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+- [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify)
 
 ## Deploying to Vercel
 

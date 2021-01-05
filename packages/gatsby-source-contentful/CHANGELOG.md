@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.4...gatsby-source-contentful@4.5.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.4.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.3...gatsby-source-contentful@4.4.0-next.4) (2020-12-29)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** dont re-create nodes ([#28642](https://github.com/gatsbyjs/gatsby/issues/28642)) ([3a51e22](https://github.com/gatsbyjs/gatsby/commit/3a51e2256eb548d21fe47ee0a078ee6fa027e845))
+
+# [4.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.2...gatsby-source-contentful@4.4.0-next.3) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 # [4.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.1...gatsby-source-contentful@4.4.0-next.2) (2020-12-17)
 
 **Note:** Version bump only for package gatsby-source-contentful

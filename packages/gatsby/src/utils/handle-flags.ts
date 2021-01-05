@@ -67,17 +67,27 @@ const handleFlags = (
   // Test flags to see if it wants opted in.
   const optedInFlags = new Map<string, IFlag>()
   const applicableFlags = new Map<string, IFlag>()
+  const lockedInFlags = new Map<string, IFlag>()
+  const lockedInFlagsThatAreInConfig = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
     const fitness = flag.testFitness(flag)
 
-    // if user didn't explicitly set a flag (either true or false)
-    // and it qualifies for auto opt-in - add it to optedInFlags
-    if (typeof configFlags[flag.name] === `undefined` && fitness === `OPT_IN`) {
+    const flagIsSetInConfig = typeof configFlags[flag.name] !== `undefined`
+
+    if (fitness === `LOCKED_IN`) {
+      enabledConfigFlags.push(flag)
+      lockedInFlags.set(flag.name, flag)
+      if (flagIsSetInConfig) {
+        lockedInFlagsThatAreInConfig.set(flag.name, flag)
+      }
+    } else if (!flagIsSetInConfig && fitness === `OPT_IN`) {
+      // if user didn't explicitly set a flag (either true or false)
+      // and it qualifies for auto opt-in - add it to optedInFlags
       enabledConfigFlags.push(flag)
       optedInFlags.set(flag.name, flag)
     }
 
-    if (fitness) {
+    if (fitness === true || fitness === `OPT_IN`) {
       applicableFlags.set(flag.name, flag)
     }
   })
@@ -133,17 +143,33 @@ const handleFlags = (
   let message = ``
   //  Create message about what flags are active.
   if (enabledConfigFlags.length > 0) {
-    if (enabledConfigFlags.length - optedInFlags.size > 0) {
+    if (
+      enabledConfigFlags.length - optedInFlags.size - lockedInFlags.size >
+      0
+    ) {
       message = `The following flags are active:`
       enabledConfigFlags.forEach(flag => {
-        if (!optedInFlags.has(flag.name)) {
+        if (!optedInFlags.has(flag.name) && !lockedInFlags.has(flag.name)) {
           message += generateFlagLine(flag)
         }
       })
     }
 
+    if (lockedInFlagsThatAreInConfig.size > 0) {
+      if (message.length > 0) {
+        message += `\n\n`
+      }
+      message += `Some features you configured with flags are used natively now.
+Those flags no longer have any effect and you can remove them from config:`
+      lockedInFlagsThatAreInConfig.forEach(flag => {
+        message += generateFlagLine(flag)
+      })
+    }
+
     if (optedInFlags.size > 0) {
-      message += `\n\n`
+      if (message.length > 0) {
+        message += `\n\n`
+      }
       message += `We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
 and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
 
@@ -178,7 +204,9 @@ The following flags were automatically enabled on your site:`
       })
     }
 
-    message += `\n`
+    if (message.length > 0) {
+      message += `\n`
+    }
   }
 
   return {
