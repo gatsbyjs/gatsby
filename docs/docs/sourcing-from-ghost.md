@@ -154,5 +154,5 @@ Here are some further resources and reading material to help you get started wit
 - [Gatsby + Ghost announcement post](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
 - [More info about Ghost as a Headless CMS](https://blog.ghost.org/jamstack/)
 - [Official Gatsby Starter for Ghost](https://github.com/tryghost/gatsby-starter-ghost)
-- [Official Gatsby Source Plugin for Ghost](/packages/gatsby-source-ghost/)
+- [Official Gatsby Source Plugin for Ghost](/plugins/gatsby-source-ghost/)
 - [Official Ghost developer docs](https://docs.ghost.org/api/)

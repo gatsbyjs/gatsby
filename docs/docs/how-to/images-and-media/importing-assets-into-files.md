@@ -142,4 +142,4 @@ query($slug: String!) {
 }
 ```
 
-Read more about querying for files in [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/).
+Read more about querying for files in [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/).

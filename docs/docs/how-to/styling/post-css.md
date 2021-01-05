@@ -8,7 +8,7 @@ PostCSS transforms extended syntaxes and features into modern, browser-friendly 
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, head to the [quick start guide](/docs/quick-start/), then come back.
 
-1. Install the Gatsby plugin [gatsby-plugin-postcss](/packages/gatsby-plugin-postcss/).
+1. Install the Gatsby plugin [gatsby-plugin-postcss](/plugins/gatsby-plugin-postcss/).
 
 ```shell
 npm install postcss gatsby-plugin-postcss

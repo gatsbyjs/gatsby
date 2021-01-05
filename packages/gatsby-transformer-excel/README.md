@@ -6,7 +6,7 @@ Parses Excel files into JSON arrays.
 
 `npm install gatsby-transformer-excel`
 
-Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
+Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
 
 ## How to use
 

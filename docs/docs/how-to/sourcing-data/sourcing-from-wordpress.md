@@ -4,7 +4,7 @@ title: Sourcing from WordPress
 
 This guide will walk you through the process of using Gatsby with WordPress and [WPGraphQL](https://www.wpgraphql.com/).
 
-WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress-experimental](/packages/gatsby-source-wordpress-experimental/?=wordpress). Let's begin!
+WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress-experimental](/plugins/gatsby-source-wordpress-experimental/?=wordpress). Let's begin!
 
 _Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
 [this example](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental) to gain extra insights._

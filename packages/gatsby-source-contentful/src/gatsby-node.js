@@ -589,6 +589,7 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,

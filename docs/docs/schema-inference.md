@@ -34,7 +34,7 @@ When running a GraphQL query, there are a variety of fields that you will want t
 
 When GraphQL runs, it will query all `file` nodes by their relativePath and return the first node that satisfies that query. Then, it will filter down the fields to return by the inner expression. I.e `{ childMarkdownRemark ... }`. The building of the query arguments is covered by the [Inferring Input Filters](/docs/schema-input-gql) doc. This section instead explains how the inner filter schema is generated (it must be generated before input filters are inferred).
 
-During the [sourceNodes](/docs/reference/config-files/gatsby-node/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/packages/gatsby-source-filesystem) ran and created a bunch of `File` nodes. Then, different transformers react via [onCreateNode](/docs/reference/config-files/gatsby-node/#onCreateNode), resulting in children of different `node.internal.type`s being created.
+During the [sourceNodes](/docs/reference/config-files/gatsby-node/#sourceNodes) phase, let's say that [gatsby-source-filesystem](/plugins/gatsby-source-filesystem) ran and created a bunch of `File` nodes. Then, different transformers react via [onCreateNode](/docs/reference/config-files/gatsby-node/#onCreateNode), resulting in children of different `node.internal.type`s being created.
 
 There are 3 categories of node fields that we can query.
 
@@ -182,7 +182,7 @@ As described in [plain object or value field](#plain-object-or-value-field), if 
 
 It creates a new GraphQL Field Config whose type is the just created `File` GqlType, and whose resolver converts a string into a File object. Here's how it works:
 
-Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/packages/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
+Say we have a `data/posts.json` file that has been sourced (of type `File`), and then the [gatsby-transformer-json](/plugins/gatsby-transformer-json) transformer creates a child node (of type `PostsJson`)
 
 ```json:title=data/posts.json
 ;[

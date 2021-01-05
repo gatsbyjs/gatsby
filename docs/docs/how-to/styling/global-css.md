@@ -126,7 +126,7 @@ It is also possible to break up your CSS styles into separate files so that team
 import "css/menu.css"
 ```
 
-This approach can simplify integration of CSS or [Sass](/packages/gatsby-plugin-sass/) styles into your Gatsby site by allowing team members to write and consume more traditional, class-based CSS. However, there are [trade-offs](#limitations) that must be considered with regards to web performance and the lack of dead code elimination.
+This approach can simplify integration of CSS or [Sass](/plugins/gatsby-plugin-sass/) styles into your Gatsby site by allowing team members to write and consume more traditional, class-based CSS. However, there are [trade-offs](#limitations) that must be considered with regards to web performance and the lack of dead code elimination.
 
 ### Adding classes to components
 

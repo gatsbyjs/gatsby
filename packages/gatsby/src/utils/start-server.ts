@@ -481,7 +481,7 @@ module.exports = {
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {
       res.json({ webpackCompilationHash: `123` })
-      // If this gets here, it's a non-existant file so just send back 404.
+      // If this gets here, it's a non-existent file so just send back 404.
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {

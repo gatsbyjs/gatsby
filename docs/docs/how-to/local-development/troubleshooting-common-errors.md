@@ -32,11 +32,11 @@ For some plugins like emotion, styled-components, or Sass, it won't be enough to
 
 Here are some examples of plugins that require you to install more than just the plugin:
 
-- [gatsby-plugin-emotion](/packages/gatsby-plugin-emotion/): `@emotion/react`, and `@emotion/styled`
-- [gatsby-plugin-styled-components](/packages/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
-- [gatsby-plugin-sass](/packages/gatsby-plugin-sass/): `node-sass`, or `sass`
-- [gatsby-plugin-material-ui](/packages/gatsby-plugin-material-ui/): `@material-ui/styles`
-- [gatsby-image](/packages/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
+- [gatsby-plugin-emotion](/plugins/gatsby-plugin-emotion/): `@emotion/react`, and `@emotion/styled`
+- [gatsby-plugin-styled-components](/plugins/gatsby-plugin-styled-components/): `styled-components`, and `babel-plugin-styled-components`
+- [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/): `node-sass`, or `sass`
+- [gatsby-plugin-material-ui](/plugins/gatsby-plugin-material-ui/): `@material-ui/styles`
+- [gatsby-image](/plugins/gatsby-image/): `gatsby-transformer-sharp`, and `gatsby-plugin-sharp`
 
 Rather than packaging up the other dependent libraries alongside these plugins, they can stay smaller in size when they are published and are able to rely on alternative implementations. One example is `gatsby-plugin-sass` that can use either the Node.js or Dart implementations of Sass.
 

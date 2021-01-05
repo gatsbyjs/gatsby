@@ -186,6 +186,24 @@ describe(`Define parent-child relationships with field extensions`, () => {
     )
   })
 
+  it(`does not show deprecation warning for inferred child fields`, async () => {
+    dispatch(
+      createTypes(`
+        type Parent implements Node @dontInfer @mimeTypes(types: ["application/listenup"]) {
+          id: ID!
+        }
+        type Child implements Node @childOf(mimeTypes: ["application/listenup"]) {
+          id: ID!
+        }
+        type AnotherChild implements Node @childOf(types: ["Parent"]) {
+          id: ID!
+        }
+      `)
+    )
+    await buildSchema()
+    expect(report.warn).toBeCalledTimes(0)
+  })
+
   it(`adds children[Field] field to parent type with childOf extension`, async () => {
     dispatch(
       createTypes(`

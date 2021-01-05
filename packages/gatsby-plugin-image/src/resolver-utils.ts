@@ -20,6 +20,7 @@ export const ImageFormatType = new GraphQLEnumType({
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
+    AVIF: { value: `avif` },
   },
 })
 
@@ -63,7 +64,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
         type: GraphQLInt,
         description: stripIndent`
             Maximum display width of generated files. 
-            The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+            The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
             This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
       },
       maxHeight: {
@@ -77,7 +78,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
         type: GraphQLInt,
         description: stripIndent`
             The display width of the generated image. 
-            The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+            The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
             Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
             `,
       },
@@ -99,10 +100,10 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
       formats: {
         type: GraphQLList(ImageFormatType),
         description: stripIndent`
-            The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG" and "WEBP". 
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, WEBP and AVIF. 
             The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying 
-            both PNG and JPG is not supported and will be ignored.
+            both PNG and JPG is not supported and will be ignored. AVIF support is currently experimental.
         `,
         defaultValue: [`auto`, `webp`],
       },

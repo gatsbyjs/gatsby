@@ -28,7 +28,7 @@ Our goal with plugins is to make them straightforward to install and use. You wi
 
 For an initial introduction to using plugins, we'll install and implement the Gatsby plugin for Typography.js.
 
-[Typography.js](https://kyleamathews.github.io/typography.js/) is a JavaScript library which generates global base styles for your site's typography. The library has a [corresponding Gatsby plugin](/packages/gatsby-plugin-typography/) to streamline using it in a Gatsby site.
+[Typography.js](https://kyleamathews.github.io/typography.js/) is a JavaScript library which generates global base styles for your site's typography. The library has a [corresponding Gatsby plugin](/plugins/gatsby-plugin-typography/) to streamline using it in a Gatsby site.
 
 ### ✋ Create a new Gatsby site
 
