@@ -13,6 +13,7 @@ Key highlights of this release:
 
 - [Query on Demand and Lazy Images: Generally available](#query-on-demand-and-lazy-images-generally-available) - improves `gatsby develop` bootup time
 - [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
+- [Server Side Rendering (SSR) in development](#server-side-rendering-ssr-in-development) — helps you find and fix many build errors in development. We're starting a partial release of this feature to 5% of users.
 
 And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050-beta) (beta):
 
@@ -69,6 +70,27 @@ See also:
 
 - https://github.com/gatsbyjs/gatsby/issues/27754
 - https://github.com/gatsbyjs/gatsby/pull/27991
+
+## Server Side Rendering (SSR) in development
+
+There are certain types of build errors that currently are only discoverable when doing a build. The most common is code that tries to access browser globals (like `window`) that don't exist in Node.js when SSRing your Gatsby site.
+
+This causes a lot of frustration as you might develop for days before running a build and it’s not fun to discover problems long after they were created. Then actually fixing the problems is painful as the feedback cycle is slow as you have to run a build after each code change.
+
+We've been working to add SSR support to the develop server so that you can immediately see SSR bugs and get quick feedback as you fix them. With this change, whenever you do a full reload, the Gatsby dev server will deliver a SSRed HTML file along with your React code mimicking how production Gatsby sites work.
+
+This is related to our general efforts to make the develop and build environment identical!
+
+Like the recent Query on Demand and Lazy Images changes, we released this change first behind a flag for early testing and now, we’re rolling this out to a small percentage of users (5%) for more real-world testing before the final release to 100% of users.
+
+We’ll let you know after upgrading if your site has SSR enabled. If it’s not enabled and you’d like to start using it immediately, simply add the `DEV_SSR` flag to your `gatsby-config.js`.
+
+```js
+module.exports = {
+  flags : { DEV_SSR: true },
+  plugins: [...]
+}`,
+```
 
 ## gatsby-plugin-image@0.5.0 (beta)
 
