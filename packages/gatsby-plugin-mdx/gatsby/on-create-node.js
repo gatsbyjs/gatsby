@@ -1,4 +1,4 @@
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
 const { createContentDigest } = require(`gatsby-core-utils`)
@@ -189,7 +189,11 @@ export default { ${scopeIdentifiers.join(`, `)} }`
     `${createContentDigest(scopeFileContent)}.js`
   )
 
-  fs.writeFileSync(filePath, scopeFileContent)
+  // Writing to file always triggers a webpack build. So only write when
+  // the file contents have changed.
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, scopeFileContent)
+  }
 }
 
 const declare = require(`@babel/helper-plugin-utils`).declare
