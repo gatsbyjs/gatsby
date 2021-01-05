@@ -12,8 +12,8 @@ Welcome to `gatsby@2.30.0` release (January 2021 #1)
 Key highlights of this release:
 
 - [Query on Demand and Lazy Images: Generally available](#query-on-demand-and-lazy-images-generally-available) - improves `gatsby develop` bootup time
-- [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
 - [Server Side Rendering (SSR) in development](#server-side-rendering-ssr-in-development) — helps you find and fix many build errors in development. We're starting a partial release of this feature to 5% of users.
+- [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
 
 And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050-beta) (beta):
 
@@ -55,22 +55,6 @@ variables to enable it. Just upgrade to `gatsby@2.30.0` (and `gatsby-plugin-shar
 
 In v2.29 we improved the UX around long-running queries by adding a loading indicator and message to the browser console (only in `gatsby develop`). If you want or need to de-activate this indicator, you can! For more details please see the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/27620).
 
-## gatsby-plugin-sass@3.0.0
-
-Now that [LibSass and Node Sass are deprecated](https://sass-lang.com/blog/libsass-is-deprecated), we've
-upgraded `sass-loader` to `10.1.0` and thus switched sass implementation to [Dart Sass](https://sass-lang.com/dart-sass).
-
-The plugin itself is compatible with the previous version. For the majority of projects the upgrade
-won't require any special actions.
-
-But keep in mind that **Dart Sass** may still have subtle differences in some edge cases comparing to **Node Sass**,
-so if you encounter any issues make sure to check out ["How do I migrate section"](https://sass-lang.com/blog/libsass-is-deprecated#how-do-i-migrate) in sass docs.
-
-See also:
-
-- https://github.com/gatsbyjs/gatsby/issues/27754
-- https://github.com/gatsbyjs/gatsby/pull/27991
-
 ## Server Side Rendering (SSR) in development
 
 There are certain types of build errors that currently are only discoverable when doing a build. The most common is code that tries to access browser globals (like `window`) that don't exist in Node.js when SSRing your Gatsby site.
@@ -88,9 +72,25 @@ We’ll let you know after upgrading if your site has SSR enabled. If it’s not
 ```js
 module.exports = {
   flags : { DEV_SSR: true },
-  plugins: [...]
-}`,
+  plugins: [...],
+}
 ```
+
+## gatsby-plugin-sass@3.0.0
+
+Now that [LibSass and Node Sass are deprecated](https://sass-lang.com/blog/libsass-is-deprecated), we've
+upgraded `sass-loader` to `10.1.0` and thus switched sass implementation to [Dart Sass](https://sass-lang.com/dart-sass).
+
+The plugin itself is compatible with the previous version. For the majority of projects the upgrade
+won't require any special actions.
+
+But keep in mind that **Dart Sass** may still have subtle differences in some edge cases comparing to **Node Sass**,
+so if you encounter any issues make sure to check out ["How do I migrate section"](https://sass-lang.com/blog/libsass-is-deprecated#how-do-i-migrate) in sass docs.
+
+See also:
+
+- https://github.com/gatsbyjs/gatsby/issues/27754
+- https://github.com/gatsbyjs/gatsby/pull/27991
 
 ## gatsby-plugin-image@0.5.0 (beta)
 
