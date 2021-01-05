@@ -38,7 +38,7 @@ export const trackCli = (eventType: string, args?: ITrackCliArgs): void => {
     body: JSON.stringify({
       eventType,
       time: new Date(),
-      sessionId: sessionId,
+      sessionId,
       machineId: getMachineId(),
       componentId: `create-gatsby`,
       componentVersion: 1,
