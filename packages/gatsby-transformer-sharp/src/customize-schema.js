@@ -510,7 +510,6 @@ const imageNodeType = ({
     },
     resolve: async (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs }
 
       if (!generateImageData) {
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
@@ -525,7 +524,7 @@ const imageNodeType = ({
       }
       const imageData = await generateImageData({
         file,
-        args,
+        args: fieldArgs,
         pathPrefix,
         reporter,
         cache,
