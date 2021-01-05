@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.6...gatsby-plugin-image@0.5.0) (2021-01-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better error logging ([#28741](https://github.com/gatsbyjs/gatsby/issues/28741)) ([#28855](https://github.com/gatsbyjs/gatsby/issues/28855)) ([f45ba68](https://github.com/gatsbyjs/gatsby/commit/f45ba68267b9a109553a366f76ce71af348fac6d))
+- **gatsby-plugin-image:** Correct image styles ([#28834](https://github.com/gatsbyjs/gatsby/issues/28834)) ([#28854](https://github.com/gatsbyjs/gatsby/issues/28854)) ([b648728](https://github.com/gatsbyjs/gatsby/commit/b6487282ee862138d4035c42e2af170d817032b6))
+- **gatsby-plugin-image:** Fix handling of sizes prop in SSR ([#28835](https://github.com/gatsbyjs/gatsby/issues/28835)) ([#28867](https://github.com/gatsbyjs/gatsby/issues/28867)) ([6b7c5e7](https://github.com/gatsbyjs/gatsby/commit/6b7c5e7d9bb8530c1b716bed835e92c623b0a871))
+- **gatsby-plugin-sharp:** Pass format-specific options in image-data ([#28826](https://github.com/gatsbyjs/gatsby/issues/28826)) ([#28853](https://github.com/gatsbyjs/gatsby/issues/28853)) ([ceeb7d4](https://github.com/gatsbyjs/gatsby/commit/ceeb7d4bd7b917fd776004cc4d1c4c9bac281dc6))
+
 # [0.5.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.5...gatsby-plugin-image@0.5.0-next.6) (2020-12-29)
 
 ### Bug Fixes

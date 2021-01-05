@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.6...gatsby-plugin-sharp@2.12.0) (2021-01-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Add avif to pipeline ([#28871](https://github.com/gatsbyjs/gatsby/issues/28871)) ([#28876](https://github.com/gatsbyjs/gatsby/issues/28876)) ([ecebdd3](https://github.com/gatsbyjs/gatsby/commit/ecebdd34e43256a107ce39eaeadee6831e2eb4cf))
+- **gatsby-plugin-sharp:** Pass format-specific options in image-data ([#28826](https://github.com/gatsbyjs/gatsby/issues/28826)) ([#28853](https://github.com/gatsbyjs/gatsby/issues/28853)) ([ceeb7d4](https://github.com/gatsbyjs/gatsby/commit/ceeb7d4bd7b917fd776004cc4d1c4c9bac281dc6))
+
+### Features
+
+- **gatsby:** enable lazy images by default ([#28743](https://github.com/gatsbyjs/gatsby/issues/28743)) ([3b40d80](https://github.com/gatsbyjs/gatsby/commit/3b40d8025356f5141625234d1781bd80985fb5a3))
+
+### Performance Improvements
+
+- **gatsby-plugin-sharp:** change approach to concurrency for image processing ([#28575](https://github.com/gatsbyjs/gatsby/issues/28575)) ([#28862](https://github.com/gatsbyjs/gatsby/issues/28862)) ([afac774](https://github.com/gatsbyjs/gatsby/commit/afac774effca51c7c1d9c32c9800ac77a4042e03))
+
 # [2.12.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.5...gatsby-plugin-sharp@2.12.0-next.6) (2020-12-29)
 
 ### Features
