@@ -200,7 +200,9 @@ export async function generateImageData({
       toFormat: primaryFormat,
     })
 
-    if (pathPrefix) transform.pathPrefix = pathPrefix
+    if (pathPrefix) {
+      transform.pathPrefix = pathPrefix
+    }
     return transform
   })
 
@@ -256,6 +258,9 @@ export async function generateImageData({
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `avif`,
       })
+      if (pathPrefix) {
+        transform.pathPrefix = pathPrefix
+      }
       return transform
     })
 
@@ -285,6 +290,9 @@ export async function generateImageData({
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
       })
+      if (pathPrefix) {
+        transform.pathPrefix = pathPrefix
+      }
       return transform
     })
 
