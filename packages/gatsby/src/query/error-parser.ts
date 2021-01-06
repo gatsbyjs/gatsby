@@ -130,7 +130,7 @@ const errorParser = ({
     {
       regex: /[\s\S]*/gm,
       cb: (match): IMatch => {
-        if (error instanceof Error && !(error instanceof GraphQLError)) {
+        if (error instanceof Error) {
           return {
             id: `85901`,
             error, // show stack trace
