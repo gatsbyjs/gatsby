@@ -56,7 +56,7 @@ success onPostBootstrap - 0.130 s
 info bootstrap finished - 3.674 s
 ⠀
 success run static queries - 0.057 s — 3/3 89.08 queries/second
-success run page queries - 0.033 s — 5/5 347.81 queries/second
+success run page queries - 0.026s - 3/3 114.85/s
 success start webpack server - 1.707 s — 1/1 6.06 pages/second
 ```
 
@@ -136,8 +136,9 @@ success onPostBootstrap - 0.130 s
 info bootstrap finished - 3.674 s
 ⠀
 success run static queries - 0.057 s — 3/3 89.08 queries/second
-success run page queries - 0.033 s — 5/5 347.81 queries/second
+- success run page queries - 0.033 s — 5/5 347.81 queries/second
 - success start webpack server - 1.707 s — 1/1 6.06 pages/second
++ success run page queries - 0.026s - 3/3 114.85/s
 + success Generating image thumbnails — 6/6 - 1.059 s
 + success Building production JavaScript and CSS bundles - 8.050 s
 + success Rewriting compilation hashes - 0.021 s
@@ -150,6 +151,8 @@ _**Note**: the output of `gatsby develop` and `gatsby build` can vary based on p
 There is only one difference in the bootstrap phase where HTML and CSS is deleted to prevent problems with previous builds. In the build phase, the build command skips setting up a dev server and goes into compiling the assets.
 
 By omitting these later steps, `gatsby develop` can speed up your ability to make live edits without page reloads using features like [hot module replacement](/docs/glossary#hot-module-replacement). It also saves time with the more CPU intensive processes that aren't necessary to perform in rapid development.
+
+There is also a difference in the number of page queries that will run. `gatsby develop` will run at most 3 page queries (index page, actual 404 and develop 404) initially. The rest of the queries will run when they are needed (when the browser requests them). In contrast, `gatsby build` will run page queries for every page that doesn't have cached and up to date results already.
 
 A [cache](/docs/glossary#cache) is also used to detect changes to `gatsby-*.js` files (like `gatsby-node.js`, or `gatsby-config.js`) or dependencies. It can be cleared manually with the `gatsby clean` command to work through issues caused by outdated references and a stale cache.
 
