@@ -61,11 +61,6 @@ export function lazyHydrate(
   const cacheKey = JSON.stringify(images)
   const hasLoaded = !hydrated.current && hasImageLoaded(cacheKey)
 
-  console.log({
-    hydrated: hydrated.current,
-    cacheKey,
-    imageloaded: hasImageLoaded(cacheKey),
-  })
   imgStyle = {
     objectFit,
     objectPosition,
