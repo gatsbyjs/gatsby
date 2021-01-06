@@ -19,6 +19,7 @@ describe(`pluginOptionsSchema`, () => {
       `"disableBgImageOnAlpha" must be a boolean`,
       `"disableBgImage" must be a boolean`,
       `"srcSetBreakpoints" must be an array`,
+      `"srcSetAlwaysIncludeOriginal" must be a boolean`,
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
@@ -36,6 +37,7 @@ describe(`pluginOptionsSchema`, () => {
       disableBgImageOnAlpha: `This should be a boolean`,
       disableBgImage: `This should be a boolean`,
       srcSetBreakpoints: `This should be an array`,
+      srcSetAlwaysIncludeOriginal: `This should be a boolean`,
     })
 
     expect(errors).toEqual(expectedErrors)
@@ -57,6 +59,7 @@ describe(`pluginOptionsSchema`, () => {
       disableBgImageOnAlpha: true,
       disableBgImage: true,
       srcSetBreakpoints: [400, 600, 800],
+      srcSetAlwaysIncludeOriginal: true,
     })
 
     expect(isValid).toBe(true)

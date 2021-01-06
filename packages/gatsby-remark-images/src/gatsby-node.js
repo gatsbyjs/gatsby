@@ -116,5 +116,10 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `By default gatsby generates 0.25x, 0.5x, 1x, 1.5x, 2x, and 3x sizes of thumbnails. If you want more control over which sizes are output you can use the srcSetBreakpoints parameter. For example, if you want images that are 200, 340, 520, and 890 wide you can add srcSetBreakpoints: [ 200, 340, 520, 890 ] as a parameter. You will also get maxWidth as a breakpoint (which is 650 by default), so you will actually get [ 200, 340, 520, 650, 890 ] as breakpoints.`
       ),
+    srcSetAlwaysIncludeOriginal: Joi.boolean()
+      .default(true)
+      .description(
+        `By default gatsby includes the original size in the generated srcSet. Setting this to false will prevent the original image from being included if it is larger than the maximum desired breakpoint.`
+      ),
   })
 }
