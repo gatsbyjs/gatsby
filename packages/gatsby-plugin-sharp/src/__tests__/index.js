@@ -393,6 +393,68 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(boundActionCreators.createJobV2).toMatchSnapshot()
     })
 
+    it(`should support option 'srcSetAlwaysIncludeOriginal'=false (maxBreakpoint > width)`, async () => {
+      const srcSetBreakpoints = [
+        50,
+        70,
+        150,
+        250,
+        300, // this shouldn't be in the output as it's wider than the original
+      ]
+      const maxWidth = 500 // this also shouldn't be in the output
+      const srcSetAlwaysIncludeOriginal = false
+      const args = {
+        maxWidth,
+        srcSetBreakpoints,
+        srcSetAlwaysIncludeOriginal,
+      }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      // width of the image tested
+      const originalWidth = 281
+      const expected = srcSetBreakpoints
+        // filter out the widths that are larger than the source image width
+        .filter(size => size < originalWidth)
+        .map(size => `${size}w`)
+      // add the original size of `144-density.png`
+      expected.push(`${originalWidth}w`)
+
+      const actual = findAllBreakpoints(result.srcSet)
+      // should contain all requested sizes as well as the original size
+      expect(actual).toEqual(expect.arrayContaining(expected))
+      // should contain no other sizes
+      expect(actual.length).toEqual(expected.length)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
+    })
+
+    it(`should support option 'srcSetAlwaysIncludeOriginal'=false (maxBreakpoint < width)`, async () => {
+      const srcSetBreakpoints = [50, 70, 150, 250]
+      const maxWidth = 250
+      const srcSetAlwaysIncludeOriginal = false
+      const args = {
+        maxWidth,
+        srcSetBreakpoints,
+        srcSetAlwaysIncludeOriginal,
+      }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/144-density.png`)),
+        args,
+      })
+
+      // width of the image tested
+      const expected = srcSetBreakpoints.map(size => `${size}w`)
+
+      const actual = findAllBreakpoints(result.srcSet)
+      // should contain all requested sizes as well as the original size
+      expect(actual).toEqual(expect.arrayContaining(expected))
+      // should contain no other sizes
+      expect(actual.length).toEqual(expected.length)
+      expect(boundActionCreators.createJobV2).toMatchSnapshot()
+    })
+
     it(`prevents duplicate breakpoints`, async () => {
       const srcSetBreakpoints = [50, 50, 100, 100, 100, 250, 250]
       const maxWidth = 100

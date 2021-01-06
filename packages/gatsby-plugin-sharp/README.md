@@ -100,6 +100,11 @@ can add `srcSetBreakpoints: [ 200, 340, 520, 890 ]` as a parameter. You will als
 `maxWidth` as a breakpoint (which is 800 by default), so you will actually get
 `[ 200, 340, 520, 800, 890 ]` as breakpoints.
 
+By default, the original image is always added to the generated srcSet. However, if you
+want to only generate sizes only up to the largest breakpoint defined in `srcSetBreakpoints`,
+you can set `srcSetAlwaysIncludeOriginal` to `false`. Doing so will only generate images up
+to the largest breakpoint or up to the original image size, whichever is the smallest.
+
 On top of that, `fluid` returns everything else (namely aspectRatio and
 a base64 image to use as a placeholder) you need to implement the "blur up"
 technique popularized by Medium and Facebook (and also available as a Gatsby
@@ -119,6 +124,7 @@ for more details.
 - `pngQuality` (int)
 - `webpQuality` (int)
 - `srcSetBreakpoints` (array of int, default: [])
+- `srcSetAlwaysIncludeOriginal` (bool, default: true)
 - `background` (string, default: 'rgba(0,0,0,1)')
 - [deprecated] `sizeByPixelDensity` (bool, default: false)
   - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.

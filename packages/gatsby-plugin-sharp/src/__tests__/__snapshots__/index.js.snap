@@ -1401,6 +1401,141 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
 }
 `;
 
+exports[`gatsby-plugin-sharp fluid should support option 'srcSetAlwaysIncludeOriginal'=false (maxBreakpoint < width) 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "isLazy": false,
+          "operations": Array [
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 50,
+              },
+              "outputPath": "a1812/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 70,
+              },
+              "outputPath": "1aade/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 150,
+              },
+              "outputPath": "8a4e8/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 250,
+              },
+              "outputPath": "63868/test.png",
+            },
+          ],
+          "pluginOptions": Object {
+            "base64Width": 20,
+            "defaultQuality": 50,
+            "failOnError": true,
+            "forceBase64Format": "",
+            "lazyImageGeneration": true,
+            "stripMetadata": true,
+            "useMozJpeg": false,
+          },
+        },
+        "inputPaths": Array [
+          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        ],
+        "name": "IMAGE_PROCESSING",
+        "outputDir": "<PROJECT_ROOT>/public/static/1234",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`gatsby-plugin-sharp fluid should support option 'srcSetAlwaysIncludeOriginal'=false (maxBreakpoint > width) 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "args": Object {
+          "isLazy": false,
+          "operations": Array [
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 50,
+              },
+              "outputPath": "a1812/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 70,
+              },
+              "outputPath": "1aade/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 150,
+              },
+              "outputPath": "8a4e8/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 250,
+              },
+              "outputPath": "63868/test.png",
+            },
+            Object {
+              "args": Object {
+                "toFormat": "png",
+                "width": 281,
+              },
+              "outputPath": "6b1e2/test.png",
+            },
+          ],
+          "pluginOptions": Object {
+            "base64Width": 20,
+            "defaultQuality": 50,
+            "failOnError": true,
+            "forceBase64Format": "",
+            "lazyImageGeneration": true,
+            "stripMetadata": true,
+            "useMozJpeg": false,
+          },
+        },
+        "inputPaths": Array [
+          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+        ],
+        "name": "IMAGE_PROCESSING",
+        "outputDir": "<PROJECT_ROOT>/public/static/1234",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
 exports[`gatsby-plugin-sharp fluid should throw if maxWidth is less than 1 1`] = `[MockFunction]`;
 
 exports[`gatsby-plugin-sharp fluid should throw on srcSet breakpoints less than 1 1`] = `[MockFunction]`;
