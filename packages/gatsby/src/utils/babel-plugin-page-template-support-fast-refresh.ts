@@ -2,13 +2,20 @@ import { NodePath, PluginObj } from "@babel/core"
 import { store } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
 
-export default function ({ types: t, ...rest }): PluginObj {
+const anonymousMessage = ``
+
+export default function babelPluginPageTemplateSupportFastRefresh(): PluginObj {
   return {
     visitor: {
       Program(path, state): void {
-        const filename = state.file.opts.filename
-        // TODO: verify on windows due to slashes hell
+        const filename = state?.file?.opts?.filename
+
+        if (!filename) {
+          return
+        }
+
         const isPageTemplate = store.getState().components.has(filename)
+
         if (!isPageTemplate) {
           return
         }
