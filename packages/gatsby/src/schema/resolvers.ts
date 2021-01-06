@@ -1,6 +1,5 @@
 import systemPath from "path"
 import normalize from "normalize-path"
-import _ from "lodash"
 import {
   GraphQLList,
   GraphQLType,
@@ -370,32 +369,38 @@ export function fileByPath<TSource, TArgs>(
       node => node.internal && node.internal.type === `File`
     )
 
-    const findLinkedFileNode = (relativePath: string): any => {
-      // Use the parent File node to create the absolute path to
-      // the linked file.
-      const fileLinkPath = normalize(
-        systemPath.resolve(parentFileNode.dir, relativePath)
+    if (Array.isArray(fieldValue)) {
+      return Promise.all(
+        fieldValue.map(fieldValue =>
+          context.nodeModel.runQuery({
+            query: {
+              filter: {
+                absolutePath: {
+                  eq: normalize(
+                    systemPath.resolve(parentFileNode.dir, fieldValue)
+                  ),
+                },
+              },
+            },
+            firstOnly: true,
+            type: `File`,
+          })
+        )
       )
-
-      // Use that path to find the linked File node.
-      const linkedFileNode = _.find(
-        context.nodeModel.getAllNodes({ type: `File` }),
-        n => n.absolutePath === fileLinkPath
-      )
-      return linkedFileNode
+    } else {
+      return context.nodeModel.runQuery({
+        query: {
+          filter: {
+            absolutePath: {
+              eq: normalize(systemPath.resolve(parentFileNode.dir, fieldValue)),
+            },
+          },
+        },
+        firstOnly: true,
+        type: `File`,
+      })
     }
-
-    return resolveValue(findLinkedFileNode, fieldValue)
   }
-}
-
-function resolveValue(
-  resolve: (a: any) => any,
-  value: any | Array<any>
-): any | Array<any> {
-  return Array.isArray(value)
-    ? value.map(v => resolveValue(resolve, v))
-    : resolve(value)
 }
 
 function getProjectedField(
