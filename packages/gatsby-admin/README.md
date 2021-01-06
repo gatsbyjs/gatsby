@@ -6,7 +6,7 @@ A visual interface to configure your Gatsby site. Currently alpha testing.
 
 For now, Gatsby Admin is marked as experimental and requires a flag to enable. Add the following flag when using `gatsby develop`:
 
-```sh
+```shell
 GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
 ```
 
@@ -98,7 +98,7 @@ The easiest way to work on Admin locally is to develop Admin itself.
 
 To try Admin with one of your sites locally, use the `gatsby-dev-cli` to copy the local versions of `gatsby`, `gatsby-cli`, `gatsby-recipes`, `gatsby-core-utils` and `gatsby-admin` into your project:
 
-```sh
+```shell
 # Make sure to build the latest local versions of all packages
 ~/gatsby
 yarn run watch
