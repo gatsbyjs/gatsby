@@ -26,7 +26,7 @@ Or in the `scripts` section of your `package.json`:
 }
 ```
 
-Once you run `gatsby develop` with the flag enabled, you can visit `localhost:8000/___admin` to view Admin for your Gatsby site!
+Once you run `gatsby develop` with the flag enabled, you can visit `http://localhost:8000/___admin` to view Admin for your Gatsby site!
 
 ![Gatsby Admin homepage showing a list of installed plugins, as well as a search input to search for plugins to install](https://user-images.githubusercontent.com/7525670/95580804-36df9200-0a38-11eb-80a7-fbd847a13da1.png)
 
@@ -58,7 +58,7 @@ It also listens to the [`gatsby develop` status server](https://github.com/gatsb
 
 To discover where they are (and whether they are already running) there is a service discovery mechanism in `gatsby-core-utils`. It stores the ports of the running Gatsby site(s) at `~/.config/gatsby/sites/<pathhash>/<servername>.json`.
 
-Admin can then fetch `localhost:8000/___services` (where `:8000` is the well-known port of the running site), which returns a list of all the random ports used by the site:
+Admin can then fetch `http://localhost:8000/___services` (where `:8000` is the well-known port of the running site), which returns a list of all the random ports used by the site:
 
 ```
 $ curl http://localhost:8000/___services | jq
@@ -75,7 +75,7 @@ $ curl http://localhost:8000/___services | jq
 }
 ```
 
-That's how the Admin frontend knows to connect to `localhost:50400/graphql` to connect to the GraphQL server, and `localhost:60731` to connect to the develop status server.
+That's how the Admin frontend knows to connect to `http://localhost:50400/graphql` to connect to the GraphQL server, and `http://localhost:60731` to connect to the develop status server.
 
 #### Production Deployment
 
@@ -111,4 +111,4 @@ $ gatsby-dev --packages gatsby gatsby-cli gatsby-recipes gatsby-core-utils gatsb
 $ GATSBY_EXPERIMENTAL_ENABLE_ADMIN=true gatsby develop
 ```
 
-Then visit `localhost:8000/\_\_\_admin` and you should see Gatsby Admin for your site!
+Then visit `http://localhost:8000/\_\_\_admin` and you should see Gatsby Admin for your site!
