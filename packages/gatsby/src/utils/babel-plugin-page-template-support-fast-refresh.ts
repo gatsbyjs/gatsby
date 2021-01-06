@@ -2,8 +2,6 @@ import { NodePath, PluginObj } from "@babel/core"
 import { store } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
 
-const anonymousMessage = ``
-
 export default function babelPluginPageTemplateSupportFastRefresh(): PluginObj {
   return {
     visitor: {
@@ -32,14 +30,30 @@ export default function babelPluginPageTemplateSupportFastRefresh(): PluginObj {
             const declaration = path.node.declaration
             if (declaration.type === `FunctionDeclaration`) {
               if (!declaration.id) {
-                makeWarning(path, `I need a name`)
+                makeWarning(
+                  path,
+                  `[FAST REFRESH]
+Anonymous function declarations cause Fast Refresh to not preserve local component state.
+
+Please add a name to your function, for example:
+
+Before:
+export default function () {};
+
+After:
+export default function Named() {}
+`
+                )
               } else if (
                 declaration.id?.name[0] !==
                 declaration.id?.name[0].toLocaleUpperCase()
               ) {
                 makeWarning(
                   path,
-                  `I need upper case. Change "${
+                  `[FAST REFRESH]
+Lowercase components cause Fast Refresh to not preserve local component state. You must use PascalCase.
+
+Change "${
                     declaration.id.name
                   }" to "${declaration.id.name[0].toLocaleUpperCase()}${declaration.id.name.substring(
                     1
@@ -49,7 +63,33 @@ export default function babelPluginPageTemplateSupportFastRefresh(): PluginObj {
             } else if (declaration.type === `ArrowFunctionExpression`) {
               makeWarning(
                 path,
-                `Arrow function - do "const Blah = () => {}; export default Blah;". `
+                `[FAST REFRESH]
+Anonymous arrow functions cause Fast Refresh to not preserve local component state.
+
+Please add a name to your function, for example:
+
+Before:
+export default () => {};
+
+After:
+const Named = () => {};
+export default Named;
+`
+              )
+            } else if (
+              declaration.type === `Identifier` &&
+              declaration?.name[0] !== declaration?.name[0].toLocaleUpperCase()
+            ) {
+              makeWarning(
+                path,
+                `[FAST REFRESH]
+Lowercase components cause Fast Refresh to not preserve local component state. You must use PascalCase.
+
+Change the component and default export from "${
+                  declaration.name
+                }" to "${declaration.name[0].toLocaleUpperCase()}${declaration.name.substring(
+                  1
+                )}"`
               )
             }
           },
@@ -57,7 +97,11 @@ export default function babelPluginPageTemplateSupportFastRefresh(): PluginObj {
             // At this point page query export is already removed
             makeWarning(
               path,
-              `There are more exports than default (react template) and page query. Fast refresh won't work`
+              `[FAST REFRESH]
+In page templates only a default export of a valid React component and the named export of a page query is allowed.
+All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
+
+Please move your other named exports to another file.`
             )
           },
         })
