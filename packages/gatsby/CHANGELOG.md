@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.30.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0...gatsby@2.30.1) (2021-01-06)
+
+### Bug Fixes
+
+- **gatsby,gatsby-admin:** Pin socket.io version to 2.3.0 ([#28885](https://github.com/gatsbyjs/gatsby/issues/28885)) ([#28886](https://github.com/gatsbyjs/gatsby/issues/28886)) ([64f2e95](https://github.com/gatsbyjs/gatsby/commit/64f2e95316c557e64efcc4bd8a8399eb33f9856c))
+
 # [2.30.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.8...gatsby@2.30.0) (2021-01-05)
 
 ### Features
