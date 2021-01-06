@@ -335,7 +335,7 @@ module.exports = {
     logLevel: `silent`,
     publicPath: devConfig.output.publicPath,
     watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
-    stats: `errors-warnings`,
+    stats: `errors-only`,
     serverSideRender: true,
   }) as unknown) as PatchedWebpackDevMiddleware
 

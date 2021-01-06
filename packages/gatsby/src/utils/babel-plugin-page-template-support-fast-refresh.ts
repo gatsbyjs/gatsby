@@ -2,20 +2,7 @@ import { NodePath, PluginObj } from "@babel/core"
 import { store } from "../redux"
 import reporter from "gatsby-cli/lib/reporter"
 
-export default function babelPluginPageTemplateSupportFastRefresh({
-  ...babel
-}): PluginObj {
-  let onWarning: ((reason: string | Error) => void) | null = null
-  const hasOnWarning = typeof onWarning === `function`
-  babel.caller(caller => {
-    onWarning = caller.onWarning
-    return `` // Intentionally empty to not invalidate cache
-  })
-
-  console.log({ onWarning })
-
-  const warn = onWarning
-
+export default function babelPluginPageTemplateSupportFastRefresh(): PluginObj {
   return {
     visitor: {
       Program(path, state): void {
@@ -36,13 +23,6 @@ export default function babelPluginPageTemplateSupportFastRefresh({
             path.buildCodeFrameError(`${message}\n\nFilename: ${filename}\n\n`)
               .message
           )
-          if (hasOnWarning) {
-            warn(
-              path.buildCodeFrameError(
-                `${message}\n\nFilename: ${filename}\n\n`
-              ).message
-            )
-          }
         }
 
         path.traverse({
