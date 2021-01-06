@@ -61,6 +61,20 @@ module.exports = babelLoader.custom(babel => {
         fallbackPresets,
       ] = prepareOptions(babel, customOptions)
 
+      if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
+        const emitWarning = this.emitWarning.bind(this)
+        Object.defineProperty(options.caller, `onWarning`, {
+          enumerable: false,
+          writable: false,
+          value: (options.caller.onWarning = function (reason) {
+            if (!(reason instanceof Error)) {
+              reason = new Error(reason)
+            }
+            emitWarning(reason)
+          }),
+        })
+      }
+
       // If there is no filesystem babel config present, add our fallback
       // presets/plugins.
       if (!partialConfig.hasFilesystemConfig()) {
