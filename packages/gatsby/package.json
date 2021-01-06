@@ -136,7 +136,7 @@
     "shallow-compare": "^1.2.2",
     "signal-exit": "^3.0.3",
     "slugify": "^1.4.4",
-    "socket.io": "^2.3.0",
+    "socket.io": "2.3.0",
     "socket.io-client": "2.3.0",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.19",
