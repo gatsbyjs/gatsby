@@ -171,7 +171,7 @@ Your featured image should now appear on the generated page right below the main
 
 ## Inline images with `gatsby-remark-images`
 
-You may also include images in the Markdown body itself. The plugin [gatsby-remark-images](/packages/gatsby-remark-images) comes in handy for this.
+You may also include images in the Markdown body itself. The plugin [gatsby-remark-images](/plugins/gatsby-remark-images) comes in handy for this.
 
 Start out by installing `gatsby-remark-images` and `gatsby-plugin-sharp`.
 

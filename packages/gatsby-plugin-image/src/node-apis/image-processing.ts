@@ -1,5 +1,4 @@
 import {
-  Node,
   GatsbyCache,
   Reporter,
   ParentSpanPluginArgs,
@@ -12,7 +11,7 @@ import fs from "fs-extra"
 import path from "path"
 import { ImageProps, SharpProps } from "../utils"
 import { watchImage } from "./watcher"
-import { createRemoteFileNode } from "gatsby-source-filesystem"
+import { createRemoteFileNode, FileSystemNode } from "gatsby-source-filesystem"
 
 const supportedTypes = new Set([`image/png`, `image/jpeg`, `image/webp`])
 export interface IImageMetadata {
@@ -30,11 +29,11 @@ export async function createImageNode({
   fullPath: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
-}): Promise<Node | undefined> {
+}): Promise<FileSystemNode | undefined> {
   if (!fs.existsSync(fullPath)) {
     return undefined
   }
-  const file: Node = await createFileNode(fullPath, createNodeId, {})
+  const file: FileSystemNode = await createFileNode(fullPath, createNodeId, {})
 
   if (!file) {
     return undefined
@@ -73,7 +72,7 @@ export async function writeImages({
 }): Promise<void> {
   const promises = [...images.entries()].map(
     async ([hash, { src, ...args }]) => {
-      let file: Node | undefined
+      let file: FileSystemNode | undefined
       let fullPath
       if (process.env.GATSBY_EXPERIMENTAL_REMOTE_IMAGES && isRemoteURL(src)) {
         try {
@@ -155,7 +154,7 @@ export async function writeImages({
 }
 
 export async function writeImage(
-  file: Node,
+  file: FileSystemNode,
   args: SharpProps,
   pathPrefix: string,
   reporter: Reporter,
@@ -176,9 +175,9 @@ export async function writeImage(
       // Write the image properties to the cache
       await fs.writeJSON(filename, sharpData)
     } else {
-      reporter.warn(`Could not process image`)
+      reporter.warn(`Could not process image ${file.relativePath}`)
     }
   } catch (e) {
-    reporter.warn(`Error processing image`)
+    reporter.warn(`Error processing image ${file.relativePath}. \n${e.message}`)
   }
 }

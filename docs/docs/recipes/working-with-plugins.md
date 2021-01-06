@@ -7,7 +7,7 @@ A [Gatsby plugin](/docs/what-is-a-plugin/) abstracts Gatsby APIs into an install
 
 ## Using a plugin
 
-Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/packages/gatsby-source-filesystem/) as an example.
+Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/plugins/gatsby-source-filesystem/) as an example.
 
 > If you'd like to take a look at available plugins, check out the [plugin library](/plugins).
 

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.31.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.8...gatsby@2.31.0-next.0) (2020-12-29)
+
+### Features
+
+- **gatsby:** use production React for dev-ssr when CI=true ([#28728](https://github.com/gatsbyjs/gatsby/issues/28728)) ([bd6b899](https://github.com/gatsbyjs/gatsby/commit/bd6b899fdb22748c2ecc016643ed39e32d014a6b))
+
+# [2.30.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.7...gatsby@2.30.0-next.8) (2020-12-29)
+
+### Bug Fixes
+
+- **gatsby:** print childOf directive for implicit child fields ([#28483](https://github.com/gatsbyjs/gatsby/issues/28483)) ([146b197](https://github.com/gatsbyjs/gatsby/commit/146b1975cc83f862c883b27415b914e152c708e8))
+- **gatsby:** use correct stageLabel instead of `undefined` ([#28701](https://github.com/gatsbyjs/gatsby/issues/28701)) ([a77e1d8](https://github.com/gatsbyjs/gatsby/commit/a77e1d80d5b3a75979760d3be2005742feb09266))
+
 # [2.30.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.6...gatsby@2.30.0-next.7) (2020-12-18)
 
 ### Bug Fixes
@@ -1148,7 +1161,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - **gatsby:** don't fail validation on fragments that are not used ([#24032](https://github.com/gatsbyjs/gatsby/issues/24032)) ([61d0ef4](https://github.com/gatsbyjs/gatsby/commit/61d0ef4))
-- **gatsby:** update script to generate apis.json to accomodate Typescript ([#24023](https://github.com/gatsbyjs/gatsby/issues/24023)) ([7878d0f](https://github.com/gatsbyjs/gatsby/commit/7878d0f))
+- **gatsby:** update script to generate apis.json to accommodate Typescript ([#24023](https://github.com/gatsbyjs/gatsby/issues/24023)) ([7878d0f](https://github.com/gatsbyjs/gatsby/commit/7878d0f))
 
 ## [2.21.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.27...gatsby@2.21.28) (2020-05-13)
 

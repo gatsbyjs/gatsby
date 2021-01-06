@@ -22,6 +22,7 @@ export interface IStaticImageProps extends Omit<GatsbyImageProps, "image"> {
   jpgOptions?: Record<string, unknown>
   pngOptions?: Record<string, unknown>
   webpOptions?: Record<string, unknown>
+  avifOptions?: Record<string, unknown>
   blurredOptions?: Record<string, unknown>
 }
 
@@ -52,6 +53,7 @@ export function _getStaticImage(
     jpgOptions,
     pngOptions,
     webpOptions,
+    avifOptions,
     blurredOptions,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...props

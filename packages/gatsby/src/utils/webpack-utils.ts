@@ -195,12 +195,28 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
-      return {
-        options,
-        // use MiniCssExtractPlugin only on production builds
-        loader: PRODUCTION
-          ? MiniCssExtractPlugin.loader
-          : require.resolve(`style-loader`),
+      if (PRODUCTION) {
+        // production always uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options,
+        }
+      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        // develop with ssr also uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            ...options,
+            // enable hmr for browser bundle, ssr bundle doesn't need it
+            hmr: stage === `develop`,
+          },
+        }
+      } else {
+        // develop without ssr is using style-loader
+        return {
+          loader: require.resolve(`style-loader`),
+          options,
+        }
       }
     },
 
@@ -690,8 +706,6 @@ export const createWebpackUtils = (
 
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
-      filename: `[name].[contenthash].css`,
-      chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 

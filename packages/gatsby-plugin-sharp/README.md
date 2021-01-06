@@ -279,7 +279,7 @@ quoting the Sharp documentation:
 
 Generates a traced SVG of the image (see [the original GitHub issue][9]) and
 returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It used in
-[gatsby-image](/packages/gatsby-image/) to provide an
+[gatsby-image](/plugins/gatsby-image/) to provide an
 alternative to the default inline base64 placeholder image.
 
 Uses [node-potrace][11] and [SVGO][12] under the hood. Default settings for
