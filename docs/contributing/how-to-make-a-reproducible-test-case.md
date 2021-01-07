@@ -17,7 +17,7 @@ A reproducible test case is a great way to share a specific environment that cau
 ## Steps to create a reproducible test case
 
 - Create a new Gatsby site with a starter, the official `hello-world` starter is a great 'barebones' starting point here: `gatsby new bug-repro https://github.com/gatsbyjs/gatsby-starter-hello-world`
-- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with Gatsby MDX you should install and configure [`gatsby-plugin-mdx`](https://www.gatsbyjs.com/packages/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
+- Add any Gatsby plugins that relate to the issue. For example, if you're having problems with Gatsby MDX you should install and configure [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/). Only add plugins that are needed to demonstrate the problem.
 - Add the code needed to recreate the error you've seen.
 - Publish the code (your GitHub account is a good place to do this) and then link to it when [creating an issue](/contributing/how-to-file-an-issue/).
 

@@ -9,11 +9,13 @@ describe(`SSR`, () => {
 
     expect(html).toMatchSnapshot()
   })
+
   test(`dev & build outputs match`, async () => {
     const childProcess = await execa(`yarn`, [`test-output`])
 
     expect(childProcess.code).toEqual(0)
-  })
+  }, 15000)
+
   test(`it generates an error page correctly`, async () => {
     const src = path.join(__dirname, `/fixtures/bad-page.js`)
     const dest = path.join(__dirname, `../src/pages/bad-page.js`)
@@ -51,5 +53,5 @@ describe(`SSR`, () => {
         }, 400)
       }, 400)
     })
-  })
+  }, 15000)
 })

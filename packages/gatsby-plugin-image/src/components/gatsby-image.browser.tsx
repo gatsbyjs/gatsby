@@ -7,6 +7,7 @@ import React, {
   ImgHTMLAttributes,
   useState,
   RefObject,
+  CSSProperties,
 } from "react"
 import {
   getWrapperProps,
@@ -26,7 +27,13 @@ export interface GatsbyImageProps
   alt: string
   as?: ElementType
   className?: string
+  class?: string
+  imgClassName?: string
   image: IGatsbyImageData
+  imgStyle?: CSSProperties
+  backgroundColor?: string
+  objectFit?: CSSProperties["objectFit"]
+  objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
   onError?: () => void
   onStartLoad?: Function
@@ -36,7 +43,6 @@ export interface IGatsbyImageData {
   layout: Layout
   height?: number
   backgroundColor?: string
-  sizes?: string
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
   width?: number
@@ -50,9 +56,11 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   as: Type = `div`,
   style,
   className,
+  class: preactClass,
   onStartLoad,
   image,
   onLoad: customOnLoad,
+  backgroundColor,
   ...props
 }) {
   if (!image) {
@@ -61,7 +69,10 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     }
     return null
   }
-  const { width, height, layout, images, backgroundColor } = image
+  if (preactClass) {
+    className = preactClass
+  }
+  const { width, height, layout, images } = image
 
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
@@ -143,7 +154,13 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
       // On first server hydration do nothing
       if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
+        hydrated.current = true
         return
+      }
+
+      // When no ssrHtml is found (develop) we should force render instead of hydrate
+      if (!hasSSRHtml) {
+        hydrated.current = true
       }
 
       import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
@@ -182,6 +199,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       style={{
         ...wStyle,
         ...style,
+        backgroundColor,
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
       ref={root}

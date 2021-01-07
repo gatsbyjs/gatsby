@@ -18,14 +18,29 @@ export const GatsbyImageHydrator: FunctionComponent<{
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage({
   as,
   className,
+  class: preactClass,
   style,
   image,
   loading = `lazy`,
+  imgClassName,
+  imgStyle,
+  backgroundColor,
+  objectFit,
+  objectPosition,
   ...props
 }) {
   if (!image) {
     console.warn(`[gatsby-plugin-image] Missing image prop`)
     return null
+  }
+  if (preactClass) {
+    className = preactClass
+  }
+  imgStyle = {
+    objectFit,
+    objectPosition,
+    backgroundColor,
+    ...imgStyle,
   }
 
   const {
@@ -34,8 +49,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     layout,
     images,
     placeholder,
-    sizes,
-    backgroundColor,
+    backgroundColor: placeholderBackgroundColor,
   } = image
 
   const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
@@ -50,7 +64,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   }
   if (images.fallback) {
     cleanedImages.fallback = {
-      src: images.fallback.src,
+      ...images.fallback,
       srcSet: images.fallback.srcSet
         ? removeNewLines(images.fallback.srcSet)
         : undefined,
@@ -73,6 +87,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
       style={{
         ...wStyle,
         ...style,
+        backgroundColor,
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
     >
@@ -84,13 +99,14 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
             layout,
             width,
             height,
-            backgroundColor
+            placeholderBackgroundColor
           )}
         />
 
         <MainImage
           data-gatsby-image-ssr=""
-          sizes={sizes}
+          className={imgClassName}
+          style={imgStyle}
           {...(props as Omit<MainImageProps, "images" | "fallback">)}
           // When eager is set we want to start the isLoading state on true (we want to load the img without react)
           {...getMainProps(loading === `eager`, false, cleanedImages, loading)}

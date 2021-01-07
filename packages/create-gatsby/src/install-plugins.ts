@@ -24,19 +24,39 @@ const resolveGatsbyCliPath = (
   gatsbyPath: string
 ): string | never => {
   try {
-    const installPluginCommand = requireResolve(
-      `gatsby-cli/lib/handlers/plugin-add`,
-      {
-        // Try to find gatsby-cli in the site root, or in the site's gatsby dir
-        paths: [rootPath, path.dirname(gatsbyPath)],
+    let installPluginCommand
+    try {
+      installPluginCommand = requireResolve(
+        `gatsby-cli/lib/handlers/plugin-add`,
+        {
+          // Try to find gatsby-cli in the site root, or in the site's gatsby dir
+          paths: [rootPath, path.dirname(gatsbyPath)],
+        }
+      )
+    } catch (e) {
+      // We'll error out later
+    }
+    try {
+      if (!installPluginCommand) {
+        // Older location
+        console.log(`looking in old place`)
+        installPluginCommand = requireResolve(`gatsby-cli/lib/plugin-add`, {
+          paths: [rootPath, path.dirname(gatsbyPath)],
+        })
       }
-    )
+    } catch (e) {
+      // We'll error out later
+    }
 
-    if (!installPluginCommand) throw new Error()
+    if (!installPluginCommand) {
+      throw new Error()
+    }
 
     return installPluginCommand
   } catch (e) {
-    throw new Error(`gatsby-cli not installed, or is too old`)
+    throw new Error(
+      `Could not find a suitable version of gatsby-cli. Please report this issue at https://www.github.com/gatsbyjs/gatsby/issues`
+    )
   }
 }
 

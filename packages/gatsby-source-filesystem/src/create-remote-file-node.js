@@ -61,6 +61,8 @@ const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT || 30000
 
 const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
 
+const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT || 3
+
 /********************
  * Queue Management *
  ********************/
@@ -178,8 +180,31 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
 
     responseStream.on(`response`, response => {
       resetTimeout()
+      const contentLength =
+        response.headers && Number(response.headers[`content-length`])
 
       fsWriteStream.on(`finish`, () => {
+        // We have an incomplete download
+        if (contentLength && contentLength !== fsWriteStream.bytesWritten) {
+          fs.removeSync(tmpFilename)
+
+          if (attempt < INCOMPLETE_RETRY_LIMIT) {
+            resolve(
+              requestRemoteNode(
+                url,
+                headers,
+                tmpFilename,
+                httpOpts,
+                attempt + 1
+              )
+            )
+          } else {
+            reject(
+              `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
+            )
+          }
+        }
+
         if (timeout) {
           clearTimeout(timeout)
         }

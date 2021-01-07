@@ -84,7 +84,7 @@ Gatsby.
   member will merge the RFCs associated pull request, at which point the RFC will
   become 'active'.
 
-## The RFC life-cycle
+## The RFC lifecycle
 
 Once an RFC becomes active, then authors may implement it and submit the
 feature as a pull request to the Gatsby repo. Becoming 'active' is not a rubber

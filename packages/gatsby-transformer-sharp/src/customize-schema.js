@@ -39,6 +39,7 @@ const {
   WebPOptionsType,
   BlurredOptionsType,
   TransformOptionsType,
+  AVIFOptionsType,
 } = require(`./types`)
 const { stripIndent } = require(`common-tags`)
 const { prefixId, CODES } = require(`./error-utils`)
@@ -398,7 +399,7 @@ const imageNodeType = ({
     args: {
       layout: {
         type: ImageLayoutType,
-        defaultValue: `fixed`,
+        defaultValue: `constrained`,
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
@@ -410,7 +411,7 @@ const imageNodeType = ({
         type: GraphQLInt,
         description: stripIndent`
         Maximum display width of generated files. 
-        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+        The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
         This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
       },
       maxHeight: {
@@ -424,7 +425,7 @@ const imageNodeType = ({
         type: GraphQLInt,
         description: stripIndent`
         The display width of the generated image. 
-        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
+        The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
         Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
         `,
       },
@@ -479,7 +480,7 @@ const imageNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        description: `The default quality. This is overriden by any format-specific options`,
+        description: `The default quality. This is overridden by any format-specific options`,
       },
       jpgOptions: {
         type: JPGOptionsType,
@@ -493,6 +494,10 @@ const imageNodeType = ({
         type: WebPOptionsType,
         description: `Options to pass to sharp when generating WebP images.`,
       },
+      avifOptions: {
+        type: AVIFOptionsType,
+        description: `Options to pass to sharp when generating AVIF images.`,
+      },
       transformOptions: {
         type: TransformOptionsType,
         description: `Options to pass to sharp to control cropping and other image manipulations.`,
@@ -505,7 +510,6 @@ const imageNodeType = ({
     },
     resolve: async (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
 
       if (!generateImageData) {
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
@@ -520,7 +524,8 @@ const imageNodeType = ({
       }
       const imageData = await generateImageData({
         file,
-        args,
+        args: fieldArgs,
+        pathPrefix,
         reporter,
         cache,
       })

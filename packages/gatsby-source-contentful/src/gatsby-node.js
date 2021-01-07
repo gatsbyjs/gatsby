@@ -5,6 +5,7 @@ const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
 const fetch = require(`node-fetch`)
+const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -215,8 +216,7 @@ exports.sourceNodes = async (
     // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
     // If present, do NOT contact contentful, skip the round trips entirely
     reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
-      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in \`${process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE}\``
     )
     ;({
       currentSyncData,
@@ -293,6 +293,31 @@ exports.sourceNodes = async (
     }
   }
 
+  const allLocales = locales
+  locales = locales.filter(pluginConfig.get(`localeFilter`))
+  reporter.verbose(
+    `Default locale: ${defaultLocale}.   All locales: ${allLocales
+      .map(({ code }) => code)
+      .join(`, `)}`
+  )
+  if (allLocales.length !== locales.length) {
+    reporter.verbose(
+      `After plugin.options.localeFilter: ${locales
+        .map(({ code }) => code)
+        .join(`, `)}`
+    )
+  }
+  if (locales.length === 0) {
+    reporter.panic({
+      id: CODES.LocalesMissing,
+      context: {
+        sourceMessage: `Please check if your localeFilter is configured properly. Locales '${allLocales
+          .map(item => item.code)
+          .join(`,`)}' were found but were filtered down to none.`,
+      },
+    })
+  }
+
   createTypes(`
   interface ContentfulEntry @nodeInterface {
     contentful_id: String!
@@ -336,7 +361,7 @@ exports.sourceNodes = async (
   fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
-    `Contentful: Proccess data (${sourceId})`,
+    `Contentful: Process data (${sourceId})`,
     {
       parentSpan,
     }
@@ -564,6 +589,7 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,

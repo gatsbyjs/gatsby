@@ -110,7 +110,7 @@ describe(`navigation`, () => {
 
   describe(`Supports unicode characters in urls`, () => {
     it(`Can navigate directly`, () => {
-      cy.visit(`/안녕`).waitForRouteChange()
+      cy.visit(encodeURI(`/안녕`)).waitForRouteChange()
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)
         .should(`equal`, `Hi from the second page`)
@@ -126,7 +126,7 @@ describe(`navigation`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
-      cy.visit(`/안녕404/`, {
+      cy.visit(encodeURI(`/안녕404/`), {
         failOnStatusCode: false,
       }).waitForRouteChange()
 
@@ -173,7 +173,10 @@ describe(`navigation`, () => {
       it(`should trigger an effect after the state has changed`, () => {
         cy.findByTestId(`effect-message`).should(`have.text`, ``)
         cy.findByTestId(`send-state-message`).click().waitForRouteChange()
-        cy.findByTestId(`effect-message`).should(`have.text`, `this is a message using the state`)
+        cy.findByTestId(`effect-message`).should(
+          `have.text`,
+          `this is a message using the state`
+        )
       })
     })
   }
@@ -203,7 +206,10 @@ describe(`navigation`, () => {
       it(`should trigger an effect after the state has changed`, () => {
         cy.findByTestId(`effect-message`).should(`have.text`, ``)
         cy.findByTestId(`send-state-message`).click().waitForRouteChange()
-        cy.findByTestId(`effect-message`).should(`have.text`, `this is a message using the state`)
+        cy.findByTestId(`effect-message`).should(
+          `have.text`,
+          `this is a message using the state`
+        )
       })
     })
   }

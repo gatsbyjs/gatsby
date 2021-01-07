@@ -7,7 +7,7 @@ let page404 = null
 exports.onCreatePage = ({ page, store, actions }) => {
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
-  // https://www.gatsbyjs.org/docs/add-404-page/
+  // https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/
   if (!page404 && /^\/?404\/?$/.test(page.path)) {
     actions.createPage({
       ...page,

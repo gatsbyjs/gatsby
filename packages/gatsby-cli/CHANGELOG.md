@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.18.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.5...gatsby-cli@2.18.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.17.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.4...gatsby-cli@2.17.0-next.5) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.17.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.3...gatsby-cli@2.17.0-next.4) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.17.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.2...gatsby-cli@2.17.0-next.3) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.17.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.1...gatsby-cli@2.17.0-next.2) (2020-12-16)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.17.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.0...gatsby-cli@2.17.0-next.1) (2020-12-15)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.17.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.16.0-next.4...gatsby-cli@2.17.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.16.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.16.0-next.3...gatsby-cli@2.16.0-next.4) (2020-12-08)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.16.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.16.0-next.2...gatsby-cli@2.16.0-next.3) (2020-12-04)
+
+**Note:** Version bump only for package gatsby-cli
+
+# [2.16.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.16.0-next.1...gatsby-cli@2.16.0-next.2) (2020-12-03)
+
+**Note:** Version bump only for package gatsby-cli
+
 # [2.16.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.16.0-next.0...gatsby-cli@2.16.0-next.1) (2020-12-01)
 
 **Note:** Version bump only for package gatsby-cli
@@ -730,7 +770,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- **gatsby-cli:** avoid unnecesary rerenders for static messages in CLI ([#21955](https://github.com/gatsbyjs/gatsby/issues/21955)) ([5aff49d](https://github.com/gatsbyjs/gatsby/commit/5aff49d))
+- **gatsby-cli:** avoid unnecessary rerenders for static messages in CLI ([#21955](https://github.com/gatsbyjs/gatsby/issues/21955)) ([5aff49d](https://github.com/gatsbyjs/gatsby/commit/5aff49d))
 
 ## [2.10.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.10.1...gatsby-cli@2.10.2) (2020-03-06)
 

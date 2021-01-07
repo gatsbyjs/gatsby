@@ -72,7 +72,24 @@ async function waitNextPageData(
         if (data.payload.page === pagePath) {
           clearTimeout(timeout)
           emitter.off(`CLEAR_PENDING_PAGE_DATA_WRITE`, listener)
-          resolve(readPageData(pagePath))
+          // page-data was flushed, but we don't know if query wasn't marked as stale in meantime
+          // so we call `doGetPageData` again that will make checks and wait for fresh result
+          // or resolve immediately if it's not stale.
+          // Remaining time change is not actually "correct", but timeout overall is meant to ensure
+          // we do resolve (or reject) eventually, it doesn't have to be 100% correct - we do decrease
+          // it slightly to not end up in infinite loop situations.
+          // We also need to delay calling `doGetPageData` because it can cause adding another `CLEAR_PENDING_PAGE_DATA_WRITE`
+          // callback in same tick and `mett` will run this callback (because it will happen before current callback finishes
+          // and `mett` doesn't guarantee it will only run callbacks registered before message was emitted)
+          process.nextTick(() =>
+            resolve(
+              doGetPageData(
+                pagePath,
+                Math.max(remainingTime - RETRY_INTERVAL / 5, 0),
+                initialWaitForMs
+              )
+            )
+          )
         }
       }
     })
