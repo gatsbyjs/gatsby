@@ -2,6 +2,10 @@
 
 Easily add Google Analytics to your Gatsby site.
 
+## Upgrade note
+
+This plugin uses under the hood the Google's `analytics.js` file. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag) which uses `gtag.js`.
+
 ## Install
 
 `npm install gatsby-plugin-google-analytics`
@@ -164,11 +168,11 @@ To allow custom events to be tracked, the plugin exposes a function to include i
 To use it, import the package and call the event within your components and business logic.
 
 ```jsx
-import React
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+import React from "react"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
 export default () => {
-  <div>
+  ;<div>
     <button
       onClick={e => {
         // To stop the page reloading
@@ -182,7 +186,7 @@ export default () => {
           // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: "Gatsby Plugin Example Campaign",
           // number - optional - Numeric value associated with the event. (e.g. A product ID)
-          value: 43
+          value: 43,
         })
         //... Other logic here
       }}
