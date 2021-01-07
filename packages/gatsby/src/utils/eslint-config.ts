@@ -8,6 +8,7 @@ export const eslintConfig = (
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,
+    rulePaths: [`${__dirname}/eslint-rules`],
     baseConfig: {
       globals: {
         graphql: true,
@@ -17,6 +18,9 @@ export const eslintConfig = (
       extends: [require.resolve(`eslint-config-react-app`)],
       plugins: [`graphql`],
       rules: {
+        // Custom ESLint rules from Gatsby
+        "no-anonymous-exports-page-templates": `warn`,
+        "limited-exports-page-templates": `warn`,
         // New versions of react use a special jsx runtime that remove the requirement
         // for having react in scope for jsx. Once the jsx runtime is backported to all
         // versions of react we can make this always be `off`.
@@ -32,7 +36,7 @@ export const eslintConfig = (
             tagName: `graphql`,
           },
         ],
-        "react/jsx-pascal-case": `off`, // Prevents errors with Theme-UI and Styled component
+        "react/jsx-pascal-case": `warn`,
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
         "jsx-a11y/alt-text": `warn`,
@@ -98,7 +102,7 @@ export const eslintConfig = (
             ],
           },
         ],
-        //"jsx-a11y/label-has-for": `warn`, was deprecated and replaced with jsx-a11y/has-associated-control in v6.1.0
+        // "jsx-a11y/label-has-for": `warn`, was deprecated and replaced with jsx-a11y/has-associated-control in v6.1.0
         "jsx-a11y/label-has-associated-control": `warn`,
         "jsx-a11y/lang": `warn`,
         "jsx-a11y/media-has-caption": `warn`,
