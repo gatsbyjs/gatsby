@@ -6,6 +6,7 @@ var http = require("http")
 var compress = require("compression")
 const cluster = require(`cluster`)
 const { performance } = require("perf_hooks")
+const execa = require(`execa`)
 
 var counter = 0
 var port = 3001
@@ -131,7 +132,12 @@ const getFiles = async files => {
 
 const handlerDirs = new Set()
 exports.runTask = async task => {
-  const handlerHash = String(murmurhash(task.handler))
+  // Hash the handler + dependencies (you can pass in dynamic dependencies).
+  const handlerHash = String(
+    murmurhash(
+      JSON.stringify({ handler: task.handler, dependencies: task.dependencies })
+    )
+  )
   const handlerDir = path.join(functionDir, handlerHash)
   const handlerPath = path.join(functionDir, handlerHash, `index.js`)
   if (!handlerDirs.has(handlerDir)) {
@@ -141,6 +147,19 @@ exports.runTask = async task => {
   // Write out the function if necessary.
   if (!knownTaskFunctions.has(handlerPath)) {
     fs.writeFileSync(handlerPath, `module.exports = ${task.handler}`)
+    if (task.dependencies) {
+      const output = await execa(`npm`, [`init`, `--yes`], { cwd: handlerDir })
+      const output2 = await execa(
+        `npm`,
+        [
+          `install`,
+          ..._.toPairs(task.dependencies).map(
+            ([name, version]) => `${name}@${version}`
+          ),
+        ],
+        { cwd: handlerDir }
+      )
+    }
     knownTaskFunctions.add(handlerPath)
   }
 

@@ -153,7 +153,6 @@ _.range(1).forEach(i => {
     handler: async (args, { files }) => {
       const path = require(`path`)
       const fs = require(`fs-extra`)
-      console.log(files)
 
       const jsonData = JSON.parse(files.data.fileBlob)
       jsonData.super = jsonData.super += 10
@@ -273,56 +272,56 @@ const runQuery = async (args, { files }) => {
   return `ok`
 }
 
-const startQueries = performance.now()
-const numQueries = 1000
-Promise.all(
-  _.range(numQueries).map(id =>
-    runTask({
-      handler: runQuery,
-      args: { id: id + 1 },
-      files: {
-        renderPage: {
-          originPath: `/tmp/the-simplest-blog/public/render-page.js`,
-        },
-      },
-    }).then(result => {
-      // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
-    })
-  )
-).then(() => {
-  const end = performance.now()
-  const elapsed = end - startQueries
-  console.log(
-    `run queries:`,
-    elapsed + `ms — ${(numQueries / elapsed) * 1000} qps`
-  )
-})
+// const startQueries = performance.now()
+// const numQueries = 1000
+// Promise.all(
+// _.range(numQueries).map(id =>
+// runTask({
+// handler: runQuery,
+// args: { id: id + 1 },
+// files: {
+// renderPage: {
+// originPath: `/tmp/the-simplest-blog/public/render-page.js`,
+// },
+// },
+// }).then(result => {
+// // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
+// })
+// )
+// ).then(() => {
+// const end = performance.now()
+// const elapsed = end - startQueries
+// console.log(
+// `run queries:`,
+// elapsed + `ms — ${(numQueries / elapsed) * 1000} qps`
+// )
+// })
 
-const renderHtml = async (args, { files }) => {
-  const requireFromString = require("require-from-string")
-  const renderer = requireFromString(String(files.renderPage.fileBlob))
-  console.log(args, files, renderer)
+// const renderHtml = async (args, { files }) => {
+// const requireFromString = require("require-from-string")
+// const renderer = requireFromString(String(files.renderPage.fileBlob))
+// console.log(args, files, renderer)
 
-  // const renderer = require(`./render-page`)
+// // const renderer = require(`./render-page`)
 
-  const htmlStr = await new Promise(resolve =>
-    renderer.default(
-      {
-        pagePath: `/blog/1`,
-        pageData: {
-          result: { data: { truth: `ho` } },
-          componentChunkName: `component---src-templates-basic-blog-js`,
-        },
-      },
-      (err, str) => {
-        // console.log(str)
-        resolve(str)
-      }
-    )
-  )
+// const htmlStr = await new Promise(resolve =>
+// renderer.default(
+// {
+// pagePath: `/blog/1`,
+// pageData: {
+// result: { data: { truth: `ho` } },
+// componentChunkName: `component---src-templates-basic-blog-js`,
+// },
+// },
+// (err, str) => {
+// // console.log(str)
+// resolve(str)
+// }
+// )
+// )
 
-  return htmlStr
-}
+// return htmlStr
+// }
 
 // Real SSR
 // runTask({
@@ -393,6 +392,21 @@ const rootSite = `/Users/kylemathews/programs/gatsby/benchmarks/markdown_id`
 // // },
 // // })
 // })
+
+// Dependencies
+runTask({
+  handler: args => {
+    const _ = require(`lodash`)
+    const faker = require(`faker`)
+    // return _.range(args.truth)
+    return faker.name.findName()
+  },
+  args: { truth: 22 },
+  dependencies: {
+    lodash: `latest`,
+    faker: `latest`,
+  },
+}).then(result => console.log(result))
 
 socket.on(`connect`, async function () {
   socket.emit(`setTaskRunner`, fs.readFileSync(`./remote-task-runner.js`))
