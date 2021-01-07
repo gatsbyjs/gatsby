@@ -370,7 +370,7 @@ export function fileByPath<TSource, TArgs>(
     )
 
     function queryNodeByPath(
-      relPath: string | Array<string>
+      relPath: string | string[]
     ): Array<Promise<IGatsbyNode>> | Promise<IGatsbyNode> {
       if (Array.isArray(relPath)) {
         const pees = relPath.map(relPath => queryNodeByPath(relPath))
