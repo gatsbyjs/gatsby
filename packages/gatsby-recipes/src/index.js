@@ -1,8 +1,8 @@
 import cli from "./cli"
-
-export { startGraphQLServer } from "./graphql-server"
+import startGraphQLServer from "./graphql-server"
 
 // data = { recipe?: string, graphqlPort: number, projectRoot: string }
 const recipesHandler = async data => cli(data)
 
-export default recipesHandler
+export * from "./resources"
+export { startGraphQLServer, recipesHandler }

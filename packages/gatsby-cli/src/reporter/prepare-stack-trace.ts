@@ -13,11 +13,16 @@ import {
 } from "source-map"
 
 export class ErrorWithCodeFrame extends Error {
-  codeFrame: string
+  codeFrame = ``
 
-  constructor(...args) {
-    super(...args)
-    this.codeFrame = ``
+  constructor(error: Error) {
+    super(error.message)
+
+    // We must use getOwnProperty because keys like `stack` are not enumerable,
+    // but we want to copy over the entire error
+    Object.getOwnPropertyNames(error).forEach(key => {
+      this[key] = error[key]
+    })
   }
 }
 

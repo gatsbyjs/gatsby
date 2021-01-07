@@ -4,7 +4,7 @@ import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
 
-import { buildHTML } from "./build-html"
+import { doBuildPages, buildRenderer, deleteRenderer } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -18,8 +18,10 @@ import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
 import { boundActionCreators } from "../redux/actions"
@@ -30,11 +32,13 @@ import {
   calculateDirtyQueries,
   runStaticQueries,
   runPageQueries,
+  writeOutRequires,
 } from "../services"
 import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
+import { updateSiteMetadata } from "gatsby-core-utils"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -53,14 +57,24 @@ interface IBuildArgs extends IProgram {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  keepPageRenderer: boolean
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
+  report.setVerbose(program.verbose)
+
   if (program.profile) {
     report.warn(
       `React Profiling is enabled. This can have a performance impact. See https://www.gatsbyjs.org/docs/profiling-site-performance-with-react-profiler/#performance-impact`
     )
   }
+
+  await updateSiteMetadata({
+    name: program.sitePackageJson.name,
+    sitePath: program.directory,
+    lastRun: Date.now(),
+    pid: process.pid,
+  })
 
   markWebpackStatusAsPending()
 
@@ -94,6 +108,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
     store,
     graphqlRunner,
+  })
+
+  await runPageQueries({
+    queryIds,
+    graphqlRunner,
+    parentSpan: buildSpan,
+    store,
+  })
+
+  await writeOutRequires({
+    store,
+    parentSpan: buildSpan,
   })
 
   await apiRunnerNode(`onPreBuild`, {
@@ -144,13 +170,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
-  await runPageQueries({
-    queryIds,
-    graphqlRunner,
-    parentSpan: buildSpan,
-    store,
-  })
-
   await flushPendingPageDataWrites()
   markWebpackStatusAsDone()
 
@@ -195,14 +214,36 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
   // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    cachedWebpackCompilationHash === store.getState().webpackCompilationHash
-  ) {
-    pagePaths = buildUtils.getChangedPageDataKeys(
-      store.getState(),
-      cachedPageData
-    )
+  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+    if (
+      cachedWebpackCompilationHash === store.getState().webpackCompilationHash
+    ) {
+      pagePaths = buildUtils.getChangedPageDataKeys(
+        store.getState(),
+        cachedPageData
+      )
+    } else if (cachedWebpackCompilationHash) {
+      report.info(
+        report.stripIndent(`
+          One or more of your source files have changed since the last time you ran Gatsby. All
+          pages will be rebuilt.
+        `)
+      )
+    }
+  }
+
+  const buildSSRBundleActivityProgress = report.activityTimer(
+    `Building HTML renderer`,
+    { parentSpan: buildSpan }
+  )
+  buildSSRBundleActivityProgress.start()
+  let pageRenderer: string
+  try {
+    pageRenderer = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildSSRBundleActivityProgress.end()
   }
 
   const buildHTMLActivityProgress = report.createProgress(
@@ -215,13 +256,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildHTMLActivityProgress.start()
   try {
-    await buildHTML({
-      program,
-      stage: Stage.BuildHTML,
+    await doBuildPages(
+      pageRenderer,
       pagePaths,
-      activity: buildHTMLActivityProgress,
-      workerPool,
-    })
+      buildHTMLActivityProgress,
+      workerPool
+    )
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
     const context = {
@@ -245,7 +285,15 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   }
   buildHTMLActivityProgress.end()
 
-  let deletedPageKeys: string[] = []
+  if (!program.keepPageRenderer) {
+    try {
+      await deleteRenderer(pageRenderer)
+    } catch (err) {
+      // pass through
+    }
+  }
+
+  let deletedPageKeys: Array<string> = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
     const deletePageDataActivityTimer = report.activityTimer(
       `Delete previous page data`
@@ -269,6 +317,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()
+
+  // Wait for any jobs that were started in onPostBuild
+  // This could occur due to queries being run which invoke sharp for instance
+  await waitUntilAllJobsComplete()
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
@@ -309,26 +361,28 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `${program.directory}/.cache`,
       `newPages.txt`
     )
+    const createdFilesContent = pagePaths.length
+      ? `${pagePaths.join(`\n`)}\n`
+      : ``
+
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `deletedPages.txt`
     )
+    const deletedFilesContent = deletedPageKeys.length
+      ? `${deletedPageKeys.join(`\n`)}\n`
+      : ``
 
-    if (pagePaths.length) {
-      await fs.writeFile(createdFilesPath, `${pagePaths.join(`\n`)}\n`, `utf8`)
-      report.info(`.cache/newPages.txt created`)
-    }
-    if (deletedPageKeys.length) {
-      await fs.writeFile(
-        deletedFilesPath,
-        `${deletedPageKeys.join(`\n`)}\n`,
-        `utf8`
-      )
-      report.info(`.cache/deletedPages.txt created`)
-    }
+    await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
+    report.info(`.cache/newPages.txt created`)
+
+    await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
+    report.info(`.cache/deletedPages.txt created`)
   }
 
-  if (await userPassesFeedbackRequestHeuristic()) {
+  if (await userGetsSevenDayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
 }

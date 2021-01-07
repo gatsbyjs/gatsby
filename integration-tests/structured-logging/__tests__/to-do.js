@@ -28,7 +28,7 @@ const gatsbyBin = path.join(
 const defaultStdio = `ignore`
 
 const collectEventsForDevelop = (events, env = {}) => {
-  const gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+  const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
     stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
     env: {
       ...process.env,
@@ -38,8 +38,9 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
-  const finishedPromise = new Promise(resolve => {
+  const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
+
     gatsbyProcess.on(`message`, msg => {
       if (!listening) {
         return
@@ -55,7 +56,8 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-          resolve()
+
+          setTimeout(resolve, 1000)
         }, 5000)
       }
     })
@@ -332,7 +334,7 @@ describe(`develop`, () => {
       events.splice(0, events.length)
     }
     beforeAll(async done => {
-      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -359,8 +361,9 @@ describe(`develop`, () => {
       })
     })
 
-    afterAll(() => {
+    afterAll(done => {
       gatsbyProcess.kill()
+      setTimeout(done, 1000)
     })
 
     describe(`code change`, () => {
@@ -477,7 +480,7 @@ describe(`build`, () => {
     let events = []
 
     beforeAll(async () => {
-      gatsbyProcess = spawn(gatsbyBin, [`build`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -512,7 +515,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -544,7 +547,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -576,7 +579,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -610,7 +613,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,

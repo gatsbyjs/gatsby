@@ -1,4 +1,4 @@
-const { buildObjectType } = require(`../../types/type-builders`)
+import { buildObjectType } from "../../types/type-builders"
 const { store } = require(`../../../redux`)
 const { build } = require(`../..`)
 const { actions } = require(`../../../redux/actions`)
@@ -133,7 +133,7 @@ describe(`merges explicit and inferred type definitions`, () => {
     infer,
     addDefaultResolvers,
   }) => {
-    let extensions = {}
+    const extensions = {}
     if (infer != null) {
       extensions.infer = infer
       if (addDefaultResolvers != null) {

@@ -170,7 +170,7 @@ async function createRepoOnGitHub(repoName, langName) {
       input: {
         name: repoName,
         ownerId: organization.id,
-        description: `${langName} translation of Gatsbyjs.org`,
+        description: `${langName} translation of the Gatsby documentation`,
         visibility: `PUBLIC`,
       },
     }

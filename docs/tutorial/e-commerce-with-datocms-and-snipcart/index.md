@@ -25,11 +25,11 @@ You can sign up for the following accounts now or as you need to use each of the
 - [Snipcart](https://snipcart.com/): add a shopping cart to your site
 - [Netlify](https://www.netlify.com/): host your site and register a domain
 
-To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
+To edit code locally (affecting files stored on your computer), you'll need the following software. If you don't already know what these are or want additional background information, check out [Step 0 of the Gatsby tutorial](/docs/tutorial/part-zero/). It includes detailed instructions on how to set up a local development environment.
 
 - [Node.js](https://nodejs.org): run JavaScript on your computer
 - [Git](https://git-scm.com/downloads): track changes to your code
-- [Gatsby command line interface (CLI)](/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
+- [Gatsby command line interface (CLI)](/docs/tutorial/part-zero/#using-the-gatsby-cli): run Gatsby commands on your computer
 
 ## Provisioning Your Site on Gatsby Cloud
 
@@ -395,7 +395,7 @@ Back in your Gatsby dashboard, head over to Site Settings > Integrations > Hosti
 
 That whimsical domain you generated earlier is probably not where you want to send your customers. Netlify will help you get set up with a shiny new custom domain.
 
-If you already have one, that's awesome! You'll need to point it to the code you just hosted on Netlify. The specifics of _how_ to do that will vary slightly and depend on the registrar you went with. Try googling something like "[registrar] netlify custom domain" to find instructions for your situation. For more information, check out [Netlify's guide on assigning a domain to a site](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
+If you already have one, that's awesome! You'll need to point it to the code you just hosted on Netlify. The specifics of _how_ to do that will vary slightly and depend on the registrar you went with. Try googling something like "[registrar] Netlify custom domain" to find instructions for your situation. For more information, check out [Netlify's guide on assigning a domain to a site](https://docs.netlify.com/domains-https/custom-domains/#assign-a-domain-to-a-site).
 
 Paying for your domain through Netlify is a little more straightforward. They'll take care of any necessary provisioning for you!
 

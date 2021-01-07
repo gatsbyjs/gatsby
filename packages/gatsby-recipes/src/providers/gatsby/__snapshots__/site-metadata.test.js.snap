@@ -1,0 +1,355 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata create 1`] = `
+Object {
+  "id": "author",
+  "name": "author",
+  "value": "\\"Fred\\"",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata create plan 1`] = `
+Object {
+  "currentState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \`Bricolage\`,
+    author: \`Kyle Mathews\`,
+    homeCity: \`San Francisco\`,
+  },
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+  ],
+};
+",
+  "describe": "Add author: Fred to the siteMetadata",
+  "diff": "- Original  - 3
++ Modified  + 3
+
+@@ -1,9 +1,9 @@
+  const redish = \`#c5484d\`;
+  module.exports = {
+    siteMetadata: {
+-     title: \`Bricolage\`,
+-     author: \`Kyle Mathews\`,
+-     homeCity: \`San Francisco\`,
++     title: \\"Bricolage\\",
++     author: \\"Fred\\",
++     homeCity: \\"San Francisco\\",
+    },
+    plugins: [
+      {",
+  "id": "author",
+  "name": "author",
+  "newState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \\"Bricolage\\",
+    author: \\"Fred\\",
+    homeCity: \\"San Francisco\\",
+  },
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+  ],
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata update 1`] = `
+Object {
+  "id": "author",
+  "name": "author",
+  "value": "\\"Velma\\"",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test: GatsbySiteMetadata update plan 1`] = `
+Object {
+  "currentState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \\"Bricolage\\",
+    author: \\"Fred\\",
+    homeCity: \\"San Francisco\\",
+  },
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+  ],
+};
+",
+  "describe": "Add author: Velma to the siteMetadata",
+  "diff": "- Original  - 1
++ Modified  + 1
+
+@@ -2,7 +2,7 @@
+  module.exports = {
+    siteMetadata: {
+      title: \\"Bricolage\\",
+-     author: \\"Fred\\",
++     author: \\"Velma\\",
+      homeCity: \\"San Francisco\\",
+    },
+    plugins: [",
+  "id": "author",
+  "name": "author",
+  "newState": "const redish = \`#c5484d\`;
+module.exports = {
+  siteMetadata: {
+    title: \\"Bricolage\\",
+    author: \\"Velma\\",
+    homeCity: \\"San Francisco\\",
+  },
+  plugins: [
+    {
+      resolve: \`gatsby-source-filesystem\`,
+      options: {
+        path: \`\${__dirname}/src/pages\`,
+        name: \`pages\`,
+      },
+    },
+    \`gatsby-transformer-sharp\`,
+    \`gatsby-plugin-emotion\`,
+    {
+      resolve: \`gatsby-plugin-typography\`,
+      options: {
+        pathToConfigModule: \`src/utils/typography\`,
+      },
+    },
+    {
+      resolve: \`gatsby-transformer-remark\`,
+      options: {
+        plugins: [
+          {
+            resolve: \`gatsby-remark-images\`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: \`gatsby-remark-responsive-iframe\`,
+            options: {
+              wrapperStyle: \`margin-bottom: 1.0725rem\`,
+            },
+          },
+          \`gatsby-remark-prismjs\`,
+          \`gatsby-remark-copy-linked-files\`,
+          \`gatsby-remark-smartypants\`,
+        ],
+      },
+    },
+    \`gatsby-plugin-sharp\`,
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: \`UA-774017-3\`,
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-manifest\`,
+      options: {
+        name: \`Bricolage\`,
+        short_name: \`Bricolage\`,
+        icon: \`static/logo.png\`,
+        start_url: \`/\`,
+        background_color: redish,
+        theme_color: redish,
+        display: \`minimal-ui\`,
+      },
+    },
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-react-helmet\`,
+  ],
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource handles multiple parallel create calls 1`] = `
+Object {
+  "id": "husky",
+  "name": "husky",
+  "value": "\\"hi\\"",
+}
+`;
+
+exports[`gatsby-plugin resource handles multiple parallel create calls 2`] = `
+Object {
+  "id": "husky2",
+  "name": "husky2",
+  "value": "\\"hi\\"",
+}
+`;

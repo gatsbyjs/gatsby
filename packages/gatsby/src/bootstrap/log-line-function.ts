@@ -11,7 +11,7 @@
     }
 
     const [, trace] = stack[1] || ``
-    const args: string[] = ([] as string[]).slice
+    const args: Array<string> = ([] as Array<string>).slice
       .apply(methodArgs)
       .concat([trace.trim()])
 

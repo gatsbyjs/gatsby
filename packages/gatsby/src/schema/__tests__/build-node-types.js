@@ -3,7 +3,6 @@ const { graphql, GraphQLString } = require(`graphql`)
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -82,7 +81,6 @@ describe(`build-node-types`, () => {
     const schemaComposer = createSchemaComposer()
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
@@ -96,7 +94,6 @@ describe(`build-node-types`, () => {
       nodeModel: new LocalNodeModel({
         schemaComposer,
         schema,
-        nodeStore,
         createPageDependency,
       }),
     })
@@ -157,11 +154,14 @@ describe(`build-node-types`, () => {
   })
 
   it(`should create typed children fields`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
           childrenChild { # lol
+            id
+          }
+          childChild {
             id
           }
         }
@@ -170,6 +170,9 @@ describe(`build-node-types`, () => {
     )
     expect(parent.childrenChild).toBeDefined()
     expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
+
+    expect(parent.childChild).toBeDefined()
+    expect(parent.childChild).toEqual({ id: `c1` })
   })
 
   it(`should create typed child field for singular children`, async () => {

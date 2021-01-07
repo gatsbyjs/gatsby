@@ -1,4 +1,4 @@
-const getDiff = require(`./get-diff`)
+import getDiff from "./get-diff"
 
 const oldValue = { a: `hi` }
 const newValue = { b: `hi` }

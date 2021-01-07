@@ -177,9 +177,9 @@
     Feel free to contact me if you want to launch a blazingly fast website!
   location: Darmstadt, Germany
   website: https://www.lekoarts.de
-  github: https://github.com/LeKoArts
+  github: https://github.com/LekoArts
   image: images/lekoarts.jpg
-  for_hire: true
+  for_hire: false
   portfolio: true
 - name: Ventura Digitalagentur
   type: agency
@@ -542,4 +542,23 @@
   image: images/amruth-pillai.png
   for_hire: true
   hiring: false
+  portfolio: true
+- name: John Kavanagh
+  type: individual
+  description: >-
+    John is a specialist front-end web developer based in Brighton in the UK. With close to two decades of hands-on development experience, he specialises in building fundamentally well-engineered, maintainable, testable and scalable front-end code.  He delivers carefully-crafted, semantic and intuitive websites and SPAs using React and Gatsby.
+  location: Brighton, UK
+  website: https://johnkavanagh.co.uk
+  github: https://github.com/johnkavanagh/
+  image: images/john-kavanagh.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Webplace
+  type: agency
+  image: images/webplace.png
+  description: >-
+    Webplace have been providing exceptional digital experiences for a vast range of clients since 2003. We provide digital strategy, UX / UI design, Web development, QA testing and ongoing maintenance & support. We are experts at WordPress, Drupal & Joomla and now use WordPress and Drupal as a Headless CMS with React / Gatsby as the frontend.
+  website: https://www.webplace.com.au
+  for_hire: true
   portfolio: true

@@ -1,6 +1,5 @@
 ---
 title: A/B Testing
-overview: true
 ---
 
 A/B or split testing is when you make test changes to a website. Suppose you have two buttons: a green “Buy Now!” button and a red “Buy Now!” button. You want to figure out which button will receive the most clicks. An A/B test would be an ideal way to measure engagement.

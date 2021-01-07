@@ -17,7 +17,7 @@ describe(`Successful Build`, () => {
   let events = []
 
   beforeAll(async done => {
-    gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
@@ -94,7 +94,7 @@ const IndexPage = () => <div>Hello world!</div>
 
     `
     )
-    gatsbyProcess = spawn(gatsbyBin, [`build`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],

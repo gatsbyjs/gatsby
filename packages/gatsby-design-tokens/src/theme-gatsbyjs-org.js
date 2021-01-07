@@ -322,6 +322,7 @@ const newTheme = {
 }
 
 export {
+  borders,
   breakpoints,
   fonts,
   fontSizes,

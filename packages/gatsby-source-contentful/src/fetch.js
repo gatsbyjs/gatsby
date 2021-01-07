@@ -1,15 +1,17 @@
 const contentful = require(`contentful`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
-const normalize = require(`./normalize`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
+const { CODES } = require(`./report`)
 
-module.exports = async ({ syncToken, reporter, pluginConfig }) => {
+module.exports = async function contentfulFetch({
+  syncToken,
+  pluginConfig,
+  reporter,
+}) {
   // Fetch articles.
-  console.time(`Fetch Contentful data`)
-
-  console.log(`Starting to fetch data from Contentful`)
-
+  let syncProgress
+  let syncItemCount = 0
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
@@ -17,6 +19,59 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
     host: pluginConfig.get(`host`),
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
+    responseLogger: response => {
+      function createMetadataLog(response) {
+        if (process.env.gatsby_log_level === `verbose`) {
+          return ``
+        }
+        return [
+          response?.headers[`content-length`] &&
+            `size: ${response.headers[`content-length`]}B`,
+          response?.headers[`x-contentful-request-id`] &&
+            `request id: ${response.headers[`x-contentful-request-id`]}`,
+          response?.headers[`x-cache`] &&
+            `cache: ${response.headers[`x-cache`]}`,
+        ]
+          .filter(Boolean)
+          .join(` `)
+      }
+
+      // Sync progress
+      if (response.config.url === `sync`) {
+        syncItemCount += response.data.items.length
+        syncProgress.total = syncItemCount
+        syncProgress.tick(response.data.items.length)
+      }
+
+      // Log error and throw it in an extended shape
+      if (response.isAxiosError) {
+        reporter.verbose(
+          `${response.config.method} /${response.config.url}: ${
+            response.response.status
+          } ${response.response.statusText} (${createMetadataLog(
+            response.response
+          )})`
+        )
+        let errorMessage = `${response.response.status} ${response.response.statusText}`
+        if (response.response?.data?.message) {
+          errorMessage += `\n\n${response.response.data.message}`
+        }
+        const contentfulApiError = new Error(errorMessage)
+        // Special response naming to ensure the error object is not touched by
+        // https://github.com/contentful/contentful.js/commit/41039afa0c1462762514c61458556e6868beba61
+        contentfulApiError.responseData = response.response
+        contentfulApiError.request = response.request
+        contentfulApiError.config = response.config
+
+        throw contentfulApiError
+      }
+
+      reporter.verbose(
+        `${response.config.method} /${response.config.url}: ${
+          response.status
+        } ${response.statusText} (${createMetadataLog(response)})`
+      )
+    },
   }
 
   const client = contentful.createClient(contentfulClientOptions)
@@ -29,22 +84,13 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
   let locales
   let defaultLocale = `en-US`
   try {
-    reporter.info(`Fetching default locale`)
+    reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
-    let contentfulLocales = await client
-      .getLocales()
-      .then(response => response.items)
-    defaultLocale = _.find(contentfulLocales, { default: true }).code
-    locales = contentfulLocales.filter(pluginConfig.get(`localeFilter`))
-    if (locales.length === 0) {
-      reporter.panic(
-        `Please check if your localeFilter is configured properly. Locales '${_.join(
-          contentfulLocales.map(item => item.code),
-          `,`
-        )}' were found but were filtered down to none.`
-      )
-    }
-    reporter.info(`default locale is: ${defaultLocale}`)
+    locales = await client.getLocales().then(response => response.items)
+    defaultLocale = _.find(locales, { default: true }).code
+    reporter.verbose(
+      `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`
+    )
   } catch (e) {
     let details
     let errors
@@ -52,11 +98,16 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
       reporter.panic(
-        `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+        {
+          id: CODES.SelfSignedCertificate,
+          context: {
+            sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
+          },
+        },
         e
       )
-    } else if (e.response) {
-      if (e.response.status === 404) {
+    } else if (e.responseData) {
+      if (e.responseData.status === 404) {
         // host and space used to generate url
         details = `Endpoint not found. Check if ${chalk.yellow(
           `host`
@@ -65,7 +116,7 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
           host: `Check if setting is correct`,
           spaceId: `Check if setting is correct`,
         }
-      } else if (e.response.status === 401) {
+      } else if (e.responseData.status === 401) {
         // authorization error
         details = `Authorization error. Check if ${chalk.yellow(
           `accessToken`
@@ -77,21 +128,46 @@ module.exports = async ({ syncToken, reporter, pluginConfig }) => {
       }
     }
 
-    reporter.panic(`Accessing your Contentful space failed.
+    reporter.panic({
+      context: {
+        sourceMessage: `Accessing your Contentful space failed: ${e.message}
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
-${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
+${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
+      },
+    })
   }
 
   let currentSyncData
+  const basicSyncConfig = {
+    limit: pageLimit,
+    resolveLinks: false,
+  }
   try {
+    syncProgress = reporter.createProgress(
+      `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
+      pageLimit,
+      0
+    )
+    syncProgress.start()
+    reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
     let query = syncToken
-      ? { nextSyncToken: syncToken }
-      : { initial: true, limit: pageLimit }
+      ? { nextSyncToken: syncToken, ...basicSyncConfig }
+      : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    reporter.panic(`Fetching contentful data failed`, e)
+    reporter.panic(
+      {
+        id: CODES.SyncError,
+        context: {
+          sourceMessage: `Fetching contentful data failed: ${e.message}`,
+        },
+      },
+      e
+    )
+  } finally {
+    syncProgress.done()
   }
 
   // We need to fetch content types with the non-sync API as the sync API
@@ -100,18 +176,19 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`)
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(`error fetching content types`, e)
+    reporter.panic(
+      {
+        id: CODES.FetchContentTypes,
+        context: {
+          sourceMessage: `Error fetching content types: ${e.message}`,
+        },
+      },
+      e
+    )
   }
-  reporter.info(`contentTypes fetched ${contentTypes.items.length}`)
+  reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
   let contentTypeItems = contentTypes.items
-
-  // Fix IDs (inline) on entries and assets, created/updated and deleted.
-  contentTypeItems.forEach(normalize.fixIds)
-  currentSyncData.entries.forEach(normalize.fixIds)
-  currentSyncData.assets.forEach(normalize.fixIds)
-  currentSyncData.deletedEntries.forEach(normalize.fixIds)
-  currentSyncData.deletedAssets.forEach(normalize.fixIds)
 
   const result = {
     currentSyncData,

@@ -11,7 +11,7 @@ import { pagesReducer as reducer } from "../reducers/pages"
 import { actions } from "../actions"
 
 afterEach(() => {
-  ;(readFile as jest.Mock).mockClear()
+  ;(readFile as jest.MockedFunction<typeof readFile>).mockClear()
 })
 
 Date.now = jest.fn(

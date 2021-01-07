@@ -1,11 +1,39 @@
 const path = require(`path`)
 const fs = require(`fs-extra`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
 exports.onPreBootstrap = () => {
   fs.copyFileSync(
     `./src/templates/static-page-from-cache.js`,
     `./.cache/static-page-from-cache.js`
   )
+}
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+      type Product implements Node {
+          name: String
+      }
+    `
+  createTypes(typeDefs)
+}
+
+const products = ["Burger", "Chicken"]
+
+exports.sourceNodes = ({ actions, createNodeId }) => {
+  products.forEach((product, i) => {
+    actions.createNode({
+      id: createNodeId(i),
+      children: [],
+      parent: null,
+      internal: {
+        type: `Product`,
+        contentDigest: createContentDigest(product),
+      },
+      name: product,
+    })
+  })
 }
 
 exports.createPages = ({ actions: { createPage } }) => {

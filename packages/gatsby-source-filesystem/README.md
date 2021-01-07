@@ -11,7 +11,7 @@ nodes from which you can query an HTML representation of the markdown.
 
 ## Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ## How to use
 
@@ -119,6 +119,7 @@ createFilePath({
   // The parameter from `onCreateNode` should be passed in here
   getNode,
   // The base path for your files.
+  // It is relative to the `options.path` setting in the `gatsby-source-filesystem` entries of your `gatsby-config.js`.
   // Defaults to `src/pages`. For the example above, you'd use `src/content`.
   basePath,
   // Whether you want your file paths to contain a trailing `/` slash
@@ -234,11 +235,11 @@ exports.downloadMediaFiles = ({
 }
 ```
 
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/plugins/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to use in the component [gatsby-image](/plugins/gatsby-image/).
 
 #### Retrieving the remote file name and extension
 
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is https://example.com/image.jpg, the extension will be inferred as `.jpg` and the name as `image`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
+The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is `https://example.com/image.jpg`, the extension will be inferred as `.jpg` and the name as `image`). If the url does not contain an extension, we use the [`file-type`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
 
 ```javascript
 createRemoteFileNode({
@@ -335,3 +336,11 @@ function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
 
 module.exports = createMySqlNodes
 ```
+
+## Troubleshooting
+
+In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
+
+- `STALL_RETRY_LIMIT`, default: `3`
+- `STALL_TIMEOUT`, default: `30000`
+- `CONNECTION_TIMEOUT`, default: `30000`

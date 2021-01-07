@@ -160,6 +160,10 @@ Array [
   Array [
     Array [
       "/path/to/module/babel-plugin-remove-graphql-queries",
+      Object {
+        "stage": "test",
+        "staticQueryDir": "page-data/sq/d",
+      },
     ],
     Object {
       "type": "plugin",
@@ -169,6 +173,7 @@ Array [
     Array [
       "/path/to/module/babel-preset-gatsby",
       Object {
+        "reactRuntime": undefined,
         "stage": "test",
       },
     ],

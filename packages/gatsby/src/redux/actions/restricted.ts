@@ -204,8 +204,8 @@ export const actions = {
     types:
       | string
       | GraphQLOutputType
-      | GatsbyGraphQLType
-      | Array<string | GraphQLOutputType | GatsbyGraphQLType>,
+      | GatsbyGraphQLType<any, any>
+      | Array<string | GraphQLOutputType | GatsbyGraphQLType<any, any>>,
     plugin: IGatsbyPlugin,
     traceId?: string
   ): ICreateTypes => {
@@ -303,6 +303,8 @@ export const actions = {
    * list of types to include/exclude. This is recommended to avoid including
    * definitions for plugin-created types.
    *
+   * The first object parameter is required, however all the fields in the object are optional.
+   *
    * @availableIn [createSchemaCustomization]
    *
    * @param {object} $0
@@ -313,7 +315,17 @@ export const actions = {
    * @param {object} [$0.exclude] Configure types to exclude
    * @param {string[]} [$0.exclude.types] Do not include these types
    * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
-   * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+   * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`.
+   *   actions.printTypeDefinitions({})
+   * }
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`, but this time it does not include field types.
+   *   actions.printTypeDefinitions({ withFieldTypes: false })
+   * }
    */
   printTypeDefinitions: (
     {
@@ -404,8 +416,10 @@ const withDeprecationWarning = (
   actionName: RestrictionActionNames,
   action: SomeActionCreator,
   api: API,
-  allowedIn: API[]
-): SomeActionCreator => (...args: any[]): ReturnType<ActionCreator<any>> => {
+  allowedIn: Array<API>
+): SomeActionCreator => (
+  ...args: Array<any>
+): ReturnType<ActionCreator<any>> => {
   report.warn(
     `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
       `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
@@ -416,7 +430,7 @@ const withDeprecationWarning = (
 const withErrorMessage = (
   actionName: RestrictionActionNames,
   api: API,
-  allowedIn: API[]
+  allowedIn: Array<API>
 ) => () =>
   // return a thunk that does not dispatch anything
   (): void => {
@@ -436,8 +450,8 @@ type API = string
 type Restrictions = Record<
   RestrictionActionNames,
   Partial<{
-    ALLOWED_IN: API[]
-    DEPRECATED_IN: API[]
+    ALLOWED_IN: Array<API>
+    DEPRECATED_IN: Array<API>
   }>
 >
 
@@ -461,16 +475,19 @@ const mapAvailableActionsToAPIs = (
 ): AvailableActionsByAPI => {
   const availableActionsByAPI: AvailableActionsByAPI = {}
 
-  const actionNames = Object.keys(restrictions) as (keyof typeof restrictions)[]
+  const actionNames = Object.keys(restrictions) as Array<
+    keyof typeof restrictions
+  >
   actionNames.forEach(actionName => {
     const action = actions[actionName]
 
-    const allowedIn: API[] = restrictions[actionName][ALLOWED_IN] || []
+    const allowedIn: Array<API> = restrictions[actionName][ALLOWED_IN] || []
     allowedIn.forEach(api =>
       set(availableActionsByAPI, api, actionName, action)
     )
 
-    const deprecatedIn: API[] = restrictions[actionName][DEPRECATED_IN] || []
+    const deprecatedIn: Array<API> =
+      restrictions[actionName][DEPRECATED_IN] || []
     deprecatedIn.forEach(api =>
       set(
         availableActionsByAPI,

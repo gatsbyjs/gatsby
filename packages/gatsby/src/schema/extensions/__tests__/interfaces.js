@@ -1,10 +1,7 @@
 const { graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
-const {
-  buildInterfaceType,
-  buildObjectType,
-} = require(`../../types/type-builders`)
+import { buildInterfaceType, buildObjectType } from "../../types/type-builders"
 const { store } = require(`../../../redux`)
 const { dispatch } = store
 const { actions } = require(`../../../redux/actions`)

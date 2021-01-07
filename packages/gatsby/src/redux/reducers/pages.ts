@@ -1,9 +1,15 @@
 import normalize from "normalize-path"
-import { ActionsUnion, IGatsbyPage, IGatsbyState } from "../types"
+import {
+  IGatsbyState,
+  IGatsbyPage,
+  IDeleteCacheAction,
+  ICreatePageAction,
+  IDeletePageAction,
+} from "../types"
 
 export const pagesReducer = (
   state: IGatsbyState["pages"] = new Map<string, IGatsbyPage>(),
-  action: ActionsUnion
+  action: IDeleteCacheAction | ICreatePageAction | IDeletePageAction
 ): IGatsbyState["pages"] => {
   switch (action.type) {
     case `DELETE_CACHE`:

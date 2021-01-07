@@ -70,12 +70,12 @@ async function processBufferNode({
     // If the user did not provide an extension and we couldn't get
     // one from remote file, try and guess one
     if (typeof ext === `undefined`) {
-      const filetype = fileType(buffer)
+      const filetype = await fileType.fromBuffer(buffer)
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
 
-    await fs.ensureDir(path.join(pluginCacheDir, hash))
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
+    await fs.ensureDir(path.dirname(filename))
 
     // Cache the buffer contents
     await writeBuffer(filename, buffer)

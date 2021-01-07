@@ -4,12 +4,7 @@ import DevLoader from "../dev-loader"
 import emitter from "../emitter"
 
 jest.mock(`../emitter`)
-jest.mock(`../socketIo`, () => {
-  return {
-    default: jest.fn(),
-    getPageData: jest.fn().mockResolvedValue(),
-  }
-})
+jest.mock(`../socketIo`, () => jest.fn())
 
 describe(`Dev loader`, () => {
   let originalBasePath
@@ -318,6 +313,7 @@ describe(`Dev loader`, () => {
         result: {
           pageContext: `something something`,
         },
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -328,7 +324,12 @@ describe(`Dev loader`, () => {
 
       const expectation = await devLoader.loadPage(`/mypage/`)
       expect(expectation).toMatchSnapshot()
-      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
+      expect(Object.keys(expectation)).toEqual([
+        `component`,
+        `json`,
+        `page`,
+        `staticQueryResults`,
+      ])
       expect(devLoader.pageDb.get(`/mypage`)).toEqual(
         expect.objectContaining({
           payload: expectation,
@@ -377,6 +378,7 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -399,6 +401,7 @@ describe(`Dev loader`, () => {
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -422,7 +425,7 @@ describe(`Dev loader`, () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
+        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
       )
 
       mock.error(defaultXHRMockErrorHandler)
@@ -441,6 +444,7 @@ describe(`Dev loader`, () => {
         Promise.resolve({
           payload: {
             componentChunkName: `chunk`,
+            staticQueryHashes: [],
           },
           status: `success`,
         })

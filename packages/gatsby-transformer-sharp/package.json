@@ -1,25 +1,26 @@
 {
   "name": "gatsby-transformer-sharp",
   "description": "Gatsby transformer plugin for images using Sharp",
-  "version": "2.5.5",
+  "version": "2.11.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.2",
+    "@babel/runtime": "^7.12.5",
     "bluebird": "^3.7.2",
-    "fs-extra": "^8.1.0",
-    "potrace": "^2.1.6",
-    "probe-image-size": "^4.1.1",
-    "semver": "^5.7.1",
-    "sharp": "^0.25.1"
+    "fs-extra": "^9.0.1",
+    "potrace": "^2.1.8",
+    "probe-image-size": "^5.0.0",
+    "semver": "^7.3.4",
+    "sharp": "^0.27.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.1",
-    "@babel/core": "^7.10.2",
-    "babel-preset-gatsby-package": "^0.4.4",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@types/sharp": "^0.26.1",
+    "babel-preset-gatsby-package": "^0.11.0-next.0",
+    "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sharp#readme",
   "keywords": [
@@ -39,9 +40,9 @@
     "directory": "packages/gatsby-transformer-sharp"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"  --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
   },
   "engines": {
     "node": ">=10.13.0"

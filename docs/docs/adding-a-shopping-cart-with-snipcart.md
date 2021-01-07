@@ -10,7 +10,7 @@ Combine it with a source of products (like a CMS or an e-commerce platform such 
 
 To get started, you'll need to have the following set up:
 
-- A Gatsby site with [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/) installed
+- A Gatsby site with [`gatsby-plugin-snipcart`](/plugins/gatsby-plugin-snipcart/) installed
 - A [Snipcart](https://snipcart.com/) account
 - A Snipcart test API key
 - A list of products to sell
@@ -111,7 +111,7 @@ You can add multiple custom fields by incrementing the index of the `data-item-c
 
 ### Selling digital products
 
-Snipcart enables the sale of digital goods such as e-books, photography, and other artwork. To sell a file you intend for download, you'll need to upload it to your Snipcart dashboard and then add the resulting guid as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
+Snipcart enables the sale of digital goods such as e-books, photography, and other artwork. To sell a file you intend for download, you'll need to upload it to your Snipcart dashboard and then add the resulting GUID as the value of the `data-item-file-guid` attribute to your product's markup. You can specify a file access expiry in days and a maximum number of downloads per order from the dashboard.
 
 ```jsx
 <section>
@@ -179,16 +179,16 @@ Once you're ready to receive payments, connect your chosen payment processor to 
 
 The following quote is from the Snipcart [payment gateway page](https://app.snipcart.com/dashboard/account/gateway):
 
-> Please note that you can select only one payment gateway. However, you can also enable Paypal Express Checkout on top of any gateway you choose.
+> Please note that you can select only one payment gateway. However, you can also enable PayPal Express Checkout on top of any gateway you choose.
 >
 > Also, you can switch from a gateway to another whenever you want.
 
 ## Other resources
 
 - [Build an E-commerce Site with Gatsby, DatoCMS, and Snipcart](/tutorial/e-commerce-with-datocms-and-snipcart/) tutorial
-- [`gatsby-plugin-snipcart`](/packages/gatsby-plugin-snipcart/)
+- [`gatsby-plugin-snipcart`](/plugins/gatsby-plugin-snipcart/)
 - [OneShopper Gatsby starter](/starters/rohitguptab/OneShopper/)
 - Reference guide on [sourcing from Etsy](/docs/sourcing-from-etsy/)
-- Reference guide on [processing payments with Stripe](/docs/processing-payments-with-stripe/)
-- From the Snipcart blog: [E-Commerce for React Developers \[w/ Gatsby Tutorial\]](https://snipcart.com/blog/react-ecommerce-gatsby-tutorial)
+- Reference guide on [processing payments with Stripe](/docs/how-to/adding-common-features/processing-payments-with-stripe/)
+- From the Snipcart blog: [Gatsby E-Commerce Recipe: Integrate a Cart in a Few Steps](https://snipcart.com/blog/gatsby-recipes-ecommerce)
 - [Snipcart documentation](https://docs.snipcart.com/v3/setup/installation)

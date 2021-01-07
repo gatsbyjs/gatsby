@@ -7,7 +7,7 @@ type MettHandler<EventName, Payload> = (
   eventName: EventName
 ) => void
 
-interface IMett {
+export interface IMett {
   on(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   off(eventName: EventName, callback: MettHandler<EventName, Payload>): void
   emit(eventName: EventName, e: Payload): void
@@ -16,7 +16,7 @@ interface IMett {
 type EventName = string
 type Payload = any
 
-function mett(): IMett {
+export function mett(): IMett {
   const mettEvents: Map<
     EventName,
     Set<MettHandler<EventName, Payload>>
@@ -53,5 +53,3 @@ function mett(): IMett {
     },
   }
 }
-
-export { mett }

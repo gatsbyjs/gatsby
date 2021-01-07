@@ -29,7 +29,7 @@ git remote set-url origin <your-github-repo-link>
 git push -u origin master
 ```
 
-Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static html file for the Forestry CMS login page at the path: /admin.
+Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static HTML file for the Forestry CMS login page at the path: /admin.
 
 Once Forestry is connected with your GitHub Gatsby site repository, pull Forestry's changes.
 
@@ -73,7 +73,7 @@ upload_dir: static/uploads
 public_path: "/static/uploads"
 ```
 
-This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/static-folder/) to learn more. The rest of the settings can remain the same.
+This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/how-to/images-and-media/static-folder/) to learn more. The rest of the settings can remain the same.
 
 Open `package.json` and add the following to scripts already available:
 
@@ -158,7 +158,7 @@ window pops up (check for blocked pop ups if you don't see it), and try creating
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
-Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/mdx/writing-pages/).
+Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/how-to/routing/mdx/writing-pages/).
 
 Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses to locate markdown files.
 

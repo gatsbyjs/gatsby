@@ -173,7 +173,11 @@ class App extends React.Component {
     graphQLFetcher({
       query: getIntrospectionQuery(),
     }).then(result => {
-      const newState = { schema: buildClientSchema(result.data) }
+      const newState = {
+        schema: buildClientSchema(result.data),
+        enableRefresh: result.extensions.enableRefresh,
+        refreshToken: result.extensions.refreshToken,
+      }
 
       if (this.state.query === null) {
         try {
@@ -302,6 +306,16 @@ class App extends React.Component {
     this.setState({ codeExporterIsOpen: newCodeExporterIsOpen })
   }
 
+  _refreshExternalDataSources = () => {
+    const options = { method: `post` }
+    if (this.state.refreshToken) {
+      options.headers = {
+        Authorization: this.state.refreshToken,
+      }
+    }
+    return fetch(`/__refresh`, options)
+  }
+
   render() {
     const { query, variables, schema, codeExporterIsOpen } = this.state
     const codeExporter = codeExporterIsOpen ? (
@@ -356,6 +370,13 @@ class App extends React.Component {
               label="Code Exporter"
               title="Toggle Code Exporter"
             />
+            {this.state.enableRefresh && (
+              <GraphiQL.Button
+                onClick={this._refreshExternalDataSources}
+                label="Refresh Data"
+                title="Refresh Data from External Sources"
+              />
+            )}
           </GraphiQL.Toolbar>
         </GraphiQL>
         {codeExporter}

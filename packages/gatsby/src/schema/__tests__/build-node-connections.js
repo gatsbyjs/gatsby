@@ -2,7 +2,6 @@ const { graphql } = require(`graphql`)
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -72,7 +71,6 @@ describe(`build-node-connections`, () => {
     const schemaComposer = createSchemaComposer()
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: [],
       thirdPartySchemas: [],
       inferenceMetadata: store.getState().inferenceMetadata,
@@ -85,7 +83,6 @@ describe(`build-node-connections`, () => {
       nodeModel: new LocalNodeModel({
         schemaComposer,
         schema,
-        nodeStore,
         createPageDependency,
       }),
     })
@@ -187,6 +184,9 @@ describe(`build-node-connections`, () => {
               childRelative { # lol
                 id
               }
+              childrenRelative {
+                id
+              }
             }
           }
         }
@@ -196,6 +196,9 @@ describe(`build-node-connections`, () => {
 
     expect(allParent.edges[0].node.childRelative).toBeDefined()
     expect(allParent.edges[0].node.childRelative.id).toEqual(`r1`)
+
+    expect(allParent.edges[0].node.childrenRelative).toBeDefined()
+    expect(allParent.edges[0].node.childrenRelative).toEqual([{ id: `r1` }])
   })
 
   it(`should create page dependency`, async () => {

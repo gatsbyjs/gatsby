@@ -1,6 +1,5 @@
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const nodeStore = require(`../../db/nodes`)
 const { LocalNodeModel } = require(`../node-model`)
 const { build } = require(`..`)
 const typeBuilders = require(`../types/type-builders`)
@@ -52,7 +51,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -497,6 +495,14 @@ describe(`NodeModel`, () => {
         const result = nodeModel.findRootNodeAncestor(obj, predicate)
         expect(result.id).toBe(`file1`)
       })
+
+      it(`returns null when object's top-most ancestor doesn't match the provided predicate`, () => {
+        const node = nodeModel.getNodeById({ id: `post1` })
+        const obj = node.frontmatter.authors
+        const predicate = () => false
+        const result = nodeModel.findRootNodeAncestor(obj, predicate)
+        expect(result).toBe(null)
+      })
     })
 
     describe(`createPageDependency`, () => {
@@ -544,7 +550,7 @@ describe(`NodeModel`, () => {
     })
   })
 
-  describe(`prepare nodes caching`, () => {
+  describe(`materialization`, () => {
     let resolveBetterTitleMock
     let resolveOtherTitleMock
     beforeEach(async () => {
@@ -552,6 +558,10 @@ describe(`NodeModel`, () => {
         {
           id: `id1`,
           title: `Foo`,
+          nested: {
+            foo: `foo1`,
+            bar: `bar1`,
+          },
           internal: {
             type: `Test`,
             contentDigest: `0`,
@@ -561,9 +571,65 @@ describe(`NodeModel`, () => {
           id: `id2`,
           title: `Bar`,
           hidden: false,
+          nested: {
+            foo: `foo2`,
+            bar: `bar2`,
+          },
           internal: {
             type: `Test`,
             contentDigest: `1`,
+          },
+        },
+        // Test2 is a special type that must have no nodes!
+        {
+          id: `id3`,
+          internal: {
+            type: `Test3`,
+            contentDigest: `2`,
+          },
+        },
+        {
+          id: `id4`,
+          Meta: {
+            Date: `1`,
+            Category: `Gatsby`,
+          },
+          internal: {
+            type: `Test4`,
+            contentDigest: `4`,
+          },
+        },
+        {
+          id: `id5`,
+          Meta: {
+            Date: `2`,
+            Category: `Gatsby`,
+          },
+          internal: {
+            type: `Test4`,
+            contentDigest: `5`,
+          },
+        },
+        {
+          id: `id6`,
+          Meta: {
+            Date: `1`,
+            Category: `Gatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `6`,
+          },
+        },
+        {
+          id: `id7`,
+          Meta: {
+            Date: `2`,
+            Category: `NotGatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `7`,
           },
         },
       ])()
@@ -576,9 +642,33 @@ describe(`NodeModel`, () => {
       store.dispatch({
         type: `CREATE_TYPES`,
         payload: [
+          typeBuilders.buildInterfaceType({
+            name: `TestInterface`,
+            fields: {
+              slug: { type: `String` },
+            },
+          }),
+
+          typeBuilders.buildInterfaceType({
+            name: `TestNestedInterface`,
+            fields: {
+              foo: { type: `String` },
+            },
+            resolveType: value => value.kind,
+          }),
+
+          typeBuilders.buildObjectType({
+            name: `TestNested`,
+            fields: {
+              foo: { type: `String` },
+              bar: { type: `String` },
+            },
+            interfaces: [`TestNestedInterface`],
+          }),
+
           typeBuilders.buildObjectType({
             name: `Test`,
-            interfaces: [`Node`],
+            interfaces: [`Node`, `TestInterface`],
             fields: {
               betterTitle: {
                 type: `String`,
@@ -598,6 +688,71 @@ describe(`NodeModel`, () => {
                 type: `Boolean!`,
                 resolve: parent => Boolean(parent.hidden),
               },
+              nested: {
+                type: `TestNested`,
+                resolve: source => source.nested,
+              },
+              arrayWithNulls: {
+                type: `[TestNestedInterface]`,
+                resolve: source => [
+                  null,
+                  { kind: `TestNested`, foo: source.id },
+                  undefined,
+                ],
+              },
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test2`,
+            interfaces: [`Node`, `TestInterface`],
+            fields: {
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test3`,
+            interfaces: [`Node`, `TestInterface`],
+            fields: {
+              slug: {
+                type: `String`,
+                resolve: source => source.id,
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test4Meta`,
+            fields: {
+              Date: {
+                type: `String`,
+                resolve(source) {
+                  // Swap sorting order for test
+                  return source.Date === `1` ? `2` : `1`
+                },
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test5Meta`,
+            fields: {
+              Date: {
+                type: `String`,
+                resolve(source) {
+                  return source.Date
+                },
+              },
+              Category: {
+                type: `String`,
+                resolve(source) {
+                  return source.Category
+                },
+              },
             },
           }),
         ],
@@ -612,7 +767,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -697,6 +851,148 @@ describe(`NodeModel`, () => {
       expect(result[0].id).toBe(`id1`)
       expect(result[1].id).toBe(`id2`)
     })
+
+    it(`merges query caches when filtering by nested field`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/26056
+      nodeModel.replaceFiltersCache()
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { nested: { foo: { eq: `foo1` } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { nested: { bar: { eq: `bar2` } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+
+      expect(result1).toBeTruthy()
+      expect(result1.length).toBe(1)
+      expect(result1[0].id).toBe(`id1`)
+
+      expect(result2).toBeTruthy()
+      expect(result2.length).toBe(1)
+      expect(result2[0].id).toBe(`id2`)
+    })
+
+    it(`always uses a custom resolvers for query fields`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/27368
+      nodeModel.replaceFiltersCache()
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            sort: {
+              fields: [`Meta.Date`],
+              order: [`desc`],
+            },
+          },
+          firstOnly: false,
+          type: `Test4`,
+        },
+        { path: `/` }
+      )
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { Meta: { Category: { eq: `Gatsby` } } },
+            sort: {
+              fields: [`Meta.Date`],
+              order: [`desc`],
+            },
+          },
+          firstOnly: false,
+          type: `Test4`,
+        },
+        { path: `/` }
+      )
+
+      expect(Array.isArray(result1)).toBeTruthy()
+      expect(result1.map(node => node.id)).toEqual([`id4`, `id5`])
+
+      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2.map(node => node.id)).toEqual([`id4`, `id5`])
+    })
+
+    it(`sorts correctly by fields with custom resolvers`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/28047
+      nodeModel.replaceFiltersCache()
+
+      // This is required to setup a state after which the error reveals itself
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { id: { regex: `/non-existing/` } },
+          },
+          firstOnly: true,
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      // Filter by the same regex with sorting
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { id: { regex: `/id/` } },
+            sort: {
+              fields: [`Meta.Date`],
+              order: [`desc`],
+            },
+          },
+          firstOnly: false,
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      expect(result1).toEqual(null)
+
+      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2.map(node => node.id)).toEqual([`id7`, `id6`])
+    })
+
+    it(`handles nulish values within array of interface type`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { arrayWithNulls: { elemMatch: { foo: { eq: `id1` } } } },
+          },
+          firstOnly: false,
+          type: `Test`,
+        },
+        { path: `/` }
+      )
+      expect(result).toBeTruthy()
+      expect(result.length).toEqual(1)
+      expect(result[0].id).toEqual(`id1`)
+    })
+
+    it(`handles fields with custom resolvers on interfaces having multiple implementations`, async () => {
+      nodeModel.replaceFiltersCache()
+      const result = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { slug: { eq: `id3` } },
+          },
+          firstOnly: true,
+          type: `TestInterface`,
+        },
+        { path: `/` }
+      )
+      expect(result).toBeTruthy()
+      expect(result.id).toEqual(`id3`)
+    })
   })
 
   describe(`node tracking`, () => {
@@ -743,7 +1039,6 @@ describe(`NodeModel`, () => {
       nodeModel = new LocalNodeModel({
         schema,
         schemaComposer,
-        nodeStore,
         createPageDependency,
       })
     })
@@ -909,7 +1204,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })
@@ -954,7 +1248,6 @@ describe(`NodeModel`, () => {
         nodeModel = new LocalNodeModel({
           schema,
           schemaComposer,
-          nodeStore,
           createPageDependency,
         })
       })

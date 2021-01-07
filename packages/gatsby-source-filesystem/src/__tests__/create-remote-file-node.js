@@ -76,7 +76,9 @@ describe(`create-remote-file-node`, () => {
           url: ``,
         })
 
-        expect(value).rejects.toMatch(`wrong url: `)
+        expect(value).rejects.toMatch(
+          `url passed to createRemoteFileNode is either missing or not a proper web uri: `
+        )
       })
 
       it(`does not increment progress bar total`, () => {
@@ -85,7 +87,9 @@ describe(`create-remote-file-node`, () => {
           url: ``,
         })
 
-        expect(value).rejects.toMatch(`wrong url: `)
+        expect(value).rejects.toMatch(
+          `url passed to createRemoteFileNode is either missing or not a proper web uri: `
+        )
 
         expect(progressBar.total).toBe(0)
         expect(progressBar.tick).not.toHaveBeenCalled()

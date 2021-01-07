@@ -29,6 +29,18 @@ const IndexPage = ({ data }) => (
     <Link to="subdirectory/page-1" data-testid="subdir-link">
       Go to subdirectory
     </Link>
+    <Link to="collection-routing/root" data-testid="collection-link">
+      Go to collection routing
+    </Link>
+    <Link to="client-dynamic-route/foo" data-testid="client-dynamic-route-foo">
+      Go to dynamic route (id: foo)
+    </Link>
+    <Link
+      to="client-dynamic-route/splat/blah/blah/blah"
+      data-testid="client-dynamic-route-splat"
+    >
+      Go to client route splat (splat: blah/blah/blah)
+    </Link>
     <h2>Blog posts</h2>
     <ul>
       {data.posts.edges.map(({ node }) => (

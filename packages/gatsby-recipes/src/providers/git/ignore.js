@@ -1,11 +1,10 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const Joi = require(`@hapi/joi`)
-const isBlank = require(`is-blank`)
-const singleTrailingNewline = require(`single-trailing-newline`)
+import fs from "fs-extra"
+import path from "path"
+import * as Joi from "@hapi/joi"
+import singleTrailingNewline from "single-trailing-newline"
 
-const getDiff = require(`../utils/get-diff`)
-const resourceSchema = require(`../resource-schema`)
+import getDiff from "../utils/get-diff"
+import resourceSchema from "../resource-schema"
 
 const makePath = root => path.join(root, `.gitignore`)
 
@@ -20,7 +19,7 @@ const gitignoresAsArray = async root => {
   const ignores = ignoresStr.split(`\n`)
   const last = ignores.pop()
 
-  if (isBlank(last)) {
+  if (last.trim() === ``) {
     return ignores
   } else {
     return [...ignores, last]
@@ -114,7 +113,7 @@ const destroy = async (context, { id, name }) => {
 }
 
 // TODO pass action to plan
-module.exports.plan = async (context, args) => {
+export const plan = async (context, args) => {
   const name = args.id || args.name
 
   const currentResource = (await all(context, args)) || []
@@ -142,12 +141,8 @@ const schema = {
   name: Joi.string(),
   ...resourceSchema,
 }
-exports.schema = schema
-exports.validate = resource =>
+
+export const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-module.exports.create = create
-module.exports.update = update
-module.exports.read = read
-module.exports.destroy = destroy
-module.exports.all = all
+export { schema, create, update, read, destroy, all }

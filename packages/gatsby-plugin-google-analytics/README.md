@@ -4,7 +4,7 @@ Easily add Google Analytics to your Gatsby site.
 
 ## Install
 
-`npm install --save gatsby-plugin-google-analytics`
+`npm install gatsby-plugin-google-analytics`
 
 ## How to use
 
@@ -138,12 +138,14 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `alwaysSendReferrer`: boolean
 - `allowAnchor`: boolean
 - `cookieName`: string
+- `cookieFlags`: string
 - `cookieDomain`: string, defaults to `'auto'` if not given
 - `cookieExpires`: number
 - `storeGac`: boolean
 - `legacyCookieDomain`: string
 - `legacyHistoryImport`: boolean
 - `allowLinker`: boolean
+- `storage`: string
 
 This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
 

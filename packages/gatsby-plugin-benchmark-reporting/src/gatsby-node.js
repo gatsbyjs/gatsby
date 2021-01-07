@@ -293,7 +293,7 @@ function init(lifecycle) {
 }
 
 process.on(`exit`, () => {
-  if (benchMeta && !benchMeta.flushed) {
+  if (benchMeta && !benchMeta.flushed && BENCHMARK_REPORTING_URL) {
     // This is probably already a non-zero exit as otherwise node should wait for the last promise to complete
     reportError(
       `gatsby-plugin-benchmark-reporting error`,

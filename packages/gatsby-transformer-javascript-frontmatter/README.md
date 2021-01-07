@@ -4,7 +4,7 @@ Parses JavaScript files to extract frontmatter from exports.
 
 ## Install
 
-`npm install --save gatsby-source-filesystem gatsby-transformer-javascript-frontmatter`
+`npm install gatsby-source-filesystem gatsby-transformer-javascript-frontmatter`
 
 ## How to use
 

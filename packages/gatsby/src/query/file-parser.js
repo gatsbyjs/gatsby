@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 // @flow
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
@@ -42,7 +43,7 @@ const generateQueryName = ({ def, hash, file }) => {
 // taken from `babel-plugin-remove-graphql-queries`, in the future import from
 // there
 function followVariableDeclarations(binding) {
-  const node = binding.path?.node
+  const node = binding?.path?.node
   if (
     node?.type === `VariableDeclarator` &&
     node?.id.type === `Identifier` &&
@@ -91,10 +92,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
         ast = tmp
         break
       } catch (error) {
-        boundActionCreators.queryExtractionGraphQLError({
-          componentPath: filePath,
-        })
-        continue
+        // We emit the actual error below if every transpiled variant fails to parse
       }
     }
     if (ast === undefined) {
@@ -376,7 +374,7 @@ async function findGraphQLTags(
                 const binding = followVariableDeclarations(
                   path.scope.getBinding(path.node.local.name)
                 )
-                binding.path.traverse({ TaggedTemplateExpression })
+                binding?.path?.traverse({ TaggedTemplateExpression })
               },
             })
           },
@@ -418,7 +416,10 @@ export default class FileParser {
       return null
     }
 
-    if (!text.includes(`graphql`)) return null
+    // We do a quick check so we can exit early if this is a file we're not interested in.
+    // We only process files that either include graphql, or static images
+    if (!text.includes(`graphql`) && !text.includes(`gatsby-plugin-image`))
+      return null
     const hash = crypto
       .createHash(`md5`)
       .update(file)

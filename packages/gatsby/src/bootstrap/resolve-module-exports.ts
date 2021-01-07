@@ -1,6 +1,6 @@
 import fs from "fs"
+import * as t from "@babel/types"
 import traverse from "@babel/traverse"
-import get from "lodash/get"
 import { codeFrameColumns, SourceLocation } from "@babel/code-frame"
 import { babelParseToAst } from "../utils/babel-parse-to-ast"
 import report from "gatsby-cli/lib/reporter"
@@ -10,9 +10,9 @@ import { testRequireError } from "../utils/test-require-error"
 const staticallyAnalyzeExports = (
   modulePath: string,
   resolver = require.resolve
-): string[] => {
+): Array<string> => {
   let absPath: string | undefined
-  const exportNames: string[] = []
+  const exportNames: Array<string> = []
 
   try {
     absPath = resolver(modulePath)
@@ -81,15 +81,40 @@ const staticallyAnalyzeExports = (
     // get foo from `export { foo } from 'bar'`
     // get foo from `export { foo }`
     ExportSpecifier: function ExportSpecifier(astPath) {
-      const exportName = get(astPath, `node.exported.name`)
       isES6 = true
-      if (exportName) exportNames.push(exportName)
+      const exp = astPath?.node?.exported
+      if (!exp) {
+        return
+      }
+      if (exp.type === `Identifier`) {
+        const exportName = exp.name
+        if (exportName) {
+          exportNames.push(exportName)
+        }
+      }
     },
 
     // export default () => {}
+    // export default function() {}
+    // export default function foo() {}
     // const foo = () => {}; export default foo
     ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
-      const name = get(astPath, `node.declaration.name`)
+      const declaration = astPath.node.declaration
+      if (
+        !t.isIdentifier(declaration) &&
+        !t.isArrowFunctionExpression(declaration) &&
+        !t.isFunctionDeclaration(declaration)
+      ) {
+        return
+      }
+
+      let name = ``
+      if (t.isIdentifier(declaration)) {
+        name = declaration.name
+      } else if (t.isFunctionDeclaration(declaration) && declaration.id) {
+        name = declaration.id.name
+      }
+
       const exportName = `export default${name ? ` ${name}` : ``}`
       isES6 = true
       exportNames.push(exportName)
@@ -98,24 +123,40 @@ const staticallyAnalyzeExports = (
     AssignmentExpression: function AssignmentExpression(astPath) {
       const nodeLeft = astPath.node.left
 
-      if (nodeLeft.type !== `MemberExpression`) return
+      if (!t.isMemberExpression(nodeLeft)) {
+        return
+      }
 
       // ignore marker property `__esModule`
-      if (get(nodeLeft, `property.name`) === `__esModule`) return
+      if (
+        t.isIdentifier(nodeLeft.property) &&
+        nodeLeft.property.name === `__esModule`
+      ) {
+        return
+      }
 
       // get foo from `exports.foo = bar`
-      if (get(nodeLeft, `object.name`) === `exports`) {
+      if (
+        t.isIdentifier(nodeLeft.object) &&
+        nodeLeft.object.name === `exports`
+      ) {
         isCommonJS = true
-        exportNames.push(nodeLeft.property.name)
+        exportNames.push((nodeLeft.property as t.Identifier).name)
       }
 
       // get foo from `module.exports.foo = bar`
-      if (
-        get(nodeLeft, `object.object.name`) === `module` &&
-        get(nodeLeft, `object.property.name`) === `exports`
-      ) {
-        isCommonJS = true
-        exportNames.push(nodeLeft.property.name)
+      if (t.isMemberExpression(nodeLeft.object)) {
+        const exp: t.MemberExpression = nodeLeft.object
+
+        if (
+          t.isIdentifier(exp.object) &&
+          t.isIdentifier(exp.property) &&
+          exp.object.name === `module` &&
+          exp.property.name === `exports`
+        ) {
+          isCommonJS = true
+          exportNames.push((nodeLeft.property as t.Identifier).name)
+        }
       }
     },
   })
@@ -148,7 +189,7 @@ https://gatsby.dev/no-mixed-modules
 export const resolveModuleExports = (
   modulePath: string,
   { mode = `analysis`, resolver = require.resolve } = {}
-): string[] => {
+): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {

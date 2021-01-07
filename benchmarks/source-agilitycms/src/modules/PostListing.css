@@ -1,0 +1,15 @@
+.posts-listing-container {
+}
+
+.posts-listing .post {
+  padding: 5px;
+}
+
+.posts-listing .post:hover {
+  background-color: #eee;
+}
+
+.posts-listing .post h2 {
+  margin-bottom: 5px;
+  font-size: 22px;
+}

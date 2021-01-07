@@ -31,6 +31,8 @@ const {
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
 import * as actions from "../redux/actions/internal"
+import { boundActionCreators } from "../redux/actions"
+
 import { websocketManager } from "../utils/websocket-manager"
 const { default: FileParser } = require(`./file-parser`)
 const {
@@ -173,6 +175,8 @@ export const processQueries = ({
     parentSpan
   )
 
+  boundActionCreators.setGraphQLDefinitions(definitionsByName)
+
   return processDefinitions({
     schema,
     operations,
@@ -213,7 +217,12 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
           const location = {
             start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
           }
-          return errorParser({ message: error.message, filePath, location })
+          return errorParser({
+            message: error.message,
+            filePath,
+            location,
+            error,
+          })
         })
       )
 
@@ -380,6 +389,7 @@ const processDefinitions = ({
             },
             message,
             filePath,
+            error,
           })
         )
       }
@@ -395,7 +405,8 @@ const processDefinitions = ({
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
-      hash: originalDefinition.hash,
+      // ensure hash should be a string and not a number
+      hash: String(originalDefinition.hash),
     }
 
     if (query.isStaticQuery) {

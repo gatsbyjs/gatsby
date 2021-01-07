@@ -17,7 +17,7 @@ Up until now, Gatsby has [sourced all nodes](/docs/node-creation/) into Redux, [
 
 ### Query compilation
 
-The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/next/babel-traverse.html) to load all JavaScript files in the site that have graphql queries in them. This produces AST results that are passed to the [relay-compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html). This accomplishes a couple of things:
+The first thing it does is use [babylon-traverse](https://babeljs.io/docs/en/next/babel-traverse.html) to load all JavaScript files in the site that have GraphQL queries in them. This produces AST results that are passed to the [relay-compiler](https://facebook.github.io/relay/docs/en/compiler-architecture.html). This accomplishes a couple of things:
 
 1. It informs us of any malformed queries, which are promptly reported back to the user.
 2. It builds a tree of queries and fragments they depend on. And outputs a single optimized query string with the fragments.
@@ -63,7 +63,7 @@ Gatsby is now in the [handleQuery](https://github.com/gatsbyjs/gatsby/blob/maste
 
 If the query is a `StaticQuery`, Gatsby will call the `replaceStaticQuery` action to save it to the `staticQueryComponents` namespace which is a mapping from a component's path to an object that contains the raw GraphQL Query amongst other things. More details can be found in the doc on [Static Queries](/docs/static-vs-normal-queries/). Gatsby also removes a component's `jsonName` from the `components` Redux namespace. See [Page -> Node Dependencies](/docs/page-node-dependencies/).
 
-If the query is just a normal every-day query (not StaticQuery), then Gatsby updates its component's `query` in the redux `components` namespace via the [replaceComponentQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L827) action.
+If the query is just a normal every-day query (not StaticQuery), then Gatsby updates its component's `query` in the Redux `components` namespace via the [replaceComponentQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L827) action.
 
 ```dot
 digraph {

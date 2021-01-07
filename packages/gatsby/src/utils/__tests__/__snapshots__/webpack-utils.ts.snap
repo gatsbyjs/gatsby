@@ -10,7 +10,8 @@ Object {
       "loader": StringContaining "babel-loader",
       "options": Object {
         "babelrc": false,
-        "cacheIdentifier": "develop---gatsby-dependencies@1.0.0",
+        "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
+        "cacheIdentifier": "{\\"browerslist\\":[],\\"gatsbyPreset\\":\\"1.0.0\\"}",
         "compact": false,
         "configFile": false,
         "presets": Array [
@@ -37,8 +38,11 @@ Object {
     Object {
       "loader": StringContaining "babel-loader",
       "options": Object {
+        "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
         "compact": false,
         "configFile": true,
+        "reactRuntime": "classic",
+        "rootDir": "<TEMP_DIR>/test",
         "stage": "develop",
       },
     },

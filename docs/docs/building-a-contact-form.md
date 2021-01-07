@@ -4,7 +4,7 @@ title: Building a Contact Form
 
 This guide covers how to create a contact form in a Gatsby site, along with an overview of some strategies for handling form data that has been submitted.
 
-Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](/docs/adding-forms/) section.
+Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to your Gatsby site can be found in the [Adding Forms](/docs/how-to/adding-common-features/adding-forms/) section.
 
 ## Creating an Accessible Form
 
@@ -68,7 +68,7 @@ Getform is a form backend platform which offers a free-plan for handling form su
 
 Once you've made the code changes to your form, you can head over to the contact page on your site and start submitting data to the form. The submissions will then be visible on the Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered.
 
-You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
+You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [CodePen](https://codepen.io/getform).
 
 ### Netlify
 
@@ -92,7 +92,7 @@ More information on Netlify Forms can be found [on their website](https://www.ne
 
 Formspree offers a generous free-tier service for handling form submissions on static sites. This makes it a great tool for having form submissions sent directly to an email address of your choosing, with very little setup required.
 
-In order to begin leveraging Formspree's features, you must add a form action directing the http POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
+In order to begin leveraging Formspree's features, you must add a form action directing the HTTP POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
 
 ```jsx:title=src/pages/contact.js
 <form method="post" action="https://formspree.io/email@domain.tld">

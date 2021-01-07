@@ -27,7 +27,7 @@ Image optimization in Gatsby is provided by a plugin called `gatsby-image` which
 
 Start by using npm to install the `gatsby-image` plugin and its associated dependencies.
 
-```bash
+```shell
 npm install gatsby-image gatsby-transformer-sharp gatsby-plugin-sharp
 ```
 
@@ -53,7 +53,7 @@ If you haven't already, make sure that your project is set up to see content ins
 
 1. Install `gatsby-source-filesystem`. Note: If you created your project using `gatsby new <name>`, this first step should already be done for you via the default starter.
 
-```bash
+```shell
 npm install gatsby-source-filesystem
 ```
 
@@ -90,6 +90,8 @@ export const query = graphql`
   }
 `
 ```
+
+_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/plugins/gatsby-image/#fragments)._
 
 There are a couple of things to note here.
 
@@ -155,7 +157,7 @@ export default HomePage
 
 ## Querying for multiple images from YAML data
 
-Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/packages/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
+Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/plugins/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
 
 Here's an example of a query from a list of conferences in a YAML file with an image for each one:
 
@@ -254,19 +256,20 @@ This example is attempting to query for all the data in `speaking.yaml` and the 
 The first thing to know is that an alias is assigning a name to a query. The second thing to know is that aliases are optional, but they can make your life easier! Below is an example.
 
 ```graphql
-talks: allSpeakingYaml {
-        edges {
-            node {
-                image {
-                    childImageSharp {
-                        fluid {
-                            ...GatsbyImageSharpFluid
-                        }
-                    }
-                }
+{
+  talks: allSpeakingYaml {
+    edges {
+      node {
+        image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
             }
+          }
         }
+      }
     }
+  }
 }
 ```
 
@@ -343,17 +346,17 @@ And then like this to access the image using the alias name `banner`.
 <Img fluid={data.banner.childImageSharp.fluid} />
 ```
 
-These examples should handle a fair number of use cases. A couple bonus things:
+These examples should handle a fair number of use cases. A couple of bonus things:
 
 ## Aspect ratio
 
 `gatsby-image` has a feature that gives you the ability to set an aspect ratio to constrain image proportions. This can be used for fixed or fluid processed images; it doesn't matter.
 
 ```jsx
-<Img sizes={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
+<Img fluid={{ ...data.banner.childImageSharp.fluid, aspectRatio: 21 / 9 }} />
 ```
 
-This example uses the `sizes` option on the `Img` component to specify the `aspectRatio` option along with the fluid image data. This processing is made possible by `gatsby-plugin-sharp`.
+This example uses the `fluid` option on the `Img` component to specify the `aspectRatio` option along with the fluid image data. This processing is made possible by `gatsby-plugin-sharp`.
 
 ## Bonus Error
 
@@ -369,6 +372,6 @@ So that's it. This post included a number of different possible use cases, so do
 
 ## Other resources
 
-- [Gatsby Image API docs](/docs/gatsby-image/)
+- [Gatsby Image API docs](/docs/reference/built-in-components/gatsby-image/)
 - [Using Gatsby Image](/docs/using-gatsby-image/)
 - [Other image and media techniques in Gatsby](/docs/images-and-files/)

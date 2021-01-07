@@ -1,10 +1,13 @@
 const path = require(`path`)
+const {
+  CORE_JS_POLYFILL_EXCLUDE_LIST: polyfillsToExclude,
+} = require(`gatsby-legacy-polyfills/dist/exclude`)
 
 const resolve = m => require.resolve(m)
 
 const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
-const loadCachedConfig = () => {
+export function loadCachedConfig() {
   let pluginBabelConfig = {}
   if (!IS_TEST) {
     try {
@@ -26,15 +29,16 @@ const loadCachedConfig = () => {
   return pluginBabelConfig
 }
 
-module.exports = function preset(_, options = {}) {
+export default function preset(_, options = {}) {
   let { targets = null } = options
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
   const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
   const pluginBabelConfig = loadCachedConfig()
-  const absoluteRuntimePath = path.dirname(
-    require.resolve(`@babel/runtime/package.json`)
-  )
+  // unused because of cloud builds
+  // const absoluteRuntimePath = path.dirname(
+  //   require.resolve(`@babel/runtime/package.json`)
+  // )
 
   if (!targets) {
     if (stage === `build-html` || stage === `test`) {
@@ -51,21 +55,34 @@ module.exports = function preset(_, options = {}) {
       [
         resolve(`@babel/preset-env`),
         {
-          corejs: 2,
+          corejs: 3,
           loose: true,
           modules: stage === `test` ? `commonjs` : false,
           useBuiltIns: `usage`,
           targets,
-          // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
-          exclude: [`transform-typeof-symbol`],
+          // debug: true,
+          exclude: [
+            // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
+            `transform-typeof-symbol`,
+            // we already have transforms for these
+            `transform-spread`,
+            `proposal-nullish-coalescing-operator`,
+            `proposal-optional-chaining`,
+
+            ...polyfillsToExclude,
+          ],
         },
       ],
       [
         resolve(`@babel/preset-react`),
         {
           useBuiltIns: true,
-          pragma: `React.createElement`,
+          pragma:
+            options.reactRuntime === `automatic`
+              ? undefined
+              : `React.createElement`,
           development: stage === `develop`,
+          runtime: options.reactRuntime || `classic`,
         },
       ],
     ],
@@ -90,10 +107,11 @@ module.exports = function preset(_, options = {}) {
         resolve(`@babel/plugin-transform-runtime`),
         {
           corejs: false,
-          helpers: stage === `develop` || stage === `test`,
+          helpers: true,
           regenerator: true,
           useESModules: stage !== `test`,
-          absoluteRuntimePath,
+          // this breaks cloud builds so we disable it for now
+          // absoluteRuntime: absoluteRuntimePath,
         },
       ],
       [

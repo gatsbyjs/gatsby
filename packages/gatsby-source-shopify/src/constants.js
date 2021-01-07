@@ -12,6 +12,7 @@ export const PRODUCT_VARIANT = `ProductVariant`
 export const PRODUCT_METAFIELD = `ProductMetafield`
 export const PRODUCT_VARIANT_METAFIELD = `ProductVariantMetafield`
 export const SHOP_POLICY = `ShopPolicy`
+export const SHOP_DETAILS = `Shop`
 export const PAGE = `Page`
 export const SHOP = `shop`
 export const CONTENT = `content`

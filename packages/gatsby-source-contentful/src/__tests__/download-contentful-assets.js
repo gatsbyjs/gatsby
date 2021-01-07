@@ -63,8 +63,9 @@ describe.only(`downloadContentfulAssets`, () => {
     }
     await downloadContentfulAssets({
       actions: { touchNode: jest.fn() },
-      getNodes: () => fixtures,
+      getNodesByType: () => fixtures,
       cache,
+      assetDownloadWorkers: 50,
     })
 
     fixtures.forEach(n => {

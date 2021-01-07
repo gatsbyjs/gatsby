@@ -1,10 +1,12 @@
 require(`v8-compile-cache`)
 
+const { isCI } = require(`gatsby-core-utils`)
 const crypto = require(`crypto`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`)
+const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -12,10 +14,10 @@ const debug = require(`debug`)(`gatsby:webpack-config`)
 const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
-
 const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
+import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -84,6 +86,15 @@ module.exports = async (
     envObject.PUBLIC_DIR = JSON.stringify(`${process.cwd()}/public`)
     envObject.BUILD_STAGE = JSON.stringify(stage)
     envObject.CYPRESS_SUPPORT = JSON.stringify(process.env.CYPRESS_SUPPORT)
+    envObject.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = JSON.stringify(
+      !!process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    )
+
+    if (stage === `develop`) {
+      envObject.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT = JSON.stringify(
+        process.env.GATSBY_SOCKET_IO_DEFAULT_TRANSPORT || `websocket`
+      )
+    }
 
     const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
 
@@ -93,7 +104,7 @@ module.exports = async (
         return acc
       },
       {
-        "process.env": JSON.stringify({}),
+        "process.env": `({})`,
       }
     )
   }
@@ -134,7 +145,7 @@ module.exports = async (
         }
       case `build-html`:
       case `develop-html`:
-        // A temp file required by static-site-generator-plugin. See plugins() below.
+        // Generate the file needed to SSR pages.
         // Deleted by build-html.js, since it's not needed for production.
         return {
           path: directoryPath(`public`),
@@ -161,17 +172,20 @@ module.exports = async (
     switch (stage) {
       case `develop`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           commons: [
-            require.resolve(`event-source-polyfill`),
-            `${require.resolve(
-              `webpack-hot-middleware/client`
-            )}?path=${getHmrPath()}`,
+            process.env.GATSBY_HOT_LOADER !== `fast-refresh` &&
+              `${require.resolve(
+                `webpack-hot-middleware/client`
+              )}?path=${getHmrPath()}`,
             directoryPath(`.cache/app`),
-          ],
+          ].filter(Boolean),
         }
       case `develop-html`:
         return {
-          main: directoryPath(`.cache/develop-static-entry`),
+          main: process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+            ? directoryPath(`.cache/ssr-develop-static-entry`)
+            : directoryPath(`.cache/develop-static-entry`),
         }
       case `build-html`:
         return {
@@ -179,6 +193,7 @@ module.exports = async (
         }
       case `build-javascript`:
         return {
+          polyfill: directoryPath(`.cache/polyfill-entry`),
           app: directoryPath(`.cache/production-app`),
         }
       default:
@@ -200,6 +215,8 @@ module.exports = async (
           program.prefixPaths ? assetPrefix : ``
         ),
       }),
+
+      plugins.virtualModules(),
     ]
 
     switch (stage) {
@@ -213,10 +230,21 @@ module.exports = async (
             plugins.eslintGraphqlSchemaReload(),
           ])
           .filter(Boolean)
+        if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+          // Don't use the default mini-css-extract-plugin setup as that
+          // breaks hmr.
+          configPlugins.push(
+            plugins.extractText({ filename: `[name].css` }),
+            plugins.extractStats()
+          )
+        }
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
-          plugins.extractText(),
+          plugins.extractText({
+            filename: `[name].[contenthash].css`,
+            chunkFilename: `[name].[contenthash].css`,
+          }),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           plugins.extractStats(),
@@ -231,7 +259,9 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `cheap-module-source-map`
+        return process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+          ? `cheap-module-source-map`
+          : `eval-cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -388,7 +418,6 @@ module.exports = async (
         "@babel/runtime": path.dirname(
           require.resolve(`@babel/runtime/package.json`)
         ),
-        "core-js": path.dirname(require.resolve(`core-js/package.json`)),
         // TODO: Remove entire block when we make fast-refresh the default
         ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
           ? {
@@ -407,6 +436,7 @@ module.exports = async (
         "socket.io-client": path.dirname(
           require.resolve(`socket.io-client/package.json`)
         ),
+        $virtual: getAbsolutePathForVirtualModule(`$virtual`),
       },
       plugins: [
         // Those two folders are special and contain gatsby-generated files
@@ -415,17 +445,24 @@ module.exports = async (
         PnpWebpackPlugin.bind(directoryPath(`public`), module),
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
+        new CoreJSResolver(),
       ],
     }
 
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      // force to use es modules when importing internals of @reach.router
-      // for browser bundles
-      resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
-        `es`
+      resolve.alias = Object.assign(
+        {},
+        {
+          // force to use es modules when importing internals of @reach.router
+          // for browser bundles
+          "@reach/router": path.join(
+            path.dirname(require.resolve(`@reach/router/package.json`)),
+            `es`
+          ),
+        },
+        resolve.alias
       )
     }
 
@@ -614,7 +651,6 @@ module.exports = async (
       `@reach/router/lib/history`,
       `@reach/router`,
       `common-tags`,
-      /^core-js\//,
       `crypto`,
       `debug`,
       `fs`,
@@ -651,6 +687,23 @@ module.exports = async (
 
     config.externals = [
       function (context, request, callback) {
+        if (
+          stage === `develop-html` &&
+          isCI() &&
+          process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+        ) {
+          if (request === `react`) {
+            callback(null, `react/cjs/react.production.min.js`)
+            return
+          } else if (request === `react-dom/server`) {
+            callback(
+              null,
+              `react-dom/cjs/react-dom-server.node.production.min.js`
+            )
+            return
+          }
+        }
+
         const external = isExternal(request)
         if (external !== null) {
           callback(null, external)
@@ -659,6 +712,12 @@ module.exports = async (
         }
       },
     ]
+  }
+
+  if (stage === `develop`) {
+    config.externals = {
+      "socket.io-client": `io`,
+    }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

@@ -1,6 +1,5 @@
 ---
 title: Preparing Your Site for Launch
-overview: true
 ---
 
 So your Gatsby site is done, and you're ready to share it with the world, **congratulations**! 🎉

@@ -1,7 +1,20 @@
-// This being a babel.config.js file instead of a .babelrc file allows the
-// packages in `internal-plugins` to be compiled with the rest of the source.
-// Ref: https://github.com/babel/babel/pull/7358
+module.exports = api => {
+  const isTest = api.env('test');
 
-const configPath = require(`path`).join(__dirname, `..`, `..`, `.babelrc.js`)
+  return {
+    presets: [
+      ["@babel/env", {
+        // use ES modules for rollup and commonjs for jest
+        modules: isTest ? `commonjs` : false,
+        shippedProposals: true,
+        targets: {
+          "node": "10.13.0"
+        }
+      }],
+      "@babel/preset-react"
+    ],
+    plugins: ["@babel/plugin-transform-runtime"]
+  }
+};
 
-module.exports = require(configPath)
+

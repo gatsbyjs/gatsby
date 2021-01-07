@@ -71,6 +71,27 @@ const IndexPage = ({ pageContext }) => (
           Go to subdirectory
         </Link>
       </li>
+      <li>
+        <Link to="collection-routing/root" data-testid="collection-link">
+          Go to collection routing
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/foo"
+          data-testid="client-dynamic-route-foo"
+        >
+          Go to dynamic route (id: foo)
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/splat/blah/blah/blah"
+          data-testid="client-dynamic-route-splat"
+        >
+          Go to client route splat (splat: blah/blah/blah)
+        </Link>
+      </li>
     </ul>
   </Layout>
 )

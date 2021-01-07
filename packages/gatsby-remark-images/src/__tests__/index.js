@@ -671,3 +671,41 @@ describe(`disableBgImage`, () => {
     expect(node.value).toMatchSnapshot()
   })
 })
+
+describe(`image alt attribute`, () => {
+  it(`should be generated correctly`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![testing-if-alt-is-correct](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(`testing-if-alt-is-correct`)
+  })
+
+  it(`should use escaped filename as fallback`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(`my image`)
+  })
+
+  it(`should be able to consider EMPTY_ALT`, async () => {
+    const imagePath = `images/my-image.jpeg`
+    const content = `![GATSBY_EMPTY_ALT](./${imagePath} "some title")`
+
+    const nodes = await plugin(createPluginOptions(content, imagePath))
+    expect(nodes.length).toBe(1)
+
+    const node = nodes.pop()
+    const $ = cheerio.load(node.value)
+    expect($(`img`).attr(`alt`)).toEqual(``)
+  })
+})

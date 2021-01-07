@@ -7,7 +7,7 @@ By default, the plugin will add some basic security headers. You can easily add 
 
 ## Install
 
-`npm install --save gatsby-plugin-netlify`
+`npm install gatsby-plugin-netlify`
 
 ## How to use
 
@@ -64,7 +64,7 @@ An example:
 }
 ```
 
-Link paths are specially handed by this plugin. Since most files are processed
+Link paths are specially handled by this plugin. Since most files are processed
 and cache-busted through Gatsby (with a file hash), the plugin will transform
 any base file names to the hashed variants. If the file is not hashed, it will
 ensure the path is valid relative to the output `public` folder. You should be
@@ -132,4 +132,6 @@ You can also create a `_redirects` file in the `static` folder for the same effe
 You can validate the `_redirects` config through the
 [Netlify playground app](https://play.netlify.com/redirects).
 
-Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication). If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.
+Redirect rules are automatically added for [client only paths](https://www.gatsbyjs.org/docs/client-only-routes-and-user-authentication). The plugin uses the [matchPath](https://www.gatsbyjs.org/docs/gatsby-internals-terminology/#matchpath) syntax to match all possible requests in the range of your client-side routes and serves the HTML file for the client-side route. Without it, only the exact route of the client-side route works.
+
+If those rules are conflicting with custom rules or if you want to have more control over them you can disable them in [configuration](#configuration) by setting `generateMatchPathRewrites` to `false`.

@@ -15,7 +15,7 @@ been used since jsonapi version `8.x-1.0-alpha4`.
 
 ## Install
 
-`npm install --save gatsby-source-drupal`
+`npm install gatsby-source-drupal`
 
 ## How to use
 
@@ -92,6 +92,36 @@ module.exports = {
           username: process.env.BASIC_AUTH_USERNAME,
           password: process.env.BASIC_AUTH_PASSWORD,
         },
+      },
+    },
+  ],
+}
+```
+
+### Fastbuilds
+
+You can use the `fastBuilds` option to enable fastbuilds. This requires the
+Gatsby Drupal module (called gatsby_fastbuilds) to be enabled. This will speed
+up your development and build process by only downloading content that has
+changed since you last ran `gatsby build` or `gatsby develop`.
+
+This will require authentication to your Drupal site and a Drupal user with the
+Drupal permission to `sync gatsby fastbuild log entities`.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        basicAuth: {
+          username: process.env.BASIC_AUTH_USERNAME,
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
+        fastBuilds: true,
       },
     },
   ],

@@ -66,7 +66,11 @@ async function watch(
       // This fixes the issue where after running gatsby-dev, running `yarn gatsby develop`
       // fails with a permission issue.
       // @fixes https://github.com/gatsbyjs/gatsby/issues/18809
-      if (/bin\/gatsby.js$/.test(newPath)) {
+      // Binary files we target:
+      // - gatsby/bin/gatsby.js
+      //  -gatsby/cli.js
+      //  -gatsby-cli/cli.js
+      if (/(bin\/gatsby.js|gatsby(-cli)?\/cli.js)$/.test(newPath)) {
         fs.chmodSync(newPath, `0755`)
       }
 
@@ -136,13 +140,22 @@ async function watch(
 
   if (forceInstall) {
     try {
-      await publishPackagesLocallyAndInstall({
-        packagesToPublish: allPackagesToWatch,
-        root,
-        localPackages,
-        ignorePackageJSONChanges,
-        yarnWorkspaceRoot,
-      })
+      if (allPackagesToWatch.length > 0) {
+        await publishPackagesLocallyAndInstall({
+          packagesToPublish: allPackagesToWatch,
+          root,
+          localPackages,
+          ignorePackageJSONChanges,
+          yarnWorkspaceRoot,
+        })
+      } else {
+        // run `yarn`
+        const yarnInstallCmd = [`yarn`]
+
+        console.log(`Installing packages from public NPM registry`)
+        await promisifiedSpawn(yarnInstallCmd)
+        console.log(`Installation complete`)
+      }
     } catch (e) {
       console.log(e)
     }

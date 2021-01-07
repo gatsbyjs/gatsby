@@ -2,7 +2,7 @@ import groupBy from "lodash/groupBy"
 import path from "path"
 import gatsbyNode from "../gatsby-node"
 
-describe(`transformer-react-doc-gen: onCreateNode`, () => {
+describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
   let createdNodes, updatedNodes
   const createNodeId = jest.fn(id => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
@@ -85,6 +85,24 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       expect(paramDescriptionNode).toBeDefined()
       expect(paramDescriptionNode.internal.content).toMatchSnapshot(
         `param description`
+      )
+    })
+
+    it(`should extract out a captions from examples`, () => {
+      const pearNode = createdNodes.find(node => node.name === `pear`)
+
+      expect(pearNode.examples.length).toBe(2)
+      expect(pearNode.examples).toMatchSnapshot(`examplesWithCaptions`)
+
+      expect(pearNode.examples[1].caption).toBeDefined()
+
+      const pearDescriptionNode = createdNodes.find(
+        node => node.id === pearNode.description___NODE
+      )
+
+      expect(pearDescriptionNode).toBeDefined()
+      expect(pearDescriptionNode.internal.content).toMatchSnapshot(
+        `description content`
       )
     })
 
@@ -360,5 +378,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       await run(getFileNode(`code.js`))
       expect(createdNodes.length).toBeGreaterThan(0)
     })
+  })
+
+  it(`doesn't cause a stack overflow for nodes of the same name`, () => {
+    expect(run(getFileNode(`same-name.ts`))).resolves.toBeUndefined()
   })
 })

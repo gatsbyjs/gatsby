@@ -2,9 +2,11 @@
 title: Conditional Page Builds
 ---
 
-If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [Incremental Builds](https://www.gatsbyjs.com/docs/incremental-builds/) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for pages with unchanged data. This feature is experimental, but _may_ improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
+If you have a large site, you may be able to improve build times for data updates by enabling an experimental feature called "conditional page builds". While this is not as fast as true [Incremental Builds](https://support.gatsbyjs.com/hc/en-us/articles/360056151214-Incremental-Builds) available in Gatsby Cloud, it can save time on the HTML-generation step by not re-rendering HTML for pages with unchanged data. This feature is experimental, but _may_ improve build times for sites with a large number of complex pages. Test it thoroughly with your site before deploying to production.
 
-For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/overview-of-the-gatsby-build-process/).
+For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/conceptual/overview-of-the-gatsby-build-process/).
+
+> ❗ Conditional page builds do not currently account for static queries. Any query result differences will not trigger pages to rebuild.
 
 ## How to use
 
@@ -22,7 +24,7 @@ To list the paths in the build assets (`public`) folder, you can use one (or bot
 
 - `--log-pages` parameter will output all the file paths that were updated or deleted at the end of the build stage.
 
-```bash
+```shell
 success Building production JavaScript and CSS bundles - 82.198s
 success run queries - 82.762s - 4/4 0.05/s
 success Building static HTML for pages - 19.386s - 2/2 0.10/s
@@ -42,8 +44,6 @@ Done in 154.501 sec
   - `newPages.txt` will contain a list of new or changed paths
   - `deletedPages.txt` will contain a list of deleted paths
 
-If there are no changed or deleted paths, then the relevant files will not be created in the `.cache` folder.
-
 ## More information
 
 - This feature works by comparing the page data from the previous build to the new page data. This creates a list of page directories that are passed to the static build process.
@@ -56,6 +56,6 @@ If there are no changed or deleted paths, then the relevant files will not be cr
 
 - You will need to persist the `.cache` and `public` directories between builds. This allows for comparisons and reuse of previously built files. If `.cache` directory was not persisted then a full build will be triggered. If `public` directory was not persisted then you might experience failing builds or builds that are missing certain assets.
 
-- Any code or static query changes (templates, components, source handling, new plugins etc) will prompt the creation of a new webpack compilation hash and trigger a full build.
+- Any code changes (templates, components, source handling, new plugins etc) will prompt the creation of a new webpack compilation hash and trigger a full build.
 
 Note: When using the `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` flag it is important to do so consistently when building your project. Otherwise, the cache will be cleared and the necessary data for comparison will no longer be available, removing the ability to check for incremental data changes.

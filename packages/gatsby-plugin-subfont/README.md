@@ -6,7 +6,7 @@
 
 ## Install
 
-`npm install --save gatsby-plugin-subfont`
+`npm install gatsby-plugin-subfont`
 
 If you want the ability to run font subsetting locally you'l need Python and install fonttools with this command line:
 

@@ -4,7 +4,7 @@ title: Docs Writing Process
 
 When a new feature or integration is released that Gatsby developers can take advantage of, documentation should be added to improve the learning experience. Gatsby also needs docs for topic areas that exist in other technologies but are under-documented or under-tooled in the Gatsby ecosystem.
 
-The knowledge of how to work with a technique, source plugin, or varied use case may be known internally to Gatsby team members, but it also may only exist on the web at large. This contributing doc is intended to provide a written process for producing docs without prior information, a critical function of the Gatsby Learning team and open source community.
+The knowledge of how to work with a technique, source plugin, or varied use case may be known internally to Gatsby team members, but it also may only exist on the web at large. This contributing doc is intended to provide a written process for producing docs without prior information, a critical function of the Gatsby Documentation team and open source community.
 
 ## Identifying a topic
 
@@ -28,7 +28,7 @@ When identifying a topic, start by:
 
 A GitHub issue for new learning material should indicate the format. Is it a Reference or Conceptual Guide? A Tutorial? A recipe?
 
-Does docs coverage exist anywhere on `gatsbyjs.org`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
+Does docs coverage exist anywhere on `gatsbyjs.com`? If so, would an alternative format help provide information for Gatsby learners of different skill and experience levels? For example, if a tutorial exists but there is no coverage in Reference Guides, adding more content in a different format would benefit users.
 
 ### Tutorials vs. recipes vs. guides:
 
@@ -71,7 +71,7 @@ Create demo sites and examples to provide more authoritative material that suppo
 
 Follow the [docs templates](/contributing/docs-templates/) to ensure you’re producing content in the right format for its purpose.
 
-Use the [Markdown syntax doc](/docs/mdx/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
+Use the [Markdown syntax doc](/docs/how-to/routing/mdx/markdown-syntax/) to understand your options for formatting text with Markdown, and follow [accessibility recommendations](/docs/conceptual/making-your-site-accessible/#how-to-improve-accessibility) for [heading levels](/contributing/docs-contributions/#headings) and image alt text.
 
 Run the docs site locally to check formatting and functionality. There are instructions in the [contributing docs](/contributing/docs-contributions/).
 
@@ -89,7 +89,7 @@ Apply feedback from pull request reviews in order for them to be accepted. Furth
 - [Docs Templates](/contributing/docs-templates/)
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Markdown Syntax Doc](/docs/mdx/markdown-syntax/)
+- [Markdown Syntax Doc](/docs/how-to/routing/mdx/markdown-syntax/)
 - [Pair Programming](/contributing/pair-programming/) for interviewing the core team only
 - [Blog Post Guidelines](/contributing/blog-contributions/)
 - [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.6.0-next.0...gatsby-theme@0.7.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.5.0-next.0...gatsby-theme@0.6.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.4.0-next.0...gatsby-theme@0.5.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.3.0-next.0...gatsby-theme@0.4.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-theme
+
+## [0.1.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.1.5...gatsby-theme@0.1.6) (2020-10-08)
+
+**Note:** Version bump only for package gatsby-theme
+
+## [0.1.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.1.4...gatsby-theme@0.1.5) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-theme
+
+## [0.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.1.3...gatsby-theme@0.1.4) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-theme
+
+## [0.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.1.2...gatsby-theme@0.1.3) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-theme
+
 ## [0.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.1.1...gatsby-theme@0.1.2) (2020-06-02)
 
 **Note:** Version bump only for package gatsby-theme

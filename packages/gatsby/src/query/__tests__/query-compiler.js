@@ -452,6 +452,7 @@ describe(`actual compiling`, () => {
          |             ^
       12 |           }",
         },
+        "error": [GraphQLError: Cannot spread fragment "Foo" within itself via Bar.],
         "filePath": "mockFile",
         "id": "85901",
         "location": Any<Object>,
@@ -814,6 +815,7 @@ describe(`actual compiling`, () => {
         |                ^
       5 |              }",
           },
+          "error": [GraphQLError: Fragment "PostsJsonFragment" cannot be spread here as objects of type "PostsJson" can never be of type "PostsJsonConnection".],
           "filePath": "mockFile",
           "id": "85901",
           "location": Object {
@@ -900,6 +902,7 @@ describe(`actual compiling`, () => {
           "context": Object {
             "sourceMessage": "This anonymous operation must be the only defined operation.",
           },
+          "error": [GraphQLError: This anonymous operation must be the only defined operation.],
           "filePath": "mockFile",
           "id": "85901",
           "location": Object {
@@ -1055,6 +1058,7 @@ describe(`actual compiling`, () => {
         |                 ^
       2 |           field",
           },
+          "error": [GraphQLError: Unknown type "ThisTypeSurelyDoesntExistInSchema".],
           "filePath": "mockFile",
           "id": "85901",
           "location": Object {

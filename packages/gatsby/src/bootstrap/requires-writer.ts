@@ -8,7 +8,10 @@ import { match } from "@reach/router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
-import { markWebpackStatusAsPending } from "../utils/webpack-status"
+import {
+  writeModule,
+  getAbsolutePathForVirtualModule,
+} from "../utils/gatsby-webpack-virtual-modules"
 
 interface IGatsbyPageComponent {
   component: string
@@ -34,7 +37,7 @@ const isRootSegment = (segment: string): boolean => segment === ``
 const isDynamic = (segment: string): boolean => paramRe.test(segment)
 const isSplat = (segment: string): boolean => segment === `*`
 
-const segmentize = (uri: string): string[] =>
+const segmentize = (uri: string): Array<string> =>
   uri
     // strip starting/ending slashes
     .replace(/(^\/+|\/+$)/g, ``)
@@ -60,7 +63,9 @@ export const resetLastHash = (): void => {
 const pickComponentFields = (page: IGatsbyPage): IGatsbyPageComponent =>
   _.pick(page, [`component`, `componentChunkName`])
 
-export const getComponents = (pages: IGatsbyPage[]): IGatsbyPageComponent[] =>
+export const getComponents = (
+  pages: Array<IGatsbyPage>
+): Array<IGatsbyPageComponent> =>
   _(pages)
     .map(pickComponentFields)
     .uniqBy(c => c.componentChunkName)
@@ -71,7 +76,9 @@ export const getComponents = (pages: IGatsbyPage[]): IGatsbyPageComponent[] =>
  * Get all dynamic routes and sort them by most specific at the top
  * code is based on @reach/router match utility (https://github.com/reach/router/blob/152aff2352bc62cefc932e1b536de9efde6b64a5/src/lib/utils.js#L224-L254)
  */
-const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
+const getMatchPaths = (
+  pages: Array<IGatsbyPage>
+): Array<IGatsbyPageMatchPath> => {
   interface IMatchPathEntry extends IGatsbyPage {
     index: number
     score: number
@@ -98,7 +105,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
     }
   }
 
-  const matchPathPages: IMatchPathEntry[] = []
+  const matchPathPages: Array<IMatchPathEntry> = []
 
   pages.forEach((page: IGatsbyPage, index: number): void => {
     if (page.matchPath) {
@@ -112,7 +119,7 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
   // More info in https://github.com/gatsbyjs/gatsby/issues/16097
   // small speedup: don't bother traversing when no matchPaths found.
   if (matchPathPages.length) {
-    const newMatches: IMatchPathEntry[] = []
+    const newMatches: Array<IMatchPathEntry> = []
 
     pages.forEach((page: IGatsbyPage, index: number): void => {
       const isInsideMatchPath = !!matchPathPages.find(
@@ -154,27 +161,48 @@ const getMatchPaths = (pages: IGatsbyPage[]): IGatsbyPageMatchPath[] => {
 }
 
 const createHash = (
-  matchPaths: IGatsbyPageMatchPath[],
-  components: IGatsbyPageComponent[]
+  matchPaths: Array<IGatsbyPageMatchPath>,
+  components: Array<IGatsbyPageComponent>,
+  cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent>
 ): string =>
   crypto
     .createHash(`md5`)
-    .update(JSON.stringify({ matchPaths, components }))
+    .update(
+      JSON.stringify({
+        matchPaths,
+        components,
+        cleanedSSRVisitedPageComponents,
+      })
+    )
     .digest(`hex`)
 
 // Write out pages information.
 export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
-  // console.log(`on requiresWriter progress`)
   const { program } = state
   const pages = [...state.pages.values()]
   const matchPaths = getMatchPaths(pages)
   const components = getComponents(pages)
+  let cleanedSSRVisitedPageComponents: Array<IGatsbyPageComponent> = []
 
-  const newHash = createHash(matchPaths, components)
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    const ssrVisitedPageComponents = [
+      ...(state.visitedPages.get(`server`)?.values() || []),
+    ]
+
+    // Remove any page components that no longer exist.
+    cleanedSSRVisitedPageComponents = components.filter(c =>
+      ssrVisitedPageComponents.some(s => s === c.componentChunkName)
+    )
+  }
+
+  const newHash = createHash(
+    matchPaths,
+    components,
+    cleanedSSRVisitedPageComponents
+  )
 
   if (newHash === lastHash) {
     // Nothing changed. No need to rewrite files
-    // console.log(`on requiresWriter END1`)
     return false
   }
 
@@ -188,11 +216,30 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   const hotMethod =
     process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
 
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    // Create file with sync requires of visited page components files.
+    let lazySyncRequires = `${hotImport}
+  // prefer default export if available
+  const preferDefault = m => (m && m.default) || m
+  \n\n`
+    lazySyncRequires += `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
+      .map(
+        (c: IGatsbyPageComponent): string =>
+          `  "${
+            c.componentChunkName
+          }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+      )
+      .join(`,\n`)}
+  }\n\n`
+
+    writeModule(`$virtual/ssr-sync-requires`, lazySyncRequires)
+  }
+
   // Create file with sync requires of components/json files.
   let syncRequires = `${hotImport}
 
 // prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
@@ -206,13 +253,13 @@ const preferDefault = m => m && m.default || m
 
   // Create file with async requires of components/json files.
   let asyncRequires = `// prefer default export if available
-const preferDefault = m => m && m.default || m
+const preferDefault = m => (m && m.default) || m
 \n`
   asyncRequires += `exports.components = {\n${components
     .map((c: IGatsbyPageComponent): string => {
       // we need a relative import path to keep contenthash the same if directory changes
       const relativeComponentPath = path.relative(
-        path.join(program.directory, `.cache`),
+        getAbsolutePathForVirtualModule(`$virtual`),
         c.component
       )
 
@@ -223,7 +270,16 @@ const preferDefault = m => m && m.default || m
     .join(`,\n`)}
 }\n\n`
 
-  const writeAndMove = (file: string, data: string): Promise<void> => {
+  const writeAndMove = (
+    virtualFilePath: string,
+    file: string,
+    data: string
+  ): Promise<void> => {
+    writeModule(virtualFilePath, data)
+
+    // files in .cache are not used anymore as part of webpack builds, but
+    // still can be used by other tools (for example `gatsby serve` reads
+    // `match-paths.json` to setup routing)
     const destination = joinPath(program.directory, `.cache`, file)
     const tmp = `${destination}.${Date.now()}`
     return fs
@@ -232,9 +288,17 @@ const preferDefault = m => m && m.default || m
   }
 
   await Promise.all([
-    writeAndMove(`sync-requires.js`, syncRequires),
-    writeAndMove(`async-requires.js`, asyncRequires),
-    writeAndMove(`match-paths.json`, JSON.stringify(matchPaths, null, 4)),
+    writeAndMove(`$virtual/sync-requires.js`, `sync-requires.js`, syncRequires),
+    writeAndMove(
+      `$virtual/async-requires.js`,
+      `async-requires.js`,
+      asyncRequires
+    ),
+    writeAndMove(
+      `$virtual/match-paths.json`,
+      `match-paths.json`,
+      JSON.stringify(matchPaths, null, 4)
+    ),
   ])
 
   return true
@@ -246,11 +310,7 @@ const debouncedWriteAll = _.debounce(
       id: `requires-writer`,
     })
     activity.start()
-    const didRequiresChange = await writeAll(store.getState())
-    if (didRequiresChange) {
-      reporter.pendingActivity({ id: `webpack-develop` })
-      markWebpackStatusAsPending()
-    }
+    await writeAll(store.getState())
     activity.end()
   },
   500,
@@ -265,7 +325,25 @@ const debouncedWriteAll = _.debounce(
  * Start listening to CREATE/DELETE_PAGE events so we can rewrite
  * files as required
  */
+let listenerStarted = false
 export const startListener = (): void => {
+  // Only start the listener once.
+  if (listenerStarted) {
+    return
+  }
+  listenerStarted = true
+
+  if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+    /**
+     * Start listening to CREATE_SERVER_VISITED_PAGE events so we can rewrite
+     * files as required
+     */
+    emitter.on(`CREATE_SERVER_VISITED_PAGE`, (): void => {
+      reporter.pendingActivity({ id: `requires-writer` })
+      debouncedWriteAll()
+    })
+  }
+
   emitter.on(`CREATE_PAGE`, (): void => {
     reporter.pendingActivity({ id: `requires-writer` })
     debouncedWriteAll()
