@@ -58,8 +58,8 @@ class StringInterpolationNotAllowedError extends Error {
   ) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
-        `fragments. Included fragments should be referenced ` +
-        `as \`...MyModule_foo\`.`
+      `fragments. Included fragments should be referenced ` +
+      `as \`...MyModule_foo\`.`
     )
     this.interpolationStart = JSON.parse(JSON.stringify(interpolationStart))
     this.interpolationEnd = JSON.parse(JSON.stringify(interpolationEnd))
@@ -283,7 +283,8 @@ export default function ({ types: t }): PluginObj {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
               const staticQueryDir = state.opts.staticQueryDir || `static/d`
-              const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
+              const rootDir = state.opts.staticQueryDir || `public`
+              const shortResultPath = `${rootDir}/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
               // Add query
               const parent = path2.parent as JSXOpeningElement
@@ -302,9 +303,9 @@ export default function ({ types: t }): PluginObj {
                 t.stringLiteral(
                   filename
                     ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
+                      nodePath.parse(filename).dir,
+                      resultPath
+                    )
                     : shortResultPath
                 )
               )
@@ -324,7 +325,8 @@ export default function ({ types: t }): PluginObj {
               const identifier = t.identifier(`staticQueryData`)
               const filename = state.file.opts.filename
               const staticQueryDir = state.opts.staticQueryDir || `static/d`
-              const shortResultPath = `public/${staticQueryDir}/${this.queryHash}.json`
+              const rootDir = state.opts.staticQueryDir || `public`
+              const shortResultPath = `${rootDir}/${staticQueryDir}/${this.queryHash}.json`
               const resultPath = nodePath.join(process.cwd(), shortResultPath)
 
               // only remove the import if its like:
@@ -363,9 +365,9 @@ export default function ({ types: t }): PluginObj {
                 t.stringLiteral(
                   filename
                     ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
+                      nodePath.parse(filename).dir,
+                      resultPath
+                    )
                     : shortResultPath
                 )
               )
@@ -452,7 +454,7 @@ export default function ({ types: t }): PluginObj {
                           if (
                             (varPath.node.id as Identifier).name === varName &&
                             varPath.node.init?.type ===
-                              `TaggedTemplateExpression`
+                            `TaggedTemplateExpression`
                           ) {
                             varPath.traverse({
                               TaggedTemplateExpression(
