@@ -2,12 +2,12 @@ const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-var http = require("http")
-var compress = require("compression")
+const http = require(`http`)
+const compress = require(`compression`)
 const cluster = require(`cluster`)
-const { performance } = require("perf_hooks")
+const { performance } = require(`perf_hooks`)
 const execa = require(`execa`)
-const { Lock: lockInner } = require("lock")
+const { Lock: lockInner } = require(`lock`)
 const lockInstance = lockInner()
 
 function lock(resources) {
@@ -19,8 +19,8 @@ function lock(resources) {
   )
 }
 
-var counter = 0
-var port = 3001
+let counter = 0
+const port = 3001
 
 let count = 0
 let start
@@ -51,18 +51,18 @@ let start
 const files = new Map()
 function postRequest(request, response, callback) {
   // compress({})(request, response, () => {})
-  if (request.method == "POST") {
+  if (request.method == `POST`) {
     if (!start) {
       start = Date.now()
     }
     // var writeStream = fs.createWriteStream("/tmp/" + ++counter + port)
 
     let newFile = ``
-    request.on("data", function (data) {
+    request.on(`data`, function (data) {
       newFile += data.toString()
     })
 
-    request.on("end", function () {
+    request.on(`end`, function () {
       files.set(++counter, newFile)
       if (files.size % 100 == 0) {
         console.log(files.size)
@@ -75,7 +75,7 @@ function postRequest(request, response, callback) {
 http
   .createServer(function (request, response) {
     postRequest(request, response, function () {
-      response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+      response.writeHead(200, `OK`, { "Content-Type": `text/plain` })
       count += 1
       if (count % 100 === 0) {
         console.log(`uploaded ${count} files`)
@@ -177,6 +177,7 @@ exports.runTask = async task => {
             ..._.toPairs(task.dependencies).map(
               ([name, version]) => `${name}@${version}`
             ),
+            `--legacy-peer-deps`,
           ],
           { cwd: handlerDir }
         )
