@@ -168,11 +168,11 @@ To allow custom events to be tracked, the plugin exposes a function to include i
 To use it, import the package and call the event within your components and business logic.
 
 ```jsx
-import React from "react"
-import { trackCustomEvent } from "gatsby-plugin-google-analytics"
+import React from 'react'
+import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
 
 export default () => {
-  ;<div>
+  <div>
     <button
       onClick={e => {
         // To stop the page reloading
@@ -186,7 +186,7 @@ export default () => {
           // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: "Gatsby Plugin Example Campaign",
           // number - optional - Numeric value associated with the event. (e.g. A product ID)
-          value: 43,
+          value: 43
         })
         //... Other logic here
       }}
