@@ -369,36 +369,34 @@ export function fileByPath<TSource, TArgs>(
       node => node.internal && node.internal.type === `File`
     )
 
-    if (Array.isArray(fieldValue)) {
-      return Promise.all(
-        fieldValue.map(fieldValue =>
-          context.nodeModel.runQuery({
-            query: {
-              filter: {
-                absolutePath: {
-                  eq: normalize(
-                    systemPath.resolve(parentFileNode.dir, fieldValue)
-                  ),
-                },
-              },
-            },
-            firstOnly: true,
-            type: `File`,
-          })
-        )
-      )
-    } else {
+    function queryNodeByPath(
+      relPath: string | Array<string>
+    ): Array<Promise<IGatsbyNode>> | Promise<IGatsbyNode> {
+      if (Array.isArray(relPath)) {
+        const pees = relPath.map(relPath => queryNodeByPath(relPath))
+        // Flatten
+        return [].concat(pees)
+      }
+
       return context.nodeModel.runQuery({
         query: {
           filter: {
             absolutePath: {
-              eq: normalize(systemPath.resolve(parentFileNode.dir, fieldValue)),
+              eq: normalize(systemPath.resolve(parentFileNode.dir, relPath)),
             },
           },
         },
         firstOnly: true,
         type: `File`,
       })
+    }
+
+    if (Array.isArray(fieldValue)) {
+      return Promise.all(
+        queryNodeByPath(fieldValue) as Array<Promise<IGatsbyNode>>
+      )
+    } else {
+      return queryNodeByPath(fieldValue)
     }
   }
 }
