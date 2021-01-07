@@ -1,11 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-
+import ImageGallery from "../components/image-gallery"
 import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
-import ImageGallery from "../components/image-gallery"
-
 import Layout from "../components/layout"
 
 const DominantColor = ({ data, location }) => (
@@ -21,6 +19,25 @@ const DominantColor = ({ data, location }) => (
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
+      The default Blur Up technique uses progressive loading to make a fast,
+      visually pleasing experience without waiting for a full-resolution image
+      with a blank screen.
+    </p>
+    <h2>Progressive Loading with Minimal Effort</h2>
+    <p>
+      The magic of Gatsby Image's Blur Up technique means that you can load an
+      image at moderate resolution and not have to bother with creating a small
+      thumbnail yourself. Gatsby Image will automatically create a tiny image
+      from your source image and load it first for quick display while the
+      larger image file is downloaded and displayed. Users first see a blurry
+      lower-resolution image to help with perceived performance, while the
+      larger image downloads and everything works automatically.
+    </p>
+    <p>
+      This technique is the default behavior when querying for an image with
+      GraphQL or using StaticImage.
+    </p>
+    {/* <p>
       Uses the dominant color of the image as the background. This value is
       extracted ferom the image by sharp.
     </p>
@@ -28,7 +45,7 @@ const DominantColor = ({ data, location }) => (
       To make use of this technique, pass{" "}
       <code>placeholder: DOMINANT_COLOR</code> to the resolver, or{" "}
       <code>placeholder="dominantColor"</code> with the StaticImage component.
-    </p>
+    </p> */}
     <h2>Unsplash Dominant Color Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
@@ -42,7 +59,7 @@ export default DominantColor
 
 export const query = graphql`
   {
-    coverImage: unsplashImagesYaml(title: { eq: "Polaroid Pronto 600" }) {
+    coverImage: unsplashImagesYaml(title: { eq: "Plant with leaves" }) {
       credit
       title
       localFile {

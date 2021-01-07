@@ -18,7 +18,6 @@ const BlurUp = ({ data, location }) => (
       imageDesktop={getImage(data.floatingImage.localFile)}
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
-
     <p>
       The default Blur Up technique uses progressive loading to make a fast,
       visually pleasing experience without waiting for a full-resolution image
@@ -38,7 +37,7 @@ const BlurUp = ({ data, location }) => (
       This technique is the default behavior when querying for an image with
       GraphQL or using StaticImage.
     </p>
-    <h2>Unsplash Dominant Color Gallery</h2>
+    <h2>Unsplash Blurred Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
       image={getImage(data.fullWidthImage.localFile)}
@@ -60,14 +59,16 @@ export const query = graphql`
         }
       }
     }
-    floatingImageMobile: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
+    floatingImageMobile: unsplashImagesYaml(
+      title: { eq: "Pug without hoodie" }
+    ) {
       localFile {
         childImageSharp {
           gatsbyImageData(width: 120, layout: FIXED)
         }
       }
     }
-    floatingImage: unsplashImagesYaml(title: { eq: "Pug with hoodie" }) {
+    floatingImage: unsplashImagesYaml(title: { eq: "Pug without hoodie" }) {
       credit
       title
       localFile {

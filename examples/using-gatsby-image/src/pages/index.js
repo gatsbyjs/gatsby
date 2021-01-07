@@ -99,7 +99,7 @@ const Index = ({ data, location }) => (
         time
       </FeatureListItem>
       <FeatureListItem>
-        Uses WebP images if browser supports the format
+        Uses WebP and optionally AVIF images if the browser supports the format
       </FeatureListItem>
     </FeatureList>
   </Layout>

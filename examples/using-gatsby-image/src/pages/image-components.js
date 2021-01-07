@@ -18,7 +18,6 @@ const BlurUp = ({ data, location }) => (
       imageDesktop={getImage(data.floatingImage.localFile)}
       title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
-
     <p>
       The default Blur Up technique uses progressive loading to make a fast,
       visually pleasing experience without waiting for a full-resolution image

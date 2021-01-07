@@ -89,7 +89,9 @@ const ImageGallery = edges => (
     <Grid>
       {edges.images.map(image => {
         const img = getImage(image.node.localFile)
-        const fallbackString = img?.placeholder?.fallback ?? img.backgroundColor
+        console.log({ image })
+        const fallbackString =
+          img?.placeholder?.fallback ?? img?.backgroundColor
         const byteLength = Buffer.byteLength(fallbackString, `utf8`)
         return (
           <GridItem key={fallbackString}>
