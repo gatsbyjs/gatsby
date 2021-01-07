@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-functions",
-  "version": "0.1.0-1",
+  "version": "0.1.0-2",
   "description": "Gatsby plugin that automatically creates serverless functions from files in specified directories",
   "main": "index.js",
   "scripts": {
