@@ -76,6 +76,7 @@
     "gatsby": ">=2",
     "gatsby-image": "*",
     "gatsby-plugin-sharp": "*",
+    "gatsby-source-filesystem": "*",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
