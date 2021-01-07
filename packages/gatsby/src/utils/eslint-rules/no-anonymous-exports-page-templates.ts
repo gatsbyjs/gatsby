@@ -34,7 +34,7 @@ export default function Named() {}
 
 const noAnonymousExports: Rule.RuleModule = {
   meta: {
-    type: `suggestion`,
+    type: `problem`,
   },
   create: context => {
     if (!isPageTemplate(store, context)) {

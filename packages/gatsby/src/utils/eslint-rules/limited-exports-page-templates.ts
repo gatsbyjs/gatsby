@@ -1,10 +1,22 @@
 import { Rule } from "eslint"
+import { Node, Identifier } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
 
+function isTemplateQuery(node: Node): boolean {
+  return (
+    node?.type === `ExportNamedDeclaration` &&
+    node?.declaration?.type === `VariableDeclaration` &&
+    node?.declaration?.declarations[0]?.init?.type ===
+      `TaggedTemplateExpression` &&
+    (node?.declaration?.declarations[0]?.init?.tag as Identifier)?.name ===
+      `graphql`
+  )
+}
+
 const limitedExports: Rule.RuleModule = {
   meta: {
-    type: `suggestion`,
+    type: `problem`,
   },
   create: context => {
     if (!isPageTemplate(store, context)) {
@@ -12,7 +24,12 @@ const limitedExports: Rule.RuleModule = {
     }
 
     return {
+      // eslint-disable-next-line consistent-return
       ExportNamedDeclaration: (node): void => {
+        if (isTemplateQuery(node)) {
+          return undefined
+        }
+
         context.report({
           node,
           message: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
