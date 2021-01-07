@@ -1,5 +1,5 @@
 import { IMatch } from "../types"
-import { SourceLocation, GraphQLError } from "graphql"
+import { SourceLocation } from "graphql"
 
 interface IErrorParser {
   message: string
