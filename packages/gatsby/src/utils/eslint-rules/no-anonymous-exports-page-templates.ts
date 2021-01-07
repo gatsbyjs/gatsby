@@ -1,4 +1,5 @@
 import { Rule } from "eslint"
+import { Node, ExportDefaultDeclaration } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
 
@@ -37,12 +38,14 @@ const noAnonymousExports: Rule.RuleModule = {
   },
   create: context => {
     if (!isPageTemplate(store, context)) {
-      return undefined
+      return {}
     }
 
     return {
-      ExportDefaultDeclaration: (node): void => {
-        const def = defs[node.declaration.type]
+      ExportDefaultDeclaration: (node: Node): void => {
+        // @ts-ignore
+        const type = node.declaration.type as ExportDefaultDeclaration["type"]
+        const def = defs[type]
 
         if (def && (!def.forbid || def.forbid(node))) {
           context.report({ node, message: def.message })

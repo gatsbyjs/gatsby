@@ -8,7 +8,7 @@ const limitedExports: Rule.RuleModule = {
   },
   create: context => {
     if (!isPageTemplate(store, context)) {
-      return undefined
+      return {}
     }
 
     return {
