@@ -42,7 +42,7 @@ export async function createImageNode({
     file = await createFileNode(fullPath, createNodeId, {})
   } catch (e) {
     reporter.error(`Please install gatsby-source-filesystem`)
-    return
+    return undefined
   }
 
   if (!file) {
