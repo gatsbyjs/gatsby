@@ -58,8 +58,8 @@ class StringInterpolationNotAllowedError extends Error {
   ) {
     super(
       `BabelPluginRemoveGraphQLQueries: String interpolations are not allowed in graphql ` +
-      `fragments. Included fragments should be referenced ` +
-      `as \`...MyModule_foo\`.`
+        `fragments. Included fragments should be referenced ` +
+        `as \`...MyModule_foo\`.`
     )
     this.interpolationStart = JSON.parse(JSON.stringify(interpolationStart))
     this.interpolationEnd = JSON.parse(JSON.stringify(interpolationEnd))
@@ -304,9 +304,9 @@ export default function ({ types: t }): PluginObj {
                 t.stringLiteral(
                   filename
                     ? nodePath.relative(
-                      nodePath.parse(filename).dir,
-                      resultPath
-                    )
+                        nodePath.parse(filename).dir,
+                        resultPath
+                      )
                     : shortResultPath
                 )
               )
@@ -366,9 +366,9 @@ export default function ({ types: t }): PluginObj {
                 t.stringLiteral(
                   filename
                     ? nodePath.relative(
-                      nodePath.parse(filename).dir,
-                      resultPath
-                    )
+                        nodePath.parse(filename).dir,
+                        resultPath
+                      )
                     : shortResultPath
                 )
               )
@@ -455,7 +455,7 @@ export default function ({ types: t }): PluginObj {
                           if (
                             (varPath.node.id as Identifier).name === varName &&
                             varPath.node.init?.type ===
-                            `TaggedTemplateExpression`
+                              `TaggedTemplateExpression`
                           ) {
                             varPath.traverse({
                               TaggedTemplateExpression(
