@@ -369,15 +369,18 @@ export function fileByPath<TSource, TArgs>(
       node => node.internal && node.internal.type === `File`
     )
 
-    function queryNodeByPath(
-      relPath: string | Array<string>
-    ): Array<Promise<IGatsbyNode>> | Promise<IGatsbyNode> {
-      if (Array.isArray(relPath)) {
-        const pees = relPath.map(relPath => queryNodeByPath(relPath))
-        // Flatten
-        return [].concat(pees)
-      }
+    function queryNodesByPath(
+      relPaths: Array<string>,
+      arr: Array<Promise<IGatsbyNode>>
+    ): void {
+      relPaths.forEach(relPath =>
+        Array.isArray(relPath)
+          ? queryNodesByPath(relPath, arr)
+          : arr.push(queryNodeByPath(relPath))
+      )
+    }
 
+    function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
       return context.nodeModel.runQuery({
         query: {
           filter: {
@@ -392,9 +395,9 @@ export function fileByPath<TSource, TArgs>(
     }
 
     if (Array.isArray(fieldValue)) {
-      return Promise.all(
-        queryNodeByPath(fieldValue) as Array<Promise<IGatsbyNode>>
-      )
+      const arr: Array<Promise<IGatsbyNode>> = []
+      queryNodesByPath(fieldValue, arr)
+      return Promise.all(arr)
     } else {
       return queryNodeByPath(fieldValue)
     }
