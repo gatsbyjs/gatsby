@@ -6,6 +6,7 @@
   "author": "PvdZ <pvdz@github>",
   "dependencies": {
     "del-cli": "^3.0.0",
+    "delay": "^4.4.0",
     "faker": "^4.1.0",
     "gatsby": "^2.19.5",
     "gatsby-image": "^2.2.39",

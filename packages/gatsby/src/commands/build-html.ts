@@ -213,7 +213,10 @@ export const buildHTML = async ({
   activity: IActivity
   workerPool: IWorkerPool
 }): Promise<void> => {
+  console.log(`HIIII`)
+  process.exit()
   const rendererPath = await buildRenderer(program, stage, activity.span)
+  console.log({ rendererPath })
   await doBuildPages(rendererPath, pagePaths, activity, workerPool)
-  await deleteRenderer(rendererPath)
+  // await deleteRenderer(rendererPath)
 }

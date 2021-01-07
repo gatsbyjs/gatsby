@@ -5,6 +5,7 @@ const _ = require(`lodash`)
 var http = require("http")
 var compress = require("compression")
 const cluster = require(`cluster`)
+const { performance } = require("perf_hooks")
 
 var counter = 0
 var port = 3001
@@ -103,9 +104,10 @@ const getFile = ([name, file]) => {
       socket.once(file.hash, async fileBlob => {
         // Make path
         const localPath = path.join(filesDir, file.hash)
-        // await fs.writeFile(localPath, fileBlob)
+        await fs.writeFile(localPath, fileBlob)
 
-        const fileObject = { ...file, name, fileBlob }
+        const fileObject = { ...file, name, localPath, fileBlob }
+
         // set on downloadedFiles
         downloadedFiles.set(file.hash, fileObject)
 
@@ -127,9 +129,15 @@ const getFiles = async files => {
 
 // const waiting
 
+const handlerDirs = new Set()
 exports.runTask = async task => {
-  const handlerHash = murmurhash(task.handler) + `.js`
-  const handlerPath = path.join(functionDir, handlerHash)
+  const handlerHash = String(murmurhash(task.handler))
+  const handlerDir = path.join(functionDir, handlerHash)
+  const handlerPath = path.join(functionDir, handlerHash, `index.js`)
+  if (!handlerDirs.has(handlerDir)) {
+    fs.ensureDirSync(handlerDir)
+    handlerDirs.add(handlerDir)
+  }
   // Write out the function if necessary.
   if (!knownTaskFunctions.has(handlerPath)) {
     fs.writeFileSync(handlerPath, `module.exports = ${task.handler}`)
@@ -159,11 +167,17 @@ const actuallyRunTask = async ({ handlerPath, args, files, traceId }) => {
 
   // Copy the trace Id to make sure task functions can't change it.
   const copyOfTraceId = (` ` + traceId).slice(1)
+  const start = performance.now()
   const result = await Promise.resolve(
     taskRunner(args, { traceId: copyOfTraceId, files })
   )
+  const end = performance.now()
   // console.timeEnd(`runTask ${traceId}`)
-  socket.emit(`response-${traceId}`, { result, traceId })
+  socket.emit(`response-${traceId}`, {
+    result,
+    traceId,
+    executionTime: end - start,
+  })
 }
 
 exports.warmup = () => {}
