@@ -240,13 +240,13 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should invalidate incorrect options`, () => {
+  it(`should invalidate incorrect options`, async () => {
     const options = {
       optionA: undefined, // Should be a boolean
       message: 123, // Should be a string
       optionB: `not a boolean`, // Should be a boolean
     }
-    const { isValid, errors } = testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
@@ -259,13 +259,13 @@ describe(`pluginOptionsSchema`, () => {
     ])
   })
 
-  it(`should validate correct options`, () => {
+  it(`should validate correct options`, async () => {
     const options = {
       optionA: false,
       message: "string",
       optionB: true,
     }
-    const { isValid, errors } = testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
