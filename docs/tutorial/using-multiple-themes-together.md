@@ -78,7 +78,7 @@ module.exports = {
 gatsby develop
 ```
 
-4. Checkout `localhost:8000` to see what is currently there.
+4. Checkout `http://localhost:8000` to see what is currently there.
 
 ## Add content
 

@@ -53,13 +53,13 @@ You can add Typekit Web Fonts to your project by using the [gatsby-plugin-web-fo
 
 First, install the Gatsby plugin with npm:
 
-```bash
+```shell
 npm install --save gatsby-plugin-web-font-loader
 ```
 
 Or with yarn:
 
-```bash
+```shell
 yarn add gatsby-plugin-web-font-loader
 ```
 
