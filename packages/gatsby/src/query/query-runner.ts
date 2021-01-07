@@ -63,6 +63,7 @@ function panicQueryJobError(
       message: e.message,
       filePath: undefined,
       location: undefined,
+      error: e,
     })
 
     structuredError.context = {
