@@ -7,6 +7,17 @@ var compress = require("compression")
 const cluster = require(`cluster`)
 const { performance } = require("perf_hooks")
 const execa = require(`execa`)
+const { Lock: lockInner } = require("lock")
+const lockInstance = lockInner()
+
+function lock(resources) {
+  return new Promise(resolve =>
+    lockInstance(resources, release => {
+      const releaseLock = release(() => {})
+      resolve(releaseLock)
+    })
+  )
+}
 
 var counter = 0
 var port = 3001
@@ -144,23 +155,38 @@ exports.runTask = async task => {
     fs.ensureDirSync(handlerDir)
     handlerDirs.add(handlerDir)
   }
+
   // Write out the function if necessary.
+  // Get lock on directory.
+  let release
   if (!knownTaskFunctions.has(handlerPath)) {
-    fs.writeFileSync(handlerPath, `module.exports = ${task.handler}`)
-    if (task.dependencies) {
-      const output = await execa(`npm`, [`init`, `--yes`], { cwd: handlerDir })
-      const output2 = await execa(
-        `npm`,
-        [
-          `install`,
-          ..._.toPairs(task.dependencies).map(
-            ([name, version]) => `${name}@${version}`
-          ),
-        ],
-        { cwd: handlerDir }
-      )
+    release = await lock(handlerDir)
+    // Check again as it's probably written now.
+    if (!knownTaskFunctions.has(handlerPath)) {
+      console.log(`setting up function`, handlerPath)
+      fs.writeFileSync(handlerPath, `module.exports = ${task.handler}`)
+      if (task.dependencies) {
+        const output = await execa(`npm`, [`init`, `--yes`], {
+          cwd: handlerDir,
+        })
+        // console.log({ output })
+        const output2 = await execa(
+          `npm`,
+          [
+            `install`,
+            ..._.toPairs(task.dependencies).map(
+              ([name, version]) => `${name}@${version}`
+            ),
+          ],
+          { cwd: handlerDir }
+        )
+        // console.log({ output2 })
+      }
+      knownTaskFunctions.add(handlerPath)
     }
-    knownTaskFunctions.add(handlerPath)
+  }
+  if (release) {
+    release()
   }
 
   // Ensure files are downloaded and get local path.

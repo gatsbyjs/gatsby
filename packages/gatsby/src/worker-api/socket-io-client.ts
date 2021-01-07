@@ -21,7 +21,7 @@ const { performance } = require("perf_hooks")
 // })
 
 // Create queue and pause immediately and resume once the server is ready
-const queue = new PQueue({ concurrency: 40 })
+const queue = new PQueue({ concurrency: 80 })
 // queue.pause()
 
 const mtimes = new Map()
@@ -272,30 +272,38 @@ const runQuery = async (args, { files }) => {
   return `ok`
 }
 
-// const startQueries = performance.now()
-// const numQueries = 1000
-// Promise.all(
-// _.range(numQueries).map(id =>
-// runTask({
-// handler: runQuery,
-// args: { id: id + 1 },
-// files: {
-// renderPage: {
-// originPath: `/tmp/the-simplest-blog/public/render-page.js`,
-// },
-// },
-// }).then(result => {
-// // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
-// })
-// )
-// ).then(() => {
-// const end = performance.now()
-// const elapsed = end - startQueries
-// console.log(
-// `run queries:`,
-// elapsed + `ms — ${(numQueries / elapsed) * 1000} qps`
-// )
-// })
+const startQueries = performance.now()
+const numQueries = 1000
+Promise.all(
+  _.range(numQueries).map(id =>
+    runTask({
+      handler: runQuery,
+      args: { id: id + 1 },
+      files: {
+        renderPage: {
+          originPath: `/tmp/the-simplest-blog/public/render-page.js`,
+        },
+      },
+      dependencies: {
+        react: `latest`, // Get from project eventually
+        "react-dom": `latest`,
+        "remark-html": `latest`,
+        "remark-parse": `latest`,
+        unified: `latest`,
+        "node-fetch": `latest`,
+      },
+    }).then(result => {
+      // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
+    })
+  )
+).then(() => {
+  const end = performance.now()
+  const elapsed = end - startQueries
+  console.log(
+    `run queries:`,
+    elapsed + `ms — ${(numQueries / elapsed) * 1000} qps`
+  )
+})
 
 // const renderHtml = async (args, { files }) => {
 // const requireFromString = require("require-from-string")
