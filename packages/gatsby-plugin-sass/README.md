@@ -31,7 +31,7 @@ import "./src/index.scss"
 
 ## Other options
 
-If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)/[dart-sass](https://github.com/sass/dart-sass) docs
+If you need to pass options to Sass use the plugins options, see [`node-sass`](https://github.com/sass/node-sass)/[`dart-sass`](https://github.com/sass/dart-sass) docs
 for all available options.
 
 ```javascript:title=gatsby-config.js
@@ -155,9 +155,9 @@ in the plugin options.
 
 ## Relative paths & `url()`
 
-This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
+This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [`sass-loader`](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
 
-Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) provides a workaround, if you want to use relative url just install the plugin and then add it to your sass plugin options configuration.
+Using [`resolve-url-loader`](https://github.com/bholloway/resolve-url-loader) provides a workaround, if you want to use relative url just install the plugin and then add it to your Sass plugin options configuration.
 
 First:
 
@@ -178,7 +178,7 @@ plugins: [
 ]
 ```
 
-You can also configure resolve-url-plugin providing some options (see [plugin documentation](https://github.com/bholloway/resolve-url-loader) for all options):
+You can also configure `resolve-url-plugin` providing some options (see [plugin documentation](https://github.com/bholloway/resolve-url-loader) for all options):
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -195,7 +195,7 @@ plugins: [
 ]
 ```
 
-**Please note:** Adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for Sass files in the plugin:
+**Please note:** Adding `resolve-url-loader` will use `sourceMap: true` on `sass-loader` (as it is required for the plugin to work), you can then activate/deactivate source-map for Sass files in the plugin:
 
 ```javascript:title=gatsby-config.js
 plugins: [
