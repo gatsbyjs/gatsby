@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn } from "@reach/router"
+import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router";
 import reporter from "gatsby-cli/lib/reporter"
 import {
   ComposeEnumTypeConfig,
@@ -1453,7 +1453,7 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   }
   pathname: string
   routerProps: {
-    location: Location
+    location: Location & NavigateOptions<any>
   }
   getSavedScrollPosition: Function
 }
