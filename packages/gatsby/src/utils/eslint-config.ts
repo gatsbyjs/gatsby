@@ -1,6 +1,53 @@
 import { printSchema, GraphQLSchema } from "graphql"
 import { CLIEngine } from "eslint"
 
+const eslintRulePaths = `${__dirname}/eslint-rules`
+const eslintRequirePreset = require.resolve(`./eslint/required`)
+
+export const eslintRequiredConfig: CLIEngine.Options = {
+  rulePaths: [eslintRulePaths],
+  baseConfig: {
+    globals: {
+      graphql: true,
+      __PATH_PREFIX__: true,
+      __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
+    },
+    extends: [eslintRequirePreset],
+  },
+}
+
+export function mergeRequiredConfigIn(
+  existingOptions: CLIEngine.Options
+): void {
+  // make sure rulePaths include our custom rules
+  if (existingOptions.rulePaths) {
+    if (
+      Array.isArray(existingOptions.rulePaths) &&
+      !existingOptions.rulePaths.includes(eslintRulePaths)
+    ) {
+      existingOptions.rulePaths.push(eslintRulePaths)
+    }
+  } else {
+    existingOptions.rulePaths = [eslintRulePaths]
+  }
+
+  // make sure we extend required preset
+  if (!existingOptions.baseConfig) {
+    existingOptions.baseConfig = {}
+  }
+
+  if (existingOptions.baseConfig.extends) {
+    if (
+      Array.isArray(existingOptions.baseConfig.extends) &&
+      !existingOptions.baseConfig.extends.includes(eslintRequirePreset)
+    ) {
+      existingOptions.baseConfig.extends.push(eslintRequirePreset)
+    }
+  } else {
+    existingOptions.baseConfig.extends = [eslintRequirePreset]
+  }
+}
+
 export const eslintConfig = (
   schema: GraphQLSchema,
   usingJsxRuntime: boolean
@@ -8,19 +55,19 @@ export const eslintConfig = (
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,
-    rulePaths: [`${__dirname}/eslint-rules`],
+    rulePaths: [eslintRulePaths],
     baseConfig: {
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
-      extends: [require.resolve(`eslint-config-react-app`)],
+      extends: [
+        require.resolve(`eslint-config-react-app`),
+        eslintRequirePreset,
+      ],
       plugins: [`graphql`],
       rules: {
-        // Custom ESLint rules from Gatsby
-        "no-anonymous-exports-page-templates": `warn`,
-        "limited-exports-page-templates": `warn`,
         // New versions of react use a special jsx runtime that remove the requirement
         // for having react in scope for jsx. Once the jsx runtime is backported to all
         // versions of react we can make this always be `off`.
