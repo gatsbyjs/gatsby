@@ -353,7 +353,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby-plugin-sass:** Support Dart SASS ([#10159](https://github.com/gatsbyjs/gatsby/issues/10159)) ([a48843e](https://github.com/gatsbyjs/gatsby/commit/a48843e))
+- **gatsby-plugin-sass:** Support Dart Sass ([#10159](https://github.com/gatsbyjs/gatsby/issues/10159)) ([a48843e](https://github.com/gatsbyjs/gatsby/commit/a48843e))
 
 <a name="2.0.6"></a>
 

@@ -128,7 +128,7 @@ plugins: [
 Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
 Any file with the `module` extension will use CSS Modules.
 
-## SASS & CSS Modules file Regexes
+## Sass & CSS Modules file Regexes
 
 To override the file regex for Sass or CSS modules,
 
@@ -137,7 +137,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      // Override the file regex for SASS
+      // Override the file regex for Sass
       sassRuleTest: /\.global\.s(a|c)ss$/,
       // Override the file regex for CSS modules
       sassRuleModulesTest: /\.mod\.s(a|c)ss$/,

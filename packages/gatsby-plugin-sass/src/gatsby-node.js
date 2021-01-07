@@ -98,10 +98,10 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(`An array of postCss plugins`),
     sassRuleTest: Joi.object()
       .instance(RegExp)
-      .description(`Override the file regex for SASS`),
+      .description(`Override the file regex for Sass`),
     sassRuleModulesTest: Joi.object()
       .instance(RegExp)
-      .description(`Override the file regex for SASS`),
+      .description(`Override the file regex for Sass`),
     useResolveUrlLoader: Joi.alternatives().try(
       Joi.boolean(),
       Joi.object({}).unknown(true)
