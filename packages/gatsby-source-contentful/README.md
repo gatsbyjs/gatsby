@@ -222,7 +222,7 @@ You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https:
 
 ### Query for a single node
 
-To query for a single `image` asset with the title `'foo'` and a width of `1600`px:
+To query for a single `image` asset with the title `'foo'` and a width of 1600px:
 
 ```javascript
 export const assetQuery = graphql`
