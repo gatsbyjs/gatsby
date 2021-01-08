@@ -68,7 +68,9 @@ If you are using an image that will be the same each time the component is used,
    }
    ```
 
-   When you build your site, this will load the image from your filesystem or from the remote URL, and generate all the sizes and formats that you need to support a responsive image. Because the image is loaded at build time, you cannot pass the filename in as a prop, or otherwise generate it outside of the component. It should either be a static string, or a local variable in the component's scope.
+   When you build your site, the `StaticImage` component will load the image from your filesystem or from the remote URL, and it will generate all the sizes and formats that you need to support a responsive image.
+
+   Because the image is loaded at build time, you cannot pass the filename in as a prop, or otherwise generate it outside of the component. It should either be a static string, or a local variable in the component's scope.
 
    > **Important:** Remote images are downloaded and resized at build time. If the image is changed on the other server, it will not be updated on your site until you rebuild.
 
@@ -110,11 +112,13 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
      blogPost(id: { eq: $Id }) {
        title
        body
+       # highlight-start
        avatar {
          childImageSharp {
            gatsbyImageData(maxWidth: 200)
          }
        }
+       # highlight-end
      }
    }
    ```
