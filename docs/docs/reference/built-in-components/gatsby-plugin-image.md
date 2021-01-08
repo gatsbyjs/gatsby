@@ -54,7 +54,7 @@ dino {
 
 _Component prop: `"constrained"`. Resolver prop: `CONSTRAINED`_
 
-This is the default layout. It displays the image at same size as the source image, or you can set a maximum size by passing in `maxWidth`). If the screen or container size is less than the width of the image, it scales-down to fit, maintaining its aspect ratio. It generates smaller versions of the image so that a mobile browser doesn't need to load the full-size image.
+This is the default layout. It displays the image at same size as the source image, or you can set a maximum size by passing in `width` or `height`). If the screen or container size is less than the width of the image, it scales down to fit, maintaining its aspect ratio. It generates smaller versions of the image so that a mobile browser doesn't need to load the full-size image.
 
 #### Fixed
 
@@ -62,17 +62,33 @@ _Component prop: `"fixed"`. Resolver prop: `FIXED`_
 
 This is a fixed-size image. It will always display at the same size, and will not shrink to fit its container. This is either the size of the source image, or the size set by the `width` and `height` props. Only use this if you are certain that the container will never need to be narrower than the image.
 
-#### Fluid
+#### Full Width
 
-_Component prop: `"fluid"`. Resolver prop: `FLUID`_
+_Component prop: `"fullWidth"`. Resolver prop: `FULL_WIDTH`_
 
-Use this for images that are always displayed at the full width of the screen, such as banners or hero images. Like the constrained layout, this resizes to fit the container. However it is not restricted to a maximum size, so will grow to fill it however large it is, maintaining its aspect ratio. You can set `maxWidth`, but this sets the maximum generated image size, not the maximum displayed size: it will continue to expand, however wide the screen is. It generates several smaller image sizes for different screen breakpoints, so that the browser only needs to load one large enough to fit the screen.
+Use this for images that are always displayed at the full width of the screen, such as banners or hero images. Like the constrained layout, this resizes to fit the container. However it is not restricted to a maximum size, so will grow to fill it however large it is, maintaining its aspect ratio. It generates several smaller image sizes for different screen breakpoints, so that the browser only needs to load one large enough to fit the screen. You can pass a `breakpoints` prop if you want to specify the sizes to use, though in most cases you can allow it to use the default.
 
 ### Size
 
 Size props are optional in `GatsbyImage` and `StaticImage`. Because the images are processed at build time, the plugin knows the size of the source image and can add the correct width and height to the `<img>` tag, so it displayed correctly with no layout jumping. However if you want to change the displayed size then you can use the size options to do this.
 
-The plugin uses the optional size properties to determine the resolution of the images generated and displayed on screen, and they vary by your chosen layout. For example, a `fixed` image is always displayed at the same size, so `width` or `height` is all you need. If you set just one, the source image is resized to fit, while maintaining aspect ratio. If you include both then it is also cropped if needed to ensure it is that exact size. A `constrained` image uses `maxWidth` and `maxHeight` for similar effect. A `fluid` image has no intrinsic size, so you can just use `maxWidth` to set the largest size image generated.
+#### `width`/`height`
+
+_Layouts: fixed and constrained_
+
+For a `fixed` layout, these define the size of the image displayed on screen. For a `constrained` image these define the maximum size, as the image will scale down to fit smaller containers if needed.
+
+If you set just one of these, the source image is resized to that width or height while maintaining aspect ratio. If you include both then it is also cropped if needed to ensure it is that exact size.
+
+#### `aspectRatio`
+
+_Layouts: fixed, constrained, and fullWidth_
+
+The `aspectRatio` prop forces an image to the specified aspect ratio, cropping if needed.
+
+For `fixed` and `constrained` images, you can also optionally pass either a `width` or `height`, and it will use that to calculate the other dimension. For example, if you pass `width={800} aspectRatio={4/3}` then `height` will be set to the width divided by the aspect ratio: so `600`. Passing `1` as the aspectRatio will crop the image to a square. If you don't pass a width or height then it will use the source image's width.
+
+For `fullWidth` images you don't specify width or height as it resizes to fit the screen width. Passing `aspectRatio` will crop the image if needed, and the height will scale according to the width of the screen. For example, if you set the aspectRatio to `16/9` then when the image is displayed full width on a screen that is 1024px wide, the image will be 576 pixels high.
 
 > There are several advanced options that you can pass to control the cropping and resizing behavior. For more details, see the advanced options reference.
 
@@ -80,7 +96,7 @@ The plugin uses the optional size properties to determine the resolution of the 
 
 **Prop name: `placeholder`**
 
-Gatsby image components are lazy-loaded by default, which means that if they are offscreen they are not loaded by the browser. To ensure that the layout does not jump around, a placeholder is displayed before the image loads. There are three types of placeholder that you can choose.
+Gatsby image components are lazy-loaded by default, which means that if they are offscreen they are not loaded by the browser until the come into view. To ensure that the layout does not jump around, a placeholder is displayed before the image loads. There are three types of placeholder that you can choose:
 
 #### Dominant color
 
@@ -98,7 +114,7 @@ This generates a very low resolution version of the source image, and displays i
 
 _Component prop: `"tracedSVG"`. Resolver prop: `TRACED_SVG`_
 
-This generates a simplified, flat SVG version of the source image, which it displays as a placeholder. This works well for images with simpel shapes or that include transparency.
+This generates a simplified, flat SVG version of the source image, which it displays as a placeholder. This works well for images with simple shapes or that include transparency.
 
 ### Output formats
 
