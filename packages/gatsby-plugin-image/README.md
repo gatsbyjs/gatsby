@@ -1,12 +1,12 @@
 # gatsby-plugin-image (beta)
 
-This plugin is a replacement for gatsby-image. It adds [static images](#staticimage), and a [new higher-performance gatsby-image component](#gatsbyimage). It also adds [a new GraphQL resolver](#graphql-resolver) to gatsby-transformer-sharp.
+This plugin is a replacement for `gatsby-image`. It adds [static images](#staticimage), and a [new higher-performance gatsby-image component](#gatsbyimage). It also adds [a new GraphQL resolver](#graphql-resolver) to `gatsby-transformer-sharp`.
 
 ## Contents
 
-- [StaticImage](#staticimage) - the new static image component
-- [GatsbyImage](#gatsbyimage) - a high-performance gatsby-image component
-- [gatsbyImageData](#graphql-resolver) - a simpler GraphQL API
+- [`StaticImage`](#staticimage) - the new static image component
+- [`GatsbyImage`](#gatsbyimage) - a high-performance `gatsby-image` component
+- [`gatsbyImageData`](#graphql-resolver) - a simpler GraphQL API
 
 ## Usage
 
@@ -32,11 +32,11 @@ module.exports = {
 }
 ```
 
-# StaticImage
+# `StaticImage`
 
 This component is a new, simpler way to use Gatsby's image processing tools and components without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
 
-```js
+```jsx
 import React from "react"
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -49,7 +49,7 @@ The `src` prop is relative to the source file, like in static HTML.
 
 You can pass the same options as those available via [`gatsbyImageData`](#graphql-resolver) queries:
 
-```js
+```jsx
 import React from "react"
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -71,55 +71,67 @@ Because the images still need to be resized during build, the props must be able
 
 This does not work:
 
-```js
+```jsx
 // ⚠️ Doesn't work
 
-({ logo }) => <Img src={logo}>
+import React from "react"
+import Img from "gatsby-image"
+
+export const myImage = ({ logo }) => <Img src={logo} />
 ```
 
 ...and nor does this:
 
-```js
+```jsx
 // ⚠️ Doesn't work
 
-() => {
-    const width = getTheWidthFromSomewhere();
-    return <Img src="trex.png" width={width}>
+import React from "react"
+import Img from "gatsby-image"
+
+export const myImage = () => {
+  const width = getTheWidthFromSomewhere()
+  return <Img src="trex.png" width={width} />
 }
 ```
 
 You can use variables and expressions if they're in the scope of the file, e.g.:
 
-```js
+```jsx
 //OK
-() => {
-    const width = 300
-    return <Img src="trex.png" width={width}>
+
+import React from "react"
+import Img from "gatsby-image"
+
+export const myImage = () => {
+  const width = 300
+  return <Img src="trex.png" width={width} />
 }
 ```
 
-```js
+```jsx
 //Also OK
 
-const width = 300
+import React from "react"
+import Img from "gatsby-image"
 
-() => {
-    const height = width * 16 / 9
-    return <Img src="trex.png" width={width} height={height}>
+const width = 300
+export const myImage = () => {
+  const height = (width * 16) / 9
+  return <Img src="trex.png" width={width} height={height} />
 }
 ```
 
 ### API
 
-The only required prop is `src`. The default type is `constrained`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
+The only required prop is `src`. The default type is `constrained`. The other props match those of [the new `GatsbyImage` component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
 
-## GatsbyImage
+## `GatsbyImage`
 
 Speedy, optimized images without the work.
 
-GatsbyImage is a React component specially designed to give your users a great image experience. It combines speed and best practices.
+`GatsbyImage` is a React component specially designed to give your users a great image experience. It combines speed and best practices.
 
-Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container.
+Note: `GatsbyImage` is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container.
 
 ## Table of Contents
 
@@ -224,7 +236,7 @@ export const query = graphql`
 `
 ```
 
-If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`. Note that `src` will be undefined if a .png or .jpg image is not available.
+If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`. Note that `src` will be undefined if a `.png` or `.jpg` image is not available.
 
 ### Upgrading from the gatsby-image@2
 
@@ -279,12 +291,12 @@ In Gatsby's GraphQL implementation, you specify the type of image with the `layo
 
 ## `GatsbyImage` props
 
-| Name  | Type            | Description                                                                                                                |
-| ----- | --------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| image | object          | The image data object returned from a GraphQL query                                                                        |
-| alt   | string          | Passed to the `img` element. Defaults to an empty string                                                                   |
-| sizes | string          | An HTML "sizes" argument, which is passed-though to the image. Can be left blank, when it will be calculated automatically |
-| as    | React Component | The component that wraps the Gatsby Image. Default is `div`                                                                |
+| Name    | Type            | Description                                                                                                                |
+| ------- | --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `image` | object          | The image data object returned from a GraphQL query                                                                        |
+| `alt`   | string          | Passed to the `img` element. Defaults to an empty string                                                                   |
+| `sizes` | string          | An HTML "sizes" argument, which is passed-though to the image. Can be left blank, when it will be calculated automatically |
+| `as`    | React Component | The component that wraps the Gatsby Image. Default is `div`                                                                |
 
 # GraphQL resolver
 
@@ -316,31 +328,31 @@ The optional helper function `getImage` takes a file node and returns `file?.chi
 
 These arguments can be passed to the `gatsbyImageData()` resolver:
 
-- **width**: The display width of the generated image. The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities. Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+- **width**: The display width of the generated image. The actual largest image resolution will be this value multiplied by the largest value in `outputPixelDensities`. Ignored if `layout` is `FLUID` or `CONSTRAINED`, where you should use `maxWidth` instead.
 - **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.
 - **maxWidth**:
   Maximum display width of generated files.
-  The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
-  This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"
-- **maxHeight**: If set, the generated image is a maximum of this height, cropping if necessary. If the image layout is "constrained" then the image will be limited to this height. If the aspect ratio of the image is different than the source, then the image will be cropped.`,
+  The actual largest image resolution will be this value multiplied by the largest value in `outputPixelDensities`
+  This only applies when `layout` is `FLUID` or `CONSTRAINED`. For other layout types, use `width`.
+- **maxHeight**: If set, the generated image is a maximum of this height, cropping if necessary. If the image `layout` is `CONSTRAINED` then the image will be limited to this height. If the aspect ratio of the image is different than the source, then the image will be cropped.
 - **placeholder**: Format of generated placeholder image.
-  - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
+  - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI.
   - `TRACED_SVG`: a low-resolution traced SVG of the image.
-  - `NONE`: no placeholder. Set "background" to use a fixed background color.
+  - `NONE`: no placeholder. Set `background` to use a fixed background color.
   - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
 - **layout**: The layout for the image.
   - `CONSTRAINED`: (default) Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
-  - `FIXED`: A static image size, that does not resize according to the screen width
-  - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
+  - `FIXED`: A static image size, that does not resize according to the screen width.
+  - `FLUID`: The image resizes to fit its container. Pass a `sizes` option if it isn't going to be the full width of the screen.
 - **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
-  Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
-- **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
+  Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide.
+- **sizes**: The [`sizes`](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
 - **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
 - **quality**: The default quality. This is overridden by any format-specific options
-- **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this
+- **blurredOptions**: Options for the low-resolution placeholder image. Set `placeholder` to `BLURRED` to use this
   - width
   - toFormat
-- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set placeholder to "SVG".
+- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set `placeholder` to `SVG`.
 - **jpgOptions**: Options to pass to sharp when generating JPG images.
   - quality
   - progressive
