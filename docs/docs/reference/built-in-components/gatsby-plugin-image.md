@@ -54,7 +54,7 @@ dino {
 
 _Component prop: `"constrained"`. Resolver prop: `CONSTRAINED`_
 
-This is the default layout. It displays the image at same size as the source image, or you can set a maximum size by passing in `width` or `height`). If the screen or container size is less than the width of the image, it scales down to fit, maintaining its aspect ratio. It generates smaller versions of the image so that a mobile browser doesn't need to load the full-size image.
+This is the default layout. It displays the image at the size of the source image, or you can set a maximum size by passing in `width` or `height`). If the screen or container size is less than the width of the image, it scales down to fit, maintaining its aspect ratio. It generates smaller versions of the image so that a mobile browser doesn't need to load the full-size image.
 
 #### Fixed
 
@@ -66,7 +66,7 @@ This is a fixed-size image. It will always display at the same size, and will no
 
 _Component prop: `"fullWidth"`. Resolver prop: `FULL_WIDTH`_
 
-Use this for images that are always displayed at the full width of the screen, such as banners or hero images. Like the constrained layout, this resizes to fit the container. However it is not restricted to a maximum size, so will grow to fill it however large it is, maintaining its aspect ratio. It generates several smaller image sizes for different screen breakpoints, so that the browser only needs to load one large enough to fit the screen. You can pass a `breakpoints` prop if you want to specify the sizes to use, though in most cases you can allow it to use the default.
+Use this for images that are always displayed at the full width of the screen, such as banners or hero images. Like the constrained layout, this resizes to fit the container. However it is not restricted to a maximum size, so will grow to fill the container however large it is, maintaining its aspect ratio. It generates several smaller image sizes for different screen breakpoints, so that the browser only needs to load one large enough to fit the screen. You can pass a `breakpoints` prop if you want to specify the sizes to use, though in most cases you can allow it to use the default.
 
 ### Sizing options
 
