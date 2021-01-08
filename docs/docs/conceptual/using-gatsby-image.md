@@ -18,7 +18,7 @@ We built Gatsby Image to provide these things -- a [higher-level building block]
 
 We provide a [detailed guide on using Gatsby Image](docs/how-to/images-and-media/using-gatsby-image/) in the How To section of this documentation. Here, we walk through the question of why these benefits matter, from a user's perspective, and why providing them without Gatsby Image (or something similar) can be difficult. 
 
-## Fetch above the fold images immediately 
+## Fetch above-the-fold images immediately 
 
 ### Avoid hydration lag for React apps
 
