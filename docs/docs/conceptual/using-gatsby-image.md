@@ -66,7 +66,7 @@ A common problem in larger projects is that images are uploaded into a CMS by co
 
 For example, a support staff member may take a 1600x2000 pixel screenshot, save it as a PNG, and upload it alongside a helpdesk article. While this is a quite reasonable action, it may degrade page performance significantly. If the article has a 800px maximum width, a 640 x 800 pixel JPG would have displayed at the same quality but a tenth of the size; the extra weight may delay page load by a second or two. 
 
-You can solve this on your own via creating and maintaining a custom image processing pipeline, perhaps during CI/CD, to resize. However, that requires writing, and then maintaining, custom code.  Gatsby Image solves this out of the box; if you use the `width` prop, Gatsby Image will automatically resize larger underlying assets.
+You can solve this on your own via creating and maintaining a custom image processing pipeline, perhaps during CI/CD, to resize. However, that requires writing, and then maintaining, custom code.  Gatsby Image solves this out of the box; if you use the `width` or `maxWidth` prop, Gatsby Image will automatically resize larger underlying assets.
 
 ### Generating "responsive images" for different device sizes
 
