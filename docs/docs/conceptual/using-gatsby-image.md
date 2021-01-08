@@ -80,4 +80,6 @@ In order to support responsive images, you need to do the image processing befor
 
 ### Better compression 
 
-The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. It's possible to support this standard, but the challenge is to also fall back for older browsers that don't support this.
+The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. It's possible to support this standard, but you also need to fall back for older browsers that don't support this, which without framework support adds additional complexity. 
+
+Gatsby supports WebP out of the box as a setting on Gatsby Image. 
