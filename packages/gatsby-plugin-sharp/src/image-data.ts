@@ -19,6 +19,7 @@ export interface ISharpGatsbyImageArgs {
   height?: number
   maxWidth?: number
   maxHeight?: number
+  aspectRatio?: number
   sizes?: string
   quality?: number
   transformOptions: {
@@ -135,6 +136,23 @@ export async function generateImageData({
     } else if (layout === `fluid`) {
       args.maxWidth = Math.round(metadata.width / 2)
     }
+  }
+
+  // note this will need to changed but keeping consistent for now
+  if (args.maxWidth && args.maxHeight && args.aspectRatio) {
+    reporter.warn(
+      `Specifying aspectRatio along with height may cause aspectRatio to be ignored.`
+    )
+  }
+
+  // todo should we allow this for fixed too?
+  if (
+    args.aspectRatio &&
+    args.maxWidth &&
+    !args.maxHeight &&
+    layout !== `fixed`
+  ) {
+    args.maxHeight = args.maxWidth / args.aspectRatio
   }
 
   const formats = new Set(args.formats)

@@ -14,6 +14,7 @@ export interface IStaticImageProps extends Omit<GatsbyImageProps, "image"> {
   height?: number
   maxWidth?: number
   maxHeight?: number
+  aspectRatio?: number
   sizes?: string
   quality?: number
   transformOptions?: {
@@ -45,6 +46,7 @@ export function _getStaticImage(
     maxWidth,
     height,
     maxHeight,
+    aspectRatio,
     tracedSVGOptions,
     placeholder,
     formats,
@@ -117,6 +119,7 @@ export const propTypes = {
   height: checkDimensionProps,
   maxHeight: checkDimensionProps,
   maxWidth: checkDimensionProps,
+  aspectRatio: checkDimensionProps,
   sizes: PropTypes.string,
   layout: (props: IStaticImageProps & IPrivateProps): Error | undefined => {
     if (props.layout === undefined) {
