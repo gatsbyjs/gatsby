@@ -4,21 +4,21 @@ title: Using Gatsby For E-commerce
 
 Businesses selling products online typically need a variety of software to support their experience. At a minimum, their website needs product pages, product catalog navigation, a shopping cart, and checkout. 
 
-Most have additional functionality like customer account creation, discount codes, customer reviews, tax calculation, user tracking via analytics, and content personalization.
+Most have additional functionality like customer account creation, promotions, discounts, and loyalty, customer reviews, tax calculation, user tracking via analytics, and content personalization.
 
-The website functions because these front-end capabilities integrate with a wide swath of software on the backend, such as inventory management, order fulfillment, business analytics, and customer engagement via email. 
+The website functions because these front-end capabilities integrate with a wide swath of software on the backend, such as inventory management, order fulfillment, accounting and business analytics, and customer engagement via email. 
 
 ### Choosing a main e-commerce platform
 
 Most businesses choose a central e-commerce platform as their source of truth for these functionality. Some businesses choose to run entirely on these platforms, which can be quicker to get started with but lock you in to their choices for website creation (eg Liquid Templates for Shopify). 
 
-If you're using or considering Gatsby, your organization is likely optimizing for specific properties of your website (such as performance, development environment, design, user experience) and are therefore considering a "JAMstack", "decoupled" or "content mesh" architecture. 
+If you're using or considering Gatsby, your organization is likely optimizing for specific properties of your website (such as performance, development environment, design, user experience, and security) and are therefore considering a "JAMstack", "decoupled" or "content mesh" architecture. 
 
-In this case, your options are likely between a technologically forward e-commerce vendor with headless capabilities, such as Shopify or BigCommerce, or a new, specialized JAMStack e-commerce vendor, like Snipcart, Nacelle, or CommerceLayer. All of these have out-of-the box Gatsby integrations.
+In this case, your options are likely between a technologically forward e-commerce vendor with headless capabilities, such as Shopify or BigCommerce, or a new, specialized JAMStack e-commerce vendor, like Elastic Path, Snipcart, Nacelle, or CommerceLayer. All of these have out-of-the box Gatsby integrations.
 
 ### Choosing additional content systems
 
-Once an organization selects a main e-commerce platform, it may also want or need other content stores that will get pulled into the website. They might choose a CMS like Contentful for complex content modelling, or Wordpress for blog content authoring. They might choose Yotpo for customer reviews or Salsify to store product SKUs. 
+Once an organization selects a main e-commerce platform, it may also want or need other content stores that will get pulled into the website. They might choose a CMS like Contentful for complex content modelling, or Wordpress for blog content authoring. They might choose Yotpo for customer reviews or Salsify for product information management.
 
 ### Why organizations build e-commerce sites with Gatsby
 
@@ -39,6 +39,7 @@ E-commerce tends to have a number of specific requirements. When building a Gats
 - **Handling account pages.** Again, many sites choose to wrap their e-commerce provider’s account pages under their own domain. 
 
 Additional resources:
+- [What is Headless Commerce?](https://www.bigcommerce.com/articles/headless-commerce/#unlocking-flexibility-examples-of-headless-commerce-in-action), an overview from BigCommerce.
 - [Gatsby Shopify Starter](https://github.com/AlexanderProd/gatsby-shopify-starter)
 - Sell Things Fast With Gatsby and Shopify by Trevor Harmon [blog post](https://thetrevorharmon.com/blog/sell-things-fast-with-gatsby-and-shopify), [video](https://www.youtube.com/watch?v=tUtuGAFOjYI&t=16m59s) and [Github repo](https://github.com/thetrevorharmon/sell-things-fast/)
 - [Gatsby Use Cases: E-commerce](https://www.gatsbyjs.com/use-cases/e-commerce)
