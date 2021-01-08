@@ -4,6 +4,8 @@ const { resolve, parse } = require(`path`)
 const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
 
+const inFlightImageCache = new Map();
+
 module.exports = async function cacheImage(store, image, options) {
   const program = store.getState().program
   const CACHE_DIR = resolve(`${program.directory}/.cache/contentful/assets/`)
@@ -45,24 +47,36 @@ module.exports = async function cacheImage(store, image, options) {
   const { name, ext } = parse(fileName)
   const absolutePath = resolve(CACHE_DIR, `${name}-${optionsHash}${ext}`)
 
+  // If there's already a request in flight await it, then return the path
+  const inFlight = inFlightImageCache.get(absolutePath);
+  if (inFlight) {
+    await inFlight;
+    return absolutePath;
+  }
+  
+  // If the file does not exist download it, put the promise in the cache, and await
   const alreadyExists = await pathExists(absolutePath)
-
   if (!alreadyExists) {
-    const previewUrl = `http:${url}?${params.join(`&`)}`
+    const downloadPromise = await new Promise((resolve, reject) => {
+      const previewUrl = `http:${url}?${params.join(`&`)}`
 
-    const response = await axios({
-      method: `get`,
-      url: previewUrl,
-      responseType: `stream`,
-    })
-
-    await new Promise((resolve, reject) => {
+      const response = await axios({
+        method: `get`,
+        url: previewUrl,
+        responseType: `stream`,
+      })
+    
       const file = createWriteStream(absolutePath)
       response.data.pipe(file)
       file.on(`finish`, resolve)
       file.on(`error`, reject)
     })
+    inFlightImageCache.set(absolutePath, downloadPromise)
+    await downloadPromise
+    // When the file is downloaded, remove the promise from the cache
+    inFlightImageCache.delete(absolutePath)
   }
 
+  // Now the file should be completely downloaded
   return absolutePath
 }
