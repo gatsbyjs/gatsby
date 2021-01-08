@@ -159,6 +159,14 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       },
       ...httpOpts,
     })
+
+    let haveAllBytesBeenWritten = false
+    responseStream.on(`downloadProgress`, progress => {
+      if (progress.transferred === progress.total || progress.total === null) {
+        haveAllBytesBeenWritten = true
+      }
+    })
+
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
 
@@ -180,12 +188,12 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
 
     responseStream.on(`response`, response => {
       resetTimeout()
-      const contentLength =
-        response.headers && Number(response.headers[`content-length`])
 
       fsWriteStream.on(`finish`, () => {
+        fsWriteStream.close()
+
         // We have an incomplete download
-        if (contentLength && contentLength !== fsWriteStream.bytesWritten) {
+        if (!haveAllBytesBeenWritten) {
           fs.removeSync(tmpFilename)
 
           if (attempt < INCOMPLETE_RETRY_LIMIT) {
