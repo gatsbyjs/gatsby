@@ -253,7 +253,7 @@ module.exports = (
               sizes="${formatFluidResult.sizes}"
               type="${formatFluidResult.srcSetType}"
             />
-          `
+          `.trim()
         }
       )
 
