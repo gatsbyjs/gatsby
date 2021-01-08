@@ -47,17 +47,18 @@ module.exports = async function cacheImage(store, image, options) {
   const { name, ext } = parse(fileName)
   const absolutePath = resolve(CACHE_DIR, `${name}-${optionsHash}${ext}`)
 
-  // If there's already a request in flight await it, then return the path
-  const inFlight = inFlightImageCache.get(absolutePath);
-  if (inFlight) {
-    await inFlight;
-    return absolutePath;
-  }
-  
-  // If the file does not exist download it, put the promise in the cache, and await
+  // If the file does not exist check if we already are downloading it
   const alreadyExists = await pathExists(absolutePath)
   if (!alreadyExists) {
-    const downloadPromise = await new Promise(async (resolve, reject) => {
+    // If there's already a request in flight await it, then return the path
+    const inFlight = inFlightImageCache.get(absolutePath)
+    if (inFlight) {
+      await inFlight
+      return absolutePath
+    }
+
+    // File doesn't exist and is not being download yet
+    const downloadPromise = new Promise(async (resolve, reject) => {
       const previewUrl = `http:${url}?${params.join(`&`)}`
 
       const response = await axios({
@@ -65,7 +66,6 @@ module.exports = async function cacheImage(store, image, options) {
         url: previewUrl,
         responseType: `stream`,
       })
-    
       const file = createWriteStream(absolutePath)
       response.data.pipe(file)
       file.on(`finish`, resolve)
