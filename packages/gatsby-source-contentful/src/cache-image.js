@@ -4,7 +4,7 @@ const { resolve, parse } = require(`path`)
 const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
 
-const inFlightImageCache = new Map();
+const inFlightImageCache = new Map()
 
 module.exports = async function cacheImage(store, image, options) {
   const program = store.getState().program
@@ -57,7 +57,7 @@ module.exports = async function cacheImage(store, image, options) {
   // If the file does not exist download it, put the promise in the cache, and await
   const alreadyExists = await pathExists(absolutePath)
   if (!alreadyExists) {
-    const downloadPromise = await new Promise((resolve, reject) => {
+    const downloadPromise = await new Promise(async (resolve, reject) => {
       const previewUrl = `http:${url}?${params.join(`&`)}`
 
       const response = await axios({
