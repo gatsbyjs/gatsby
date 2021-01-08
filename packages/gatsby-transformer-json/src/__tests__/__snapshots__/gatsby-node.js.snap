@@ -7,12 +7,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "12345",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "FooJson",
       },
       "parent": "whatever",
+      "publicId": "12345",
     },
   ],
 ]
@@ -26,12 +27,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "12345",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "FooJson",
         },
         "parent": "whatever",
+        "publicId": "12345",
       },
       "parent": Object {
         "children": Array [],
@@ -58,12 +60,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "foo",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "FooJson",
       },
       "parent": "whatever",
+      "publicId": "foo",
     },
   ],
 ]
@@ -77,12 +80,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "foo",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "FooJson",
         },
         "parent": "whatever",
+        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -109,12 +113,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "foo",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "NotFileJson",
       },
       "parent": "whatever",
+      "publicId": "foo",
     },
   ],
 ]
@@ -128,12 +133,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "foo",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "NotFileJson",
         },
         "parent": "whatever",
+        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -158,12 +164,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "foo",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "NodeNameJson",
       },
       "parent": "whatever",
+      "publicId": "foo",
     },
   ],
   Array [
@@ -190,12 +197,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "foo",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "NodeNameJson",
         },
         "parent": "whatever",
+        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -250,12 +258,13 @@ Array [
       "blue": true,
       "children": Array [],
       "funny": "yup",
-      "id": "foo",
+      "id": "uuid-from-gatsby",
       "internal": Object {
         "contentDigest": "contentDigest",
         "type": "NotFileJson",
       },
       "parent": "whatever",
+      "publicId": "foo",
     },
   ],
   Array [
@@ -282,12 +291,13 @@ Array [
         "blue": true,
         "children": Array [],
         "funny": "yup",
-        "id": "foo",
+        "id": "uuid-from-gatsby",
         "internal": Object {
           "contentDigest": "contentDigest",
           "type": "NotFileJson",
         },
         "parent": "whatever",
+        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -324,6 +334,59 @@ Array [
           "mediaType": "application/json",
           "type": "NotFile",
         },
+        "parent": null,
+      },
+    },
+  ],
+]
+`;
+
+exports[`Process JSON nodes correctly creates a publicId if id was given 1`] = `
+Array [
+  Array [
+    Object {
+      "blue": true,
+      "children": Array [],
+      "funny": "yup",
+      "id": "uuid-from-gatsby",
+      "internal": Object {
+        "contentDigest": "contentDigest",
+        "type": "FooJson",
+      },
+      "parent": "whatever",
+      "publicId": "123",
+    },
+  ],
+]
+`;
+
+exports[`Process JSON nodes correctly creates a publicId if id was given 2`] = `
+Array [
+  Array [
+    Object {
+      "child": Object {
+        "blue": true,
+        "children": Array [],
+        "funny": "yup",
+        "id": "uuid-from-gatsby",
+        "internal": Object {
+          "contentDigest": "contentDigest",
+          "type": "FooJson",
+        },
+        "parent": "whatever",
+        "publicId": "123",
+      },
+      "parent": Object {
+        "children": Array [],
+        "content": "{\\"id\\":\\"123\\",\\"blue\\":true,\\"funny\\":\\"yup\\"}",
+        "dir": "<TEMP_DIR>/foo/",
+        "id": "whatever",
+        "internal": Object {
+          "contentDigest": "whatever",
+          "mediaType": "application/json",
+          "type": "File",
+        },
+        "name": "nodeName",
         "parent": null,
       },
     },

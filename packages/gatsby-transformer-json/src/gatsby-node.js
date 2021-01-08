@@ -56,20 +56,28 @@ async function onCreateNode(
     throw new Error(`Unable to parse JSON: ${hint}`)
   }
 
+  function createPublicId(obj) {
+    if (obj.id) {
+      console.log(`the id: ${obj.id} given will now be on the key publicId`)
+      obj.publicId = String(obj.id)
+    }
+    return obj
+  }
+
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
+      obj = createPublicId(obj)
       transformObject(
         obj,
-        obj.id ? String(obj.id) : createNodeId(`${node.id} [${i}] >>> JSON`),
+        createNodeId(`${node.id} [${i}] >>> JSON`),
         getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
+    parsedContent = createPublicId(parsedContent)
     transformObject(
       parsedContent,
-      parsedContent.id
-        ? String(parsedContent.id)
-        : createNodeId(`${node.id} >>> JSON`),
+      createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
     )
   }
