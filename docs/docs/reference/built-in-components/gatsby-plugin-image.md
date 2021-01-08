@@ -13,7 +13,7 @@ The Gatsby Image plugin includes two components to display responsive images on 
 
 ## Image options
 
-The API for both components is almost the same. The difference is how you pass the properties. When using `StaticImage`, they are passed as props to the component, whereas for the `GatsbyImage` component they are passed to the `gatsbyImageData` GraphQL resolver. There is a small change in the values too: in the `StaticImage` component, props such as layout and placeholder take a string, while the resolver takes a GraphQL enum, which is in upper case by convention and is not quoted like a string. Both options are shown in the reference below.
+The options for both components are almost the same, with the difference being how you specify them. When using `StaticImage`, they are passed as props to the component, whereas for the `GatsbyImage` component they are passed to the `gatsbyImageData` GraphQL resolver. There is a small change in the values too: in the `StaticImage` component, props such as layout and placeholder take a string, while the resolver takes a GraphQL enum, which is in upper case by convention and is not quoted like a string. Both syntaxes are shown in the reference below.
 
 > It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the IDE.
 
@@ -68,7 +68,7 @@ _Component prop: `"fullWidth"`. Resolver prop: `FULL_WIDTH`_
 
 Use this for images that are always displayed at the full width of the screen, such as banners or hero images. Like the constrained layout, this resizes to fit the container. However it is not restricted to a maximum size, so will grow to fill it however large it is, maintaining its aspect ratio. It generates several smaller image sizes for different screen breakpoints, so that the browser only needs to load one large enough to fit the screen. You can pass a `breakpoints` prop if you want to specify the sizes to use, though in most cases you can allow it to use the default.
 
-### Size
+### Sizing options
 
 Size props are optional in `GatsbyImage` and `StaticImage`. Because the images are processed at build time, the plugin knows the size of the source image and can add the correct width and height to the `<img>` tag, so it displays correctly with no layout jumping. However, if you want to change the display size you can use the size options to do this.
 
@@ -102,7 +102,7 @@ Gatsby image components are lazy-loaded by default, which means that if they are
 
 _Component prop: `"dominantColor"`. Resolver prop: `DOMINANT_COLOR`_
 
-The calculates the dominant color in the source image, and uses this as a solid background color.
+The default placeholder. This calculates the dominant color of the source image and uses it as a solid background color.
 
 #### Blurred
 
@@ -120,7 +120,7 @@ This generates a simplified, flat SVG version of the source image, which it disp
 
 **Prop name: `formats`**
 
-The Gatsby Image plugin supports four output formats: JPEG, PNG, WebP and AVIF. By default, the plugin generates images in the same format as the source image, as well as WebP. For example, if your source image is a PNG, it will generate PNG and WebP images. In most cases, you should not change this. However, in some cases, you may need to manually set the formats. One reason for doing so is if you want to enable support for AVIF images. AVIF is a new image format that results in significantly smaller file sizes than alternative formats. It currently has [limited browser support](https://caniuse.com/avif), but this is likely to expand, and it is safe to include as long as you also generate fallbacks for other browsers, which the image plugin does automatically.
+The Gatsby Image plugin supports four output formats: JPEG, PNG, WebP and AVIF. By default, the plugin generates images in the same format as the source image, as well as WebP. For example, if your source image is a PNG, it will generate PNG and WebP images. In most cases, you should not change this. However, in some cases you may need to manually set the formats. One reason for doing so is if you want to enable support for AVIF images. AVIF is a new image format that results in significantly smaller file sizes than alternative formats. It currently has [limited browser support](https://caniuse.com/avif), but this is likely to expand, and it is safe to include as long as you also generate fallbacks for other browsers, which the image plugin does automatically.
 
 _Default component prop value: `["auto", "webp"]`. Default resolver prop value: `[AUTO, WEBP]`_
 
