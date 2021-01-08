@@ -13,9 +13,9 @@
     "html-webpack-plugin": "^3.2.0",
     "html-webpack-tags-plugin": "^2.0.17",
     "lodash": "^4.17.20",
-    "mini-css-extract-plugin": "^0.11.2",
+    "mini-css-extract-plugin": "^0.11.3",
     "netlify-identity-widget": "^1.9.1",
-    "webpack": "^4.44.2"
+    "webpack": "^4.45.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
