@@ -23,7 +23,7 @@ To use the File System Route API, use curly braces (`{ }`) in your filenames to 
 - `src/pages/products/{Product.fields__sku}.js` will generate a route like `/products/001923`
 - `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
 
-At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
+At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all Markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
 
 ### Syntax (collection routes)
 
@@ -135,11 +135,11 @@ export const query = graphql`
 `
 ```
 
-If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
+If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type `"Food"`), you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
 ### Routing and linking
 
-Gatsby "slugifies" every route that gets created from collection pages (by using [sindresorhus/slugify](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
+Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
 
 When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
 
@@ -215,19 +215,19 @@ Three periods `...` mark a page as a splat route. Optionally, you can name the s
 
 The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
-```js:title=src/pages/users/[name].js
+```jsx:title=src/pages/users/[name].js
 function UserPage(props) {
   const name = props.params.name
 }
 ```
 
-```js:title=src/pages/image/[...awsKey].js
+```jsx:title=src/pages/image/[...awsKey].js
 function ProductsPage(props) {
   const splat = props.params.awsKey
 }
 ```
 
-```js:title=src/pages/image/[...].js
+```jsx:title=src/pages/image/[...].js
 function AppPage(props) {
   const splat = props.params[‘*’]
 }
@@ -259,7 +259,7 @@ You want to display product information which is both accessible by name and SKU
 
 Create a view component at `src/view/product-view.js` that takes in a `product` prop. Use that component in both collection routes, e.g.:
 
-```js:title=src/pages/products/{Product.name}.js
+```jsx:title=src/pages/products/{Product.name}.js
 import React from "react"
 import { graphql } from "gatsby"
 import ProductView from "../../views/product-view"
