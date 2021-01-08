@@ -41,7 +41,7 @@ export async function createImageNode({
     } = require(`gatsby-source-filesystem/create-file-node`)
     file = await createFileNode(fullPath, createNodeId, {})
   } catch (e) {
-    reporter.error(`Please install gatsby-source-filesystem`)
+    reporter.panic(`Please install gatsby-source-filesystem`)
     return undefined
   }
 
@@ -87,10 +87,9 @@ export async function writeImages({
       if (process.env.GATSBY_EXPERIMENTAL_REMOTE_IMAGES && isRemoteURL(src)) {
         let createRemoteFileNode
         try {
-          createRemoteFileNode = require(`gatsby-source-filesystem`)
+          ;({ createRemoteFileNode } = require(`gatsby-source-filesystem`))
         } catch (e) {
-          reporter.error(`Please install gatsby-source-filesystem`)
-          return
+          reporter.panic(`Please install gatsby-source-filesystem`)
         }
 
         try {
@@ -132,8 +131,7 @@ export async function writeImages({
 
           file = await createFileNode(fullPath, createNodeId, {})
         } catch (e) {
-          reporter.error(`Please install gatsby-source-filesystem`)
-          return
+          reporter.panic(`Please install gatsby-source-filesystem`)
         }
       }
 
@@ -193,8 +191,7 @@ export async function writeImage(
   try {
     generateImageData = require(`gatsby-plugin-sharp`).generateImageData
   } catch (e) {
-    reporter.error(`Please install gatsby-plugin-sharp`)
-    return
+    reporter.panic(`Please install gatsby-plugin-sharp`)
   }
   try {
     const options = { file, args, pathPrefix, reporter, cache }
