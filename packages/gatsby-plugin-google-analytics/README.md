@@ -4,7 +4,7 @@ Easily add Google Analytics to your Gatsby site.
 
 ## Upgrade note
 
-This plugin uses under the hood the Google's `analytics.js` file. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-gtag) which uses `gtag.js`.
+This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js`.
 
 ## Install
 
@@ -64,13 +64,15 @@ To use it, simply import it and use it like you would the `<a>` element e.g.
 import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-export default () => (
+const Component = () => (
   <div>
-    <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/">
+    <OutboundLink href="https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/">
       Visit the Google Analytics plugin page!
     </OutboundLink>
   </div>
 )
+
+export default Component
 ```
 
 ## Options
@@ -168,10 +170,10 @@ To allow custom events to be tracked, the plugin exposes a function to include i
 To use it, import the package and call the event within your components and business logic.
 
 ```jsx
-import React from 'react'
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+import React from "react"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
-export default () => {
+const Component = () => (
   <div>
     <button
       onClick={e => {
@@ -186,7 +188,7 @@ export default () => {
           // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: "Gatsby Plugin Example Campaign",
           // number - optional - Numeric value associated with the event. (e.g. A product ID)
-          value: 43
+          value: 43,
         })
         //... Other logic here
       }}
@@ -194,7 +196,9 @@ export default () => {
       Tap that!
     </button>
   </div>
-}
+)
+
+export default Component
 ```
 
 ### All Fields Options
