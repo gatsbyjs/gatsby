@@ -54,7 +54,7 @@ In addition, when an image appears, it goes from blank background to fully there
 
 Gatsby Image's will hold the spot for your image automatically when you specify `width` prop, and depending on your preference, will provide a background -- blurred, a background color, or traced SVG, while the image loads.
 
-![Gatsby Image Gradual Transition](../images/gatsby-image-gif.gif)
+![Gatsby Image Gradual Transition](../../images/gatsby-image-gif.gif)
 
 ## Minimize image file size
 
