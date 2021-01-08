@@ -319,6 +319,7 @@ Array [
         "type": "FooBarYaml",
       },
       "parent": "whatever",
+      "publicId": "some",
     },
   ],
 ]
@@ -338,6 +339,7 @@ Array [
           "type": "FooBarYaml",
         },
         "parent": "whatever",
+        "publicId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -374,6 +376,7 @@ Array [
         "type": "fixed",
       },
       "parent": "whatever",
+      "publicId": "some",
     },
   ],
 ]
@@ -393,6 +396,7 @@ Array [
           "type": "fixed",
         },
         "parent": "whatever",
+        "publicId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -429,6 +433,7 @@ Array [
         "type": "yup",
       },
       "parent": "whatever",
+      "publicId": "some",
     },
   ],
 ]
@@ -448,6 +453,7 @@ Array [
           "type": "yup",
         },
         "parent": "whatever",
+        "publicId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -778,6 +784,7 @@ Array [
         "type": "OtherYaml",
       },
       "parent": "whatever",
+      "publicId": "some",
     },
   ],
 ]
@@ -797,6 +804,7 @@ Array [
           "type": "OtherYaml",
         },
         "parent": "whatever",
+        "publicId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -831,6 +839,7 @@ Array [
         "type": "fixed",
       },
       "parent": "whatever",
+      "publicId": "some",
     },
   ],
 ]
@@ -850,6 +859,7 @@ Array [
           "type": "fixed",
         },
         "parent": "whatever",
+        "publicId": "some",
       },
       "parent": Object {
         "children": Array [],
@@ -884,6 +894,7 @@ Array [
         "type": "yup",
       },
       "parent": "whatever",
+      "publicId": "some",
     },
   ],
 ]
@@ -903,6 +914,7 @@ Array [
           "type": "yup",
         },
         "parent": "whatever",
+        "publicId": "some",
       },
       "parent": Object {
         "children": Array [],
