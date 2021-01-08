@@ -48,8 +48,17 @@ async function onCreateNode(
   const content = await loadNodeContent(node)
   const parsedContent = jsYaml.load(content)
 
+  function createPublicId(obj) {
+    if (obj.id) {
+      console.log(`the id: ${obj.id} given will now be on the key publicId`)
+      obj.publicId = String(obj.id)
+    }
+    return obj
+  }
+
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
+      obj = createPublicId(obj)
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
@@ -57,8 +66,9 @@ async function onCreateNode(
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
+    const newParsedContent = createPublicId(parsedContent)
     transformObject(
-      parsedContent,
+      newParsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
       getType({ node, object: parsedContent, isArray: false })
     )
