@@ -208,7 +208,7 @@ module.exports = {
 This is what a component using `gatsby-plugin-image` looks like:
 
 ```jsx
-import * as React from "react"
+import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
@@ -238,7 +238,7 @@ export const query = graphql`
 
 If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`. Note that `src` will be undefined if a `.png` or `.jpg` image is not available.
 
-### Upgrading from the gatsby-image@2
+### Upgrading from the `gatsby-image@2`
 
 We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
 
@@ -295,7 +295,7 @@ In Gatsby's GraphQL implementation, you specify the type of image with the `layo
 | ------- | --------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `image` | object          | The image data object returned from a GraphQL query                                                                        |
 | `alt`   | string          | Passed to the `img` element. Defaults to an empty string                                                                   |
-| `sizes` | string          | An HTML "sizes" argument, which is passed-though to the image. Can be left blank, when it will be calculated automatically |
+| `sizes` | string          | An HTML `sizes` argument, which is passed-though to the image. Can be left blank, when it will be calculated automatically |
 | `as`    | React Component | The component that wraps the Gatsby Image. Default is `div`                                                                |
 
 # GraphQL resolver
@@ -314,6 +314,7 @@ coverImage: file(relativePath: { eq: "plant.jpg" }) {
 You then use the data like this:
 
 ```jsx
+import React from "react"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 export function Plant({ data }) {
