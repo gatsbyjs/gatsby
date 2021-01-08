@@ -12,6 +12,21 @@ const fs = jest.requireActual(`fs-extra`)
 const gotStream = jest.spyOn(got, `stream`)
 const urlCount = new Map()
 
+async function getFileSize(file) {
+  const stat = await fs.stat(file)
+
+  return stat.size
+}
+
+/**
+ * A utility to help create file responses
+ * - Url with attempts will use maxBytes for x amount of time until it delivers the full response
+ * - MaxBytes indicates how much bytes we'll be sending
+ *
+ * @param {string} file File path on disk
+ * @param {Object} req Is the request object from msw
+ * @param {{ compress: boolean}} options Options for the getFilecontent (use gzip or not)
+ */
 async function getFileContent(file, req, options = {}) {
   const cacheKey = req.url.origin + req.url.pathname
   const maxRetry = req.url.searchParams.get(`attempts`)
@@ -158,7 +173,9 @@ describe(`create-remote-file-node`, () => {
     })
 
     expect(fileNode.base).toBe(`logo.svg`)
-    expect(fileNode.size).toBe(1614)
+    expect(fileNode.size).toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+    )
     expect(gotStream).toBeCalledTimes(1)
   })
 
@@ -173,7 +190,9 @@ describe(`create-remote-file-node`, () => {
     })
 
     expect(fileNode.base).toBe(`logo-gzip.svg`)
-    expect(fileNode.size).toBe(1614)
+    expect(fileNode.size).toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+    )
     expect(gotStream).toBeCalledTimes(1)
   })
 
@@ -188,7 +207,9 @@ describe(`create-remote-file-node`, () => {
     })
 
     expect(fileNode.base).toBe(`dog.jpg`)
-    expect(fileNode.size).toBe(19559)
+    expect(fileNode.size).toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+    )
     expect(gotStream).toBeCalledTimes(1)
   })
 
@@ -203,7 +224,9 @@ describe(`create-remote-file-node`, () => {
     })
 
     expect(fileNode.base).toBe(`logo-gzip.svg`)
-    expect(fileNode.size).toBe(301)
+    expect(fileNode.size).not.toBe(
+      await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+    )
     expect(gotStream).toBeCalledTimes(1)
   })
 
@@ -219,7 +242,9 @@ describe(`create-remote-file-node`, () => {
       })
 
       expect(fileNode.base).toBe(`logo-gzip.svg`)
-      expect(fileNode.size).toBe(1614)
+      expect(fileNode.size).toBe(
+        await getFileSize(path.join(__dirname, `./fixtures/gatsby-logo.svg`))
+      )
       expect(gotStream).toBeCalledTimes(2)
     })
 
@@ -234,7 +259,9 @@ describe(`create-remote-file-node`, () => {
       })
 
       expect(fileNode.base).toBe(`dog.jpg`)
-      expect(fileNode.size).toBe(19559)
+      expect(fileNode.size).toBe(
+        await getFileSize(path.join(__dirname, `./fixtures/dog-thumbnail.jpg`))
+      )
       expect(gotStream).toBeCalledTimes(2)
     })
   })
