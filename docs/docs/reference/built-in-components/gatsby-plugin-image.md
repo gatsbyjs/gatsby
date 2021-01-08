@@ -21,7 +21,7 @@ The API for both components is almost the same. The difference is how you pass t
 
 **Prop name: `layout`**
 
-The image components support three types of layout, which determines the image sizes that are generated, as well as the resizing behavior of the image itself in the browser. You can compare the layouts in the video below:
+The image components support three types of layout, which determine the image sizes that are generated, as well as the resizing behavior of the image itself in the browser. You can compare the layouts in the video below:
 
 <video controls autoplay loop>
   <source type="video/mp4" src="./layouts.mp4" />
@@ -70,7 +70,7 @@ Use this for images that are always displayed at the full width of the screen, s
 
 ### Size
 
-Size props are optional in `GatsbyImage` and `StaticImage`. Because the images are processed at build time, the plugin knows the size of the source image and can add the correct width and height to the `<img>` tag, so it displayed correctly with no layout jumping. However if you want to change the displayed size then you can use the size options to do this.
+Size props are optional in `GatsbyImage` and `StaticImage`. Because the images are processed at build time, the plugin knows the size of the source image and can add the correct width and height to the `<img>` tag, so it displays correctly with no layout jumping. However, if you want to change the display size you can use the size options to do this.
 
 #### `width`/`height`
 
@@ -108,7 +108,7 @@ The calculates the dominant color in the source image, and uses this as a solid 
 
 _Component prop: `"blurred"`. Resolver prop: `BLURRED`_
 
-This generates a very low resolution version of the source image, and displays it as a blurred background.
+This generates a very low-resolution version of the source image and displays it as a blurred background.
 
 #### Traced SVG
 
@@ -120,7 +120,7 @@ This generates a simplified, flat SVG version of the source image, which it disp
 
 **Prop name: `formats`**
 
-The Gatsby Image plugin supports four output formats: JPEG, PNG, WebP and AVIF. By default the plugin generates images in the same format as the source image, as well as WebP. For example if your source image is a PNG, it will generate PNG and WebP images. In most cases you should not change this. However in some cases you may need to manually set the formats. The main reason could be if you want to enable support for AVIF images. This is a new image format that can give significantly smaller filesizes than the alternatives. It currently has [limited browser support](https://caniuse.com/avif), but this is likely to expand, and it is safe to include as long as you also generate fallbacks for other browsers.
+The Gatsby Image plugin supports four output formats: JPEG, PNG, WebP and AVIF. By default, the plugin generates images in the same format as the source image, as well as WebP. For example, if your source image is a PNG, it will generate PNG and WebP images. In most cases, you should not change this. However, in some cases, you may need to manually set the formats. One reason for doing so is if you want to enable support for AVIF images. AVIF is a new image format that results in significantly smaller file sizes than alternative formats. It currently has [limited browser support](https://caniuse.com/avif), but this is likely to expand, and it is safe to include as long as you also generate fallbacks for other browsers, which the image plugin does automatically.
 
 _Default component prop value: `["auto", "webp"]`. Default resolver prop value: `[AUTO, WEBP]`_
 
