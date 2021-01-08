@@ -11,3 +11,12 @@ export function isPageTemplate(
   }
   return s.getState().components.has(filename)
 }
+
+export function test(t): any {
+  return Object.assign(t, {
+    parserOptions: {
+      sourceType: `module`,
+      ecmaVersion: 9,
+    },
+  })
+}

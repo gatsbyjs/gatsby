@@ -17,6 +17,13 @@ function isTemplateQuery(node: Node): boolean {
 const limitedExports: Rule.RuleModule = {
   meta: {
     type: `problem`,
+    messages: {
+      limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
+        All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
+
+        Please move your other named exports to another file.
+`,
+    },
   },
   create: context => {
     if (!isPageTemplate(store, context)) {
@@ -32,10 +39,7 @@ const limitedExports: Rule.RuleModule = {
 
         context.report({
           node,
-          message: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
-All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
-
-Please move your other named exports to another file.`,
+          messageId: `limitedExportsPageTemplates`,
         })
       },
     }

@@ -5,29 +5,10 @@ import { isPageTemplate } from "../eslint-rules-helpers"
 
 const defs = {
   ArrowFunctionExpression: {
-    message: `Anonymous arrow functions cause Fast Refresh to not preserve local component state.
-
-Please add a name to your function, for example:
-
-Before:
-export default () => {};
-
-After:
-const Named = () => {};
-export default Named;
-`,
+    messageId: `anonymousArrowFunction`,
   },
   FunctionDeclaration: {
-    message: `Anonymous function declarations cause Fast Refresh to not preserve local component state.
-
-Please add a name to your function, for example:
-
-Before:
-export default function () {};
-
-After:
-export default function Named() {}
-`,
+    messageId: `anonymousFunctionDeclaration`,
     forbid: (node): boolean => !node.declaration.id,
   },
 }
@@ -35,6 +16,29 @@ export default function Named() {}
 const noAnonymousExports: Rule.RuleModule = {
   meta: {
     type: `problem`,
+    messages: {
+      anonymousArrowFunction: `Anonymous arrow functions cause Fast Refresh to not preserve local component state.
+
+       Please add a name to your function, for example:
+
+       Before:
+       export default () => {};
+
+       After:
+       const Named = () => {};
+       export default Named;
+`,
+      anonymousFunctionDeclaration: `Anonymous function declarations cause Fast Refresh to not preserve local component state.
+
+       Please add a name to your function, for example:
+
+       Before:
+       export default function () {};
+
+       After:
+       export default function Named() {}
+`,
+    },
   },
   create: context => {
     if (!isPageTemplate(store, context)) {
@@ -48,7 +52,10 @@ const noAnonymousExports: Rule.RuleModule = {
         const def = defs[type]
 
         if (def && (!def.forbid || def.forbid(node))) {
-          context.report({ node, message: def.message })
+          context.report({
+            node,
+            messageId: def.messageId,
+          })
         }
       },
     }
