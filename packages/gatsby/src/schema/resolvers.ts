@@ -28,6 +28,9 @@ import { IGatsbyNode } from "../redux/types"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
 
+type nestedListOfStrings = Array<string | nestedListOfStrings>
+type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
+
 export function findMany<TSource, TArgs>(
   typeName: string
 ): GatsbyResolver<TSource, TArgs> {
@@ -352,15 +355,22 @@ export function fileByPath<TSource, TArgs>(
     args,
     context,
     info
-  ): Promise<any> {
+  ): Promise<IGatsbyNode | nestedListOfNodes | null> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
-    const fieldValue = await resolver(source, args, context, {
-      ...info,
-      from: options.from || info.from,
-      fromNode: options.from ? options.fromNode : info.fromNode,
-    })
+    const fieldValue: nestedListOfStrings = await resolver(
+      source,
+      args,
+      context,
+      {
+        ...info,
+        from: options.from || info.from,
+        fromNode: options.from ? options.fromNode : info.fromNode,
+      }
+    )
 
-    if (fieldValue == null) return null
+    if (fieldValue == null) {
+      return null
+    }
 
     // Find the File node for this node (we assume the node is something
     // like markdown which would be a child node of a File node).
@@ -369,15 +379,16 @@ export function fileByPath<TSource, TArgs>(
       node => node.internal && node.internal.type === `File`
     )
 
-    function queryNodesByPath(
-      relPaths: Array<string>,
-      arr: Array<Promise<IGatsbyNode>>
-    ): void {
-      relPaths.forEach(relPath =>
-        Array.isArray(relPath)
-          ? queryNodesByPath(relPath, arr)
-          : arr.push(queryNodeByPath(relPath))
-      )
+    async function queryNodesByPath(
+      relPaths: nestedListOfStrings
+    ): Promise<nestedListOfNodes> {
+      const arr: nestedListOfNodes = []
+      for (let i = 0; i < relPaths.length; ++i) {
+        arr[i] = await (Array.isArray(relPaths[i])
+          ? queryNodesByPath(relPaths[i] as nestedListOfStrings)
+          : queryNodeByPath(relPaths[i] as string))
+      }
+      return arr
     }
 
     function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
@@ -395,9 +406,7 @@ export function fileByPath<TSource, TArgs>(
     }
 
     if (Array.isArray(fieldValue)) {
-      const arr: Array<Promise<IGatsbyNode>> = []
-      queryNodesByPath(fieldValue, arr)
-      return Promise.all(arr)
+      return queryNodesByPath(fieldValue)
     } else {
       return queryNodeByPath(fieldValue)
     }
