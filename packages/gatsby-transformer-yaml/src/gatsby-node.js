@@ -1,7 +1,7 @@
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const path = require(`path`)
-
+const { reporter } = require(`gatsby`)
 function unstable_shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `text/yaml`
 }
@@ -50,7 +50,7 @@ async function onCreateNode(
 
   function createPublicId(obj) {
     if (obj.id) {
-      console.log(`the id: ${obj.id} given will now be on the key publicId`)
+      reporter.warn(`the id: ${obj.id} given will now be on the key publicId`)
       obj.publicId = String(obj.id)
     }
     return obj
