@@ -118,11 +118,13 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
      blogPost(id: { eq: $Id }) {
        title
        body
+       # highlight-start
        avatar {
          childImageSharp {
            gatsbyImageData(maxWidth: 200)
          }
        }
+       # highlight-end
      }
    }
    ```
