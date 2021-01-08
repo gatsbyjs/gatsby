@@ -12,7 +12,7 @@ Welcome to `gatsby@2.28.0` release (December 2020 #1).
 Key highlights of this release:
 
 - [New `gatsby new`](#new-gatsby-new) - new, interactive way to create a Gatsby site
-- [Feature flags in `gatsby-config.js`](#feature-flags-in-gatsby-config-js) - set your feature toggles without environment variables
+- [Feature flags in `gatsby-config.js`](#feature-flags-in-gatsby-configjs) - set your feature toggles without environment variables
 - [Improved Fast Refresh integration](#improved-fast-refresh-integration) - better hot reloading
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) - run image transformations only when they are needed by browser
 
