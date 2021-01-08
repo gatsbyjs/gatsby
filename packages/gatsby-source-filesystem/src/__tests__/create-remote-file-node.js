@@ -7,11 +7,6 @@ jest.mock(`fs-extra`, () => {
             cb()
           }
         }),
-        // once: jest.fn((type, cb) => {
-        //   if (type === `end`) {
-        //     cb()
-        //   }
-        // }),
         close: jest.fn(),
       }
     }),
@@ -249,7 +244,6 @@ describe(`create-remote-file-node`, () => {
             return {
               pipe: jest.fn(),
               on: jest.fn(),
-              once: jest.fn(),
             }
           }),
           on: jest.fn((mockType, mockCallback) => {
