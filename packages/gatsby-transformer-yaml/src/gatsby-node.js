@@ -7,14 +7,7 @@ function unstable_shouldOnCreateNode({ node }) {
 }
 
 async function onCreateNode(
-  {
-    node,
-    actions,
-    loadNodeContent,
-    createNodeId,
-    createContentDigest,
-    reporter,
-  },
+  { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
 ) {
   if (!unstable_shouldOnCreateNode({ node })) {
@@ -57,7 +50,6 @@ async function onCreateNode(
 
   function createPublicId(obj) {
     if (obj.id) {
-      reporter.warn(`the id: ${obj.id} given will now be on the key publicId`)
       obj.publicId = String(obj.id)
     }
     return obj
