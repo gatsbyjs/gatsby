@@ -1,13 +1,20 @@
 const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const path = require(`path`)
-const { reporter } = require(`gatsby`)
+
 function unstable_shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `text/yaml`
 }
 
 async function onCreateNode(
-  { node, actions, loadNodeContent, createNodeId, createContentDigest },
+  {
+    node,
+    actions,
+    loadNodeContent,
+    createNodeId,
+    createContentDigest,
+    reporter,
+  },
   pluginOptions
 ) {
   if (!unstable_shouldOnCreateNode({ node })) {
