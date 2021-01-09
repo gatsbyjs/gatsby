@@ -648,18 +648,18 @@ module.exports = async (
     // Packages we want to externalize to save some build time
     // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
     const externalList = [
-      // `@reach/router/lib/history`,
-      // `@reach/router`,
-      // `common-tags`,
+      `@reach/router/lib/history`,
+      `@reach/router`,
+      `common-tags`,
       `crypto`,
-      // `debug`,
+      `debug`,
       `fs`,
       `https`,
       `http`,
-      // `lodash`,
+      `lodash`,
       `path`,
-      // `semver`,
-      // /^lodash\//,
+      `semver`,
+      /^lodash\//,
       `zlib`,
     ]
 
@@ -677,7 +677,7 @@ module.exports = async (
 
     const isExternal = request => {
       if (externalList.some(item => checkItem(item, request))) {
-        return `umd ${request}`
+        return `umd ${require.resolve(request)}`
       }
       if (userExternalList.some(item => checkItem(item, request))) {
         return `umd ${request}`

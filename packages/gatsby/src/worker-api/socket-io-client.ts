@@ -21,7 +21,7 @@ const { performance } = require("perf_hooks")
 // })
 
 // Create queue and pause immediately and resume once the server is ready
-const queue = new PQueue({ concurrency: 80 })
+const queue = new PQueue({ concurrency: 120 })
 // queue.pause()
 
 const mtimes = new Map()
@@ -146,31 +146,31 @@ runTask({
 // args: { name: `Tech Council` },
 // }).then(result => console.log(result))
 
-const filePath = path.resolve(`./data.json`)
-const filePath2 = path.resolve(`./data2.json`)
-_.range(1).forEach(i => {
-  runTask({
-    handler: async (args, { files }) => {
-      const path = require(`path`)
-      const fs = require(`fs-extra`)
+// const filePath = path.resolve(`./data.json`)
+// const filePath2 = path.resolve(`./data2.json`)
+// _.range(1).forEach(i => {
+// runTask({
+// handler: async (args, { files }) => {
+// const path = require(`path`)
+// const fs = require(`fs-extra`)
 
-      const jsonData = JSON.parse(files.data.fileBlob)
-      jsonData.super = jsonData.super += 10
-      const newPath = path.join(`blue`, `moon`)
-      return {
-        "Math!": args.a + args.b * Math.random(),
-        path: newPath,
-        jsonData,
-      }
-    },
-    args: { a: 10, b: i + 2 },
-    files: {
-      data: {
-        originPath: Math.random() > 0.5 ? filePath : filePath2,
-      },
-    },
-  }).then(result => console.log(result))
-})
+// const jsonData = JSON.parse(files.data.fileBlob)
+// jsonData.super = jsonData.super += 10
+// const newPath = path.join(`blue`, `moon`)
+// return {
+// "Math!": args.a + args.b * Math.random(),
+// path: newPath,
+// jsonData,
+// }
+// },
+// args: { a: 10, b: i + 2 },
+// files: {
+// data: {
+// originPath: Math.random() > 0.5 ? filePath : filePath2,
+// },
+// },
+// }).then(result => console.log(result))
+// })
 
 // HELLO PEOPLE
 // const anotherHandler = args => {
@@ -267,13 +267,26 @@ const runQuery = async (args, { files }) => {
     )
   )
 
+  // Imports the Google Cloud client library
+  const { Storage } = require("@google-cloud/storage")
+
+  // Creates a client
+  const storage = new Storage({ keyFilename: files.key.localPath })
+
+  console.time(`write to bucket ${args.id}`)
+  const writeToBucket = await storage
+    .bucket(`run-task-experiment-website`)
+    .file(`${args.id}.html`)
+    .save(Buffer.from(htmlStr))
+  console.timeEnd(`write to bucket ${args.id}`)
+
   // result.htmlStr = htmlStr
   // return result
   return `ok`
 }
 
 const startQueries = performance.now()
-const numQueries = 1000
+const numQueries = 100
 Promise.all(
   _.range(numQueries).map(id =>
     runTask({
@@ -283,6 +296,9 @@ Promise.all(
         renderPage: {
           originPath: `/tmp/the-simplest-blog/public/render-page.js`,
         },
+        key: {
+          originPath: `./key.json`,
+        },
       },
       dependencies: {
         react: `latest`, // Get from project eventually
@@ -291,9 +307,15 @@ Promise.all(
         "remark-parse": `latest`,
         unified: `latest`,
         "node-fetch": `latest`,
+        "@reach/router": `latest`,
+        "common-tags": `latest`,
+        debug: `latest`,
+        lodash: `latest`,
+        semver: `latest`,
+        "@google-cloud/storage": `latest`,
       },
     }).then(result => {
-      // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
+      console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
     })
   )
 ).then(() => {

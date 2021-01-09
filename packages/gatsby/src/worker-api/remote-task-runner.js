@@ -2,13 +2,21 @@ const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const path = require(`path`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
-const http = require(`http`)
-const compress = require(`compression`)
+var http = require("http")
+var compress = require("compression")
 const cluster = require(`cluster`)
-const { performance } = require(`perf_hooks`)
+const { performance } = require("perf_hooks")
 const execa = require(`execa`)
-const { Lock: lockInner } = require(`lock`)
+const { Lock: lockInner } = require("lock")
 const lockInstance = lockInner()
+const JestWorker = require(`jest-worker`).default
+
+const Worker = new JestWorker(require.resolve("./Worker"), {
+  // exposedMethods: [`runTask`],
+  enableWorkerThreads: true,
+})
+
+console.log(Worker)
 
 function lock(resources) {
   return new Promise(resolve =>
@@ -19,8 +27,8 @@ function lock(resources) {
   )
 }
 
-let counter = 0
-const port = 3001
+var counter = 0
+var port = 3001
 
 let count = 0
 let start
@@ -51,18 +59,18 @@ let start
 const files = new Map()
 function postRequest(request, response, callback) {
   // compress({})(request, response, () => {})
-  if (request.method == `POST`) {
+  if (request.method == "POST") {
     if (!start) {
       start = Date.now()
     }
     // var writeStream = fs.createWriteStream("/tmp/" + ++counter + port)
 
     let newFile = ``
-    request.on(`data`, function (data) {
+    request.on("data", function (data) {
       newFile += data.toString()
     })
 
-    request.on(`end`, function () {
+    request.on("end", function () {
       files.set(++counter, newFile)
       if (files.size % 100 == 0) {
         console.log(files.size)
@@ -75,7 +83,7 @@ function postRequest(request, response, callback) {
 http
   .createServer(function (request, response) {
     postRequest(request, response, function () {
-      response.writeHead(200, `OK`, { "Content-Type": `text/plain` })
+      response.writeHead(200, "OK", { "Content-Type": "text/plain" })
       count += 1
       if (count % 100 === 0) {
         console.log(`uploaded ${count} files`)
@@ -118,7 +126,7 @@ const getFile = ([name, file]) => {
         const localPath = path.join(filesDir, file.hash)
         await fs.writeFile(localPath, fileBlob)
 
-        const fileObject = { ...file, name, localPath, fileBlob }
+        const fileObject = { ...file, name, localPath } //, fileBlob }
 
         // set on downloadedFiles
         downloadedFiles.set(file.hash, fileObject)
@@ -163,9 +171,10 @@ exports.runTask = async task => {
     release = await lock(handlerDir)
     // Check again as it's probably written now.
     if (!knownTaskFunctions.has(handlerPath)) {
-      console.log(`setting up function`, handlerPath)
+      console.time(`setting up function ${handlerPath}`)
       fs.writeFileSync(handlerPath, `module.exports = ${task.handler}`)
       if (task.dependencies) {
+        console.log(task.dependencies)
         const output = await execa(`npm`, [`init`, `--yes`], {
           cwd: handlerDir,
         })
@@ -184,6 +193,7 @@ exports.runTask = async task => {
         // console.log({ output2 })
       }
       knownTaskFunctions.add(handlerPath)
+      console.timeEnd(`setting up function ${handlerPath}`)
     }
   }
   if (release) {
@@ -212,11 +222,9 @@ const actuallyRunTask = async ({ handlerPath, args, files, traceId }) => {
   }
 
   // Copy the trace Id to make sure task functions can't change it.
-  const copyOfTraceId = (` ` + traceId).slice(1)
   const start = performance.now()
-  const result = await Promise.resolve(
-    taskRunner(args, { traceId: copyOfTraceId, files })
-  )
+  const result = await Worker.runTask({ handlerPath, args, files, traceId })
+
   const end = performance.now()
   // console.timeEnd(`runTask ${traceId}`)
   socket.emit(`response-${traceId}`, {
