@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 const path = require(`path`)
-const { reporter } = require(`gatsby`)
+
 function unstable_shouldOnCreateNode({ node }) {
   // We only care about JSON content.
   return node.internal.mediaType === `application/json`
@@ -58,7 +58,6 @@ async function onCreateNode(
 
   function createPublicId(obj) {
     if (obj.id) {
-      reporter.warn(`the id: ${obj.id} given will now be on the key publicId`)
       obj.publicId = String(obj.id)
     }
     return obj
