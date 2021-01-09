@@ -22,9 +22,10 @@ export default async function startGraphQLServer(programPath, forceStart) {
     port = await detectPort(50400)
     await createServiceLock(programPath, `recipesgraphqlserver`, { port })
 
-    const subprocess = execa(
-      `node`,
-      [require.resolve(`gatsby-recipes/dist/graphql-server/server.js`), port],
+    // execa cleans the process up
+    const subprocess = execa.node(
+      require.resolve(`gatsby-recipes/dist/graphql-server/server.js`),
+      [port],
       {
         all: true,
         env: {
@@ -39,12 +40,6 @@ export default async function startGraphQLServer(programPath, forceStart) {
     // eslint-disable-next-line no-unused-expressions
     subprocess.stderr?.on(`data`, data => {
       console.log(data.toString())
-    })
-
-    process.on(`exit`, () => {
-      subprocess.kill(`SIGTERM`, {
-        forceKillAfterTimeout: 2000,
-      })
     })
 
     // Log server output to a file.
