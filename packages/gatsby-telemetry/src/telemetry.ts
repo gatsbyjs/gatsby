@@ -384,7 +384,7 @@ export class AnalyticsTracker {
       const stat = fs.statSync(path)
       if (this.lastEnvTagsFromFileTime < stat.mtimeMs) {
         this.lastEnvTagsFromFileTime = stat.mtimeMs
-        const data = fs.readFileSync(path)
+        const data = fs.readFileSync(path, `utf8`)
         this.lastEnvTagsFromFileValue = JSON.parse(data)
       }
     } catch (e) {
