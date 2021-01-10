@@ -90,6 +90,7 @@ export const sourceNodes = async (
       cache,
       getCache,
       reporter,
+      downloadImages,
     }
 
     // Arguments used for node creation.

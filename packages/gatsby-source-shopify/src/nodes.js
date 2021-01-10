@@ -32,15 +32,16 @@ const downloadImageAndCreateFileNode = async (
     cache,
     getCache,
     reporter,
+    downloadImages,
   }
 ) => {
-  let fileNodeID
+  if (!downloadImages) return undefined
 
   const mediaDataCacheKey = `${TYPE_PREFIX}__Media__${url}`
   const cacheMediaData = await cache.get(mediaDataCacheKey)
 
   if (cacheMediaData) {
-    fileNodeID = cacheMediaData.fileNodeID
+    const fileNodeID = cacheMediaData.fileNodeID
     touchNode({ nodeId: fileNodeID })
     return fileNodeID
   }
@@ -57,7 +58,7 @@ const downloadImageAndCreateFileNode = async (
   })
 
   if (fileNode) {
-    fileNodeID = fileNode.id
+    const fileNodeID = fileNode.id
     await cache.set(mediaDataCacheKey, { fileNodeID })
     return fileNodeID
   }
