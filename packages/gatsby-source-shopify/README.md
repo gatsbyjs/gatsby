@@ -75,10 +75,6 @@ plugins: [
       // Download Images Locally
       // set to false if you plan on using shopify's CDN
       downloadImages: true,
-      // default image URL
-      // if you set downloadImages to false then it will set all localFile of file from this URL this is to make graphQL types unchanged
-      defaultImageURL:
-        "https://raw.githubusercontent.com/mrhut10/gatsby/Feature/gatsby-source-shopify/downloadImagesOption/packages/gatsby-source-shopify/src/default.png",
 
       // Allow overriding the default queries
       // This allows you to include/exclude extra fields when sourcing nodes
