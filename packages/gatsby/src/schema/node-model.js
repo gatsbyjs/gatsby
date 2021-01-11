@@ -275,7 +275,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = await runFastFiltersAndSort({
+    const queryResult = runFastFiltersAndSort({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
