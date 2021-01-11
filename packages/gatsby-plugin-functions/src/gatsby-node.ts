@@ -55,6 +55,7 @@ export async function onPreBootstrap(
           filename: file.replace(`.ts`, `.js`),
           libraryTarget: `commonjs2`,
         },
+        target: `node`,
         // library: "yourLibName",
 
         mode: `production`,
