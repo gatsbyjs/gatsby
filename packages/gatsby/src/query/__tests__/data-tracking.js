@@ -186,8 +186,9 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   if (restart) {
     await require(`../../schema`).build({})
-    await apiRunner(`createPages`)
   }
+
+  await apiRunner(`createPages`)
 
   Object.entries(pageQueries).forEach(([componentPath, query]) => {
     store.dispatch({
@@ -226,10 +227,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   activity.end()
 
   await saveState()
-
-  if (restart) {
-    require(`../../bootstrap/page-hot-reloader`)
-  }
 
   const idsOfQueriesThatRan = queryRunner.mock.calls.map(call => call[1].id)
 
