@@ -15,20 +15,20 @@ The following are props that can be passed to the components.
 
 ### Shared props
 
-The following props can be passed to both `GatsbyImage` and `StaticImage`. You may also use any valid [`<img>` tag props](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attributes), which are passed-down to the underlying `<img>` element.
+The following props can be passed to both `GatsbyImage` and `StaticImage`. You may also use any valid [`<img>` tag props](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attributes), which are forwarded to the underlying `<img>` element.
 
-| Prop              | Type                                                                        | Default       | Description                                                              |
-| ----------------- | --------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------ |
-| `alt`             | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility. |
-| `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper                              |
-| `loading`         | `"eager"                                                                    | "lazy"`       | `"lazy"`                                                                 | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
-| `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper                                   |
-| `imgClassName`    | `string`                                                                    |               | CSS class applied to the `<img>` element                                 |
-| `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper                               |
-| `imgStyle`        | `CSSProperties`                                                             |               | Inline styles applied to the `<img>` element                             |
-| `backgroundColor` | `string`                                                                    | `transparent` | Background color applied to the wrapper                                  |
-| `objectFit`       | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container                     |
-| `objectPosition`  | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container                               |
+| Prop              | Type                                                                        | Default       | Description                                                                                                                                     |
+| ----------------- | --------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `alt`             | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility.                                                                        |
+| `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper                                                                                                     |
+| `loading`         | `"eager" \| "lazy"`                                                         | `"lazy"`      | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
+| `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper                                                                                                          |
+| `imgClassName`    | `string`                                                                    |               | CSS class applied to the `<img>` element                                                                                                        |
+| `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper                                                                                                      |
+| `imgStyle`        | `CSSProperties`                                                             |               | Inline styles applied to the `<img>` element                                                                                                    |
+| `backgroundColor` | `string`                                                                    | `transparent` | Background color applied to the wrapper                                                                                                         |
+| `objectFit`       | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container                                                                                            |
+| `objectPosition`  | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container                                                                                                      |
 
 ### `StaticImage`
 
