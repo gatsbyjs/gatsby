@@ -19,7 +19,7 @@ The following props can be passed to both `GatsbyImage` and `StaticImage`. You m
 
 | Prop              | Type                                                                        | Default       | Description                                                                                                                                     |
 | ----------------- | --------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `alt`             | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility.                                                                        |
+| `alt` (Required)  | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility.                                                                        |
 | `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper                                                                                                     |
 | `loading`         | `"eager" \| "lazy"`                                                         | `"lazy"`      | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
 | `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper                                                                                                          |
@@ -34,17 +34,17 @@ The following props can be passed to both `GatsbyImage` and `StaticImage`. You m
 
 The `StaticImage` component can take all [image options](#image-options) as props, as well as all [shared props](#shared-props). Additionally, it takes this prop:
 
-| Prop  | Type     | Default | Description                                                                                                  |
-| ----- | -------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| `src` | `string` |         | Source image, to be processed at build time. Can be a path, relative to the source file, or an absolute URL. |
+| Prop             | Type     | Description                                                                                                  |
+| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
+| `src` (Required) | `string` | Source image, to be processed at build time. Can be a path, relative to the source file, or an absolute URL. |
 
 ### `GatsbyImage`
 
 This component accepts all [shared props](#shared-props), as well as the one below. These props are passed directly to the component, and are not to be confused with [image options](#all-options), which are passed to the GraphQL resolver when using dynamic images.
 
-| Prop    | Type              | Default | Description                                                         |
-| ------- | ----------------- | ------- | ------------------------------------------------------------------- |
-| `image` | `GatsbyImageData` |         | The image data object, returned from the `gatsbyImageData` resolver |
+| Prop               | Type              | Description                                                         |
+| ------------------ | ----------------- | ------------------------------------------------------------------- |
+| `image` (Required) | `GatsbyImageData` | The image data object, returned from the `gatsbyImageData` resolver |
 
 ## Image options
 
