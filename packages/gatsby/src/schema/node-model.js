@@ -319,7 +319,7 @@ class LocalNodeModel {
         if (pageDependencies.path) {
           this.createPageDependency({
             path: pageDependencies.path,
-            connection: nodeTypeNames,
+            connection: gqlType.name,
           })
         }
       }
@@ -579,12 +579,6 @@ class ContextualNodeModel {
 const getNodeById = id => (id != null ? getNode(id) : null)
 
 const toNodeTypeNames = (schema, gqlTypeName) => {
-  if (Array.isArray(gqlTypeName)) {
-    return _.flatMap(gqlTypeName, singleTypeName =>
-      toNodeTypeNames(schema, singleTypeName)
-    )
-  }
-
   const gqlType =
     typeof gqlTypeName === `string` ? schema.getType(gqlTypeName) : gqlTypeName
 
