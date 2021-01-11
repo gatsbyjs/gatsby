@@ -26,7 +26,7 @@ export interface ICommonImageProps {
   rotate?: number
 }
 
-export interface IFluidImageProps extends ICommonImageProps {
+export interface IFullWidthImageProps extends ICommonImageProps {
   maxWidth?: number
   maxHeight?: number
   aspectRatio?: number
@@ -52,7 +52,7 @@ export type ImageComponentProps = Omit<
 }
 
 export type StaticImageProps = IImageOptions &
-  IFluidImageProps &
+  IFullWidthImageProps &
   IFixedImageProps &
   ImageComponentProps & { src: string }
 
@@ -60,7 +60,7 @@ export type ImageProps = IImageOptions &
   IFluidImageProps &
   IFixedImageProps & { src: string }
 export type SharpProps = Omit<ImageProps, "src" | "layout">
-export type AnyImageProps = (IFluidImageProps | IFixedImageProps) &
+export type AnyImageProps = (IFullWidthImageProps | IFixedImageProps) &
   ICommonImageProps
 
 export interface IImageOptions {

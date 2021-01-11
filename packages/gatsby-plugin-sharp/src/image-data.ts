@@ -11,7 +11,7 @@ const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
+  layout?: "fixed" | "fullWidth" | "constrained"
   formats?: Array<ImageFormat>
   placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
   tracedSVGOptions?: Record<string, unknown>
@@ -133,7 +133,7 @@ export async function generateImageData({
   ) {
     if (layout === `constrained`) {
       args.maxWidth = metadata.width
-    } else if (layout === `fluid`) {
+    } else if (layout === `fullWidth`) {
       args.maxWidth = Math.round(metadata.width / 2)
     }
   }
@@ -364,7 +364,7 @@ export async function generateImageData({
       imageProps.height = imageSizes.presentationHeight
       break
 
-    case `fluid`:
+    case `fullWidth`:
       imageProps.width = 1
       imageProps.height = 1 / primaryImage.aspectRatio
       break

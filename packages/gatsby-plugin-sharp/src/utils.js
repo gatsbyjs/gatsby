@@ -128,11 +128,11 @@ export function calculateImageSizes(args) {
 
   if (layout === `fixed`) {
     return fixedImageSizes(args)
-  } else if (layout === `fluid` || layout === `constrained`) {
-    return fluidImageSizes(args)
+  } else if (layout === `fullWidth` || layout === `constrained`) {
+    return responsiveImageSizes(args)
   } else {
     reporter.warn(
-      `No valid layout was provided for the image at ${file.absolutePath}. Valid image layouts are fixed, fluid, and constrained.`
+      `No valid layout was provided for the image at ${file.absolutePath}. Valid image layouts are fixed, fullWidth, and constrained.`
     )
     return []
   }
@@ -223,7 +223,7 @@ export function fixedImageSizes({
   }
 }
 
-export function fluidImageSizes({
+export function responsiveImageSizes({
   file,
   imgDimensions,
   width,
@@ -328,7 +328,7 @@ export const getSizes = (width, layout) => {
       return `${width}px`
 
     // Image is always the width of the screen
-    case `fluid`:
+    case `fullWidth`:
       return `100vw`
 
     default:

@@ -41,8 +41,8 @@ describe(`GatsbyImage server`, () => {
   })
 
   describe(`style verifications`, () => {
-    it(`has a valid style attributes for fluid layout`, () => {
-      const layout = `fluid`
+    it(`has a valid style attributes for fullWidth layout`, () => {
+      const layout = `fullWidth`
 
       const image: IGatsbyImageData = {
         width: 100,
@@ -350,11 +350,11 @@ icon.svg`,
   })
 
   describe(`placeholder verifications`, () => {
-    it(`has a placeholder in a div with valid styles for fluid layout`, () => {
+    it(`has a placeholder in a div with valid styles for fullWidth layout`, () => {
       const image: IGatsbyImageData = {
         width: 100,
         height: 100,
-        layout: `fluid`,
+        layout: `fullWidth`,
         images: {},
         placeholder: { sources: [] },
         backgroundColor: `red`,

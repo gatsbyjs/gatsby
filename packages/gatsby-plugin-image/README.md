@@ -57,7 +57,7 @@ export const Dino = () => (
   <StaticImage
     src="trex.png"
     placeholder="none"
-    layout="fluid"
+    layout="constrained"
     maxWidth={200}
     alt="T-Rex"
     transformOptions={{ grayscale: true }}
@@ -272,7 +272,7 @@ devices with widths stretching from smartphone to wide desktop monitors.
 
 To decide between the two, ask yourself: "do I know what the exact size of this image
 will be?" If yes, it's "fixed". If no and its width and/or height need to
-vary depending on the size of the screen, then it's "fluid". If you want it to shrink
+vary depending on the size of the screen, then it's "fullWidth". If you want it to shrink
 to fit on smaller screens, but not to expand larger than a maximum, then use "constrained"
 
 In Gatsby's GraphQL implementation, you specify the type of image with the `layout` argument
@@ -288,13 +288,13 @@ In Gatsby's GraphQL implementation, you specify the type of image with the `layo
 
 # GraphQL resolver
 
-We have added a new `gatsbyImageData` resolver to the `ImageSharp` node. Unlike the existing `fixed` and `fluid` resolvers, this returns a
+We have added a new `gatsbyImageData` resolver to the `ImageSharp` node. Unlike the existing `fixed` and `fullWidth` resolvers, this returns a
 JSON type, meaning you don't specify the individual fields, but are instead given the whole object. This is because the object is then passed in to the `<GatsbyImage>` component. The API is like this:
 
 ```graphql
 coverImage: file(relativePath: { eq: "plant.jpg" }) {
   childImageSharp {
-    gatsbyImageData(maxWidth: 720, layout: FLUID, placeholder: TRACED_SVG)
+    gatsbyImageData(maxWidth: 720, layout: CONSTRAINED, placeholder: TRACED_SVG)
   }
 }
 ```
@@ -331,9 +331,9 @@ These arguments can be passed to the `gatsbyImageData()` resolver:
 - **layout**: The layout for the image.
   - `CONSTRAINED`: (default) Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
   - `FIXED`: A static image size, that does not resize according to the screen width
-  - `FLUID`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
+  - `FULL_WIDTH`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
 - **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
-  Default is `[ 0.25, 0.5, 1, 2 ]`, for fluid/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fluid layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
+  Default is `[ 0.25, 0.5, 1, 2 ]`, for fullWidth/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fullWidth layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
 - **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
 - **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
 - **quality**: The default quality. This is overridden by any format-specific options

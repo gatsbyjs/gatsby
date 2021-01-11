@@ -110,7 +110,7 @@ const checkDimensionProps: PropTypes.Validator<number> = (
   return PropTypes.number(props, propName, ...rest)
 }
 
-const validLayouts = new Set([`fixed`, `fluid`, `constrained`])
+const validLayouts = new Set([`fixed`, `fullWidth`, `constrained`])
 
 export const propTypes = {
   src: PropTypes.string.isRequired,
@@ -130,7 +130,7 @@ export const propTypes = {
     }
 
     return new Error(
-      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fluid" or "constrained"`
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fullWidth" or "constrained"`
     )
   },
 }
