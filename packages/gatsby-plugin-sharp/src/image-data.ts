@@ -119,6 +119,14 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
+  if ((args.width || args.height) && layout === `fluid`) {
+    reporter.warn(
+      `Specifying fluid images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
+    )
+    args.width = undefined
+    args.height = undefined
+  }
+
   if (!args.width && !args.height && metadata.width) {
     if (layout === `fluid`) {
       args.width = Math.round(metadata.width / 2)
