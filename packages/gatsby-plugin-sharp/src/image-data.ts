@@ -138,21 +138,16 @@ export async function generateImageData({
     }
   }
 
-  // note this will need to changed but keeping consistent for now
-  if (args.maxWidth && args.maxHeight && args.aspectRatio) {
-    reporter.warn(
-      `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
-    )
-  }
-
-  // todo should we allow this for fixed too?
-  if (
-    args.aspectRatio &&
-    args.maxWidth &&
-    !args.maxHeight &&
-    layout !== `fixed`
-  ) {
-    args.maxHeight = args.maxWidth / args.aspectRatio
+  if (args.aspectRatio && layout !== `fixed`) {
+    if (args.maxWidth && args.maxHeight) {
+      reporter.warn(
+        `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
+      )
+    } else if (args.maxWidth) {
+      args.maxHeight = args.maxWidth / args.aspectRatio
+    } else if (args.maxHeight) {
+      args.maxWidth = args.maxHeight * args.aspectRatio
+    }
   }
 
   const formats = new Set(args.formats)
