@@ -12,7 +12,7 @@ Welcome to `gatsby@2.28.0` release (December 2020 #1).
 Key highlights of this release:
 
 - [New `gatsby new`](#new-gatsby-new) - new, interactive way to create a Gatsby site
-- [Feature flags in gatsby-config](#feature-flags-in-gatsby-config) - set your feature toggles without environment variables
+- [Feature flags in `gatsby-config.js`](#feature-flags-in-gatsby-configjs) - set your feature toggles without environment variables
 - [Improved Fast Refresh integration](#improved-fast-refresh-integration) - better hot reloading
 - [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) - run image transformations only when they are needed by browser
 
@@ -20,7 +20,7 @@ Other notable changes:
 
 - [Image plugin helpers](#image-plugin-helpers) - make it easier for plugin authors to support the new gatsby image plugin
 - [Experimental: New cache clearing behaviors](#experimental-new-cache-clearing-behaviors) - we're experimenting with ways to be smarter about clearing caches
-- [gatsby-plugin-emotion v5.0](#gatsby-plugin-emotion500) - now uses emotion v11
+- [`gatsby-plugin-emotion` v5.0](#gatsby-plugin-emotion500) - now uses emotion v11
 - [Removed experimental lazy page bundling](#removed-experimental-lazy-page-bundling)
 - [Notable bugfixes](#notable-bugfixes)
 
@@ -39,7 +39,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 In previous release we added [interactive way of scaffolding new gatsby project](/docs/reference/release-notes/v2.27#create-gatsby) (with `npm init gatsby`). As of this release, `gatsby new` (without any addition arguments) will use the same flow.
 
-## Feature flags in `gatsby-config`
+## Feature flags in `gatsby-config.js`
 
 Gatsby traditionally used environment variables to use various modes or enable experimental features. This worked, but it was far from pleasant and had many issues, notably:
 
@@ -66,7 +66,7 @@ Currently supported flags:
 - `QUERY_ON_DEMAND` - Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
 - `LAZY_IMAGES` - Don't process images during development until they're requested from the browser. Speeds starting the develop server (requires `gatsby-plugin-sharp@^2.10.0`). See [Experimental: Lazy images in develop](#experimental-lazy-images-in-develop) section for additional details.
 - `FAST_DEV` - Umbrella flag that enables `DEV_SSR`, `QUERY_ON_DEMAND` and `LAZY_IMAGES` features.
-- `FAST_REFRESH` - Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.
+- `FAST_REFRESH` - Use React Fast Refresh instead of the legacy `react-hot-loader` for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.
 
 ## Improved Fast Refresh integration
 
@@ -138,7 +138,7 @@ module.exports = {
 }
 ```
 
-## gatsby-plugin-emotion@5.0.0
+## `gatsby-plugin-emotion@5.0.0`
 
 The plugin is updated to the new major version of emotion: v11. Check out [this post](https://emotion.sh/docs/emotion-11) in emotion docs for updates.
 
@@ -157,7 +157,7 @@ In `gatsby@2.27.0` we added [Experimental: Lazy page bundling](/docs/reference/r
 
 Plugin APIs in Gatsby run serially. Generally this what we want as most API calls are CPU/IO bound so things are fastest letting each plugin have the full undivided attention of your computer. But source plugins are often _network_ bound as they're hitting remote APIs and waiting for responses. We tried [changing the invocation of `sourceNodes` to parallel](https://github.com/gatsbyjs/gatsby/pull/28214) on a few sites with 4+ source plugins and saw a big speedup on sourcing (40%+) as they were no longer waiting on each other to start their API calls.
 
-This is a very "Your mileage may vary" situation — not all sites will notice any difference and also not all source plugins are network bound (gatsby-source-filesystem reads from the local machine). We're looking at finding better heuristics so that all sites are as fast as possible at data sourcing but in the meantime, if you have sites with multiple source plugins, this could be a big help.
+This is a very "Your mileage may vary" situation — not all sites will notice any difference and also not all source plugins are network bound (`gatsby-source-filesystem` reads from the local machine). We're looking at finding better heuristics so that all sites are as fast as possible at data sourcing but in the meantime, if you have sites with multiple source plugins, this could be a big help.
 
 You can try it today using `gatsby@next` version and adding a flag to your `gatsby-config.js`:
 

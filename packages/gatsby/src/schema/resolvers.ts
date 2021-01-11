@@ -1,6 +1,5 @@
 import systemPath from "path"
 import normalize from "normalize-path"
-import _ from "lodash"
 import {
   GraphQLList,
   GraphQLType,
@@ -28,6 +27,9 @@ import {
 import { IGatsbyNode } from "../redux/types"
 
 type ResolvedLink = IGatsbyNode | Array<IGatsbyNode> | null
+
+type nestedListOfStrings = Array<string | nestedListOfStrings>
+type nestedListOfNodes = Array<IGatsbyNode | nestedListOfNodes>
 
 export function findMany<TSource, TArgs>(
   typeName: string
@@ -353,15 +355,22 @@ export function fileByPath<TSource, TArgs>(
     args,
     context,
     info
-  ): Promise<any> {
+  ): Promise<IGatsbyNode | nestedListOfNodes | null> {
     const resolver = fieldConfig.resolve || context.defaultFieldResolver
-    const fieldValue = await resolver(source, args, context, {
-      ...info,
-      from: options.from || info.from,
-      fromNode: options.from ? options.fromNode : info.fromNode,
-    })
+    const fieldValue: nestedListOfStrings = await resolver(
+      source,
+      args,
+      context,
+      {
+        ...info,
+        from: options.from || info.from,
+        fromNode: options.from ? options.fromNode : info.fromNode,
+      }
+    )
 
-    if (fieldValue == null) return null
+    if (fieldValue == null) {
+      return null
+    }
 
     // Find the File node for this node (we assume the node is something
     // like markdown which would be a child node of a File node).
@@ -370,32 +379,38 @@ export function fileByPath<TSource, TArgs>(
       node => node.internal && node.internal.type === `File`
     )
 
-    const findLinkedFileNode = (relativePath: string): any => {
-      // Use the parent File node to create the absolute path to
-      // the linked file.
-      const fileLinkPath = normalize(
-        systemPath.resolve(parentFileNode.dir, relativePath)
-      )
-
-      // Use that path to find the linked File node.
-      const linkedFileNode = _.find(
-        context.nodeModel.getAllNodes({ type: `File` }),
-        n => n.absolutePath === fileLinkPath
-      )
-      return linkedFileNode
+    async function queryNodesByPath(
+      relPaths: nestedListOfStrings
+    ): Promise<nestedListOfNodes> {
+      const arr: nestedListOfNodes = []
+      for (let i = 0; i < relPaths.length; ++i) {
+        arr[i] = await (Array.isArray(relPaths[i])
+          ? queryNodesByPath(relPaths[i] as nestedListOfStrings)
+          : queryNodeByPath(relPaths[i] as string))
+      }
+      return arr
     }
 
-    return resolveValue(findLinkedFileNode, fieldValue)
-  }
-}
+    function queryNodeByPath(relPath: string): Promise<IGatsbyNode> {
+      return context.nodeModel.runQuery({
+        query: {
+          filter: {
+            absolutePath: {
+              eq: normalize(systemPath.resolve(parentFileNode.dir, relPath)),
+            },
+          },
+        },
+        firstOnly: true,
+        type: `File`,
+      })
+    }
 
-function resolveValue(
-  resolve: (a: any) => any,
-  value: any | Array<any>
-): any | Array<any> {
-  return Array.isArray(value)
-    ? value.map(v => resolveValue(resolve, v))
-    : resolve(value)
+    if (Array.isArray(fieldValue)) {
+      return queryNodesByPath(fieldValue)
+    } else {
+      return queryNodeByPath(fieldValue)
+    }
+  }
 }
 
 function getProjectedField(
