@@ -138,7 +138,7 @@ export async function generateImageData({
     }
   }
 
-  if (args.aspectRatio && layout !== `fixed`) {
+  if (args.aspectRatio) {
     if (args.maxWidth && args.maxHeight) {
       reporter.warn(
         `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
