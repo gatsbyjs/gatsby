@@ -15,7 +15,7 @@ The following are props that can be passed to the components.
 
 ### Shared props
 
-The following props can be passed to both `GatsbyImage` and `StaticImage`. Any extra props are passed-down to the underlying `<img>` element.
+The following props can be passed to both `GatsbyImage` and `StaticImage`. You may also use any valid [`<img>` tag props](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img), which are passed-down to the underlying `<img>` element.
 
 | Prop              | Type                                                                        | Default       | Description                                                              |
 | ----------------- | --------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------ |
@@ -32,7 +32,7 @@ The following props can be passed to both `GatsbyImage` and `StaticImage`. Any e
 
 ### `StaticImage`
 
-The `StaticImage` component can take all [image options](#imageoptions) as props, as well as all shared props.
+The `StaticImage` component can take all [image options](#image-options) as props, as well as all [shared props](#shared-props). Additionally, it takes this prop:
 
 | Prop  | Type     | Default | Description                                                                                                  |
 | ----- | -------- | ------- | ------------------------------------------------------------------------------------------------------------ |
@@ -40,7 +40,7 @@ The `StaticImage` component can take all [image options](#imageoptions) as props
 
 ### `GatsbyImage`
 
-These props are passed directly to the component, and are not to be confused with [image options](#alloptions), which are passed to the GraphQL resolver when using dynamic images.
+This component accepts all [shared props](#shared-props), as well as the one below. These props are passed directly to the component, and are not to be confused with [image options](#all-options), which are passed to the GraphQL resolver when using dynamic images.
 
 | Prop    | Type              | Default | Description                                                         |
 | ------- | ----------------- | ------- | ------------------------------------------------------------------- |
