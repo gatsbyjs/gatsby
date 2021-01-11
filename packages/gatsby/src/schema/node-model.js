@@ -199,10 +199,10 @@ class LocalNodeModel {
       result = getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodes = nodeTypeNames.reduce((acc, typeName) => {
-        acc.push(...getNodesByType(typeName))
-        return acc
-      }, [])
+      const nodesByType = nodeTypeNames.map(typeName =>
+        getNodesByType(typeName)
+      )
+      const nodes = [].concat(...nodesByType)
       result = nodes.filter(Boolean)
     }
 

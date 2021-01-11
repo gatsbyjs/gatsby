@@ -1,5 +1,6 @@
 const path = require(`path`)
 const queue = require(`async/queue`)
+const { cpuCoreCount } = require(`gatsby-core-utils`)
 const { processFile } = require(`./process-file`)
 
 exports.IMAGE_PROCESSING_JOB_NAME = `IMAGE_PROCESSING`
@@ -31,7 +32,7 @@ const q = queue(
         args.pluginOptions
       )
     ),
-  1
+  cpuCoreCount()
 )
 
 /**

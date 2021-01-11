@@ -98,17 +98,17 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(`An array of postCss plugins`),
     sassRuleTest: Joi.object()
       .instance(RegExp)
-      .description(`Override the file regex for SASS`),
+      .description(`Override the file regex for Sass`),
     sassRuleModulesTest: Joi.object()
       .instance(RegExp)
-      .description(`Override the file regex for SASS`),
+      .description(`Override the file regex for Sass`),
     useResolveUrlLoader: Joi.alternatives().try(
       Joi.boolean(),
       Joi.object({}).unknown(true)
     )
       .description(`This plugin resolves url() paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of sass-loader and this is documented in the readme.
 
-        Using resolve-url-loader provides a workaround, if you want to use relative url just install the plugin and then add it to your sass plugin options configuration.`),
+        Using resolve-url-loader provides a workaround, if you want to use relative url just install the plugin and then add it to your Sass plugin options configuration.`),
     // TODO: Use alternatives() to also allow function. Currently some bug in our schema validation (test)
     sassOptions: Joi.object({
       file: Joi.string()
@@ -129,7 +129,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       functions: Joi.object()
         .pattern(MATCH_ALL_KEYS, Joi.function().maxArity(2))
         .description(
-          `functions is an Object that holds a collection of custom functions that may be invoked by the sass files being compiled.`
+          `functions is an Object that holds a collection of custom functions that may be invoked by the Sass files being compiled.`
         ),
       includePaths: Joi.array()
         .items(Joi.string())
