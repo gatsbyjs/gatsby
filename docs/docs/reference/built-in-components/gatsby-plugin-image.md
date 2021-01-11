@@ -20,31 +20,31 @@ The following props can be passed to both `GatsbyImage` and `StaticImage`. You m
 | Prop              | Type                                                                        | Default       | Description                                                                                                                                     |
 | ----------------- | --------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `alt` (Required)  | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility.                                                                        |
-| `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper                                                                                                     |
+| `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper.                                                                                                    |
 | `loading`         | `"eager" \| "lazy"`                                                         | `"lazy"`      | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
-| `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper                                                                                                          |
-| `imgClassName`    | `string`                                                                    |               | CSS class applied to the `<img>` element                                                                                                        |
-| `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper                                                                                                      |
-| `imgStyle`        | `CSSProperties`                                                             |               | Inline styles applied to the `<img>` element                                                                                                    |
-| `backgroundColor` | `string`                                                                    | `transparent` | Background color applied to the wrapper                                                                                                         |
-| `objectFit`       | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container                                                                                            |
-| `objectPosition`  | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container                                                                                                      |
+| `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper.                                                                                                         |
+| `imgClassName`    | `string`                                                                    |               | CSS class applied to the `<img>` element.                                                                                                       |
+| `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper.                                                                                                     |
+| `imgStyle`        | `CSSProperties`                                                             |               | Inline styles applied to the `<img>` element.                                                                                                   |
+| `backgroundColor` | `string`                                                                    | `transparent` | Background color applied to the wrapper.                                                                                                        |
+| `objectFit`       | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container.                                                                                           |
+| `objectPosition`  | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container.                                                                                                     |
 
 ### `StaticImage`
 
 The `StaticImage` component can take all [image options](#image-options) as props, as well as all [shared props](#shared-props). Additionally, it takes this prop:
 
-| Prop             | Type     | Description                                                                                                  |
-| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------ |
-| `src` (Required) | `string` | Source image, to be processed at build time. Can be a path, relative to the source file, or an absolute URL. |
+| Prop             | Type     | Description                                                                                           |
+| ---------------- | -------- | ----------------------------------------------------------------------------------------------------- |
+| `src` (Required) | `string` | Source image, processed at build time. Can be a path relative to the source file, or an absolute URL. |
 
 ### `GatsbyImage`
 
 This component accepts all [shared props](#shared-props), as well as the one below. These props are passed directly to the component, and are not to be confused with [image options](#all-options), which are passed to the GraphQL resolver when using dynamic images.
 
-| Prop               | Type              | Description                                                         |
-| ------------------ | ----------------- | ------------------------------------------------------------------- |
-| `image` (Required) | `GatsbyImageData` | The image data object, returned from the `gatsbyImageData` resolver |
+| Prop               | Type              | Description                                                          |
+| ------------------ | ----------------- | -------------------------------------------------------------------- |
+| `image` (Required) | `GatsbyImageData` | The image data object, returned from the `gatsbyImageData` resolver. |
 
 ## Image options
 
@@ -57,14 +57,14 @@ There are a few differences between how you specify options for `StaticImage` an
 
 Both static and dynamic images have the following options available:
 
-| Option                                  | Default string/enum value                                                     | Description                                                                                     |
-| --------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [`layout`](#layout)                     | `"constrained"` / `CONSTRAINED`                                               | Determines the size of the image and its resizing behavior. [More info](#layout)                |
-| [`aspectRatio`](#aspectratio)           | Source image aspect ratio                                                     | Force a specific ratio between the image's width and height. [More info](#aspectratio)          |
-| [`width`/`height`](#widthheight)        | Source image size                                                             | Change the size of the image. [More info](#width-height)                                        |
-| [`placeholder`](#placeholder)           | `"dominantColor"`/`DOMINANT_COLOR`                                            | Choose the style of temporary image shown while the full image loads. [More info](#placeholder) |
-| [`formats`](#formats)                   | `["auto","webp"]`/`[AUTO,WEBP]`                                               | File formats of the images generated. [More info](#formats)                                     |
-| [`transformOptions`](#transformoptions) | `{fit: "cover", cropFocus: "attention"}`/`{fit: COVER, cropFocus: ATTENTION}` | Options to pass to sharp to control cropping and other image manipulations.                     |
+| Option                                  | Default string/enum value                                                     | Description                                                                 |
+| --------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [`layout`](#layout)                     | `"constrained"` / `CONSTRAINED`                                               | Determines the size of the image and its resizing behavior.                 |
+| [`aspectRatio`](#aspectratio)           | Source image aspect ratio                                                     | Force a specific ratio between the image's width and height.                |
+| [`width`/`height`](#widthheight)        | Source image size                                                             | Change the size of the image.                                               |
+| [`placeholder`](#placeholder)           | `"dominantColor"`/`DOMINANT_COLOR`                                            | Choose the style of temporary image shown while the full image loads.       |
+| [`formats`](#formats)                   | `["auto","webp"]`/`[AUTO,WEBP]`                                               | File formats of the images generated.                                       |
+| [`transformOptions`](#transformoptions) | `{fit: "cover", cropFocus: "attention"}`/`{fit: COVER, cropFocus: ATTENTION}` | Options to pass to sharp to control cropping and other image manipulations. |
 
 See [all options](#all-options).
 
