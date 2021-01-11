@@ -436,7 +436,10 @@ const imageNodeType = ({
       },
       aspectRatio: {
         type: GraphQLFloat,
-        description: stripIndent`If set, the image will be cropped using the width of the generated image in relation to the provided aspect ratio.`,
+        description: stripIndent`
+        If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed. 
+        If neither width or height is provided, height will be set based on the intrinsic width of the source image.
+        `,
       },
       placeholder: {
         type: ImagePlaceholderType,
