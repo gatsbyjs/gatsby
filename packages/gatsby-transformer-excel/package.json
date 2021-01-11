@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "xlsx": "^0.16.8"
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
