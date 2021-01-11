@@ -8,8 +8,8 @@ function isTemplateQuery(node: Node, varName: string | undefined): boolean {
   // const query = graphql``
   // export { query }
   if (
-    node?.type === `ExportNamedDeclaration` &&
-    node?.declaration === null &&
+    node.type === `ExportNamedDeclaration` &&
+    node.declaration === null &&
     varName
   ) {
     // For export { foobar } the declaration will be null and specifiers exists
@@ -23,11 +23,11 @@ function isTemplateQuery(node: Node, varName: string | undefined): boolean {
     // Checks for:
     // export const query = graphql``
     return (
-      node?.type === `ExportNamedDeclaration` &&
-      node?.declaration?.type === `VariableDeclaration` &&
-      node?.declaration?.declarations[0]?.init?.type ===
+      node.type === `ExportNamedDeclaration` &&
+      node.declaration?.type === `VariableDeclaration` &&
+      node.declaration?.declarations[0]?.init?.type ===
         `TaggedTemplateExpression` &&
-      (node?.declaration?.declarations[0]?.init?.tag as Identifier)?.name ===
+      (node.declaration?.declarations[0]?.init?.tag as Identifier)?.name ===
         `graphql`
     )
   }
@@ -52,14 +52,18 @@ const limitedExports: Rule.RuleModule = {
     let queryVariableName: string | undefined = ``
 
     return {
+      // eslint-disable-next-line consistent-return
       TaggedTemplateExpression: (node): void => {
         if (
-          node?.type === `TaggedTemplateExpression` &&
+          node.type === `TaggedTemplateExpression` &&
           // @ts-ignore
-          node?.tag?.name === `graphql`
+          node.tag?.name === `graphql`
         ) {
+          if (queryVariableName) {
+            return undefined
+          }
           // @ts-ignore
-          queryVariableName = node?.parent?.id?.name
+          queryVariableName = node.parent?.id?.name
         }
       },
       // eslint-disable-next-line consistent-return

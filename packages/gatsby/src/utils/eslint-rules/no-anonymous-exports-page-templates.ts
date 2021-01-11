@@ -11,6 +11,10 @@ const defs = {
     messageId: `anonymousFunctionDeclaration`,
     forbid: (node): boolean => !node.declaration.id,
   },
+  ClassDeclaration: {
+    messageId: `anonymousClass`,
+    forbid: (node): boolean => !node.declaration.id,
+  },
 }
 
 const noAnonymousExports: Rule.RuleModule = {
@@ -22,10 +26,10 @@ const noAnonymousExports: Rule.RuleModule = {
        Please add a name to your function, for example:
 
        Before:
-       export default () => {};
+       export default () => {}
 
        After:
-       const Named = () => {};
+       const Named = () => {}
        export default Named;
 `,
       anonymousFunctionDeclaration: `Anonymous function declarations cause Fast Refresh to not preserve local component state.
@@ -33,10 +37,20 @@ const noAnonymousExports: Rule.RuleModule = {
        Please add a name to your function, for example:
 
        Before:
-       export default function () {};
+       export default function () {}
 
        After:
        export default function Named() {}
+`,
+      anonymousClass: `Anonymous classes cause Fast Refresh to not preserve local component state.
+
+       Please add a name to your class, for example:
+
+       Before:
+       export default class extends Component {}
+
+       After:
+       export default class Named extends Component {}
 `,
     },
   },

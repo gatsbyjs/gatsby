@@ -43,5 +43,9 @@ ruleTester.run(`no-anonymous-exports-page-templates`, rule, {
       code: `export default function() {}`,
       errors: [{ messageId: `anonymousFunctionDeclaration` }],
     }),
+    test({
+      code: `export default class {}`,
+      errors: [{ messageId: `anonymousClass` }],
+    }),
   ],
 })
