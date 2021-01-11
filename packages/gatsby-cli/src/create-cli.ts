@@ -370,6 +370,12 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
   })
 
   cli.command({
+    command: `api`,
+    describe: `[EXPERIMENTAL] Start Gatsby API server`,
+    handler: getCommandHandler(`api`),
+  })
+
+  cli.command({
     command: `recipes [recipe]`,
     describe: `[EXPERIMENTAL] Run a recipe`,
     builder: _ =>

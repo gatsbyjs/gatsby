@@ -670,11 +670,13 @@ describe(`query caching between builds`, () => {
         sourceNodes: (nodeApiContext, _pluginOptions) => {
           const { createTestNode } = getTypedNodeCreators(nodeApiContext)
 
-          createTestNode({
-            id: `test-1`,
-            slug: `foo${nodeChangeCounter}`,
-            content: `Lorem ipsum.`,
-          })
+          for (let i = 1; i <= nodeChangeCounter; i++) {
+            createTestNode({
+              id: `test-${i}`,
+              slug: `foo${i}`,
+              content: `Lorem ipsum.`,
+            })
+          }
 
           nodeChangeCounter++
         },
@@ -714,14 +716,14 @@ describe(`query caching between builds`, () => {
       const { staticQueriesThatRan } = await setup()
 
       // runs the query with filter `slug: { eq: "foo1" }`
-      expect(staticQueriesThatRan).toContain(`static-query-1`)
+      expect(staticQueriesThatRan).toEqual([`static-query-1`, `static-query-2`])
     }, 999999)
 
     it(`changing node to be used by any query triggers running that query (with restart)`, async () => {
       const { staticQueriesThatRan } = await setup({ restart: true })
 
       // runs the query with filter `slug: { eq: "foo2" }`
-      expect(staticQueriesThatRan).toContain(`static-query-2`)
+      expect(staticQueriesThatRan).toEqual([`static-query-2`])
     }, 999999)
   })
 
