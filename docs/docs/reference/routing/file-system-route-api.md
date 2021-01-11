@@ -112,7 +112,7 @@ Naming your file with the File System Route API will generate routes for each no
 
 For example, in the component itself (e.g. `src/pages/products/{Product.name}.js`) you're able to access the `name` via `props.params` and as a variable in the GraphQL query (as `$name`). However, we recommend filtering by `id` as this is the fastest way to filter.
 
-```jsx:title=src/pages/products/{Product.name}.js
+```js:title=src/pages/products/{Product.name}.js
 import React from "react"
 import { graphql } from "gatsby"
 
