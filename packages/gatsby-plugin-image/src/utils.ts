@@ -29,6 +29,7 @@ export interface ICommonImageProps {
 export interface IFluidImageProps extends ICommonImageProps {
   maxWidth?: number
   maxHeight?: number
+  aspectRatio?: number
   fit?: number
   background?: number
 }
