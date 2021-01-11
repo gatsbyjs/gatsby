@@ -1,17 +1,20 @@
+// needed for graphiql-code-exporter
+import "regenerator-runtime/runtime.js"
+
 import React from "react"
 import ReactDOM from "react-dom"
 
 import GraphiQL from "graphiql"
 import GraphiQLExplorer from "graphiql-explorer"
 import { getIntrospectionQuery, buildClientSchema, parse } from "graphql"
-// import CodeExporter from "graphiql-code-exporter"
-// import snippets from "./snippets"
+import CodeExporter from "graphiql-code-exporter"
+import snippets from "./snippets"
 
 import "whatwg-fetch"
 
 import "graphiql/graphiql.css"
 import "./app.css"
-// import "graphiql-code-exporter/CodeExporter.css"
+import "graphiql-code-exporter/CodeExporter.css"
 
 const parameters = {}
 window.location.search
@@ -319,15 +322,14 @@ class App extends React.Component {
   render() {
     const { query, variables, schema, codeExporterIsOpen } = this.state
     const { externalFragments } = this.props
-    // const codeExporter = codeExporterIsOpen ? (
-    //   <CodeExporter
-    //     hideCodeExporter={this._handleToggleExporter}
-    //     snippets={snippets}
-    //     query={query}
-    //     codeMirrorTheme="default"
-    //   />
-    // ) : null
-    const codeExporter = null
+    const codeExporter = codeExporterIsOpen ? (
+      <CodeExporter
+        hideCodeExporter={this._handleToggleExporter}
+        snippets={snippets}
+        query={query}
+        codeMirrorTheme="default"
+      />
+    ) : null
 
     return (
       <React.Fragment>
