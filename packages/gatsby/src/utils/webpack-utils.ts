@@ -756,10 +756,15 @@ export function reactHasJsxRuntime(): boolean {
 }
 
 export function ensureRequireEslintRules(config: Configuration): Configuration {
+  if (!config.module) {
+    config.module = {
+      rules: [],
+    }
+  }
   // for fast refresh we want to ensure that that there is eslint rule running
   // because user might have added their own `eslint-loader` let's check if there is one
   // and adjust it to add the rule or append new loader with required rule
-  const rule = config.module.rules.find(rule => {
+  const rule = config.module?.rules.find(rule => {
     if (typeof rule.loader === `string`) {
       return rule.loader.includes(`eslint-loader`)
     }
@@ -769,6 +774,9 @@ export function ensureRequireEslintRules(config: Configuration): Configuration {
 
   if (rule) {
     if (typeof rule.options !== `string`) {
+      if (!rule.options) {
+        rule.options = {}
+      }
       mergeRequiredConfigIn(rule.options)
     }
   } else {
