@@ -356,6 +356,7 @@ export default (pagePath, callback) => {
           rel={script.rel}
           key={script.name}
           href={`${__PATH_PREFIX__}/${script.name}`}
+          crossOrigin="anonymous"
         />
       )
     })
