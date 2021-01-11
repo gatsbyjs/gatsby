@@ -17,6 +17,7 @@ export interface ISharpGatsbyImageArgs {
   tracedSVGOptions?: Record<string, unknown>
   width?: number
   height?: number
+  aspectRatio?: number
   sizes?: string
   quality?: number
   transformOptions: {
@@ -123,6 +124,18 @@ export async function generateImageData({
       args.width = Math.round(metadata.width / 2)
     } else {
       args.width = metadata.width
+    }
+  }
+
+  if (args.aspectRatio) {
+    if (args.width && args.height) {
+      reporter.warn(
+        `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
+      )
+    } else if (args.width) {
+      args.height = args.width / args.aspectRatio
+    } else if (args.height) {
+      args.width = args.height * args.aspectRatio
     }
   }
 

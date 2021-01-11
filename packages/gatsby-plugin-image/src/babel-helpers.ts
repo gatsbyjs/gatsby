@@ -10,6 +10,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `formats`,
   `maxWidth`,
   `maxHeight`,
+  `aspectRatio`,
   `quality`,
   `avifOptions`,
   `jpgOptions`,
