@@ -239,7 +239,6 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
     const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
-    expect(reporter.warn).toBeCalled()
   })
 
   it(`should adjust fluid sizes according to fit type`, () => {
