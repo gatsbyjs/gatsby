@@ -8,8 +8,43 @@ This guide will show you how to configure your images, including choosing layout
 
 The Gatsby Image plugin includes two components to display responsive images on your site, used for static and dynamic images.
 
-- **`StaticImage`:** Use this if the image is the same every time the component is used. _Examples: site logo, index page hero image_
-- **`GatsbyImage`:** Use this if the image is passed into the component as a prop. _Examples: Blog post hero image, author avatar_
+- **[`StaticImage`](#staticimage):** Use this if the image is the same every time the component is used. _Examples: site logo, index page hero image_
+- **[`GatsbyImage`](#gatsbyimage):** Use this if the image is passed into the component as a prop, or otherwise changes. _Examples: Blog post hero image, author avatar_
+
+The following are props that can be passed to the components.
+
+### Shared props
+
+The following props can be passed to both `GatsbyImage` and `StaticImage`. Any extra props are passed-down to the underlying `<img>` element.
+
+| Prop              | Type                                                                        | Default       | Description                                                              |
+| ----------------- | --------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------ |
+| `alt`             | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility. |
+| `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper                              |
+| `loading`         | `"eager"                                                                    | "lazy"`       | `"lazy"`                                                                 | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
+| `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper                                   |
+| `imgClassName`    | `string`                                                                    |               | CSS class applied to the `<img>` element                                 |
+| `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper                               |
+| `imgStyle`        | `CSSProperties`                                                             |               | Inline styles applied to the `<img>` element                             |
+| `backgroundColor` | `string`                                                                    | `transparent` | Background color applied to the wrapper                                  |
+| `objectFit`       | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container                     |
+| `objectPosition`  | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container                               |
+
+### `StaticImage`
+
+The `StaticImage` component can take all [image options](#imageoptions) as props, as well as all shared props.
+
+| Prop  | Type     | Default | Description                                                                                                  |
+| ----- | -------- | ------- | ------------------------------------------------------------------------------------------------------------ |
+| `src` | `string` |         | Source image, to be processed at build time. Can be a path, relative to the source file, or an absolute URL. |
+
+### `GatsbyImage`
+
+These props are passed directly to the component, and are not to be confused with [image options](#alloptions), which are passed to the GraphQL resolver when using dynamic images.
+
+| Prop    | Type              | Default | Description                                                         |
+| ------- | ----------------- | ------- | ------------------------------------------------------------------- |
+| `image` | `GatsbyImageData` |         | The image data object, returned from the `gatsbyImageData` resolver |
 
 ## Image options
 
@@ -124,11 +159,9 @@ These values are passed in as an object to `transformOptions`, either as a prop 
 | `cropFocus` | `"attention"`/`ATTENTION` | Controls crop behavior. See [the sharp documentation](https://sharp.pixelplumbing.com/api-resize#resize) for strategy, position and gravity.                  |
 | `fit`       | `"cover"`/`COVER`         | Controls behavior when resizing an image and proving both width and height. See [the sharp documentation.](https://sharp.pixelplumbing.com/api-resize#resize) |
 
-## Advanced options
+## All options
 
 The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image processing, and supports passing through many advanced options, such as those affecting cropping behavior or image effects including grayscale or duotone, as well as options specific to each format.
-
-### All options
 
 | Option                                  | Default                                                              | Description                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
