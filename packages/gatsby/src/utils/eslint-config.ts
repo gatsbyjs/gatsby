@@ -42,6 +42,14 @@ export function mergeRequiredConfigIn(
       !existingOptions.baseConfig.extends.includes(eslintRequirePreset)
     ) {
       existingOptions.baseConfig.extends.push(eslintRequirePreset)
+    } else if (
+      typeof existingOptions.baseConfig.extends === `string` &&
+      existingOptions.baseConfig.extends !== eslintRequirePreset
+    ) {
+      existingOptions.baseConfig.extends = [
+        existingOptions.baseConfig.extends,
+        eslintRequirePreset,
+      ]
     }
   } else {
     existingOptions.baseConfig.extends = [eslintRequirePreset]
