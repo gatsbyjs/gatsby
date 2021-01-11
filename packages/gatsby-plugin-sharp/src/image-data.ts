@@ -17,8 +17,6 @@ export interface ISharpGatsbyImageArgs {
   tracedSVGOptions?: Record<string, unknown>
   width?: number
   height?: number
-  maxWidth?: number
-  maxHeight?: number
   sizes?: string
   quality?: number
   transformOptions: {
@@ -120,20 +118,11 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  if (layout === `fixed` && !args.width && !args.height) {
-    args.width = metadata.width
-  }
-
-  if (
-    layout !== `fixed` &&
-    !args.maxWidth &&
-    !args.maxHeight &&
-    metadata.width
-  ) {
-    if (layout === `constrained`) {
-      args.maxWidth = metadata.width
-    } else if (layout === `fluid`) {
-      args.maxWidth = Math.round(metadata.width / 2)
+  if (!args.width && !args.height && metadata.width) {
+    if (layout === `fluid`) {
+      args.width = Math.round(metadata.width / 2)
+    } else {
+      args.width = metadata.width
     }
   }
 
@@ -357,7 +346,7 @@ export async function generateImageData({
       break
 
     case `constrained`:
-      imageProps.width = args.maxWidth || primaryImage.width || 1
+      imageProps.width = args.width || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
   return imageProps

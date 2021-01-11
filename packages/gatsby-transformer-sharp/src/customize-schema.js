@@ -407,26 +407,12 @@ const imageNodeType = ({
         CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
         `,
       },
-      maxWidth: {
-        type: GraphQLInt,
-        description: stripIndent`
-        Maximum display width of generated files. 
-        The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
-        This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
-      },
-      maxHeight: {
-        type: GraphQLInt,
-        description: stripIndent`
-        If set, the generated image is a maximum of this height, cropping if necessary. 
-        If the image layout is "constrained" then the image will be limited to this height. 
-        If the aspect ratio of the image is different than the source, then the image will be cropped.`,
-      },
       width: {
         type: GraphQLInt,
         description: stripIndent`
-        The display width of the generated image. 
+        The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.  
         The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
-        Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+        Ignored if layout = FLUID.
         `,
       },
       height: {
