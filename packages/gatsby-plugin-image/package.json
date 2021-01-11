@@ -77,8 +77,8 @@
     "gatsby-image": "*",
     "gatsby-plugin-sharp": "*",
     "gatsby-source-filesystem": "*",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=17.1.0",
+    "react-dom": ">=17.1.0"
   },
   "dependencies": {
     "@babel/parser": "^7.12.5",
