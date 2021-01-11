@@ -12,8 +12,6 @@ export interface IStaticImageProps extends Omit<GatsbyImageProps, "image"> {
   tracedSVGOptions?: Record<string, unknown>
   width?: number
   height?: number
-  maxWidth?: number
-  maxHeight?: number
   aspectRatio?: number
   sizes?: string
   quality?: number
@@ -43,9 +41,7 @@ export function _getStaticImage(
     // We extract these because they're not meant to be passed-down to GatsbyImage
     /* eslint-disable @typescript-eslint/no-unused-vars */
     width,
-    maxWidth,
     height,
-    maxHeight,
     aspectRatio,
     tracedSVGOptions,
     placeholder,
@@ -81,45 +77,11 @@ const StaticImage: React.FC<
   IStaticImageProps & IPrivateProps
 > = _getStaticImage(GatsbyImageServer)
 
-const checkDimensionProps: PropTypes.Validator<number> = (
-  props: IStaticImageProps & IPrivateProps,
-  propName: keyof IStaticImageProps & IPrivateProps,
-  ...rest
-) => {
-  if (
-    props.layout !== `fixed` &&
-    (propName === `width` || propName === `height`) &&
-    props[propName]
-  ) {
-    return new Error(
-      `"${propName}" ${props[propName]} may not be passed when layout is "${
-        props.layout || `constrained`
-      }"`
-    )
-  } else {
-    if (
-      props.layout === `fixed` &&
-      (propName === `maxWidth` || propName === `maxHeight`) &&
-      props[propName]
-    ) {
-      return new Error(
-        `"${propName}" may not be passed when layout is "${props.layout}"`
-      )
-    }
-  }
-  return PropTypes.number(props, propName, ...rest)
-}
-
 const validLayouts = new Set([`fixed`, `fluid`, `constrained`])
 
 export const propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
-  width: checkDimensionProps,
-  height: checkDimensionProps,
-  maxHeight: checkDimensionProps,
-  maxWidth: checkDimensionProps,
-  aspectRatio: checkDimensionProps,
   sizes: PropTypes.string,
   layout: (props: IStaticImageProps & IPrivateProps): Error | undefined => {
     if (props.layout === undefined) {

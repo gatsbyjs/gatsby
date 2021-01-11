@@ -47,8 +47,6 @@ export interface IGatsbyImageData {
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
   width?: number
-  maxHeight?: number
-  maxWidth?: number
 }
 
 let hasShownWarning = false

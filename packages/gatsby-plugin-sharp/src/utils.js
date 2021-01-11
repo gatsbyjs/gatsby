@@ -88,22 +88,6 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
-const warnForIgnoredParameters = (layout, parameters, filepath, reporter) => {
-  const ignoredParams = Object.entries(parameters).filter(([_, value]) =>
-    Boolean(value)
-  )
-  if (ignoredParams.length) {
-    reporter.warn(
-      `The following provided parameter(s): ${ignoredParams
-        .map(param => param.join(`: `))
-        .join(
-          `, `
-        )} for the image at ${filepath} are ignored in ${layout} image layouts.`
-    )
-  }
-  return
-}
-
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_FLUID_SIZE = 800
 
@@ -215,24 +199,15 @@ export function fixedImageSizes({
 }
 
 export function fluidImageSizes({
-  file,
   imgDimensions,
   width,
   height,
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   srcSetBreakpoints,
-  reporter,
 }) {
   const { fit = `cover` } = transformOptions
 
-  // warn if ignored parameters are passed in
-  warnForIgnoredParameters(
-    `fluid and constrained`,
-    { width, height },
-    file.absolutePath,
-    reporter
-  )
   let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1

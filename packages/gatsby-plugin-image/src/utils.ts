@@ -24,14 +24,17 @@ export interface ICommonImageProps {
     | "ATTENTION"
   pngCompressionSpeed?: number
   rotate?: number
+  aspectRatio?: number
 }
 
 export interface IFluidImageProps extends ICommonImageProps {
-  maxWidth?: number
-  maxHeight?: number
-  aspectRatio?: number
   fit?: number
   background?: number
+}
+
+export interface IConstrainedImageProps extends IFluidImageProps {
+  width?: number
+  height?: number
 }
 
 export interface IFixedImageProps extends ICommonImageProps {
@@ -52,15 +55,15 @@ export type ImageComponentProps = Omit<
 }
 
 export type StaticImageProps = IImageOptions &
-  IFluidImageProps &
+  IConstrainedImageProps &
   IFixedImageProps &
   ImageComponentProps & { src: string }
 
 export type ImageProps = IImageOptions &
-  IFluidImageProps &
+  IConstrainedImageProps &
   IFixedImageProps & { src: string }
 export type SharpProps = Omit<ImageProps, "src" | "layout">
-export type AnyImageProps = (IFluidImageProps | IFixedImageProps) &
+export type AnyImageProps = (IConstrainedImageProps | IFixedImageProps) &
   ICommonImageProps
 
 export interface IImageOptions {
