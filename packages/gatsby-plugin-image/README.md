@@ -353,7 +353,7 @@ These arguments can be passed to the `gatsbyImageData()` resolver:
 - **blurredOptions**: Options for the low-resolution placeholder image. Set `placeholder` to `BLURRED` to use this
   - width
   - toFormat
-- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set `placeholder` to `SVG`.
+- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set `placeholder` to `TRACED_SVG`.
 - **jpgOptions**: Options to pass to sharp when generating JPG images.
   - quality
   - progressive
