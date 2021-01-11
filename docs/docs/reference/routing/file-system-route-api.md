@@ -161,7 +161,7 @@ Assume that a `Product` type is used in two pages:
 
 If you wanted to link to the `products/{Product.name}` and `discounts/{Product.name}` routes from your home page, you would have a component like this:
 
-```jsx:title=src/pages/index.js
+```js:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 
@@ -215,19 +215,19 @@ Three periods `...` mark a page as a splat route. Optionally, you can name the s
 
 The dynamic segment of the file name (the part between the square brackets) will be filled in and provided to your components on a `props.params` object. For example:
 
-```jsx:title=src/pages/users/[name].js
+```js:title=src/pages/users/[name].js
 function UserPage(props) {
   const name = props.params.name
 }
 ```
 
-```jsx:title=src/pages/image/[...awsKey].js
+```js:title=src/pages/image/[...awsKey].js
 function ProductsPage(props) {
   const splat = props.params.awsKey
 }
 ```
 
-```jsx:title=src/pages/image/[...].js
+```js:title=src/pages/image/[...].js
 function AppPage(props) {
   const splat = props.params[‘*’]
 }
@@ -259,7 +259,7 @@ You want to display product information which is both accessible by name and SKU
 
 Create a view component at `src/view/product-view.js` that takes in a `product` prop. Use that component in both collection routes, e.g.:
 
-```jsx:title=src/pages/products/{Product.name}.js
+```js:title=src/pages/products/{Product.name}.js
 import React from "react"
 import { graphql } from "gatsby"
 import ProductView from "../../views/product-view"
