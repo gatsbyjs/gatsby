@@ -141,7 +141,7 @@ export async function generateImageData({
   // note this will need to changed but keeping consistent for now
   if (args.maxWidth && args.maxHeight && args.aspectRatio) {
     reporter.warn(
-      `Specifying aspectRatio along with height may cause aspectRatio to be ignored.`
+      `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
     )
   }
 
