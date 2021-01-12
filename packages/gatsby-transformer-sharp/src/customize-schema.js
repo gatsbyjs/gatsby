@@ -434,6 +434,13 @@ const imageNodeType = ({
         description: stripIndent`
         If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
       },
+      aspectRatio: {
+        type: GraphQLFloat,
+        description: stripIndent`
+        If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed. 
+        If neither width or height is provided, height will be set based on the intrinsic width of the source image.
+        `,
+      },
       placeholder: {
         type: ImagePlaceholderType,
         defaultValue: `blurred`,

@@ -224,7 +224,7 @@ The types passed in are used to determine child relations of the node.
 
 #### Defining child relations
 
-The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` or `children[MyType]` as a field on the parent.
+The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` and `children[MyType]` fields on the parent.
 
 The `types` argument takes an array of strings and determines what node types the node is a child of:
 
@@ -251,20 +251,6 @@ The `mimeTypes` and `types` arguments can be combined as follows:
 # Adds `childMdx` as a child to `File` nodes *and* nodes with `@mimeTypes` set to "text/markdown" or "text/x-markdown"
 type Mdx implements Node
   @childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
-  id: ID!
-}
-```
-
-If `many: true` is set, then instead of creating a single child field on the parent, it will create multiple:
-
-```graphql
-# Adds `childMdx1` with type `Mdx1` to `File`.
-type Mdx1 implements Node @childOf(types: ["File"]) {
-  id: ID!
-}
-
-# Adds `childrenMdx2` with type `[Mdx2]` as a field of `File`.
-type Mdx2 implements Node @childOf(types: ["File"], many: true) {
   id: ID!
 }
 ```

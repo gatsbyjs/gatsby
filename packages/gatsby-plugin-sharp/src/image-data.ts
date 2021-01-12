@@ -19,6 +19,7 @@ export interface ISharpGatsbyImageArgs {
   height?: number
   maxWidth?: number
   maxHeight?: number
+  aspectRatio?: number
   sizes?: string
   quality?: number
   transformOptions: {
@@ -134,6 +135,18 @@ export async function generateImageData({
       args.maxWidth = metadata.width
     } else if (layout === `fluid`) {
       args.maxWidth = Math.round(metadata.width / 2)
+    }
+  }
+
+  if (args.aspectRatio) {
+    if (args.maxWidth && args.maxHeight) {
+      reporter.warn(
+        `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
+      )
+    } else if (args.maxWidth) {
+      args.maxHeight = args.maxWidth / args.aspectRatio
+    } else if (args.maxHeight) {
+      args.maxWidth = args.maxHeight * args.aspectRatio
     }
   }
 

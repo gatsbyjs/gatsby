@@ -1,7 +1,7 @@
 import chokidar, { FSWatcher } from "chokidar"
 import { Actions, ParentSpanPluginArgs, GatsbyCache, Reporter } from "gatsby"
 import { createImageNode, IImageMetadata, writeImage } from "./image-processing"
-import { FileSystemNode } from "gatsby-source-filesystem"
+import type { FileSystemNode } from "gatsby-source-filesystem"
 
 let watcher: FSWatcher | undefined
 
@@ -34,6 +34,7 @@ export function watchImage({
           fullPath: path,
           createNodeId,
           createNode,
+          reporter,
         })
         if (!node) {
           reporter.warn(`Could not process image ${path}`)
