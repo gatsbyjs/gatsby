@@ -20,7 +20,7 @@ export interface IReporter {
 }
 
 export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
+  layout?: Layout
   formats?: Array<ImageFormat>
   placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
   tracedSVGOptions?: Record<string, unknown>

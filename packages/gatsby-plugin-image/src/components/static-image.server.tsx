@@ -68,12 +68,12 @@ const checkDimensionProps: PropTypes.Validator<number> = (
   ...rest
 ) => {
   if (
-    props.layout === `fluid` &&
+    props.layout === `fullWidth` &&
     (propName === `width` || propName === `height`) &&
     props[propName]
   ) {
     return new Error(
-      `"${propName}" ${props[propName]} may not be passed when layout is fluid.`
+      `"${propName}" ${props[propName]} may not be passed when layout is fullWidth.`
     )
   }
   return PropTypes.number(props, propName, ...rest)

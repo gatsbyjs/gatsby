@@ -99,7 +99,7 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  if ((args.width || args.height) && layout === `fluid`) {
+  if ((args.width || args.height) && layout === `fullWidth`) {
     reporter.warn(
       `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
