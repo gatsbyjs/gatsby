@@ -16,6 +16,7 @@ const { EventEmitter } = require("events")
 const pEvent = require(`p-event`)
 const top = require("process-top")()
 
+const Bottleneck = require(`bottleneck`)
 const redis = require("redis")
 const client = redis.createClient({ host: `0.0.0.0` })
 client.on("error", function (error) {
@@ -24,6 +25,36 @@ client.on("error", function (error) {
 const { promisify } = require("util")
 const getAsync = promisify(client.get).bind(client)
 const setAsync = promisify(client.set).bind(client)
+
+const getToBatch = key =>
+  new Promise(resolve => {
+    redisBatcher.add({ type: `get`, key, callback: value => resolve(value) })
+  })
+
+const setToBatch = (key, value) =>
+  new Promise(resolve => {
+    redisBatcher.add({ type: `set`, key, value, callback: res => resolve(res) })
+  })
+
+const redisBatcher = new Bottleneck.Batcher({
+  maxTime: 30,
+  maxSize: 50,
+})
+
+redisBatcher.on(`batch`, async commands => {
+  const batch = client.batch()
+  commands.forEach(command => {
+    if (command.type === `get`) {
+      batch.get(command.key)
+    } else if (command.type === `set`) {
+      batch.set(command.key, command.value)
+    }
+  })
+
+  batch.exec((err, replies) =>
+    replies.forEach((reply, i) => commands[i].callback(reply))
+  )
+})
 
 // function lock(resources) {
 // return new Promise(resolve =>
@@ -83,7 +114,8 @@ if (cluster.isMaster) {
 
   // Start workers and listen for messages containing notifyRequest
   const numCPUs = require("os").cpus().length
-  for (let i = 0; i < numCPUs - 1; i++) {
+  console.log({ numCPUs })
+  for (let i = 0; i < numCPUs - 4; i++) {
     cluster.fork()
   }
 
@@ -298,7 +330,7 @@ if (cluster.isMaster) {
       args: task.args,
       files,
       id: task.id,
-      cache: { set: setAsync, get: getAsync },
+      cache: { set: setToBatch, get: getToBatch },
     })
   }
 

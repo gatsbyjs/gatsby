@@ -24,7 +24,7 @@ const httpAgent = new http.Agent({
 
 const batcher = new Bottleneck.Batcher({
   maxTime: 1,
-  maxSize: 40,
+  maxSize: 80,
 })
 
 batcher.on(`batch`, async tasks => {
@@ -74,7 +74,7 @@ setInterval(function () {
 // })
 
 // Create queue and pause immediately and resume once the server is ready
-const queue = new PQueue({ concurrency: 1200 })
+const queue = new PQueue({ concurrency: 2300 })
 queue.pause()
 
 const mtimes = new Map()
@@ -314,10 +314,6 @@ const runQuery = async (args, { files, cache }) => {
   var unified = require("unified")
   var markdown = require("remark-parse")
   var html = require("remark-html")
-  const http = require(`http`)
-  const httpAgent = new http.Agent({
-    keepAlive: true,
-  })
 
   // async function fetchGraphQL(operationsDoc, operationName, variables) {
   // const result = await fetch("http://206.189.215.152:8080/v1/graphql", {
@@ -413,12 +409,15 @@ const runQuery = async (args, { files, cache }) => {
   return `ok`
 }
 
-const startQueries = performance.now()
-const numQueries = 60000
+let startQueries = 0
+const numQueries = 50000
 const taskDigest = murmurhash(runQuery.toString() + `7`).toString()
 Promise.all(
-  _.range(numQueries).map(id =>
-    runTask({
+  _.range(numQueries).map(id => {
+    if (startQueries === 0) {
+      startQueries = performance.now()
+    }
+    return runTask({
       func: runQuery,
       digest: taskDigest,
       args: { id: id + 1 },
@@ -448,7 +447,7 @@ Promise.all(
       executionTimes.push(result.executionTime)
       // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
     })
-  )
+  })
 ).then(() => {
   const end = performance.now()
   const elapsed = end - startQueries
