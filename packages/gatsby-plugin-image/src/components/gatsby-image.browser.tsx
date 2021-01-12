@@ -32,12 +32,12 @@ export interface GatsbyImageProps
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
-  backgroundColor?: string
+  backgroundColor?: CSSProperties["backgroundColor"]
   objectFit?: CSSProperties["objectFit"]
   objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
   onError?: () => void
-  onStartLoad?: Function
+  onStartLoad?: (props: { wasCached?: boolean }) => void
 }
 
 export interface IGatsbyImageData {
@@ -47,8 +47,6 @@ export interface IGatsbyImageData {
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
   width?: number
-  maxHeight?: number
-  maxWidth?: number
 }
 
 let hasShownWarning = false

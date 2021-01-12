@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { IGatsbyImageData } from "gatsby-plugin-image"
+import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
@@ -10,28 +10,7 @@ import { createTransformObject } from "./plugin-options"
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
-export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
-  formats?: Array<ImageFormat>
-  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
-  tracedSVGOptions?: Record<string, unknown>
-  width?: number
-  height?: number
-  maxWidth?: number
-  maxHeight?: number
-  aspectRatio?: number
-  sizes?: string
-  quality?: number
-  transformOptions: {
-    fit?: "contain" | "cover" | "fill" | "inside" | "outside"
-    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
-  }
-  jpgOptions: Record<string, unknown>
-  pngOptions: Record<string, unknown>
-  webpOptions: Record<string, unknown>
-  avifOptions: Record<string, unknown>
-  blurredOptions: { width?: number; toFormat?: ImageFormat }
-}
+
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -121,32 +100,31 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  if (layout === `fixed` && !args.width && !args.height) {
-    args.width = metadata.width
+  if ((args.width || args.height) && layout === `fluid`) {
+    reporter.warn(
+      `Specifying fluid images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
+    )
+    args.width = undefined
+    args.height = undefined
   }
 
-  if (
-    layout !== `fixed` &&
-    !args.maxWidth &&
-    !args.maxHeight &&
-    metadata.width
-  ) {
-    if (layout === `constrained`) {
-      args.maxWidth = metadata.width
-    } else if (layout === `fluid`) {
-      args.maxWidth = Math.round(metadata.width / 2)
+  if (!args.width && !args.height && metadata.width) {
+    if (layout === `fluid`) {
+      args.width = Math.round(metadata.width / 2)
+    } else {
+      args.width = metadata.width
     }
   }
 
   if (args.aspectRatio) {
-    if (args.maxWidth && args.maxHeight) {
+    if (args.width && args.height) {
       reporter.warn(
         `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
       )
-    } else if (args.maxWidth) {
-      args.maxHeight = args.maxWidth / args.aspectRatio
-    } else if (args.maxHeight) {
-      args.maxWidth = args.maxHeight * args.aspectRatio
+    } else if (args.width) {
+      args.height = args.width / args.aspectRatio
+    } else if (args.height) {
+      args.width = args.height * args.aspectRatio
     }
   }
 
@@ -370,7 +348,7 @@ export async function generateImageData({
       break
 
     case `constrained`:
-      imageProps.width = args.maxWidth || primaryImage.width || 1
+      imageProps.width = args.width || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
   return imageProps

@@ -2,29 +2,12 @@ import React, { FunctionComponent } from "react"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 import PropTypes from "prop-types"
-import { ImageFormat, Layout, Fit } from "../image-utils"
+import { ISharpGatsbyImageArgs } from "../image-utils"
 
-export interface IStaticImageProps extends Omit<GatsbyImageProps, "image"> {
+export interface IStaticImageProps
+  extends Omit<GatsbyImageProps, "image">,
+    ISharpGatsbyImageArgs {
   src: string
-  layout?: Layout
-  formats?: Array<ImageFormat>
-  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
-  tracedSVGOptions?: Record<string, unknown>
-  width?: number
-  height?: number
-  maxWidth?: number
-  maxHeight?: number
-  aspectRatio?: number
-  sizes?: string
-  quality?: number
-  transformOptions?: {
-    fit?: Fit
-  }
-  jpgOptions?: Record<string, unknown>
-  pngOptions?: Record<string, unknown>
-  webpOptions?: Record<string, unknown>
-  avifOptions?: Record<string, unknown>
-  blurredOptions?: Record<string, unknown>
 }
 
 // These values are added by Babel. Do not add them manually
@@ -43,9 +26,7 @@ export function _getStaticImage(
     // We extract these because they're not meant to be passed-down to GatsbyImage
     /* eslint-disable @typescript-eslint/no-unused-vars */
     width,
-    maxWidth,
     height,
-    maxHeight,
     aspectRatio,
     tracedSVGOptions,
     placeholder,
@@ -87,25 +68,13 @@ const checkDimensionProps: PropTypes.Validator<number> = (
   ...rest
 ) => {
   if (
-    props.layout !== `fixed` &&
+    props.layout === `fluid` &&
     (propName === `width` || propName === `height`) &&
     props[propName]
   ) {
     return new Error(
-      `"${propName}" ${props[propName]} may not be passed when layout is "${
-        props.layout || `constrained`
-      }"`
+      `"${propName}" ${props[propName]} may not be passed when layout is fluid.`
     )
-  } else {
-    if (
-      props.layout === `fixed` &&
-      (propName === `maxWidth` || propName === `maxHeight`) &&
-      props[propName]
-    ) {
-      return new Error(
-        `"${propName}" may not be passed when layout is "${props.layout}"`
-      )
-    }
   }
   return PropTypes.number(props, propName, ...rest)
 }
@@ -117,9 +86,6 @@ export const propTypes = {
   alt: PropTypes.string.isRequired,
   width: checkDimensionProps,
   height: checkDimensionProps,
-  maxHeight: checkDimensionProps,
-  maxWidth: checkDimensionProps,
-  aspectRatio: checkDimensionProps,
   sizes: PropTypes.string,
   layout: (props: IStaticImageProps & IPrivateProps): Error | undefined => {
     if (props.layout === undefined) {
@@ -130,7 +96,7 @@ export const propTypes = {
     }
 
     return new Error(
-      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fluid" or "constrained"`
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fluid" or "constrained"`
     )
   },
 }
