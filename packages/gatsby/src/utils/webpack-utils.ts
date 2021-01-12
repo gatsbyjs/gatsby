@@ -766,7 +766,11 @@ export function ensureRequireEslintRules(config: Configuration): Configuration {
   // and adjust it to add the rule or append new loader with required rule
   const rule = config.module?.rules.find(rule => {
     if (typeof rule.loader === `string`) {
-      return rule.loader.includes(`eslint-loader`)
+      return (
+        rule.loader === `eslint-loader` ||
+        rule.loader.endsWith(`eslint-loader/index.js`) ||
+        rule.loader.endsWith(`eslint-loader/dist/cjs.js`)
+      )
     }
 
     return false
