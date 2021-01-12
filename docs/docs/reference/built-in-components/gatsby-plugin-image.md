@@ -21,7 +21,7 @@ The following props can be passed to both `GatsbyImage` and `StaticImage`. You m
 | ----------------- | --------------------------------------------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `alt` (Required)  | `string`                                                                    |               | Alternative text, passed to the `<img>` tag. Required for accessibility.                                                                        |
 | `as`              | `ElementType`                                                               | `"div"`       | The HTML element used for the outer wrapper.                                                                                                    |
-| `loading`         | `"eager" \| "lazy"`                                                         | `"lazy"`      | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
+| `loading`         | `"eager" ∣ "lazy"`                                                          | `"lazy"`      | Loading behavior for the image. You should set this to `"eager"` for above-the-fold images to ensure they start loading before React hydration. |
 | `className`       | `string`                                                                    |               | CSS class applied to the outer wrapper.                                                                                                         |
 | `imgClassName`    | `string`                                                                    |               | CSS class applied to the `<img>` element.                                                                                                       |
 | `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper.                                                                                                     |
@@ -125,9 +125,9 @@ The `aspectRatio` prop forces an image to the specified aspect ratio, cropping i
 
 For `fixed` and `constrained` images, you can also optionally pass either a `width` or `height`, and it will use that to calculate the other dimension. For example, if you pass `width={800} aspectRatio={4/3}` then `height` will be set to the width divided by the aspect ratio: so `600`. Passing `1` as the aspectRatio will crop the image to a square. If you don't pass a width or height then it will use the source image's width.
 
-For `fullWidth` images you don't specify width or height as it resizes to fit the screen width. Passing `aspectRatio` will crop the image if needed, and the height will scale according to the width of the screen. For example, if you set the aspectRatio to `16/9` then when the image is displayed full width on a screen that is 1024px wide, the image will be 576 pixels high.
+For `fullWidth` images you don't specify width or height as it resizes to fit the screen width. Passing `aspectRatio` will crop the image if needed, and the height will scale according to the width of the screen. For example, if you set the aspectRatio to `16/9` then when the image is displayed full width on a screen that is 1280px wide, the image will be 720 pixels high.
 
-> There are several advanced options that you can pass to control the cropping and resizing behavior. For more details, see the advanced options reference.
+> There are several advanced options that you can pass to control the cropping and resizing behavior. For more details, see the [`transformOptions`](#transformoptions) reference.
 
 ### `placeholder`
 
