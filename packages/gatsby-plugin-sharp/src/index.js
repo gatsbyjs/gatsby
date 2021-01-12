@@ -329,7 +329,13 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    if (options.duotone.highlight && options.duotone.shadow) {
+      pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    } else {
+      reporter.warn(
+        `To use duotone for ${file.absolutPath}, please specify duotone.highlight and duotone.shadow as the two hex colors you want to use.`
+      )
+    }
   }
   let buffer
   let info
