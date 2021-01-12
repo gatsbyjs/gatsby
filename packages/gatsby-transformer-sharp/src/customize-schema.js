@@ -410,15 +410,16 @@ const imageNodeType = ({
       width: {
         type: GraphQLInt,
         description: stripIndent`
-        The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.  
-        The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
+        The display width of the generated image for layout = FIXED, and the maximum display width of the largest image for layout = CONSTRAINED.  
         Ignored if layout = FLUID.
         `,
       },
       height: {
         type: GraphQLInt,
         description: stripIndent`
-        If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
+        The display height of the generated image for layout = FIXED, and the maximum display height of the largest image for layout = CONSTRAINED.  
+        The image will be cropped if the aspect ratio does not match the source image. If omitted, it is calculated from the supplied width, 
+        matching the aspect ratio of the source image.`,
       },
       aspectRatio: {
         type: GraphQLFloat,
