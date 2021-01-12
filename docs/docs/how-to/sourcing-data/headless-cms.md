@@ -48,6 +48,7 @@ Here are more resources for guides, plugins, and starters for CMS systems you ca
 | [Seams-CMS](https://seams-cms.com/)           | [guide](/docs/sourcing-from-seams-cms)                                           |                                                       |                                                                      |
 | [Builder.io](https://www.builder.io/)         | [guide](/docs/sourcing-from-builder-io/)                                         | [docs](/plugins/@builder.io/gatsby/)                  | [starter](https://github.com/BuilderIO/gatsby-starter-builder)       |
 | [Flotiq](https://flotiq.com/)                 | [guide](/docs/sourcing-from-flotiq/)                                             | [docs](/plugins/gatsby-source-flotiq)                 | [starter](https://github.com/flotiq/gatsby-starter-blog)             |
+| [Tina](https://tina.io)                       | [guide](https://tina.io/guides/#gatsby)                                          | [docs](https://tina.io/docs/integrations/gatsby/)     |                                                                      |
 
 ## How to add new guides to this section
 
