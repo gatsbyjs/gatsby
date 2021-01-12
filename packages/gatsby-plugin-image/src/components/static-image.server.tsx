@@ -62,11 +62,30 @@ const StaticImage: React.FC<
   IStaticImageProps & IPrivateProps
 > = _getStaticImage(GatsbyImageServer)
 
+const checkDimensionProps: PropTypes.Validator<number> = (
+  props: IStaticImageProps & IPrivateProps,
+  propName: keyof IStaticImageProps & IPrivateProps,
+  ...rest
+) => {
+  if (
+    props.layout === `fluid` &&
+    (propName === `width` || propName === `height`) &&
+    props[propName]
+  ) {
+    return new Error(
+      `"${propName}" ${props[propName]} may not be passed when layout is fluid.`
+    )
+  }
+  return PropTypes.number(props, propName, ...rest)
+}
+
 const validLayouts = new Set([`fixed`, `fluid`, `constrained`])
 
 export const propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
+  width: checkDimensionProps,
+  height: checkDimensionProps,
   sizes: PropTypes.string,
   layout: (props: IStaticImageProps & IPrivateProps): Error | undefined => {
     if (props.layout === undefined) {
