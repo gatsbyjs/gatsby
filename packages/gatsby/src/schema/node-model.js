@@ -227,7 +227,7 @@ class LocalNodeModel {
    * @param {PageDependencies} [pageDependencies]
    * @returns {Promise<Node[]>}
    */
-  async runQuery(args, pageDependencies) {
+  runQuery(args, pageDependencies) {
     const { query, firstOnly, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types
@@ -261,8 +261,51 @@ class LocalNodeModel {
       nodeTypeNames
     )
 
-    await this.prepareNodes(gqlType, fields, fieldsToResolve, nodeTypeNames)
-
+    const result = this.prepareNodes(
+      gqlType,
+      fields,
+      fieldsToResolve,
+      nodeTypeNames
+    )
+    if (result?.then) {
+      return result.then(() =>
+        this._runQuery(
+          materializationActivity,
+          tracer,
+          query,
+          firstOnly,
+          gqlType,
+          fieldsToResolve,
+          nodeTypeNames,
+          stats,
+          pageDependencies
+        )
+      )
+    } else {
+      return this._runQuery(
+        materializationActivity,
+        tracer,
+        query,
+        firstOnly,
+        gqlType,
+        fieldsToResolve,
+        nodeTypeNames,
+        stats,
+        pageDependencies
+      )
+    }
+  }
+  _runQuery(
+    materializationActivity,
+    tracer,
+    query,
+    firstOnly,
+    gqlType,
+    fieldsToResolve,
+    nodeTypeNames,
+    stats,
+    pageDependencies
+  ) {
     if (materializationActivity) {
       materializationActivity.end()
     }
