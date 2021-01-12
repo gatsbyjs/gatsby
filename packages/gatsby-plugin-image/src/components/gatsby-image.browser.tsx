@@ -32,12 +32,12 @@ export interface GatsbyImageProps
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
-  backgroundColor?: string
+  backgroundColor?: CSSProperties["backgroundColor"]
   objectFit?: CSSProperties["objectFit"]
   objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
   onError?: () => void
-  onStartLoad?: Function
+  onStartLoad?: (props: { wasCached?: boolean }) => void
 }
 
 export interface IGatsbyImageData {

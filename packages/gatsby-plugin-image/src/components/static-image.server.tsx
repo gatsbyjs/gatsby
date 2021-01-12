@@ -2,27 +2,12 @@ import React, { FunctionComponent } from "react"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 import PropTypes from "prop-types"
-import { ImageFormat, Layout, Fit } from "../image-utils"
+import { ISharpGatsbyImageArgs } from "../image-utils"
 
-export interface IStaticImageProps extends Omit<GatsbyImageProps, "image"> {
+export interface IStaticImageProps
+  extends Omit<GatsbyImageProps, "image">,
+    ISharpGatsbyImageArgs {
   src: string
-  layout?: Layout
-  formats?: Array<ImageFormat>
-  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
-  tracedSVGOptions?: Record<string, unknown>
-  width?: number
-  height?: number
-  aspectRatio?: number
-  sizes?: string
-  quality?: number
-  transformOptions?: {
-    fit?: Fit
-  }
-  jpgOptions?: Record<string, unknown>
-  pngOptions?: Record<string, unknown>
-  webpOptions?: Record<string, unknown>
-  avifOptions?: Record<string, unknown>
-  blurredOptions?: Record<string, unknown>
 }
 
 // These values are added by Babel. Do not add them manually
@@ -92,7 +77,7 @@ export const propTypes = {
     }
 
     return new Error(
-      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fluid" or "constrained"`
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fluid" or "constrained"`
     )
   },
 }

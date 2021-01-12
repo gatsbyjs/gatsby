@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { stripIndent } from "common-tags"
 import { IGatsbyImageData } from "."
+import type sharp from "gatsby-plugin-sharp/safe-sharp"
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_FLUID_WIDTH = 800
@@ -16,6 +17,27 @@ export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto" | ""
  */
 export interface IReporter {
   warn(message: string): void
+}
+
+export interface ISharpGatsbyImageArgs {
+  layout?: "fixed" | "fluid" | "constrained"
+  formats?: Array<ImageFormat>
+  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
+  tracedSVGOptions?: Record<string, unknown>
+  width?: number
+  height?: number
+  aspectRatio?: number
+  sizes?: string
+  quality?: number
+  transformOptions?: {
+    fit?: Fit
+    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
+  }
+  jpgOptions?: Record<string, unknown>
+  pngOptions?: Record<string, unknown>
+  webpOptions?: Record<string, unknown>
+  avifOptions?: Record<string, unknown>
+  blurredOptions?: { width?: number; toFormat?: ImageFormat }
 }
 
 export interface IImageSizeArgs {
@@ -392,8 +414,8 @@ export function fluidImageSizes({
     height = width / aspectRatio
   }
 
-  // if it still hasn't been found, calculate width from the derived maxHeight.
-  // TS isn't smart enough to realise the type for maxHeight has been narrowed here
+  // if it still hasn't been found, calculate width from the derived height.
+  // TS isn't smart enough to realise the type for height has been narrowed here
   if (!width) {
     width = (height as number) * aspectRatio
   }

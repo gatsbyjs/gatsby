@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { IGatsbyImageData } from "gatsby-plugin-image"
+import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
@@ -10,26 +10,7 @@ import { createTransformObject } from "./plugin-options"
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
-export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
-  formats?: Array<ImageFormat>
-  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
-  tracedSVGOptions?: Record<string, unknown>
-  width?: number
-  height?: number
-  aspectRatio?: number
-  sizes?: string
-  quality?: number
-  transformOptions: {
-    fit?: "contain" | "cover" | "fill" | "inside" | "outside"
-    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
-  }
-  jpgOptions: Record<string, unknown>
-  pngOptions: Record<string, unknown>
-  webpOptions: Record<string, unknown>
-  avifOptions: Record<string, unknown>
-  blurredOptions: { width?: number; toFormat?: ImageFormat }
-}
+
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
