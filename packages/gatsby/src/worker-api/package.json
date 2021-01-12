@@ -9,8 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@adobe/node-fetch-retry": "^1.1.0",
     "@bnaya/objectbuffer": "^0.30.1",
+    "@google-cloud/storage": "^5.7.1",
+    "async-sema": "^3.1.0",
+    "bottleneck": "^2.19.5",
     "microjob": "^0.7.0",
+    "p-event": "^4.2.0",
+    "process-top": "^1.2.0",
+    "redis": "^3.0.2",
     "shared-array-buffer-store": "^1.0.0"
   }
 }

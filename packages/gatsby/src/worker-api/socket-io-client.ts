@@ -1,8 +1,10 @@
 // Gatsby's scheduler
 
 // const IP = `159.65.103.164`
-const IP = `143.110.158.220`
+// const IP = `143.110.158.220`
+const IP = `0.0.0.0`
 
+const Bottleneck = require(`bottleneck`)
 const fs = require(`fs-extra`)
 const crypto = require(`crypto`)
 const path = require(`path`)
@@ -10,10 +12,61 @@ const _ = require(`lodash`)
 var socket = require("socket.io-client")(`http://${IP}:3000`)
 const { default: PQueue } = require("p-queue")
 const uuid = require(`uuid`)
-const fetch = require(`node-fetch`)
+const fetch = require(`@adobe/node-fetch-retry`)
 const http = require(`http`)
 const JestWorker = require(`jest-worker`).default
 const { performance } = require("perf_hooks")
+const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
+
+const httpAgent = new http.Agent({
+  keepAlive: true,
+})
+
+const batcher = new Bottleneck.Batcher({
+  maxTime: 1,
+  maxSize: 40,
+})
+
+batcher.on(`batch`, async tasks => {
+  const grouped = {}
+  tasks.forEach(task => {
+    if (grouped[task.digest]) {
+      grouped[task.digest].tasks.push({ args: task.args, files: task.files })
+    } else {
+      grouped[task.digest] = {
+        tasks: [{ args: task.args, files: task.files }],
+        dependencies: task.dependencies,
+        funcDigest: task.funcDigest,
+        func: task.func,
+      }
+    }
+  })
+  // console.log(JSON.stringify(grouped, null, 4))
+  // process.exit()
+  const res = await fetch(WORKER_HOST, {
+    method: `post`,
+    body: JSON.stringify(grouped),
+    agent: function (_parsedURL) {
+      if (_parsedURL.protocol == "http:") {
+        return httpAgent
+      } else {
+        return httpsAgent
+      }
+    },
+  })
+  const body = await res.json()
+  // console.log({ body })
+
+  // Loop through tasks and call callback with responses.
+  // TODO fix ordering?
+  body.forEach((res, i) => tasks[i].callback(res))
+})
+const top = require("process-top")()
+
+setInterval(function () {
+  // Prints out a string containing stats about your Node.js process.
+  console.log(`gatsby`, top.toString())
+}, 3000)
 
 // const chunkSize = 100
 // const worker = new JestWorker(require.resolve("./upload-worker"), {
@@ -21,49 +74,53 @@ const { performance } = require("perf_hooks")
 // })
 
 // Create queue and pause immediately and resume once the server is ready
-const queue = new PQueue({ concurrency: 120 })
-// queue.pause()
+const queue = new PQueue({ concurrency: 1200 })
+queue.pause()
 
 const mtimes = new Map()
-const hashes = new Map()
+const digests = new Map()
 const inFlight = new Map()
 async function md5File(filePath) {
+  if (digests.has(filePath)) {
+    return digests.get(filePath)
+  }
+
   if (inFlight.has(filePath)) {
     return inFlight.get(filePath)
   } else {
     const md5Promise = new Promise((resolve, reject) => {
-      const newMtime = fs.statSync(filePath).mtime.getTime()
-      let renew = false
-      // Has the file changed?
-      if (mtimes.has(filePath)) {
-        if (newMtime !== mtimes.get(filePath)) {
-          renew = true
-        }
-      } else {
-        renew = true
-      }
+      // const newMtime = fs.statSync(filePath).mtime.getTime()
+      // let renew = false
+      // // Has the file changed?
+      // if (mtimes.has(filePath)) {
+      // if (newMtime !== mtimes.get(filePath)) {
+      // renew = true
+      // }
+      // } else {
+      // renew = true
+      // }
 
-      mtimes.set(filePath, newMtime)
+      // mtimes.set(filePath, newMtime)
 
-      // If we need to renew, calculate, cache and return.
-      if (renew) {
-        const output = crypto.createHash("md5")
-        const input = fs.createReadStream(filePath)
+      // // If we need to renew, calculate, cache and return.
+      // if (renew) {
+      const output = crypto.createHash("md5")
+      const input = fs.createReadStream(filePath)
 
-        input.on("error", err => {
-          reject(err)
-        })
+      input.on("error", err => {
+        reject(err)
+      })
 
-        output.once("readable", () => {
-          const newHash = output.read().toString("hex")
-          hashes.set(filePath, newHash)
-          resolve(newHash)
-        })
+      output.once("readable", () => {
+        const newDigest = output.read().toString("hex")
+        digests.set(filePath, newDigest)
+        resolve(newDigest)
+      })
 
-        input.pipe(output)
-      } else {
-        resolve(hashes.get(path))
-      }
+      input.pipe(output)
+      // } else {
+      // resolve(digests.get(path))
+      // }
     })
 
     inFlight.set(filePath, md5Promise)
@@ -71,38 +128,87 @@ async function md5File(filePath) {
   }
 }
 
+const taskPrepTimes = []
+const executionTimes = []
+// const postBodySize = []
+
+let taskNum = 1
+let taskPartDigests = new Map()
+let hostHashDigest = new Set()
+let taskFiles = new Map()
+const WORKER_HOST = `http://localhost:8001`
+
 const runTask = async task => {
   let outsideResolve
   taskPromise = new Promise(resolve => {
     outsideResolve = resolve
   })
   // preprocess and then add to the queue
-  // TODO only send hash of the handler function.
   const taskFn = () => {
     return new Promise(async resolve => {
-      task.traceId = uuid.v4()
+      const start = performance.now()
+      taskNum += 1
+      task.id = taskNum
 
-      if (_.isFunction(task.handler)) {
-        task.handler = task.handler.toString()
+      if (!task.digest) {
+        // Set the task digest
+        const TASK_DIGEST_KEY =
+          task.func.toString() + task.dependencies?.toString() || ``
+        if (taskPartDigests.has(TASK_DIGEST_KEY)) {
+          task.digest = taskPartDigests.get(TASK_DIGEST_KEY)
+        } else {
+          const taskDigest = String(murmurhash(TASK_DIGEST_KEY)).slice(0, 5)
+          taskPartDigests.set(TASK_DIGEST_KEY, taskDigest)
+          task.digest = taskDigest
+        }
       }
 
-      if (task.files && !_.isEmpty(task.files)) {
-        await Promise.all(
-          _.toPairs(task.files).map(async ([name, file]) => {
-            const hash = await md5File(file.originPath)
-            // Discard the file path
-            task.files[name] = { ...file, hash }
-          })
-        )
+      // Is the function already stored?
+      if (taskPartDigests.has(task.func)) {
+        task.funcDigest = taskPartDigests.get(task.func)
+      } else {
+        task.func = task.func.toString()
+        const funcDigest = murmurhash(task.func).toString().slice(0, 5)
+        taskPartDigests.set(task.func, funcDigest)
+        task.funcDigest = funcDigest
       }
-      // console.time(`runTask ${task.traceId}`)
-      socket.emit(`runTask`, task)
-      socket.once(`response-${task.traceId}`, res => {
-        // console.log(res.result.)
-        // console.timeEnd(`runTask ${task.traceId}`)
-        outsideResolve(res)
+
+      // TODO send files & dependencies hash like the function hash
+
+      // Does this host already have this function digest?
+      // If so, delete the function as it's not needed.
+      const func_KEY = `${WORKER_HOST}-${task.funcDigest}`
+      if (hostHashDigest.has(func_KEY)) {
+        delete task.func
+      } else {
+        hostHashDigest.add(func_KEY)
+      }
+
+      if (taskFiles.has(task.digest)) {
+        task.files = taskFiles.get(task.digest)
+      } else {
+        if (task.files && !_.isEmpty(task.files)) {
+          await Promise.all(
+            _.toPairs(task.files).map(async ([name, file]) => {
+              const digest = await md5File(file.originPath)
+              // Discard the file path
+              task.files[name] = { ...file, digest }
+            })
+          )
+          taskFiles.set(task.digest, task.files)
+        }
+      }
+
+      // console.log(task)
+      const end = performance.now()
+      taskPrepTimes.push(end - start)
+
+      task.callback = response => {
+        outsideResolve(response)
         resolve()
-      })
+      }
+
+      batcher.add(task)
     })
   }
 
@@ -112,28 +218,46 @@ const runTask = async task => {
 }
 
 let count = 0
-let startTime
+let startTime = 0
+let lastTime = 0
+let lastCount = 0
 queue.on("active", () => {
   count += 1
-  if (count % 25 === 0 || queue.pending === 0) {
+  if (count % 2000 === 0 || queue.pending === 0) {
     console.log(
       `Working on item #${count}.  Size: ${queue.size}  Pending: ${queue.pending}`
     )
 
     const now = Date.now()
     const diffTime = now - startTime
+    let rate = ``
+    if (lastTime) {
+      rate = (count - lastCount) / ((now - lastTime) / 1000)
+    }
     console.log(
-      `elapsed time: ${diffTime / 1000}s — ${
-        count / (diffTime / 1000)
-      } tasks / second`
+      `elapsed time: ${
+        diffTime / 1000
+      }s — ${rate} tasks / second — prepTime: ${_.mean(
+        taskPrepTimes.slice(-100)
+      )} — executionTime: ${_.mean(executionTimes.slice(-100))}`
     )
+    lastTime = now
+    lastCount = count
   }
 })
 
 exports.runTask = runTask
 
 runTask({
-  handler: args => {
+  func: args => {
+    const path = require(`path`)
+    const newPath = path.join(`blah`, `nlur`, `suoo`)
+    return { newPath, theWolrldIsGreen: true }
+  },
+  args: { name: `World` },
+}).then(result => console.log(result))
+runTask({
+  func: args => {
     const path = require(`path`)
     const newPath = path.join(`blah`, `nlur`, `suoo`)
     return { newPath, theWolrldIsGreen: true }
@@ -142,7 +266,7 @@ runTask({
 }).then(result => console.log(result))
 
 // runTask({
-// handler: args => `hello ${args.name}`,
+// func: args => `hello ${args.name}`,
 // args: { name: `Tech Council` },
 // }).then(result => console.log(result))
 
@@ -150,11 +274,12 @@ runTask({
 // const filePath2 = path.resolve(`./data2.json`)
 // _.range(1).forEach(i => {
 // runTask({
-// handler: async (args, { files }) => {
+// func: async (args, { files }) => {
 // const path = require(`path`)
 // const fs = require(`fs-extra`)
+// // console.log(files)
 
-// const jsonData = JSON.parse(files.data.fileBlob)
+// const jsonData = JSON.parse(fs.readFileSync(files.data.localPath))
 // jsonData.super = jsonData.super += 10
 // const newPath = path.join(`blue`, `moon`)
 // return {
@@ -173,18 +298,18 @@ runTask({
 // })
 
 // HELLO PEOPLE
-// const anotherHandler = args => {
+// const anotherfunc = args => {
 // return `hello ${args.name}!`
 // }
 
 // runTask({
-// handler: anotherHandler,
+// func: anotherfunc,
 // args: { name: `Dustin` },
 // }).then(result => {
 // console.log(`the result`, result)
 // })
 
-const runQuery = async (args, { files }) => {
+const runQuery = async (args, { files, cache }) => {
   const fetch = require(`node-fetch`)
   var unified = require("unified")
   var markdown = require("remark-parse")
@@ -194,60 +319,64 @@ const runQuery = async (args, { files }) => {
     keepAlive: true,
   })
 
-  async function fetchGraphQL(operationsDoc, operationName, variables) {
-    const result = await fetch("http://206.189.215.152:8080/v1/graphql", {
-      method: "POST",
-      body: JSON.stringify({
-        query: operationsDoc,
-        variables: variables,
-        operationName: operationName,
-      }),
-      agent: function (_parsedURL) {
-        if (_parsedURL.protocol == "http:") {
-          return httpAgent
-        } else {
-          return httpsAgent
-        }
-      },
-    })
+  // async function fetchGraphQL(operationsDoc, operationName, variables) {
+  // const result = await fetch("http://206.189.215.152:8080/v1/graphql", {
+  // method: "POST",
+  // body: JSON.stringify({
+  // query: operationsDoc,
+  // variables: variables,
+  // operationName: operationName,
+  // }),
+  // agent: function (_parsedURL) {
+  // if (_parsedURL.protocol == "http:") {
+  // return httpAgent
+  // } else {
+  // return httpsAgent
+  // }
+  // },
+  // })
 
-    // console.log(`done`, variables.id)
-    return await result.json()
-  }
+  // // console.log(`done`, variables.id)
+  // return await result.json()
+  // }
 
-  const operationsDoc = `
-  # Consider giving this mutation a unique, descriptive
-  # name in your application as a best practice
-  query MyQuery($id: bigint!) {
-    blog_by_pk(id: $id) {
-      body
-      created_at
-      id
-      title
-      updated_at
-    }
-  }
-`
+  // const operationsDoc = `
+  // # Consider giving this mutation a unique, descriptive
+  // # name in your application as a best practice
+  // query MyQuery($id: bigint!) {
+  // blog_by_pk(id: $id) {
+  // body
+  // created_at
+  // id
+  // title
+  // updated_at
+  // }
+  // }
+  // `
 
-  function executeUnnamedMutation1(id) {
-    return fetchGraphQL(operationsDoc, "MyQuery", {
-      id,
-    })
-  }
+  // function executeUnnamedMutation1(id) {
+  // return fetchGraphQL(operationsDoc, "MyQuery", {
+  // id,
+  // })
+  // }
 
-  const result = await executeUnnamedMutation1(args.id)
+  // const result = await executeUnnamedMutation1(args.id)
+  const result = {}
+
+  result.mdStr = await cache.get(`${args.id}.md`)
 
   // Transform markdown string to html.
   const bodyStr = await new Promise(resolve =>
     unified()
       .use(markdown)
       .use(html)
-      .process(result.data.blog_by_pk.body, function (err, html) {
+      .process(result.mdStr, function (err, html) {
         resolve(String(html))
       })
   )
   result.html = bodyStr
 
+  // console.log(files)
   // Render page.
   const renderer = require(files.renderPage.localPath)
 
@@ -267,18 +396,17 @@ const runQuery = async (args, { files }) => {
     )
   )
 
-  // Imports the Google Cloud client library
-  const { Storage } = require("@google-cloud/storage")
-
   // Creates a client
-  const storage = new Storage({ keyFilename: files.key.localPath })
+  // const storage = new Storage({ keyFilename: files.key.localPath })
 
-  console.time(`write to bucket ${args.id}`)
-  const writeToBucket = await storage
-    .bucket(`run-task-experiment-website`)
-    .file(`${args.id}.html`)
-    .save(Buffer.from(htmlStr))
-  console.timeEnd(`write to bucket ${args.id}`)
+  // console.time(`write to bucket ${args.id}`)
+  // const writeToBucket = await storage
+  // .bucket(`run-task-experiment-website`)
+  // .file(`${Math.random()}${args.id}.html`)
+  // .save(Buffer.from(htmlStr))
+  // console.timeEnd(`write to bucket ${args.id}`)
+
+  await cache.set(`${args.id}.html`, htmlStr)
 
   // result.htmlStr = htmlStr
   // return result
@@ -286,19 +414,21 @@ const runQuery = async (args, { files }) => {
 }
 
 const startQueries = performance.now()
-const numQueries = 100
+const numQueries = 60000
+const taskDigest = murmurhash(runQuery.toString() + `7`).toString()
 Promise.all(
   _.range(numQueries).map(id =>
     runTask({
-      handler: runQuery,
+      func: runQuery,
+      digest: taskDigest,
       args: { id: id + 1 },
       files: {
         renderPage: {
           originPath: `/tmp/the-simplest-blog/public/render-page.js`,
         },
-        key: {
-          originPath: `./key.json`,
-        },
+        // key: {
+        // originPath: `./key.json`,
+        // },
       },
       dependencies: {
         react: `latest`, // Get from project eventually
@@ -315,7 +445,8 @@ Promise.all(
         "@google-cloud/storage": `latest`,
       },
     }).then(result => {
-      console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
+      executionTimes.push(result.executionTime)
+      // console.log(id + 1, result.executionTime, JSON.stringify(result, null, 4))
     })
   )
 ).then(() => {
@@ -355,7 +486,7 @@ Promise.all(
 
 // Real SSR
 // runTask({
-// handler: renderHtml,
+// func: renderHtml,
 // files: {
 // renderPage: { originPath: `/tmp/the-simplest-blog/public/render-page.js` },
 // },
@@ -380,7 +511,7 @@ const rootSite = `/Users/kylemathews/programs/gatsby/benchmarks/markdown_id`
 
 // queue.add(postTask)
 // // return runTask({
-// // handler: async (args, { files }) => {
+// // func: async (args, { files }) => {
 // // const fs = require(`fs-extra`)
 // // const _ = require(`lodash`)
 
@@ -424,22 +555,23 @@ const rootSite = `/Users/kylemathews/programs/gatsby/benchmarks/markdown_id`
 // })
 
 // Dependencies
-runTask({
-  handler: args => {
-    const _ = require(`lodash`)
-    const faker = require(`faker`)
-    // return _.range(args.truth)
-    return faker.name.findName()
-  },
-  args: { truth: 22 },
-  dependencies: {
-    lodash: `latest`,
-    faker: `latest`,
-  },
-}).then(result => console.log(result))
+// runTask({
+// func: args => {
+// const _ = require(`lodash`)
+// const faker = require(`faker`)
+// // return _.range(args.truth)
+// return faker.name.findName()
+// },
+// args: { truth: 22 },
+// dependencies: {
+// lodash: `latest`,
+// faker: `latest`,
+// },
+// }).then(result => console.log(result))
 
 socket.on(`connect`, async function () {
-  socket.emit(`setTaskRunner`, fs.readFileSync(`./remote-task-runner.js`))
+  console.log(`connect`)
+  // socket.emit(`setTaskRunner`, fs.readFileSync(`./remote-task-runner.js`))
   socket.on(`serverReady`, () => {
     queue.start()
     startTime = Date.now()
@@ -452,8 +584,8 @@ socket.on(`connect`, async function () {
 
   socket.on(`sendFile`, async file => {
     // console.log(`sendFile`, file)
-    const fileContents = await fs.readFile(file.originPath)
-    socket.emit(file.hash, fileContents)
+    file.fileBlob = await fs.readFile(file.originPath)
+    socket.emit(`file`, file)
   })
 })
 
