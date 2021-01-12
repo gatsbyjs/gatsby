@@ -118,7 +118,7 @@ describe(`calculateImageSizes (fixed)`, () => {
   })
 })
 
-describe(`calculateImageSizes (fluid & constrained)`, () => {
+describe(`calculateImageSizes (fullWidth & constrained)`, () => {
   it(`should throw if width is less than 1`, () => {
     const args = {
       layout: `constrained`,
@@ -155,7 +155,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
   it(`should include the original size of the image when height is passed`, () => {
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       height: 300,
       file,
       imgDimensions,
@@ -166,7 +166,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
   it(`should create images of different sizes (0.25x, 0.5x, 1x, 2x) from a width`, () => {
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       width: 320,
       file,
       imgDimensions,
@@ -177,7 +177,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
   it(`should create images of different sizes (0.25x, 0.5x, 1x) without any defined size provided`, () => {
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       file,
       imgDimensions,
     }
@@ -189,7 +189,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     const srcSetBreakpoints = [50, 70, 150, 250, 300]
     const width = 500
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       width,
       srcSetBreakpoints,
       file,
@@ -211,7 +211,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     ]
     const width = 1500 // also shouldn't be included
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       width,
       srcSetBreakpoints,
       file,
@@ -228,7 +228,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     const srcSetBreakpoints = [400, 800] // should find these
     const width = 500
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       width,
       outputPixelDensities: [2, 4], // and ignore these, ie [1000, 2000]
       srcSetBreakpoints,
@@ -241,7 +241,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
   })
 
-  it(`should adjust fluid sizes according to fit type`, () => {
+  it(`should adjust fullWidth sizes according to fit type`, () => {
     const imgDimensions = {
       width: 2810,
       height: 1360,
@@ -308,7 +308,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
         outputPixelDensities,
         reporter,
         imgDimensions,
-        layout: `fluid`,
+        layout: `fullWidth`,
       })
       expect([presentationWidth, presentationHeight]).toEqual(result)
     })
