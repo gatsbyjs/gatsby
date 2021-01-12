@@ -657,7 +657,11 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  const dimensions = await getImageSizeAsync(file)
+
+  let dimensions = getImageSizeAsync(file)
+  if (dimensions?.then) {
+    dimensions = await dimensions
+  }
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
