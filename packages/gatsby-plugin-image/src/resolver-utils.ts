@@ -28,7 +28,7 @@ export const ImageLayoutType = new GraphQLEnumType({
   name: `GatsbyImageLayout`,
   values: {
     FIXED: { value: `fixed` },
-    FLUID: { value: `fluid` },
+    FULL_WIDTH: { value: `fullWidth` },
     CONSTRAINED: { value: `constrained` },
   },
 })
@@ -52,11 +52,11 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
     args: {
       layout: {
         type: ImageLayoutType,
-        defaultValue: `fixed`,
+        defaultValue: `constrained`,
         description: stripIndent`
             The layout for the image.
             FIXED: A static image sized, that does not resize according to the screen width
-            FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+            FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
             CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
             `,
       },

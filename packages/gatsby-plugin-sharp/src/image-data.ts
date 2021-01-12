@@ -10,7 +10,6 @@ import { createTransformObject } from "./plugin-options"
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
-
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -100,16 +99,16 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  if ((args.width || args.height) && layout === `fluid`) {
+  if ((args.width || args.height) && layout === `fullWidth`) {
     reporter.warn(
-      `Specifying fluid images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
+      `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
     args.width = undefined
     args.height = undefined
   }
 
   if (!args.width && !args.height && metadata.width) {
-    if (layout === `fluid`) {
+    if (layout === `fullWidth`) {
       args.width = Math.round(metadata.width / 2)
     } else {
       args.width = metadata.width
@@ -342,7 +341,7 @@ export async function generateImageData({
       imageProps.height = imageSizes.presentationHeight
       break
 
-    case `fluid`:
+    case `fullWidth`:
       imageProps.width = 1
       imageProps.height = 1 / primaryImage.aspectRatio
       break

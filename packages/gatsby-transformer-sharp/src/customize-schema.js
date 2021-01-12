@@ -403,7 +403,7 @@ const imageNodeType = ({
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
-        FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
         CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
         `,
       },

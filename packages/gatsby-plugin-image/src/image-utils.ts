@@ -9,7 +9,7 @@ const DEFAULT_FIXED_WIDTH = 400
 
 export type Fit = "cover" | "fill" | "inside" | "outside" | "contain"
 
-export type Layout = "fixed" | "fluid" | "constrained"
+export type Layout = "fixed" | "fullWidth" | "constrained"
 export type ImageFormat = "jpg" | "png" | "webp" | "avif" | "auto" | ""
 
 /**
@@ -20,7 +20,7 @@ export interface IReporter {
 }
 
 export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
+  layout?: Layout
   formats?: Array<ImageFormat>
   placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
   tracedSVGOptions?: Record<string, unknown>
@@ -107,7 +107,7 @@ export const getSizes = (width: number, layout: Layout): string | undefined => {
       return `${width}px`
 
     // Image is always the width of the screen
-    case `fluid`:
+    case `fullWidth`:
       return `100vw`
 
     default:
@@ -251,7 +251,7 @@ export function generateImageData(
       imageProps.height = imageSizes.presentationHeight
       break
 
-    case `fluid`:
+    case `fullWidth`:
       imageProps.width = 1
       imageProps.height = 1 / imageSizes.aspectRatio
       break
@@ -292,11 +292,11 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
 
   if (layout === `fixed`) {
     return fixedImageSizes(args)
-  } else if (layout === `fluid` || layout === `constrained`) {
-    return fluidImageSizes(args)
+  } else if (layout === `fullWidth` || layout === `constrained`) {
+    return responsiveImageSizes(args)
   } else {
     reporter.warn(
-      `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fluid, and constrained.`
+      `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained.`
     )
     return {
       sizes: [imgDimensions.width],
@@ -380,7 +380,7 @@ export function fixedImageSizes({
   }
 }
 
-export function fluidImageSizes({
+export function responsiveImageSizes({
   sourceMetadata: imgDimensions,
   width,
   height,

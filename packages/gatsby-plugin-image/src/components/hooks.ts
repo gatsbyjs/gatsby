@@ -176,7 +176,7 @@ export function getPlaceholderProps(
       wrapperStyle.left = 0
       wrapperStyle.bottom = 0
       wrapperStyle.right = 0
-    } else if (layout === `fluid`) {
+    } else if (layout === `fullWidth`) {
       wrapperStyle.position = `absolute`
       wrapperStyle.top = 0
       wrapperStyle.left = 0

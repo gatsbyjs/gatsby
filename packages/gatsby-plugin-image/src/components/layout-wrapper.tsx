@@ -45,7 +45,7 @@ export function getSizer(
   height: number
 ): string {
   let sizer: string | null = null
-  if (layout === `fluid`) {
+  if (layout === `fullWidth`) {
     sizer = `<div aria-hidden="true" style="padding-top: ${
       (height / width) * 100
     }%;"></div>`
@@ -63,7 +63,7 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
   children,
 }) {
   let sizer: JSX.Element | null = null
-  if (layout === `fluid`) {
+  if (layout === `fullWidth`) {
     sizer = (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
