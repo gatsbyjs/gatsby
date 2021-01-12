@@ -47,15 +47,41 @@ export interface IImageMetadata {
 
 const metadataCache = new Map<string, IImageMetadata>()
 
-export async function getImageMetadata(
+export function getImageMetadata(
   file: FileNode,
   getDominantColor?: boolean
-): Promise<IImageMetadata> {
-  if (!getDominantColor) {
-    // If we don't need the dominant color we can use the cheaper size function
-    const { width, height, type } = await getImageSizeAsync(file)
-    return { width, height, format: type }
+): Promise<IImageMetadata> | IImageMetadata {
+  // If we don't need the dominant color we can use the cheaper size function
+  if (getDominantColor) {
+    return getImageMetadataDominant(file)
+  } else {
+    return getImageMetadataPlain(file)
   }
+}
+function getImageMetadataPlain(
+  file: FileNode
+): IImageMetadata | Promise<IImageMetadata> {
+  const metadata = getImageSizeAsync(file)
+  if (metadata?.then) {
+    return metadata.then(getMetadataParts)
+  } else {
+    return getMetadataParts(metadata)
+  }
+}
+function getMetadataParts({
+  width,
+  height,
+  type,
+}: {
+  width: number
+  height: number
+  type: string
+}): IImageMetadata {
+  return { width, height, format: type }
+}
+async function getImageMetadataDominant(
+  file: FileNode
+): Promise<IImageMetadata> {
   let metadata = metadataCache.get(file.internal.contentDigest)
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
