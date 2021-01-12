@@ -12,8 +12,8 @@ Array [
         "contentDigest": "contentDigest",
         "type": "FooJson",
       },
+      "json_id": 12345,
       "parent": "whatever",
-      "publicId": "12345",
     },
   ],
 ]
@@ -32,8 +32,8 @@ Array [
           "contentDigest": "contentDigest",
           "type": "FooJson",
         },
+        "json_id": 12345,
         "parent": "whatever",
-        "publicId": "12345",
       },
       "parent": Object {
         "children": Array [],
@@ -65,8 +65,8 @@ Array [
         "contentDigest": "contentDigest",
         "type": "FooJson",
       },
+      "json_id": "foo",
       "parent": "whatever",
-      "publicId": "foo",
     },
   ],
 ]
@@ -85,8 +85,8 @@ Array [
           "contentDigest": "contentDigest",
           "type": "FooJson",
         },
+        "json_id": "foo",
         "parent": "whatever",
-        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -118,8 +118,8 @@ Array [
         "contentDigest": "contentDigest",
         "type": "NotFileJson",
       },
+      "json_id": "foo",
       "parent": "whatever",
-      "publicId": "foo",
     },
   ],
 ]
@@ -138,8 +138,8 @@ Array [
           "contentDigest": "contentDigest",
           "type": "NotFileJson",
         },
+        "json_id": "foo",
         "parent": "whatever",
-        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -169,8 +169,8 @@ Array [
         "contentDigest": "contentDigest",
         "type": "NodeNameJson",
       },
+      "json_id": "foo",
       "parent": "whatever",
-      "publicId": "foo",
     },
   ],
   Array [
@@ -202,8 +202,8 @@ Array [
           "contentDigest": "contentDigest",
           "type": "NodeNameJson",
         },
+        "json_id": "foo",
         "parent": "whatever",
-        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -263,8 +263,8 @@ Array [
         "contentDigest": "contentDigest",
         "type": "NotFileJson",
       },
+      "json_id": "foo",
       "parent": "whatever",
-      "publicId": "foo",
     },
   ],
   Array [
@@ -296,8 +296,8 @@ Array [
           "contentDigest": "contentDigest",
           "type": "NotFileJson",
         },
+        "json_id": "foo",
         "parent": "whatever",
-        "publicId": "foo",
       },
       "parent": Object {
         "children": Array [],
@@ -353,8 +353,8 @@ Array [
         "contentDigest": "contentDigest",
         "type": "FooJson",
       },
+      "json_id": "123",
       "parent": "whatever",
-      "publicId": "123",
     },
   ],
 ]
@@ -373,8 +373,8 @@ Array [
           "contentDigest": "contentDigest",
           "type": "FooJson",
         },
+        "json_id": "123",
         "parent": "whatever",
-        "publicId": "123",
       },
       "parent": Object {
         "children": Array [],
