@@ -22,20 +22,20 @@ const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
 // const { rgbToHex } = require(`./utils`)
 
-// Note: two caches. One can be used by async functions, the other one can only be used by sync functions.
-const imageSizeOrPromiseCache = new Map()
-const imageSizeCache = new Map()
+const imageSizeOrPromiseCache = new Map() // For async functions, sync functions should only set
+const imageSizeCache = new Map() // For sync functions, async functions should only set
 
 function getImageSizeAsync(file) {
+  const digest = file.internal.contentDigest
   if (process.env.NODE_ENV !== `test`) {
-    const cache = imageSizeOrPromiseCache.get(file.internal.contentDigest)
+    const cache = imageSizeOrPromiseCache.get(digest)
     if (cache) {
       return cache
     }
   }
   const input = fs.createReadStream(file.absolutePath)
   const promise = imageSize(input)
-  imageSizeOrPromiseCache.set(file.internal.contentDigest, promise)
+  imageSizeOrPromiseCache.set(digest, promise)
   return promise.then(dimensions => {
     if (!dimensions) {
       reportError(
@@ -44,18 +44,16 @@ function getImageSizeAsync(file) {
       )
     }
 
-    imageSizeCache.set(file.internal.contentDigest, dimensions)
-    imageSizeOrPromiseCache.set(file.internal.contentDigest, dimensions)
+    imageSizeCache.set(digest, dimensions)
+    imageSizeOrPromiseCache.set(digest, dimensions)
     return dimensions
   })
 }
 // Remove in next major as it's really slow
 const getImageSize = file => {
-  if (
-    process.env.NODE_ENV !== `test` &&
-    imageSizeCache.has(file.internal.contentDigest)
-  ) {
-    return imageSizeCache.get(file.internal.contentDigest)
+  const digest = file.internal.contentDigest
+  if (process.env.NODE_ENV !== `test` && imageSizeCache.has(digest)) {
+    return imageSizeCache.get(digest)
   } else {
     const dimensions = imageSize.sync(fs.readFileSync(file.absolutePath))
 
@@ -66,8 +64,8 @@ const getImageSize = file => {
       )
     }
 
-    imageSizeCache.set(file.internal.contentDigest, dimensions)
-    imageSizeOrPromiseCache.set(file.internal.contentDigest, dimensions)
+    imageSizeCache.set(digest, dimensions)
+    imageSizeOrPromiseCache.set(digest, dimensions)
     return dimensions
   }
 }
