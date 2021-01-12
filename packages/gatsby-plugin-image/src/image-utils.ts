@@ -384,7 +384,7 @@ export function fluidImageSizes({
 
   // Case 1: width of height were passed in, make sure it isn't larger than the actual image
   width = width && Math.min(width, imgDimensions.width)
-  width = height && Math.min(height, imgDimensions.height)
+  height = height && Math.min(height, imgDimensions.height)
 
   // Case 2: neither width or height were passed in, use default size
   if (!width && !height) {
