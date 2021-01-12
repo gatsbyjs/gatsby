@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.31.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.0...gatsby@2.31.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby:** fix stale query results on data updates ([#28986](https://github.com/gatsbyjs/gatsby/issues/28986)) ([811c2a8](https://github.com/gatsbyjs/gatsby/commit/811c2a839c44999967b5f081cc1998fc4a347e85))
+- **gatsby:** rewrite a spread that would break at scale ([#28910](https://github.com/gatsbyjs/gatsby/issues/28910)) ([638ac0a](https://github.com/gatsbyjs/gatsby/commit/638ac0af798de9727ec2488f201b7c578464c916))
+- **gatsby:** show stack trace for non-graphql errors ([#28888](https://github.com/gatsbyjs/gatsby/issues/28888)) ([1769fc3](https://github.com/gatsbyjs/gatsby/commit/1769fc361b5d3f664ec71bd5ecf4f22b85bfe5a2))
+- **gatsby,gatsby-admin:** Pin socket.io version to 2.3.0 ([#28885](https://github.com/gatsbyjs/gatsby/issues/28885)) ([247b1dc](https://github.com/gatsbyjs/gatsby/commit/247b1dc0441fdade52a5ff7a71de8c9340ee05fd))
+
+### Features
+
+- **gatsby:** Partially release develop SSR to 5% ([#28844](https://github.com/gatsbyjs/gatsby/issues/28844)) ([6b8cd5d](https://github.com/gatsbyjs/gatsby/commit/6b8cd5d69bc8a5ad63413756eb71ff3e739230e5))
+
+### Performance Improvements
+
+- **develop:** don't use debug config for bluebird ([#28957](https://github.com/gatsbyjs/gatsby/issues/28957)) ([125f571](https://github.com/gatsbyjs/gatsby/commit/125f571880190b55d6e9c03672b6d79e854dd4bd))
+- **gatsby:** do not call and iterate getAllNodes(File) for each file ([#28891](https://github.com/gatsbyjs/gatsby/issues/28891)) ([a455a23](https://github.com/gatsbyjs/gatsby/commit/a455a2396c97997dca6fb0797e845de0acebd2f6))
+
 # [2.31.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.8...gatsby@2.31.0-next.0) (2020-12-29)
 
 ### Features

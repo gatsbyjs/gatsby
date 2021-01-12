@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.13.0-next.0...gatsby-plugin-sharp@2.13.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Add avif to pipeline ([#28871](https://github.com/gatsbyjs/gatsby/issues/28871)) ([1debff5](https://github.com/gatsbyjs/gatsby/commit/1debff5cb1133206ce08563f576d9a121a241730))
+- **gatsby-plugin-sharp:** Pass format-specific options in image-data ([#28826](https://github.com/gatsbyjs/gatsby/issues/28826)) ([7378fcf](https://github.com/gatsbyjs/gatsby/commit/7378fcfa9b4ee6c173c4fecd5eb90efdcc0f7ff3))
+- **gatsby-plugin-sharp:** PathPrefix isn't being passed/set for GatsbyImage ([#28845](https://github.com/gatsbyjs/gatsby/issues/28845)) ([5874414](https://github.com/gatsbyjs/gatsby/commit/58744145d6f8ef2e36c9a5f2f4e06290b0cff942))
+
+### Features
+
+- Add support for aspectRatio ([#28941](https://github.com/gatsbyjs/gatsby/issues/28941)) ([ed19fa0](https://github.com/gatsbyjs/gatsby/commit/ed19fa052a93e948b1135ac128cf5abec48752b6))
+
+### Performance Improvements
+
+- **gatsby-plugin-sharp:** change approach to concurrency for image processing ([#28575](https://github.com/gatsbyjs/gatsby/issues/28575)) ([930e6b6](https://github.com/gatsbyjs/gatsby/commit/930e6b6e991cabd33f2be0fee2e8a315a8bee131))
+
 # [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.6...gatsby-plugin-sharp@2.13.0-next.0) (2020-12-29)
 
 ### Features
