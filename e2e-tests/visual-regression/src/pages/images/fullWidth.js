@@ -9,7 +9,7 @@ const Page = () => {
     query {
       file(relativePath: { eq: "cornwall.jpg" }) {
         childImageSharp {
-          gatsbyImageData(width: 1024, layout: FLUID)
+          gatsbyImageData(width: 1024, layout: FULL_WIDTH)
         }
       }
     }
@@ -17,7 +17,7 @@ const Page = () => {
 
   return (
     <Layout>
-      <h1>Fluid, maxWidth</h1>
+      <h1>fullWidth, maxWidth</h1>
       <TestWrapper style={{ display: `block` }}>
         <GatsbyImage
           image={getImage(data.file)}
