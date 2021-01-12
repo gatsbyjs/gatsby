@@ -309,6 +309,19 @@ class LocalNodeModel {
         this.trackInlineObjectsInRootNode(result)
       } else {
         result = null
+
+        // Couldn't find matching node.
+        //  This leads to a state where data tracking for this query gets empty.
+        //  It means we will NEVER re-run this query on any data updates
+        //  (even if a new node matching this query is added at some point).
+        //  To workaround this, we have to add a connection tracking to re-run
+        //  the query whenever any node of this type changes.
+        if (pageDependencies.path) {
+          this.createPageDependency({
+            path: pageDependencies.path,
+            connection: gqlType.name,
+          })
+        }
       }
     } else if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
