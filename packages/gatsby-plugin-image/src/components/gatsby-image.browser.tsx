@@ -109,13 +109,14 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
         if (hasSSRHtml.complete) {
           customOnLoad?.()
           storeImageloaded(JSON.stringify(images))
-        }
-        hasSSRHtml.addEventListener(`load`, function onLoad() {
-          hasSSRHtml.removeEventListener(`load`, onLoad)
+        } else {
+          hasSSRHtml.addEventListener(`load`, function onLoad() {
+            hasSSRHtml.removeEventListener(`load`, onLoad)
 
-          customOnLoad?.()
-          storeImageloaded(JSON.stringify(images))
-        })
+            customOnLoad?.()
+            storeImageloaded(JSON.stringify(images))
+          })
+        }
         return undefined
       }
 
@@ -155,11 +156,6 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
         hydrated.current = true
         return
-      }
-
-      // When no ssrHtml is found (develop) we should force render instead of hydrate
-      if (!hasSSRHtml) {
-        hydrated.current = true
       }
 
       import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
