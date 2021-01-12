@@ -37,13 +37,11 @@ const args: IGatsbyImageHelperArgs = {
 
 const fluidArgs: IGatsbyImageHelperArgs = {
   ...args,
-  width: undefined,
-  maxWidth: 400,
   layout: `fluid`,
 }
 
 const constrainedArgs: IGatsbyImageHelperArgs = {
-  ...fluidArgs,
+  ...args,
   layout: `constrained`,
 }
 

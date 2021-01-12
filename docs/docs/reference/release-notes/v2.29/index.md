@@ -20,7 +20,7 @@ Other notable changes:
 
 - [Performance improvements](#performance-improvements)
 - [Slugify option for File System Route API](#slugify-option-for-file-system-route-api)
-- [gatsby-image codemod](#gatsby-image-codemod)
+- [`gatsby-image` codemod](#gatsby-image-codemod)
 - [Notable bugfixes](#notable-bugfixes)
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
@@ -131,7 +131,7 @@ We were able to ship a bunch of performance improvements both to Gatsby itself a
 
 The File System Route API uses [slugify](https://github.com/sindresorhus/slugify) to create slugs for the generated routes. You're now able to pass custom options to that instance, e.g. when you want to change the separator. The full details are listed in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator) of `gatsby-plugin-page-creator`.
 
-## gatsby-image codemod
+## `gatsby-image` codemod
 
 We introduced some API changes for working with images when we published the new `gatsby-plugin-image` in [v2.26](/docs/reference/release-notes/v2.26#gatsby-plugin-image010-beta). In order to make it easier to migrate your code to work with the new plugin, we've created a codemod. Follow the migration instructions in the [README](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image#upgrading-from-the-gatsby-image2) in order to run the codemod against your project.
 

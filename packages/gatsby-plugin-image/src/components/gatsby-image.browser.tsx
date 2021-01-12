@@ -17,6 +17,7 @@ import {
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
+import { getSizer } from "./layout-wrapper"
 
 // eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface GatsbyImageProps
@@ -31,12 +32,12 @@ export interface GatsbyImageProps
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
-  backgroundColor?: string
+  backgroundColor?: CSSProperties["backgroundColor"]
   objectFit?: CSSProperties["objectFit"]
   objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
   onError?: () => void
-  onStartLoad?: Function
+  onStartLoad?: (props: { wasCached?: boolean }) => void
 }
 
 export interface IGatsbyImageData {
@@ -46,8 +47,6 @@ export interface IGatsbyImageData {
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
   width?: number
-  maxHeight?: number
-  maxWidth?: number
 }
 
 let hasShownWarning = false
@@ -189,6 +188,8 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     props,
   ])
 
+  const sizer = getSizer(layout, width, height)
+
   return (
     <Type
       {...wrapperProps}
@@ -200,7 +201,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       className={`${wClass}${className ? ` ${className}` : ``}`}
       ref={root}
       dangerouslySetInnerHTML={{
-        __html: ``,
+        __html: sizer,
       }}
       suppressHydrationWarning
     />

@@ -6,13 +6,13 @@ import Layout from "../../components/layout"
 const Page = () => {
   return (
     <Layout>
-      <h1>Fluid, maxWidth</h1>
+      <h1>Fluid, width</h1>
       <TestWrapper style={{ display: `block` }}>
         <StaticImage
           src="../../images/cornwall.jpg"
           loading="eager"
           layout="fluid"
-          maxWidth={1024}
+          width={1024}
           alt="cornwall"
         />
       </TestWrapper>

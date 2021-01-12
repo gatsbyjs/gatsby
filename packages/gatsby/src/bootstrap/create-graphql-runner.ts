@@ -79,6 +79,7 @@ export const createGraphQLRunner = (
                     },
                   },
                   filePath: file.getFileName(),
+                  error: e,
                 })
                 structuredError.context = {
                   ...structuredError.context,
