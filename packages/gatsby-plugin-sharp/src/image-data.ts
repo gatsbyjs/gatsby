@@ -9,6 +9,8 @@ import { createTransformObject } from "./plugin-options"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
+const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
+
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 
 export type FileNode = Node & {
@@ -93,6 +95,12 @@ export async function generateImageData({
 
   args.formats = args.formats || [`auto`, `webp`]
 
+  if (layout === `fluid`) {
+    args.breakpoints = args.breakpoints?.length
+      ? args.breakpoints
+      : DEFAULT_BREAKPOINTS
+  }
+
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,
@@ -104,16 +112,12 @@ export async function generateImageData({
     reporter.warn(
       `Specifying fluid images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
-    args.width = undefined
+    args.width = metadata.width
     args.height = undefined
   }
 
   if (!args.width && !args.height && metadata.width) {
-    if (layout === `fluid`) {
-      args.width = Math.round(metadata.width / 2)
-    } else {
-      args.width = metadata.width
-    }
+    args.width = metadata.width
   }
 
   if (args.aspectRatio) {

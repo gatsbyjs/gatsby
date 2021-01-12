@@ -38,6 +38,7 @@ export interface ISharpGatsbyImageArgs {
   webpOptions?: Record<string, unknown>
   avifOptions?: Record<string, unknown>
   blurredOptions?: { width?: number; toFormat?: ImageFormat }
+  breakpoints?: Array<number>
 }
 
 export interface IImageSizeArgs {

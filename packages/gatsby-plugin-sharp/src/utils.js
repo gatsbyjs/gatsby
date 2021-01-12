@@ -128,7 +128,6 @@ export function fixedImageSizes({
   height,
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  srcSetBreakpoints,
   reporter,
 }) {
   let aspectRatio = imgDimensions.width / imgDimensions.height
@@ -204,7 +203,7 @@ export function fluidImageSizes({
   height,
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  srcSetBreakpoints,
+  breakpoints,
 }) {
   const { fit = `cover` } = transformOptions
 
@@ -259,8 +258,8 @@ export function fluidImageSizes({
   // device size / screen resolution while (hopefully) not requiring too much
   // image processing time (Sharp has optimizations thankfully for creating
   // multiple sizes of the same input file)
-  if (srcSetBreakpoints?.length > 0) {
-    sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
+  if (breakpoints?.length > 0) {
+    sizes = breakpoints.filter(size => size <= imgDimensions.width)
   } else {
     sizes = densities.map(density => Math.round(density * width))
     sizes = sizes.filter(size => size <= imgDimensions.width)
