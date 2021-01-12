@@ -7,16 +7,12 @@
     "build:gatsby-ssr": "microbundle -i src/gatsby-ssr.tsx -f cjs -o ./[name].js --no-pkg-main --jsx React.createElement --no-compress --external=common-tags,react --no-sourcemap",
     "build:server": "microbundle -f cjs,es --jsx React.createElement --define SERVER=true",
     "build:browser": "microbundle -i src/index.browser.ts -f cjs,modern,es --jsx React.createElement -o dist/gatsby-image.browser --define SERVER=false",
-    "build:server-compat": "microbundle -i src/components/compat.tsx -f cjs,es --jsx React.createElement -o dist/gatsby-image.compat --define SERVER=true",
-    "build:browser-compat": "microbundle -i src/components/compat.browser.tsx -f cjs,modern,es --jsx React.createElement -o dist/gatsby-image.compat.browser --define SERVER=false",
     "prepare": "yarn build",
     "watch": "run-p watch:*",
     "watch:gatsby-node": "yarn build:gatsby-node --watch",
     "watch:gatsby-ssr": "yarn build:gatsby-ssr watch",
     "watch:server": "yarn build:server --no-compress watch",
     "watch:browser": "yarn build:browser --no-compress watch",
-    "watch:server-compat": "yarn build:server-compat --no-compress watch",
-    "watch:browser-compat": "yarn build:browser-compat --no-compress watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "clean": "del-cli dist/*"
@@ -30,20 +26,12 @@
   "module": "dist/gatsby-image.module.js",
   "esmodule": "dist/gatsby-image.modern.js",
   "browser": {
-    "./compat.js": "./compat.browser.module.js",
-    "./compat.module.js": "./compat.browser.module.js",
-    "./compat.modern.js": "./compat.browser.modern.js",
     "./dist/gatsby-image.js": "./dist/gatsby-image.browser.js",
     "./dist/gatsby-image.module.js": "./dist/gatsby-image.browser.module.js",
     "./dist/gatsby-image.modern.js": "./dist/gatsby-image.browser.modern.js"
   },
   "files": [
     "dist/*",
-    "compat.js",
-    "compat.module.js",
-    "compat.browser.js",
-    "compat.browser.module.js",
-    "compat.browser.modern.js",
     "gatsby-node.js",
     "gatsby-ssr.js"
   ],
