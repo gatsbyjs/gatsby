@@ -2,7 +2,7 @@
 title: Gatsby Image plugin
 ---
 
-This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. If you would like to learn how to set up the image plugins and use images on your site, see [the how-to guide](/docs/how-to/images-and-media/using-gatsby-plugin-image).
+This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options.
 
 ## Components
 
@@ -11,7 +11,9 @@ The Gatsby Image plugin includes two components to display responsive images on 
 - **[`StaticImage`](#staticimage):** Use this if the image is the same every time the component is used. _Examples: site logo, index page hero image_
 - **[`GatsbyImage`](#gatsbyimage):** Use this if the image is passed into the component as a prop, or otherwise changes. _Examples: Blog post hero image, author avatar_
 
-The following are props that can be passed to the components.
+If you would like to learn how to set up the image plugins and use these components on your site, see [the how-to guide](/docs/how-to/images-and-media/using-gatsby-plugin-image).
+
+These are props that can be passed to the components:
 
 ### Shared props
 
