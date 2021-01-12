@@ -98,24 +98,27 @@ async function getImageMetadataDominantAsync(
 ): Promise<IImageMetadata> {
   const pipeline = sharp(file.absolutePath)
 
-  const promise = pipeline.metadata()
+  const promiseMeta = pipeline.metadata()
+  const promiseStats = pipeline.stats()
 
   // First set the promise
-  dominantMetadataOrPromiseCache.set(file.internal.contentDigest, promise)
+  dominantMetadataOrPromiseCache.set(file.internal.contentDigest, promiseMeta)
 
-  const { width, height, density, format } = await promise
+  return Promise.all([promiseMeta, promiseStats]).then(
+    ([{ width, height, density, format }, { dominant }]) => {
+      // Fallback in case sharp doesn't support dominant
+      const dominantColor = dominant
+        ? rgbToHex(dominant.r, dominant.g, dominant.b)
+        : `#000000`
 
-  const { dominant } = await pipeline.stats()
-  // Fallback in case sharp doesn't support dominant
-  const dominantColor = dominant
-    ? rgbToHex(dominant.r, dominant.g, dominant.b)
-    : `#000000`
+      const metadata = { width, height, density, format, dominantColor }
 
-  const metadata = { width, height, density, format, dominantColor }
+      // Secondly set the metadata once it's resolved
+      dominantMetadataOrPromiseCache.set(file.internal.contentDigest, metadata)
 
-  // Secondly set the metadata once it's resolved
-  dominantMetadataOrPromiseCache.set(file.internal.contentDigest, metadata)
-  return metadata
+      return metadata
+    }
+  )
 }
 
 export interface IImageDataProps {
