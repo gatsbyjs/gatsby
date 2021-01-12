@@ -40,5 +40,13 @@ ruleTester.run(`no-anonymous-exports-page-templates`, rule, {
       code: `const Template = () => {}\nconst query = graphql\`test\`\nfunction Test() {}\nexport { query, Test }\nexport default Template`,
       errors: [{ messageId: `limitedExportsPageTemplates` }],
     }),
+    test({
+      code: `const Template = () => {}\nexport const query = graphql\`test\`, hello = 10\nexport default Template`,
+      errors: [{ messageId: `limitedExportsPageTemplates` }],
+    }),
+    test({
+      code: `const Template = () => {}\nexport const hello = 10, query = graphql\`test\`\nexport default Template`,
+      errors: [{ messageId: `limitedExportsPageTemplates` }],
+    }),
   ],
 })
