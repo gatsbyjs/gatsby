@@ -4,11 +4,15 @@ import { GatsbyImage } from "gatsby-plugin-image";
 
 <GatsbyImage image={data.file.childImageSharp.gatsbyImageData} alt="headshot" />
 
-
 export const query = graphql`{
-  named: file(relativePath: {eq: "landscape.jpg"}) {
+  file(relativePath: {eq: "headers/default.jpg"}) {
     childImageSharp {
-      gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
+      gatsbyImageData(layout: FULL_WIDTH)
+    }
+  }
+  other: file(relativePath: {eq: "headers/default.jpg"}) {
+    childImageSharp {
+      gatsbyImageData(width: 500, layout: CONSTRAINED)
     }
   }
 }
