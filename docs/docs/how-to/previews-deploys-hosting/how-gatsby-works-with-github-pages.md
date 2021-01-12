@@ -62,12 +62,13 @@ When you run `npm run deploy` all contents of the `public` folder will be moved 
 
 For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `master` branch.
 
-> ⚠️ Keep in mind that GitHub Pages forces deployment of user/organization pages to the `master` branch. So if you use `master` for development you need to do one of these:
+> You have several option of how you deploy your pages:
 >
 > - Change the default branch from `master` to something else, and use `master` as a site deployment directory only:
 >   1. To create a new branch called `source` run this command:
 >      `git checkout -b source master`
 >   2. Change the default branch in your repository settings ("Branches" menu item) from `master` to `source`
+>   - **Note**: GitHub Pages now lets you use any branch for deployment, see [this docs page](https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#choosing-a-publishing-source) on how to do this. This means you do not have to change your default branch.
 > - Have a separate repository for your source code (so `username.github.io` is used only for deployment and not really for tracking your source code)
 
 ```json:title=package.json
@@ -77,6 +78,7 @@ For a repository named like `username.github.io`, you don't need to specify `pat
   }
 }
 ```
+> If you are deploying to branch different to `master`, replace it with your deployment branch's name in the deploy script.
 
 After running `npm run deploy` you should see your website at `username.github.io`
 
