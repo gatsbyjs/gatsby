@@ -294,7 +294,7 @@ JSON type, meaning you don't specify the individual fields, but are instead give
 ```graphql
 coverImage: file(relativePath: { eq: "plant.jpg" }) {
   childImageSharp {
-    gatsbyImageData(maxWidth: 720, layout: CONSTRAINED, placeholder: TRACED_SVG)
+    gatsbyImageData(width: 720, layout: CONSTRAINED, placeholder: TRACED_SVG)
   }
 }
 ```
