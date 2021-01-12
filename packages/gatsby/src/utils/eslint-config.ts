@@ -1,7 +1,8 @@
 import { printSchema, GraphQLSchema } from "graphql"
 import { CLIEngine } from "eslint"
+import { slash } from "gatsby-core-utils"
 
-const eslintRulePaths = `${__dirname}/eslint-rules`
+const eslintRulePaths = slash(`${__dirname}/eslint-rules`)
 const eslintRequirePreset = require.resolve(`./eslint/required`)
 
 export const eslintRequiredConfig: CLIEngine.Options = {

@@ -1,6 +1,7 @@
 import { mergeRequiredConfigIn } from "../eslint-config"
 import { CLIEngine } from "eslint"
 import * as path from "path"
+import { slash } from "gatsby-core-utils"
 
 describe(`eslint-config`, () => {
   describe(`mergeRequiredConfigIn`, () => {
@@ -41,7 +42,7 @@ describe(`eslint-config`, () => {
 
     it(`doesn't add rulePath multiple times`, () => {
       const conf: CLIEngine.Options = {
-        rulePaths: [path.resolve(__dirname, `../eslint-rules`), `test`],
+        rulePaths: [slash(path.resolve(__dirname, `../eslint-rules`)), `test`],
       }
 
       mergeRequiredConfigIn(conf)
