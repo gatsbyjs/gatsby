@@ -2,6 +2,17 @@ const jsYaml = require(`js-yaml`)
 const _ = require(`lodash`)
 const path = require(`path`)
 
+const conflictFieldPrefix = `yaml_`
+// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
+const restrictedNodeFields = [
+  `children`,
+  `contentful_id`,
+  `fields`,
+  `id`,
+  `internal`,
+  `parent`,
+]
+
 function unstable_shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `text/yaml`
 }
@@ -48,26 +59,42 @@ async function onCreateNode(
   const content = await loadNodeContent(node)
   const parsedContent = jsYaml.load(content)
 
-  function createPublicId(obj) {
-    if (obj.id) {
-      obj.publicId = String(obj.id)
-    }
-    return obj
+  function normalizeRestrictedFields(obj) {
+    restrictedNodeFields.forEach(restrictedNodeField => {
+      if (Object.keys(obj).includes(restrictedNodeField)) {
+        obj[`${conflictFieldPrefix}${restrictedNodeField}`] =
+          obj[restrictedNodeField]
+        delete obj[restrictedNodeField]
+
+        console.log(
+          `Restricted field found for when parsing yaml object. Field ${restrictedNodeField} value is now found on field ${conflictFieldPrefix}${restrictedNodeField}.`
+        )
+      }
+    })
+  }
+
+  if (_.isArray(parsedContent)) {
+    parsedContent.forEach(obj => {
+      if (_.isPlainObject(obj)) {
+        normalizeRestrictedFields(obj)
+      }
+    })
+  }
+  if (_.isPlainObject(parsedContent)) {
+    normalizeRestrictedFields(parsedContent)
   }
 
   if (_.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
-      obj = createPublicId(obj)
       transformObject(
         obj,
-        obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> YAML`),
+        createNodeId(`${node.id} [${i}] >>> YAML`),
         getType({ node, object: obj, isArray: true })
       )
     })
   } else if (_.isPlainObject(parsedContent)) {
-    const newParsedContent = createPublicId(parsedContent)
     transformObject(
-      newParsedContent,
+      parsedContent,
       parsedContent.id ? parsedContent.id : createNodeId(`${node.id} >>> YAML`),
       getType({ node, object: parsedContent, isArray: false })
     )
