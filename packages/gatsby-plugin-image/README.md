@@ -288,7 +288,7 @@ In Gatsby's GraphQL implementation, you specify the type of image with the `layo
 
 # GraphQL resolver
 
-We have added a new `gatsbyImageData` resolver to the `ImageSharp` node. Unlike the existing `fixed` and `fullWidth` resolvers, this returns a
+We have added a new `gatsbyImageData` resolver to the `ImageSharp` node. Unlike the existing `fixed` and `fluid` resolvers, this returns a
 JSON type, meaning you don't specify the individual fields, but are instead given the whole object. This is because the object is then passed in to the `<GatsbyImage>` component. The API is like this:
 
 ```graphql
