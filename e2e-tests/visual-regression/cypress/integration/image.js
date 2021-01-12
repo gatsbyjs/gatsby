@@ -1,14 +1,14 @@
 const testCases = [
   ["fixed image", "/images/fixed"],
   ["fixed image smaller than requested size", "/images/fixed-too-big"],
-  ["fullWidth image", "/images/fullWidth"],
+  ["fluid image", "/images/fullWidth"],
   ["constrained image", "/images/constrained"],
   ["avif format", "/images/avif"],
 ]
 const staticImageTestCases = [
   ["fixed image", "/static-images/fixed"],
   ["fixed image smaller than requested size", "/static-images/fixed-too-big"],
-  ["fullWidth image", "/static-images/fullWidth"],
+  ["fluid image", "/static-images/fullWidth"],
   ["constrained image", "/static-images/constrained"],
   ["avif format", "/static-images/avif"],
 ]
