@@ -8,8 +8,6 @@ export const SHARP_ATTRIBUTES = new Set([
   `src`,
   `layout`,
   `formats`,
-  `maxWidth`,
-  `maxHeight`,
   `aspectRatio`,
   `quality`,
   `avifOptions`,

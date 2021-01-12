@@ -58,7 +58,7 @@ export const Dino = () => (
     src="trex.png"
     placeholder="none"
     layout="constrained"
-    maxWidth={200}
+    width={200}
     alt="T-Rex"
     transformOptions={{ grayscale: true }}
   />
@@ -289,7 +289,7 @@ In Gatsby's GraphQL implementation, you specify the type of image with the `layo
 # GraphQL resolver
 
 We have added a new `gatsbyImageData` resolver to the `ImageSharp` node. Unlike the existing `fixed` and `fluid` resolvers, this returns a
-JSON type, meaning you don't specify the individual fields, but are instead given the whole object. This is because the object is then passed in to the `<GatsbyImage>` component. The API is like this:
+JSON type, meaning you don't specify the individual fields, but are instead given the whole object. This is because the object is then passed into the `<GatsbyImage>` component. The API is like this:
 
 ```graphql
 coverImage: file(relativePath: { eq: "plant.jpg" }) {
@@ -316,13 +316,8 @@ The optional helper function `getImage` takes a file node and returns `file?.chi
 
 These arguments can be passed to the `gatsbyImageData()` resolver:
 
-- **width**: The display width of the generated image. The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities. Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+- **width**: The display width of the generated image for layout = FIXED, if layout = CONSTRAINED it's the display width of the largest generated image. The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities.
 - **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.
-- **maxWidth**:
-  Maximum display width of generated files.
-  The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
-  This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"
-- **maxHeight**: If set, the generated image is a maximum of this height, cropping if necessary. If the image layout is "constrained" then the image will be limited to this height. If the aspect ratio of the image is different than the source, then the image will be cropped.`,
 - **placeholder**: Format of generated placeholder image.
   - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
   - `TRACED_SVG`: a low-resolution traced SVG of the image.
@@ -333,7 +328,8 @@ These arguments can be passed to the `gatsbyImageData()` resolver:
   - `FIXED`: A static image size, that does not resize according to the screen width
   - `FULL_WIDTH`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
 - **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
-  Default is `[ 0.25, 0.5, 1, 2 ]`, for fullWidth/constrained images, and `[ 1, 2 ]` for fixed. In this case, an image with a fullWidth layout and maxWidth = 400 would generate images at 100, 200, 400 and 800px wide
+  Default is `[ 0.25, 0.5, 1, 2 ]`, for fullWidth/constrained images, and `[ 1, 2 ]` for fixed.
+  > > > > > > > master
 - **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
 - **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
 - **quality**: The default quality. This is overridden by any format-specific options

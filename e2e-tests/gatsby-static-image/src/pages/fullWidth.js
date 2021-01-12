@@ -9,7 +9,7 @@ const FluidPage = () => (
       <StaticImage
         src="../images/citrus-fruits.jpg"
         layout="fullWidth"
-        maxWidth={700}
+        width={700}
         alt="Citrus fruits"
       />
     </div>

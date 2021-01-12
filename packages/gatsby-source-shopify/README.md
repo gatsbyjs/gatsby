@@ -72,6 +72,9 @@ plugins: [
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
       includeCollections: ["shop", "content"],
+      // Download Images Locally
+      // set to false if you plan on using shopify's CDN
+      downloadImages: true,
 
       // Allow overriding the default queries
       // This allows you to include/exclude extra fields when sourcing nodes

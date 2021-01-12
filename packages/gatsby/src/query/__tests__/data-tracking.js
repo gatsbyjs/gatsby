@@ -663,6 +663,70 @@ describe(`query caching between builds`, () => {
     }, 999999)
   })
 
+  describe(`Changed node previously not used to be used by the query`, () => {
+    let nodeChangeCounter = 1
+    beforeEach(() => {
+      setAPIhooks({
+        sourceNodes: (nodeApiContext, _pluginOptions) => {
+          const { createTestNode } = getTypedNodeCreators(nodeApiContext)
+
+          for (let i = 1; i <= nodeChangeCounter; i++) {
+            createTestNode({
+              id: `test-${i}`,
+              slug: `foo${i}`,
+              content: `Lorem ipsum.`,
+            })
+          }
+
+          nodeChangeCounter++
+        },
+      })
+      setPageQueries({})
+      setStaticQueries({
+        "static-query-1": `
+          {
+            test(slug: { eq: "foo2" }) {
+              slug
+              content
+            }
+          }
+        `,
+        "static-query-2": `
+          {
+            test(slug: { eq: "foo3" }) {
+              slug
+              content
+            }
+          }
+        `,
+      })
+    })
+
+    it(`rerunning after cache clearing - should run all queries`, async () => {
+      const { staticQueriesThatRan } = await setup({
+        restart: true,
+        clearCache: true,
+      })
+
+      // all queries to run
+      expect(staticQueriesThatRan).toEqual([`static-query-1`, `static-query-2`])
+    }, 99999)
+
+    it(`changing node to be used by any query triggers running that query (no restart)`, async () => {
+      const { staticQueriesThatRan } = await setup()
+
+      // runs the query with filter `slug: { eq: "foo1" }`
+      expect(staticQueriesThatRan).toEqual([`static-query-1`, `static-query-2`])
+    }, 999999)
+
+    it(`changing node to be used by any query triggers running that query (with restart)`, async () => {
+      const { staticQueriesThatRan } = await setup({ restart: true })
+
+      // runs the query with filter `slug: { eq: "foo2" }`
+      expect(staticQueriesThatRan).toEqual([`static-query-2`])
+    }, 999999)
+  })
+
   describe(`Changing data used in multiple queries properly invalidates them`, () => {
     let nodeChangeCounter = 1
     beforeAll(() => {
