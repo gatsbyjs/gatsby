@@ -22,27 +22,32 @@ const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
 // const { rgbToHex } = require(`./utils`)
 
+// Note: two caches. One can be used by async functions, the other one can only be used by sync functions.
+const imageSizeOrPromiseCache = new Map()
 const imageSizeCache = new Map()
 
-const getImageSizeAsync = async file => {
-  if (
-    process.env.NODE_ENV !== `test` &&
-    imageSizeCache.has(file.internal.contentDigest)
-  ) {
-    return imageSizeCache.get(file.internal.contentDigest)
+function getImageSizeAsync(file) {
+  if (process.env.NODE_ENV !== `test`) {
+    const cache = imageSizeOrPromiseCache.get(file.internal.contentDigest)
+    if (cache) {
+      return cache
+    }
   }
   const input = fs.createReadStream(file.absolutePath)
-  const dimensions = await imageSize(input)
+  const promise = imageSize(input)
+  imageSizeOrPromiseCache.set(file.internal.contentDigest, promise)
+  return promise.then(dimensions => {
+    if (!dimensions) {
+      reportError(
+        `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+        ``
+      )
+    }
 
-  if (!dimensions) {
-    reportError(
-      `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
-      ``
-    )
-  }
-
-  imageSizeCache.set(file.internal.contentDigest, dimensions)
-  return dimensions
+    imageSizeCache.set(file.internal.contentDigest, dimensions)
+    imageSizeOrPromiseCache.set(file.internal.contentDigest, dimensions)
+    return dimensions
+  })
 }
 // Remove in next major as it's really slow
 const getImageSize = file => {
@@ -62,6 +67,7 @@ const getImageSize = file => {
     }
 
     imageSizeCache.set(file.internal.contentDigest, dimensions)
+    imageSizeOrPromiseCache.set(file.internal.contentDigest, dimensions)
     return dimensions
   }
 }
