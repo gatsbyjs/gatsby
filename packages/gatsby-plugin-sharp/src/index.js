@@ -333,7 +333,7 @@ async function generateBase64({ file, args = {}, reporter }) {
       pipeline = await duotone(options.duotone, options.toFormat, pipeline)
     } else {
       reporter.warn(
-        `To use duotone for ${file.absolutPath}, please specify duotone.highlight and duotone.shadow as the two hex colors you want to use.`
+        `To use duotone for ${file.absolutePath}, please specify duotone.highlight and duotone.shadow as the two hex colors you want to use.`
       )
     }
   }
