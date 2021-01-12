@@ -45,7 +45,10 @@ export interface IImageMetadata {
   dominantColor?: string
 }
 
-const metadataCache = new Map<string, IImageMetadata>()
+const dominantMetadataOrPromiseCache = new Map<
+  string,
+  Promise<IImageMetadata> | IImageMetadata
+>()
 
 export function getImageMetadata(
   file: FileNode,
@@ -79,16 +82,28 @@ function getMetadataParts({
 }): IImageMetadata {
   return { width, height, format: type }
 }
-async function getImageMetadataDominant(
+function getImageMetadataDominant(
+  file: FileNode
+): Promise<IImageMetadata> | IImageMetadata {
+  // Note: this cache is a promise as long as it's in flight, and a resolved object afterwards
+  const cache = dominantMetadataOrPromiseCache.get(file.internal.contentDigest)
+  if (cache && process.env.NODE_ENV !== `test`) {
+    return cache
+  }
+
+  return getImageMetadataDominantAsync(file)
+}
+async function getImageMetadataDominantAsync(
   file: FileNode
 ): Promise<IImageMetadata> {
-  let metadata = metadataCache.get(file.internal.contentDigest)
-  if (metadata && process.env.NODE_ENV !== `test`) {
-    return metadata
-  }
   const pipeline = sharp(file.absolutePath)
 
-  const { width, height, density, format } = await pipeline.metadata()
+  const promise = pipeline.metadata()
+
+  // First set the promise
+  dominantMetadataOrPromiseCache.set(file.internal.contentDigest, promise)
+
+  const { width, height, density, format } = await promise
 
   const { dominant } = await pipeline.stats()
   // Fallback in case sharp doesn't support dominant
@@ -96,8 +111,10 @@ async function getImageMetadataDominant(
     ? rgbToHex(dominant.r, dominant.g, dominant.b)
     : `#000000`
 
-  metadata = { width, height, density, format, dominantColor }
-  metadataCache.set(file.internal.contentDigest, metadata)
+  const metadata = { width, height, density, format, dominantColor }
+
+  // Secondly set the metadata once it's resolved
+  dominantMetadataOrPromiseCache.set(file.internal.contentDigest, metadata)
   return metadata
 }
 
