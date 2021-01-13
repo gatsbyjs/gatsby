@@ -39,6 +39,7 @@ const {
   WebPOptionsType,
   BlurredOptionsType,
   TransformOptionsType,
+  AVIFOptionsType,
 } = require(`./types`)
 const { stripIndent } = require(`common-tags`)
 const { prefixId, CODES } = require(`./error-utils`)
@@ -398,40 +399,34 @@ const imageNodeType = ({
     args: {
       layout: {
         type: ImageLayoutType,
-        defaultValue: `fixed`,
+        defaultValue: `constrained`,
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
-        FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
         CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
         `,
-      },
-      maxWidth: {
-        type: GraphQLInt,
-        description: stripIndent`
-        Maximum display width of generated files. 
-        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-        This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
-      },
-      maxHeight: {
-        type: GraphQLInt,
-        description: stripIndent`
-        If set, the generated image is a maximum of this height, cropping if necessary. 
-        If the image layout is "constrained" then the image will be limited to this height. 
-        If the aspect ratio of the image is different than the source, then the image will be cropped.`,
       },
       width: {
         type: GraphQLInt,
         description: stripIndent`
-        The display width of the generated image. 
-        The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-        Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
+        The display width of the generated image for layout = FIXED, and the maximum display width of the largest image for layout = CONSTRAINED.  
+        Ignored if layout = FLUID.
         `,
       },
       height: {
         type: GraphQLInt,
         description: stripIndent`
-        If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
+        The display height of the generated image for layout = FIXED, and the maximum display height of the largest image for layout = CONSTRAINED.  
+        The image will be cropped if the aspect ratio does not match the source image. If omitted, it is calculated from the supplied width, 
+        matching the aspect ratio of the source image.`,
+      },
+      aspectRatio: {
+        type: GraphQLFloat,
+        description: stripIndent`
+        If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed. 
+        If neither width or height is provided, height will be set based on the intrinsic width of the source image.
+        `,
       },
       placeholder: {
         type: ImagePlaceholderType,
@@ -479,7 +474,7 @@ const imageNodeType = ({
       },
       quality: {
         type: GraphQLInt,
-        description: `The default quality. This is overriden by any format-specific options`,
+        description: `The default quality. This is overridden by any format-specific options`,
       },
       jpgOptions: {
         type: JPGOptionsType,
@@ -493,6 +488,10 @@ const imageNodeType = ({
         type: WebPOptionsType,
         description: `Options to pass to sharp when generating WebP images.`,
       },
+      avifOptions: {
+        type: AVIFOptionsType,
+        description: `Options to pass to sharp when generating AVIF images.`,
+      },
       transformOptions: {
         type: TransformOptionsType,
         description: `Options to pass to sharp to control cropping and other image manipulations.`,
@@ -505,7 +504,6 @@ const imageNodeType = ({
     },
     resolve: async (image, fieldArgs, context) => {
       const file = getNodeAndSavePathDependency(image.parent, context.path)
-      const args = { ...fieldArgs, pathPrefix }
 
       if (!generateImageData) {
         reporter.warn(`Please upgrade gatsby-plugin-sharp`)
@@ -520,7 +518,8 @@ const imageNodeType = ({
       }
       const imageData = await generateImageData({
         file,
-        args,
+        args: fieldArgs,
+        pathPrefix,
         reporter,
         cache,
       })

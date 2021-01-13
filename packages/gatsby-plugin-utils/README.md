@@ -6,9 +6,9 @@
 npm install gatsby-plugin-utils
 ```
 
-### validateOptionsSchema
+### `validateOptionsSchema`
 
-The `validateOptionsSchema` function verifies that the proper data types of options were passed into a plugin from the `gatsby-config` file. It is called internally by Gatsby to validate each plugin's options when a site is started.
+The `validateOptionsSchema` function verifies that the proper data types of options were passed into a plugin from the `gatsby-config.js` file. It is called internally by Gatsby to validate each plugin's options when a site is started.
 
 #### Example
 
@@ -18,9 +18,9 @@ import { validateOptionsSchema } from "gatsby-plugin-utils"
 await validateOptionsSchema(pluginName, pluginSchema, pluginOptions)
 ```
 
-### testPluginOptionsSchema
+### `testPluginOptionsSchema`
 
-Utility to validate and test plugin options schemas. An example of a plugin options schema implementation can be found in the [gatsby-node.js file of gatsby-plugin-google-analytics](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils).
+Utility to validate and test plugin options schemas. An example of a plugin options schema implementation can be found in the [`gatsby-node.js` file of `gatsby-plugin-google-analytics`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-google-analytics/src/gatsby-node.js).
 
 #### Example
 
@@ -31,7 +31,7 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 it(`should partially validate one value of a schema`, async () => {
   const pluginSchema = ({ Joi }) =>
     Joi.object({
-      someOtherValue: Joi.string()
+      someOtherValue: Joi.string(),
       toVerify: Joi.boolean(),
     })
 

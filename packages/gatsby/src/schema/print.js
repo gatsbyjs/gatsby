@@ -402,4 +402,5 @@ const breakLine = (line, maxLen) => {
 
 module.exports = {
   printTypeDefinitions,
+  printDirectives,
 }

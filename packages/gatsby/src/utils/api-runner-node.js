@@ -33,6 +33,15 @@ const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
 const { loadNodeContent } = require(`../db/nodes`)
 
+if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
+  // Unless specified - disable longStackTraces
+  // as this have severe perf penalty ( http://bluebirdjs.com/docs/api/promise.longstacktraces.html )
+  // This is mainly for `gatsby develop` due to NODE_ENV being set to development
+  // which cause bluebird to enable longStackTraces
+  // `gatsby build` (with NODE_ENV=production) already doesn't enable longStackTraces
+  Promise.config({ longStackTraces: false })
+}
+
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
 const boundPluginActionCreators = {}
@@ -491,9 +500,15 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // call an action which will trigger the same API being called.
     // `onCreatePage` is the only example right now. In these cases, we should
     // avoid calling the originating plugin again.
-    const implementingPlugins = plugins.filter(
+    let implementingPlugins = plugins.filter(
       plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
     )
+
+    if (api === `sourceNodes` && args.pluginName) {
+      implementingPlugins = implementingPlugins.filter(
+        plugin => plugin.name === args.pluginName
+      )
+    }
 
     const apiRunInstance = {
       api,

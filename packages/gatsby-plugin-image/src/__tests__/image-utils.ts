@@ -24,6 +24,7 @@ const args: IGatsbyImageHelperArgs = {
   filename: `afile.jpg`,
   generateImageSource,
   width: 400,
+  layout: `fixed`,
   sourceMetadata: {
     width: 800,
     height: 600,
@@ -36,13 +37,11 @@ const args: IGatsbyImageHelperArgs = {
 
 const fluidArgs: IGatsbyImageHelperArgs = {
   ...args,
-  width: undefined,
-  maxWidth: 400,
-  layout: `fluid`,
+  layout: `fullWidth`,
 }
 
 const constrainedArgs: IGatsbyImageHelperArgs = {
-  ...fluidArgs,
+  ...args,
   layout: `constrained`,
 }
 
@@ -154,7 +153,7 @@ describe(`the image data helper`, () => {
     expect(data.images.fallback?.sizes).toEqual(`400px`)
   })
 
-  it(`calculates sizes for fluid`, () => {
+  it(`calculates sizes for fullWidth`, () => {
     const data = generateImageData(fluidArgs)
     expect(data.images.fallback?.sizes).toEqual(`100vw`)
   })
@@ -177,7 +176,7 @@ describe(`the image data helper`, () => {
     )
   })
 
-  it(`returns URLs for fluid`, () => {
+  it(`returns URLs for fullWidth`, () => {
     const data = generateImageData(fluidArgs)
     expect(data?.images?.fallback?.src).toEqual(
       `https://example.com/afile.jpg/400/300/image.jpg`

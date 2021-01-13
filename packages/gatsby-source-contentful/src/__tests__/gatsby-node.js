@@ -702,4 +702,44 @@ describe(`gatsby-node`, () => {
       expect(homeNode.content.references___NODE).toMatchSnapshot()
     })
   })
+
+  it(`panics when localeFilter reduces locale list to 0`, async () => {
+    cache.get.mockClear()
+    cache.set.mockClear()
+    fetch.mockImplementationOnce(startersBlogFixture.initialSync)
+    const locales = [`en-US`, `nl`]
+
+    const mockPanicReporter = {
+      ...reporter,
+      panic: jest.fn(),
+    }
+
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter: mockPanicReporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      {
+        ...pluginOptions,
+        localeFilter: () => false,
+      }
+    )
+
+    expect(mockPanicReporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Please check if your localeFilter is configured properly. Locales '${locales.join(
+            `,`
+          )}' were found but were filtered down to none.`,
+        },
+      })
+    )
+  })
 })

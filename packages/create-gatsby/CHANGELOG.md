@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.4.0-next.0...create-gatsby@0.4.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.4...create-gatsby@0.4.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.3.0-next.4](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.3...create-gatsby@0.3.0-next.4) (2020-12-17)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.2...create-gatsby@0.3.0-next.3) (2020-12-17)
+
+### Bug Fixes
+
+- **create-gatsby:** Switch dependency to sass ([#28655](https://github.com/gatsbyjs/gatsby/issues/28655)) ([a1f6e79](https://github.com/gatsbyjs/gatsby/commit/a1f6e79a4c8bb444381503fae0fadfe3bc4cbf9c))
+
+# [0.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.1...create-gatsby@0.3.0-next.2) (2020-12-16)
+
+### Bug Fixes
+
+- **create-gatsby:** Adds a default icon so plugin-manifest works out of the box ([#28635](https://github.com/gatsbyjs/gatsby/issues/28635)) ([4dc8ab7](https://github.com/gatsbyjs/gatsby/commit/4dc8ab79c194fe5c56a1d2bd794ff9c8e03ad927))
+
+# [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.0...create-gatsby@0.3.0-next.1) (2020-12-15)
+
+### Bug Fixes
+
+- **create-gatsby:** Default to gatsby-image until the plugin is GA ([#28607](https://github.com/gatsbyjs/gatsby/issues/28607)) ([84f3d08](https://github.com/gatsbyjs/gatsby/commit/84f3d08ac4ae2830bdb946da30a51c41ecb00ed1))
+
+# [0.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.4...create-gatsby@0.3.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.2.0-next.4](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.3...create-gatsby@0.2.0-next.4) (2020-12-08)
+
+### Bug Fixes
+
+- **create-gatsby:** Fix kebabcase edge cases and tests ([#28480](https://github.com/gatsbyjs/gatsby/issues/28480)) ([d76ccb1](https://github.com/gatsbyjs/gatsby/commit/d76ccb16ff6b8f8da541ebe06f0455f41f343807))
+
+### Features
+
+- **create-gatsby:** Add -y flag ([#28468](https://github.com/gatsbyjs/gatsby/issues/28468)) ([a93c71d](https://github.com/gatsbyjs/gatsby/commit/a93c71d5e66fe2265c650d1bfb4b94b50d56d91c))
+
 # [0.2.0-next.3](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.2.0-next.2...create-gatsby@0.2.0-next.3) (2020-12-04)
 
 **Note:** Version bump only for package create-gatsby

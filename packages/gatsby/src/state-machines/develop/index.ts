@@ -285,11 +285,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           webhookBody,
+          webhookSourcePluginName,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
             webhookBody,
+            webhookSourcePluginName,
             refresh: true,
             deferNodeMutation: true,
           }

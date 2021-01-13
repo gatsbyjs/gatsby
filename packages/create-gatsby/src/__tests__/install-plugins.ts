@@ -20,7 +20,7 @@ describe(`install-plugins`, () => {
   })
 
   it(`reports an error explaining that gatsby is not installed`, async () => {
-    ;(requireResolve as any).mockImplementation(() => undefined)
+    ;(requireResolve as jest.Mock).mockImplementation(() => undefined)
 
     await installPlugins([], {}, `not-existing-path`, [])
 
@@ -31,8 +31,11 @@ describe(`install-plugins`, () => {
   })
 
   it(`reports an error when the gatsby cli is not installed`, async () => {
-    ;(requireResolve as any).mockImplementation(path => {
-      if (path === `gatsby-cli/lib/handlers/plugin-add`) {
+    ;(requireResolve as jest.Mock).mockImplementation(path => {
+      if (
+        path === `gatsby-cli/lib/handlers/plugin-add` ||
+        path === `gatsby-cli/lib/plugin-add`
+      ) {
         throw new Error()
       }
       return `somewhere-i-belong`
@@ -42,12 +45,12 @@ describe(`install-plugins`, () => {
 
     // Test function behaviour but improves the DX, it probably worth it
     expect(reporter.error).toBeCalledWith(
-      `gatsby-cli not installed, or is too old`
+      `Could not find a suitable version of gatsby-cli. Please report this issue at https://www.github.com/gatsbyjs/gatsby/issues`
     )
   })
 
   it(`reports an error when add plugins fails somehow`, async () => {
-    ;(requireResolve as any).mockImplementation(
+    ;(requireResolve as jest.Mock).mockImplementation(
       () => `somewhere-virtually-existing`
     )
 

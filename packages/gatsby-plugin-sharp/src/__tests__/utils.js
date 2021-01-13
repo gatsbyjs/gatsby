@@ -73,20 +73,6 @@ describe(`calculateImageSizes (fixed)`, () => {
     expect(getSizes).toThrow()
   })
 
-  it(`should warn if ignored maxWidth or maxHeight are passed in`, () => {
-    const args = {
-      layout: `fixed`,
-      height: 240,
-      maxWidth: 1000,
-      maxHeight: 1000,
-      file,
-      imgDimensions,
-      reporter,
-    }
-    calculateImageSizes(args)
-    expect(reporter.warn).toBeCalled()
-  })
-
   it(`should return the original width of the image when only width is provided`, () => {
     const args = {
       layout: `fixed`,
@@ -132,70 +118,45 @@ describe(`calculateImageSizes (fixed)`, () => {
   })
 })
 
-describe(`calculateImageSizes (fluid & constrained)`, () => {
-  it(`should throw if maxWidth is less than 1`, () => {
-    const args = {
-      layout: `fluid`,
-      maxWidth: 0,
-      file,
-      imgDimensions,
-    }
-    const getSizes = () => calculateImageSizes(args)
-    expect(getSizes).toThrow()
-  })
-
-  it(`should throw if maxHeight is less than 1`, () => {
-    const args = {
-      layout: `fluid`,
-      maxHeight: -50,
-      file,
-      imgDimensions,
-    }
-    const getSizes = () => calculateImageSizes(args)
-    expect(getSizes).toThrow()
-  })
-
-  it(`should warn if ignored width or height are passed in`, () => {
-    const args = {
-      layout: `fluid`,
-      maxWidth: 240,
-      height: 1000,
-      width: 1000,
-      file,
-      imgDimensions,
-      reporter,
-    }
-    calculateImageSizes(args)
-    expect(reporter.warn).toBeCalled()
-  })
-
-  it(`should include the original size of the image when maxWidth is passed`, () => {
-    const args = {
-      layout: `fluid`,
-      maxWidth: 400,
-      file,
-      imgDimensions,
-      reporter,
-    }
-    const { sizes } = calculateImageSizes(args)
-    expect(sizes).toContain(400)
-  })
-
-  it(`should include the original size of the image when maxWidth is passed for a constrained image`, () => {
+describe(`calculateImageSizes (fullWidth & constrained)`, () => {
+  it(`should throw if width is less than 1`, () => {
     const args = {
       layout: `constrained`,
-      maxWidth: 400,
+      width: 0,
       file,
       imgDimensions,
+    }
+    const getSizes = () => calculateImageSizes(args)
+    expect(getSizes).toThrow()
+  })
+
+  it(`should throw if height is less than 1`, () => {
+    const args = {
+      layout: `constrained`,
+      height: -50,
+      file,
+      imgDimensions,
+    }
+    const getSizes = () => calculateImageSizes(args)
+    expect(getSizes).toThrow()
+  })
+
+  it(`should include the original size of the image when width is passed`, () => {
+    const args = {
+      layout: `constrained`,
+      width: 400,
+      file,
+      imgDimensions,
+      reporter,
     }
     const { sizes } = calculateImageSizes(args)
     expect(sizes).toContain(400)
   })
 
-  it(`should include the original size of the image when maxHeight is passed`, () => {
+  it(`should include the original size of the image when height is passed`, () => {
     const args = {
-      layout: `fluid`,
-      maxHeight: 300,
+      layout: `fullWidth`,
+      height: 300,
       file,
       imgDimensions,
     }
@@ -203,10 +164,10 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     expect(sizes).toContain(450)
   })
 
-  it(`should create images of different sizes (0.25x, 0.5x, 1x, 2x) from a maxWidth`, () => {
+  it(`should create images of different sizes (0.25x, 0.5x, 1x, 2x) from a width`, () => {
     const args = {
-      layout: `fluid`,
-      maxWidth: 320,
+      layout: `fullWidth`,
+      width: 320,
       file,
       imgDimensions,
     }
@@ -216,7 +177,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
   it(`should create images of different sizes (0.25x, 0.5x, 1x) without any defined size provided`, () => {
     const args = {
-      layout: `fluid`,
+      layout: `fullWidth`,
       file,
       imgDimensions,
     }
@@ -226,10 +187,10 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
   it(`should return sizes of provided srcSetBreakpoints`, () => {
     const srcSetBreakpoints = [50, 70, 150, 250, 300]
-    const maxWidth = 500
+    const width = 500
     const args = {
-      layout: `fluid`,
-      maxWidth,
+      layout: `fullWidth`,
+      width,
       srcSetBreakpoints,
       file,
       imgDimensions,
@@ -248,10 +209,10 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
       250,
       1250, // shouldn't be included, larger than original width
     ]
-    const maxWidth = 1500 // also shouldn't be included
+    const width = 1500 // also shouldn't be included
     const args = {
-      layout: `fluid`,
-      maxWidth,
+      layout: `fullWidth`,
+      width,
       srcSetBreakpoints,
       file,
       imgDimensions,
@@ -265,10 +226,10 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
   it(`should only uses sizes from srcSetBreakpoints when outputPixelDensities are also passed in`, () => {
     const srcSetBreakpoints = [400, 800] // should find these
-    const maxWidth = 500
+    const width = 500
     const args = {
-      layout: `fluid`,
-      maxWidth,
+      layout: `fullWidth`,
+      width,
       outputPixelDensities: [2, 4], // and ignore these, ie [1000, 2000]
       srcSetBreakpoints,
       file,
@@ -278,10 +239,9 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
 
     const { sizes } = calculateImageSizes(args)
     expect(sizes).toEqual(expect.arrayContaining([400, 500, 800]))
-    expect(reporter.warn).toBeCalled()
   })
 
-  it(`should adjust fluid sizes according to fit type`, () => {
+  it(`should adjust fullWidth sizes according to fit type`, () => {
     const imgDimensions = {
       width: 2810,
       height: 1360,
@@ -290,52 +250,52 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
     const outputPixelDensities = [1]
 
     const testsCases = [
-      { args: { maxWidth: 20, maxHeight: 20 }, result: [20, 20] },
+      { args: { width: 20, height: 20 }, result: [20, 20] },
       {
         args: {
-          maxWidth: 20,
-          maxHeight: 20,
+          width: 20,
+          height: 20,
           transformOptions: { fit: sharp.fit.fill },
         },
         result: [20, 20],
       },
       {
         args: {
-          maxWidth: 20,
-          maxHeight: 20,
+          width: 20,
+          height: 20,
           transformOptions: { fit: sharp.fit.inside },
         },
         result: [20, 10],
       },
       {
         args: {
-          maxWidth: 20,
-          maxHeight: 20,
+          width: 20,
+          height: 20,
           transformOptions: { fit: sharp.fit.outside },
         },
         result: [41, 20],
       },
-      { args: { maxWidth: 200, maxHeight: 200 }, result: [200, 200] },
+      { args: { width: 200, height: 200 }, result: [200, 200] },
       {
         args: {
-          maxWidth: 200,
-          maxHeight: 200,
+          width: 200,
+          height: 200,
           transformOptions: { fit: sharp.fit.fill },
         },
         result: [200, 200],
       },
       {
         args: {
-          maxWidth: 200,
-          maxHeight: 200,
+          width: 200,
+          height: 200,
           transformOptions: { fit: sharp.fit.inside },
         },
         result: [200, 97],
       },
       {
         args: {
-          maxWidth: 200,
-          maxHeight: 200,
+          width: 200,
+          height: 200,
           transformOptions: { fit: sharp.fit.outside },
         },
         result: [413, 200],
@@ -348,7 +308,7 @@ describe(`calculateImageSizes (fluid & constrained)`, () => {
         outputPixelDensities,
         reporter,
         imgDimensions,
-        layout: `fluid`,
+        layout: `fullWidth`,
       })
       expect([presentationWidth, presentationHeight]).toEqual(result)
     })

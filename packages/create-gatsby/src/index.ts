@@ -54,6 +54,9 @@ const makeChoices = (
 export const validateProjectName = async (
   value: string
 ): Promise<string | boolean> => {
+  if (!value) {
+    return `You have not provided a directory name for your site. Please do so when running with the 'y' flag.`
+  }
   value = value.trim()
   if (INVALID_FILENAMES.test(value)) {
     return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
@@ -69,7 +72,7 @@ export const validateProjectName = async (
 
 // The enquirer types are not accurate
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const questions = (initialFolderName: string): any => [
+export const questions = (initialFolderName: string, skip: boolean): any => [
   {
     type: `textinput`,
     name: `project`,
@@ -79,6 +82,7 @@ export const questions = (initialFolderName: string): any => [
     initial: initialFolderName,
     format: (value: string): string => c.cyan(value),
     validate: validateProjectName,
+    skip,
   },
   {
     type: `selectinput`,
@@ -140,6 +144,13 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
+  const [flag, siteDirectory] = process.argv.slice(2)
+
+  let yesFlag = false
+  if (flag === `-y`) {
+    yesFlag = true
+  }
+
   trackCli(`CREATE_GATSBY_START`)
 
   const { version } = require(`../package.json`)
@@ -156,30 +167,47 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 `
   )
 
-  reporter.info(
-    wrap(
-      `This command will generate a new Gatsby site for you in ${c.bold(
-        process.cwd()
-      )} with the setup you select. ${c.white.bold(
-        `Let's answer some questions:\n\n`
-      )}`,
-      process.stdout.columns
+  if (!yesFlag) {
+    reporter.info(
+      wrap(
+        `This command will generate a new Gatsby site for you in ${c.bold(
+          process.cwd()
+        )} with the setup you select. ${c.white.bold(
+          `Let's answer some questions:\n\n`
+        )}`,
+        process.stdout.columns
+      )
     )
-  )
+  }
 
   const enquirer = new Enquirer<IAnswers>()
 
   enquirer.use(plugin)
 
-  const { name: siteName } = await enquirer.prompt({
-    type: `textinput`,
-    name: `name`,
-    message: `What would you like to call your site?`,
-    initial: `My Gatsby Site`,
-    format: (value: string): string => c.cyan(value),
-  } as any)
+  let data
+  let siteName
+  if (!yesFlag) {
+    ;({ name: siteName } = await enquirer.prompt({
+      type: `textinput`,
+      name: `name`,
+      message: `What would you like to call your site?`,
+      initial: `My Gatsby Site`,
+      format: (value: string): string => c.cyan(value),
+    } as any))
 
-  const data = await enquirer.prompt(questions(makeNpmSafe(siteName)))
+    data = await enquirer.prompt(questions(makeNpmSafe(siteName), yesFlag))
+  } else {
+    const warn = await validateProjectName(siteDirectory)
+    if (typeof warn === `string`) {
+      reporter.warn(warn)
+      return
+    }
+    siteName = siteDirectory
+    data = await enquirer.prompt(
+      questions(makeNpmSafe(siteDirectory), yesFlag)[0]
+    )
+  }
+
   data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
@@ -286,27 +314,28 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
-
-  reporter.info(`
+  if (!yesFlag) {
+    reporter.info(`
 
 ${c.bold(`Thanks! Here's what we'll now do:`)}
 
     ${messages.join(`\n    `)}
   `)
 
-  const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
-    type: `confirm`,
-    name: `confirm`,
-    initial: `Yes`,
-    message: `Shall we do this?`,
-    format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
-  })
+    const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
+      type: `confirm`,
+      name: `confirm`,
+      initial: `Yes`,
+      message: `Shall we do this?`,
+      format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
+    })
 
-  if (!confirm) {
-    trackCli(`CREATE_GATSBY_CANCEL`)
+    if (!confirm) {
+      trackCli(`CREATE_GATSBY_CANCEL`)
 
-    reporter.info(`OK, bye!`)
-    return
+      reporter.info(`OK, bye!`)
+      return
+    }
   }
 
   await initStarter(

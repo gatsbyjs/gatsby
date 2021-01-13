@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import { IGatsbyImageData } from "gatsby-plugin-image"
+import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
@@ -9,27 +9,7 @@ import { createTransformObject } from "./plugin-options"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
-type ImageFormat = "jpg" | "png" | "webp" | "" | "auto"
-export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
-  formats?: Array<ImageFormat>
-  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
-  tracedSVGOptions?: Record<string, unknown>
-  width?: number
-  height?: number
-  maxWidth?: number
-  maxHeight?: number
-  sizes?: string
-  quality?: number
-  transformOptions: {
-    fit?: "contain" | "cover" | "fill" | "inside" | "outside"
-    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
-  }
-  jpgOptions: Record<string, unknown>
-  pngOptions: Record<string, unknown>
-  webpOptions: Record<string, unknown>
-  blurredOptions: { width?: number; toFormat?: ImageFormat }
-}
+type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -103,12 +83,14 @@ export async function generateImageData({
   cache,
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
-    layout = `fixed`,
+    layout = `constrained`,
     placeholder = `blurred`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
   } = args
+
+  args.formats = args.formats || [`auto`, `webp`]
 
   const {
     fit = `cover`,
@@ -116,6 +98,34 @@ export async function generateImageData({
   } = transformOptions
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
+
+  if ((args.width || args.height) && layout === `fullWidth`) {
+    reporter.warn(
+      `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
+    )
+    args.width = undefined
+    args.height = undefined
+  }
+
+  if (!args.width && !args.height && metadata.width) {
+    if (layout === `fullWidth`) {
+      args.width = Math.round(metadata.width / 2)
+    } else {
+      args.width = metadata.width
+    }
+  }
+
+  if (args.aspectRatio) {
+    if (args.width && args.height) {
+      reporter.warn(
+        `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
+      )
+    } else if (args.width) {
+      args.height = args.width / args.aspectRatio
+    } else if (args.height) {
+      args.width = args.height * args.aspectRatio
+    }
+  }
 
   const formats = new Set(args.formats)
   let useAuto = formats.has(``) || formats.has(`auto`) || formats.size === 0
@@ -128,19 +138,29 @@ export async function generateImageData({
   }
 
   let primaryFormat: ImageFormat | undefined
-  let options: Record<string, unknown> | undefined
   if (useAuto) {
     primaryFormat = normalizeFormat(metadata.format || file.extension)
   } else if (formats.has(`png`)) {
     primaryFormat = `png`
-    options = args.pngOptions
   } else if (formats.has(`jpg`)) {
     primaryFormat = `jpg`
-    options = args.jpgOptions
   } else if (formats.has(`webp`)) {
     primaryFormat = `webp`
-    options = args.webpOptions
+  } else if (formats.has(`avif`)) {
+    reporter.warn(
+      `Image ${file.relativePath} specified only AVIF format, with no fallback format. This will mean your site cannot be viewed in all browsers.`
+    )
+    primaryFormat = `avif`
   }
+
+  const optionsMap = {
+    jpg: args.jpgOptions,
+    png: args.pngOptions,
+    webp: args.webpOptions,
+    avif: args.avifOptions,
+  }
+
+  const options = primaryFormat ? optionsMap[primaryFormat] : undefined
 
   const imageSizes: {
     sizes: Array<number>
@@ -170,7 +190,9 @@ export async function generateImageData({
       toFormat: primaryFormat,
     })
 
-    if (pathPrefix) transform.pathPrefix = pathPrefix
+    if (pathPrefix) {
+      transform.pathPrefix = pathPrefix
+    }
     return transform
   })
 
@@ -213,18 +235,54 @@ export async function generateImageData({
     },
   }
 
+  if (primaryFormat !== `avif` && formats.has(`avif`)) {
+    const transforms = imageSizes.sizes.map(outputWidth => {
+      const width = Math.round(outputWidth)
+      const transform = createTransformObject({
+        quality,
+        ...transformOptions,
+        fit,
+        cropFocus,
+        ...args.avifOptions,
+        width,
+        height: Math.round(width / imageSizes.aspectRatio),
+        toFormat: `avif`,
+      })
+      if (pathPrefix) {
+        transform.pathPrefix = pathPrefix
+      }
+      return transform
+    })
+
+    const avifImages = batchQueueImageResizing({
+      file,
+      transforms,
+      reporter,
+    })
+
+    imageProps.images.sources?.push({
+      srcSet: getSrcSet(avifImages),
+      type: `image/avif`,
+      sizes,
+    })
+  }
+
   if (primaryFormat !== `webp` && formats.has(`webp`)) {
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
         quality,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         ...args.webpOptions,
-        tracedSVGOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
       })
+      if (pathPrefix) {
+        transform.pathPrefix = pathPrefix
+      }
       return transform
     })
 
@@ -233,10 +291,9 @@ export async function generateImageData({
       transforms,
       reporter,
     })
-    const webpSrcSet = getSrcSet(webpImages)
 
     imageProps.images.sources?.push({
-      srcSet: webpSrcSet,
+      srcSet: getSrcSet(webpImages),
       type: `image/webp`,
       sizes,
     })
@@ -249,7 +306,9 @@ export async function generateImageData({
       file,
       args: {
         ...options,
-        ...args.transformOptions,
+        ...transformOptions,
+        fit,
+        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),
@@ -282,13 +341,13 @@ export async function generateImageData({
       imageProps.height = imageSizes.presentationHeight
       break
 
-    case `fluid`:
+    case `fullWidth`:
       imageProps.width = 1
       imageProps.height = 1 / primaryImage.aspectRatio
       break
 
     case `constrained`:
-      imageProps.width = args.maxWidth || primaryImage.width || 1
+      imageProps.width = args.width || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
   return imageProps

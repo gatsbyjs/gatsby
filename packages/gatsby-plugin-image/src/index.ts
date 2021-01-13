@@ -10,6 +10,7 @@ export { getImage, getSrc, useGatsbyImage } from "./components/hooks"
 export {
   generateImageData,
   IGatsbyImageHelperArgs,
+  ISharpGatsbyImageArgs,
   IImage,
   ImageFormat,
   Layout,

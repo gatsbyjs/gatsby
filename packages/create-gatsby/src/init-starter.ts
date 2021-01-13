@@ -87,6 +87,7 @@ const setNameInPackage = async (
   const packageJson = await fs.readJSON(packageJsonPath)
   packageJson.name = makeNpmSafe(name)
   packageJson.description = name
+  delete packageJson.license
   try {
     const result = await execa(`git`, [`config`, `user.name`])
     if (result.failed) {
@@ -178,6 +179,8 @@ const clone = async (
 
   stop()
   await fs.remove(path.join(rootPath, `.git`))
+
+  await fs.remove(path.join(rootPath, `LICENSE`))
 }
 
 export async function gitSetup(rootPath: string): Promise<void> {

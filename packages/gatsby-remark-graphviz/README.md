@@ -2,7 +2,7 @@
 
 Processes [graphviz](https://www.graphviz.org/) (`dot` and `circo`) code blocks in your markdown files and replaces them with the rendered SVG using [viz.js](https://github.com/mdaines/viz.js/)
 
-![demo gif](/packages/gatsby-remark-graphviz/demo.gif)
+![demo gif](/plugins/gatsby-remark-graphviz/demo.gif)
 
 ## Install
 
@@ -40,7 +40,7 @@ Then, add `dot` code blocks to your markdown. E.g
 
 Which will be rendered using viz.js and the output html will replace the code block with the actual SVG.
 
-![rendered-graph](/packages/gatsby-remark-graphviz/rendered-graph.svg)
+![rendered-graph](/plugins/gatsby-remark-graphviz/rendered-graph.svg)
 
 Custom attributes can be passed to the rendered SVG:
 
