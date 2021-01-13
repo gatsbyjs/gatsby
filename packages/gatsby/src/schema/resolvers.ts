@@ -566,13 +566,17 @@ export function wrappingResolver<TSource, TArgs>(
       )
       activity.start()
     }
-    try {
-      return resolver(parent, args, context, info)
-    } finally {
+    const result = resolver(parent, args, context, info)
+
+    const endActivity = (): void => {
       if (activity) {
         activity.end()
       }
     }
+    if (typeof result?.then === `function` && activity) {
+      result.then(endActivity, endActivity)
+    }
+    return result
   }
 }
 
