@@ -392,14 +392,13 @@ describe(`NodeModel`, () => {
         const query = {}
         const firstOnly = true
         nodeModel.replaceFiltersCache()
-        const result = nodeModel.runQuery({
-          query,
-          firstOnly,
-          type,
-        })
-        return expect(result).rejects.toThrowError(
-          `Querying GraphQLUnion types is not supported.`
-        )
+        return expect(() =>
+          nodeModel.runQuery({
+            query,
+            firstOnly,
+            type,
+          })
+        ).toThrowError(`Querying GraphQLUnion types is not supported.`)
       })
 
       it(`handles interface types`, async () => {
