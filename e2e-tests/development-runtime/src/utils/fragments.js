@@ -1,10 +1,9 @@
-/* eslint-disable */
 import { graphql } from "gatsby"
 
-export const GatsbyImageSharpFixed = graphql`
+export const TestingFragment = graphql`
   fragment TestingFragment on Site {
     siteMetadata {
-      title
+      author
     }
   }
 `
