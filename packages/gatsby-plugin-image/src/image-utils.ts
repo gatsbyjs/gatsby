@@ -393,6 +393,7 @@ export function responsiveImageSizes({
   fit = `cover`,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   breakpoints,
+  layout,
 }: IImageSizeArgs): IImageSizes {
   let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
@@ -453,7 +454,7 @@ export function responsiveImageSizes({
   }
 
   // ensure that the size passed in is included in the final output
-  if (!sizes.includes(width)) {
+  if (layout === `constrained` && !sizes.includes(width)) {
     sizes.push(width)
   }
   sizes = sizes.sort(sortNumeric)
