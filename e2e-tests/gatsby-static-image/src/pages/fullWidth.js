@@ -8,7 +8,7 @@ const FluidPage = () => (
     <div data-testid="image-fluid">
       <StaticImage
         src="../images/citrus-fruits.jpg"
-        layout="fluid"
+        layout="fullWidth"
         width={700}
         alt="Citrus fruits"
       />
@@ -16,19 +16,19 @@ const FluidPage = () => (
     <div data-testid="image-fluid-png">
       <StaticImage
         src="../images/gatsby-icon.png"
-        layout="fluid"
+        layout="fullWidth"
         alt="Gatsby icon"
       />
     </div>
     <div data-testid="image-fluid-relative">
       <StaticImage
         src="../../content/relative.jpg"
-        layout="fluid"
+        layout="fullWidth"
         alt="Citrus fruits"
       />
     </div>
     <div data-testid="invalid-image">
-      <StaticImage src="./does-not-exist.jpg" layout="fluid" />
+      <StaticImage src="./does-not-exist.jpg" layout="fullWidth" />
     </div>
   </Layout>
 )

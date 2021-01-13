@@ -11,7 +11,7 @@ const Page = () => {
         <StaticImage
           src="../../images/cornwall.jpg"
           loading="eager"
-          layout="fluid"
+          layout="fullWidth"
           width={1024}
           alt="cornwall"
         />

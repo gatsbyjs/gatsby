@@ -12,7 +12,6 @@ const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
-
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -108,9 +107,9 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  if ((args.width || args.height) && layout === `fluid`) {
+  if ((args.width || args.height) && layout === `fullWidth`) {
     reporter.warn(
-      `Specifying fluid images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
+      `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
     args.width = metadata.width
     args.height = undefined
@@ -346,7 +345,7 @@ export async function generateImageData({
       imageProps.height = imageSizes.presentationHeight
       break
 
-    case `fluid`:
+    case `fullWidth`:
       imageProps.width = 1
       imageProps.height = 1 / primaryImage.aspectRatio
       break

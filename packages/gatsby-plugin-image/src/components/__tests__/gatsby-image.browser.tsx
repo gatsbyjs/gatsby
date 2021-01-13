@@ -26,7 +26,7 @@ describe(`GatsbyImage browser`, () => {
     image = {
       width: 100,
       height: 100,
-      layout: `fluid`,
+      layout: `fullWidth`,
       images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
       placeholder: { sources: [] },
 

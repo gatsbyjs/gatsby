@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.9.0-next.0...gatsby-source-shopify@3.9.0-next.1) (2021-01-12)
+
+### Features
+
+- **gatsby-source-shopify:** download images option ([#23840](https://github.com/gatsbyjs/gatsby/issues/23840)) ([931cc81](https://github.com/gatsbyjs/gatsby/commit/931cc81a7e6850842a79dff3ce990af8f2aa50da))
+
 # [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@3.8.0-next.2...gatsby-source-shopify@3.9.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-source-shopify

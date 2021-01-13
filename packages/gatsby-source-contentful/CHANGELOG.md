@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.0-next.0...gatsby-source-contentful@4.5.0-next.1) (2021-01-12)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** prevent redundant fs/remote fetches for tracedSVG ([#28926](https://github.com/gatsbyjs/gatsby/issues/28926)) ([addc9e9](https://github.com/gatsbyjs/gatsby/commit/addc9e968c2605405d9efd902c7ea9700efe3475))
+
 # [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.4...gatsby-source-contentful@4.5.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-source-contentful

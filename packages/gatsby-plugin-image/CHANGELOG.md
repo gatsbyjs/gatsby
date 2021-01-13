@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0-next.0...gatsby-plugin-image@0.6.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better error logging ([#28741](https://github.com/gatsbyjs/gatsby/issues/28741)) ([305fa64](https://github.com/gatsbyjs/gatsby/commit/305fa649293a060098821a32dc3d44026285e798))
+- **gatsby-plugin-image:** Conditionally require dependencies and give better warnings ([#28921](https://github.com/gatsbyjs/gatsby/issues/28921)) ([c82c3a6](https://github.com/gatsbyjs/gatsby/commit/c82c3a6f663da6eedb75c57814e3d103e6731c44))
+- **gatsby-plugin-image:** Correct image styles ([#28834](https://github.com/gatsbyjs/gatsby/issues/28834)) ([3d6446c](https://github.com/gatsbyjs/gatsby/commit/3d6446cd53675cf47468a59b633a75ef83d179d2))
+- **gatsby-plugin-image:** do not show placeholder if image already lo… ([#28868](https://github.com/gatsbyjs/gatsby/issues/28868)) ([12da978](https://github.com/gatsbyjs/gatsby/commit/12da9782a2ac8c3120e1c0cfa0661d43dc2c3ca5))
+- **gatsby-plugin-image:** Fix handling of sizes prop in SSR ([#28835](https://github.com/gatsbyjs/gatsby/issues/28835)) ([a135c50](https://github.com/gatsbyjs/gatsby/commit/a135c503744438ec9dd231828a1ce74d0c6a3b93))
+- **gatsby-plugin-sharp:** Pass format-specific options in image-data ([#28826](https://github.com/gatsbyjs/gatsby/issues/28826)) ([7378fcf](https://github.com/gatsbyjs/gatsby/commit/7378fcfa9b4ee6c173c4fecd5eb90efdcc0f7ff3))
+
+### Features
+
+- Add support for aspectRatio ([#28941](https://github.com/gatsbyjs/gatsby/issues/28941)) ([ed19fa0](https://github.com/gatsbyjs/gatsby/commit/ed19fa052a93e948b1135ac128cf5abec48752b6))
+
 # [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.6...gatsby-plugin-image@0.6.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-plugin-image

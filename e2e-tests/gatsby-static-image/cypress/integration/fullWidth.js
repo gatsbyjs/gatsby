@@ -1,8 +1,8 @@
 const fluidTestId = `image-fluid`
 
-describe(`fluid`, () => {
+describe(`fullWidth`, () => {
   beforeEach(() => {
-    cy.visit(`/fluid`).waitForRouteChange()
+    cy.visit(`/fullWidth`).waitForRouteChange()
   })
 
   it(`works on png files`, () => {

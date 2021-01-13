@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.18.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.18.0-next.0...gatsby-cli@2.18.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-cli:** fix timers on progress bar ([#28684](https://github.com/gatsbyjs/gatsby/issues/28684)) ([f11adbb](https://github.com/gatsbyjs/gatsby/commit/f11adbb00d9e1c3add1e3f77c69e258bc5f65699))
+
 # [2.18.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@2.17.0-next.5...gatsby-cli@2.18.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-cli

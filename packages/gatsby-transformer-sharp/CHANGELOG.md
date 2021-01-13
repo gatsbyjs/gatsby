@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.11.0-next.0...gatsby-transformer-sharp@2.11.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** PathPrefix isn't being passed/set for GatsbyImage ([#28845](https://github.com/gatsbyjs/gatsby/issues/28845)) ([5874414](https://github.com/gatsbyjs/gatsby/commit/58744145d6f8ef2e36c9a5f2f4e06290b0cff942))
+
+### Features
+
+- Add support for aspectRatio ([#28941](https://github.com/gatsbyjs/gatsby/issues/28941)) ([ed19fa0](https://github.com/gatsbyjs/gatsby/commit/ed19fa052a93e948b1135ac128cf5abec48752b6))
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.3...gatsby-transformer-sharp@2.11.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

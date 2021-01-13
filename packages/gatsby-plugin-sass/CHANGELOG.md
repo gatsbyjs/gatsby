@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.1.0-next.0...gatsby-plugin-sass@3.1.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sass:** fix brand name, code block around names ([#28908](https://github.com/gatsbyjs/gatsby/issues/28908)) ([6275072](https://github.com/gatsbyjs/gatsby/commit/6275072fc31bb85269b65d702740e36eafe18c34))
+
 # [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@3.0.0-next.2...gatsby-plugin-sass@3.1.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-plugin-sass

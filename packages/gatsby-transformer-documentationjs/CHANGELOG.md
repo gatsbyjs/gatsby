@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.9.0-next.0...gatsby-transformer-documentationjs@4.9.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-documentationjs ([#28721](https://github.com/gatsbyjs/gatsby/issues/28721)) ([7be1f71](https://github.com/gatsbyjs/gatsby/commit/7be1f71258c9a697eaae2f6264cfc29ca27b0eac))
+
 # [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.8.0-next.0...gatsby-transformer-documentationjs@4.9.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs
