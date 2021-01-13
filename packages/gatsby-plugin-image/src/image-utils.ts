@@ -4,6 +4,7 @@ import { IGatsbyImageData } from "."
 import type sharp from "gatsby-plugin-sharp/safe-sharp"
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
+const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 const DEFAULT_FLUID_WIDTH = 800
 const DEFAULT_FIXED_WIDTH = 400
 
@@ -47,6 +48,7 @@ export interface IImageSizeArgs {
   layout?: Layout
   filename: string
   outputPixelDensities?: Array<number>
+  breakpoints?: Array<number>
   fit?: Fit
   reporter?: IReporter
   sourceMetadata: { width: number; height: number }
@@ -90,6 +92,7 @@ export interface IGatsbyImageHelperArgs {
   sourceMetadata?: { width: number; height: number; format: ImageFormat }
   fit?: Fit
   options?: Record<string, unknown>
+  breakpoints?: Array<number>
 }
 
 const warn = (message: string): void => console.warn(message)
@@ -293,8 +296,10 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
 
   if (layout === `fixed`) {
     return fixedImageSizes(args)
-  } else if (layout === `fullWidth` || layout === `constrained`) {
+  } else if (layout === `constrained`) {
     return responsiveImageSizes(args)
+  } else if (layout === `fullWidth`) {
+    return responsiveImageSizes({ breakpoints: DEFAULT_BREAKPOINTS, ...args })
   } else {
     reporter.warn(
       `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained.`
@@ -387,6 +392,7 @@ export function responsiveImageSizes({
   height,
   fit = `cover`,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
+  breakpoints,
 }: IImageSizeArgs): IImageSizes {
   let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
@@ -431,8 +437,20 @@ export function responsiveImageSizes({
 
   width = Math.round(width)
 
-  sizes = densities.map(density => Math.round(density * (width as number)))
-  sizes = sizes.filter(size => size <= imgDimensions.width)
+  if (breakpoints?.length > 0) {
+    sizes = breakpoints.filter(size => size <= imgDimensions.width)
+
+    // If a larger breakpoint has been filtered-out, add the actual image width instead
+    if (
+      sizes.length < breakpoints.length &&
+      !sizes.includes(imgDimensions.width)
+    ) {
+      sizes.push(imgDimensions.width)
+    }
+  } else {
+    sizes = densities.map(density => Math.round(density * (width as number)))
+    sizes = sizes.filter(size => size <= imgDimensions.width)
+  }
 
   // ensure that the size passed in is included in the final output
   if (!sizes.includes(width)) {
