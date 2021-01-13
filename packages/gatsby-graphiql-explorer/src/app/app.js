@@ -69,6 +69,11 @@ function graphQLFetcher(graphQLParams) {
   })
 }
 
+const fetchFragments = async () =>
+  fetch(`/___graphiql/fragments`)
+    .catch(err => console.error(`Error fetching external fragments: \n${err}`))
+    .then(response => response.json())
+
 // When the query and variables string is edited, update the URL bar so
 // that it can be easily shared.
 function onEditVariables(newVariables) {
@@ -166,6 +171,7 @@ const storedCodeExporterPaneState =
 class App extends React.Component {
   state = {
     schema: null,
+    externalFragments: null,
     query: DEFAULT_QUERY,
     variables: DEFAULT_VARIABLES,
     explorerIsOpen: storedExplorerPaneState,
@@ -316,11 +322,21 @@ class App extends React.Component {
         Authorization: this.state.refreshToken,
       }
     }
+    fetchFragments().then(externalFragments => {
+      this.setState({ externalFragments })
+    })
+
     return fetch(`/__refresh`, options)
   }
 
   render() {
-    const { query, variables, schema, codeExporterIsOpen } = this.state
+    const {
+      query,
+      variables,
+      schema,
+      codeExporterIsOpen,
+      externalFragments: externalFragmentsState,
+    } = this.state
     const { externalFragments } = this.props
     const codeExporter = codeExporterIsOpen ? (
       <CodeExporter
@@ -352,7 +368,7 @@ class App extends React.Component {
           onEditQuery={this._handleEditQuery}
           onEditVariables={onEditVariables}
           onEditOperationName={onEditOperationName}
-          externalFragments={externalFragments}
+          externalFragments={externalFragmentsState || externalFragments}
         >
           <GraphiQL.Toolbar>
             <GraphiQL.Button
@@ -393,11 +409,9 @@ class App extends React.Component {
 // crude way to fetch fragments on boot time
 // it won't hot reload fragments (refresh requires)
 // but good enough for initial integration
-fetch(`/___graphiql/fragments`)
-  .then(response => response.json())
-  .then(externalFragments => {
-    ReactDOM.render(
-      <App externalFragments={externalFragments} />,
-      document.getElementById(`root`)
-    )
-  })
+fetchFragments().then(externalFragments => {
+  ReactDOM.render(
+    <App externalFragments={externalFragments} />,
+    document.getElementById(`root`)
+  )
+})
