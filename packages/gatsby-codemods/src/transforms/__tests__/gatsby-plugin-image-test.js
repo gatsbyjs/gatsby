@@ -17,6 +17,8 @@ const tests = [
   `stunted-ref`,
   `optional-chaining`,
   `styled`,
+  `fluid`,
+  `variable-src`,
 ]
 
 const defineTest = require(`jscodeshift/dist/testUtils`).defineTest
