@@ -215,6 +215,32 @@ npm install --save-dev babel-preset-react-app
 
 With setup completed for Storybook 5, you can continue with the [information below to write stories](#writing-stories).
 
+#### When you need to build Storybook and replace StaticQueries irrespective of Gatsby
+
+There may be a use-case where you need to build your Storybook, and it doesn't make sense to run a Gatsby build, eg using chromatic, building Storybook in CI.
+The way the `babel-plugin-remove-graphql-queries` plugin works is to look inside the `public` folder to resolve the `graphql` queries. On CI, or inside `github` the `public` folder is ignored, and hence does not exist. This will cause the Storybook build to fail. To resolve this, you can use the `babel-plugin-remove-graphql-queries` options to tell storybook where to look for the `StaticQuery` json files.
+
+```js:title=.storybook/webpack.config.js
+
+{
+   plugins: [
+        [
+          require.resolve("babel-plugin-remove-graphql-queries"),
+          {
+            rootDir: ".storybook", // the root folder where your static queries are, defaults to public
+            staticQueryDir: "staticQueries", // the subdirectory where the static queries are defaults to static/d
+          },
+        ],
+      ],
+}
+```
+
+You will need to put these static queries files in the folder you specifiy. The script below will do it automatically (and you could add this to a post build or `npm script`), or you can manually do it when needed.
+
+```shell
+cp -r ./public/page-data/sq/d ./.storybook/staticQueries
+```
+
 ### Storybook version 4
 
 To use Storybook version 4 with Gatsby, use the following setup instructions:
