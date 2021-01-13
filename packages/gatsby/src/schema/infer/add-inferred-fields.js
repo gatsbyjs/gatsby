@@ -8,6 +8,7 @@ import { isFile } from "./is-file"
 import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
+import { printDirectives } from "../print"
 const { getNode, getNodes } = require(`../../redux/nodes`)
 
 const addInferredFields = ({
@@ -120,11 +121,22 @@ const addInferredFieldsImpl = ({
               .forEach(name => {
                 if (!typeComposer.hasFieldExtension(key, name)) {
                   typeComposer.setFieldExtension(key, name, extensions[name])
+
+                  const typeName = typeComposer.getTypeName()
+                  const implementsNode =
+                    unsanitizedFieldPath.length === 1 ? `implements Node ` : ``
+                  const extension = printDirectives(
+                    { [name]: extensions[name] },
+                    schemaComposer.getDirectives()
+                  )
                   report.warn(
-                    `Deprecation warning - adding inferred resolver for field ` +
-                      `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
-                      `only fields with an explicit directive/extension will ` +
-                      `get a resolver.`
+                    `Deprecation warning: adding inferred extension \`${name}\` for field \`${typeName}.${key}\`.\n` +
+                      `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
+                      `Add the following type definition to fix this:\n\n` +
+                      `  type ${typeComposer.getTypeName()} ${implementsNode}{\n` +
+                      `    ${key}: ${field.type.toString()}${extension}\n` +
+                      `  }\n\n` +
+                      `https://www.gatsbyjs.com/docs/actions/#createTypes`
                   )
                 }
               })

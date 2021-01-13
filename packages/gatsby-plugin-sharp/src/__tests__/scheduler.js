@@ -170,13 +170,13 @@ describe(`scheduler`, () => {
       expect(got.post).toHaveBeenCalledWith(
         process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL,
         {
-          body: {
+          json: {
             file: job.inputPaths[0],
             hash: expect.any(String),
             transforms: job.args.operations,
             options: job.args.pluginOptions,
           },
-          json: true,
+          responseType: `json`,
         }
       )
     })

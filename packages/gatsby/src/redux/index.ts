@@ -60,7 +60,7 @@ export const readState = (): IGatsbyState => {
 }
 
 export interface IMultiDispatch {
-  <T extends ActionsUnion>(action: T[]): T[]
+  <T extends ActionsUnion>(action: Array<T>): Array<T>
 }
 
 /**
@@ -68,7 +68,7 @@ export interface IMultiDispatch {
  */
 const multi: Middleware<IMultiDispatch> = ({ dispatch }) => next => (
   action: ActionsUnion
-): ActionsUnion | ActionsUnion[] =>
+): ActionsUnion | Array<ActionsUnion> =>
   Array.isArray(action) ? action.filter(Boolean).map(dispatch) : next(action)
 
 // We're using the inferred type here becauise manually typing it would be very complicated
@@ -91,7 +91,6 @@ export const saveState = (): void => {
   return writeToCache({
     nodes: state.nodes,
     status: state.status,
-    componentDataDependencies: state.componentDataDependencies,
     components: state.components,
     jobsV2: state.jobsV2,
     staticQueryComponents: state.staticQueryComponents,
@@ -100,6 +99,7 @@ export const saveState = (): void => {
     pageData: state.pageData,
     pendingPageDataWrites: state.pendingPageDataWrites,
     staticQueriesByTemplate: state.staticQueriesByTemplate,
+    queries: state.queries,
   })
 }
 

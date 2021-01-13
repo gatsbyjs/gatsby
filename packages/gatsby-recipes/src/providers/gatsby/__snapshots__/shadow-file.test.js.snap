@@ -16,6 +16,12 @@ export default () => <h1>F. Scott Fitzgerald</h1>
 exports[`Shadow File resource e2e shadow file resource test: GatsbyShadowFile create plan 1`] = `
 Object {
   "currentState": Object {},
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-theme-blog",
+      "resourceName": "NPMPackage",
+    },
+  ],
   "describe": "Shadow src/components/author.js from the theme gatsby-theme-blog",
   "diff": "- Original  - 0
 + Modified  + 4
@@ -77,6 +83,12 @@ export default () => <h1>F. Scott Fitzgerald</h1>
     "path": "src/gatsby-theme-blog/components/author.js",
     "theme": "gatsby-theme-blog",
   },
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-theme-blog",
+      "resourceName": "NPMPackage",
+    },
+  ],
   "describe": "Shadow src/components/author.js from the theme gatsby-theme-blog",
   "diff": "Compared values have no visual difference.",
   "id": "src/gatsby-theme-blog/components/author.js",

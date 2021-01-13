@@ -22,7 +22,7 @@ The Gatsby docs include multiple types of guides. They mostly follow the same fo
 - [Conceptual Guides](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
   - As an example, "Plugins, Themes, and Starters" would be an overarching concept article, with individual reference guide sections for Plugin, Theme, and Starter docs.
 - [Gatsby Internals](/docs/gatsby-internals/): previously titled Behind the Scenes, these docs go in depth into how Gatsby works under the hood.
-- [Using Gatsby Professionally](/docs/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
+- [Using Gatsby Professionally](/docs/using-gatsby-professionally/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
 
 ## What should a reference guide be about?
 
@@ -57,8 +57,7 @@ Guide topics should be chosen based on these priorities:
 1. [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
 2. Articles with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
 3. Articles related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
-4. Articles listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-5. Articles that you or other community members would like to see
+4. Articles that you or other community members would like to see
 
 ### Length of a reference guide
 
@@ -143,8 +142,7 @@ Guide overview articles are essentially new parent categories that help organize
 1. [Stub articles](/contributing/stub-list/) (docs that already exist on the site but don't have content in them yet)
 2. Article sections with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
 3. Article sections related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708), like "e-commerce"
-4. Article sections listed in the "Backlog" or "To prioritize" sections of the [Learning / Devrel Roadmap](https://github.com/gatsbyjs/gatsby/projects/10) on GitHub
-5. Article sections that you or other community members would like to see
+4. Article sections that you or other community members would like to see
 
 ## Reference guide overview template
 

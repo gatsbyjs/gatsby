@@ -1,8 +1,9 @@
 /** @jsx jsx */
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { jsx, Flex } from "strict-ui"
 import { Spinner } from "theme-ui"
 import { useQuery } from "urql"
+import { Link } from "gatsby"
 import {
   Card,
   Heading,
@@ -15,21 +16,14 @@ import skaterIllustration from "../skaterboi.svg"
 import boltIcon from "../bolt.svg"
 import sparklesIcon from "../sparkles.svg"
 import PluginSearchBar from "../components/plugin-search"
-import ManagePluginModal from "../components/manage-plugin-modal"
 
 function InstalledPluginListItem({
   plugin,
 }: {
   plugin: { name: string; description?: string; options?: Record<string, any> }
 }): JSX.Element {
-  const [isOpen, setIsOpen] = useState(false)
   return (
     <Fragment>
-      <ManagePluginModal
-        plugin={plugin}
-        isOpen={isOpen}
-        onDismiss={(): void => setIsOpen(false)}
-      />
       <Flex
         as="li"
         // NOTE(@mxstbr): This is an escape hatch from strict-ui. Gotta figure out how to cover this use case upstream...
@@ -40,13 +34,17 @@ function InstalledPluginListItem({
         }}
       >
         <Flex
-          as="button"
+          as={Link}
+          // NOTE(@mxstbr): TypeScript does not understand the as="" prop
+          // @ts-ignore
+          to={`/plugins/${plugin.name}`}
           justifyContent="space-between"
           alignItems="center"
           sx={{
             background: `none`,
             border: `none`,
             borderRadius: 2,
+            textDecoration: `none`,
             transition: `background-color 100ms ease-out`,
             "&:hover": {
               backgroundColor: `grey.10`,
@@ -57,11 +55,6 @@ function InstalledPluginListItem({
             width: `100%`,
             py: 3,
             px: 5,
-          }}
-          // NOTE(@mxstbr): TypeScript does not understand the as="" prop
-          // @ts-ignore
-          onClick={(): void => {
-            setIsOpen(true)
           }}
         >
           <Heading as="h3" sx={{ fontWeight: `bold`, fontSize: 2 }}>
@@ -106,19 +99,32 @@ function Index(): JSX.Element {
     `,
   })
 
-  if (fetching) return <Spinner />
+  let errMsg: string | false = false
 
   if (error) {
-    const errMsg =
+    errMsg =
       (error.networkError && error.networkError.message) ||
       (Array.isArray(error.graphQLErrors) &&
         error.graphQLErrors.map(e => e.message).join(` | `))
-
-    return <p>Error: {errMsg}</p>
   }
 
   return (
     <Fragment>
+      {error && (
+        <Fragment>
+          <Spacer size={9} />
+          <div
+            sx={{
+              p: 4,
+              backgroundColor: `red.10`,
+              border: (t: any): string => `1px solid ${t.colors.red[`80`]}`,
+              borderRadius: 2,
+            }}
+          >
+            <strong>Error:</strong> {errMsg}
+          </div>
+        </Fragment>
+      )}
       <Spacer size={9} />
       <Flex gap={13}>
         <Flex flexDirection="column" gap={13} flex="1">
@@ -158,21 +164,29 @@ function Index(): JSX.Element {
               <img src={boltIcon} alt="" />
               <Subheading>
                 Installed plugins{` `}
-                <span sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}>
-                  ({data.allGatsbyPlugin.nodes.length})
-                </span>
+                {data?.allGatsbyPlugin?.nodes && (
+                  <span
+                    sx={{ fontSize: 1, color: `grey.60`, fontWeight: `400` }}
+                  >
+                    ({data.allGatsbyPlugin.nodes.length})
+                  </span>
+                )}
               </Subheading>
             </Flex>
-            <Flex
-              as="ul"
-              gap={3}
-              flexDirection="column"
-              sx={{ p: 0, listStyle: `none` }}
-            >
-              {data.allGatsbyPlugin.nodes.map(plugin => (
-                <InstalledPluginListItem key={plugin.id} plugin={plugin} />
-              ))}
-            </Flex>
+            {data?.allGatsbyPlugin?.nodes ? (
+              <Flex
+                as="ul"
+                gap={3}
+                flexDirection="column"
+                sx={{ p: 0, listStyle: `none` }}
+              >
+                {data.allGatsbyPlugin.nodes.map(plugin => (
+                  <InstalledPluginListItem key={plugin.id} plugin={plugin} />
+                ))}
+              </Flex>
+            ) : (
+              <Spinner />
+            )}
           </Flex>
         </Flex>
         <Flex flexDirection="column" gap={13} flex="1">

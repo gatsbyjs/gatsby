@@ -1,5 +1,5 @@
-const render = require(`.`)
-const { parse } = require(`../parser`)
+import render from "."
+import { parse } from "../parser"
 
 const mdxFixture = `
 # Hello, world!

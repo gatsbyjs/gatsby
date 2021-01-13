@@ -1,31 +1,33 @@
-require(`dotenv`).config()
+import dotenv from "dotenv"
 
-const express = require(`express`)
-const chokidar = require(`chokidar`)
-const graphqlHTTP = require(`express-graphql`)
-const { v4: uuidv4 } = require(`uuid`)
-const {
+import express from "express"
+import chokidar from "chokidar"
+import graphqlHTTP from "express-graphql"
+
+import { v4 as uuidv4 } from "uuid"
+import {
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLString,
   GraphQLBoolean,
   execute,
   subscribe,
-} = require(`graphql`)
-const { PubSub } = require(`graphql-subscriptions`)
-const { SubscriptionServer } = require(`subscriptions-transport-ws`)
-const { createServer } = require(`http`)
-const { interpret } = require(`xstate`)
-const pkgDir = require(`pkg-dir`)
-const cors = require(`cors`)
-const lodash = require(`lodash`)
+} from "graphql"
+import { PubSub } from "graphql-subscriptions"
+import { SubscriptionServer } from "subscriptions-transport-ws"
+import { createServer } from "http"
+import { interpret } from "xstate"
+import pkgDir from "pkg-dir"
+import cors from "cors"
+import lodash from "lodash"
 
+import recipeMachine from "../recipe-machine"
+import createTypes from "../create-types"
+
+dotenv.config()
 // Create a session id — mostly useful to tell the client when the server
 // has restarted
 const sessionId = uuidv4()
-
-const recipeMachine = require(`../recipe-machine`)
-const createTypes = require(`../create-types`)
 
 const SITE_ROOT = pkgDir.sync(process.cwd())
 

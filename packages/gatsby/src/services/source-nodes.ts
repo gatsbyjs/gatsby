@@ -8,11 +8,12 @@ import { findChangedPages } from "../utils/changed-pages"
 export async function sourceNodes({
   parentSpan,
   webhookBody,
+  webhookSourcePluginName,
   store,
   deferNodeMutation = false,
 }: Partial<IDataLayerContext>): Promise<{
-  deletedPages: string[]
-  changedPages: string[]
+  deletedPages: Array<string>
+  changedPages: Array<string>
 }> {
   assertStore(store)
 
@@ -25,15 +26,8 @@ export async function sourceNodes({
     parentSpan: activity.span,
     deferNodeMutation,
     webhookBody,
+    pluginName: webhookSourcePluginName,
   })
-
-  reporter.verbose(
-    `Now have ${store.getState().nodes.size} nodes with ${
-      store.getState().nodesByType.size
-    } types: [${[...store.getState().nodesByType.entries()]
-      .map(([type, nodes]) => type + `:` + nodes.size)
-      .join(`, `)}]`
-  )
 
   reporter.verbose(`Checking for deleted pages`)
 

@@ -26,4 +26,18 @@ describe(`babel-preset-gatsby`, () => {
       }),
     ])
   })
+
+  it(`Allows to configure react runtime`, () => {
+    const { presets } = preset(null, {
+      reactRuntime: `automatic`,
+    })
+
+    expect(presets[1]).toEqual([
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
+      expect.objectContaining({
+        pragma: undefined,
+        runtime: `automatic`,
+      }),
+    ])
+  })
 })

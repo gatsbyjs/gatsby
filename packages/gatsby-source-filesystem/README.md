@@ -11,7 +11,7 @@ nodes from which you can query an HTML representation of the markdown.
 
 ## Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ## How to use
 
@@ -119,6 +119,7 @@ createFilePath({
   // The parameter from `onCreateNode` should be passed in here
   getNode,
   // The base path for your files.
+  // It is relative to the `options.path` setting in the `gatsby-source-filesystem` entries of your `gatsby-config.js`.
   // Defaults to `src/pages`. For the example above, you'd use `src/content`.
   basePath,
   // Whether you want your file paths to contain a trailing `/` slash
@@ -234,7 +235,7 @@ exports.downloadMediaFiles = ({
 }
 ```
 
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
+The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/plugins/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to use in the component [gatsby-image](/plugins/gatsby-image/).
 
 #### Retrieving the remote file name and extension
 

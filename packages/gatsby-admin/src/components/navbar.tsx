@@ -2,13 +2,25 @@
 import { jsx, Flex } from "strict-ui"
 import { Text, Button, AnchorButton } from "gatsby-interface"
 import { useQuery } from "urql"
-import { FeedbackForm } from "feedback-fish"
+import { FeedbackFish } from "@feedback-fish/react"
 import externalLinkIcon from "../external-link.svg"
 import graphqlIcon from "../graphql.svg"
+import { Link } from "gatsby"
+import useDevelopState from "../utils/use-develop-logs"
+import { useTelemetry } from "gatsby-admin/src/utils/use-telemetry"
 
 function SendFeedbackButton(props): JSX.Element {
+  const telemetry = useTelemetry()
   return (
-    <Button variant="GHOST" size="S" {...props}>
+    <Button
+      variant="GHOST"
+      size="S"
+      data-feedback-fish
+      {...props}
+      onClick={(): void => {
+        telemetry.trackEvent(`FEEDBACK_WIDGET_OPEN`)
+      }}
+    >
       Send feedback
     </Button>
   )
@@ -25,6 +37,8 @@ function Navbar(): JSX.Element {
     `,
   })
 
+  const [developState, restartDevelop] = useDevelopState()
+
   return (
     <Flex
       as="nav"
@@ -35,7 +49,14 @@ function Navbar(): JSX.Element {
         paddingY: 5,
       }}
     >
-      <Flex gap={5} alignItems="baseline">
+      <Flex
+        as={Link}
+        // @ts-ignore
+        to="/"
+        gap={5}
+        alignItems="baseline"
+        sx={{ textDecoration: `none` }}
+      >
         <Text sx={{ textTransform: `uppercase`, fontSize: 0 }}>
           Gatsby Admin
         </Text>
@@ -46,10 +67,11 @@ function Navbar(): JSX.Element {
         )}
       </Flex>
       <Flex alignItems="baseline" gap={3}>
-        <FeedbackForm
+        <FeedbackFish
           projectId="9502a819990b03"
           triggerComponent={SendFeedbackButton}
         />
+        <SendFeedbackButton />
         <AnchorButton
           size="S"
           href="/___graphql"
@@ -59,10 +81,24 @@ function Navbar(): JSX.Element {
           GraphiQL&nbsp;
           <img src={graphqlIcon} />
         </AnchorButton>
-        <AnchorButton size="S" href="/" target="_blank">
-          View localhost&nbsp;
-          <img src={externalLinkIcon} />
-        </AnchorButton>
+        {developState === `needs-restart` && (
+          <Button size="S" onClick={restartDevelop}>
+            Restart develop process
+          </Button>
+        )}
+        {developState === `is-restarting` && (
+          <Button
+            size="S"
+            loading
+            loadingLabel="Restarting develop process..."
+          />
+        )}
+        {developState === `idle` && (
+          <AnchorButton size="S" href="/" target="_blank">
+            View localhost&nbsp;
+            <img src={externalLinkIcon} />
+          </AnchorButton>
+        )}
       </Flex>
     </Flex>
   )

@@ -4,12 +4,7 @@ import DevLoader from "../dev-loader"
 import emitter from "../emitter"
 
 jest.mock(`../emitter`)
-jest.mock(`../socketIo`, () => {
-  return {
-    default: jest.fn(),
-    getPageData: jest.fn().mockResolvedValue(),
-  }
-})
+jest.mock(`../socketIo`, () => jest.fn())
 
 describe(`Dev loader`, () => {
   let originalBasePath
@@ -430,7 +425,7 @@ describe(`Dev loader`, () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/add-404-page/`
+        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
       )
 
       mock.error(defaultXHRMockErrorHandler)

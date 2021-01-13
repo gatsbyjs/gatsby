@@ -32,7 +32,7 @@ export const createGraphQLRunner = (
     graphqlTracing,
   })
 
-  const eventTypes: string[] = [
+  const eventTypes: Array<string> = [
     `DELETE_CACHE`,
     `CREATE_NODE`,
     `DELETE_NODE`,
@@ -79,6 +79,7 @@ export const createGraphQLRunner = (
                     },
                   },
                   filePath: file.getFileName(),
+                  error: e,
                 })
                 structuredError.context = {
                   ...structuredError.context,

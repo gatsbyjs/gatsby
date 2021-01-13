@@ -4,6 +4,7 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
 import { Compiler } from "webpack"
 import { isEqual } from "lodash"
+import { Stage } from "../commands/types"
 
 import {
   reportWebpackWarnings,
@@ -11,6 +12,7 @@ import {
 } from "../utils/webpack-error-utils"
 
 import { printDeprecationWarnings } from "../utils/print-deprecation-warnings"
+import { showExperimentNotices } from "../utils/show-experiment-notice"
 import { printInstructions } from "../utils/print-instructions"
 import { prepareUrls } from "../utils/prepare-urls"
 import { startServer, IWebpackWatchingPauseResume } from "../utils/start-server"
@@ -41,6 +43,7 @@ export async function startWebpackServer({
     compiler,
     webpackActivity,
     websocketManager,
+    cancelDevJSNotice,
     webpackWatching,
   } = await startServer(program, app, workerPool)
   webpackWatching.suspend()
@@ -76,6 +79,10 @@ export async function startWebpackServer({
       stats,
       done
     ) {
+      if (cancelDevJSNotice) {
+        cancelDevJSNotice()
+      }
+
       // "done" event fires when Webpack has finished recompiling the bundle.
       // Whether or not you have warnings or errors, you will get this event.
 
@@ -91,6 +98,9 @@ export async function startWebpackServer({
       const isSuccessful = !messages.errors.length
 
       if (isSuccessful && isFirstCompile) {
+        // Show notices to users about potential experiments/feature flags they could
+        // try.
+        showExperimentNotices()
         printInstructions(
           program.sitePackageJson.name || `(Unnamed package)`,
           urls
@@ -116,7 +126,7 @@ export async function startWebpackServer({
 
         if (!isSuccessful) {
           const errors = structureWebpackErrors(
-            `develop`,
+            Stage.Develop,
             stats.compilation.errors
           )
           webpackActivity.panicOnBuild(errors)
@@ -144,6 +154,7 @@ export async function startWebpackServer({
                 type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
                 payload: {
                   componentPath,
+                  pages: state.components.get(componentPath)?.pages ?? [],
                 },
               })
               store.dispatch({

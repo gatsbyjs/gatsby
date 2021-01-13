@@ -61,7 +61,7 @@ exports.onCreateNode = args => {
 }
 ```
 
-To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/conceptual/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 
@@ -79,7 +79,7 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 
 ## VS Code Debugger (Manual Config)
 
-Using built in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
+Using built-in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
@@ -89,26 +89,21 @@ We won't go in depth here about how to debug in VS Code - for that you can check
   "configurations": [
     {
       "name": "Gatsby develop",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
-      "autoAttachChildProcesses": true,
-      "args": ["develop", "--inspect-brk"],
-      "stopOnEntry": false,
+      "args": ["develop"],
       "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
+      "console": "integratedTerminal"
     },
     {
       "name": "Gatsby build",
-      "type": "node",
+      "type": "pwa-node",
       "request": "launch",
-      "protocol": "inspector",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
       "args": ["build"],
-      "stopOnEntry": false,
       "runtimeArgs": ["--nolazy"],
-      "sourceMaps": false
+      "console": "integratedTerminal"
     }
   ]
 }

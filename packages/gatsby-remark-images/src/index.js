@@ -1,5 +1,6 @@
 const {
   DEFAULT_OPTIONS,
+  EMPTY_ALT,
   imageClass,
   imageBackgroundClass,
   imageWrapperClass,
@@ -168,10 +169,13 @@ module.exports = (
     const fileName = srcSplit[srcSplit.length - 1]
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, ``)
     const defaultAlt = fileNameNoExt.replace(/[^A-Z0-9]/gi, ` `)
+    const isEmptyAlt = node.alt === EMPTY_ALT
 
-    const alt = _.escape(
-      overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
-    )
+    const alt = isEmptyAlt
+      ? ``
+      : _.escape(
+          overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
+        )
 
     const title = node.title ? _.escape(node.title) : alt
 
@@ -210,44 +214,74 @@ module.exports = (
       />
     `.trim()
 
-    // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
-    if (options.withWebp) {
-      const webpFluidResult = await fluid({
-        file: imageNode,
-        args: _.defaults(
-          { toFormat: `WEBP` },
-          // override options if it's an object, otherwise just pass through defaults
-          options.withWebp === true ? {} : options.withWebp,
-          options
-        ),
-        reporter,
-      })
+    const formatConfigs = [
+      {
+        propertyName: `withAvif`,
+        format: `AVIF`,
+      },
+      {
+        propertyName: `withWebp`,
+        format: `WEBP`,
+      },
+    ]
 
-      if (!webpFluidResult) {
+    const enabledFormatConfigs = formatConfigs.filter(
+      ({ propertyName }) => options[propertyName]
+    )
+
+    if (enabledFormatConfigs.length) {
+      const sourcesHtmlPromises = enabledFormatConfigs.map(
+        async ({ format, propertyName }) => {
+          const formatFluidResult = await fluid({
+            file: imageNode,
+            args: _.defaults(
+              { toFormat: format },
+              // override options if it's an object, otherwise just pass through defaults
+              options[propertyName] === true ? {} : options[propertyName],
+              options
+            ),
+            reporter,
+          })
+
+          if (!formatFluidResult) {
+            return null
+          }
+
+          return `
+            <source
+              srcset="${formatFluidResult.srcSet}"
+              sizes="${formatFluidResult.sizes}"
+              type="${formatFluidResult.srcSetType}"
+            />
+          `.trim()
+        }
+      )
+
+      const sourcesHtml = (await Promise.all(sourcesHtmlPromises)).filter(
+        sourceHtml => sourceHtml !== null
+      )
+
+      if (!sourcesHtml.length) {
         return resolve()
       }
 
       imageTag = `
-      <picture>
-        <source
-          srcset="${webpFluidResult.srcSet}"
-          sizes="${webpFluidResult.sizes}"
-          type="${webpFluidResult.srcSetType}"
-        />
-        <source
-          srcset="${srcSet}"
-          sizes="${fluidResult.sizes}"
-          type="${fluidResult.srcSetType}"
-        />
-        <img
-          class="${imageClass}"
-          src="${fallbackSrc}"
-          alt="${alt}"
-          title="${title}"
-          loading="${loading}"
-          style="${imageStyle}"
-        />
-      </picture>
+        <picture>
+          ${sourcesHtml.join(``)}
+          <source
+            srcset="${srcSet}"
+            sizes="${fluidResult.sizes}"
+            type="${fluidResult.srcSetType}"
+          />
+          <img
+            class="${imageClass}"
+            src="${fallbackSrc}"
+            alt="${alt}"
+            title="${title}"
+            loading="${loading}"
+            style="${imageStyle}"
+          />
+        </picture>
       `.trim()
     }
 

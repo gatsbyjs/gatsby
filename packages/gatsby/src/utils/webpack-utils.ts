@@ -8,8 +8,8 @@ import TerserPlugin from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
-import isWsl from "is-wsl"
 import { getBrowsersList } from "./browserslist"
+import semver from "semver"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
@@ -48,11 +48,11 @@ interface ILoaderUtils {
   style: LoaderResolver
   css: LoaderResolver
   postcss: LoaderResolver<{
-    browsers?: string[]
-    overrideBrowserslist?: string[]
+    browsers?: Array<string>
+    overrideBrowserslist?: Array<string>
     plugins?:
-      | postcss.Plugin<any>[]
-      | ((loader: Loader) => postcss.Plugin<any>[])
+      | Array<postcss.Plugin<any>>
+      | ((loader: Loader) => Array<postcss.Plugin<any>>)
   }>
 
   file: LoaderResolver
@@ -81,8 +81,10 @@ interface IRuleUtils {
   /**
    * Handles JavaScript compilation via babel
    */
-  js: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
-  dependencies: RuleFactory<{ modulesThatUseGatsby?: IModuleThatUseGatsby[] }>
+  js: RuleFactory<{ modulesThatUseGatsby?: Array<IModuleThatUseGatsby> }>
+  dependencies: RuleFactory<{
+    modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
+  }>
   yaml: RuleFactory
   fonts: RuleFactory
   images: RuleFactory
@@ -90,11 +92,11 @@ interface IRuleUtils {
   media: RuleFactory
 
   css: ContextualRuleFactory<{
-    browsers?: string[]
+    browsers?: Array<string>
     modules?: CssLoaderModuleOption
   }>
   cssModules: RuleFactory
-  postcss: ContextualRuleFactory<{ overrideBrowserOptions: string[] }>
+  postcss: ContextualRuleFactory<{ overrideBrowserOptions: Array<string> }>
 
   eslint: (schema: GraphQLSchema) => RuleSetRule
 }
@@ -137,6 +139,7 @@ export const createWebpackUtils = (
 
   const isSSR = stage.includes(`html`)
 
+  const jsxRuntimeExists = reactHasJsxRuntime()
   const makeExternalOnly = (original: RuleFactory) => (
     options = {}
   ): RuleSetRule => {
@@ -192,12 +195,28 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
-      return {
-        options,
-        // use MiniCssExtractPlugin only on production builds
-        loader: PRODUCTION
-          ? MiniCssExtractPlugin.loader
-          : require.resolve(`style-loader`),
+      if (PRODUCTION) {
+        // production always uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options,
+        }
+      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        // develop with ssr also uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            ...options,
+            // enable hmr for browser bundle, ssr bundle doesn't need it
+            hmr: stage === `develop`,
+          },
+        }
+      } else {
+        // develop without ssr is using style-loader
+        return {
+          loader: require.resolve(`style-loader`),
+          options,
+        }
       }
     },
 
@@ -228,7 +247,7 @@ export const createWebpackUtils = (
         options: {
           ident: `postcss-${++ident}`,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): postcss.Plugin<any>[] => {
+          plugins: (loader: Loader): Array<postcss.Plugin<any>> => {
             plugins =
               (typeof plugins === `function` ? plugins(loader) : plugins) || []
 
@@ -273,7 +292,7 @@ export const createWebpackUtils = (
       return {
         options: {
           stage,
-          // TODO add proper cache keys
+          reactRuntime: jsxRuntimeExists ? `automatic` : `classic`,
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -281,6 +300,7 @@ export const createWebpackUtils = (
             `babel`
           ),
           ...options,
+          rootDir: program.directory,
         },
         loader: require.resolve(`./babel-loader`),
       }
@@ -289,7 +309,6 @@ export const createWebpackUtils = (
     dependencies: options => {
       return {
         options: {
-          // TODO add proper cache keys
           cacheDirectory: path.join(
             program.directory,
             `.cache`,
@@ -303,7 +322,7 @@ export const createWebpackUtils = (
     },
 
     eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema)
+      const options = eslintConfig(schema, jsxRuntimeExists)
 
       return {
         options,
@@ -339,7 +358,9 @@ export const createWebpackUtils = (
     const js = ({
       modulesThatUseGatsby = [],
       ...options
-    }: { modulesThatUseGatsby?: IModuleThatUseGatsby[] } = {}): RuleSetRule => {
+    }: {
+      modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
+    } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
         include: (modulePath: string): boolean => {
@@ -376,7 +397,7 @@ export const createWebpackUtils = (
     const dependencies = ({
       modulesThatUseGatsby = [],
     }: {
-      modulesThatUseGatsby?: IModuleThatUseGatsby[]
+      modulesThatUseGatsby?: Array<IModuleThatUseGatsby>
     } = {}): RuleSetRule => {
       const jsOptions = {
         babelrc: false,
@@ -395,9 +416,11 @@ export const createWebpackUtils = (
         // debugger to show the original code. Instead, the code
         // being evaluated would be much more helpful.
         sourceMaps: false,
-        cacheIdentifier: `${stage}---gatsby-dependencies@${
-          require(`babel-preset-gatsby/package.json`).version
-        }`,
+
+        cacheIdentifier: JSON.stringify({
+          browerslist: supportedBrowsers,
+          gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
+        }),
       }
 
       // TODO REMOVE IN V3
@@ -492,7 +515,7 @@ export const createWebpackUtils = (
   rules.images = (): RuleSetRule => {
     return {
       use: [loaders.url()],
-      test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/,
+      test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
     }
   }
 
@@ -588,9 +611,6 @@ export const createWebpackUtils = (
     new TerserPlugin({
       // TODO add proper cache keys
       cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
-      // We can't use parallel in WSL because of https://github.com/gatsbyjs/gatsby/issues/6540
-      // This issue was fixed in https://github.com/gatsbyjs/gatsby/pull/12636
-      parallel: !isWsl,
       exclude: /\.min\.js/,
       sourceMap: true,
       terserOptions: {
@@ -681,15 +701,11 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: `whm`,
-      },
+      overlay: false,
     })
 
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
-      filename: `[name].[contenthash].css`,
-      chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 
@@ -709,4 +725,27 @@ export const createWebpackUtils = (
     rules,
     plugins,
   }
+}
+
+export function reactHasJsxRuntime(): boolean {
+  // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
+  // People can use a custom babelrc file to support it
+  // try {
+  //   // React is shipping a new jsx runtime that is to be used with
+  //   // an option on @babel/preset-react called `runtime: automatic`
+  //   // Not every version of React has this jsx-runtime yet. Eventually,
+  //   // it will be backported to older versions of react and this check
+  //   // will become unnecessary.
+  //   // for now we also do the semver check until react 17 is more widely used
+  //   // const react = require(`react/package.json`)
+  //   // return (
+  //   //   !!require.resolve(`react/jsx-runtime.js`) &&
+  //   //   semver.major(react.version) >= 17
+  //   // )
+  // } catch (e) {
+  //   // If the require.resolve throws, that means this version of React
+  //   // does not support the jsx runtime.
+  // }
+
+  return false
 }

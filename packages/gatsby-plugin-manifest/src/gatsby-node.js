@@ -9,6 +9,8 @@ import {
   favicons,
 } from "./common"
 
+import pluginOptionsSchema from "./pluginOptionsSchema"
+
 sharp.simd(true)
 
 // Handle Sharp's concurrency based on the Gatsby CPU count
@@ -58,8 +60,11 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
+exports.pluginOptionsSchema = pluginOptionsSchema
+
 /**
  * Setup pluginOption defaults
+ * TODO: Remove once pluginOptionsSchema is stable
  */
 exports.onPreInit = (_, pluginOptions) => {
   pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
@@ -179,7 +184,7 @@ const makeManifest = async ({
       const exists = fs.existsSync(iconPath)
       //create destination directory if it doesn't exist
       if (!exists) {
-        fs.mkdirSync(iconPath)
+        fs.mkdirSync(iconPath, { recursive: true })
       }
       paths[iconPath] = true
     }

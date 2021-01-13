@@ -1,4 +1,4 @@
-const ReactReconciler = require(`react-reconciler`)
+import ReactReconciler from "react-reconciler"
 
 // const debugInner = require(`debug`)(`recipes-reconciler`)
 const debug = (title, data) => {
@@ -113,4 +113,4 @@ const RecipesRenderer = {
   },
 }
 
-module.exports = RecipesRenderer
+export default RecipesRenderer

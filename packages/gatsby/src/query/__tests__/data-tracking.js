@@ -186,8 +186,9 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
 
   if (restart) {
     await require(`../../schema`).build({})
-    await apiRunner(`createPages`)
   }
+
+  await apiRunner(`createPages`)
 
   Object.entries(pageQueries).forEach(([componentPath, query]) => {
     store.dispatch({
@@ -200,14 +201,18 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   })
 
   Object.entries(staticQueries).forEach(([id, query]) => {
-    store.dispatch({
-      type: `REPLACE_STATIC_QUERY`,
-      payload: {
-        id: `sq--${id}`,
-        hash: `sq--${id}`,
-        query,
-      },
-    })
+    // Mimic real code behavior by only calling this action when static query text changes
+    const lastQuery = mockPersistedState.staticQueryComponents?.get(`sq--${id}`)
+    if (lastQuery?.query !== query) {
+      store.dispatch({
+        type: `REPLACE_STATIC_QUERY`,
+        payload: {
+          id: `sq--${id}`,
+          hash: `sq--${id}`,
+          query,
+        },
+      })
+    }
   })
 
   const queryIds = queryUtil.calcInitialDirtyQueryIds(store.getState())
@@ -222,10 +227,6 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   activity.end()
 
   await saveState()
-
-  if (restart) {
-    require(`../../bootstrap/page-hot-reloader`)
-  }
 
   const idsOfQueriesThatRan = queryRunner.mock.calls.map(call => call[1].id)
 
@@ -659,6 +660,70 @@ describe(`query caching between builds`, () => {
       // no queries should run
       expect(pathsOfPagesWithQueriesThatRan).toEqual([])
       expect(staticQueriesThatRan).toEqual([])
+    }, 999999)
+  })
+
+  describe(`Changed node previously not used to be used by the query`, () => {
+    let nodeChangeCounter = 1
+    beforeEach(() => {
+      setAPIhooks({
+        sourceNodes: (nodeApiContext, _pluginOptions) => {
+          const { createTestNode } = getTypedNodeCreators(nodeApiContext)
+
+          for (let i = 1; i <= nodeChangeCounter; i++) {
+            createTestNode({
+              id: `test-${i}`,
+              slug: `foo${i}`,
+              content: `Lorem ipsum.`,
+            })
+          }
+
+          nodeChangeCounter++
+        },
+      })
+      setPageQueries({})
+      setStaticQueries({
+        "static-query-1": `
+          {
+            test(slug: { eq: "foo2" }) {
+              slug
+              content
+            }
+          }
+        `,
+        "static-query-2": `
+          {
+            test(slug: { eq: "foo3" }) {
+              slug
+              content
+            }
+          }
+        `,
+      })
+    })
+
+    it(`rerunning after cache clearing - should run all queries`, async () => {
+      const { staticQueriesThatRan } = await setup({
+        restart: true,
+        clearCache: true,
+      })
+
+      // all queries to run
+      expect(staticQueriesThatRan).toEqual([`static-query-1`, `static-query-2`])
+    }, 99999)
+
+    it(`changing node to be used by any query triggers running that query (no restart)`, async () => {
+      const { staticQueriesThatRan } = await setup()
+
+      // runs the query with filter `slug: { eq: "foo1" }`
+      expect(staticQueriesThatRan).toEqual([`static-query-1`, `static-query-2`])
+    }, 999999)
+
+    it(`changing node to be used by any query triggers running that query (with restart)`, async () => {
+      const { staticQueriesThatRan } = await setup({ restart: true })
+
+      // runs the query with filter `slug: { eq: "foo2" }`
+      expect(staticQueriesThatRan).toEqual([`static-query-2`])
     }, 999999)
   })
 
@@ -1238,9 +1303,7 @@ describe(`query caching between builds`, () => {
       expect(staticQueriesThatRan).toEqual([])
     }, 999999)
 
-    // TO-DO: this is known issue - we always rerun queries for pages with no dependencies
-    // this mean that we will retry to rerun them every time we restart gatsby
-    it.skip(`rerunning should not run any queries (with restart)`, async () => {
+    it(`rerunning should not run any queries (with restart)`, async () => {
       const {
         pathsOfPagesWithQueriesThatRan,
         staticQueriesThatRan,

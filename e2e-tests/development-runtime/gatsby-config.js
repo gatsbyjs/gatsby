@@ -1,12 +1,16 @@
 // isomorphic-fetch sets global.fetch which seems to conflicts with source-map@<0.8.0 where it does a
 // simple browser check if (global.fetch) which is true when isomorphic-fetch is used. This creates an
 // exception in react-hot-loader. @see https://github.com/gatsbyjs/gatsby/pull/13713
+//
+// This is only necessary if we are testing react < 16.9 or if you are forcing GATSBY_HOT_LOADER=react-hot-loader.
+// When we are using fast-refresh we do not need this hack.
+// TODO: Remove once fast-refresh is the default
+//
 require(`isomorphic-fetch`)
 
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
     social: {
       twitter: `kylemathews`,
@@ -29,7 +33,9 @@ module.exports = {
       },
     },
     `gatsby-source-fake-data`,
+    `gatsby-source-pinc-data`,
     `gatsby-transformer-sharp`,
+    `gatsby-transformer-json`,
     {
       resolve: `gatsby-transformer-remark`,
       options: {
@@ -49,6 +55,7 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-image`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',

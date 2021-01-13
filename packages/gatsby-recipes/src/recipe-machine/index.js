@@ -1,14 +1,15 @@
-const { Machine, assign, send } = require(`xstate`)
-const lodash = require(`lodash`)
+import { Machine, assign, send } from "xstate"
+import lodash from "lodash"
 
-const debug = require(`debug`)(`recipes-machine`)
+import debugCtor from "debug"
+import validateSteps from "../validate-steps"
+import createPlan from "../create-plan"
+import applyPlan from "../apply-plan"
+import { parse } from "../parser"
+import resolveRecipe from "../resolve-recipe"
+import findDependencyMatch from "../find-dependency-match"
 
-const createPlan = require(`../create-plan`)
-const applyPlan = require(`../apply-plan`)
-const validateSteps = require(`../validate-steps`)
-const parser = require(`../parser`)
-const resolveRecipe = require(`../resolve-recipe`)
-const findDependencyMatch = require(`../find-dependency-match`)
+const debug = debugCtor(`recipes-machine`)
 
 const recipeMachine = Machine(
   {
@@ -20,6 +21,7 @@ const recipeMachine = Machine(
       recipe: ``,
       recipeSrc: ``,
       stepsAsMdx: [],
+      stepsAsJS: [],
       exports: [],
       plan: [],
       commands: [],
@@ -67,9 +69,8 @@ const recipeMachine = Machine(
           id: `parseRecipe`,
           src: async (context, _event) => {
             debug(`parsingRecipe`)
-            const parsed = await parser.parse(context.recipeSrc)
+            const parsed = await parse(context.recipeSrc)
             debug(`parsedRecipe`)
-
             return parsed
           },
           onError: {
@@ -96,6 +97,7 @@ const recipeMachine = Machine(
             actions: assign({
               recipe: (context, event) => event.data.recipe,
               stepsAsMdx: (context, event) => event.data.stepsAsMdx,
+              stepsAsJS: (context, event) => event.data.stepsAsJS,
               exports: (context, event) => event.data.exports,
             }),
           },
@@ -302,4 +304,4 @@ const recipeMachine = Machine(
   }
 )
 
-module.exports = recipeMachine
+export default recipeMachine

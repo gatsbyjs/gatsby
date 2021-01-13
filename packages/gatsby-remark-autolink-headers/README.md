@@ -6,7 +6,7 @@ This is a sub-plugin for `gatsby-transformer-remark`. As demoed below, add this 
 
 ## Install
 
-`npm install --save gatsby-remark-autolink-headers`
+`npm install gatsby-remark-autolink-headers`
 
 ## How to use
 
@@ -87,3 +87,17 @@ module.exports = {
   ],
 }
 ```
+
+## How to style the anchor link
+
+By default, the anchor link has a class of `anchor` (see `className` option to change this name) on the element but has no additional styling. To make it fit your website, you'll have to write some CSS to change the appearance.
+
+In your CSS you can specify this element, in this instance the anchor tag will appear red:
+
+```css
+a.anchor {
+  fill: "red";
+}
+```
+
+Note: There are a variety of approaches to styling your Gatsby site, see [styling documentation](https://www.gatsbyjs.com/docs/styling/) for more detail.

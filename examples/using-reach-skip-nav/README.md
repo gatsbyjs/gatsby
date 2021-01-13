@@ -2,7 +2,7 @@
 
 Many people navigate the web primarily using the keyboard, often with a screen reader. If main content is not the first thing on a page (e.g. if there is a top site banner or navigation menu before the main content starts), these users have to tab through every single link before they can get to the main content. As this is cumbersome and not an ideal user experience, it is recommended that a "skip link" be added at the very top of every page that links to the main content, allowing users to skip right to the most relevant information on the page. It is idiomatic to position this link off of the page so it can only be reached with a keyboard and doesn't interrupt visual flow of the page, and to display the link if it is focused.
 
-Additionally, many users (e.g. low vision users who view pages at a high magnification) have difficulty orienting themselves on a new page if focus is set on too large of an element or an inoperable element, like the wrapper div that Gatsby focuses by default. Sending focus directly to a smaller, interactive control like the skip link is ideal, as laid out in [research](https://www.gatsbyjs.org/blog/2019-07-11-user-testing-accessible-client-routing/) conducted by [@marcysutton](www.github.com/marcysutton) and [Fable Tech Labs](https://www.makeitfable.com/).
+Additionally, many users (e.g. low vision users who view pages at a high magnification) have difficulty orienting themselves on a new page if focus is set on too large of an element or an inoperable element, like the wrapper div that Gatsby focuses by default. Sending focus directly to a smaller, interactive control like the skip link is ideal, as laid out in [research](https://www.gatsbyjs.com/blog/2019-07-11-user-testing-accessible-client-routing/) conducted by [@marcysutton](www.github.com/marcysutton) and [Fable Tech Labs](https://www.makeitfable.com/).
 
 This example will show you how to leverage the [@reach/skip-nav](https://reacttraining.com/reach-ui/skip-nav/) component to implement a skip link and also how to focus that link on navigation to a new page in your `gatsby-browser.js` file.
 
@@ -31,7 +31,7 @@ export default Layout
 
 ### Focus your link on page navigation
 
-Hooking into Gatsby's `onRouteUpdate` API method will allow you to focus automatically on a skip link on page change, putting a user in a more appropriate spot to take action. More information about this method can be found the [browser API docs](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate).
+Hooking into Gatsby's `onRouteUpdate` API method will allow you to focus automatically on a skip link on page change, putting a user in a more appropriate spot to take action. More information about this method can be found the [browser API docs](https://www.gatsbyjs.com/docs/browser-apis/#onRouteUpdate).
 
 ```javascript:title=gatsby-browser.js
 // gatsby-browser.js
