@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0...gatsby-plugin-sharp@2.12.1) (2021-01-13)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** PathPrefix isn't being passed/set for GatsbyImage ([#28845](https://github.com/gatsbyjs/gatsby/issues/28845)) ([#28991](https://github.com/gatsbyjs/gatsby/issues/28991)) ([c762050](https://github.com/gatsbyjs/gatsby/commit/c76205061e83d372bc205690ea1b970273f673dc))
+
 # [2.12.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.12.0-next.6...gatsby-plugin-sharp@2.12.0) (2021-01-05)
 
 ### Bug Fixes

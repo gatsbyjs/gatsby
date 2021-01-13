@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.30.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.1...gatsby@2.30.2) (2021-01-13)
+
+### Bug Fixes
+
+- **gatsby:** fix stale query results on data updates ([#28986](https://github.com/gatsbyjs/gatsby/issues/28986)) ([#28994](https://github.com/gatsbyjs/gatsby/issues/28994)) ([c172848](https://github.com/gatsbyjs/gatsby/commit/c172848f16cd9449f2ce47df8ec0ba42254381e2))
+
+### Performance Improvements
+
+- **develop:** don't use debug config for bluebird ([#28957](https://github.com/gatsbyjs/gatsby/issues/28957)) ([#28993](https://github.com/gatsbyjs/gatsby/issues/28993)) ([f632c0a](https://github.com/gatsbyjs/gatsby/commit/f632c0ac5e8e1085942a4616c98b980636949d6e))
+
 ## [2.30.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0...gatsby@2.30.1) (2021-01-06)
 
 ### Bug Fixes

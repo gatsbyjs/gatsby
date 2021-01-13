@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0...gatsby-plugin-image@0.5.1) (2021-01-13)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
 # [0.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.6...gatsby-plugin-image@0.5.0) (2021-01-05)
 
 ### Bug Fixes
