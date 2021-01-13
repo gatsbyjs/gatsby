@@ -122,5 +122,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Disable MDX transformation for nodes where this function returns true`
       ),
+    root: Joi.string()
+      .default(process.cwd())
+      .description(`Who knows what this does lol`)
   })
 }
