@@ -204,6 +204,7 @@ export function responsiveImageSizes({
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
   breakpoints,
+  layout,
 }) {
   const { fit = `cover` } = transformOptions
 
@@ -249,24 +250,23 @@ export function responsiveImageSizes({
 
   width = Math.round(width)
 
-  // Create sizes (in width) for the image if no custom breakpoints are
-  // provided. If the max width of the container for the rendered markdown file
-  // is 800px, the sizes would then be: 200, 400, 800, 1600 if using
-  // the default outputPixelDensities
-  //
-  // This is enough sizes to provide close to the optimal image size for every
-  // device size / screen resolution while (hopefully) not requiring too much
-  // image processing time (Sharp has optimizations thankfully for creating
-  // multiple sizes of the same input file)
   if (breakpoints?.length > 0) {
     sizes = breakpoints.filter(size => size <= imgDimensions.width)
+
+    // If a larger breakpoint has been filtered-out, add the actual image width instead
+    if (
+      sizes.length < breakpoints.length &&
+      !sizes.includes(imgDimensions.width)
+    ) {
+      sizes.push(imgDimensions.width)
+    }
   } else {
     sizes = densities.map(density => Math.round(density * width))
     sizes = sizes.filter(size => size <= imgDimensions.width)
   }
 
   // ensure that the size passed in is included in the final output
-  if (!sizes.includes(width)) {
+  if (layout === `constrained` && !sizes.includes(width)) {
     sizes.push(width)
   }
   sizes = sizes.sort((a, b) => a - b)
