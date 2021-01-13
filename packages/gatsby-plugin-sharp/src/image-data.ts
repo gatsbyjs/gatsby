@@ -94,7 +94,7 @@ export async function generateImageData({
 
   args.formats = args.formats || [`auto`, `webp`]
 
-  if (layout === `fluid`) {
+  if (layout === `fullWidth`) {
     args.breakpoints = args.breakpoints?.length
       ? args.breakpoints
       : DEFAULT_BREAKPOINTS
