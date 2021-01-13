@@ -1,11 +1,7 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const {
-  nodeFromData,
-  downloadFile,
-  isFileNode,
-} = require(`./normalize`)
+const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
 const {
   handleReferences,
   handleWebhookUpdate,
@@ -86,11 +82,11 @@ exports.sourceNodes = async (
       headers,
       params,
     })
-  
-    if(translation && !languageConfig.enabledLanguages.length) {
+
+    if (translation && !languageConfig.enabledLanguages.length) {
       reporter.warn(
-          `The translation option is enabled but no enabled languages were retrieved from Drupal. Make sure your basicAuth credentials in the Gatsby config file are populated with a user that has the "administer languages" permission.`,
-      );
+        `The translation option is enabled but no enabled languages were retrieved from Drupal. Make sure your basicAuth credentials in the Gatsby config file are populated with a user that has the "administer languages" permission.`
+      )
     }
   }
 
