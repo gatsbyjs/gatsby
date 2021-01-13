@@ -1,6 +1,11 @@
 const _ = require(`lodash`)
 const axios = require(`axios`)
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  getHref,
+} = require(`./normalize`)
 
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
@@ -26,26 +31,30 @@ const fetchLanguageConfig = async ({
   let translatableEntitiesResponses = []
 
   while (next) {
-    const response = axios.get(next, {
+    const response = await axios.get(next, {
       auth: basicAuth,
       headers,
       params,
     })
 
-    availableLanguagesResponses.concat(response.data.data)
-    next = response.data.links.next
+    availableLanguagesResponses = availableLanguagesResponses.concat(
+      response.data.data
+    )
+    next = getHref(response.data.links.next)
   }
 
   next = `${baseUrl}/${apiBase}/language_content_settings/language_content_settings?filter[language_alterable]=true`
   while (next) {
-    const response = axios.get(next, {
+    const response = await axios.get(next, {
       auth: basicAuth,
       headers,
       params,
     })
 
-    translatableEntitiesResponses.concat(response.data.data)
-    next = response.data.links.next
+    translatableEntitiesResponses = translatableEntitiesResponses.concat(
+      response.data.data
+    )
+    next = getHref(response.data.links.next)
   }
 
   const enabledLanguages = availableLanguagesResponses

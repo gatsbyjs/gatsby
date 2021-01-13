@@ -1,7 +1,11 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+} = require(`./normalize`)
 const {
   handleReferences,
   handleWebhookUpdate,
@@ -82,6 +86,12 @@ exports.sourceNodes = async (
       headers,
       params,
     })
+  
+    if(translation && !languageConfig.enabledLanguages.length) {
+      reporter.warn(
+          `The translation option is enabled but no enabled languages were retrieved from Drupal. Make sure your basicAuth credentials in the Gatsby config file are populated with a user that has the "administer languages" permission.`,
+      );
+    }
   }
 
   setPluginStatus({ languageConfig })
@@ -180,7 +190,11 @@ exports.sourceNodes = async (
         let nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode({ node: getNode(createNodeId(nodeSyncData.id)) })
+            actions.deleteNode({
+              node: getNode(
+                createNodeId(`${nodeSyncData.langcode}${nodeSyncData.id}`)
+              ),
+            })
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
@@ -303,20 +317,11 @@ exports.sourceNodes = async (
         } else {
           for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
             let currentLanguage = languageConfig.enabledLanguages[i]
-            let dataForLanguage
-
-            if (currentLanguage === languageConfig.defaultLanguage) {
-              dataForLanguage = await getNext(url)
-            } else {
-              const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
-              const urlPath = url.href.replace(
-                `${baseUrlWithoutTrailingSlash}/${apiBase}/`,
-                ``
-              )
-              dataForLanguage = await getNext(
-                `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
-              )
-            }
+            const urlPath = url.href.split(`${apiBase}/`).pop()
+            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+            let dataForLanguage = await getNext(
+              `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
+            )
 
             data = data.concat(dataForLanguage)
           }

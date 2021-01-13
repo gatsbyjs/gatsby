@@ -1,6 +1,15 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
+const getHref = link => {
+  if (typeof link === `object`) {
+    return link.href
+  }
+  return link
+}
+
+exports.getHref = getHref
+
 const nodeFromData = (datum, createNodeId) => {
   const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
   const preservedId =
