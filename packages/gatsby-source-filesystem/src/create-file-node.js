@@ -6,6 +6,78 @@ const prettyBytes = require(`pretty-bytes`)
 const md5File = require(`md5-file`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
+let Worker, isMainThread, parentPort, workerData
+try {
+  // worker_threads is node 10.15 ...
+  ;({
+    Worker,
+    isMainThread,
+    parentPort,
+    workerData,
+  } = require("worker_threads"))
+} catch (e) {
+  console.info(
+    "Not using threads to generate file digests. This requires node >= 10.15, currently on " +
+      process.version
+  )
+}
+
+const pool = []
+const all = [] // Reference so we can terminate them
+if (process.env.DW) {
+  const count = +process.env.DW
+  console.log("Creating", count, "workers now")
+  Array(+process.env.DW)
+    .fill()
+    .forEach((_, i) => {
+      const worker = new Worker(path.join(__dirname, "worker.js"), {
+        workerData: { i },
+        //resourceLimits: {
+        //  maxOldGenerationSizeMb: 5000,
+        //  maxYoungGenerationSizeMb: 5000,
+        //}
+      })
+      const pod = {
+        i,
+        worker,
+        resolve: undefined, // callback set by a task that uses this worker
+        reject: undefined, // callback set by a task that uses this worker
+      };
+      worker.on('message', msg => {
+        // "complete"
+        pod.resolve(msg)
+        pool.push(pod)
+        redrain()
+      })
+      worker.on("error", e => {
+        console.error("The error is:")
+        console.error(e)
+        pool.push(pod)
+        pod.reject(e)
+      })
+      pool.push(pod)
+      all.push(pod)
+    })
+}
+
+const queue = []
+function queueFile(fname, ext) {
+  return new Promise((resolve, reject) => {
+    queue.push({ fname, ext, resolve, reject })
+    redrain()
+  })
+}
+function redrain() {
+  if (pool.length && queue.length) {
+    const pod = pool.pop()
+    const { fname, ext, resolve, reject } = queue.pop()
+    //console.log("sending work to worker", i, "->", fname)
+    pod.worker.postMessage({ fname, ext })
+    pod.resolve = resolve
+    pod.reject = reject
+  }
+}
+
 exports.createFileNode = async (
   pathToFile,
   createNodeId,
@@ -35,13 +107,19 @@ exports.createFileNode = async (
       description: `Directory "${path.relative(process.cwd(), slashed)}"`,
     }
   } else {
-    const contentDigest = await md5File(slashedFile.absolutePath)
-    const mediaType = mime.getType(slashedFile.ext)
-    internal = {
-      contentDigest,
-      type: `File`,
-      mediaType: mediaType ? mediaType : `application/octet-stream`,
-      description: `File "${path.relative(process.cwd(), slashed)}"`,
+    console.timeSumCount('md5file')
+    if (process.env.DW) {
+      internal = await queueFile(slashedFile.absolutePath, slashedFile.ext)
+    } else {
+      const contentDigest = await md5File(slashedFile.absolutePath)
+      //const contentDigest = String(Math.random()).slice(2) // await md5File(slashedFile.absolutePath)
+      const mediaType = mime.getType(slashedFile.ext)
+      internal = {
+        contentDigest,
+        type: `File`,
+        mediaType: mediaType ? mediaType : `application/octet-stream`,
+        description: `File "${path.relative(process.cwd(), slashed)}"`,
+      }
     }
   }
 
