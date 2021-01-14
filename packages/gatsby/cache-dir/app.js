@@ -119,9 +119,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    // TODO replace with hydrate once dev SSR is ready
-    // but only for SSRed pages.
-    ReactDOM.render
+    // Client only pages have any empty body so we just do a normal
+    // render to avoid React complaining about hydration mis-matches.
+    document.getElementById(`___gatsby`).children.length === 0
+      ? ReactDOM.render
+      : ReactDOM.hydrate
   )[0]
 
   let dismissLoadingIndicator
