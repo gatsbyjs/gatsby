@@ -316,26 +316,28 @@ The optional helper function `getImage` takes a file node and returns `file?.chi
 
 These arguments can be passed to the `gatsbyImageData()` resolver:
 
-- **width**: The display width of the generated image for layout = FIXED, if layout = CONSTRAINED it's the display width of the largest generated image. The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities.
-- **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.
+- **width**: The display width of the generated image for layout = FIXED, if layout = CONSTRAINED it's the maximum display width. Ignored for FULL_WIDTH images.
+- **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image. Ignored for FULL_WIDTH images.
+- **aspectRatio**: Forces an image to the specified aspect ratio, cropping if needed. The value is a number, but can be clearer to express as a fraction, e.g. `aspectRatio={16/9}`
 - **placeholder**: Format of generated placeholder image.
-  - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
-  - `TRACED_SVG`: a low-resolution traced SVG of the image.
+  - `DOMINANT_COLOR`: (default) A solid color, calculated from the dominant color of the image.
+  - `BLURRED`: a blurred, low resolution image, encoded as a base64 data URI
+  - `TRACED_SVG`: a single-color traced SVG of the image.
   - `NONE`: no placeholder. Set "background" to use a fixed background color.
-  - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
 - **layout**: The layout for the image.
   - `CONSTRAINED`: (default) Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
   - `FIXED`: A static image size, that does not resize according to the screen width
   - `FULL_WIDTH`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
-- **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
-  Default is `[ 0.25, 0.5, 1, 2 ]`, for fullWidth/constrained images, and `[ 1, 2 ]` for fixed.
 - **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
 - **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
 - **quality**: The default quality. This is overridden by any format-specific options
-- **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this
+- **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
+  Default is `[ 0.25, 0.5, 1, 2 ]`, for `CONSTRAINED` images, and `[ 1, 2 ]` for `FIXED`. Ignored for `FULL_WIDTH`, which uses `breakpoints` instead.
+- **breakpoints**: Output widths to generate for full width images. Default is `[750, 1080, 1366, 1920]`, which is suitable for most common device resolutions. It will never generate an image larger than the source image. The browser will automatically choose the most appropriate.
+- **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to `BLURRED` to use this
   - width
   - toFormat
-- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set placeholder to "SVG".
+- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set placeholder to `TRACED_SVG`.
 - **jpgOptions**: Options to pass to sharp when generating JPG images.
   - quality
   - progressive

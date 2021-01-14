@@ -430,7 +430,7 @@ const imageNodeType = ({
       },
       placeholder: {
         type: ImagePlaceholderType,
-        defaultValue: `blurred`,
+        defaultValue: `dominantColor`,
         description: stripIndent`
         Format of generated placeholder image, displayed while the main image loads. 
         BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
@@ -444,13 +444,12 @@ const imageNodeType = ({
       },
       tracedSVGOptions: {
         type: PotraceType,
-        defaultValue: false,
-        description: `Options for traced placeholder SVGs. You also should set placeholder to "SVG".`,
+        description: `Options for traced placeholder SVGs. You also should set placeholder to "TRACED_SVG".`,
       },
       formats: {
         type: GraphQLList(ImageFormatType),
         description: stripIndent`
-        The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG" and "WEBP". 
+        The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG", "WEBP" and "AVIF". 
         The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
         not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying 
         both PNG and JPG is not supported and will be ignored.
@@ -461,15 +460,24 @@ const imageNodeType = ({
         type: GraphQLList(GraphQLFloat),
         description: stripIndent`
         A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image. 
-        Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide`,
+        Default is [ 1, 2 ] for FIXED images, meaning 1x and 2x and [0.25, 0.5, 1, 2] for CONSTRAINED. In this case, an image with a constrained layout 
+        and width = 400 would generate images at 100, 200, 400 and 800px wide. Ignored for FULL_WIDTH images, which use breakpoints instead`,
+      },
+      breakpoints: {
+        type: GraphQLList(GraphQLInt),
+        description: stripIndent`
+        Specifies the image widths to generate. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
+        based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].
+        It will never generate any images larger than the source.
+        `,
       },
       sizes: {
         type: GraphQLString,
-        defaultValue: ``,
         description: stripIndent`
         The "sizes" property, passed to the img tag. This describes the display size of the image. 
-        This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image
-        container will be the full width of the screen. In these cases we will generate an appropriate value.
+        This does not affect the generated images, but is used by the browser to decide which images to download. 
+        You should usually leave this blank, and a suitable value will be calculated. The exception is if a FULL_WIDTH image
+        does not actually span the full width of the screen, in which case you should pass the correct size here.
         `,
       },
       quality: {

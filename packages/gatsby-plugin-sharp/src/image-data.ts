@@ -9,6 +9,8 @@ import { createTransformObject } from "./plugin-options"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
+const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
+
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
 export type FileNode = Node & {
   absolutePath?: string
@@ -84,13 +86,19 @@ export async function generateImageData({
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
     layout = `constrained`,
-    placeholder = `blurred`,
+    placeholder = `dominantColor`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
   } = args
 
   args.formats = args.formats || [`auto`, `webp`]
+
+  if (layout === `fullWidth`) {
+    args.breakpoints = args.breakpoints?.length
+      ? args.breakpoints
+      : DEFAULT_BREAKPOINTS
+  }
 
   const {
     fit = `cover`,
@@ -103,16 +111,12 @@ export async function generateImageData({
     reporter.warn(
       `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
-    args.width = undefined
+    args.width = metadata.width
     args.height = undefined
   }
 
   if (!args.width && !args.height && metadata.width) {
-    if (layout === `fullWidth`) {
-      args.width = Math.round(metadata.width / 2)
-    } else {
-      args.width = metadata.width
-    }
+    args.width = metadata.width
   }
 
   if (args.aspectRatio) {
@@ -206,9 +210,10 @@ export async function generateImageData({
 
   const sizes = args.sizes || getSizes(imageSizes.unscaledWidth, layout)
 
-  const primaryIndex = imageSizes.sizes.findIndex(
-    size => size === imageSizes.unscaledWidth
-  )
+  const primaryIndex =
+    layout === `fullWidth`
+      ? imageSizes.sizes.length - 1 // The largest image
+      : imageSizes.sizes.findIndex(size => size === imageSizes.unscaledWidth)
 
   if (primaryIndex === -1) {
     reporter.error(
