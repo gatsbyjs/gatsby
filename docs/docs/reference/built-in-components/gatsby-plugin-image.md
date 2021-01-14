@@ -29,8 +29,8 @@ The following props can be passed to both `GatsbyImage` and `StaticImage`. You m
 | `style`           | `CSSProperties`                                                             |               | Inline styles applied to the outer wrapper.                                                                                                     |
 | `imgStyle`        | `CSSProperties`                                                             |               | Inline styles applied to the `<img>` element.                                                                                                   |
 | `backgroundColor` | `string`                                                                    | `transparent` | Background color applied to the wrapper.                                                                                                        |
-| `objectFit`       | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container.                                                                                           |
-| `objectPosition`  | [See doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container.                                                                                                     |
+| `objectFit`       | [See MDN doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)      | `cover`       | Resizing behavior for the image within its container.                                                                                           |
+| `objectPosition`  | [See MDN doc](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) | `50% 50%`     | Position of the image within its container.                                                                                                     |
 
 ### `StaticImage`
 
