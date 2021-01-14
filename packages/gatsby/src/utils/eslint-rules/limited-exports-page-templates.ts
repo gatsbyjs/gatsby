@@ -66,7 +66,6 @@ const limitedExports: Rule.RuleModule = {
     let queryVariableName: string | undefined = ``
 
     return {
-      // eslint-disable-next-line consistent-return
       TaggedTemplateExpression: (node): void => {
         if (
           node.type === `TaggedTemplateExpression` &&
@@ -79,8 +78,9 @@ const limitedExports: Rule.RuleModule = {
           // @ts-ignore
           queryVariableName = node.parent?.id?.name
         }
+
+        return undefined
       },
-      // eslint-disable-next-line consistent-return
       ExportNamedDeclaration: (node): void => {
         if (hasOneValidNamedDeclaration(node, queryVariableName)) {
           return undefined
@@ -94,6 +94,8 @@ const limitedExports: Rule.RuleModule = {
           node,
           messageId: `limitedExportsPageTemplates`,
         })
+
+        return undefined
       },
     }
   },
