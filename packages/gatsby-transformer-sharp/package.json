@@ -11,7 +11,7 @@
     "bluebird": "^3.7.2",
     "fs-extra": "^9.0.1",
     "potrace": "^2.1.8",
-    "probe-image-size": "^5.0.0",
+    "probe-image-size": "^6.0.0",
     "semver": "^7.3.4",
     "sharp": "^0.27.0"
   },

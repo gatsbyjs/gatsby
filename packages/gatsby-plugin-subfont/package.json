@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "subfont": "^4.2.2"
+    "subfont": "^5.2.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",

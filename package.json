@@ -90,7 +90,7 @@
     "ts-jest": "^22",
     "typescript": "^3.9.7",
     "unified": "^9.2.0",
-    "yargs": "^10.1.2"
+    "yargs": "^15.4.1"
   },
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
