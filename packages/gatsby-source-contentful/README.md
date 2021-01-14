@@ -363,28 +363,29 @@ Rich Text feature is supported in this source plugin, you can use the following 
 ### Query Rich Text content and references
 
 ```graphql
-{
-  allContentfulBlogPost {
-    edges {
-      node {
-        bodyRichText {
-          raw
-          references {
-            ... on ContentfulAsset {
-              contentful_id
-              fixed(width: 1600) {
-                width
-                height
-                src
-                srcSet
-              }
-            }
-            ... on ContentfulBlogPost {
-              contentful_id
-              title
-              slug
-            }
+query pageQuery($id: String!) {
+  contentfulBlogPost(id: { eq: $id }) {
+    title
+    slug
+    # This is the rich text field
+    bodyRichText {
+      raw
+      references {
+        ... on ContentfulAsset {
+          contentful_id
+          __typename
+          fixed(width: 1600) {
+            width
+            height
+            src
+            srcSet
           }
+        }
+        ... on ContentfulBlogPost {
+          contentful_id
+          __typename
+          title
+          slug
         }
       }
     }
@@ -420,7 +421,7 @@ const options = {
   },
 }
 
-function BlogPostTemplate({ data, pageContext }) {
+function BlogPostTemplate({ data }) {
   const { bodyRichText } = data.contentfulBlogPost
 
   return <div>{bodyRichText && renderRichText(richTextField, options)}</div>
