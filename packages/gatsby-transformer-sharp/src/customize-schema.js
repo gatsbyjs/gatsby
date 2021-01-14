@@ -430,7 +430,7 @@ const imageNodeType = ({
       },
       placeholder: {
         type: ImagePlaceholderType,
-        defaultValue: `blurred`,
+        defaultValue: `dominantColor`,
         description: stripIndent`
         Format of generated placeholder image, displayed while the main image loads. 
         BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
@@ -444,7 +444,6 @@ const imageNodeType = ({
       },
       tracedSVGOptions: {
         type: PotraceType,
-        defaultValue: false,
         description: `Options for traced placeholder SVGs. You also should set placeholder to "TRACED_SVG".`,
       },
       formats: {
@@ -474,7 +473,6 @@ const imageNodeType = ({
       },
       sizes: {
         type: GraphQLString,
-        defaultValue: ``,
         description: stripIndent`
         The "sizes" property, passed to the img tag. This describes the display size of the image. 
         This does not affect the generated images, but is used by the browser to decide which images to download. 
