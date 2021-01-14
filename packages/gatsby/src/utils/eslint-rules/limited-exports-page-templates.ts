@@ -42,7 +42,7 @@ function isTemplateQuery(node: Node): boolean {
     node.declaration?.declarations.every(
       el =>
         el?.init?.type === `TaggedTemplateExpression` &&
-        (el.init?.tag as Identifier)?.name === `graphql`
+        (el.init.tag as Identifier)?.name === `graphql`
     )
   )
 }
