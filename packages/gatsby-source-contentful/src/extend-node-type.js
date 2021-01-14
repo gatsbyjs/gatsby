@@ -16,7 +16,7 @@ const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
 const {
   getGatsbyImageFieldConfig,
-} = require(`gatsby-plugin-image/dist/resolver-utils`)
+} = require(`gatsby-plugin-image/graphql-utils`)
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
