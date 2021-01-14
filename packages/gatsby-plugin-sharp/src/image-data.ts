@@ -86,7 +86,7 @@ export async function generateImageData({
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
     layout = `constrained`,
-    placeholder = `blurred`,
+    placeholder = `dominantColor`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
@@ -210,9 +210,10 @@ export async function generateImageData({
 
   const sizes = args.sizes || getSizes(imageSizes.unscaledWidth, layout)
 
-  const primaryIndex = imageSizes.sizes.findIndex(
-    size => size === imageSizes.unscaledWidth
-  )
+  const primaryIndex =
+    layout === `fullWidth`
+      ? imageSizes.sizes.length - 1 // The largest image
+      : imageSizes.sizes.findIndex(size => size === imageSizes.unscaledWidth)
 
   if (primaryIndex === -1) {
     reporter.error(
