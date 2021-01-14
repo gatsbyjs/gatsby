@@ -4,7 +4,7 @@ title: Using the beta Gatsby Image plugin
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
-> Want to learn more about image optimization challenges? Read the Conceptual Guide: [title of conceptual guide, hyperlinked].
+Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
 The new Gatsby Image plugin is currently in beta, but you can try it out now and see what it can do for the performance of your site.
 
@@ -13,7 +13,7 @@ The new Gatsby Image plugin is currently in beta, but you can try it out now and
 First you need to install the following packages:
 
 ```shell
-npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-transformer-sharp
+npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
 You then need to add the plugins to your `gatsby-config.js`:
@@ -23,6 +23,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
+    `gatsby-source-filesystem`,
     `gatsby-transformer-sharp`,
   ],
 }
@@ -72,7 +73,7 @@ If you are using an image that will be the same each time the component is used,
 
    Because the image is loaded at build time, you cannot pass the filename in as a prop, or otherwise generate it outside of the component. It should either be a static string, or a local variable in the component's scope.
 
-**Important:** Remote images are downloaded and resized at build time. If the image is changed on the other server, it will not be updated on your site until you rebuild.
+   **Important:** Remote images are downloaded and resized at build time. If the image is changed on the other server, it will not be updated on your site until you rebuild.
 
 3. **Configure the image.**
 
