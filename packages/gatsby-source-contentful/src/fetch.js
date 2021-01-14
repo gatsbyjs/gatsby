@@ -3,7 +3,6 @@ const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
-const { version } = require(`../package.json`)
 
 module.exports = async function contentfulFetch({
   syncToken,
@@ -20,7 +19,7 @@ module.exports = async function contentfulFetch({
     host: pluginConfig.get(`host`),
     environment: pluginConfig.get(`environment`),
     proxy: pluginConfig.get(`proxy`),
-    integration: `gatsby-source-contentful@${version}`,
+    integration: `gatsby-source-contentful`,
     responseLogger: response => {
       function createMetadataLog(response) {
         if (process.env.gatsby_log_level === `verbose`) {

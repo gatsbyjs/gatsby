@@ -15,7 +15,7 @@
     "base64-img": "^1.0.4",
     "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
-    "contentful": "^7.14.12",
+    "contentful": "^8.1.7",
     "fs-extra": "^9.0.1",
     "gatsby-core-utils": "^1.9.0-next.0",
     "gatsby-plugin-utils": "^0.8.0-next.1",
