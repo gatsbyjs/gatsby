@@ -55,7 +55,7 @@ There are a few differences between how you specify options for `StaticImage` an
 1. **How to pass options:** When using `StaticImage`, options are passed as props to the component, whereas for the `GatsbyImage` component they are passed to the `gatsbyImageData` GraphQL resolver.
 1. **Option values:** In the `StaticImage` component, props such as `layout` and `placeholder` take a _string_, while the resolver takes a _[a GraphQL enum](https://graphql.org/learn/schema/#enumeration-types)_, which is in upper case by convention and is not quoted like a string. Both syntaxes are shown in the reference below.
 
-> It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the IDE.
+**Note:** It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the IDE.
 
 Both static and dynamic images have the following options available:
 
@@ -127,13 +127,13 @@ The `aspectRatio` prop forces an image to the specified aspect ratio, cropping i
 
 For `fixed` and `constrained` images, you can also optionally pass either a `width` or `height`, and it will use that to calculate the other dimension. For example, if you pass `width={800} aspectRatio={4/3}` then `height` will be set to the width divided by the aspect ratio: so `600`. Passing `1` as the aspectRatio will crop the image to a square. If you don't pass a width or height then it will use the source image's width.
 
-For `fullWidth` images you don't specify width or height as it resizes to fit the screen width. Passing `aspectRatio` will crop the image if needed, and the height will scale according to the width of the screen. For example, if you set the aspectRatio to `16/9` then when the image is displayed full width on a screen that is 1280px wide, the image will be 720 pixels high.
+For `fullWidth` images you don't specify width or height, as it resizes to fit the screen width. Passing `aspectRatio` will crop the image if needed, and the height will scale according to the width of the screen. For example, if you set the aspectRatio to `16/9` then when the image is displayed full width on a screen that is 1280px wide, the image will be 720 pixels high.
 
-> There are several advanced options that you can pass to control the cropping and resizing behavior. For more details, see the [`transformOptions`](#transformoptions) reference.
+**Note:** There are several advanced options that you can pass to control the cropping and resizing behavior. For more details, see the [`transformOptions`](#transformoptions) reference.
 
 ### `placeholder`
 
-Gatsby image components are lazy-loaded by default, which means that if they are offscreen they are not loaded by the browser until the come into view. To ensure that the layout does not jump around, a placeholder is displayed before the image loads. There are three types of placeholder that you can choose
+Gatsby image components are lazy-loaded by default, which means that if they are offscreen they are not loaded by the browser until they come into view. To ensure that the layout does not jump around, a placeholder is displayed before the image loads. You can choose one of three types of placeholder (or not use a placeholder at all):
 
 | Placeholder    | Component prop value | Resolver prop value | Description                                                                                                                                                                        |
 | -------------- | -------------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
