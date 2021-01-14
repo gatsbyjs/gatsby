@@ -14,24 +14,11 @@ Take a moment to locate and open up the command line interface (CLI) for your co
 
 _**Note:** If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute._
 
-### Learn more about the command line
-
-For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not how to interface with it.
-
 ## Install Node.js for your appropriate operating system
 
 Node.js is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have a recent version installed on your computer. npm comes bundled with Node.js so if you don't have npm, chances are that you don't have Node.js either.
 
-<details>
-
-
-<summary>
-
-
 ### Mac instructions
-
-</summary>
-
 
 To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
 
@@ -70,9 +57,6 @@ brew install node
 ```
 
 > 💡 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
-
-</details>
-
 
 ### Windows Instructions
 
@@ -187,18 +171,6 @@ The output should look similar to the screenshot below, showing version numbers 
 
 Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step.
 
-### Learn more about npm
-
-npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you downloaded and installed Node.js, npm was installed with it!
-
-npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
-
-- On the npm website, you can browse what JavaScript packages are available in the npm registry.
-- The npm registry is a large database of information about JavaScript packages available on npm.
-- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
-
-> 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
-
 ## Install Git
 
 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. When you install a Gatsby "starter" site, Gatsby uses Git behind the scenes to download and install the required files for your starter. You will need to have Git installed to set up your first Gatsby site.
@@ -208,10 +180,6 @@ The steps to download and install Git depend on your operating system. Follow th
 - [Install Git on macOS](https://www.atlassian.com/git/tutorials/install-git#mac-os-x)
 - [Install Git on Windows](https://www.atlassian.com/git/tutorials/install-git#windows)
 - [Install Git on Linux](https://www.atlassian.com/git/tutorials/install-git#linux)
-
-### Learn more about Git
-
-You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
 
 ## Using the Gatsby CLI
 
@@ -320,7 +288,7 @@ To summarize, in this section you:
 
 Now, move on to [**getting to know Gatsby building blocks**](/docs/tutorial/part-one/).
 
-## New to web development?
+## References
 
 ### Overview of core technologies
 
@@ -335,3 +303,23 @@ It’s not necessary to be an expert with these already — if you’re not, don
 ### What is a website?
 
 For a comprehensive introduction to what a website is -- including an intro to HTML and CSS -- check out “[**Building your first web page**](https://learn.shayhowe.com/html-css/building-your-first-web-page/)”. It’s a great place to start learning about the web. For a more hands-on introduction to [**HTML**](https://www.codecademy.com/learn/learn-html), [**CSS**](https://www.codecademy.com/learn/learn-css), and [**JavaScript**](https://www.codecademy.com/learn/introduction-to-javascript), check out the tutorials from Codecademy. [**React**](https://reactjs.org/tutorial/tutorial.html) and [**GraphQL**](https://graphql.org/graphql-js/) also have their own introductory tutorials.
+
+### Learn more about the command line
+
+For a great introduction to using the command line, check out [**Codecademy’s Command Line tutorial**](https://www.codecademy.com/courses/learn-the-command-line/lessons/navigation/exercises/your-first-command) for Mac and Linux users, and [**this tutorial**](https://www.computerhope.com/issues/chusedos.htm) for Windows users. Even if you are a Windows user, the first page of the Codecademy tutorial is a valuable read. It explains what the command line is, not how to interface with it.
+
+### Learn more about npm
+
+npm is a JavaScript package manager. A package is a module of code that you can choose to include in your projects. If you downloaded and installed Node.js, npm was installed with it!
+
+npm has three distinct components: the npm website, the npm registry, and the npm command line interface (CLI).
+
+- On the npm website, you can browse what JavaScript packages are available in the npm registry.
+- The npm registry is a large database of information about JavaScript packages available on npm.
+- Once you’ve identified a package you want, you can use the npm CLI to install it in your project or globally (like other CLI tools). The npm CLI is what talks to the registry — you generally only interact with the npm website or the npm CLI.
+
+> 💡 Check out npm’s introduction, “[**What is npm?**](https://docs.npmjs.com/getting-started/what-is-npm)”.
+
+### Learn more about Git
+
+You will not need to know Git to complete this tutorial, but it is a very useful tool. If you are interested in learning more about version control, Git, and GitHub, check out GitHub's [Git Handbook](https://guides.github.com/introduction/git-handbook/).
