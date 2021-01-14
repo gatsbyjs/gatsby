@@ -9,7 +9,7 @@ Gatsby provides a way to use a local HTTPS server during development, thanks to 
 Start the development server using `npm run develop` as usual, and add either the `-S` or `--https` flag.
 
 ```shell
-npm run develop -- --https
+npm run develop --https
 ```
 
 ## Setup
