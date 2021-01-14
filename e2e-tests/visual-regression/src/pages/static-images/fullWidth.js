@@ -12,7 +12,6 @@ const Page = () => {
           src="../../images/cornwall.jpg"
           loading="eager"
           layout="fullWidth"
-          width={1024}
           alt="cornwall"
         />
       </TestWrapper>
