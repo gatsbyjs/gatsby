@@ -18,13 +18,13 @@ Gatsby converts components in the `pages` folder into static HTML files for the 
 
 ## Handling client-only routes with Gatsby
 
-Gatsby uses [@reach/router](https://reach.tech/router/) under the hood. This means you don't need to install it separately and it is the recommended approach to create client-only routes.
+Gatsby uses [@react/router](https://react.tech/router/) under the hood. This means you don't need to install it separately and it is the recommended approach to create client-only routes.
 
 You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/app.js` in the code example below:
 
 ```jsx:title=src/pages/app.js
 import React from "react"
-import { Router } from "@reach/router" // highlight-line
+import { Router } from "@react/router" // highlight-line
 import Layout from "../components/Layout"
 import Profile from "../components/Profile"
 import Details from "../components/Details"
@@ -49,7 +49,7 @@ const App = () => {
 export default App
 ```
 
-Briefly, when a page loads, Reach Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router)). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
+Briefly, when a page loads, React Router looks at the `path` prop of each component nested under `<Router />`, and chooses _one_ to render that best matches `window.location` (you can learn more about how routing works from the [@reach/router documentation](https://reach.tech/router/api/Router)). In the case of the `/app/profile` path, the `Profile` component will be rendered, as its prefix matches the base path of `/app`, and the remaining part is identical to the child's path.
 
 ### Adjusting routes to account for authenticated users
 
@@ -128,7 +128,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
 > [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths/).
 
-The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router.
+The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by React Router.
 
 _Without_ this configuration set up, a user that clicks on a link to `<yoursite.com>/app/user` will instead be routed to the static `/app` page instead of the component or page you have set up at `/app/user`.
 
