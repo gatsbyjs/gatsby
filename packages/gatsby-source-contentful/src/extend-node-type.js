@@ -2,7 +2,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 
-const Promise = require(`bluebird`)
+const axios = require(`axios`)
 const {
   GraphQLObjectType,
   GraphQLBoolean,
@@ -12,7 +12,6 @@ const {
   GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
-const base64Img = require(`base64-img`)
 
 const cacheImage = require(`./cache-image`)
 
@@ -103,19 +102,25 @@ const getBase64Image = imageProps => {
     })
   }
 
-  const promise = new Promise((resolve, reject) => {
-    base64Img.requestBase64(requestUrl, (a, b, body) => {
-      // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      fs.promises
-        .writeFile(cacheFile, body)
-        .then(() => resolve(body))
-        .catch(e => {
-          console.error(
-            `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
-          )
-          reject(e)
-        })
+  const promise = new Promise(async (resolve, reject) => {
+    const imageResponse = await axios.get(requestUrl, {
+      responseType: `arraybuffer`,
     })
+
+    const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
+
+    const body = `data:image/jpeg;base64,${base64}`
+
+    // TODO: against dogma, confirm whether writeFileSync is indeed slower
+    fs.promises
+      .writeFile(cacheFile, body)
+      .then(() => resolve(body))
+      .catch(e => {
+        console.error(
+          `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
+        )
+        reject(e)
+      })
   })
 
   inFlightBase64Cache.set(requestUrl, promise)
@@ -403,9 +408,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
       fields: {
         base64: {
           type: GraphQLString,
-          resolve(imageProps) {
-            return getBase64Image(imageProps)
-          },
+          resolve: getBase64Image,
         },
         tracedSVG: {
           type: GraphQLString,
@@ -500,9 +503,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
       fields: {
         base64: {
           type: GraphQLString,
-          resolve(imageProps) {
-            return getBase64Image(imageProps)
-          },
+          resolve: getBase64Image,
         },
         tracedSVG: {
           type: GraphQLString,
@@ -647,9 +648,7 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
+            resolve: getBase64Image,
           },
           tracedSVG: {
             type: GraphQLString,
