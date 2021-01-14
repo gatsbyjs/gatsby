@@ -76,7 +76,6 @@ export function useGatsbyImage({
   pluginName = `useGatsbyImage`,
   ...args
 }: IGatsbyImageHelperArgs): IGatsbyImageData {
-  // TODO: use context to get default plugin options and spread them in here
   return generateImageData({ pluginName, ...args })
 }
 
