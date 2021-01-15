@@ -26,6 +26,18 @@ describe(`no-anonymous-exports-page-templates`, () => {
         code: `import { graphql, Link } from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template`,
       }),
       test({
+        code: `const { graphql } = require("gatsby")\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template`,
+      }),
+      test({
+        code: `const { graphql } = require(\`gatsby\`)\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template`,
+      }),
+      test({
+        code: `const { graphql: wat } = require("gatsby")\nconst Template = () => {}\nexport const query = wat\`test\`\nexport default Template`,
+      }),
+      test({
+        code: `const { graphql: wat } = require(\`gatsby\`)\nconst Template = () => {}\nexport const query = wat\`test\`\nexport default Template`,
+      }),
+      test({
         code: `import { graphql as wat, Link } from "gatsby"\nconst Template = () => {}\nexport const query = wat\`test\`\nexport default Template`,
       }),
       test({

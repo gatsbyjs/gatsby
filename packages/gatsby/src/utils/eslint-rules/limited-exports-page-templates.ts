@@ -4,6 +4,12 @@ import {
   Identifier,
   ImportDeclaration,
   TaggedTemplateExpression,
+  VariableDeclaration,
+  CallExpression,
+  Literal,
+  TemplateLiteral,
+  VariableDeclarator,
+  ObjectPattern,
 } from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
@@ -94,6 +100,44 @@ const limitedExports: Rule.RuleModule = {
     let namespaceSpecifierName = ``
 
     return {
+      // const { graphql } = require('gatsby')
+      VariableDeclaration: (node): void => {
+        // Check if require('gatsby')
+        const requiredFromGatsby = (node as VariableDeclaration).declarations.find(
+          el => {
+            // Handle require(`gatsby`)
+            if (
+              (el.init as CallExpression)?.arguments?.[0]?.type ===
+              `TemplateLiteral`
+            ) {
+              return (
+                ((el.init as CallExpression).arguments[0] as TemplateLiteral)
+                  ?.quasis[0].value.raw === `gatsby`
+              )
+            }
+
+            return (
+              ((el.init as CallExpression)?.arguments?.[0] as Literal)
+                ?.value === `gatsby`
+            )
+          }
+        )
+
+        if (requiredFromGatsby) {
+          // Search for "graphql" in a const { graphql, Link } = require('gatsby')
+          const graphqlTagSpecifier = ((requiredFromGatsby as VariableDeclarator)
+            .id as ObjectPattern)?.properties.find(
+            el => (el.key as Identifier).name === DEFAULT_GRAPHQL_TAG_NAME
+          )
+
+          if (graphqlTagSpecifier) {
+            graphqlTagName = (graphqlTagSpecifier.value as Identifier).name
+          }
+        }
+
+        return undefined
+      },
+      // import { graphql } from "gatsby"
       ImportDeclaration: (node): void => {
         // Make sure that the specifier is imported from "gatsby"
         if ((node as ImportDeclaration).source.value === `gatsby`) {
