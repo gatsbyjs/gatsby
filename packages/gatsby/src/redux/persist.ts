@@ -13,6 +13,9 @@ import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
+let warnedAboutChunkSize = false
+let warnedAboutChunkGuess = 0 // 0, 1, 2
+
 const getLegacyCacheFile = (): string =>
   // TODO: remove this legacy stuff in v3 (fairly benign change but still)
   // This is a function for the case that somebody does a process.chdir (#19800)
@@ -71,19 +74,41 @@ export function readFromCache(): ICachedReduxState {
 }
 
 function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
+  const chunkSizeOverride = getChunkSizeOverride(values.length)
+  if (chunkSizeOverride > 0) {
+    return chunkSizeOverride
+  }
+
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
   // This heuristic could still fail if it randomly grabs the smallest nodes.
-  // TODO: test a few nodes per each type instead of from all nodes
+
+  const stepOverride = getChunkGuessStep(values.length)
 
   const nodesToTest = 11 // Very arbitrary number
   const valueCount = values.length
-  const step = Math.max(1, Math.ceil(valueCount / nodesToTest))
+  const step = stepOverride || Math.max(1, Math.ceil(valueCount / nodesToTest))
   let maxSize = 0
+  let minSize = Infinity
+  let totalSize = 0
   for (let i = 0; i < valueCount; i += step) {
     const size = v8.serialize(values[i]).length
+    totalSize += size
     maxSize = Math.max(size, maxSize)
+    minSize = Math.min(size, minSize)
+  }
+
+  const chunkSize = Math.floor((1.5 * 1024 * 1024 * 1024) / maxSize)
+
+  if (warnedAboutChunkGuess === 1) {
+    report.info(
+      `GATSBY_EXPERIMENTAL_CACHE_CHUNK_GUESS_STEP: Smallest detected node was: ${minSize} bytes. Largest detected node was: ${maxSize} bytes. Average size: ${Math.round(
+        totalSize / valueCount
+      )} bytes. Chunk size determined to be: ${chunkSize}`
+    )
+
+    warnedAboutChunkGuess = 2
   }
 
   // Sends a warning once if any of the chunkSizes exceeds approx 500kb limit
@@ -96,7 +121,7 @@ function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
   // Max size of a Buffer is 2gb (yeah, we're assuming 64bit system)
   // https://stackoverflow.com/questions/8974375/whats-the-maximum-size-of-a-node-js-buffer
   // Use 1.5gb as the target ceiling, allowing for some margin of error
-  return Math.floor((1.5 * 1024 * 1024 * 1024) / maxSize)
+  return chunkSize
 }
 
 function prepareCacheFolder(
@@ -180,4 +205,59 @@ export function writeToCache(contents: ICachedReduxState): void {
       `Non-fatal: Deleting the old cache folder failed, left behind in \`${bakName}\`. Rimraf reported this error: ${e}`
     )
   }
+}
+
+function getChunkSizeOverride(elementCount: number): number {
+  if (!process.env.GATSBY_EXPERIMENTAL_CACHE_FORCE_CHUNK_SIZE) {
+    return 0
+  }
+
+  const chunkSize =
+    parseInt(
+      process.env.GATSBY_EXPERIMENTAL_CACHE_FORCE_CHUNK_SIZE ?? ``,
+      10
+    ) || 0
+
+  if (!warnedAboutChunkSize) {
+    if (chunkSize) {
+      report.info(
+        `GATSBY_EXPERIMENTAL_CACHE_FORCE_CHUNK_SIZE: Overriding chunk size with given value: ${chunkSize}, total chunks: ${Math.ceil(
+          elementCount / chunkSize
+        )}`
+      )
+    } else {
+      report.warn(
+        `GATSBY_EXPERIMENTAL_CACHE_FORCE_CHUNK_SIZE was used but it did not result in a non-zero number. Ignoring the flag.`
+      )
+    }
+    warnedAboutChunkSize = true
+  }
+
+  return chunkSize
+}
+
+function getChunkGuessStep(elementCount: number): number {
+  const chunkGuessStepOverride =
+    parseInt(
+      process.env.GATSBY_EXPERIMENTAL_CACHE_CHUNK_GUESS_STEP ?? ``,
+      10
+    ) || 0
+  if (process.env.GATSBY_EXPERIMENTAL_CACHE_CHUNK_GUESS_STEP) {
+    if (warnedAboutChunkGuess === 0) {
+      if (chunkGuessStepOverride) {
+        report.info(
+          `GATSBY_EXPERIMENTAL_CACHE_CHUNK_GUESS_STEP: Overriding default step size at which chunk size is determined to: ${chunkGuessStepOverride}, which means: ${Math.ceil(
+            elementCount / chunkGuessStepOverride
+          )} nodes will be checked for size (more is more accurate but slower)`
+        )
+      } else {
+        report.warn(
+          `GATSBY_EXPERIMENTAL_CACHE_CHUNK_GUESS_STEP was used but it did not result in a non-zero number. Using default step.`
+        )
+      }
+      warnedAboutChunkGuess = 1
+    }
+  }
+
+  return chunkGuessStepOverride
 }
