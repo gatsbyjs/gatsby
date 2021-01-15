@@ -19,33 +19,35 @@ jest.mock(`../../eslint-rules-helpers`, () => {
   }
 })
 
-ruleTester.run(`no-anonymous-exports-page-templates`, rule, {
-  valid: [
-    // Exports with identifiers are valid
-    test({ code: `const Named = () => {}\nexport default Named` }),
-    test({ code: `export default function foo() {}` }),
-    test({ code: `export default class MyClass {}` }),
+describe(`no-anonymous-exports-page-templates`, () => {
+  ruleTester.run(`passes valid and invalid cases`, rule, {
+    valid: [
+      // Exports with identifiers are valid
+      test({ code: `const Named = () => {}\nexport default Named` }),
+      test({ code: `export default function foo() {}` }),
+      test({ code: `export default class MyClass {}` }),
 
-    // Sanity check unrelated export syntaxes
-    test({ code: `export * from 'foo'` }),
-    test({ code: `const foo = 123\nexport { foo }` }),
-    test({ code: `const foo = 123\nexport { foo as default }` }),
+      // Sanity check unrelated export syntaxes
+      test({ code: `export * from 'foo'` }),
+      test({ code: `const foo = 123\nexport { foo }` }),
+      test({ code: `const foo = 123\nexport { foo as default }` }),
 
-    // Allow call expressions by default for backwards compatibility
-    test({ code: `export default foo(bar)` }),
-  ],
-  invalid: [
-    test({
-      code: `export default () => {}`,
-      errors: [{ messageId: `anonymousArrowFunction` }],
-    }),
-    test({
-      code: `export default function() {}`,
-      errors: [{ messageId: `anonymousFunctionDeclaration` }],
-    }),
-    test({
-      code: `export default class {}`,
-      errors: [{ messageId: `anonymousClass` }],
-    }),
-  ],
+      // Allow call expressions by default for backwards compatibility
+      test({ code: `export default foo(bar)` }),
+    ],
+    invalid: [
+      test({
+        code: `export default () => {}`,
+        errors: [{ messageId: `anonymousArrowFunction` }],
+      }),
+      test({
+        code: `export default function() {}`,
+        errors: [{ messageId: `anonymousFunctionDeclaration` }],
+      }),
+      test({
+        code: `export default class {}`,
+        errors: [{ messageId: `anonymousClass` }],
+      }),
+    ],
+  })
 })
