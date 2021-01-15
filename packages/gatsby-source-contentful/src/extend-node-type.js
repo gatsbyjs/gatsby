@@ -62,7 +62,7 @@ const getBase64Image = imageProps => {
     return null
   }
 
-  // We only support images that are delivered thourgh Contentful's Image API
+  // We only support images that are delivered through Contentful's Image API
   if (imageProps.baseUrl.indexOf(`images.ctfassets.net`) === -1) {
     return null
   }
