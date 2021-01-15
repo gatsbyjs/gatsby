@@ -1,0 +1,27 @@
+{
+  "name": "dagsby",
+  "version": "0.0.1",
+  "description": "Gatsby library for orchestrating running data pipelines across workers",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir dist --ignore \"**/__tests__\" --extensions \".ts,.js\""
+  },
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@adobe/node-fetch-retry": "github:adobe/node-fetch-retry",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "babel-plugin-remove-graphql-queries": "^2.14.0",
+    "babel-preset-gatsby-package": "^0.11.0-next.0",
+    "bottleneck": "^2.19.5",
+    "execa": "^5.0.0",
+    "fs-extra": "^9.0.1",
+    "lodash": "^4.17.20",
+    "p-queue": "^6.6.2",
+    "uuid": "^8.3.2",
+    "yargs": "^16.2.0"
+  }
+}
