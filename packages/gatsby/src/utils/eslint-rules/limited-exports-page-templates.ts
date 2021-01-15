@@ -1,7 +1,14 @@
 import { Rule } from "eslint"
-import { Node, Identifier } from "estree"
+import {
+  Node,
+  Identifier,
+  ImportDeclaration,
+  TaggedTemplateExpression,
+} from "estree"
 import { store } from "../../redux"
 import { isPageTemplate } from "../eslint-rules-helpers"
+
+const DEFAULT_GRAPHQL_TAG_NAME = `graphql`
 
 function hasOneValidNamedDeclaration(
   node: Node,
@@ -26,7 +33,11 @@ function hasOneValidNamedDeclaration(
   return false
 }
 
-function isTemplateQuery(node: Node): boolean {
+function isTemplateQuery(
+  node: Node,
+  graphqlTagName: string,
+  namespaceSpecifierName: string
+): boolean {
   // For export const query = 'foobar' the declaration exists with type 'VariableDeclaration'
 
   // Checks for:
@@ -36,14 +47,29 @@ function isTemplateQuery(node: Node): boolean {
   // The array will have two items. So use every() to check if only one item exists
   // With TaggedTemplateExpression and "graphql" name
 
+  // In addition the declaration can also be a MemberExpression like
+  // Gatsby.graphql`` when the import happened with import * as Gatsby from "gatsby"
+
   return (
     node.type === `ExportNamedDeclaration` &&
     node.declaration?.type === `VariableDeclaration` &&
-    node.declaration?.declarations.every(
-      el =>
+    node.declaration?.declarations.every(el => {
+      if (
         el?.init?.type === `TaggedTemplateExpression` &&
-        (el.init.tag as Identifier)?.name === `graphql`
-    )
+        el.init.tag.type === `Identifier`
+      ) {
+        return el.init.tag.name === graphqlTagName
+      } else if (
+        el?.init?.type === `TaggedTemplateExpression` &&
+        el.init.tag.type === `MemberExpression`
+      ) {
+        return (
+          (el.init.tag.object as Identifier).name === namespaceSpecifierName &&
+          (el.init.tag.property as Identifier).name === DEFAULT_GRAPHQL_TAG_NAME
+        )
+      }
+      return false
+    })
   )
 }
 
@@ -54,7 +80,7 @@ const limitedExports: Rule.RuleModule = {
       limitedExportsPageTemplates: `In page templates only a default export of a valid React component and the named export of a page query is allowed.
         All other named exports will cause Fast Refresh to not preserve local component state and do a full refresh.
 
-        Please move your other named exports to another file.
+        Please move your other named exports to another file. Also make sure that you only export page queries that use the "graphql" tag from "gatsby".
 `,
     },
   },
@@ -64,13 +90,43 @@ const limitedExports: Rule.RuleModule = {
     }
 
     let queryVariableName: string | undefined = ``
+    let graphqlTagName = ``
+    let namespaceSpecifierName = ``
 
     return {
+      ImportDeclaration: (node): void => {
+        // Make sure that the specifier is imported from "gatsby"
+        if ((node as ImportDeclaration).source.value === `gatsby`) {
+          const graphqlTagSpecifier = (node as ImportDeclaration).specifiers.find(
+            el => {
+              // We only want import { graphql } from "gatsby"
+              // Not import graphql from "gatsby"
+              if (el.type === `ImportSpecifier`) {
+                // Only get the specifier with the original name of "graphql"
+                return el.imported.name === DEFAULT_GRAPHQL_TAG_NAME
+              }
+              // import * as Gatsby from "gatsby"
+              if (el.type === `ImportNamespaceSpecifier`) {
+                namespaceSpecifierName = el.local.name
+                return false
+              }
+              return false
+            }
+          )
+          if (graphqlTagSpecifier) {
+            // The local.name handles the case for import { graphql as otherName }
+            // For normal import { graphql } the imported & local name are the same
+            graphqlTagName = graphqlTagSpecifier.local.name
+          }
+        }
+        return undefined
+      },
       TaggedTemplateExpression: (node): void => {
         if (
-          node.type === `TaggedTemplateExpression` &&
-          // @ts-ignore
-          node.tag?.name === `graphql`
+          (node as TaggedTemplateExpression).type ===
+            `TaggedTemplateExpression` &&
+          ((node as TaggedTemplateExpression).tag as Identifier)?.name ===
+            graphqlTagName
         ) {
           if (queryVariableName) {
             return undefined
@@ -86,7 +142,7 @@ const limitedExports: Rule.RuleModule = {
           return undefined
         }
 
-        if (isTemplateQuery(node)) {
+        if (isTemplateQuery(node, graphqlTagName, namespaceSpecifierName)) {
           return undefined
         }
 
