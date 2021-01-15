@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`runs tasks supports tasks declaring dependencies 1`] = `
+"yeeesss This is some text
+ 
+
+ thisIsSomeText"
+`;
+
 exports[`runs tasks supports uploading files to be used for the task 1`] = `
 "yeeesss This is some text
 "

@@ -6,7 +6,7 @@ import fs from "fs-extra"
 import path from "path"
 import os from "os"
 const execa = require("execa")
-console.log(execa)
+const detectPort = require(`detect-port`)
 
 let runner
 let workerPool
@@ -17,15 +17,26 @@ describe(`runs tasks`, () => {
     const directory = path.join(os.tmpdir(), id)
     fs.ensureDirSync(directory)
 
-    // workerPool = await execa.node(
-    // path.join(__dirname, `../dist/worker-pool-server.js`),
-    // [`--workers`, 1, `--directory`, directory]
-    // )
+    const httpPort = await detectPort(6898)
+    const socketPort = await detectPort(6899)
 
-    // workerPool.stdout.pipe(process.stdout)
-    // workerPool.stderr.pipe(process.stderr)
-    runner = Runner({ pools: [{ socketPort: 6899, httpPort: 6898 }] })
-    console.log({ runner })
+    workerPool = execa.node(
+      path.join(__dirname, `../dist/worker-pool-server.js`),
+      [
+        `--numWorkers`,
+        1,
+        `--directory`,
+        directory,
+        `--socketPort`,
+        socketPort,
+        `--httpPort`,
+        httpPort,
+      ]
+    )
+
+    workerPool.stdout.pipe(process.stdout)
+    workerPool.stderr.pipe(process.stderr)
+    runner = Runner({ pools: [{ socketPort, httpPort }] })
     return runner
   })
 
@@ -88,6 +99,30 @@ describe(`runs tasks`, () => {
         return `${args.preface} ${text}`
       },
       args: { preface: `yeeesss` },
+      files: {
+        text: {
+          originPath: path.join(__dirname, `mocks`, `hello.txt`),
+        },
+      },
+    })
+
+    expect(result.result).toMatchSnapshot()
+  })
+
+  it(`supports tasks declaring dependencies`, async () => {
+    const result = await runner.runTask({
+      func: (args, { files }) => {
+        const fs = require(`fs`)
+        const _ = require(`lodash`)
+        const text = fs.readFileSync(files.text.localPath)
+        const camelCase = _.camelCase(text)
+
+        return `${args.preface} ${text} \n\n ${camelCase}`
+      },
+      args: { preface: `yeeesss` },
+      dependencies: {
+        lodash: `latest`,
+      },
       files: {
         text: {
           originPath: path.join(__dirname, `mocks`, `hello.txt`),
