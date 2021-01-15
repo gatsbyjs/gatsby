@@ -39,7 +39,7 @@ There are many options available, including both self-hosted and commercially ho
 
 Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
 
-* [Adding Search with Algoolia](/docs/adding-search-with-algolia)
+* [Adding Search with Algolia](/docs/adding-search-with-algolia)
 
 When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. For UI components, Algolia provides a [React library](https://github.com/algolia/react-instantsearch) has helpful components.
 
