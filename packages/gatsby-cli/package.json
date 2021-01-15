@@ -47,7 +47,7 @@
     "uuid": "3.4.0",
     "yargs": "^15.4.1",
     "yoga-layout-prebuilt": "^1.9.6",
-    "yurnalist": "^1.1.2"
+    "yurnalist": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",

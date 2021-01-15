@@ -11,7 +11,7 @@
     "@contentful/rich-text-react-renderer": "^14.1.2",
     "@contentful/rich-text-types": "^14.1.2",
     "@hapi/joi": "^15.1.1",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "base64-img": "^1.0.4",
     "bluebird": "^3.7.2",
     "chalk": "^4.1.0",
