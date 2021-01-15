@@ -7,10 +7,10 @@ There are three required components for adding search to your Gatsby website: th
 ## Site search components
 
 | Search Component  | Description                                                                                                                                                                                                                                                              |
-|-------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Search index**  | The search index is a copy of your data stored in a search-friendly format. An index is for optimizing speed and performance when executing a search query. Without an index, every search would need to scan every page in your site—which quickly becomes inefficient. |
 | **Search engine** | The search engine indexes your content, takes a search query, runs it through theindex, and returns any matching documents. Search engines can be hosted services (like Algolia) or open-source that you can self-host (like Elastic)                                    |
-| **Search UI**     | A UI component on your site that allows users to write search queries and view the results of each query. Some search providers provide out of the box React components that you can drop into Gatsby sites.                                                             |                                                      |
+| **Search UI**     | A UI component on your site that allows users to write search queries and view the results of each query. Some search providers provide out of the box React components that you can drop into Gatsby sites.                                                             |  |
 
 ## Adding search to your site
 
@@ -21,11 +21,13 @@ There are a few ways to approach adding search to your Gatsby-powered site.
 It is possible to do all the work in your Gatsby site without needing a third-party solution. This involves writing a bit of code, but using less services. With large amounts of content to index, it can also increase the bundle size significantly.
 
 One way of doing this is to use the `js-search` library:
-* [Adding Search with JS Search](/docs/adding-search-with-js-search)
+
+- [Adding Search with JS Search](/docs/adding-search-with-js-search)
 
 There are two Gatsby plugins that support this as well:
-* [gatsby-plugin-elasticlunr-search](/plugins/@gatsby-contrib/gatsby-plugin-elasticlunr-search)
-* [gatsby-plugin-local-search](/plugins/gatsby-plugin-local-search)
+
+- [gatsby-plugin-elasticlunr-search](/plugins/@gatsby-contrib/gatsby-plugin-elasticlunr-search)
+- [gatsby-plugin-local-search](/plugins/gatsby-plugin-local-search)
 
 ### Use an API-based search engine
 
@@ -39,7 +41,7 @@ There are many options available, including both self-hosted and commercially ho
 
 Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
 
-* [Adding Search with Algolia](/docs/adding-search-with-algolia)
+- [Adding Search with Algolia](/docs/adding-search-with-algolia)
 
 When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. For UI components, Algolia provides a [React library](https://github.com/algolia/react-instantsearch) has helpful components.
 
