@@ -168,18 +168,14 @@ if (cluster.isMaster) {
     return filesObj
   }
 
-  const funcDirs = new Set()
   const runTask = async task => {
     // console.log(task)
-    // Hash the func + dependencies (you can pass in dynamic dependencies).
-    const funcDir = path.join(functionDir, task.digest)
-    const funcPath = path.join(functionDir, task.digest, `index.js`)
-    if (!funcDirs.has(funcDir)) {
-      fs.ensureDirSync(funcDir)
-      funcDirs.add(funcDir)
-    }
-
-    await setupFunctionDir({ task, funcDir, funcPath, parentMessages })
+    const { funcPath } = await setupFunctionDir({
+      task,
+      functionDir,
+      parentMessages,
+      emit: emitObj => process.send(emitObj),
+    })
 
     // Ensure files are downloaded and get local path.
     let files
