@@ -47,6 +47,10 @@ describe(`no-anonymous-exports-page-templates`, () => {
         errors: [{ messageId: `limitedExportsPageTemplates` }],
       }),
       test({
+        code: `import graphql from "gatsby"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template`,
+        errors: [{ messageId: `limitedExportsPageTemplates` }],
+      }),
+      test({
         code: `import graphql from "graphql-tag"\nconst Template = () => {}\nexport const query = graphql\`test\`\nexport default Template`,
         errors: [{ messageId: `limitedExportsPageTemplates` }],
       }),
