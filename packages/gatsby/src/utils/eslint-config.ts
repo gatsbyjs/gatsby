@@ -1,5 +1,61 @@
 import { printSchema, GraphQLSchema } from "graphql"
 import { CLIEngine } from "eslint"
+import path from "path"
+
+const eslintRulePaths = path.resolve(`${__dirname}/eslint-rules`)
+const eslintRequirePreset = require.resolve(`./eslint/required`)
+
+export const eslintRequiredConfig: CLIEngine.Options = {
+  rulePaths: [eslintRulePaths],
+  baseConfig: {
+    globals: {
+      graphql: true,
+      __PATH_PREFIX__: true,
+      __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
+    },
+    extends: [eslintRequirePreset],
+  },
+}
+
+export function mergeRequiredConfigIn(
+  existingOptions: CLIEngine.Options
+): void {
+  // make sure rulePaths include our custom rules
+  if (existingOptions.rulePaths) {
+    if (
+      Array.isArray(existingOptions.rulePaths) &&
+      !existingOptions.rulePaths.includes(eslintRulePaths)
+    ) {
+      existingOptions.rulePaths.push(eslintRulePaths)
+    }
+  } else {
+    existingOptions.rulePaths = [eslintRulePaths]
+  }
+
+  // make sure we extend required preset
+  if (!existingOptions.baseConfig) {
+    existingOptions.baseConfig = {}
+  }
+
+  if (existingOptions.baseConfig.extends) {
+    if (
+      Array.isArray(existingOptions.baseConfig.extends) &&
+      !existingOptions.baseConfig.extends.includes(eslintRequirePreset)
+    ) {
+      existingOptions.baseConfig.extends.push(eslintRequirePreset)
+    } else if (
+      typeof existingOptions.baseConfig.extends === `string` &&
+      existingOptions.baseConfig.extends !== eslintRequirePreset
+    ) {
+      existingOptions.baseConfig.extends = [
+        existingOptions.baseConfig.extends,
+        eslintRequirePreset,
+      ]
+    }
+  } else {
+    existingOptions.baseConfig.extends = [eslintRequirePreset]
+  }
+}
 
 export const eslintConfig = (
   schema: GraphQLSchema,
@@ -8,13 +64,17 @@ export const eslintConfig = (
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,
+    rulePaths: [eslintRulePaths],
     baseConfig: {
       globals: {
         graphql: true,
         __PATH_PREFIX__: true,
         __BASE_PATH__: true, // this will rarely, if ever, be used by consumers
       },
-      extends: [require.resolve(`eslint-config-react-app`)],
+      extends: [
+        require.resolve(`eslint-config-react-app`),
+        eslintRequirePreset,
+      ],
       plugins: [`graphql`],
       rules: {
         // New versions of react use a special jsx runtime that remove the requirement
@@ -32,7 +92,7 @@ export const eslintConfig = (
             tagName: `graphql`,
           },
         ],
-        "react/jsx-pascal-case": `off`, // Prevents errors with Theme-UI and Styled component
+        "react/jsx-pascal-case": `warn`,
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
         "jsx-a11y/alt-text": `warn`,
@@ -98,7 +158,7 @@ export const eslintConfig = (
             ],
           },
         ],
-        //"jsx-a11y/label-has-for": `warn`, was deprecated and replaced with jsx-a11y/has-associated-control in v6.1.0
+        // "jsx-a11y/label-has-for": `warn`, was deprecated and replaced with jsx-a11y/has-associated-control in v6.1.0
         "jsx-a11y/label-has-associated-control": `warn`,
         "jsx-a11y/lang": `warn`,
         "jsx-a11y/media-has-caption": `warn`,
