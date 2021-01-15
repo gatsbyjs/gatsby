@@ -1,6 +1,5 @@
 // create worker & import library and run a
-import workerPoolServer from "../src/worker-pool-server"
-import Runner from "../src/index"
+import Runner from "../index"
 const uuid = require("uuid")
 import fs from "fs-extra"
 import path from "path"
@@ -21,7 +20,7 @@ describe(`runs tasks`, () => {
     const socketPort = await detectPort(6899)
 
     workerPool = execa.node(
-      path.join(__dirname, `../dist/worker-pool-server.js`),
+      path.join(__dirname, `../../dist/worker-pool-server.js`),
       [
         `--numWorkers`,
         1,

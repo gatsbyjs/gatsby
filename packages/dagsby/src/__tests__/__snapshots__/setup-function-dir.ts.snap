@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`setup-function-dir installs dependencies for a task 1`] = `
+Object {
+  "author": "",
+  "dependencies": Object {
+    "lodash": "^4.17.20",
+  },
+  "description": "",
+  "keywords": Array [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "e93a3f80-e996-4d2c-b308-b4fb6d6e19f6",
+  "scripts": Object {
+    "test": "echo \\"Error: no test specified\\" && exit 1",
+  },
+  "version": "1.0.0",
+}
+`;
