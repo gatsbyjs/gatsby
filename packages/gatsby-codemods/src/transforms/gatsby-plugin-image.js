@@ -38,7 +38,6 @@ const otherOptions = [
   `jpegQuality`,
   `webpQuality`,
   `pngQuality`,
-  `srcSetBreakpoints`,
   `pngCompressionSpeed`,
 ]
 
