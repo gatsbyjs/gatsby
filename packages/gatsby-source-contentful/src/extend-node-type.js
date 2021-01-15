@@ -163,7 +163,10 @@ const createUrl = (imgUrl, options = {}) => {
   const urlArgs = {
     w: options.width || undefined,
     h: options.height || undefined,
-    fl: options.jpegProgressive ? `progressive` : undefined,
+    fl:
+      options.toFormat === `jpg` && options.jpegProgressive
+        ? `progressive`
+        : undefined,
     q: options.quality || undefined,
     fm: options.toFormat || undefined,
     fit: options.resizingBehavior || undefined,
