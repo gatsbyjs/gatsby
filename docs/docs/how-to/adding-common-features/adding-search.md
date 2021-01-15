@@ -45,4 +45,4 @@ When using Algolia, they host the search index and search engine for you. Your s
 
 If you're building a documentation website you can use [Algolia's DocSearch feature](https://community.algolia.com/docsearch/). It will automatically create a search index from the content of your pages.
 
-Elasticsearch also has several React component libraries for search e.g. https://github.com/appbaseio/reactivesearch
+Elasticsearch also has several React component libraries for search, such as [ReactiveSearch](https://github.com/appbaseio/reactivesearch)
