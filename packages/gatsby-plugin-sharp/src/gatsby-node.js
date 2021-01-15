@@ -1,4 +1,6 @@
 const {
+  getImageSizeAsync,
+  imageSizeCache,
   setBoundActionCreators,
   // queue: jobQueue,
   // reportError,
@@ -11,6 +13,7 @@ const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
+const fs = require(`fs-extra`)
 
 // create the progressbar once and it will be killed in another lifecycle
 const finishProgressBar = () => {
@@ -216,3 +219,40 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     defaultQuality: Joi.number().default(50),
     failOnError: Joi.boolean().default(true),
   })
+
+if (process.env.IMD) {
+  function unstable_shouldOnCreateNode({ node }) {
+    return node.internal.type === `ImageSharp`
+  }
+
+  let createdIMD = false
+  async function onCreateNode({ node, actions, createNodeId }) {
+    if (!unstable_shouldOnCreateNode({ node })) {
+      return
+    }
+
+    //if (!process.env.IMD) throw oops
+    //
+    //const IMD = path.resolve(process.env.IMD)
+    //if (!createdIMD) {
+    //  fs.mkdirSync(IMD, { recursive: true })
+    //  createdIMD = true
+    //}
+    //
+    //const jsonFile = path.join(IMD, node.internal.contentDigest + ".json")
+    //if (fs.existsSync(jsonFile)) {
+    //  node.internal.metadata = JSON.parse(fs.readFileSync(jsonFile))
+    //} else {
+    //  node.internal.metadata = await getImageSizeAsync(node)
+    //  fs.writeFileSync(jsonFile, JSON.stringify(node.internal.metadata))
+    //}
+    //imageSizeCache.set(node.internal.contentDigest, node.internal.metadata);
+
+    imageSizeCache.set(
+      node.internal.contentDigest,
+      await getImageSizeAsync(node)
+    )
+  }
+  exports.onCreateNode = onCreateNode
+  exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+}

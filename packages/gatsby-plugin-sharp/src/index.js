@@ -22,7 +22,7 @@ const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
 // const { rgbToHex } = require(`./utils`)
 
-const imageSizeCache = new Map()
+export const imageSizeCache = new Map()
 
 const getImageSizeAsync = async file => {
   if (

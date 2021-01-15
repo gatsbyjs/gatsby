@@ -21,6 +21,7 @@ module.exports.onCreateNode = async function onCreateNode({
     id: createNodeId(`${node.id} >> ImageSharp`),
     children: [],
     parent: node.id,
+    absolutePath: node.absolutePath,
     internal: {
       contentDigest: `${node.internal.contentDigest}`,
       type: `ImageSharp`,
