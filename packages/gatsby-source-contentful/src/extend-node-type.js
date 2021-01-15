@@ -102,7 +102,7 @@ const getBase64Image = imageProps => {
     })
   }
 
-  const promise = new Promise(async (resolve, reject) => {
+  const loadImage = async () => {
     const imageResponse = await axios.get(requestUrl, {
       responseType: `arraybuffer`,
     })
@@ -111,17 +111,19 @@ const getBase64Image = imageProps => {
 
     const body = `data:image/jpeg;base64,${base64}`
 
-    // TODO: against dogma, confirm whether writeFileSync is indeed slower
-    fs.promises
-      .writeFile(cacheFile, body)
-      .then(() => resolve(body))
-      .catch(e => {
-        console.error(
-          `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
-        )
-        reject(e)
-      })
-  })
+    try {
+      // TODO: against dogma, confirm whether writeFileSync is indeed slower
+      await fs.promises.writeFile(cacheFile, body)
+      return body
+    } catch (e) {
+      console.error(
+        `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
+      )
+      throw e
+    }
+  }
+
+  const promise = loadImage()
 
   inFlightBase64Cache.set(requestUrl, promise)
 
