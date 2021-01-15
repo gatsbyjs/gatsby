@@ -3360,10 +3360,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@prefresh/babel-plugin@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@prefresh/babel-plugin/-/babel-plugin-0.3.0.tgz#6e5be66dc120f495bbcc94c5645e68ec10b98674"
-  integrity sha512-4VqFK5r0ySG+crNrLuP2AQUtny1hwJ42Usd1IYvPDOClpS5TeKw9hXwvoZ06BZQehCWyJY4WYJ39hkuvFNiX3g==
+"@prefresh/babel-plugin@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@prefresh/babel-plugin/-/babel-plugin-0.4.0.tgz#78ca60adb51095b20e6afdaadc1015e549ae89c9"
+  integrity sha512-fFwyfIHm/B8BBY7HL4j9iJl7KFk/5yVIWE+aozRRPPxI8lRFkyXMAgUFtTSmP3/jiMA6jyOcBeYUhWsyEUynpQ==
 
 "@prefresh/core@^0.8.1":
   version "0.8.1"
