@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.9.0...gatsby-source-filesystem@2.9.1) (2021-01-16)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem:** fix broken stream with gzipped files ([#28913](https://github.com/gatsbyjs/gatsby/issues/28913)) ([38c0f42](https://github.com/gatsbyjs/gatsby/commit/38c0f42593411820459bc01b39a8c48884ad61e0))
+- **gatsby-source-filesystem:** fix broken stream with gzipped files ([#28913](https://github.com/gatsbyjs/gatsby/issues/28913)) ([#28995](https://github.com/gatsbyjs/gatsby/issues/28995)) ([a7d6614](https://github.com/gatsbyjs/gatsby/commit/a7d6614c21f794e6cc0b5408b5b2073a49e1610d))
+
 # [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.9.0-next.2...gatsby-source-filesystem@2.9.0) (2021-01-05)
 
 **Note:** Version bump only for package gatsby-source-filesystem
