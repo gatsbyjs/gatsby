@@ -201,7 +201,7 @@ There’s a bit more up-front setup required to get data into GraphQL, but the b
 Using `data/products.json` as an example, by using GraphQL we’re able to solve all of the limitations from the previous section:
 
 1. The images can be collocated with the products in `data/images/`.
-2. Image paths in `data/products.json` can be relative to the JSON file.
+2. Image paths in `data/products.json` can be relative to the JSON file.( prepend `image` field in our products.json with '.') 
 3. Gatsby can automatically optimize images for faster loading and better user experience.
 4. You no longer need to pass all product data into `context` when creating pages.
 5. Data is loaded using GraphQL in the components where it’s used, making it much easier to see where data comes from and how to change it.
