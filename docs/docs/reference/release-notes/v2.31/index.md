@@ -12,7 +12,7 @@ Welcome to `gatsby@2.31.0` release (January 2021 #2)
 Key highlights of this release:
 
 - [Performance improvements](#performance-improvements)
-- [Support for Gatsby's fragments in GraphiQL](#TODO)
+- [Support for Gatsby's fragments in GraphiQL](#support-for-gatsbys-fragments-in-graphiql)
 - [Use Fast Refresh by default for React 17](#use-fast-refresh-by-default-for-react-17)
 
 Also check out [notable bugfixes](#notable-bugfixes).
