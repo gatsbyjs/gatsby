@@ -68,7 +68,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
 
       // if a main image does not have a ssr tag, we know it's not the first run anymore
       if (typeof e.target.dataset["gatsbyImageSsr"] === 'undefined') {
-        document.body.removeEventListener('load', gatsbyImageNativeLoader, true);
         return;
       }
 
