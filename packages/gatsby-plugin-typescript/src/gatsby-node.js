@@ -45,25 +45,25 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       .description(
         `Replace the function used when compiling JSX fragment expressions.`
       )
-      .default(`React.Fragment`),
+      .optional(),
     allExtensions: Joi.boolean()
       .description(`Indicates that every file should be parsed as TS or TSX.`)
       .default(false)
       .when(`isTSX`, { is: true, then: Joi.valid(true) }),
     allowNamespaces: Joi.boolean()
       .description(`Enables compilation of TypeScript namespaces.`)
-      .default(false),
+      .optional(),
     allowDeclareFields: Joi.boolean()
       .description(
         `When enabled, type-only class fields are only removed if they are prefixed with the declare modifier.`
       )
-      .default(false),
+      .optional(),
     onlyRemoveTypeImports: Joi.boolean()
       .description(
         `When set to true, the transform will only remove type-only imports (introduced in TypeScript 3.8).` +
           `This should only be used if you are using TypeScript >= 3.8.`
       )
-      .default(false),
+      .optional(),
   })
 
 exports.resolvableExtensions = resolvableExtensions
