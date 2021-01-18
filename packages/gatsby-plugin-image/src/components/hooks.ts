@@ -7,6 +7,7 @@ import {
   ReactEventHandler,
   SetStateAction,
   Dispatch,
+  RefObject,
 } from "react"
 import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
@@ -72,6 +73,12 @@ export function getWrapperProps(
   }
 }
 
+export function applyPolyfill(ref: RefObject<HTMLImageElement>): void {
+  import(`objectFitPolyfill`).then(() => {
+    ;(window as any).objectFitPolyfill(ref.current)
+  })
+}
+
 export function useGatsbyImage({
   pluginName = `useGatsbyImage`,
   ...args
@@ -91,13 +98,21 @@ export function getMainProps(
   style: CSSProperties = {}
 ): MainImageProps {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
+    const target = e.currentTarget
+    const shouldPolyfill =
+      typeof target.style.objectFit === `undefined` ||
+      typeof target.style.objectPosition === `undefined`
+
+    if (shouldPolyfill) {
+      target.dataset.objectFit = style.objectFit || `cover`
+      target.dataset.objectPosition = `${style.objectPosition || `50% 50%`}`
+    }
     if (isLoaded) {
       return
     }
 
     storeImageloaded(cacheKey)
 
-    const target = e.currentTarget
     const img = new Image()
     img.src = target.currentSrc
 
@@ -110,9 +125,15 @@ export function getMainProps(
         })
         .then(() => {
           toggleLoaded(true)
+          if (shouldPolyfill) {
+            applyPolyfill(ref)
+          }
         })
     } else {
       toggleLoaded(true)
+      if (shouldPolyfill) {
+        applyPolyfill(ref)
+      }
     }
   }
 
