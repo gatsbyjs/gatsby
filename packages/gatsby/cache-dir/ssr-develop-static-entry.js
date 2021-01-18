@@ -205,9 +205,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
         } else {
           // If this is a client-only page or the pageComponent didn't finish
           // compiling yet, just render an empty component.
-          pageElement = () => {
-            return null
-          }
+          pageElement = () => null
         }
 
         const wrappedPage = apiRunner(
