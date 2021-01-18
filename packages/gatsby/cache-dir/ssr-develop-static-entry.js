@@ -193,10 +193,22 @@ export default (pagePath, isClientOnlyPage, callback) => {
             : undefined,
         }
 
-        const pageElement = createElement(
-          syncRequires.ssrComponents[componentChunkName],
-          props
-        )
+        let pageElement
+        if (
+          syncRequires.ssrComponents[componentChunkName] &&
+          !isClientOnlyPage
+        ) {
+          pageElement = createElement(
+            syncRequires.ssrComponents[componentChunkName],
+            props
+          )
+        } else {
+          // If this is a client-only page or the pageComponent didn't finish
+          // compiling yet, just render an empty component.
+          pageElement = () => {
+            return null
+          }
+        }
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -276,7 +288,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = isClientOnlyPage ? `` : generateBodyHTML()
+  const bodyStr = generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
