@@ -73,10 +73,13 @@ export function getWrapperProps(
   }
 }
 
-export function applyPolyfill(ref: RefObject<HTMLImageElement>): void {
-  import(`objectFitPolyfill`).then(() => {
-    ;(window as any).objectFitPolyfill(ref.current)
-  })
+export async function applyPolyfill(
+  ref: RefObject<HTMLImageElement>
+): Promise<void> {
+  if (!(`objectFitPolyfill` in window)) {
+    await import(`objectFitPolyfill`)
+  }
+  ;(window as any).objectFitPolyfill(ref.current)
 }
 
 export function useGatsbyImage({
@@ -92,27 +95,19 @@ export function getMainProps(
   isLoaded: boolean,
   images: any,
   loading?: "eager" | "lazy",
-  toggleLoaded?: any,
+  toggleLoaded?: (loaded: boolean) => void,
   cacheKey?: string,
-  ref?: any,
+  ref?: RefObject<HTMLImageElement>,
   style: CSSProperties = {}
 ): MainImageProps {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
-    const target = e.currentTarget
-    const shouldPolyfill =
-      typeof target.style.objectFit === `undefined` ||
-      typeof target.style.objectPosition === `undefined`
-
-    if (shouldPolyfill) {
-      target.dataset.objectFit = style.objectFit || `cover`
-      target.dataset.objectPosition = `${style.objectPosition || `50% 50%`}`
-    }
     if (isLoaded) {
       return
     }
 
     storeImageloaded(cacheKey)
 
+    const target = e.currentTarget
     const img = new Image()
     img.src = target.currentSrc
 
@@ -125,16 +120,17 @@ export function getMainProps(
         })
         .then(() => {
           toggleLoaded(true)
-          if (shouldPolyfill) {
-            applyPolyfill(ref)
-          }
         })
     } else {
       toggleLoaded(true)
-      if (shouldPolyfill) {
-        applyPolyfill(ref)
-      }
     }
+  }
+
+  // Polyfill "object-fit" if unsupported (mostly IE)
+  if (ref?.current && !(`objectFit` in document.documentElement.style)) {
+    ref.current.dataset.objectFit = style.objectFit ?? `cover`
+    ref.current.dataset.objectPosition = `${style.objectPosition ?? `50% 50%`}`
+    applyPolyfill(ref)
   }
 
   // fallback when it's not configured in gatsby-config.
