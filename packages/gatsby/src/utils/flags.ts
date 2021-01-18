@@ -95,7 +95,7 @@ const activeFlags: Array<IFlag> = [
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => {
-      if (sampleSiteForExperiment(`DEV_SSR`, 5)) {
+      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
         return `OPT_IN`
       } else {
         return true
