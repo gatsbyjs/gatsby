@@ -149,4 +149,23 @@ describe(`redux db`, () => {
 
     expect(mockWrittenContent.has(legacyLocation)).toBe(false)
   })
+
+  describe(`GATSBY_DISABLE_CACHE_PERSISTENCE`, () => {
+    beforeAll(() => {
+      process.env.GATSBY_DISABLE_CACHE_PERSISTENCE = `truthy`
+    })
+
+    afterAll(() => {
+      delete process.env.GATSBY_DISABLE_CACHE_PERSISTENCE
+    })
+    it(`shouldn't write redux cache to disk when GATSBY_DISABLE_CACHE_PERSISTENCE env var is used`, async () => {
+      expect(initialComponentsState).toEqual(new Map())
+
+      store.getState().nodes = getFakeNodes()
+
+      await saveState()
+
+      expect(writeToCache).not.toBeCalled()
+    })
+  })
 })
