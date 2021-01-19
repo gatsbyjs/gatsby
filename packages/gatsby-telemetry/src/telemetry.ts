@@ -99,6 +99,7 @@ export interface ITelemetryTagsPayload {
   devDependencies?: Array<string>
   siteMeasurements?: {
     pagesCount?: number
+    totalPagesCount?: number
     clientsCount?: number
     paths?: Array<string | undefined>
     bundleStats?: unknown
