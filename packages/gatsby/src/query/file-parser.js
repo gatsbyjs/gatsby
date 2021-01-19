@@ -88,7 +88,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   if (transpiled && transpiled.length) {
     for (const item of transpiled) {
       try {
-        const tmp = await babelParseToAst(item, filePath)
+        const tmp = babelParseToAst(item, filePath)
         ast = tmp
         break
       } catch (error) {
@@ -111,7 +111,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
     }
   } else {
     try {
-      ast = await babelParseToAst(fileStr, filePath)
+      ast = babelParseToAst(fileStr, filePath)
     } catch (error) {
       boundActionCreators.queryExtractionBabelError({
         componentPath: filePath,

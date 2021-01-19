@@ -7,7 +7,7 @@ import report from "gatsby-cli/lib/reporter"
 
 import { testRequireError } from "../utils/test-require-error"
 
-const staticallyAnalyzeExports = async (
+const staticallyAnalyzeExports = (
   modulePath: string,
   resolver = require.resolve
 ): Array<string> => {
@@ -23,7 +23,7 @@ const staticallyAnalyzeExports = async (
 
   let ast
   try {
-    ast = await babelParseToAst(code, absPath)
+    ast = babelParseToAst(code, absPath)
   } catch (err) {
     if (err instanceof SyntaxError) {
       // Pretty print syntax errors
@@ -45,7 +45,6 @@ const staticallyAnalyzeExports = async (
       throw err
     }
   }
-  console.log(ast)
 
   let isCommonJS = false
   let isES6 = false
