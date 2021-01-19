@@ -77,6 +77,7 @@
     "chokidar": "^3.4.3",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^1.10.0-next.0",
+    "objectFitPolyfill": "^2.3.0",
     "prop-types": "^15.7.2"
   },
   "repository": {
