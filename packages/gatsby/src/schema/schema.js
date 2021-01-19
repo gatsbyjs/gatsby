@@ -282,7 +282,10 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
         const typeName = type.getTypeName()
         const createdFrom = `typeBuilder`
         checkIsAllowedTypeName(typeName)
-        if (schemaComposer.has(typeName)) {
+        if (
+          schemaComposer.has(typeName) &&
+          type !== schemaComposer.get(typeName)
+        ) {
           const typeComposer = schemaComposer.get(typeName)
           mergeTypes({
             schemaComposer,
