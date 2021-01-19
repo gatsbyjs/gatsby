@@ -400,7 +400,7 @@ const processAddedType = ({
   createdFrom,
   plugin,
 }) => {
-  const typeName = schemaComposer.addAsComposer(type)
+  const typeName = schemaComposer.add(type)
   const typeComposer = schemaComposer.get(typeName)
   if (
     typeComposer instanceof InterfaceTypeComposer ||

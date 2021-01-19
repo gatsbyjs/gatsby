@@ -179,7 +179,7 @@ const convert = ({
     )
   }
 
-  schemaComposer.addAsComposer(convertedITC)
+  schemaComposer.add(convertedITC)
 
   const fieldNames = inputTypeComposer.getFieldNames()
   const convertedFields = {}
