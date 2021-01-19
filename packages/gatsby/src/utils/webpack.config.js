@@ -15,7 +15,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
-import { createWebpackUtils } from "./webpack-utils"
+import { createWebpackUtils, ensureRequireEslintRules } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 
@@ -732,5 +732,15 @@ module.exports = async (
     parentSpan,
   })
 
-  return getConfig()
+  let finalConfig = getConfig()
+
+  if (
+    stage === `develop` &&
+    process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
+    hasLocalEslint(program.directory)
+  ) {
+    finalConfig = ensureRequireEslintRules(finalConfig)
+  }
+
+  return finalConfig
 }

@@ -1,36 +1,18 @@
 /* eslint-disable no-unused-expressions */
-import { IGatsbyImageData } from "gatsby-plugin-image"
+import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
 import { createTransformObject } from "./plugin-options"
+import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
+const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
+
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
-export interface ISharpGatsbyImageArgs {
-  layout?: "fixed" | "fluid" | "constrained"
-  formats?: Array<ImageFormat>
-  placeholder?: "tracedSVG" | "dominantColor" | "blurred" | "none"
-  tracedSVGOptions?: Record<string, unknown>
-  width?: number
-  height?: number
-  maxWidth?: number
-  maxHeight?: number
-  sizes?: string
-  quality?: number
-  transformOptions: {
-    fit?: "contain" | "cover" | "fill" | "inside" | "outside"
-    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
-  }
-  jpgOptions: Record<string, unknown>
-  pngOptions: Record<string, unknown>
-  webpOptions: Record<string, unknown>
-  avifOptions: Record<string, unknown>
-  blurredOptions: { width?: number; toFormat?: ImageFormat }
-}
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -49,7 +31,7 @@ const metadataCache = new Map<string, IImageMetadata>()
 export async function getImageMetadata(
   file: FileNode,
   getDominantColor?: boolean
-): Promise<IImageMetadata> {
+): Promise<IImageMetadata | undefined> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
     const { width, height, type } = await getImageSizeAsync(file)
@@ -59,18 +41,24 @@ export async function getImageMetadata(
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
-  const pipeline = sharp(file.absolutePath)
 
-  const { width, height, density, format } = await pipeline.metadata()
+  try {
+    const pipeline = sharp(file.absolutePath)
 
-  const { dominant } = await pipeline.stats()
-  // Fallback in case sharp doesn't support dominant
-  const dominantColor = dominant
-    ? rgbToHex(dominant.r, dominant.g, dominant.b)
-    : `#000000`
+    const { width, height, density, format } = await pipeline.metadata()
 
-  metadata = { width, height, density, format, dominantColor }
-  metadataCache.set(file.internal.contentDigest, metadata)
+    const { dominant } = await pipeline.stats()
+    // Fallback in case sharp doesn't support dominant
+    const dominantColor = dominant
+      ? rgbToHex(dominant.r, dominant.g, dominant.b)
+      : `#000000`
+
+    metadata = { width, height, density, format, dominantColor }
+    metadataCache.set(file.internal.contentDigest, metadata)
+  } catch (err) {
+    reportError(`Failed to process image ${file.absolutePath}`, err)
+  }
+
   return metadata
 }
 
@@ -105,13 +93,19 @@ export async function generateImageData({
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
   const {
     layout = `constrained`,
-    placeholder = `blurred`,
+    placeholder = `dominantColor`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
   } = args
 
   args.formats = args.formats || [`auto`, `webp`]
+
+  if (layout === `fullWidth`) {
+    args.breakpoints = args.breakpoints?.length
+      ? args.breakpoints
+      : DEFAULT_BREAKPOINTS
+  }
 
   const {
     fit = `cover`,
@@ -120,20 +114,27 @@ export async function generateImageData({
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
-  if (layout === `fixed` && !args.width && !args.height) {
+  if ((args.width || args.height) && layout === `fullWidth`) {
+    reporter.warn(
+      `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
+    )
+    args.width = metadata.width
+    args.height = undefined
+  }
+
+  if (!args.width && !args.height && metadata.width) {
     args.width = metadata.width
   }
 
-  if (
-    layout !== `fixed` &&
-    !args.maxWidth &&
-    !args.maxHeight &&
-    metadata.width
-  ) {
-    if (layout === `constrained`) {
-      args.maxWidth = metadata.width
-    } else if (layout === `fluid`) {
-      args.maxWidth = Math.round(metadata.width / 2)
+  if (args.aspectRatio) {
+    if (args.width && args.height) {
+      reporter.warn(
+        `Specifying aspectRatio along with both width and height will cause aspectRatio to be ignored.`
+      )
+    } else if (args.width) {
+      args.height = args.width / args.aspectRatio
+    } else if (args.height) {
+      args.width = args.height * args.aspectRatio
     }
   }
 
@@ -149,7 +150,7 @@ export async function generateImageData({
 
   let primaryFormat: ImageFormat | undefined
   if (useAuto) {
-    primaryFormat = normalizeFormat(metadata.format || file.extension)
+    primaryFormat = normalizeFormat(metadata?.format || file.extension)
   } else if (formats.has(`png`)) {
     primaryFormat = `png`
   } else if (formats.has(`jpg`)) {
@@ -216,9 +217,10 @@ export async function generateImageData({
 
   const sizes = args.sizes || getSizes(imageSizes.unscaledWidth, layout)
 
-  const primaryIndex = imageSizes.sizes.findIndex(
-    size => size === imageSizes.unscaledWidth
-  )
+  const primaryIndex =
+    layout === `fullWidth`
+      ? imageSizes.sizes.length - 1 // The largest image
+      : imageSizes.sizes.findIndex(size => size === imageSizes.unscaledWidth)
 
   if (primaryIndex === -1) {
     reporter.error(
@@ -339,7 +341,7 @@ export async function generateImageData({
     imageProps.placeholder = {
       fallback,
     }
-  } else if (metadata.dominantColor) {
+  } else if (metadata?.dominantColor) {
     imageProps.backgroundColor = metadata.dominantColor
   }
 
@@ -351,13 +353,13 @@ export async function generateImageData({
       imageProps.height = imageSizes.presentationHeight
       break
 
-    case `fluid`:
+    case `fullWidth`:
       imageProps.width = 1
       imageProps.height = 1 / primaryImage.aspectRatio
       break
 
     case `constrained`:
-      imageProps.width = args.maxWidth || primaryImage.width || 1
+      imageProps.width = args.width || primaryImage.width || 1
       imageProps.height = (imageProps.width || 1) / primaryImage.aspectRatio
   }
   return imageProps

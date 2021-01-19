@@ -11,11 +11,11 @@ Welcome to `gatsby@2.27.0` release (November 2020 #2).
 
 Key highlights of this release:
 
-- [create-gatsby](#create-gatsby) - new, interactive way to create a Gatsby site
+- [`create-gatsby`](#create-gatsby) - new, interactive way to create a Gatsby site
 - [Experimental: Queries on Demand](#experimental-queries-on-demand) - improves `gatsby develop` bootup time
 - [Experimental: Lazy page bundling](#experimental-lazy-page-bundling-in-development) - also improves `gatsby develop` bootup time
 - [Experimental: SSR in develop](#experimental-ssr-in-development) - catch SSR errors early
-- [gatsby-plugin-mdx@1.5.0](#gatsby-plugin-mdx150) - new option for better performance
+- [`gatsby-plugin-mdx@1.5.0`](#gatsby-plugin-mdx150) - new option for better performance
 - [Notable bugfixes](#notable-bugfixes)
 
 Sneak peek to next releases:
@@ -29,7 +29,7 @@ Sneak peek to next releases:
 
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.27.0-next.0...gatsby@2.27.0)
 
-## create-gatsby
+## `create-gatsby`
 
 There is now a new, interactive way to create a Gatsby site. As long as you have Node.js installed you're ready to go.
 
@@ -75,7 +75,7 @@ Try it out immediately by running `GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby devel
 
 ### Experimental: Lazy page bundling in development
 
-UPDATE: After a number of community members tested the change on their website, we decided it wasn't going to work out—https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998
+UPDATE: After a number of community members tested the change on their website, we decided it wasn't going to work out — https://github.com/gatsbyjs/gatsby/discussions/28137#discussioncomment-138998
 
 An obstacle to Gatsby being a delightful experience for larger sites is JavaScript compilation can start to get annoyingly slow. For example, gatsbyjs.com takes over two minutes currently (with a cold cache) to compile and bundle the code for the many page components. Not acceptable!
 
@@ -85,7 +85,7 @@ Now when you run `GATSBY_EXPERIMENT_DEVJS_LAZY=true gatsby develop`, webpack won
 
 All sites should see some speedups but it's especially noticeable for larger sites like gatsbyjs.com which now starts webpack 81% faster than before! Please test it out and tell us how fast your dev server boots up over at the [umbrella issue](https://github.com/gatsbyjs/gatsby/discussions/28137) along with any bugs you might run across.
 
-## gatsby-plugin-mdx@1.5.0
+## `gatsby-plugin-mdx@1.5.0`
 
 Adds a `lessBabel` option to the plugin which allows you to use a fast path for scanning exports during sourcing. The savings are significant, especially at scale, but as the new scanner does not use Babel, if your site depends on Babel then you can't use this. Please give the option a try and report any problems unrelated to not running Babel so we can improve the support.
 
@@ -106,7 +106,7 @@ This experimental version of `gatsby-plugin-sharp` only does image processing wh
 
 Try early alpha (and [let us know](https://github.com/gatsbyjs/gatsby/discussions/27603) if you have any issues with it):
 
-```
+```shell
 npm install gatsby-plugin-sharp@lazy-images
 ```
 
