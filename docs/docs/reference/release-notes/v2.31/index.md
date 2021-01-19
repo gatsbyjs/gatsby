@@ -87,4 +87,53 @@ This is likely to be the final minor version before the stable release, but plea
 
 A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.0...gatsby@2.31.0) to this release 💜
 
-TODO: Needs to be generated after with the script
+- [DecliningLotus](https://github.com/DecliningLotus): Update Fontsource Documentation [PR #28750](https://github.com/gatsbyjs/gatsby/pull/28750)
+- [saintmalik](https://github.com/saintmalik): chore(docs): fix a broken url [PR #28756](https://github.com/gatsbyjs/gatsby/pull/28756)
+- [jbampton](https://github.com/jbampton)
+
+  - chore: Fix spelling [PR #28761](https://github.com/gatsbyjs/gatsby/pull/28761)
+  - chore(gatsby-transformer-csv): fix whitespace [PR #28763](https://github.com/gatsbyjs/gatsby/pull/28763)
+
+- [vse-volod](https://github.com/vse-volod): chore(docs): Fixing broken link [PR #28767](https://github.com/gatsbyjs/gatsby/pull/28767)
+- [eriklofblad](https://github.com/eriklofblad): chore(docs): Updated Twin + Gatsby + Emotion link [PR #28782](https://github.com/gatsbyjs/gatsby/pull/28782)
+- [yonatanLehman](https://github.com/yonatanLehman): chore(docs): Update lighthouse instructions in tutorial [PR #28785](https://github.com/gatsbyjs/gatsby/pull/28785)
+- [sreehari-sj23](https://github.com/sreehari-sj23)
+
+  - chore(gatsby): Changed .org to .com [PR #28818](https://github.com/gatsbyjs/gatsby/pull/28818)
+  - chore(examples): Remove Broken Link [PR #28817](https://github.com/gatsbyjs/gatsby/pull/28817)
+
+- [takapiro99](https://github.com/takapiro99): chore(docs): Fix all `/packages` links to `/plugins` [PR #28816](https://github.com/gatsbyjs/gatsby/pull/28816)
+- [Taremeh](https://github.com/Taremeh): chore(docs): Update migrate-remark-to-mdx [PR #28811](https://github.com/gatsbyjs/gatsby/pull/28811)
+- [muescha](https://github.com/muescha)
+
+  - chore(docs): add http to localhost [PR #28896](https://github.com/gatsbyjs/gatsby/pull/28896)
+  - chore(docs): fix code block language to shell [PR #28895](https://github.com/gatsbyjs/gatsby/pull/28895)
+  - docs(readme): add file extension, fix code block, fix link, fix code [PR #28905](https://github.com/gatsbyjs/gatsby/pull/28905)
+  - fix(gatsby-plugin-netlify): fix typo [PR #28907](https://github.com/gatsbyjs/gatsby/pull/28907)
+  - fix(gatsby-plugin-sass): fix brand name, code block around names [PR #28908](https://github.com/gatsbyjs/gatsby/pull/28908)
+  - doc(node-creation): fix brand name [PR #28912](https://github.com/gatsbyjs/gatsby/pull/28912)
+  - chore(docs): plugin contentful - fix brand name, code blocks for names [PR #28915](https://github.com/gatsbyjs/gatsby/pull/28915)
+  - readme(gatsby-plugin-emotion): fix table [PR #28906](https://github.com/gatsbyjs/gatsby/pull/28906)
+  - chore(docs): google plugin analytics - upgrade to gtag, fix code [PR #28918](https://github.com/gatsbyjs/gatsby/pull/28918)
+  - chore(docs): realease notes - code fences, code language [PR #28936](https://github.com/gatsbyjs/gatsby/pull/28936)
+  - chore(docs): typography - brand name [PR #28931](https://github.com/gatsbyjs/gatsby/pull/28931)
+  - chore(docs): routing - brand name, code language, code block [PR #28929](https://github.com/gatsbyjs/gatsby/pull/28929)
+
+- [AlexRAV](https://github.com/AlexRAV): Add avif format support to gatsby remark images package [PR #28927](https://github.com/gatsbyjs/gatsby/pull/28927)
+- [nishantwrp](https://github.com/nishantwrp): chore(default-starter): format code using prettier [PR #28958](https://github.com/gatsbyjs/gatsby/pull/28958)
+- [GrantHair5](https://github.com/GrantHair5): chore(docs): Change cd path to "my-gatsby-site" [PR #28933](https://github.com/gatsbyjs/gatsby/pull/28933)
+- [mrhut10](https://github.com/mrhut10): feat(gatsby-source-shopify): download images option [PR #23840](https://github.com/gatsbyjs/gatsby/pull/23840)
+- [andrewmcoupe](https://github.com/andrewmcoupe): chore(gatsby): Improve type safety of ShouldUpdateScrollArgs [PR #28923](https://github.com/gatsbyjs/gatsby/pull/28923)
+- [Vishal19111999](https://github.com/Vishal19111999): chore(docs): Add Tina in list of Headless CMS [PR #28981](https://github.com/gatsbyjs/gatsby/pull/28981)
+- [ariadne-github](https://github.com/ariadne-github): perf(gatsby-source-contentful): prevent redundant fs/remote fetches for tracedSVG [PR #28926](https://github.com/gatsbyjs/gatsby/pull/28926)
+- [RookTKO](https://github.com/RookTKO): chore(docs): Updating Chakra UI docs [PR #29018](https://github.com/gatsbyjs/gatsby/pull/29018)
+- [kaneshin](https://github.com/kaneshin): fix(gatsbu-source-contentful): apply useNameForId when creating the graphql schema [PR #28649](https://github.com/gatsbyjs/gatsby/pull/28649)
+- [axe312ger](https://github.com/axe312ger)
+
+  - Fix/contentful add header [PR #29028](https://github.com/gatsbyjs/gatsby/pull/29028)
+  - chore(docs): adjust Contentful Rich Text example codes [PR #29029](https://github.com/gatsbyjs/gatsby/pull/29029)
+  - fix(gatsby-source-contentful): Improve base64 placeholders [PR #29034](https://github.com/gatsbyjs/gatsby/pull/29034)
+
+- [nategiraudeau](https://github.com/nategiraudeau): fix(sharp) wrap sharp calls in try/catch to avoid crashing on bad images [PR #28645](https://github.com/gatsbyjs/gatsby/pull/28645)
+- [hoobdeebla](https://github.com/hoobdeebla): fix(security): update vulnerable packages, include React 17 in peerDeps [PR #28545](https://github.com/gatsbyjs/gatsby/pull/28545)
+- [hasparus](https://github.com/hasparus): fix(gatsby-plugin-typescript): add missing options validations [PR #29066](https://github.com/gatsbyjs/gatsby/pull/29066)
