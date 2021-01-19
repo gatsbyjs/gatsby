@@ -154,11 +154,14 @@ describe(`build-node-types`, () => {
   })
 
   it(`should create typed children fields`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
           childrenChild { # lol
+            id
+          }
+          childChild {
             id
           }
         }
@@ -167,6 +170,9 @@ describe(`build-node-types`, () => {
     )
     expect(parent.childrenChild).toBeDefined()
     expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
+
+    expect(parent.childChild).toBeDefined()
+    expect(parent.childChild).toEqual({ id: `c1` })
   })
 
   it(`should create typed child field for singular children`, async () => {

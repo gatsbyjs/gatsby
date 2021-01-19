@@ -20,6 +20,7 @@ export const ImageFormatType = new GraphQLEnumType({
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
+    AVIF: { value: `avif` },
   },
 })
 
@@ -27,7 +28,7 @@ export const ImageLayoutType = new GraphQLEnumType({
   name: `GatsbyImageLayout`,
   values: {
     FIXED: { value: `fixed` },
-    FLUID: { value: `fluid` },
+    FULL_WIDTH: { value: `fullWidth` },
     CONSTRAINED: { value: `constrained` },
   },
 })
@@ -51,40 +52,26 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
     args: {
       layout: {
         type: ImageLayoutType,
-        defaultValue: `fixed`,
+        defaultValue: `constrained`,
         description: stripIndent`
             The layout for the image.
             FIXED: A static image sized, that does not resize according to the screen width
-            FLUID: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+            FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
             CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
             `,
-      },
-      maxWidth: {
-        type: GraphQLInt,
-        description: stripIndent`
-            Maximum display width of generated files. 
-            The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-            This only applies when layout = FLUID or CONSTRAINED. For other layout types, use "width"`,
-      },
-      maxHeight: {
-        type: GraphQLInt,
-        description: stripIndent`
-            If set, the generated image is a maximum of this height, cropping if necessary. 
-            If the image layout is "constrained" then the image will be limited to this height. 
-            If the aspect ratio of the image is different than the source, then the image will be cropped.`,
       },
       width: {
         type: GraphQLInt,
         description: stripIndent`
-            The display width of the generated image. 
-            The actual largest image resolution will be this value multipled by the largest value in outputPixelDensities
-            Ignored if layout = FLUID or CONSTRAINED, where you should use "maxWidth" instead.
-            `,
+        The display width of the generated image for layout = FIXED, and the display width of the largest image for layout = CONSTRAINED.  
+        The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities
+        Ignored if layout = FLUID.
+        `,
       },
       height: {
         type: GraphQLInt,
         description: stripIndent`
-            If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
+        If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.`,
       },
       placeholder: {
         type: ImagePlaceholderType,
@@ -99,10 +86,10 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
       formats: {
         type: GraphQLList(ImageFormatType),
         description: stripIndent`
-            The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG" and "WEBP". 
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, WEBP and AVIF. 
             The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying 
-            both PNG and JPG is not supported and will be ignored.
+            both PNG and JPG is not supported and will be ignored. AVIF support is currently experimental.
         `,
         defaultValue: [`auto`, `webp`],
       },

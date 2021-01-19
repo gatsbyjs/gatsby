@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.9.0-next.1...gatsby-plugin-netlify-cms@4.10.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.9.0-next.0...gatsby-plugin-netlify-cms@4.9.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-netlify-cms ([#28714](https://github.com/gatsbyjs/gatsby/issues/28714)) ([b2729dd](https://github.com/gatsbyjs/gatsby/commit/b2729dd49ee753afb0d8b604ac2290ba759dc053))
+
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.8.0-next.1...gatsby-plugin-netlify-cms@4.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 # [4.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.8.0-next.0...gatsby-plugin-netlify-cms@4.8.0-next.1) (2020-12-15)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms

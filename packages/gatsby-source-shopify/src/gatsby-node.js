@@ -56,6 +56,7 @@ export const sourceNodes = async (
     verbose = true,
     paginationSize = 250,
     includeCollections = [SHOP, CONTENT],
+    downloadImages = true,
     shopifyQueries = {},
   }
 ) => {
@@ -89,6 +90,7 @@ export const sourceNodes = async (
       cache,
       getCache,
       reporter,
+      downloadImages,
     }
 
     // Arguments used for node creation.

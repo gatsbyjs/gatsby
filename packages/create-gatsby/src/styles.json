@@ -1,5 +1,5 @@
 {
-  "gatsby-plugin-sass": { "message": "Sass", "dependencies": ["node-sass"] },
+  "gatsby-plugin-sass": { "message": "Sass", "dependencies": ["sass"] },
   "gatsby-plugin-styled-components": {
     "message": "styled-components",
     "dependencies": ["styled-components", "babel-plugin-styled-components"]

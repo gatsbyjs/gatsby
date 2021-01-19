@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.4.0-next.1...create-gatsby@0.5.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.4.0-next.0...create-gatsby@0.4.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.4...create-gatsby@0.4.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.3.0-next.4](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.3...create-gatsby@0.3.0-next.4) (2020-12-17)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.2...create-gatsby@0.3.0-next.3) (2020-12-17)
+
+### Bug Fixes
+
+- **create-gatsby:** Switch dependency to sass ([#28655](https://github.com/gatsbyjs/gatsby/issues/28655)) ([a1f6e79](https://github.com/gatsbyjs/gatsby/commit/a1f6e79a4c8bb444381503fae0fadfe3bc4cbf9c))
+
+# [0.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.1...create-gatsby@0.3.0-next.2) (2020-12-16)
+
+### Bug Fixes
+
+- **create-gatsby:** Adds a default icon so plugin-manifest works out of the box ([#28635](https://github.com/gatsbyjs/gatsby/issues/28635)) ([4dc8ab7](https://github.com/gatsbyjs/gatsby/commit/4dc8ab79c194fe5c56a1d2bd794ff9c8e03ad927))
+
 # [0.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.0...create-gatsby@0.3.0-next.1) (2020-12-15)
 
 ### Bug Fixes

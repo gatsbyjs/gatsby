@@ -61,5 +61,5 @@ Using Yarn to install packages generates a `yarn.lock` file. The `yarn.lock` tra
 - [Yarn](https://yarnpkg.com/) official website
 - [Building a Theme](/tutorial/building-a-theme/)
 - [Gatsby Theme Authoring](https://egghead.io/courses/gatsby-theme-authoring) from egghead.io
-- [How to change your default package manager for your next project?](/docs/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) from the Gatsby CLI docs
+- [How to change your default package manager for your next project?](/docs/reference/gatsby-cli/#how-to-change-your-default-package-manager-for-your-next-project) from the Gatsby CLI docs
 - [Setting Up Your Local Dev Environment](/contributing/setting-up-your-local-dev-environment/) for contributions to the Gatsby project

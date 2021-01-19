@@ -122,6 +122,14 @@ input Baz {
   qux: Boolean
 }
 
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
 type Test implements Node @dontInfer {
   foo: Int
 }"
@@ -150,6 +158,10 @@ type Nested {
 
 input Baz {
   qux: Boolean
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;
 
@@ -269,6 +281,14 @@ type OneMoreTest implements Node @dontInfer {
 }
 
 union ThisOrThat = AnotherTest | OneMoreTest
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
 
 type Test implements Node @dontInfer {
   foo: Int
@@ -427,6 +447,14 @@ type Inline {
 
 input Baz {
   qux: Boolean
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }
 
 type Test implements Node @dontInfer {

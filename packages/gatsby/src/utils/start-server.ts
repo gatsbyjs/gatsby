@@ -9,7 +9,7 @@ import compression from "compression"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError } from "graphql"
+import { formatError, FragmentDefinitionNode, Kind } from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -113,16 +113,15 @@ module.exports = {
 
   // Remove the following when merging GATSBY_EXPERIMENTAL_DEV_SSR
   const directoryPath = withBasePath(directory)
-  const { buildHTML } = require(`../commands/build-html`)
+  const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      await buildHTML({
+      const rendererPath = await buildRenderer(
         program,
-        stage: Stage.DevelopHTML,
-        pagePaths: [`/`],
-        workerPool,
-        activity,
-      })
+        Stage.DevelopHTML,
+        activity.span
+      )
+      await doBuildPages(rendererPath, [`/`], activity, workerPool)
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -139,9 +138,10 @@ module.exports = {
   }
   const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
 
+  let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    await buildRenderer(program, Stage.DevelopHTML)
+    pageRenderer = await buildRenderer(program, Stage.DevelopHTML)
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
   } else {
@@ -193,6 +193,15 @@ module.exports = {
   } else {
     graphiqlExplorer(app, {
       graphqlEndpoint,
+      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+        const fragments: Array<FragmentDefinitionNode> = []
+        for (const def of store.getState().definitions.values()) {
+          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+            fragments.push(def.def)
+          }
+        }
+        return fragments
+      },
     })
   }
 
@@ -259,6 +268,16 @@ module.exports = {
 
     if (enableRefresh && authorizedRefresh) {
       refresh(req, pluginName)
+      res.status(200)
+      res.setHeader(`content-type`, `application/json`)
+    } else {
+      res.status(authorizedRefresh ? 404 : 403)
+      res.json({
+        error: enableRefresh
+          ? `Authorization failed. Make sure you add authorization header to your refresh requests`
+          : `Refresh endpoint is not enabled. Run gatsby with "ENABLE_GATSBY_REFRESH_ENDPOINT=true" environment variable set.`,
+        isEnabled: !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT,
+      })
     }
     res.end()
   })
@@ -461,11 +480,17 @@ module.exports = {
   }
 
   app.use(async (req, res) => {
+    // in this catch-all block we don't support POST so we should 404
+    if (req.method === `POST`) {
+      res.status(404).end()
+      return
+    }
+
     const fullUrl = req.protocol + `://` + req.get(`host`) + req.originalUrl
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {
       res.json({ webpackCompilationHash: `123` })
-      // If this gets here, it's a non-existant file so just send back 404.
+      // If this gets here, it's a non-existent file so just send back 404.
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
@@ -479,7 +504,7 @@ module.exports = {
             // Let renderDevHTML figure it out.
             page: undefined,
             store,
-            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
           })
           const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200

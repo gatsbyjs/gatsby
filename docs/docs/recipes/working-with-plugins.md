@@ -7,7 +7,7 @@ A [Gatsby plugin](/docs/what-is-a-plugin/) abstracts Gatsby APIs into an install
 
 ## Using a plugin
 
-Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/packages/gatsby-source-filesystem/) as an example.
+Found a plugin you'd like to use in your project? Awesome! You can configure it for use by following the steps below. This recipe uses the [`gatsby-source-filesystem` plugin](/plugins/gatsby-source-filesystem/) as an example.
 
 > If you'd like to take a look at available plugins, check out the [plugin library](/plugins).
 
@@ -52,7 +52,7 @@ _The instructions found in the README of the plugin you're using can help you de
 
 ### Additional resources
 
-- Learn more about configuring options or using default options in the [Using a Plugin in Your Site](/docs/using-a-plugin-in-your-site/) guide.
+- Learn more about configuring options or using default options in the [Using a Plugin in Your Site](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site/) guide.
 - See an example Gatsby site using this configuration in [the repo for the default Gatsby starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/gatsby-config.js).
 
 ## Creating a new plugin using a plugin starter
@@ -113,7 +113,7 @@ success onPreInit - 0.016s
 ...
 ```
 
-4. Now you can implement [browser](/docs/browser-apis/), [server-side rendering](/docs/ssr-apis/), or [node APIs](/docs/node-apis/) and your site will run them each time it loads your plugin!
+4. Now you can implement [browser](/docs/reference/config-files/gatsby-browser/), [server-side rendering](/docs/reference/config-files/gatsby-ssr/), or [node APIs](/docs/reference/config-files/gatsby-node/) and your site will run them each time it loads your plugin!
 
 ### Additional resources
 

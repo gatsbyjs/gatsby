@@ -35,7 +35,7 @@ directive @mimeTypes(
 ) on OBJECT
 
 \\"\\"\\"
-Define parent-child relations between types. This is used to add \`child*\` or
+Define parent-child relations between types. This is used to add \`child*\` and
 \`children*\` convenience fields like \`childImageSharp\`.
 \\"\\"\\"
 directive @childOf(

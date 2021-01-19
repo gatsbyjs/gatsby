@@ -122,5 +122,8 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `Disable MDX transformation for nodes where this function returns true`
       ),
+    root: Joi.string()
+      .default(process.cwd())
+      .description(`[deprecated] This is a legacy option that used to define root directory of the project. It was needed to generate a cache directory location. It currently has no effect.`)
   })
 }

@@ -2,13 +2,13 @@
 title: Node Creation
 ---
 
-Nodes are created by calling the [createNode](/docs/actions/#createNode) action. Nodes can be any object.
+Nodes are created by calling the [createNode](/docs/reference/config-files/actions/#createNode) action. Nodes can be any object.
 
 A node is stored in Redux under the `nodes` namespace, whose state is a map of the node ID to the actual node object.
 
 ## Sourcing Nodes
 
-The creation of nodes occurs primarily in the [sourceNodes](/docs/node-apis/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `null`. Nodes created via transform plugins (who implement [onCreateNode](/docs/node-apis/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [`traceId` illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
+The creation of nodes occurs primarily in the [sourceNodes](/docs/reference/config-files/gatsby-node/#sourceNodes) bootstrap phase. Nodes created during this phase are top level nodes. I.e, they have no parent. This is represented by source plugins setting the node's `parent` field to `null`. Nodes created via transform plugins (who implement [onCreateNode](/docs/reference/config-files/gatsby-node/#onCreateNode)) will have source nodes as their parents, or other transformed nodes. For a rough overview of what happens when source nodes run, see the [`traceId` illustration](/docs/how-plugins-apis-are-run/#using-traceid-to-await-downstream-api-calls).
 
 ## Parent/Child/Refs
 
@@ -30,7 +30,7 @@ An important note here is that we do not store a distinct collection of each typ
 
 ### Explicitly recording a parent/child relationship
 
-This occurs when a transformer plugin implements [onCreateNode](/docs/node-apis/#onCreateNode) in order to create some child of the originally created node. In this case, the transformer plugin will call [createParentChildLink](/docs/actions/#createParentChildLink), with the original node, and the newly created node. All this does is push the child's node ID onto the parent's `children` collection and resave the parent to Redux.
+This occurs when a transformer plugin implements [onCreateNode](/docs/reference/config-files/gatsby-node/#onCreateNode) in order to create some child of the originally created node. In this case, the transformer plugin will call [createParentChildLink](/docs/reference/config-files/actions/#createParentChildLink), with the original node, and the newly created node. All this does is push the child's node ID onto the parent's `children` collection and resave the parent to Redux.
 
 This does **not** automatically create a `parent` field on the child node. If a plugin author wishes to allow child nodes to navigate to their parents in GraphQL queries, they must explicitly set `childNode.parent: 'parent.id'` when creating the child node.
 
@@ -59,7 +59,7 @@ During schema compilation, Gatsby will infer the sub object's type while [creati
 
 Every time a build is re-run, there is a chance that a node that exists in the Redux store no longer exists in the original data source. E.g. a file might be deleted from disk between runs. We need a way to indicate that fact to Gatsby.
 
-To track this, there is a Redux `nodesTouched` namespace that tracks whether a particular node ID has been touched. This occurs whenever a node is created (handled by [CREATE_NODE](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/nodes-touched.ts)), or an explicit call to [touchNode](/docs/actions/#touchNode).
+To track this, there is a Redux `nodesTouched` namespace that tracks whether a particular node ID has been touched. This occurs whenever a node is created (handled by [CREATE_NODE](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/reducers/nodes-touched.ts)), or an explicit call to [touchNode](/docs/reference/config-files/actions/#touchNode).
 
 When a `source-nodes` plugin runs again, it generally recreates nodes (which automatically touches them too). But in some cases, such as [transformer-screenshot](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-transformer-screenshot/src/gatsby-node.js#L56), a node might not change, but we still want to keep it around for the build. In these cases, we must explicitly call `touchNode`.
 
@@ -67,9 +67,9 @@ Any nodes that aren't touched by the end of the `source-nodes` phase, are delete
 
 ## Changing a node's fields
 
-From a site developer's point of view, nodes are immutable. In the sense that if you change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to redux via an action.
+From a site developer's point of view, nodes are immutable. In the sense that if you change a node object, those changes will not be seen by other parts of Gatsby. To make a change to a node, it must be persisted to Redux via an action.
 
-So, how do you add a field to an existing node? E.g. perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField](/docs/actions/#createNodeField) and this will add your field to the node's `node.fields` object and then persists it to redux. This can then be referenced by other parts of your plugin at later stages of the build.
+So, how do you add a field to an existing node? E.g. perhaps in onCreateNode, you want to add a transformer specific field? You can call [createNodeField](/docs/reference/config-files/actions/#createNodeField) and this will add your field to the node's `node.fields` object and then persists it to Redux. This can then be referenced by other parts of your plugin at later stages of the build.
 
 ## Node Tracking
 

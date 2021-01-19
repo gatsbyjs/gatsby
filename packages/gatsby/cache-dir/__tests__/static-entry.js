@@ -46,7 +46,7 @@ jest.mock(
   () => {
     return {
       ssrComponents: {
-        "page-component---src-pages-test-js": () => null,
+        "page-component---src-pages-about-js": () => null,
       },
     }
   },
@@ -188,8 +188,27 @@ const reactHelmetAsyncPlugin = {
   },
 }
 
+const SSR_DEV_MOCK_FILE_INFO = {
+  [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
+  [join(
+    process.cwd(),
+    `/public/page-data/about/page-data.json`
+  )]: JSON.stringify({
+    componentChunkName: `page-component---src-pages-about-js`,
+    path: `/about/`,
+    webpackCompilationHash: `1234567890abcdef1234`,
+    staticQueryHashes: [],
+  }),
+  [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
+    webpackCompilationHash: `1234567890abcdef1234`,
+  }),
+}
+
 describe(`develop-static-entry`, () => {
+  let ssrDevelopStaticEntry
   beforeEach(() => {
+    fs.readFileSync.mockImplementation(file => SSR_DEV_MOCK_FILE_INFO[file])
+    ssrDevelopStaticEntry = require(`../ssr-develop-static-entry`).default
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
     global.__ASSET_PREFIX__ = ``
