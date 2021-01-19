@@ -27,7 +27,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Performance improvements
 
-An improvement to build speed for sites with many (10k+) markdown and images was made in this PR [#28891](https://github.com/gatsbyjs/gatsby/pull/28891). This change especially benefits large sites—our 16k page markdown/image benchmark site's build time dropped 37% and the 128k pages benchmark dropped 84%.
+An improvement to build speed for sites with many (10k+) markdown and images was made in this PR [#28891](https://github.com/gatsbyjs/gatsby/pull/28891). This change especially benefits very large sites—our 16k page markdown/image benchmark site's build time dropped 37% and the 128k pages benchmark dropped 84%.
 
 In [#28957](https://github.com/gatsbyjs/gatsby/pull/28957) an improvement to `gatsby develop` was made by not using the `debug` config for `bluebird`. This can speed your `source nodes`, especially for sites with larger numbers of pages.
 
