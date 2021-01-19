@@ -118,10 +118,10 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function (image, node) {
+  const generateImagesAndUpdateNode = function (image, node, attribute) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
-      image.attr(`src`)
+      image.attr(attribute)
     )
     const imageNode = _.find(files, file => {
       if (file && file.absolutePath) {
@@ -133,13 +133,13 @@ module.exports = (
       return
     }
 
-    const initialImageSrc = image.attr(`src`)
+    const initialImageSrc = image.attr(attribute)
     // The link object will be modified to the new location so we'll
     // use that data to update our ref
-    const link = { url: image.attr(`src`) }
+    const link = { url: image.attr(attribute) }
     visitor(link)
     node.value = node.value.replace(
-      new RegExp(image.attr(`src`), `g`),
+      new RegExp(image.attr(attribute), `g`),
       link.url
     )
 
@@ -262,7 +262,7 @@ module.exports = (
         try {
           const ext = url.split(`.`).pop()
           if (!options.ignoreFileExtensions.includes(ext)) {
-            generateImagesAndUpdateNode(element, node)
+            generateImagesAndUpdateNode(element, node, `src`)
           }
         } catch (err) {
           // Ignore
