@@ -100,6 +100,10 @@ export interface ITelemetryTagsPayload {
   siteMeasurements?: {
     pagesCount?: number
     totalPagesCount?: number
+    createdNodesCount?: number
+    touchedNodesCount?: number
+    updatedNodesCount?: number
+    deletedNodesCount?: number
     clientsCount?: number
     paths?: Array<string | undefined>
     bundleStats?: unknown
