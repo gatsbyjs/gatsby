@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.10.0-next.0...gatsby-graphiql-explorer@0.11.0-next.0) (2021-01-18)
+
+### Features
+
+- **gatsby-graphiql-explorer:** add support for magic fragments ([#28878](https://github.com/gatsbyjs/gatsby/issues/28878)) ([a03e862](https://github.com/gatsbyjs/gatsby/commit/a03e862fe1ec54ac6609a67528234476dfb76dfa))
+
 # [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-graphiql-explorer@0.9.0-next.1...gatsby-graphiql-explorer@0.10.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-graphiql-explorer

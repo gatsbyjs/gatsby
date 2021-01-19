@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.11.0-next.0...gatsby-plugin-typescript@2.12.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-typescript:** add missing options validations ([#29066](https://github.com/gatsbyjs/gatsby/issues/29066)) ([c0e6c92](https://github.com/gatsbyjs/gatsby/commit/c0e6c92570ab0dc935616933b71f9ac3bf1dd065))
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-typescript@2.10.0-next.0...gatsby-plugin-typescript@2.11.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-plugin-typescript
