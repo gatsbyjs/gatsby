@@ -27,9 +27,9 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ## Performance improvements
 
-A massive reduction in build speed for local file usage was found in PR [#28891](https://github.com/gatsbyjs/gatsby/pull/28891). This change hugely benefits sites that use markdown and/or images, for up to an 84% improvement on our 128k pages markdown benchmark.
+An improvement to build speed for sites with many (10k+) markdown and images was made in this PR [#28891](https://github.com/gatsbyjs/gatsby/pull/28891). This change especially benefits large sites—our 16k page markdown/image benchmark site's build time dropped 37% and the 128k pages benchmark dropped 84%.
 
-In [#28957](https://github.com/gatsbyjs/gatsby/pull/28957) an improvement to `gatsby develop` was made by not using the `debug` config for `bluebird`. This can improve your `source nodes` step.
+In [#28957](https://github.com/gatsbyjs/gatsby/pull/28957) an improvement to `gatsby develop` was made by not using the `debug` config for `bluebird`. This can speed your `source nodes`, especially for sites with larger numbers of pages.
 
 ## Support for Gatsby's fragments in GraphiQL
 
@@ -37,7 +37,7 @@ The underlying `graphiql` package added support for registering fragments and Ga
 
 ![Screenshot showing the GraphiQL IDE with the fragments in auto-completion](https://user-images.githubusercontent.com/419821/103703746-686ce880-4fa8-11eb-852a-8f33f0b5b6b2.png)
 
-## Use Fast Refresh by default for React 17
+## Fast Refresh enabled by default for React 17
 
 With the PRs [#28689](https://github.com/gatsbyjs/gatsby/pull/28689) & [#28930](https://github.com/gatsbyjs/gatsby/pull/28930) merged, Gatsby will now automatically use Fast Refresh if you use React >= 17.0.0 for your site. As you can read in the [release notes for 2.28](/docs/reference/release-notes/v2.28#improved-fast-refresh-integration) we've added support for Fast Refresh giving you a better (and custom) error overlay, quicker error recovery and in general a better `gatsby develop` experience.
 
