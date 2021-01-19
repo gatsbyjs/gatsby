@@ -6,69 +6,18 @@ const Bottleneck = require(`bottleneck`)
 const http = require(`http`)
 const fetch = require(`@adobe/node-fetch-retry`)
 const { performance } = require("perf_hooks")
-const crypto = require(`crypto`)
+
+const prepareTask = require(`./prepare-task`)
 
 const httpAgent = new http.Agent({
   keepAlive: true,
 })
-
-const mtimes = new Map()
-const digests = new Map()
-const inFlight = new Map()
-async function md5File(filePath) {
-  if (digests.has(filePath)) {
-    return digests.get(filePath)
-  }
-
-  if (inFlight.has(filePath)) {
-    return inFlight.get(filePath)
-  } else {
-    const md5Promise = new Promise((resolve, reject) => {
-      // const newMtime = fs.statSync(filePath).mtime.getTime()
-      // let renew = false
-      // // Has the file changed?
-      // if (mtimes.has(filePath)) {
-      // if (newMtime !== mtimes.get(filePath)) {
-      // renew = true
-      // }
-      // } else {
-      // renew = true
-      // }
-
-      // mtimes.set(filePath, newMtime)
-
-      // // If we need to renew, calculate, cache and return.
-      // if (renew) {
-      const output = crypto.createHash("md5")
-      const input = fs.createReadStream(filePath)
-
-      input.on("error", err => {
-        reject(err)
-      })
-
-      output.once("readable", () => {
-        const newDigest = output.read().toString("hex")
-        digests.set(filePath, newDigest)
-        resolve(newDigest)
-      })
-
-      input.pipe(output)
-      // } else {
-      // resolve(digests.get(path))
-      // }
-    })
-
-    inFlight.set(filePath, md5Promise)
-    return md5Promise
-  }
-}
 
 const queue = new PQueue({ concurrency: 100 })
 queue.pause()
 let taskNum = 1
 let taskPartDigests = new Map()
 let hostHashDigest = new Set()
-let taskFiles = new Map()
 let startTime = 0
 module.exports = function Runner(options) {
   const pool = options.pools[0]
@@ -104,6 +53,7 @@ module.exports = function Runner(options) {
 
   batcher.on(`batch`, async tasks => {
     const grouped = {}
+
     tasks.forEach(task => {
       if (grouped[task.digest]) {
         grouped[task.digest].tasks.push({ args: task.args, files: task.files })
@@ -181,20 +131,7 @@ module.exports = function Runner(options) {
           hostHashDigest.add(func_KEY)
         }
 
-        if (taskFiles.has(task.digest)) {
-          task.files = taskFiles.get(task.digest)
-        } else {
-          if (task.files && !_.isEmpty(task.files)) {
-            await Promise.all(
-              _.toPairs(task.files).map(async ([name, file]) => {
-                const digest = await md5File(file.originPath)
-                // Discard the file path
-                task.files[name] = { ...file, digest }
-              })
-            )
-            taskFiles.set(task.digest, task.files)
-          }
-        }
+        const task = prepareTask(task)
 
         const end = performance.now()
         // taskPrepTimes.push(end - start)

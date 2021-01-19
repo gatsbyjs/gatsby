@@ -95,9 +95,6 @@ if (cluster.isMaster) {
   // In this case it is an HTTP server
   http
     .createServer((req, res) => {
-      var noop = function () {},
-        useDefaultOptions = {}
-      // compress(useDefaultOptions)(req, res, noop)
       let data = ""
       req.on("data", chunk => {
         data += chunk
