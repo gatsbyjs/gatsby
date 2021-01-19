@@ -38,6 +38,7 @@ test/**/public
 public/
 node_modules/
 e2e-tests/gatsby-pnp/
+integration-tests/images/__diff_output/
 .cache/
 .netlify
 .Rhistory
