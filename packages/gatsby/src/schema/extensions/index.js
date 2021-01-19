@@ -191,6 +191,12 @@ const toDirectives = ({
     }
     // Support the `graphql-compose` style of directly providing the field type as string
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
+
+    // arg.type is a composer that needs to be converted to graphql-js type
+    Object.keys(normalizedArgs).forEach(argName => {
+      normalizedArgs[argName].type = normalizedArgs[argName].type.getType()
+    })
+
     return new GraphQLDirective({
       name,
       args: normalizedArgs,
