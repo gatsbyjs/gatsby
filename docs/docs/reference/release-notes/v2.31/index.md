@@ -13,7 +13,7 @@ Key highlights of this release:
 
 - [Performance improvements](#performance-improvements)
 - [Support for Gatsby's fragments in GraphiQL](#support-for-gatsbys-fragments-in-graphiql)
-- [Use Fast Refresh by default for React 17](#use-fast-refresh-by-default-for-react-17)
+- [Use Fast Refresh by default for React 17](#fast-refresh-enabled-by-default-for-react-17)
 - [Important gatsby-plugin-image updates](#important-gatsby-plugin-image-updates)
 
 Also check out [notable bugfixes](#notable-bugfixes).
