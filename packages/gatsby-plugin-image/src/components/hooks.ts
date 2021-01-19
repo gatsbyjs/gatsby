@@ -77,7 +77,9 @@ export async function applyPolyfill(
   ref: RefObject<HTMLImageElement>
 ): Promise<void> {
   if (!(`objectFitPolyfill` in window)) {
-    await import(/* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`)
+    await import(
+      /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
+    )
   }
   ;(window as any).objectFitPolyfill(ref.current)
 }
