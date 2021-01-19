@@ -33,7 +33,7 @@ In [#28957](https://github.com/gatsbyjs/gatsby/pull/28957) an improvement to `ga
 
 ## Support for Gatsby's fragments in GraphiQL
 
-The underlying `graphiql` package added support for registering fragments and Gatsby now leverages this new feature! You now get auto-completion for image fragments inside GraphiQL and any fragments that you added yourself:
+The underlying `graphiql` package added support for registering fragments and Gatsby now leverages this new feature! You now get auto-completion for image fragments and any fragments that you added yourself inside GraphiQL:
 
 ![Screenshot showing the GraphiQL IDE with the fragments in auto-completion](https://user-images.githubusercontent.com/419821/103703746-686ce880-4fa8-11eb-852a-8f33f0b5b6b2.png)
 
