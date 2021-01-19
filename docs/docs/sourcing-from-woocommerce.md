@@ -12,7 +12,7 @@ You’ll need a WordPress site with the [WooCommerce](https://woocommerce.com/) 
 
 ## Existing plugins
 
-This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/packages/@pasdo501/gatsby-source-woocommerce/).
+This guide assumes the use of the [`gatsby-source-woocommerce` plugin](/plugins/@pasdo501/gatsby-source-woocommerce/).
 
 Install it:
 
@@ -67,7 +67,7 @@ allWcProducts {
 
 ### Using GraphiQL
 
-You can explore the data available to your site [using GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/). This is dependent on the fields you have specified in `gatsby-config.js`. The plugin documentation has tons of [suggested GraphQL queries](/packages/@pasdo501/gatsby-source-woocommerce/#some-graphql-query-examples). If you don't see the options listed there, try adjusting the `fields` array and/or refreshing your GraphiQL tab.
+You can explore the data available to your site [using GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/). This is dependent on the fields you have specified in `gatsby-config.js`. The plugin documentation has tons of [suggested GraphQL queries](/plugins/@pasdo501/gatsby-source-woocommerce/#some-graphql-query-examples). If you don't see the options listed there, try adjusting the `fields` array and/or refreshing your GraphiQL tab.
 
 ### Using WPGraphQL
 
@@ -75,7 +75,7 @@ You can explore possible queries in the [WPGraphQL WooCommerce Playground](https
 
 ## Pending Changes
 
-Note that `gatsby-source-wordpress` is undergoing a major rewrite at the time of writing. This new major version of the official source plugin is likely to change the optimal solution for using WooCommerce with Gatsby. For now, new projects should start with [`gatsby-source-graphql`](/packages/gatsby-source-graphql/) rather than `gatsby-source-wordpress` to ease the transition. If you’re interested in the current progress of the plugin, you can [check out the working alpha version](https://github.com/gatsbyjs/gatsby/issues/19292#issuecomment-587946239). **Once this work is done, the [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce) will be the recommended option.**
+Note that `gatsby-source-wordpress` is undergoing a major rewrite at the time of writing. This new major version of the official source plugin is likely to change the optimal solution for using WooCommerce with Gatsby. For now, new projects should start with [`gatsby-source-graphql`](/plugins/gatsby-source-graphql/) rather than `gatsby-source-wordpress` to ease the transition. If you’re interested in the current progress of the plugin, you can [check out the working alpha version](https://github.com/gatsbyjs/gatsby/issues/19292#issuecomment-587946239). **Once this work is done, the [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce) will be the recommended option.**
 
 If you decide to go with this more experimental route, you'll need to install and activate the [WPGraphQL](https://www.wpgraphql.com/) and [wp-graphql-woocommerce](https://github.com/wp-graphql/wp-graphql-woocommerce) plugins on your WordPress site as well.
 
@@ -83,8 +83,8 @@ The WPGraphQL plugin is also undergoing significant changes. It has not yet hit 
 
 ## Other resources
 
-- [`gatsby-source-woocommerce`](/packages/@pasdo501/gatsby-source-woocommerce/)
-- [`gatsby-theme-woocommerce`](/packages/@ccerda0520/gatsby-theme-woocommerce/)
+- [`gatsby-source-woocommerce`](/plugins/@pasdo501/gatsby-source-woocommerce/)
+- [`gatsby-theme-woocommerce`](/plugins/@ccerda0520/gatsby-theme-woocommerce/)
 - [`wp-graphql-woocommerce` plugin](https://github.com/wp-graphql/wp-graphql-woocommerce)
 - [experimental `gatsby-source-wordpress` starter](https://github.com/TylerBarnes/using-gatsby-source-wordpress-experimental)
 - [Sourcing from WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/)

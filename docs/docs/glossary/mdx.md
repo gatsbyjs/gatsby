@@ -53,13 +53,13 @@ If you're creating a Gatsby site from scratch, the [gatsby-starter-mdx-basic](ht
 gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
 ```
 
-To use MDX with an existing Gatsby site, add the [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/?=gatsby-plugin-mdx) plugin. As with Gatsby itself, you can install it using [npm](/docs/glossary/#npm). You'll also need to install MDX itself, and the React implementation of MDX.
+To use MDX with an existing Gatsby site, add the [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/?=gatsby-plugin-mdx) plugin. As with Gatsby itself, you can install it using [npm](/docs/glossary/#npm). You'll also need to install MDX itself, and the React implementation of MDX.
 
 ```shell
 npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
-Then add `gatsby-plugin-mdx` to your plugins list in `gatsby-config.js`, and set the [configuration options](/packages/gatsby-plugin-mdx/?=gatsby-plugin-mdx#configuration) you prefer.
+Then add `gatsby-plugin-mdx` to your plugins list in `gatsby-config.js`, and set the [configuration options](/plugins/gatsby-plugin-mdx/?=gatsby-plugin-mdx#configuration) you prefer.
 
 MDX enhances Markdown's capabilities so that you can use React components anywhere in your Gatsby-powered site.
 

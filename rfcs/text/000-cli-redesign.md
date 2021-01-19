@@ -71,7 +71,7 @@ The user can:
 - [x] select a starter in the CLI without needing a URL. See PR https://github.com/gatsbyjs/gatsby/pull/14097
 - [ ] be redirected to the correct URL when typing in “localhost:8000/\_ \_ graphiql incorrectly (we could either redirect to "correct" one or just support multiple different cases)
 - [ ] be directed to another localhost address is localhost:8000 is already taken (https://github.com/gatsbyjs/gatsby/issues/368 and https://github.com/gatsbyjs/gatsby/issues/13512#issuecomment-485781525)
-- [ ] misspell a Gatsby command and the CLI will run the correct command anyway just like Google search does when you mispell something (requires us to update the did-you-mean file). https://github.com/gatsbyjs/gatsby/issues/13512
+- [ ] misspell a Gatsby command and the CLI will run the correct command anyway just like Google search does when you misspell something (requires us to update the did-you-mean file). https://github.com/gatsbyjs/gatsby/issues/13512
 - [ ] get createPages page count in output to help users optimize for speed and catch errors faster''
 - [ ] get notified that they might need to hit `r` if they’ve changed package.json, gatsby node, etc. when `gatsby develop` is running
 - [ ] see only relevant warnings; e.g. omission of peer dependency warnings that they can ignore

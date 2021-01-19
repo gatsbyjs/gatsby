@@ -37,11 +37,11 @@ Chakra UI is built on top of the [Emotion styling library](/docs/how-to/styling/
 
 Chakra UI provides a library of components, and it comes with dark mode out of the box. It also has a theme object which you can use to customize your site's color palette, typography, breakpoints, and more.
 
-If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui` documentation](/packages/gatsby-plugin-chakra-ui/?=chakra).
+If you're interested in using Chakra UI, check out the [`@chakra-ui/gatsby-plugin` documentation](/plugins/@chakra-ui/gatsby-plugin/).
 
 - [Chakra UI documentation](https://chakra-ui.com/getting-started)
 - [Chakra UI repo on GitHub](https://github.com/chakra-ui/chakra-ui/)
-- [Setting Up Chakra UI in a GatsbyJS App (YouTube)](https://www.youtube.com/watch?v=PjQHqDWnzGw)
+- [Chakra UI and Gatsby - Getting Started (YouTube)](https://www.youtube.com/watch?v=hXM9Ju_NIpU)
 
 ## Grommet
 
@@ -59,7 +59,7 @@ If you're interested in using Grommet, check out [Using Grommet with Gatsby (Hew
 
 Material-UI provides a library of components designed using Google's [Material Design guidelines](https://material.io/design/introduction). It also supports customizing theme elements like color, typography, and breakpoints.
 
-If you're interested in using Material-UI, check out the [`gatsby-plugin-material-ui` documentation](/packages/gatsby-plugin-material-ui).
+If you're interested in using Material-UI, check out the [`gatsby-plugin-material-ui` documentation](/plugins/gatsby-plugin-material-ui).
 
 - [Material-UI documentation](https://material-ui.com/)
 - [Material-UI repo on GitHub](https://github.com/mui-org/material-ui)

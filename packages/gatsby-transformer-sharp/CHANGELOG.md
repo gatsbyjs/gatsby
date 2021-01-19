@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.11.0-next.1...gatsby-transformer-sharp@2.12.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+### Features
+
+- **gatsby-plugin-image:** Change fullWidth to use breakpoints ([#29002](https://github.com/gatsbyjs/gatsby/issues/29002)) ([9bcc12c](https://github.com/gatsbyjs/gatsby/commit/9bcc12c57728bb7ca08cefe4f2f4c684b65d3111))
+
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.11.0-next.0...gatsby-transformer-sharp@2.11.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** PathPrefix isn't being passed/set for GatsbyImage ([#28845](https://github.com/gatsbyjs/gatsby/issues/28845)) ([5874414](https://github.com/gatsbyjs/gatsby/commit/58744145d6f8ef2e36c9a5f2f4e06290b0cff942))
+
+### Features
+
+- Add support for aspectRatio ([#28941](https://github.com/gatsbyjs/gatsby/issues/28941)) ([ed19fa0](https://github.com/gatsbyjs/gatsby/commit/ed19fa052a93e948b1135ac128cf5abec48752b6))
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.3...gatsby-transformer-sharp@2.11.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.2...gatsby-transformer-sharp@2.10.0-next.3) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
 # [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.1...gatsby-transformer-sharp@2.10.0-next.2) (2020-12-17)
 
 ### Bug Fixes

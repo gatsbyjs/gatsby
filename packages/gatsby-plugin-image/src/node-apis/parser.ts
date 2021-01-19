@@ -1,10 +1,10 @@
 import traverse from "@babel/traverse"
-import { ImageProps } from "../utils"
 import { NodePath } from "@babel/core"
 import { JSXOpeningElement } from "@babel/types"
 import { parse, ParserOptions } from "@babel/parser"
 import babel from "@babel/core"
 import { evaluateImageAttributes, hashOptions } from "../babel-helpers"
+import { IStaticImageProps } from "../components/static-image.server"
 
 const PARSER_OPTIONS: ParserOptions = {
   allowImportExportEverywhere: true,
@@ -74,8 +74,8 @@ export function babelParseToAst(
  */
 export const extractStaticImageProps = (
   ast: babel.types.File
-): Map<string, ImageProps> => {
-  const images: Map<string, ImageProps> = new Map()
+): Map<string, IStaticImageProps> => {
+  const images: Map<string, IStaticImageProps> = new Map()
 
   traverse(ast, {
     JSXOpeningElement(nodePath) {
@@ -90,7 +90,7 @@ export const extractStaticImageProps = (
       const image = (evaluateImageAttributes(
         // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
         (nodePath as unknown) as NodePath<JSXOpeningElement>
-      ) as unknown) as ImageProps
+      ) as unknown) as IStaticImageProps
       images.set(hashOptions(image), image)
     },
   })
