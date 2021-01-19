@@ -1193,7 +1193,7 @@ const parseTypes = ({
       const typeComposer = schemaComposer.get(name)
 
       // After this, the parsed type composer will be registered as the composer
-      // handling the type name
+      // handling the type name (requires cleanup after merging, see below)
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
 
       // Merge the parsed type with the original
@@ -1206,9 +1206,16 @@ const parseTypes = ({
         parentSpan,
       })
 
+      // Cleanup:
       // Set the original type composer (with the merged fields added)
-      // as the correct composer for the type name
-      schemaComposer.typeMapper.set(typeComposer.getTypeName(), typeComposer)
+      // as the correct composer for the type name and remove the temporary one
+      // `graphql-compose` doesn't make that easy 🤯
+      // TODO: clean this up when this issue is fixed:
+      //  https://github.com/graphql-compose/graphql-compose/issues/311
+      schemaComposer.set(typeComposer.getTypeName(), typeComposer)
+      schemaComposer.set(typeComposer.getType(), typeComposer)
+      schemaComposer.delete(parsedType.getType())
+      schemaComposer.delete(parsedType)
     } else {
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)
       types.push(parsedType)

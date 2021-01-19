@@ -346,7 +346,9 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(PluginDefined._gqcExtensions).toEqual(
+      const objectComposer = getSchemaComposer().getOTC(`PluginDefined`)
+
+      expect(objectComposer.getExtensions()).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
@@ -1558,6 +1560,8 @@ const buildSchema = async () => {
   await build({})
   return store.getState().schema
 }
+
+const getSchemaComposer = () => store.getState().schemaCustomization.composer
 
 const addThirdPartySchema = async typeDefs => {
   const schemaComposer = new SchemaComposer()
