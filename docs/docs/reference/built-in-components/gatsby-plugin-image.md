@@ -40,7 +40,58 @@ The `StaticImage` component can take all [image options](#image-options) as prop
 | ---------------- | -------- | ----------------------------------------------------------------------------------------------------- |
 | `src` (Required) | `string` | Source image, processed at build time. Can be a path relative to the source file, or an absolute URL. |
 
-**Note:** There are a few technical restrictions to the way you can pass props into StaticImage. For more information, refer to the Reference Guide: [Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image#restrictions-on-using-staticimage). If you find yourself wishing you could use a prop for the image `src` then it's likely that you should be using a dynamic image.
+#### Restrictions on using `StaticImage`
+
+The images are loaded and processed at build time, so there are restrictions on how you pass props to the component. The values need to be statically-analyzed at build time, which means you can't pass them as props from outside the component, or use the results of function calls, for example. You can either use static values, or variables within the component's local scope. See the following examples:
+
+This does not work:
+
+```js
+// ⚠️ Doesn't work
+
+export function Logo({ logo }) {
+  // You can't use a prop passed into the parent component
+  return <StaticImage src={logo}>
+}
+```
+
+...and nor does this:
+
+```js
+// ⚠️ Doesn't work
+
+export function Dino() {
+    // Props can't come from function calls
+    const width = getTheWidthFromSomewhere();
+    return <StaticImage src="trex.png" width={width}>
+}
+```
+
+You can use variables and expressions if they're in the scope of the file, e.g.:
+
+```js
+// OK
+export function Dino()  {
+    // Local variables are fine
+    const width = 300
+    return <StaticImage src="trex.png" width={width}>
+}
+```
+
+```js
+// Also OK
+
+// A variable in the same file is fine.
+const width = 300
+
+export function Dino()  {
+    // This works because the value can be statically-analyzed
+    const height = width * 16 / 9
+    return <StaticImage src="trex.png" width={width} height={height}>
+}
+```
+
+If you find yourself wishing you could use a prop for the image `src` then it's likely that you should be using a dynamic image.
 
 ### `GatsbyImage`
 
