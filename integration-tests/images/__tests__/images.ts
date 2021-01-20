@@ -85,7 +85,7 @@ async function imageDiff(source: ImgData, target: string): Promise<boolean> {
     diffImg.data,
     metadata.width,
     metadata.height,
-    { threshold: 0.1 }
+    { threshold: 0.2 }
   )
 
   const pass = diff < data.length / 4 / 100 //1% change
@@ -164,20 +164,48 @@ expect.extend({
       message: () =>
         `expected ${
           received.format
-        } srcset to match original:\n\n${results.join("\n")} `,
+        } srcset to match original:\n\n${results.join(
+          "\n"
+        )}\n\nSee "__diff_output__" for comparison`,
     }
   },
 })
 
-describe("image snapshots", () => {
-  it("generates an image", async () => {
-    const div = await loadHTML("index.html")
+let div: HTMLDivElement
 
-    const [fallback, ...imgs] = getImages("constrained", div)
+describe("image generation", () => {
+  beforeAll(async () => {
+    div = await loadHTML("index.html")
+  })
 
-    await Promise.all(
-      imgs.map(img => {
-        return (expect(img) as jest.VisualMatch).toVisuallyMatchSrcSet(fallback)
+  it("generates the correct images for test image", async () => {
+    return Promise.all(
+      [
+        "constrained-square",
+        "forcePNG",
+        "aspectRatio",
+        "fullWidth-aspectRatio",
+        "fixed-aspectRatio",
+        "fixed",
+        "fixed-square",
+        "constrained",
+        "no-jpg",
+        "fullwidth",
+        "fullwidth-bp",
+      ].map(async testId => {
+        const images = getImages(testId, div)
+
+        expect(images).toMatchSnapshot(testId)
+
+        const [fallback, ...imgs] = images
+
+        await Promise.all(
+          imgs.map(img => {
+            return (expect(img) as jest.VisualMatch).toVisuallyMatchSrcSet(
+              fallback
+            )
+          })
+        )
       })
     )
   })
