@@ -74,5 +74,5 @@ This is a similar process to setting up yarn workspaces for development with Gat
 
 Like all `gatsby-*` files, the code is not processed by Babel. If you want
 to use JavaScript syntax which isn't supported by your version of Node.js, you
-can place the files in a `src` subfolder and build them to the plugin folder
+can place the files in your `src` subfolder and build them to the plugin folder
 root.
