@@ -27,6 +27,8 @@ You'll need to install Yarn separately from Node. Choose the [binary package](ht
 
 Although the Yarn documentation discourages it, you can also install Yarn using npm or npx. Use `npm install yarn` with the `-g` or `--global` flags to install Yarn globally. Or install Yarn per project using npx: `npx yarn`. If you install Yarn using npx, you'll need to prefix Yarn commands with `npx`, e.g. `npx yarn add`. Read more about [npm](/docs/glossary/npm/) and npx in the Gatsby docs.
 
+> **Note:** If you are using Gatsby with Gatsby Cloud, then Yarn 2.x is not currently supported.
+
 ### Using Yarn to install Gatsby
 
 Once installed, you can use Yarn to install the Gatsby CLI globally or locally. If you'd like to use Gatsby CLI commands such as `gatsby new`, install the CLI globally using the [`global` prefix](https://classic.yarnpkg.com/en/docs/cli/global/).
