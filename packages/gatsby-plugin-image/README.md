@@ -1,10 +1,10 @@
 # gatsby-plugin-image (beta)
 
-_The new Gatsby Image plugin is currently in beta, but you can try it out now and see what it can do for the performance of your site._
+_The new Gatsby Image plugin is currently in beta, but you can try it out now_
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
-For full documentation on all configuration options, see [the reference guide](https://www.gatsbyjs.com/docs/reference/)
+For full documentation on all configuration options, see [the Gatsby Image Plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/)
 
 ## Contents
 
@@ -106,56 +106,7 @@ If you are using an image that will be the same each time the component is used,
 
 #### Restrictions on using `StaticImage`
 
-The images are loaded and processed at build time, so there are restrictions on how you pass props to the component. The values need to be statically-analyzed at build time, which means you can't pass them as props from outside the component, or use the results of function calls, for example. You can either use static values, or variables within the component's local scope. See the following examples:
-
-This does not work:
-
-```js
-// ⚠️ Doesn't work
-
-export function Logo({ logo }) {
-  // You can't use a prop passed into the parent component
-  return <StaticImage src={logo}>
-}
-```
-
-...and nor does this:
-
-```js
-// ⚠️ Doesn't work
-
-export function Dino() {
-    // Props can't come from function calls
-    const width = getTheWidthFromSomewhere();
-    return <StaticImage src="trex.png" width={width}>
-}
-```
-
-You can use variables and expressions if they're in the scope of the file, e.g.:
-
-```js
-// OK
-export function Dino()  {
-    // Local variables are fine
-    const width = 300
-    return <StaticImage src="trex.png" width={width}>
-}
-```
-
-```js
-// Also OK
-
-// A variable in the same file is fine.
-const width = 300
-
-export function Dino()  {
-    // This works because the value can be statically-analyzed
-    const height = width * 16 / 9
-    return <StaticImage src="trex.png" width={width} height={height}>
-}
-```
-
-If you find yourself wishing you could use a prop for the image `src` then it's likely that you should be using a dynamic image.
+There are a few technical restrictions to the way you can pass props into `StaticImage`. Most importantly, you can't use any of the parent component's props. For more information, refer to the [Gatsby Image plugin reference guide](/docs/reference/built-in-components/gatsby-plugin-image#restrictions-on-using-staticimage). If you find yourself wishing you could use a prop passed from a parent for the image `src` then it's likely that you should be using a dynamic image.
 
 ### Dynamic images
 
