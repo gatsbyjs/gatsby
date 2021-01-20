@@ -7,6 +7,9 @@ import { PNG } from "pngjs"
 
 type ImgData = { metadata: sharp.Metadata; data: Buffer }
 
+/**
+ * Loads an image from disk and converts it to a raw pixel buffer
+ */
 async function toImageBuffer(imagePath: string): Promise<ImgData> {
   const filename = path.join(__dirname, "..", "public", imagePath)
   const pipeline = sharp(filename)
@@ -15,10 +18,13 @@ async function toImageBuffer(imagePath: string): Promise<ImgData> {
   return { metadata, data }
 }
 
+/**
+ *  Extracts image path/size pairs from a srcset
+ */
 function parseSrcSet(srcset: string): Array<{ src: string; size: number }> {
   return srcset.split(",").map(item => {
     const [src, size] = item.split(" ")
-    return { src, size: parseInt(size) }
+    return { src: src.trim(), size: parseInt(size) }
   })
 }
 
@@ -27,6 +33,9 @@ type Source = {
   srcset: Array<{ src: string; size: number }>
 }
 
+/**
+ * Loads all image srcsets below the given testId
+ */
 function getImages(testId: string, dom: HTMLDivElement) {
   const node = dom.querySelector(`[data-test-id="${testId}"]`)
 
@@ -51,6 +60,11 @@ function getImages(testId: string, dom: HTMLDivElement) {
   return srcsets
 }
 
+/**
+ * Performs a pixel-level comparison on two images. Fails if there is more than 1% difference.
+ * This is enough to catch common errors such as issues with cropping, without tripping on
+ * differences in image quality, artifacts etc.
+ */
 async function imageDiff(source: ImgData, target: string): Promise<boolean> {
   const targetData = await toImageBuffer(target)
   const { metadata, data } = targetData
@@ -71,7 +85,7 @@ async function imageDiff(source: ImgData, target: string): Promise<boolean> {
     diffImg.data,
     metadata.width,
     metadata.height,
-    { threshold: 0.2 }
+    { threshold: 0.1 }
   )
 
   const pass = diff < data.length / 4 / 100 //1% change
@@ -81,13 +95,16 @@ async function imageDiff(source: ImgData, target: string): Promise<boolean> {
       target
     )} ${source.metadata.width}x${source.metadata.height}`.replace(/\W+/g, "_")
 
-    await ensureDir("__diff_output")
-    await writeFile(`__diff_output/${name}.png`, PNG.sync.write(diffImg))
+    await ensureDir("__diff_output__")
+    await writeFile(`__diff_output__/${name}.png`, PNG.sync.write(diffImg))
   }
 
   return pass
 }
 
+/**
+ * Loads an HTML file and returns the root gatsby DOM element
+ */
 async function loadHTML(pathName): Promise<HTMLDivElement> {
   const html = await readFile(
     path.resolve(__dirname, "..", "public", pathName),
@@ -96,23 +113,30 @@ async function loadHTML(pathName): Promise<HTMLDivElement> {
   return new JSDOM(html).window.document.getElementById("___gatsby")
 }
 
+/**
+ * Given a pair of srcsets, returns an array of mismatching images
+ */
+
 async function compareSrcSets(
   main: Source,
   other: Source
-): Promise<Array<[string, boolean]>> {
+): Promise<Array<string>> {
   const results = await Promise.all(
     main.srcset.map(
-      async ({ src, size }, index): Promise<[string, boolean]> => {
+      async ({ src, size }, index): Promise<string | null> => {
         const title = `${path.basename(src)} does not match ${path.basename(
           other.srcset[index].src
         )} at size ${size}`
         const source = await toImageBuffer(src)
         const result = await imageDiff(source, other.srcset[index].src)
-        return [title, result]
+        if (!result) {
+          return title
+        }
+        return null
       }
     )
   )
-  return results.filter(([title, result]) => !result)
+  return results.filter(Boolean) as Array<string>
 }
 
 declare global {
@@ -132,15 +156,15 @@ expect.extend({
       return {
         pass: true,
         message: () =>
-          `expected ${received.format} srcset to not match ${comparison.format}`,
+          `expected ${received.format} srcset to not match original`,
       }
     }
     return {
       pass: false,
       message: () =>
-        `expected ${received.format} srcset to match ${
-          comparison.format
-        }: \n${results.map(([title]) => title).join("\n")} `,
+        `expected ${
+          received.format
+        } srcset to match original:\n\n${results.join("\n")} `,
     }
   },
 })

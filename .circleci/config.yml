@@ -283,6 +283,8 @@ jobs:
       - e2e-test:
           test_path: integration-tests/images
           test_command: yarn build-and-test
+      - store_artifacts:
+          path: integration-tests/images/__diff_output__
 
   e2e_tests_path-prefix:
     <<: *e2e-executor
