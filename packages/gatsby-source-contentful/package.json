@@ -13,7 +13,7 @@
     "@hapi/joi": "^15.1.1",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
-    "contentful": "^8.1.7",
+    "contentful": "^7.14.12",
     "fs-extra": "^9.0.1",
     "gatsby-core-utils": "^1.10.0-next.0",
     "gatsby-plugin-utils": "^0.9.0-next.0",
