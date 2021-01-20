@@ -208,5 +208,5 @@ describe("image generation", () => {
         )
       })
     )
-  })
+  }, 60000)
 })
