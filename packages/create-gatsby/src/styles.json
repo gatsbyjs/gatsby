@@ -1,8 +1,17 @@
 {
-  "gatsby-plugin-postcss": { "message": "CSS Modules/PostCSS", "dependencies": ["postcss"] },
-  "gatsby-plugin-styled-components": { "message": "styled-components", "dependencies": ["styled-components", "babel-plugin-styled-components"] },
-  "gatsby-plugin-emotion": { "message": "Emotion", "dependencies": ["@emotion/core", "@emotion/styled"] },
-  "gatsby-plugin-sass": { "message": "Sass", "dependencies": ["node-sass"] },
+  "gatsby-plugin-sass": { "message": "Sass", "dependencies": ["sass"] },
+  "gatsby-plugin-styled-components": {
+    "message": "styled-components",
+    "dependencies": ["styled-components", "babel-plugin-styled-components"]
+  },
+  "gatsby-plugin-emotion": {
+    "message": "Emotion",
+    "dependencies": ["@emotion/react", "@emotion/styled"]
+  },
+  "gatsby-plugin-postcss": {
+    "message": "PostCSS",
+    "dependencies": ["postcss"]
+  },
   "gatsby-plugin-theme-ui": {
     "message": "Theme UI",
     "dependencies": ["theme-ui"]

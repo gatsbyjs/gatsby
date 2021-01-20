@@ -19,7 +19,7 @@ You can deploy sites on GitLab Pages with or without a custom domain. If you cho
 
 As the site will be hosted under yourname.gitlab.io/examplerepository/, you will need to configure Gatsby to use the Path Prefix plugin.
 
-In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link paths. The `pathPrefix` should be the project name in your repository. (ex. `https://gitlab.com/yourname/examplerepository/` - your `pathPrefix` should be `/examplerepository`). See [the docs page on path prefixing for more](/docs/path-prefix/).
+In the `gatsby-config.js`, set the `pathPrefix` to be added to your site's link paths. The `pathPrefix` should be the project name in your repository. (ex. `https://gitlab.com/yourname/examplerepository/` - your `pathPrefix` should be `/examplerepository`). See [the docs page on path prefixing for more](/docs/how-to/previews-deploys-hosting/path-prefix/).
 
 ```js:title=gatsby-config.js
 module.exports = {

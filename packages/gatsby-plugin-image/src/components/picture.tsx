@@ -66,11 +66,17 @@ const Image: FunctionComponent<ImageProps> = function Image({
 
 export const Picture = forwardRef<HTMLImageElement, PictureProps>(
   function Picture(
-    { fallback, sources = [], shouldLoad = true, ...props },
+    { fallback, sources = [], shouldLoad = true, sizes, ...props },
     ref
   ) {
     const fallbackImage = (
-      <Image {...props} {...fallback} shouldLoad={shouldLoad} innerRef={ref} />
+      <Image
+        sizes={sizes}
+        {...props}
+        {...fallback}
+        shouldLoad={shouldLoad}
+        innerRef={ref}
+      />
     )
 
     if (!sources.length) {
@@ -85,6 +91,7 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
             type={type}
             media={media}
             srcSet={srcSet}
+            sizes={sizes}
           />
         ))}
         {fallbackImage}

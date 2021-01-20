@@ -154,6 +154,7 @@ export interface IStateProgram extends IProgram {
 
 export interface IQueryState {
   dirty: number
+  running: number
 }
 
 export interface IComponentState {
@@ -210,9 +211,11 @@ export interface IGatsbyState {
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
     byConnection: Map<string, Set<Identifier>>
+    queryNodes: Map<Identifier, Set<Identifier>>
     trackedQueries: Map<Identifier, IQueryState>
     trackedComponents: Map<string, IComponentState>
     deletedQueries: Set<Identifier>
+    dirtyQueriesListToEmitViaWebsocket: Array<string>
   }
   components: Map<
     SystemPath,
@@ -273,6 +276,7 @@ export interface IGatsbyState {
   }
   pageDataStats: Map<SystemPath, number>
   pageData: Map<Identifier, string>
+  visitedPages: Map<string, Set<string>>
 }
 
 export interface ICachedReduxState {
@@ -305,6 +309,7 @@ export type ActionsUnion =
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
+  | IQueryClearDirtyQueriesListToEmitViaWebsocket
   | IQueryExtractedAction
   | IQueryExtractedBabelSuccessAction
   | IQueryExtractionBabelErrorAction
@@ -471,6 +476,10 @@ export interface IReplaceStaticQueryAction {
   }
 }
 
+export interface IQueryClearDirtyQueriesListToEmitViaWebsocket {
+  type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`
+}
+
 export interface IQueryExtractedAction {
   type: `QUERY_EXTRACTED`
   plugin: IGatsbyPlugin
@@ -586,6 +595,12 @@ interface IClearSchemaCustomizationAction {
 interface ISetSchemaComposerAction {
   type: `SET_SCHEMA_COMPOSER`
   payload: SchemaComposer<any>
+}
+
+export interface ICreateServerVisitedPage {
+  type: `CREATE_SERVER_VISITED_PAGE`
+  payload: IGatsbyPage
+  plugin?: IGatsbyPlugin
 }
 
 export interface ICreatePageAction {

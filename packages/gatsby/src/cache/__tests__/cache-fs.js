@@ -86,7 +86,7 @@ describe(`DiskStore`, function () {
       expect(countFilesInCacheDir()).toEqual(2)
     })
 
-    it(`should save buffers in seperate files promise`, async function () {
+    it(`should save buffers in separate files promise`, async function () {
       await cache.set(`key`, Buffer.alloc(100000))
       expect(countFilesInCacheDir()).toEqual(2)
     })

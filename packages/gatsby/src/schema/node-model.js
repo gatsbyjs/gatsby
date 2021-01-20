@@ -199,10 +199,10 @@ class LocalNodeModel {
       result = getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodes = nodeTypeNames.reduce((acc, typeName) => {
-        acc.push(...getNodesByType(typeName))
-        return acc
-      }, [])
+      const nodesByType = nodeTypeNames.map(typeName =>
+        getNodesByType(typeName)
+      )
+      const nodes = [].concat(...nodesByType)
       result = nodes.filter(Boolean)
     }
 
@@ -275,7 +275,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = await runFastFiltersAndSort({
+    const queryResult = runFastFiltersAndSort({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
@@ -309,6 +309,19 @@ class LocalNodeModel {
         this.trackInlineObjectsInRootNode(result)
       } else {
         result = null
+
+        // Couldn't find matching node.
+        //  This leads to a state where data tracking for this query gets empty.
+        //  It means we will NEVER re-run this query on any data updates
+        //  (even if a new node matching this query is added at some point).
+        //  To workaround this, we have to add a connection tracking to re-run
+        //  the query whenever any node of this type changes.
+        if (pageDependencies.path) {
+          this.createPageDependency({
+            path: pageDependencies.path,
+            connection: gqlType.name,
+          })
+        }
       }
     } else if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
@@ -383,11 +396,10 @@ class LocalNodeModel {
           queryFields,
           actualFieldsToResolve
         )
-        const mergedResolved = _.merge(
-          node.__gatsby_resolved || {},
-          resolvedFields
-        )
-        return mergedResolved
+        if (!node.__gatsby_resolved) {
+          node.__gatsby_resolved = {}
+        }
+        return _.merge(node.__gatsby_resolved, resolvedFields)
       })
       this._preparedNodesCache.set(
         typeName,

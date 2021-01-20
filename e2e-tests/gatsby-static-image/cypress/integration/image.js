@@ -2,7 +2,7 @@ const fluidTestId = `image-fluid`
 
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
-    cy.visit(`/fluid`).waitForRouteChange()
+    cy.visit(`/fullWidth`).waitForRouteChange()
   })
 
   describe(`wrapping elements`, () => {
@@ -30,5 +30,4 @@ describe(`Production gatsby-image`, () => {
         .should(`not.exist`)
     })
   })
-
 })

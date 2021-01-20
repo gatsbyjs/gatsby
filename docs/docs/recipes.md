@@ -68,11 +68,11 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Using a plugin](/docs/recipes/working-with-plugins#using-a-plugin)
 - [Creating a new plugin using a plugin starter](/docs/recipes/working-with-plugins#creating-a-new-plugin-using-a-plugin-starter)
 
-## [4. Working with starters](/docs/recipes/working-with-starters/)
+## [4. Working with starters](/docs/how-to/local-development/starters/)
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-- [Using a starter](/docs/recipes/working-with-starters#using-a-starter)
+- [Using a starter](/docs/how-to/local-development/starters#using-a-starter)
 
 ## [5. Working with themes](/docs/recipes/working-with-themes/)
 

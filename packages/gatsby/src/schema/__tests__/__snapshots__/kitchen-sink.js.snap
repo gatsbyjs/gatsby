@@ -40,6 +40,11 @@ Object {
             "childImageSharp": Object {
               "id": "0b06bdfe-f253-5859-8321-b42b5d737195",
             },
+            "childrenImageSharp": Array [
+              Object {
+                "id": "0b06bdfe-f253-5859-8321-b42b5d737195",
+              },
+            ],
           },
           "time": "06 kesäkuu",
         },
@@ -64,6 +69,11 @@ Object {
               "childImageSharp": Object {
                 "id": "f5f0e564-899f-5bbc-92de-a2325b69cb75",
               },
+              "childrenImageSharp": Array [
+                Object {
+                  "id": "f5f0e564-899f-5bbc-92de-a2325b69cb75",
+                },
+              ],
             },
             "likes": 8,
             "localeFormat": "05 huhtikuu 2017",
@@ -83,6 +93,11 @@ Object {
               "childImageSharp": Object {
                 "id": "6ba97198-5331-53d6-a0e0-c9c063c5094e",
               },
+              "childrenImageSharp": Array [
+                Object {
+                  "id": "6ba97198-5331-53d6-a0e0-c9c063c5094e",
+                },
+              ],
             },
             "likes": 9,
             "localeFormat": "11 syyskuu 2017",

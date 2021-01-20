@@ -23,6 +23,7 @@ export interface IDataLayerContext {
   gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
   webhookBody?: Record<string, unknown>
+  webhookSourcePluginName?: string
   refresh?: boolean
   workerPool?: JestWorker
   pagesToBuild?: Array<string>
