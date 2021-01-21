@@ -346,9 +346,10 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      const objectComposer = getSchemaComposer().getOTC(`PluginDefined`)
 
-      expect(objectComposer.getExtensions()).toEqual(
+      expect(
+        getSchemaComposer().getOTC(`PluginDefined`).getExtensions()
+      ).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
@@ -405,7 +406,9 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(PluginDefined._gqcExtensions).toEqual(
+      expect(
+        getSchemaComposer().getOTC(`PluginDefined`).getExtensions()
+      ).toEqual(
         expect.objectContaining({
           createdFrom: `typeBuilder`,
           plugin: `default-site-plugin`,
@@ -465,7 +468,9 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(PluginDefined._gqcExtensions).toEqual(
+      expect(
+        getSchemaComposer().getOTC(`PluginDefined`).getExtensions()
+      ).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
@@ -539,7 +544,9 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(PluginDefined._gqcExtensions).toEqual(
+      expect(
+        getSchemaComposer().getOTC(`PluginDefined`).getExtensions()
+      ).toEqual(
         expect.objectContaining({
           createdFrom: `typeBuilder`,
           plugin: `default-site-plugin`,
@@ -638,7 +645,9 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(PluginDefined._gqcExtensions).toEqual(
+      expect(
+        getSchemaComposer().getOTC(`PluginDefined`).getExtensions()
+      ).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `default-site-plugin`,
@@ -678,7 +687,9 @@ describe(`Build schema`, () => {
         `children`,
         `internal`,
       ])
-      expect(PluginDefined._gqcExtensions).toEqual(
+      expect(
+        getSchemaComposer().getOTC(`PluginDefined`).getExtensions()
+      ).toEqual(
         expect.objectContaining({
           createdFrom: `sdl`,
           plugin: `some-gatsby-plugin`,

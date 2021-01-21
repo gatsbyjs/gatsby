@@ -282,10 +282,7 @@ const addTypes = ({ schemaComposer, types, parentSpan }) => {
         const typeName = type.getTypeName()
         const createdFrom = `typeBuilder`
         checkIsAllowedTypeName(typeName)
-        if (
-          schemaComposer.has(typeName) &&
-          type !== schemaComposer.get(typeName)
-        ) {
+        if (schemaComposer.has(typeName)) {
           const typeComposer = schemaComposer.get(typeName)
           mergeTypes({
             schemaComposer,
@@ -588,54 +585,64 @@ const createTypeComposerFromGatsbyType = ({
 }) => {
   switch (type.kind) {
     case GatsbyGraphQLTypeKind.OBJECT: {
-      return ObjectTypeComposer.createTemp(
-        {
-          ...type.config,
-          interfaces: () => {
-            if (type.config.interfaces) {
-              return type.config.interfaces.map(iface => {
-                if (typeof iface === `string`) {
-                  return schemaComposer.getIFTC(iface).getType()
-                } else {
-                  return iface
-                }
-              })
-            } else {
-              return []
-            }
-          },
+      return ObjectTypeComposer.createTemp({
+        ...type.config,
+        fields: () =>
+          schemaComposer.typeMapper.convertOutputFieldConfigMap(
+            type.config.fields
+          ),
+        interfaces: () => {
+          if (type.config.interfaces) {
+            return type.config.interfaces.map(iface => {
+              if (typeof iface === `string`) {
+                return schemaComposer.getIFTC(iface).getType()
+              } else {
+                return iface
+              }
+            })
+          } else {
+            return []
+          }
         },
-        schemaComposer
-      )
+      })
     }
     case GatsbyGraphQLTypeKind.INPUT_OBJECT: {
-      return InputTypeComposer.createTemp(type.config, schemaComposer)
+      return InputTypeComposer.createTemp({
+        ...type.config,
+        fields: () =>
+          schemaComposer.typeMapper.convertInputFieldConfigMap(
+            type.config.fields
+          ),
+      })
     }
     case GatsbyGraphQLTypeKind.UNION: {
-      return UnionTypeComposer.createTemp(
-        {
-          ...type.config,
-          types: () => {
-            if (type.config.types) {
-              return type.config.types.map(typeName =>
-                schemaComposer.getOTC(typeName).getType()
-              )
-            } else {
-              return []
-            }
-          },
+      return UnionTypeComposer.createTemp({
+        ...type.config,
+        types: () => {
+          if (type.config.types) {
+            return type.config.types.map(typeName =>
+              schemaComposer.getOTC(typeName).getType()
+            )
+          } else {
+            return []
+          }
         },
-        schemaComposer
-      )
+      })
     }
     case GatsbyGraphQLTypeKind.INTERFACE: {
-      return InterfaceTypeComposer.createTemp(type.config, schemaComposer)
+      return InterfaceTypeComposer.createTemp({
+        ...type.config,
+        fields: () =>
+          schemaComposer.typeMapper.convertOutputFieldConfigMap(
+            type.config.fields
+          ),
+      })
     }
     case GatsbyGraphQLTypeKind.ENUM: {
-      return EnumTypeComposer.createTemp(type.config, schemaComposer)
+      return EnumTypeComposer.createTemp(type.config)
     }
     case GatsbyGraphQLTypeKind.SCALAR: {
-      return ScalarTypeComposer.createTemp(type.config, schemaComposer)
+      return ScalarTypeComposer.createTemp(type.config)
     }
     default: {
       report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
