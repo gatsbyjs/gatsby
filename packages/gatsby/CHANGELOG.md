@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.31.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0...gatsby@2.31.1) (2021-01-21)
+
+### Bug Fixes
+
+- **eslint-config:** don't use .eslintrc and set parser settings ([#29109](https://github.com/gatsbyjs/gatsby/issues/29109)) ([#29128](https://github.com/gatsbyjs/gatsby/issues/29128)) ([54e72a1](https://github.com/gatsbyjs/gatsby/commit/54e72a1563495dc4fd4e93bfe94da8e5ff3a9c28))
+
 # [2.31.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.1...gatsby@2.31.0) (2021-01-19)
 
 ### Bug Fixes
