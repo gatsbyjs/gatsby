@@ -1,5 +1,5 @@
 const {
-  setBoundActionCreators,
+  setActions,
   // queue: jobQueue,
   // reportError,
   _unstable_createJob,
@@ -123,7 +123,7 @@ exports.onPreBootstrap = async (
   { actions, emitter, reporter, cache, store },
   pluginOptions
 ) => {
-  setBoundActionCreators(actions)
+  setActions(actions)
   setPluginOptions(pluginOptions)
 
   // below is a hack / hot fix for confusing progress bar behaviour
