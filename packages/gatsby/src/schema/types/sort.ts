@@ -137,7 +137,7 @@ export const getFieldsEnum = <TSource = any, TContext = any>({
   const fields = convert({
     schemaComposer,
     typeComposer,
-    fields: inputTypeComposer.getFields() as GraphQLInputFieldMap,
+    fields: inputTypeComposer.getType().getFields(),
   })
   fieldsEnumTypeComposer.setFields(fields)
   return fieldsEnumTypeComposer
