@@ -95,14 +95,8 @@ const handleReferences = (node, languageConfig, { getNode, createNodeId }) => {
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
           v.data.map(data => {
-            const isTranslatableReferencedNodeType = languageConfig.translatableEntities.some(
-              entity => entity.id === data.type
-            )
-            const referenceLanguagePrefix = isTranslatableReferencedNodeType
-              ? rootNodeLanguage
-              : languageConfig.defaultLanguage
             const referencedNodeId = createNodeId(
-              `${referenceLanguagePrefix}${data.id}`
+              `${rootNodeLanguage}${data.id}`
             )
             if (!getNode(referencedNodeId)) {
               return null
