@@ -9,7 +9,7 @@ import compression from "compression"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError } from "graphql"
+import { formatError, FragmentDefinitionNode, Kind } from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -193,6 +193,15 @@ module.exports = {
   } else {
     graphiqlExplorer(app, {
       graphqlEndpoint,
+      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+        const fragments: Array<FragmentDefinitionNode> = []
+        for (const def of store.getState().definitions.values()) {
+          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+            fragments.push(def.def)
+          }
+        }
+        return fragments
+      },
     })
   }
 
@@ -481,7 +490,7 @@ module.exports = {
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {
       res.json({ webpackCompilationHash: `123` })
-      // If this gets here, it's a non-existant file so just send back 404.
+      // If this gets here, it's a non-existent file so just send back 404.
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {

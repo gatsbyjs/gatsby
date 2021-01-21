@@ -21,7 +21,7 @@ It will look like this, but use your project's directory.
 ```shell
 Start by going to the directory with
 
-cd gatsby-site
+cd my-gatsby-site
 
 Start the local development server with
 

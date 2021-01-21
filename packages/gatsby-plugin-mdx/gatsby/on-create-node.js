@@ -157,6 +157,8 @@ async function onCreateNodeLessBabel(
   })
 }
 
+const writeCache = new Set()
+
 async function cacheScope({
   cache,
   scopeImports,
@@ -168,6 +170,16 @@ async function cacheScope({
   let scopeFileContent = `${scopeImports.join(`\n`)}
 
 export default { ${scopeIdentifiers.join(`, `)} }`
+
+  // Multiple files sharing the same imports/exports will lead to the same file writes.
+  // Prevent writing the same content to the same file over and over again (reduces io pressure).
+  // This also prevents an expensive babel step whose outcome is based on this same value
+  if (writeCache.has(scopeFileContent)) {
+    return
+  }
+
+  // Make sure other calls see this value being processed during async time
+  writeCache.add(scopeFileContent)
 
   // if parent node is a file, convert relative imports to be
   // relative to new .cache location

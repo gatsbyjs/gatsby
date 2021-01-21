@@ -276,4 +276,129 @@ describe(`handle flags`, () => {
       "
     `)
   })
+
+  describe(`LOCKED_IN`, () => {
+    it(`Enables locked in flag by default and doesn't mention it in terminal (no spam)`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `ALWAYS_LOCKED_IN`,
+            env: `GATSBY_ALWAYS_LOCKED_IN`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            // this will always LOCKED IN
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+        ],
+        {},
+        `develop`
+      )
+
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `ALWAYS_LOCKED_IN` })
+      )
+      expect(response.message).toEqual(``)
+    })
+
+    it(`Display message saying config flag for LOCKED_IN feature is no-op`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
+            env: `GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            // this will always LOCKED IN
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+        ],
+        {
+          // this has no effect, but we want to show to user that
+          ALWAYS_LOCKED_IN_SET_IN_CONFIG: true,
+        },
+        `develop`
+      )
+
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG` })
+      )
+      expect(response.message).toMatchInlineSnapshot(`
+        "Some features you configured with flags are used natively now.
+        Those flags no longer have any effect and you can remove them from config:
+        - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`Kitchen sink`, () => {
+      const response = handleFlags(
+        activeFlags.concat([
+          {
+            name: `ALWAYS_LOCKED_IN`,
+            env: `GATSBY_ALWAYS_LOCKED_IN`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            // this will always LOCKED IN
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+          {
+            name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
+            env: `GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            // this will always LOCKED IN
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+        ]),
+        {
+          ALWAYS_OPT_IN: true,
+          DEV_SSR: true,
+          PARTIAL_RELEASE: false,
+          PARTIAL_RELEASE_ONLY_NEW_LODASH: false,
+          // this has no effect, but we want to show to user that
+          ALWAYS_LOCKED_IN_SET_IN_CONFIG: true,
+        },
+        `develop`
+      )
+
+      // this is enabled, but because it's not configurable anymore and user doesn't set it explicitly in config - there is no point in printing information about it
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `ALWAYS_LOCKED_IN` })
+      )
+      // this is enabled, but because it's not configurable anymore and user sets it in config - we want to mention that this config flag has no effect anymore
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG` })
+      )
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+
+        Some features you configured with flags are used natively now.
+        Those flags no longer have any effect and you can remove them from config:
+        - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
+
+        There are 5 other flags available that you might be interested in:
+        - FAST_DEV · Enable all experiments aimed at improving develop server start time
+        - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+        - ONLY_BUILDS · (Umbrella Issue (test)) · test
+        - ALL_COMMANDS · (Umbrella Issue (test)) · test
+        - YET_ANOTHER · (Umbrella Issue (test)) · test
+        - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+        - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+  })
 })

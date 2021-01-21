@@ -20,7 +20,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 
 Hooking up Gatsby to a new or existing Drupal site takes only a few steps.
 
-- Follow the `gatsby-source-drupal` [installation instructions](/packages/gatsby-source-drupal/?=drupal) to add the plugin to your Gatsby site
+- Follow the `gatsby-source-drupal` [installation instructions](/plugins/gatsby-source-drupal/?=drupal) to add the plugin to your Gatsby site
 
 An example of how to include the `gatsby-source-drupal` plugin in your `gatsby-config.js` file:
 

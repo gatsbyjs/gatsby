@@ -13,11 +13,11 @@ Key highlights of this release:
 - [New Image Plugin (beta)](#gatsby-plugin-image010-beta) - access static images without GraphQL, high Lighthouse scores again
 - [File System Route API](#file-system-route-api) - create routes from your data using filename conventions
 - [New Release Process](#new-release-process) - more stability and clarity around Gatsby releases
-- [gatsby-source-contentful v4.0](#gatsby-source-contentful400) - new RichText implementation, performance improvements
+- [`gatsby-source-contentful` v4.0](#gatsby-source-contentful400) - new RichText implementation, performance improvements
 
 Other notable changes:
 
-- [gatsby-plugin-mdx](#gatsby-plugin-mdx140) - performance improvements
+- [`gatsby-plugin-mdx`](#gatsby-plugin-mdx140) - performance improvements
 - [Enable compression in the dev server](#enable-compression-in-the-dev-server) - speeds up remote previews
 
 Sneak peek to next releases:
@@ -53,19 +53,19 @@ and related PR [#27424](https://github.com/gatsbyjs/gatsby/pull/27424).
 ### Enable compression in the dev server
 
 This lowers the amount of data transferred for one site especially in remote situations.
-Most of that drop was from the commons.js bundle.
+Most of that drop was from the `commons.js` bundle.
 
 See PR [#27948](https://github.com/gatsbyjs/gatsby/pull/27948) for details.
 
-## gatsby-plugin-image@0.1.0 (beta)
+## `gatsby-plugin-image@0.1.0` (beta)
 
 [New image plugin](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) to replace `gatsby-image`, which greatly improves performance (Lighthouse 💯 again) and adds easy static images (no GraphQL). Part of it is also a new, simpler API for `gatsby-transformer-sharp`.
 
-### StaticImage
+### `StaticImage`
 
 This component is a new, simpler way to use Gatsby's image processing for static images without needing to write GraphQL queries:
 
-```js
+```jsx
 import React from "react"
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -74,7 +74,7 @@ export const Dino = () => (
 )
 ```
 
-### GatsbyImage
+### `GatsbyImage`
 
 This is a complete rewrite of the Gatsby Image component, using native lazy loading whenever possible.
 In our tests it allows sites whose Lighthouse scores dropped in recent updates to get back to 100s across the board.
@@ -108,7 +108,7 @@ export function Plant({ data }) {
 - [Details, Migration guide and discussion](https://github.com/gatsbyjs/gatsby/discussions/27950)
 - [Documentation](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image)
 
-## gatsby-source-contentful@4.0.0
+## `gatsby-source-contentful@4.0.0`
 
 ### New Rich Text Implementation
 
@@ -127,7 +127,7 @@ it manually in your site config to see performance improvements.
 Due to technical limitations, the response payload size is still bound by a hard chunk download
 size, so it is possible you may need to use a lower value for your particular site.
 
-## gatsby-plugin-mdx@1.4.0
+## `gatsby-plugin-mdx@1.4.0`
 
 There was a significant performance improvement by making a certain node fetching step lazy.
 This is especially noticeable at scale. See PR [#27937](https://github.com/gatsbyjs/gatsby/pull/27937) for details.
@@ -142,7 +142,7 @@ This would avoid having to wait for slower queries (like image processing) if yo
 
 Try early alpha (and [let us know](https://github.com/gatsbyjs/gatsby/discussions/27620) if you have any issues with it):
 
-```
+```shell
 npm install gatsby@qod
 ```
 
@@ -164,7 +164,7 @@ This experimental version of `gatsby-plugin-sharp` only does image processing wh
 
 Try early alpha (and [let us know](https://github.com/gatsbyjs/gatsby/discussions/27603) if you have any issues with it):
 
-```
+```shell
 npm install gatsby-plugin-sharp@lazy-images
 ```
 

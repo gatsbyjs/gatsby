@@ -17,6 +17,7 @@ module.exports = ({ mdPlugins, hastPlugins, ...pluginOptions }) => {
       plugins: [],
       root: process.cwd(),
       gatsbyRemarkPlugins: [],
+      // TODO: Remove globalScope option in next major as it's deprecated in favor of shortcodes, see https://github.com/ChristopherBiscardi/gatsby-mdx/issues/239#issuecomment-507322221
       globalScope: `export default {}`,
       shouldBlockNodeFromTransformation: () => false,
     },

@@ -4,10 +4,10 @@ title: Sourcing from Databases
 
 The Gatsby ecosystem includes built-in connectors to several database systems. These include:
 
-- [PostgreSQL](/packages/gatsby-source-pg/?=pg)
-- [MySQL](/packages/gatsby-source-mysql/?=mysql)
+- [PostgreSQL](/plugins/gatsby-source-pg/?=pg)
+- [MySQL](/plugins/gatsby-source-mysql/?=mysql)
 - [Amazon Redshift, SQLite3, Oracle and MSSQL](https://github.com/mrfunnyshoes/gatsby-source-sql)
-- [MongoDB](/packages/gatsby-source-mongodb/)
-- [Firebase](/packages/gatsby-source-firebase/)/[Firestore](/packages/gatsby-source-firestore/)
+- [MongoDB](/plugins/gatsby-source-mongodb/)
+- [Firebase](/plugins/gatsby-source-firebase/)/[Firestore](/plugins/gatsby-source-firestore/)
 
 These plugins will ingest data from your DB and make it available for your page components to query.

@@ -1,4 +1,5 @@
 import uuidv4 from "uuid/v4"
+import * as fs from "fs-extra"
 import os from "os"
 import {
   isCI,
@@ -98,6 +99,11 @@ export interface ITelemetryTagsPayload {
   devDependencies?: Array<string>
   siteMeasurements?: {
     pagesCount?: number
+    totalPagesCount?: number
+    createdNodesCount?: number
+    touchedNodesCount?: number
+    updatedNodesCount?: number
+    deletedNodesCount?: number
     clientsCount?: number
     paths?: Array<string | undefined>
     bundleStats?: unknown
@@ -136,6 +142,8 @@ export class AnalyticsTracker {
   features = new Set<string>()
   machineId: string
   siteHash?: string = createContentDigest(process.cwd())
+  lastEnvTagsFromFileTime = 0
+  lastEnvTagsFromFileValue: ITelemetryTagsPayload = {}
 
   constructor({
     componentId,
@@ -165,12 +173,26 @@ export class AnalyticsTracker {
   }
 
   // We might have two instances of this lib loaded, one from globally installed gatsby-cli and one from local gatsby.
-  // Hence we need to use process level globals that are not scoped to this module
+  // Hence we need to use process level globals that are not scoped to this module.
+  // Due to the forking on develop process, we also need to pass this via process.env so that child processes have the same sessionId
   getSessionId(): string {
     const p = process as any
     if (!p.gatsbyTelemetrySessionId) {
-      p.gatsbyTelemetrySessionId = uuidv4()
+      const inherited = process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID
+      if (inherited) {
+        p.gatsbyTelemetrySessionId = inherited
+      } else {
+        p.gatsbyTelemetrySessionId = uuidv4()
+        process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
+          p.gatsbyTelemetrySessionId
+      }
+    } else if (!process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID) {
+      // in case older `gatsby-telemetry` already set `gatsbyTelemetrySessionId` property on process
+      // but didn't set env var - let's make sure env var is set
+      process.env.INTERNAL_GATSBY_TELEMETRY_SESSION_ID =
+        p.gatsbyTelemetrySessionId
     }
+
     return p.gatsbyTelemetrySessionId
   }
 
@@ -347,6 +369,7 @@ export class AnalyticsTracker {
       dbEngine,
       features: Array.from(this.features),
       ...this.getRepositoryId(),
+      ...this.getTagsFromPath(),
     }
     this.store.addEvent(event)
     if (this.isFinalEvent(eventType)) {
@@ -354,6 +377,26 @@ export class AnalyticsTracker {
       const flush = createFlush(this.isTrackingEnabled())
       flush()
     }
+  }
+
+  getTagsFromPath(): ITelemetryTagsPayload {
+    const path = process.env.GATSBY_TELEMETRY_METADATA_PATH
+
+    if (!path) {
+      return {}
+    }
+    try {
+      const stat = fs.statSync(path)
+      if (this.lastEnvTagsFromFileTime < stat.mtimeMs) {
+        this.lastEnvTagsFromFileTime = stat.mtimeMs
+        const data = fs.readFileSync(path, `utf8`)
+        this.lastEnvTagsFromFileValue = JSON.parse(data)
+      }
+    } catch (e) {
+      // nop
+      return {}
+    }
+    return this.lastEnvTagsFromFileValue
   }
 
   getIsTTY(): boolean {

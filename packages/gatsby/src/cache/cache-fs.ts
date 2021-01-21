@@ -67,7 +67,7 @@ function DiskStore(options): void {
     subdirs: options.subdirs || false,
     zip: options.zip || false,
     lockFile: {
-      //check lock at 0ms 50ms 100ms ... 400ms 1400ms 1450ms... up to 10 seconds, after that just asume the lock is staled
+      //check lock at 0ms 50ms 100ms ... 400ms 1400ms 1450ms... up to 10 seconds, after that just assume the lock is staled
       wait: 400,
       pollPeriod: 50,
       stale: 10 * 1000,

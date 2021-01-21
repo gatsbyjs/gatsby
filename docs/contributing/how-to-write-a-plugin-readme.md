@@ -5,7 +5,7 @@ issue: https://github.com/gatsbyjs/gatsby/issues/21599
 
 ## Near-perfect example of a plugin README
 
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/)
+[`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/)
 
 ```markdown
 ## Description

@@ -782,7 +782,7 @@ Full example:
 
 To learn more about image processing check
 
-- documentation of [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/),
+- documentation of [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/),
 - source code of [image processing example
   site](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing).
 

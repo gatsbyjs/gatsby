@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.32.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.1...gatsby@2.32.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsby:** Always render the body component to ensure needed head & pre/post body components are added ([#29077](https://github.com/gatsbyjs/gatsby/issues/29077)) ([e998870](https://github.com/gatsbyjs/gatsby/commit/e99887039d822d3940069c9f35655e9653b27967))
+- **gatsby:** fix broken GraphQL resolver tracing ([#29015](https://github.com/gatsbyjs/gatsby/issues/29015)) ([48db6ac](https://github.com/gatsbyjs/gatsby/commit/48db6ac672220c21b4fef9b117237c73d622a344))
+- **gatsby:** Use fast-refresh for React 17 ([#28930](https://github.com/gatsbyjs/gatsby/issues/28930)) ([90b6e3d](https://github.com/gatsbyjs/gatsby/commit/90b6e3d3c5526e4f3db891019969f7cfddc11958))
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+### Features
+
+- **gatsby:** Add eslint rules to warn against bad patterns in pageTemplates (for Fast Refresh) ([#28689](https://github.com/gatsbyjs/gatsby/issues/28689)) ([9a55d12](https://github.com/gatsbyjs/gatsby/commit/9a55d1231331ebd8e1fab5496a85ba0a14dacdca))
+- **gatsby:** allow to skip cache persistence ([#29047](https://github.com/gatsbyjs/gatsby/issues/29047)) ([bd5b5f7](https://github.com/gatsbyjs/gatsby/commit/bd5b5f75d3c95819c7bf6a548e4c4c98aaae5dfe))
+- **gatsby:** bump opt-in % to dev-ssr to 20% ([#29075](https://github.com/gatsbyjs/gatsby/issues/29075)) ([a1921b5](https://github.com/gatsbyjs/gatsby/commit/a1921b537cda6cbfd73188fba8ea0d6a8dba3ef7))
+- **gatsby-graphiql-explorer:** add support for magic fragments ([#28878](https://github.com/gatsbyjs/gatsby/issues/28878)) ([a03e862](https://github.com/gatsbyjs/gatsby/commit/a03e862fe1ec54ac6609a67528234476dfb76dfa))
+
+# [2.31.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.0...gatsby@2.31.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby:** fix stale query results on data updates ([#28986](https://github.com/gatsbyjs/gatsby/issues/28986)) ([811c2a8](https://github.com/gatsbyjs/gatsby/commit/811c2a839c44999967b5f081cc1998fc4a347e85))
+- **gatsby:** rewrite a spread that would break at scale ([#28910](https://github.com/gatsbyjs/gatsby/issues/28910)) ([638ac0a](https://github.com/gatsbyjs/gatsby/commit/638ac0af798de9727ec2488f201b7c578464c916))
+- **gatsby:** show stack trace for non-graphql errors ([#28888](https://github.com/gatsbyjs/gatsby/issues/28888)) ([1769fc3](https://github.com/gatsbyjs/gatsby/commit/1769fc361b5d3f664ec71bd5ecf4f22b85bfe5a2))
+- **gatsby,gatsby-admin:** Pin socket.io version to 2.3.0 ([#28885](https://github.com/gatsbyjs/gatsby/issues/28885)) ([247b1dc](https://github.com/gatsbyjs/gatsby/commit/247b1dc0441fdade52a5ff7a71de8c9340ee05fd))
+
+### Features
+
+- **gatsby:** Partially release develop SSR to 5% ([#28844](https://github.com/gatsbyjs/gatsby/issues/28844)) ([6b8cd5d](https://github.com/gatsbyjs/gatsby/commit/6b8cd5d69bc8a5ad63413756eb71ff3e739230e5))
+
+### Performance Improvements
+
+- **develop:** don't use debug config for bluebird ([#28957](https://github.com/gatsbyjs/gatsby/issues/28957)) ([125f571](https://github.com/gatsbyjs/gatsby/commit/125f571880190b55d6e9c03672b6d79e854dd4bd))
+- **gatsby:** do not call and iterate getAllNodes(File) for each file ([#28891](https://github.com/gatsbyjs/gatsby/issues/28891)) ([a455a23](https://github.com/gatsbyjs/gatsby/commit/a455a2396c97997dca6fb0797e845de0acebd2f6))
+
+# [2.31.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.8...gatsby@2.31.0-next.0) (2020-12-29)
+
+### Features
+
+- **gatsby:** use production React for dev-ssr when CI=true ([#28728](https://github.com/gatsbyjs/gatsby/issues/28728)) ([bd6b899](https://github.com/gatsbyjs/gatsby/commit/bd6b899fdb22748c2ecc016643ed39e32d014a6b))
+
 # [2.30.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.30.0-next.7...gatsby@2.30.0-next.8) (2020-12-29)
 
 ### Bug Fixes
@@ -1155,7 +1195,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - **gatsby:** don't fail validation on fragments that are not used ([#24032](https://github.com/gatsbyjs/gatsby/issues/24032)) ([61d0ef4](https://github.com/gatsbyjs/gatsby/commit/61d0ef4))
-- **gatsby:** update script to generate apis.json to accomodate Typescript ([#24023](https://github.com/gatsbyjs/gatsby/issues/24023)) ([7878d0f](https://github.com/gatsbyjs/gatsby/commit/7878d0f))
+- **gatsby:** update script to generate apis.json to accommodate Typescript ([#24023](https://github.com/gatsbyjs/gatsby/issues/24023)) ([7878d0f](https://github.com/gatsbyjs/gatsby/commit/7878d0f))
 
 ## [2.21.28](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.21.27...gatsby@2.21.28) (2020-05-13)
 

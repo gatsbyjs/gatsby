@@ -10,7 +10,7 @@ There are three ways you can use Tailwind with Gatsby:
 
 1. Standard: Use PostCSS to generate Tailwind classes, then you can apply those classes using `className`.
 2. CSS-in-JS: Integrate Tailwind classes into Styled Components.
-3. SCSS: Use [gatsby-plugin-sass](/packages/gatsby-plugin-sass) to support Tailwind classes in your SCSS files.
+3. SCSS: Use [gatsby-plugin-sass](/plugins/gatsby-plugin-sass) to support Tailwind classes in your SCSS files.
 
 You have to install and configure Tailwind for all of these methods, so this guide will walk through that step first, then you can follow the instructions for PostCSS, CSS-in-JS or SCSS.
 
@@ -36,7 +36,7 @@ npx tailwindcss init
 
 #### Option #1: PostCSS
 
-1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/packages/gatsby-plugin-postcss).
+1. Install the Gatsby PostCSS plugin [**gatsby-plugin-postcss**](/plugins/gatsby-plugin-postcss).
 
 ```shell
 npm install postcss gatsby-plugin-postcss
@@ -114,14 +114,14 @@ const IndexPage = () => (
 export default IndexPage
 ```
 
-See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.macro/blob/master/docs/how-to/styling/emotion/gatsby.md) for more information.
+See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-rogerson/twin.examples/tree/master/gatsby-emotion) for more information.
 
 #### Option #3: SCSS
 
-1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/packages/gatsby-plugin-sass) and `node-sass`.
+1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/plugins/gatsby-plugin-sass) and `sass`.
 
 ```shell
-npm install node-sass gatsby-plugin-sass
+npm install sass gatsby-plugin-sass
 ```
 
 2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCssPlugins` parameter in your `gatsby-config.js`.
