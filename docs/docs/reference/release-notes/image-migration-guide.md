@@ -92,7 +92,7 @@ The `fluid` image type has been deprecated in favor of two alternatives.
 
 The first is an image type called `fullWidth`. This image is designed to be used for things like hero images and generates image sizes accordingly. Instead of passing something like `maxWidth`, it takes an array called `breakpoints` that will generate images designed for those screen sizes. In most cases will not need to provide these, as there are default values that work for most sites. Note that `fullWidth` images will expand to fit the width of their container, even if that width is larger than the source image.
 
-The second is a responsive image type called `constrained` that generates smaller images, but nothing larger than the original image source size. Additionally, you can pass `width` and/or `height` to limit the largest image generated to that size.
+The second is a responsive image type called `constrained` that generates smaller images, but nothing larger than the original image source size. Additionally, you can pass `width` and/or `height` to limit the displayed image to that size. In this case, larger images may be generated for high-density screens.
 
 #### maxWidth
 
