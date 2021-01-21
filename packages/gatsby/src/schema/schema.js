@@ -587,10 +587,9 @@ const createTypeComposerFromGatsbyType = ({
     case GatsbyGraphQLTypeKind.OBJECT: {
       return ObjectTypeComposer.createTemp({
         ...type.config,
-        fields: () =>
-          schemaComposer.typeMapper.convertOutputFieldConfigMap(
-            type.config.fields
-          ),
+        fields: schemaComposer.typeMapper.convertOutputFieldConfigMap(
+          type.config.fields
+        ),
         interfaces: () => {
           if (type.config.interfaces) {
             return type.config.interfaces.map(iface => {
@@ -609,10 +608,9 @@ const createTypeComposerFromGatsbyType = ({
     case GatsbyGraphQLTypeKind.INPUT_OBJECT: {
       return InputTypeComposer.createTemp({
         ...type.config,
-        fields: () =>
-          schemaComposer.typeMapper.convertInputFieldConfigMap(
-            type.config.fields
-          ),
+        fields: schemaComposer.typeMapper.convertInputFieldConfigMap(
+          type.config.fields
+        ),
       })
     }
     case GatsbyGraphQLTypeKind.UNION: {
@@ -632,10 +630,9 @@ const createTypeComposerFromGatsbyType = ({
     case GatsbyGraphQLTypeKind.INTERFACE: {
       return InterfaceTypeComposer.createTemp({
         ...type.config,
-        fields: () =>
-          schemaComposer.typeMapper.convertOutputFieldConfigMap(
-            type.config.fields
-          ),
+        fields: schemaComposer.typeMapper.convertOutputFieldConfigMap(
+          type.config.fields
+        ),
       })
     }
     case GatsbyGraphQLTypeKind.ENUM: {
