@@ -8,12 +8,7 @@ import pluginOptionsSchema from "./plugin-options"
 
 const publicPath = `./public`
 
-const warnMessage = (error, behavior) => `
-  gatsby-plugin-feed was initialized in gatsby-config.js without a ${error}.
-  This means that the plugin will use ${behavior}, which may not match your use case.
-  This behavior will be removed in the next major release of gatsby-plugin-feed.
-  For more info, check out: https://gatsby.dev/adding-rss-feed
-`
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 // TODO: remove in the next major release
 // A default function to transform query data into feed entries.
@@ -27,49 +22,6 @@ const serialize = ({ query: { site, allMarkdownRemark } }) =>
       custom_elements: [{ "content:encoded": edge.node.html }],
     }
   })
-
-exports.onPreBootstrap = async function onPreBootstrap(
-  { reporter },
-  pluginOptions
-) {
-  delete pluginOptions.plugins
-
-  try {
-    const normalized = await pluginOptionsSchema.validate(pluginOptions)
-
-    // TODO: remove these checks in the next major release
-    if (!normalized.feeds) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(`feeds option`, `the internal RSS feed creation`)
-        )
-      )
-    } else if (normalized.feeds.some(feed => typeof feed.title !== `string`)) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(`title in a feed`, `the default feed title`)
-        )
-      )
-    } else if (
-      normalized.feeds.some(feed => typeof feed.serialize !== `function`)
-    ) {
-      reporter.warn(
-        reporter.stripIndent(
-          warnMessage(
-            `serialize function in a feed`,
-            `the internal serialize function`
-          )
-        )
-      )
-    }
-  } catch (e) {
-    throw new Error(
-      e.details
-        .map(detail => `[Config Validation]: ${detail.message}`)
-        .join(`\n`)
-    )
-  }
-}
 
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   /*

@@ -2,7 +2,7 @@
 title: Cheat Sheet
 ---
 
-The Gatsby team has created a resource that you might find useful when building a Gatsby site: a cheat sheet with all the top commands and development tips! Feel free to download and print yourself a copy (and tape it by your workstation!). For related online information, visit [Quick Start](/docs/quick-start/) and [Commands (Gatsby CLI)](/docs/gatsby-cli/).
+The Gatsby team has created a resource that you might find useful when building a Gatsby site: a cheat sheet with all the top commands and development tips! Feel free to download and print yourself a copy (and tape it by your workstation!). For related online information, visit [Quick Start](/docs/quick-start/) and [Commands (Gatsby CLI)](/docs/reference/gatsby-cli/).
 
 Get the PDF: <a href="/gatsby-cheat-sheet.pdf" download>gatsby-cheat-sheet.pdf</a>
 

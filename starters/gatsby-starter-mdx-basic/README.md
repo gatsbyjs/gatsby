@@ -6,19 +6,19 @@ README also applies here.
 
 1. Create a new Gatsby site using this starter
 
-```sh
+```shell
 gatsby new my-site https://github.com/gatsbyjs/gatsby-starter-mdx-basic
 ```
 
 2. Install dependencies
 
-```sh
+```shell
 npm install
 ```
 
 3. Run the develop script
 
-```sh
+```shell
 gatsby develop
 ```
 

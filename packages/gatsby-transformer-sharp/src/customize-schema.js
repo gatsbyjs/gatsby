@@ -7,6 +7,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const {
   queueImageResizing,
@@ -14,6 +15,7 @@ const {
   fluid,
   fixed,
   traceSVG,
+  generateImageData,
 } = require(`gatsby-plugin-sharp`)
 
 const sharp = require(`./safe-sharp`)
@@ -30,7 +32,17 @@ const {
   PotraceTurnPolicyType,
   PotraceType,
   ImageFitType,
+  ImageLayoutType,
+  ImagePlaceholderType,
+  JPGOptionsType,
+  PNGOptionsType,
+  WebPOptionsType,
+  BlurredOptionsType,
+  TransformOptionsType,
+  AVIFOptionsType,
 } = require(`./types`)
+const { stripIndent } = require(`common-tags`)
+const { prefixId, CODES } = require(`./error-utils`)
 
 function toArray(buf) {
   const arr = new Array(buf.length)
@@ -374,6 +386,157 @@ const fluidNodeType = ({
   }
 }
 
+let warnedForBeta = false
+
+const imageNodeType = ({
+  pathPrefix,
+  getNodeAndSavePathDependency,
+  reporter,
+  cache,
+}) => {
+  return {
+    type: new GraphQLNonNull(GraphQLJSON),
+    args: {
+      layout: {
+        type: ImageLayoutType,
+        defaultValue: `constrained`,
+        description: stripIndent`
+        The layout for the image.
+        FIXED: A static image sized, that does not resize according to the screen width
+        FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
+        `,
+      },
+      width: {
+        type: GraphQLInt,
+        description: stripIndent`
+        The display width of the generated image for layout = FIXED, and the maximum display width of the largest image for layout = CONSTRAINED.  
+        Ignored if layout = FLUID.
+        `,
+      },
+      height: {
+        type: GraphQLInt,
+        description: stripIndent`
+        The display height of the generated image for layout = FIXED, and the maximum display height of the largest image for layout = CONSTRAINED.  
+        The image will be cropped if the aspect ratio does not match the source image. If omitted, it is calculated from the supplied width, 
+        matching the aspect ratio of the source image.`,
+      },
+      aspectRatio: {
+        type: GraphQLFloat,
+        description: stripIndent`
+        If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed. 
+        If neither width or height is provided, height will be set based on the intrinsic width of the source image.
+        `,
+      },
+      placeholder: {
+        type: ImagePlaceholderType,
+        defaultValue: `dominantColor`,
+        description: stripIndent`
+        Format of generated placeholder image, displayed while the main image loads. 
+        BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
+        TRACED_SVG: a low-resolution traced SVG of the image.
+        NONE: no placeholder. Set "background" to use a fixed background color.`,
+      },
+      blurredOptions: {
+        type: BlurredOptionsType,
+        description: `Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this`,
+      },
+      tracedSVGOptions: {
+        type: PotraceType,
+        description: `Options for traced placeholder SVGs. You also should set placeholder to "TRACED_SVG".`,
+      },
+      formats: {
+        type: GraphQLList(ImageFormatType),
+        description: stripIndent`
+        The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG", "WEBP" and "AVIF". 
+        The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+        not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying 
+        both PNG and JPG is not supported and will be ignored.
+        `,
+        defaultValue: [`auto`, `webp`],
+      },
+      outputPixelDensities: {
+        type: GraphQLList(GraphQLFloat),
+        description: stripIndent`
+        A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image. 
+        Default is [ 1, 2 ] for FIXED images, meaning 1x and 2x and [0.25, 0.5, 1, 2] for CONSTRAINED. In this case, an image with a constrained layout 
+        and width = 400 would generate images at 100, 200, 400 and 800px wide. Ignored for FULL_WIDTH images, which use breakpoints instead`,
+      },
+      breakpoints: {
+        type: GraphQLList(GraphQLInt),
+        description: stripIndent`
+        Specifies the image widths to generate. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
+        based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].
+        It will never generate any images larger than the source.
+        `,
+      },
+      sizes: {
+        type: GraphQLString,
+        description: stripIndent`
+        The "sizes" property, passed to the img tag. This describes the display size of the image. 
+        This does not affect the generated images, but is used by the browser to decide which images to download. 
+        You should usually leave this blank, and a suitable value will be calculated. The exception is if a FULL_WIDTH image
+        does not actually span the full width of the screen, in which case you should pass the correct size here.
+        `,
+      },
+      quality: {
+        type: GraphQLInt,
+        description: `The default quality. This is overridden by any format-specific options`,
+      },
+      jpgOptions: {
+        type: JPGOptionsType,
+        description: `Options to pass to sharp when generating JPG images.`,
+      },
+      pngOptions: {
+        type: PNGOptionsType,
+        description: `Options to pass to sharp when generating PNG images.`,
+      },
+      webpOptions: {
+        type: WebPOptionsType,
+        description: `Options to pass to sharp when generating WebP images.`,
+      },
+      avifOptions: {
+        type: AVIFOptionsType,
+        description: `Options to pass to sharp when generating AVIF images.`,
+      },
+      transformOptions: {
+        type: TransformOptionsType,
+        description: `Options to pass to sharp to control cropping and other image manipulations.`,
+      },
+      background: {
+        type: GraphQLString,
+        defaultValue: `rgba(0,0,0,0)`,
+        description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
+      },
+    },
+    resolve: async (image, fieldArgs, context) => {
+      const file = getNodeAndSavePathDependency(image.parent, context.path)
+
+      if (!generateImageData) {
+        reporter.warn(`Please upgrade gatsby-plugin-sharp`)
+        return null
+      }
+      if (!warnedForBeta) {
+        reporter.warn(
+          stripIndent`
+        Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
+        )
+        warnedForBeta = true
+      }
+      const imageData = await generateImageData({
+        file,
+        args: fieldArgs,
+        pathPrefix,
+        reporter,
+        cache,
+      })
+
+      return imageData
+    },
+  }
+}
+
 /**
  * Keeps track of asynchronous file copy to prevent sequence errors in the
  * underlying fs-extra module during parallel copies of the same file
@@ -405,11 +568,14 @@ const createFields = ({
   const sizesNode = fluidNodeType({ name: `ImageSharpSizes`, ...nodeOptions })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
+  const imageNode = imageNodeType(nodeOptions)
+
   return {
     fixed: fixedNode,
     resolutions: resolutionsNode,
     fluid: fluidNode,
     sizes: sizesNode,
+    gatsbyImageData: imageNode,
     original: {
       type: new GraphQLObjectType({
         name: `ImageSharpOriginal`,
@@ -441,8 +607,13 @@ const createFields = ({
             // this is no longer in progress
             inProgressCopy.delete(publicPath)
             if (err) {
-              console.error(
-                `error copying file from ${details.absolutePath} to ${publicPath}`,
+              reporter.panic(
+                {
+                  id: prefixId(CODES.MissingResource),
+                  context: {
+                    sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
+                  },
+                },
                 err
               )
             }
@@ -609,6 +780,7 @@ module.exports = ({
     createTypes([
       ImageFormatType,
       ImageFitType,
+      ImageLayoutType,
       ImageCropFocusType,
       DuotoneGradientType,
       PotraceTurnPolicyType,

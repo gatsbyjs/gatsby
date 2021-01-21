@@ -1,5 +1,5 @@
 import * as path from "path"
-import { Loader, RuleSetRule, Plugin } from "webpack"
+import { Loader, RuleSetRule, Plugin, Configuration } from "webpack"
 import { GraphQLSchema } from "graphql"
 import postcss from "postcss"
 import autoprefixer from "autoprefixer"
@@ -9,6 +9,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
+import semver from "semver"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
@@ -19,7 +20,11 @@ import {
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
-import { eslintConfig } from "./eslint-config"
+import {
+  eslintConfig,
+  mergeRequiredConfigIn,
+  eslintRequiredConfig,
+} from "./eslint-config"
 
 type LoaderResolver<T = {}> = (options?: T) => Loader
 
@@ -123,6 +128,8 @@ interface IWebpackUtils {
   plugins: PluginUtils
 }
 
+const vendorRegex = /(node_modules|bower_components)/
+
 /**
  * A factory method that produces an atoms namespace
  */
@@ -131,7 +138,6 @@ export const createWebpackUtils = (
   program: IProgram
 ): IWebpackUtils => {
   const assetRelativeRoot = `static/`
-  const vendorRegex = /(node_modules|bower_components)/
   const supportedBrowsers = getBrowsersList(program.directory)
 
   const PRODUCTION = !stage.includes(`develop`)
@@ -194,12 +200,28 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
-      return {
-        options,
-        // use MiniCssExtractPlugin only on production builds
-        loader: PRODUCTION
-          ? MiniCssExtractPlugin.loader
-          : require.resolve(`style-loader`),
+      if (PRODUCTION) {
+        // production always uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options,
+        }
+      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
+        // develop with ssr also uses MiniCssExtractPlugin
+        return {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            ...options,
+            // enable hmr for browser bundle, ssr bundle doesn't need it
+            hmr: stage === `develop`,
+          },
+        }
+      } else {
+        // develop without ssr is using style-loader
+        return {
+          loader: require.resolve(`style-loader`),
+          options,
+        }
       }
     },
 
@@ -498,7 +520,7 @@ export const createWebpackUtils = (
   rules.images = (): RuleSetRule => {
     return {
       use: [loaders.url()],
-      test: /\.(ico|svg|jpg|jpeg|png|gif|webp)(\?.*)?$/,
+      test: /\.(ico|svg|jpg|jpeg|png|gif|webp|avif)(\?.*)?$/,
     }
   }
 
@@ -684,15 +706,11 @@ export const createWebpackUtils = (
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: `whm`,
-      },
+      overlay: false,
     })
 
   plugins.extractText = (options: any): Plugin =>
     new MiniCssExtractPlugin({
-      filename: `[name].[contenthash].css`,
-      chunkFilename: `[name].[contenthash].css`,
       ...options,
     })
 
@@ -714,18 +732,72 @@ export const createWebpackUtils = (
   }
 }
 
-function reactHasJsxRuntime(): boolean {
-  try {
-    // React is shipping a new jsx runtime that is to be used with
-    // an option on @babel/preset-react called `runtime: automatic`
-    // Not every version of React has this jsx-runtime yet. Eventually,
-    // it will be backported to older versions of react and this check
-    // will become unnecessary.
-    return !!require.resolve(`react/jsx-runtime.js`)
-  } catch (e) {
-    // If the require.resolve throws, that means this version of React
-    // does not support the jsx runtime.
-  }
+export function reactHasJsxRuntime(): boolean {
+  // We've got some complains about the ecosystem not being ready for automatic so we disable it by default.
+  // People can use a custom babelrc file to support it
+  // try {
+  //   // React is shipping a new jsx runtime that is to be used with
+  //   // an option on @babel/preset-react called `runtime: automatic`
+  //   // Not every version of React has this jsx-runtime yet. Eventually,
+  //   // it will be backported to older versions of react and this check
+  //   // will become unnecessary.
+  //   // for now we also do the semver check until react 17 is more widely used
+  //   // const react = require(`react/package.json`)
+  //   // return (
+  //   //   !!require.resolve(`react/jsx-runtime.js`) &&
+  //   //   semver.major(react.version) >= 17
+  //   // )
+  // } catch (e) {
+  //   // If the require.resolve throws, that means this version of React
+  //   // does not support the jsx runtime.
+  // }
 
   return false
+}
+
+export function ensureRequireEslintRules(config: Configuration): Configuration {
+  if (!config.module) {
+    config.module = {
+      rules: [],
+    }
+  }
+  // for fast refresh we want to ensure that that there is eslint rule running
+  // because user might have added their own `eslint-loader` let's check if there is one
+  // and adjust it to add the rule or append new loader with required rule
+  const rule = config.module.rules.find(rule => {
+    if (typeof rule.loader === `string`) {
+      return (
+        rule.loader === `eslint-loader` ||
+        rule.loader.endsWith(`eslint-loader/index.js`) ||
+        rule.loader.endsWith(`eslint-loader/dist/cjs.js`)
+      )
+    }
+
+    return false
+  })
+
+  if (rule) {
+    if (typeof rule.options !== `string`) {
+      if (!rule.options) {
+        rule.options = {}
+      }
+      mergeRequiredConfigIn(rule.options)
+    }
+  } else {
+    config.module.rules.push({
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      use: [
+        {
+          loader: require.resolve(`eslint-loader`),
+          options: eslintRequiredConfig,
+        },
+      ],
+    })
+  }
+
+  return config
 }

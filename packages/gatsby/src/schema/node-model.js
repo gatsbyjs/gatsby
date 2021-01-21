@@ -199,10 +199,10 @@ class LocalNodeModel {
       result = getNodes()
     } else {
       const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodes = nodeTypeNames.reduce((acc, typeName) => {
-        acc.push(...getNodesByType(typeName))
-        return acc
-      }, [])
+      const nodesByType = nodeTypeNames.map(typeName =>
+        getNodesByType(typeName)
+      )
+      const nodes = [].concat(...nodesByType)
       result = nodes.filter(Boolean)
     }
 
@@ -275,7 +275,7 @@ class LocalNodeModel {
       runQueryActivity.start()
     }
 
-    const queryResult = await runFastFiltersAndSort({
+    const queryResult = runFastFiltersAndSort({
       queryArgs: query,
       firstOnly,
       gqlSchema: this.schema,
@@ -309,6 +309,19 @@ class LocalNodeModel {
         this.trackInlineObjectsInRootNode(result)
       } else {
         result = null
+
+        // Couldn't find matching node.
+        //  This leads to a state where data tracking for this query gets empty.
+        //  It means we will NEVER re-run this query on any data updates
+        //  (even if a new node matching this query is added at some point).
+        //  To workaround this, we have to add a connection tracking to re-run
+        //  the query whenever any node of this type changes.
+        if (pageDependencies.path) {
+          this.createPageDependency({
+            path: pageDependencies.path,
+            connection: gqlType.name,
+          })
+        }
       }
     } else if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
@@ -383,11 +396,10 @@ class LocalNodeModel {
           queryFields,
           actualFieldsToResolve
         )
-        const mergedResolved = _.merge(
-          node.__gatsby_resolved || {},
-          resolvedFields
-        )
-        return mergedResolved
+        if (!node.__gatsby_resolved) {
+          node.__gatsby_resolved = {}
+        }
+        return _.merge(node.__gatsby_resolved, resolvedFields)
       })
       this._preparedNodesCache.set(
         typeName,
@@ -654,19 +666,14 @@ async function resolveRecursive(
     const gqlField = gqlFields[fieldName]
     const gqlNonNullType = getNullableType(gqlField.type)
     const gqlFieldType = getNamedType(gqlField.type)
-    let innerValue
-    if (gqlField.resolve) {
-      innerValue = await resolveField(
-        nodeModel,
-        schemaComposer,
-        schema,
-        node,
-        gqlField,
-        fieldName
-      )
-    } else {
-      innerValue = node[fieldName]
-    }
+    let innerValue = await resolveField(
+      nodeModel,
+      schemaComposer,
+      schema,
+      node,
+      gqlField,
+      fieldName
+    )
     if (gqlField && innerValue != null) {
       if (
         isCompositeType(gqlFieldType) &&
@@ -708,11 +715,20 @@ async function resolveRecursive(
     }
   }
 
-  Object.keys(queryFields).forEach(key => {
-    if (!fieldsToResolve[key] && node[key]) {
-      resolvedFields[key] = node[key]
+  for (const fieldName of Object.keys(queryFields)) {
+    if (!fieldsToResolve[fieldName] && node[fieldName]) {
+      // It is possible that this field still has a custom resolver
+      // See https://github.com/gatsbyjs/gatsby/issues/27368
+      resolvedFields[fieldName] = await resolveField(
+        nodeModel,
+        schemaComposer,
+        schema,
+        node,
+        gqlFields[fieldName],
+        fieldName
+      )
     }
-  })
+  }
 
   return _.pickBy(resolvedFields, (value, key) => queryFields[key])
 }
@@ -725,6 +741,9 @@ function resolveField(
   gqlField,
   fieldName
 ) {
+  if (!gqlField?.resolve) {
+    return node[fieldName]
+  }
   const withResolverContext = require(`./context`)
   return gqlField.resolve(
     node,

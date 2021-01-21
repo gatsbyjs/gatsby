@@ -186,7 +186,7 @@ Review the payment in the Sandbox Seller Dashboard. The payment is credited to t
 
 ## The Square sandbox
 
-You can test your setup [using the Square sandbox](https://developer.squareup.com/docs/testing/sandbox). To do so, you'll need to return to your [developer dashboard](https://developer.squareup.com/apps). In the "Credentials" tab, you can toggle back and forth between your production and sandbox credentials!
+You can test your setup [using the Square sandbox](https://developer.squareup.com/docs/how-to/testing/sandbox). To do so, you'll need to return to your [developer dashboard](https://developer.squareup.com/apps). In the "Credentials" tab, you can toggle back and forth between your production and sandbox credentials!
 
 ## Other resources
 

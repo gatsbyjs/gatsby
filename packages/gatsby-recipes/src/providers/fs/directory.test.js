@@ -1,4 +1,4 @@
-import directory from "./directory"
+import * as directory from "./directory"
 import resourceSchema from "../resource-schema"
 import Joi from "@hapi/joi"
 import fs from "fs-extra"

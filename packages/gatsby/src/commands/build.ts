@@ -4,7 +4,7 @@ import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
 
-import { buildHTML } from "./build-html"
+import { doBuildPages, buildRenderer, deleteRenderer } from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -18,8 +18,10 @@ import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import {
+  userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
+  showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
 import { boundActionCreators } from "../redux/actions"
@@ -55,6 +57,7 @@ interface IBuildArgs extends IProgram {
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
+  keepPageRenderer: boolean
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
@@ -229,6 +232,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
+  const buildSSRBundleActivityProgress = report.activityTimer(
+    `Building HTML renderer`,
+    { parentSpan: buildSpan }
+  )
+  buildSSRBundleActivityProgress.start()
+  let pageRenderer: string
+  try {
+    pageRenderer = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+  } catch (err) {
+    buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
+  } finally {
+    buildSSRBundleActivityProgress.end()
+  }
+
   const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
@@ -239,13 +256,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildHTMLActivityProgress.start()
   try {
-    await buildHTML({
-      program,
-      stage: Stage.BuildHTML,
+    await doBuildPages(
+      pageRenderer,
       pagePaths,
-      activity: buildHTMLActivityProgress,
-      workerPool,
-    })
+      buildHTMLActivityProgress,
+      workerPool
+    )
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
     const context = {
@@ -268,6 +284,14 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
   buildHTMLActivityProgress.end()
+
+  if (!program.keepPageRenderer) {
+    try {
+      await deleteRenderer(pageRenderer)
+    } catch (err) {
+      // pass through
+    }
+  }
 
   let deletedPageKeys: Array<string> = []
   if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
@@ -293,6 +317,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     parentSpan: buildSpan,
   })
   postBuildActivityTimer.end()
+
+  // Wait for any jobs that were started in onPostBuild
+  // This could occur due to queries being run which invoke sharp for instance
+  await waitUntilAllJobsComplete()
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
@@ -352,7 +380,9 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     report.info(`.cache/deletedPages.txt created`)
   }
 
-  if (await userPassesFeedbackRequestHeuristic()) {
+  if (await userGetsSevenDayFeedback()) {
+    showSevenDayFeedbackRequest()
+  } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
 }

@@ -1,13 +1,14 @@
 import _ from "lodash"
-import { slash } from "gatsby-core-utils"
+import { slash, isCI } from "gatsby-core-utils"
 import fs from "fs-extra"
-import md5File from "md5-file/promise"
+import md5File from "md5-file"
 import crypto from "crypto"
 import del from "del"
 import path from "path"
 import telemetry from "gatsby-telemetry"
 
 import apiRunnerNode from "../utils/api-runner-node"
+import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
@@ -18,16 +19,41 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
+import { getReactHotLoaderStrategy } from "../utils/get-react-hot-loader-strategy"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
+import availableFlags from "../utils/flags"
 
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions
+}
+
+// If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
+// all DEV experimental changes (but only during development & not on CI).
+if (
+  process.env.gatsby_executing_command === `develop` &&
+  process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
+  !isCI()
+) {
+  process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
+  process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
+  process.env.PRESERVE_WEBPACK_CACHE = `true`
+
+  reporter.info(`
+Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
+
+Please give feedback on their respective umbrella issues!
+
+- https://gatsby.dev/dev-ssr-feedback
+- https://gatsby.dev/cache-clearing-feedback
+  `)
+
+  telemetry.trackFeatureIsUsed(`FastDev`)
 }
 
 // Show stack trace on unhandled promises.
@@ -48,6 +74,12 @@ export async function initialize({
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {
+  if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
+    reporter.info(
+      `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`
+    )
+    telemetry.trackFeatureIsUsed(`DisableCachePersistence`)
+  }
   if (!args) {
     reporter.panic(`Missing program args`)
   }
@@ -127,6 +159,73 @@ export async function initialize({
     })
   }
 
+  // Setup flags
+  if (config) {
+    // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
+    if (
+      config.flags?.FAST_REFRESH &&
+      process.env.GATSBY_HOT_LOADER &&
+      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
+    ) {
+      delete config.flags.FAST_REFRESH
+      reporter.warn(
+        reporter.stripIndent(`
+          Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
+
+          Will use react-hot-loader.
+
+          To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
+        `)
+      )
+    }
+
+    // Get flags
+    const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
+      availableFlags,
+      config.flags
+    )
+
+    if (unknownFlagMessage !== ``) {
+      reporter.warn(unknownFlagMessage)
+    }
+
+    //  set process.env for each flag
+    enabledConfigFlags.forEach(flag => {
+      process.env[flag.env] = `true`
+    })
+
+    // Print out message.
+    if (message !== ``) {
+      reporter.info(message)
+    }
+
+    //  track usage of feature
+    enabledConfigFlags.forEach(flag => {
+      if (flag.telemetryId) {
+        telemetry.trackFeatureIsUsed(flag.telemetryId)
+      }
+    })
+
+    // Track the usage of config.flags
+    if (config.flags) {
+      telemetry.trackFeatureIsUsed(`ConfigFlags`)
+    }
+  }
+
+  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
+
+  // TODO: figure out proper way of disabling loading indicator
+  // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
+  // will work, but we don't want to force users into using env vars
+  if (
+    process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+    !process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR
+  ) {
+    // if query on demand is enabled and GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR was not set at all
+    // enable loading indicator
+    process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR = `true`
+  }
+
   // theme gatsby configs can be functions or objects
   if (config && config.__experimentalThemes) {
     reporter.warn(
@@ -161,6 +260,19 @@ export async function initialize({
   store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
+
+  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+    if (process.env.gatsby_executing_command !== `develop`) {
+      // we don't want to ever have this flag enabled for anything than develop
+      // in case someone have this env var globally set
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+    } else if (isCI()) {
+      delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
+      reporter.verbose(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
+      )
+    }
+  }
 
   // run stale jobs
   store.dispatch(removeStaleJobs(store.getState()))
@@ -226,15 +338,11 @@ export async function initialize({
   // The last, gatsby-node.js, is important as many gatsby sites put important
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
-  const hashes = await Promise.all([
+  const hashes: any = await Promise.all([
     !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-config.js`).catch(() => {})
-    ), // ignore as this file isn't required),
-    Promise.resolve(
-      md5File(`${program.directory}/gatsby-node.js`).catch(() => {})
-    ), // ignore as this file isn't required),
+    md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
+    md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
   ])
   const pluginsHash = crypto
     .createHash(`md5`)
@@ -255,11 +363,102 @@ export async function initialize({
     `)
   }
   const cacheDirectory = `${program.directory}/.cache`
-  if (!oldPluginsHash || pluginsHash !== oldPluginsHash) {
+  const publicDirectory = `${program.directory}/public`
+
+  // .cache directory exists in develop at this point
+  // so checking for .cache/json as a heuristic (could be any expected file)
+  const cacheIsCorrupt =
+    fs.existsSync(`${cacheDirectory}/json`) && !fs.existsSync(publicDirectory)
+
+  if (cacheIsCorrupt) {
+    reporter.info(reporter.stripIndent`
+      We've detected that the Gatsby cache is incomplete (the .cache directory exists
+      but the public directory does not). As a precaution, we're deleting your site's
+      cache to ensure there's no stale data.
+    `)
+  }
+
+  if (!oldPluginsHash || pluginsHash !== oldPluginsHash || cacheIsCorrupt) {
     try {
-      // Attempt to empty dir if remove fails,
-      // like when directory is mount point
-      await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      // Comment out inviet until we can test perf impact
+      //
+      // let sourceFileSystemVersion = flattenedPlugins.find(
+      // plugin => plugin.name === `gatsby-source-filesystem`
+      // )?.version
+
+      // // The site might be using a plugin which uses "createRemoteFileNode" but
+      // // doesn't have gatsby-source-filesystem in their gatsby-config.js. So lets
+      // // also try requiring it.
+      // if (!sourceFileSystemVersion) {
+      // try {
+      // sourceFileSystemVersion = require(`gatsby-source-filesystem/package.json`)
+      // ?.version
+      // } catch {
+      // // ignore require errors
+      // }
+      // }
+      // } else if (
+      // sourceFileSystemVersion &&
+      // semver.lt(sourceFileSystemVersion, `2.9.0`)
+      // ) {
+      // // If the site has more than 50 downloaded files in it, tell them
+      // // how to save time.
+      // try {
+      // // Divide by two as the directory as both cache files + the actual downloaded files so
+      // // two results / downloaded file.
+      // const filesCount =
+      // (await fs.readdir(`.cache/caches/gatsby-source-filesystem`))
+      // .length / 2
+      // if (filesCount > 50) {
+      // reporter.info(stripIndent`\n\n
+
+      // Your local development experience is about to get better, faster, and stronger!
+
+      // Your friendly Gatsby maintainers detected your site downloads quite a few files and that we're about to delete all ${Math.round(
+      // filesCount
+      // )} of them 😅. We're working right now to make our caching smarter which means we won't delete your downloaded files any more.
+
+      // If you're interested in trialing the new caching behavior *today* — which should make your local development environment faster, go ahead and enable the PRESERVE_FILE_DOWNLOAD_CACHE flag and run your develop server again.
+
+      // To do so, add to your gatsby-config.js:
+
+      // flags: {
+      // preserve_file_download_cache: true,
+      // }
+
+      // visit the umbrella issue to learn more: https://github.com/gatsbyjs/gatsby/discussions/28331
+      // `)
+      // }
+      // } catch {
+      // // ignore errors (mostly will just be directory not found).
+      // }
+      // }
+
+      if (
+        process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE ||
+        process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE
+      ) {
+        const deleteGlobs = [
+          // By default delete all files & subdirectories
+          `${cacheDirectory}/**`,
+          `${cacheDirectory}/*/`,
+        ]
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
+          // Add gatsby-source-filesystem
+          deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
+        }
+
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          // Add webpack
+          deleteGlobs.push(`!${cacheDirectory}/webpack`)
+        }
+        await del(deleteGlobs)
+      } else {
+        // Attempt to empty dir if remove fails,
+        // like when directory is mount point
+        await fs.remove(cacheDirectory).catch(() => fs.emptyDir(cacheDirectory))
+      }
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
@@ -267,6 +466,7 @@ export async function initialize({
     // been loaded from the file system cache).
     store.dispatch({
       type: `DELETE_CACHE`,
+      cacheIsCorrupt,
     })
 
     // in future this should show which plugin's caches are purged
@@ -290,7 +490,7 @@ export async function initialize({
   await fs.ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${program.directory}/public/static`)
+  await fs.ensureDir(`${publicDirectory}/static`)
 
   activity.end()
 

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.9.0-next.1...gatsby-plugin-catch-links@2.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.9.0-next.0...gatsby-plugin-catch-links@2.9.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.8.0-next.0...gatsby-plugin-catch-links@2.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.7.0-next.0...gatsby-plugin-catch-links@2.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.6.0-next.0...gatsby-plugin-catch-links@2.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.5.0-next.0...gatsby-plugin-catch-links@2.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.4.0-next.0...gatsby-plugin-catch-links@2.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.3.14...gatsby-plugin-catch-links@2.3.15) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-catch-links
+
 ## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-catch-links@2.3.13...gatsby-plugin-catch-links@2.3.14) (2020-10-01)
 
 **Note:** Version bump only for package gatsby-plugin-catch-links

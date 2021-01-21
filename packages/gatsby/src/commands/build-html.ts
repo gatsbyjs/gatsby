@@ -6,6 +6,7 @@ import telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"
 
+import { emitter } from "../redux"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
@@ -14,46 +15,113 @@ import { IProgram, Stage } from "./types"
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
-const runWebpack = (compilerConfig): Bluebird<webpack.Stats> =>
+export interface IWebpackWatchingPauseResume extends webpack.Watching {
+  suspend: () => void
+  resume: () => void
+}
+
+let devssrWebpackCompiler: webpack.Compiler
+let devssrWebpackWatcher: IWebpackWatchingPauseResume
+let needToRecompileSSRBundle = true
+export const getDevSSRWebpack = (): Record<
+  IWebpackWatchingPauseResume,
+  webpack.Compiler,
+  needToRecompileSSRBundle
+> => {
+  if (process.env.gatsby_executing_command !== `develop`) {
+    throw new Error(`This function can only be called in development`)
+  }
+
+  return {
+    devssrWebpackWatcher,
+    devssrWebpackCompiler,
+    needToRecompileSSRBundle,
+  }
+}
+
+let oldHash = ``
+let newHash = ``
+const runWebpack = (
+  compilerConfig,
+  stage: Stage,
+  directory
+): Bluebird<webpack.Stats> =>
   new Bluebird((resolve, reject) => {
-    webpack(compilerConfig).run((err, stats) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(stats)
-      }
-    })
+    if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
+      webpack(compilerConfig).run((err, stats) => {
+        if (err) {
+          return reject(err)
+        } else {
+          return resolve(stats)
+        }
+      })
+    } else if (
+      process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
+      stage === `develop-html`
+    ) {
+      devssrWebpackCompiler = webpack(compilerConfig)
+      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, file => {
+        needToRecompileSSRBundle = true
+      })
+      devssrWebpackWatcher = devssrWebpackCompiler.watch(
+        {
+          ignored: /node_modules/,
+        },
+        (err, stats) => {
+          needToRecompileSSRBundle = false
+          emitter.emit(`DEV_SSR_COMPILATION_DONE`)
+          devssrWebpackWatcher.suspend()
+
+          if (err) {
+            return reject(err)
+          } else {
+            newHash = stats.hash || ``
+
+            const {
+              restartWorker,
+            } = require(`../utils/dev-ssr/render-dev-html`)
+            // Make sure we use the latest version during development
+            if (oldHash !== `` && newHash !== oldHash) {
+              restartWorker(`${directory}/public/render-page.js`)
+            }
+
+            oldHash = newHash
+
+            return resolve(stats)
+          }
+        }
+      )
+    }
   })
 
 const doBuildRenderer = async (
   { directory }: IProgram,
-  webpackConfig: webpack.Configuration
+  webpackConfig: webpack.Configuration,
+  stage: Stage
 ): Promise<string> => {
-  const stats = await runWebpack(webpackConfig)
+  const stats = await runWebpack(webpackConfig, stage, directory)
   if (stats.hasErrors()) {
-    reporter.panic(
-      structureWebpackErrors(`build-html`, stats.compilation.errors)
-    )
+    reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
   // render-page.js is hard coded in webpack.config
   return `${directory}/public/render-page.js`
 }
 
-const buildRenderer = async (
+export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
-  parentSpan: IActivity
+  parentSpan?: IActivity
 ): Promise<string> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
   })
 
-  return doBuildRenderer(program, config)
+  return doBuildRenderer(program, config, stage)
 }
 
-const deleteRenderer = async (rendererPath: string): Promise<void> => {
+export const deleteRenderer = async (rendererPath: string): Promise<void> => {
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
@@ -76,7 +144,6 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  // const start = process.hrtime()
   const segments = chunk(pages, 50)
 
   await Bluebird.map(segments, async pageSegment => {
@@ -109,7 +176,7 @@ class BuildHTMLError extends Error {
   }
 }
 
-const doBuildPages = async (
+export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
@@ -132,6 +199,7 @@ const doBuildPages = async (
   }
 }
 
+// TODO remove in v4 - this could be a "public" api
 export const buildHTML = async ({
   program,
   stage,

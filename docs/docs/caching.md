@@ -44,7 +44,7 @@ How you setup your caching depends on how you host your site. We encourage peopl
 
 The following plugins have been created:
 
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/)
+- [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify/)
 - [gatsby-plugin-s3](https://github.com/jariz/gatsby-plugin-s3)
 
 When deploying with Vercel, follow the instructions in the [Vercel documentation](https://vercel.com/guides/deploying-gatsby-with-vercel#bonus:-cache-your-gatsby-assets).

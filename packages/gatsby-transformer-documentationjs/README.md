@@ -9,7 +9,7 @@ It's used on gatsbyjs.org and can be seen in use on several pages there e.g.
 
 ## Install
 
-`npm install --save gatsby-transformer-documentationjs`
+`npm install gatsby-transformer-documentationjs`
 
 ## How to use
 

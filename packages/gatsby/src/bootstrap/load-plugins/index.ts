@@ -11,8 +11,15 @@ import {
   handleMultipleReplaceRenderers,
   ExportType,
   ICurrentAPIs,
+  validateConfigPluginsOptions,
 } from "./validate"
-import { IPluginInfo, IFlattenedPlugin, ISiteConfig } from "./types"
+import {
+  IPluginInfo,
+  IFlattenedPlugin,
+  ISiteConfig,
+  IRawSiteConfig,
+} from "./types"
+import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -44,10 +51,45 @@ const flattenPlugins = (plugins: Array<IPluginInfo>): Array<IPluginInfo> => {
   return flattened
 }
 
+function normalizePlugin(plugin): IPluginRefObject {
+  if (typeof plugin === `string`) {
+    return {
+      resolve: plugin,
+      options: {},
+    }
+  }
+
+  if (plugin.options?.plugins) {
+    plugin.options = {
+      ...plugin.options,
+      plugins: normalizePlugins(plugin.options.plugins),
+    }
+  }
+
+  return plugin
+}
+
+function normalizePlugins(plugins?: Array<PluginRef>): Array<IPluginRefObject> {
+  return (plugins || []).map(normalizePlugin)
+}
+
+const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
+  return {
+    ...config,
+    plugins: (config.plugins || []).map(normalizePlugin),
+  }
+}
+
 export async function loadPlugins(
-  config: ISiteConfig = {},
+  rawConfig: IRawSiteConfig = {},
   rootDir: string | null = null
 ): Promise<Array<IFlattenedPlugin>> {
+  // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
+  const config = normalizeConfig(rawConfig)
+
+  // Show errors for invalid plugin configuration
+  await validateConfigPluginsOptions(config, rootDir)
+
   const currentAPIs = getAPI({
     browser: browserAPIs,
     node: nodeAPIs,

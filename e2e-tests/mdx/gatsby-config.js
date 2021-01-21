@@ -17,9 +17,11 @@ module.exports = {
         path: `${__dirname}/src/posts`,
       },
     },
+    `gatsby-plugin-test-regression1`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
+        lessBabel: false,
         extensions: [`.mdx`, `.md`],
         defaultLayouts: {
           default: require.resolve("./src/components/layout.js"),

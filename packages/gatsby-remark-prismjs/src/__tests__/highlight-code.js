@@ -55,10 +55,10 @@ export default Counter
     expect(/<span[^>]*>[^<]*\n[^<]*<\/span>/g.exec(processed)).not.toBeTruthy()
   })
 
-  it(`for language diff-js`, () => {
+  it(`for language diff-typescript`, () => {
     const highlightCode = require(`../highlight-code`)
     const language = `diff`
-    const diffLanguage = `js`
+    const diffLanguage = `typescript`
     const lineNumbersHighlight = []
     const code = `
 -    let foo = bar.baz([1, 2, 3]);

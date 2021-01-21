@@ -23,7 +23,7 @@
   <a href="https://circleci.com/gh/gatsbyjs/gatsby">
     <img src="https://circleci.com/gh/gatsbyjs/gatsby.svg?style=shield" alt="Current CircleCI build status." />
   </a>
-  <a href="https://www.npmjs.org/package/gatsby">
+  <a href="https://www.npmjs.com/package/gatsby">
     <img src="https://img.shields.io/npm/v/gatsby.svg" alt="Current npm package version." />
   </a>
   <a href="https://npmcharts.com/compare/gatsby?minimal=true">
@@ -169,4 +169,4 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [GatsbyJs](https://www.gatsbyjs.com) and our example sites.
+Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [Gatsby](https://www.gatsbyjs.com) and our example sites.

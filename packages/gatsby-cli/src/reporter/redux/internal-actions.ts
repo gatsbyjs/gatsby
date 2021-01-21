@@ -31,6 +31,7 @@ import {
   getGlobalStatus,
 } from "./utils"
 import { IStructuredError } from "../../structured-errors/types"
+import { ErrorCategory } from "../../structured-errors/error-map"
 
 const ActivityStatusToLogLevel = {
   [ActivityStatuses.Interrupted]: ActivityLogLevels.Interrupted,
@@ -93,6 +94,7 @@ export const createLog = ({
   group,
   code,
   type,
+  category,
   filePath,
   location,
   docsUrl,
@@ -102,6 +104,7 @@ export const createLog = ({
   activity_type,
   activity_uuid,
   stack,
+  pluginName,
 }: {
   level: string
   text?: string
@@ -110,6 +113,7 @@ export const createLog = ({
   group?: string
   code?: string
   type?: string
+  category?: keyof typeof ErrorCategory
   filePath?: string
   location?: IStructuredError["location"]
   docsUrl?: string
@@ -119,6 +123,7 @@ export const createLog = ({
   activity_type?: string
   activity_uuid?: string
   stack?: IStructuredError["stack"]
+  pluginName?: string
 }): ICreateLog => {
   return {
     type: Actions.Log,
@@ -130,6 +135,7 @@ export const createLog = ({
       group,
       code,
       type,
+      category,
       filePath,
       location,
       docsUrl,
@@ -140,6 +146,7 @@ export const createLog = ({
       activity_uuid,
       timestamp: new Date().toJSON(),
       stack,
+      pluginName,
     },
   }
 }

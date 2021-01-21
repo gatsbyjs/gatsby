@@ -1,19 +1,19 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const babel = require(`@babel/core`)
-const t = require(`@babel/types`)
-const declare = require(`@babel/helper-plugin-utils`).declare
-const Joi = require(`@hapi/joi`)
-const prettier = require(`prettier`)
+import fs from "fs-extra"
+import path from "path"
+import { transform } from "@babel/core"
+import * as t from "@babel/types"
+import { declare } from "@babel/helper-plugin-utils"
+import * as Joi from "@hapi/joi"
+import prettier from "prettier"
 
-const lock = require(`../lock`)
-const getDiff = require(`../utils/get-diff`)
-const resourceSchema = require(`../resource-schema`)
+import lock from "../lock"
+import getDiff from "../utils/get-diff"
+import resourceSchema from "../resource-schema"
 
-const isDefaultExport = require(`./utils/is-default-export`)
-const getObjectFromNode = require(`./utils/get-object-from-node`)
-const { REQUIRES_KEYS } = require(`./utils/constants`)
-const template = require(`@babel/template`).default
+import isDefaultExport from "./utils/is-default-export"
+import getObjectFromNode from "./utils/get-object-from-node"
+import { REQUIRES_KEYS } from "./utils/constants"
+import template from "@babel/template"
 
 const addFieldToSiteMetadata = (src, { name, value }) => {
   const setSiteMetadata = new BabelPluginSetSiteMetadataField({
@@ -21,7 +21,7 @@ const addFieldToSiteMetadata = (src, { name, value }) => {
     value,
   })
 
-  const { code } = babel.transform(src, {
+  const { code } = transform(src, {
     plugins: [setSiteMetadata.plugin],
     configFile: false,
   })
@@ -35,7 +35,7 @@ const removeFieldFromSiteMetadata = (src, { name }) => {
     value: undefined,
   })
 
-  const { code } = babel.transform(src, {
+  const { code } = transform(src, {
     plugins: [setSiteMetadata.plugin],
     configFile: false,
   })
@@ -46,7 +46,7 @@ const removeFieldFromSiteMetadata = (src, { name }) => {
 const getSiteMetdataFromConfig = src => {
   const getSiteMetadata = new BabelPluginGetSiteMetadataFromConfig()
 
-  babel.transform(src, {
+  transform(src, {
     plugins: [getSiteMetadata.plugin],
     configFile: false,
   })
@@ -217,17 +217,17 @@ class BabelPluginGetSiteMetadataFromConfig {
   }
 }
 
-module.exports.addFieldToSiteMetadata = addFieldToSiteMetadata
-module.exports.getSiteMetdataFromConfig = getSiteMetdataFromConfig
-module.exports.removeFieldFromSiteMetadata = removeFieldFromSiteMetadata
+export {
+  addFieldToSiteMetadata,
+  getSiteMetdataFromConfig,
+  removeFieldFromSiteMetadata,
+}
 
-module.exports.create = create
-module.exports.update = create
-module.exports.read = read
-module.exports.destroy = destroy
-module.exports.config = {}
+export { create, create as update, read, destroy }
 
-module.exports.all = async ({ root }) => {
+export const config = {}
+
+export const all = async ({ root }) => {
   const configSrc = await readConfigFile(root)
   const siteMetadata = getSiteMetdataFromConfig(configSrc)
 
@@ -261,10 +261,9 @@ const validate = resource => {
   return Joi.validate(resource, schema, { abortEarly: false })
 }
 
-exports.schema = schema
-exports.validate = validate
+export { schema, validate }
 
-module.exports.plan = async ({ root }, { id, key, name, value }) => {
+export const plan = async ({ root }, { id, key, name, value }) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)

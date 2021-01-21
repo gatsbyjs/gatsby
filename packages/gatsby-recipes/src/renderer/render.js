@@ -3,7 +3,7 @@ import Queue from "better-queue"
 import lodash from "lodash"
 import mitt from "mitt"
 
-import resources from "../resources"
+import * as resources from "../resources"
 
 import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"
@@ -51,7 +51,9 @@ const Wrapper = ({
     >
       <ResourceProvider value={plan}>
         <InputProvider value={inputs}>
-          <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+          <Suspense fallback={<p>Loading recipe 1/2...</p>}>
+            {children}
+          </Suspense>
         </InputProvider>
       </ResourceProvider>
     </GlobalsProvider>
@@ -328,7 +330,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   })
 
   // When there's no resources, renderResources finishes synchronously
-  // so wait for the next tick so the emitter listners can be setup first.
+  // so wait for the next tick so the emitter listeners can be setup first.
   process.nextTick(() => renderResources())
 
   if (isStream) {
@@ -347,5 +349,4 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   }
 }
 
-module.exports.render = render
-module.exports.ResourceComponent = ResourceComponent
+export { render, ResourceComponent }

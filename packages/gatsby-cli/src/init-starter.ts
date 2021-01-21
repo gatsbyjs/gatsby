@@ -31,7 +31,7 @@ const spawn = (
 // Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-const checkForYarn = async (): Promise<boolean> => {
+const checkForYarn = (): boolean => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
     return true
@@ -111,12 +111,7 @@ const install = async (rootPath: string): Promise<void> => {
       }
     }
     if (getPackageManager() === `yarn` && checkForYarn()) {
-      if (await fs.pathExists(`package-lock.json`)) {
-        if (!(await fs.pathExists(`yarn.lock`))) {
-          await spawn(`yarnpkg import`)
-        }
-        await fs.remove(`package-lock.json`)
-      }
+      await fs.remove(`package-lock.json`)
       await spawn(`yarnpkg`)
     } else {
       await fs.remove(`yarn.lock`)

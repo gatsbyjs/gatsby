@@ -16,18 +16,18 @@ _Note: this section only explains how `gatsby-node` plugins are run. Not browser
 
 ## Early in the build
 
-Early in the bootstrap phase, you [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into redux under the `flattenedPlugins` namespace. Each plugin in redux contains the following fields:
+Early in the bootstrap phase, you [load all the configured plugins](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/index.js#L40) (and internal plugins) for the site. These are saved into Redux under the `flattenedPlugins` namespace. Each plugin in Redux contains the following fields:
 
 - **resolve**: absolute path to the plugin's directory
 - **id**: String concatenation of 'Plugin ' and the name of the plugin. E.g. `Plugin query-runner`
 - **name**: The name of the plugin. E.g. `query-runner`
 - **version**: The version as per the package.json. Or if it is a site plugin, one is generated from the file's hash
-- **pluginOptions**: Plugin options as specified in [gatsby-config.js](/docs/gatsby-config/)
+- **pluginOptions**: Plugin options as specified in [gatsby-config.js](/docs/reference/config-files/gatsby-config/)
 - **nodeAPIs**: A list of node APIs that this plugin implements. E.g. `[ 'sourceNodes', ...]`
 - **browserAPIs**: List of browser APIs that this plugin implements
 - **ssrAPIs**: List of SSR APIs that this plugin implements
 
-In addition, you also create a lookup from API to the plugins that implement it and save this to redux as `api-to-plugins`. This is implemented in [load-plugins/validate.js](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/validate.js#L106)
+In addition, you also create a lookup from API to the plugins that implement it and save this to Redux as `api-to-plugins`. This is implemented in [load-plugins/validate.js](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/bootstrap/load-plugins/validate.js#L106)
 
 ## apiRunInstance
 
@@ -50,11 +50,11 @@ Next, filter all `flattenedPlugins` down to those that implement the API you're 
 
 ## Injected arguments
 
-API implementations are passed a variety of useful [actions](/docs/actions/) and other interesting functions/objects. These arguments are [created](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L94) each time a plugin is run for an API, which allows us to rebind actions with default information.
+API implementations are passed a variety of useful [actions](/docs/reference/config-files/actions/) and other interesting functions/objects. These arguments are [created](https://github.com/gatsbyjs/gatsby/blob/8029c6647ab38792bb0a7c135ab4b98ae70a2627/packages/gatsby/src/utils/api-runner-node.js#L94) each time a plugin is run for an API, which allows us to rebind actions with default information.
 
 All actions take 3 arguments:
 
-1. The core information required by the action. E.g. for [createNode](/docs/actions/#createNode), you must pass a node
+1. The core information required by the action. E.g. for [createNode](/docs/reference/config-files/actions/#createNode), you must pass a node
 2. The plugin that is calling this action. E.g. `createNode` uses this to assign the owner of the new node
 3. An object with misc action options:
    - `traceId`: [See below](#using-traceid-to-await-downstream-api-calls)
@@ -68,7 +68,7 @@ Each plugin is run inside a [map-series](https://www.npmjs.com/package/map-serie
 
 ## Using `traceId` to await downstream API calls
 
-The majority of API calls result in one or more implementing plugins being called. You then wait for them all to complete, and return. But some plugins (e.g. [sourceNodes](/docs/node-apis/#sourceNodes)) result in calls to actions that themselves call APIs. You need some way of tracing whether an API call originated from another API call, so that you can wait on all child calls to complete. The mechanism for this is the `traceId`.
+The majority of API calls result in one or more implementing plugins being called. You then wait for them all to complete, and return. But some plugins (e.g. [sourceNodes](/docs/reference/config-files/gatsby-node/#sourceNodes)) result in calls to actions that themselves call APIs. You need some way of tracing whether an API call originated from another API call, so that you can wait on all child calls to complete. The mechanism for this is the `traceId`.
 
 ```dot
 digraph {

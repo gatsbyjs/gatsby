@@ -224,6 +224,7 @@ describe(`Query schema`, () => {
             edges {
               node {
                 childMarkdown { frontmatter { title } }
+                childrenMarkdown { frontmatter { title } }
               }
             }
           }
@@ -236,16 +237,23 @@ describe(`Query schema`, () => {
             {
               node: {
                 childMarkdown: { frontmatter: { title: `Markdown File 1` } },
+                childrenMarkdown: [
+                  { frontmatter: { title: `Markdown File 1` } },
+                ],
               },
             },
             {
               node: {
                 childMarkdown: { frontmatter: { title: `Markdown File 2` } },
+                childrenMarkdown: [
+                  { frontmatter: { title: `Markdown File 2` } },
+                ],
               },
             },
             {
               node: {
                 childMarkdown: null,
+                childrenMarkdown: [],
               },
             },
           ],
@@ -261,6 +269,7 @@ describe(`Query schema`, () => {
           allFile {
             edges {
               node {
+                childAuthor { name }
                 childrenAuthor { name }
               }
             }
@@ -273,16 +282,19 @@ describe(`Query schema`, () => {
           edges: [
             {
               node: {
+                childAuthor: null,
                 childrenAuthor: [],
               },
             },
             {
               node: {
+                childAuthor: null,
                 childrenAuthor: [],
               },
             },
             {
               node: {
+                childAuthor: { name: `Author 2` },
                 childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }],
               },
             },

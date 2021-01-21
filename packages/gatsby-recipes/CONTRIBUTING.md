@@ -114,7 +114,7 @@ One note, as you’ll be testing changes to the Gatsby CLI — instead of runnin
 
 When debugging the CLI, you may run into errors without stacktraces. In order to work around that, you can use the node inspector:
 
-```sh
+```shell
 DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
 ```
 
@@ -261,6 +261,7 @@ That's it!
 
 #### Output MDX
 
+<!-- prettier-ignore-start -->
 ```mdx
 <RecipeIntroduction># Create a file</RecipeIntroduction>
 
@@ -274,6 +275,7 @@ Creates a "hello, world" file
   That's it!
 </RecipeStep>
 ```
+<!-- prettier-ignore-end -->
 
 #### Parser return object
 

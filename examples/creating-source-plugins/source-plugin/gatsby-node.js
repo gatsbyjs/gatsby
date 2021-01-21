@@ -250,7 +250,7 @@ exports.onCreateNode = async ({
   createNodeId,
   node,
 }) => {
-  // transfrom remote file nodes using Gatsby sharp plugins
+  // transform remote file nodes using Gatsby sharp plugins
   // because onCreateNode is called for all nodes, verify that you are only running this code on nodes created by your plugin
   if (node.internal.type === POST_NODE_TYPE) {
     // create a FileNode in Gatsby that gatsby-transformer-sharp will create optimized images for

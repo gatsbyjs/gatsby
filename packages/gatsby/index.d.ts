@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Renderer } from "react-dom"
 import { EventEmitter } from "events"
-import { WindowLocation, NavigateFn } from "@reach/router"
+import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 export { Reporter }
 import {
@@ -13,6 +13,7 @@ import {
   ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
+import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
 
 export {
   default as Link,
@@ -175,15 +176,6 @@ export class StaticQuery<T = any> extends React.Component<
 export const graphql: (query: TemplateStringsArray) => void
 
 /**
- * graphql is a tag function. Behind the scenes Gatsby handles these tags in a particular way
- *
- * During the Gatsby build process, GraphQL queries are pulled out of the original source for parsing.
- *
- * @see https://www.gatsbyjs.org/docs/page-query#how-does-the-graphql-tag-work
- */
-export const unstable_collectionGraphql: (query: TemplateStringsArray) => void
-
-/**
  * Gatsby configuration API.
  *
  * @see https://www.gatsbyjs.org/docs/gatsby-config/
@@ -193,6 +185,8 @@ export interface GatsbyConfig {
   siteMetadata?: Record<string, unknown>
   /** Plugins are Node.js packages that implement Gatsby APIs. The config file accepts an array of plugins. Some plugins may need only to be listed by name, while others may take options. */
   plugins?: Array<PluginRef>
+  /** You can activate and deactivate current experiments here. These are experimental features that are currently under development and need testing. When opting in to an experiment you'll receive a console message with more information of what it does and a link to an umbrella discussion. */
+  flags?: Record<string, boolean>
   /** It’s common for sites to be hosted somewhere other than the root of their domain. Say we have a Gatsby site at `example.com/blog/`. In this case, we would need a prefix (`/blog`) added to all paths on the site. */
   pathPrefix?: string
   /** In some circumstances you may want to deploy assets (non-HTML resources such as JavaScript, CSS, etc.) to a separate domain. `assetPrefix` allows you to use Gatsby with assets hosted from a separate domain */
@@ -304,6 +298,20 @@ export interface GatsbyNode {
     options?: PluginOptions,
     callback?: PluginCallback
   ): void
+
+  /**
+   * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+   * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+   * Note: this API does not receive the regular `api` that other callbacks get as first arg.
+   *
+   * @gatsbyVersion 2.24.80
+   * @example
+   * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+   */
+  unstable_shouldOnCreateNode?<TNode extends object = {}>(
+    args: { node: TNode },
+    options?: PluginOptions
+  ): boolean
 
   /**
    * Called when a new page is created. This extension API is useful
@@ -512,6 +520,12 @@ export interface GatsbyNode {
     options: PluginOptions,
     callback: PluginCallback
   ): void
+
+  /**
+   * Add a Joi schema for the possible options of your plugin.
+   * Currently experimental and not enabled by default.
+   */
+  pluginOptionsSchema?(args: PluginOptionsSchemaArgs): ObjectSchema
 }
 
 /**
@@ -909,6 +923,7 @@ export interface RenderBodyArgs extends NodePluginArgs {
 
 export interface ReplaceRendererArgs extends NodePluginArgs {
   replaceBodyHTMLString: (str: string) => void
+  bodyComponent: React.ReactNode
   setHeadComponents: (comp: React.ReactNode[]) => void
   setHtmlAttributes: (attr: ReactProps<HTMLHtmlElement>) => void
   setBodyAttributes: (attr: ReactProps<HTMLBodyElement>) => void
@@ -1272,6 +1287,15 @@ export interface Actions {
     plugin?: ActionPlugin,
     traceId?: string
   ): void
+
+  printTypeDefinitions(
+    path?: string,
+    include?: { types?: Array<string>; plugins?: Array<string> },
+    exclude?: { types?: Array<string>; plugins?: Array<string> },
+    withFieldTypes?: boolean,
+    plugin?: ActionPlugin,
+    traceId?: string
+  ): void
 }
 
 export interface Store {
@@ -1471,7 +1495,7 @@ export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   }
   pathname: string
   routerProps: {
-    location: Location
+    location: Location & NavigateOptions<any>
   }
   getSavedScrollPosition: Function
 }
@@ -1506,7 +1530,7 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
 
 export interface NodeInput {
   id: string
-  parent?: string
+  parent?: string | null
   children?: string[]
   internal: {
     type: string
@@ -1519,7 +1543,7 @@ export interface NodeInput {
 }
 
 export interface Node extends NodeInput {
-  parent: string
+  parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
     owner: string
@@ -1546,4 +1570,8 @@ export interface IPluginRefOptions {
   plugins?: PluginRef[]
   path?: string
   [option: string]: unknown
+}
+
+export interface PluginOptionsSchemaArgs {
+  Joi: PluginOptionsSchemaJoi
 }
