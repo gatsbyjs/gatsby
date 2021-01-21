@@ -19,7 +19,7 @@ The new plugin requires significant syntax changes. We've provided a [codemod](#
 
 #### Import change
 
-Previously, `GatsbyImage` was the default export from `gatsby-image`. This is no longer the case.
+Previously, `GatsbyImage` was the default export from `gatsby-image`. With `gatsby-plugin-image`, the component is now a named export.
 
 ```javascript
 // import Img from "gatsby-image"
