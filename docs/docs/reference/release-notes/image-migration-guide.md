@@ -116,7 +116,7 @@ See the [how to guide] for specifics, but `grayscale` now exists within the `tra
 
 Due to the changes to gatsby-plugin-image, there is some functionality that is no longer supported.
 
-1. GatsbyImage is no longer a class component and therefore cannot be extended
+1. GatsbyImage is no longer a class component and therefore cannot be extended. You can use [composition](https://reactjs.org/docs/composition-vs-inheritance.html) instead.
 2. Fluid images no longer exist, and the fullWidth replacement does not take maxWidth or maxHeight
 3. Art direction is no longer supported
 4. The component no longer takes a decomposed object and the following code is not valid
