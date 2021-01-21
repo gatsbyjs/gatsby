@@ -118,7 +118,9 @@ const builtInFieldExtensions = {
       on: `String`,
     },
     extend(args, fieldConfig, schemaComposer) {
-      const type = args.on && schemaComposer.typeMapper.getWrapped(args.on)
+      const type =
+        args.on &&
+        schemaComposer.typeMapper.convertSDLWrappedTypeName(args.on)?.getType()
       return {
         resolve: link({ ...args, type }, fieldConfig),
       }
