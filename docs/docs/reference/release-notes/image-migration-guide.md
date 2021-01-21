@@ -106,7 +106,7 @@ The second is a responsive image type called `constrained` that generates smalle
 
 Previously, images generated their own type, e.g. jpg, png, etc. You could also generate WebP images when using the appropriate fragment. This is now controlled using the `formats` argument. This field takes an array, `[AUTO, WEBP]` by default, where "AUTO" means the same format as the source image.`"AVIF"` is now also a valid format.
 
-#### options nested inside objects
+#### Options nested inside objects
 
 Previously, transformations like `grayscale` and quality options such as `pngQuality` were top level query arguments. This has changed.
 
