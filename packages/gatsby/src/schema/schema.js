@@ -588,6 +588,11 @@ const createTypeComposerFromGatsbyType = ({
     case GatsbyGraphQLTypeKind.OBJECT: {
       typeComposer = ObjectTypeComposer.createTemp({
         ...type.config,
+        // FIXME: this changes ordering of type processing.
+        //  Before graphql-compose bump we had parent type processed and added to the composer first
+        //  and then any new types from fields were processed.
+        //  Now we process fields and their types first.
+        //  Setting `fields` as thunk here causes stack overflow in graphql-compose
         fields: schemaComposer.typeMapper.convertOutputFieldConfigMap(
           type.config.fields
         ),
