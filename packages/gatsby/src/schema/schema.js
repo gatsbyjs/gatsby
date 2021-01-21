@@ -583,9 +583,10 @@ const createTypeComposerFromGatsbyType = ({
   type,
   parentSpan,
 }) => {
+  let typeComposer
   switch (type.kind) {
     case GatsbyGraphQLTypeKind.OBJECT: {
-      return ObjectTypeComposer.createTemp({
+      typeComposer = ObjectTypeComposer.createTemp({
         ...type.config,
         fields: schemaComposer.typeMapper.convertOutputFieldConfigMap(
           type.config.fields
@@ -604,17 +605,19 @@ const createTypeComposerFromGatsbyType = ({
           }
         },
       })
+      break
     }
     case GatsbyGraphQLTypeKind.INPUT_OBJECT: {
-      return InputTypeComposer.createTemp({
+      typeComposer = InputTypeComposer.createTemp({
         ...type.config,
         fields: schemaComposer.typeMapper.convertInputFieldConfigMap(
           type.config.fields
         ),
       })
+      break
     }
     case GatsbyGraphQLTypeKind.UNION: {
-      return UnionTypeComposer.createTemp({
+      typeComposer = UnionTypeComposer.createTemp({
         ...type.config,
         types: () => {
           if (type.config.types) {
@@ -626,26 +629,35 @@ const createTypeComposerFromGatsbyType = ({
           }
         },
       })
+      break
     }
     case GatsbyGraphQLTypeKind.INTERFACE: {
-      return InterfaceTypeComposer.createTemp({
+      typeComposer = InterfaceTypeComposer.createTemp({
         ...type.config,
         fields: schemaComposer.typeMapper.convertOutputFieldConfigMap(
           type.config.fields
         ),
       })
+      break
     }
     case GatsbyGraphQLTypeKind.ENUM: {
-      return EnumTypeComposer.createTemp(type.config)
+      typeComposer = EnumTypeComposer.createTemp(type.config)
+      break
     }
     case GatsbyGraphQLTypeKind.SCALAR: {
-      return ScalarTypeComposer.createTemp(type.config)
+      typeComposer = ScalarTypeComposer.createTemp(type.config)
+      break
     }
     default: {
       report.warn(`Illegal type definition: ${JSON.stringify(type.config)}`)
-      return null
+      typeComposer = null
     }
   }
+  if (typeComposer) {
+    // Workaround for https://github.com/graphql-compose/graphql-compose/issues/311
+    typeComposer.schemaComposer = schemaComposer
+  }
+  return typeComposer
 }
 
 const addSetFieldsOnGraphQLNodeTypeFields = ({ schemaComposer, parentSpan }) =>
