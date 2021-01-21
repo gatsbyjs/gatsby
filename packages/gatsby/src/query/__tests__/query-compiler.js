@@ -438,7 +438,7 @@ describe(`actual compiling`, () => {
       `
       Object {
         "context": Object {
-          "sourceMessage": "Cannot spread fragment \\"Foo\\" within itself via Bar.
+          "sourceMessage": "Cannot spread fragment \\"Foo\\" within itself via "Bar".
 
       GraphQL request:17:13
       16 |           children {
@@ -452,7 +452,7 @@ describe(`actual compiling`, () => {
          |             ^
       12 |           }",
         },
-        "error": [GraphQLError: Cannot spread fragment "Foo" within itself via Bar.],
+        "error": [GraphQLError: Cannot spread fragment "Foo" within itself via "Bar".],
         "filePath": "mockFile",
         "id": "85901",
         "location": Any<Object>,
@@ -729,7 +729,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
          9 |         fragment PostsJsonFragment on PostsJson {
         10 |           id
         11 |           node
@@ -757,7 +757,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
       >  9 |         fragment PostsJsonFragment on PostsJson {
            |                  ^^^^^^^^^^^^^^^^^
         10 |           id
