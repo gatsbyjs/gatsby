@@ -166,16 +166,6 @@ module.exports.createContentDigest = true;
  *
  * See [`actions`](/docs/actions/) reference.
  * @type {Actions}
- * @deprecated Will be removed in gatsby 3.0. Use [actions](#actions)
- * instead.
- */
-module.exports.boundActionCreators = true;
-
-/**
- * Collection of functions used to programmatically modify Gatsby’s internal state.
- *
- * See [`actions`](/docs/actions/) reference.
- * @type {Actions}
  */
 module.exports.actions = true;
 
