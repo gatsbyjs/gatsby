@@ -15,6 +15,7 @@ import {
   InterfaceTypeComposer,
   UnionTypeComposer,
   ScalarTypeComposer,
+  toInputObjectType,
 } from "graphql-compose"
 
 type AnyTypeComposer<TContext> =
@@ -149,7 +150,10 @@ export const getSortInput = <TSource = any, TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer<TSource, TContext>
 }): InputTypeComposer<TContext> => {
-  const inputTypeComposer = typeComposer.getInputTypeComposer()
+  // FIXME: using String as a fallback could be wrong!
+  const inputTypeComposer = toInputObjectType(typeComposer, {
+    fallbackType: schemaComposer.getSTC(`String`),
+  })
   const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
   const fieldsEnumTC = getFieldsEnum({
     schemaComposer,
