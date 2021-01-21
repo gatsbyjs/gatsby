@@ -5,10 +5,22 @@ import path from "path"
 const eslintRulePaths = path.resolve(`${__dirname}/eslint-rules`)
 const eslintRequirePreset = require.resolve(`./eslint/required`)
 
-export const eslintRequiredConfig: CLIEngine.Options = {
+// eslint-loader options are few eslint-loader specific options and rest of it is passed to
+// eslint's CLIEngine
+type EslintLoaderOptions = CLIEngine.Options & {
+  emitWarning?: boolean
+}
+
+export const eslintRequiredConfig: EslintLoaderOptions = {
   rulePaths: [eslintRulePaths],
   useEslintrc: false,
+  // this forces any errors to be webpack warnings, minimal eslint-loader
+  // should NEVER prevent bundle from building. Our eslint config for it
+  // only contain rules set to warnings, but loader itself can emit errors
+  // if parsing failed etc.
+  emitWarning: true,
   baseConfig: {
+    parser: require.resolve(`babel-eslint`),
     parserOptions: {
       ecmaVersion: 2018,
       sourceType: `module`,
@@ -26,7 +38,7 @@ export const eslintRequiredConfig: CLIEngine.Options = {
 }
 
 export function mergeRequiredConfigIn(
-  existingOptions: CLIEngine.Options
+  existingOptions: EslintLoaderOptions
 ): void {
   // make sure rulePaths include our custom rules
   if (existingOptions.rulePaths) {
@@ -68,7 +80,7 @@ export function mergeRequiredConfigIn(
 export const eslintConfig = (
   schema: GraphQLSchema,
   usingJsxRuntime: boolean
-): CLIEngine.Options => {
+): EslintLoaderOptions => {
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,
