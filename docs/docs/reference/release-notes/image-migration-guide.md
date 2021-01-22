@@ -48,7 +48,7 @@ export const query = graphql`
 `
 ```
 
-The new syntax looks like this. The fragment is removed in favor of `gatsbyImageData` which is used for all images. Previous differences, such as fixed vs. fluid, WebP generation and placeholder type are passed as arguments to the resolver.
+The new syntax looks like this. The fragment is removed in favor of `gatsbyImageData`, which is used for all images. Previous differences - such as `fixed` vs. `fluid`, WebP generation, and placeholder type - are passed as arguments to the resolver.
 
 ```javascript
 import { graphql } from "gatsby"
