@@ -160,7 +160,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    * Fluid images will map to either `fullWidth` or `constrained` images. This decision is made based on the existence of `maxWidth` and its value. If `maxWidth` does not exist, it will be a `fullWidth` image. If it does, and the `maxWidth` is less than 1000, it will be a `constrained` image, otherwise a `fullWidth` image. `fullWidth` images do not retain their `maxWidth` or `maxHeight` fields; `constrained` images do, as `width` and `height`.
 
-   2. All images will generate WebP
+   2. All images will generate WebP.
 
    The API change to options is not currently codemoded. TODO: should this be?
 
