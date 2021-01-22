@@ -45,7 +45,10 @@ const {
   parseTypeDef,
   reportParsingError,
 } = require(`./types/type-defs`)
-import { clearDerivedTypes } from "./types/derived-types"
+import {
+  clearDerivedTypes,
+  deleteFieldsOfDerivedTypes,
+} from "./types/derived-types"
 const { printTypeDefinitions } = require(`./print`)
 
 const buildSchema = async ({
@@ -88,6 +91,7 @@ const rebuildSchemaWithSitePage = async ({
 
   // Clear derived types and fields
   // they will be re-created in processTypeComposer later
+  deleteFieldsOfDerivedTypes({ typeComposer })
   clearDerivedTypes({ schemaComposer, typeComposer })
 
   const shouldInfer =
@@ -1238,8 +1242,8 @@ const parseTypes = ({
       // TODO: clean this up when this issue is fixed:
       //  https://github.com/graphql-compose/graphql-compose/issues/311
       schemaComposer.set(typeComposer.getTypeName(), typeComposer)
-      schemaComposer.set(typeComposer.getType(), typeComposer)
-      schemaComposer.delete(parsedType.getType())
+      schemaComposer.set(typeComposer._gqType, typeComposer)
+      schemaComposer.delete(parsedType._gqType)
       schemaComposer.delete(parsedType)
     } else {
       const parsedType = schemaComposer.typeMapper.makeSchemaDef(def)

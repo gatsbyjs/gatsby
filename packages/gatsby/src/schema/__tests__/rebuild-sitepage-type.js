@@ -157,8 +157,16 @@ describe(`build and update schema for SitePage`, () => {
         keep: String!
         fields: SitePageFields
       }
+      type SitePageFields {
+        temp: String!
+      }
     `
     store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+
+    // rebuildWithSitePage ignores new type definitions,
+    // so need to build again first
+    await build({})
+
     store.dispatch({ type: `CREATE_NODE`, payload: secondPage() })
 
     await rebuildWithSitePage({})
