@@ -134,7 +134,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
    npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-transformer-sharp
    ```
 
-2. Configure plugins
+2. Configure plugins.
 
    ```javascript:title=gatsby-config.js
    module.exports = {
