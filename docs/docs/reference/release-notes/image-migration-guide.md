@@ -8,8 +8,8 @@ Note that you can use both packages at the same time. You may need to in situati
 
 If you're looking for other documentation on the new plugin, see:
 
-- How to guide: //todo
-- Reference guide: //todo
+- How-To Guide: [Using the beta Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image/)
+- Reference Guide: [Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/)
 
 ## What changed?
 
