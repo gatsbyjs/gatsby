@@ -165,7 +165,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    The codemod will output warnings in a number of different scenarios and point you to the file in question so you can inspect the changes manually.
 
-4. Consider manual changes
+4. Consider manual changes.
 
    For images using static query, you should move to use the `StaticImage` component instead. This component takes `src` which can be a remote image URL or a relative path to an image. Make sure you've installed `gatsby-source-filesystem` if you're going to use this component.
 
