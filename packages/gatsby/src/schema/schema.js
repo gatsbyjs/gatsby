@@ -699,13 +699,10 @@ const addThirdPartySchemas = ({
   parentSpan,
 }) => {
   thirdPartySchemas.forEach(schema => {
-    schemaComposer.merge(schema)
-
     const schemaQueryType = schema.getQueryType()
-    // TODO: remove if no other issues found
-    // const queryTC = schemaComposer.createTempTC(schemaQueryType)
-    // processThirdPartyTypeFields({ typeComposer: queryTC, schemaQueryType })
-    // schemaComposer.Query.addFields(queryTC.getFields())
+    const queryTC = schemaComposer.createTempTC(schemaQueryType)
+    processThirdPartyTypeFields({ typeComposer: queryTC, schemaQueryType })
+    schemaComposer.Query.addFields(queryTC.getFields())
 
     // Explicitly add the third-party schema's types, so they can be targeted
     // in `createResolvers` API.
@@ -719,13 +716,13 @@ const addThirdPartySchemas = ({
         type.name !== `Date` &&
         type.name !== `JSON`
       ) {
-        const typeComposer = schemaComposer.getAnyTC(type.name)
-        // if (
-        //   typeComposer instanceof ObjectTypeComposer ||
-        //   typeComposer instanceof InterfaceTypeComposer
-        // ) {
-        //   processThirdPartyTypeFields({ typeComposer, schemaQueryType })
-        // }
+        const typeComposer = schemaComposer.createTC(type)
+        if (
+          typeComposer instanceof ObjectTypeComposer ||
+          typeComposer instanceof InterfaceTypeComposer
+        ) {
+          processThirdPartyTypeFields({ typeComposer, schemaQueryType })
+        }
         typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
         schemaComposer.addSchemaMustHaveType(typeComposer)
       }

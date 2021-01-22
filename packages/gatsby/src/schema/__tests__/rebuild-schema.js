@@ -1207,8 +1207,7 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     expect(String(queryFields.external.type)).toEqual(`ExternalType`)
     expect(String(queryFields.external2.type)).toEqual(`String`)
     expect(print(`ExternalType`)).toMatchInlineSnapshot(`
-      "\\"\\"\\"\\"\\"\\"
-      type ExternalType {
+      "type ExternalType {
         externalFoo(injectedFooArg: String): String
         foo(fooArg: String): Foo
       }"
@@ -1261,8 +1260,7 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     const print = typePrinter(newSchema)
 
     expect(print(`ExternalType`)).toMatchInlineSnapshot(`
-      "\\"\\"\\"\\"\\"\\"
-      type ExternalType {
+      "type ExternalType {
         externalFoo: String
       }"
     `)
