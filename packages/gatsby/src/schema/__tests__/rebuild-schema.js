@@ -1261,7 +1261,8 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     const print = typePrinter(newSchema)
 
     expect(print(`ExternalType`)).toMatchInlineSnapshot(`
-      "type ExternalType {
+      "\\"\\"\\"\\"\\"\\"
+      type ExternalType {
         externalFoo: String
       }"
     `)
