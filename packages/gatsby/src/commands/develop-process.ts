@@ -50,7 +50,7 @@ if (process.send) {
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`, {
     siteMeasurements: {
-      pagesCount: store.getState().pages.size,
+      totalPagesCount: store.getState().pages.size,
     },
   })
 })
