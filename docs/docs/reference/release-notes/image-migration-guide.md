@@ -64,7 +64,7 @@ export const query = graphql`
 `
 ```
 
-There are other changes to the available argument structure in the section on [API changes](#api-changes).
+Other changes to the available argument structure are in the section on [API changes](#api-changes).
 
 #### Component changes
 
