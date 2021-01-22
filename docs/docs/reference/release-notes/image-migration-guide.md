@@ -162,7 +162,6 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    2. All images will generate WebP.
 
-   The API change to options is not currently codemoded. TODO: should this be?
 
    The codemod will output warnings in a number of different scenarios and point you to the file in question so you can inspect the changes manually.
 
