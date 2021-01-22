@@ -100,7 +100,7 @@ The second is a responsive image type called `constrained` that generates smalle
 
 #### aspectRatio
 
-`aspectRatio` is a new argument that takes a number (or fraction). If you pass it without also passing in `width` or `height`, it will default to using the source image width, and then adjusting the height to the correct aspect ratio. Alternatively you can pass your own width or height and it will set the other dimension. Passing both `height` and `width` will cause `aspectRatio` to be ignored in favor of the inferred aspect ratio.
+`aspectRatio` is a new argument that takes a number (or fraction). If you pass it without also passing in `width` or `height`, it will default to using the source image width and then adjusting the height to the correct aspect ratio. Alternatively, you can pass your own `width` or `height` and it will set the other dimension. Passing both `height` and `width` will cause `aspectRatio` to be ignored in favor of the inferred aspect ratio.
 
 #### formats
 
