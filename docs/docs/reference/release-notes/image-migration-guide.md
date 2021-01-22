@@ -219,7 +219,7 @@ This section is for people who need to run the codemod with extra flags exposed 
 npm install --global jscodeshift
 ```
 
-2. Install the codemods package in your project
+2. Install the codemods package in your project.
 
 ```shell
 npm install gatsby-codemods
