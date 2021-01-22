@@ -1289,24 +1289,28 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
       queryableInterfaces.add(type.getTypeName())
     }
   })
-  const incorrectTypes = []
+  const incorrectTypes = new Set()
   schemaComposer.forEach(type => {
     if (type instanceof ObjectTypeComposer) {
       const interfaces = type.getInterfaces()
       if (
-        interfaces.some(iface => queryableInterfaces.has(iface.name)) &&
+        interfaces.some(iface =>
+          queryableInterfaces.has(iface.getTypeName())
+        ) &&
         !type.hasInterface(`Node`)
       ) {
-        incorrectTypes.push(type.getTypeName())
+        incorrectTypes.add(type.getTypeName())
       }
     }
   })
-  if (incorrectTypes.length) {
+  if (incorrectTypes.size) {
     report.panic(
       `Interfaces with the \`nodeInterface\` extension must only be ` +
         `implemented by types which also implement the \`Node\` ` +
         `interface. Check the type definition of ` +
-        `${incorrectTypes.map(t => `\`${t}\``).join(`, `)}.`
+        `${Array.from(incorrectTypes)
+          .map(t => `\`${t}\``)
+          .join(`, `)}.`
     )
   }
 }
