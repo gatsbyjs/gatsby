@@ -169,14 +169,14 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    * For images using static query, you should move to use the `StaticImage` component instead. This component takes `src`, which can be a remote image URL or a relative path to an image. Make sure you've installed `gatsby-source-filesystem` if you're going to use this component.
 
-   ```javascript
-   import { StaticImage } from "gatsby-plugin-image"
+      ```javascript
+      import { StaticImage } from "gatsby-plugin-image"
 
-   const HomePage = () => (
-        <StaticImage src="./example.jpg" alt="please include an alt" />
-     )
-   }
-   ```
+      const HomePage = () => (
+           <StaticImage src="./example.jpg" alt="please include an alt" />
+        )
+      }
+      ```
 
    You may also consider refactoring code to make use of the `getImage` helper function.
 
