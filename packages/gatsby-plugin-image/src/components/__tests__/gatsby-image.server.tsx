@@ -60,7 +60,7 @@ describe(`GatsbyImage server`, () => {
 
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
       expect((wrapper as HTMLElement).className).toMatchInlineSnapshot(
-        `gatsby-image-wrapper`
+        `"gatsby-image-wrapper"`
       )
     })
 
@@ -119,7 +119,7 @@ describe(`GatsbyImage server`, () => {
 
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
       expect((wrapper as HTMLElement).className).toMatchInlineSnapshot(
-        `gatsby-image-wrapper gatsby-image-wrapper-constrained`
+        `"gatsby-image-wrapper gatsby-image-wrapper-constrained"`
       )
     })
   })
