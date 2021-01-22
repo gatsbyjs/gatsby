@@ -68,7 +68,7 @@ Other changes to the available argument structure are in the section on [API cha
 
 #### Component changes
 
-The last change is to the JSX component. The import name is potentially different and the query result is also different.
+The last change is to the JSX component. The import name is potentially different, and the query result is also different.
 
 ```javascript
 // import Img from "gatsby-image"
