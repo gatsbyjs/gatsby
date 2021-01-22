@@ -1482,6 +1482,7 @@ export interface PrefetchPathnameArgs extends BrowserPluginArgs {
 
 export interface RouteUpdateArgs extends BrowserPluginArgs {
   location: Location
+  prevLocation: Location | null;
 }
 
 export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
