@@ -104,7 +104,7 @@ The second is a responsive image type called `constrained` that generates smalle
 
 #### formats
 
-Previously, images generated their own type, e.g. jpg, png, etc. You could also generate WebP images when using the appropriate fragment. This is now controlled using the `formats` argument. This field takes an array, `[AUTO, WEBP]` by default, where "AUTO" means the same format as the source image.`"AVIF"` is now also a valid format.
+Previously, images generated their own type, e.g. JPG, PNG, etc. You could also generate WebP images when using the appropriate fragment. This is now controlled using the `formats` argument. This field takes an array, `[AUTO, WEBP]` by default, where `AUTO` means the same format as the source image.`AVIF` is now also a valid format.
 
 #### Options nested inside objects
 
