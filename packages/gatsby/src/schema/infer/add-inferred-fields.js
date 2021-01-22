@@ -102,8 +102,9 @@ const addInferredFieldsImpl = ({
         // Add default resolvers to existing fields if the type matches
         // and the field has neither args nor resolver explicitly defined.
         const field = typeComposer.getField(key)
+        const fieldType = field.type.getType()
         if (
-          field.type.toString().replace(/[[\]!]/g, ``) ===
+          fieldType.toString().replace(/[[\]!]/g, ``) ===
             fieldConfig.type.toString() &&
           _.isEmpty(field.args) &&
           !field.resolve
