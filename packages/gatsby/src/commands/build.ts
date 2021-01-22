@@ -12,7 +12,7 @@ import { GraphQLRunner } from "../query/graphql-runner"
 import { copyStaticDirs } from "../utils/get-static-dir"
 import { initTracer, stopTracer } from "../utils/tracer"
 import db from "../db"
-import { store, readState } from "../redux"
+import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
@@ -39,15 +39,6 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { updateSiteMetadata } from "gatsby-core-utils"
-
-let cachedPageData
-let cachedWebpackCompilationHash
-if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-  const { pageData, webpackCompilationHash } = readState()
-  // extract only data that we need to reuse and let v8 garbage collect rest of state
-  cachedPageData = pageData
-  cachedWebpackCompilationHash = webpackCompilationHash
-}
 
 interface IBuildArgs extends IProgram {
   directory: string
@@ -173,17 +164,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   await flushPendingPageDataWrites()
   markWebpackStatusAsDone()
 
-  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    const { pages } = store.getState()
-    if (cachedPageData) {
-      cachedPageData.forEach((_value, key) => {
-        if (!pages.has(key)) {
-          store.dispatch(actions.removePageData({ id: key }))
-        }
-      })
-    }
-  }
-
   if (telemetry.isTrackingEnabled()) {
     // transform asset size to kB (from bytes) to fit 64 bit to numbers
     const bundleSizes = stats
@@ -208,28 +188,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   // we need to save it again to make sure our latest state has been saved
   await db.saveState()
 
-  let pagePaths = [...store.getState().pages.keys()]
-
-  // Rebuild subset of pages if user opt into GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
-  // if there were no source files (for example components, static queries, etc) changes since last build, otherwise rebuild all pages
-  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    if (
-      cachedWebpackCompilationHash === store.getState().webpackCompilationHash
-    ) {
-      pagePaths = buildUtils.getChangedPageDataKeys(
-        store.getState(),
-        cachedPageData
-      )
-    } else if (cachedWebpackCompilationHash) {
-      report.info(
-        report.stripIndent(`
-          One or more of your source files have changed since the last time you ran Gatsby. All
-          pages will be rebuilt.
-        `)
-      )
-    }
-  }
-
   const buildSSRBundleActivityProgress = report.activityTimer(
     `Building HTML renderer`,
     { parentSpan: buildSpan }
@@ -244,14 +202,22 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  const { toRegenerate, toDelete } = process.env
+    .GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
+    ? buildUtils.calcDirtyHtmlFiles(store.getState())
+    : {
+        toRegenerate: [...store.getState().pages.keys()],
+        toDelete: [],
+      }
+
   telemetry.addSiteMeasurement(`BUILD_END`, {
-    pagesCount: pagePaths.length, // number of html files that will be written
+    pagesCount: toRegenerate.length, // number of html files that will be written
     totalPagesCount: store.getState().pages.size, // total number of pages
   })
 
   const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,
-    pagePaths.length,
+    toRegenerate.length,
     0,
     {
       parentSpan: buildSpan,
@@ -261,7 +227,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   try {
     await doBuildPages(
       pageRenderer,
-      pagePaths,
+      toRegenerate,
       buildHTMLActivityProgress,
       workerPool,
       Stage.BuildHTML
@@ -297,17 +263,12 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
-  let deletedPageKeys: Array<string> = []
-  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
+  if (toDelete.length > 0) {
     const deletePageDataActivityTimer = report.activityTimer(
       `Delete previous page data`
     )
     deletePageDataActivityTimer.start()
-    deletedPageKeys = buildUtils.collectRemovedPageData(
-      store.getState(),
-      cachedPageData
-    )
-    await buildUtils.removePageFiles(publicDir, deletedPageKeys)
+    await buildUtils.removePageFiles(publicDir, toDelete)
 
     deletePageDataActivityTimer.end()
   }
@@ -340,17 +301,17 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     process.argv.includes(`--log-pages`)
   ) {
-    if (pagePaths.length) {
+    if (toRegenerate.length) {
       report.info(
-        `Built pages:\n${pagePaths
+        `Built pages:\n${toRegenerate
           .map(path => `Updated page: ${path}`)
           .join(`\n`)}`
       )
     }
 
-    if (deletedPageKeys.length) {
+    if (toDelete.length) {
       report.info(
-        `Deleted pages:\n${deletedPageKeys
+        `Deleted pages:\n${toDelete
           .map(path => `Deleted page: ${path}`)
           .join(`\n`)}`
       )
@@ -365,16 +326,16 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       `${program.directory}/.cache`,
       `newPages.txt`
     )
-    const createdFilesContent = pagePaths.length
-      ? `${pagePaths.join(`\n`)}\n`
+    const createdFilesContent = toRegenerate.length
+      ? `${toRegenerate.join(`\n`)}\n`
       : ``
 
     const deletedFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `deletedPages.txt`
     )
-    const deletedFilesContent = deletedPageKeys.length
-      ? `${deletedPageKeys.join(`\n`)}\n`
+    const deletedFilesContent = toDelete.length
+      ? `${toDelete.join(`\n`)}\n`
       : ``
 
     await fs.writeFile(createdFilesPath, createdFilesContent, `utf8`)
