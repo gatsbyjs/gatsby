@@ -228,6 +228,7 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       quality: Joi.number(),
       breakpoints: Joi.array().items(Joi.number()),
       backgroundColor: Joi.string(),
+      transformOptions: Joi.object(),
       tracedSVGOptions: Joi.object(),
       blurredOptions: Joi.object(),
       jpgOptions: Joi.object(),
