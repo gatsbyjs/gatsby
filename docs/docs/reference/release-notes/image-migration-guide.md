@@ -28,7 +28,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 
 #### GraphQL changes
 
-This is one of the bigger changes. There are no more fragments to use, instead things like layout and format are passed as arguments to the resolver.
+This is one of the bigger changes. There are no more fragments to use. Instead, things like `layout` and `format` are passed as arguments to the resolver.
 
 This is the previous syntax.
 
