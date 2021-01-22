@@ -84,7 +84,7 @@ const HomePage = ({ data }) => {
 
 ### API Changes
 
-In addition to the syntax changes for using gatsby-plugin-image, there are also changes to the API that affect the resolver arguments (and StaticImage).
+In addition to the syntax changes for using `gatsby-plugin-image`, there are also changes to the API that affect the resolver arguments (and `StaticImage`).
 
 #### fluid
 
