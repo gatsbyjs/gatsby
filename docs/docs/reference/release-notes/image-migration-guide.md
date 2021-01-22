@@ -158,7 +158,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    Due to the API changes, the codemod is not a pure 1:1 mapping. There are some changes introduced.
 
-   1. Fluid images will map to either fullWidth or constrained images. This decision is made based on the existence of maxWidth and its value. If maxWidth does not exist, it will be a fullWidth image. If it does, and the maxWidth is less than 1000, it will be a constrained image, otherwise a fullWidth image. fullWidth images do not retain their maxWidth or maxHeight fields, constrained images do, as width and height.
+   * Fluid images will map to either `fullWidth` or `constrained` images. This decision is made based on the existence of `maxWidth` and its value. If `maxWidth` does not exist, it will be a `fullWidth` image. If it does, and the `maxWidth` is less than 1000, it will be a `constrained` image, otherwise a `fullWidth` image. `fullWidth` images do not retain their `maxWidth` or `maxHeight` fields; `constrained` images do, as `width` and `height`.
 
    2. All images will generate WebP
 
