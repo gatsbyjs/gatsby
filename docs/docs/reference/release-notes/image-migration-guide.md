@@ -225,7 +225,7 @@ npm install --global jscodeshift
 npm install gatsby-codemods
 ```
 
-3. Run the codemod
+3. Run the codemod using `jscodeshift`.
 
 ```shell
 jscodeshift -t node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js .
