@@ -430,7 +430,6 @@ const imageNodeType = ({
       },
       placeholder: {
         type: ImagePlaceholderType,
-        defaultValue: `dominantColor`,
         description: stripIndent`
         Format of generated placeholder image, displayed while the main image loads. 
         BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)

@@ -215,4 +215,27 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     stripMetadata: Joi.boolean().default(true),
     defaultQuality: Joi.number().default(50),
     failOnError: Joi.boolean().default(true),
+    defaults: Joi.object({
+      formats: Joi.array().items(
+        Joi.string().valid(`auto`, `png`, `jpg`, `webp`, `avif`)
+      ),
+      placeholder: Joi.string().valid(
+        `tracedSVG`,
+        `dominantColor`,
+        `blurred`,
+        `none`
+      ),
+      quality: Joi.number(),
+      breakpoints: Joi.array().items(Joi.number()),
+      backgroundColor: Joi.string(),
+      transformOptions: Joi.object(),
+      tracedSVGOptions: Joi.object(),
+      blurredOptions: Joi.object(),
+      jpgOptions: Joi.object(),
+      pngOptions: Joi.object(),
+      webpOptions: Joi.object(),
+      avifOptions: Joi.object(),
+    }).description(
+      `Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/`
+    ),
   })
