@@ -135,7 +135,7 @@ const addInferredFieldsImpl = ({
                       `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
                       `Add the following type definition to fix this:\n\n` +
                       `  type ${typeComposer.getTypeName()} ${implementsNode}{\n` +
-                      `    ${key}: ${field.type.toString()}${extension}\n` +
+                      `    ${key}: ${fieldType.toString()}${extension}\n` +
                       `  }\n\n` +
                       `https://www.gatsbyjs.com/docs/actions/#createTypes`
                   )
