@@ -31,7 +31,7 @@ const metadataCache = new Map<string, IImageMetadata>()
 export async function getImageMetadata(
   file: FileNode,
   getDominantColor?: boolean
-): Promise<IImageMetadata | undefined> {
+): Promise<IImageMetadata> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
     const { width, height, type } = await getImageSizeAsync(file)
@@ -57,6 +57,7 @@ export async function getImageMetadata(
     metadataCache.set(file.internal.contentDigest, metadata)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err)
+    return {}
   }
 
   return metadata
@@ -123,7 +124,7 @@ export async function generateImageData({
     args.height = undefined
   }
 
-  if (!args.width && !args.height && metadata?.width) {
+  if (!args.width && !args.height && metadata.width) {
     args.width = metadata.width
   }
 
@@ -291,7 +292,6 @@ export async function generateImageData({
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
-        background: backgroundColor,
       })
       if (pathPrefix) {
         transform.pathPrefix = pathPrefix
@@ -323,7 +323,6 @@ export async function generateImageData({
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),
-        background: backgroundColor,
       },
       reporter,
     })
