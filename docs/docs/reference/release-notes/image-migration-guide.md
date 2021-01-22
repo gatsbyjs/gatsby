@@ -213,7 +213,7 @@ Due to the changes to gatsby-plugin-image, there is some functionality that is n
 
 This section is for people who need to run the codemod with extra flags exposed by `jscodeshift`, e.g. to transform file types other than those with extensions `.js`, `.ts`, `.tsx`, or `.jsx`.
 
-1. Install jscodeshift
+1. Install `jscodeshift`.
 
 ```shell
 npm install --global jscodeshift
