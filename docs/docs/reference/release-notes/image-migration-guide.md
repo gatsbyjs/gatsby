@@ -128,7 +128,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
 ## How to Migrate
 
-1. Install and update dependencies
+1. Install and update dependencies.
 
    ```shell
    npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-transformer-sharp
