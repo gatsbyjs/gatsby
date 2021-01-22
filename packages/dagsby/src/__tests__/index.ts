@@ -1,5 +1,5 @@
 // create worker & import library and run a
-import Runner from "../index"
+import dagsby from "../index"
 const uuid = require("uuid")
 import fs from "fs-extra"
 import path from "path"
@@ -12,30 +12,33 @@ let workerPool
 describe(`runs tasks`, () => {
   beforeAll(async () => {
     // Create a temporary directory
-    const id = uuid.v4()
-    const directory = path.join(os.tmpdir(), id)
-    fs.ensureDirSync(directory)
+    // const id = uuid.v4()
+    // const directory = path.join(os.tmpdir(), id)
+    // fs.ensureDirSync(directory)
 
-    const httpPort = await detectPort(6898)
-    const socketPort = await detectPort(6899)
+    // const httpPort = await detectPort(6898)
+    // const socketPort = await detectPort(7899)
 
-    workerPool = execa.node(
-      path.join(__dirname, `../../dist/worker-pool-server.js`),
-      [
-        `--numWorkers`,
-        1,
-        `--directory`,
-        directory,
-        `--socketPort`,
-        socketPort,
-        `--httpPort`,
-        httpPort,
-      ]
-    )
+    const httpPort = 10001
+    const socketPort = 10000
 
-    workerPool.stdout.pipe(process.stdout)
-    workerPool.stderr.pipe(process.stderr)
-    runner = Runner({ pools: [{ socketPort, httpPort }] })
+    // workerPool = execa.node(
+    // path.join(__dirname, `../../dist/worker-pool-server.js`),
+    // [
+    // `--numWorkers`,
+    // 1,
+    // `--directory`,
+    // directory,
+    // `--socketPort`,
+    // socketPort,
+    // `--httpPort`,
+    // httpPort,
+    // ]
+    // )
+
+    // workerPool.stdout.pipe(process.stdout)
+    // workerPool.stderr.pipe(process.stderr)
+    runner = await dagsby.createRunner({ pools: [{ socketPort, httpPort }] })
     return runner
   })
 
@@ -44,13 +47,28 @@ describe(`runs tasks`, () => {
   })
 
   it(`runs a simple task`, async () => {
-    const result = await runner.runTask({
+    const task = await dagsby.createTask({
       func: args => args.a + args.b,
-      args: {
-        a: 1,
-        b: 2,
-      },
+      argsSchema: [
+        {
+          name: `a`,
+          type: `double`,
+        },
+        {
+          name: `b`,
+          type: `double`,
+        },
+      ],
     })
+    await runner.setupTask(task)
+    const result = await runner.executeTask({ task, args: { a: 1, b: 2 } })
+    // const result = await runner.runTask({
+    // func: args => args.a + args.b,
+    // args: {
+    // a: 1,
+    // b: 2,
+    // },
+    // })
     expect(result).toHaveProperty(`executionTime`)
     expect(result.result).toBe(3)
   })
@@ -89,19 +107,27 @@ describe(`runs tasks`, () => {
     expect(result3.result).toBe(`Hello Hal`)
   })
 
-  it(`supports uploading files to be used for the task`, async () => {
-    const result = await runner.runTask({
+  it.only(`supports uploading files to be used for the task`, async () => {
+    const task = await dagsby.createTask({
       func: (args, { files }) => {
         const fs = require(`fs`)
         const text = fs.readFileSync(files.text.localPath)
 
         return `${args.preface} ${text}`
       },
-      args: { preface: `yeeesss` },
+      argsSchema: [{ name: `preface`, type: `string` }],
       files: {
         text: {
           originPath: path.join(__dirname, `mocks`, `hello.txt`),
         },
+      },
+    })
+    await runner.setupTask(task)
+    console.log(task)
+    const result = await runner.executeTask({
+      task,
+      args: {
+        preface: `yeeesss`,
       },
     })
 

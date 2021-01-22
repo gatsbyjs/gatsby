@@ -54,23 +54,18 @@ async function md5File(filePath) {
   }
 }
 
-async function prepareTask(task) {
-  if (taskFiles.has(task.digest)) {
-    task.files = taskFiles.get(task.digest)
-  } else {
-    if (task.files && !_.isEmpty(task.files)) {
-      await Promise.all(
-        _.toPairs(task.files).map(async ([name, file]) => {
-          const digest = await md5File(file.originPath)
-          // Discard the file path
-          task.files[name] = { ...file, digest }
-        })
-      )
-      taskFiles.set(task.digest, task.files)
-    }
+async function prepareTask(files) {
+  if (files && !_.isEmpty(files)) {
+    await Promise.all(
+      _.toPairs(files).map(async ([name, file]) => {
+        const digest = await md5File(file.originPath)
+        // Discard the file path
+        files[name] = { ...file, digest }
+      })
+    )
   }
 
-  return task
+  return files
 }
 
 module.exports = prepareTask

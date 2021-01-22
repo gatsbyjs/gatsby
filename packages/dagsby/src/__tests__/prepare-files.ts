@@ -1,4 +1,4 @@
-const prepareTask = require(`../prepare-task`)
+const prepareFiles = require(`../prepare-files`)
 const path = require(`path`)
 
 describe(`prepare-task`, () => {
@@ -12,7 +12,7 @@ describe(`prepare-task`, () => {
       args: { a: 1 },
     }
 
-    const preparedTask = await prepareTask(task)
+    const preparedTask = await prepareFiles(task)
 
     expect(preparedTask).toMatchSnapshot()
     expect(preparedTask.files.test.digest).toBeTruthy()
@@ -28,7 +28,7 @@ describe(`prepare-task`, () => {
       args: { a: 1 },
     }
 
-    const preparedTask = await prepareTask(task)
+    const preparedTask = await prepareFiles(task)
 
     expect(preparedTask).toMatchSnapshot()
     expect(preparedTask.files.test.digest).toBeTruthy()

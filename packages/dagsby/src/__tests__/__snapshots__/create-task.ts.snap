@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create task creates a simple task 1`] = `
+Object {
+  "argsSchema": Object {
+    "fields": Array [
+      Object {
+        "name": "name",
+        "type": "string",
+      },
+    ],
+    "type": "record",
+  },
+  "digest": 72259,
+  "func": "args => \`hello \${args.name}!\`",
+  "funcDigest": 19923,
+}
+`;
+
+exports[`create task creates a simple task with files 1`] = `
+Object {
+  "argsSchema": Object {
+    "fields": Array [
+      Object {
+        "name": "name",
+        "type": "string",
+      },
+    ],
+    "type": "record",
+  },
+  "dependencies": Object {
+    "lodash": "latest",
+  },
+  "digest": 95176,
+  "files": Object {
+    "text": Object {
+      "digest": "6b8c327f0fc6f470c030a5b6c71154c5",
+      "originPath": "<PROJECT_ROOT>/packages/dagsby/src/__tests__/mocks/hello.txt",
+    },
+  },
+  "func": "args => \`hello \${args.name}!\`",
+  "funcDigest": 19923,
+}
+`;

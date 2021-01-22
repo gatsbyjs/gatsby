@@ -6,7 +6,16 @@ const http = require("http")
 const os = require(`os`)
 const { performance } = require("perf_hooks")
 const _ = require(`lodash`)
+const avro = require("avsc")
 const setupFunctionDir = require(`./setup-function-dir`)
+const redis = require("redis")
+const { promisify } = require("util")
+const client = redis.createClient()
+const getAsync = promisify(client.get).bind(client)
+const setAsync = promisify(client.set).bind(client)
+
+const avroSchemas = new Map()
+let avroType
 
 const yargs = require("yargs/yargs")
 const { hideBin } = require("yargs/helpers")
@@ -16,7 +25,7 @@ const argv = yargs(hideBin(process.argv))
   .default(`socketPort`, () => 6899)
   .default(`httpPort`, () => 6898).argv
 
-console.log(`worker-pool-server`, argv)
+// console.log(`worker-pool-server`, argv)
 
 const options = {
   directory: argv.directory,
@@ -28,13 +37,14 @@ const options = {
 const functionDir = path.join(options.directory, `.cache`, `worker-tasks`)
 const filesDir = path.join(options.directory, `.cache`, `files`)
 
+const tasks = {}
+
 if (cluster.isMaster) {
   console.log(`worker-server`, options)
 
   const controls = {}
 
   // Setup directories
-  console.log({ filesDir, functionDir })
   fs.ensureDirSync(functionDir)
   fs.ensureDirSync(filesDir)
 
@@ -47,21 +57,41 @@ if (cluster.isMaster) {
   let socket
   console.log(`master pid ${process.pid}`)
 
+  function broadcastToWorkers(msg) {
+    for (const id in cluster.workers) {
+      cluster.workers[id].send(msg)
+    }
+  }
+
   io.on("connection", sock => {
-    console.log(`connected to socket`)
+    console.log(`connection`)
     socket = sock
     socket.emit(`serverReady`)
     // sock.on(`*`, (type, action) => {
-    sock.on(`file`, async file => {
+    socket.on(`file`, async file => {
       // Make path
       const localPath = path.join(filesDir, file.digest)
       await fs.writeFile(localPath, file.fileBlob)
 
       const fileObject = { ...file, localPath } //, fileBlob };
       delete fileObject.fileBlob
-      for (const id in cluster.workers) {
-        cluster.workers[id].send({ type: file.digest, action: fileObject })
-      }
+      broadcastToWorkers({ type: file.digest, action: fileObject })
+    })
+
+    socket.on(`setupTask`, async task => {
+      const { funcPath } = await setupFunctionDir({
+        task,
+        functionDir,
+        emit: emitObj => {
+          broadcastToWorkers({ type: emitObj.msg })
+        },
+      })
+
+      task.funcPath = funcPath
+      console.log(task)
+      broadcastToWorkers({ type: `newTask`, action: task })
+      // tasks[task.digest] = task
+      socket.emit(`task-setup-${task.digest}`)
     })
   })
 
@@ -69,13 +99,10 @@ if (cluster.isMaster) {
   function messageHandler(msg) {
     if (msg.cmd) {
       if (msg.cmd === `emit`) {
-        console.log(`socket.io emit`, msg.args)
         socket.emit(msg.emit, msg.args)
       }
       if (msg.cmd === `broadcast`) {
-        for (const id in cluster.workers) {
-          cluster.workers[id].send({ type: msg.msg })
-        }
+        broadcastToWorkers({ type: msg.msg })
       }
     }
   }
@@ -91,37 +118,58 @@ if (cluster.isMaster) {
 } else {
   const parentMessages = new EventEmitter()
   process.on(`message`, msg => parentMessages.emit(msg.type, msg.action))
+
+  parentMessages.on(`newTask`, task => {
+    console.log(`newTask`, task)
+    tasks[task.digest] = task
+  })
+
   // Workers can share any TCP connection
   // In this case it is an HTTP server
   http
     .createServer((req, res) => {
-      let data = ""
-      req.on("data", chunk => {
-        data += chunk
+      console.log(`new request`, req.url)
+      let data
+      req.on(`data`, chunk => {
+        // console.log({ chunk })
+        if (!data) {
+          data = chunk
+        } else if (chunk) {
+          data += chunk
+        }
       })
-      req.on("end", async () => {
-        const groupedTasks = JSON.parse(data)
-        // Recreate shape of original task object
-        const tasks = []
-        Object.keys(groupedTasks).forEach(taskDigest => {
-          groupedTasks[taskDigest].tasks.forEach(task => {
-            const group = groupedTasks[taskDigest]
-            // console.log(task, group)
-            tasks.push({
-              ...task,
-              digest: taskDigest,
-              dependencies: group.dependencies,
-              funcDigest: group.funcDigest,
-              func: group.func,
-            })
-          })
-        })
-        console.log(`tasks`, tasks)
-        // process.exit()
-        const results = await Promise.all(tasks.map(task => runTask(task)))
-        console.log(`received results`)
-        res.writeHead(200)
-        res.end(JSON.stringify(results))
+      req.on(`end`, async chunk => {
+        // console.log({ chunk })
+        // console.log(`req.path`, req.url)
+        // console.log({ buffer, data })
+        if (req.url === `/schema`) {
+          // Store the schema
+          // console.log(data)
+          const schema = JSON.parse(data)
+          const dataType = avro.parse(JSON.parse(schema.schema))
+          // console.log({ dataType })
+          avroSchemas.set(schema.digest, dataType)
+          avroType = dataType
+          process.send({ cmd: `broadcast`, msg: schema })
+          res.writeHead(200)
+          res.end(`ok`)
+        } else {
+          // const buffer = Buffer.concat(data)
+          console.log(`data.length`, data.length)
+          console.log(data)
+          console.log(tasks)
+          const taskDef = tasks[req.url.slice(1)]
+          console.log(taskDef)
+          const avroType = avro.Type.forSchema(taskDef.argsSchema)
+          console.log(avroType)
+          const tasksArgs = avroType.fromBuffer(data)
+          console.log({ tasksArgs })
+          const results = await Promise.all(
+            tasksArgs.map(args => runTask(taskDef, args))
+          )
+          res.writeHead(200)
+          res.end(JSON.stringify(results))
+        }
       })
       // Notify master about the request
       // process.send({ cmd: "notifyRequest" })
@@ -165,14 +213,8 @@ if (cluster.isMaster) {
     return filesObj
   }
 
-  const runTask = async task => {
-    // console.log(task)
-    const { funcPath } = await setupFunctionDir({
-      task,
-      functionDir,
-      parentMessages,
-      emit: emitObj => process.send(emitObj),
-    })
+  const runTask = async (task, args) => {
+    console.log({ task, args })
 
     // Ensure files are downloaded and get local path.
     let files
@@ -181,15 +223,16 @@ if (cluster.isMaster) {
     }
 
     return actuallyRunTask({
-      funcPath,
-      args: task.args,
+      funcPath: task.funcPath,
+      args: args.args,
       files,
-      id: task.id,
-      cache: { set: (key, value) => {}, get: key => {} },
+      id: args.id,
+      cache: { set: setAsync, get: getAsync },
     })
   }
 
   const actuallyRunTask = async ({ funcPath, args, files, id, cache }) => {
+    console.log({ funcPath, args, files, id })
     // console.time(`runTask ${id}`)
     let taskRunner = require(funcPath)
     if (taskRunner.default) {

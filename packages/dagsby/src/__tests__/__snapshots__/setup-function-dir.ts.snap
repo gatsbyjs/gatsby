@@ -16,20 +16,3 @@ Object {
   "version": "1.0.0",
 }
 `;
-
-exports[`setup-function-dir installs dependencies only once when multiple workers try to setup a directory 1`] = `
-Object {
-  "author": "",
-  "dependencies": Object {
-    "lodash": "^4.17.20",
-  },
-  "description": "",
-  "keywords": Array [],
-  "license": "ISC",
-  "main": "index.js",
-  "scripts": Object {
-    "test": "echo \\"Error: no test specified\\" && exit 1",
-  },
-  "version": "1.0.0",
-}
-`;
