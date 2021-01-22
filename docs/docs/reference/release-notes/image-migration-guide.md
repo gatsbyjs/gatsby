@@ -110,7 +110,7 @@ Previously, images generated their own type, e.g. JPG, PNG, etc. You could also 
 
 Previously, transformations like `grayscale` and quality options such as `pngQuality` were top level query arguments. This has changed.
 
-See the [how to guide] for specifics, but `grayscale` now exists within the `transformOptions` argument, and `pngQuality` inside `pngOptions`.
+`grayscale` now exists within the `transformOptions` argument, and `pngQuality` inside `pngOptions`. See the [`gatsby-plugin-image` How-To Guide](/docs/how-to/images-and-media/using-gatsby-plugin-image/) for specifics.
 
 ### Breaking changes
 
