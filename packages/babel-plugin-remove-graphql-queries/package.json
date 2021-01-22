@@ -12,10 +12,12 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^0.12.0-next.0",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "gatsby-core-utils": "^1.10.0-next.0"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^2.0.0",
+    "@babel/core": "^7.0.0"
   },
   "license": "MIT",
   "main": "index.js",
