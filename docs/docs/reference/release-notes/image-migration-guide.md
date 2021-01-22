@@ -158,55 +158,54 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    Due to the API changes, the codemod is not a pure 1:1 mapping. There are some changes introduced.
 
-   * Fluid images will map to either `fullWidth` or `constrained` images. This decision is made based on the existence of `maxWidth` and its value. If `maxWidth` does not exist, it will be a `fullWidth` image. If it does, and the `maxWidth` is less than 1000, it will be a `constrained` image, otherwise a `fullWidth` image. `fullWidth` images do not retain their `maxWidth` or `maxHeight` fields; `constrained` images do, as `width` and `height`.
+   - Fluid images will map to either `fullWidth` or `constrained` images. This decision is made based on the existence of `maxWidth` and its value. If `maxWidth` does not exist, it will be a `fullWidth` image. If it does, and the `maxWidth` is less than 1000, it will be a `constrained` image, otherwise a `fullWidth` image. `fullWidth` images do not retain their `maxWidth` or `maxHeight` fields; `constrained` images do, as `width` and `height`.
 
-   2. All images will generate WebP.
-
+   - All images will generate WebP.
 
    The codemod will output warnings in a number of different scenarios and point you to the file in question so you can inspect the changes manually.
 
 4. Consider manual changes.
 
-   * For images using static query, you should move to use the `StaticImage` component instead. This component takes `src`, which can be a remote image URL or a relative path to an image. Make sure you've installed `gatsby-source-filesystem` if you're going to use this component.
+- For images using static query, you should move to use the `StaticImage` component instead. This component takes `src`, which can be a remote image URL or a relative path to an image. Make sure you've installed `gatsby-source-filesystem` if you're going to use this component.
 
-      ```javascript
-      import { StaticImage } from "gatsby-plugin-image"
+  ```javascript
+  import { StaticImage } from "gatsby-plugin-image"
 
-      const HomePage = () => (
-           <StaticImage src="./example.jpg" alt="please include an alt" />
-        )
-      }
-      ```
+  const HomePage = () => (
+        <StaticImage src="./example.jpg" alt="please include an alt" />
+    )
+  }
+  ```
 
-   * You may also consider refactoring code to make use of the `getImage` helper function.
+- You may also consider refactoring code to make use of the `getImage` helper function.
 
-      ```javascript
-      import { getImage, GatsbyImage } from "gatsby-plugin-image"
+  ```javascript
+  import { getImage, GatsbyImage } from "gatsby-plugin-image"
 
-      const HomePage = ({ data }) => {
-        const image = getImage(data.file)
-        return (
-          <>
-            <GatsbyImage image={image} alt="please include an alt" />
-          </>
-        )
-      }
-      ```
+  const HomePage = ({ data }) => {
+    const image = getImage(data.file)
+    return (
+      <>
+        <GatsbyImage image={image} alt="please include an alt" />
+      </>
+    )
+  }
+  ```
 
-   * Finally, if you were previously using `src`, e.g. for an SEO component, you'll want to use the `getSrc` helper function as the internal structure of the return object has changed.
+- Finally, if you were previously using `src`, e.g. for an SEO component, you'll want to use the `getSrc` helper function as the internal structure of the return object has changed.
 
-      ```javascript
-      import { getSrc } from "gatsby-plugin-image"
+  ```javascript
+  import { getSrc } from "gatsby-plugin-image"
 
-      const HomePage = ({ data }) => {
-        const imagePath = getSrc(data.file)
-        return (
-          <>
-            <SEO imageSrc={imagePath} />
-          </>
-        )
-      }
-      ```
+  const HomePage = ({ data }) => {
+    const imagePath = getSrc(data.file)
+    return (
+      <>
+        <SEO imageSrc={imagePath} />
+      </>
+    )
+  }
+  ```
 
 ## `jscodeshift`
 
