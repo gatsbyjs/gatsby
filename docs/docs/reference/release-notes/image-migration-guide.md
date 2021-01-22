@@ -4,7 +4,7 @@ title: Migrating from gatsby-image to gatsby-plugin-image
 
 This document is provided to help users of `gatsby-image` migrate to using `gatsby-plugin-image`.
 
-Note that you can use both packages at the same time and may need to in situations where you're using a gatsby-image compatible CMS as a data source and that CMS plugin has not yet updated to a version compatible with the new API.
+Note that you can use both packages at the same time. You may need to in situations where you're using a `gatsby-image`-compatible CMS as a data source, and that CMS plugin has not yet updated to a version compatible with the new API.
 
 If you're looking for other documentation on the new plugin, see:
 
