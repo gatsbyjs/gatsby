@@ -193,20 +193,20 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
       }
       ```
 
-   Finally, if you were previously using `src`, e.g. for an SEO component, you'll want to use the `getSrc` helper function as the internal structure of the return object has changed.
+   * Finally, if you were previously using `src`, e.g. for an SEO component, you'll want to use the `getSrc` helper function as the internal structure of the return object has changed.
 
-   ```javascript
-   import { getSrc } from "gatsby-plugin-image"
+      ```javascript
+      import { getSrc } from "gatsby-plugin-image"
 
-   const HomePage = ({ data }) => {
-     const imagePath = getSrc(data.file)
-     return (
-       <>
-         <SEO imageSrc={imagePath} />
-       </>
-     )
-   }
-   ```
+      const HomePage = ({ data }) => {
+        const imagePath = getSrc(data.file)
+        return (
+          <>
+            <SEO imageSrc={imagePath} />
+          </>
+        )
+      }
+      ```
 
 ## `jscodeshift`
 
