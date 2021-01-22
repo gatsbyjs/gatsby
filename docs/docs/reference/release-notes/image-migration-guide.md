@@ -178,20 +178,20 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
       }
       ```
 
-   You may also consider refactoring code to make use of the `getImage` helper function.
+   * You may also consider refactoring code to make use of the `getImage` helper function.
 
-   ```javascript
-   import { getImage, GatsbyImage } from "gatsby-plugin-image"
+      ```javascript
+      import { getImage, GatsbyImage } from "gatsby-plugin-image"
 
-   const HomePage = ({ data }) => {
-     const image = getImage(data.file)
-     return (
-       <>
-         <GatsbyImage image={image} alt="please include an alt" />
-       </>
-     )
-   }
-   ```
+      const HomePage = ({ data }) => {
+        const image = getImage(data.file)
+        return (
+          <>
+            <GatsbyImage image={image} alt="please include an alt" />
+          </>
+        )
+      }
+      ```
 
    Finally, if you were previously using `src`, e.g. for an SEO component, you'll want to use the `getSrc` helper function as the internal structure of the return object has changed.
 
