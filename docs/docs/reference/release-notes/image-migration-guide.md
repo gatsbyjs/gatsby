@@ -164,7 +164,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
    The API change to options is not currently codemoded. TODO: should this be?
 
-   The codemod will warn the user in a number of different scenarios and point you to the file in question so you can inspect the changes manually.
+   The codemod will output warnings in a number of different scenarios and point you to the file in question so you can inspect the changes manually.
 
 4. Consider manual changes
 
