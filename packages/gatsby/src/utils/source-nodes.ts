@@ -3,9 +3,9 @@ import { Span } from "opentracing"
 import apiRunner from "./api-runner-node"
 import { store } from "../redux"
 import { getNode, getNodes } from "../redux/nodes"
-import { boundActionCreators } from "../redux/actions"
+import { actions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
-const { deleteNode } = boundActionCreators
+const { deleteNode } = actions
 import { Node } from "../../index"
 
 /**

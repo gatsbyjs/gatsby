@@ -15,7 +15,7 @@ import path from "path"
 import { slash } from "gatsby-core-utils"
 
 import { store, emitter } from "../redux/"
-import { boundActionCreators } from "../redux/actions"
+import { actions } from "../redux/actions"
 import { IGatsbyStaticQueryComponents } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
@@ -97,7 +97,7 @@ const handleQuery = (
       oldQuery?.hash !== query.hash ||
       oldQuery?.query !== query.text
     ) {
-      boundActionCreators.replaceStaticQuery({
+      actions.replaceStaticQuery({
         name: query.name,
         componentPath: query.path,
         id: query.id,
@@ -233,7 +233,7 @@ export const updateStateAndRunQueries = async (
     const { isStaticQuery = false, text = `` } =
       queries.get(c.componentPath) || {}
 
-    boundActionCreators.queryExtracted({
+    actions.queryExtracted({
       componentPath: c.componentPath,
       query: isStaticQuery ? `` : text,
     })

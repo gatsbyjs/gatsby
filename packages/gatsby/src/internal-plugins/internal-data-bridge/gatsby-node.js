@@ -4,7 +4,7 @@ const systemPath = require(`path`)
 const _ = require(`lodash`)
 
 const { emitter } = require(`../../redux`)
-const { boundActionCreators } = require(`../../redux/actions`)
+const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../redux/nodes`)
 
 function transformPackageJson(json) {
@@ -197,5 +197,5 @@ exports.onCreatePage = ({ createContentDigest, page, actions }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  boundActionCreators.deleteNode({ node })
+  actions.deleteNode({ node })
 })

@@ -1,5 +1,5 @@
-import { boundActionCreators } from "../redux/actions"
-const { deletePage } = boundActionCreators
+import { actions } from "../redux/actions"
+const { deletePage } = actions
 
 import { isEqualWith, IsEqualCustomizer } from "lodash"
 import { IGatsbyPage } from "../redux/types"
