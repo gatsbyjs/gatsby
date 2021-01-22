@@ -123,7 +123,7 @@ function dagsby(options) {
     batcher.add(task)
   }
 
-  const batchSize = 50
+  const batchSize = 30
   const batcher = new Bottleneck.Batcher({
     maxTime: 1,
     maxSize: batchSize,

@@ -12,10 +12,20 @@ const taskType = avro.Type.forValue([cheese])
 
 console.log(JSON.stringify(taskType, null, 4))
 
-const numPages = 10000
-const pages = []
-_.range(numPages).map(page => {
-  pages.push({
+// const numPages = 10000
+const pages100 = []
+const pages10000 = []
+_.range(100).map(page => {
+  pages100.push({
+    pagePath: page.toString(),
+    publicDir: cheese.publicDir,
+    chiz: 1,
+    chiz2: 1.1,
+  })
+})
+
+_.range(10000).map(page => {
+  pages10000.push({
     pagePath: page.toString(),
     publicDir: cheese.publicDir,
     chiz: 1,
@@ -25,51 +35,52 @@ _.range(numPages).map(page => {
 
 let start = 0
 let end = 0
+let total = 0
 
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
-JSON.stringify(pages)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
+JSON.stringify(pages100)
 start = performance.now()
-JSON.stringify(pages)
+JSON.stringify(pages100)
 end = performance.now()
 
-console.log(`json`, end - start)
-const str = JSON.stringify(pages)
+total = end - start
+console.log(`json`, total, 1000 / (total / 100))
+
+const str = JSON.stringify(pages100)
+console.log(`json length`, str.length)
 start = performance.now()
 JSON.parse(str)
 end = performance.now()
 
 console.log(`json deserialize`, end - start)
-// _.range(100).forEach(() => {
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// taskType.toBuffer(pages)
-// })
+_.range(100).forEach(() => {
+  taskType.toBuffer(pages100)
+})
 
-// start = performance.now()
-// taskType.toBuffer(pages)
-// end = performance.now()
+start = performance.now()
+taskType.toBuffer(pages100)
+end = performance.now()
 
-// console.log(`avro`, end - start)
+total = end - start
+console.log(`avro 100`, total, 1000 / (total / 100))
 
-const buf = taskType.toBuffer(pages)
+start = performance.now()
+taskType.toBuffer(pages10000)
+end = performance.now()
+
+total = end - start
+console.log(`avro 10000`, total, 1000 / (total / 10000))
+
+const buf = taskType.toBuffer(pages100)
+console.log(`avro length`, buf.length)
 
 _.range(100).forEach(() => {
   taskType.fromBuffer(buf)
@@ -78,5 +89,6 @@ start = performance.now()
 const result = taskType.fromBuffer(buf)
 end = performance.now()
 
-console.log(`avro deserialize`, end - start)
+total = end - start
+console.log(`avro deserialize`, total, 1000 / (total / 100))
 console.log({ result: result[0] })

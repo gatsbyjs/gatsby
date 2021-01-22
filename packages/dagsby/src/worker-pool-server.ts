@@ -88,7 +88,22 @@ if (cluster.isMaster) {
       })
 
       task.funcPath = funcPath
-      console.log(task)
+
+      // Process files
+      if (task.files && !_.isEmpty(task.files)) {
+        await Promise.all(
+          _.toPairs(task.files).map(async ([name, file]) => {
+            const localPath = path.join(filesDir, file.digest)
+            await fs.writeFile(localPath, file.fileBlob)
+
+            const fileObject = { ...file, localPath } //, fileBlob };
+            delete fileObject.fileBlob
+            task.files[name] = fileObject
+          })
+        )
+      }
+
+      // console.log(task)
       broadcastToWorkers({ type: `newTask`, action: task })
       // tasks[task.digest] = task
       socket.emit(`task-setup-${task.digest}`)
@@ -120,7 +135,7 @@ if (cluster.isMaster) {
   process.on(`message`, msg => parentMessages.emit(msg.type, msg.action))
 
   parentMessages.on(`newTask`, task => {
-    console.log(`newTask`, task)
+    // console.log(`newTask`, task)
     tasks[task.digest] = task
   })
 
@@ -128,7 +143,7 @@ if (cluster.isMaster) {
   // In this case it is an HTTP server
   http
     .createServer((req, res) => {
-      console.log(`new request`, req.url)
+      // console.log(`new request`, req.url)
       let data
       req.on(`data`, chunk => {
         // console.log({ chunk })
@@ -155,15 +170,15 @@ if (cluster.isMaster) {
           res.end(`ok`)
         } else {
           // const buffer = Buffer.concat(data)
-          console.log(`data.length`, data.length)
-          console.log(data)
-          console.log(tasks)
+          // console.log(`data.length`, data.length)
+          // console.log(data)
+          // console.log(tasks)
           const taskDef = tasks[req.url.slice(1)]
-          console.log(taskDef)
+          // console.log(taskDef)
           const avroType = avro.Type.forSchema(taskDef.argsSchema)
-          console.log(avroType)
+          // console.log(avroType)
           const tasksArgs = avroType.fromBuffer(data)
-          console.log({ tasksArgs })
+          // console.log({ tasksArgs })
           const results = await Promise.all(
             tasksArgs.map(args => runTask(taskDef, args))
           )
@@ -214,25 +229,25 @@ if (cluster.isMaster) {
   }
 
   const runTask = async (task, args) => {
-    console.log({ task, args })
+    // console.log({ task, args })
 
     // Ensure files are downloaded and get local path.
-    let files
-    if (task.files) {
-      files = await getFiles(task.files)
-    }
+    // let files
+    // if (task.files) {
+    // files = await getFiles(task.files)
+    // }
 
     return actuallyRunTask({
       funcPath: task.funcPath,
       args: args.args,
-      files,
+      files: task.files,
       id: args.id,
       cache: { set: setAsync, get: getAsync },
     })
   }
 
   const actuallyRunTask = async ({ funcPath, args, files, id, cache }) => {
-    console.log({ funcPath, args, files, id })
+    // console.log({ funcPath, args, files, id })
     // console.time(`runTask ${id}`)
     let taskRunner = require(funcPath)
     if (taskRunner.default) {

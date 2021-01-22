@@ -20,6 +20,7 @@ async function createTask(taskDef) {
     )
     task.digest = taskDigest
   }
+  console.log({ digest: task.digest })
 
   // Validate the args schema
   if (taskDef.argsSchema) {

@@ -107,7 +107,7 @@ describe(`runs tasks`, () => {
     expect(result3.result).toBe(`Hello Hal`)
   })
 
-  it.only(`supports uploading files to be used for the task`, async () => {
+  it(`supports uploading files to be used for the task`, async () => {
     const task = await dagsby.createTask({
       func: (args, { files }) => {
         const fs = require(`fs`)
@@ -134,8 +134,8 @@ describe(`runs tasks`, () => {
     expect(result.result).toMatchSnapshot()
   })
 
-  it(`supports tasks declaring dependencies`, async () => {
-    const result = await runner.runTask({
+  it.only(`supports tasks declaring dependencies`, async () => {
+    const task = await dagsby.createTask({
       func: (args, { files }) => {
         const fs = require(`fs`)
         const _ = require(`lodash`)
@@ -144,7 +144,7 @@ describe(`runs tasks`, () => {
 
         return `${args.preface} ${text} \n\n ${camelCase}`
       },
-      args: { preface: `yeeesss` },
+      argsSchema: [{ name: `preface`, type: `string` }],
       dependencies: {
         lodash: `latest`,
       },
@@ -153,6 +153,12 @@ describe(`runs tasks`, () => {
           originPath: path.join(__dirname, `mocks`, `hello.txt`),
         },
       },
+    })
+    await runner.setupTask(task)
+
+    const result = await runner.executeTask({
+      task,
+      args: { preface: `yeeesss` },
     })
 
     expect(result.result).toMatchSnapshot()

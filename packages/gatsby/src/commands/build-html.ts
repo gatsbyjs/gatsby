@@ -5,6 +5,41 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import telemetry from "gatsby-telemetry"
 import { chunk } from "lodash"
 import webpack from "webpack"
+const path = require(`path`)
+const runnerPath = path.join(
+  process.cwd(),
+  `../../packages/dagsby/dist/index.js`
+)
+const Runner = require(runnerPath)
+
+// Setup worker pool
+import os from "os"
+// const uuid = require("uuid")
+const execa = require("execa")
+
+// const id = uuid.v4()
+const id = `create-pages-benchmark`
+const directory = path.join(os.tmpdir(), id)
+fs.ensureDirSync(directory)
+const httpPort = 9898
+const socketPort = 8899
+const workerPool = execa.node(
+  path.join(process.cwd(), `../../packages/dagsby/dist/worker-pool-server.js`),
+  [
+    `--numWorkers`,
+    1,
+    `--directory`,
+    directory,
+    `--socketPort`,
+    socketPort,
+    `--httpPort`,
+    httpPort,
+  ]
+)
+
+workerPool.stdout.pipe(process.stdout)
+workerPool.stderr.pipe(process.stderr)
+const runner = Runner({ pools: [{ socketPort, httpPort }] })
 
 import { emitter } from "../redux"
 import webpackConfig from "../utils/webpack.config"
@@ -122,12 +157,44 @@ export const buildRenderer = async (
 }
 
 export const deleteRenderer = async (rendererPath: string): Promise<void> => {
+  return
   try {
     await fs.remove(rendererPath)
     await fs.remove(`${rendererPath}.map`)
   } catch (e) {
     // This function will fail on Windows with no further consequences.
   }
+}
+
+async function ssrPage({ pagePath }, { files }) {
+  // console.log(`hi`, { pagePath })
+  const fs = require(`fs`)
+  const path = require(`path`)
+
+  const rendererPath = path.join(__dirname, `render-page.js`)
+  if (!fs.existsSync(rendererPath)) {
+    fs.copyFileSync(files.renderPage.localPath, rendererPath)
+  }
+
+  const renderer = require(rendererPath)
+
+  const htmlStr = await new Promise(resolve =>
+    renderer.default(
+      {
+        pagePath: pagePath,
+        pageData: {
+          result: { data: { body: `` } },
+          componentChunkName: `component---src-templates-blank-js`,
+        },
+      },
+      (err, str) => {
+        // console.log(str)
+        resolve(str)
+      }
+    )
+  )
+
+  return `ok`
 }
 
 const renderHTMLQueue = async (
@@ -144,19 +211,47 @@ const renderHTMLQueue = async (
     [`gatsby_log_level`, process.env.gatsby_log_level],
   ]
 
-  const segments = chunk(pages, 50)
+  console.log(pages)
+  await Promise.all(
+    pages.map(page =>
+      runner.runTask({
+        func: ssrPage,
+        args: { pagePath: page },
+        files: {
+          renderPage: {
+            originPath: htmlComponentRendererPath,
+          },
+        },
+        dependencies: {
+          react: `latest`, // Get from project eventually
+          "react-dom": `latest`,
+          "remark-html": `latest`,
+          "remark-parse": `latest`,
+          unified: `latest`,
+          "node-fetch": `latest`,
+          "@reach/router": `latest`,
+          "common-tags": `latest`,
+          debug: `latest`,
+          lodash: `latest`,
+          "fs-extra": "latest",
+          semver: `latest`,
+        },
+      })
+    )
+  )
+  // const segments = chunk(pages, 50)
 
-  await Bluebird.map(segments, async pageSegment => {
-    await workerPool.renderHTML({
-      envVars,
-      htmlComponentRendererPath,
-      paths: pageSegment,
-    })
+  // await Bluebird.map(segments, async pageSegment => {
+  // await workerPool.renderHTML({
+  // envVars,
+  // htmlComponentRendererPath,
+  // paths: pageSegment,
+  // })
 
-    if (activity && activity.tick) {
-      activity.tick(pageSegment.length)
-    }
-  })
+  // if (activity && activity.tick) {
+  // activity.tick(pageSegment.length)
+  // }
+  // })
 }
 
 class BuildHTMLError extends Error {

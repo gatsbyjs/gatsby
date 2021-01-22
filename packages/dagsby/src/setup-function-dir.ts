@@ -13,12 +13,19 @@ module.exports = async function setupFunctionDir({
 }) {
   const funcDir = path.join(functionDir, task.digest.toString())
   const funcPath = path.join(functionDir, task.digest.toString(), `index.js`)
+  const SETUPpath = path.join(functionDir, task.digest.toString(), `SETUP`)
+
+  console.log(`setting up function ${funcPath}`)
+  if (fs.existsSync(SETUPpath)) {
+    console.log(`found`)
+    return { funcPath, funcDir }
+  }
+
   if (!funcDirs.has(funcDir)) {
     fs.ensureDirSync(funcDir)
     funcDirs.add(funcDir)
   }
 
-  console.log(`setting up function ${funcPath}`)
   console.time(`setting up function ${funcPath}`)
   fs.writeFileSync(funcPath, `module.exports = ${task.func}`)
   if (task.dependencies) {
@@ -42,6 +49,8 @@ module.exports = async function setupFunctionDir({
 
   emit({ cmd: `broadcast`, msg: `taskSetup-${task.digest}` })
   console.timeEnd(`setting up function ${funcPath}`)
+
+  fs.writeFileSync(SETUPpath, `true`)
 
   return { funcPath, funcDir }
 }
