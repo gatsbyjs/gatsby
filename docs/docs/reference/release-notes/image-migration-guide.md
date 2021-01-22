@@ -114,7 +114,7 @@ Previously, transformations like `grayscale` and quality options such as `pngQua
 
 ### Breaking changes
 
-Due to the changes to gatsby-plugin-image, there is some functionality that is no longer supported.
+Due to the changes to `gatsby-plugin-image`, there is some functionality that is no longer supported.
 
 1. GatsbyImage is no longer a class component and therefore cannot be extended. You can use [composition](https://reactjs.org/docs/composition-vs-inheritance.html) instead.
 2. Fluid images no longer exist, and the fullWidth replacement does not take maxWidth or maxHeight
