@@ -146,7 +146,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
    }
    ```
 
-3. Run the codemod
+3. Run the codemod.
 
    Note that if you need to do a partial migration, e.g. because you're using a CMS that doesn't yet support the new plugin alongside local image files, you'll want to make use of the `optional-path` to run against individual files.
 
