@@ -96,7 +96,7 @@ The second is a responsive image type called `constrained` that generates smalle
 
 #### maxWidth
 
-`maxWidth` and `maxHeight` are deprecated for all image types. For constrained and fixed images, use `width` and `height`. For fullWidth images look at the `breakpoints` option.
+`maxWidth` and `maxHeight` are deprecated for all image types. For `constrained` and `fixed` images, use `width` and `height`. For `fullWidth` images, look at the `breakpoints` option.
 
 #### aspectRatio
 
