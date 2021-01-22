@@ -97,6 +97,7 @@ export async function generateImageData({
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
+    backgroundColor,
   } = args
 
   args.formats = args.formats || [`auto`, `webp`]
@@ -118,11 +119,11 @@ export async function generateImageData({
     reporter.warn(
       `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
-    args.width = metadata.width
+    args.width = metadata?.width
     args.height = undefined
   }
 
-  if (!args.width && !args.height && metadata.width) {
+  if (!args.width && !args.height && metadata?.width) {
     args.width = metadata.width
   }
 
@@ -187,15 +188,19 @@ export async function generateImageData({
     reporter,
   })
 
+  const sharedOptions = {
+    quality,
+    ...transformOptions,
+    fit,
+    cropFocus,
+    background: backgroundColor,
+  }
+
   const transforms = imageSizes.sizes.map(outputWidth => {
     const width = Math.round(outputWidth)
     const transform = createTransformObject({
-      quality,
-      ...transformOptions,
-      fit,
-      cropFocus,
+      ...sharedOptions,
       ...options,
-      tracedSVGOptions,
       width,
       height: Math.round(width / imageSizes.aspectRatio),
       toFormat: primaryFormat,
@@ -237,6 +242,7 @@ export async function generateImageData({
   const imageProps: IGatsbyImageData = {
     layout,
     placeholder: undefined,
+    backgroundColor,
     images: {
       fallback: {
         src: primaryImage.src,
@@ -251,10 +257,7 @@ export async function generateImageData({
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        quality,
-        ...transformOptions,
-        fit,
-        cropFocus,
+        ...sharedOptions,
         ...args.avifOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
@@ -283,14 +286,12 @@ export async function generateImageData({
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        quality,
-        ...transformOptions,
-        fit,
-        cropFocus,
+        ...sharedOptions,
         ...args.webpOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
         toFormat: `webp`,
+        background: backgroundColor,
       })
       if (pathPrefix) {
         transform.pathPrefix = pathPrefix
@@ -317,13 +318,12 @@ export async function generateImageData({
     const { src: fallback } = await base64({
       file,
       args: {
+        ...sharedOptions,
         ...options,
-        ...transformOptions,
-        fit,
-        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),
+        background: backgroundColor,
       },
       reporter,
     })

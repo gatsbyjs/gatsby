@@ -40,6 +40,7 @@ export interface ISharpGatsbyImageArgs {
   avifOptions?: Record<string, unknown>
   blurredOptions?: { width?: number; toFormat?: ImageFormat }
   breakpoints?: Array<number>
+  backgroundColor?: string
 }
 
 export interface IImageSizeArgs {
