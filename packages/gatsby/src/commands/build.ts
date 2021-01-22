@@ -178,7 +178,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     if (cachedPageData) {
       cachedPageData.forEach((_value, key) => {
         if (!pages.has(key)) {
-          actions.removePageData(key)
+          actions.removePageData({ id: key })
         }
       })
     }
