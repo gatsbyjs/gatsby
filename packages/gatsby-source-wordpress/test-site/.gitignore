@@ -1,0 +1,6 @@
+.env.WORDPRESS_BASIC_AUTH
+WordPress
+.cache
+Public
+node_modules
+.wordpress-cache
