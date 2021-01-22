@@ -83,7 +83,7 @@ const fetchLanguageConfig = async ({
 
 exports.fetchLanguageConfig = fetchLanguageConfig
 
-const handleReferences = (node, languageConfig, { getNode, createNodeId }) => {
+const handleReferences = (node, { getNode, createNodeId }) => {
   const relationships = node.relationships
   const rootNodeLanguage = node.langcode
 
@@ -117,9 +117,7 @@ const handleReferences = (node, languageConfig, { getNode, createNodeId }) => {
           node[k] = meta
         }
       } else {
-        const referencedNodeId = createNodeId(
-          `${rootNodeLanguage}${v.data.id}`
-        )
+        const referencedNodeId = createNodeId(`${rootNodeLanguage}${v.data.id}`)
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)
@@ -176,7 +174,6 @@ const handleWebhookUpdate = async (
     getNode,
     reporter,
     store,
-    languageConfig,
   },
   pluginOptions = {}
 ) => {
@@ -186,7 +183,7 @@ const handleWebhookUpdate = async (
 
   const nodesToUpdate = [newNode]
 
-  handleReferences(newNode, languageConfig, {
+  handleReferences(newNode, {
     getNode,
     createNodeId,
   })

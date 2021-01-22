@@ -355,7 +355,7 @@ exports.sourceNodes = async (
 
   // second pass - handle relationships and back references
   nodes.forEach(node => {
-    handleReferences(node, languageConfig, {
+    handleReferences(node, {
       getNode: nodes.get.bind(nodes),
       createNodeId,
     })
