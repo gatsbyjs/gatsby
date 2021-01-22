@@ -1243,9 +1243,7 @@ exports[`build and update individual types applies automatic extensions to infer
   internal: Internal!
   date(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -1253,9 +1251,7 @@ exports[`build and update individual types applies automatic extensions to infer
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -1270,9 +1266,7 @@ exports[`build and update individual types applies automatic extensions to infer
 "type NewTypeNested {
   date(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -1280,9 +1274,7 @@ exports[`build and update individual types applies automatic extensions to infer
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -1297,9 +1289,7 @@ exports[`build and update individual types applies automatic extensions to infer
 "type NewTypeNestedNested {
   date(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -1307,9 +1297,7 @@ exports[`build and update individual types applies automatic extensions to infer
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
