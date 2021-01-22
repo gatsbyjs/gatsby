@@ -1207,7 +1207,8 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     expect(String(queryFields.external.type)).toEqual(`ExternalType`)
     expect(String(queryFields.external2.type)).toEqual(`String`)
     expect(print(`ExternalType`)).toMatchInlineSnapshot(`
-      "type ExternalType {
+      "\\"\\"\\"\\"\\"\\"
+      type ExternalType {
         externalFoo(injectedFooArg: String): String
         foo(fooArg: String): Foo
       }"
