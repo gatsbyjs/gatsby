@@ -154,7 +154,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
    npx gatsby-codemods gatsby-plugin-image <optional-path>
    ```
 
-   Without an `optional-path`, the codemod will run against all the files in your current directory, so running it in root is recommended. It will ignore `node_modules`, `.cache` and `public` automatically. It will also respect any local Babel configuration in your project. The codemod is designed to run against files with the extensions `.ts, .js, .tsx, .jsx`. If this does not cover your project, or you require other customizations, see the section on using [jscodeshift](#jscodeshift).
+   Without an `optional-path`, the codemod will run against all the files in your current directory, so running it in root is recommended. It will ignore `node_modules`, `.cache`, and `public` automatically. It will also respect any local Babel configuration in your project. The codemod is designed to run against files with the extensions `.ts`, `.js`, `.tsx`, and `.jsx`. If this does not cover your project, or you require other customizations, see the section on using [`jscodeshift`](#jscodeshift).
 
    Due to the API changes, the codemod is not a pure 1:1 mapping. There are some changes introduced.
 
