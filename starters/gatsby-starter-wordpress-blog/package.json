@@ -15,7 +15,7 @@
     "gatsby-plugin-offline": "^3.3.3",
     "gatsby-plugin-react-helmet": "^3.3.14",
     "gatsby-plugin-sharp": "^2.7.1",
-    "gatsby-source-wordpress-experimental": "^7.0.0",
+    "gatsby-source-wordpress": "^4.0.0",
     "gatsby-transformer-sharp": "^2.5.21",
     "html-react-parser": "^0.14.1",
     "lodash": "^4.17.20",

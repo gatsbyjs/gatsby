@@ -27,7 +27,7 @@ Now that your Builds webhook is set up, when content is updated in WordPress you
 
 ## Setting Up Preview
 
-Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box as long as your Gatsby pages have the corresponding node id as part of their pageContext. See [this starter's gatsby-node.js](https://github.com/TylerBarnes/using-gatsby-source-wordpress/tree/master/gatsby-node.js) for an example of how to set up your Gatsby pages. See the [feature page on Preview](../features/preview.md) for more information about how Preview works, considerations you should keep in mind while writing Preview-ready templates, and how to debug Preview templates.
+Once configured in the GatsbyJS settings page in wp-admin, Previews will work out of the box as long as your Gatsby pages have the corresponding node id as part of their pageContext. See [this starter's gatsby-node.js](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-wordpress-blog/tree/master/gatsby-node.js) for an example of how to set up your Gatsby pages. See the [feature page on Preview](../features/preview.md) for more information about how Preview works, considerations you should keep in mind while writing Preview-ready templates, and how to debug Preview templates.
 
 ### Connecting Preview
 
