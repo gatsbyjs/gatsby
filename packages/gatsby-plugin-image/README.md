@@ -32,7 +32,7 @@ If you're using the new `GatsbyImage` in addition to `StaticImage`, you'll also 
 module.exports = {
   plugins: [
     `gatsby-plugin-image`,
-    `gatsby-psource-filesystem`,
+    `gatsby-source-filesystem`,
     `gatsby-plugin-sharp`,
     // `gatsby-transformer-sharp` // Needed for dynamic images
   ],
@@ -41,13 +41,13 @@ module.exports = {
 
 ## Using the Gatsby Image components
 
-### Decide which component to use
+### Deciding which component to use
 
-The Gatsby Image plugin includes two image components: one for static and one for dynamic images. The simplest way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
+The Gatsby Image plugin includes two image components: one for static and one for dynamic images. An effective way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
 
 ### Static images
 
-If you are using an image that will be the same each time the component is used, such as a logo or front page hero image, you can use the `StaticImage` component. The image can be either a local file in your project, or an image hosted on a remote server. Any remote images are downloaded and resized at build time.
+If you are using an image that will be the same each time the component is used, such as a logo or front page hero image, you can use the `StaticImage` component. The image can be a local file in your project or an image hosted on a remote server. Any remote images are downloaded and resized at build time.
 
 1. **Add the image to your project.**
 
