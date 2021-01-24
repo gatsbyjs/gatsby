@@ -86,7 +86,7 @@ An example:
   Link: </page-data/index/page-data.json>; rel=preload; as=fetch; crossorigin
 ```
 
-Therefore, expect the size of the \_headers file to grow linearly with the number of pages in your application.
+Therefore, expect the size of the _headers file to grow linearly with the number of pages in your application.
 
 > **Note:** Gatsby also adds these preload tags in your pages' index.html files, whether or not you are using this plugin.
 
