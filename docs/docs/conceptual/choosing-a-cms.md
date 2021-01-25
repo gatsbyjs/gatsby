@@ -2,7 +2,7 @@
 title: Choosing Your CMS(s)
 ---
 
-At their core, most medium-sized and large Gatsby websites are backed by a so-called "headless CMS". Headless CMSes excel at allowing content editors to flexibly create a content schema of inter-related content models. 
+At their core, most medium-sized and large Gatsby websites are backed by a so-called "headless CMS". Headless CMSes excel at allowing content editors to flexibly create a content schema of inter-related content models.
 
 One of the key questions people ask when building a Gatsby site is "which CMS should I use?"
 
@@ -18,7 +18,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - **two general-purpose full-stack CMSs** running in "headless" mode: Wordpress and Drupal
 
-- **one specialized CMS** (Shopify). 
+- **one specialized CMS** (Shopify).
 
 **Second**, consider the price point:
 
@@ -26,7 +26,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - If you're looking more at "Team", "Pro", or "Business" price points (eg $29, $99, or $299 per month), the above CMSs are all good options, plus Wordpress and Drupal .
 
-- If you're looking more at an "enterprise" project in the four digits per month and up, Contentful is the leader, with others using Contentstack, Sanity, and Strapi. 
+- If you're looking more at an "enterprise" project in the four digits per month and up, Contentful is the leader, with others using Contentstack, Sanity, and Strapi.
 
 **Third,** consider project requirements.
 
@@ -54,16 +54,16 @@ Apollo does this [for their blog](https://twitter.com/apollographql/status/12504
 
 One of the key considerations when using content in multiple systems is that at some point one  content often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU (which lives in Shopify).
 
-The easiest way to create relationship references across CMSs is through one CMS storing unique IDs of content living in another CMS. In this case, you'd store an array of Shopify product IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in gatsby-node.js.  
+The easiest way to create relationship references across CMSs is through one CMS storing unique IDs of content living in another CMS. In this case, you'd store an array of Shopify product IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in gatsby-node.js.
 
 ## Other non-CMS options
 
 Finally, there are several options for content composition and management that work well as non-CMS choices.
 
--   Markdown and MDX are common choices for documentation and small developer sites, since they are natural composition formats for developers and allow embedding components within your content. There are several guides in our [Routing and Pages section](https://www.gatsbyjs.com/docs/how-to/routing/) on using Markdown and MDX. You may also want to consider a git-based CMS like NetlifyCMS or Foresty.io to provide a UI for this workflow.
+- Markdown and MDX are common choices for documentation and small developer sites, since they are natural composition formats for developers and allow embedding components within your content. There are several guides in our [Routing and Pages section](https://www.gatsbyjs.com/docs/how-to/routing/) on using Markdown and MDX. You may also want to consider a git-based CMS like NetlifyCMS or Foresty.io to provide a UI for this workflow.
 
--   JSON or YAML is a common choice for hierarchical data, for example, a site navigation tree, especially when the underlying content is stored in markdown. 
+- JSON or YAML is a common choice for hierarchical data, for example, a site navigation tree, especially when the underlying content is stored in markdown.
 
--   Web-based spreadsheets, like Airtable or Google Sheets, are common use cases for tabular data. Airtable used this to power their store locator, and ProPublica used this as a database for interactive data journalism graphics.
+- Web-based spreadsheets, like Airtable or Google Sheets, are common use cases for tabular data. Airtable used this to power their store locator, and ProPublica used this as a database for interactive data journalism graphics.
 
--   Other vertical-specific solutions for specific parts of the website, eg having a Careers page pull data from Greenhouse or Lever.
+- Other vertical-specific solutions for specific parts of the website, eg having a Careers page pull data from Greenhouse or Lever.
