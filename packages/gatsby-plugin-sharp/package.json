@@ -33,7 +33,8 @@
     "@types/sharp": "^0.26.1",
     "babel-preset-gatsby-package": "^0.12.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-image": "^0.7.0-next.0"
+    "gatsby-plugin-image": "^0.7.0-next.0",
+    "gatsby-plugin-utils": "^0.9.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sharp#readme",
   "keywords": [
