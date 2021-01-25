@@ -1,4 +1,5 @@
 import { actions } from "../redux/actions"
+import { store } from "../redux"
 const { deletePage } = actions
 
 import { isEqualWith, IsEqualCustomizer } from "lodash"
@@ -17,7 +18,7 @@ export function deleteUntouchedPages(
       page.updatedAt < timeBeforeApisRan &&
       page.path !== `/404.html`
     ) {
-      deletePage(page)
+      store.dispatch(deletePage(page))
       deletedPages.push(page.path, `/page-data${page.path}`)
     }
   })

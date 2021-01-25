@@ -12,6 +12,7 @@ import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
 import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
+import { store } from "../../redux"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
@@ -47,7 +48,9 @@ export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
 )
 
 const setQueryRunningFinished = async (): Promise<void> => {
-  actions.setProgramStatus(ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED)
+  store.dispatch(
+    actions.setProgramStatus(ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED)
+  )
 }
 
 export const markQueryFilesDirty = assign<IBuildContext>({

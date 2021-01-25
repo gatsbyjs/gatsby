@@ -117,11 +117,13 @@ export async function queryRunner(
 ): Promise<IExecutionResult> {
   const { program } = store.getState()
 
-  actions.queryStart({
-    path: queryJob.id,
-    componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
-  })
+  store.dispatch(
+    actions.queryStart({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      isPage: queryJob.isPage,
+    })
+  )
 
   // Run query
   let result: IExecutionResult
@@ -199,21 +201,25 @@ export async function queryRunner(
   }
 
   // Broadcast that a page's query has run.
-  actions.pageQueryRun({
-    path: queryJob.id,
-    componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
-  })
+  store.dispatch(
+    actions.pageQueryRun({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      isPage: queryJob.isPage,
+    })
+  )
 
   // Sets pageData to the store, here for easier access to the resultHash
   if (
     process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
     queryJob.isPage
   ) {
-    actions.setPageData({
-      id: queryJob.id,
-      resultHash,
-    })
+    store.dispatch(
+      actions.setPageData({
+        id: queryJob.id,
+        resultHash,
+      })
+    )
   }
   return result
 }

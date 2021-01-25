@@ -178,7 +178,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     if (cachedPageData) {
       cachedPageData.forEach((_value, key) => {
         if (!pages.has(key)) {
-          actions.removePageData({ id: key })
+          store.dispatch(actions.removePageData({ id: key }))
         }
       })
     }
@@ -199,7 +199,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`)
+  store.dispatch(actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
 
   await db.saveState()
 

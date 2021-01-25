@@ -1,5 +1,5 @@
 import reporter from "gatsby-cli/lib/reporter"
-import { emitter } from "../redux"
+import { emitter, store } from "../redux"
 import apiRunnerNode from "../utils/api-runner-node"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { actions } from "../redux/actions"
@@ -22,5 +22,5 @@ export async function postBootstrap({
     bootstrap finished - ${process.uptime().toFixed(3)}s
   `)
   emitter.emit(`BOOTSTRAP_FINISHED`, {})
-  actions.setProgramStatus(`BOOTSTRAP_FINISHED`)
+  store.dispatch(actions.setProgramStatus(`BOOTSTRAP_FINISHED`))
 }

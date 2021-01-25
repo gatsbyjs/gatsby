@@ -97,13 +97,15 @@ const handleQuery = (
       oldQuery?.hash !== query.hash ||
       oldQuery?.query !== query.text
     ) {
-      actions.replaceStaticQuery({
-        name: query.name,
-        componentPath: query.path,
-        id: query.id,
-        query: query.text,
-        hash: query.hash,
-      })
+      store.dispatch(
+        actions.replaceStaticQuery({
+          name: query.name,
+          componentPath: query.path,
+          id: query.id,
+          query: query.text,
+          hash: query.hash,
+        })
+      )
 
       debug(
         `Static query in ${component} ${
@@ -233,10 +235,12 @@ export const updateStateAndRunQueries = async (
     const { isStaticQuery = false, text = `` } =
       queries.get(c.componentPath) || {}
 
-    actions.queryExtracted({
-      componentPath: c.componentPath,
-      query: isStaticQuery ? `` : text,
-    })
+    store.dispatch(
+      actions.queryExtracted({
+        componentPath: c.componentPath,
+        query: isStaticQuery ? `` : text,
+      })
+    )
   })
 
   let queriesWillNotRun = false

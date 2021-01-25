@@ -7,7 +7,7 @@ import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
-import { emitter } from "../../redux"
+import { emitter, store as internalStore } from "../../redux"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -135,7 +135,7 @@ export const renderDevHTML = ({
     const { createServerVisitedPage } = actions
     // Record this page was requested. This will kick off adding its page
     // component to the ssr bundle (if that's not already happened)
-    createServerVisitedPage(pageObj.componentChunkName)
+    internalStore.dispatch(createServerVisitedPage(pageObj.componentChunkName))
 
     // Ensure the query has been run and written out.
     try {
