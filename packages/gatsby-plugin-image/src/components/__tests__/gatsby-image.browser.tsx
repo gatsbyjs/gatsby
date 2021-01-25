@@ -26,7 +26,7 @@ describe(`GatsbyImage browser`, () => {
     image = {
       width: 100,
       height: 100,
-      layout: `fluid`,
+      layout: `fullWidth`,
       images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
       placeholder: { sources: [] },
 
@@ -36,9 +36,9 @@ describe(`GatsbyImage browser`, () => {
     beforeHydrationContent = document.createElement(`div`)
     beforeHydrationContent.innerHTML = `
       <div
-        class="gatsby-image-wrapper"
+        class="gatsby-image-wrapper gatsby-image-wrapper-constrained"
         data-gatsby-image-wrapper=""
-        style="position: relative; display: inline-block;"
+        style="position: relative;"
       >
         <div
           style="max-width: 100px; display: block;"

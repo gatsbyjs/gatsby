@@ -88,22 +88,6 @@ export function rgbToHex(red, green, blue) {
     .slice(1)}`
 }
 
-const warnForIgnoredParameters = (layout, parameters, filepath, reporter) => {
-  const ignoredParams = Object.entries(parameters).filter(([_, value]) =>
-    Boolean(value)
-  )
-  if (ignoredParams.length) {
-    reporter.warn(
-      `The following provided parameter(s): ${ignoredParams
-        .map(param => param.join(`: `))
-        .join(
-          `, `
-        )} for the image at ${filepath} are ignored in ${layout} image layouts.`
-    )
-  }
-  return
-}
-
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 const DEFAULT_FLUID_SIZE = 800
 
@@ -111,10 +95,10 @@ const dedupeAndSortDensities = values =>
   Array.from(new Set([1, ...values])).sort()
 
 export function calculateImageSizes(args) {
-  const { width, maxWidth, height, maxHeight, file, layout, reporter } = args
+  const { width, height, file, layout, reporter } = args
 
   // check that all dimensions provided are positive
-  const userDimensions = { width, maxWidth, height, maxHeight }
+  const userDimensions = { width, height }
   const erroneousUserDimensions = Object.entries(userDimensions).filter(
     ([_, size]) => typeof size === `number` && size < 1
   )
@@ -128,11 +112,11 @@ export function calculateImageSizes(args) {
 
   if (layout === `fixed`) {
     return fixedImageSizes(args)
-  } else if (layout === `fluid` || layout === `constrained`) {
-    return fluidImageSizes(args)
+  } else if (layout === `fullWidth` || layout === `constrained`) {
+    return responsiveImageSizes(args)
   } else {
     reporter.warn(
-      `No valid layout was provided for the image at ${file.absolutePath}. Valid image layouts are fixed, fluid, and constrained.`
+      `No valid layout was provided for the image at ${file.absolutePath}. Valid image layouts are fixed, fullWidth, and constrained.`
     )
     return []
   }
@@ -141,25 +125,15 @@ export function fixedImageSizes({
   file,
   imgDimensions,
   width,
-  maxWidth,
   height,
-  maxHeight,
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  srcSetBreakpoints,
   reporter,
 }) {
   let aspectRatio = imgDimensions.width / imgDimensions.height
   const { fit = `cover` } = transformOptions
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities)
-
-  warnForIgnoredParameters(
-    `fixed`,
-    { maxWidth, maxHeight },
-    file.absolutePath,
-    reporter
-  )
 
   // If both are provided then we need to check the fit
   if (width && height) {
@@ -223,96 +197,85 @@ export function fixedImageSizes({
   }
 }
 
-export function fluidImageSizes({
-  file,
+export function responsiveImageSizes({
   imgDimensions,
   width,
-  maxWidth,
   height,
   transformOptions = {},
-  maxHeight,
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  srcSetBreakpoints,
-  reporter,
+  breakpoints,
+  layout,
 }) {
   const { fit = `cover` } = transformOptions
 
-  // warn if ignored parameters are passed in
-  warnForIgnoredParameters(
-    `fluid and constrained`,
-    { width, height },
-    file.absolutePath,
-    reporter
-  )
   let sizes
   let aspectRatio = imgDimensions.width / imgDimensions.height
   // Sort, dedupe and ensure there's a 1
   const densities = dedupeAndSortDensities(outputPixelDensities)
 
   // If both are provided then we need to check the fit
-  if (maxWidth && maxHeight) {
+  if (width && height) {
     const calculated = getDimensionsAndAspectRatio(imgDimensions, {
-      width: maxWidth,
-      height: maxHeight,
+      width: width,
+      height: height,
       fit,
     })
-    maxWidth = calculated.width
-    maxHeight = calculated.height
+    width = calculated.width
+    height = calculated.height
     aspectRatio = calculated.aspectRatio
   }
 
-  // Case 1: maxWidth of maxHeight were passed in, make sure it isn't larger than the actual image
-  maxWidth = maxWidth && Math.min(maxWidth, imgDimensions.width)
-  maxHeight = maxHeight && Math.min(maxHeight, imgDimensions.height)
+  // Case 1: width or height were passed in, make sure it isn't larger than the actual image
+  width = width && Math.min(width, imgDimensions.width)
+  height = height && Math.min(height, imgDimensions.height)
 
-  // Case 2: neither maxWidth or maxHeight were passed in, use default size
-  if (!maxWidth && !maxHeight) {
-    maxWidth = Math.min(DEFAULT_FLUID_SIZE, imgDimensions.width)
-    maxHeight = maxWidth / aspectRatio
+  // Case 2: neither width or height were passed in, use default size
+  if (!width && !height) {
+    width = Math.min(DEFAULT_FLUID_SIZE, imgDimensions.width)
+    height = width / aspectRatio
   }
 
-  // if it still hasn't been found, calculate maxWidth from the derived maxHeight
-  if (!maxWidth) {
-    maxWidth = maxHeight * aspectRatio
+  // if it still hasn't been found, calculate width from the derived height
+  if (!width) {
+    width = height * aspectRatio
   }
 
-  const originalMaxWidth = maxWidth
+  const originalWidth = width
   const isTopSizeOverriden =
-    imgDimensions.width < maxWidth || imgDimensions.height < maxHeight
+    imgDimensions.width < width || imgDimensions.height < height
   if (isTopSizeOverriden) {
-    maxWidth = imgDimensions.width
-    maxHeight = imgDimensions.height
+    width = imgDimensions.width
+    height = imgDimensions.height
   }
 
-  maxWidth = Math.round(maxWidth)
+  width = Math.round(width)
 
-  // Create sizes (in width) for the image if no custom breakpoints are
-  // provided. If the max width of the container for the rendered markdown file
-  // is 800px, the sizes would then be: 200, 400, 800, 1600 if using
-  // the default outputPixelDensities
-  //
-  // This is enough sizes to provide close to the optimal image size for every
-  // device size / screen resolution while (hopefully) not requiring too much
-  // image processing time (Sharp has optimizations thankfully for creating
-  // multiple sizes of the same input file)
-  if (srcSetBreakpoints?.length > 0) {
-    sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
+  if (breakpoints?.length > 0) {
+    sizes = breakpoints.filter(size => size <= imgDimensions.width)
+
+    // If a larger breakpoint has been filtered-out, add the actual image width instead
+    if (
+      sizes.length < breakpoints.length &&
+      !sizes.includes(imgDimensions.width)
+    ) {
+      sizes.push(imgDimensions.width)
+    }
   } else {
-    sizes = densities.map(density => Math.round(density * maxWidth))
+    sizes = densities.map(density => Math.round(density * width))
     sizes = sizes.filter(size => size <= imgDimensions.width)
   }
 
   // ensure that the size passed in is included in the final output
-  if (!sizes.includes(maxWidth)) {
-    sizes.push(maxWidth)
+  if (layout === `constrained` && !sizes.includes(width)) {
+    sizes.push(width)
   }
   sizes = sizes.sort((a, b) => a - b)
   return {
     sizes,
     aspectRatio,
-    presentationWidth: originalMaxWidth,
-    presentationHeight: Math.round(originalMaxWidth / aspectRatio),
-    unscaledWidth: maxWidth,
+    presentationWidth: originalWidth,
+    presentationHeight: Math.round(originalWidth / aspectRatio),
+    unscaledWidth: width,
   }
 }
 
@@ -328,7 +291,7 @@ export const getSizes = (width, layout) => {
       return `${width}px`
 
     // Image is always the width of the screen
-    case `fluid`:
+    case `fullWidth`:
       return `100vw`
 
     default:

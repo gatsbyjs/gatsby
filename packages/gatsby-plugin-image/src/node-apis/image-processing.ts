@@ -7,9 +7,10 @@ import {
 } from "gatsby"
 import fs from "fs-extra"
 import path from "path"
-import { ImageProps, SharpProps } from "../utils"
 import { watchImage } from "./watcher"
 import type { FileSystemNode } from "gatsby-source-filesystem"
+import { IStaticImageProps } from "../components/static-image.server"
+import { ISharpGatsbyImageArgs } from "../image-utils"
 
 const supportedTypes = new Set([`image/png`, `image/jpeg`, `image/webp`])
 export interface IImageMetadata {
@@ -70,7 +71,7 @@ export async function writeImages({
   createNode,
   store,
 }: {
-  images: Map<string, ImageProps>
+  images: Map<string, IStaticImageProps>
   pathPrefix: string
   cacheDir: string
   reporter: Reporter
@@ -84,10 +85,11 @@ export async function writeImages({
     async ([hash, { src, ...args }]) => {
       let file: FileSystemNode | undefined
       let fullPath
-      if (process.env.GATSBY_EXPERIMENTAL_REMOTE_IMAGES && isRemoteURL(src)) {
+      if (isRemoteURL(src)) {
         let createRemoteFileNode
         try {
-          ;({ createRemoteFileNode } = require(`gatsby-source-filesystem`))
+          createRemoteFileNode = require(`gatsby-source-filesystem`)
+            .createRemoteFileNode
         } catch (e) {
           reporter.panic(`Please install gatsby-source-filesystem`)
         }
@@ -181,7 +183,7 @@ export async function writeImages({
 
 export async function writeImage(
   file: FileSystemNode,
-  args: SharpProps,
+  args: ISharpGatsbyImageArgs,
   pathPrefix: string,
   reporter: Reporter,
   cache: GatsbyCache,

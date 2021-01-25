@@ -7,6 +7,7 @@ import {
   ReactEventHandler,
   SetStateAction,
   Dispatch,
+  RefObject,
 } from "react"
 import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
@@ -16,6 +17,7 @@ import {
   IGatsbyImageHelperArgs,
   generateImageData,
   Layout,
+  EVERY_BREAKPOINT,
 } from "../image-utils"
 const imageCache = new Set<string>()
 
@@ -53,31 +55,44 @@ export function getWrapperProps(
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
   "data-gatsby-image-wrapper": string
 } {
-  const wrapperStyle: CSSProperties = {
-    position: `relative`,
-    overflow: `hidden`,
-  }
+  const wrapperStyle: CSSProperties = {}
+
+  let className = `gatsby-image-wrapper`
 
   if (layout === `fixed`) {
     wrapperStyle.width = width
     wrapperStyle.height = height
   } else if (layout === `constrained`) {
-    wrapperStyle.display = `inline-block`
+    if (!global.GATSBY___IMAGE) {
+      wrapperStyle.display = `inline-block`
+    }
+    className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
   }
 
   return {
-    className: `gatsby-image-wrapper`,
+    className,
     "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
 }
 
+export async function applyPolyfill(
+  ref: RefObject<HTMLImageElement>
+): Promise<void> {
+  if (!(`objectFitPolyfill` in window)) {
+    await import(
+      /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
+    )
+  }
+  ;(window as any).objectFitPolyfill(ref.current)
+}
+
 export function useGatsbyImage({
   pluginName = `useGatsbyImage`,
+  breakpoints = EVERY_BREAKPOINT,
   ...args
 }: IGatsbyImageHelperArgs): IGatsbyImageData {
-  // TODO: use context to get default plugin options and spread them in here
-  return generateImageData({ pluginName, ...args })
+  return generateImageData({ pluginName, breakpoints, ...args })
 }
 
 export function getMainProps(
@@ -85,9 +100,9 @@ export function getMainProps(
   isLoaded: boolean,
   images: any,
   loading?: "eager" | "lazy",
-  toggleLoaded?: any,
+  toggleLoaded?: (loaded: boolean) => void,
   cacheKey?: string,
-  ref?: any,
+  ref?: RefObject<HTMLImageElement>,
   style: CSSProperties = {}
 ): MainImageProps {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
@@ -114,6 +129,13 @@ export function getMainProps(
     } else {
       toggleLoaded(true)
     }
+  }
+
+  // Polyfill "object-fit" if unsupported (mostly IE)
+  if (ref?.current && !(`objectFit` in document.documentElement.style)) {
+    ref.current.dataset.objectFit = style.objectFit ?? `cover`
+    ref.current.dataset.objectPosition = `${style.objectPosition ?? `50% 50%`}`
+    applyPolyfill(ref)
   }
 
   // fallback when it's not configured in gatsby-config.
@@ -176,7 +198,7 @@ export function getPlaceholderProps(
       wrapperStyle.left = 0
       wrapperStyle.bottom = 0
       wrapperStyle.right = 0
-    } else if (layout === `fluid`) {
+    } else if (layout === `fullWidth`) {
       wrapperStyle.position = `absolute`
       wrapperStyle.top = 0
       wrapperStyle.left = 0
