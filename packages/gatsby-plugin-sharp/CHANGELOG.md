@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.13.0-next.1...gatsby-plugin-sharp@2.14.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+### Features
+
+- **gatsby-plugin-image:** Change fullWidth to use breakpoints ([#29002](https://github.com/gatsbyjs/gatsby/issues/29002)) ([9bcc12c](https://github.com/gatsbyjs/gatsby/commit/9bcc12c57728bb7ca08cefe4f2f4c684b65d3111))
+
 # [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.13.0-next.0...gatsby-plugin-sharp@2.13.0-next.1) (2021-01-12)
 
 ### Bug Fixes

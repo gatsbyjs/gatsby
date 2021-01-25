@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.9.0-next.0...gatsby-codemods@1.10.0-next.0) (2021-01-18)
+
+### Features
+
+- **gatsby-codemods:** Handle or warn on nested options changes ([#29046](https://github.com/gatsbyjs/gatsby/issues/29046)) ([2439b44](https://github.com/gatsbyjs/gatsby/commit/2439b4440e7c756ae6c09b0e854c91b484d9a462))
+
 # [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.8.0-next.0...gatsby-codemods@1.9.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-codemods

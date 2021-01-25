@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.9.0-next.1...gatsby-plugin-mdx@1.10.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Add `root` to plugin validation ([#29010](https://github.com/gatsbyjs/gatsby/issues/29010)) ([3163ca6](https://github.com/gatsbyjs/gatsby/commit/3163ca67d44b79c727dd3e331fb56b21707877a5))
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
 # [1.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@1.9.0-next.0...gatsby-plugin-mdx@1.9.0-next.1) (2021-01-12)
 
 ### Performance Improvements

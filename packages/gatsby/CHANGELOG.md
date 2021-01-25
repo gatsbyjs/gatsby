@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.32.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.1...gatsby@2.32.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsby:** Always render the body component to ensure needed head & pre/post body components are added ([#29077](https://github.com/gatsbyjs/gatsby/issues/29077)) ([e998870](https://github.com/gatsbyjs/gatsby/commit/e99887039d822d3940069c9f35655e9653b27967))
+- **gatsby:** fix broken GraphQL resolver tracing ([#29015](https://github.com/gatsbyjs/gatsby/issues/29015)) ([48db6ac](https://github.com/gatsbyjs/gatsby/commit/48db6ac672220c21b4fef9b117237c73d622a344))
+- **gatsby:** Use fast-refresh for React 17 ([#28930](https://github.com/gatsbyjs/gatsby/issues/28930)) ([90b6e3d](https://github.com/gatsbyjs/gatsby/commit/90b6e3d3c5526e4f3db891019969f7cfddc11958))
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+### Features
+
+- **gatsby:** Add eslint rules to warn against bad patterns in pageTemplates (for Fast Refresh) ([#28689](https://github.com/gatsbyjs/gatsby/issues/28689)) ([9a55d12](https://github.com/gatsbyjs/gatsby/commit/9a55d1231331ebd8e1fab5496a85ba0a14dacdca))
+- **gatsby:** allow to skip cache persistence ([#29047](https://github.com/gatsbyjs/gatsby/issues/29047)) ([bd5b5f7](https://github.com/gatsbyjs/gatsby/commit/bd5b5f75d3c95819c7bf6a548e4c4c98aaae5dfe))
+- **gatsby:** bump opt-in % to dev-ssr to 20% ([#29075](https://github.com/gatsbyjs/gatsby/issues/29075)) ([a1921b5](https://github.com/gatsbyjs/gatsby/commit/a1921b537cda6cbfd73188fba8ea0d6a8dba3ef7))
+- **gatsby-graphiql-explorer:** add support for magic fragments ([#28878](https://github.com/gatsbyjs/gatsby/issues/28878)) ([a03e862](https://github.com/gatsbyjs/gatsby/commit/a03e862fe1ec54ac6609a67528234476dfb76dfa))
+
 # [2.31.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.0...gatsby@2.31.0-next.1) (2021-01-12)
 
 ### Bug Fixes

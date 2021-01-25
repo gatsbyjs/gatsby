@@ -7,6 +7,7 @@ import {
   ReactEventHandler,
   SetStateAction,
   Dispatch,
+  RefObject,
 } from "react"
 import { Node } from "gatsby"
 import { PlaceholderProps } from "./placeholder"
@@ -72,6 +73,17 @@ export function getWrapperProps(
   }
 }
 
+export async function applyPolyfill(
+  ref: RefObject<HTMLImageElement>
+): Promise<void> {
+  if (!(`objectFitPolyfill` in window)) {
+    await import(
+      /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
+    )
+  }
+  ;(window as any).objectFitPolyfill(ref.current)
+}
+
 export function useGatsbyImage({
   pluginName = `useGatsbyImage`,
   ...args
@@ -85,9 +97,9 @@ export function getMainProps(
   isLoaded: boolean,
   images: any,
   loading?: "eager" | "lazy",
-  toggleLoaded?: any,
+  toggleLoaded?: (loaded: boolean) => void,
   cacheKey?: string,
-  ref?: any,
+  ref?: RefObject<HTMLImageElement>,
   style: CSSProperties = {}
 ): MainImageProps {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
@@ -114,6 +126,13 @@ export function getMainProps(
     } else {
       toggleLoaded(true)
     }
+  }
+
+  // Polyfill "object-fit" if unsupported (mostly IE)
+  if (ref?.current && !(`objectFit` in document.documentElement.style)) {
+    ref.current.dataset.objectFit = style.objectFit ?? `cover`
+    ref.current.dataset.objectPosition = `${style.objectPosition ?? `50% 50%`}`
+    applyPolyfill(ref)
   }
 
   // fallback when it's not configured in gatsby-config.

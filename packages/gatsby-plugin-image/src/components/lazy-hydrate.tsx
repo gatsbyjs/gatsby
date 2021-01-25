@@ -15,7 +15,7 @@ import { ReactElement } from "react"
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
-  toggleIsLoaded: Function
+  toggleIsLoaded: (toggle: boolean) => void
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
 
