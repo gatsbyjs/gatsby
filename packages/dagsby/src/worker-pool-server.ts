@@ -25,8 +25,6 @@ const argv = yargs(hideBin(process.argv))
   .default(`socketPort`, () => 6899)
   .default(`httpPort`, () => 6898).argv
 
-// console.log(`worker-pool-server`, argv)
-
 const options = {
   directory: argv.directory,
   numWorkers: argv.numWorkers,
@@ -103,7 +101,6 @@ if (cluster.isMaster) {
         )
       }
 
-      // console.log(task)
       broadcastToWorkers({ type: `newTask`, action: task })
       // tasks[task.digest] = task
       socket.emit(`task-setup-${task.digest}`)
@@ -135,7 +132,6 @@ if (cluster.isMaster) {
   process.on(`message`, msg => parentMessages.emit(msg.type, msg.action))
 
   parentMessages.on(`newTask`, task => {
-    // console.log(`newTask`, task)
     tasks[task.digest] = task
   })
 
@@ -143,10 +139,8 @@ if (cluster.isMaster) {
   // In this case it is an HTTP server
   http
     .createServer((req, res) => {
-      // console.log(`new request`, req.url)
       let data
       req.on(`data`, chunk => {
-        // console.log({ chunk })
         if (!data) {
           data = chunk
         } else if (chunk) {
@@ -154,12 +148,8 @@ if (cluster.isMaster) {
         }
       })
       req.on(`end`, async chunk => {
-        // console.log({ chunk })
-        // console.log(`req.path`, req.url)
-        // console.log({ buffer, data })
         if (req.url === `/schema`) {
           // Store the schema
-          // console.log(data)
           const schema = JSON.parse(data)
           const dataType = avro.parse(JSON.parse(schema.schema))
           // console.log({ dataType })
@@ -169,74 +159,29 @@ if (cluster.isMaster) {
           res.writeHead(200)
           res.end(`ok`)
         } else {
-          // const buffer = Buffer.concat(data)
-          // console.log(`data.length`, data.length)
-          // console.log(data)
-          // console.log(tasks)
           const taskDef = tasks[req.url.slice(1)]
-          // console.log(taskDef)
           const avroType = avro.Type.forSchema(taskDef.argsSchema)
-          // console.log(avroType)
           const tasksArgs = avroType.fromBuffer(data)
-          // console.log({ tasksArgs })
           const results = await Promise.all(
             tasksArgs.map(args => runTask(taskDef, args))
           )
-          res.writeHead(200)
-          res.end(JSON.stringify(results))
+
+          if (taskDef.returnOnlyErrors) {
+            // TODO actually set errors haha
+            res.writeHead(200)
+            res.end(`ok`)
+          } else {
+            res.writeHead(200)
+            res.end(JSON.stringify(results))
+          }
         }
       })
-      // Notify master about the request
-      // process.send({ cmd: "notifyRequest" })
     })
     .listen(options.httpPort)
 
   console.log(`Worker ${process.pid} started`)
 
-  const downloadedFiles = new Map()
-  const inFlightDownloads = new Map()
-  const getFile = ([name, file]) => {
-    // console.log({ alreadyDownloaded: downloadedFiles.size, name, file })
-    if (downloadedFiles.has(file.digest)) {
-      return downloadedFiles.get(file.digest)
-    } else if (inFlightDownloads.has(file.digest)) {
-      return inFlightDownloads.get(file.digest)
-    } else {
-      const downloadPromise = new Promise(resolve => {
-        process.send({
-          cmd: `emit`,
-          emit: `sendFile`,
-          args: { ...file, name },
-        })
-        parentMessages.once(file.digest, async fileObject => {
-          // set on downloadedFiles
-          downloadedFiles.set(file.digest, fileObject)
-
-          resolve(fileObject)
-        })
-      })
-
-      inFlightDownloads.set(file.digest, downloadPromise)
-      return downloadPromise
-    }
-  }
-  const getFiles = async files => {
-    const pairs = await Promise.all(_.toPairs(files).map(pair => getFile(pair)))
-    // Recreate object
-    const filesObj = {}
-    pairs.forEach(pair => (filesObj[pair.name] = pair))
-    return filesObj
-  }
-
   const runTask = async (task, args) => {
-    // console.log({ task, args })
-
-    // Ensure files are downloaded and get local path.
-    // let files
-    // if (task.files) {
-    // files = await getFiles(task.files)
-    // }
-
     return actuallyRunTask({
       funcPath: task.funcPath,
       args: args.args,
@@ -247,8 +192,6 @@ if (cluster.isMaster) {
   }
 
   const actuallyRunTask = async ({ funcPath, args, files, id, cache }) => {
-    // console.log({ funcPath, args, files, id })
-    // console.time(`runTask ${id}`)
     let taskRunner = require(funcPath)
     if (taskRunner.default) {
       taskRunner = taskRunner.default
@@ -261,12 +204,7 @@ if (cluster.isMaster) {
       taskRunner(args, { id: copyOfTraceId, files, cache })
     )
     const end = performance.now()
-    // console.timeEnd(`runTask ${id}`)
-    // socket.emit(`response-${id}`, {
-    // result,
-    // id,
-    // executionTime: end - start,
-    // })
+
     return {
       result,
       id,

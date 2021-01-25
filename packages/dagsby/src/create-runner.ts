@@ -44,11 +44,12 @@ function createRunner(options) {
         runner.socket.once(`task-setup-${task.digest}`, waitForTaskFinish)
       })
     }
+
     runner.setupTask = setupTask
     runner.destroy = () => socket.close()
 
     // Task execution
-    const batchSize = 70
+    const batchSize = 20
     const batcher = new Bottleneck.Batcher({
       maxTime: 1,
       maxSize: batchSize,
@@ -56,7 +57,6 @@ function createRunner(options) {
 
     let batchesCount = 0
     batcher.on(`batch`, async tasks => {
-      // console.log(`task batch`, tasks.length)
       batchesCount += 1
       if (batchesCount % 100 === 0) {
         console.log(
@@ -65,12 +65,10 @@ function createRunner(options) {
           _.mean(taskExecutionTime.slice(-100))
         )
       }
-      // console.log(`hi`)
       const start = performance.now()
       const argsType = avro.Type.forSchema(tasks[0].task.argsSchema)
-      // console.log(`hi2`)
-      // console.log(argsType)
-      // Send the minimal data
+
+      // send the minimal data
       const preppedTaskArgs = tasks.map(task => {
         const minimalTask = {
           id: task.id,
@@ -78,11 +76,8 @@ function createRunner(options) {
         }
         return minimalTask
       })
-      // console.log(preppedTaskArgs)
       const buf = argsType.toBuffer(preppedTaskArgs)
       const end = performance.now()
-      // console.log(buf.toString())
-      // console.log(argsType.fromBuffer(buf))
 
       taskSerialize.push(end - start)
 
@@ -97,16 +92,19 @@ function createRunner(options) {
           }
         },
       })
-      const body = await res.json()
-      // console.log({ bodyLength: body.toString().length })
 
-      // taskExecutionTime.push(body[0].executionTime)
-      // taskExecutionTime.push(body[20].executionTime)
-      // taskExecutionTime.push(body.slice(-1)[0].executionTime)
+      // We're just looking for an ok response
+      if (tasks[0].task.returnOnlyErrors) {
+        if (res.status == 200 && res.statusText === `OK`) {
+          tasks.forEach(t => t.callback(null, `ok`))
+        }
+      } else {
+        const body = await res.json()
 
-      // Loop through tasks and call callback with responses.
-      // TODO fix ordering?
-      body.forEach((res, i) => tasks[i].callback(null, res))
+        // Loop through tasks and call callback with responses.
+        // TODO fix ordering?
+        body.forEach((res, i) => tasks[i].callback(null, res))
+      }
     })
 
     let taskNum = 0
@@ -117,11 +115,11 @@ function createRunner(options) {
       task.id = taskNum
 
       task.callback = cb
-      // console.log(task)
 
       batcher.add(task)
     }
-    const fqueue = fastqueue(worker, 1800)
+    const queueConcurrency = 2500
+    const fqueue = fastqueue(worker, queueConcurrency)
     function executeTask(task) {
       let outsideResolve
       const taskPromise = new Promise(resolve => {
@@ -129,7 +127,6 @@ function createRunner(options) {
       })
 
       fqueue.push(task, (err, result) => {
-        // console.log({ err, result })
         outsideResolve(result)
       })
 

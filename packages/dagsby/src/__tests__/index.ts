@@ -73,7 +73,34 @@ describe(`runs tasks`, () => {
     expect(result.result).toBe(3)
   })
 
-  it(`runs multiple simple tasks`, async () => {
+  it(`tasks can enable returning only errors`, async () => {
+    const task = await dagsby.createTask({
+      func: args => args.a + args.b,
+      returnOnlyErrors: true,
+      argsSchema: [
+        {
+          name: `a`,
+          type: `double`,
+        },
+        {
+          name: `b`,
+          type: `double`,
+        },
+      ],
+    })
+    await runner.setupTask(task)
+    const result = await runner.executeTask({ task, args: { a: 1, b: 2 } })
+    // const result = await runner.runTask({
+    // func: args => args.a + args.b,
+    // args: {
+    // a: 1,
+    // b: 2,
+    // },
+    // })
+    expect(result).toBe(`ok`)
+  })
+
+  it.skip(`runs multiple simple tasks`, async () => {
     const promise1 = runner.runTask({
       func: args => args.a + args.b,
       args: {
@@ -123,7 +150,6 @@ describe(`runs tasks`, () => {
       },
     })
     await runner.setupTask(task)
-    console.log(task)
     const result = await runner.executeTask({
       task,
       args: {
@@ -134,7 +160,7 @@ describe(`runs tasks`, () => {
     expect(result.result).toMatchSnapshot()
   })
 
-  it.only(`supports tasks declaring dependencies`, async () => {
+  it(`supports tasks declaring dependencies`, async () => {
     const task = await dagsby.createTask({
       func: (args, { files }) => {
         const fs = require(`fs`)

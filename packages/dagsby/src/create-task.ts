@@ -1,6 +1,6 @@
 const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const avro = require("avsc")
-const processFiles = require(`./prepare-files`)
+const prepareFiles = require(`./prepare-files`)
 
 async function createTask(taskDef) {
   const task = {}
@@ -20,7 +20,6 @@ async function createTask(taskDef) {
     )
     task.digest = taskDigest
   }
-  console.log({ digest: task.digest })
 
   // Validate the args schema
   if (taskDef.argsSchema) {
@@ -47,7 +46,7 @@ async function createTask(taskDef) {
   }
 
   // Process files
-  const files = await processFiles(taskDef.files)
+  const files = await prepareFiles(taskDef.files)
   if (files) {
     task.files = files
   }
@@ -55,6 +54,13 @@ async function createTask(taskDef) {
   // Copy over dependencies
   if (taskDef.dependencies) {
     task.dependencies = { ...taskDef.dependencies }
+  }
+
+  // Copy over returnOnlyErrors
+  if (taskDef.returnOnlyErrors) {
+    task.returnOnlyErrors = taskDef.returnOnlyErrors
+  } else {
+    task.returnOnlyErrors = false
   }
 
   return task
