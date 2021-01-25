@@ -769,7 +769,7 @@ const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
     // Remove customization that we could have added via `createResolvers`
     // to make it work with schema rebuilding
     const field = typeComposer.getField(fieldName)
-    const fieldType = field.type.getType().toString()
+    const fieldType = field.type.getTypeName()
     if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
       typeComposer.extendField(fieldName, {
         type: fieldType.replace(schemaQueryType.name, `Query`),
