@@ -10,7 +10,7 @@ One of the key questions people ask when building a Gatsby site is "which CMS sh
 
 If you're looking for a primary CMS (general-purpose, flexible content modelling) to power your website, there are several ways you could make your decision:
 
-**First**, focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users. A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud#:~:text=A%20first%2Dclass%20integration%20with%20Gatsby%20Cloud%20means%20that%20there's,more%20users%20and%20satisfied%20customers.) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds.
+**First**, focus on **top-flight general-purpose CMSs** with **first-class Gatsby integrations** and **high popularity** among Gatsby users. A ["first-class integration"](https://support.gatsbyjs.com/hc/en-us/articles/360052503494-Developing-a-first-class-CMS-integration-for-Gatsby-Cloud) means it supports the main Cloud functionality of Gatsby -- previews and incremental builds.
 
 In terms of popularity, you can see [top integrations listed by monthly downloads here](https://www.gatsbyjs.com/plugins?=gatsby-source). There are currently (January 2021) eight CMSs used by over 1% of Gatsby users. These are:
 
