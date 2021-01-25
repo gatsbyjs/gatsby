@@ -25,6 +25,7 @@ export interface ISharpGatsbyImageArgs {
   transformOptions: {
     fit?: "contain" | "cover" | "fill" | "inside" | "outside"
     cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
+    duotone?: { highlight: string; shadow: string }
   }
   jpgOptions: Record<string, unknown>
   pngOptions: Record<string, unknown>
@@ -117,7 +118,14 @@ export async function generateImageData({
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,
+    duotone,
   } = transformOptions
+
+  if (duotone && (!duotone.highlight || !duotone.shadow)) {
+    reporter.warn(
+      `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+    )
+  }
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
