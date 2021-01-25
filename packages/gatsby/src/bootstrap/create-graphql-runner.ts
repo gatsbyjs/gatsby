@@ -1,20 +1,19 @@
 import stackTrace from "stack-trace"
 import { Span } from "opentracing"
-import { ExecutionResultDataDefault } from "graphql/execution/execute"
+import { ExecutionResult, Source } from "graphql"
 import { Store } from "redux"
 
 import { GraphQLRunner } from "../query/graphql-runner"
 import errorParser from "../query/error-parser"
 import { emitter } from "../redux"
 import { Reporter } from "../.."
-import { ExecutionResult, Source } from "../../graphql"
 import { IGatsbyState } from "../redux/types"
 import { IMatch } from "../types"
 
 export type Runner = (
   query: string | Source,
   context: Record<string, any>
-) => Promise<ExecutionResult<ExecutionResultDataDefault>>
+) => Promise<ExecutionResult>
 
 export const createGraphQLRunner = (
   store: Store<IGatsbyState>,
