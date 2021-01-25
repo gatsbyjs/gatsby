@@ -55,20 +55,22 @@ export function getWrapperProps(
 ): Pick<HTMLAttributes<HTMLElement>, "className" | "style"> & {
   "data-gatsby-image-wrapper": string
 } {
-  const wrapperStyle: CSSProperties = {
-    position: `relative`,
-    overflow: `hidden`,
-  }
+  const wrapperStyle: CSSProperties = {}
+
+  let className = `gatsby-image-wrapper`
 
   if (layout === `fixed`) {
     wrapperStyle.width = width
     wrapperStyle.height = height
   } else if (layout === `constrained`) {
-    wrapperStyle.display = `inline-block`
+    if (!global.GATSBY___IMAGE) {
+      wrapperStyle.display = `inline-block`
+    }
+    className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
   }
 
   return {
-    className: `gatsby-image-wrapper`,
+    className,
     "data-gatsby-image-wrapper": ``,
     style: wrapperStyle,
   }
