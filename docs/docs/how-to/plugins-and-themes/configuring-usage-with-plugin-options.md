@@ -240,13 +240,13 @@ import { testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../gatsby-node"
 
 describe(`pluginOptionsSchema`, () => {
-  it(`should invalidate incorrect options`, () => {
+  it(`should invalidate incorrect options`, async () => {
     const options = {
       optionA: undefined, // Should be a boolean
       message: 123, // Should be a string
       optionB: `not a boolean`, // Should be a boolean
     }
-    const { isValid, errors } = testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
@@ -259,13 +259,13 @@ describe(`pluginOptionsSchema`, () => {
     ])
   })
 
-  it(`should validate correct options`, () => {
+  it(`should validate correct options`, async () => {
     const options = {
       optionA: false,
       message: "string",
       optionB: true,
     }
-    const { isValid, errors } = testPluginOptionsSchema(
+    const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
@@ -281,3 +281,4 @@ describe(`pluginOptionsSchema`, () => {
 - [Example Gatsby site using plugin options with a local plugin](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-plugin-options)
 - [Joi API documentation](https://joi.dev/api/)
 - [`pluginOptionsSchema` for the Contentful source plugin](https://github.com/gatsbyjs/gatsby/blob/af973d4647dc14c85555a2ad8f1aff08028ee3b7/packages/gatsby-source-contentful/src/gatsby-node.js#L75-L159)
+- [`pluginOptionsSchema` for the Kontent source plugin](https://github.com/Kentico/kontent-gatsby-packages/blob/master/packages/gatsby-source-kontent/src/pluginOptionsSchema.ts#L2-L35)

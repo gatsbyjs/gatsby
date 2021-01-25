@@ -5,7 +5,8 @@ import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
-import { createTransformObject } from "./plugin-options"
+import { createTransformObject, mergeDefaults } from "./plugin-options"
+import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 
@@ -40,18 +41,25 @@ export async function getImageMetadata(
   if (metadata && process.env.NODE_ENV !== `test`) {
     return metadata
   }
-  const pipeline = sharp(file.absolutePath)
 
-  const { width, height, density, format } = await pipeline.metadata()
+  try {
+    const pipeline = sharp(file.absolutePath)
 
-  const { dominant } = await pipeline.stats()
-  // Fallback in case sharp doesn't support dominant
-  const dominantColor = dominant
-    ? rgbToHex(dominant.r, dominant.g, dominant.b)
-    : `#000000`
+    const { width, height, density, format } = await pipeline.metadata()
 
-  metadata = { width, height, density, format, dominantColor }
-  metadataCache.set(file.internal.contentDigest, metadata)
+    const { dominant } = await pipeline.stats()
+    // Fallback in case sharp doesn't support dominant
+    const dominantColor = dominant
+      ? rgbToHex(dominant.r, dominant.g, dominant.b)
+      : `#000000`
+
+    metadata = { width, height, density, format, dominantColor }
+    metadataCache.set(file.internal.contentDigest, metadata)
+  } catch (err) {
+    reportError(`Failed to process image ${file.absolutePath}`, err)
+    return {}
+  }
+
   return metadata
 }
 
@@ -84,12 +92,15 @@ export async function generateImageData({
   reporter,
   cache,
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
+  args = mergeDefaults(args)
+
   const {
     layout = `constrained`,
     placeholder = `dominantColor`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
+    backgroundColor,
   } = args
 
   args.formats = args.formats || [`auto`, `webp`]
@@ -111,7 +122,7 @@ export async function generateImageData({
     reporter.warn(
       `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
-    args.width = metadata.width
+    args.width = metadata?.width
     args.height = undefined
   }
 
@@ -143,7 +154,7 @@ export async function generateImageData({
 
   let primaryFormat: ImageFormat | undefined
   if (useAuto) {
-    primaryFormat = normalizeFormat(metadata.format || file.extension)
+    primaryFormat = normalizeFormat(metadata?.format || file.extension)
   } else if (formats.has(`png`)) {
     primaryFormat = `png`
   } else if (formats.has(`jpg`)) {
@@ -180,15 +191,19 @@ export async function generateImageData({
     reporter,
   })
 
+  const sharedOptions = {
+    quality,
+    ...transformOptions,
+    fit,
+    cropFocus,
+    background: backgroundColor,
+  }
+
   const transforms = imageSizes.sizes.map(outputWidth => {
     const width = Math.round(outputWidth)
     const transform = createTransformObject({
-      quality,
-      ...transformOptions,
-      fit,
-      cropFocus,
+      ...sharedOptions,
       ...options,
-      tracedSVGOptions,
       width,
       height: Math.round(width / imageSizes.aspectRatio),
       toFormat: primaryFormat,
@@ -230,6 +245,7 @@ export async function generateImageData({
   const imageProps: IGatsbyImageData = {
     layout,
     placeholder: undefined,
+    backgroundColor,
     images: {
       fallback: {
         src: primaryImage.src,
@@ -244,10 +260,7 @@ export async function generateImageData({
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        quality,
-        ...transformOptions,
-        fit,
-        cropFocus,
+        ...sharedOptions,
         ...args.avifOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
@@ -276,10 +289,7 @@ export async function generateImageData({
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        quality,
-        ...transformOptions,
-        fit,
-        cropFocus,
+        ...sharedOptions,
         ...args.webpOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
@@ -310,10 +320,8 @@ export async function generateImageData({
     const { src: fallback } = await base64({
       file,
       args: {
+        ...sharedOptions,
         ...options,
-        ...transformOptions,
-        fit,
-        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),
@@ -334,7 +342,7 @@ export async function generateImageData({
     imageProps.placeholder = {
       fallback,
     }
-  } else if (metadata.dominantColor) {
+  } else if (metadata?.dominantColor) {
     imageProps.backgroundColor = metadata.dominantColor
   }
 

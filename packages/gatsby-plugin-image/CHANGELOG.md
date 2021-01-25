@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0-next.1...gatsby-plugin-image@0.7.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Fix onload race condition ([#29064](https://github.com/gatsbyjs/gatsby/issues/29064)) ([6233382](https://github.com/gatsbyjs/gatsby/commit/6233382c6d770e7f1ab6184dccc8c79fd3b7f809))
+- **gatsby-plugin-image:** Handle imgStyle in SSR ([#29043](https://github.com/gatsbyjs/gatsby/issues/29043)) ([b9978e1](https://github.com/gatsbyjs/gatsby/commit/b9978e1f7a4e6a8dec0f034b965dfbce09a372f2))
+- **gatsby-plugin-image:** Remove preload tag ([#28998](https://github.com/gatsbyjs/gatsby/issues/28998)) ([87bdec0](https://github.com/gatsbyjs/gatsby/commit/87bdec0f1ac8de8062fe3c90997b278ff921a4aa))
+
+### Features
+
+- **gatsby-plugin-image:** Change fullWidth to use breakpoints ([#29002](https://github.com/gatsbyjs/gatsby/issues/29002)) ([9bcc12c](https://github.com/gatsbyjs/gatsby/commit/9bcc12c57728bb7ca08cefe4f2f4c684b65d3111))
+
 # [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0-next.0...gatsby-plugin-image@0.6.0-next.1) (2021-01-12)
 
 ### Bug Fixes

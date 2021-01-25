@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.0-next.1...gatsby-source-contentful@4.6.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsbu-source-contentful:** apply useNameForId when creating the graphql schema ([#28649](https://github.com/gatsbyjs/gatsby/issues/28649)) ([a3ad6d7](https://github.com/gatsbyjs/gatsby/commit/a3ad6d71c549da973d3f03000e31c08d89b5a715))
+- **gatsby-source-contentful:** Improve base64 placeholders ([#29034](https://github.com/gatsbyjs/gatsby/issues/29034)) ([f23ba4b](https://github.com/gatsbyjs/gatsby/commit/f23ba4b3b8adfaedccce6379158a76eb575b1d4c)), closes [#24679](https://github.com/gatsbyjs/gatsby/issues/24679)
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
 # [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.0-next.0...gatsby-source-contentful@4.5.0-next.1) (2021-01-12)
 
 ### Performance Improvements

@@ -2,7 +2,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 
-const Promise = require(`bluebird`)
+const axios = require(`axios`)
 const {
   GraphQLObjectType,
   GraphQLBoolean,
@@ -12,7 +12,6 @@ const {
   GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
-const base64Img = require(`base64-img`)
 
 const cacheImage = require(`./cache-image`)
 
@@ -63,6 +62,11 @@ const getBase64Image = imageProps => {
     return null
   }
 
+  // We only support images that are delivered through Contentful's Image API
+  if (imageProps.baseUrl.indexOf(`images.ctfassets.net`) === -1) {
+    return null
+  }
+
   const requestUrl = `https:${imageProps.baseUrl}?w=20`
 
   // Prefer to return data sync if we already have it
@@ -98,20 +102,28 @@ const getBase64Image = imageProps => {
     })
   }
 
-  const promise = new Promise((resolve, reject) => {
-    base64Img.requestBase64(requestUrl, (a, b, body) => {
-      // TODO: against dogma, confirm whether writeFileSync is indeed slower
-      fs.promises
-        .writeFile(cacheFile, body)
-        .then(() => resolve(body))
-        .catch(e => {
-          console.error(
-            `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
-          )
-          reject(e)
-        })
+  const loadImage = async () => {
+    const imageResponse = await axios.get(requestUrl, {
+      responseType: `arraybuffer`,
     })
-  })
+
+    const base64 = Buffer.from(imageResponse.data, `binary`).toString(`base64`)
+
+    const body = `data:image/jpeg;base64,${base64}`
+
+    try {
+      // TODO: against dogma, confirm whether writeFileSync is indeed slower
+      await fs.promises.writeFile(cacheFile, body)
+      return body
+    } catch (e) {
+      console.error(
+        `Contentful:getBase64Image: failed to write ${body.length} bytes remotely fetched from \`${requestUrl}\` to: \`${cacheFile}\`\nError: ${e}`
+      )
+      throw e
+    }
+  }
+
+  const promise = loadImage()
 
   inFlightBase64Cache.set(requestUrl, promise)
 
@@ -398,9 +410,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
       fields: {
         base64: {
           type: GraphQLString,
-          resolve(imageProps) {
-            return getBase64Image(imageProps)
-          },
+          resolve: getBase64Image,
         },
         tracedSVG: {
           type: GraphQLString,
@@ -495,9 +505,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
       fields: {
         base64: {
           type: GraphQLString,
-          resolve(imageProps) {
-            return getBase64Image(imageProps)
-          },
+          resolve: getBase64Image,
         },
         tracedSVG: {
           type: GraphQLString,
@@ -642,9 +650,7 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
         fields: {
           base64: {
             type: GraphQLString,
-            resolve(imageProps) {
-              return getBase64Image(imageProps)
-            },
+            resolve: getBase64Image,
           },
           tracedSVG: {
             type: GraphQLString,
