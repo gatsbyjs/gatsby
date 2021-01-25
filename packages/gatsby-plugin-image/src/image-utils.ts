@@ -4,7 +4,21 @@ import { IGatsbyImageData } from "."
 import type sharp from "gatsby-plugin-sharp/safe-sharp"
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
-const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
+export const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
+export const EVERY_BREAKPOINT = [
+  320,
+  654,
+  768,
+  1024,
+  1366,
+  1600,
+  1920,
+  2048,
+  2560,
+  3440,
+  3840,
+  4096,
+]
 const DEFAULT_FLUID_WIDTH = 800
 const DEFAULT_FIXED_WIDTH = 400
 
@@ -229,7 +243,7 @@ export function generateImageData(
       })
       .filter(Boolean)
 
-    if (format === `jpg` || format === `png`) {
+    if (format === `jpg` || format === `png` || format === `auto`) {
       const unscaled =
         images.find(img => img.width === imageSizes.unscaledWidth) || images[0]
 
@@ -280,6 +294,7 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
     layout = `constrained`,
     sourceMetadata: imgDimensions,
     reporter = { warn },
+    breakpoints = DEFAULT_BREAKPOINTS,
   } = args
 
   // check that all dimensions provided are positive
@@ -300,7 +315,7 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
   } else if (layout === `constrained`) {
     return responsiveImageSizes(args)
   } else if (layout === `fullWidth`) {
-    return responsiveImageSizes({ breakpoints: DEFAULT_BREAKPOINTS, ...args })
+    return responsiveImageSizes({ breakpoints, ...args })
   } else {
     reporter.warn(
       `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained.`
