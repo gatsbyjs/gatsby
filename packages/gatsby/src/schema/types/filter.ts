@@ -63,7 +63,7 @@ const removeEmptyFields = (
     const fields = itc.getFields()
     const nonEmptyFields = {}
     Object.keys(fields).forEach(fieldName => {
-      const fieldITC = fields[fieldName]
+      const fieldITC = fields[fieldName].type
       if (fieldITC instanceof InputTypeComposer) {
         const convertedITC = convert(fieldITC)
         if (convertedITC.getFieldNames().length) {
