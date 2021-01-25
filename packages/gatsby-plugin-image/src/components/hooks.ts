@@ -17,6 +17,7 @@ import {
   IGatsbyImageHelperArgs,
   generateImageData,
   Layout,
+  EVERY_BREAKPOINT,
 } from "../image-utils"
 const imageCache = new Set<string>()
 
@@ -86,10 +87,10 @@ export async function applyPolyfill(
 
 export function useGatsbyImage({
   pluginName = `useGatsbyImage`,
+  breakpoints = EVERY_BREAKPOINT,
   ...args
 }: IGatsbyImageHelperArgs): IGatsbyImageData {
-  // TODO: use context to get default plugin options and spread them in here
-  return generateImageData({ pluginName, ...args })
+  return generateImageData({ pluginName, breakpoints, ...args })
 }
 
 export function getMainProps(
