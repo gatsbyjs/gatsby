@@ -1,5 +1,5 @@
 import { Span } from "opentracing"
-import { emitter } from "./index"
+import { emitter, store } from "./index"
 import apiRunnerNode from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
 
@@ -40,12 +40,19 @@ interface ICreatePageAction {
 }
 
 export const startPluginRunner = (): void => {
-  emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
-    const page = action.payload
-    apiRunnerNode(
-      `onCreatePage`,
-      { page, traceId: action.traceId, parentSpan: action.parentSpan },
-      { pluginSource: action.plugin.name, activity: action.activity }
-    )
-  })
+  const plugins = store.getState().flattenedPlugins
+  const implementingPlugins = plugins.filter(plugin =>
+    plugin.nodeAPIs.includes(`onCreatePage`)
+  )
+
+  if (implementingPlugins.length > 0) {
+    emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
+      const page = action.payload
+      apiRunnerNode(
+        `onCreatePage`,
+        { page, traceId: action.traceId, parentSpan: action.parentSpan },
+        { pluginSource: action.plugin.name, activity: action.activity }
+      )
+    })
+  }
 }

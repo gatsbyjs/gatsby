@@ -1,5 +1,8 @@
-import normalize from "normalize-path"
+import _normalize from "normalize-path"
+import memoize from "memoizee"
 import { IGatsbyState, ActionsUnion } from "../types"
+
+const normalize = memoize(_normalize)
 
 let programStatus = `BOOTSTRAPPING`
 

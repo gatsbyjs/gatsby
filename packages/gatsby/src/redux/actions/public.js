@@ -1,4 +1,5 @@
 // @flow
+const memoize = require(`memoizee`)
 const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
@@ -30,7 +31,7 @@ const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
  * on files that are in shadowing chain, but webpack currently doesn't handle
  * shadowing changes during develop session, so no invalidation is not a deal breaker.
  */
-const shadowCreatePagePath = _.memoize(
+const shadowCreatePagePath = memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
 const {
@@ -129,11 +130,12 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
+const _pascalCase = _.flow(_.camelCase, _.upperFirst)
+const pascalCase = memoize(_pascalCase)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
-const pageComponentCache = {}
+const pageComponentCache = new Map()
 const reservedFields = [
   `path`,
   `matchPath`,
@@ -288,8 +290,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   //
   // Skip during testing as the paths don't exist on disk.
   if (process.env.NODE_ENV !== `test`) {
-    if (pageComponentCache[page.component]) {
-      page.component = pageComponentCache[page.component]
+    if (pageComponentCache.has(page.component)) {
+      page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
 
@@ -349,7 +351,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
-      pageComponentCache[originalPageComponent] = page.component
+      pageComponentCache.set(originalPageComponent, page.component)
     }
   }
 

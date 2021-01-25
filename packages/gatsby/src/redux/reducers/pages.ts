@@ -1,4 +1,5 @@
-import normalize from "normalize-path"
+import _normalize from "normalize-path"
+import memoize from "memoizee"
 import {
   IGatsbyState,
   IGatsbyPage,
@@ -6,6 +7,8 @@ import {
   ICreatePageAction,
   IDeletePageAction,
 } from "../types"
+
+const normalize = memoize(_normalize)
 
 export const pagesReducer = (
   state: IGatsbyState["pages"] = new Map<string, IGatsbyPage>(),

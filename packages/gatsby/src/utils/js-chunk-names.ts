@@ -1,6 +1,10 @@
-import { kebabCase } from "lodash"
+import memoize from "memoizee"
+import { kebabCase as _kebabCase } from "lodash"
 import path from "path"
 import { store } from "../redux"
+
+const kebabCase = memoize(_kebabCase)
+const pathRelative = memoize(path.relative)
 
 // unified routes adds support for files with [] and {},
 // the problem with our generateComponentChunkName is that when you
@@ -35,7 +39,7 @@ function replaceUnifiedRoutesKeys(
 export function generateComponentChunkName(componentPath: string): string {
   const { program } = store.getState()
   const directory = program?.directory || `/`
-  const name = path.relative(directory, componentPath)
+  const name = pathRelative(directory, componentPath)
 
   return `component---${replaceUnifiedRoutesKeys(kebabCase(name), name)}`
 }

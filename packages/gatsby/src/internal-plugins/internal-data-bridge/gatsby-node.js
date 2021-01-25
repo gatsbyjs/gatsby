@@ -171,27 +171,28 @@ exports.createResolvers = ({ createResolvers }) => {
   createResolvers(resolvers)
 }
 
-exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  const { createNode } = actions
-  // eslint-disable-next-line
-  const { updatedAt, ...pageWithoutUpdated } = page
+// TODO Put hiding this behind a flag
+// exports.onCreatePage = ({ createContentDigest, page, actions }) => {
+// const { createNode } = actions
+// // eslint-disable-next-line
+// const { updatedAt, ...pageWithoutUpdated } = page
 
-  // Add page.
-  createNode({
-    ...pageWithoutUpdated,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(pageWithoutUpdated),
-      description:
-        page.pluginCreatorId === `Plugin default-site-plugin`
-          ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId,
-    },
-  })
-}
+// // Add page.
+// createNode({
+// ...pageWithoutUpdated,
+// id: createPageId(page.path),
+// parent: null,
+// children: [],
+// internal: {
+// type: `SitePage`,
+// contentDigest: createContentDigest(pageWithoutUpdated),
+// description:
+// page.pluginCreatorId === `Plugin default-site-plugin`
+// ? `Your site's "gatsby-node.js"`
+// : page.pluginCreatorId,
+// },
+// })
+// }
 
 // Listen for DELETE_PAGE and delete page nodes.
 emitter.on(`DELETE_PAGE`, action => {

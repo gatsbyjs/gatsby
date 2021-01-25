@@ -19,7 +19,12 @@ export async function createPages({
   const activity = reporter.activityTimer(`createPages`, {
     parentSpan,
   })
+  const Inspector = require(`inspector-api`)
+  const inspector = new Inspector({ storage: { type: `fs` } })
   activity.start()
+
+  await inspector.profiler.enable()
+  await inspector.profiler.start()
   const timestamp = Date.now()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
   await apiRunnerNode(
@@ -51,6 +56,7 @@ export async function createPages({
   }
 
   activity.end()
+  await inspector.profiler.stop()
 
   reporter.verbose(`Checking for deleted pages`)
 
