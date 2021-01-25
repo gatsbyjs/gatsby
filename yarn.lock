@@ -7225,10 +7225,10 @@ chokidar@^1.6.0:
   optionalDependencies:
     fsevents "^1.0.0"
 
-chokidar@^3.0.0, chokidar@^3.2.2, chokidar@^3.2.3, chokidar@^3.4.0, chokidar@^3.4.1, chokidar@^3.4.2, chokidar@^3.4.3, chokidar@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.0.tgz#458a4816a415e9d3b3caa4faec2b96a6935a9e65"
-  integrity sha512-JgQM9JS92ZbFR4P90EvmzNpSGhpPBGBSj10PILeDyYFwp4h2/D9OM03wsJ4zW1fEp4ka2DGrnUeD7FuvQ2aZ2Q==
+chokidar@^3.0.0, chokidar@^3.2.2, chokidar@^3.2.3, chokidar@^3.4.0, chokidar@^3.4.1, chokidar@^3.4.2, chokidar@^3.4.3, chokidar@^3.5.0, chokidar@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"
+  integrity sha512-9+s+Od+W0VJJzawDma/gvBNQqkTiqYTWLuZoyAsivsI4AaWTCzHG06/TMjsf1cYe9Cb97UCEhjz7HvnPk2p/tw==
   dependencies:
     anymatch "~3.1.1"
     braces "~3.0.2"
@@ -11628,13 +11628,6 @@ gatsby-node-helpers@^0.3.0:
     json-stringify-safe "^5.0.1"
     lodash "^4.17.4"
     p-is-promise "^1.1.0"
-
-gatsby-plugin-utils@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-utils/-/gatsby-plugin-utils-0.8.0.tgz#2ecd848e6e3362ee929e496bc11528267d2fb96e"
-  integrity sha512-EQC1U7LQVHaI6jXMbx4ryvA8rV1yYrlyxwO2T4nuLUDOO1STUpKTYCH4ySOEtXi6f4P5v7NxgHkFoid6ayY9HA==
-  dependencies:
-    joi "^17.2.1"
 
 gatsby-plugin-webfonts@^1.1.4:
   version "1.1.4"
