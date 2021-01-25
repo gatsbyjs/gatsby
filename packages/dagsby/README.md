@@ -24,28 +24,30 @@ Create a simple task in a test.js file and run it on the worker pool.
 const dagsby = require(`dagsby`)
 
 ;(async () => {
-// Create our runner.
-const runner = await dagsby.createRunner({ pools: [{ socketPort: 9999, httpPort: 10020 }] })
+  // Create our runner.
+  const runner = await dagsby.createRunner({
+    pools: [{ socketPort: 9999, httpPort: 10020 }],
+  })
 
-// Create a simple task
-const task = await dagsby.createTask({
-  func: args => `Hello ${args.name}!`,
-  // Written using Arvo's schema language.
-  argsSchema: [
-    {
-      name: `name`,
-      type: `string`,
-    },
-  ],
-})
+  // Create a simple task
+  const task = await dagsby.createTask({
+    func: args => `Hello ${args.name}!`,
+    // Written using Arvo's schema language.
+    argsSchema: [
+      {
+        name: `name`,
+        type: `string`,
+      },
+    ],
+  })
 
-// Setup the task on the worker pool(s).
-await runner.setupTask(task)
+  // Setup the task on the worker pool(s).
+  await runner.setupTask(task)
 
-// Run the task!
-const result = await runner.executeTask({ task, args: { name: `World` } })
+  // Run the task!
+  const result = await runner.executeTask({ task, args: { name: `World` } })
 
-console.log(result)
+  console.log(result)
 })()
 ```
 
@@ -83,9 +85,9 @@ const result2 = await runner.executeTask({
 })
 
 console.log(result2)
-})()
 ```
 
 ## TODOs
+
 - [ ] support (again) running multiple types of tasks in parallel.
 - [ ] support multiple pools in runners.
