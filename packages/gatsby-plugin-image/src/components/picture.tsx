@@ -69,7 +69,7 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
     { fallback, sources = [], shouldLoad = true, ...props },
     ref
   ) {
-    const sizes = props.sizes || fallback.sizes
+    const sizes = props.sizes || fallback?.sizes
     const fallbackImage = (
       <Image
         {...props}
