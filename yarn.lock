@@ -11629,13 +11629,6 @@ gatsby-node-helpers@^0.3.0:
     lodash "^4.17.4"
     p-is-promise "^1.1.0"
 
-gatsby-plugin-utils@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-utils/-/gatsby-plugin-utils-0.8.0.tgz#2ecd848e6e3362ee929e496bc11528267d2fb96e"
-  integrity sha512-EQC1U7LQVHaI6jXMbx4ryvA8rV1yYrlyxwO2T4nuLUDOO1STUpKTYCH4ySOEtXi6f4P5v7NxgHkFoid6ayY9HA==
-  dependencies:
-    joi "^17.2.1"
-
 gatsby-plugin-webfonts@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-webfonts/-/gatsby-plugin-webfonts-1.1.4.tgz#f6fb8daf0acc4c59511c98964fceca35504014ac"
