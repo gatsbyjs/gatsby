@@ -62,13 +62,6 @@ describe(`runs tasks`, () => {
     })
     await runner.setupTask(task)
     const result = await runner.executeTask({ task, args: { a: 1, b: 2 } })
-    // const result = await runner.runTask({
-    // func: args => args.a + args.b,
-    // args: {
-    // a: 1,
-    // b: 2,
-    // },
-    // })
     expect(result).toHaveProperty(`executionTime`)
     expect(result.result).toBe(3)
   })
@@ -90,13 +83,6 @@ describe(`runs tasks`, () => {
     })
     await runner.setupTask(task)
     const result = await runner.executeTask({ task, args: { a: 1, b: 2 } })
-    // const result = await runner.runTask({
-    // func: args => args.a + args.b,
-    // args: {
-    // a: 1,
-    // b: 2,
-    // },
-    // })
     expect(result).toBe(`ok`)
   })
 

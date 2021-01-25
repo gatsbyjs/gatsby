@@ -24,28 +24,28 @@ Create a simple task in a test.js file and run it on the worker pool.
 const dagsby = require(`dagsby`)
 
 ;(async () => {
-  // Create our runner.
-  const runner = await dagsby.createRunner({
-    pools: [{ socketPort: 9999, httpPort: 10020 }],
-  })
+// Create our runner.
+const runner = await dagsby.createRunner({ pools: [{ socketPort: 9999, httpPort: 10020 }] })
 
-  // Create a simple task
-  const task = await dagsby.createTask({
-    func: args => `Hello ${args.name}!`,
-    // Written using Arvo's schema language.
-    argsSchema: [
-      {
-        name: `name`,
-        type: `string`,
-      },
-    ],
-  })
+// Create a simple task
+const task = await dagsby.createTask({
+  func: args => `Hello ${args.name}!`,
+  // Written using Arvo's schema language.
+  argsSchema: [
+    {
+      name: `name`,
+      type: `string`,
+    },
+  ],
+})
 
-  // Setup the task on the worker pool(s).
-  await runner.setupTask(task)
+// Setup the task on the worker pool(s).
+await runner.setupTask(task)
 
-  // Run the task!
-  const result = await runner.executeTask({ task, args: { name: `World` } })
+// Run the task!
+const result = await runner.executeTask({ task, args: { name: `World` } })
+
+console.log(result)
 })()
 ```
 
@@ -53,41 +53,39 @@ Let's try a more complex task where we specify a required file & add an NPM depe
 
 First create a file called `hello.txt` with some text in it.
 
-Then add this code to our test file.
+Then add this code to our test file after the first task.
 
 ```js
-;(async () => {
-  const mySecondTask = await dagsby.createTask({
-    func: (args, { files }) => {
-      const fs = require(`fs`)
-      const _ = require(`lodash`)
-      const text = fs.readFileSync(files.text.localPath)
-      const camelCase = _.camelCase(text)
+const mySecondTask = await dagsby.createTask({
+  func: (args, { files }) => {
+    const fs = require(`fs`)
+    const _ = require(`lodash`)
+    const text = fs.readFileSync(files.text.localPath)
+    const camelCase = _.camelCase(text)
 
-      return `${args.preface} ${text} \n\n ${camelCase}`
+    return `${args.preface} ${text} \n\n ${camelCase}`
+  },
+  argsSchema: [{ name: `preface`, type: `string` }],
+  dependencies: {
+    lodash: `latest`,
+  },
+  files: {
+    text: {
+      originPath: require(`path`).join(__dirname, `hello.txt`),
     },
-    argsSchema: [{ name: `preface`, type: `string` }],
-    dependencies: {
-      lodash: `latest`,
-    },
-    files: {
-      text: {
-        originPath: path.join(__dirname, `mocks`, `hello.txt`),
-      },
-    },
-  })
-  await runner.setupTask(task)
+  },
+})
+await runner.setupTask(mySecondTask)
 
-  const result = await runner.executeTask({
-    task,
-    args: { preface: `yeeesss` },
-  })
+const result2 = await runner.executeTask({
+  task: mySecondTask,
+  args: { preface: `yeeesss` },
+})
 
-  console.log(result)
+console.log(result2)
 })()
 ```
 
 ## TODOs
-
 - [ ] support (again) running multiple types of tasks in parallel.
 - [ ] support multiple pools in runners.

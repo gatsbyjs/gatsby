@@ -1,4 +1,4 @@
-const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
+const XXH = require(`xxhashjs`)
 const avro = require("avsc")
 const prepareFiles = require(`./prepare-files`)
 
@@ -8,14 +8,17 @@ async function createTask(taskDef) {
   // Stringifiy the function
   const funcStr = taskDef.func.toString()
   task.func = funcStr
-  const funcDigest = parseInt(murmurhash(funcStr).toString().slice(0, 5), 10)
+  const funcDigest = parseInt(
+    XXH.h32(funcStr, 0xabcd).toString().slice(0, 5),
+    10
+  )
   task.funcDigest = funcDigest
 
   // Set the task digest
   if (!task.digest) {
     const TASK_DIGEST_KEY = funcStr + taskDef.dependencies?.toString() || ``
     const taskDigest = parseInt(
-      String(murmurhash(TASK_DIGEST_KEY)).slice(0, 5),
+      String(XXH.h32(TASK_DIGEST_KEY, 0xabcd)).slice(0, 5),
       10
     )
     task.digest = taskDigest
