@@ -83,7 +83,7 @@ Using built-in debuggers in code editors is very convenient. You will be able to
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
-On Linux:
+### Linux
 
 ```json:title=launch.json
 {
@@ -111,7 +111,8 @@ On Linux:
 }
 ```
 
-On Windows use the following:
+### Windows
+
 ```json:title=launch.json
 {
   "version": "0.2.0",
@@ -143,6 +144,7 @@ On Windows use the following:
   ]
 }
 ```
+
 After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
 
 ![VSCode breakpoint hit](./images/vscode-debug.png)
