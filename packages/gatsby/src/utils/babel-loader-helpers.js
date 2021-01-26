@@ -1,13 +1,15 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 
+const isNotTestEnv = process.env.NODE_ENV !== `test`
+const isFastRefresh = process.env.GATSBY_HOT_LOADER === `fast-refresh`
 const loadCachedConfig = () => {
   let pluginBabelConfig = {
     stages: {
       test: { plugins: [], presets: [] },
     },
   }
-  if (process.env.NODE_ENV !== `test`) {
+  if (isNotTestEnv) {
     pluginBabelConfig = require(path.join(
       process.cwd(),
       `./.cache/babelState.json`
@@ -50,7 +52,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   }
 
   if (stage === `develop`) {
-    if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
+    if (isFastRefresh) {
       requiredPlugins.push(
         babel.createConfigItem([resolve(`react-refresh/babel`)], {
           type: `plugin`,

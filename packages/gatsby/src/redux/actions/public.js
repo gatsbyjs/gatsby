@@ -25,6 +25,9 @@ const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
 
+const isNotTestEnv = process.env.NODE_ENV !== `test`
+const isTestEnv = process.env.NODE_ENV === `test`
+
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
  * Ideally, we should invalidate memoized values if there are any FS operations
@@ -178,7 +181,7 @@ actions.createPage = (
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11323`,
         context: {
@@ -225,7 +228,7 @@ The following fields are used by the page object and should be avoided.
 ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
             `
-      if (process.env.NODE_ENV === `test`) {
+      if (isTestEnv) {
         return error
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
@@ -248,7 +251,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   // Check if a component is set.
   if (!page.component) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11322`,
         context: {
@@ -274,7 +277,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   )
 
   if (error) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       if (panicOnBuild) {
         report.panicOnBuild(error)
       } else {
@@ -289,7 +292,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
-  if (process.env.NODE_ENV !== `test`) {
+  if (isNotTestEnv) {
     if (pageComponentCache.has(page.component)) {
       page.component = pageComponentCache.get(page.component)
     } else {
@@ -1044,7 +1047,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options)) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1052,7 +1055,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options.options)) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1086,7 +1089,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1122,7 +1125,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }

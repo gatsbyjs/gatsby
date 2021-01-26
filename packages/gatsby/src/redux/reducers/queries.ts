@@ -323,12 +323,12 @@ function registerComponent(
   }
   return component
 }
-
+const queryOnDemandEnabled = process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
 function trackDirtyQuery(
   state: IGatsbyState["queries"],
   queryId: QueryId
 ): IGatsbyState["queries"] {
-  if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+  if (queryOnDemandEnabled) {
     state.dirtyQueriesListToEmitViaWebsocket.push(queryId)
   }
 
