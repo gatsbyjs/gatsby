@@ -36,9 +36,9 @@ describe(`GatsbyImage browser`, () => {
     beforeHydrationContent = document.createElement(`div`)
     beforeHydrationContent.innerHTML = `
       <div
-        class="gatsby-image-wrapper"
+        class="gatsby-image-wrapper gatsby-image-wrapper-constrained"
         data-gatsby-image-wrapper=""
-        style="position: relative; display: inline-block;"
+        style="position: relative;"
       >
         <div
           style="max-width: 100px; display: block;"
