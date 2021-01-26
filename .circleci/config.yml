@@ -67,7 +67,7 @@ aliases:
       - <<: *attach_to_bootstrap
       - run: yarn list react
       - run:
-          command: node --max-old-space-size=1024 ./node_modules/.bin/jest -w 1 --ci
+          command: node --max-old-space-size=1024 ./node_modules/.bin/jest -w 1 --ci --logHeapUsage
           environment:
             GENERATE_JEST_REPORT: true
             JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
@@ -488,7 +488,7 @@ jobs:
       - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       - run:
           name: "Run Tests"
-          command: yarn jest -w 1 --ci
+          command: yarn jest -w 1 --ci --logHeapUsage
 
   bootstrap-with-experimental-react:
     executor: node
