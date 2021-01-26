@@ -403,37 +403,37 @@ const imageNodeType = ({
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
-        FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen. 
+        FULL_WIDTH: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
         CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
         `,
       },
       width: {
         type: GraphQLInt,
         description: stripIndent`
-        The display width of the generated image for layout = FIXED, and the maximum display width of the largest image for layout = CONSTRAINED.  
+        The display width of the generated image for layout = FIXED, and the maximum display width of the largest image for layout = CONSTRAINED.
         Ignored if layout = FLUID.
         `,
       },
       height: {
         type: GraphQLInt,
         description: stripIndent`
-        The display height of the generated image for layout = FIXED, and the maximum display height of the largest image for layout = CONSTRAINED.  
-        The image will be cropped if the aspect ratio does not match the source image. If omitted, it is calculated from the supplied width, 
+        The display height of the generated image for layout = FIXED, and the maximum display height of the largest image for layout = CONSTRAINED.
+        The image will be cropped if the aspect ratio does not match the source image. If omitted, it is calculated from the supplied width,
         matching the aspect ratio of the source image.`,
       },
       aspectRatio: {
         type: GraphQLFloat,
         description: stripIndent`
-        If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed. 
+        If set along with width or height, this will set the value of the other dimension to match the provided aspect ratio, cropping the image if needed.
         If neither width or height is provided, height will be set based on the intrinsic width of the source image.
         `,
       },
       placeholder: {
         type: ImagePlaceholderType,
         description: stripIndent`
-        Format of generated placeholder image, displayed while the main image loads. 
+        Format of generated placeholder image, displayed while the main image loads.
         BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
-        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image. 
+        DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
         TRACED_SVG: a low-resolution traced SVG of the image.
         NONE: no placeholder. Set "background" to use a fixed background color.`,
       },
@@ -448,18 +448,18 @@ const imageNodeType = ({
       formats: {
         type: GraphQLList(ImageFormatType),
         description: stripIndent`
-        The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG", "WEBP" and "AVIF". 
+        The image formats to generate. Valid values are "AUTO" (meaning the same format as the source image), "JPG", "PNG", "WEBP" and "AVIF".
         The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
-        not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying 
+        not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
         both PNG and JPG is not supported and will be ignored.
         `,
-        defaultValue: [`auto`, `webp`],
+        defaultValue: [``, `webp`],
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLFloat),
         description: stripIndent`
-        A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image. 
-        Default is [ 1, 2 ] for FIXED images, meaning 1x and 2x and [0.25, 0.5, 1, 2] for CONSTRAINED. In this case, an image with a constrained layout 
+        A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image.
+        Default is [ 1, 2 ] for FIXED images, meaning 1x and 2x and [0.25, 0.5, 1, 2] for CONSTRAINED. In this case, an image with a constrained layout
         and width = 400 would generate images at 100, 200, 400 and 800px wide. Ignored for FULL_WIDTH images, which use breakpoints instead`,
       },
       breakpoints: {
@@ -473,8 +473,8 @@ const imageNodeType = ({
       sizes: {
         type: GraphQLString,
         description: stripIndent`
-        The "sizes" property, passed to the img tag. This describes the display size of the image. 
-        This does not affect the generated images, but is used by the browser to decide which images to download. 
+        The "sizes" property, passed to the img tag. This describes the display size of the image.
+        This does not affect the generated images, but is used by the browser to decide which images to download.
         You should usually leave this blank, and a suitable value will be calculated. The exception is if a FULL_WIDTH image
         does not actually span the full width of the screen, in which case you should pass the correct size here.
         `,
