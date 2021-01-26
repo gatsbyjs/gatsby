@@ -1,6 +1,5 @@
 import openurl from "better-opn"
 import report from "gatsby-cli/lib/reporter"
-import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import chalk from "chalk"
 import { Compiler } from "webpack"
 import { Stage } from "../commands/types"
@@ -80,19 +79,12 @@ export async function startWebpackServer({
         cancelDevJSNotice()
       }
 
-      // "done" event fires when Webpack has finished recompiling the bundle.
-      // Whether or not you have warnings or errors, you will get this event.
-
-      // We have switched off the default Webpack output in WebpackDevServer
-      // options so we are going to "massage" the warnings and errors and present
-      // them in a readable focused way.
-      const messages = formatWebpackMessages(stats.toJson({}, true))
       const urls = prepareUrls(
         program.https ? `https` : `http`,
         program.host,
         program.proxyPort
       )
-      const isSuccessful = !messages.errors.length
+      const isSuccessful = !stats.hasErrors()
 
       if (isSuccessful && isFirstCompile) {
         // Show notices to users about potential experiments/feature flags they could
@@ -119,7 +111,9 @@ export async function startWebpackServer({
       isFirstCompile = false
 
       if (webpackActivity) {
-        reportWebpackWarnings(stats)
+        if (stats.hasWarnings()) {
+          reportWebpackWarnings(stats.compilation.warnings, report)
+        }
 
         if (!isSuccessful) {
           const errors = structureWebpackErrors(

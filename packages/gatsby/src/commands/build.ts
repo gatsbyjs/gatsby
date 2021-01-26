@@ -16,7 +16,10 @@ import { store, readState } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
-import { structureWebpackErrors } from "../utils/webpack-error-utils"
+import {
+  structureWebpackErrors,
+  reportWebpackWarnings,
+} from "../utils/webpack-error-utils"
 import {
   userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
@@ -139,6 +142,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let stats
   try {
     stats = await buildProductionBundle(program, buildActivityTimer.span)
+
+    if (stats.hasWarnings()) {
+      reportWebpackWarnings(stats.compilation.warnings, report)
+    }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
