@@ -286,7 +286,7 @@ module.exports = async (
       case `develop`:
       case `develop-html`:
       case `build-html`:
-        return `development` // So we don't uglify the html bundle
+        return `none` // So we don't uglify the html bundle
       default:
         return `production`
     }
@@ -523,10 +523,6 @@ module.exports = async (
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(stage),
-
-    node: {
-      __filename: true,
-    },
   }
 
   if (stage === `build-javascript`) {
@@ -537,7 +533,7 @@ module.exports = async (
       chunks: `all`,
       cacheGroups: {
         default: false,
-        vendors: false,
+        defaultVendors: false,
         framework: {
           chunks: `all`,
           name: `framework`,
@@ -626,9 +622,7 @@ module.exports = async (
         name: `webpack-runtime`,
       },
       // use hashes instead of ids for module identifiers
-      // TODO update to deterministic in webpack 5 (hashed is deprecated)
-      // @see https://webpack.js.org/guides/caching/#module-identifiers
-      moduleIds: `hashed`,
+      moduleIds: `deterministic`,
       splitChunks,
       minimizer: [
         // TODO: maybe this option should be noMinimize?
@@ -690,7 +684,7 @@ module.exports = async (
     }
 
     config.externals = [
-      function (context, request, callback) {
+      function ({ context, request }, callback) {
         if (
           stage === `develop-html` &&
           isCI() &&

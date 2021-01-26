@@ -6,6 +6,7 @@ import { chunk } from "lodash"
 import webpack from "webpack"
 
 import { emitter } from "../redux"
+import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
@@ -14,19 +15,15 @@ import { IProgram, Stage } from "./types"
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
-  suspend: () => void
-  resume: () => void
-}
-
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
 let needToRecompileSSRBundle = true
-export const getDevSSRWebpack = (): Record<
-  IWebpackWatchingPauseResume,
-  webpack.Compiler,
-  needToRecompileSSRBundle
-> => {
+
+export const getDevSSRWebpack = (): {
+  devssrWebpackWatcher: IWebpackWatchingPauseResume
+  devssrWebpackCompiler: webpack.Compiler
+  needToRecompileSSRBundle: boolean
+} => {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
