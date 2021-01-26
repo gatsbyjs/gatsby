@@ -29,3 +29,4 @@ packages/gatsby/gatsby-admin-public
 packages/gatsby-source-wordpress/test-site/**
 !packages/gatsby-source-wordpress/test-site/__tests__
 !packages/gatsby-source-wordpress/test-site/test-utils
+packages/gatsby-codemods/transforms/*
