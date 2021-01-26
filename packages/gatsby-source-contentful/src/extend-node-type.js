@@ -1,3 +1,4 @@
+// @ts-check
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
@@ -188,14 +189,14 @@ const generateImageSource = (
   height,
   toFormat,
   _fit, // We use resizingBehavior instead
-  { jpegProgressive, quality, cropFocus, background, resizingBehavior }
+  { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
 ) => {
   const src = createUrl(filename, {
     width,
     height,
     toFormat,
     resizingBehavior,
-    background,
+    background: backgroundColor?.replace(`#`, `rgb:`),
     quality,
     jpegProgressive,
     cropFocus,
@@ -678,22 +679,29 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const getDominantColor = async ({ image, options }) => {
-    const { rgbToHex } = require(`gatsby-plugin-sharp`)
-    const sharp = require(`sharp`)
+    try {
+      const { rgbToHex } = require(`gatsby-plugin-sharp`)
+      const sharp = require(`gatsby-plugin-sharp/safe-sharp`)
 
-    const absolutePath = await cacheImage(store, image, options)
+      const absolutePath = await cacheImage(store, image, options)
 
-    const pipeline = sharp(absolutePath)
-    const { dominant } = await pipeline.stats()
+      const pipeline = sharp(absolutePath)
+      const { dominant } = await pipeline.stats()
 
-    // Fallback in case sharp doesn't support dominant
-    const dominantColor = dominant
-      ? rgbToHex(dominant.r, dominant.g, dominant.b)
-      : `#000000`
+      // Fallback in case sharp doesn't support dominant
+      const dominantColor = dominant
+        ? rgbToHex(dominant.r, dominant.g, dominant.b)
+        : `rgba(0,0,0,0.5)`
 
-    dominantColorCache.set(absolutePath, dominantColor)
+      dominantColorCache.set(absolutePath, dominantColor)
 
-    return dominantColor
+      return dominantColor
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`
+      )
+      return `rgba(0,0,0,0.5)`
+    }
   }
 
   const resolveGatsbyImageData = async (image, options) => {
@@ -735,8 +743,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       imageProps.placeholder = { fallback: placeholderDataURI }
     }
 
-    console.log({ imageProps })
-
     return imageProps
   }
 
@@ -777,7 +783,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: GraphQLInt,
         defaultValue: 50,
       },
-      background: {
+      backgroundColor: {
         type: GraphQLString,
       },
     })
