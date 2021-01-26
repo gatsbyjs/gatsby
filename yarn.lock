@@ -11629,6 +11629,11 @@ gatsby-node-helpers@^0.3.0:
     lodash "^4.17.4"
     p-is-promise "^1.1.0"
 
+gatsby-plugin-react-helmet-async@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-react-helmet-async/-/gatsby-plugin-react-helmet-async-1.1.0.tgz#680995b67588a4d4de1f63e41bd929e1f7fe1c86"
+  integrity sha512-qJkFIcDKg9b27Z3tXp5uXugVzne2MEsTi4hIm5erTSlGmOIj2EuoKfC8Tc/bGUkHazbY71AUFAZj15aonAXPzw==
+
 gatsby-plugin-webfonts@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-webfonts/-/gatsby-plugin-webfonts-1.1.4.tgz#f6fb8daf0acc4c59511c98964fceca35504014ac"
@@ -20315,7 +20320,7 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-fast-compare@^3.1.1:
+react-fast-compare@^3.1.1, react-fast-compare@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.0.tgz#641a9da81b6a6320f270e89724fb45a0b39e43bb"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
@@ -20331,6 +20336,17 @@ react-focus-lock@^2.3.1:
     react-clientside-effect "^1.2.2"
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
+
+react-helmet-async@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-helmet-async/-/react-helmet-async-1.0.7.tgz#b988fbc3abdc4b704982bb74b9cb4a08fcf062c1"
+  integrity sha512-By90p5uxAriGukbyejq2poK41DwTxpNWOpOjN8mIyX/BKrCd3+sXZ5pHUZXjHyjR5OYS7PGsOD9dbM61YxfFmA==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    invariant "^2.2.4"
+    prop-types "^15.7.2"
+    react-fast-compare "^3.2.0"
+    shallowequal "^1.1.0"
 
 react-helmet@^6.1.0:
   version "6.1.0"

@@ -260,6 +260,20 @@ export function loadPlugins(
     )
   }
 
+  // react-helmet-async is used by the <Head /> component, so we have to add the plugin if it doesn't already exist
+  const reactHelmetAsyncPlugin = (config.plugins || []).find(
+    plugin => plugin.resolve === `gatsby-plugin-react-helmet-async`
+  )
+
+  if (reactHelmetAsyncPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-react-helmet-async`),
+        options: {},
+      })
+    )
+  }
+
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),

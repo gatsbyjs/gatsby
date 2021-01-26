@@ -1,7 +1,7 @@
 import React from "react"
 import fs from "fs"
+import { HelmetProvider } from "react-helmet-async"
 const { join } = require(`path`)
-
 import developStaticEntry from "../develop-static-entry"
 
 jest.mock(`fs`, () => {
@@ -64,6 +64,11 @@ const MOCK_FILE_INFO = {
 let staticEntry
 beforeEach(() => {
   fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
+  // NOTE(@mxstbr): Importing the src directly ("../static-entry") breaks the tests as static-entry
+  // imports the <Head /> component from cache-dir/head/index.js. That component has a useStaticQuery
+  // and graphql`` call, which aren't compiled away in the src, so all these tests fail with the
+  // "query was left in the compiled code" error from gatsby-browser-entry.js graphql.
+  // Importing from the built commonjs folder works, as the graphql() call is compiled away.
   staticEntry = require(`../static-entry`).default
 })
 
@@ -150,6 +155,14 @@ const fakeComponentsPluginFactory = type => {
   }
 }
 
+const reactHelmetAsyncPlugin = {
+  plugin: {
+    wrapRootElement: ({ element }) => (
+      <HelmetProvider context={{}}>{element}</HelmetProvider>
+    ),
+  },
+}
+
 const SSR_DEV_MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [join(
@@ -177,7 +190,11 @@ describe(`develop-static-entry`, () => {
   })
 
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
-    global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
+    global.plugins = [
+      reactHelmetAsyncPlugin,
+      fakeStylesPlugin,
+      reverseHeadersPlugin,
+    ]
 
     ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toMatchSnapshot()
@@ -187,6 +204,7 @@ describe(`develop-static-entry`, () => {
 
   test(`SSR: onPreRenderHTML can be used to replace postBodyComponents`, done => {
     global.plugins = [
+      reactHelmetAsyncPlugin,
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
@@ -199,6 +217,7 @@ describe(`develop-static-entry`, () => {
 
   test(`SSR: onPreRenderHTML can be used to replace preBodyComponents`, done => {
     global.plugins = [
+      reactHelmetAsyncPlugin,
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
@@ -210,6 +229,7 @@ describe(`develop-static-entry`, () => {
   })
 
   test(`SSR: onPreRenderHTML adds metatag note for development environment`, done => {
+    global.plugins = [reactHelmetAsyncPlugin]
     ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
@@ -219,7 +239,7 @@ describe(`develop-static-entry`, () => {
   })
 
   test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
-    global.plugins = [reverseHeadersPlugin]
+    global.plugins = [reactHelmetAsyncPlugin, reverseHeadersPlugin]
 
     ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
       expect(html).toContain(
@@ -299,7 +319,11 @@ describe(`static-entry sanity checks`, () => {
   methodsToCheck.forEach(methodName => {
     test(`${methodName} can filter out null value`, done => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, null)
-      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+      global.plugins = [
+        reactHelmetAsyncPlugin,
+        plugin,
+        checkNonEmptyHeadersPlugin,
+      ]
 
       staticEntry(`/about/`, (_, html) => {
         done()
@@ -311,7 +335,11 @@ describe(`static-entry sanity checks`, () => {
         null,
         null,
       ])
-      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+      global.plugins = [
+        reactHelmetAsyncPlugin,
+        plugin,
+        checkNonEmptyHeadersPlugin,
+      ]
 
       staticEntry(`/about/`, (_, html) => {
         done()
@@ -320,7 +348,11 @@ describe(`static-entry sanity checks`, () => {
 
     test(`${methodName} can filter out empty array`, done => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [])
-      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+      global.plugins = [
+        reactHelmetAsyncPlugin,
+        plugin,
+        checkNonEmptyHeadersPlugin,
+      ]
 
       staticEntry(`/about/`, (_, html) => {
         done()
@@ -329,7 +361,11 @@ describe(`static-entry sanity checks`, () => {
 
     test(`${methodName} can filter out empty arrays`, done => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [[], []])
-      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+      global.plugins = [
+        reactHelmetAsyncPlugin,
+        plugin,
+        checkNonEmptyHeadersPlugin,
+      ]
 
       staticEntry(`/about/`, (_, html) => {
         done()
@@ -343,7 +379,11 @@ describe(`static-entry sanity checks`, () => {
         <style key="style3"> .style3 {} </style>,
         [<style key="style4"> .style3 {} </style>],
       ])
-      global.plugins = [plugin, checkNonEmptyHeadersPlugin]
+      global.plugins = [
+        reactHelmetAsyncPlugin,
+        plugin,
+        checkNonEmptyHeadersPlugin,
+      ]
 
       staticEntry(`/about/`, (_, html) => {
         done()
@@ -360,7 +400,11 @@ describe(`static-entry`, () => {
   })
 
   test(`onPreRenderHTML can be used to replace headComponents`, done => {
-    global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
+    global.plugins = [
+      reactHelmetAsyncPlugin,
+      fakeStylesPlugin,
+      reverseHeadersPlugin,
+    ]
 
     staticEntry(`/about/`, (_, html) => {
       expect(html).toMatchSnapshot()
@@ -370,6 +414,7 @@ describe(`static-entry`, () => {
 
   test(`onPreRenderHTML can be used to replace postBodyComponents`, done => {
     global.plugins = [
+      reactHelmetAsyncPlugin,
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
@@ -382,6 +427,7 @@ describe(`static-entry`, () => {
 
   test(`onPreRenderHTML can be used to replace preBodyComponents`, done => {
     global.plugins = [
+      reactHelmetAsyncPlugin,
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
@@ -393,6 +439,7 @@ describe(`static-entry`, () => {
   })
 
   test(`onPreRenderHTML does not add metatag note for development environment`, done => {
+    global.plugins = [reactHelmetAsyncPlugin]
     staticEntry(`/about/`, (_, html) => {
       expect(html).not.toContain(
         `<meta name="note" content="environment=development"/>`

@@ -12,6 +12,7 @@ import Link, {
 import { useScrollRestoration } from "gatsby-react-router-scroll"
 import PageRenderer from "./public-page-renderer"
 import loader from "./loader"
+import { Head } from "./head"
 
 const prefetchPathname = loader.enqueue
 
@@ -114,4 +115,5 @@ export {
   PageRenderer,
   useStaticQuery,
   prefetchPathname,
+  Head,
 }
