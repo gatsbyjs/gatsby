@@ -9,7 +9,7 @@ emitter.on(`CREATE_PAGE`, action => {
   // Copy /404/ to /404.html as many static site hosts expect
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/
-  if (!page404 && fourOFourRegex.test(action.payload.path)) {
+  if (!page404 && fourOhFourRegex.test(action.payload.path)) {
     boundActionCreators.createPage({
       ...action.payload,
       path: PROD_404_PAGE_PATH,

@@ -41,9 +41,18 @@ interface ICreatePageAction {
 
 export const startPluginRunner = (): void => {
   const plugins = store.getState().flattenedPlugins
-  const implementingPlugins = plugins.filter(plugin =>
-    plugin.nodeAPIs.includes(`onCreatePage`)
-  )
+  const implementingPlugins = plugins.filter(plugin => {
+    const includesOnCreatePage = plugin.nodeAPIs.includes(`onCreatePage`)
+    if (includesOnCreatePage && process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+      if (plugin.name === `internal-data-bridge`) {
+        return false
+      } else {
+        return includesOnCreatePage
+      }
+    }
+
+    return includesOnCreatePage
+  })
 
   if (implementingPlugins.length > 0) {
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {

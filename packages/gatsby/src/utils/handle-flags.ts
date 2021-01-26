@@ -143,10 +143,7 @@ const handleFlags = (
   let message = ``
   //  Create message about what flags are active.
   if (enabledConfigFlags.length > 0) {
-    if (
-      enabledConfigFlags.length - optedInFlags.size - lockedInFlags.size >
-      0
-    ) {
+    if (enabledConfigFlags.length - optedInFlags.size > 0) {
       message = `The following flags are active:`
       enabledConfigFlags.forEach(flag => {
         if (!optedInFlags.has(flag.name) && !lockedInFlags.has(flag.name)) {
@@ -160,7 +157,7 @@ const handleFlags = (
         message += `\n\n`
       }
       message += `Some features you configured with flags are used natively now.
-Those flags no longer have any effect and you can remove them from config:`
+Those flags no longer have any effect and you can remove them from config. Thank you for helping test early features!`
       lockedInFlagsThatAreInConfig.forEach(flag => {
         message += generateFlagLine(flag)
       })
