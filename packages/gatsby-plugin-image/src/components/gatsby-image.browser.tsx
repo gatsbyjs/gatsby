@@ -32,7 +32,7 @@ export interface GatsbyImageProps
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
-  backgroundColor?: CSSProperties["backgroundColor"]
+  backgroundColor?: string
   objectFit?: CSSProperties["objectFit"]
   objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void

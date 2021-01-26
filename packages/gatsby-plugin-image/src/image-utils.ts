@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { stripIndent } from "common-tags"
 import { IGatsbyImageData } from "."
-import type sharp from "gatsby-plugin-sharp/safe-sharp"
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
 export const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
@@ -46,7 +45,7 @@ export interface ISharpGatsbyImageArgs {
   quality?: number
   transformOptions?: {
     fit?: Fit
-    cropFocus?: typeof sharp.strategy | typeof sharp.gravity | string
+    cropFocus?: number | string
   }
   jpgOptions?: Record<string, unknown>
   pngOptions?: Record<string, unknown>
