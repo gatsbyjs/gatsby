@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.1...gatsby-plugin-image@0.6.2) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Add missing files ([#29185](https://github.com/gatsbyjs/gatsby/issues/29185)) ([#29196](https://github.com/gatsbyjs/gatsby/issues/29196)) ([4282e05](https://github.com/gatsbyjs/gatsby/commit/4282e0561a36f66ff409b4672b2ab4fd5b6afae0))
+- **gatsby-plugin-image:** Handle breakpoints and auto-format in plugin utils ([#29187](https://github.com/gatsbyjs/gatsby/issues/29187)) ([#29197](https://github.com/gatsbyjs/gatsby/issues/29197)) ([3b5dcda](https://github.com/gatsbyjs/gatsby/commit/3b5dcda998ad9f344e1ca7b981beec5aaab2e8e3))
+
 ## [0.6.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0...gatsby-plugin-image@0.6.1) (2021-01-20)
 
 ### Bug Fixes
