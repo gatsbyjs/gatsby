@@ -3,7 +3,7 @@ const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
 const _ = require(`lodash`)
 
-const { emitter } = require(`../../redux`)
+const { emitter, store } = require(`../../redux`)
 const { boundActionCreators } = require(`../../redux/actions`)
 const { getNode } = require(`../../redux/nodes`)
 
@@ -164,6 +164,38 @@ exports.createResolvers = ({ createResolvers }) => {
             context,
             info
           )
+        },
+      },
+    },
+    Query: {
+      sitePage: {
+        type: `SitePage`,
+        resolve(source, args, context, info) {
+          const { pages } = store.getState()
+          let pagePath = ``
+          if (args.path?.eq && pages.get(args.path.eq)) {
+            pagePath = args.path.eq
+          } else {
+            pagePath = pages.keys().next().value
+          }
+          const page = pages.get(pagePath)
+          page.id = pagePath
+          return page
+        },
+      },
+      allSitePage: {
+        type: `SitePageConnection`,
+        resolve(source, args, context, info) {
+          console.log({ source, args, context, info })
+          console.log(info)
+          const { pages } = store.getState()
+          const mappedPages = [...pages.values()].map(page => {
+            page.id = page.path
+            return page
+          })
+
+          // TODO how do you make this work for both edges & nodes?
+          return { nodes: pages }
         },
       },
     },
