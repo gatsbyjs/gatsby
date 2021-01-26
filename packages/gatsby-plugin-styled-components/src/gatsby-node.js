@@ -20,6 +20,11 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     minify: Joi.boolean()
       .default(true)
       .description(`Remove the whitespace from the CSS.`),
+    namespace: Joi.string()
+      .default(``)
+      .description(
+        `The namespace will ensure that your class names will be unique; this setting is handy when you are working with micro frontends where class name collision can occur.`
+      ),
     transpileTemplateLiterals: Joi.boolean()
       .default(true)
       .description(`Transpile tagged template literals into optimized code.`),
