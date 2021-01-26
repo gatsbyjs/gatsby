@@ -35,7 +35,6 @@ exports.sourceNodes = async ({
   actions,
   getNode,
   createNodeId,
-  hasNodeChanged,
   createContentDigest,
 }) => {
   const { createNode } = actions
