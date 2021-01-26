@@ -22,10 +22,6 @@ const syncRequires = require(`$virtual/sync-requires`)
 const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
-const stats = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
-)
-
 const chunkMapping = JSON.parse(
   fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)
 )
@@ -284,6 +280,10 @@ export default (pagePath, callback) => {
       if (!isRedirect(e)) throw e
     }
   }
+
+  const stats = JSON.parse(
+    fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+  )
 
   // Create paths to scripts
   let scriptsAndStyles = flatten(

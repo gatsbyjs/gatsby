@@ -21,10 +21,6 @@ const testRequireError = (moduleName, err) => {
   return regex.test(firstLine)
 }
 
-const stats = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
-)
-
 let Html
 try {
   Html = require(`../src/html`)
@@ -117,6 +113,10 @@ export default (pagePath, isClientOnlyPage, callback) => {
     const pageData = getPageData(pagePath)
 
     const { componentChunkName, staticQueryHashes = [] } = pageData
+
+    const stats = JSON.parse(
+      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+    )
 
     let scriptsAndStyles = flatten(
       [`commons`].map(chunkKey => {
