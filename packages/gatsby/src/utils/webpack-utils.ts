@@ -6,10 +6,11 @@ import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
+// import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
-import semver from "semver"
+// import semver from "semver"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
@@ -36,17 +37,40 @@ type PluginFactory = (...args: any) => Plugin
 
 type BuiltinPlugins = typeof builtinPlugins
 
+type CSSModulesOptions =
+  | boolean
+  | string
+  | {
+      mode?: "local" | "global" | "pure" | Function
+      auto?: boolean
+      exportGlobals?: boolean
+      localIdentName?: string
+      localIdentContext?: string
+      localIdentHashPrefix?: string
+      namedExport?: boolean
+      exportLocalsConvention?:
+        | "asIs"
+        | "camelCaseOnly"
+        | "camelCase"
+        | "dashes"
+        | "dashesOnly"
+      exportOnlyLocals?: boolean
+    }
+
 /**
  * Utils that produce webpack `loader` objects
  */
 interface ILoaderUtils {
-  json: LoaderResolver
   yaml: LoaderResolver
-  null: LoaderResolver
-  raw: LoaderResolver
-
   style: LoaderResolver
-  css: LoaderResolver
+  css: LoaderResolver<{
+    url?: boolean | Function
+    import?: boolean | Function
+    modules?: CSSModulesOptions
+    sourceMap?: boolean
+    importLoaders?: number
+    esModule?: boolean
+  }>
   postcss: LoaderResolver<{
     browsers?: Array<string>
     overrideBrowserslist?: Array<string>
@@ -159,8 +183,6 @@ export const createWebpackUtils = (
     return rule
   }
 
-  let ident = 0
-
   const loaders: ILoaderUtils = {
     json: (options = {}) => {
       return {
@@ -168,7 +190,6 @@ export const createWebpackUtils = (
         loader: require.resolve(`json-loader`),
       }
     },
-
     yaml: (options = {}) => {
       return {
         options,
@@ -198,48 +219,42 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
-      if (PRODUCTION) {
-        // production always uses MiniCssExtractPlugin
-        return {
-          loader: MiniCssExtractPlugin.loader,
-          options,
-        }
-      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-        // develop with ssr also uses MiniCssExtractPlugin
-        return {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            ...options,
-            // enable hmr for browser bundle, ssr bundle doesn't need it
-            hmr: stage === `develop`,
-          },
-        }
-      } else {
-        // develop without ssr is using style-loader
-        return {
-          loader: require.resolve(`style-loader`),
-          options,
-        }
+      // production always uses MiniCssExtractPlugin
+      return {
+        loader: MiniCssExtractPlugin.loader,
+        options,
       }
     },
 
     css: (options = {}) => {
+      let modulesOptions: CSSModulesOptions = false
+      if (options.modules) {
+        modulesOptions = {
+          auto: false,
+          localIdentName: `[name]--[local]--[hash:base64:5]`,
+          exportLocalsConvention: `dashesOnly`,
+          exportOnlyLocals: isSSR,
+        }
+
+        if (typeof options.modules === `object`) {
+          modulesOptions = {
+            ...modulesOptions,
+            ...options.modules,
+          }
+        }
+      }
+
       return {
-        loader: isSSR
-          ? require.resolve(`css-loader/locals`)
-          : require.resolve(`css-loader`),
+        loader: require.resolve(`css-loader`),
         options: {
           sourceMap: !PRODUCTION,
-          camelCase: `dashesOnly`,
-          // https://github.com/webpack-contrib/css-loader/issues/406
-          localIdentName: `[name]--[local]--[hash:base64:5]`,
-          ...options,
+          modules: modulesOptions,
         },
       }
     },
 
     postcss: (options = {}) => {
-      let {
+      const {
         plugins,
         overrideBrowserslist = supportedBrowsers,
         ...postcssOpts
@@ -248,23 +263,33 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`postcss-loader`),
         options: {
-          ident: `postcss-${++ident}`,
+          execute: false,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): Array<postcss.Plugin<any>> => {
-            plugins =
-              (typeof plugins === `function` ? plugins(loader) : plugins) || []
+          // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+          postcssOptions: (loaderContext: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let postCSSPlugins: Array<postcss.Plugin<any>> = []
+            if (plugins) {
+              postCSSPlugins =
+                typeof plugins === `function` ? plugins(loaderContext) : plugins
+            }
 
             const autoprefixerPlugin = autoprefixer({
               overrideBrowserslist,
               flexbox: `no-2009`,
-              ...((plugins.find(
+              ...((postCSSPlugins.find(
                 plugin => plugin.postcssPlugin === `autoprefixer`
               ) as autoprefixer.Autoprefixer)?.options ?? {}),
             })
 
-            return [flexbugs, autoprefixerPlugin, ...plugins]
+            postCSSPlugins.unshift(autoprefixerPlugin)
+            postCSSPlugins.unshift(flexbugs)
+
+            return {
+              plugins: postCSSPlugins,
+              ...postcssOpts,
+            }
           },
-          ...postcssOpts,
         },
       }
     },
@@ -337,20 +362,6 @@ export const createWebpackUtils = (
       return {
         options: eslintRequiredConfig,
         loader: require.resolve(`eslint-loader`),
-      }
-    },
-
-    imports: (options = {}) => {
-      return {
-        options,
-        loader: require.resolve(`imports-loader`),
-      }
-    },
-
-    exports: (options = {}) => {
-      return {
-        options,
-        loader: require.resolve(`exports-loader`),
       }
     },
   }
@@ -515,7 +526,8 @@ export const createWebpackUtils = (
   rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml$/,
-      use: [loaders.json(), loaders.yaml()],
+      type: `json`,
+      use: [loaders.yaml()],
     }
   }
 
@@ -568,13 +580,10 @@ export const createWebpackUtils = (
     const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
       const { browsers, ...restOptions } = options
       const use = [
+        loaders.miniCssExtract(),
         loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR)
-        use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
-        )
 
       return {
         use,
@@ -630,10 +639,7 @@ export const createWebpackUtils = (
     ...options
   }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
-      // TODO add proper cache keys
-      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       exclude: /\.min\.js/,
-      sourceMap: true,
       terserOptions: {
         ie8: false,
         mangle: {
@@ -655,7 +661,7 @@ export const createWebpackUtils = (
 
   plugins.minifyCss = (
     options = {
-      cssProcessorPluginOptions: {
+      minimizerOptions: {
         preset: [
           `default`,
           {
@@ -718,7 +724,7 @@ export const createWebpackUtils = (
         ],
       },
     }
-  ): OptimizeCssAssetsPlugin => new OptimizeCssAssetsPlugin(options)
+  ): CssMinimizerPlugin => new CssMinimizerPlugin(options)
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({

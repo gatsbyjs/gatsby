@@ -299,9 +299,9 @@ export default (pagePath, callback) => {
         return { rel: `preload`, name: chunk }
       })
 
-      namedChunkGroups[s].assets.forEach(asset =>
-        chunks.push({ rel: `preload`, name: asset })
-      )
+      namedChunkGroups[s].assets.forEach(asset => {
+        chunks.push({ rel: `preload`, name: asset.name })
+      })
 
       const childAssets = namedChunkGroups[s].childAssets
       for (const rel in childAssets) {

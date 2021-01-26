@@ -232,13 +232,16 @@ module.exports = async (
             new StaticQueryMapper(store),
           ])
           .filter(Boolean)
+
+        configPlugins.push(
+          plugins.extractText({
+            filename: `[name].css`,
+            chunkFilename: `[id].css`,
+          })
+        )
+
         if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-          // Don't use the default mini-css-extract-plugin setup as that
-          // breaks hmr.
-          configPlugins.push(
-            plugins.extractText({ filename: `[name].css` }),
-            plugins.extractStats()
-          )
+          configPlugins.push(plugins.extractStats())
         }
         break
       case `build-javascript`: {

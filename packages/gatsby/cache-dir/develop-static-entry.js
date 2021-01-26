@@ -104,6 +104,7 @@ export default (pagePath, callback) => {
     body: ``,
     headComponents: headComponents.concat([
       <script key={`io`} src="/socket.io/socket.io.js" />,
+      <link key="styles" rel="stylesheet" href="/commons.css" />,
     ]),
     htmlAttributes,
     bodyAttributes,
