@@ -18,6 +18,7 @@ const apiRunnerNode = require(`./api-runner-node`)
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
+import { StaticQueryMapper } from "./webpack/static-query-mapper"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -228,6 +229,7 @@ module.exports = async (
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
+            new StaticQueryMapper(store),
           ])
           .filter(Boolean)
         if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
@@ -248,6 +250,7 @@ module.exports = async (
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           plugins.extractStats(),
+          new StaticQueryMapper(store),
         ])
         break
       }
