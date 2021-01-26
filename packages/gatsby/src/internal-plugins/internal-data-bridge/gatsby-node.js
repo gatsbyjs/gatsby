@@ -168,6 +168,7 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
     Query: {
+      // TODO add JSON field for page context.
       sitePage: {
         type: `SitePage`,
         resolve(source, args, context, info) {
