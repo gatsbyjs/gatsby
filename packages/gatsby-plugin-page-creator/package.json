@@ -26,11 +26,11 @@
   "dependencies": {
     "@babel/traverse": "^7.12.5",
     "@sindresorhus/slugify": "^1.1.0",
-    "chokidar": "^3.4.2",
+    "chokidar": "^3.5.1",
     "fs-exists-cached": "^1.0.0",
     "gatsby-page-utils": "^0.9.0-next.0",
     "gatsby-telemetry": "^1.10.0-next.1",
-    "globby": "^11.0.1",
+    "globby": "^11.0.2",
     "lodash": "^4.17.20"
   },
   "devDependencies": {
