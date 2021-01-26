@@ -24,7 +24,6 @@ const {
   getNodes,
   getNode,
   getNodesByType,
-  hasNodeChanged,
   getNodeAndSavePathDependency,
 } = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -424,7 +423,6 @@ const runAPI = async (plugin, api, args, activity) => {
         getNodes,
         getNode,
         getNodesByType,
-        hasNodeChanged,
         reporter: extendedLocalReporter,
         getNodeAndSavePathDependency,
         cache,
