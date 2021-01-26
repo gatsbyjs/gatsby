@@ -430,26 +430,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
  * @example
  * deleteNode({node: node})
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
-  let id
-
-  // Check if using old method signature. Warn about incorrect usage but get
-  // node from nodeID anyway.
-  if (typeof options === `string`) {
-    let msg =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }).`
-    if (args && args.name) {
-      // `plugin` used to be the third argument
-      plugin = args
-      msg = msg + ` "deleteNode" was called by ${plugin.name}`
-    }
-    report.warn(msg)
-
-    id = options
-  } else {
-    id = options && options.node && options.node.id
-  }
+actions.deleteNode = (options: any, plugin: Plugin) => {
+  const id = options && options.node && options.node.id
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
