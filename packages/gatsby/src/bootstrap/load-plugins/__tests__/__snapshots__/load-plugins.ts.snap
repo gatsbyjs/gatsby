@@ -218,6 +218,23 @@ Array [
     "version": "1.0.0",
   },
   Object {
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
+    "id": "",
+    "name": "gatsby-plugin-react-helmet-async",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "onRenderBody",
+      "wrapRootElement",
+    ],
+    "version": "1.0.0",
+  },
+  Object {
     "browserAPIs": Array [],
     "id": "",
     "name": "default-site-plugin",
@@ -495,6 +512,23 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
+    "id": "",
+    "name": "gatsby-plugin-react-helmet-async",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "onRenderBody",
+      "wrapRootElement",
+    ],
     "version": "1.0.0",
   },
   Object {
@@ -783,6 +817,23 @@ Array [
     },
     "resolve": "",
     "ssrAPIs": Array [],
+    "version": "1.0.0",
+  },
+  Object {
+    "browserAPIs": Array [
+      "wrapRootElement",
+    ],
+    "id": "",
+    "name": "gatsby-plugin-react-helmet-async",
+    "nodeAPIs": Array [],
+    "pluginOptions": Object {
+      "plugins": Array [],
+    },
+    "resolve": "",
+    "ssrAPIs": Array [
+      "onRenderBody",
+      "wrapRootElement",
+    ],
     "version": "1.0.0",
   },
   Object {
