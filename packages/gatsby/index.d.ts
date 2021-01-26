@@ -1118,16 +1118,6 @@ interface CreateNodeFieldArgs {
   node: Node
   name: string
   value: string
-
-  /**
-   * @deprecated
-   */
-  fieldName?: string
-
-  /**
-   * @deprecated
-   */
-  fieldValue?: string
 }
 
 interface ActionOptions {
@@ -1182,8 +1172,6 @@ export interface Actions {
   createNodeField(
     args: {
       node: Node
-      fieldName?: string
-      fieldValue?: string
       name?: string
       value: any
     },
