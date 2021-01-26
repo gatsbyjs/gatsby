@@ -16,25 +16,22 @@ For full documentation on all configuration options, see [the Gatsby Image Plugi
 
 ## Installation
 
-1. Install `gatsby-plugin-image`, `gatsby-source-filesystem` and `gatsby-plugin-sharp`:
+1. Install `gatsby-plugin-image` and `gatsby-plugin-sharp`. Additionally install `gatsby-source-filesystem` if you are using static images, and `gatsby-transformer-sharp` if you are using dynamic images.
 
 ```shell
-npm install gatsby-plugin-image gatsby-source-filesystem gatsby-plugin-sharp
+npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-If you're using the new `GatsbyImage` in addition to `StaticImage`, you'll also want to install `gatsby-transformer-sharp`.
+1. Upgrade `gatsby` to at least `2.24.78`.
 
-2. Upgrade `gatsby` to at least `2.24.78`.
-
-3. Add the plugins to your `gatsby-config.js`:
+2. Add the plugins to your `gatsby-config.js`:
 
 ```javascript
 module.exports = {
   plugins: [
     `gatsby-plugin-image`,
-    `gatsby-source-filesystem`,
     `gatsby-plugin-sharp`,
-    // `gatsby-transformer-sharp` // Needed for dynamic images
+    `gatsby-transformer-sharp`, // Needed for dynamic images
   ],
 }
 ```
@@ -85,8 +82,6 @@ If you are using an image that will be the same each time the component is used,
 
    You configure the image by passing props to the `<StaticImage />` component. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options [in the API docs](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
-   This component renders a 200px by 200px image of a dinosaur. Before loading it will have a blurred, low-resolution placeholder. It uses the `"fixed"` layout, which means the image does not resize with its container.
-
    ```jsx
    import { StaticImage } from "gatsby-plugin-image"
 
@@ -103,6 +98,8 @@ If you are using an image that will be the same each time the component is used,
      )
    }
    ```
+
+   This component renders a 200px by 200px image of a dinosaur. Before loading it will have a blurred, low-resolution placeholder. It uses the `"fixed"` layout, which means the image does not resize with its container.
 
 #### Restrictions on using `StaticImage`
 
@@ -131,6 +128,8 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    ```
 
 2. **Configure your image.**
+
+   For all the configuration options, see the [Gatsby Image plugin reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
    You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
@@ -192,7 +191,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    `
    ```
 
-For full APIs, see [the API reference](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
+For full APIs, see [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
 ## Migrating
 
