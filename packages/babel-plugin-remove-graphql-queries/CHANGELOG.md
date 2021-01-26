@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.16.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.16.0-next.0...babel-plugin-remove-graphql-queries@2.16.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **babel-plugin-remove-graphql-queries:** make sure imports are posix ([#29144](https://github.com/gatsbyjs/gatsby/issues/29144)) ([3a5a855](https://github.com/gatsbyjs/gatsby/commit/3a5a855ebc16c1cd2e9c1cae1586765591a4b353))
+
 # [2.16.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.15.0-next.0...babel-plugin-remove-graphql-queries@2.16.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package babel-plugin-remove-graphql-queries

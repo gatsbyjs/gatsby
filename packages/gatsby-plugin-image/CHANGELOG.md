@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.7.0-next.0...gatsby-plugin-image@0.7.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Add missing files ([#29185](https://github.com/gatsbyjs/gatsby/issues/29185)) ([0ac0ac8](https://github.com/gatsbyjs/gatsby/commit/0ac0ac840957b92be447d61e46b1b8bcd2bcfacd))
+- **gatsby-plugin-image:** Fixes to plugin utils types ([#29204](https://github.com/gatsbyjs/gatsby/issues/29204)) ([b236f49](https://github.com/gatsbyjs/gatsby/commit/b236f4916721c8e5fa1465cca7b6c4b8c26170c8))
+- **gatsby-plugin-image:** Handle breakpoints and auto-format in plugin utils ([#29187](https://github.com/gatsbyjs/gatsby/issues/29187)) ([25912f0](https://github.com/gatsbyjs/gatsby/commit/25912f00b452c4df04ba950efa90cdf12e73818e))
+- **gatsby-plugin-image:** pass down missing sizes attribute to <sources> ([#29092](https://github.com/gatsbyjs/gatsby/issues/29092)) ([2e42197](https://github.com/gatsbyjs/gatsby/commit/2e42197025e2e1bac06c721c3cc44135bf8ef526))
+- **gatsby-plugin-image:** Pass sizes for source ([#29192](https://github.com/gatsbyjs/gatsby/issues/29192)) ([0ddbbfe](https://github.com/gatsbyjs/gatsby/commit/0ddbbfe7ac03d5e6281b1d5e9f37d7216a48b079))
+- **gatsby-plugin-image:** Use inline-block in class so users can override ([#29148](https://github.com/gatsbyjs/gatsby/issues/29148)) ([f945049](https://github.com/gatsbyjs/gatsby/commit/f9450498daa12921085cf60171f4f45b8012cf5f))
+
+### Features
+
+- **gatsby-plugin-image:** Add support for backgroundColor in sharp ([#29141](https://github.com/gatsbyjs/gatsby/issues/29141)) ([eb2bede](https://github.com/gatsbyjs/gatsby/commit/eb2bede99328e149b34a7e893c870094fc1ae6de))
+- **gatsby-plugin-image:** object-fit polyfill for IE ([#29072](https://github.com/gatsbyjs/gatsby/issues/29072)) ([3b4e8a5](https://github.com/gatsbyjs/gatsby/commit/3b4e8a55b5d1a7d2832f7037390ec447086beb83))
+
 # [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0-next.1...gatsby-plugin-image@0.7.0-next.0) (2021-01-18)
 
 ### Bug Fixes

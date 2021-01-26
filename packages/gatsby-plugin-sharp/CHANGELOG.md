@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.14.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.14.0-next.0...gatsby-plugin-sharp@2.14.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** ignore incorrect duotone options ([#28999](https://github.com/gatsbyjs/gatsby/issues/28999)) ([298eb31](https://github.com/gatsbyjs/gatsby/commit/298eb317f91b050f822803934931c136fa4e94c1))
+
+### Features
+
+- **gatsby-plugin-image:** Add support for backgroundColor in sharp ([#29141](https://github.com/gatsbyjs/gatsby/issues/29141)) ([eb2bede](https://github.com/gatsbyjs/gatsby/commit/eb2bede99328e149b34a7e893c870094fc1ae6de))
+- **gatsby-plugin-sharp:** Add image plugin defaults ([#29147](https://github.com/gatsbyjs/gatsby/issues/29147)) ([8b6bfa6](https://github.com/gatsbyjs/gatsby/commit/8b6bfa61a8ed502df71057409862b7771b096156))
+
 # [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.13.0-next.1...gatsby-plugin-sharp@2.14.0-next.0) (2021-01-18)
 
 ### Bug Fixes

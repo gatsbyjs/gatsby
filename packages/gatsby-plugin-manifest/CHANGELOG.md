@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.12.0-next.0...gatsby-plugin-manifest@2.12.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Add `webapp` key ([#29193](https://github.com/gatsbyjs/gatsby/issues/29193)) ([a5714b7](https://github.com/gatsbyjs/gatsby/commit/a5714b7075b7be005d200600e7c53307bf7b6e7b))
+
 # [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.11.0-next.1...gatsby-plugin-manifest@2.12.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

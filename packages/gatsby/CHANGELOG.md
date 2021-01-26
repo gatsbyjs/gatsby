@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.32.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.0...gatsby@2.32.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **eslint-config:** don't use .eslintrc and set parser settings ([#29109](https://github.com/gatsbyjs/gatsby/issues/29109)) ([5f0d214](https://github.com/gatsbyjs/gatsby/commit/5f0d2146b591a0c09576c455f2f4f7e1424f8a20))
+- **gatsby:** Add missing prev location TS property for RouteUpdateArgs ([#29125](https://github.com/gatsbyjs/gatsby/issues/29125)) ([e363adb](https://github.com/gatsbyjs/gatsby/commit/e363adb642423a08f4cd70009cb41fb59a4499d6))
+
 # [2.32.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.1...gatsby@2.32.0-next.0) (2021-01-18)
 
 ### Bug Fixes
