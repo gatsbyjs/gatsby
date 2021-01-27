@@ -185,6 +185,7 @@ export async function flush(): Promise<void> {
         })
       }
     }
+
     store.dispatch({
       type: `CLEAR_PENDING_PAGE_DATA_WRITE`,
       payload: {
@@ -199,7 +200,7 @@ export async function flush(): Promise<void> {
     flushQueue.push(pagePath, () => {})
   }
 
-  if (flushQueue.length() > 0) {
+  if (!flushQueue.idle()) {
     await new Promise(resolve => {
       flushQueue.drain = resolve
     })
