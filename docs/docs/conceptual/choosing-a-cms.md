@@ -16,7 +16,7 @@ If you're looking for a primary CMS (general-purpose, flexible content modelling
 
 In terms of popularity, you can see [top integrations listed by monthly downloads here](https://www.gatsbyjs.com/plugins?=gatsby-source). There are currently (January 2021) eight CMSs used by over 1% of Gatsby users. These are:
 
-- **five general-purpose headless CMSs:** Contentful, Sanity, DatoCMS, Strapi, and Prismic
+- **five general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Sanity and Strapi
 
 - **two general-purpose full-stack CMSs** running in "headless" mode: Wordpress and Drupal
 
