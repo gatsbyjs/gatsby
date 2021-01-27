@@ -14,7 +14,7 @@ emitter.on(`CREATE_PAGE`, action => {
       ...action.payload,
       path: PROD_404_PAGE_PATH,
     })
-    page404 = page
+    page404 = action.payload
   }
 })
 
