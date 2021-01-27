@@ -160,11 +160,6 @@ export async function flush(): Promise<void> {
             `We have a page, but we don't have registered query for it (???)`
           )
         }
-
-        if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
-          // query results are not written yet
-          cb(null, true)
-        }
       }
 
       const staticQueryHashes =
@@ -196,6 +191,10 @@ export async function flush(): Promise<void> {
   }, 25)
 
   for (const pagePath of pagesToWrite) {
+    if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
+      // query results are not written yet
+      continue
+    }
     flushQueue.push(pagePath, () => {})
   }
 
