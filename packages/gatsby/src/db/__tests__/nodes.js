@@ -317,6 +317,40 @@ describe(`nodes db tests`, () => {
     expect(getNode(`hi`)).toBeUndefined()
   })
 
+  it(`warns when using old deleteNode signature `, () => {
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
+        },
+        {
+          name: `tests`,
+        }
+      )
+    )
+    expect(getNode(`hi`)).toMatchObject({ id: `hi` })
+    store.dispatch(
+      actions.deleteNode(
+        { node: getNode(`hi`) },
+        {
+          name: `tests`,
+        }
+      )
+    )
+    expect(getNode(`hi`)).toBeUndefined()
+    const deprecationNotice =
+      `Calling "deleteNode" with an object containing a full node is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node) ` +
+      `"deleteNode" was called by tests`
+    expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
+  })
+
   it(`throws an error when trying to delete a node of a type owned from another plugin`, () => {
     expect(() => {
       store.dispatch(
