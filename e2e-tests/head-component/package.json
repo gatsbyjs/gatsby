@@ -5,7 +5,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "cypress": "^3.1.0",
-    "gatsby": "2.32.0-next.0-dev-1611672369021",
+    "gatsby": "*",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-helmet": "^5.2.0"
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@cypress/snapshot": "^2.1.7",
     "cross-env": "^5.2.0",
-    "gatsby-cypress": "0.11.0-next.0-dev-1611672369021",
+    "gatsby-cypress": "*",
     "is-ci": "^2.0.0",
     "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"
