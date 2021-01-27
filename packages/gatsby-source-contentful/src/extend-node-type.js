@@ -49,9 +49,6 @@ const inFlightBase64Cache = new Map()
 // The images are based on urls with w=20 and should be relatively small (<2kb) but it does stick around in memory
 const resolvedBase64Cache = new Map()
 
-// Caches dominat colors per cached image file
-const dominantColorCache = new Map()
-
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -680,22 +677,17 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
   const getDominantColor = async ({ image, options }) => {
     try {
-      const { rgbToHex } = require(`gatsby-plugin-sharp`)
-      const sharp = require(`gatsby-plugin-sharp/safe-sharp`)
-
       const absolutePath = await cacheImage(store, image, options)
 
-      const pipeline = sharp(absolutePath)
-      const { dominant } = await pipeline.stats()
+      const pluginSharp = require(`gatsby-plugin-sharp`)
+      if (!(`getDominantColor` in pluginSharp)) {
+        console.error(
+          `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
+        )
+        return `rgba(0,0,0,0.5)`
+      }
 
-      // Fallback in case sharp doesn't support dominant
-      const dominantColor = dominant
-        ? rgbToHex(dominant.r, dominant.g, dominant.b)
-        : `rgba(0,0,0,0.5)`
-
-      dominantColorCache.set(absolutePath, dominantColor)
-
-      return dominantColor
+      return pluginSharp.getDominantColor(absolutePath)
     } catch (e) {
       console.error(
         `[gatsby-source-contentful] Please install gatsby-plugin-sharp`
