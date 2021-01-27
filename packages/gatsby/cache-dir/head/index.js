@@ -7,7 +7,10 @@ export const Head = props => {
 
   // This supports passing a gatsby-plugin-image object to the image prop, e.g.
   // image={getImage(data.metaImage)}
-  const image = props.image?.images?.fallback?.src || props.image
+  const imageSrc = props.image?.images?.fallback?.src || props.image
+  const imageWidth = props.image?.width
+  const imageHeight = props.image?.height
+
   const { title, description } = props
 
   return (
@@ -32,11 +35,18 @@ export const Head = props => {
         </>
       )}
 
-      {image && (
+      {imageSrc && (
         <>
-          <meta name="twitter:image" content={image} />
-          <meta property="og:image" content={image} />
+          <meta name="image" content={imageSrc} />
+          <meta name="twitter:image" content={imageSrc} />
+          <meta property="og:image" content={imageSrc} />
           <meta name="twitter:card" content="summary_large_image" />
+          {imageWidth && (
+            <meta property="og:image:width" content={imageWidth} />
+          )}
+          {imageHeight && (
+            <meta property="og:image:height" content={imageHeight} />
+          )}
         </>
       )}
 
