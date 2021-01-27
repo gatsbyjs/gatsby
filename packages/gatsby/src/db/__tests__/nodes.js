@@ -188,14 +188,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        {
-          node: getNode(`hi`),
-        },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode(getNode(`hi`), {
+        name: `tests`,
+      })
     )
     expect(getNodes()).toHaveLength(1)
   })
@@ -272,12 +267,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        { node: getNode(`hi`) },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode(getNode(`hi`), {
+        name: `tests`,
+      })
     )
     expect(getNodes()).toHaveLength(0)
   })
@@ -309,11 +301,7 @@ describe(`nodes db tests`, () => {
         }
       )
     )
-    store.dispatch(
-      actions.deleteNode({
-        node: getNode(`hi`),
-      })
-    )
+    store.dispatch(actions.deleteNode(getNode(`hi`)))
     expect(getNode(`hi`)).toBeUndefined()
   })
 
@@ -370,12 +358,9 @@ describe(`nodes db tests`, () => {
         )
       )
       store.dispatch(
-        actions.deleteNode(
-          { node: getNode(`hi`) },
-          {
-            name: `tests`,
-          }
-        )
+        actions.deleteNode(getNode(`hi`), {
+          name: `tests`,
+        })
       )
     }).toThrow(/deleted/)
   })
