@@ -83,6 +83,6 @@ Finally, there are several options for content composition and management that w
 
 - **JSON** or **YAML** is a common choice for hierarchical data (for example, a site navigation tree), especially when the underlying content is stored in Markdown.
 
-- **Web-based spreadsheets**, like **Airtable** or **Google Sheets**, are common use cases for tabular data. Airtable used this to [power their store locator](https://www.gatsbyjs.com/blog/2020-05-07-gatsby-delivers-impossible-burgers-map/), and [ProPublica used this as a database](https://www.gatsbyjs.com/blog/2019-03-29-interview-with-david-eads/) for interactive data journalism graphics.
+- **Web-based spreadsheets**, like **Airtable** or **Google Sheets**, are common use cases for tabular data. [Impossible Foods used Airtable to power their store locator](https://www.gatsbyjs.com/blog/2020-05-07-gatsby-delivers-impossible-burgers-map/), and [ProPublica used Google sheets as a database](https://www.gatsbyjs.com/blog/2019-03-29-interview-with-david-eads/) for interactive data journalism graphics.
 
 - Other domain-specific solutions for specific parts of the website (e.g., having a Careers page pull data from Greenhouse or Lever).
