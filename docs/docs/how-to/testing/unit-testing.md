@@ -217,7 +217,7 @@ by running `npm test -- -u`.
 
 ## Using TypeScript
 
-If you are using TypeScript, you need to install typings packages and make 
+If you are using TypeScript, you need to install typings packages and make
 two changes to your config.
 
 ```shell
