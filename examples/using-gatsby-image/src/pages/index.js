@@ -114,12 +114,11 @@ export const query = graphql`
     ) {
       childImageSharp {
         gatsbyImageData(
-          maxWidth: 800
           quality: 80
           transformOptions: {
             duotone: { highlight: "#ffffff", shadow: "#663399" }
           }
-          layout: FLUID
+          layout: CONSTRAINED
         )
       }
     }

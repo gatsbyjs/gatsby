@@ -55,7 +55,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(maxWidth: 720, layout: FLUID)
+          gatsbyImageData(width: 720, layout: CONSTRAINED)
         }
       }
     }
@@ -82,7 +82,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(maxWidth: 600, layout: FLUID)
+          gatsbyImageData(width: 600, layout: CONSTRAINED)
         }
       }
     }
@@ -97,11 +97,11 @@ export const query = graphql`
           localFile {
             childImageSharp {
               gatsbyImageData(
-                maxWidth: 380
-                maxHeight: 380
+                width: 380
+                height: 380
                 quality: 70
                 placeholder: BLURRED
-                layout: FLUID
+                layout: CONSTRAINED
               )
             }
           }

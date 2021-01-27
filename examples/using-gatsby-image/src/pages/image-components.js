@@ -53,7 +53,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(maxWidth: 720, layout: FLUID)
+          gatsbyImageData(width: 720, layout: CONSTRAINED, aspectRatio: 0.5)
         }
       }
     }
@@ -78,7 +78,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(maxWidth: 600, layout: FLUID)
+          gatsbyImageData(width: 600, layout: CONSTRAINED)
         }
       }
     }

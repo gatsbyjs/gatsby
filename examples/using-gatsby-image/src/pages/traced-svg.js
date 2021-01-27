@@ -51,10 +51,10 @@ export const query = graphql`
       localFile {
         childImageSharp {
           gatsbyImageData(
-            maxWidth: 720
+            width: 720
             tracedSVGOptions: { background: "#fff", color: "#663399" }
             placeholder: TRACED_SVG
-            layout: FLUID
+            layout: CONSTRAINED
           )
         }
       }
@@ -82,7 +82,11 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(maxWidth: 480, placeholder: TRACED_SVG, layout: FLUID)
+          gatsbyImageData(
+            width: 480
+            placeholder: TRACED_SVG
+            layout: CONSTRAINED
+          )
         }
       }
     }
@@ -97,11 +101,11 @@ export const query = graphql`
           localFile {
             childImageSharp {
               gatsbyImageData(
-                maxWidth: 380
+                width: 380
                 quality: 70
                 tracedSVGOptions: { background: "#fbfafc", color: "#dbd4e2" }
                 placeholder: TRACED_SVG
-                layout: FLUID
+                layout: CONSTRAINED
               )
             }
           }
@@ -119,12 +123,12 @@ export const query = graphql`
           localFile {
             childImageSharp {
               gatsbyImageData(
-                maxWidth: 380
-                maxHeight: 380
+                width: 380
+                height: 380
                 quality: 70
                 tracedSVGOptions: { background: "#fbfafc", color: "#dbd4e2" }
                 placeholder: TRACED_SVG
-                layout: FLUID
+                layout: CONSTRAINED
               )
             }
           }

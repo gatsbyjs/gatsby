@@ -65,9 +65,10 @@ export const query = graphql`
       localFile {
         childImageSharp {
           gatsbyImageData(
-            maxWidth: 720
+            width: 720
+            aspectRatio: 0.5
             placeholder: DOMINANT_COLOR
-            layout: FLUID
+            layout: CONSTRAINED
           )
         }
       }
@@ -104,9 +105,9 @@ export const query = graphql`
       localFile {
         childImageSharp {
           gatsbyImageData(
-            maxWidth: 480
+            width: 480
             placeholder: DOMINANT_COLOR
-            layout: FLUID
+            layout: CONSTRAINED
           )
         }
       }
@@ -122,11 +123,11 @@ export const query = graphql`
           localFile {
             childImageSharp {
               gatsbyImageData(
-                maxWidth: 380
-                maxHeight: 380
+                width: 380
+                height: 380
                 quality: 70
                 placeholder: DOMINANT_COLOR
-                layout: FLUID
+                layout: CONSTRAINED
               )
             }
           }
