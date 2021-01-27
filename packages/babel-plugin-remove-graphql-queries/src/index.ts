@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-expressions */
 /*  eslint-disable new-cap */
 import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
+import { slash } from "gatsby-core-utils"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -103,7 +105,7 @@ const isGlobalIdentifier = (
   tag.isIdentifier({ name: tagName }) && tag.scope.hasGlobal(tagName)
 
 export function followVariableDeclarations(binding: Binding): Binding {
-  const node = binding.path?.node
+  const node = binding?.path?.node
   if (
     node?.type === `VariableDeclarator` &&
     node?.id.type === `Identifier` &&
@@ -166,8 +168,12 @@ function isGraphqlTag(tag: NodePath, tagName: string = `graphql`): boolean {
     return (tag.get(`property`) as NodePath<Identifier>).node.name === tagName
   }
 
-  if (importPath.isImportSpecifier())
-    return importPath.node.imported.name === tagName
+  if (importPath.isImportSpecifier()) {
+    if (importPath.node.imported.type === `Identifier`) {
+      return importPath.node.imported.name === tagName
+    }
+    return false
+  }
 
   if (importPath.isObjectProperty())
     return (importPath.get(`key`) as NodePath<Identifier>).node.name === tagName
@@ -269,6 +275,7 @@ export default function ({ types: t }): PluginObj {
           JSXIdentifier(path2: NodePath<JSXIdentifier>): void {
             if (
               (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `develop-html` ||
                 state.opts.stage === `build-html`) &&
               path2.isJSXIdentifier({ name: `StaticQuery` }) &&
               path2.referencesImport(`gatsby`, ``) &&
@@ -294,12 +301,14 @@ export default function ({ types: t }): PluginObj {
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)
@@ -311,6 +320,7 @@ export default function ({ types: t }): PluginObj {
           CallExpression(path2: NodePath<CallExpression>): void {
             if (
               (process.env.NODE_ENV === `test` ||
+                state.opts.stage === `develop-html` ||
                 state.opts.stage === `build-html`) &&
               isUseStaticQuery(path2)
             ) {
@@ -354,12 +364,14 @@ export default function ({ types: t }): PluginObj {
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)
@@ -487,7 +499,7 @@ export default function ({ types: t }): PluginObj {
               const binding = hookPath.scope.getBinding(varName)
 
               if (binding) {
-                followVariableDeclarations(binding).path.traverse({
+                followVariableDeclarations(binding)?.path?.traverse({
                   TaggedTemplateExpression,
                 })
               }
@@ -508,6 +520,16 @@ export default function ({ types: t }): PluginObj {
             if (!ast) return null
 
             const queryHash = hash.toString()
+
+            // In order to properly support FastRefresh, we need to remove the page query export
+            // from the built page. With FastRefresh, it looks up the parents of the imports from modules
+            // and since page queries are never used, FastRefresh doesn't know if it's safe to apply the
+            // update or not.
+            // By removing the page query export, FastRefresh works properly with page components
+            const potentialExportPath = path2.parentPath?.parentPath?.parentPath
+            if (potentialExportPath?.isExportNamedDeclaration()) {
+              potentialExportPath.replaceWith(path2.parentPath.parentPath)
+            }
 
             const tag = path2.get(`tag`)
             if (!isGlobal) {

@@ -45,6 +45,12 @@ module.exports = {
         allowTaggedTemplates: true,
       },
     ],
+    "no-unused-vars": [
+      "warn",
+      {
+        varsIgnorePattern: "^_"
+      }
+    ],
     "consistent-return": ["error"],
     "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
     "no-console": "off",

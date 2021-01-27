@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.6.0-next.0...gatsby-source-contentful@4.6.0-next.1) (2021-01-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.0-next.1...gatsby-source-contentful@4.6.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsbu-source-contentful:** apply useNameForId when creating the graphql schema ([#28649](https://github.com/gatsbyjs/gatsby/issues/28649)) ([a3ad6d7](https://github.com/gatsbyjs/gatsby/commit/a3ad6d71c549da973d3f03000e31c08d89b5a715))
+- **gatsby-source-contentful:** Improve base64 placeholders ([#29034](https://github.com/gatsbyjs/gatsby/issues/29034)) ([f23ba4b](https://github.com/gatsbyjs/gatsby/commit/f23ba4b3b8adfaedccce6379158a76eb575b1d4c)), closes [#24679](https://github.com/gatsbyjs/gatsby/issues/24679)
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [4.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.0-next.0...gatsby-source-contentful@4.5.0-next.1) (2021-01-12)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** prevent redundant fs/remote fetches for tracedSVG ([#28926](https://github.com/gatsbyjs/gatsby/issues/28926)) ([addc9e9](https://github.com/gatsbyjs/gatsby/commit/addc9e968c2605405d9efd902c7ea9700efe3475))
+
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.4...gatsby-source-contentful@4.5.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.4.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.3...gatsby-source-contentful@4.4.0-next.4) (2020-12-29)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** dont re-create nodes ([#28642](https://github.com/gatsbyjs/gatsby/issues/28642)) ([3a51e22](https://github.com/gatsbyjs/gatsby/commit/3a51e2256eb548d21fe47ee0a078ee6fa027e845))
+
+# [4.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.2...gatsby-source-contentful@4.4.0-next.3) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.1...gatsby-source-contentful@4.4.0-next.2) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.0...gatsby-source-contentful@4.4.0-next.1) (2020-12-15)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** use updatedAt field for digest verbatim ([#28609](https://github.com/gatsbyjs/gatsby/issues/28609)) ([756f437](https://github.com/gatsbyjs/gatsby/commit/756f4373c86aa9c481168cb751b79c86f12fb64a))
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.3.0-next.2...gatsby-source-contentful@4.4.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- improve error handling, always show API response status and message ([#27730](https://github.com/gatsbyjs/gatsby/issues/27730)) ([079bb3c](https://github.com/gatsbyjs/gatsby/commit/079bb3c4ef4a6815ff3d871ee263721a0e8d5dcf))
+
+# [4.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.3.0-next.1...gatsby-source-contentful@4.3.0-next.2) (2020-12-03)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** prevent redundant fs/remote fetches for base64 ([#28438](https://github.com/gatsbyjs/gatsby/issues/28438)) ([2755cfa](https://github.com/gatsbyjs/gatsby/commit/2755cfaa0e459dd47be32aa7b69bcf0f5950356a))
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.3.0-next.0...gatsby-source-contentful@4.3.0-next.1) (2020-12-01)
+
+### Performance Improvements
+
+- **gatsby-source-contentful:** fix unguided search in loop over large lists ([#28375](https://github.com/gatsbyjs/gatsby/issues/28375)) ([d9904ac](https://github.com/gatsbyjs/gatsby/commit/d9904ac69ec6abcd8e16f18056b0387c54d8c625))
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.2...gatsby-source-contentful@4.3.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.2.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.1...gatsby-source-contentful@4.2.0-next.2) (2020-11-22)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** fix the process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE flag ([#28160](https://github.com/gatsbyjs/gatsby/issues/28160)) ([e014a81](https://github.com/gatsbyjs/gatsby/commit/e014a817bcdb74e3f4ced857335d504f002de57b))
+
+# [4.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.2.0-next.0...gatsby-source-contentful@4.2.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.1.0-next.0...gatsby-source-contentful@4.2.0-next.0) (2020-11-18)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-contentful ([#28091](https://github.com/gatsbyjs/gatsby/issues/28091)) ([af86539](https://github.com/gatsbyjs/gatsby/commit/af865397a1b79937fa09475bcc3c6abeb0388687))
+
 # [4.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.0.0-next.0...gatsby-source-contentful@4.0.0-next.1) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-source-contentful
@@ -13,42 +93,85 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### BREAKING CHANGES
 
-- - Entities references in Rich Text fields are no more automatically resolved
+This major release improves Contentful's Richtext experience. If you are not using the Rich Text Contentful field type there are no breaking changes.
+
+If you do, follow the migration guide.
+
+#### Richtext migration
+
+- Entities references in Rich Text fields are no more automatically resolved
 - Use the `raw` subfield instead of `json`
 - Use GraphQL to define your referenced data with the new `references` field
-- Removes the `resolveFieldLocales` as the new `references` field automatically resolves locales
-- To render Rich Text fields unse the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
+- Removes the `resolveFieldLocales` option as the new `references` field automatically resolves locales
+- To render Rich Text fields use the new `renderRichText()` function from `gatsby-source-contentful/rich-text`
 
-- perf(gatsby-source-contentful): use getNodesByType to locate Rich Text references
+Check this example code for a page template:
 
-- clean up from rebase
+```javascript
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Img from "gatsby-image"
+import * as propTypes from "prop-types"
 
-- refactor to use a query for entry references
+// Import the new rendering and the render node definitions
+import { renderRichText } from "gatsby-source-contentful/rich-text"
+import { BLOCKS, INLINES } from "@contentful/rich-text-types"
+import Layout from "../components/layout"
+// Setting the rendering options. Same as:
+// https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer
+const options = {
+  renderNode: {
+    [INLINES.ENTRY_HYPERLINK]: ({
+      data: {
+        target: { slug, title },
+      },
+    }) => <Link to={slug}>{title}</Link>,
+    [BLOCKS.EMBEDDED_ASSET]: node => <Img {...node.data.target} />,
+  },
+}
+function PageTemplate({ data }) {
+  const { title, description } = data.contentfulPage
+  return (
+    <Layout>
+      <h1>{title}</h1>
+      {/* Render the Rich Text field data: */}
+      {description && renderRichText(description, options)}
+    </Layout>
+  )
+}
+PageTemplate.propTypes = {
+  data: propTypes.object.isRequired,
+}
+export default PageTemplate
+export const pageQuery = graphql`
+  query pageQuery($id: String!) {
+    contentfulPage(id: { eq: $id }) {
+      title
+      slug
+      description {
+        raw
+        references {
+          ... on ContentfulPage {
+            # contentful_id is required to resolve the references
+            contentful_id
+            title
+            slug
+          }
+          ... on ContentfulAsset {
+            # contentful_id is required to resolve the references
+            contentful_id
+            fluid(maxWidth: 600) {
+              ...GatsbyContentfulFluid_withWebp
+            }
+          }
+        }
+      }
+    }
+  }
+`
+```
 
-- simplify and reduce complexity of rich text raw field value injection
-
-- performance: directly inject references into Rich Text field, skipping the extra node type
-
-- remove plugin config for no more existing rich text resolveFieldLocales
-
-- add hint to remove extra traversal of rich text as soon fixIds is gone
-
-- add first test for rich text
-
-- clean up code and use more Maps
-
-- align readme for new rich text changes
-
-- remove workarounds for fixIds
-
-- add typescript types for rich text render function
-
-- add tests for rich text rendering
-
-- Dirty lock file
-
-Co-authored-by: Peter van der Zee <github-public@qfox.nl>
-Co-authored-by: gatsbybot <mathews.kyle+gatsbybot@gmail.com>
+Find more information in [the PR leading to this change](https://github.com/gatsbyjs/gatsby/pull/25249).
 
 # [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@3.2.0-next.0...gatsby-source-contentful@3.2.0-next.1) (2020-11-09)
 
@@ -110,7 +233,7 @@ Co-authored-by: gatsbybot <mathews.kyle+gatsbybot@gmail.com>
 
 ### BREAKING CHANGES
 
-- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries  those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
+- **gatsby-plugin-contentful:** If you were relying on the `contentful_id` on the `sys` object in your queries those are no longer exposed and you can safely change them to the `id` property on that `sys` object.
 
 If you were relying on the `id` property in the `sys` object, you should be aware that it is no longer "normalized". In particular, it will no longer get a 'c' prefixed to the id.
 

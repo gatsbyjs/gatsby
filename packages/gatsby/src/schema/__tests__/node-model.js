@@ -610,6 +610,28 @@ describe(`NodeModel`, () => {
             contentDigest: `5`,
           },
         },
+        {
+          id: `id6`,
+          Meta: {
+            Date: `1`,
+            Category: `Gatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `6`,
+          },
+        },
+        {
+          id: `id7`,
+          Meta: {
+            Date: `2`,
+            Category: `NotGatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `7`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -712,6 +734,23 @@ describe(`NodeModel`, () => {
                 resolve(source) {
                   // Swap sorting order for test
                   return source.Date === `1` ? `2` : `1`
+                },
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test5Meta`,
+            fields: {
+              Date: {
+                type: `String`,
+                resolve(source) {
+                  return source.Date
+                },
+              },
+              Category: {
+                type: `String`,
+                resolve(source) {
+                  return source.Category
                 },
               },
             },
@@ -882,6 +921,44 @@ describe(`NodeModel`, () => {
 
       expect(Array.isArray(result2)).toBeTruthy()
       expect(result2.map(node => node.id)).toEqual([`id4`, `id5`])
+    })
+
+    it(`sorts correctly by fields with custom resolvers`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/28047
+      nodeModel.replaceFiltersCache()
+
+      // This is required to setup a state after which the error reveals itself
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { id: { regex: `/non-existing/` } },
+          },
+          firstOnly: true,
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      // Filter by the same regex with sorting
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { id: { regex: `/id/` } },
+            sort: {
+              fields: [`Meta.Date`],
+              order: [`desc`],
+            },
+          },
+          firstOnly: false,
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      expect(result1).toEqual(null)
+
+      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2.map(node => node.id)).toEqual([`id7`, `id6`])
     })
 
     it(`handles nulish values within array of interface type`, async () => {

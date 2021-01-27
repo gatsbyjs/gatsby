@@ -182,10 +182,10 @@ export const onCreatePage = true
  *
  * Many transformer plugins use this to add fields that take arguments.
  *
- * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
+ * * [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/)
  * adds an "excerpt" field where the user when writing their query can specify
  * how many characters to prune the markdown source to.
- * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
+ * * [`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/) exposes
  * many image transformation options as GraphQL fields.
  *
  * @param {object} $0

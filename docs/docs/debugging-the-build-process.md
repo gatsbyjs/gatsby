@@ -61,7 +61,7 @@ exports.onCreateNode = args => {
 }
 ```
 
-To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/conceptual/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 
@@ -83,6 +83,8 @@ Using built-in debuggers in code editors is very convenient. You will be able to
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
 
+### Linux
+
 ```json:title=launch.json
 {
   "version": "0.2.0",
@@ -101,6 +103,40 @@ We won't go in depth here about how to debug in VS Code - for that you can check
       "type": "pwa-node",
       "request": "launch",
       "program": "${workspaceRoot}/node_modules/.bin/gatsby",
+      "args": ["build"],
+      "runtimeArgs": ["--nolazy"],
+      "console": "integratedTerminal"
+    }
+  ]
+}
+```
+
+### Windows
+
+```json:title=launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Gatsby develop",
+      "type": "pwa-node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/.bin/gatsby",
+      "windows": {
+        "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby"
+      },
+      "args": ["develop"],
+      "runtimeArgs": ["--nolazy"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Gatsby build",
+      "type": "pwa-node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/.bin/gatsby",
+      "windows": {
+        "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby"
+      },
       "args": ["build"],
       "runtimeArgs": ["--nolazy"],
       "console": "integratedTerminal"

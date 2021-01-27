@@ -66,7 +66,7 @@ async function update() {
       `utf8`
     )
   }
-  let file = await fs.readFile(filePath, `utf8`)
+  const file = await fs.readFile(filePath, `utf8`)
 
   if (!history.has(filePath)) {
     history.set(filePath, exists ? file : false)

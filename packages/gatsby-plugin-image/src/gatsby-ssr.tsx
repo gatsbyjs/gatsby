@@ -17,8 +17,12 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     <style
       key="gatsby-image-style"
       dangerouslySetInnerHTML={generateHtml(cssNanoMacro`
+  .gatsby-image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
   .gatsby-image-wrapper img {
-    all: initial;
+    all: inherit;
     bottom: 0;
     height: 100%;
     left: 0;
@@ -37,6 +41,9 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     transition: opacity 250ms linear;
     will-change: opacity;
   }
+  .gatsby-image-wrapper-constrained {
+    display: inline-block;
+  }
     `)}
     />,
     <noscript
@@ -44,9 +51,13 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
       dangerouslySetInnerHTML={generateHtml(
         `<style>` +
           cssNanoMacro`
-  .gatsby-image-wrapper [data-main-image] {
+  .gatsby-image-wrapper noscript [data-main-image] {
     opacity: 1 !important;
-  }` +
+  }
+  .gatsby-image-wrapper [data-placeholder-image] {
+    opacity: 0 !important;
+  }
+  ` +
           `</style>`
       )}
     />,
@@ -64,7 +75,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
 
       // if a main image does not have a ssr tag, we know it's not the first run anymore
       if (typeof e.target.dataset["gatsbyImageSsr"] === 'undefined') {
-        document.body.removeEventListener('load', gatsbyImageNativeLoader, true);
         return;
       }
 

@@ -366,9 +366,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     const truncatedPath = truncatePath(page.path)
     report.warn(
       report.stripIndent(`
-        The path to the following page is longer than the supported limit on most 
+        The path to the following page is longer than the supported limit on most
         operating systems and will cause an ENAMETOOLONG error. The path has been
-        truncated to prevent this. 
+        truncated to prevent this.
 
         Original Path: ${page.path}
 
@@ -1069,7 +1069,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config.options Options to pass to the Babel plugin.
  * @example
  * setBabelPlugin({
- *   name:  `babel-plugin-emotion`,
+ *   name:  `@emotion/babel-plugin`,
  *   options: {
  *     sourceMap: true,
  *   },
@@ -1137,7 +1137,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 /**
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
@@ -1157,7 +1157,7 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
 /**
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
@@ -1287,9 +1287,9 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/). Alternatively, you can use
- * [this plugin](/packages/gatsby-plugin-meta-redirect/) to generate meta redirect
+ * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
+ * [this plugin](/plugins/gatsby-plugin-meta-redirect/) to generate meta redirect
  * html files for redirecting on any static file host.
  *
  * @param {Object} redirect Redirect data
@@ -1388,6 +1388,25 @@ actions.removePageData = (id: PageDataRemove) => {
   return {
     type: `REMOVE_PAGE_DATA`,
     payload: id,
+  }
+}
+
+/**
+ * Record that a page was visited on the server..
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the chunkName for the page component.
+ */
+actions.createServerVisitedPage = (chunkName: string) => {
+  if (store.getState().visitedPages.get(`server`)?.has(chunkName)) {
+    // we already have given chunk tracked, let's not emit `CREATE_SERVER_VISITED_PAGE`
+    // action to not cause any additional work
+    return []
+  }
+
+  return {
+    type: `CREATE_SERVER_VISITED_PAGE`,
+    payload: { componentChunkName: chunkName },
   }
 }
 

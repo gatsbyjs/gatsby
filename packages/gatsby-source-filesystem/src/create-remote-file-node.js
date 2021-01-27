@@ -4,7 +4,6 @@ const { createContentDigest } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
-const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
 const { createProgress } = require(`./utils`)
 
@@ -61,6 +60,8 @@ const STALL_RETRY_LIMIT = process.env.GATSBY_STALL_RETRY_LIMIT || 3
 const STALL_TIMEOUT = process.env.GATSBY_STALL_TIMEOUT || 30000
 
 const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
+
+const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT || 3
 
 /********************
  * Queue Management *
@@ -158,6 +159,14 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       },
       ...httpOpts,
     })
+
+    let haveAllBytesBeenWritten = false
+    responseStream.on(`downloadProgress`, progress => {
+      if (progress.transferred === progress.total || progress.total === null) {
+        haveAllBytesBeenWritten = true
+      }
+    })
+
     const fsWriteStream = fs.createWriteStream(tmpFilename)
     responseStream.pipe(fsWriteStream)
 
@@ -181,6 +190,29 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       resetTimeout()
 
       fsWriteStream.on(`finish`, () => {
+        fsWriteStream.close()
+
+        // We have an incomplete download
+        if (!haveAllBytesBeenWritten) {
+          fs.removeSync(tmpFilename)
+
+          if (attempt < INCOMPLETE_RETRY_LIMIT) {
+            resolve(
+              requestRemoteNode(
+                url,
+                headers,
+                tmpFilename,
+                httpOpts,
+                attempt + 1
+              )
+            )
+          } else {
+            reject(
+              `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
+            )
+          }
+        }
+
         if (timeout) {
           clearTimeout(timeout)
         }
@@ -290,8 +322,7 @@ async function fetchRemoteNode({
   if (ext === ``) {
     if (response.statusCode === 200) {
       // if this is fresh response - try to guess extension and cache result for future
-      const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-      const filetype = fileType(buffer)
+      const filetype = await fileType.fromFile(tmpFilename)
       if (filetype) {
         ext = `.${filetype.ext}`
         await cache.set(cacheIdForExtensions(url), ext)

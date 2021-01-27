@@ -131,12 +131,35 @@ const getDescriptionForPlugin = async (root, name) => {
 
 const readmeCache = new Map()
 
-const getReadmeForPlugin = async name => {
+const getPath = (module, file, root) => {
+  try {
+    return require.resolve(`${module}/${file}`, { paths: [root] })
+  } catch (e) {
+    return undefined
+  }
+}
+
+const getReadmeForPlugin = async (root, name) => {
   if (readmeCache.has(name)) {
     return readmeCache.get(name)
   }
 
+  let readmePath
+
+  const readmes = [`readme.txt`, `readme`, `readme.md`, `README`, `README.md`]
+  while (!readmePath && readmes.length) {
+    readmePath = getPath(name, readmes.pop(), root)
+  }
+
   try {
+    if (readmePath) {
+      const readme = await fs.readFile(readmePath, `utf8`)
+      if (readme) {
+        readmeCache.set(name, readme)
+      }
+      return readme
+    }
+
     const readme = await fetch(`https://unpkg.com/${name}/README.md`)
       .then(res => res.text())
       .catch(() => null)
@@ -270,7 +293,7 @@ const read = async ({ root }, id) => {
     if (plugin?.name) {
       const [description, readme] = await Promise.all([
         getDescriptionForPlugin(root, id),
-        getReadmeForPlugin(id),
+        getReadmeForPlugin(root, id),
       ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
         root,
@@ -488,17 +511,20 @@ export { create, create as update, read, destroy }
 
 export const config = {}
 
-export const all = async ({ root }) => {
+export const all = async ({ root }, processPlugins = true) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
+  return Promise.all(
+    plugins.map(({ name }) => (processPlugins ? read({ root }, name) : name))
+  )
 }
 
 const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
+  isLocal: Joi.boolean(),
   readme: Joi.string().optional().allow(null).allow(``),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),

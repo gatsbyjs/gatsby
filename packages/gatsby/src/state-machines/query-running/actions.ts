@@ -1,5 +1,10 @@
 import { IQueryRunningContext } from "./types"
-import { DoneInvokeEvent, assign, ActionFunctionMap } from "xstate"
+import {
+  DoneInvokeEvent,
+  assign,
+  ActionFunctionMap,
+  AnyEventObject,
+} from "xstate"
 import { enqueueFlush } from "../../utils/page-data"
 
 export const flushPageData = (): void => {
@@ -24,9 +29,30 @@ export const markSourceFilesClean = assign<IQueryRunningContext>({
   filesDirty: false,
 })
 
+export const trackRequestedQueryRun = assign<
+  IQueryRunningContext,
+  AnyEventObject
+>({
+  pendingQueryRuns: (context, { payload }) => {
+    const pendingQueryRuns = context.pendingQueryRuns || new Set<string>()
+    if (payload?.pagePath) {
+      pendingQueryRuns.add(payload.pagePath)
+    }
+    return pendingQueryRuns
+  },
+})
+
+export const clearCurrentlyHandledPendingQueryRuns = assign<
+  IQueryRunningContext
+>({
+  currentlyHandledPendingQueryRuns: undefined,
+})
+
 export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   assignDirtyQueries,
   flushPageData,
   markSourceFilesDirty,
   markSourceFilesClean,
+  trackRequestedQueryRun,
+  clearCurrentlyHandledPendingQueryRuns,
 }

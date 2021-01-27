@@ -71,7 +71,7 @@ useStaticQuery(graphql\`${query}\`);
 `)
   }
 
-  if (context?.[query]?.data) {
+  if (context[query]?.data) {
     return context[query].data
   } else {
     throw new Error(

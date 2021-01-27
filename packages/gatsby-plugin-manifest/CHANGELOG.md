@@ -3,6 +3,62 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.12.0-next.0...gatsby-plugin-manifest@2.12.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Add `webapp` key ([#29193](https://github.com/gatsbyjs/gatsby/issues/29193)) ([a5714b7](https://github.com/gatsbyjs/gatsby/commit/a5714b7075b7be005d200600e7c53307bf7b6e7b))
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.11.0-next.1...gatsby-plugin-manifest@2.12.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.11.0-next.0...gatsby-plugin-manifest@2.11.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.10.0-next.2...gatsby-plugin-manifest@2.11.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.10.0-next.1...gatsby-plugin-manifest@2.10.0-next.2) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.10.0-next.0...gatsby-plugin-manifest@2.10.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.2...gatsby-plugin-manifest@2.10.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.1...gatsby-plugin-manifest@2.9.0-next.2) (2020-12-04)
+
+### Features
+
+- **gatsby-plugin-manifest:** Add support for share_target ([#28457](https://github.com/gatsbyjs/gatsby/issues/28457)) ([1fe3f9a](https://github.com/gatsbyjs/gatsby/commit/1fe3f9ab6f7385a084ec783b4d109139cdfab620))
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.0...gatsby-plugin-manifest@2.9.0-next.1) (2020-12-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.8.0-next.0...gatsby-plugin-manifest@2.9.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.7.0-next.1...gatsby-plugin-manifest@2.8.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.7.0-next.0...gatsby-plugin-manifest@2.7.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **plugin-manifest:** Allow for all valid WebAppManifest properties ([#27951](https://github.com/gatsbyjs/gatsby/issues/27951)) ([88b990a](https://github.com/gatsbyjs/gatsby/commit/88b990ab44c1cd9acc9e1b7367991a3c194dd308))
+
 # [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.6.0-next.0...gatsby-plugin-manifest@2.6.0-next.1) (2020-11-10)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

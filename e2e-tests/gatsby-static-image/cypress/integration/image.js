@@ -2,7 +2,7 @@ const fluidTestId = `image-fluid`
 
 describe(`Production gatsby-image`, () => {
   beforeEach(() => {
-    cy.visit(`/fluid`).waitForRouteChange()
+    cy.visit(`/fullWidth`).waitForRouteChange()
   })
 
   describe(`wrapping elements`, () => {
@@ -12,13 +12,6 @@ describe(`Production gatsby-image`, () => {
           .find(`.gatsby-image-wrapper`)
           .its(`length`)
           .should(`eq`, 1)
-      })
-
-      it(`contains position relative`, () => {
-        cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image-wrapper`)
-          .should(`have.attr`, `style`)
-          .and(`contains`, `position:relative`)
       })
     })
   })
@@ -30,5 +23,4 @@ describe(`Production gatsby-image`, () => {
         .should(`not.exist`)
     })
   })
-
 })
