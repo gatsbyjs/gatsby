@@ -183,7 +183,7 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     telemetryId: `NoPageNodes`,
     description: `Don't create page nodes. Saves time when creating pages for larger sites. Will be the new default behavior in v3.`,
-    umbrellaIssue: `https://gatsby.dev/TBD`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
     testFitness: (): fitnessEnum => true,
   },
 ]
