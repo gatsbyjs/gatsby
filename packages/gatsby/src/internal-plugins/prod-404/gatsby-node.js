@@ -10,10 +10,13 @@ emitter.on(`CREATE_PAGE`, action => {
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/
   if (!page404 && fourOhFourRegex.test(action.payload.path)) {
-    boundActionCreators.createPage({
-      ...action.payload,
-      path: PROD_404_PAGE_PATH,
-    })
+    boundActionCreators.createPage(
+      {
+        ...action.payload,
+        path: PROD_404_PAGE_PATH,
+      },
+      { name: `prod-404`, id: `prod-404` }
+    )
     page404 = action.payload
   }
 })
