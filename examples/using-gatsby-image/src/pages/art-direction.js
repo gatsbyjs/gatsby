@@ -1,10 +1,9 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage, useArtDirection } from "gatsby-plugin-image"
 
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
-import { useArtDirection } from "../utils/use-art-direction"
 
 import "./art-direction.css"
 
@@ -63,7 +62,7 @@ export const query = graphql`
     floatingImageMobile: unsplashImagesYaml(title: { eq: "Tennis court" }) {
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 400, height: 300, layout: FIXED)
+          gatsbyImageData(width: 400, height: 300, layout: CONSTRAINED)
         }
       }
     }
@@ -74,7 +73,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(layout: FIXED, width: 800, height: 600)
+          gatsbyImageData(layout: CONSTRAINED, width: 800, height: 1200)
         }
       }
     }
