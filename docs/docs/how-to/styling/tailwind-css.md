@@ -118,10 +118,10 @@ See the [Twin + Gatsby + Emotion installation guide](https://github.com/ben-roge
 
 #### Option #3: SCSS
 
-1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/plugins/gatsby-plugin-sass) and `node-sass`.
+1. Install the Gatsby SCSS plugin [**gatsby-plugin-sass**](/plugins/gatsby-plugin-sass) and `sass`.
 
 ```shell
-npm install node-sass gatsby-plugin-sass
+npm install sass gatsby-plugin-sass
 ```
 
 2. To be able to use Tailwind classes in your SCSS files, add the `tailwindcss` package into the `postCssPlugins` parameter in your `gatsby-config.js`.

@@ -37,13 +37,16 @@ const args: IGatsbyImageHelperArgs = {
 
 const fluidArgs: IGatsbyImageHelperArgs = {
   ...args,
-  width: undefined,
-  maxWidth: 400,
-  layout: `fluid`,
+  sourceMetadata: {
+    width: 2000,
+    height: 1500,
+    format: `jpg`,
+  },
+  layout: `fullWidth`,
 }
 
 const constrainedArgs: IGatsbyImageHelperArgs = {
-  ...fluidArgs,
+  ...args,
   layout: `constrained`,
 }
 
@@ -155,7 +158,7 @@ describe(`the image data helper`, () => {
     expect(data.images.fallback?.sizes).toEqual(`400px`)
   })
 
-  it(`calculates sizes for fluid`, () => {
+  it(`calculates sizes for fullWidth`, () => {
     const data = generateImageData(fluidArgs)
     expect(data.images.fallback?.sizes).toEqual(`100vw`)
   })
@@ -178,15 +181,17 @@ describe(`the image data helper`, () => {
     )
   })
 
-  it(`returns URLs for fluid`, () => {
+  it(`returns URLs for fullWidth`, () => {
     const data = generateImageData(fluidArgs)
     expect(data?.images?.fallback?.src).toEqual(
-      `https://example.com/afile.jpg/400/300/image.jpg`
+      `https://example.com/afile.jpg/750/563/image.jpg`
     )
 
-    expect(data.images?.sources?.[0].srcSet).toEqual(
-      `https://example.com/afile.jpg/100/75/image.webp 100w,\nhttps://example.com/afile.jpg/200/150/image.webp 200w,\nhttps://example.com/afile.jpg/400/300/image.webp 400w,\nhttps://example.com/afile.jpg/800/600/image.webp 800w`
-    )
+    expect(data.images?.sources?.[0].srcSet)
+      .toEqual(`https://example.com/afile.jpg/750/563/image.webp 750w,
+https://example.com/afile.jpg/1080/810/image.webp 1080w,
+https://example.com/afile.jpg/1366/1025/image.webp 1366w,
+https://example.com/afile.jpg/1920/1440/image.webp 1920w`)
   })
 
   it(`converts to PNG if requested`, () => {

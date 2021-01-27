@@ -13,7 +13,7 @@ Key highlights of this release:
 
 - [Query on Demand and Lazy Images: Generally available](#query-on-demand-and-lazy-images-generally-available) - improves `gatsby develop` bootup time
 - [Server Side Rendering (SSR) in development](#server-side-rendering-ssr-in-development) — helps you find and fix many build errors in development. We're starting a partial release of this feature to 5% of users.
-- [gatsby-plugin-sass v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
+- [`gatsby-plugin-sass` v3](#gatsby-plugin-sass300) - use the latest `sass-loader` and `Dart Sass` by default
 - [Image transformations up to 30% faster](#gatsby-plugin-sharp2120)
 
 And several impactful updates in the new [`gatsby-plugin-image`](#gatsby-plugin-image050-beta) (beta):
@@ -76,7 +76,7 @@ module.exports = {
 }
 ```
 
-## gatsby-plugin-sass@3.0.0
+## `gatsby-plugin-sass@3.0.0`
 
 Now that [LibSass and Node Sass are deprecated](https://sass-lang.com/blog/libsass-is-deprecated), we've
 upgraded `sass-loader` to `10.1.0` and thus switched sass implementation to [Dart Sass](https://sass-lang.com/dart-sass).
@@ -92,7 +92,7 @@ See also:
 - https://github.com/gatsbyjs/gatsby/issues/27754
 - https://github.com/gatsbyjs/gatsby/pull/27991
 
-## gatsby-plugin-sharp@2.12.0
+## `gatsby-plugin-sharp@2.12.0`
 
 New approach to concurrency speeds up image transformations up to 30%.
 
@@ -102,7 +102,7 @@ to each image serially.
 
 Another major change is [lazy images in develop](#query-on-demand-and-lazy-images-generally-available).
 
-## gatsby-plugin-image@0.5.0 (beta)
+## `gatsby-plugin-image@0.5.0 (beta)`
 
 ### AVIF support
 
@@ -154,7 +154,7 @@ GATSBY_EXPERIMENTAL_REMOTE_IMAGES=1 gatsby build
 
 You can then pass absolute URLs to `StaticImage`:
 
-```js
+```jsx
 <StaticImage src="https://placekitten.com/400/400" alt="Kittin" />
 ```
 

@@ -15,9 +15,11 @@ import { ReactElement } from "react"
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
-  toggleIsLoaded: Function
+  toggleIsLoaded: (toggle: boolean) => void
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
+
+const IS_DEV = process.env.NODE_ENV === `development`
 
 export function lazyHydrate(
   {
@@ -97,7 +99,8 @@ export function lazyHydrate(
     </LayoutWrapper>
   )
 
-  const doRender = hydrated.current ? render : hydrate
+  // Force render to mitigate "Expected server HTML to contain a matching" in develop
+  const doRender = hydrated.current || IS_DEV ? render : hydrate
   doRender(component, root.current)
   hydrated.current = true
 

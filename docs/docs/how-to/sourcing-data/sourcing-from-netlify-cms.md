@@ -140,6 +140,7 @@ forward slash, and then your repository name. If your username is "test-user" an
 backend:
   name: github
   repo: your-username/your-repo-name
+  branch: your-main-branch
 ```
 
 Now you can save the `config.yml` file, commit the change, and push it to your GitHub repo.

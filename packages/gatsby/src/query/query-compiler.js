@@ -217,7 +217,12 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
           const location = {
             start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
           }
-          return errorParser({ message: error.message, filePath, location })
+          return errorParser({
+            message: error.message,
+            filePath,
+            location,
+            error,
+          })
         })
       )
 
@@ -384,6 +389,7 @@ const processDefinitions = ({
             },
             message,
             filePath,
+            error,
           })
         )
       }

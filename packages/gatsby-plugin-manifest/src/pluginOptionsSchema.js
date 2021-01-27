@@ -21,7 +21,8 @@ export default function pluginOptionSchema({ Joi }) {
       `chrome_web_store`,
       `play`,
       `itunes`,
-      `microsoft`
+      `microsoft`,
+      `webapp`
     ) //https://w3c.github.io/manifest-app-info/#platform-member
     .description(`The platform on which the application can be found.`)
 

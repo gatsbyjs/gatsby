@@ -23,7 +23,7 @@ To use the File System Route API, use curly braces (`{ }`) in your filenames to 
 - `src/pages/products/{Product.fields__sku}.js` will generate a route like `/products/001923`
 - `src/pages/blog/{MarkdownRemark.parent__(File)__name}.js` will generate a route like `/blog/learning-gatsby`
 
-At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
+At build time, Gatsby uses the content within the curly braces to generate GraphQL queries to retrieve the nodes that should be built for a given collection (collection here refers to all nodes of a given type, e.g. all Markdown files for `MarkdownRemark`). Gatsby then runs those queries to grab all the nodes and create a page for each of them. Gatsby also adds an `id` field to every query automatically, to simplify integration with page queries.
 
 ### Syntax (collection routes)
 
@@ -112,7 +112,7 @@ Naming your file with the File System Route API will generate routes for each no
 
 For example, in the component itself (e.g. `src/pages/products/{Product.name}.js`) you're able to access the `name` via `props.params` and as a variable in the GraphQL query (as `$name`). However, we recommend filtering by `id` as this is the fastest way to filter.
 
-```jsx:title=src/pages/products/{Product.name}.js
+```js:title=src/pages/products/{Product.name}.js
 import React from "react"
 import { graphql } from "gatsby"
 
@@ -135,11 +135,11 @@ export const query = graphql`
 `
 ```
 
-If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type "Food"), you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
+If you need to customize the query used for collecting the nodes (e.g. filtering out any product of type `"Food"`), you should use the [`createPages`](/docs/reference/config-files/gatsby-node#createPages) API instead as File System Route API doesn't support this at the moment.
 
 ### Routing and linking
 
-Gatsby "slugifies" every route that gets created from collection pages (by using [sindresorhus/slugify](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
+Gatsby "slugifies" every route that gets created from collection pages (by using [`sindresorhus/slugify`](https://github.com/sindresorhus/slugify)). Or in other words: If you have a route called `src/pages/wholesome/{Animal.slogan}.js` where `slogan` is `I ♥ Dogs` the final URL will be `/wholesome/i-love-dogs`. Gatsby will convert the field into a human-readable URL format while stripping it of invalid characters.
 
 When you want to link to one of those pages, it may not always be clear how to construct the URL from scratch.
 
@@ -161,7 +161,7 @@ Assume that a `Product` type is used in two pages:
 
 If you wanted to link to the `products/{Product.name}` and `discounts/{Product.name}` routes from your home page, you would have a component like this:
 
-```jsx:title=src/pages/index.js
+```js:title=src/pages/index.js
 import React from "react"
 import { Link, graphql } from "gatsby"
 

@@ -74,6 +74,12 @@ export async function initialize({
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {
+  if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
+    reporter.info(
+      `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`
+    )
+    telemetry.trackFeatureIsUsed(`DisableCachePersistence`)
+  }
   if (!args) {
     reporter.panic(`Missing program args`)
   }

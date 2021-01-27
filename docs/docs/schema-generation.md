@@ -38,7 +38,7 @@ This allows adding GraphQL Fields to any node type. This operates on GraphQL typ
 
 ## 4. Parent / children relationships
 
-Nodes can be connected into _child-parent_ relationships either by using [`createParentChildLink`](/docs/reference/config-files/actions/#createParentChildLink) or by adding the `parent` field to raw node data. Child types can always access parent with the `parent` field in GraphQL. Parent types also get `children` fields as well as "convenience child fields" `child[TypeName]` or `children[TypeName]`.
+Nodes can be connected into _child-parent_ relationships either by using [`createParentChildLink`](/docs/reference/config-files/actions/#createParentChildLink) or by adding the `parent` field to raw node data. Child types can always access parent with the `parent` field in GraphQL. Parent types also get `children` fields as well as "convenience child fields" `child[TypeName]` and `children[TypeName]`.
 
 Children types are either inferred from data or created using `@childOf` directive, either by parent type name or by `mimeType` (only for File parent types).
 
