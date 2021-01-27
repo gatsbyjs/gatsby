@@ -29,12 +29,15 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
 
-  await fetch(`https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}`, {
-    headers: {
-      Authorization: `Bearer ${pluginOptions.accessToken}`,
-      "Content-Type": `application/json`,
-    },
-  })
+  await fetch(
+    `https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}/environments/${pluginOptions.environment}/content_types`,
+    {
+      headers: {
+        Authorization: `Bearer ${pluginOptions.accessToken}`,
+        "Content-Type": `application/json`,
+      },
+    }
+  )
     .then(res => res.ok)
     .then(ok => {
       if (!ok)
