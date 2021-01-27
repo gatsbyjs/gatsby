@@ -187,8 +187,6 @@ exports.createResolvers = ({ createResolvers }) => {
       allSitePage: {
         type: `SitePageConnection`,
         resolve(source, args, context, info) {
-          console.log({ source, args, context, info })
-          console.log(info)
           const { pages } = store.getState()
           const mappedPages = [...pages.values()].map(page => {
             page.id = page.path
