@@ -195,11 +195,11 @@ export async function flush(): Promise<void> {
     return cb(null, true)
   }, 25)
 
-  if (pagesToWrite.size > 0) {
-    for (const pagePath of pagesToWrite) {
-      flushQueue.push(pagePath, () => {})
-    }
+  for (const pagePath of pagesToWrite) {
+    flushQueue.push(pagePath, () => {})
+  }
 
+  if (flushQueue.length() > 0) {
     await new Promise(resolve => {
       flushQueue.drain = resolve
     })
