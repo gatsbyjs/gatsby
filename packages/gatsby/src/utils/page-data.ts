@@ -163,7 +163,6 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          // @ts-expect-error
           cb(null, true)
         }
       }
@@ -193,7 +192,6 @@ export async function flush(): Promise<void> {
       },
     })
 
-    // @ts-expect-error
     cb(null, true)
   }, 25)
 
