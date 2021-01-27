@@ -10927,6 +10927,13 @@ fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
 
+fastq@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.10.0.tgz#74dbefccade964932cdf500473ef302719c652bb"
+  integrity sha512-NL2Qc5L3iQEsyYzweq7qfgy5OtXCmGzGvhElGEd/SoFWEMOEczNh5s5ocaF01HDetxz+p8ecjNPA6cZxxIHmzA==
+  dependencies:
+    reusify "^1.0.4"
+
 fastq@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.6.0.tgz#4ec8a38f4ac25f21492673adb7eae9cfef47d1c2"
@@ -22258,7 +22265,7 @@ retry@^0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
 
-reusify@^1.0.0:
+reusify@^1.0.0, reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
