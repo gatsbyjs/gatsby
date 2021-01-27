@@ -36,11 +36,11 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 **Third,** other project requirements and team preferences will play a role.
 
-**Contentful** is the most common CMS used with Gatsby, accounting for roughly half of all CMS usage with Gatsby. It's the most mature headless CMS as measured by revenue, number of customers, and venture funding. In some ways, it's become the "default" to use with Gatsby.
+**Contentful** is the most common headless CMS used with Gatsby. As an early player in the space, they've built a fairly mature product in terms of features, revenue, etc and are sometimes seen as the "default" choice.
 
-Users choosing other CMSs typically have a specific reason for their choice. While every user has different reasons for their choice, we have noticed some trends for how users decide:
+Users choosing other CMSs typically have a specific reason for their choice. Some trends we've noticed include:
 
-- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise
+- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times for larger sites, which can be a key usability consideration (we [benchmark build times by CMS here](https://willit.build/)).
 - **DatoCMS** if they will run into Contentful's model limits and want a lower-priced alternative
 - **Prismic** if they like the content editing UI
 - **Contentstack** if they like the editing UI and have an enterprise budget
