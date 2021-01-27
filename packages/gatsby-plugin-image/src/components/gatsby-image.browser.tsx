@@ -42,11 +42,11 @@ export interface GatsbyImageProps
 
 export interface IGatsbyImageData {
   layout: Layout
-  height?: number
+  width: number
+  height: number
   backgroundColor?: string
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
-  width?: number
 }
 
 let hasShownWarning = false
