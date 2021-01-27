@@ -18,7 +18,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - **two general-purpose full-stack CMSs** running in "headless" mode: Wordpress and Drupal
 
-- **one specialized CMS** (Shopify).
+- **one specialized CMS**: Shopify
 
 **Second**, consider the price point:
 
