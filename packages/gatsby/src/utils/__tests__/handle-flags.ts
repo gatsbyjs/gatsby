@@ -330,7 +330,7 @@ describe(`handle flags`, () => {
       )
       expect(response.message).toMatchInlineSnapshot(`
         "Some features you configured with flags are used natively now.
-        Those flags no longer have any effect and you can remove them from config:
+        Those flags no longer have any effect and you can remove them from config. Thank you for helping test early features!
         - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
         "
       `)
@@ -386,7 +386,7 @@ describe(`handle flags`, () => {
         - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 
         Some features you configured with flags are used natively now.
-        Those flags no longer have any effect and you can remove them from config:
+        Those flags no longer have any effect and you can remove them from config. Thank you for helping test early features!
         - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
 
         There are 5 other flags available that you might be interested in:

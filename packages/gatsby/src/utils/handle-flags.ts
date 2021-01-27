@@ -142,13 +142,14 @@ const handleFlags = (
 
   let message = ``
   //  Create message about what flags are active.
+  const regularEnabledConfigFlags = enabledConfigFlags.filter(
+    flag => !optedInFlags.has(flag.name) && !lockedInFlags.has(flag.name)
+  )
   if (enabledConfigFlags.length > 0) {
-    if (enabledConfigFlags.length - optedInFlags.size > 0) {
+    if (regularEnabledConfigFlags.length > 0) {
       message = `The following flags are active:`
-      enabledConfigFlags.forEach(flag => {
-        if (!optedInFlags.has(flag.name) && !lockedInFlags.has(flag.name)) {
-          message += generateFlagLine(flag)
-        }
+      regularEnabledConfigFlags.forEach(flag => {
+        message += generateFlagLine(flag)
       })
     }
 
