@@ -40,14 +40,17 @@ const validateContentfulAccess = async pluginOptions => {
   )
     .then(res => res.ok)
     .then(ok => {
-      if (!ok)
-        throw new Error(
-          `Cannot access Contentful space "${maskText(
-            pluginOptions.spaceId
-          )}" with access token "${maskText(
-            pluginOptions.accessToken
-          )}". Make sure to double check them!`
-        )
+      if (!ok) {
+        let errorMessage = `Cannot access Contentful space "${maskText(
+          pluginOptions.spaceId
+        )}" on environment "${
+          pluginOptions.environment
+        } with access token "${maskText(
+          pluginOptions.accessToken
+        )}". Make sure to double check them!`
+
+        throw new Error(errorMessage)
+      }
     })
 
   return undefined
