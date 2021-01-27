@@ -167,7 +167,10 @@ exports.createResolvers = ({ createResolvers }) => {
         },
       },
     },
-    Query: {
+  }
+
+  if (process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+    resolvers.Query = {
       // TODO add JSON field for page context.
       sitePage: {
         type: `SitePage`,
@@ -194,34 +197,37 @@ exports.createResolvers = ({ createResolvers }) => {
           })
 
           // TODO how do you make this work for both edges & nodes?
-          return { nodes: pages }
+          return { nodes: mappedPages }
         },
       },
-    },
+    }
   }
+
   createResolvers(resolvers)
 }
 
 exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  const { createNode } = actions
-  // eslint-disable-next-line
-  const { updatedAt, ...pageWithoutUpdated } = page
+  if (!process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+    const { createNode } = actions
+    // eslint-disable-next-line
+    const { updatedAt, ...pageWithoutUpdated } = page
 
-  // Add page.
-  createNode({
-    ...pageWithoutUpdated,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(pageWithoutUpdated),
-      description:
-        page.pluginCreatorId === `Plugin default-site-plugin`
-          ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId,
-    },
-  })
+    // Add page.
+    createNode({
+      ...pageWithoutUpdated,
+      id: createPageId(page.path),
+      parent: null,
+      children: [],
+      internal: {
+        type: `SitePage`,
+        contentDigest: createContentDigest(pageWithoutUpdated),
+        description:
+          page.pluginCreatorId === `Plugin default-site-plugin`
+            ? `Your site's "gatsby-node.js"`
+            : page.pluginCreatorId,
+      },
+    })
+  }
 }
 
 // Listen for DELETE_PAGE and delete page nodes.
