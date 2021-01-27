@@ -10,7 +10,6 @@
     "declarationDir": "./dist",
     "lib": ["es2016", "dom"],
     "esModuleInterop": true,
-    "skipLibCheck": true
     // "jsxFactory": "createElement"
   },
   "files": ["./src/global.d.ts", "./src/index.ts", "./src/index.browser.ts"]
