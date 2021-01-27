@@ -54,7 +54,7 @@ Typically, teams that use multiple CMSs use a specialized CMS for part of the we
 
 ### Considerations when using multiple CMSs
 
-One of the key considerations when using content in multiple systems is that at some point one  content often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU (which lives in Shopify).
+One of the key considerations when using content in multiple systems is that - at some point - one content system often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU from Shopify.
 
 The easiest way to create relationship references across CMSs is through one CMS storing unique IDs of content living in another CMS. In this case, you'd store an array of Shopify product IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in gatsby-node.js.
 
