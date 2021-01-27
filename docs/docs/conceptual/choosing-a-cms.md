@@ -18,7 +18,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - **five general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Sanity and Strapi
 
-- **two general-purpose full-stack CMSs** running in "headless" mode: Wordpress and Drupal
+- **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and Wordpress
 
 - **one specialized CMS**: Shopify
 
