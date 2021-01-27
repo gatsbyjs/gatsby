@@ -43,19 +43,14 @@ Users choosing other CMSs typically have a specific reason for their choice. Whi
 
 ## Using multiple CMS systems together
 
-Another approach is, rather than using one CMS, use different CMSs for different parts of the website. Known as a ["content mesh" approach](https://www.gatsbyjs.com/blog/2018-10-04-journey-to-the-content-mesh/), the typical rationale here is that one CMS provides must-have specialized functionality but is less good for the rest of the site. Typically the decision is to use a specialized CMS for part of the website, and a general-purpose CMS for most of the website.
+Can't choose just one CMS? You can use different CMSs for different parts of the website. Known as a ["content mesh" approach](https://www.gatsbyjs.com/blog/2018-10-04-journey-to-the-content-mesh/), the typical rationale here is that one CMS provides must-have specialized functionality but is less good for the rest of the site.
 
-Typically there are two reasons to intentionally take this approach:
+Typically, teams that use multiple CMSs use a specialized CMS for part of the website and a general-purpose CMS for the rest of the website. There are two common reasons teams choose this approach:
 
-### Using Shopify as an e-commerce system
-
-Shopify has best-in-class e-commerce functionality, but the rest of their interface (for example, their blogs feature) is often seen as subpar compared to other systems. As a result, it's very standard to use Shopify as the backend for the store, but a general purpose CMS like Contentful as the backend for the rest of the site.
-
-### Using Wordpress as a blogging tool
-
-Because Wordpress is so familiar to content authors, and has a best-in-class content composition experience, it's quite common to move the blog portion of the website with Gatsby, and use a flexible content modelling CMS for the rest of the website.
-
-Apollo does this [for their blog](https://twitter.com/apollographql/status/1250479066605662210), as we do for the blog at [gatsbyjs.com/blog](gatsbyjs.com/blog).
+- **Using Shopify as an e-commerce system.**
+    - Shopify has best-in-class e-commerce functionality, but the rest of their interface (for example, their blogs feature) is often seen as subpar compared to other systems. As a result, it's very standard to use Shopify as the backend for the store, with a general-purpose CMS like Contentful as the backend for the rest of the site.
+- **Using WordPress as a blogging tool.**
+    - Because WordPress is so familiar to content authors and has a best-in-class content composition experience, it's quite common to move the blog portion of the website with Gatsby, and use a flexible content modelling CMS for the rest of the website. (Apollo does this (source: [tweet from Apollo](https://twitter.com/apollographql/status/1250479066605662210)), as does the [Gatsby blog](gatsbyjs.com/blog).)
 
 ### Considerations when using multiple CMSs
 
