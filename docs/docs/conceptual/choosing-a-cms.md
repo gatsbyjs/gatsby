@@ -68,4 +68,4 @@ Finally, there are several options for content composition and management that w
 
 - **Web-based spreadsheets**, like **Airtable** or **Google Sheets**, are common use cases for tabular data. Airtable used this to [power their store locator](https://www.gatsbyjs.com/blog/2020-05-07-gatsby-delivers-impossible-burgers-map/), and [ProPublica used this as a database](https://www.gatsbyjs.com/blog/2019-03-29-interview-with-david-eads/) for interactive data journalism graphics.
 
-- Other vertical-specific solutions for specific parts of the website, eg having a Careers page pull data from Greenhouse or Lever.
+- Other domain-specific solutions for specific parts of the website (e.g., having a Careers page pull data from Greenhouse or Lever).
