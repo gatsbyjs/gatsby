@@ -2,7 +2,7 @@
 title: Choosing Your CMS(s)
 ---
 
-At their core, most medium-sized and large Gatsby websites are backed by a so-called "headless CMS". Headless CMSes excel at allowing content editors to flexibly create a content schema of inter-related content models.
+At their core, most medium-sized and large Gatsby websites are backed by a so-called "headless CMS". Headless CMSes excel at allowing content editors to flexibly create a content schema of interrelated content models.
 
 One of the key questions people ask when building a Gatsby site is "which CMS should I use?"
 
