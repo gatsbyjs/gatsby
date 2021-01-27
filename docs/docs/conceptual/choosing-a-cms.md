@@ -26,26 +26,26 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 **Second**, it's important to consider the price point given your budget:
 
-- If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, Sanity, DatoCMS, Strapi, Prismic).
+- If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, DatoCMS, Prismic, Sanity, Strapi).
 
-- If you're looking more at "Team", "Pro", or "Business" price points (eg $29, $99, or \$299 per month), the above CMSs are all good options, plus Wordpress and Drupal .
+- If you're looking more at "Team", "Pro", or "Business" price points (eg $29, $99, or \$299 per month), the above CMSs are all good options, plus Drupal and Wordpress.
 
-- If you're looking more at an "enterprise" project in the four digits per month and up, Contentful is the leader, with others using Contentstack, Sanity, and Strapi.
+- If you're looking more at an "enterprise" project in the four digits per month and up, your main options are Contentful, Contentstack, Sanity, and Strapi.
 
 ### 3) Meeting specialized requirements
 
 **Third,** other project requirements and team preferences will play a role.
 
-**Contentful** is the most common headless CMS used with Gatsby. As an early player in the space, they've built a fairly mature product in terms of features, revenue, etc and are sometimes seen as the "default" choice.
+**Contentful** is the most common headless CMS used with Gatsby. As an early player in the space, they've built a fairly mature product in terms of features and revenue and are sometimes seen as the "default" choice.
 
 Users choosing other CMSs typically have a specific reason for their choice. Some trends we've noticed include:
 
-- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times for larger sites, which can be a key usability consideration (we [benchmark build times by CMS here](https://willit.build/)).
-- **DatoCMS** if they will run into Contentful's model limits and want a lower-priced alternative
-- **Prismic** if they like the content editing UI
 - **Contentstack** if they like the editing UI and have an enterprise budget
-- **Wordpress** when the client or content team is already familiar with the Wordpress UI
+- **DatoCMS** if they will run into Contentful's model limits and want a lower-priced alternative
 - **Drupal** if open-source, configurability, or custom code are important.
+- **Prismic** if they like the content editing UI
+- **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times, which can be a key usability consideration, especially for larger sites (we [benchmark build times by CMS here](https://willit.build/)).
+- **Wordpress** when the client or content team is already familiar with the Wordpress UI
 
 ## Using multiple CMS systems together
 
