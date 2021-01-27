@@ -62,7 +62,7 @@ Finally, there are several options for content composition and management that w
 
 - **Markdown** and **MDX** are common choices for documentation and small developer sites, since they are natural composition formats for developers and allow embedding components within your content. There are several guides in our [Routing and Pages section](https://www.gatsbyjs.com/docs/how-to/routing/) on using Markdown and MDX. You may also want to consider a git-based CMS like NetlifyCMS or Foresty.io to provide a UI for this workflow.
 
-- **JSON** or **YAML** is a common choice for hierarchical data, for example, a site navigation tree, especially when the underlying content is stored in markdown.
+- **JSON** or **YAML** is a common choice for hierarchical data (for example, a site navigation tree), especially when the underlying content is stored in Markdown.
 
 - **Web-based spreadsheets**, like **Airtable** or **Google Sheets**, are common use cases for tabular data. Airtable used this to [power their store locator](https://www.gatsbyjs.com/blog/2020-05-07-gatsby-delivers-impossible-burgers-map/), and [ProPublica used this as a database](https://www.gatsbyjs.com/blog/2019-03-29-interview-with-david-eads/) for interactive data journalism graphics.
 
