@@ -22,7 +22,7 @@ module.exports = {
 }
 ```
 
-### multiple collections
+### Multiple collections
 
 ```javascript
 // In your gatsby-config.js
@@ -42,6 +42,7 @@ module.exports = {
 - **dbName**: indicates the database name that you want to use
 - **collection**: the collection name within Mongodb, this can also be an array
   for multiple collections
+- **aggregations**: define a set of aggregations per collection (if defined the `collection`-option is ignored). See section below for more instructions.
 - **query**: add a query when retriving a collection. This is a key value object where key's are collection names, and value is the query object. Defaults to {} (i.e. the whole collection)
 - **server**: contains the server info, with sub properties address and port ex.
   server: { address: `ds143532.mlab.com`, port: 43532 }. Defaults to a server
@@ -106,14 +107,61 @@ query($id: String!) {
 }
 ```
 
+### Use MongoDB Aggregations
+
+By setting the `aggregations` parameter you have direct access to the full set of stages and pipelines of a [MongoDB Aggregation](https://docs.mongodb.com/manual/aggregation/). With that you can apply filter, map or add new values, calculate sums and averages, limit the amount of results, and much more. **Important:** If you have one (valid) aggregation defined the `collection` value/option is ignored and only aggregations are queried from the database.
+
+You can define aggregations in multiple ways:
+```js
+// Named aggregations per collection
+aggregations: {
+  'collectionName' : {
+    'customAggregationName': [
+      { $set: { a: '$b' } },
+      { $limit: 5 },
+    ],
+    'aggregationReturns5Objects': [
+      { $limit: 5 }
+    ],
+  }
+}
+// Shorthand (unnamed) aggregation per collection
+aggregations: {
+  'collectionName' : [
+    { $limit: 5 }
+   ],
+   // Tip: Empty Aggregations return the complete collection
+  'otherCollectionName' : []
+}
+```
+
+You can find more on naming of aggregations within the GraphQL layer in the section below.
+
+
 ## How to query your MongoDB data using GraphQL
 
 Below is a sample query for fetching all MongoDB document nodes from a db named
-**'Cloud'** and a collection named **'documents'**.
+**'Cloud'** and a collection named **'documents'** with the `collection` option.
 
 ```graphql
 query {
   allMongodbCloudDocuments {
+    edges {
+      node {
+        id
+        url
+        name
+      }
+    }
+  }
+}
+```
+
+If you use the `aggregations` option to query data from the database the naming of generated sets is slightly different. If the db and the collections are named like above an aggregation named **'niceAggregation'** would result in the query below. *Note:* If you have used an unnamed aggregation its default name is **'aggregation'**.
+
+```graphql
+query {
+  allMongodbNiceAggregationCloudDocuments {
     edges {
       node {
         id
