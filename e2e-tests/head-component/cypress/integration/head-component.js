@@ -1,6 +1,6 @@
 describe(`manual <Head /> render`, () => {
   beforeEach(() => {
-    cy.visit(`/head`)
+    cy.visit(`/head`).waitForRouteChange()
   })
 
   it(`renders the meta tags in the head`, () => {
@@ -17,7 +17,7 @@ describe(`manual <Head /> render`, () => {
 
 describe(`no manual <Head /> render`, () => {
   beforeEach(() => {
-    cy.visit(`/no-head`)
+    cy.visit(`/no-head`).waitForRouteChange()
   })
 
   it(`renders no meta tags`, () => {
@@ -34,7 +34,7 @@ describe(`no manual <Head /> render`, () => {
 
 describe(`manual <Head /> render with minimal overrides`, () => {
   beforeEach(() => {
-    cy.visit(`/mixture`)
+    cy.visit(`/mixture`).waitForRouteChange()
   })
 
   it(`renders the meta tags based on the siteMetdata and the description override`, () => {
