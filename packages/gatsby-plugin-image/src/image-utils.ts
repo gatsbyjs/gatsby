@@ -262,7 +262,7 @@ export function generateImageData(
     }
   })
 
-  const imageProps: IGatsbyImageData = { images: result, layout }
+  const imageProps: Partial<IGatsbyImageData> = { images: result, layout }
   switch (layout) {
     case `fixed`:
       imageProps.width = imageSizes.presentationWidth
@@ -279,7 +279,7 @@ export function generateImageData(
       imageProps.height = (imageProps.width || 1) / imageSizes.aspectRatio
   }
 
-  return imageProps
+  return imageProps as IGatsbyImageData
 }
 
 const dedupeAndSortDensities = (values: Array<number>): Array<number> =>
