@@ -37,6 +37,7 @@ const isTestEnv = process.env.NODE_ENV === `test`
 const shadowCreatePagePath = memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
+
 const {
   enqueueJob,
   createInternalJob,
@@ -133,7 +134,7 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const _pascalCase = _.flow(_.camelCase, _.upperFirst)
+const _pascalCase = str => _.upperFirst(_.camelCase(str))
 const pascalCase = memoize(_pascalCase)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
