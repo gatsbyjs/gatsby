@@ -71,7 +71,7 @@ exports.sourceNodes = async (
         return
       }
       if (action === `delete`) {
-        actions.deleteNode({ node: getNode(createNodeId(id)) })
+        actions.deleteNode(getNode(createNodeId(id)))
         reporter.log(`Deleted node: ${id}`)
         changesActivity.end()
         return
@@ -147,7 +147,7 @@ exports.sourceNodes = async (
         let nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode({ node: getNode(createNodeId(nodeSyncData.id)) })
+            actions.deleteNode(getNode(createNodeId(nodeSyncData.id)))
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
@@ -385,7 +385,7 @@ exports.onCreateDevServer = (
           )
         }
         if (action === `delete`) {
-          actions.deleteNode({ node: getNode(createNodeId(id)) })
+          actions.deleteNode(getNode(createNodeId(id)))
           return reporter.log(`Deleted node: ${id}`)
         }
         const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data

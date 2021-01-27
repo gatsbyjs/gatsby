@@ -179,9 +179,7 @@ exports.sourceNodes = async function sourceNodes(
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(nodeId),
-            })
+            deleteNode(getNode(nodeId))
             break
           case "created":
           case "updated":
