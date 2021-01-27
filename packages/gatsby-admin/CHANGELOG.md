@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.8.0-next.0...gatsby-admin@0.8.0-next.1) (2021-01-26)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.7.0-next.1...gatsby-admin@0.8.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [0.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.7.0-next.0...gatsby-admin@0.7.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby,gatsby-admin:** Pin socket.io version to 2.3.0 ([#28885](https://github.com/gatsbyjs/gatsby/issues/28885)) ([247b1dc](https://github.com/gatsbyjs/gatsby/commit/247b1dc0441fdade52a5ff7a71de8c9340ee05fd))
+
 # [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.6.0-next.8...gatsby-admin@0.7.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-admin

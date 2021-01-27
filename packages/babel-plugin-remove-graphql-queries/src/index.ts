@@ -4,6 +4,7 @@ import graphql from "gatsby/graphql"
 import { murmurhash } from "./murmur"
 import nodePath from "path"
 import { NodePath, PluginObj } from "@babel/core"
+import { slash } from "gatsby-core-utils"
 import { Binding } from "babel__traverse"
 import {
   CallExpression,
@@ -300,12 +301,14 @@ export default function ({ types: t }): PluginObj {
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)
@@ -361,12 +364,14 @@ export default function ({ types: t }): PluginObj {
               const importDeclaration = t.importDeclaration(
                 [importDefaultSpecifier],
                 t.stringLiteral(
-                  filename
-                    ? nodePath.relative(
-                        nodePath.parse(filename).dir,
-                        resultPath
-                      )
-                    : shortResultPath
+                  slash(
+                    filename
+                      ? nodePath.relative(
+                          nodePath.dirname(filename),
+                          resultPath
+                        )
+                      : shortResultPath
+                  )
                 )
               )
               path.node.body.unshift(importDeclaration)

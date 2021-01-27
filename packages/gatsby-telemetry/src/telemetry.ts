@@ -1,4 +1,5 @@
 import uuidv4 from "uuid/v4"
+import * as fs from "fs-extra"
 import os from "os"
 import {
   isCI,
@@ -98,6 +99,11 @@ export interface ITelemetryTagsPayload {
   devDependencies?: Array<string>
   siteMeasurements?: {
     pagesCount?: number
+    totalPagesCount?: number
+    createdNodesCount?: number
+    touchedNodesCount?: number
+    updatedNodesCount?: number
+    deletedNodesCount?: number
     clientsCount?: number
     paths?: Array<string | undefined>
     bundleStats?: unknown
@@ -136,6 +142,8 @@ export class AnalyticsTracker {
   features = new Set<string>()
   machineId: string
   siteHash?: string = createContentDigest(process.cwd())
+  lastEnvTagsFromFileTime = 0
+  lastEnvTagsFromFileValue: ITelemetryTagsPayload = {}
 
   constructor({
     componentId,
@@ -361,6 +369,7 @@ export class AnalyticsTracker {
       dbEngine,
       features: Array.from(this.features),
       ...this.getRepositoryId(),
+      ...this.getTagsFromPath(),
     }
     this.store.addEvent(event)
     if (this.isFinalEvent(eventType)) {
@@ -368,6 +377,26 @@ export class AnalyticsTracker {
       const flush = createFlush(this.isTrackingEnabled())
       flush()
     }
+  }
+
+  getTagsFromPath(): ITelemetryTagsPayload {
+    const path = process.env.GATSBY_TELEMETRY_METADATA_PATH
+
+    if (!path) {
+      return {}
+    }
+    try {
+      const stat = fs.statSync(path)
+      if (this.lastEnvTagsFromFileTime < stat.mtimeMs) {
+        this.lastEnvTagsFromFileTime = stat.mtimeMs
+        const data = fs.readFileSync(path, `utf8`)
+        this.lastEnvTagsFromFileValue = JSON.parse(data)
+      }
+    } catch (e) {
+      // nop
+      return {}
+    }
+    return this.lastEnvTagsFromFileValue
   }
 
   getIsTTY(): boolean {
@@ -446,7 +475,10 @@ export class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  addSiteMeasurement(event: string, obj): void {
+  addSiteMeasurement(
+    event: string,
+    obj: ITelemetryTagsPayload["siteMeasurements"]
+  ): void {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
     this.metadataCache[event] = Object.assign(cachedEvent, {

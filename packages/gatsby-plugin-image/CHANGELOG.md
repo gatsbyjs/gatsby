@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.7.0-next.0...gatsby-plugin-image@0.7.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Add missing files ([#29185](https://github.com/gatsbyjs/gatsby/issues/29185)) ([0ac0ac8](https://github.com/gatsbyjs/gatsby/commit/0ac0ac840957b92be447d61e46b1b8bcd2bcfacd))
+- **gatsby-plugin-image:** Fixes to plugin utils types ([#29204](https://github.com/gatsbyjs/gatsby/issues/29204)) ([b236f49](https://github.com/gatsbyjs/gatsby/commit/b236f4916721c8e5fa1465cca7b6c4b8c26170c8))
+- **gatsby-plugin-image:** Handle breakpoints and auto-format in plugin utils ([#29187](https://github.com/gatsbyjs/gatsby/issues/29187)) ([25912f0](https://github.com/gatsbyjs/gatsby/commit/25912f00b452c4df04ba950efa90cdf12e73818e))
+- **gatsby-plugin-image:** pass down missing sizes attribute to <sources> ([#29092](https://github.com/gatsbyjs/gatsby/issues/29092)) ([2e42197](https://github.com/gatsbyjs/gatsby/commit/2e42197025e2e1bac06c721c3cc44135bf8ef526))
+- **gatsby-plugin-image:** Pass sizes for source ([#29192](https://github.com/gatsbyjs/gatsby/issues/29192)) ([0ddbbfe](https://github.com/gatsbyjs/gatsby/commit/0ddbbfe7ac03d5e6281b1d5e9f37d7216a48b079))
+- **gatsby-plugin-image:** Use inline-block in class so users can override ([#29148](https://github.com/gatsbyjs/gatsby/issues/29148)) ([f945049](https://github.com/gatsbyjs/gatsby/commit/f9450498daa12921085cf60171f4f45b8012cf5f))
+
+### Features
+
+- **gatsby-plugin-image:** Add support for backgroundColor in sharp ([#29141](https://github.com/gatsbyjs/gatsby/issues/29141)) ([eb2bede](https://github.com/gatsbyjs/gatsby/commit/eb2bede99328e149b34a7e893c870094fc1ae6de))
+- **gatsby-plugin-image:** object-fit polyfill for IE ([#29072](https://github.com/gatsbyjs/gatsby/issues/29072)) ([3b4e8a5](https://github.com/gatsbyjs/gatsby/commit/3b4e8a55b5d1a7d2832f7037390ec447086beb83))
+
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0-next.1...gatsby-plugin-image@0.7.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Fix onload race condition ([#29064](https://github.com/gatsbyjs/gatsby/issues/29064)) ([6233382](https://github.com/gatsbyjs/gatsby/commit/6233382c6d770e7f1ab6184dccc8c79fd3b7f809))
+- **gatsby-plugin-image:** Handle imgStyle in SSR ([#29043](https://github.com/gatsbyjs/gatsby/issues/29043)) ([b9978e1](https://github.com/gatsbyjs/gatsby/commit/b9978e1f7a4e6a8dec0f034b965dfbce09a372f2))
+- **gatsby-plugin-image:** Remove preload tag ([#28998](https://github.com/gatsbyjs/gatsby/issues/28998)) ([87bdec0](https://github.com/gatsbyjs/gatsby/commit/87bdec0f1ac8de8062fe3c90997b278ff921a4aa))
+
+### Features
+
+- **gatsby-plugin-image:** Change fullWidth to use breakpoints ([#29002](https://github.com/gatsbyjs/gatsby/issues/29002)) ([9bcc12c](https://github.com/gatsbyjs/gatsby/commit/9bcc12c57728bb7ca08cefe4f2f4c684b65d3111))
+
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.0-next.0...gatsby-plugin-image@0.6.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better error logging ([#28741](https://github.com/gatsbyjs/gatsby/issues/28741)) ([305fa64](https://github.com/gatsbyjs/gatsby/commit/305fa649293a060098821a32dc3d44026285e798))
+- **gatsby-plugin-image:** Conditionally require dependencies and give better warnings ([#28921](https://github.com/gatsbyjs/gatsby/issues/28921)) ([c82c3a6](https://github.com/gatsbyjs/gatsby/commit/c82c3a6f663da6eedb75c57814e3d103e6731c44))
+- **gatsby-plugin-image:** Correct image styles ([#28834](https://github.com/gatsbyjs/gatsby/issues/28834)) ([3d6446c](https://github.com/gatsbyjs/gatsby/commit/3d6446cd53675cf47468a59b633a75ef83d179d2))
+- **gatsby-plugin-image:** do not show placeholder if image already lo… ([#28868](https://github.com/gatsbyjs/gatsby/issues/28868)) ([12da978](https://github.com/gatsbyjs/gatsby/commit/12da9782a2ac8c3120e1c0cfa0661d43dc2c3ca5))
+- **gatsby-plugin-image:** Fix handling of sizes prop in SSR ([#28835](https://github.com/gatsbyjs/gatsby/issues/28835)) ([a135c50](https://github.com/gatsbyjs/gatsby/commit/a135c503744438ec9dd231828a1ce74d0c6a3b93))
+- **gatsby-plugin-sharp:** Pass format-specific options in image-data ([#28826](https://github.com/gatsbyjs/gatsby/issues/28826)) ([7378fcf](https://github.com/gatsbyjs/gatsby/commit/7378fcfa9b4ee6c173c4fecd5eb90efdcc0f7ff3))
+
+### Features
+
+- Add support for aspectRatio ([#28941](https://github.com/gatsbyjs/gatsby/issues/28941)) ([ed19fa0](https://github.com/gatsbyjs/gatsby/commit/ed19fa052a93e948b1135ac128cf5abec48752b6))
+
 # [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.5.0-next.6...gatsby-plugin-image@0.6.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-plugin-image

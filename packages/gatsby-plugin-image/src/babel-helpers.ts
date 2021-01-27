@@ -8,8 +8,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `src`,
   `layout`,
   `formats`,
-  `maxWidth`,
-  `maxHeight`,
+  `aspectRatio`,
   `quality`,
   `avifOptions`,
   `jpgOptions`,
@@ -22,7 +21,7 @@ export const SHARP_ATTRIBUTES = new Set([
   `placeholder`,
   `tracedSVGOptions`,
   `sizes`,
-  `background`,
+  `backgroundColor`,
 ])
 
 export function normalizeProps(

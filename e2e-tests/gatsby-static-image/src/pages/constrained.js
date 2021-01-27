@@ -11,14 +11,14 @@ const ConstrainedPage = () => (
     <div data-testid="image-constrained-limit">
       <StaticImage
         src="../images/citrus-fruits.jpg"
-        maxWidth={500}
+        width={500}
         alt="Citrus fruits"
       />
     </div>
     <div data-testid="image-constrained-override">
       <StaticImage
         src="../images/citrus-fruits.jpg"
-        maxWidth={500}
+        width={500}
         sizes="100vw"
         alt="Citrus fruits"
       />

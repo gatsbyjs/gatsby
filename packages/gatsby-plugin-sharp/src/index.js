@@ -329,7 +329,13 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    if (options.duotone.highlight && options.duotone.shadow) {
+      pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    } else {
+      reporter.warn(
+        `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+      )
+    }
   }
   let buffer
   let info
