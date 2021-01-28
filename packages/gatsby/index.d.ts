@@ -566,10 +566,6 @@ export interface GatsbyBrowser {
     options: PluginOptions
   ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
-  replaceComponentRenderer?(
-    args: ReplaceComponentRendererArgs,
-    options: PluginOptions
-  ): any
   replaceHydrateFunction?(
     args: BrowserPluginArgs,
     options: PluginOptions
@@ -1483,11 +1479,6 @@ export interface PrefetchPathnameArgs extends BrowserPluginArgs {
 export interface RouteUpdateArgs extends BrowserPluginArgs {
   location: Location
   prevLocation: Location | null;
-}
-
-export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: PageProps
-  loader: object
 }
 
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {

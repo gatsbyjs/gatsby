@@ -1,6 +1,5 @@
 import React, { createElement } from "react"
 import PropTypes from "prop-types"
-import { publicLoader } from "./loader"
 import { apiRunner } from "./api-runner-browser"
 import { grabMatchParams } from "./find-path"
 
@@ -16,17 +15,10 @@ class PageRenderer extends React.Component {
       pathContext: this.props.pageContext,
     }
 
-    const [replacementElement] = apiRunner(`replaceComponentRenderer`, {
-      props: this.props,
-      loader: publicLoader,
+    const pageElement = createElement(this.props.pageResources.component, {
+      ...props,
+      key: this.props.path || this.props.pageResources.page.path,
     })
-
-    const pageElement =
-      replacementElement ||
-      createElement(this.props.pageResources.component, {
-        ...props,
-        key: this.props.path || this.props.pageResources.page.path,
-      })
 
     const wrappedPage = apiRunner(
       `wrapPageElement`,
