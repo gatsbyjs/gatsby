@@ -112,6 +112,7 @@ query($id: String!) {
 By setting the `aggregations` parameter you have direct access to the full set of stages and pipelines of a [MongoDB Aggregation](https://docs.mongodb.com/manual/aggregation/). With that you can apply filter, map or add new values, calculate sums and averages, limit the amount of results, and much more. **Important:** If you have one (valid) aggregation defined the `collection` value/option is ignored and only aggregations are queried from the database.
 
 You can define aggregations in multiple ways:
+
 ```js
 // Named aggregations per collection
 aggregations: {
@@ -137,7 +138,6 @@ aggregations: {
 
 You can find more on naming of aggregations within the GraphQL layer in the section below.
 
-
 ## How to query your MongoDB data using GraphQL
 
 Below is a sample query for fetching all MongoDB document nodes from a db named
@@ -157,7 +157,7 @@ query {
 }
 ```
 
-If you use the `aggregations` option to query data from the database the naming of generated sets is slightly different. If the db and the collections are named like above an aggregation named **'niceAggregation'** would result in the query below. *Note:* If you have used an unnamed aggregation its default name is **'aggregation'**.
+If you use the `aggregations` option to query data from the database the naming of generated sets is slightly different. If the db and the collections are named like above an aggregation named **'niceAggregation'** would result in the query below. _Note:_ If you have used an unnamed aggregation its default name is **'aggregation'**.
 
 ```graphql
 query {
