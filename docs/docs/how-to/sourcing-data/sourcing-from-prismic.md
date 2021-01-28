@@ -75,8 +75,8 @@ module.exports = {
         repositoryName: `your-repository-name`,
         accessToken: `${process.env.API_KEY}`,
         linkResolver: ({ node, key, value }) => post => `/${post.uid}`,
-         schemas: {
-          post: require('./custom_types/post.json'),
+        schemas: {
+          post: require("./custom_types/post.json"),
         },
       },
     },
@@ -131,7 +131,7 @@ import { graphql } from "gatsby"
 const Post = ({ data }) => {
   if (!data) return null
   const post = data.prismicPost
-  
+
   return (
     <React.Fragment>
       <h1>{post.data.title.text}</h1>
@@ -194,12 +194,12 @@ import { graphql, Link } from "gatsby"
 const Index = ({ data }) => {
   if (!data) return null
   const home = data.prismicHomepage
-  
-  return(
+
+  return (
     <React.Fragment>
-     <h1>{home.data.title.text}</h1>
-     <div dangerouslySetInnerHTML={{ __html: home.data.content.html }} />
-   </React.Fragment>
+      <h1>{home.data.title.text}</h1>
+      <div dangerouslySetInnerHTML={{ __html: home.data.content.html }} />
+    </React.Fragment>
   )
 }
 
@@ -236,6 +236,6 @@ As mentioned in the beginning of this guide, if you got stuck, you can compare y
 <!-- Links to more advanced tutorials will go here -->
 
 ## Interesting reads:
-1) [Official Prismic + Gatsby documentation](https://prismic.io/docs/technologies/gatsby)
-2) [Prismic & Gatsby step by step guide](https://prismic.io/docs/technologies/step-by-step-guide-gatsby)
 
+1. [Official Prismic + Gatsby documentation](https://prismic.io/docs/technologies/gatsby)
+2. [Prismic & Gatsby step by step guide](https://prismic.io/docs/technologies/step-by-step-guide-gatsby)
