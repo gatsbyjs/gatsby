@@ -16,6 +16,7 @@
     "contentful": "^7.14.12",
     "fs-extra": "^9.0.1",
     "gatsby-core-utils": "^1.10.0-next.0",
+    "gatsby-plugin-image": "^0.7.0-next.0",
     "gatsby-plugin-utils": "^0.9.0-next.0",
     "gatsby-source-filesystem": "^2.11.0-next.0",
     "is-online": "^8.5.1",
@@ -40,7 +41,8 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^2.12.1",
-    "gatsby-plugin-sharp": "^2.6.14"
+    "gatsby-plugin-sharp": "^2.6.14",
+    "sharp": "^0.26.0"
   },
   "repository": {
     "type": "git",
