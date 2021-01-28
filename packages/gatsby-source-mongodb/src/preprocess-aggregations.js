@@ -4,11 +4,11 @@
  * ```
  * {
  *  'collection_1' : {
- *    'aggregation_1': [ … ],
- *    'aggregation_2': [ … ],
+ *    'aggregation_1': [ … ],
+ *    'aggregation_2': [ … ],
  *  },
  *  'collection_2' : {
- *    'aggregation_1': [ … ],
+ *    'aggregation_1': [ … ],
  *  },
  *  …
  * }
