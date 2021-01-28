@@ -11,6 +11,7 @@
     "async": "^3.2.0",
     "bluebird": "^3.7.2",
     "fs-extra": "^9.1.0",
+    "filenamify": "^4.2.0",
     "gatsby-core-utils": "^1.10.0-next.0",
     "gatsby-telemetry": "^1.10.0-next.1",
     "got": "^10.7.0",
