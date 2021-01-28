@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.0-next.1...gatsby-telemetry@1.11.0-next.0) (2021-01-28)
+
+### Features
+
+- **gatsby:** distinguish total number of pages from number of written html files ([#29149](https://github.com/gatsbyjs/gatsby/issues/29149)) ([e676944](https://github.com/gatsbyjs/gatsby/commit/e676944d629eab2b92446d3dac72f9a290fa4367))
+
 # [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.0-next.0...gatsby-telemetry@1.10.0-next.1) (2021-01-26)
 
 **Note:** Version bump only for package gatsby-telemetry

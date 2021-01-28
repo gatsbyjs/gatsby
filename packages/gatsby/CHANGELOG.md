@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.33.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.1...gatsby@2.33.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **gatsby:** queue fs writes so event loop not overwhelmed on large sites ([#29219](https://github.com/gatsbyjs/gatsby/issues/29219)) ([7c38997](https://github.com/gatsbyjs/gatsby/commit/7c38997090f550d2b2cd902128f87fc5b19a631b))
+- **gatsby:** Upgrade v8-compile-cache ([#29244](https://github.com/gatsbyjs/gatsby/issues/29244)) ([1af6e10](https://github.com/gatsbyjs/gatsby/commit/1af6e10a8c00d72f5aeebe120d06888394ca1bd9))
+
+### Features
+
+- **gatsby:** cache/memoize hot functions in runAPI ([#29240](https://github.com/gatsbyjs/gatsby/issues/29240)) ([e1c899f](https://github.com/gatsbyjs/gatsby/commit/e1c899f3abc54af038bd5aa3fb1c2ee79dd098fc))
+- **gatsby:** distinguish total number of pages from number of written html files ([#29149](https://github.com/gatsbyjs/gatsby/issues/29149)) ([e676944](https://github.com/gatsbyjs/gatsby/commit/e676944d629eab2b92446d3dac72f9a290fa4367))
+
 # [2.32.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.0...gatsby@2.32.0-next.1) (2021-01-26)
 
 ### Bug Fixes

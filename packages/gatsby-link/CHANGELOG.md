@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.11.0-next.0...gatsby-link@2.12.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-link ([#29175](https://github.com/gatsbyjs/gatsby/issues/29175)) ([7e07e2b](https://github.com/gatsbyjs/gatsby/commit/7e07e2b748c0195fc4a1e2b442c6836338d906dd))
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.10.0-next.1...gatsby-link@2.11.0-next.0) (2021-01-18)
 
 ### Bug Fixes

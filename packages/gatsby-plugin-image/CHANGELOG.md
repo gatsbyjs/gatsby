@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.7.0-next.1...gatsby-plugin-image@0.8.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **deps:** update dependency chokidar to ^3.5.1 ([#28970](https://github.com/gatsbyjs/gatsby/issues/28970)) ([c206d66](https://github.com/gatsbyjs/gatsby/commit/c206d66d9e67896ebc85c505ea1a3566f6479f5e))
+- **gatsby-plugin-image:** Update types ([#29226](https://github.com/gatsbyjs/gatsby/issues/29226)) ([7a589c0](https://github.com/gatsbyjs/gatsby/commit/7a589c0a940fe1859517401a57cf4c22010f2e8e))
+- **gatsby-plugin-image:** Use ESM for gatsby-browser, as CJS was causing errors ([#29235](https://github.com/gatsbyjs/gatsby/issues/29235)) ([552afa9](https://github.com/gatsbyjs/gatsby/commit/552afa930a3d6e4ad719b69605a5eb39359fd7e5))
+
+### Features
+
+- **gatsby-plugin-image:** Add useArtDirection hook ([#29231](https://github.com/gatsbyjs/gatsby/issues/29231)) ([c2f0298](https://github.com/gatsbyjs/gatsby/commit/c2f0298b62d4a27ec6ffb1a93e9a18d7d057e864))
+
 # [0.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.7.0-next.0...gatsby-plugin-image@0.7.0-next.1) (2021-01-26)
 
 ### Bug Fixes

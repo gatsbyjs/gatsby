@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.6.0-next.1...gatsby-source-contentful@4.7.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-contentful ([#29183](https://github.com/gatsbyjs/gatsby/issues/29183)) ([392c8a3](https://github.com/gatsbyjs/gatsby/commit/392c8a371c26b54b3d3cd2d952794fdff1db970f))
+- **gatsby-source-contentful:** validation with environment ([#29228](https://github.com/gatsbyjs/gatsby/issues/29228)) ([fb38f8a](https://github.com/gatsbyjs/gatsby/commit/fb38f8a49c1421b62dcda55f39ce95a721ae92e3))
+- sync crash with error response ([#29212](https://github.com/gatsbyjs/gatsby/issues/29212)) ([db05fe2](https://github.com/gatsbyjs/gatsby/commit/db05fe28aa2dcb4eccc780e6cb433c922978f83b))
+
+### Features
+
+- **gatsby-source-contentful:** Add gatsbyImageData resolver ([#28236](https://github.com/gatsbyjs/gatsby/issues/28236)) ([a823622](https://github.com/gatsbyjs/gatsby/commit/a82362267d2c842aa7dd3a65c8ffb8d51183c9eb)), closes [#29095](https://github.com/gatsbyjs/gatsby/issues/29095) [#29162](https://github.com/gatsbyjs/gatsby/issues/29162) [#29163](https://github.com/gatsbyjs/gatsby/issues/29163) [#29067](https://github.com/gatsbyjs/gatsby/issues/29067) [#29137](https://github.com/gatsbyjs/gatsby/issues/29137)
+
 # [4.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.6.0-next.0...gatsby-source-contentful@4.6.0-next.1) (2021-01-26)
 
 **Note:** Version bump only for package gatsby-source-contentful

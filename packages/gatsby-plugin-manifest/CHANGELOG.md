@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.12.0-next.1...gatsby-plugin-manifest@2.13.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Fix `or` Joi assertion ([#29242](https://github.com/gatsbyjs/gatsby/issues/29242)) ([844ac84](https://github.com/gatsbyjs/gatsby/commit/844ac842736707427560a205de477ace96f568c0))
+
 # [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.12.0-next.0...gatsby-plugin-manifest@2.12.0-next.1) (2021-01-26)
 
 ### Bug Fixes
