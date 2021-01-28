@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 
-const _ = require(`lodash`)
+const sortBy = require(`lodash/sortBy`)
 const axios = require(`axios`)
 const {
   GraphQLObjectType,
@@ -265,7 +265,7 @@ const resolveFixed = (image, options) => {
   })
 
   // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  const sortedSizes = sortBy(filteredSizes)
 
   // Create the srcSet.
   const srcSet = sortedSizes
@@ -381,7 +381,7 @@ const resolveFluid = (image, options) => {
   }
 
   // Sort sizes for prettiness.
-  const sortedSizes = _.sortBy(filteredSizes)
+  const sortedSizes = sortBy(filteredSizes)
 
   // Create the srcSet.
   const srcSet = sortedSizes
