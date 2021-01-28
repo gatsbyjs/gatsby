@@ -55,9 +55,13 @@ const transformWebpackError = (
   const castedWebpackError = (webpackError as unknown) as IWebpackError
 
   let location
-  if (castedWebpackError.loc) {
-    location = castedWebpackError.loc
+  if (castedWebpackError.loc && castedWebpackError.loc.start) {
+    location = {
+      start: castedWebpackError.loc.start,
+      end: castedWebpackError.loc.end,
+    }
   }
+
   if (!location && castedWebpackError.error?.loc) {
     if (castedWebpackError.error.loc.start) {
       location = castedWebpackError.error.loc

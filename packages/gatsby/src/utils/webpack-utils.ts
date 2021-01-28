@@ -6,7 +6,6 @@ import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-// import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
@@ -384,6 +383,9 @@ export const createWebpackUtils = (
     } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
+        resolve: {
+          fullySpecified: false,
+        },
         include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
@@ -477,6 +479,9 @@ export const createWebpackUtils = (
 
       return {
         test: /\.(js|mjs)$/,
+        resolve: {
+          fullySpecified: false,
+        },
         exclude: (modulePath: string): boolean => {
           // If dep is user land code, exclude
           if (!vendorRegex.test(modulePath)) {
