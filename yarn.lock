@@ -12565,10 +12565,10 @@ guess-ga@^0.4.20:
   dependencies:
     googleapis "^59.0.0"
 
-guess-webpack@^0.4.20:
-  version "0.4.20"
-  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.20.tgz#f344396bbb6455e8d9e60285a91cab3d36af193e"
-  integrity sha512-v/SkoCu8UgVwiCMSLAhcjr43Oa6uzsy+nsWfT+iuQi+vbB+jiUGxgadQtapPqPSp3RsBxoW8QIzolEsLJHPhmw==
+guess-webpack@^0.4.22:
+  version "0.4.22"
+  resolved "https://registry.yarnpkg.com/guess-webpack/-/guess-webpack-0.4.22.tgz#df7add92d3f783715d01ea0153459823e332b4f6"
+  integrity sha512-uo7nSNfcHafWgAM7eq73yif709fUWJ9bNJl4MIsjMNBfocmWADapeWMwjmBpExHpTeVcdpBnSF4yxlgvuVpOWg==
   dependencies:
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.0"
