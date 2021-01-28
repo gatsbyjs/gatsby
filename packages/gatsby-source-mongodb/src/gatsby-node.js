@@ -42,16 +42,19 @@ exports.sourceNodes = (
       }
 
       // Format aggregations & Determine whether to use `collection.find` or `collection.aggregate`
-      const aggregations = preprocessAggregations(pluginOptions.aggregations || {})
+      const aggregations = preprocessAggregations(
+        pluginOptions.aggregations || {}
+      )
       const useCollection = !Object.keys(aggregations).length
 
-      return Promise
-        .all(
-          Object.entries(useCollection ? collection : aggregations)
-            .reduce((acc, [key, value]) => {
-              if (useCollection) {
-                // Map to `createNodes` calls for collection
-                return [...acc, createNodes(
+      return Promise.all(
+        Object.entries(useCollection ? collection : aggregations).reduce(
+          (acc, [key, value]) => {
+            if (useCollection) {
+              // Map to `createNodes` calls for collection
+              return [
+                ...acc,
+                createNodes(
                   db,
                   pluginOptions,
                   dbName,
@@ -59,23 +62,30 @@ exports.sourceNodes = (
                   createNodeId,
                   value,
                   createContentDigest
-                )]
-
-              } else {
-                // Flatten & map to `createNodes` calls for aggregation
-                return [...acc, ...Object.entries(value).map(aggregation => createNodes(
-                  db,
-                  pluginOptions,
-                  dbName,
-                  createNode,
-                  createNodeId,
-                  key,
-                  createContentDigest,
-                  aggregation
-                ))]
-              }
-            }, [])
+                ),
+              ]
+            } else {
+              // Flatten & map to `createNodes` calls for aggregation
+              return [
+                ...acc,
+                ...Object.entries(value).map(aggregation =>
+                  createNodes(
+                    db,
+                    pluginOptions,
+                    dbName,
+                    createNode,
+                    createNodeId,
+                    key,
+                    createContentDigest,
+                    aggregation
+                  )
+                ),
+              ]
+            }
+          },
+          []
         )
+      )
         .then(() => {
           mongoClient.close()
         })
@@ -110,11 +120,9 @@ function createNodes(
     let collection = db.collection(collectionName)
 
     // Create cursor via `find` or `aggregate` depending on if `aggregation` is given
-    let cursor = !!aggregation
+    let cursor = aggregation
       ? collection.aggregate(aggregation[1])
-      : collection.find(
-        query[collectionName] ? query[collectionName] : {}
-      )
+      : collection.find(query[collectionName] ? query[collectionName] : {})
 
     // Execute the each command, triggers for each document
     cursor.toArray((err, documents) => {
@@ -131,9 +139,15 @@ function createNodes(
         }
 
         const mongodb_id = mongoIdToString(_id)
-        const id = `${!!aggregation ? aggregation[0] : ''}${dbName}${collectionName}${mongodb_id}`
-        const sanitizedAggregationName = !!aggregation ? sanitizeName(aggregation[0]) : ''
-        const internalType = `mongodb${sanitizedAggregationName}${sanitizeName(dbName)}${sanitizeName(collectionName)}`
+        const id = `${
+          aggregation ? aggregation[0] : ``
+        }${dbName}${collectionName}${mongodb_id}`
+        const sanitizedAggregationName = aggregation
+          ? sanitizeName(aggregation[0])
+          : ``
+        const internalType = `mongodb${sanitizedAggregationName}${sanitizeName(
+          dbName
+        )}${sanitizeName(collectionName)}`
         const node = {
           // Data for the node.
           ...item,
