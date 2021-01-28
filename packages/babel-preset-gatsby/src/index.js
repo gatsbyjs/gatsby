@@ -83,7 +83,9 @@ export default function preset(_, options = {}) {
               : `React.createElement`,
           development: stage === `develop`,
           runtime: options.reactRuntime || `classic`,
-          importSource: options.reactImportSource,
+          ...(options.reactImportSource
+            ? { importSource: options.reactImportSource }
+            : {}),
         },
       ],
     ],

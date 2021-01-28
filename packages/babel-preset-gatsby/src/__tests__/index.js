@@ -40,4 +40,17 @@ describe(`babel-preset-gatsby`, () => {
       }),
     ])
   })
+
+  it(`Allows to configure react importSource`, () => {
+    const { presets } = preset(null, {
+      reactImportSource: `@emotion/react`,
+    })
+
+    expect(presets[1]).toEqual([
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
+      expect.objectContaining({
+        importSource: `@emotion/react`,
+      }),
+    ])
+  })
 })
