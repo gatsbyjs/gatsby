@@ -600,7 +600,8 @@ const createTypeComposerFromGatsbyType = ({
           if (type.config.interfaces) {
             return type.config.interfaces.map(iface => {
               if (typeof iface === `string`) {
-                return schemaComposer.getIFTC(iface).getType()
+                // FIXME: this causes warnings that we should account for
+                return schemaComposer.getOrCreateIFTC(iface)
               } else {
                 return iface
               }
@@ -627,7 +628,8 @@ const createTypeComposerFromGatsbyType = ({
         types: () => {
           if (type.config.types) {
             return type.config.types.map(typeName =>
-              schemaComposer.getOTC(typeName).getType()
+              // FIXME: this causes warnings that we should account for
+              schemaComposer.getOrCreateOTC(typeName)
             )
           } else {
             return []
