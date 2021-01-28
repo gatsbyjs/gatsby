@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "bluebird": "^3.7.2",
-    "chokidar": "^3.4.3",
+    "chokidar": "^3.5.1",
     "fs-exists-cached": "^1.0.0",
     "gatsby-core-utils": "^1.10.0-next.0",
     "glob": "^7.1.6",
