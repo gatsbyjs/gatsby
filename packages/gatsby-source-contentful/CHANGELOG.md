@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.1...gatsby-source-contentful@4.5.2) (2021-01-28)
+
+### Bug Fixes
+
+- sync crash with error response ([#29212](https://github.com/gatsbyjs/gatsby/issues/29212)) ([#29222](https://github.com/gatsbyjs/gatsby/issues/29222)) ([1e70a98](https://github.com/gatsbyjs/gatsby/commit/1e70a98509e406f210625660fa44c045c1fa8aac))
+
 ## [4.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.0...gatsby-source-contentful@4.5.1) (2021-01-20)
 
 **Note:** Version bump only for package gatsby-source-contentful

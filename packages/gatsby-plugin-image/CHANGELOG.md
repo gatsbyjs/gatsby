@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.2...gatsby-plugin-image@0.6.3) (2021-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Fixes to plugin utils types ([#29204](https://github.com/gatsbyjs/gatsby/issues/29204)) ([#29221](https://github.com/gatsbyjs/gatsby/issues/29221)) ([17bf581](https://github.com/gatsbyjs/gatsby/commit/17bf581cdafe336f0dac588ea33c577eb5263630))
+- **gatsby-plugin-image:** Pass sizes for source ([#29192](https://github.com/gatsbyjs/gatsby/issues/29192)) ([23af522](https://github.com/gatsbyjs/gatsby/commit/23af5227b1ce95b13155a075e9eebceef73f688b))
+
 ## [0.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.1...gatsby-plugin-image@0.6.2) (2021-01-26)
 
 ### Bug Fixes
