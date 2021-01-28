@@ -373,8 +373,8 @@ const resolveFluid = (image, options) => {
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
   if (
-    !filteredSizes.includes(parseInt(width)) &&
-    parseInt(width) < CONTENTFUL_IMAGE_MAX_SIZE &&
+    !filteredSizes.includes(width) &&
+    width < CONTENTFUL_IMAGE_MAX_SIZE &&
     Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
   ) {
     filteredSizes.push(width)
