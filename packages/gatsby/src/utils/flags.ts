@@ -1,8 +1,6 @@
 import _ from "lodash"
 import semver from "semver"
 
-import sampleSiteForExperiment from "./sample-site-for-experiment"
-
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
 
