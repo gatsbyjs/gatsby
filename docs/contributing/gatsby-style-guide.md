@@ -170,7 +170,7 @@ When referencing another page within [gatsbyjs.com](https://www.gatsbyjs.com/) h
 
 <!-- Bad -->
 
-[Gatsby's glossary](/docs/glossary)
+[Gatsby's glossary](https://www.gatsbyjs.com/docs/glossary)
 ```
 
 Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
