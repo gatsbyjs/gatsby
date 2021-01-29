@@ -275,8 +275,8 @@ async function generateBase64({ file, args = {}, reporter }) {
   let pipeline
   try {
     pipeline = !options.failOnError
-      ? sharp(file, { failOnError: false })
-      : sharp(file)
+      ? sharp(file.absolutePath, { failOnError: false })
+      : sharp(file.absolutePath)
 
     if (!options.rotate) {
       pipeline.rotate()
