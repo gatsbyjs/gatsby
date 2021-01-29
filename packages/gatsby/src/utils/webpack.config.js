@@ -296,6 +296,14 @@ module.exports = async (
       rules.js({
         modulesThatUseGatsby,
       }),
+      // Webpack expects extensions when importing to mimic ESM spec.
+      // Not all libraries have adapted so we don't enforce its behaviour
+      {
+        test: /\.m?js/,
+        resolve: {
+            fullySpecified: false
+        }
+      },
       rules.yaml(),
       rules.fonts(),
       rules.images(),
@@ -638,7 +646,7 @@ module.exports = async (
 
     // Packages we want to externalize to save some build time
     // https://github.com/gatsbyjs/gatsby/pull/14208#pullrequestreview-240178728
-    const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
+    // const externalList = [`common-tags`, `lodash`, `semver`, /^lodash\//]
 
     // Packages we want to externalize because meant to be user-provided
     const userExternalList = [`react`, /^react-dom\//]
@@ -660,7 +668,6 @@ module.exports = async (
         // Force commonjs as we're in node land
         const resolver = getResolve({
           dependencyType: `commonjs`,
-          mainFields: [`module`, `main`],
         })
 
         // TODO figure out to make preact work with this too
@@ -700,18 +707,19 @@ module.exports = async (
           })
           return
         }
+        // TODO look into re-enabling, breaks builds right now because of esm
         // User modules that do not need to be part of the bundle
-        if (externalList.some(item => checkItem(item, request))) {
-          resolver(context, request, (err, request) => {
-            if (err) {
-              callback(err)
-              return
-            }
+        // if (externalList.some(item => checkItem(item, request))) {
+        //   resolver(context, request, (err, request) => {
+        //     if (err) {
+        //       callback(err)
+        //       return
+        //     }
 
-            callback(null, `commonjs2 ${request}`)
-          })
-          return
-        }
+        //     callback(null, `commonjs2 ${request}`)
+        //   })
+        //   return
+        // }
 
         callback()
       },
