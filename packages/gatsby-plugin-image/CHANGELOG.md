@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.3...gatsby-plugin-image@0.6.4) (2021-01-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Use ESM for gatsby-browser, as CJS was causing errors ([#29235](https://github.com/gatsbyjs/gatsby/issues/29235)) ([#29266](https://github.com/gatsbyjs/gatsby/issues/29266)) ([d27c968](https://github.com/gatsbyjs/gatsby/commit/d27c9684558bef5483d082099fdc219ccf400182))
+
 ## [0.6.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.6.2...gatsby-plugin-image@0.6.3) (2021-01-28)
 
 ### Bug Fixes

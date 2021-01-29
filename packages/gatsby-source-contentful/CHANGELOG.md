@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.5.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.2...gatsby-source-contentful@4.5.3) (2021-01-29)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** validation with environment ([#29228](https://github.com/gatsbyjs/gatsby/issues/29228)) ([#29265](https://github.com/gatsbyjs/gatsby/issues/29265)) ([94e8132](https://github.com/gatsbyjs/gatsby/commit/94e8132104b03ced5f08519bf0502f19d6f89d26))
+
 ## [4.5.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.5.1...gatsby-source-contentful@4.5.2) (2021-01-28)
 
 ### Bug Fixes
