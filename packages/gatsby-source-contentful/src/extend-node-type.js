@@ -4,7 +4,6 @@ const path = require(`path`)
 const crypto = require(`crypto`)
 
 const sortBy = require(`lodash/sortBy`)
-const axios = require(`axios`)
 const {
   GraphQLObjectType,
   GraphQLBoolean,
@@ -21,6 +20,12 @@ const {
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
+const downloadWithRetry = require(`./download-with-retry`)
+const {
+  ImageFormatType,
+  ImageResizingBehavior,
+  ImageCropFocusType,
+} = require(`./schemes`)
 
 // By default store the images in `.cache` but allow the user to override
 // and store the image cache away from the gatsby cache. After all, the gatsby
@@ -48,12 +53,6 @@ const inFlightBase64Cache = new Map()
 // This cache contains the resolved base64 fetches. This prevents async calls for promises that have resolved.
 // The images are based on urls with w=20 and should be relatively small (<2kb) but it does stick around in memory
 const resolvedBase64Cache = new Map()
-
-const {
-  ImageFormatType,
-  ImageResizingBehavior,
-  ImageCropFocusType,
-} = require(`./schemes`)
 
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
@@ -110,7 +109,8 @@ const getBase64Image = imageProps => {
   }
 
   const loadImage = async () => {
-    const imageResponse = await axios.get(requestUrl, {
+    const imageResponse = await downloadWithRetry({
+      url: requestUrl,
       responseType: `arraybuffer`,
     })
 
