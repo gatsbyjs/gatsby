@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.7.0-next.0...gatsby-plugin-preact@4.8.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-preact ([#28972](https://github.com/gatsbyjs/gatsby/issues/28972)) ([c4fbb43](https://github.com/gatsbyjs/gatsby/commit/c4fbb4310d253fa3222299a5d06ee799224aa595))
+
 # [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.6.0-next.0...gatsby-plugin-preact@4.7.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-plugin-preact

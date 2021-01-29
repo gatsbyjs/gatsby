@@ -1,7 +1,9 @@
+// @ts-check
 const fs = require(`fs`)
 const path = require(`path`)
 const crypto = require(`crypto`)
 
+const sortBy = require(`lodash/sortBy`)
 const axios = require(`axios`)
 const {
   GraphQLObjectType,
@@ -12,6 +14,11 @@ const {
   GraphQLNonNull,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
+const { generateImageData } = require(`gatsby-plugin-image`)
+const {
+  getGatsbyImageFieldConfig,
+} = require(`gatsby-plugin-image/graphql-utils`)
+const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
 
@@ -157,7 +164,10 @@ const createUrl = (imgUrl, options = {}) => {
   const urlArgs = {
     w: options.width || undefined,
     h: options.height || undefined,
-    fl: options.jpegProgressive ? `progressive` : undefined,
+    fl:
+      options.toFormat === `jpg` && options.jpegProgressive
+        ? `progressive`
+        : undefined,
     q: options.quality || undefined,
     fm: options.toFormat || undefined,
     fit: options.resizingBehavior || undefined,
@@ -169,6 +179,37 @@ const createUrl = (imgUrl, options = {}) => {
   return `${imgUrl}?${qs.stringify(urlArgs)}`
 }
 exports.createUrl = createUrl
+
+const generateImageSource = (
+  filename,
+  width,
+  height,
+  toFormat,
+  _fit, // We use resizingBehavior instead
+  { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
+) => {
+  const src = createUrl(filename, {
+    width,
+    height,
+    toFormat,
+    resizingBehavior,
+    background: backgroundColor?.replace(`#`, `rgb:`),
+    quality,
+    jpegProgressive,
+    cropFocus,
+  })
+  return { width, height, format: toFormat, src }
+}
+
+exports.generateImageSource = generateImageSource
+
+const fitMap = new Map([
+  [`pad`, `contain`],
+  [`fill`, `cover`],
+  [`scale`, `fill`],
+  [`crop`, `cover`],
+  [`thumb`, `cover`],
+])
 
 const resolveFixed = (image, options) => {
   if (!isImage(image)) return null
@@ -223,8 +264,11 @@ const resolveFixed = (image, options) => {
     )
   })
 
+  // Sort sizes for prettiness.
+  const sortedSizes = sortBy(filteredSizes)
+
   // Create the srcSet.
-  const srcSet = filteredSizes
+  const srcSet = sortedSizes
     .map((size, i) => {
       let resolution
       switch (i) {
@@ -328,17 +372,19 @@ const resolveFluid = (image, options) => {
 
   // Add the original image (if it isn't already in there) to ensure the largest image possible
   // is available for small images.
-  const pwidth = parseInt(width, 10)
   if (
-    !filteredSizes.includes(pwidth) &&
-    pwidth < CONTENTFUL_IMAGE_MAX_SIZE &&
-    Math.round(pwidth / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
+    !filteredSizes.includes(width) &&
+    width < CONTENTFUL_IMAGE_MAX_SIZE &&
+    Math.round(width / desiredAspectRatio) < CONTENTFUL_IMAGE_MAX_SIZE
   ) {
-    filteredSizes.push(pwidth)
+    filteredSizes.push(width)
   }
 
+  // Sort sizes for prettiness.
+  const sortedSizes = sortBy(filteredSizes)
+
   // Create the srcSet.
-  const srcSet = filteredSizes
+  const srcSet = sortedSizes
     .map(width => {
       const h = Math.round(width / desiredAspectRatio)
       return `${createUrl(image.file.url, {
@@ -423,7 +469,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -440,7 +486,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
         },
         srcSetWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -516,7 +562,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         srcSet: { type: new GraphQLNonNull(GraphQLString) },
         srcWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -533,7 +579,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
         },
         srcSetWebp: {
           type: GraphQLString,
-          resolve({ image, options, context }) {
+          resolve({ image, options }) {
             if (
               image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
@@ -595,7 +641,9 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
+let warnedForBeta = false
+
+exports.extendNodeType = ({ type, store, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -627,6 +675,69 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
     })
   }
 
+  const getDominantColor = async ({ image, options }) => {
+    try {
+      const absolutePath = await cacheImage(store, image, options)
+
+      const pluginSharp = require(`gatsby-plugin-sharp`)
+      if (!(`getDominantColor` in pluginSharp)) {
+        console.error(
+          `[gatsby-source-contentful] Please upgrade gatsby-plugin-sharp`
+        )
+        return `rgba(0,0,0,0.5)`
+      }
+
+      return pluginSharp.getDominantColor(absolutePath)
+    } catch (e) {
+      console.error(
+        `[gatsby-source-contentful] Please install gatsby-plugin-sharp`
+      )
+      return `rgba(0,0,0,0.5)`
+    }
+  }
+
+  const resolveGatsbyImageData = async (image, options) => {
+    const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
+
+    const imageProps = generateImageData({
+      ...options,
+      pluginName: `gatsby-source-contentful`,
+      sourceMetadata,
+      filename: baseUrl,
+      generateImageSource,
+      fit: fitMap.get(options.resizingBehavior),
+      options,
+    })
+
+    let placeholderDataURI = null
+
+    if (options.placeholder === `dominantColor`) {
+      imageProps.backgroundColor = await getDominantColor({
+        image,
+        options,
+      })
+    }
+
+    if (options.placeholder === `blurred`) {
+      placeholderDataURI = await getBase64Image({
+        baseUrl,
+      })
+    }
+
+    if (options.placeholder === `tracedSVG`) {
+      placeholderDataURI = await getTracedSVG({
+        image,
+        options,
+      })
+    }
+
+    if (placeholderDataURI) {
+      imageProps.placeholder = { fallback: placeholderDataURI }
+    }
+
+    return imageProps
+  }
+
   // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
   const resolutionsNode = fixedNodeType({
@@ -639,11 +750,43 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
   const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
   sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
+  // gatsby-plugin-image
+  const getGatsbyImageData = () => {
+    if (!warnedForBeta) {
+      reporter.warn(
+        stripIndent`
+      Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
+      )
+      warnedForBeta = true
+    }
+
+    return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+      jpegProgressive: {
+        type: GraphQLBoolean,
+        defaultValue: true,
+      },
+      resizingBehavior: {
+        type: ImageResizingBehavior,
+      },
+      cropFocus: {
+        type: ImageCropFocusType,
+      },
+      quality: {
+        type: GraphQLInt,
+        defaultValue: 50,
+      },
+      backgroundColor: {
+        type: GraphQLString,
+      },
+    })
+  }
+
   return {
     fixed: fixedNode,
     resolutions: resolutionsNode,
     fluid: fluidNode,
     sizes: sizesNode,
+    gatsbyImageData: getGatsbyImageData(),
     resize: {
       type: new GraphQLObjectType({
         name: `ContentfulResize`,
@@ -693,7 +836,7 @@ exports.extendNodeType = ({ type, store, cache, getNodesByType }) => {
           defaultValue: null,
         },
       },
-      resolve(image, options, context) {
+      resolve(image, options) {
         return resolveResize(image, options)
       },
     },

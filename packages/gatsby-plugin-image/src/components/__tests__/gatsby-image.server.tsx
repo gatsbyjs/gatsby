@@ -297,6 +297,7 @@ icon.svg`,
         <picture>
           <source
             media="some-media"
+            sizes="192x192"
             srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
           />
           <img

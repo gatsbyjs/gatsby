@@ -20,7 +20,7 @@ const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
 const { getDimensionsAndAspectRatio } = require(`./utils`)
-// const { rgbToHex } = require(`./utils`)
+const { getDominantColor } = require(`./utils`)
 
 const imageSizeCache = new Map()
 
@@ -777,6 +777,7 @@ exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
 exports.getImageSizeAsync = getImageSizeAsync
+exports.getDominantColor = getDominantColor
 exports.stats = stats
 exports._unstable_createJob = createJob
 exports._lazyJobsEnabled = lazyJobsEnabled
