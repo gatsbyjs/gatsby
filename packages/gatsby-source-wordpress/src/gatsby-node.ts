@@ -15,7 +15,8 @@ module.exports = runApisInSteps({
 
   sourceNodes: [
     steps.setGatsbyApiToState,
-    [steps.persistPreviouslyCachedImages, steps.sourceNodes],
+    steps.persistPreviouslyCachedImages,
+    steps.sourceNodes,
     steps.setImageNodeIdCache,
   ],
 

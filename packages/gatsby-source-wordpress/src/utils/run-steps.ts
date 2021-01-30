@@ -5,14 +5,14 @@ import { invokeAndCleanupLeftoverPreviewCallbacks } from "../steps/preview/clean
 import { CODES } from "./report"
 
 export type Step = (
-  helpers: GatsbyNodeApiHelpers,
-  pluginOptions: IPluginOptions
-) => Promise<void>
+  helpers?: GatsbyNodeApiHelpers,
+  pluginOptions?: IPluginOptions
+) => Promise<void> | void
 
 export type ActivityTimer = ReturnType<GatsbyReporter["activityTimer"]>
 
 const runSteps = async (
-  steps: Step[],
+  steps: Array<Step>,
   helpers: GatsbyNodeApiHelpers,
   pluginOptions: IPluginOptions,
   apiName: string
@@ -72,14 +72,14 @@ const runSteps = async (
   }
 }
 
-const runApiSteps = (steps: Step[], apiName: string) => async (
+const runApiSteps = (steps: Array<Step>, apiName: string) => async (
   helpers: GatsbyNodeApiHelpers,
   pluginOptions: IPluginOptions
 ): Promise<void> => runSteps(steps, helpers, pluginOptions, apiName)
 
 const runApisInSteps = (nodeApis: {
-  [apiName: string]: Step | Step[]
-}): { [apiName: string]: Promise<void> } =>
+  [apiName: string]: Array<Step> | Step
+}): { [apiName: string]: Promise<void> | void } =>
   Object.entries(nodeApis).reduce(
     (gatsbyNodeExportObject, [apiName, apiSteps]) => {
       return {

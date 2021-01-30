@@ -8,7 +8,7 @@ const prettierConfig = require(`./prettier.config.js`)
 
 const {
   pluginOptionsSchema,
-} = require(`./plugin/dist/steps/declare-plugin-options-schema`)
+} = require(`./dist/steps/declare-plugin-options-schema`)
 
 // :( poor children
 const excludeParentsChildren = [`RootQuery`]

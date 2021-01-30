@@ -1,3 +1,4 @@
+import { Step } from "./../../utils/run-steps"
 import fetchAndApplyNodeUpdates from "./update-nodes/fetch-node-updates"
 
 import { fetchAndCreateAllNodes } from "./fetch-nodes/fetch-nodes"
@@ -8,7 +9,7 @@ import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non
 import { allowFileDownloaderProgressBarToClear } from "./create-nodes/create-remote-file-node/progress-bar-promise"
 import { sourcePreviews } from "~/steps/preview"
 
-const sourceNodes = async (helpers, pluginOptions) => {
+const sourceNodes: Step = async (helpers, pluginOptions) => {
   const { cache, webhookBody } = helpers
 
   // if this is a preview we want to process it and return early
