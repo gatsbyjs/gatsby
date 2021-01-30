@@ -475,7 +475,10 @@ export class AnalyticsTracker {
     this.metadataCache[event] = Object.assign(cached, obj)
   }
 
-  addSiteMeasurement(event: string, obj): void {
+  addSiteMeasurement(
+    event: string,
+    obj: ITelemetryTagsPayload["siteMeasurements"]
+  ): void {
     const cachedEvent = this.metadataCache[event] || {}
     const cachedMeasurements = cachedEvent.siteMeasurements || {}
     this.metadataCache[event] = Object.assign(cachedEvent, {

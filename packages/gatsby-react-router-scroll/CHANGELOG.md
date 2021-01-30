@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.7.0-next.0...gatsby-react-router-scroll@3.8.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
 # [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@3.6.0-next.0...gatsby-react-router-scroll@3.7.0-next.0) (2021-01-18)
 
 ### Bug Fixes

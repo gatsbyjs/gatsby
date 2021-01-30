@@ -29,22 +29,28 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
 
-  await fetch(`https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}`, {
-    headers: {
-      Authorization: `Bearer ${pluginOptions.accessToken}`,
-      "Content-Type": `application/json`,
-    },
-  })
+  await fetch(
+    `https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}/environments/${pluginOptions.environment}/content_types`,
+    {
+      headers: {
+        Authorization: `Bearer ${pluginOptions.accessToken}`,
+        "Content-Type": `application/json`,
+      },
+    }
+  )
     .then(res => res.ok)
     .then(ok => {
-      if (!ok)
-        throw new Error(
-          `Cannot access Contentful space "${maskText(
-            pluginOptions.spaceId
-          )}" with access token "${maskText(
-            pluginOptions.accessToken
-          )}". Make sure to double check them!`
-        )
+      if (!ok) {
+        let errorMessage = `Cannot access Contentful space "${maskText(
+          pluginOptions.spaceId
+        )}" on environment "${
+          pluginOptions.environment
+        } with access token "${maskText(
+          pluginOptions.accessToken
+        )}". Make sure to double check them!`
+
+        throw new Error(errorMessage)
+      }
     })
 
   return undefined
