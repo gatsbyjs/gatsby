@@ -4,7 +4,7 @@ let isWpSourcePluginInstalled = false
 
 /**
  * Temporarily break the build when a user defines multiple source configs for the plugin
- * See https://github.com/gatsbyjs/gatsby-source-wordpress/issues/251
+ * See https://github.com/gatsbyjs/gatsby/issues/new/251
  * @param {Reporter} reporter
  */
 
@@ -16,10 +16,7 @@ export function tempPreventMultipleInstances({
   if (isWpSourcePluginInstalled) {
     reporter.panic(
       formatLogMessage(
-        [
-          `Multiple instances of this plugin aren't currently supported yet.`,
-          `Follow this issue for updates https://github.com/gatsbyjs/gatsby-source-wordpress/issues/58`,
-        ].join(`\n\n`),
+        `Multiple instances of this plugin aren't currently supported yet.`,
         { useVerboseStyle: true }
       )
     )

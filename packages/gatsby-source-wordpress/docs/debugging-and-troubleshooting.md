@@ -9,6 +9,7 @@
   - [Media File Download Errors](#media-file-download-errors)
   - [Broken Preview templates](#broken-preview-templates)
   - [Previews Don't Update](#previews-dont-update)
+  - [Preview debug mode](#preview-debug-mode)
 - [Up Next :point_right:](#up-next-point_right)
 
 ## Node sourcing
@@ -171,7 +172,11 @@ You can proactively protect against broken Preview templates by using [optional 
 ## Previews Don't Update
 
 Check in your `wp-config.php` to determine wether or not post revisions are disabled. Look for `define( 'WP_POST_REVISIONS', FALSE );` and if you find it, remove it. This appears to be a WPGraphQL bug and we're working on fixing it. If you're interested in the status of that check https://github.com/wp-graphql/wp-graphql/issues/1408.
-If post revisions are enabled on your site and previews are still not working, please open a [new issue](https://github.com/gatsbyjs/gatsby-source-wordpress/issues).
+If post revisions are enabled on your site and previews are still not working, please open a [new issue](https://github.com/gatsbyjs/gatsby/issues/new).
+
+## Preview debug mode
+
+You can enable Preview debug mode to help you debug issues with the Gatsby Preview build process. Visit the [plugin options page](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debugpreview-boolean) to see how to enable this debug option. This option will log addition info to the terminal output including the contents of the webhook body that was sent to the Gatsby process, a list of the Preview change events Gatsby receives, as well as the node Preview data that was sourced during the Preview.
 
 # Up Next :point_right:
 

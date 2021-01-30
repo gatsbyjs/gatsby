@@ -5,6 +5,6 @@ This plugin is built with your WP site security in mind. For that reason, we've 
 If you have a requirement where you need some private data in Gatsby, you should either
 
 1. If your private data requirements are related to specific user accounts and will require different data depending on who's logged in to your site, add client-side authentication and make live GraphQL requests to WPGraphQL in-browser (using [Apollo](https://www.apollographql.com/docs/react/) or similar).
-2. Filter your data to be public in WPGraphQL. If you need some data during a Gatsby build, you need to consider it as public data. This means you need to make it public in WPGraphQL. Think very carefully before you do this, and make sure you understand the security implications before you change anything. To filter private data to make it public, visit the [WPGraphQL docs](https://docs.wpgraphql.com/) to learn more.
+2. Filter your data to be public in WPGraphQL. If you need some data during a Gatsby build, you need to consider it as public data. This means you need to make it public in WPGraphQL. Think very carefully before you do this, and make sure you understand the security implications before you change anything. To filter private data to make it public, visit the [WPGraphQL docs](https://www.wpgraphql.com/recipes/making-menus-and-menu-items-public/) to learn more.
 
 :point_left: [Back to Features](./index.md)

@@ -1,7 +1,3 @@
-# Official Themes & Starters
-
-Currently there are none! We will be creating some soon. In the meantime check out the awesome work form the community below.
-
 # Official Starters
 
 [gatsby-starter-wordpress-blog](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog)
@@ -18,17 +14,15 @@ Currently there are none! We will be creating some soon. In the meantime check o
 
 [Gatsby WooCommerce Theme](https://gatsby-woocommerce-theme.netlify.app/) [[source]](https://github.com/imranhsayed/gatsby-woocommerce-themes)
 
-# WP/Gatsby In the Wild
+# Examples
 
-[Apollo Blog](https://github.com/apollographql/blog) [[source]](https://github.com/apollographql/blog)
+[Apollo GraphQL](https://github.com/apollographql/blog) [[source]](https://github.com/apollographql/blog)
 
-[Gatsby News](https://gatsby-news2.netlify.app/) [[source]](https://github.com/DSchau/gatsby-news)
+[Bluehost](https://www.bluehost.com/blog/)
 
-[moonmeister.net](https://moonmeister.net/) [[source]](https://github.com/moonmeister/moonmeister.net)
+[Sitepoint](https://www.sitepoint.com/blog/)
 
-muhammadmuhsin.com [[source]](https://github.com/m-muhsin/muhammadmuhsin.com)
-
-[thoughtsandstuff.com](https://thoughtsandstuff.com) [[source]](https://github.com/robmarshall/tns-gatsby)
+[Visit the Gatsby.com WordPress use cases page for more](https://www.gatsbyjs.com/use-cases/wordpress)
 
 # Up Next :point_right:
 

@@ -11,13 +11,14 @@ If you find a bug when using an extension please open an issue and let us know.
 ## Confirmed Extensions
 
 - [WPGraphQL for Advanced Custom Fields](https://www.wpgraphql.com/acf/)
-- [WPGraphQL Gutenberg](https://wp-graphql-gutenberg.netlify.app/)
 - [WPGraphQL Yoast SEO](https://github.com/ashhitch/wp-graphql-yoast-seo)
 - [WPGraphQL Polylang](https://github.com/valu-digital/wp-graphql-polylang)
+- [WPGraphQL for Custom Post Type UI](https://github.com/wp-graphql/wp-graphql-custom-post-type-ui)
 
-## Unconfirmed Extensions (might still work)
+## Unconfirmed Extensions (might still work but will have problems)
 
 - [WPGraphQL WooCommerce](https://woographql.com/)
+- [WPGraphQL Gutenberg](https://wp-graphql-gutenberg.netlify.app/)
 
 # Up Next :point_right:
 

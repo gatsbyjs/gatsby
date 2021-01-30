@@ -1,10 +1,10 @@
-## Creating a new site from scratch
+# Creating a new site from scratch
 
-### What this tutorial covers:
+## What this tutorial covers:
 
 In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + WordPress starter](https://github.com/henrikwirth/gatsby-starter-wordpress-twenty-twenty) shows you the source code for an example site similar to what you’re going to be building in this tutorial.
 
-### Creating a site with the `gatsby-source-wordpress` plugin
+## Creating a site with the `gatsby-source-wordpress` plugin
 
 Create a new Gatsby project and change directories into the new project you just created:
 
@@ -75,7 +75,7 @@ module.exports = {
 }
 ```
 
-### Creating GraphQL queries that pull data from WordPress
+## Creating GraphQL queries that pull data from WordPress
 
 Now you are ready to create a GraphQL query to pull in some data from the WordPress site. You will create a query that pulls in the title of the blog posts, date they were posted, and blogpost content.
 
@@ -167,7 +167,7 @@ export const pageQuery = graphql`
 
 Save these changes and look at `http://localhost:8000` to see your new homepage with a list of sorted blog posts!
 
-## Create pages for each blog post and link to them
+## Creating pages for each blog post and linking to them
 
 An index page with a post title and excerpt is great, but you should also build pages out for each of the blog posts, and link to them from your `index.js` file.
 

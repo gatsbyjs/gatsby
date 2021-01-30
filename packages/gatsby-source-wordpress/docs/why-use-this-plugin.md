@@ -50,7 +50,6 @@ Now we have the ability to properly cache data and this makes incremental builds
 - :feet: [Features](./features/index.md)
 - :electric_plug: [Plugin options](./plugin-options.md)
 - :boat: [Migrating from other WP source plugins](./migrating-from-other-wp-source-plugins.md)
-- :computer: [Using Data](./using-data.md)
 - :house: [Hosting WordPress](./hosting.md)
 - :athletic_shoe: [Themes, Starters, and Examples](./themes-starters-examples.md)
 - :medal_sports: [Usage with popular WPGraphQL extensions](./usage-with-popular-wp-graphql-extensions.md)

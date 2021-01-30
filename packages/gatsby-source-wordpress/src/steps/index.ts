@@ -10,8 +10,6 @@ export { checkIfSchemaHasChanged } from "~/steps/ingest-remote-schema/diff-schem
 export { setErrorMap } from "~/steps/set-error-map"
 export { tempPreventMultipleInstances } from "~/steps/temp-prevent-multiple-instances"
 
-export { setPreviewState } from "~/steps/preview/index"
-
 export { onPreExtractQueriesInvokeLeftoverPreviewCallbacks } from "./preview/cleanup"
 
 export {
