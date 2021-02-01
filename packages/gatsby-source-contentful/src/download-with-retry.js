@@ -6,14 +6,15 @@ const queue = new PQueue({
   concurrency: 100,
 })
 
+const RetryAxios = axios.create()
+
 export default async function downloadWithRetry(requestConfig, reporter) {
   if (!requestConfig.url) {
     throw new Error(`requestConfig.url is missing`)
   }
-  const axiosInstance = axios.create()
 
-  axiosInstance.defaults.raxConfig = {
-    instance: axiosInstance,
+  RetryAxios.defaults.raxConfig = {
+    instance: RetryAxios,
     onRetryAttempt: err => {
       const cfg = rax.getConfig(err)
       reporter.verbose(
@@ -21,11 +22,12 @@ export default async function downloadWithRetry(requestConfig, reporter) {
       )
     },
   }
-  rax.attach(axiosInstance)
+
+  rax.attach(RetryAxios)
 
   try {
     const result = await queue.add(() =>
-      axiosInstance.get(requestConfig.url, requestConfig)
+      RetryAxios.get(requestConfig.url, requestConfig)
     )
     return result
   } catch (err) {
