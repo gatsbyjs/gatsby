@@ -41,7 +41,9 @@ describe(`download-with-retry`, () => {
 
     await expect(
       downloadAndRetry({ method: `get`, url }, reporter)
-    ).rejects.toThrowError(`Request failed with status code 404`)
+    ).rejects.toThrowError(
+      `Unable to download asset from https://images.ctfassets.net/foo/bar/baz/image.jpg. Request failed with status code 404`
+    )
 
     expect(reporter.verbose).not.toHaveBeenCalled()
     expect(scope.isDone()).toBeFalsy()
@@ -68,7 +70,9 @@ describe(`download-with-retry`, () => {
 
     await expect(
       downloadAndRetry({ method: `get`, url }, reporter)
-    ).rejects.toThrowError(`Request failed with status code 503`)
+    ).rejects.toThrowError(
+      `Unable to download asset from https://images.ctfassets.net/foo/bar/baz/image.jpg. Request failed with status code 503`
+    )
 
     expect(reporter.verbose).toHaveBeenCalledTimes(3)
     expect(reporter.verbose).toHaveBeenCalledWith(

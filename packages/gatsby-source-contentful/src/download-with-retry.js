@@ -23,12 +23,18 @@ export default async function downloadWithRetry(requestConfig, reporter) {
   }
   rax.attach(axiosInstance)
 
-  return await queue.add(() =>
-    axiosInstance.get(requestConfig.url, {
-      ...requestConfig,
-      // This is required as we should not set `testEnvironment: "node"`
-      // in jest.config.js just to test this properly
-      adapter: require(`axios/lib/adapters/http`),
-    })
-  )
+  try {
+    const result = await queue.add(() =>
+      axiosInstance.get(requestConfig.url, {
+        ...requestConfig,
+        // This is required as we should not set `testEnvironment: "node"`
+        // in jest.config.js just to test this properly
+        adapter: require(`axios/lib/adapters/http`),
+      })
+    )
+    return result
+  } catch (err) {
+    err.message = `Unable to download asset from ${requestConfig.url}. ${err.message}`
+    throw err
+  }
 }
