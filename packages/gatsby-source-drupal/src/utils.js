@@ -1,5 +1,10 @@
 const _ = require(`lodash`)
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  createNodeIdWithVersion,
+} = require(`./normalize`)
 
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
@@ -15,7 +20,13 @@ const handleReferences = (node, { getNode, createNodeId }) => {
       if (_.isArray(v.data)) {
         relationships[nodeFieldName] = _.compact(
           v.data.map(data => {
-            const referencedNodeId = createNodeId(data.id)
+            const referencedNodeId = createNodeId(
+              createNodeIdWithVersion(
+                data.id,
+                data.type,
+                data.meta?.target_version
+              )
+            )
             if (!getNode(referencedNodeId)) {
               return null
             }
@@ -35,7 +46,13 @@ const handleReferences = (node, { getNode, createNodeId }) => {
           node[k] = meta
         }
       } else {
-        const referencedNodeId = createNodeId(v.data.id)
+        const referencedNodeId = createNodeId(
+          createNodeIdWithVersion(
+            v.data.id,
+            v.data.type,
+            v.data.meta?.target_revision_id
+          )
+        )
         if (getNode(referencedNodeId)) {
           relationships[nodeFieldName] = referencedNodeId
           referencedNodes.push(referencedNodeId)

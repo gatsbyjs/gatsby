@@ -1,7 +1,12 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  createNodeIdWithVersion,
+} = require(`./normalize`)
 const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 
 const asyncPool = require(`tiny-async-pool`)
@@ -147,7 +152,17 @@ exports.sourceNodes = async (
         const nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode(getNode(createNodeId(nodeSyncData.id)))
+            actions.deleteNode(
+              getNode(
+                createNodeId(
+                  createNodeIdWithVersion(
+                    nodeSyncData.id,
+                    nodeSyncData.type,
+                    nodeSyncData.attributes?.drupal_internal__revision_id
+                  )
+                )
+              )
+            )
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.

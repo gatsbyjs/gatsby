@@ -6,7 +6,13 @@ const nodeFromData = (datum, createNodeId) => {
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
   return {
-    id: createNodeId(datum.id),
+    id: createNodeId(
+      createNodeIdWithVersion(
+        datum.id,
+        datum.type,
+        attributes.drupal_internal__revision_id
+      )
+    ),
     drupal_id: datum.id,
     parent: null,
     drupal_parent_menu_item: attributes.parent,
@@ -22,6 +28,15 @@ const nodeFromData = (datum, createNodeId) => {
 }
 
 exports.nodeFromData = nodeFromData
+
+const isEntityReferenceRevision = type => type.indexOf(`paragraph`) === 0
+
+const createNodeIdWithVersion = (id, type, revision_id) =>
+  // The relationship between an entity and another entity also depends on the revision ID if the field is of type
+  // entity reference revision such as for paragraphs.
+  isEntityReferenceRevision(type) ? `${id}.${revision_id || 0}` : id
+
+exports.createNodeIdWithVersion = createNodeIdWithVersion
 
 const isFileNode = node =>
   node.internal.type === `files` || node.internal.type === `file__file`
