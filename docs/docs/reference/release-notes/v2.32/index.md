@@ -11,7 +11,7 @@ We landed two PRs that improve build performance for larger sites.
 - https://github.com/gatsbyjs/gatsby/pull/29240
 - https://github.com/gatsbyjs/gatsby/pull/29219
 
-On our [minimal benchmark site](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages), these improved build times by ~15% for a 10,000 page site and 50% for a 100,000 page site! 
+On our [minimal benchmark site](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages), these improved build times by ~15% for a 10,000 page site and 30% for a 100,000 page site! 
 
 ---
 
