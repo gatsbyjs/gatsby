@@ -49,13 +49,6 @@ export const restartWorker = (htmlComponentRendererPath): void => {
 
 const searchFileForString = (substring, filePath): Promise<boolean> =>
   new Promise(resolve => {
-    console.log(
-      `exports.ssrComponents.*${substring}.*}`.replace(
-        /[.*+?^${}()|[\]\\]/g,
-        `\\$&`
-      )
-    )
-
     const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
 
     // See if the chunk is in the newComponents array (not the notVisited).
