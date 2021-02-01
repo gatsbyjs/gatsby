@@ -16,7 +16,14 @@ import {
   genericDownloadMessage,
 } from "~/supported-remote-plugin-versions"
 
-const parseRange = (range: string) => {
+const parseRange = (
+  range: string
+): {
+  message: string
+  minVersion: string
+  maxVersion: string
+  isARange: boolean
+} => {
   const {
     set: [versions],
   } = new Range(range)
@@ -25,7 +32,7 @@ const parseRange = (range: string) => {
   const minVersion = versions[0].semver.version
   const maxVersion = versions[1]?.semver?.version
 
-  let message
+  let message: string
   if (isARange) {
     message = `Install a version between ${minVersion} and ${maxVersion}.`
   } else {
@@ -215,7 +222,10 @@ ${firstError.debugMessage || firstError.message}
         }
       }
     })
-    .catch(e => {})
+    .catch(() => {
+      // this is ignored because a /graphql request will always return a 200 at this point
+      // we've already checked prior to this point that /graphql is up and returns a response.
+    })
 
 const isWpGatsby = async () =>
   fetchGraphql({

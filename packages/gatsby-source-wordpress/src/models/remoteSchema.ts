@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
-interface RemoteSchemaState {
+interface IRemoteSchemaState {
   wpUrl: string
   nodeQueries: any
   nonNodeQuery: string
@@ -12,11 +12,11 @@ interface RemoteSchemaState {
   ingestibles: {
     nodeListRootFields: any
     nodeInterfaceTypes: any
-    nonNodeRootFields: any[]
+    nonNodeRootFields: Array<any>
   }
   allowRefreshSchemaUpdate: boolean
   fetchedTypes: any
-  fieldBlacklist: string[]
+  fieldBlacklist: Array<string>
   fieldAliases: {
     parent: string
     children: string
@@ -26,35 +26,35 @@ interface RemoteSchemaState {
   }
 }
 
-interface RemoteSchemaReducers {
+interface IRemoteSchemaReducers {
   toggleAllowRefreshSchemaUpdate: (
-    state: RemoteSchemaState
-  ) => RemoteSchemaState
+    state: IRemoteSchemaState
+  ) => IRemoteSchemaState
 
   setSchemaWasChanged: (
-    state: RemoteSchemaState,
+    state: IRemoteSchemaState,
     payload: boolean
-  ) => RemoteSchemaState
+  ) => IRemoteSchemaState
 
   addFieldsToBlackList: (
-    state: RemoteSchemaState,
-    payload: string[]
-  ) => RemoteSchemaState
+    state: IRemoteSchemaState,
+    payload: Array<string>
+  ) => IRemoteSchemaState
 
   setState: (
-    state: RemoteSchemaState,
-    payload: RemoteSchemaState
-  ) => RemoteSchemaState
+    state: IRemoteSchemaState,
+    payload: IRemoteSchemaState
+  ) => IRemoteSchemaState
 
-  addFetchedType: (state: RemoteSchemaState, type: any) => RemoteSchemaState
+  addFetchedType: (state: IRemoteSchemaState, type: any) => IRemoteSchemaState
 }
 
-interface RemoteSchemaStore {
-  state: RemoteSchemaState
-  reducers: RemoteSchemaReducers
+interface IRemoteSchemaStore {
+  state: IRemoteSchemaState
+  reducers: IRemoteSchemaReducers
 }
 
-const remoteSchema: RemoteSchemaStore = {
+const remoteSchema: IRemoteSchemaStore = {
   state: {
     wpUrl: null,
     nodeQueries: {},
@@ -146,7 +146,7 @@ const remoteSchema: RemoteSchemaStore = {
 
       return state
     },
-  } as RemoteSchemaReducers,
+  } as IRemoteSchemaReducers,
 }
 
 export default remoteSchema

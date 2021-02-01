@@ -33,9 +33,8 @@ export const applyNodeFilter = async ({
     return data
   }
 
-  const nodeFilters: INodeFilter[] = store.getState().wpHooks.nodeFilters?.[
-    name
-  ]
+  const nodeFilters: Array<INodeFilter> = store.getState().wpHooks
+    .nodeFilters?.[name]
 
   if (!nodeFilters || !nodeFilters.length) {
     return data

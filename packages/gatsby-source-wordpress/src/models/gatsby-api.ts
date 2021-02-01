@@ -4,7 +4,7 @@ import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/cre
 import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
 import { cloneDeep } from "lodash"
 
-export interface PluginOptionsPreset {
+export interface IPluginOptionsPreset {
   presetName: string
   useIf: (
     helpers: GatsbyNodeApiHelpers,
@@ -19,7 +19,7 @@ const inDevelopPreview =
 
 const inPreviewRunner = process.env.RUNNER_TYPE === `PREVIEW`
 
-export const previewOptimizationPreset: PluginOptionsPreset = {
+export const previewOptimizationPreset: IPluginOptionsPreset = {
   presetName: `PREVIEW_OPTIMIZATION`,
   useIf: (): boolean => inDevelopPreview || inPreviewRunner,
   options: {
@@ -62,7 +62,7 @@ export interface IPluginOptions {
       copyHtmlResponseOnError?: boolean
       printIntrospectionDiff?: boolean
     }
-    timeBuildSteps?: string[] | boolean
+    timeBuildSteps?: Array<string> | boolean
     disableCompatibilityCheck?: boolean
     preview?: boolean
   }
@@ -98,11 +98,11 @@ export interface IPluginOptions {
     imageQuality?: number
     createStaticFiles?: boolean
   }
-  presets?: PluginOptionsPreset[]
+  presets?: Array<IPluginOptionsPreset>
   type?: {
     [typename: string]: {
       limit?: number
-      excludeFieldNames?: string[]
+      excludeFieldNames?: Array<string>
 
       exclude?: boolean
       // @todo type this
@@ -111,7 +111,7 @@ export interface IPluginOptions {
       nodeInterface?: boolean
       lazyNodes?: boolean
       localFile?: {
-        excludeByMimeTypes?: string[]
+        excludeByMimeTypes?: Array<string>
         maxFileSizeBytes?: number
         requestConcurrency?: number
       }
@@ -319,7 +319,7 @@ const defaultPluginOptions: IPluginOptions = {
 export interface IGatsbyApiState {
   helpers: GatsbyNodeApiHelpers
   pluginOptions: IPluginOptions
-  activePluginOptionsPresets?: PluginOptionsPreset[]
+  activePluginOptionsPresets?: Array<IPluginOptionsPreset>
 }
 
 const gatsbyApi = {

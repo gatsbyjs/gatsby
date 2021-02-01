@@ -2,7 +2,7 @@ import chalk from "chalk"
 import store from "~/store"
 
 const formatLogMessage = (
-  input: string | string[],
+  input: string | Array<string>,
   { useVerboseStyle }: { useVerboseStyle?: boolean } = {}
 ): string => {
   let verbose = false

@@ -268,7 +268,7 @@ export const restoreHardCachedNodes = async ({
   hardCachedNodes,
 }: {
   hardCachedNodes: Node[]
-}): Promise<string[]> => {
+}): Promise<Array<string>> => {
   const loggerTypeCounts = {}
 
   const { helpers, pluginOptions } = getGatsbyApi()
