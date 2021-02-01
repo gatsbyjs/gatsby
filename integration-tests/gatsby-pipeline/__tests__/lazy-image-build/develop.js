@@ -34,7 +34,7 @@ describe(`Lazy images`, () => {
     expect(response.status).toBe(200)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
-    expect(images.length).toBe(1)
+    expect(images.length).toBe(6)
   })
 
   test(`should process the rest of images on build`, async () => {
