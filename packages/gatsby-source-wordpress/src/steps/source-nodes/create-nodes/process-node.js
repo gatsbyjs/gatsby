@@ -21,7 +21,7 @@ import btoa from "btoa"
 import store from "~/store"
 import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
 
-const getNodeEditLink = (node) => {
+const getNodeEditLink = node => {
   const { protocol, hostname } = url.parse(node.link)
   const editUrl = `${protocol}//${hostname}/wp-admin/post.php?post=${node.databaseId}&action=edit`
 
@@ -40,13 +40,13 @@ const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
     /"__typename":"MediaItem","id":"([^"]*)"/gm,
     nodeString
   )
-    .map((match) => match.subMatches[0])
-    .filter((id) => id !== node.id)
+    .map(match => match.subMatches[0])
+    .filter(id => id !== node.id)
 
   return matchedIds
 }
 
-const getCheerioImgDbId = (cheerioImg) => {
+const getCheerioImgDbId = cheerioImg => {
   // try to get the db id from data attributes
   const dataAttributeId =
     cheerioImg.attribs[`data-id`] || cheerioImg.attribs[`data-image-id`]
@@ -62,7 +62,7 @@ const getCheerioImgDbId = (cheerioImg) => {
   // try to get the db id from the wp-image-id classname
   const wpImageClass = cheerioImg.attribs.class
     .split(` `)
-    .find((className) => className.includes(`wp-image-`))
+    .find(className => className.includes(`wp-image-`))
 
   if (wpImageClass) {
     const wpImageClassDashArray = wpImageClass.split(`-`)
@@ -79,9 +79,9 @@ const getCheerioImgDbId = (cheerioImg) => {
 }
 
 // media items are of the "post" type
-const dbIdToMediaItemRelayId = (dbId) => (dbId ? btoa(`post:${dbId}`) : null)
+const dbIdToMediaItemRelayId = dbId => (dbId ? btoa(`post:${dbId}`) : null)
 
-const getCheerioImgRelayId = (cheerioImg) =>
+const getCheerioImgRelayId = cheerioImg =>
   dbIdToMediaItemRelayId(getCheerioImgDbId(cheerioImg))
 
 export const ensureSrcHasHostname = ({ src, wpUrl }) => {
@@ -107,7 +107,7 @@ const pickNodeBySourceUrlOrCheerioImg = ({
   ]
 
   const imageNode = mediaItemNodes.find(
-    (mediaItemNode) =>
+    mediaItemNode =>
       // either find our node by the source url
       possibleHtmlSrcs.includes(mediaItemNode.sourceUrl) ||
       possibleHtmlSrcs.includes(
@@ -210,10 +210,10 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
     .filter(Boolean)
 
   const mediaItemRelayIds = mediaItemDbIds
-    .map((dbId) => dbIdToMediaItemRelayId(dbId))
+    .map(dbId => dbIdToMediaItemRelayId(dbId))
     .filter(
       // filter out any media item ids we already fetched
-      (relayId) =>
+      relayId =>
         ![...mediaItemNodesBySourceUrl, ...previouslyCachedNodesByUrl].find(
           ({ id } = {}) => id === relayId
         )
@@ -292,7 +292,7 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
   return htmlMatchesToMediaItemNodesMap
 }
 
-const getCheerioElementFromMatch = (wpUrl) => ({ match, tag = `img` }) => {
+const getCheerioElementFromMatch = wpUrl => ({ match, tag = `img` }) => {
   // unescape quotes
   const parsedMatch = JSON.parse(`"${match}"`)
 
@@ -327,7 +327,7 @@ const getCheerioElementFromMatch = (wpUrl) => ({ match, tag = `img` }) => {
   }
 }
 
-const getLargestSizeFromSizesAttribute = (sizesString) => {
+const getLargestSizeFromSizesAttribute = sizesString => {
   const sizesStringsArray = sizesString.split(`,`)
 
   return sizesStringsArray.reduce((largest, currentSizeString) => {
@@ -351,7 +351,7 @@ const getLargestSizeFromSizesAttribute = (sizesString) => {
   }, null)
 }
 
-const findImgTagMaxWidthFromCheerioImg = (cheerioImg) => {
+const findImgTagMaxWidthFromCheerioImg = cheerioImg => {
   const {
     attribs: { width, sizes },
   } = cheerioImg || { attribs: { width: null, sizes: null } }
@@ -375,13 +375,13 @@ const findImgTagMaxWidthFromCheerioImg = (cheerioImg) => {
   return null
 }
 
-const getFileNodeRelativePathname = (fileNode) => {
+const getFileNodeRelativePathname = fileNode => {
   const fileName = `${fileNode.internal.contentDigest}/${fileNode.base}`
 
   return fileName
 }
 
-const getFileNodePublicPath = (fileNode) => {
+const getFileNodePublicPath = fileNode => {
   const fileName = getFileNodeRelativePathname(fileNode)
 
   const publicPath = path.join(process.cwd(), `public`, `static`, fileName)
@@ -397,7 +397,7 @@ const copyFileToStaticAndReturnUrlPath = async (fileNode, helpers) => {
       fileNode.absolutePath,
       publicPath,
       { dereference: true },
-      (err) => {
+      err => {
         if (err) {
           console.error(
             `error copying file from ${fileNode.absolutePath} to ${publicPath}`,
@@ -415,7 +415,7 @@ const copyFileToStaticAndReturnUrlPath = async (fileNode, helpers) => {
   return relativeUrl
 }
 
-const filterMatches = (wpUrl) => ({ match }) => {
+const filterMatches = wpUrl => ({ match }) => {
   const { hostname: wpHostname } = url.parse(wpUrl)
 
   // @todo make it a plugin option to fetch non-wp images
@@ -712,7 +712,7 @@ const replaceFileLinks = async ({
 
   if (hrefMatches.length) {
     // eslint-disable-next-line arrow-body-style
-    const mediaItemUrlsAndMatches = hrefMatches.map((matchGroup) => ({
+    const mediaItemUrlsAndMatches = hrefMatches.map(matchGroup => ({
       matchGroup,
       url: `${wpUrl}${matchGroup.subMatches[2]}`,
     }))
@@ -730,7 +730,7 @@ const replaceFileLinks = async ({
     const findReplaceMaps = []
 
     await Promise.all(
-      mediaItemNodesBySourceUrl.map(async (node) => {
+      mediaItemNodesBySourceUrl.map(async node => {
         let fileNode
         let mediaItemNode
 
@@ -756,7 +756,7 @@ const replaceFileLinks = async ({
         const mediaItemMatchGroup = mediaItemUrlsAndMatches.find(
           ({
             matchGroup: {
-              subMatches: [_delimiter, _hostname, path],
+              subMatches: [, , path],
             },
           }) => mediaItemNode.mediaItemUrl.includes(path)
         )?.matchGroup
@@ -781,6 +781,8 @@ const replaceFileLinks = async ({
           find: path,
           replace: relativeUrl,
         })
+
+        return null
       })
     )
 
@@ -880,9 +882,7 @@ const processNode = async ({
 
   // push them to our store of referenced id's
   if (nodeMediaItemIdReferences?.length && referencedMediaItemNodeIds) {
-    nodeMediaItemIdReferences.forEach((id) =>
-      referencedMediaItemNodeIds.add(id)
-    )
+    nodeMediaItemIdReferences.forEach(id => referencedMediaItemNodeIds.add(id))
   }
 
   const processedNodeString = await processNodeString({

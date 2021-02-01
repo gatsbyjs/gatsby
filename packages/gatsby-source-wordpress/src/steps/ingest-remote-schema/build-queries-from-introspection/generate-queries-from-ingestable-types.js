@@ -9,15 +9,17 @@ import {
   generateReusableFragments,
 } from "./build-query-on-field-name"
 
+import clipboardy from "clipboardy"
+
 import store from "~/store"
 import { getTypeSettingsByType } from "~/steps/create-schema-customization/helpers"
 import prettier from "prettier"
 import { formatLogMessage } from "~/utils/format-log-message"
 
-const recursivelyAliasFragments = (field) =>
-  field.inlineFragments.map((fragment) => {
+const recursivelyAliasFragments = field =>
+  field.inlineFragments.map(fragment => {
     // for each of this inlineFragments fields
-    fragment.fields = fragment.fields.map((fragmentField) => {
+    fragment.fields = fragment.fields.map(fragmentField => {
       if (typeof fragmentField === `string`) {
         return fragmentField
       }
@@ -25,42 +27,40 @@ const recursivelyAliasFragments = (field) =>
       // compare it against each field of each other fragment
       let updatedFragmentField = fragmentField
 
-      field.inlineFragments.forEach((possiblyConflictingFragment) => {
+      field.inlineFragments.forEach(possiblyConflictingFragment => {
         // don't compare this fragment against itself
         if (possiblyConflictingFragment.name === fragment.name) {
           return
         }
 
-        possiblyConflictingFragment.fields.forEach(
-          (possiblyConflictingField) => {
-            const fieldNamesMatch =
-              fragmentField.fieldName === possiblyConflictingField.fieldName
+        possiblyConflictingFragment.fields.forEach(possiblyConflictingField => {
+          const fieldNamesMatch =
+            fragmentField.fieldName === possiblyConflictingField.fieldName
 
-            const fieldTypeKindsDontMatch =
-              possiblyConflictingField?.fieldType?.kind !==
-              fragmentField?.fieldType?.kind
+          const fieldTypeKindsDontMatch =
+            possiblyConflictingField?.fieldType?.kind !==
+            fragmentField?.fieldType?.kind
 
-            const fieldTypeNamesDontMatch =
-              possiblyConflictingField?.fieldType?.name !==
-              fragmentField?.fieldType?.name
+          const fieldTypeNamesDontMatch =
+            possiblyConflictingField?.fieldType?.name !==
+            fragmentField?.fieldType?.name
 
-            // if the fields have the same name but a different type kind
-            // alias them
-            if (
-              fieldNamesMatch &&
-              (fieldTypeKindsDontMatch || fieldTypeNamesDontMatch)
-            ) {
-              const autoAliasedFieldName = `${fragmentField.fieldName}__typename_${fragmentField.fieldType.name}: ${fragmentField.fieldName}`
+          // if the fields have the same name but a different type kind
+          // alias them
+          if (
+            fieldNamesMatch &&
+            (fieldTypeKindsDontMatch || fieldTypeNamesDontMatch)
+          ) {
+            const autoAliasedFieldName = `${fragmentField.fieldName}__typename_${fragmentField.fieldType.name}: ${fragmentField.fieldName}`
 
-              updatedFragmentField = {
-                ...fragmentField,
-                fieldName: autoAliasedFieldName,
-              }
-
-              return
+            updatedFragmentField = {
+              ...fragmentField,
+              fieldName: autoAliasedFieldName,
             }
+
+            return
           }
-        )
+        })
       })
       // if the fields have the same name but a different type AND the field has sub fields, compare those sub fields against any fragment fields subfields where the field name matches
       // if any subfields have conflicting types, alias them
@@ -77,7 +77,7 @@ const recursivelyAliasFragments = (field) =>
     return fragment
   })
 
-const aliasConflictingFieldFields = (field) => {
+const aliasConflictingFieldFields = field => {
   // we only have conflicting fields in inlineFragments
   // if there are no inlineFragments, do nothing
   if (!field.inlineFragments) {
@@ -164,7 +164,7 @@ const generateNodeQueriesFromIngestibleFields = async () => {
     let nodeListQueries = []
 
     const singleNodeRootFieldInfo = rootFields.find(
-      (field) => field.type.name === nodesType.name
+      field => field.type.name === nodesType.name
     )
 
     if (!singleNodeRootFieldInfo) {

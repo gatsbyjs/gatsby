@@ -9,7 +9,7 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
 
   return {
     type: `[${typeName}]`,
-    resolve: (source, args, context, info) => {
+    resolve: (source, args, context) => {
       let nodes = null
 
       const field = source[fieldName]
@@ -25,7 +25,7 @@ export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
       }
 
       return context.nodeModel.getNodesByIds({
-        ids: nodes.map((node) => node?.id),
+        ids: nodes.map(node => node?.id),
         type: typeName,
       })
     },
@@ -88,7 +88,7 @@ export const buildGatsbyNodeObjectResolver = ({ field, fieldName }) => async (
   return node || null
 }
 
-export const transformGatsbyNodeObject = (transformerApi) => {
+export const transformGatsbyNodeObject = transformerApi => {
   const { field } = transformerApi
   const typeName = buildTypeName(field.type.name)
 

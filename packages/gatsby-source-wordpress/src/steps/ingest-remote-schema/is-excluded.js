@@ -15,7 +15,7 @@ const fieldIsExcludedOnParentType = ({ pluginOptions, field, parentType }) => {
   const fullType = typeMap.get(findTypeName(parentType))
 
   const parentTypeNodesField = fullType?.fields?.find(
-    (field) => field.name === `nodes`
+    field => field.name === `nodes`
   )
 
   const parentTypeNodesFieldTypeName = findTypeName(parentTypeNodesField?.type)

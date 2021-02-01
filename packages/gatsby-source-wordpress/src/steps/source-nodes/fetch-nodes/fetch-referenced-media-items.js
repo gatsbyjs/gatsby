@@ -49,7 +49,7 @@ const pushPromiseOntoRetryQueue = ({
 
     if (timesRetried >= 2) {
       // if we've retried this more than once, pause for a sec.
-      await new Promise((resolve) =>
+      await new Promise(resolve =>
         setTimeout(() => resolve(), timesRetried * 500)
       )
     }
@@ -111,7 +111,6 @@ export const createMediaItemNode = async ({
   helpers,
   createContentDigest,
   actions,
-  referencedMediaItemNodeIds,
   parentName,
   allMediaItemNodes = [],
 }) => {
@@ -129,7 +128,7 @@ export const createMediaItemNode = async ({
   allMediaItemNodes.push(node)
 
   let resolveFutureNode
-  const futureNode = new Promise((resolve) => {
+  const futureNode = new Promise(resolve => {
     resolveFutureNode = resolve
   })
 
@@ -193,14 +192,14 @@ export const createMediaItemNode = async ({
       const normalizedNode = normalizeNode({ node, nodeTypeName: `MediaItem` })
 
       await actions.createNode(normalizedNode)
-      resolveFutureNode(node)
+      return resolveFutureNode(node)
     },
   })
 
   return futureNode
 }
 
-const urlToFileExtension = (url) => {
+const urlToFileExtension = url => {
   const { pathname } = urlUtil.parse(url)
 
   const fileExtension = path.extname(pathname)
@@ -208,7 +207,7 @@ const urlToFileExtension = (url) => {
   return fileExtension
 }
 
-export const stripImageSizesFromUrl = (url) => {
+export const stripImageSizesFromUrl = url => {
   const fileExtension = urlToFileExtension(url)
 
   const imageSizesPattern = new RegExp(
@@ -224,7 +223,7 @@ export const stripImageSizesFromUrl = (url) => {
   return urlWithoutSizes
 }
 
-const createScaledImageUrl = (url) => {
+const createScaledImageUrl = url => {
   const fileExtension = urlToFileExtension(url)
 
   const isAlreadyScaled = url.includes(`-scaled${fileExtension || ``}`)
@@ -253,7 +252,7 @@ const createScaledImageUrl = (url) => {
 // someone could upload a full-size image that contains that pattern - so the full
 // size url would have 500x1000 in it, and removing it would make it so we can never
 // fetch this image node.
-const processAndDedupeImageUrls = (urls) =>
+const processAndDedupeImageUrls = urls =>
   uniq(
     urls.reduce((accumulator, url) => {
       const scaledUrl = createScaledImageUrl(url)
@@ -309,7 +308,7 @@ const fetchMediaItemsBySourceUrl = async ({
 
   // take our previously cached id's and get nodes for them
   const previouslyCachedMediaItemNodes = await Promise.all(
-    cachedMediaItemNodeIds.map(async (nodeId) => helpers.getNode(nodeId))
+    cachedMediaItemNodeIds.map(async nodeId => helpers.getNode(nodeId))
   )
 
   const {
@@ -323,7 +322,7 @@ const fetchMediaItemsBySourceUrl = async ({
   // we pass this resolve function into the queue function so it can let us
   // know when it's finished
   let resolveFutureNodes
-  const futureNodes = new Promise((resolve) => {
+  const futureNodes = new Promise(resolve => {
     resolveFutureNodes = (nodes = []) =>
       // combine our resolved nodes we fetched with our cached nodes
       resolve([...nodes, ...previouslyCachedMediaItemNodes])
@@ -385,7 +384,7 @@ const fetchMediaItemsBySourceUrl = async ({
 
         // take the WPGraphQL nodes we received and create Gatsby nodes out of them
         const nodes = await Promise.all(
-          thisPagesNodes.map((node) =>
+          thisPagesNodes.map(node =>
             createMediaItemNode({
               node,
               helpers,
@@ -432,7 +431,7 @@ const fetchMediaItemsById = async ({
   helpers,
   typeInfo,
 }) => {
-  const newMediaItemIds = mediaItemIds.filter((id) => !helpers.getNode(id))
+  const newMediaItemIds = mediaItemIds.filter(id => !helpers.getNode(id))
 
   const {
     schema: { perPage },
@@ -441,7 +440,7 @@ const fetchMediaItemsById = async ({
   const chunkedIds = chunk(newMediaItemIds, perPage)
 
   let resolveFutureNodes
-  const futureNodes = new Promise((resolve) => {
+  const futureNodes = new Promise(resolve => {
     resolveFutureNodes = resolve
   })
 
@@ -465,7 +464,7 @@ const fetchMediaItemsById = async ({
         // where 89381 is the id we want for our query
         // so we split on the : and get the last item in the array, which is the id
         // once we can get a list of media items by relay id's, we can remove atob
-        const ids = relayIds.map((id) => atob(id).split(`:`).slice(-1)[0])
+        const ids = relayIds.map(id => atob(id).split(`:`).slice(-1)[0])
 
         const query = `
           query MEDIA_ITEMS($in: [ID]) {
@@ -493,7 +492,7 @@ const fetchMediaItemsById = async ({
         })
 
         const nodes = await Promise.all(
-          allNodesOfContentType.map((node) =>
+          allNodesOfContentType.map(node =>
             createMediaItemNode({
               node,
               helpers,

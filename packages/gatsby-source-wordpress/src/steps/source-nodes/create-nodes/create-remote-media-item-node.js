@@ -16,13 +16,13 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { stripImageSizesFromUrl } from "~/steps/source-nodes/fetch-nodes/fetch-referenced-media-items"
 import { ensureSrcHasHostname } from "./process-node"
 
-export const getFileNodeMetaBySourceUrl = (sourceUrl) => {
+export const getFileNodeMetaBySourceUrl = sourceUrl => {
   const fileNodesMetaByUrls = store.getState().imageNodes.nodeMetaByUrl
 
   return fileNodesMetaByUrls[stripImageSizesFromUrl(sourceUrl)]
 }
 
-export const getMediaItemEditLink = (node) => {
+export const getMediaItemEditLink = node => {
   const { helpers, pluginOptions } = store.getState().gatsbyApi
 
   const { protocol, hostname } = url.parse(node?.link || pluginOptions.url)
@@ -320,7 +320,7 @@ export const createRemoteMediaItemNode = async ({
       retries: 3,
       factor: 1.1,
       minTimeout: 5000,
-      onRetry: (error) =>
+      onRetry: error =>
         errorPanicker({
           error,
           reporter,

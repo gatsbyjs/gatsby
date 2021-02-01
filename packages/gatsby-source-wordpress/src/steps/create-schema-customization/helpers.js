@@ -6,7 +6,7 @@ import { cloneDeep, merge } from "lodash"
 /**
  * This function namespaces typenames with a prefix
  */
-export const buildTypeName = (name) => {
+export const buildTypeName = name => {
   if (!name || typeof name !== `string`) {
     return null
   }
@@ -27,7 +27,7 @@ export const buildTypeName = (name) => {
  * Find the first type name of a Type definition pulled via introspection
  * @param {object} type
  */
-export const findTypeName = (type) =>
+export const findTypeName = type =>
   type?.name ||
   type?.ofType?.name ||
   type?.ofType?.ofType?.name ||
@@ -37,13 +37,13 @@ export const findTypeName = (type) =>
  * Find the first type kind of a Type definition pulled via introspection
  * @param {object} type
  */
-export const findTypeKind = (type) =>
+export const findTypeKind = type =>
   type?.kind ||
   type?.ofType?.kind ||
   type?.ofType?.ofType?.kind ||
   type?.ofType?.ofType?.ofType?.kind
 
-export const fieldOfTypeWasFetched = (type) => {
+export const fieldOfTypeWasFetched = type => {
   const { fetchedTypes } = store.getState().remoteSchema
   const typeName = findTypeName(type)
   const typeWasFetched = !!fetchedTypes.get(typeName)
@@ -61,12 +61,12 @@ const supportedScalars = [
   `JSON`,
 ]
 
-export const typeIsABuiltInScalar = (type) =>
+export const typeIsABuiltInScalar = type =>
   // @todo the next function and this one are redundant.
   // see the next todo on how to fix the issue. If that todo is resolved, these functions will be identical. :(
   supportedScalars.includes(findTypeName(type))
 
-export const typeIsASupportedScalar = (type) => {
+export const typeIsASupportedScalar = type => {
   if (findTypeKind(type) !== `SCALAR`) {
     // @todo returning true here seems wrong since a type that is not a scalar can't be a supported scalar... so there is some other logic elsewhere that is wrong
     // making this return false causes errors in the schema
@@ -79,7 +79,7 @@ export const typeIsASupportedScalar = (type) => {
 const typeSettingCache = {}
 
 // retrieves plugin settings for the provided type
-export const getTypeSettingsByType = (type) => {
+export const getTypeSettingsByType = type => {
   if (!type) {
     return {}
   }
@@ -126,12 +126,12 @@ export const filterTypeDefinition = (
   typeBuilderApi,
   typeKind
 ) => {
-  const filters = typeDefinitionFilters.filter((filter) =>
+  const filters = typeDefinitionFilters.filter(filter =>
     [typeBuilderApi.type.name, `__all`].includes(filter.typeName)
   )
 
   if (filters?.length) {
-    filters.forEach((filter) => {
+    filters.forEach(filter => {
       if (filter && typeof filter.typeDef === `function`) {
         typeDefinition = filter.typeDef(
           typeDefinition,

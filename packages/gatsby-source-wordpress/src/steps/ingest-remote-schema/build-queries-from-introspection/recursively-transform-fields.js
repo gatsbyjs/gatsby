@@ -18,7 +18,6 @@ export const transformInlineFragments = ({
   fragments,
   circularQueryLimit,
   buildGatsbyNodeFields = false,
-  debug = false,
   depth = 0,
   buildingFragment = false,
   ancestorTypeNames: parentAncestorTypeNames = [],
@@ -46,7 +45,7 @@ export const transformInlineFragments = ({
   const ancestorTypeNames = [...parentAncestorTypeNames]
 
   const transformedInlineFragments = possibleTypes
-    .map((possibleType) => {
+    .map(possibleType => {
       possibleType = { ...possibleType }
 
       const type = typeMap.get(possibleType.name)
@@ -83,9 +82,9 @@ export const transformInlineFragments = ({
       if (parentType?.kind === `INTERFACE`) {
         // remove any fields from our fragment if the parent type already has them as shared fields
         filteredFields = filteredFields.filter(
-          (filteredField) =>
+          filteredField =>
             !parentType.fields.find(
-              (parentField) => parentField.name === filteredField.name
+              parentField => parentField.name === filteredField.name
             )
         )
       }
@@ -122,7 +121,7 @@ export const transformInlineFragments = ({
 const countIncarnations = ({ typeName, ancestorTypeNames }) =>
   ancestorTypeNames.length
     ? ancestorTypeNames.filter(
-        (ancestorTypeName) => ancestorTypeName === typeName
+        ancestorTypeName => ancestorTypeName === typeName
       )?.length
     : 0
 
@@ -139,7 +138,6 @@ export function transformField({
   fragments,
   buildingFragment,
   mainType,
-  parentField,
 } = {}) {
   const ancestorTypeNames = [...parentAncestorTypeNames]
 
@@ -213,7 +211,7 @@ export function transformField({
   if (
     field.args &&
     field.args.length &&
-    field.args.find((arg) => arg?.type?.kind === `NON_NULL`)
+    field.args.find(arg => arg?.type?.kind === `NON_NULL`)
   ) {
     return false
   }
@@ -308,7 +306,7 @@ export function transformField({
     // or this type has a possible type which is a gatsby node type
     typeMap
       .get(typeName)
-      ?.possibleTypes?.find((possibleType) =>
+      ?.possibleTypes?.find(possibleType =>
         gatsbyNodesInfo.typeNames.includes(possibleType.name)
       )
 
@@ -461,7 +459,7 @@ const createFragment = ({
       // we need to skip this field in the fragment to prevent nesting this type in itself a level down
       fieldType.name !== typeName &&
       fieldType?.fields?.find(
-        (innerFieldField) => findTypeName(innerFieldField.type) === typeName
+        innerFieldField => findTypeName(innerFieldField.type) === typeName
       )
     ) {
       return fragmentFields
@@ -539,7 +537,7 @@ const transformFields = ({
 }) =>
   fields
     ?.filter(
-      (field) =>
+      field =>
         !fieldIsExcludedOnParentType({
           pluginOptions,
           field,
@@ -548,7 +546,7 @@ const transformFields = ({
           parentField,
         })
     )
-    .map((field) => {
+    .map(field => {
       const transformedField = transformField({
         maxDepth: queryDepth,
         gatsbyNodesInfo,
@@ -581,9 +579,9 @@ const transformFields = ({
         // remove fields from this query that already exist in the fragment
         if (transformedField?.fields?.length) {
           transformedField.fields = transformedField.fields.filter(
-            (field) =>
+            field =>
               !fragment.fields.find(
-                (fragmentField) => fragmentField.fieldName === field.fieldName
+                fragmentField => fragmentField.fieldName === field.fieldName
               )
           )
         }
@@ -602,10 +600,10 @@ const transformFields = ({
 
         if (transformedField?.inlineFragments?.length) {
           transformedField.inlineFragments = transformedField.inlineFragments.filter(
-            (fieldInlineFragment) =>
+            fieldInlineFragment =>
               // yes this is a horrible use of .find(). @todo refactor this for better perf
               !fragment.inlineFragments.find(
-                (fragmentInlineFragment) =>
+                fragmentInlineFragment =>
                   fragmentInlineFragment.name === fieldInlineFragment.name
               )
           )
@@ -687,7 +685,7 @@ const recursivelyTransformFields = ({
     // these types should instead be proper connections so we can identify
     // that only an id needs to be fetched.
     // @todo maybe move this into transformFields() instead of here
-    fields = fields.filter((field) => {
+    fields = fields.filter(field => {
       const fieldTypeName = findTypeName(field.type)
       return fieldTypeName !== grandParentTypeName
     })

@@ -2,11 +2,7 @@ import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
 import { buildGatsbyNodeObjectResolver } from "~/steps/create-schema-customization/transform-fields/transform-object"
 
-export const buildDefaultResolver = (transformerApi) => (
-  source,
-  _,
-  context
-) => {
+export const buildDefaultResolver = transformerApi => (source, _, context) => {
   const { fieldName, field, gatsbyNodeTypes } = transformerApi
 
   let finalFieldValue

@@ -51,7 +51,7 @@ const fetchAndCreateNonNodeRootFields = async () => {
   const referencedMediaItemNodeIdsArray = [...referencedMediaItemNodeIds]
 
   const newMediaItemIds = referencedMediaItemNodeIdsArray.filter(
-    (id) => !helpers.getNode(id)
+    id => !helpers.getNode(id)
   )
 
   /**

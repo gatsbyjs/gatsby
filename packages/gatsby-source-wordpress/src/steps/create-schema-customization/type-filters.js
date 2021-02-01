@@ -4,7 +4,7 @@ import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/cre
 export const typeDefinitionFilters = [
   {
     typeName: `__all`,
-    typeDef: (typeDef) => {
+    typeDef: typeDef => {
       /**
        * @todo once WPGraphQL has a DateTime Scalar, use that to find date fields
        * instead of the below fieldnames
@@ -63,7 +63,7 @@ export const typeDefinitionFilters = [
   },
   {
     typeName: `MediaItem`,
-    typeDef: (objectType, { pluginOptions }) => {
+    typeDef: objectType => {
       // @todo: this field is deprecated as of 0.1.8, remove this when we get to beta
       objectType.fields.remoteFile = {
         type: `File`,

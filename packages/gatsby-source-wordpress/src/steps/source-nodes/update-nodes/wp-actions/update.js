@@ -5,7 +5,7 @@ import chalk from "chalk"
 import { getQueryInfoBySingleFieldName } from "../../helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { CREATED_NODE_IDS } from "~/constants"
-
+import { dump } from "dumper.js"
 import { atob } from "atob"
 
 import {
@@ -206,7 +206,7 @@ export const createSingleNode = async ({
     cachedNodeIds.push(remoteNode.id)
 
     if (additionalNodeIds && additionalNodeIds.length) {
-      additionalNodeIds.forEach((id) => cachedNodeIds.push(id))
+      additionalNodeIds.forEach(id => cachedNodeIds.push(id))
     }
 
     await setPersistentCache({ key: CREATED_NODE_IDS, value: cachedNodeIds })
@@ -249,7 +249,7 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
   if (wpAction.referencedNodeStatus !== `publish`) {
     // if the post status isn't publish anymore, we need to remove the node
     // by removing it from cached nodes so it's garbage collected by Gatsby
-    const validNodeIds = cachedNodeIds.filter((cachedId) => cachedId !== nodeId)
+    const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
 
     await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
 
@@ -276,31 +276,33 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
       const nodeEntries = existingNode ? Object.entries(existingNode) : null
 
       if (nodeEntries?.length) {
-        nodeEntries
-          .filter(([key]) => !key.includes(`modifiedGmt`) && key !== `modified`)
-          ?.forEach(([key, value]) => {
-            if (!node || !node[key] || !value) {
-              return
-            }
+        const loggableEntries = nodeEntries.filter(
+          ([key]) => !key.includes(`modifiedGmt`) && key !== `modified`
+        )
 
-            if (
-              // if the value of this field changed, log it
-              typeof node[key] === `string` &&
-              value !== node[key]
-            ) {
+        for (const [key, value] of loggableEntries) {
+          if (!node || !node[key] || !value) {
+            return
+          }
+
+          if (
+            // if the value of this field changed, log it
+            typeof node[key] === `string` &&
+            value !== node[key]
+          ) {
+            reporter.log(``)
+            reporter.info(chalk.bold(`${key} changed`))
+
+            if (value.length < 250 && node[key].length < 250) {
               reporter.log(``)
-              reporter.info(chalk.bold(`${key} changed`))
-
-              if (value.length < 250 && node[key].length < 250) {
-                reporter.log(``)
-                reporter.log(`${chalk.italic.bold(`    from`)}`)
-                reporter.log(`      ${value}`)
-                reporter.log(chalk.italic.bold(`    to`))
-                reporter.log(`      ${node[key]}`)
-                reporter.log(``)
-              }
+              reporter.log(`${chalk.italic.bold(`    from`)}`)
+              reporter.log(`      ${value}`)
+              reporter.log(chalk.italic.bold(`    to`))
+              reporter.log(`      ${node[key]}`)
+              reporter.log(``)
             }
-          })
+          }
+        }
 
         reporter.log(``)
       }
@@ -310,7 +312,7 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
   // return cachedNodeIds
 }
 
-const getDbIdFromRelayId = (relayId) => atob(relayId).split(`:`).reverse()[0]
+const getDbIdFromRelayId = relayId => atob(relayId).split(`:`).reverse()[0]
 
 const normalizeUri = ({ uri, id, singleName }) => {
   // remove the preview query params as they're not relevant in Gatsby

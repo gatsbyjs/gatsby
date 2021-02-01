@@ -1,6 +1,6 @@
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 
-const deleteMenuNodeChildMenuItems = (node) => {
+const deleteMenuNodeChildMenuItems = node => {
   const {
     pluginOptions,
     helpers: { getNodesByType, actions },
@@ -11,19 +11,21 @@ const deleteMenuNodeChildMenuItems = (node) => {
   )
 
   const allMenuItemsNodesWithThisMenuIdAsAParent = allMenuItems.filter(
-    (menuItemNode) => menuItemNode.menu.node.id === node.id
+    menuItemNode => menuItemNode.menu.node.id === node.id
   )
 
-  allMenuItemsNodesWithThisMenuIdAsAParent?.forEach((menuItemNode) =>
+  for (const menuItemNode of allMenuItemsNodesWithThisMenuIdAsAParent) {
     actions.deleteNode({
       node: menuItemNode,
     })
-  )
+  }
 }
 
-export const menuBeforeChangeNode = async (api) => {
+export const menuBeforeChangeNode = async api => {
   if (api.remoteNode && api.actionType === `DELETE`) {
     // delete child menu items
     return deleteMenuNodeChildMenuItems(api.remoteNode)
   }
+
+  return null
 }

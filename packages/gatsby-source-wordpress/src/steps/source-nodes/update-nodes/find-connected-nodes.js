@@ -1,4 +1,5 @@
 import flattenDeep from "lodash/flattenDeep"
+import { dump } from "dumper.js"
 
 // After all nodes are created while building the schema, store possible node type relationships. So for example when building the WpPost type, for every gatsby node discovered as a potential connected node type WpPost's fields, record that in redux as WpPost => [...ConnectedTypeNames].
 
@@ -21,7 +22,7 @@ const recursivelySearchForIds = ([key, value]) => {
     dump(key)
     // loop through each value of the array. If it's an object recurse on it's fields
     // if it's anything else skip it.
-    value.map((innerValue) => {
+    value.map(innerValue => {
       if (innerValue === null) {
         return null
       }
@@ -44,11 +45,11 @@ const recursivelySearchForIds = ([key, value]) => {
   return null
 }
 
-export const findConnectedNodeIds = (node) => {
+export const findConnectedNodeIds = node => {
   const childNodeIds = [
     ...new Set(
       flattenDeep(Object.entries(node).map(recursivelySearchForIds)).filter(
-        (id) => id !== node.id && !!id
+        id => id !== node.id && !!id
       )
     ),
   ]

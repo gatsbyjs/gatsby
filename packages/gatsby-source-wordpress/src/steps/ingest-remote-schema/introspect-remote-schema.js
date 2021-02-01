@@ -42,7 +42,7 @@ const introspectAndStoreRemoteSchema = async () => {
 
   if (staleIntrospectionData && printSchemaDiff) {
     console.log(`\nData changed in WordPress schema:`)
-    staleIntrospectionData.__schema.types.forEach((type) => {
+    staleIntrospectionData.__schema.types.forEach(type => {
       const staleTypeJSON = JSON.stringify(type, null, 2)
 
       const newType = introspectionData.__schema.types.find(
@@ -59,7 +59,7 @@ const introspectAndStoreRemoteSchema = async () => {
 
       if (typeDiff?.length) {
         console.log(`\nFound changes to the ${type.name} type\n`)
-        typeDiff.forEach((part) => {
+        typeDiff.forEach(part => {
           if (part.added || part.removed) {
             console.log(
               chalk.green(
@@ -84,7 +84,7 @@ const introspectAndStoreRemoteSchema = async () => {
   }
 
   const typeMap = new Map(
-    introspectionData.__schema.types.map((type) => [type.name, type])
+    introspectionData.__schema.types.map(type => [type.name, type])
   )
 
   store.dispatch.remoteSchema.setState({ introspectionData, typeMap })

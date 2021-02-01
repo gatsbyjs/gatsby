@@ -84,7 +84,7 @@ const paginatedWpNodeFetch = async ({
   nodes = nodes.filter(Boolean)
 
   if (nodes && nodes.length) {
-    nodes.forEach((node) => {
+    nodes.forEach(node => {
       node = normalizeNode({ node, nodeTypeName })
       allContentNodes.push(node)
     })

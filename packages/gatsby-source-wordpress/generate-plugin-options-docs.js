@@ -4,7 +4,7 @@ const Handlebars = require(`handlebars`)
 const fs = require(`fs-extra`)
 const _ = require(`lodash`)
 const toc = require(`markdown-toc`)
-const prettierConfig = require(`./prettier.config.js`)
+const prettierConfig = require(`../../.prettierrc.js`)
 
 const {
   pluginOptionsSchema,
@@ -30,7 +30,7 @@ function joiKeysToMD({
 }) {
   if (
     !keys ||
-    (parentMetas.length && parentMetas.find((meta) => meta.portableOptions))
+    (parentMetas.length && parentMetas.find(meta => meta.portableOptions))
   ) {
     return mdString
   }
@@ -52,7 +52,7 @@ function joiKeysToMD({
 
     if (value.type) {
       const { trueType } =
-        (value.meta && value.meta.find((meta) => `trueType` in meta)) || {}
+        (value.meta && value.meta.find(meta => `trueType` in meta)) || {}
 
       mdString += `\n\n`
       mdString += `**Field type**: \`${_.startCase(trueType || value.type)}\``
@@ -60,10 +60,10 @@ function joiKeysToMD({
 
     if (
       (value.flags && `default` in value.flags) ||
-      (value.meta && value.meta.find((meta) => `default` in meta))
+      (value.meta && value.meta.find(meta => `default` in meta))
     ) {
       const defaultValue =
-        value.meta.find((meta) => `default` in meta)?.default ||
+        (value.meta.find(meta => `default` in meta) || {}).default ||
         value.flags.default
 
       let printedValue
@@ -91,7 +91,7 @@ function joiKeysToMD({
     }
 
     if (value.meta) {
-      const examples = value.meta.filter((meta) => `example` in meta)
+      const examples = value.meta.filter(meta => `example` in meta)
       examples.forEach(({ example }) => {
         mdString += `\n\n\`\`\`js\n` + example + `\n\`\`\`\n`
       })
@@ -112,7 +112,7 @@ function joiKeysToMD({
     }
 
     if (!excludeChildren && value.items && value.items.length) {
-      value.items.forEach((item) => {
+      value.items.forEach(item => {
         if (item.children) {
           mdString = joiKeysToMD({
             keys: item.children,

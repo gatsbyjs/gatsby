@@ -47,7 +47,7 @@ export const getWpActions = async ({
  * Acts on changes in WordPress to call functions that sync Gatsby with
  * the latest WP changes
  */
-export const handleWpActions = async (api) => {
+export const handleWpActions = async api => {
   const { cachedNodeIds, helpers } = api
 
   switch (api.wpAction.actionType) {

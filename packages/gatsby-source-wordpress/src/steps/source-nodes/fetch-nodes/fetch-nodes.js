@@ -88,7 +88,7 @@ export const getGatsbyNodeTypeNames = () => {
   const { typeMap } = store.getState().remoteSchema
 
   const queryableTypenames = getContentTypeQueryInfos().map(
-    (query) => query.typeInfo.nodesTypeName
+    query => query.typeInfo.nodesTypeName
   )
 
   const implementingNodeTypes = queryableTypenames.reduce(
@@ -117,7 +117,7 @@ export const getGatsbyNodeTypeNames = () => {
  *
  * @returns {Array}
  */
-export const runFnForEachNodeQuery = async (fn) => {
+export const runFnForEachNodeQuery = async fn => {
   const nodeQueries = getContentTypeQueryInfos()
 
   const chunkSize = getPluginOptions()?.schema?.requestConcurrency || 15
@@ -125,7 +125,7 @@ export const runFnForEachNodeQuery = async (fn) => {
 
   for (const queries of chunkedQueries) {
     await Promise.all(
-      queries.map(async (queryInfo) => {
+      queries.map(async queryInfo => {
         if (
           // if the type settings call for lazyNodes, don't fetch them upfront here
           queryInfo.settings.lazyNodes ||

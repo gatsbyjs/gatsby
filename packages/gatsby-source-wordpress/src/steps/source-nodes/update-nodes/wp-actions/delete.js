@@ -61,7 +61,7 @@ const wpActionDELETE = async ({
         })) || {}
 
       if (additionalNodeIds && additionalNodeIds.length) {
-        additionalNodeIds.forEach((id) => cachedNodeIds.push(id))
+        additionalNodeIds.forEach(id => cachedNodeIds.push(id))
       }
     }
 
@@ -82,7 +82,7 @@ const wpActionDELETE = async ({
     }
 
     // Remove this from cached node id's so we don't try to touch it
-    const validNodeIds = cachedNodeIds.filter((cachedId) => cachedId !== nodeId)
+    const validNodeIds = cachedNodeIds.filter(cachedId => cachedId !== nodeId)
 
     await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
 

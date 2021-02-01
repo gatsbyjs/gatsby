@@ -1,11 +1,11 @@
 import store from "~/store"
 
-export const getTypeInfoBySingleName = (singleName) => {
+export const getTypeInfoBySingleName = singleName => {
   const { typeMap } = store.getState().remoteSchema
 
   const rootField = typeMap
     .get(`RootQuery`)
-    .fields.find((field) => field.name === singleName)
+    .fields.find(field => field.name === singleName)
 
   const typeName = rootField.type.name || rootField.type.ofType.name
 
@@ -14,21 +14,21 @@ export const getTypeInfoBySingleName = (singleName) => {
   return type
 }
 
-export const getQueryInfoBySingleFieldName = (singleName) => {
+export const getQueryInfoBySingleFieldName = singleName => {
   const { nodeQueries } = store.getState().remoteSchema
 
   const queryInfo = Object.values(nodeQueries).find(
-    (q) => q.typeInfo.singularName === singleName
+    q => q.typeInfo.singularName === singleName
   )
 
   return queryInfo
 }
 
-export const getQueryInfoByTypeName = (typeName) => {
+export const getQueryInfoByTypeName = typeName => {
   const { nodeQueries } = store.getState().remoteSchema
 
   const queryInfo = Object.values(nodeQueries).find(
-    (q) => q.typeInfo.nodesTypeName === typeName
+    q => q.typeInfo.nodesTypeName === typeName
   )
 
   return queryInfo

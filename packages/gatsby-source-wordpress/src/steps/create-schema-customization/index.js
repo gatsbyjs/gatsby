@@ -37,7 +37,7 @@ const customizeSchema = async ({ actions, schema }) => {
   }
 
   // create Gatsby node types
-  remoteSchema.introspectionData.__schema.types.forEach((type) => {
+  remoteSchema.introspectionData.__schema.types.forEach(type => {
     if (
       fieldOfTypeWasFetched(type) &&
       !typeIsExcluded({ pluginOptions, typeName: type.name })
@@ -84,7 +84,7 @@ const customizeSchema = async ({ actions, schema }) => {
   actions.createTypes(typeDefs)
 }
 
-const createSchemaCustomization = async (api) => {
+const createSchemaCustomization = async api => {
   try {
     await customizeSchema(api)
   } catch (e) {

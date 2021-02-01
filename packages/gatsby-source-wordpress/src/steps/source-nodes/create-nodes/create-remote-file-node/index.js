@@ -16,7 +16,7 @@ const {
   getRemoteFileName,
   createFilePath,
 } = require(`gatsby-source-filesystem/utils`)
-const cacheId = (url) => `create-remote-file-node-${url}`
+const cacheId = url => `create-remote-file-node-${url}`
 
 let bar
 // Keep track of the total number of jobs we push in the queue
@@ -75,7 +75,7 @@ const CONNECTION_TIMEOUT = 30000
 
 let queue = null
 
-const getQueue = (limit) => {
+const getQueue = limit => {
   if (!queue) {
     queue = new Queue(pushToQueue, {
       id: `url`,
@@ -193,7 +193,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
     responseStream.pipe(fsWriteStream)
 
     // If there's a 400/500 response or other error.
-    responseStream.on(`error`, (error) => {
+    responseStream.on(`error`, error => {
       if (timeout) {
         clearTimeout(timeout)
       }
@@ -205,7 +205,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       reject(error)
     })
 
-    fsWriteStream.on(`error`, (error) => {
+    fsWriteStream.on(`error`, error => {
       if (timeout) {
         clearTimeout(timeout)
       }
@@ -215,7 +215,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
       reject(error)
     })
 
-    responseStream.on(`response`, (response) => {
+    responseStream.on(`response`, response => {
       resetTimeout()
 
       fsWriteStream.on(`finish`, () => {
@@ -339,14 +339,14 @@ const processingCache = {}
  * @param {CreateRemoteFileNodePayload} task
  * @return {Promise<Object>}
  */
-const pushTask = (task) =>
+const pushTask = task =>
   new Promise((resolve, reject) => {
     getQueue(task.limit)
       .push(task)
-      .on(`finish`, (task) => {
+      .on(`finish`, task => {
         resolve(task)
       })
-      .on(`failed`, (err) => {
+      .on(`failed`, err => {
         reject(new Error(`failed to process ${task.url}\n${err}`))
       })
   })
@@ -452,7 +452,7 @@ module.exports = ({
     limit,
   })
 
-  processingCache[url] = fileDownloadPromise.then((node) => {
+  processingCache[url] = fileDownloadPromise.then(node => {
     bar.tick()
 
     return node

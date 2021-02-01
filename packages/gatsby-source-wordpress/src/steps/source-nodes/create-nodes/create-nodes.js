@@ -82,7 +82,7 @@ export const createNodeWithSideEffects = ({
 
     if (additionalNodeIds?.length && totalSideEffectNodes) {
       additionalNodeIds.forEach(
-        (id) => createdNodeIds.push(id) && totalSideEffectNodes.push(id)
+        id => createdNodeIds.push(id) && totalSideEffectNodes.push(id)
       )
     }
 

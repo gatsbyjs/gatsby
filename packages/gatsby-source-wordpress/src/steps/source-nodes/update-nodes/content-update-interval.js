@@ -95,7 +95,7 @@ const refetcher = async (
     const maxWait = 60000
     const waitFor = retryTime >= maxWait ? maxWait : retryTime
 
-    await new Promise((resolve) => setTimeout(resolve, waitFor))
+    await new Promise(resolve => setTimeout(resolve, waitFor))
   }
 
   setTimeout(
@@ -112,7 +112,7 @@ const refetcher = async (
  * Starts constantly refetching the latest WordPress changes
  * so we can update Gatsby nodes when data changes
  */
-const startPollingForContentUpdates = (helpers) => {
+const startPollingForContentUpdates = helpers => {
   if (
     process.env.WP_DISABLE_POLLING ||
     process.env.ENABLE_GATSBY_REFRESH_ENDPOINT

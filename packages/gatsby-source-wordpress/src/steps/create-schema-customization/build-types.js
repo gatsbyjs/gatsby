@@ -8,18 +8,18 @@ import {
   filterTypeDefinition,
 } from "./helpers"
 
-const unionType = (typeBuilderApi) => {
+const unionType = typeBuilderApi => {
   const { typeDefs, schema, type, pluginOptions } = typeBuilderApi
 
   const types = type.possibleTypes
     .filter(
-      (possibleType) =>
+      possibleType =>
         !typeIsExcluded({
           pluginOptions,
           typeName: possibleType.name,
         })
     )
-    .map((possibleType) => buildTypeName(possibleType.name))
+    .map(possibleType => buildTypeName(possibleType.name))
 
   if (!types || !types.length) {
     return
@@ -28,7 +28,7 @@ const unionType = (typeBuilderApi) => {
   let unionType = {
     name: buildTypeName(type.name),
     types,
-    resolveType: (node) => {
+    resolveType: node => {
       if (node.type) {
         return buildTypeName(node.type)
       }
@@ -50,7 +50,7 @@ const unionType = (typeBuilderApi) => {
   typeDefs.push(schema.buildUnionType(unionType))
 }
 
-const interfaceType = (typeBuilderApi) => {
+const interfaceType = typeBuilderApi => {
   const {
     type,
     typeDefs,
@@ -71,11 +71,11 @@ const interfaceType = (typeBuilderApi) => {
       ({ interfaces }) =>
         interfaces &&
         // find types that implement this interface type
-        interfaces.find((singleInterface) => singleInterface.name === type.name)
+        interfaces.find(singleInterface => singleInterface.name === type.name)
     )
-    .map((type) => typeMap.get(type.name))
+    .map(type => typeMap.get(type.name))
     .filter(
-      (type) =>
+      type =>
         type.kind !== `UNION` ||
         // if this is a union type, make sure the union type has one or more member types, otherwise schema customization will throw an error
         (!!type.possibleTypes && !!type.possibleTypes.length)
@@ -104,7 +104,7 @@ const interfaceType = (typeBuilderApi) => {
     typeDef.extensions.nodeInterface = {}
   } else {
     // otherwise this is a regular interface type so we need to resolve the type name
-    typeDef.resolveType = (node) =>
+    typeDef.resolveType = node =>
       node && node.__typename ? buildTypeName(node.__typename) : null
   }
 
@@ -114,7 +114,7 @@ const interfaceType = (typeBuilderApi) => {
   typeDefs.push(schema.buildInterfaceType(typeDef))
 }
 
-const objectType = (typeBuilderApi) => {
+const objectType = typeBuilderApi => {
   const {
     type,
     gatsbyNodeTypes,
@@ -149,7 +149,7 @@ const objectType = (typeBuilderApi) => {
 
   if (type.interfaces) {
     objectType.interfaces = type.interfaces
-      .filter((interfaceType) => {
+      .filter(interfaceType => {
         const interfaceTypeSettings = getTypeSettingsByType(interfaceType)
 
         return !interfaceTypeSettings.exclude && fieldOfTypeWasFetched(type)

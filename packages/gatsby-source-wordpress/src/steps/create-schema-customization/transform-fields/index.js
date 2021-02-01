@@ -10,7 +10,7 @@ import {
 
 import { buildDefaultResolver } from "./default-resolver"
 
-const handleCustomScalars = (field) => {
+const handleCustomScalars = field => {
   const fieldTypeIsACustomScalar =
     field.type.kind === `SCALAR` && !typeIsASupportedScalar(field.type)
 
@@ -63,10 +63,10 @@ const excludeField = ({
   // this field is on an interface type and one of the implementing types has this field excluded on it.
   (parentInterfacesImplementingTypeSettings &&
     parentInterfacesImplementingTypeSettings.find(
-      (typeSetting) =>
+      typeSetting =>
         typeSetting.excludeFieldNames &&
         typeSetting.excludeFieldNames.find(
-          (excludedFieldName) => fieldName === excludedFieldName
+          excludedFieldName => fieldName === excludedFieldName
         )
     )) ||
   // the type of this field was excluded via plugin options
@@ -74,7 +74,7 @@ const excludeField = ({
   // field is blacklisted
   fieldBlacklist.includes(fieldName) ||
   // this field has required input args
-  (field.args && field.args.find((arg) => arg.type.kind === `NON_NULL`)) ||
+  (field.args && field.args.find(arg => arg.type.kind === `NON_NULL`)) ||
   // this field has no typeName
   !findTypeName(field.type) ||
   // field is a non null object
@@ -104,9 +104,7 @@ export const transformFields = ({
   const parentTypeSettings = getTypeSettingsByType(parentType)
 
   const parentInterfacesImplementingTypeSettings = parentInterfacesImplementingTypes
-    ? parentInterfacesImplementingTypes.map((type) =>
-        getTypeSettingsByType(type)
-      )
+    ? parentInterfacesImplementingTypes.map(type => getTypeSettingsByType(type))
     : null
 
   const transformedFields = fields.reduce((fieldsObject, field) => {
@@ -136,7 +134,7 @@ export const transformFields = ({
 
     const type = typeMap.get(findTypeName(field.type))
 
-    const includedChildFields = type?.fields?.filter((field) => {
+    const includedChildFields = type?.fields?.filter(field => {
       const childFieldTypeSettings = getTypeSettingsByType(field.type)
       const fieldName = getAliasedFieldName({ fieldAliases, field })
       return !excludeField({
