@@ -62,107 +62,137 @@ const getPreviewQueue = (): PQueue => {
   return previewQueue
 }
 
-/**
- * This is called when the /__refresh endpoint is posted to from WP previews.
- * It should only ever run in Preview mode, which is process.env.ENABLE_GATSBY_REFRESH_ENDPOINT = true
- * It first sources all pending preview actions, then calls sourcePreview() for each of them.
- */
-export const sourcePreviews = async (
-  { webhookBody, reporter }: GatsbyHelpers,
-  pluginOptions: IPluginOptions
-): Promise<void> => {
-  const {
-    debug: { preview: inPreviewDebugMode },
-  } = getPluginOptions()
-
-  if (inPreviewDebugMode) {
-    reporter.info(`Sourcing previews for the following webhook:`)
-    dump(webhookBody)
+// This checks wether or not we're already currently processing a preview
+// for the passed preview id.
+const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
+  if (!id) {
+    return false
   }
 
-  if (previewForIdIsAlreadyBeingProcessed(webhookBody?.id)) {
-    if (inPreviewDebugMode) {
-      reporter.info(
-        `Preview for id ${webhookBody?.id} is already being sourced.`
-      )
-    }
+  const existingCallbacks = store.getState().previewStore
+    .nodePageCreatedCallbacks
+
+  const alreadyProcessingThisPreview = !!existingCallbacks?.[id]
+
+  return alreadyProcessingThisPreview
+}
+
+/**
+ * For previews of draft posts, gatsby develop will throw a bunch of 404 errors
+ * while WPGatsby is trying to read page-data.json
+ * So we can write a dummy page-data.json if one doesn't exist.
+ * that way there will be no 404's and Gatsby will overwrite our dummy file when it
+ * needs to.
+ */
+const writeDummyPageDataJsonIfNeeded = async ({
+  previewData,
+  pageNode,
+}: {
+  previewData: IWebhookBody
+  pageNode: IPageNode
+}): Promise<void> => {
+  if (!previewData.isDraft) {
     return
   }
 
-  const previewActions = await paginatedWpNodeFetch({
-    contentTypePlural: `actionMonitorActions`,
-    nodeTypeName: `ActionMonitor`,
-    headers: {
-      WPGatsbyPreview: webhookBody.token,
-      WPGatsbyPreviewUser: webhookBody.userDatabaseId,
-    },
+  const pageDataDirectory = path.join(
+    process.cwd(),
+    `public/page-data`,
+    pageNode.path
+  )
+
+  await fs.ensureDir(pageDataDirectory)
+
+  const pageDataPath = path.join(pageDataDirectory, `page-data.json`)
+
+  const pageDataExists = await fs.exists(pageDataPath)
+
+  if (!pageDataExists) {
+    await fs.writeJSON(pageDataPath, {
+      isDraft: previewData.isDraft,
+    })
+  }
+}
+
+interface IOnPreviewStatusInput {
+  status: PreviewStatusUnion
+  context?: string
+  nodeId?: string
+  passedNode?: {
+    modified?: string
+    databaseId: number
+  }
+  pageNode?: IPageNode
+  graphqlEndpoint?: string
+  error?: Error
+}
+
+const createPreviewStatusCallback = ({
+  previewData,
+  reporter,
+}: {
+  previewData: IWebhookBody
+  reporter: Reporter
+}) => async ({
+  passedNode,
+  pageNode,
+  context,
+  status,
+  graphqlEndpoint,
+  error,
+}: IOnPreviewStatusInput): Promise<void> => {
+  if (status === `PREVIEW_SUCCESS`) {
+    // we might need to write a dummy page-data.json so that
+    // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
+    // that maybe doesn't exist yet
+    await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
+  }
+
+  const statusContext = error?.message
+    ? `${context}\n\n${error.message}`
+    : context
+
+  const { data } = await fetchGraphql({
+    url: graphqlEndpoint,
     query: /* GraphQL */ `
-      query PREVIEW_ACTIONS($after: String) {
-        actionMonitorActions(
-          where: {
-            previewStream: true
-            status: PRIVATE
-            orderby: { field: MODIFIED, order: DESC }
-            sinceTimestamp: ${
-              // only source previews made in the last 10 minutes
-              Date.now() - 1000 * 60 * 10
-            }
-          }
-          first: 100
-          after: $after
-        ) {
-          nodes {
-            previewData {
-              id
-              isDraft
-              modified
-              parentDatabaseId
-              previewDatabaseId
-              remoteUrl
-              singleName
-              userDatabaseId
-            }
-          }
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
+      mutation MUTATE_PREVIEW_NODE($input: WpGatsbyRemotePreviewStatusInput!) {
+        wpGatsbyRemotePreviewStatus(input: $input) {
+          success
         }
       }
     `,
+    variables: {
+      input: {
+        clientMutationId: `sendPreviewStatus`,
+        modified: passedNode?.modified,
+        pagePath: pageNode?.path,
+        parentDatabaseId:
+          previewData.parentDatabaseId || previewData.previewDatabaseId, // if the parentDatabaseId is 0 we want to use the previewDatabaseId
+        status,
+        statusContext,
+      },
+    },
+    errorContext: `Error occurred while mutating WordPress Preview node meta.`,
+    forceReportCriticalErrors: true,
+    headers: {
+      WPGatsbyPreview: previewData.token,
+      WPGatsbyPreviewUser: previewData.userDatabaseId,
+    },
   })
 
-  if (!previewActions?.length) {
-    if (inPreviewDebugMode) {
-      reporter.info(
-        `Preview for id ${webhookBody?.id} returned no action monitor actions.`
-      )
-    }
-    return
-  }
-
-  if (inPreviewDebugMode) {
-    reporter.info(
-      `Preview for id ${webhookBody?.id} returned the following actions:`
-    )
-    dump(previewActions)
-  }
-
-  const queue = getPreviewQueue()
-
-  previewActions?.forEach(({ previewData }) => {
-    queue.add(() =>
-      sourcePreview(
-        {
-          previewData: { ...previewData, token: webhookBody.token },
-          reporter,
-        },
-        pluginOptions
+  if (data?.wpGatsbyRemotePreviewStatus?.success) {
+    reporter.log(
+      formatLogMessage(
+        `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
       )
     )
-  })
-
-  await Promise.all([queue.onEmpty(), queue.onIdle()])
+  } else {
+    reporter.log(
+      formatLogMessage(
+        `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
+      )
+    )
+  }
 }
 
 /**
@@ -264,135 +294,105 @@ export const sourcePreview = async (
   })
 }
 
-interface OnPreviewStatusInput {
-  status: PreviewStatusUnion
-  context?: string
-  nodeId?: string
-  passedNode?: {
-    modified?: string
-    databaseId: number
-  }
-  pageNode?: IPageNode
-  graphqlEndpoint?: string
-  error?: Error
-}
-
-const createPreviewStatusCallback = ({
-  previewData,
-  reporter,
-}: {
-  previewData: IWebhookBody
-  reporter: Reporter
-}) => async ({
-  passedNode,
-  pageNode,
-  context,
-  status,
-  graphqlEndpoint,
-  error,
-}: OnPreviewStatusInput): Promise<void> => {
-  if (status === `PREVIEW_SUCCESS`) {
-    // we might need to write a dummy page-data.json so that
-    // Gatsby doesn't throw 404 errors when WPGatsby tries to read this file
-    // that maybe doesn't exist yet
-    await writeDummyPageDataJsonIfNeeded({ previewData, pageNode })
-  }
-
-  const statusContext = error?.message
-    ? `${context}\n\n${error.message}`
-    : context
-
-  const { data } = await fetchGraphql({
-    url: graphqlEndpoint,
-    query: /* GraphQL */ `
-      mutation MUTATE_PREVIEW_NODE($input: WpGatsbyRemotePreviewStatusInput!) {
-        wpGatsbyRemotePreviewStatus(input: $input) {
-          success
-        }
-      }
-    `,
-    variables: {
-      input: {
-        clientMutationId: `sendPreviewStatus`,
-        modified: passedNode?.modified,
-        pagePath: pageNode?.path,
-        parentDatabaseId:
-          previewData.parentDatabaseId || previewData.previewDatabaseId, // if the parentDatabaseId is 0 we want to use the previewDatabaseId
-        status,
-        statusContext,
-      },
-    },
-    errorContext: `Error occurred while mutating WordPress Preview node meta.`,
-    forceReportCriticalErrors: true,
-    headers: {
-      WPGatsbyPreview: previewData.token,
-      WPGatsbyPreviewUser: previewData.userDatabaseId,
-    },
-  })
-
-  if (data?.wpGatsbyRemotePreviewStatus?.success) {
-    reporter.log(
-      formatLogMessage(
-        `Successfully sent Preview status back to WordPress post ${previewData.id} during ${context}`
-      )
-    )
-  } else {
-    reporter.log(
-      formatLogMessage(
-        `failed to mutate WordPress post ${previewData.id} during Preview ${context}.\nCheck your WP server logs for more information.`
-      )
-    )
-  }
-}
-
 /**
- * For previews of draft posts, gatsby develop will throw a bunch of 404 errors
- * while WPGatsby is trying to read page-data.json
- * So we can write a dummy page-data.json if one doesn't exist.
- * that way there will be no 404's and Gatsby will overwrite our dummy file when it
- * needs to.
+ * This is called when the /__refresh endpoint is posted to from WP previews.
+ * It should only ever run in Preview mode, which is process.env.ENABLE_GATSBY_REFRESH_ENDPOINT = true
+ * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
-const writeDummyPageDataJsonIfNeeded = async ({
-  previewData,
-  pageNode,
-}: {
-  previewData: IWebhookBody
-  pageNode: IPageNode
-}): Promise<void> => {
-  if (!previewData.isDraft) {
+export const sourcePreviews = async (
+  { webhookBody, reporter }: GatsbyHelpers,
+  pluginOptions: IPluginOptions
+): Promise<void> => {
+  const {
+    debug: { preview: inPreviewDebugMode },
+  } = getPluginOptions()
+
+  if (inPreviewDebugMode) {
+    reporter.info(`Sourcing previews for the following webhook:`)
+    dump(webhookBody)
+  }
+
+  if (previewForIdIsAlreadyBeingProcessed(webhookBody?.id)) {
+    if (inPreviewDebugMode) {
+      reporter.info(
+        `Preview for id ${webhookBody?.id} is already being sourced.`
+      )
+    }
     return
   }
 
-  const pageDataDirectory = path.join(
-    process.cwd(),
-    `public/page-data`,
-    pageNode.path
-  )
+  const previewActions = await paginatedWpNodeFetch({
+    contentTypePlural: `actionMonitorActions`,
+    nodeTypeName: `ActionMonitor`,
+    headers: {
+      WPGatsbyPreview: webhookBody.token,
+      WPGatsbyPreviewUser: webhookBody.userDatabaseId,
+    },
+    query: /* GraphQL */ `
+      query PREVIEW_ACTIONS($after: String) {
+        actionMonitorActions(
+          where: {
+            previewStream: true
+            status: PRIVATE
+            orderby: { field: MODIFIED, order: DESC }
+            sinceTimestamp: ${
+              // only source previews made in the last 10 minutes
+              Date.now() - 1000 * 60 * 10
+            }
+          }
+          first: 100
+          after: $after
+        ) {
+          nodes {
+            previewData {
+              id
+              isDraft
+              modified
+              parentDatabaseId
+              previewDatabaseId
+              remoteUrl
+              singleName
+              userDatabaseId
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    `,
+  })
 
-  await fs.ensureDir(pageDataDirectory)
-
-  const pageDataPath = path.join(pageDataDirectory, `page-data.json`)
-
-  const pageDataExists = await fs.exists(pageDataPath)
-
-  if (!pageDataExists) {
-    await fs.writeJSON(pageDataPath, {
-      isDraft: previewData.isDraft,
-    })
+  if (!previewActions?.length) {
+    if (inPreviewDebugMode) {
+      reporter.info(
+        `Preview for id ${webhookBody?.id} returned no action monitor actions.`
+      )
+    }
+    return
   }
-}
 
-// This checks wether or not we're already currently processing a preview
-// for the passed preview id.
-const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
-  if (!id) {
-    return false
+  if (inPreviewDebugMode) {
+    reporter.info(
+      `Preview for id ${webhookBody?.id} returned the following actions:`
+    )
+    dump(previewActions)
   }
 
-  const existingCallbacks = store.getState().previewStore
-    .nodePageCreatedCallbacks
+  const queue = getPreviewQueue()
 
-  const alreadyProcessingThisPreview = !!existingCallbacks?.[id]
+  for (const { previewData } of previewActions) {
+    queue.add(() =>
+      sourcePreview(
+        {
+          previewData: { ...previewData, token: webhookBody.token },
+          reporter,
+        },
+        pluginOptions
+      )
+    )
+  }
 
-  return alreadyProcessingThisPreview
+  await Promise.all([queue.onEmpty(), queue.onIdle()])
 }

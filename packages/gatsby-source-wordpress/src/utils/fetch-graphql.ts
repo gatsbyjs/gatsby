@@ -23,7 +23,7 @@ const getHttp = (limit = 50): RateLimitedAxiosInstance => {
 }
 
 interface IHandleErrorOptionsInput {
-  variables: JSON
+  variables: IJSON
   query: string
   pluginOptions: IPluginOptions
   reporter: GatsbyReporter
@@ -65,11 +65,11 @@ const handleErrorOptions = async ({
 }
 
 interface IHandleErrors {
-  variables: JSON
+  variables: IJSON
   query: string
   pluginOptions: IPluginOptions
   reporter: GatsbyReporter
-  responseJSON: JSON
+  responseJSON: IJSON
   panicOnError: boolean
   errorContext: string
 }
@@ -112,7 +112,7 @@ const handleErrors = async ({
 
 interface IHandleGraphQLErrorsInput {
   query: string
-  variables: JSON
+  variables: IJSON
   response: AxiosResponse
   errorMap: IErrorMap
   panicOnError: boolean
@@ -258,7 +258,7 @@ interface IHandleFetchErrors {
   query: string
   response: AxiosResponse
   errorContext: string
-  variables?: JSON
+  variables?: IJSON
   isFirstRequest?: boolean
   headers?: IFetchGraphQLHeaders
 }
@@ -468,7 +468,9 @@ ${slackChannelSupportMessage}`
 
     if (copyHtmlResponseOnError) {
       try {
-        clipboardy?.writeSync(response.data)
+        if (`writeSync` in clipboardy) {
+          clipboardy.writeSync(response.data)
+        }
       } catch (e) {
         reporter.error(
           formatLogMessage(
@@ -559,7 +561,7 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
   })
 }
 
-export interface JSON {
+export interface IJSON {
   // these will always be different depending on where this is used
   // we need this for GraphQL results and the node filter api
   // which can be used in any way by users
@@ -588,11 +590,11 @@ interface IFetchGraphQLInput {
   isFirstRequest?: boolean
   forceReportCriticalErrors?: boolean
   errorMap?: IErrorMap
-  variables?: JSON
+  variables?: IJSON
   headers?: IFetchGraphQLHeaders
 }
 
-type IGraphQLDataResponse = JSON
+type IGraphQLDataResponse = IJSON
 
 const fetchGraphql = async ({
   query,

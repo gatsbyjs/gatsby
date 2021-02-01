@@ -1,7 +1,7 @@
 import prettier from "prettier"
 import { Root, SchemaLike } from "hapi__joi"
 
-const wrapOptions = innerOptions =>
+const wrapOptions = (innerOptions): string =>
   prettier
     .format(
       `const something = {
@@ -15,7 +15,7 @@ const wrapOptions = innerOptions =>
     .replace(`;`, ``)
 
 export function pluginOptionsSchema({ Joi }: { Joi: Root }): SchemaLike {
-  const getTypeOptions = () =>
+  const getTypeOptions = (): SchemaLike =>
     Joi.object({
       where: Joi.string()
         .allow(null)

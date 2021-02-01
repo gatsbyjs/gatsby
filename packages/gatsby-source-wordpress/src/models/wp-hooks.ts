@@ -6,7 +6,7 @@ export interface INodeFilter {
 }
 
 export interface IWPHooksState {
-  nodeFilters: { [name: string]: INodeFilter[] }
+  nodeFilters: { [name: string]: Array<INodeFilter> }
 }
 
 export interface IWPHooksReducers {

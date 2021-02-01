@@ -1,13 +1,13 @@
-import { JSON } from "../utils/fetch-graphql"
+import { IJSON } from "../utils/fetch-graphql"
 import store from "~/store"
 
 interface INodeFilterInput {
   name: string
-  context: JSON
-  data: JSON
+  context: IJSON
+  data: IJSON
 }
 
-type NodeFilterFn = (INodeFilterInput) => JSON
+type NodeFilterFn = (INodeFilterInput) => IJSON
 
 interface INodeFilter {
   name: string
@@ -28,7 +28,7 @@ export const applyNodeFilter = async ({
   name,
   context,
   data,
-}: INodeFilterInput): Promise<JSON> => {
+}: INodeFilterInput): Promise<IJSON> => {
   if (!name) {
     return data
   }

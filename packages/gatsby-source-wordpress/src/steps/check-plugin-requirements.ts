@@ -55,7 +55,7 @@ const areRemotePluginVersionsSatisfied = async ({
   helpers: NodePluginArgs
   url: string
   disableCompatibilityCheck: boolean
-}) => {
+}): Promise<void> => {
   if (disableCompatibilityCheck) {
     return
   }
@@ -227,7 +227,7 @@ ${firstError.debugMessage || firstError.message}
       // we've already checked prior to this point that /graphql is up and returns a response.
     })
 
-const isWpGatsby = async () =>
+const isWpGatsby = async (): Promise<void> => {
   fetchGraphql({
     query: /* GraphQL */ `
       {
@@ -242,12 +242,13 @@ const isWpGatsby = async () =>
     panicOnError: true,
     isFirstRequest: true,
   })
+}
 
 const prettyPermalinksAreEnabled = async ({
   helpers,
 }: {
   helpers: NodePluginArgs
-}) => {
+}): Promise<void> => {
   try {
     const { data } = await fetchGraphql({
       query: /* GraphQL */ `

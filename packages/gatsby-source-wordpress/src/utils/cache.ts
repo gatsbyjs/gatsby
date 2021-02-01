@@ -24,7 +24,7 @@ const cacheDir = `.wordpress-cache/caches`
 
 type Store = manager.StoreConfig["store"]
 
-interface CacheOptions {
+interface ICacheOptions {
   name?: string
   store?: Store
 }
@@ -33,7 +33,7 @@ export default class Cache {
   private name: string
   private cacheDirectory: string
   private cache: manager.MultiCache
-  constructor({ name = `db`, store = fsStore }: CacheOptions = {}) {
+  constructor({ name = `db`, store = fsStore }: ICacheOptions = {}) {
     this.name = name
     this.store = store
     this.cacheDirectory = cacheDir
@@ -50,7 +50,7 @@ export default class Cache {
   init(): Cache {
     fs.ensureDirSync(this.directory)
 
-    const configs: manager.StoreConfig[] = [
+    const configs: Array<manager.StoreConfig> = [
       {
         store: `memory`,
         max: MAX_CACHE_SIZE,
@@ -159,8 +159,8 @@ export const getHardCachedData = async <T = Node>({
   return data as T
 }
 
-export const getHardCachedNodes = async (): Promise<null | Node[]> => {
-  const allWpNodes = await getHardCachedData<Node[]>({ key: `allWpNodes` })
+export const getHardCachedNodes = async (): Promise<null | Array<Node>> => {
+  const allWpNodes = await getHardCachedData<Array<Node>>({ key: `allWpNodes` })
 
   const shouldUseHardDataCache = allWpNodes?.length
 
@@ -178,7 +178,7 @@ export const restoreStaticDirectory = async (): Promise<void> => {
   await fs.copy(staticFileCacheDirectory, staticFileDirectory)
 }
 
-const copyStaticDirectory = async () => {
+const copyStaticDirectory = async (): Promise<void> => {
   await fs.copy(staticFileDirectory, staticFileCacheDirectory)
 }
 
@@ -267,7 +267,7 @@ export const getPersistentCache = async ({
 export const restoreHardCachedNodes = async ({
   hardCachedNodes,
 }: {
-  hardCachedNodes: Node[]
+  hardCachedNodes: Array<Node>
 }): Promise<Array<string>> => {
   const loggerTypeCounts = {}
 
@@ -345,6 +345,8 @@ export const restoreHardCachedNodes = async ({
       // restore each node
       // TODO: update gatsby types
       await helpers.actions.createNode(remoteNode)
+
+      return null
     })
   )
 
