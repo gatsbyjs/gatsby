@@ -24,6 +24,8 @@ packages/gatsby/cache-dir/commonjs/**/*.js
 packages/gatsby-admin/public/styles.*
 packages/gatsby/gatsby-admin-public/styles.*
 
+**/public/*
+
 # fixtures
 **/__testfixtures__/**
 **/__tests__/fixtures/**
