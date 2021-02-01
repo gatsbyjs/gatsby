@@ -381,7 +381,24 @@ describe(`gatsby-source-drupal`, () => {
     expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
     expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()
     expect(nodes[createNodeId(`tag-3`)]).toBeDefined()
-    expect(nodes[createNodeId(`article-5`)]).toBeDefined()
+    const paragraphForwardRevisionId = createNodeId(
+      `08d07c95-26ab-46b8-a56d-0a55567b2e31.4`
+    )
+    const paragraphDraft = nodes[paragraphForwardRevisionId]
+    expect(paragraphDraft).toBeDefined()
+    expect(
+      nodes[createNodeId(`08d07c95-26ab-46b8-a56d-0a55567b2e31.3`)]
+    ).toBeDefined()
+    expect(nodes[createNodeId(`tag-3`)]).toBeDefined()
+
+    const article = nodes[createNodeId(`article-5`)]
+    expect(article).toBeDefined()
+    const paragraphRelationships = article.relationships[`content___NODE`]
+    expect(paragraphRelationships).toContain(paragraphForwardRevisionId)
+
+    expect(paragraphDraft.body.value).toEqual(
+      `Aenean porta turpis quis vulputate blandit`
+    )
   })
 
   describe(`Fastbuilds sync`, () => {
