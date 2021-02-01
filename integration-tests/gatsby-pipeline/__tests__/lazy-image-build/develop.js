@@ -5,6 +5,7 @@ const glob = require(`glob`)
 const fetch = require(`node-fetch`)
 const createDevServer = require(`../../utils/create-devserver`)
 const basePath = path.resolve(__dirname, `../../`)
+const detectPort = require(`detect-port`)
 
 // 2 min
 jest.setTimeout(2000 * 60)
@@ -21,10 +22,11 @@ describe(`Lazy images`, () => {
   })
 
   test(`should process images on demand`, async () => {
-    const { kill } = await createDevServer()
+    const port = await detectPort(9023)
+    const { kill } = await createDevServer(port)
 
     const response = await fetch(
-      `http://localhost:8000/static/6d91c86c0fde632ba4cd01062fd9ccfa/e4795/gatsby-astronaut.png`
+      `http://localhost:${port}/static/6d91c86c0fde632ba4cd01062fd9ccfa/2a4de/gatsby-astronaut.png`
     )
 
     await kill()
@@ -32,7 +34,7 @@ describe(`Lazy images`, () => {
     expect(response.status).toBe(200)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
-    expect(images.length).toBe(6)
+    expect(images.length).toBe(1)
   })
 
   test(`should process the rest of images on build`, async () => {

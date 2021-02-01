@@ -16,11 +16,11 @@ const killProcess = devProcess =>
     process.kill(-devProcess.pid)
   })
 
-module.exports = () =>
+module.exports = (port = 8000) =>
   new Promise(resolve => {
-    const devProcess = execa(`yarn`, [`develop`], {
+    const devProcess = execa(`yarn`, [`develop`, `--port`, port], {
       cwd: basePath,
-      env: { NODE_ENV: `development` },
+      env: { NODE_ENV: `development`, GATSBY_LOGGER: `yurnalist` },
       detached: true,
     })
 

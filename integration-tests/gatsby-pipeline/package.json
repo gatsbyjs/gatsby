@@ -25,6 +25,7 @@
     "test": "jest --config=../jest.config.js gatsby-pipeline/"
   },
   "devDependencies": {
+    "detect-port": "^1.3.0",
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
     "node-fetch": "^2.6.0",
