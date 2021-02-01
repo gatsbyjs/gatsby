@@ -88,12 +88,11 @@ describe(`navigation`, () => {
       cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
 
       /*
-       * Three route updates:
+       * Two route updates:
        * - initial render of /
-       * - render overlays
        * - (default) development 404 page
        */
-      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 3)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
 
     it(`can display a custom 404 page`, () => {
@@ -102,13 +101,12 @@ describe(`navigation`, () => {
       cy.getTestElement(`page-title`).invoke(`text`).should(`eq`, `NOT FOUND`)
 
       /*
-       * Three route updates:
+       * Two route updates:
        * - initial render
-       * - render overlays
        * - 404 page
        * a re-render does not occur because the route remains the same
        */
-      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 3)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
   })
 
@@ -138,7 +136,7 @@ describe(`navigation`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
-      cy.visit(`/`).waitForRouteChange()
+      cy.visit(`/`, { failOnStatusCode: false }).waitForRouteChange()
       cy.window()
         .then(win => win.___navigate(`/안녕404/`))
         .waitForRouteChange()
@@ -220,21 +218,21 @@ describe(`navigation`, () => {
 
   describe(`Route lifecycle update order`, () => {
     it(`calls onPreRouteUpdate, render and onRouteUpdate the correct amount of times on route change`, () => {
-      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
       cy.lifecycleCallCount(`render`).should(`eq`, 2)
-      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 1)
       cy.getTestElement(`page-two`).click().waitForRouteChange()
       cy.getTestElement(`page-2-message`).should(`exist`)
-      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 3)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
       cy.lifecycleCallCount(`render`).should(`eq`, 3)
-      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 3)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
 
     it(`renders the component after onPreRouteUpdate on route change`, () => {
       cy.getTestElement(`page-component`).should(`exist`)
-      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 1)
       cy.lifecycleCallCount(`render`).should(`eq`, 2)
-      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 1)
       cy.lifecycleCallOrder([
         `onPreRouteUpdate`,
         `render`,
@@ -250,9 +248,9 @@ describe(`navigation`, () => {
         `render`,
         `onRouteUpdate`,
       ]).should(`eq`, true)
-      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 3)
+      cy.lifecycleCallCount(`onPreRouteUpdate`).should(`eq`, 2)
       cy.lifecycleCallCount(`render`).should(`eq`, 3)
-      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 3)
+      cy.lifecycleCallCount(`onRouteUpdate`).should(`eq`, 2)
     })
   })
 })

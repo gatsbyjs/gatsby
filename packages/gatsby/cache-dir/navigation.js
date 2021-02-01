@@ -217,14 +217,25 @@ const compareLocationProps = (prevLocation, nextLocation) => {
 }
 
 // Fire on(Pre)RouteUpdate APIs
+// We ignore the first update in development as we have do a double render
+// to account for rendering first the body component that hydrates the SSRed HTML
+// and then a second render to add our dev overlays. We don't want to fire
+// route APIs for the first render.
+let isNotFirstUpdate = false
 class RouteUpdates extends React.Component {
   constructor(props) {
     super(props)
-    onPreRouteUpdate(props.location, null)
+    if (process.env.NODE_ENV === `development` && isNotFirstUpdate) {
+      onPreRouteUpdate(props.location, null)
+    }
   }
 
   componentDidMount() {
-    onRouteUpdate(this.props.location, null)
+    if (process.env.NODE_ENV === `development` && isNotFirstUpdate) {
+      onRouteUpdate(this.props.location, null)
+    } else {
+      isNotFirstUpdate = true
+    }
   }
 
   shouldComponentUpdate(prevProps) {
