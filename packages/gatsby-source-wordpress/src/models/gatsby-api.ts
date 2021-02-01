@@ -346,9 +346,7 @@ const gatsbyApi = {
       const optionsPresets = [
         ...defaultPresets,
         ...userPresets,
-      ]?.filter((preset) =>
-        preset.useIf(payload.helpers, payload.pluginOptions)
-      )
+      ]?.filter(preset => preset.useIf(payload.helpers, payload.pluginOptions))
 
       if (optionsPresets?.length) {
         state.activePluginOptionsPresets = optionsPresets

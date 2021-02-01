@@ -1,7 +1,7 @@
 import prettier from "prettier"
 import { Root, SchemaLike } from "hapi__joi"
 
-const wrapOptions = (innerOptions) =>
+const wrapOptions = innerOptions =>
   prettier
     .format(
       `const something = {

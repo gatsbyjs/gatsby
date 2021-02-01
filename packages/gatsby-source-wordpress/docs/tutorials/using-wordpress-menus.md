@@ -167,7 +167,7 @@ const flatListToHierarchical = (
 ) => {
   const tree = []
   const childrenOf = {}
-  data.forEach((item) => {
+  data.forEach(item => {
     const newItem = { ...item }
     const { [idKey]: id, [parentKey]: parentId = 0 } = newItem
     childrenOf[id] = childrenOf[id] || []

@@ -192,7 +192,7 @@ export const sourcePreview = async (
   ]
 
   const missingProperties = requiredProperties.filter(
-    (property) => !(property in previewData)
+    property => !(property in previewData)
   )
 
   if (!previewData || missingProperties.length) {

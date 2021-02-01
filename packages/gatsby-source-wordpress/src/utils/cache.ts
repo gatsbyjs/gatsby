@@ -66,7 +66,7 @@ export default class Cache {
       },
     ]
 
-    const caches = configs.map((cache) => manager.caching(cache))
+    const caches = configs.map(cache => manager.caching(cache))
 
     this.cache = manager.multiCaching(caches)
 
@@ -74,7 +74,7 @@ export default class Cache {
   }
 
   get(key: string): Promise<unknown> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
           `Cache wasn't initialised yet, please run the init method first`
@@ -87,13 +87,13 @@ export default class Cache {
   }
 
   set(key: string, value: unknown, args = { ttl: TTL }): Promise<unknown> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
           `Cache wasn't initialised yet, please run the init method first`
         )
       }
-      this.cache.set(key, value, args, (err) => {
+      this.cache.set(key, value, args, err => {
         resolve(err ? undefined : value)
       })
     })
@@ -210,7 +210,7 @@ export const setHardCachedNodes = async ({
 }
 
 export const clearHardCache = async (): Promise<void> => {
-  await new Promise((resolve) => {
+  await new Promise(resolve => {
     const directory = new Cache().cacheBase
 
     rimraf(directory, resolve)
@@ -276,7 +276,7 @@ export const restoreHardCachedNodes = async ({
 
   // restore nodes
   await Promise.all(
-    hardCachedNodes.map(async (node) => {
+    hardCachedNodes.map(async node => {
       if (!loggerTypeCounts[node.internal.type]) {
         loggerTypeCounts[node.internal.type] = 0
       }
@@ -371,7 +371,7 @@ export const restoreHardCachedNodes = async ({
   await restoreStaticDirectory()
 
   // build createdNodeIds id array to be cached 1 level above
-  const createdNodeIds = hardCachedNodes.map((node) => node.id)
+  const createdNodeIds = hardCachedNodes.map(node => node.id)
 
   return createdNodeIds
 }

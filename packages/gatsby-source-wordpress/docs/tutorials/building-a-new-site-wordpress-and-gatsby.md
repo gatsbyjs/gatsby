@@ -139,7 +139,7 @@ export default function Home({ data }) {
       {/* highlight-start */}
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
-      {data.allWpPost.nodes.map((node) => (
+      {data.allWpPost.nodes.map(node => (
         <div>
           <p>{node.title}</p>
           <div dangerouslySetInnerHTML={{ __html: node.excerpt }} />
@@ -200,7 +200,7 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then((result) => {
+  `).then(result => {
     console.log(JSON.stringify(result, null, 4))
     process.exit()
   })
@@ -264,9 +264,9 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then((result) => {
+  `).then(result => {
     //highlight-start
-    result.data.allWpPost.nodes.forEach((node) => {
+    result.data.allWpPost.nodes.forEach(node => {
       createPage({
         path: node.slug,
         component: path.resolve(`./src/templates/blog-post.js`),
@@ -304,7 +304,7 @@ export default function Home({ data }) {
       <SEO title="home" />
       <h1>My WordPress Blog</h1>
       <h4>Posts</h4>
-      {data.allWpPost.nodes.map((node) => (
+      {data.allWpPost.nodes.map(node => (
         <div key={node.slug}>
           {/* highlight-start */}
           <Link to={node.slug}>

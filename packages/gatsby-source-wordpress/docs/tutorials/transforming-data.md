@@ -57,7 +57,7 @@ The above code example fetches files from WPGraphQL and creates local Gatsby nod
 A good example of why you might want to perform some side effects before a node is deleted can be seen in our internal usage of this API for Menu nodes:
 
 ```js
-export const menuBeforeChangeNode = async (api) => {
+export const menuBeforeChangeNode = async api => {
   if (api.remoteNode && api.actionType === `DELETE`) {
     const {
       pluginOptions,
@@ -71,11 +71,11 @@ export const menuBeforeChangeNode = async (api) => {
 
     // find the nodes that are children of the current menu
     const allMenuItemsNodesWithThisMenuIdAsAParent = allMenuItems.filter(
-      (menuItemNode) => menuItemNode.menu.node.id === api.remoteNode.id
+      menuItemNode => menuItemNode.menu.node.id === api.remoteNode.id
     )
 
     // delete each child menu item
-    allMenuItemsNodesWithThisMenuIdAsAParent?.forEach((menuItemNode) =>
+    allMenuItemsNodesWithThisMenuIdAsAParent?.forEach(menuItemNode =>
       actions.deleteNode({
         node: menuItemNode,
       })

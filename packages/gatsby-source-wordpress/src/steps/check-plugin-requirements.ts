@@ -194,8 +194,8 @@ const blankGetRequest = async ({
   helpers: NodePluginArgs
 }): Promise<void> =>
   fetch(url)
-    .then((response) => response.json())
-    .then((json) => {
+    .then(response => response.json())
+    .then(json => {
       if (json?.errors?.length) {
         const firstError = json.errors[0]
 
@@ -215,7 +215,7 @@ ${firstError.debugMessage || firstError.message}
         }
       }
     })
-    .catch((e) => {})
+    .catch(e => {})
 
 const isWpGatsby = async () =>
   fetchGraphql({

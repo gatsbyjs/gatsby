@@ -12,7 +12,9 @@ import { NodePluginArgs } from "gatsby"
  * preview callbacks haven't been invoked, and invoke them with a "NO_PAGE_CREATED_FOR_PREVIEWED_NODE" status, which sends that status to WP
  * After invoking all these leftovers, we clear them out from the store so they aren't called again later.
  */
-export const onPreExtractQueriesInvokeLeftoverPreviewCallbacks = async (): Promise<void> => {
+export const onPreExtractQueriesInvokeLeftoverPreviewCallbacks = async (): Promise<
+  void
+> => {
   if (!inPreviewMode()) {
     return invokeAndCleanupLeftoverPreviewCallbacks({
       status: `GATSBY_PREVIEW_PROCESS_ERROR`,
@@ -71,10 +73,9 @@ const invokeLeftoverPreviewCallback = ({
   context?: string
   error?: Error
   getNode: NodePluginArgs["getNode"]
-}) => async ([nodeId, callback]: [
-  string,
-  OnPageCreatedCallback
-]): Promise<void> => {
+}) => async ([nodeId, callback]: [string, OnPageCreatedCallback]): Promise<
+  void
+> => {
   const passedNode = getNode(nodeId)
 
   await callback({

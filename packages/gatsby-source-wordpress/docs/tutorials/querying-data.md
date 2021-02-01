@@ -105,7 +105,7 @@ const { allWpPost } = result.data
 const template = require.resolve(`./src/templates/WpPost.js`)
 
 if (allWpPost.nodes.length) {
-  allWpPost.nodes.map((post) => {
+  allWpPost.nodes.map(post => {
     actions.createPage({
       // It's best practice to use the uri field from WPGraphQL nodes when
       // building
@@ -138,7 +138,7 @@ Next, we iterate over all the posts that were returned from our GraphQL Query, a
 
 ```js
 if (allWpPost.nodes.length) {
-  allWpPost.nodes.map((post) => {
+  allWpPost.nodes.map(post => {
     actions.createPage({
       path: post.uri,
       component: template,
@@ -192,7 +192,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const template = require.resolve(`./src/templates/WpPost.js`)
 
   if (allWpPost.nodes.length) {
-    allWpPost.nodes.map((post) => {
+    allWpPost.nodes.map(post => {
       actions.createPage({
         path: post.uri,
         component: template,
@@ -463,7 +463,7 @@ And then use the `__typename` to determine the template to use, like so:
 const fs = require("fs")
 
 if (allContent.nodes.length) {
-  allContent.nodes.map((node) => {
+  allContent.nodes.map(node => {
     // Set the default template to use if a specific one doesn't exist
     let template = require.resolve(`./src/templates/WpContentNode.js`)
 

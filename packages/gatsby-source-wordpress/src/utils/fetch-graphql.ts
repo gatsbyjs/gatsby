@@ -213,7 +213,7 @@ const handleGraphQLErrors = async ({
             error?.locations?.length
               ? error.locations
                   .map(
-                    (location) =>
+                    location =>
                       `location: line ${location.line}, column: ${location.column}`
                   )
                   ?.join(`. `)
