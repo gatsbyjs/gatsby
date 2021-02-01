@@ -8,8 +8,17 @@ exports[`File parser extracts query AST correctly from files: panic 1`] = `
 Import it instead like:  import { graphql } from 'gatsby' in file:
 global-query.js",
     ],
+    Array [
+      "Using the global \`graphql\` tag for Gatsby's queries isn't supported as of v3.
+Import it instead like:  import { graphql } from 'gatsby' in file:
+global-static-query-hooks.js",
+    ],
   ],
   "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
     Object {
       "type": "return",
       "value": undefined,

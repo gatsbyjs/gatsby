@@ -28,6 +28,11 @@ query pageQueryName {
   foo
 }
 \``,
+    "global-static-query-hooks.js": `import { useStaticQuery } from 'gatsby'
+export default () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
     "page-query.js": `import { graphql } from 'gatsby'
     export const query = graphql\`
 query PageQueryName {
@@ -260,6 +265,9 @@ export default () => {
         expect.not.objectContaining({ filePath: `no-query.js` }),
         expect.not.objectContaining({ filePath: `other-graphql-tag.js` }),
         expect.not.objectContaining({ filePath: `global-query.js` }),
+        expect.not.objectContaining({
+          filePath: `global-static-query-hooks.js`,
+        }),
       ])
     )
 
