@@ -79,7 +79,9 @@ describe(`navigation`, () => {
 
   describe(`non-existent route`, () => {
     beforeEach(() => {
-      cy.getTestElement(`broken-link`).click().waitForRouteChange()
+      cy.getTestElement(`broken-link`)
+        .click({ failOnStatusCode: false })
+        .waitForRouteChange()
     })
 
     it(`displays 404 page on broken link`, () => {
