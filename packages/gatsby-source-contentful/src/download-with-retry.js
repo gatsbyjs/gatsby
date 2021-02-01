@@ -2,6 +2,11 @@ const axios = require(`axios`)
 const rax = require(`retry-axios`)
 const { default: PQueue } = require(`p-queue`)
 
+/**
+ * Contentfuls APIs have a general rate limit of 79 uncached requests per second.
+ * A concurrency of 100 was recommended by Contentful backend and will ensure
+ * that we won't run into rate-limit errors.
+ */
 const queue = new PQueue({
   concurrency: 100,
 })
