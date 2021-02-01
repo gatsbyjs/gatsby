@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import nock from "nock"
 
 import downloadAndRetry from "../download-with-retry"

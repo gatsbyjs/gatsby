@@ -25,12 +25,7 @@ export default async function downloadWithRetry(requestConfig, reporter) {
 
   try {
     const result = await queue.add(() =>
-      axiosInstance.get(requestConfig.url, {
-        ...requestConfig,
-        // This is required as we should not set `testEnvironment: "node"`
-        // in jest.config.js just to test this properly
-        adapter: require(`axios/lib/adapters/http`),
-      })
+      axiosInstance.get(requestConfig.url, requestConfig)
     )
     return result
   } catch (err) {
