@@ -23,7 +23,7 @@ module.exports = {
        * https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress-experimental/README.md
        *
        */
-      resolve: `gatsby-source-wordpress`,
+      resolve: `gatsby-source-wordpress-experimental`,
       options: {
         // the only required plugin option for WordPress is the GraphQL url.
         url:
