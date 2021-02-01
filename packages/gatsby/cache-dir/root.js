@@ -145,12 +145,24 @@ const ConditionalFastRefreshOverlay = ({ children }) => {
   return <React.Fragment>{children}</React.Fragment>
 }
 
-export default () => (
-  <ConditionalFastRefreshOverlay>
-    <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-    {process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true` && (
-        <LoadingIndicatorEventHandler />
-      )}
-  </ConditionalFastRefreshOverlay>
-)
+export default () => {
+  // Only render client-side overlays *after* the initial  hydration
+  // as otherwise the client html & server html are mismatched.
+  const [hasRendered, setHasRendered] = React.useState(false)
+  React.useEffect(() => {
+    setHasRendered(true)
+  }, [])
+  if (hasRendered) {
+    return (
+      <ConditionalFastRefreshOverlay>
+        <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
+        {process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true` && (
+            <LoadingIndicatorEventHandler />
+          )}
+      </ConditionalFastRefreshOverlay>
+    )
+  } else {
+    return <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
+  }
+}
