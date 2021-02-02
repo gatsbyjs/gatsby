@@ -217,8 +217,12 @@ by running `npm test -- -u`.
 
 ## Using TypeScript
 
-If you are using TypeScript, you need to make two changes to your
-config.
+If you are using TypeScript, you need to install typings packages and make
+two changes to your config.
+
+```shell
+npm install --save-dev @types/jest @types/react-test-renderer
+```
 
 Update the transform in `jest.config.js` to run `jest-preprocess` on files in your project's root directory.
 
