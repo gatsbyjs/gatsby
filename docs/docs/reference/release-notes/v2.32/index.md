@@ -9,6 +9,23 @@ Welcome to `gatsby@2.32.0` release (February 2021 #1)
 
 Key highlights of this release:
 
+- [Stable API in beta image plugin](#stable-api-in-beta-image-plugin)
+- [Support for beta image plugin in Contentful](#support-for-beta-image-plugin-in-contentful)
+- [Support for art direction in beta image plugin](#support-for-art-direction-in-beta-image-plugin)
+- [Performance improvements for larger sites (10000+ pages)](#performance-improvements-for-larger-sites-10000-pages)
+
+## Stable API in beta image plugin
+
+With this release, [the API for gatsby-plugin-image](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image) can be considered stable. We do not expect any breaking changes to be made before general release, and now will just be making bugfixes and minor changes. You can start to [migrate your sites to use the new plugin](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/), and benefit from the improved performance and cleaner API.
+
+## Support for beta image plugin in Contentful
+
+This release includes initial support for [gatsby-plugin-image](https://gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image/) in gatsby-source-contentful. This adds a new `gatsbyImageData` resolver to ContentfulAsset nodes, allowing you to use the new image components with your Contentful data. This is a first release, and does not yet have proper documentation, but please try it out and report back in [the gatsby-plugin-image RFC](https://github.com/gatsbyjs/gatsby/discussions/27950).
+
+## Support for art direction in beta image plugin
+
+Art direction is a browser feature that allows you to specify different images to be displayed at different screen sizes. This is different from responsive images, which just provides different image resolutions, as it allows you to use completely different images, or different crops of the same image. Until now this feature has been missing in the new image plugin, but this release adds a new `useArtDirection` hook, which allows you to art direct your images. See [the PR](https://github.com/gatsbyjs/gatsby/pull/29231) for more information, as it does not currently have full docs.
+
 ## Performance improvements for larger sites (10000+ pages)
 
 We landed two PRs that improve build performance for larger sites.
@@ -42,3 +59,4 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
 - [alexleventer](https://github.com/alexleventer): chore(docs): Add cassandra to list of database sources [PR #29137](https://github.com/gatsbyjs/gatsby/pull/29137)
 - [johanneswuerbach](https://github.com/johanneswuerbach): fix: sync crash with error response [PR #29212](https://github.com/gatsbyjs/gatsby/pull/29212)
 - [jevenson](https://github.com/jevenson): chore(docs): Update TypeScript Unit Testing Docs [PR #29227](https://github.com/gatsbyjs/gatsby/pull/29227)
+- [domvo](https://github.com/domvo) fix(gatsby-plugin-sharp): make sure to pass the failOnError option to base64 generation [PR #29254](https://github.com/gatsbyjs/gatsby/pull/29254)
