@@ -351,6 +351,44 @@ To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `titl
 
 When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [`gatsby-plugin-sharp`](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that `gatsby-source-contentful` also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
 
+## Using the new Gatsby image plugin
+
+You can now use the beta [gatsby-plugin-image](https://gatsbyjs.com/plugins/gatsby-plugin-image/) to display high-performance, responsive images from Contentful. This plugin is the replacement for gatsby-image, and is currently in beta, but can help deliver improved performance, with a cleaner API. Support in gatsby-source-contentful is still experimental.
+
+To use it:
+
+1.  Install the plugins:
+
+```shell
+npm install gatsby-plugin-image gatsby-plugin-sharp
+```
+
+2. Add the plugins to your `gatsby-config.js`:
+
+```javascript
+module.exports = {
+  plugins: [
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
+    // ...etc
+  ],
+}
+```
+
+3. You can then query for image data using the new `gatsbyImageData` resolver:
+
+```graphql
+{
+  allContentfulBlogPost {
+    nodes {
+      heroImage {
+        gatsbyImageData(layout: FULL_WIDTH)
+      }
+    }
+  }
+}
+```
+
 ## More on Queries with Contentful and Gatsby
 
 It is strongly recommended that you take a look at how data flows in a real Contentful and Gatsby application to fully understand how the queries, Node.js functions and React components all come together. Check out the example site at
