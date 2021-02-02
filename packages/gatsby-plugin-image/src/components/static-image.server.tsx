@@ -91,12 +91,12 @@ export const propTypes = {
     if (props.layout === undefined) {
       return undefined
     }
-    if (validLayouts.has(props.layout.toLowerCase())) {
+    if (validLayouts.has(props.layout)) {
       return undefined
     }
 
     return new Error(
-      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fullWidth" or "constrained".`
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fullWidth" or "constrained".`
     )
   },
 }
