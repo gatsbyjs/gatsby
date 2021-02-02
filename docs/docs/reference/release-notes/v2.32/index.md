@@ -15,6 +15,15 @@ Key highlights of this release:
 - [Support for art direction in beta image plugin](#support-for-art-direction-in-beta-image-plugin)
 - [Performance improvements for larger sites (10000+ pages)](#performance-improvements-for-larger-sites-10000-pages)
 
+Also check out [notable bugfixes](#notable-bugfixes).
+
+**Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
+if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
+
+[Previous release notes](/docs/reference/release-notes/v2.31)
+
+[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.0...gatsby@2.32.0)
+
 ## Stable API in beta image plugin
 
 With this release, [the API for gatsby-plugin-image](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image) can be considered stable. We do not expect any breaking changes to be made before general release, and now will just be making bugfixes and minor updates. You can start to [migrate your sites to use the new plugin](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/), and benefit from the improved performance, new components, and cleaner API.
@@ -41,6 +50,14 @@ We landed two PRs that improve build performance for larger sites.
 On our [minimal benchmark site](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages), these improved build times by ~15% for a 10,000 page site and 30% for a 100,000 page site!
 
 ---
+
+## Notable bugfixes
+
+- gatsby-plugin-sharp: The `failOnError` is correctly passed to sharp, allowing the build to proceed when there are corrupt images, via [PR #29254](https://github.com/gatsbyjs/gatsby/pull/29254)
+- gatsby-plugin-sharp: Fixes a bug that caused build failures on Windows when generating traced SVGs, via [PR #29246](https://github.com/gatsbyjs/gatsby/pull/29246)
+- gatsby-plugin-manifest: Fixes to plugin options validation, via [PR #29242](https://github.com/gatsbyjs/gatsby/pull/29242) and [PR 29193](https://github.com/gatsbyjs/gatsby/pull/29193/)
+- gatsby-source-contentful: Correctly handle env-specific API key validation, via [PR 29228](https://github.com/gatsbyjs/gatsby/pull/29228)
+- babel-plugin-remove-graphql-queries: Make sure imports are POSIX-compliant, via [PR #29144](https://github.com/gatsbyjs/gatsby/pull/29144)
 
 ## Contributors
 
