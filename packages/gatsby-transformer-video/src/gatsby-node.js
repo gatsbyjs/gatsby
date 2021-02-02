@@ -81,7 +81,7 @@ exports.createResolvers = async (
   await ensureDir(cacheDirOriginal)
   await ensureDir(cacheDirConverted)
 
-  const alreadyInstalled = await libsInstalled({ platform })
+  const alreadyInstalled = await libsInstalled()
 
   // Set paths to our own binaries
   if (!alreadyInstalled && downloadBinaries && (!ffmpegPath || !ffprobePath)) {
@@ -320,7 +320,7 @@ exports.onPreInit = async ({ store }, { downloadBinaries = true }) => {
     return
   }
 
-  const alreadyInstalled = await libsInstalled({ platform })
+  const alreadyInstalled = await libsInstalled()
 
   if (alreadyInstalled) {
     reporter.verbose(`FFMPEG && FFPROBE are already available on this machine`)

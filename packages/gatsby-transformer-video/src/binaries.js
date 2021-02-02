@@ -2,14 +2,14 @@ import { resolve } from "path"
 
 import execa from "execa"
 import { access, ensureDir } from "fs-extra"
+import commandExists from "command-exists"
+
 import reporter from "gatsby-cli/lib/reporter"
 
-export async function libsInstalled({ platform }) {
+export async function libsInstalled() {
   try {
-    const isInstalledCommand = platform === `win32` ? `WHERE` : `command`
-    const isInstalledParams = platform === `win32` ? [] : [`-v`]
-    await execa(isInstalledCommand, [...isInstalledParams, `ffmpeg`])
-    await execa(isInstalledCommand, [...isInstalledParams, `ffprobe`])
+    await commandExists(`ffmpeg`)
+    await commandExists(`ffprobe`)
     return true
   } catch {
     return false

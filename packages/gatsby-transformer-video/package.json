@@ -24,6 +24,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "command-exists": "^1.2.9",
     "execa": "^4.0.3",
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^9.0.1",
