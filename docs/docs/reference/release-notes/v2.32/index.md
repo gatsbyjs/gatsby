@@ -68,7 +68,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
   - chore(docs): Fix grammar in add-404-page [PR #29079](https://github.com/gatsbyjs/gatsby/pull/29079)
   - fix(gatsby-plugin-styled-components): add `namespace` option [PR #29095](https://github.com/gatsbyjs/gatsby/pull/29095)
 
-- [Grsmto](https://github.com/Grsmto): fix(gatsby-plugin-image): pass down missing sizes attribute to <sources> [PR #29092](https://github.com/gatsbyjs/gatsby/pull/29092)
+- [Grsmto](https://github.com/Grsmto): fix(gatsby-plugin-image): pass down missing sizes attribute to `<sources>` [PR #29092](https://github.com/gatsbyjs/gatsby/pull/29092)
 
 - [StefanSelfTaught](https://github.com/StefanSelfTaught): Update creating-a-local-plugin.md [PR #28072](https://github.com/gatsbyjs/gatsby/pull/28072)
 
