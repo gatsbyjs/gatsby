@@ -11,6 +11,7 @@ Key highlights of this release:
 
 - [Stable API in beta image plugin](#stable-api-in-beta-image-plugin)
 - [Support for beta image plugin in Contentful](#support-for-beta-image-plugin-in-contentful)
+- [Default sharp settings in beta image plugin](#default-sharp-settings-in-beta-image-plugin)
 - [Support for art direction in beta image plugin](#support-for-art-direction-in-beta-image-plugin)
 - [Performance improvements for larger sites (10000+ pages)](#performance-improvements-for-larger-sites-10000-pages)
 
@@ -21,6 +22,10 @@ With this release, [the API for gatsby-plugin-image](https://gatsbyjs.com/docs/r
 ## Support for beta image plugin in Contentful
 
 This release includes initial support for the beta image plugin in gatsby-source-contentful. This adds a new `gatsbyImageData` resolver to ContentfulAsset nodes, allowing you to use the new image components with your Contentful data. This is a first release, and does not yet have proper documentation, but please try it out and report back in [the gatsby-plugin-image RFC](https://github.com/gatsbyjs/gatsby/discussions/27950).
+
+## Default sharp settings in beta image plugin
+
+Do you always want to generate AVIF images? Should your hero image breakpoints support 8K monitors? Until now you needed to pass [the relevant options](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image) for every image. This release adds support for default options, meaning you can set most options once in gatsby-config and they will apply by default to both dynamic and static images. Add a `defaults` object to your `gatsby-plugin-sharp` config, and pass it any valid option except for options such as width and height which make no sense to have a default.
 
 ## Support for art direction in beta image plugin
 
