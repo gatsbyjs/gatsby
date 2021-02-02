@@ -16,15 +16,15 @@ Key highlights of this release:
 
 ## Stable API in beta image plugin
 
-With this release, [the API for gatsby-plugin-image](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image) can be considered stable. We do not expect any breaking changes to be made before general release, and now will just be making bugfixes and minor changes. You can start to [migrate your sites to use the new plugin](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/), and benefit from the improved performance and cleaner API.
+With this release, [the API for gatsby-plugin-image](https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image) can be considered stable. We do not expect any breaking changes to be made before general release, and now will just be making bugfixes and minor updates. You can start to [migrate your sites to use the new plugin](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/), and benefit from the improved performance, new components, and cleaner API.
 
 ## Support for beta image plugin in Contentful
 
-This release includes initial support for [gatsby-plugin-image](https://gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image/) in gatsby-source-contentful. This adds a new `gatsbyImageData` resolver to ContentfulAsset nodes, allowing you to use the new image components with your Contentful data. This is a first release, and does not yet have proper documentation, but please try it out and report back in [the gatsby-plugin-image RFC](https://github.com/gatsbyjs/gatsby/discussions/27950).
+This release includes initial support for the beta image plugin in gatsby-source-contentful. This adds a new `gatsbyImageData` resolver to ContentfulAsset nodes, allowing you to use the new image components with your Contentful data. This is a first release, and does not yet have proper documentation, but please try it out and report back in [the gatsby-plugin-image RFC](https://github.com/gatsbyjs/gatsby/discussions/27950).
 
 ## Support for art direction in beta image plugin
 
-Art direction is a browser feature that allows you to specify different images to be displayed at different screen sizes. This is different from responsive images, which just provides different image resolutions, as it allows you to use completely different images, or different crops of the same image. Until now this feature has been missing in the new image plugin, but this release adds a new `useArtDirection` hook, which allows you to art direct your images. See [the PR](https://github.com/gatsbyjs/gatsby/pull/29231) for more information, as it does not currently have full docs.
+Art direction is a browser feature that allows you to specify different images to be displayed at different screen sizes. This is different from responsive images, which just provides different image resolutions, as it allows you to use completely different images, or different crops of the same image. Until now this feature has been missing in the new image plugin, but this release adds a new `useArtDirection` hook, which allows you to art direct your images. It does not have full docs, but see [the PR](https://github.com/gatsbyjs/gatsby/pull/29231) for more information and a video featuring a pug in a raincoat.
 
 ## Performance improvements for larger sites (10000+ pages)
 
