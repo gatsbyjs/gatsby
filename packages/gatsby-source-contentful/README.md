@@ -353,11 +353,11 @@ When querying images you can use the `fixed`, `fluid` or `resize` nodes to get d
 
 ## Using the new Gatsby image plugin
 
-You can now use the beta gatsby-plugin-image to display high-performance, responsive images from Contentful. This is the replacement for gatsby-image, and is currently in beta, but can help deliver improved performance and a cleaner API. Support in gatsby-source-contentful is still experimental.
+You can now use the beta [gatsby-plugin-image](https://gatsbyjs.com/plugins/gatsby-plugin-image/) to display high-performance, responsive images from Contentful. This plugin is the replacement for gatsby-image, and is currently in beta, but can help deliver improved performance, with a cleaner API. Support in gatsby-source-contentful is still experimental.
 
 To use it:
 
- 1.  Install the plugins:
+1.  Install the plugins:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp
