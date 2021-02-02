@@ -22,8 +22,10 @@ export function pluginOptionsSchema({ Joi }: { Joi: Root }): SchemaLike {
         .allow(false)
         .meta({
           example: wrapOptions(`
-              schema: {
-                where: \`language: \${process.env.GATSBY_ACTIVE_LANGUAGE}\`
+              type: {
+                Page: {
+                  where: \`language: \${process.env.GATSBY_ACTIVE_LANGUAGE}\`
+                },
               }
             `),
         })
