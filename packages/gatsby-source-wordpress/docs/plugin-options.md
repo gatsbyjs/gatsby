@@ -944,8 +944,10 @@ This string is passed as the WPGraphQL "where" arguments in the GraphQL queries 
 {
   resolve: `gatsby-source-wordpress`,
   options: {
-    schema: {
-      where: `language: ${process.env.GATSBY_ACTIVE_LANGUAGE}`,
+    type: {
+      Page: {
+        where: `language: ${process.env.GATSBY_ACTIVE_LANGUAGE}`,
+      },
     },
   },
 }
