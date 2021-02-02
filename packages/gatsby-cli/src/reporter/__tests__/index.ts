@@ -1,5 +1,5 @@
 import { Level } from "../../structured-errors/types"
-import { reporter } from "../reporter"
+import { Reporter } from "../reporter"
 import * as reporterActions from "../redux/actions"
 
 // TODO: report.error now DOES return something. Get rid of this spying mocking stuff
@@ -16,17 +16,21 @@ jest
   // @ts-ignore
   .mockImplementation(structuredLog => structuredLog)
 
-// We don't care about this
-reporter.log = jest.fn()
-
 const getErrorMessages = (fn: jest.Mock): any =>
   fn.mock.calls
     .map(([firstArg]) => firstArg)
     .filter(structuredMessage => structuredMessage.level === `ERROR`)
 
 describe(`report.error`, () => {
+  let reporter: Reporter
   beforeEach(() => {
     ;(reporterActions.createLog as jest.Mock).mockClear()
+
+    jest.isolateModules(() => {
+      reporter = require("../reporter").reporter
+      // We don't care about this
+      reporter.log = jest.fn()
+    })
   })
 
   it(`handles "String, Error" signature correctly`, () => {
@@ -104,5 +108,82 @@ describe(`report.error`, () => {
     })
 
     expect(reporter.errorMap[`1337`]).toBeTruthy()
+  })
+})
+
+describe(`report.deprecate`, () => {
+  const level = `DEPRECATION`
+  const code = "JEST"
+  const text = "deprecate me"
+  let reporter: Reporter
+  beforeEach(() => {
+    ;(reporterActions.createLog as jest.Mock).mockClear()
+
+    jest.isolateModules(() => {
+      reporter = require("../reporter").reporter
+      // We don't care about this
+      reporter.log = jest.fn()
+    })
+  })
+
+  it(`should render deprecation notice`, () => {
+    reporter.deprecate({
+      code,
+      text,
+    })
+
+    expect(reporterActions.createLog).toBeCalledWith({
+      level,
+      category: "USER",
+      text,
+      pluginName: undefined,
+    })
+  })
+
+  it(`should use pluginName`, () => {
+    reporter.deprecate({
+      code,
+      text,
+      pluginName: "gatsby-plugin-jest",
+    })
+
+    expect(reporterActions.createLog).toBeCalledWith({
+      level,
+      category: "THIRD_PARTY",
+      text,
+      pluginName: "gatsby-plugin-jest",
+    })
+  })
+
+  it(`should only call deprecation once`, () => {
+    reporter.deprecate({
+      code,
+      text,
+      pluginName: "gatsby-plugin-jest",
+    })
+    reporter.deprecate({
+      code,
+      text,
+      pluginName: "gatsby-plugin-jest",
+    })
+    reporter.deprecate({
+      code,
+      text,
+      pluginName: "gatsby-plugin-test",
+    })
+
+    expect(reporterActions.createLog).toBeCalledTimes(2)
+    expect(reporterActions.createLog).toBeCalledWith({
+      level,
+      category: "THIRD_PARTY",
+      text,
+      pluginName: "gatsby-plugin-jest",
+    })
+    expect(reporterActions.createLog).toBeCalledWith({
+      level,
+      category: "THIRD_PARTY",
+      text,
+      pluginName: "gatsby-plugin-test",
+    })
   })
 })

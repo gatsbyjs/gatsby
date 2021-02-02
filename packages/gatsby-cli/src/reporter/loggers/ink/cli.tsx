@@ -6,6 +6,7 @@ import { Spinner } from "./components/spinner"
 import { ProgressBar } from "./components/progress-bar"
 import { Message, IMessageProps } from "./components/messages"
 import { Error as ErrorComponent } from "./components/error"
+import { Deprecation as DeprecationComponent } from "./components/deprecation"
 import Develop from "./components/develop"
 import { IGatsbyCLIState, IActivity } from "../../redux/types"
 import { ActivityLogLevels } from "../../constants"
@@ -85,19 +86,32 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
       <Box flexDirection="column">
         <Box flexDirection="column">
           <Static items={messages}>
-            {(message): React.ReactElement =>
-              message.level === `ERROR` ? (
-                <ErrorComponent
-                  details={message as IStructuredError}
-                  key={messages.indexOf(message)}
-                />
-              ) : (
+            {(message): React.ReactElement => {
+              if (message.level === "ERROR") {
+                return (
+                  <ErrorComponent
+                    details={message as IStructuredError}
+                    key={messages.indexOf(message)}
+                  />
+                )
+              }
+
+              if (message.level === "DEPRECATION") {
+                return (
+                  <DeprecationComponent
+                    details={message}
+                    key={messages.indexOf(message)}
+                  />
+                )
+              }
+
+              return (
                 <Message
                   key={messages.indexOf(message)}
                   {...(message as IMessageProps)}
                 />
               )
-            }
+            }}
           </Static>
 
           {spinners.map(activity => (

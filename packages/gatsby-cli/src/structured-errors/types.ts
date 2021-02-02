@@ -21,6 +21,16 @@ export interface IStructuredStackFrame {
   columnNumber?: number
 }
 
+export interface IStructuredLog {
+  code?: string
+  text: string
+  category?: keyof typeof ErrorCategory
+  group?: string
+  level: IErrorMapEntry["level"]
+  type?: IErrorMapEntry["type"]
+  docsUrl?: string
+}
+
 export interface IStructuredError {
   code?: string
   text: string
@@ -50,6 +60,7 @@ export enum Level {
   WARNING = `WARNING`,
   INFO = `INFO`,
   DEBUG = `DEBUG`,
+  DEPRECATION = `DEPRECATION`,
 }
 
 export enum Type {

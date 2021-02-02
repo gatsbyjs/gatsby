@@ -26,6 +26,9 @@ export interface IActivityArgs {
 
 let isVerbose = false
 
+// only show deprecations once
+const deprecationCache = new Set()
+
 /**
  * Reporter module.
  * @module reporter
@@ -183,6 +186,32 @@ class Reporter {
         text,
       })
     }
+  }
+
+  deprecate = ({
+    pluginName,
+    code,
+    ...messageObj
+  }: {
+    code: string
+    text: string
+    pluginName?: string
+  }): void => {
+    const cacheKey = `${pluginName ?? ``}-${code}`
+
+    if (deprecationCache.has(cacheKey)) {
+      return
+    }
+
+    deprecationCache.add(cacheKey)
+
+    // TODO add telemetry
+    reporterActions.createLog({
+      level: LogLevels.Deprecation,
+      category: pluginName ? `THIRD_PARTY` : `USER`,
+      pluginName,
+      ...messageObj,
+    })
   }
 
   success = (text?: string): CreateLogAction =>
