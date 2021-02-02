@@ -5,19 +5,20 @@ version: "2.32.0"
 
 # [v2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.0...gatsby@2.32.0) (February 2021 #1)
 
+Welcome to `gatsby@2.32.0` release (February 2021 #1)
+
+Key highlights of this release:
+
 ## Performance improvements for larger sites (10000+ pages)
+
 We landed two PRs that improve build performance for larger sites.
 
 - https://github.com/gatsbyjs/gatsby/pull/29240
 - https://github.com/gatsbyjs/gatsby/pull/29219
 
-On our [minimal benchmark site](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages), these improved build times by ~15% for a 10,000 page site and 30% for a 100,000 page site! 
+On our [minimal benchmark site](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages), these improved build times by ~15% for a 10,000 page site and 30% for a 100,000 page site!
 
 ---
-
-Welcome to `gatsby@2.32.0` release (February 2021 #1)
-
-Key highlights of this release:
 
 ## Contributors
 
