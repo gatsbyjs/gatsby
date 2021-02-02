@@ -93,26 +93,8 @@
     "prettier-check": "prettier . --check",
     "lint": "yarn prettier-check && yarn eslint",
     "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js",
-    "clean-test-runtime": "cd test-site && gatsby clean",
-    "develop-test-runtime": "cd test-site && yarn develop",
-    "develop-preview": "cd test-site && ENABLE_GATSBY_REFRESH_ENDPOINT=true yarn develop",
-    "build-test-runtime": "cd test-site && yarn build",
-    "serve-test-runtime": "cd test-site && yarn serve",
-    "ci-test": "server-test 'yarn docker-start' http://localhost:8001",
-    "ci": "yarn lint && yarn ci-test",
     "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans",
-    "docker-rebuild": "./docker/rebuild.sh",
-    "test-schema-first": "START_SERVER=true jest ./test-site/__tests__/integration/schema",
-    "test-schema-increment": "WPGQL_INCREMENT=true START_SERVER=true jest ./test-site/__tests__/integration/schema",
-    "test-schema": "yarn clean-test-runtime && yarn test-schema-first && yarn test-schema-increment",
-    "build-cli": "cd cli && yarn build",
-    "test-preview": "START_SERVER=true ENABLE_GATSBY_REFRESH_ENDPOINT=true jest ./test-site/__tests__/e2e/preview",
-    "test-build": "yarn clean-test-runtime && DEFAULT_PLUGIN_OPTIONS=true jest ./test-site/__tests__/integration/build && jest ./test-site/__tests__/integration/build/plugin-options-schema",
-    "test": "yarn test-plugin && yarn build && yarn test-schema && yarn build-cli && yarn test-build && yarn clean-test-runtime",
-    "test-schema-watch": "SHOW_GATSBY_PROCESS_STDOUT=true yarn test-schema-first --watch",
-    "test-build-watch": "SHOW_GATSBY_PROCESS_STDOUT=true yarn test-build --watch",
-    "test-update": "yarn test-schema-first -u && yarn test-schema-increment -u && yarn test-build -u",
-    "test-plugin": "jest ./plugin/src/.*.test.js"
+    "docker-rebuild": "./docker/rebuild.sh"
   },
   "engines": {
     "node": ">=10.0.0"
