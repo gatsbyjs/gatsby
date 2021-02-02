@@ -134,8 +134,6 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const _pascalCase = str => _.upperFirst(_.camelCase(str))
-const pascalCase = memoize(_pascalCase)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
@@ -363,7 +361,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (page.path === `/`) {
     internalComponentName = `ComponentIndex`
   } else {
-    internalComponentName = `Component${pascalCase(page.path)}`
+    internalComponentName = `Component${page.path}`
   }
 
   const invalidPathSegments = tooLongSegmentsInPath(page.path)
