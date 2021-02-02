@@ -351,6 +351,7 @@ const mergeTypes = ({
     !plugin ||
     plugin.name === `default-site-plugin` ||
     plugin.name === typeOwner ||
+    typeComposer.hasExtension(`isPlaceholder`) ||
     isOverridableBuiltInType
 
   if (!isSafeMerge) {
@@ -600,8 +601,15 @@ const createTypeComposerFromGatsbyType = ({
           if (type.config.interfaces) {
             return type.config.interfaces.map(iface => {
               if (typeof iface === `string`) {
-                // FIXME: this causes warnings that we should account for
-                return schemaComposer.getOrCreateIFTC(iface)
+                // Sadly, graphql-compose runs this function too early - before we have
+                // all of those interfaces actually created in the schema, so have to create
+                // a temporary placeholder composer :/
+                if (!schemaComposer.has(iface)) {
+                  const tmpComposer = schemaComposer.createInterfaceTC(iface)
+                  tmpComposer.setExtension(`isPlaceholder`, true)
+                  return tmpComposer
+                }
+                return schemaComposer.getIFTC(iface)
               } else {
                 return iface
               }
@@ -627,10 +635,17 @@ const createTypeComposerFromGatsbyType = ({
         ...type.config,
         types: () => {
           if (type.config.types) {
-            return type.config.types.map(typeName =>
-              // FIXME: this causes warnings that we should account for
-              schemaComposer.getOrCreateOTC(typeName)
-            )
+            return type.config.types.map(typeName => {
+              if (!schemaComposer.has(typeName)) {
+                // Sadly, graphql-compose runs this function too early - before we have
+                // all of those types actually created in the schema, so have to create
+                // a temporary placeholder composer :/
+                const tmpComposer = schemaComposer.createObjectTC(typeName)
+                tmpComposer.setExtension(`isPlaceholder`, true)
+                return tmpComposer
+              }
+              return schemaComposer.getOTC(typeName)
+            })
           } else {
             return []
           }
