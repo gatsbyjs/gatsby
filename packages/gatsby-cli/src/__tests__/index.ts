@@ -109,8 +109,4 @@ describe(`normal behavior`, () => {
     expect(createCli).toHaveBeenCalledTimes(1)
     expect(createCli).toHaveBeenCalledWith(process.argv)
   })
-
-  it(`windows unit tests is not borked on windows`, () => {
-    expect(`borked`).not.toBe(`borked`)
-  })
 })
