@@ -22,11 +22,7 @@ const logger = {
   reducers: {
     incrementActivityTimer(
       state: ILoggerState,
-      {
-        typeName,
-        by,
-        action = `fetched`,
-      }: { typeName: string; by: number; action: string }
+      { typeName, by, action = `fetched` }
     ): ILoggerState {
       const logger = state.activityTimers[typeName]
 

@@ -9,8 +9,8 @@ and then store that page in state so we can return info about the page to WordPr
 when the page is updated during Previews.
 We do that by finding the node id on pageContext.id
 Ideally we could detect this without the need for pageContext.id.
-There was an attempt to use store.componentDataDependencies but my implementation 
-was buggy and unreliable. @todo it's worth trying to remove the need for 
+There was an attempt to use store.componentDataDependencies but my implementation
+was buggy and unreliable. @todo it's worth trying to remove the need for
 pageContext.id again in the future.
  */
 export const onCreatepageSavePreviewNodeIdToPageDependency = (

@@ -39,6 +39,9 @@ export interface IWebhookBody {
   id: string
   isDraft: boolean
   singleName: string
+  since?: number
+  refreshing?: boolean
+  preview?: boolean
 }
 
 interface IPageNode {
@@ -105,7 +108,7 @@ const writeDummyPageDataJsonIfNeeded = async ({
 
   const pageDataPath = path.join(pageDataDirectory, `page-data.json`)
 
-  const pageDataExists = await fs.exists(pageDataPath)
+  const pageDataExists = await fs.pathExists(pageDataPath)
 
   if (!pageDataExists) {
     await fs.writeJSON(pageDataPath, {

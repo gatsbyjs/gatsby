@@ -1,5 +1,5 @@
+import { Step } from "./../utils/run-steps"
 import prettier from "prettier"
-import { Root, SchemaLike } from "hapi__joi"
 
 const wrapOptions = (innerOptions): string =>
   prettier
@@ -14,8 +14,8 @@ const wrapOptions = (innerOptions): string =>
     .replace(`const something = `, ``)
     .replace(`;`, ``)
 
-export function pluginOptionsSchema({ Joi }: { Joi: Root }): SchemaLike {
-  const getTypeOptions = (): SchemaLike =>
+export const pluginOptionsSchema: Step = ({ Joi }) => {
+  const getTypeOptions = () =>
     Joi.object({
       where: Joi.string()
         .allow(null)

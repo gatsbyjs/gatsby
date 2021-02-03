@@ -306,7 +306,8 @@ const handleFetchErrors = async ({
     const {
       requestConcurrency,
       previewRequestConcurrency,
-    } = store.getState().gatsbyApi.pluginOptions
+    } = store.getState().gatsbyApi.pluginOptions.schema
+
     console.error(e)
     reporter.panic({
       id: CODES.WordPress500ishError,
@@ -572,6 +573,7 @@ export interface IJSON {
 interface IFetchGraphQLHeaders {
   WPGatsbyPreview?: string
   Authorization?: string
+  WPGatsbyPreviewUser?: number
 }
 
 interface IErrorMap {
@@ -603,7 +605,7 @@ const fetchGraphql = async ({
   panicOnError = false,
   throwGqlErrors = false,
   throwFetchErrors = false,
-  url = false,
+  url,
   variables = {},
   headers = {},
   errorContext = null,
