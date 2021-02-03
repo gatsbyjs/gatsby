@@ -15,7 +15,7 @@ const wrapOptions = (innerOptions): string =>
     .replace(`;`, ``)
 
 export const pluginOptionsSchema: Step = ({ Joi }) => {
-  const getTypeOptions = () =>
+  const getTypeOptions = (): any =>
     Joi.object({
       where: Joi.string()
         .allow(null)

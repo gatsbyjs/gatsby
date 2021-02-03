@@ -1,4 +1,4 @@
-import { runApisInSteps, Step } from "./utils/run-steps"
+import { runApisInSteps } from "./utils/run-steps"
 import * as steps from "./steps"
 
 module.exports = runApisInSteps({
