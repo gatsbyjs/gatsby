@@ -7,7 +7,7 @@ This guide will walk you through the process of using Gatsby with WordPress and 
 WordPress is a free and open-source content management system (CMS). Let's say you have a site built with WordPress and you want to pull the existing data into your static Gatsby site. You can do that with [gatsby-source-wordpress](/plugins/gatsby-source-wordpress/?=wordpress). Let's begin!
 
 _Note: this guide uses the `gatsby-starter-default` to provide you with the knowledge necessary to start working with WordPress but if you get stuck at some point of the guide feel free to use
-[this example](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog) to gain extra insights._
+[this example](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-wordpress-blog) to gain extra insights._
 
 ## Setup
 
@@ -85,9 +85,9 @@ Once your source plugin is pulling data, you can construct your site pages by im
 
 The `createPages` API exposes the `graphql` function:
 
-> The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog/gatsby-node.js#L21))
+> The GraphQL function allows us to run arbitrary queries against the local WordPress GraphQL schema... like the site has a built-in database constructed from the fetched data that you can run queries against. ([Source](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-wordpress-blog/gatsby-node.js#L21))
 
-You can use the [`gatsby-node.js`](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/how-to/routing/layout-components/).
+You can use the [`gatsby-node.js`](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-wordpress-blog/gatsby-node.js) from the plugin demo to get started. For the purpose of this guide, the code to construct posts works out of the box. It queries your local WordPress GraphQL schema for all Posts, [iterates through each Post node](/docs/programmatically-create-pages-from-data/) and constructs a static page for each, [based on the defined template](/docs/how-to/routing/layout-components/).
 
 For example:
 
@@ -143,7 +143,7 @@ In the GraphiQL IDE at `http://localhost:8000/__graphql` you should now see quer
 ## Wrapping up
 
 This was a very basic example meant to help you understand how you can fetch data from WordPress and use it with Gatsby. As
-the guide mentioned already, if you got stuck, you can have a look at [example repo](https://github.com/gatsbyjs/gatsby-starter-wordpress-blog), which is a working example
+the guide mentioned already, if you got stuck, you can have a look at [example repo](https://github.com/gatsbyjs/gatsby/blob/master/starters/gatsby-starter-wordpress-blog), which is a working example
 created to support this guide.
 
 ## Other resources
