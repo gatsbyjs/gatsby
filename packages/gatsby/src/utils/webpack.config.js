@@ -339,15 +339,18 @@ module.exports = async (
         // get schema to pass to eslint config and program for directory
         const { schema, program } = store.getState()
 
+        const isCustomEslint = hasLocalEslint(program.directory)
+
         // if no local eslint config, then add gatsby config
-        if (!hasLocalEslint(program.directory)) {
+        if (!isCustomEslint) {
           configRules = configRules.concat([rules.eslint(schema)])
         }
 
-        if (process.env.GATSBY_HOT_LOADER === `fast-refresh`) {
-          // FIXME: Should we always add it and just filter
-          //   the set of eslint rules when the flag is set?
-          //   (e.g. what if new required rules not related to fast-refresh are needed)
+        // Enforce fast-refresh rules even with local eslint config
+        if (
+          isCustomEslint &&
+          process.env.GATSBY_HOT_LOADER === `fast-refresh`
+        ) {
           configRules = configRules.concat([rules.eslintRequired()])
         }
 
