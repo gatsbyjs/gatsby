@@ -87,7 +87,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
         <Box flexDirection="column">
           <Static items={messages}>
             {(message): React.ReactElement => {
-              if (message.level === "ERROR") {
+              if (message.level === `ERROR`) {
                 return (
                   <ErrorComponent
                     details={message as IStructuredError}
@@ -96,7 +96,7 @@ class CLI extends React.Component<ICLIProps, ICLIState> {
                 )
               }
 
-              if (message.level === "DEPRECATION") {
+              if (message.level === `DEPRECATION`) {
                 return (
                   <DeprecationComponent
                     details={message}

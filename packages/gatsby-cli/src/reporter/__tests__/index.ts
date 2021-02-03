@@ -27,7 +27,7 @@ describe(`report.error`, () => {
     ;(reporterActions.createLog as jest.Mock).mockClear()
 
     jest.isolateModules(() => {
-      reporter = require("../reporter").reporter
+      reporter = require(`../reporter`).reporter
       // We don't care about this
       reporter.log = jest.fn()
     })
@@ -113,14 +113,14 @@ describe(`report.error`, () => {
 
 describe(`report.deprecate`, () => {
   const level = `DEPRECATION`
-  const code = "JEST"
-  const text = "deprecate me"
+  const code = `JEST`
+  const text = `deprecate me`
   let reporter: Reporter
   beforeEach(() => {
     ;(reporterActions.createLog as jest.Mock).mockClear()
 
     jest.isolateModules(() => {
-      reporter = require("../reporter").reporter
+      reporter = require(`../reporter`).reporter
       // We don't care about this
       reporter.log = jest.fn()
     })
@@ -134,7 +134,7 @@ describe(`report.deprecate`, () => {
 
     expect(reporterActions.createLog).toBeCalledWith({
       level,
-      category: "USER",
+      category: `USER`,
       text,
       pluginName: undefined,
     })
@@ -144,14 +144,14 @@ describe(`report.deprecate`, () => {
     reporter.deprecate({
       code,
       text,
-      pluginName: "gatsby-plugin-jest",
+      pluginName: `gatsby-plugin-jest`,
     })
 
     expect(reporterActions.createLog).toBeCalledWith({
       level,
-      category: "THIRD_PARTY",
+      category: `THIRD_PARTY`,
       text,
-      pluginName: "gatsby-plugin-jest",
+      pluginName: `gatsby-plugin-jest`,
     })
   })
 
@@ -159,31 +159,31 @@ describe(`report.deprecate`, () => {
     reporter.deprecate({
       code,
       text,
-      pluginName: "gatsby-plugin-jest",
+      pluginName: `gatsby-plugin-jest`,
     })
     reporter.deprecate({
       code,
       text,
-      pluginName: "gatsby-plugin-jest",
+      pluginName: `gatsby-plugin-jest`,
     })
     reporter.deprecate({
       code,
       text,
-      pluginName: "gatsby-plugin-test",
+      pluginName: `gatsby-plugin-test`,
     })
 
     expect(reporterActions.createLog).toBeCalledTimes(2)
     expect(reporterActions.createLog).toBeCalledWith({
       level,
-      category: "THIRD_PARTY",
+      category: `THIRD_PARTY`,
       text,
-      pluginName: "gatsby-plugin-jest",
+      pluginName: `gatsby-plugin-jest`,
     })
     expect(reporterActions.createLog).toBeCalledWith({
       level,
-      category: "THIRD_PARTY",
+      category: `THIRD_PARTY`,
       text,
-      pluginName: "gatsby-plugin-test",
+      pluginName: `gatsby-plugin-test`,
     })
   })
 })
