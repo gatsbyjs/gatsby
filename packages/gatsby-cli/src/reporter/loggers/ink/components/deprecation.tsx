@@ -10,35 +10,38 @@ export interface IDeprecationProps {
 }
 
 export const Deprecation: FunctionComponent<IDeprecationProps> = React.memo(
-  ({ details }) => (
-    <Box marginY={1} flexDirection="column">
-      <Box flexDirection="column">
+  ({ details }) => {
+    let pluginNameMessage: string | null = null
+    if (details.pluginName) {
+      pluginNameMessage = `Plugin: ${details.pluginName} - upgrade to the latest version or contact the plugin author.`
+    }
+
+    return (
+      <Box marginY={1} flexDirection="column">
         <Box flexDirection="column">
-          <Box>
-            <Box marginRight={1}>
-              <Text color="black" backgroundColor="yellow">
-                {` ${details.level} `}
-              </Text>
+          <Box flexDirection="column">
+            <Box>
+              <Box marginRight={1}>
+                <Text color="black" backgroundColor="yellow">
+                  {` ${details.level} `}
+                </Text>
+              </Box>
+            </Box>
+            <Box marginTop={1}>
+              <Text>{details.text}</Text>
             </Box>
           </Box>
-          <Box marginTop={1}>
-            <Text>{details.text}</Text>
-          </Box>
+          {pluginNameMessage && (
+            <Box marginTop={1} flexDirection="column">
+              <Text color="gray">{`─`.repeat(pluginNameMessage.length)}</Text>
+              <Text color="gray" dimColor>
+                {pluginNameMessage}
+              </Text>
+              <Text color="gray">{`─`.repeat(pluginNameMessage.length)}</Text>
+            </Box>
+          )}
         </Box>
-        {details.pluginName && (
-          <Box marginTop={1} flexDirection="column">
-            <Text color="gray">
-              {`─`.repeat(`Plugin: ${details.pluginName}`.length)}
-            </Text>
-            <Text color="gray" dimColor>
-              Plugin: {details.pluginName}
-            </Text>
-            <Text color="gray">
-              {`─`.repeat(`Plugin: ${details.pluginName}`.length)}
-            </Text>
-          </Box>
-        )}
       </Box>
-    </Box>
-  )
+    )
+  }
 )
