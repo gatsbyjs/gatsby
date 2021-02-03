@@ -98,7 +98,7 @@
   },
   "engines": {
     "yarn": "^1.17.3",
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "eslintIgnore": [
     "interfaces",

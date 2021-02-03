@@ -32,13 +32,13 @@
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "gatsby": "^2.24.79"
+    "gatsby": "^3.0.0-next.0"
   },
   "files": [
     "dist/",
     "src/"
   ],
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }
