@@ -8,9 +8,13 @@ const eslintRequirePreset = require.resolve(`./eslint/required`)
 export const eslintRequiredConfig: CLIEngine.Options = {
   rulePaths: [eslintRulePaths],
   useEslintrc: false,
+  allowInlineConfig: false,
+  // @ts-ignore
+  emitWarning: true,
+  parser: require.resolve(`babel-eslint`),
   baseConfig: {
     parserOptions: {
-      ecmaVersion: 2018,
+      ecmaVersion: 2020,
       sourceType: `module`,
       ecmaFeatures: {
         jsx: true,
