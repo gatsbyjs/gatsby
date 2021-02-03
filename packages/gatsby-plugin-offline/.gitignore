@@ -1,4 +1,2 @@
 /*.js
 !index.js
-!src/__tests__/fixtures/public
-yarn.lock

@@ -1,3 +1,2 @@
-/gatsby-node.js
-/normalize.js
-/utils.js
+/*.js
+!index.js

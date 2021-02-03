@@ -1,6 +1,3 @@
-demo.gif
-demo.mp4
-
 # Logs
 logs
 *.log
@@ -35,3 +32,10 @@ flow-typed
 coverage
 decls
 examples
+.eslintrc
+.babelrc
+tsconfig.json
+
+# package based ignore
+demo.gif
+demo.mp4

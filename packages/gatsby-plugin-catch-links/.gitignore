@@ -1,3 +1,2 @@
-/gatsby-browser.js
-/gatsby-node.js
-/catch-links.js
+/*.js
+!index.js
