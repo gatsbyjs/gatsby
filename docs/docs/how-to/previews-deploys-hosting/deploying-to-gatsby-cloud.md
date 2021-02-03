@@ -8,8 +8,8 @@ This guide will walk you through building and deploying your Gatsby site on [Gat
 
 Gatsby Cloud is a platform of stable, trusted tools launched by the team behind Gatsby.js in late 2019 that enables web creators to build better websites. It offers unique features that remove friction in your team's workflow including:
 
-- [**Autoprovisioning**](/cloud/docs/quick-start/) that empowers new users to create projects in minutes with a Content Management System (CMS), sample content, and connected Gatsby starter.
-- [**Real-time Preview**](/cloud/docs/viewing-preview/) to simplify content creation and collaboration. Preview offers a private playground for developers, designers, marketers, and content creators by providing a shareable temporary URL for viewing changes immediately and in context. With instant updates triggered by a CMS or webhooks, it’s a shareable, hot-reloading preview.
+- [**Quick Connect**](https://support.gatsbyjs.com/hc/en-us/articles/360061317133-Quick-Connect) that empowers new users to create projects in minutes with a Content Management System (CMS), sample content, and connected Gatsby starter.
+- [**Real-time Preview**](https://support.gatsbyjs.com/hc/en-us/articles/360055676874-CMS-Previews) to simplify content creation and collaboration. Preview offers a private playground for developers, designers, marketers, and content creators by providing a shareable temporary URL for viewing changes immediately and in context. With instant updates triggered by a CMS or webhooks, it’s a shareable, hot-reloading preview.
 - **Numerous CMS Integrations**, many of which are automatic
 - **Builds** is the fastest continuous deployment solution for Gatsby sites and apps- up to 20x faster build times compared to other solutions. Build with Gatsby and deploy to your favorite CDN.
 - **Reports** provide automated Lighthouse performance checks and deploy previews to fix errors before they’re published.
@@ -47,7 +47,7 @@ Gatsby Cloud offers automatic integration with the following hosting providers:
 - Google Cloud Storage
 - Fastly
 
-Please refer to the [Gatsby Cloud Docs](/cloud/docs/) for full details on available integrations.
+Please refer to the [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/articles/360058357013-What-hosting-providers-are-supported-) for full details on available integrations.
 
 ## Set up a new Gatsby site from scratch
 
@@ -65,7 +65,7 @@ Please refer to the [Gatsby Cloud Docs](/cloud/docs/) for full details on availa
 
 6. On _Tab 3_, click **Connect** to authenticate with your chosen CMS provider.
 
-   > If you're looking for instructions on configuring Gatsby Cloud with a specific CMS, check out the [Gatsby Cloud Docs](/cloud/docs/).
+   > If you're looking for instructions on configuring Gatsby Cloud with a specific CMS, check out the [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/sections/360011112314-Connecting-to-a-Content-Management-System).
 
 7. Once you successfully configure your CMS, click **Start my site**, prompting Gatsby Cloud to provision your starter project.
 
@@ -99,7 +99,7 @@ Please refer to the [Gatsby Cloud Docs](/cloud/docs/) for full details on availa
 
 7. By clicking **Connect** next to any integration option, you will be prompted to authenticate with that CMS platform and choose your data source within that CMS.
 
-   > If you're looking for instructions on configuring Gatsby Cloud with a specific CMS, check out the [Gatsby Cloud Docs](/cloud/docs/).
+   > If you're looking for instructions on configuring Gatsby Cloud with a specific CMS, check out the [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/sections/360011112314-Connecting-to-a-Content-Management-System).
 
    > If your CMS provider isn't listed but supports webhooks, you can attempt to manually connect to it using the Gatsby Cloud POST endpoint. This will keep your Preview automatically updated when you make changes to your CMS.
 
@@ -123,7 +123,7 @@ Please refer to the [Gatsby Cloud Docs](/cloud/docs/) for full details on availa
 
 3. Follow the prompts to authorize with your hosting provider.
 
-   > The [Gatsby Cloud Docs](/cloud/docs/) provide specific tutorials for each hosting provider.
+   > The [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/sections/360012243573-Deploying-to-a-Hosting-Service) provide specific tutorials for each hosting provider.
 
 4. At this point your hosting integration should be setup.
 
@@ -133,5 +133,5 @@ Please refer to the [Gatsby Cloud Docs](/cloud/docs/) for full details on availa
 
 ## Additional Resources
 
-- [Gatsby Cloud Docs](/cloud/docs/)
+- [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/)
 - [Announcing Gatsby Cloud](/blog/2019-11-14-announcing-gatsby-cloud/)
