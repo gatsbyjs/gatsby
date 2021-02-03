@@ -64,7 +64,7 @@
     "tree-kill": "^1.2.2",
     "wait-on": "^4.0.0"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -80,7 +80,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby.git"
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-source-wordpress"
   },
   "scripts": {
     "prepare": "npm run build",
