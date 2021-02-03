@@ -13,7 +13,7 @@ _Note: this guide uses the `gatsby-starter-default` to provide you with the know
 
 ### Quick start
 
-This guide assumes that you have a Gatsby project set up along with a WordPress instance with the [appropriate plugins](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress-experimental/docs/getting-started.md#required-wordpress-dependencies). If you need to set up a Gatsby project, head to the [Quick Start guide](/docs/quick-start), then come back. For information on configuring your WordPress instance, checkout the [docs](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress-experimental/docs/getting-started.md#required-wordpress-dependencies) before continuing.
+This guide assumes that you have a Gatsby project set up along with a WordPress instance with the [appropriate plugins](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/getting-started.md#required-wordpress-dependencies). If you need to set up a Gatsby project, head to the [Quick Start guide](/docs/quick-start), then come back. For information on configuring your WordPress instance, checkout the [docs](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/getting-started.md#required-wordpress-dependencies) before continuing.
 
 ### gatsby-config.js
 
@@ -77,7 +77,7 @@ module.exports = {
 }
 ```
 
-**Note**: If your config varies from what it shown above, for instance, if you are securing your WordPress instance with Basic Auth, please refer to the [plugin docs](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress-experimental/docs/plugin-options.md) for more information on how to setup other options required for your use case.
+**Note**: If your config varies from what it shown above, for instance, if you are securing your WordPress instance with Basic Auth, please refer to the [plugin docs](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md) for more information on how to setup other options required for your use case.
 
 ## Using WordPress data
 
