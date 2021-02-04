@@ -219,6 +219,54 @@ describe(`gatsby-remark-copy-linked-files`, () => {
     expect(fsExtra.copy).toHaveBeenCalledTimes(2)
   })
 
+  it(`can copy HTML images from source elements with the srcset attribute`, async () => {
+    const path = `images/sample-image.gif`
+
+    const markdownAST = remark.parse(
+      `<picture><source srcset="${path}"></picture>`
+    )
+
+    await plugin({ files: getFiles(path), markdownAST, markdownNode, getNode })
+
+    expect(fsExtra.copy).toHaveBeenCalled()
+  })
+
+  it(`can copy HTML multiple images from source elements with the srcset attribute`, async () => {
+    const path1 = `images/sample-image.gif`
+    const path2 = `images/another-sample-image.gif`
+
+    const markdownAST = remark.parse(
+      `<picture><source srcset="${path1}"><source srcset="${path2}"></picture>`
+    )
+
+    await plugin({
+      files: [...getFiles(path1), ...getFiles(path2)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(2)
+  })
+
+  it(`can copy HTML images from source elements with the srcset attribute and fallback img too`, async () => {
+    const path1 = `images/sample-image.gif`
+    const path2 = `images/another-sample-image.gif`
+
+    const markdownAST = remark.parse(
+      `<picture><source srcset="${path1}"><img src="${path2}"></picture>`
+    )
+
+    await plugin({
+      files: [...getFiles(path1), ...getFiles(path2)],
+      markdownAST,
+      markdownNode,
+      getNode,
+    })
+
+    expect(fsExtra.copy).toHaveBeenCalledTimes(2)
+  })
+
   it(`can copy flash from object elements with the value attribute`, async () => {
     const path = `myMovie.swf`
 
