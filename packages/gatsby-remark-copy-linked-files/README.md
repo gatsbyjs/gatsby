@@ -222,3 +222,4 @@ plugins: [
 - `<video />`
 - `<audio />`
 - `<a />`
+- `<source />`
