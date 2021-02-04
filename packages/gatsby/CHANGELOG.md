@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.33.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.33.0-next.0...gatsby@2.33.0-next.1) (2021-02-04)
+
+### Bug Fixes
+
+- **gatsby:** use separate eslint-loader for rules that are always required ([#29317](https://github.com/gatsbyjs/gatsby/issues/29317)) ([a1543bf](https://github.com/gatsbyjs/gatsby/commit/a1543bf535871a921fdd2e9893abce064cbe5565))
+
 # [2.33.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.1...gatsby@2.33.0-next.0) (2021-01-28)
 
 ### Bug Fixes

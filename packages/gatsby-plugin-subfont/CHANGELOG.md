@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-subfont@2.10.0-next.0...gatsby-plugin-subfont@2.10.0-next.1) (2021-02-04)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-subfont ([#29282](https://github.com/gatsbyjs/gatsby/issues/29282)) ([aa89084](https://github.com/gatsbyjs/gatsby/commit/aa89084fa53cd6d1efdfdbf8a0dc2951165021e4))
+
 # [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-subfont@2.9.0-next.0...gatsby-plugin-subfont@2.10.0-next.0) (2021-01-28)
 
 **Note:** Version bump only for package gatsby-plugin-subfont
