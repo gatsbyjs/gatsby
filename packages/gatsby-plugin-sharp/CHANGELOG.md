@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.15.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.15.0-next.0...gatsby-plugin-sharp@2.15.0-next.1) (2021-02-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** make sure to pass the failOnError option to base64 generation ([#29254](https://github.com/gatsbyjs/gatsby/issues/29254)) ([bc0f5c8](https://github.com/gatsbyjs/gatsby/commit/bc0f5c8f12c3bfd01c653e428566ffba5f01edcc))
+
 # [2.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.14.0-next.1...gatsby-plugin-sharp@2.15.0-next.0) (2021-01-28)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.7.0-next.0...gatsby-source-contentful@4.7.0-next.1) (2021-02-04)
+
+### Features
+
+- **contentful:** add retry logic to asset downloading ([#29268](https://github.com/gatsbyjs/gatsby/issues/29268)) ([2573224](https://github.com/gatsbyjs/gatsby/commit/25732249744fcb5c5d401dfec84fe84d51efd7c2))
+
 # [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.6.0-next.1...gatsby-source-contentful@4.7.0-next.0) (2021-01-28)
 
 ### Bug Fixes
