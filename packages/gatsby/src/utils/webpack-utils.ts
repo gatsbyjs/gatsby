@@ -20,11 +20,7 @@ import {
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
-import {
-  eslintConfig,
-  mergeRequiredConfigIn,
-  eslintRequiredConfig,
-} from "./eslint-config"
+import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 
 type LoaderResolver<T = {}> = (options?: T) => Loader
 
@@ -69,6 +65,7 @@ interface ILoaderUtils {
   exports: LoaderResolver
 
   eslint(schema: GraphQLSchema): Loader
+  eslintRequired(): Loader
 }
 
 interface IModuleThatUseGatsby {
@@ -103,6 +100,7 @@ interface IRuleUtils {
   postcss: ContextualRuleFactory<{ overrideBrowserOptions: Array<string> }>
 
   eslint: (schema: GraphQLSchema) => RuleSetRule
+  eslintRequired: () => RuleSetRule
 }
 
 type PluginUtils = BuiltinPlugins & {
@@ -335,6 +333,13 @@ export const createWebpackUtils = (
       }
     },
 
+    eslintRequired: () => {
+      return {
+        options: eslintRequiredConfig,
+        loader: require.resolve(`eslint-loader`),
+      }
+    },
+
     imports: (options = {}) => {
       return {
         options,
@@ -493,6 +498,17 @@ export const createWebpackUtils = (
         modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
         vendorRegex.test(modulePath),
       use: [loaders.eslint(schema)],
+    }
+  }
+
+  rules.eslintRequired = (): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      use: [loaders.eslintRequired()],
     }
   }
 
@@ -753,51 +769,4 @@ export function reactHasJsxRuntime(): boolean {
   // }
 
   return false
-}
-
-export function ensureRequireEslintRules(config: Configuration): Configuration {
-  if (!config.module) {
-    config.module = {
-      rules: [],
-    }
-  }
-  // for fast refresh we want to ensure that that there is eslint rule running
-  // because user might have added their own `eslint-loader` let's check if there is one
-  // and adjust it to add the rule or append new loader with required rule
-  const rule = config.module.rules.find(rule => {
-    if (typeof rule.loader === `string`) {
-      return (
-        rule.loader === `eslint-loader` ||
-        rule.loader.endsWith(`eslint-loader/index.js`) ||
-        rule.loader.endsWith(`eslint-loader/dist/cjs.js`)
-      )
-    }
-
-    return false
-  })
-
-  if (rule) {
-    if (typeof rule.options !== `string`) {
-      if (!rule.options) {
-        rule.options = {}
-      }
-      mergeRequiredConfigIn(rule.options)
-    }
-  } else {
-    config.module.rules.push({
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [
-        {
-          loader: require.resolve(`eslint-loader`),
-          options: eslintRequiredConfig,
-        },
-      ],
-    })
-  }
-
-  return config
 }
