@@ -466,6 +466,9 @@ jobs:
       shell: powershell.exe
     steps:
       - checkout
+      - run:
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
+          shell: bash.exe
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:
       #     keys:
@@ -482,9 +485,6 @@ jobs:
       #     paths:
       #       - C:\Users\circleci\AppData\Local\Yarn\Cache
       #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-      - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
-          shell: bash.exe
       - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       - run:
           name: "Run Tests"
