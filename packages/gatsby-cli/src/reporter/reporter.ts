@@ -7,7 +7,11 @@ import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
+import {
+  IErrorMapEntry,
+  ErrorId,
+  ErrorCategory,
+} from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
@@ -205,13 +209,19 @@ class Reporter {
 
     deprecationCache.add(cacheKey)
 
-    // TODO add telemetry
-    reporterActions.createLog({
+    const structuredLog = {
+      id: code,
       level: LogLevels.Deprecation,
-      category: pluginName ? `THIRD_PARTY` : `USER`,
+      category: (pluginName
+        ? `THIRD_PARTY`
+        : `USER`) as keyof typeof ErrorCategory,
       pluginName,
       ...messageObj,
-    })
+    }
+
+    trackError(`GENERIC_DEPRECATION`, { error: structuredLog, pluginName })
+
+    reporterActions.createLog(structuredLog)
   }
 
   success = (text?: string): CreateLogAction =>
