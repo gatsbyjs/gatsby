@@ -60,6 +60,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   image,
   onLoad: customOnLoad,
   backgroundColor,
+  loading = `lazy`,
   ...props
 }) {
   if (!image) {
@@ -169,6 +170,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
               toggleIsLoaded(true)
             },
             ref,
+            loading,
             ...props,
           },
           root,
