@@ -107,6 +107,7 @@ export interface IGatsbyImageHelperArgs {
   fit?: Fit
   options?: Record<string, unknown>
   breakpoints?: Array<number>
+  backgroundColor?: string
 }
 
 const warn = (message: string): void => console.warn(message)
@@ -164,6 +165,7 @@ export function generateImageData(
     height,
     filename,
     reporter = { warn },
+    backgroundColor,
   } = args
 
   if (!pluginName) {
@@ -180,7 +182,7 @@ export function generateImageData(
     sourceMetadata = {
       width,
       height,
-      format: formatFromFilename(filename),
+      format: sourceMetadata?.format || formatFromFilename(filename) || `auto`,
     }
   } else if (!sourceMetadata.format) {
     sourceMetadata.format = formatFromFilename(filename)
@@ -262,7 +264,11 @@ export function generateImageData(
     }
   })
 
-  const imageProps: Partial<IGatsbyImageData> = { images: result, layout }
+  const imageProps: Partial<IGatsbyImageData> = {
+    images: result,
+    layout,
+    backgroundColor,
+  }
   switch (layout) {
     case `fixed`:
       imageProps.width = imageSizes.presentationWidth

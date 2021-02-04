@@ -19,6 +19,7 @@ import {
   generateImageData,
   Layout,
   EVERY_BREAKPOINT,
+  IImage,
 } from "../image-utils"
 const imageCache = new Set<string>()
 
@@ -94,6 +95,126 @@ export function useGatsbyImage({
   ...args
 }: IGatsbyImageHelperArgs): IGatsbyImageData {
   return generateImageData({ pluginName, breakpoints, ...args })
+}
+
+export interface IUrlBuilderArgs<OptionsType> {
+  width: number
+  height: number
+  baseUrl: string
+  options: OptionsType
+}
+export interface IUseUrlBuilderArgs<OptionsType = {}> {
+  baseUrl: string
+  /**
+   * For constrained and fixed images, the size of the image element
+   */
+  width?: number
+  height?: number
+  /**
+   * If available, pass the source image width and height
+   */
+  sourceWidth?: number
+  sourceHeight?: number
+  /**
+   * If only one dimension is passed, then this will be used to calculate the other
+   */
+  aspectRatio?: number
+  layout?: Layout
+  /**
+   * Returns a URL based on the passed arguments. Should be a pure function
+   */
+  urlBuilder: (args: IUrlBuilderArgs<OptionsType>) => string
+
+  /**
+   * Should be a data URI
+   */
+  placeholderURL?: string
+  backgroundColor?: string
+  pluginName?: string
+  options?: OptionsType
+}
+
+export function useImageUrlBuilder<OptionsType>({
+  baseUrl,
+  urlBuilder,
+  width,
+  height,
+  sourceWidth,
+  sourceHeight,
+  aspectRatio,
+  layout = `constrained`,
+  pluginName = `useImageUrlBuilder`,
+  backgroundColor,
+  placeholderURL,
+  options,
+}: IUseUrlBuilderArgs<OptionsType>): IGatsbyImageData {
+  const generateImageSource = (
+    baseUrl: string,
+    width: number,
+    height?: number
+  ): IImage => {
+    return {
+      width,
+      height,
+      format: `auto`,
+      src: urlBuilder({ baseUrl, width, height, options }),
+    }
+  }
+
+  const breakpoints = sourceWidth
+    ? EVERY_BREAKPOINT.filter(bp => bp <= sourceWidth)
+    : EVERY_BREAKPOINT
+
+  let sourceMetadata: Partial<IGatsbyImageHelperArgs["sourceMetadata"]> = {
+    format: `auto`,
+  }
+
+  if (sourceWidth && sourceHeight) {
+    sourceMetadata = {
+      width: sourceWidth,
+      height: sourceHeight,
+      format: `auto`,
+    }
+    if (!aspectRatio) {
+      aspectRatio = sourceWidth / sourceHeight
+    }
+  }
+
+  if (layout === `fullWidth`) {
+    width = width || sourceWidth || breakpoints[breakpoints.length - 1]
+    height = height || aspectRatio ? width / aspectRatio : width / (4 / 3)
+  } else {
+    if (!width) {
+      if (height && aspectRatio) {
+        width = height * aspectRatio
+      } else if (sourceWidth) {
+        width = sourceWidth
+      } else if (height) {
+        width = height / (4 / 3)
+      } else {
+        width = 800
+      }
+    }
+
+    if (aspectRatio && !height) {
+      height = width / aspectRatio
+    }
+  }
+
+  const args: IGatsbyImageHelperArgs = {
+    width,
+    height,
+    pluginName,
+    generateImageSource,
+    layout,
+    filename: baseUrl,
+    formats: [`auto`],
+    breakpoints,
+    backgroundColor,
+    placeholderURL,
+    sourceMetadata: sourceMetadata as IGatsbyImageHelperArgs["sourceMetadata"],
+  }
+  return useGatsbyImage(args)
 }
 
 export function getMainProps(
