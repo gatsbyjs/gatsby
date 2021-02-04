@@ -1,6 +1,6 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
-import { trackError } from "gatsby-telemetry"
+import { trackError, trackMessage } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
 
 import * as reporterActions from "./redux/actions"
@@ -210,7 +210,7 @@ class Reporter {
     deprecationCache.add(cacheKey)
 
     const structuredLog = {
-      id: code,
+      ids: code,
       level: LogLevels.Deprecation,
       category: (pluginName
         ? `THIRD_PARTY`
@@ -219,7 +219,7 @@ class Reporter {
       ...messageObj,
     }
 
-    trackError(`GENERIC_DEPRECATION`, { error: structuredLog, pluginName })
+    trackMessage({ message: structuredLog, pluginName })
 
     reporterActions.createLog(structuredLog)
   }
