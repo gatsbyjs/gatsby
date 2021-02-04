@@ -23,8 +23,10 @@ fi
 
 FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
 
-# reset to PR branch
-git reset --hard "$CIRCLE_BRANCH"
+if [ "$IS_CI" = true ]; then
+  # reset to previous state
+  git reset --hard $CIRCLE_SHA1
+fi
 
 if [ "$FILES_COUNT" -eq 0 ]; then
   echo "0 files matching '$GREP_PATTERN'; exiting and marking successful."
