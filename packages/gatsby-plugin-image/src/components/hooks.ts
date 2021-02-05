@@ -23,6 +23,8 @@ import {
 } from "../image-utils"
 const imageCache = new Set<string>()
 
+const DEFAULT_FIXED_WIDTH = 800
+const DEFAULT_ASPECT_RATIO = 4 / 3
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
 export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
@@ -89,21 +91,13 @@ export async function applyPolyfill(
   ;(window as any).objectFitPolyfill(ref.current)
 }
 
-export function useGatsbyImage({
-  pluginName = `useGatsbyImage`,
-  breakpoints = EVERY_BREAKPOINT,
-  ...args
-}: IGatsbyImageHelperArgs): IGatsbyImageData {
-  return generateImageData({ pluginName, breakpoints, ...args })
-}
-
 export interface IUrlBuilderArgs<OptionsType> {
   width: number
   height: number
   baseUrl: string
   options: OptionsType
 }
-export interface IUseUrlBuilderArgs<OptionsType = {}> {
+export interface IUseGatsbyImageArgs<OptionsType = {}> {
   baseUrl: string
   /**
    * For constrained and fixed images, the size of the image element
@@ -130,11 +124,20 @@ export interface IUseUrlBuilderArgs<OptionsType = {}> {
    */
   placeholderURL?: string
   backgroundColor?: string
+  /**
+   * Used in error messages etc
+   */
   pluginName?: string
+  /**
+   * Passed to the urlBuilder function
+   */
   options?: OptionsType
 }
 
-export function useImageUrlBuilder<OptionsType>({
+/**
+ * Use this hook to generate gatsby-plugin-image data in the browser.
+ */
+export function useGatsbyImage<OptionsType>({
   baseUrl,
   urlBuilder,
   width,
@@ -143,11 +146,11 @@ export function useImageUrlBuilder<OptionsType>({
   sourceHeight,
   aspectRatio,
   layout = `constrained`,
-  pluginName = `useImageUrlBuilder`,
+  pluginName = `useGatsbyImage`,
   backgroundColor,
   placeholderURL,
   options,
-}: IUseUrlBuilderArgs<OptionsType>): IGatsbyImageData {
+}: IUseGatsbyImageArgs<OptionsType>): IGatsbyImageData {
   const generateImageSource = (
     baseUrl: string,
     width: number,
@@ -165,24 +168,19 @@ export function useImageUrlBuilder<OptionsType>({
     ? EVERY_BREAKPOINT.filter(bp => bp <= sourceWidth)
     : EVERY_BREAKPOINT
 
-  let sourceMetadata: Partial<IGatsbyImageHelperArgs["sourceMetadata"]> = {
+  const sourceMetadata: IGatsbyImageHelperArgs["sourceMetadata"] = {
+    width: sourceWidth,
+    height: sourceHeight,
     format: `auto`,
   }
 
-  if (sourceWidth && sourceHeight) {
-    sourceMetadata = {
-      width: sourceWidth,
-      height: sourceHeight,
-      format: `auto`,
-    }
-    if (!aspectRatio) {
-      aspectRatio = sourceWidth / sourceHeight
-    }
+  if (sourceWidth && sourceHeight && !aspectRatio) {
+    aspectRatio = sourceWidth / sourceHeight
   }
 
   if (layout === `fullWidth`) {
     width = width || sourceWidth || breakpoints[breakpoints.length - 1]
-    height = height || aspectRatio ? width / aspectRatio : width / (4 / 3)
+    height = height || width / (aspectRatio || DEFAULT_ASPECT_RATIO)
   } else {
     if (!width) {
       if (height && aspectRatio) {
@@ -192,7 +190,7 @@ export function useImageUrlBuilder<OptionsType>({
       } else if (height) {
         width = height / (4 / 3)
       } else {
-        width = 800
+        width = DEFAULT_FIXED_WIDTH
       }
     }
 
@@ -212,9 +210,9 @@ export function useImageUrlBuilder<OptionsType>({
     breakpoints,
     backgroundColor,
     placeholderURL,
-    sourceMetadata: sourceMetadata as IGatsbyImageHelperArgs["sourceMetadata"],
+    sourceMetadata,
   }
-  return useGatsbyImage(args)
+  return generateImageData(args)
 }
 
 export function getMainProps(

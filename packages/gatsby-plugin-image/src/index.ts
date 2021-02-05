@@ -10,10 +10,9 @@ export {
   getImage,
   getSrc,
   useGatsbyImage,
-  useImageUrlBuilder,
   useArtDirection,
   IArtDirectedImage,
-  IUseUrlBuilderArgs,
+  IUseGatsbyImageArgs,
   IUrlBuilderArgs,
 } from "./components/hooks"
 export {
