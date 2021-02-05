@@ -1,5 +1,5 @@
 orbs:
-  win: circleci/windows@2.2.0
+  win: circleci/windows@2.4.0
   slack: circleci/slack@3.4.1
 
 executors:
@@ -8,15 +8,7 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "10.13"
-    docker:
-      - image: circleci/node:<< parameters.image >>
-  node_10_19:
-    parameters:
-      image:
-        type: string
-        # More recent Yarn binary
-        default: "10.19"
+        default: "12.13"
     docker:
       - image: circleci/node:<< parameters.image >>
 
@@ -85,7 +77,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node10
+      - unit_tests_node12
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -218,14 +210,9 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node10:
-    executor: node
-    <<: *test_template
-
   unit_tests_node12:
     executor:
       name: node
-      image: "12"
     <<: *test_template
 
   unit_tests_node14:
@@ -296,7 +283,7 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_pnp:
-    executor: node_10_19
+    executor: node
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -475,6 +462,13 @@ jobs:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
       - run:
+          name: Install node 12.13
+          command: |
+            nvm install 12.13.0
+            nvm alias default 12.13.0
+            nvm use 12.13.0
+            choco install yarn
+      - run:
           name: Set yarn timeout
           command: yarn config set network-timeout 300000
       - run:
@@ -592,12 +586,6 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
-      - unit_tests_node10:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
