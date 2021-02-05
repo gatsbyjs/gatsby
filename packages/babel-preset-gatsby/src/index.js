@@ -119,10 +119,17 @@ export default function preset(_, options = {}) {
           // absoluteRuntime: absoluteRuntimePath,
         },
       ],
+      // TODO allow loose mode as an option in v3
       isBrowser && [
         resolve(`@babel/plugin-transform-spread`),
         {
           loose: false, // Fixes #14848
+        },
+      ],
+      isBrowser && [
+        resolve(`@babel/plugin-transform-classes`),
+        {
+          loose: true,
         },
       ],
       IS_TEST && resolve(`babel-plugin-dynamic-import-node`),

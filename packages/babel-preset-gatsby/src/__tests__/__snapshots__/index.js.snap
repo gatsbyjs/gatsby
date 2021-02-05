@@ -298,6 +298,12 @@ Object {
         "loose": false,
       },
     ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-classes/lib/index.js",
+      Object {
+        "loose": true,
+      },
+    ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
     Array [
       "<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/lib/index.js",
@@ -566,6 +572,12 @@ Object {
       "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-spread/lib/index.js",
       Object {
         "loose": false,
+      },
+    ],
+    Array [
+      "<PROJECT_ROOT>/node_modules/@babel/plugin-transform-classes/lib/index.js",
+      Object {
+        "loose": true,
       },
     ],
     "<PROJECT_ROOT>/node_modules/babel-plugin-dynamic-import-node/lib/index.js",
