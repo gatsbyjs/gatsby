@@ -90,10 +90,6 @@ export default [
     value: `travis-deploy-github-pages`,
   },
   {
-    label: `Add Headless WordPress integration`,
-    value: `wordpress`,
-  },
-  {
     label: `Add e-commerce powered by Snipcart`,
     value: `snipcart.mdx`,
   },

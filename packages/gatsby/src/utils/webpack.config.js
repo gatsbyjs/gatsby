@@ -15,7 +15,7 @@ const report = require(`gatsby-cli/lib/reporter`)
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
 const apiRunnerNode = require(`./api-runner-node`)
-import { createWebpackUtils, ensureRequireEslintRules } from "./webpack-utils"
+import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 
@@ -339,9 +339,19 @@ module.exports = async (
         // get schema to pass to eslint config and program for directory
         const { schema, program } = store.getState()
 
+        const isCustomEslint = hasLocalEslint(program.directory)
+
         // if no local eslint config, then add gatsby config
-        if (!hasLocalEslint(program.directory)) {
+        if (!isCustomEslint) {
           configRules = configRules.concat([rules.eslint(schema)])
+        }
+
+        // Enforce fast-refresh rules even with local eslint config
+        if (
+          isCustomEslint &&
+          process.env.GATSBY_HOT_LOADER === `fast-refresh`
+        ) {
+          configRules = configRules.concat([rules.eslintRequired()])
         }
 
         configRules = configRules.concat([
@@ -732,15 +742,5 @@ module.exports = async (
     parentSpan,
   })
 
-  let finalConfig = getConfig()
-
-  if (
-    stage === `develop` &&
-    process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
-    hasLocalEslint(program.directory)
-  ) {
-    finalConfig = ensureRequireEslintRules(finalConfig)
-  }
-
-  return finalConfig
+  return getConfig()
 }
