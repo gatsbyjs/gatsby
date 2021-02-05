@@ -35,17 +35,22 @@ export default function preset(_, options = {}) {
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
   const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
   const pluginBabelConfig = loadCachedConfig()
+  let isBrowser
   // unused because of cloud builds
   // const absoluteRuntimePath = path.dirname(
   //   require.resolve(`@babel/runtime/package.json`)
   // )
-
   if (!targets) {
-    if (stage === `build-html` || stage === `test`) {
+    if (
+      stage === `build-html` ||
+      stage === `develop-html` ||
+      stage === `test`
+    ) {
       targets = {
         node: `current`,
       }
     } else {
+      isBrowser = true
       targets = pluginBabelConfig.browserslist
     }
   }
@@ -114,7 +119,7 @@ export default function preset(_, options = {}) {
           // absoluteRuntime: absoluteRuntimePath,
         },
       ],
-      [
+      isBrowser && [
         resolve(`@babel/plugin-transform-spread`),
         {
           loose: false, // Fixes #14848
