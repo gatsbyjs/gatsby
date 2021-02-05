@@ -19,7 +19,8 @@ export const EVERY_BREAKPOINT = [
   4096,
 ]
 const DEFAULT_FLUID_WIDTH = 800
-const DEFAULT_FIXED_WIDTH = 400
+const DEFAULT_FIXED_WIDTH = 800
+const DEFAULT_ASPECT_RATIO = 4 / 3
 
 export type Fit = "cover" | "fill" | "inside" | "outside" | "contain"
 
@@ -108,6 +109,7 @@ export interface IGatsbyImageHelperArgs {
   options?: Record<string, unknown>
   breakpoints?: Array<number>
   backgroundColor?: string
+  aspectRatio?: number
 }
 
 const warn = (message: string): void => console.warn(message)
@@ -151,9 +153,46 @@ export function formatFromFilename(filename: string): ImageFormat | undefined {
   return undefined
 }
 
+export function setDefaultDimensions(
+  args: IGatsbyImageHelperArgs
+): IGatsbyImageHelperArgs {
+  let { layout, width, height, sourceMetadata, breakpoints, aspectRatio } = args
+
+  if (width && height) {
+    return args
+  }
+  if (sourceMetadata.width && sourceMetadata.height && !aspectRatio) {
+    aspectRatio = sourceMetadata.width / sourceMetadata.height
+  }
+
+  if (layout === `fullWidth`) {
+    width = width || sourceMetadata.width || breakpoints[breakpoints.length - 1]
+    height = height || width / (aspectRatio || DEFAULT_ASPECT_RATIO)
+  } else {
+    if (!width) {
+      if (height && aspectRatio) {
+        width = height * aspectRatio
+      } else if (sourceMetadata.width) {
+        width = sourceMetadata.width
+      } else if (height) {
+        width = height / (4 / 3)
+      } else {
+        width = DEFAULT_FIXED_WIDTH
+      }
+    }
+
+    if (aspectRatio && !height) {
+      height = width / aspectRatio
+    }
+  }
+  return { ...args, width, height, aspectRatio }
+}
+
 export function generateImageData(
   args: IGatsbyImageHelperArgs
 ): IGatsbyImageData {
+  args = setDefaultDimensions(args)
+
   let {
     pluginName,
     sourceMetadata,

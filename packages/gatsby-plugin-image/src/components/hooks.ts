@@ -20,11 +20,11 @@ import {
   Layout,
   EVERY_BREAKPOINT,
   IImage,
+  ImageFormat,
 } from "../image-utils"
+import { PictureProps } from "./picture"
 const imageCache = new Set<string>()
 
-const DEFAULT_FIXED_WIDTH = 800
-const DEFAULT_ASPECT_RATIO = 4 / 3
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
 export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
@@ -95,6 +95,7 @@ export interface IUrlBuilderArgs<OptionsType> {
   width: number
   height: number
   baseUrl: string
+  format: ImageFormat
   options: OptionsType
 }
 export interface IUseGatsbyImageArgs<OptionsType = {}> {
@@ -110,7 +111,7 @@ export interface IUseGatsbyImageArgs<OptionsType = {}> {
   sourceWidth?: number
   sourceHeight?: number
   /**
-   * If only one dimension is passed, then this will be used to calculate the other
+   * If only one dimension is passed, then this will be used to calculate the other.
    */
   aspectRatio?: number
   layout?: Layout
@@ -128,6 +129,14 @@ export interface IUseGatsbyImageArgs<OptionsType = {}> {
    * Used in error messages etc
    */
   pluginName?: string
+
+  /**
+   * If you do not support auto-format, pass an array of image types here
+   */
+  formats?: Array<ImageFormat>
+
+  breakpoints?: Array<number>
+
   /**
    * Passed to the urlBuilder function
    */
@@ -140,33 +149,27 @@ export interface IUseGatsbyImageArgs<OptionsType = {}> {
 export function useGatsbyImage<OptionsType>({
   baseUrl,
   urlBuilder,
-  width,
-  height,
   sourceWidth,
   sourceHeight,
-  aspectRatio,
-  layout = `constrained`,
   pluginName = `useGatsbyImage`,
-  backgroundColor,
-  placeholderURL,
+  formats = [`auto`],
+  breakpoints = EVERY_BREAKPOINT,
   options,
+  ...props
 }: IUseGatsbyImageArgs<OptionsType>): IGatsbyImageData {
   const generateImageSource = (
     baseUrl: string,
     width: number,
-    height?: number
+    height?: number,
+    format?: ImageFormat
   ): IImage => {
     return {
       width,
       height,
-      format: `auto`,
-      src: urlBuilder({ baseUrl, width, height, options }),
+      format,
+      src: urlBuilder({ baseUrl, width, height, options, format }),
     }
   }
-
-  const breakpoints = sourceWidth
-    ? EVERY_BREAKPOINT.filter(bp => bp <= sourceWidth)
-    : EVERY_BREAKPOINT
 
   const sourceMetadata: IGatsbyImageHelperArgs["sourceMetadata"] = {
     width: sourceWidth,
@@ -174,42 +177,13 @@ export function useGatsbyImage<OptionsType>({
     format: `auto`,
   }
 
-  if (sourceWidth && sourceHeight && !aspectRatio) {
-    aspectRatio = sourceWidth / sourceHeight
-  }
-
-  if (layout === `fullWidth`) {
-    width = width || sourceWidth || breakpoints[breakpoints.length - 1]
-    height = height || width / (aspectRatio || DEFAULT_ASPECT_RATIO)
-  } else {
-    if (!width) {
-      if (height && aspectRatio) {
-        width = height * aspectRatio
-      } else if (sourceWidth) {
-        width = sourceWidth
-      } else if (height) {
-        width = height / (4 / 3)
-      } else {
-        width = DEFAULT_FIXED_WIDTH
-      }
-    }
-
-    if (aspectRatio && !height) {
-      height = width / aspectRatio
-    }
-  }
-
   const args: IGatsbyImageHelperArgs = {
-    width,
-    height,
+    ...props,
     pluginName,
     generateImageSource,
-    layout,
     filename: baseUrl,
-    formats: [`auto`],
+    formats,
     breakpoints,
-    backgroundColor,
-    placeholderURL,
     sourceMetadata,
   }
   return generateImageData(args)
@@ -218,7 +192,7 @@ export function useGatsbyImage<OptionsType>({
 export function getMainProps(
   isLoading: boolean,
   isLoaded: boolean,
-  images: any,
+  images: Pick<PictureProps, "sources" | "fallback" | "alt">,
   loading?: "eager" | "lazy",
   toggleLoaded?: (loaded: boolean) => void,
   cacheKey?: string,
