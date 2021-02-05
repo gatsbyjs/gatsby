@@ -100,7 +100,7 @@ describe(`build and update schema for SitePage`, () => {
     fields = Object.keys(schema.getType(`SitePage`).getFields())
     expect(fields.length).toBe(12)
 
-    // FIXME: restore ordering of fields
+    // fix ordering of fields (graphql-compose adds them in the weird order in v7)
     expect(fields).toEqual(
       initialFields.filter(f => f !== `fields`).concat(`fields`, `context`)
     )
