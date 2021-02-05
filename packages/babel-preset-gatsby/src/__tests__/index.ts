@@ -19,7 +19,7 @@ describe(`babel-preset-gatsby`, () => {
       targets,
     })
 
-    expect(presets[0]).toEqual([
+    expect(presets?.[0]).toEqual([
       expect.stringContaining(path.join(`@babel`, `preset-env`)),
       expect.objectContaining({
         targets,

@@ -1,13 +1,13 @@
-const path = require(`path`)
-const {
-  CORE_JS_POLYFILL_EXCLUDE_LIST: polyfillsToExclude,
-} = require(`gatsby-legacy-polyfills/dist/exclude`)
+import { Browserslist } from "browserslist"
+import { TransformOptions, PluginItem } from "@babel/core"
+import * as path from "path"
+import { CORE_JS_POLYFILL_EXCLUDE_LIST as polyfillsToExclude } from "gatsby-legacy-polyfills/dist/exclude"
 
-const resolve = m => require.resolve(m)
+const resolve = (m: string): string => require.resolve(m)
 
 const IS_TEST = (process.env.BABEL_ENV || process.env.NODE_ENV) === `test`
 
-export function loadCachedConfig() {
+export function loadCachedConfig(): { browserslist?: Browserslist } {
   let pluginBabelConfig = {}
   if (!IS_TEST) {
     try {
@@ -29,7 +29,12 @@ export function loadCachedConfig() {
   return pluginBabelConfig
 }
 
-export default function preset(_, options = {}) {
+interface IOptions {
+  targets?: Browserslist | { node: `current` } | string
+  stage?: string
+}
+
+export default function preset(_, options: IOptions = {}): TransformOptions {
   let { targets = null } = options
 
   // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
@@ -46,7 +51,7 @@ export default function preset(_, options = {}) {
         node: `current`,
       }
     } else {
-      targets = pluginBabelConfig.browserslist
+      targets = pluginBabelConfig.browserslist as Browserslist
     }
   }
 
@@ -128,6 +133,6 @@ export default function preset(_, options = {}) {
           removeImport: true,
         },
       ],
-    ].filter(Boolean),
+    ].filter(Boolean) as Array<PluginItem>,
   }
 }
