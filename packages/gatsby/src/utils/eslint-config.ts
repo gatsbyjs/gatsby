@@ -8,9 +8,13 @@ const eslintRequirePreset = require.resolve(`./eslint/required`)
 export const eslintRequiredConfig: CLIEngine.Options = {
   rulePaths: [eslintRulePaths],
   useEslintrc: false,
+  allowInlineConfig: false,
+  // @ts-ignore
+  emitWarning: true,
   baseConfig: {
+    parser: require.resolve(`babel-eslint`),
     parserOptions: {
-      ecmaVersion: 2018,
+      ecmaVersion: 2020,
       sourceType: `module`,
       ecmaFeatures: {
         jsx: true,
@@ -23,46 +27,6 @@ export const eslintRequiredConfig: CLIEngine.Options = {
     },
     extends: [eslintRequirePreset],
   },
-}
-
-export function mergeRequiredConfigIn(
-  existingOptions: CLIEngine.Options
-): void {
-  // make sure rulePaths include our custom rules
-  if (existingOptions.rulePaths) {
-    if (
-      Array.isArray(existingOptions.rulePaths) &&
-      !existingOptions.rulePaths.includes(eslintRulePaths)
-    ) {
-      existingOptions.rulePaths.push(eslintRulePaths)
-    }
-  } else {
-    existingOptions.rulePaths = [eslintRulePaths]
-  }
-
-  // make sure we extend required preset
-  if (!existingOptions.baseConfig) {
-    existingOptions.baseConfig = {}
-  }
-
-  if (existingOptions.baseConfig.extends) {
-    if (
-      Array.isArray(existingOptions.baseConfig.extends) &&
-      !existingOptions.baseConfig.extends.includes(eslintRequirePreset)
-    ) {
-      existingOptions.baseConfig.extends.push(eslintRequirePreset)
-    } else if (
-      typeof existingOptions.baseConfig.extends === `string` &&
-      existingOptions.baseConfig.extends !== eslintRequirePreset
-    ) {
-      existingOptions.baseConfig.extends = [
-        existingOptions.baseConfig.extends,
-        eslintRequirePreset,
-      ]
-    }
-  } else {
-    existingOptions.baseConfig.extends = [eslintRequirePreset]
-  }
 }
 
 export const eslintConfig = (
