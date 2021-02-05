@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.12.0...babel-preset-gatsby@0.12.1) (2021-02-05)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** remove spread operator from node builds ([#29346](https://github.com/gatsbyjs/gatsby/issues/29346)) ([#29357](https://github.com/gatsbyjs/gatsby/issues/29357)) ([794b387](https://github.com/gatsbyjs/gatsby/commit/794b38799cd8b8ad33bddf857ad9d87cd2615dca))
+
 # [0.12.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.12.0-next.0...babel-preset-gatsby@0.12.0) (2021-02-02)
 
 **Note:** Version bump only for package babel-preset-gatsby

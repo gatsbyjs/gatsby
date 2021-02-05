@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.2...gatsby@2.32.3) (2021-02-05)
+
+**Note:** Version bump only for package gatsby
+
 ## [2.32.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.1...gatsby@2.32.2) (2021-02-04)
 
 **Note:** Version bump only for package gatsby
