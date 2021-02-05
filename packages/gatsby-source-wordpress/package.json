@@ -72,7 +72,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.24.74",
+    "gatsby": "^3.0.0-next.0",
     "gatsby-plugin-sharp": "^2.6.8",
     "gatsby-transformer-sharp": "^2.5.10"
   },
@@ -90,6 +90,6 @@
     "docker-rebuild": "./docker/rebuild.sh"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

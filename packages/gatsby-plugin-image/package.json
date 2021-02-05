@@ -64,7 +64,7 @@
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "gatsby": ">=2",
+    "gatsby": "^3.0.0-next.0",
     "gatsby-image": "*",
     "gatsby-plugin-sharp": "*",
     "gatsby-source-filesystem": "*",

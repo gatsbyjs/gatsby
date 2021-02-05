@@ -195,7 +195,7 @@
     "zipkin-transport-http": "^0.22.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "files": [
     "apis.json",
