@@ -150,9 +150,15 @@ export const getSortInput = <TSource = any, TContext = any>({
   schemaComposer: SchemaComposer<TContext>
   typeComposer: ObjectTypeComposer<TSource, TContext>
 }): InputTypeComposer<TContext> => {
-  // FIXME: using String as a fallback could be wrong!
+  // toInputObjectType() will fail to convert fields of union types, e.g.
+  //   union FooBar = Foo | Bar
+  //   type Baz {
+  //     fooBar: FooBar
+  //   }
+  // Unfortunately there is no way to just exclude such fields from the input type in graphql-compose v7+,
+  // so simply replacing them with booleans as the least confusing option :/
   const inputTypeComposer = toInputObjectType(typeComposer, {
-    fallbackType: schemaComposer.getSTC(`String`),
+    fallbackType: schemaComposer.getSTC(`Boolean`),
   })
   const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
   const fieldsEnumTC = getFieldsEnum({

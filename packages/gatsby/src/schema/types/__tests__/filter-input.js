@@ -61,16 +61,22 @@ describe(`Filter input`, () => {
     )
   })
 
-  // FIXME: this test breaks because of https://github.com/gatsbyjs/gatsby/pull/29090/commits/126b7ec1ee168fefc6884b1dfaad96c12272f302
-  //  Need to figure out good approach for the fallback type for unions to make it work again :/
-  it.skip(`removes empty input filter fields`, async () => {
+  it(`removes empty input filter fields`, async () => {
     // This can happen when a type has only one GraphQLUnion type field,
     // which will be skipped by `toInputObjectType`
     const schema = await buildSchema()
     const parentFilterInput = schema.getType(`ParentFilterInput`)
     const fields = parentFilterInput.getFields()
     expect(fields.id).toBeDefined()
-    expect(fields.nested).toBeUndefined()
+
+    // graphql-compose v7 requires union type to be replaced by a fallback type
+    // (we chose to use boolean as a fallback as it is the least confusing of all options)
+    expect(fields.nested).toBeDefined()
+    expect(fields.nested.type.name).toEqual(`ParentNestedFilterInput`)
+    const nestedInput = schema.getType(`ParentNestedFilterInput`)
+    expect(nestedInput.getFields().union.type.name).toEqual(
+      `BooleanQueryOperatorInput`
+    )
   })
 })
 
