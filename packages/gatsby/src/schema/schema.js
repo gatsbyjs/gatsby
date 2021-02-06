@@ -1072,11 +1072,9 @@ const addInferredChildOfExtensions = ({ schemaComposer }) => {
 
 const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
   const shouldInfer = typeComposer.getExtension(`infer`)
-  // In Gatsby v3, when `@dontInfer` is set, `@childOf` extension will not be
-  // automatically created for parent-child relations set by plugins with
-  // `createParentChildLink`. With `@dontInfer`, only parent-child
-  // relations explicitly set with the `@childOf` extension will be added.
-  // if (shouldInfer === false) return
+  // With `@dontInfer`, only parent-child
+  // relations explicitly set with the `@childOf` extension are added.
+  if (shouldInfer === false) return
 
   const parentTypeName = typeComposer.getTypeName()
   const nodes = getNodesByType(parentTypeName)
@@ -1089,28 +1087,6 @@ const addInferredChildOfExtension = ({ schemaComposer, typeComposer }) => {
 
     if (isExplicitChild({ typeComposer, childTypeComposer })) {
       return
-    }
-    if (shouldInfer === false) {
-      // Adding children fields to types with the `@dontInfer` extension is deprecated
-      // Only warn when the parent-child relation has not been explicitly set with `childOf` directive
-      const childField = fieldNames.convenienceChild(typeName)
-      const childrenField = fieldNames.convenienceChildren(typeName)
-      const childOfTypes = (childOfExtension?.types ?? [])
-        .concat(parentTypeName)
-        .map(name => `"${name}"`)
-        .join(`,`)
-
-      report.warn(
-        `Deprecation warning: ` +
-          `In Gatsby v3 fields \`${parentTypeName}.${childField}\` and \`${parentTypeName}.${childrenField}\` ` +
-          `will not be added automatically because ` +
-          `type \`${typeName}\` does not explicitly list type \`${parentTypeName}\` in \`childOf\` extension.\n` +
-          `Add the following type definition to fix this:\n\n` +
-          `  type ${typeName} implements Node @childOf(types: [${childOfTypes}]) {\n` +
-          `    id: ID!\n` +
-          `  }\n\n` +
-          `https://www.gatsbyjs.com/docs/actions/#createTypes`
-      )
     }
     // Set `@childOf` extension automatically
     // This will cause convenience children fields like `childImageSharp`
