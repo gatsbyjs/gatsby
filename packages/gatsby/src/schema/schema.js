@@ -980,7 +980,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       }
 
       const { types, mimeTypes } = type.getExtension(`childOf`)
-      // TODO: deprecate `many` argument
+
       new Set(types).forEach(parentType => {
         if (!parentTypesToChildren.has(parentType)) {
           parentTypesToChildren.set(parentType, new Set())
