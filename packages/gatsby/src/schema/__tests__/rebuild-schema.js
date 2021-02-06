@@ -438,7 +438,7 @@ describe(`build and update individual types`, () => {
     `)
     expect(print(`BarFilterInput`)).toMatchInlineSnapshot(`
       "input BarFilterInput {
-        id: StringQueryOperatorInput
+        id: IDQueryOperatorInput
         parent: NodeFilterInput
         children: NodeFilterListInput
         internal: InternalFilterInput
