@@ -476,10 +476,17 @@ input FloatQueryOperatorInput {
 }
 
 input NodeFilterInput {
-  id: StringQueryOperatorInput
+  id: IDQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
+}
+
+input IDQueryOperatorInput {
+  eq: ID
+  ne: ID
+  in: [ID]
+  nin: [ID]
 }
 
 input NodeFilterListInput {
