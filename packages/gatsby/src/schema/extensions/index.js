@@ -27,23 +27,9 @@ const dontInferExtensionName = `dontInfer`
 const typeExtensions = {
   [inferExtensionName]: {
     description: `Infer field types from field values.`,
-    args: {
-      noDefaultResolvers: {
-        type: `Boolean`,
-        description: `Don't add default resolvers to defined fields.`,
-        deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
-      },
-    },
   },
   [dontInferExtensionName]: {
     description: `Do not infer field types from field values.`,
-    args: {
-      noDefaultResolvers: {
-        type: `Boolean`,
-        description: `Don't add default resolvers to defined fields.`,
-        deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
-      },
-    },
   },
   mimeTypes: {
     description: `Define the mime-types handled by this type.`,

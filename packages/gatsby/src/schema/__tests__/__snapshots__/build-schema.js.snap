@@ -14,16 +14,10 @@ directive @fileByRelativePath(from: String) on FIELD_DEFINITION
 directive @proxy(from: String!, fromNode: Boolean! = false) on FIELD_DEFINITION
 
 \\"\\"\\"Infer field types from field values.\\"\\"\\"
-directive @infer(
-  \\"\\"\\"Don't add default resolvers to defined fields.\\"\\"\\"
-  noDefaultResolvers: Boolean @deprecated(reason: \\"noDefaultResolvers is deprecated, annotate individual fields.\\")
-) on OBJECT
+directive @infer on OBJECT
 
 \\"\\"\\"Do not infer field types from field values.\\"\\"\\"
-directive @dontInfer(
-  \\"\\"\\"Don't add default resolvers to defined fields.\\"\\"\\"
-  noDefaultResolvers: Boolean @deprecated(reason: \\"noDefaultResolvers is deprecated, annotate individual fields.\\")
-) on OBJECT
+directive @dontInfer on OBJECT
 
 \\"\\"\\"Define the mime-types handled by this type.\\"\\"\\"
 directive @mimeTypes(
