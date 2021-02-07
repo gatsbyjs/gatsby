@@ -115,7 +115,7 @@ Font files can usually be reduced in size significantly. If your font file is ov
 
 - **Self-host fonts rather than using an external CDN.** Having the font file available locally will save a trip over the network. 
 
-- **Use Latin font subsets only** (if creating a Latin-language site). It's common to accidentally include font extensions (Greek, Cyrillic, Devnagari, Chinese) when typically you only need the Latin base set. The [Google Webfonts Helper app](https://google-webfonts-helper.herokuapp.com/fonts/SourceSansPro) can help you do this with free fonts.
+- **Use Latin font subsets only** (if creating a Latin-language site). It's common to accidentally include language font extensions (Greek, Cyrillic, Devnagari, Chinese) when if you're creating a Latin-language site you typically only need the Latin base set. The [Google Webfonts Helper app](https://google-webfonts-helper.herokuapp.com/fonts/SourceSansPro) can help you do this with free fonts.
 
 Font optimizations are usually small, but easy performance wins. 
 
