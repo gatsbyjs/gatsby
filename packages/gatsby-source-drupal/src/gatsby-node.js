@@ -54,6 +54,7 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
+    entityReferenceRevisions = [],
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -158,7 +159,8 @@ exports.sourceNodes = async (
                   createNodeIdWithVersion(
                     nodeSyncData.id,
                     nodeSyncData.type,
-                    nodeSyncData.attributes?.drupal_internal__revision_id
+                    nodeSyncData.attributes?.drupal_internal__revision_id,
+                    entityReferenceRevisions
                   )
                 )
               )
@@ -309,7 +311,7 @@ exports.sourceNodes = async (
     if (!contentType) return
     _.each(contentType.data, datum => {
       if (!datum) return
-      const node = nodeFromData(datum, createNodeId)
+      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
       nodes.set(node.id, node)
     })
   })
@@ -319,6 +321,7 @@ exports.sourceNodes = async (
     handleReferences(node, {
       getNode: nodes.get.bind(nodes),
       createNodeId,
+      entityReferenceRevisions,
     })
   })
 

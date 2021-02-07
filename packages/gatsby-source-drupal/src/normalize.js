@@ -1,7 +1,7 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const nodeFromData = (datum, createNodeId) => {
+const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
@@ -10,7 +10,8 @@ const nodeFromData = (datum, createNodeId) => {
       createNodeIdWithVersion(
         datum.id,
         datum.type,
-        attributes.drupal_internal__revision_id
+        attributes.drupal_internal__revision_id,
+        entityReferenceRevisions
       )
     ),
     drupal_id: datum.id,
@@ -29,12 +30,22 @@ const nodeFromData = (datum, createNodeId) => {
 
 exports.nodeFromData = nodeFromData
 
-const isEntityReferenceRevision = type => type.indexOf(`paragraph`) === 0
+const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
+  entityReferenceRevisions.findIndex(
+    revisionType => type.indexOf(revisionType) === 0
+  ) !== -1
 
-const createNodeIdWithVersion = (id, type, revision_id) =>
+const createNodeIdWithVersion = (
+  id,
+  type,
+  revision_id,
+  entityReferenceRevisions = []
+) =>
   // The relationship between an entity and another entity also depends on the revision ID if the field is of type
   // entity reference revision such as for paragraphs.
-  isEntityReferenceRevision(type) ? `${id}.${revision_id || 0}` : id
+  isEntityReferenceRevision(type, entityReferenceRevisions)
+    ? `${id}.${revision_id || 0}`
+    : id
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
 

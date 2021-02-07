@@ -372,11 +372,18 @@ describe(`gatsby-source-drupal`, () => {
     // Reset nodes and test includes relationships.
     Object.keys(nodes).forEach(key => delete nodes[key])
     const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
+    const entityReferenceRevisions = [`paragraph`]
     const filters = {
       "node--article": `include=field_tags`,
     }
     const apiBase = `jsonapi-includes`
-    await sourceNodes(args, { baseUrl, apiBase, disallowedLinkTypes, filters })
+    await sourceNodes(args, {
+      baseUrl,
+      apiBase,
+      disallowedLinkTypes,
+      filters,
+      entityReferenceRevisions,
+    })
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
     expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()

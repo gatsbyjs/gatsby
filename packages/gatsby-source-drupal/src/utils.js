@@ -9,7 +9,10 @@ const {
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
-const handleReferences = (node, { getNode, createNodeId }) => {
+const handleReferences = (
+  node,
+  { getNode, createNodeId, entityReferenceRevisions = [] }
+) => {
   const relationships = node.relationships
 
   if (node.drupal_relationships) {
@@ -24,7 +27,8 @@ const handleReferences = (node, { getNode, createNodeId }) => {
               createNodeIdWithVersion(
                 data.id,
                 data.type,
-                data.meta?.target_version
+                data.meta?.target_version,
+                entityReferenceRevisions
               )
             )
             if (!getNode(referencedNodeId)) {
@@ -50,7 +54,8 @@ const handleReferences = (node, { getNode, createNodeId }) => {
           createNodeIdWithVersion(
             v.data.id,
             v.data.type,
-            v.data.meta?.target_revision_id
+            v.data.meta?.target_revision_id,
+            entityReferenceRevisions
           )
         )
         if (getNode(referencedNodeId)) {
@@ -114,13 +119,18 @@ const handleWebhookUpdate = async (
 ) => {
   const { createNode } = actions
 
-  const newNode = nodeFromData(nodeToUpdate, createNodeId)
+  const newNode = nodeFromData(
+    nodeToUpdate,
+    createNodeId,
+    pluginOptions.entityReferenceRevisions
+  )
 
   const nodesToUpdate = [newNode]
 
   handleReferences(newNode, {
     getNode,
     createNodeId,
+    entityReferenceRevisions: pluginOptions.entityReferenceRevisions,
   })
 
   const oldNode = getNode(newNode.id)
