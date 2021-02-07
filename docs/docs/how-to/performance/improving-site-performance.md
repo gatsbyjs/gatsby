@@ -149,3 +149,4 @@ For additional precision, run Lighthouse multiple times and take the median resu
 ## Additional Resources
 
 - If you want an in-depth, more generalized guide to performance optimization that isn't specific to Gatsby sites, look at [Smashing Magazine's Frontend Performance Checklist](https://www.smashingmagazine.com/2021/01/front-end-performance-2021-free-pdf-checklist/#delivery-optimizations).
+- [TKTK link to Concierge performance audit page]
