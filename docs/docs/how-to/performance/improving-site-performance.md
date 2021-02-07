@@ -4,7 +4,7 @@ title: Improving Site Performance
 
 To paraphrase Tolstoy, all fast websites are alike, but all slow websites are slow in different ways.
 
-This document is a brief guide (emphasis on _brief_) to understanding why your Gatsby site might be slow. 
+This document is a brief guide (emphasis on _brief_) to understanding how you can optimize your Gatsby site performance.
 
 ## Step 0: Use Gatsby
 
