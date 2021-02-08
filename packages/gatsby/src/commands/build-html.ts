@@ -6,7 +6,7 @@ import { chunk } from "lodash"
 import webpack from "webpack"
 
 import { emitter } from "../redux"
-import * as webpackConfig from "../utils/webpack.config"
+import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
 import { IProgram, Stage } from "./types"

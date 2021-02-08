@@ -147,7 +147,10 @@ export function objectToDottedField(
   Object.keys(obj).forEach(key => {
     const value = obj[key]
     if (_.isPlainObject(value)) {
-      const pathResult = objectToDottedField(value, path.concat(key))
+      const pathResult = objectToDottedField(
+        value as Record<string, unknown>,
+        path.concat(key)
+      )
       result = {
         ...result,
         ...pathResult,
