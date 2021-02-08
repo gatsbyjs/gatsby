@@ -8,11 +8,7 @@ const { performance } = require("perf_hooks")
 const _ = require(`lodash`)
 const avro = require("avsc")
 const setupFunctionDir = require(`./setup-function-dir`)
-const redis = require("redis")
 const { promisify } = require("util")
-const client = redis.createClient()
-const getAsync = promisify(client.get).bind(client)
-const setAsync = promisify(client.set).bind(client)
 
 const avroSchemas = new Map()
 let avroType
@@ -187,11 +183,11 @@ if (cluster.isMaster) {
       args: args.args,
       files: task.files,
       id: args.id,
-      cache: { set: setAsync, get: getAsync },
+      // cache: { set: setAsync, get: getAsync },
     })
   }
 
-  const actuallyRunTask = async ({ funcPath, args, files, id, cache }) => {
+  const actuallyRunTask = async ({ funcPath, args, files, id }) => {
     let taskRunner = require(funcPath)
     if (taskRunner.default) {
       taskRunner = taskRunner.default
@@ -201,7 +197,7 @@ if (cluster.isMaster) {
     const copyOfTraceId = (` ` + id).slice(1)
     const start = performance.now()
     const result = await Promise.resolve(
-      taskRunner(args, { id: copyOfTraceId, files, cache })
+      taskRunner(args, { id: copyOfTraceId, files })
     )
     const end = performance.now()
 
