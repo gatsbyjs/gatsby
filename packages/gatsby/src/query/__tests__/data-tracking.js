@@ -1339,13 +1339,8 @@ describe(`query caching between builds`, () => {
           // Define fields with custom resolvers first
           const resolveOne = type => (value, args, context) =>
             context.nodeModel.runQuery({
-              query: { testId: { eq: value.testId } },
+              query: { testId: { eq: value.id } },
               firstOnly: true,
-              type,
-            })
-          const resolveList = type => (value, args, context) =>
-            context.nodeModel.runQuery({
-              query: { testId: { eq: value.testId } },
               type,
             })
 
@@ -1373,11 +1368,16 @@ describe(`query caching between builds`, () => {
                 },
                 fooList: {
                   type: [`Foo`],
-                  resolve: resolveList(`Foo`),
+                  resolve: (value, args, context) =>
+                    context.nodeModel.runQuery({
+                      query: { testId: { eq: value.id } },
+                      type: `Foo`,
+                    }),
                 },
                 barList: {
                   type: [`Bar`],
-                  resolve: resolveList(`Bar`),
+                  resolve: (value, args, context) =>
+                    context.nodeModel.getAllNodes({ type: `Bar` }),
                 },
               },
               interfaces: [`Node`],

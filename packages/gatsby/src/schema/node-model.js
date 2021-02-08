@@ -183,8 +183,7 @@ class LocalNodeModel {
 
   /**
    * Get all nodes in the store, or all nodes of a specified type. Note that
-   * this doesn't add tracking to all the nodes, unless pageDependencies are
-   * passed.
+   * this adds connectionType tracking by default if type is passed.
    *
    * @param {Object} args
    * @param {(string|GraphQLOutputType)} [args.type] Optional type of the nodes
@@ -192,29 +191,32 @@ class LocalNodeModel {
    * @returns {Node[]}
    */
   getAllNodes(args, pageDependencies) {
+    // TODO: deprecate this method in favor of runQuery
     const { type } = args || {}
 
-    let result
     if (!type) {
-      result = getNodes()
-    } else {
-      const nodeTypeNames = toNodeTypeNames(this.schema, type)
-      const nodesByType = nodeTypeNames.map(typeName =>
-        getNodesByType(typeName)
-      )
-      const nodes = [].concat(...nodesByType)
-      result = nodes.filter(Boolean)
+      const result = getNodes()
+      if (result) {
+        result.forEach(node => this.trackInlineObjectsInRootNode(node))
+      }
+      return result
     }
+
+    const nodeTypeNames = toNodeTypeNames(this.schema, type)
+    const nodesByType = nodeTypeNames.map(typeName => getNodesByType(typeName))
+    const nodes = [].concat(...nodesByType)
+    const result = nodes.filter(Boolean)
 
     if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
     }
 
-    if (pageDependencies) {
-      return this.trackPageDependencies(result, pageDependencies)
-    } else {
-      return result
+    if (typeof pageDependencies.connectionType === `undefined`) {
+      pageDependencies.connectionType =
+        typeof type === `string` ? type : type.name
     }
+
+    return this.trackPageDependencies(result, pageDependencies)
   }
 
   /**
@@ -534,10 +536,10 @@ class ContextualNodeModel {
   }
 
   getAllNodes(args, pageDependencies) {
-    const fullDependencies = pageDependencies
-      ? this._getFullDependencies(pageDependencies)
-      : null
-    return this.nodeModel.getAllNodes(args, fullDependencies)
+    return this.nodeModel.getAllNodes(
+      args,
+      this._getFullDependencies(pageDependencies)
+    )
   }
 
   runQuery(args, pageDependencies) {
