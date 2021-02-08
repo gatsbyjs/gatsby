@@ -316,12 +316,7 @@ class LocalNodeModel {
         //  (even if a new node matching this query is added at some point).
         //  To workaround this, we have to add a connection tracking to re-run
         //  the query whenever any node of this type changes.
-        if (pageDependencies.path) {
-          this.createPageDependency({
-            path: pageDependencies.path,
-            connection: gqlType.name,
-          })
-        }
+        pageDependencies.connectionType = gqlType.name
       }
     } else if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
@@ -331,6 +326,10 @@ class LocalNodeModel {
       trackInlineObjectsActivity.end()
     }
 
+    // Tracking connections by default:
+    if (!firstOnly && typeof pageDependencies.connectionType === `undefined`) {
+      pageDependencies.connectionType = gqlType.name
+    }
     return this.trackPageDependencies(result, pageDependencies)
   }
 
