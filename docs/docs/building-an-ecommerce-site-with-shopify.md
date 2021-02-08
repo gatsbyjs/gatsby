@@ -87,7 +87,7 @@ const ProductsPage = ({ data }) => (
       {data.allShopifyProduct.edges.map(({ node }) => (
         <li key={node.shopifyId}>
           <h3>
-            <Link to={`/product/${node.handle}`}>{node.title}</Link>
+            <Link to={`/products/${node.handle}`}>{node.title}</Link>
             {" - "}${node.priceRange.minVariantPrice.amount}
           </h3>
           <p>{node.description}</p>
