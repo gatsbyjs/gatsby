@@ -105,7 +105,7 @@ export class StaticQueryMapper {
     compiler.hooks.done.tap(this.name, stats => {
       const compilation = stats.compilation
       // We only care about the main compilation
-      // Chunkgraph should alwasy be available when it's done but you know typescript.
+      // Chunkgraph should always be available when it's done but you know typescript.
       if (compilation.compiler.parentCompilation || !compilation.chunkGraph) {
         return
       }
