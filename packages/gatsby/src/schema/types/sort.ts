@@ -29,7 +29,6 @@ type AnyTypeComposer<TContext> =
 export const SORTABLE_ENUM = {
   SORTABLE: `SORTABLE`,
   NOT_SORTABLE: `NON_SORTABLE`,
-  DEPRECATED_SORTABLE: `DERPECATED_SORTABLE`,
 }
 
 export const getSortOrderEnum = <TContext = any>({
@@ -73,8 +72,6 @@ const convert = <TContext = any>({
         : typeComposer.getFieldExtension(fieldName, `sortable`)
     if (sortable === SORTABLE_ENUM.NOT_SORTABLE) {
       return
-    } else if (sortable === SORTABLE_ENUM.DEPRECATED_SORTABLE) {
-      deprecationReason = `Sorting on fields that need arguments to resolve is deprecated.`
     }
     const sortKey = prefix ? `${prefix}.${fieldName}` : fieldName
     const sortKeyFieldName = sortKey.split(`.`).join(SORT_FIELD_DELIMITER)

@@ -912,13 +912,7 @@ const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
           sortable: SORTABLE_ENUM.SORTABLE,
           needsResolve: extensions.proxy ? true : false,
         })
-      } else if (!_.isEmpty(field.args)) {
-        typeComposer.extendFieldExtensions(fieldName, {
-          searchable: SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE,
-          sortable: SORTABLE_ENUM.DEPRECATED_SORTABLE,
-          needsResolve: true,
-        })
-      } else {
+      } else if (_.isEmpty(field.args)) {
         typeComposer.extendFieldExtensions(fieldName, {
           searchable: SEARCHABLE_ENUM.SEARCHABLE,
           sortable: SORTABLE_ENUM.SORTABLE,

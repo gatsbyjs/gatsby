@@ -33,7 +33,6 @@ type AnyComposeType<TContext> =
 export const SEARCHABLE_ENUM = {
   SEARCHABLE: `SEARCHABLE`,
   NOT_SEARCHABLE: `NON_SEARCHABLE`,
-  DEPRECATED_SEARCHABLE: `DERPECATED_SEARCHABLE`,
 } as const
 
 const getQueryOperatorListInput = ({
@@ -194,8 +193,6 @@ const convert = ({
 
     if (searchable === SEARCHABLE_ENUM.NOT_SEARCHABLE) {
       return
-    } else if (searchable === SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE) {
-      deprecationReason = `Filtering on fields that need arguments to resolve is deprecated.`
     }
 
     if (type instanceof GraphQLInputObjectType) {
