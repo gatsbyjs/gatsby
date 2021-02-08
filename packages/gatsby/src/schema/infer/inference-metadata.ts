@@ -159,12 +159,12 @@ const getType = (value: unknown, key: string): ValueType | "null" => {
 }
 
 const updateValueDescriptorObject = (
-  value: object,
+  value: Record<string, unknown>,
   typeInfo: ITypeInfoObject,
   nodeId: string,
   operation: Operation,
   metadata: ITypeMetadata,
-  path: Array<object>
+  path: Array<Record<string, unknown>>
 ): void => {
   path.push(value)
 
@@ -193,7 +193,7 @@ const updateValueDescriptorArray = (
   nodeId: string,
   operation: Operation,
   metadata: ITypeMetadata,
-  path: Array<object>
+  path: Array<Record<string, unknown>>
 ): void => {
   value.forEach(item => {
     let descriptor = typeInfo.item
@@ -256,11 +256,11 @@ const updateValueDescriptor = (
   operation: Operation = `add`,
   descriptor: IValueDescriptor,
   metadata: ITypeMetadata,
-  path: Array<object>
+  path: Array<Record<string, unknown>>
 ): void => {
   // The object may be traversed multiple times from root.
   // Each time it does it should not revisit the same node twice
-  if (path.includes(value as object)) {
+  if (path.includes(value as Record<string, unknown>)) {
     return
   }
 
@@ -274,6 +274,7 @@ const updateValueDescriptor = (
 
   let typeInfo: ITypeInfo | undefined = descriptor[typeName]
   if (typeInfo === undefined) {
+    // eslint-disable-next-line no-undef
     typeInfo = (descriptor[typeName] as ITypeInfo) = { total: 0 }
   }
   typeInfo.total += delta
@@ -299,7 +300,7 @@ const updateValueDescriptor = (
   switch (typeName) {
     case `object`:
       updateValueDescriptorObject(
-        value as object,
+        value as Record<string, unknown>,
         typeInfo as ITypeInfoObject,
         nodeId,
         operation,
@@ -352,8 +353,8 @@ const updateValueDescriptor = (
 }
 
 const mergeObjectKeys = (
-  dpropsKeysA: object = {},
-  dpropsKeysB: object = {}
+  dpropsKeysA: Record<string, unknown> = {},
+  dpropsKeysB: Record<string, unknown> = {}
 ): Array<string> => {
   const dprops = Object.keys(dpropsKeysA)
   const otherProps = Object.keys(dpropsKeysB)
@@ -502,7 +503,7 @@ const haveEqualFields = (
   )
 }
 
-const initialMetadata = (state?: object): ITypeMetadata => {
+const initialMetadata = (state?: Record<string, unknown>): ITypeMetadata => {
   return {
     typeName: undefined,
     disabled: false,

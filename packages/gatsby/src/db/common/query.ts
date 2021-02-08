@@ -88,7 +88,7 @@ function createDbQueriesFromObjectNested(
 
 export function prefixResolvedFields(
   queries: Array<DbQuery>,
-  resolvedFields: object
+  resolvedFields: Record<string, unknown>
 ): Array<DbQuery> {
   const dottedFields = objectToDottedField(resolvedFields)
   const dottedFieldKeys = Object.getOwnPropertyNames(dottedFields)
@@ -140,9 +140,9 @@ export function prefixResolvedFields(
 
 // Like above, but doesn't handle $elemMatch
 export function objectToDottedField(
-  obj: object,
+  obj: Record<string, unknown>,
   path: Array<string> = []
-): object {
+): Record<string, unknown> {
   let result = {}
   Object.keys(obj).forEach(key => {
     const value = obj[key]

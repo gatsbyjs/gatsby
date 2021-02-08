@@ -26,7 +26,7 @@ export function generateQueryFromString(
 // translates the object into `{ fields__value: 'foo' }`. This is necassary to pass the value
 // into a query function for each individual page.
 export function reverseLookupParams(
-  queryResults: Record<string, object | string>,
+  queryResults: Record<string, Record<string, unknown> | string>,
   absolutePath: string
 ): Record<string, string> {
   const reversedParams = {

@@ -16,7 +16,7 @@ const propTypes = {
 
 interface IProps {
   scrollKey: string
-  shouldUpdateScroll?: Function
+  shouldUpdateScroll?: () => boolean
   children: React.ReactNode
 }
 
