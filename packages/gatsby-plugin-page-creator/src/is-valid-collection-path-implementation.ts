@@ -18,9 +18,8 @@ export function isValidCollectionPathImplementation(
   parts.forEach(part => {
     if (!part.includes(`{`) && !part.includes(`}`)) return
 
-    const model = [...part.matchAll(/\{([a-zA-Z_]\w*)./g)] // Search for word before first dot, e.g. Model
-    const field = [...part.matchAll(/.*?((?<=\w\.)[^}]*)}/g)] // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
-
+    const model = Array.from(part.matchAll(/\{([a-zA-Z_]\w*)./g)) // Search for word before first dot, e.g. Model
+    const field = Array.from(part.matchAll(/.*?((?<=\w\.)[^}]*)}/g)) // Search for everything after the first dot, e.g. foo__bar (or in invalid case: foo.bar)
     try {
       if (
         model.length === 0 ||
