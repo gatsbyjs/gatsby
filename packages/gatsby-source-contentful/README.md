@@ -17,6 +17,18 @@ npm install gatsby-source-contentful
 
 First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about `dotenv` and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
 
+## Restrictions and limitations
+
+This plugin has several limitations, please be aware of these:
+
+1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema. This can break your site when field values get removed. You may workaround with an extra content entry with all fields filled out.
+
+2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+
+3. When working with environments, your access token has to have access to your desired enviornment and the `master` environment.
+
+4. Using the preview functionallity might result in broken content over time, as syncing data on preview is not officially supported by Contentful. Make sure to regulary clean your cache when using Contentfuls preview API.
+
 ### Using Delivery API
 
 ```javascript
@@ -119,14 +131,6 @@ Number of workers to use when downloading Contentful assets. Due to technical li
 Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
 
 Use this with caution, you might override values this plugin does set for you to connect to Contentful.
-
-## Notes on Contentful Content Models
-
-There are currently some things to keep in mind when building your content models at Contentful.
-
-1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
-
-2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
 ## How to query for nodes
 
