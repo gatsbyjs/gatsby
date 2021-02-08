@@ -11,6 +11,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
@@ -708,6 +709,8 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const resolveGatsbyImageData = async (image, options) => {
+    if (!isImage(image)) return null
+
     const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
 
     const imageProps = generateImageData({
@@ -771,7 +774,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       warnedForBeta = true
     }
 
-    return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+    const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -790,6 +793,10 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: GraphQLString,
       },
     })
+
+    fieldConfig.type = GraphQLJSON
+
+    return fieldConfig
   }
 
   return {
