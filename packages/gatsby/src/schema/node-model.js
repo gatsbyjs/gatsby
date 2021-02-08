@@ -190,7 +190,7 @@ class LocalNodeModel {
    * @param {PageDependencies} [pageDependencies]
    * @returns {Node[]}
    */
-  getAllNodes(args, pageDependencies) {
+  getAllNodes(args, pageDependencies = {}) {
     // TODO: deprecate this method in favor of runQuery
     const { type } = args || {}
 
@@ -229,7 +229,7 @@ class LocalNodeModel {
    * @param {PageDependencies} [pageDependencies]
    * @returns {Promise<Node[]>}
    */
-  async runQuery(args, pageDependencies) {
+  async runQuery(args, pageDependencies = {}) {
     const { query, firstOnly, type, stats, tracer } = args || {}
 
     // We don't support querying union types (yet?), because the combined types

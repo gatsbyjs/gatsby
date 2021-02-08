@@ -239,9 +239,9 @@ describe(`NodeModel`, () => {
         expect(result.length).toBe(3)
       })
 
-      it(`creates page dependencies`, () => {
+      it(`does not create page dependencies for all nodes`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
-        expect(createPageDependency).toHaveBeenCalledTimes(9)
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`creates page dependencies when called with context and connection type`, () => {
@@ -331,14 +331,10 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -354,14 +350,10 @@ describe(`NodeModel`, () => {
           firstOnly,
           type,
         })
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
