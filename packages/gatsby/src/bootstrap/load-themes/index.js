@@ -90,6 +90,10 @@ const processTheme = (
   const themesList = useLegacyThemes
     ? themeConfig && themeConfig.__experimentalThemes
     : themeConfig && themeConfig.plugins
+
+  const parentDir =
+    themeSpec && themeSpec.parentDir ? themeSpec.parentDir : rootDir
+
   // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
@@ -97,16 +101,20 @@ const processTheme = (
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
-      return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
+      const nextThemeDir = spec.parentDir || themeDir
+      const themeObj = await resolveTheme(
+        spec,
+        configFilePath,
+        false,
+        nextThemeDir
+      )
+      return processTheme(themeObj, { useLegacyThemes, rootDir: nextThemeDir })
     }).then(arr =>
-      arr.concat([
-        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
-      ])
+      arr.concat([{ themeName, themeConfig, themeSpec, themeDir, parentDir }])
     )
   } else {
     // if a theme doesn't define additional themes, return the original theme
-    return [{ themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir }]
+    return [{ themeName, themeConfig, themeSpec, themeDir, parentDir }]
   }
 }
 
@@ -144,7 +152,7 @@ module.exports = async (
               return {
                 resolve: typeof plugin === `string` ? plugin : plugin.resolve,
                 options: plugin.options || {},
-                parentDir: themeDir,
+                parentDir: plugin.parentDir || themeDir,
               }
             }),
             // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
