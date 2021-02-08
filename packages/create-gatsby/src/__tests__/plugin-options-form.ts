@@ -13,13 +13,13 @@ describe(`plugin-options-form`, () => {
   })
 
   it(`returns an array containing only the wordpress options (choices are included)`, () => {
-    const plugins = [`gatsby-source-wordpress-experimental`]
+    const plugins = [`gatsby-source-wordpress`]
     expect(makePluginConfigQuestions(plugins)).toEqual([
       {
         type: `forminput`,
-        name: `gatsby-source-wordpress-experimental`,
+        name: `gatsby-source-wordpress`,
         multiple: true,
-        message: `Configure the WordPress plugin.\nSee \u001b[94mhttps://www.gatsbyjs.com/plugins/gatsby-source-wordpress-experimental/\u001b[39m for help.`,
+        message: `Configure the WordPress plugin.\nSee \u001b[94mhttps://www.gatsbyjs.com/plugins/gatsby-source-wordpress/\u001b[39m for help.`,
         choices: [
           {
             name: `url`,
@@ -35,9 +35,9 @@ describe(`plugin-options-form`, () => {
     expect(makePluginConfigQuestions(Object.keys(pluginSchemas))).toEqual([
       {
         type: `forminput`,
-        name: `gatsby-source-wordpress-experimental`,
+        name: `gatsby-source-wordpress`,
         multiple: true,
-        message: `Configure the WordPress plugin.\nSee \u001b[94mhttps://www.gatsbyjs.com/plugins/gatsby-source-wordpress-experimental/\u001b[39m for help.`,
+        message: `Configure the WordPress plugin.\nSee \u001b[94mhttps://www.gatsbyjs.com/plugins/gatsby-source-wordpress/\u001b[39m for help.`,
         choices: [
           {
             name: `url`,

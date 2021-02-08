@@ -19,9 +19,6 @@ export {
   default as Link,
   GatsbyLinkProps,
   navigate,
-  navigateTo,
-  push,
-  replace,
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
@@ -1482,6 +1479,7 @@ export interface PrefetchPathnameArgs extends BrowserPluginArgs {
 
 export interface RouteUpdateArgs extends BrowserPluginArgs {
   location: Location
+  prevLocation: Location | null;
 }
 
 export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {

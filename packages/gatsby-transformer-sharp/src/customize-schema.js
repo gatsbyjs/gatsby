@@ -430,7 +430,6 @@ const imageNodeType = ({
       },
       placeholder: {
         type: ImagePlaceholderType,
-        defaultValue: `dominantColor`,
         description: stripIndent`
         Format of generated placeholder image, displayed while the main image loads. 
         BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
@@ -504,9 +503,8 @@ const imageNodeType = ({
         type: TransformOptionsType,
         description: `Options to pass to sharp to control cropping and other image manipulations.`,
       },
-      background: {
+      backgroundColor: {
         type: GraphQLString,
-        defaultValue: `rgba(0,0,0,0)`,
         description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
       },
     },

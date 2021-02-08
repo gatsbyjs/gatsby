@@ -272,31 +272,10 @@ GatsbyLink.propTypes = {
   state: PropTypes.object,
 }
 
-const showDeprecationWarning = (functionName, altFunctionName, version) =>
-  console.warn(
-    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
-  )
-
 export default React.forwardRef((props, ref) => (
   <GatsbyLinkLocationWrapper innerRef={ref} {...props} />
 ))
 
 export const navigate = (to, options) => {
   window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
-}
-
-export const push = to => {
-  showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(rewriteLinkPath(to, window.location.pathname))
-}
-
-export const replace = to => {
-  showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(rewriteLinkPath(to, window.location.pathname))
-}
-
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
-  showDeprecationWarning(`navigateTo`, `navigate`, 3)
-  return push(to)
 }

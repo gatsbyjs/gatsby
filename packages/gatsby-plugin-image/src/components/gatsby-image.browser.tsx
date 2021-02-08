@@ -32,7 +32,7 @@ export interface GatsbyImageProps
   imgClassName?: string
   image: IGatsbyImageData
   imgStyle?: CSSProperties
-  backgroundColor?: CSSProperties["backgroundColor"]
+  backgroundColor?: string
   objectFit?: CSSProperties["objectFit"]
   objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
@@ -42,11 +42,11 @@ export interface GatsbyImageProps
 
 export interface IGatsbyImageData {
   layout: Layout
-  height?: number
+  width: number
+  height: number
   backgroundColor?: string
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
-  width?: number
 }
 
 let hasShownWarning = false
@@ -60,6 +60,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   image,
   onLoad: customOnLoad,
   backgroundColor,
+  loading = `lazy`,
   ...props
 }) {
   if (!image) {
@@ -169,6 +170,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
               toggleIsLoaded(true)
             },
             ref,
+            loading,
             ...props,
           },
           root,
