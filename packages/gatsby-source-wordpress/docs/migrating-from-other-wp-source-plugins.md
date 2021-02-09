@@ -16,7 +16,7 @@ If you have any custom code which you've added to make connections between nodes
 
 ## Migrating from `gatsby-source-wordpress-experimental`
 
-This is the easiest migration since both plugins are one and the same (as of `gatsby-source-wordpress@4.0.0`). 
+This is the easiest migration since both plugins are one and the same (as of `gatsby-source-wordpress@4.0.0`).
 
 - Uninstall the experimental plugin `npm uninstall gatsby-source-wordpress-experimental`
 - Install the stable plugin `npm install gatsby-source-wordpress`
