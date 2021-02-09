@@ -99,6 +99,22 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
             container will be the full width of the screen. In these cases we will generate an appropriate value.
         `,
       },
+      outputPixelDensities: {
+        type: `[Float]`,
+        description: stripIndent`
+            A list of image pixel densities to generate for FIXED and CONSTRAINED images. You should rarely need to change this. It will never generate images larger than the source, and will always include a 1x image.
+            Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide.
+            Ignored for FULL_WIDTH, which uses breakpoints instead.
+            `,
+      },
+      breakpoints: {
+        type: `[Int]`,
+        description: stripIndent`
+        Specifies the image widths to generate. You should rarely need to change this. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
+        based on the image size. For FULL_WIDTH images this can be used to override the default, which is determined by the plugin.
+        It will never generate any images larger than the source.
+        `,
+      },
       backgroundColor: {
         type: `String`,
         description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
@@ -167,9 +183,17 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
       outputPixelDensities: {
         type: GraphQLList(GraphQLFloat),
         description: stripIndent`
-            A list of image pixel densities to generate. It will never generate images larger than the source, and will always include a 1x image.
-            Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide
+            A list of image pixel densities to generate for FIXED and CONSTRAINED images. You should rarely need to change this. It will never generate images larger than the source, and will always include a 1x image.
+            Default is [ 1, 2 ] for fixed images, meaning 1x, 2x, 3x, and [0.25, 0.5, 1, 2] for fluid. In this case, an image with a fluid layout and width = 400 would generate images at 100, 200, 400 and 800px wide.
             `,
+      },
+      breakpoints: {
+        type: GraphQLList(GraphQLInt),
+        description: stripIndent`
+        Specifies the image widths to generate. You should rarely need to change this. For FIXED and CONSTRAINED images it is better to allow these to be determined automatically,
+        based on the image size. For FULL_WIDTH images this can be used to override the default, which is [750, 1080, 1366, 1920].
+        It will never generate any images larger than the source.
+        `,
       },
       sizes: {
         type: GraphQLString,
