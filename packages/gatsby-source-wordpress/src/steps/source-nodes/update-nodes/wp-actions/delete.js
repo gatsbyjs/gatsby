@@ -66,7 +66,7 @@ const wpActionDELETE = async ({
     }
 
     if (node) {
-      await actions.touchNode({ nodeId })
+      await actions.touchNode(node)
       await actions.deleteNode({ node })
 
       reporter.log(``)

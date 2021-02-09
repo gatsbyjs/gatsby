@@ -254,7 +254,7 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
     await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
 
     if (existingNode) {
-      await actions.touchNode({ nodeId })
+      await actions.touchNode(existingNode)
       await actions.deleteNode({ node: existingNode })
       reportUpdate({ setAction: `DELETE` })
     }
