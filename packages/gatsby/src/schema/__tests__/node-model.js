@@ -250,7 +250,7 @@ describe(`NodeModel`, () => {
         expect(result.length).toBe(3)
       })
 
-      it(`creates page dependencies for all connection types`, () => {
+      it(`creates page dependencies with all connection types`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
         allNodeTypes.forEach(typeName => {
           expect(createPageDependency).toHaveBeenCalledWith({
@@ -281,6 +281,16 @@ describe(`NodeModel`, () => {
           })
         })
         expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
+      })
+
+      it(`allows to opt-out of automatic dependency tracking`, () => {
+        nodeModel.getAllNodes({}, { path: `/`, track: false })
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of automatic dependency tracking with context`, () => {
+        nodeModel.withContext({ path: `/` }).getAllNodes({}, { track: false })
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`returns empty array when no nodes of type found`, () => {
@@ -404,6 +414,68 @@ describe(`NodeModel`, () => {
           path: `/`,
           connection: `Post`,
         })
+      })
+
+      it(`creates page dependencies with individual nodes when connectionType is null`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { path: `/`, connectionType: null }
+        )
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`allows to opt-out of dependency tracking`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { path: `/`, track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of dependency tracking with context`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.withContext({ path: `/` }).runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`doesn't allow querying union types`, () => {

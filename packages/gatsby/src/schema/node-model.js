@@ -482,8 +482,8 @@ class LocalNodeModel {
    * @returns {Node | Node[]}
    */
   trackPageDependencies(result, pageDependencies = {}) {
-    const { path, connectionType } = pageDependencies
-    if (path) {
+    const { path, connectionType, track = true } = pageDependencies
+    if (path && track) {
       if (connectionType) {
         this.createPageDependency({ path, connection: connectionType })
       } else {
