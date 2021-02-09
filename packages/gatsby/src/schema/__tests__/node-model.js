@@ -11,6 +11,17 @@ describe(`NodeModel`, () => {
   let schema
   const createPageDependency = jest.fn()
 
+  const allNodeTypes = [
+    `File`,
+    `Directory`,
+    `Site`,
+    `SitePage`,
+    `Author`,
+    `Contributor`,
+    `RemoteFile`,
+    `Post`,
+  ]
+
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
@@ -239,9 +250,15 @@ describe(`NodeModel`, () => {
         expect(result.length).toBe(3)
       })
 
-      it(`does not create page dependencies for all nodes`, () => {
+      it(`creates page dependencies for all connection types`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
-        expect(createPageDependency).not.toHaveBeenCalled()
+        allNodeTypes.forEach(typeName => {
+          expect(createPageDependency).toHaveBeenCalledWith({
+            path: `/`,
+            connection: typeName,
+          })
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
       })
 
       it(`creates page dependencies when called with context and connection type`, () => {
@@ -249,11 +266,21 @@ describe(`NodeModel`, () => {
           .withContext({ path: `/` })
           .getAllNodes({ type: `Post` }, { connectionType: `Post` })
         expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Post`,
+        })
       })
 
-      it(`does not create page dependencies when called with context without connection type`, () => {
+      it(`creates page dependencies with all connection types when called with context without connection type`, () => {
         nodeModel.withContext({ path: `/` }).getAllNodes()
-        expect(createPageDependency).toHaveBeenCalledTimes(0)
+        allNodeTypes.forEach(typeName => {
+          expect(createPageDependency).toHaveBeenCalledWith({
+            path: `/`,
+            connection: typeName,
+          })
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
       })
 
       it(`returns empty array when no nodes of type found`, () => {

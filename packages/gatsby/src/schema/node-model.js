@@ -192,20 +192,19 @@ class LocalNodeModel {
    */
   getAllNodes(args, pageDependencies = {}) {
     // TODO: deprecate this method in favor of runQuery
-    const { type } = args || {}
+    const { type = `Node` } = args || {}
 
-    if (!type) {
-      const result = getNodes()
-      if (result) {
-        result.forEach(node => this.trackInlineObjectsInRootNode(node))
-      }
-      return result
+    let result
+    if (type === `Node`) {
+      result = getNodes()
+    } else {
+      const nodeTypeNames = toNodeTypeNames(this.schema, type)
+      const nodesByType = nodeTypeNames.map(typeName =>
+        getNodesByType(typeName)
+      )
+      const nodes = [].concat(...nodesByType)
+      result = nodes.filter(Boolean)
     }
-
-    const nodeTypeNames = toNodeTypeNames(this.schema, type)
-    const nodesByType = nodeTypeNames.map(typeName => getNodesByType(typeName))
-    const nodes = [].concat(...nodesByType)
-    const result = nodes.filter(Boolean)
 
     if (result) {
       result.forEach(node => this.trackInlineObjectsInRootNode(node))
