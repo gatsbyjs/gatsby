@@ -11,7 +11,7 @@ import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { printDirectives } from "../print"
 const { getNode, getNodes } = require(`../../redux/nodes`)
 
-const addInferredFields = ({
+export const addInferredFields = ({
   schemaComposer,
   typeComposer,
   exampleValue,
