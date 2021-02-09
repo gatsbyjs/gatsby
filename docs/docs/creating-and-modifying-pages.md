@@ -151,7 +151,6 @@ exports.createPages = async ({ graphql, actions }) => {
     });
   });
 };
-};
 ```
 
 > You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).
