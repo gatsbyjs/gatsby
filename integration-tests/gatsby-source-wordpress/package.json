@@ -1,0 +1,24 @@
+{
+  "name": "gatsby-source-wordpress-integration-tests",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A simple Gatsby WP site for running integrations tests",
+  "scripts": {
+    "test": "yarn docker-start && yarn run-jest",
+    "run-jest": "jest --config=jest.config.js --runInBand",
+    "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans -d",
+    "docker-rebuild": "./docker/rebuild.sh"
+  },
+  "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-source-wordpress": "next",
+    "gatsby-transformer-sharp": "next"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
