@@ -15,51 +15,6 @@ describe(`Test plugin feed`, () => {
     fs.mkdirp = jest.fn().mockResolvedValue()
   })
 
-  it(`default settings work properly`, async () => {
-    fs.writeFile = jest.fn()
-    fs.writeFile.mockResolvedValue(true)
-    const graphql = jest.fn()
-    graphql.mockResolvedValue({
-      data: {
-        site: {
-          siteMetadata: {
-            title: `a sample title`,
-            description: `a description`,
-            siteUrl: `http://dummy.url/`,
-          },
-        },
-        allMarkdownRemark: {
-          edges: [
-            {
-              node: {
-                fields: {
-                  slug: `a-slug`,
-                },
-                excerpt: `post description`,
-              },
-            },
-          ],
-        },
-      },
-    })
-    const options = {
-      feeds: [
-        {
-          serialize: ({ query: { allMarkdownRemark } }) =>
-            allMarkdownRemark.edges.map(edge => {
-              return {
-                ...edge.node.frontmatter,
-              }
-            }),
-        },
-      ],
-    }
-    await onPostBuild({ graphql }, options)
-    const [filePath, contents] = fs.writeFile.mock.calls[0]
-    expect(filePath).toEqual(path.join(`public`, `rss.xml`))
-    expect(contents).toMatchSnapshot()
-  })
-
   it(`custom properties work properly`, async () => {
     fs.writeFile = jest.fn()
     fs.writeFile.mockResolvedValue(true)
