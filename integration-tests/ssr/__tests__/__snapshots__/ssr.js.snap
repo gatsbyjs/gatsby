@@ -105,13 +105,13 @@ exports[`SSR it generates an error page correctly 1`] = `
         </ul>
         <h3>error</h3>
         <code style=\\"padding: var(--space);padding-left: var(--space-sm);\\">window is not defined</code>
-        <pre><span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 2 | </span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 3 | </span><span style=\\"color:#006500;\\">const</span> <span style=\\"color:#DB3A00;\\">Component</span> <span style=\\"color:#DB3A00;\\">=</span> () <span style=\\"color:#DB3A00;\\">=></span> {</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 4 | </span>  <span style=\\"color:#006500;\\">const</span> a <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\">   | </span>            <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 5 | </span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 6 | </span>  <span style=\\"color:#006500;\\">return</span> <span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span>hi<span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">/</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 7 | </span>}</span></pre>
+        <pre><span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 2 |</span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 3 |</span> <span style=\\"color:#006500;\\">const</span> <span style=\\"color:#DB3A00;\\">Component</span> <span style=\\"color:#DB3A00;\\">=</span> () <span style=\\"color:#DB3A00;\\">=></span> {</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 4 |</span>   <span style=\\"color:#006500;\\">const</span> a <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width</span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\">   |</span>             <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 5 |</span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 6 |</span>   <span style=\\"color:#006500;\\">return</span> <span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span>hi<span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">/</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span></span>
+<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 7 |</span> }</span></pre>
       <p>For help debugging SSR errors, see this docs page: <a
       href=\\"https://www.gatsbyjs.com/docs/debugging-html-builds/\\">https://www.gatsbyjs.com/docs/debugging-html-builds/</a></p>
         <h3>Skip SSR</h3>
