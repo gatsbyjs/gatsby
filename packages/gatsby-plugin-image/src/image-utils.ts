@@ -157,7 +157,17 @@ export function formatFromFilename(filename: string): ImageFormat | undefined {
 export function setDefaultDimensions(
   args: IGatsbyImageHelperArgs
 ): IGatsbyImageHelperArgs {
-  let { layout, width, height, sourceMetadata, breakpoints, aspectRatio } = args
+  let {
+    layout = `constrained`,
+    width,
+    height,
+    sourceMetadata,
+    breakpoints,
+    aspectRatio,
+    formats = [`auto`, `webp`],
+  } = args
+  formats = formats.map(format => format.toLowerCase() as ImageFormat)
+  layout = camelCase(layout) as Layout
 
   if (width && height) {
     return args
@@ -168,7 +178,7 @@ export function setDefaultDimensions(
 
   if (layout === `fullWidth`) {
     width = width || sourceMetadata.width || breakpoints[breakpoints.length - 1]
-    height = height || width / (aspectRatio || DEFAULT_ASPECT_RATIO)
+    height = height || Math.round(width / (aspectRatio || DEFAULT_ASPECT_RATIO))
   } else {
     if (!width) {
       if (height && aspectRatio) {
@@ -176,17 +186,17 @@ export function setDefaultDimensions(
       } else if (sourceMetadata.width) {
         width = sourceMetadata.width
       } else if (height) {
-        width = height / (4 / 3)
+        width = Math.round(height / (4 / 3))
       } else {
         width = DEFAULT_FIXED_WIDTH
       }
     }
 
     if (aspectRatio && !height) {
-      height = width / aspectRatio
+      height = Math.round(width / aspectRatio)
     }
   }
-  return { ...args, width, height, aspectRatio }
+  return { ...args, width, height, aspectRatio, layout, formats }
 }
 
 export function generateImageData(
@@ -198,7 +208,7 @@ export function generateImageData(
     pluginName,
     sourceMetadata,
     generateImageSource,
-    layout = `constrained`,
+    layout,
     fit,
     options,
     width,
@@ -206,7 +216,6 @@ export function generateImageData(
     filename,
     reporter = { warn },
     backgroundColor,
-    formats: rawFormats = [`auto`, `webp`],
   } = args
 
   if (!pluginName) {
@@ -219,8 +228,6 @@ export function generateImageData(
     throw new Error(`generateImageSource must be a function`)
   }
 
-  layout = camelCase(layout) as Layout
-
   if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
     // No metadata means we let the CDN handle max size etc, aspect ratio etc
     sourceMetadata = {
@@ -232,9 +239,7 @@ export function generateImageData(
     sourceMetadata.format = formatFromFilename(filename)
   }
 
-  const formats = new Set<ImageFormat>(
-    rawFormats.map(format => format.toLowerCase() as ImageFormat)
-  )
+  const formats = new Set<ImageFormat>(args.formats)
 
   if (formats.size === 0 || formats.has(`auto`) || formats.has(``)) {
     formats.delete(`auto`)
@@ -369,7 +374,7 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
     return responsiveImageSizes({ breakpoints, ...args })
   } else {
     reporter.warn(
-      `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained.`
+      `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained. Found ${layout}`
     )
     return {
       sizes: [imgDimensions.width],
