@@ -42,7 +42,19 @@ describe(`Test plugin feed`, () => {
         },
       },
     })
-    await onPostBuild({ graphql }, {})
+    const options = {
+      feeds: [
+        {
+          serialize: ({ query: { allMarkdownRemark } }) =>
+            allMarkdownRemark.edges.map(edge => {
+              return {
+                ...edge.node.frontmatter,
+              }
+            }),
+        },
+      ],
+    }
+    await onPostBuild({ graphql }, options)
     const [filePath, contents] = fs.writeFile.mock.calls[0]
     expect(filePath).toEqual(path.join(`public`, `rss.xml`))
     expect(contents).toMatchSnapshot()
@@ -243,6 +255,12 @@ describe(`Test plugin feed`, () => {
         {
           output: `rss.xml`,
           query: `{ firstMarkdownQuery }`,
+          serialize: ({ query: { allMarkdownRemark } }) =>
+            allMarkdownRemark.edges.map(edge => {
+              return {
+                ...edge.node.frontmatter,
+              }
+            }),
         },
       ],
     }
