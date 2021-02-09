@@ -12,7 +12,7 @@ You can find our tutorial on setting up WPGatsby [here](../tutorials/configuring
 
 ## Filesystem route API
 
-The filesystem route API is not currently supported with WP Previews because it does not call the `onCreatePage` API which this plugin relies on. Follow [this issue](https://github.com/gatsbyjs/gatsby/issues/29361) for updates or [vote for this feature](https://gatsby.canny.io/gatsby-cloud/p/support-filesystem-route-api-alongside-gatsby-source-wordpress).
+The [filesystem route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) is not currently supported with WP Previews because it does not call the `onCreatePage` API which this plugin relies on. Follow [this issue](https://github.com/gatsbyjs/gatsby/issues/29361) for updates or [vote for this feature](https://gatsby.canny.io/gatsby-cloud/p/support-filesystem-route-api-alongside-gatsby-source-wordpress).
 
 ## Gutenberg and ACF
 
