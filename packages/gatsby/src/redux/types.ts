@@ -266,7 +266,6 @@ export interface IGatsbyState {
       string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin }
     >
   }
-  themes: any // TODO
   logs: IGatsbyCLIState
   inferenceMetadata: {
     step: string // TODO make enum or union
@@ -613,11 +612,6 @@ export interface ICreatePageAction {
 export interface ICreateRedirectAction {
   type: `CREATE_REDIRECT`
   payload: IRedirect
-}
-
-export interface ISetResolvedThemesAction {
-  type: `SET_RESOLVED_THEMES`
-  payload: any // TODO
 }
 
 export interface IDeleteCacheAction {
