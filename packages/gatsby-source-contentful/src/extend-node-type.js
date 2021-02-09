@@ -775,9 +775,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: GraphQLInt,
         defaultValue: 50,
       },
-      backgroundColor: {
-        type: GraphQLString,
-      },
     })
   }
 

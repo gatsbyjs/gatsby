@@ -117,7 +117,7 @@ export function getGatsbyImageResolver<TSource, TContext, TArgs>(
       },
       backgroundColor: {
         type: `String`,
-        description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
+        description: `Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.`,
       },
       ...extraArgs,
     },
@@ -205,7 +205,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
       },
       backgroundColor: {
         type: GraphQLString,
-        description: `Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.`,
+        description: `Background color applied to the wrapper, or when "letterboxing" an image to another aspect ratio.`,
       },
       ...extraArgs,
     },
