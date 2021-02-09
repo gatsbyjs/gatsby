@@ -1021,16 +1021,6 @@ export interface NodePluginArgs {
   getNodesByType(type: string): Node[]
 
   /**
-   * Compares `contentDigest` of cached node with passed value
-   * to determine if node has changed.
-   *
-   * @param id of node
-   * @param contentDigest of node
-   * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
-   */
-  hasNodeChanged(id: string, contentDigest: string): boolean
-
-  /**
    * Set of utilities to output information to user
    */
   reporter: Reporter
