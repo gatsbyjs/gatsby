@@ -44,6 +44,7 @@ This plugin works by merging the [WPGraphQL schema & data](https://docs.wpgraphq
 - 🛠 [Debugging and troubleshooting](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/debugging-and-troubleshooting.md)
 - 🏞 [Community and Support](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/community-and-support.md)
 - 💡 [Contribution](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/contribution.md)
+- 🧓 [v3 Documentation](https://github.com/gatsbyjs/gatsby/blob/1da331a5352e3f7cb18f69050b7199481d85fbcb/packages/gatsby-source-wordpress/README.md)
 
 ## Relevant Links 🔗
 
