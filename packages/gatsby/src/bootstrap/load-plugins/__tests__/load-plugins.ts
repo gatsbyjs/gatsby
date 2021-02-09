@@ -235,11 +235,11 @@ describe(`Load plugins`, () => {
                     "label": "trackingId",
                     "value": 123,
                   },
-                  "message": "\\"trackingId\\" must be a string",
+                  "message": "\\"trackingId\\" is required",
                   "path": Array [
                     "trackingId",
                   ],
-                  "type": "string.base",
+                  "type": "any.required",
                 },
                 Object {
                   "context": Object {
