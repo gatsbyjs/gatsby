@@ -74,13 +74,6 @@ const typeExtensions = {
           `A list of types this type is a child of. Usually these are the ` +
           `types handled by a transformer plugin.`,
       },
-      many: {
-        // TODO: Remove in Gatsby v3
-        type: `Boolean!`,
-        defaultValue: false,
-        description: `Specifies whether a parent can have multiple children of this type or not.`,
-        deprecationReason: `No-op. We always add both \`child[Field]\` and \`children[Field]\` to the parent type`,
-      },
     },
   },
   nodeInterface: {
@@ -118,7 +111,9 @@ const builtInFieldExtensions = {
       on: `String`,
     },
     extend(args, fieldConfig, schemaComposer) {
-      const type = args.on && schemaComposer.typeMapper.getWrapped(args.on)
+      const type =
+        args.on &&
+        schemaComposer.typeMapper.convertSDLWrappedTypeName(args.on)?.getType()
       return {
         resolve: link({ ...args, type }, fieldConfig),
       }
@@ -191,6 +186,12 @@ const toDirectives = ({
     }
     // Support the `graphql-compose` style of directly providing the field type as string
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
+
+    // arg.type is a composer that needs to be converted to graphql-js type
+    Object.keys(normalizedArgs).forEach(argName => {
+      normalizedArgs[argName].type = normalizedArgs[argName].type.getType()
+    })
+
     return new GraphQLDirective({
       name,
       args: normalizedArgs,
