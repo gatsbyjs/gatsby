@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { stripIndent } from "common-tags"
-import camelCase from "lodash/camelcase"
+import camelCase from "camelcase"
 import { IGatsbyImageData } from "."
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
