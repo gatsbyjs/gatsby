@@ -43,13 +43,13 @@ export const ImagePlaceholderType = new GraphQLEnumType({
   },
 })
 
-export interface GatsbyGraphQLFieldConfig<TSource, TContext, TArgs> {
+export interface IGatsbyGraphQLFieldConfig<TSource, TContext, TArgs> {
   description?: string
   type: string
-  args?: Record<string, GatsbyGraphQLResolverArgumentConfig>
+  args?: Record<string, IGatsbyGraphQLResolverArgumentConfig>
   resolve: GraphQLFieldResolver<TSource, TContext, TArgs>
 }
-export interface GatsbyGraphQLResolverArgumentConfig<TValue = any> {
+export interface IGatsbyGraphQLResolverArgumentConfig<TValue = any> {
   description?: string
   type: string | Array<string>
   defaultValue?: TValue
@@ -57,8 +57,8 @@ export interface GatsbyGraphQLResolverArgumentConfig<TValue = any> {
 
 export function getGatsbyImageResolver<TSource, TContext, TArgs>(
   resolve: GraphQLFieldResolver<TSource, TContext, TArgs>,
-  extraArgs?: Record<string, GatsbyGraphQLResolverArgumentConfig>
-): GatsbyGraphQLFieldConfig<TSource, TContext, TArgs> {
+  extraArgs?: Record<string, IGatsbyGraphQLResolverArgumentConfig>
+): IGatsbyGraphQLFieldConfig<TSource, TContext, TArgs> {
   return {
     type: `JSON!`,
     args: {
