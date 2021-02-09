@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.0...gatsby-plugin-image@1.0.0-next.1) (2021-02-08)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Fix blur up on navigate issue ([#29333](https://github.com/gatsbyjs/gatsby/issues/29333)) ([1443ecd](https://github.com/gatsbyjs/gatsby/commit/1443ecde5fe5f6e4b0072239bd3f2688ecb3d260))
+
 # [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@0.8.0-next.1...gatsby-plugin-image@1.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-plugin-image
