@@ -2,10 +2,13 @@
   "gatsby-plugin-google-analytics": {
     "message": "Add the Google Analytics tracking script"
   },
-  "gatsby-plugin-sharp": {
+  "gatsby-plugin-image": {
     "message": "Add responsive images",
-    "plugins": ["gatsby-transformer-sharp", "gatsby-source-filesystem:images"],
-    "dependencies": ["gatsby-image"],
+    "plugins": [
+      "gatsby-plugin-sharp",
+      "gatsby-transformer-sharp",
+      "gatsby-source-filesystem:images"
+    ],
     "options": {
       "gatsby-source-filesystem:images": {
         "name": "images",

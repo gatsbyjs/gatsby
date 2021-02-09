@@ -246,6 +246,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  telemetry.addSiteMeasurement(`BUILD_END`, {
+    pagesCount: pagePaths.length, // number of html files that will be written
+    totalPagesCount: store.getState().pages.size, // total number of pages
+  })
+
   const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,
     pagePaths.length,
