@@ -84,6 +84,27 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   ]
   ```
 
+* `runtimeCachingMergeStrategy` is option where one can define how `workboxConfig.runtimeCaching` should be merged. - see [Option of runtime caching merge strategy](https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#runtime-caching-merge-strategy). For example:
+
+  ```javascript
+  plugins: [
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        runtimeCachingMergeStrategy: "append", // new option
+        workboxConfig: {
+          runtimeCaching: [
+            {
+              urlPattern: /some\/path\/that\/needs\/to\/always\/get\/fetched\/from\/the\/network/,
+              handler: `NetworkFirst`,
+            },
+          ],
+        },
+      },
+    },
+  ]
+  ```
+
 ## Upgrading from 2.x
 
 To upgrade from 2.x to 3.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
@@ -164,6 +185,171 @@ const options = {
   ],
   skipWaiting: true,
   clientsClaim: true,
+}
+```
+
+## Option of runtime caching merge strategy
+
+`runtimeCachingMergeStrategy ` is option where one can define how `workboxConfig.runtimeCaching` should be merged.
+
+- It is also possible to leave the option unspecified. In this case, the behavior is the same as when the `merge` option is specified.
+
+  - **This `merge` option will behave as before. Therefore, those who do not specify the merge strategy option and do not want to change from the previous behavior do not need to set the option anew.**
+
+- There are three options available. There are three options: `merge`, `append`, and `replace`.
+
+For example:
+
+### Append a custom handler
+
+```javascript
+   {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        runtimeCachingMergeStrategy: "append", // new option
+        workboxConfig: {
+          runtimeCaching: [
+            {
+              urlPattern: /some\/path\/that\/needs\/to\/always\/get\/fetched\/from\/the\/network/,
+              handler: `NetworkFirst`,
+            },
+          ],
+        },
+      },
+    },
+```
+
+Result:
+
+```javascript
+{
+    runtimeCaching: [
+       {
+          // Use cacheFirst since these don't need to be revalidated (same RegExp
+          // and same reason as above)
+          urlPattern: /(\.js$|\.css$|static\/)/,
+          handler: `CacheFirst`,
+       },
+      {
+        // page-data.json files, static query results and app-data.json
+        // are not content hashed
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
+        handler: `StaleWhileRevalidate`,
+      },
+      {
+        // Add runtime caching of various other page resources
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        handler: `StaleWhileRevalidate`,
+      },
+      {
+        // Google Fonts CSS (doesn't end in .css so we need to specify it)
+        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+        handler: `StaleWhileRevalidate`,
+      },
+     {
+         urlPattern: /some\/path\/that\/needs\/to\/always\/get\/fetched\/from\/the\/network/,
+         handler: `NetworkFirst`,
+      },
+    ],
+}
+```
+
+### Defining your own handlers
+
+```javascript
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        runtimeCachingMergeStrategy: "replace", // new option
+        workboxConfig: {
+          runtimeCaching: [
+            {
+              urlPattern: /only-this-path-should-be-cached/,
+              handler: `CacheFirst`,
+            },
+          ],
+        },
+      },
+    },
+```
+
+Result:
+
+```javascript
+{
+    runtimeCaching: [
+       {
+          urlPattern: /only-this-path-should-be-cached/,
+          handler: `CacheFirst`,
+       },
+    ],
+}
+```
+
+### Modifing default handlers
+
+```javascript
+const { defaultRuntimeCachingHandlers } = require('gatsby-plugin-offline');
+//...
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        runtimeCachingMergeStrategy: "replace", // new option
+        workboxConfig: {
+          runtimeCaching: [
+            ...defaultRuntimeCachingHandlers.map((handler) => {
+               // some logic to detect the  handler we want to modify/replace
+               if (!handler.urlPattern.test('https://www.example.org/some.png') {
+                   return handler;
+               }
+
+               // for example, modifing the 3rd default handler to also cache .wasm files + add some options
+               return {
+                   ...handler,
+                   urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css|wasm)$/,
+                   options: {
+                      networkTimeoutSeconds: 1.5,
+                   },
+               }
+           }),
+          ],
+        },
+      },
+    },
+```
+
+Result:
+
+```javascript
+{
+    runtimeCaching: [
+       {
+          // Use cacheFirst since these don't need to be revalidated (same RegExp
+          // and same reason as above)
+          urlPattern: /(\.js$|\.css$|static\/)/,
+          handler: `CacheFirst`,
+       },
+      {
+        // page-data.json files, static query results and app-data.json
+        // are not content hashed
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
+        handler: `StaleWhileRevalidate`,
+      },
+      {
+        // **** MODIFIED HANDLER ****
+        // Add runtime caching of various other page resources
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css|wasm)$/,
+        handler: `StaleWhileRevalidate`,
+        options: {
+             networkTimeoutSeconds: 1.5,
+        },
+      },
+      {
+        // Google Fonts CSS (doesn't end in .css so we need to specify it)
+        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+        handler: `StaleWhileRevalidate`,
+      },
+    ],
 }
 ```
 
