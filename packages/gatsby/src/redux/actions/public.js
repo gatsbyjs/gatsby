@@ -457,7 +457,11 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   if (plugin) {
     const pluginName = plugin.name
 
-    if (node && typeOwners[node.internal.type] !== pluginName)
+    if (
+      node &&
+      typeOwners[node.internal.type] &&
+      typeOwners[node.internal.type] !== pluginName
+    )
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
