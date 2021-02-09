@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: gtsb-wp-dckr
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: gtsb-wp-dckr-user
+    restart: always
+    volumes:
+      - "db_data:/var/lib/mysql"
+      - "./docker/seed:/docker-entrypoint-initdb.d"
+
+  docker-host:
+    image: qoomon/docker-host
+    cap_add: ["NET_ADMIN", "NET_RAW"]
+    mem_limit: 8M
+    restart: on-failure
+
+  wordpress:
+    depends_on:
+      - db
+    env_file:
+      - ./test-site/.env.test
+      - ./test-site/.env.plugins
+    build:
+      context: ./docker/wordpress
+    ports:
+      - "8001:8001"
+    environment:
+      WORDPRESS_DB_PASSWORD: gtsb-wp-dckr-user
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DEBUG: 1
+    restart: always
+    volumes:
+      - wp_data:/var/www/html
+
+  wordpress-cli:
+    depends_on:
+      - db
+      - wordpress
+    # Specify versions for wp cli or composer here
+    environment:
+      CPT_UI_VERSION: 1.8.1
+    env_file:
+      - ./test-site/.env.test
+      - ./test-site/.env.plugins
+    build:
+      context: ./docker/wp-cli
+    volumes:
+      - wp_data:/var/www/html
+
+volumes:
+  db_data:
+  wp_data:
