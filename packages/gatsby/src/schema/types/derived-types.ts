@@ -53,6 +53,18 @@ const getDerivedTypes = ({
   typeComposer: AllTypeComposer
 }): Set<string> => typeComposer.getExtension(`derivedTypes`) || new Set()
 
+export const deleteFieldsOfDerivedTypes = ({ typeComposer }): void => {
+  const derivedTypes = getDerivedTypes({ typeComposer })
+
+  typeComposer.getFieldNames().forEach(fieldName => {
+    const fieldType = typeComposer.getField(fieldName).type
+
+    if (derivedTypes.has(fieldType.getTypeName())) {
+      typeComposer.removeField(fieldName)
+    }
+  })
+}
+
 export const clearDerivedTypes = ({
   schemaComposer,
   typeComposer,
@@ -66,6 +78,8 @@ export const clearDerivedTypes = ({
     const derivedTypeComposer = schemaComposer.getAnyTC(typeName)
     clearDerivedTypes({ schemaComposer, typeComposer: derivedTypeComposer })
     schemaComposer.delete(typeName)
+    schemaComposer.delete((derivedTypeComposer as any)._gqType)
+    schemaComposer.delete(derivedTypeComposer)
   }
 
   if (

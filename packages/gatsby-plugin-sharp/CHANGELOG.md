@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.0...gatsby-plugin-sharp@3.0.0-next.1) (2021-02-08)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.15.0-next.1...gatsby-plugin-sharp@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [2.15.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.15.0-next.0...gatsby-plugin-sharp@2.15.0-next.1) (2021-02-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** make sure to pass the failOnError option to base64 generation ([#29254](https://github.com/gatsbyjs/gatsby/issues/29254)) ([bc0f5c8](https://github.com/gatsbyjs/gatsby/commit/bc0f5c8f12c3bfd01c653e428566ffba5f01edcc))
+
+# [2.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.14.0-next.1...gatsby-plugin-sharp@2.15.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Sanitize tmp filename ([#29246](https://github.com/gatsbyjs/gatsby/issues/29246)) ([c0f1b5c](https://github.com/gatsbyjs/gatsby/commit/c0f1b5c4e3689b33e48206f1e1a0ba80020ebf53))
+
+### Features
+
+- **gatsby-source-contentful:** Add gatsbyImageData resolver ([#28236](https://github.com/gatsbyjs/gatsby/issues/28236)) ([a823622](https://github.com/gatsbyjs/gatsby/commit/a82362267d2c842aa7dd3a65c8ffb8d51183c9eb)), closes [#29095](https://github.com/gatsbyjs/gatsby/issues/29095) [#29162](https://github.com/gatsbyjs/gatsby/issues/29162) [#29163](https://github.com/gatsbyjs/gatsby/issues/29163) [#29067](https://github.com/gatsbyjs/gatsby/issues/29067) [#29137](https://github.com/gatsbyjs/gatsby/issues/29137)
+
+# [2.14.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.14.0-next.0...gatsby-plugin-sharp@2.14.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** ignore incorrect duotone options ([#28999](https://github.com/gatsbyjs/gatsby/issues/28999)) ([298eb31](https://github.com/gatsbyjs/gatsby/commit/298eb317f91b050f822803934931c136fa4e94c1))
+
+### Features
+
+- **gatsby-plugin-image:** Add support for backgroundColor in sharp ([#29141](https://github.com/gatsbyjs/gatsby/issues/29141)) ([eb2bede](https://github.com/gatsbyjs/gatsby/commit/eb2bede99328e149b34a7e893c870094fc1ae6de))
+- **gatsby-plugin-sharp:** Add image plugin defaults ([#29147](https://github.com/gatsbyjs/gatsby/issues/29147)) ([8b6bfa6](https://github.com/gatsbyjs/gatsby/commit/8b6bfa61a8ed502df71057409862b7771b096156))
+
 # [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@2.13.0-next.1...gatsby-plugin-sharp@2.14.0-next.0) (2021-01-18)
 
 ### Bug Fixes

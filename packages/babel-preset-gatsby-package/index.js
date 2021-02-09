@@ -1,7 +1,7 @@
 const r = require(`./resolver`)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false, nodeVersion = `10.13.0` } = options
+  const { browser = false, debug = false, nodeVersion = `12.13.0` } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
