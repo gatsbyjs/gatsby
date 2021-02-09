@@ -10,9 +10,9 @@ When configured properly by a developer, preview should function almost identica
 
 You can find our tutorial on setting up WPGatsby [here](../tutorials/configuring-wp-gatsby.md#setting-up-preview). Part-way down the page there are instructions you can follow on setting up Preview.
 
-## Filesystem route API
+## File System Route API
 
-The [filesystem route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) is not currently supported with WP Previews because it does not call the `onCreatePage` API which this plugin relies on. Follow [this issue](https://github.com/gatsbyjs/gatsby/issues/29361) for updates or [vote for this feature](https://gatsby.canny.io/gatsby-cloud/p/support-filesystem-route-api-alongside-gatsby-source-wordpress).
+The [File System Route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) is not currently supported with WP Previews because it does not call the `onCreatePage` API which this plugin relies on. Follow [this issue](https://github.com/gatsbyjs/gatsby/issues/29361) for updates or [vote for this feature](https://gatsby.canny.io/gatsby-cloud/p/support-filesystem-route-api-alongside-gatsby-source-wordpress).
 
 ## Gutenberg and ACF
 
