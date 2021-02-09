@@ -25,9 +25,6 @@ it("generates the expected api output", done => {
           "onServiceWorkerUpdateFound": Object {},
           "onServiceWorkerUpdateReady": Object {},
           "registerServiceWorker": Object {},
-          "replaceComponentRenderer": Object {
-            "deprecated": true,
-          },
           "replaceHydrateFunction": Object {},
           "shouldUpdateScroll": Object {},
           "wrapPageElement": Object {},

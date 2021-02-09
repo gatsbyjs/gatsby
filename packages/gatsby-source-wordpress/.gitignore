@@ -1,4 +1,12 @@
-/*.js
-!index.js
-yarn.lock
-scripts
+dist
+
+.DS_Store
+yarn-error.log
+.vscode
+
+node_modules
+public
+.cache
+plugin/README.md
+
+.inc-builds

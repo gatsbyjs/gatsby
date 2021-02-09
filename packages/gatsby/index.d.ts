@@ -5,12 +5,12 @@ import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 export { Reporter }
 import {
-  ComposeEnumTypeConfig,
-  ComposeInputObjectTypeConfig,
-  ComposeInterfaceTypeConfig,
-  ComposeObjectTypeConfig,
-  ComposeScalarTypeConfig,
-  ComposeUnionTypeConfig,
+  EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
+  InputTypeComposerAsObjectDefinition as ComposeInputObjectTypeConfig,
+  InterfaceTypeComposerAsObjectDefinition as ComposeInterfaceTypeConfig,
+  ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
+  ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
+  UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
@@ -19,9 +19,6 @@ export {
   default as Link,
   GatsbyLinkProps,
   navigate,
-  navigateTo,
-  push,
-  replace,
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
@@ -77,8 +74,6 @@ export type PageProps<
   navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
-  /** @deprecated use pageContext instead */
-  pathContext: object
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
   /** Holds information about the build process for this component */
@@ -566,10 +561,6 @@ export interface GatsbyBrowser {
     options: PluginOptions
   ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
-  replaceComponentRenderer?(
-    args: ReplaceComponentRendererArgs,
-    options: PluginOptions
-  ): any
   replaceHydrateFunction?(
     args: BrowserPluginArgs,
     options: PluginOptions
@@ -1485,11 +1476,6 @@ export interface RouteUpdateArgs extends BrowserPluginArgs {
   prevLocation: Location | null;
 }
 
-export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: PageProps
-  loader: object
-}
-
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   prevRouterProps?: {
     location: Location
@@ -1515,8 +1501,6 @@ export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
 }
 
 export interface BrowserPluginArgs {
-  getResourcesForPathnameSync: Function
-  getResourcesForPathname: Function
   getResourceURLsForPathname: Function
   [key: string]: unknown
 }
