@@ -102,9 +102,9 @@ const addInferredFieldsImpl = ({
         // Add default resolvers to existing fields if the type matches
         // and the field has neither args nor resolver explicitly defined.
         const field = typeComposer.getField(key)
+        const fieldType = field.type.getTypeName()
         if (
-          field.type.toString().replace(/[[\]!]/g, ``) ===
-            fieldConfig.type.toString() &&
+          fieldType.replace(/[[\]!]/g, ``) === fieldConfig.type.toString() &&
           _.isEmpty(field.args) &&
           !field.resolve
         ) {
@@ -134,7 +134,7 @@ const addInferredFieldsImpl = ({
                       `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
                       `Add the following type definition to fix this:\n\n` +
                       `  type ${typeComposer.getTypeName()} ${implementsNode}{\n` +
-                      `    ${key}: ${field.type.toString()}${extension}\n` +
+                      `    ${key}: ${fieldType}${extension}\n` +
                       `  }\n\n` +
                       `https://www.gatsbyjs.com/docs/actions/#createTypes`
                   )
