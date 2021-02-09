@@ -37,13 +37,6 @@ module.exports = async function contentfulFetch({
           .join(` `)
       }
 
-      // Sync progress
-      if (response.config.url === `sync`) {
-        syncItemCount += response.data.items.length
-        syncProgress.total = syncItemCount
-        syncProgress.tick(response.data.items.length)
-      }
-
       // Log error and throw it in an extended shape
       if (response.isAxiosError) {
         reporter.verbose(
@@ -65,6 +58,13 @@ module.exports = async function contentfulFetch({
         contentfulApiError.config = response.config
 
         throw contentfulApiError
+      }
+
+      // Sync progress
+      if (response.config.url === `sync`) {
+        syncItemCount += response.data.items.length
+        syncProgress.total = syncItemCount
+        syncProgress.tick(response.data.items.length)
       }
 
       reporter.verbose(

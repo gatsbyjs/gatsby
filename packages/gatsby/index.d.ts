@@ -19,9 +19,6 @@ export {
   default as Link,
   GatsbyLinkProps,
   navigate,
-  navigateTo,
-  push,
-  replace,
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
