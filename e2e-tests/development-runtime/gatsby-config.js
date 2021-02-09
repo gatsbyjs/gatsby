@@ -1,13 +1,3 @@
-// isomorphic-fetch sets global.fetch which seems to conflicts with source-map@<0.8.0 where it does a
-// simple browser check if (global.fetch) which is true when isomorphic-fetch is used. This creates an
-// exception in react-hot-loader. @see https://github.com/gatsbyjs/gatsby/pull/13713
-//
-// This is only necessary if we are testing react < 16.9 or if you are forcing GATSBY_HOT_LOADER=react-hot-loader.
-// When we are using fast-refresh we do not need this hack.
-// TODO: Remove once fast-refresh is the default
-//
-require(`isomorphic-fetch`)
-
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,

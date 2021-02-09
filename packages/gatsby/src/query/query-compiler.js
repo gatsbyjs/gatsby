@@ -51,8 +51,7 @@ const overlayErrorID = `graphql-compiler`
 export default async function compile({ parentSpan } = {}): Promise<
   Map<string, RootQuery>
 > {
-  // TODO: swap plugins to themes
-  const { program, schema, themes, flattenedPlugins } = store.getState()
+  const { program, schema, flattenedPlugins } = store.getState()
 
   const activity = report.activityTimer(`extract queries from components`, {
     parentSpan,
@@ -66,13 +65,11 @@ export default async function compile({ parentSpan } = {}): Promise<
   const parsedQueries = await parseQueries({
     base: program.directory,
     additional: resolveThemes(
-      themes.themes
-        ? themes.themes
-        : flattenedPlugins.map(plugin => {
-            return {
-              themeDir: plugin.pluginFilepath,
-            }
-          })
+      flattenedPlugins.map(plugin => {
+        return {
+          themeDir: plugin.pluginFilepath,
+        }
+      })
     ),
     addError,
     parentSpan,

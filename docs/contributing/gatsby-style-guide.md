@@ -166,14 +166,12 @@ When referencing another page within [gatsbyjs.com](https://www.gatsbyjs.com/) h
 ```markdown
 <!-- Good -->
 
-[Gatsby's glossary](/docs/glossary)
+[Gatsby's glossary](/docs/glossary/)
 
 <!-- Bad -->
 
-[Gatsby's glossary](/docs/glossary)
+[Gatsby's glossary](https://www.gatsbyjs.com/docs/glossary/)
 ```
-
-Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
 
 ### Mark localhost URLs as code strings
 
@@ -474,7 +472,7 @@ wording.
 
 ### Referencing Gatsby Cloud
 
-While Gatsby Cloud is hosted on a separate site, [gatsbyjs.com](https://www.gatsbyjs.com/), it is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
+[gatsbyjs.com](https://www.gatsbyjs.com/) is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
 
 The guidelines for doing so are as follows:
 

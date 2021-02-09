@@ -66,14 +66,15 @@ const Image: FunctionComponent<ImageProps> = function Image({
 
 export const Picture = forwardRef<HTMLImageElement, PictureProps>(
   function Picture(
-    { fallback, sources = [], shouldLoad = true, sizes, ...props },
+    { fallback, sources = [], shouldLoad = true, ...props },
     ref
   ) {
+    const sizes = props.sizes || fallback?.sizes
     const fallbackImage = (
       <Image
-        sizes={sizes}
         {...props}
         {...fallback}
+        sizes={sizes}
         shouldLoad={shouldLoad}
         innerRef={ref}
       />

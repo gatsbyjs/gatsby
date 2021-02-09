@@ -3,16 +3,9 @@ import glob from "glob"
 import chalk from "chalk"
 
 export function printDeprecationWarnings(): void {
-  const deprecatedApis = [`pathContext`]
-  const fixMap = {
-    pathContext: {
-      newName: `pageContext`,
-      docsLink: `https://gatsby.dev/pathContext`,
-    },
-  }
-  const deprecatedLocations: Record<string, Array<string>> = {
-    pathContext: [],
-  }
+  const deprecatedApis = []
+  const fixMap = {}
+  const deprecatedLocations: Record<string, Array<string>> = {}
 
   glob
     .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })

@@ -59,7 +59,7 @@ export function lazyHydrate(
   }
 
   const cacheKey = JSON.stringify(images)
-  const hasLoaded = !hydrated.current && hasImageLoaded(cacheKey)
+  const hasLoaded = hasImageLoaded(cacheKey)
 
   imgStyle = {
     objectFit,
