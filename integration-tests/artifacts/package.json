@@ -13,7 +13,7 @@
     "test": "jest --config=jest.config.js --runInBand"
   },
   "dependencies": {
-    "gatsby": "^2.22.0",
+    "gatsby": "^3.0.0-next.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
