@@ -16,7 +16,7 @@ describe(`build-headers-program`, () => {
 
   beforeEach(() => {
     reporter = {
-      warn: jest.fn(),
+      panic: jest.fn(),
     }
     fs.existsSync.mockClear()
     fs.existsSync.mockReturnValue(true)
