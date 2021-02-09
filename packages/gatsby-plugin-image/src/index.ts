@@ -6,7 +6,13 @@ export {
 export { Placeholder } from "./components/placeholder"
 export { MainImage } from "./components/main-image"
 export { StaticImage } from "./components/static-image.server"
-export { getImage, getSrc, useGatsbyImage } from "./components/hooks"
+export {
+  getImage,
+  getSrc,
+  useGatsbyImage,
+  useArtDirection,
+  IArtDirectedImage,
+} from "./components/hooks"
 export {
   generateImageData,
   IGatsbyImageHelperArgs,

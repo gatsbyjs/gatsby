@@ -1,7 +1,10 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
-const { bindActionCreators } = require(`redux`)
+const { bindActionCreators: origBindActionCreators } = require(`redux`)
+const memoize = require(`memoizee`)
+
+const bindActionCreators = memoize(origBindActionCreators)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -295,6 +298,8 @@ const getUninitializedCache = plugin => {
 
 const pluginNodeCache = new Map()
 
+const availableActionsCache = new Map()
+let publicPath
 const runAPI = async (plugin, api, args, activity) => {
   let gatsbyNode = pluginNodeCache.get(plugin.name)
   if (!gatsbyNode) {
@@ -309,15 +314,23 @@ const runAPI = async (plugin, api, args, activity) => {
 
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
-
     const {
       publicActions,
       restrictedActionsAvailableInAPI,
     } = require(`../redux/actions`)
-    const availableActions = {
-      ...publicActions,
-      ...(restrictedActionsAvailableInAPI[api] || {}),
+
+    let availableActions
+    if (availableActionsCache.has(api)) {
+      availableActions = availableActionsCache.get(api)
+    } else {
+      availableActions = {
+        ...publicActions,
+        ...(restrictedActionsAvailableInAPI[api] || {}),
+      }
+
+      availableActionsCache.set(api, availableActions)
     }
+
     let boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch
@@ -337,7 +350,10 @@ const runAPI = async (plugin, api, args, activity) => {
     const { config, program } = store.getState()
 
     const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
-    const publicPath = getPublicPath({ ...config, ...program }, ``)
+
+    if (typeof publicPath === `undefined`) {
+      publicPath = getPublicPath({ ...config, ...program }, ``)
+    }
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 

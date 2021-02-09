@@ -99,11 +99,10 @@ describe(`build and update schema for SitePage`, () => {
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
     expect(fields.length).toBe(12)
-    expect(fields).toEqual(initialFields.concat(`context`))
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
     expect(fields.length).toBe(12)
-    expect(inputFields).toEqual(initialFields.concat(`context`))
+    expect(inputFields.sort()).toEqual(initialFields.concat(`context`).sort())
 
     const fieldsEnum = schema
       .getType(`SitePageFieldsEnum`)
@@ -157,8 +156,16 @@ describe(`build and update schema for SitePage`, () => {
         keep: String!
         fields: SitePageFields
       }
+      type SitePageFields {
+        temp: String!
+      }
     `
     store.dispatch({ type: `CREATE_TYPES`, payload: typeDefs })
+
+    // rebuildWithSitePage ignores new type definitions,
+    // so need to build again first
+    await build({})
+
     store.dispatch({ type: `CREATE_NODE`, payload: secondPage() })
 
     await rebuildWithSitePage({})

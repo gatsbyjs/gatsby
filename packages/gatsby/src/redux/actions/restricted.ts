@@ -369,7 +369,7 @@ export const actions = {
    *   actions.createResolverContext({ getHtml })
    * }
    * // The context value can then be accessed in any field resolver like this:
-   * exports.createSchemaCustomization = ({ actions }) => {
+   * exports.createSchemaCustomization = ({ actions, schema }) => {
    *   actions.createTypes(schema.buildObjectType({
    *     name: 'Test',
    *     interfaces: ['Node'],
