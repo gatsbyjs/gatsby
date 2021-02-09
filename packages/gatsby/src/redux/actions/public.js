@@ -836,7 +836,7 @@ actions.createNode = (...args) => dispatch => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {object} node A node object. See the "createNode" action for more information about the node object details.
+ * @param {Object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
  * touchNode(node)
  */
