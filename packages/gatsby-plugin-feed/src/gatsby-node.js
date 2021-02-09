@@ -10,19 +10,6 @@ const publicPath = `./public`
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-// TODO: remove in the next major release
-// A default function to transform query data into feed entries.
-const serialize = ({ query: { site, allMarkdownRemark } }) =>
-  allMarkdownRemark.edges.map(edge => {
-    return {
-      ...edge.node.frontmatter,
-      description: edge.node.excerpt,
-      url: site.siteMetadata.siteUrl + edge.node.fields.slug,
-      guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-      custom_elements: [{ "content:encoded": edge.node.html }],
-    }
-  })
-
 exports.onPostBuild = async ({ graphql }, pluginOptions) => {
   /*
    * Run the site settings query to gather context, then
@@ -47,12 +34,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
       ...feed,
     }
 
-    const serializer =
-      feed.serialize && typeof feed.serialize === `function`
-        ? feed.serialize
-        : serialize
-
-    const rssFeed = (await serializer(locals)).reduce((merged, item) => {
+    const rssFeed = (await feed.serialize(locals)).reduce((merged, item) => {
       merged.item(item)
       return merged
     }, new RSS(setup(locals)))
