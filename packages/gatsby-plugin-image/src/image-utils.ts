@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { stripIndent } from "common-tags"
+import camelCase from "lodash/camelcase"
 import { IGatsbyImageData } from "."
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
@@ -205,6 +206,7 @@ export function generateImageData(
     filename,
     reporter = { warn },
     backgroundColor,
+    formats: rawFormats = [`auto`, `webp`],
   } = args
 
   if (!pluginName) {
@@ -216,6 +218,9 @@ export function generateImageData(
   if (typeof generateImageSource !== `function`) {
     throw new Error(`generateImageSource must be a function`)
   }
+
+  layout = camelCase(layout) as Layout
+
   if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
     // No metadata means we let the CDN handle max size etc, aspect ratio etc
     sourceMetadata = {
@@ -226,8 +231,10 @@ export function generateImageData(
   } else if (!sourceMetadata.format) {
     sourceMetadata.format = formatFromFilename(filename)
   }
-  //
-  const formats = new Set<ImageFormat>(args.formats || [`auto`, `webp`])
+
+  const formats = new Set<ImageFormat>(
+    rawFormats.map(format => format.toLowerCase() as ImageFormat)
+  )
 
   if (formats.size === 0 || formats.has(`auto`) || formats.has(``)) {
     formats.delete(`auto`)
