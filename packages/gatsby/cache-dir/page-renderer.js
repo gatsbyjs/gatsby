@@ -13,7 +13,6 @@ class PageRenderer extends React.Component {
         ...grabMatchParams(this.props.location.pathname),
         ...this.props.pageResources.json.pageContext.__params,
       },
-      pathContext: this.props.pageContext,
     }
 
     const [replacementElement] = apiRunner(`replaceComponentRenderer`, {

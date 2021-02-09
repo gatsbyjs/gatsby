@@ -74,8 +74,6 @@ export type PageProps<
   navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
-  /** @deprecated use pageContext instead */
-  pathContext: object
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
   /** Holds information about the build process for this component */
