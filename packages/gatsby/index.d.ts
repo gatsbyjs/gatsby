@@ -5,12 +5,12 @@ import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 export { Reporter }
 import {
-  ComposeEnumTypeConfig,
-  ComposeInputObjectTypeConfig,
-  ComposeInterfaceTypeConfig,
-  ComposeObjectTypeConfig,
-  ComposeScalarTypeConfig,
-  ComposeUnionTypeConfig,
+  EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
+  InputTypeComposerAsObjectDefinition as ComposeInputObjectTypeConfig,
+  InterfaceTypeComposerAsObjectDefinition as ComposeInterfaceTypeConfig,
+  ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
+  ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
+  UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"

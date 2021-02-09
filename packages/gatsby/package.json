@@ -90,8 +90,8 @@
     "gatsby-telemetry": "^2.0.0-next.0",
     "glob": "^7.1.6",
     "got": "8.3.2",
-    "graphql": "^14.6.0",
-    "graphql-compose": "^6.3.8",
+    "graphql": "^15.4.0",
+    "graphql-compose": "^7.24.4",
     "graphql-playground-middleware-express": "^1.7.18",
     "hasha": "^5.2.0",
     "http-proxy": "^1.18.1",
@@ -235,7 +235,7 @@
     "url": "git+https://github.com/gatsbyjs/gatsby.git"
   },
   "resolutions": {
-    "graphql": "^14.6.0",
+    "graphql": "^15.0.0",
     "@mdx-js/mdx": "^2.0.0-next.3",
     "@mdx-js/react": "^2.0.0-next.3",
     "@mdx-js/runtime": "^2.0.0-next.3",
