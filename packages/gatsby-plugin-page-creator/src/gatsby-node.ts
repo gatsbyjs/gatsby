@@ -52,7 +52,7 @@ export async function createPagesStatefully(
     ignore,
     slugify: slugifyOptions,
   }: IOptions,
-  doneCb: PluginCallback
+  doneCb: PluginCallback<null>
 ): Promise<void> {
   try {
     const { deletePage } = actions
