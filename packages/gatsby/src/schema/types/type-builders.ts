@@ -1,4 +1,13 @@
 import {
+  GraphQLEnumType,
+  GraphQLInterfaceType,
+  GraphQLList,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLScalarType,
+  GraphQLUnionType,
+} from "graphql"
+import {
   ComposeObjectTypeConfig,
   ComposeInputObjectTypeConfig,
   ComposeInterfaceTypeConfig,
@@ -6,6 +15,7 @@ import {
   ComposeEnumTypeConfig,
   ComposeScalarTypeConfig,
 } from "graphql-compose"
+import { TypeOrTypeDef } from "../../schema/types/type-defs"
 
 enum GatsbyGraphQLTypeKind {
   OBJECT = `OBJECT`,
@@ -96,11 +106,20 @@ function buildScalarType<TSource, TContext>(
   }
 }
 
-function isGatsbyType(something: any): something is GatsbyGraphQLTypeKind {
+function isGatsbyType(
+  something: TypeOrTypeDef
+): something is GatsbyGraphQLType<any, any> {
   return (
     typeof something === `object` &&
+    !(something instanceof GraphQLScalarType) &&
+    !(something instanceof GraphQLObjectType) &&
+    !(something instanceof GraphQLInterfaceType) &&
+    !(something instanceof GraphQLUnionType) &&
+    !(something instanceof GraphQLEnumType) &&
+    !(something instanceof GraphQLList) &&
+    !(something instanceof GraphQLNonNull) &&
     something.kind &&
-    GatsbyGraphQLTypeKind[something.kind]
+    GatsbyGraphQLTypeKind[something.kind] !== undefined
   )
 }
 
