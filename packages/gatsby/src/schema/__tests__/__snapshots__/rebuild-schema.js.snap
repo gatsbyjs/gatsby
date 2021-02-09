@@ -44,11 +44,6 @@ directive @childOf(
   A list of types this type is a child of. Usually these are the types handled by a transformer plugin.
   \\"\\"\\"
   types: [String!]! = []
-
-  \\"\\"\\"
-  Specifies whether a parent can have multiple children of this type or not.
-  \\"\\"\\"
-  many: Boolean! = false @deprecated(reason: \\"No-op. We always add both \`child[Field]\` and \`children[Field]\` to the parent type\\")
 ) on OBJECT
 
 \\"\\"\\"

@@ -74,8 +74,6 @@ export type PageProps<
   navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
-  /** @deprecated use pageContext instead */
-  pathContext: object
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
   /** Holds information about the build process for this component */
@@ -563,10 +561,6 @@ export interface GatsbyBrowser {
     options: PluginOptions
   ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
-  replaceComponentRenderer?(
-    args: ReplaceComponentRendererArgs,
-    options: PluginOptions
-  ): any
   replaceHydrateFunction?(
     args: BrowserPluginArgs,
     options: PluginOptions
@@ -1027,16 +1021,6 @@ export interface NodePluginArgs {
   getNodesByType(type: string): Node[]
 
   /**
-   * Compares `contentDigest` of cached node with passed value
-   * to determine if node has changed.
-   *
-   * @param id of node
-   * @param contentDigest of node
-   * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
-   */
-  hasNodeChanged(id: string, contentDigest: string): boolean
-
-  /**
    * Set of utilities to output information to user
    */
   reporter: Reporter
@@ -1482,11 +1466,6 @@ export interface RouteUpdateArgs extends BrowserPluginArgs {
   prevLocation: Location | null;
 }
 
-export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: PageProps
-  loader: object
-}
-
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
   prevRouterProps?: {
     location: Location
@@ -1512,8 +1491,6 @@ export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
 }
 
 export interface BrowserPluginArgs {
-  getResourcesForPathnameSync: Function
-  getResourcesForPathname: Function
   getResourceURLsForPathname: Function
   [key: string]: unknown
 }
