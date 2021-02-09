@@ -525,7 +525,12 @@ describe(`GraphQL type inference`, () => {
           name: `Repro`,
           interfaces: [`Node`],
           fields: {
-            field_that_needs_to_be_sanitized_: `String`,
+            field_that_needs_to_be_sanitized_: {
+              type: `String`,
+              extensions: {
+                proxy: { from: `field_that_needs_to_be_sanitized?` },
+              },
+            },
             _another__field_that_needs_to_be_sanitized: {
               type: `String`,
               resolve: source =>
@@ -1383,56 +1388,6 @@ Object {
       expect(result.errors.length).toEqual(1)
       expect(result.errors[0].message).toMatch(
         `Cannot query field "number" on type "Test".`
-      )
-    })
-  })
-
-  describe(`missing extension warning`, () => {
-    it(`warns when inferred extension is missing in type definition`, async () => {
-      const nodes = [
-        {
-          date: `2012-11-01`,
-          internal: { type: `Test` },
-          id: `1`,
-        },
-        {
-          linked___NODE: `foo`,
-          internal: { type: `Test` },
-          id: `2`,
-        },
-
-        // linked node:
-        { id: `foo`, internal: { type: `Foo` } },
-      ]
-      const typeDefs = [
-        {
-          typeOrTypeDef: `
-            type Test implements Node {
-              linked: Foo
-              date: Date
-            }
-          `,
-        },
-      ]
-      await buildTestSchema(nodes, {}, typeDefs)
-      expect(report.warn.mock.calls.length).toEqual(2)
-      expect(report.warn.mock.calls[0][0]).toEqual(
-        `Deprecation warning: adding inferred extension \`dateformat\` for field \`Test.date\`.\n` +
-          `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
-          `Add the following type definition to fix this:\n\n` +
-          `  type Test implements Node {\n` +
-          `    date: Date @dateformat\n` +
-          `  }\n\n` +
-          `https://www.gatsbyjs.com/docs/actions/#createTypes`
-      )
-      expect(report.warn.mock.calls[1][0]).toEqual(
-        `Deprecation warning: adding inferred extension \`link\` for field \`Test.linked\`.\n` +
-          `In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.\n` +
-          `Add the following type definition to fix this:\n\n` +
-          `  type Test implements Node {\n` +
-          `    linked: Foo @link(by: "id", from: "linked___NODE")\n` +
-          `  }\n\n` +
-          `https://www.gatsbyjs.com/docs/actions/#createTypes`
       )
     })
   })
