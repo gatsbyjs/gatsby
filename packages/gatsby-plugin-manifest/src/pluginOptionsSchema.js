@@ -93,13 +93,10 @@ export default function pluginOptionSchema({ Joi }) {
       platform: platform.required(),
       url: Joi.string()
         .uri()
-        .required()
         .description(`The URL at which the application can be found.`),
-      id: Joi.string()
-        .required()
-        .description(
-          `The ID used to represent the application on the specified platform.`
-        ),
+      id: Joi.string().description(
+        `The ID used to represent the application on the specified platform.`
+      ),
       min_version: Joi.string()
         .optional()
         .description(

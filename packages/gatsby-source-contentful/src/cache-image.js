@@ -1,8 +1,9 @@
 const crypto = require(`crypto`)
 const { resolve, parse } = require(`path`)
 
-const axios = require(`axios`)
 const { pathExists, createWriteStream } = require(`fs-extra`)
+
+const downloadWithRetry = require(`./download-with-retry`)
 
 const inFlightImageCache = new Map()
 
@@ -58,8 +59,7 @@ module.exports = async function cacheImage(store, image, options) {
     const downloadPromise = new Promise(async (resolve, reject) => {
       const previewUrl = `http:${url}?${params.join(`&`)}`
 
-      const response = await axios({
-        method: `get`,
+      const response = await downloadWithRetry({
         url: previewUrl,
         responseType: `stream`,
       })

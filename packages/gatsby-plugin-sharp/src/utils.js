@@ -361,3 +361,24 @@ export function getDimensionsAndAspectRatio(dimensions, options) {
     aspectRatio: width / height,
   }
 }
+
+const dominantColorCache = new Map()
+
+export const getDominantColor = async absolutePath => {
+  let dominantColor = dominantColorCache.get(absolutePath)
+  if (dominantColor) {
+    return dominantColor
+  }
+
+  const pipeline = sharp(absolutePath)
+  const { dominant } = await pipeline.stats()
+
+  // Fallback in case sharp doesn't support dominant
+  dominantColor = dominant
+    ? rgbToHex(dominant.r, dominant.g, dominant.b)
+    : `rgba(0,0,0,0.5)`
+
+  dominantColorCache.set(absolutePath, dominantColor)
+
+  return dominantColor
+}

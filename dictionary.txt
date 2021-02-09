@@ -407,7 +407,7 @@ gatsby-source-flotiq
 gatsby-source-graphql
 gatsby-source-sanity
 gatsby-source-tmdb
-gatsby-source-wordpress-experimental
+gatsby-source-wordpress
 gatsby-source-x-cms
 gatsby-starter-blog
 gatsby-starter-buttercms
