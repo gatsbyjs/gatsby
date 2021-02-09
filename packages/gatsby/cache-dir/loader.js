@@ -504,21 +504,6 @@ export const setLoader = _loader => {
 }
 
 export const publicLoader = {
-  // Deprecated methods. As far as we're aware, these are only used by
-  // core gatsby and the offline plugin, however there's a very small
-  // chance they're called by others.
-  getResourcesForPathname: rawPath => {
-    console.warn(
-      `Warning: getResourcesForPathname is deprecated. Use loadPage instead`
-    )
-    return instance.i.loadPage(rawPath)
-  },
-  getResourcesForPathnameSync: rawPath => {
-    console.warn(
-      `Warning: getResourcesForPathnameSync is deprecated. Use loadPageSync instead`
-    )
-    return instance.i.loadPageSync(rawPath)
-  },
   enqueue: rawPath => instance.prefetch(rawPath),
 
   // Real methods
