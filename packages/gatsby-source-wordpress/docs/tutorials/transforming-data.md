@@ -76,9 +76,7 @@ export const menuBeforeChangeNode = async api => {
 
     // delete each child menu item
     allMenuItemsNodesWithThisMenuIdAsAParent?.forEach(menuItemNode =>
-      actions.deleteNode({
-        node: menuItemNode,
-      })
+      actions.deleteNode(menuItemNode)
     )
   }
 }
