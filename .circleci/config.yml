@@ -593,6 +593,8 @@ workflows:
             - lint
             - typecheck
             - bootstrap
+      - integration_tests_gatsby_source_wordpress:
+          <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_cache_resilience:
