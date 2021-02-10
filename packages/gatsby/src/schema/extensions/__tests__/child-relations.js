@@ -830,7 +830,7 @@ describe(`Define parent-child relationships with field extensions`, () => {
     await buildSchema()
     expect(report.error).toBeCalledWith(
       `With the \`childOf\` extension, children fields can only be added to ` +
-        `interfaces which have the \`@nodeInterface\` extension.\n` +
+        `interfaces which implement the \`Node\` interface.\n` +
         `Check the type definition of \`Ancestors\`.`
     )
   })

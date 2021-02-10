@@ -1033,7 +1033,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
     ) {
       report.error(
         `With the \`childOf\` extension, children fields can only be added to ` +
-          `interfaces which have the \`@nodeInterface\` extension.\n` +
+          `interfaces which implement the \`Node\` interface.\n` +
           `Check the type definition of \`${typeComposer.getTypeName()}\`.`
       )
       return
@@ -1054,7 +1054,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
         ) {
           report.error(
             `With the \`childOf\` extension, children fields can only be added to ` +
-              `interfaces which have the \`@nodeInterface\` extension.\n` +
+              `interfaces which implement the \`Node\` interface.\n` +
               `Check the type definition of \`${typeComposer.getTypeName()}\`.`
           )
           return
