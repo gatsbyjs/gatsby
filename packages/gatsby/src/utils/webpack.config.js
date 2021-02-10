@@ -438,7 +438,6 @@ module.exports = async (
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
-        "create-react-context": directoryPath(`.cache/create-react-context.js`),
         "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
           require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
         ),
