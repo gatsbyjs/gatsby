@@ -806,28 +806,26 @@ actions.createNode = (...args) => dispatch => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
+ * @param {Object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * touchNode({ nodeId: `a-node-id` })
+ * touchNode(node)
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
-  let nodeId = _.get(options, `nodeId`)
-
-  // Check if using old method signature. Warn about incorrect usage
-  if (typeof options === `string`) {
-    console.warn(
-      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
-    )
+actions.touchNode = (node: any, plugin?: Plugin) => {
+  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
+  if (node && node.nodeId) {
+    let msg =
+      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
+      `the node directly to the function: touchNode(node)`
 
     if (plugin && plugin.name) {
-      console.log(`"touchNode" was called by ${plugin.name}`)
+      msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    nodeId = options
+    report.warn(msg)
+
+    node = getNode(node.nodeId)
   }
 
-  const node = getNode(nodeId)
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -835,7 +833,7 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: nodeId,
+    payload: node.id,
   }
 }
 

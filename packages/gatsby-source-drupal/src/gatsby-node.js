@@ -139,7 +139,7 @@ exports.sourceNodes = async (
         // Touch nodes so they are not garbage collected by Gatsby.
         getNodes().forEach(node => {
           if (node.internal.owner === `gatsby-source-drupal`) {
-            touchNode({ nodeId: node.id })
+            touchNode(node)
           }
         })
 

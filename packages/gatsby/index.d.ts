@@ -1141,7 +1141,7 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
+  touchNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
