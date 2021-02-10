@@ -1,254 +1,70 @@
-const { spawn } = require(`child_process`)
-const path = require(`path`)
+require(`dotenv`).config({
+  path: `.env.test`,
+})
+
+const on = require(`wait-on`)
+const {
+  getGatsbyProcess,
+  gatsbyCleanBeforeAll,
+} = require(`../test-fns/test-utils/get-gatsby-process`)
+
+const {
+  resetSchema,
+  mutateSchema,
+} = require(`../test-fns/test-utils/increment-remote-data`)
 
 jest.setTimeout(100000)
 
-const publicDir = path.join(process.cwd(), `public`)
+describe(`[gatsby-source-wordpress] Build default options`, () => {
+  beforeAll(done => {
+    if (process.env.WPGQL_INCREMENT) {
+      return
+    }
 
-const gatsbyBin = path.join(`node_modules`, `.bin`, `gatsby`)
+    console.log(`Build default options`)
 
-beforeAll(async done => {
-  const gatsbyCleanProcess = spawn(gatsbyBin, [`clean`], {
-    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-    env: {
-      ...process.env,
-      NODE_ENV: `production`,
-    },
+    gatsbyCleanBeforeAll(done)
   })
 
-  gatsbyCleanProcess.on(`exit`, exitCode => {
-    done()
-  })
-})
+  // skip this test when we run with WPGQL_INCREMENT=true
+  // because we only want to run the "Run tests on develop build" tests
+  const testFn = process.env.WPGQL_INCREMENT ? test.skip : test
 
-describe(`Build default options`, () => {
-  test(`Default options build succeeded`, async () => {
-    const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-      env: {
-        ...process.env,
-        NODE_ENV: `production`,
-        DEFAULT_PLUGIN_OPTIONS: `1`,
-      },
+  testFn(`Default options build succeeded`, async () => {
+    const gatsbyProcess = getGatsbyProcess(`build`, {
+      DEFAULT_PLUGIN_OPTIONS: `1`,
     })
-
     const exitCode = await new Promise(resolve =>
       gatsbyProcess.on(`exit`, resolve)
     )
-
     expect(exitCode).toEqual(0)
+
+    gatsbyProcess.kill()
   })
-
-  // describe(`Static Queries`, () => {
-  //   test(`are written correctly when inline`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/inline/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when imported`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/import/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when dynamically imported`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/dynamic/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly in jsx`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/jsx/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly in tsx`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/tsx/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly in typescript`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/typescript/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when nesting imports`, async () => {
-  //     const queries = [titleQuery, authorQuery, ...globalQueries]
-  //     const pagePath = `/import-import/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when nesting dynamic imports`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/dynamic-dynamic/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when nesting a dynamic import in a regular import`, async () => {
-  //     const queries = [titleQuery, authorQuery, ...globalQueries]
-  //     const pagePath = `/import-dynamic/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when nesting a regular import in a dynamic import`, async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/dynamic-import/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test("are written correctly with circular dependency", async () => {
-  //     const queries = [titleQuery, ...globalQueries]
-  //     const pagePath = `/circular-dep/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-
-  //   test(`are written correctly when using gatsby-browser`, async () => {
-  //     const queries = [...globalQueries]
-  //     const pagePath = `/gatsby-browser/`
-
-  //     const { staticQueryHashes } = await readPageData(publicDir, pagePath)
-
-  //     expect(staticQueryHashes.sort()).toEqual(queries.map(hashQuery).sort())
-  //   })
-  // })
-
-  // const expectedPages = [`stale-pages/stable`, `stale-pages/only-in-first`]
-  // const unexpectedPages = [`stale-pages/only-in-second`]
-
-  // describe(`html files`, () => {
-  //   const type = `html`
-
-  //   describe(`should have expected html files`, () => {
-  //     assertFileExistenceForPagePaths({
-  //       pagePaths: expectedPages,
-  //       type,
-  //       shouldExist: true,
-  //     })
-  //   })
-
-  //   describe(`shouldn't have unexpected html files`, () => {
-  //     assertFileExistenceForPagePaths({
-  //       pagePaths: unexpectedPages,
-  //       type,
-  //       shouldExist: false,
-  //     })
-  //   })
-  // })
-
-  // describe(`page-data files`, () => {
-  //   const type = `page-data`
-
-  //   describe(`should have expected page-data files`, () => {
-  //     assertFileExistenceForPagePaths({
-  //       pagePaths: expectedPages,
-  //       type,
-  //       shouldExist: true,
-  //     })
-  //   })
-
-  //   describe(`shouldn't have unexpected page-data files`, () => {
-  //     assertFileExistenceForPagePaths({
-  //       pagePaths: unexpectedPages,
-  //       type,
-  //       shouldExist: false,
-  //     })
-  //   })
-  // })
 })
 
-// describe(`Second run`, () => {
-//   const expectedPages = [`stale-pages/stable`, `stale-pages/only-in-second`]
-//   const unexpectedPages = [`stale-pages/only-in-first`]
+describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
+  let gatsbyDevelopProcess
+  beforeAll(async done => {
+    if (!process.env.WPGQL_INCREMENT) {
+      console.log(`Cold develop build`)
+      await resetSchema()
 
-//   beforeAll(async done => {
-//     const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-//       stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-//       env: {
-//         ...process.env,
-//         NODE_ENV: `production`,
-//         RUN_FOR_STALE_PAGE_ARTIFICATS: `2`,
-//       },
-//     })
+      await gatsbyCleanBeforeAll()
+    } else {
+      console.log(`Warm develop build`)
+      await mutateSchema()
+    }
+    gatsbyDevelopProcess = getGatsbyProcess(`develop`)
 
-//     gatsbyProcess.on(`exit`, exitCode => {
-//       done()
-//     })
-//   })
+    await on({ resources: [`http://localhost:8000`] })
+    done()
+  })
 
-//   describe(`html files`, () => {
-//     const type = `html`
+  require(`../test-fns/index`)
 
-//     describe(`should have expected html files`, () => {
-//       assertFileExistenceForPagePaths({
-//         pagePaths: expectedPages,
-//         type,
-//         shouldExist: true,
-//       })
-//     })
-
-//     describe(`shouldn't have unexpected html files`, () => {
-//       assertFileExistenceForPagePaths({
-//         pagePaths: unexpectedPages,
-//         type,
-//         shouldExist: false,
-//       })
-//     })
-//   })
-
-//   describe(`page-data files`, () => {
-//     const type = `page-data`
-
-//     describe(`should have expected page-data files`, () => {
-//       assertFileExistenceForPagePaths({
-//         pagePaths: expectedPages,
-//         type,
-//         shouldExist: true,
-//       })
-//     })
-
-//     describe(`shouldn't have unexpected page-data files`, () => {
-//       assertFileExistenceForPagePaths({
-//         pagePaths: unexpectedPages,
-//         type,
-//         shouldExist: false,
-//       })
-//     })
-//   })
-// })
+  afterAll(done => {
+    gatsbyDevelopProcess.kill()
+    done()
+  })
+})

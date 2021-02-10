@@ -6,7 +6,7 @@ require(`dotenv`).config({
 // an int test with all default plugin options
 const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
   ? {
-      excludeFieldNames: [`commentCount`, `commentCount`],
+      excludeFieldNames: [`commentCount`],
       debug: {
         graphql: {
           writeQueriesToDisk: true,
