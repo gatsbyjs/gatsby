@@ -6,6 +6,9 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
+const {
+  GatsbyNodeModulesResolver,
+} = require(`./webpack/gatsby-node-modules-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -446,6 +449,30 @@ module.exports = async (
           require.resolve(`socket.io-client/package.json`)
         ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
+
+        // Packages used in .cache folder - new resolution can't find them with yarn2/PnP
+        // TODO move to custom resolver
+        mitt: path.dirname(require.resolve(`mitt/package.json`)),
+        "shallow-compare": path.dirname(
+          require.resolve(`shallow-compare/package.json`)
+        ),
+        "gatsby-link": path.dirname(
+          require.resolve(`gatsby-link/package.json`)
+        ),
+        "gatsby-react-router-scroll": path.dirname(
+          require.resolve(`gatsby-react-router-scroll/package.json`)
+        ),
+        "gatsby-legacy-polyfills": path.dirname(
+          require.resolve(`gatsby-legacy-polyfills/package.json`)
+        ),
+        "@mikaelkristiansson/domready": path.dirname(
+          require.resolve(`@mikaelkristiansson/domready/package.json`)
+        ),
+        "@reach/router": path.dirname(
+          require.resolve(`@reach/router/package.json`)
+        ),
+        lodash: path.dirname(require.resolve(`lodash/package.json`)),
+        "prop-types": path.dirname(require.resolve(`prop-types/package.json`)),
       },
       plugins: [new CoreJSResolver()],
     }
@@ -453,17 +480,9 @@ module.exports = async (
     const target =
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
-      resolve.alias = Object.assign(
-        {},
-        {
-          // force to use es modules when importing internals of @reach.router
-          // for browser bundles
-          "@reach/router": path.join(
-            path.dirname(require.resolve(`@reach/router/package.json`)),
-            `es`
-          ),
-        },
-        resolve.alias
+      resolve.alias[`@reach/router`] = path.join(
+        path.dirname(require.resolve(`@reach/router/package.json`)),
+        `es`
       )
     }
 
