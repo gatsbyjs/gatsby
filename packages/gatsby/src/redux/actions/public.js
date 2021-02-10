@@ -501,40 +501,6 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was suppressed in documentation pages.
-/**
- * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
- */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  let msg =
-    `The "deleteNodes" action is now deprecated and will be removed in ` +
-    `Gatsby v3. Please use "deleteNode" instead.`
-  if (plugin && plugin.name) {
-    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
-  }
-  report.warn(msg)
-
-  // Also delete any nodes transformed from these.
-  const descendantNodes = _.flatten(
-    nodes.map(n => findChildren(getNode(n).children))
-  )
-
-  const nodeIds = [...nodes, ...descendantNodes]
-
-  const deleteNodesAction = {
-    type: `DELETE_NODES`,
-    plugin,
-    // Payload contains node IDs but inference-metadata requires full node instances
-    payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
-  }
-  return deleteNodesAction
-}
-
 // We add a counter to internal to make sure we maintain insertion order for
 // backends that don't do that out of the box
 let NODE_COUNTER = 0

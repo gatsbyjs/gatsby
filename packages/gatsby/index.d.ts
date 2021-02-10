@@ -1143,12 +1143,6 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
-  /**
-   * @deprecated
-   * @see https://www.gatsbyjs.org/docs/actions/#deleteNodes
-   */
-  deleteNodes(nodes: string[], plugin?: ActionPlugin): void
-
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
   createNode(
     node: NodeInput,
