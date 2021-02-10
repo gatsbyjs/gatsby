@@ -222,14 +222,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        {
-          node: getNode(`hi`),
-        },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode(getNode(`hi`), {
+        name: `tests`,
+      })
     )
     expect(getNodes()).toHaveLength(1)
   })
@@ -306,12 +301,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        { node: getNode(`hi`) },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode(getNode(`hi`), {
+        name: `tests`,
+      })
     )
     expect(getNodes()).toHaveLength(0)
   })
@@ -343,11 +335,7 @@ describe(`nodes db tests`, () => {
         }
       )
     )
-    store.dispatch(
-      actions.deleteNode({
-        node: getNode(`hi`),
-      })
-    )
+    store.dispatch(actions.deleteNode(getNode(`hi`)))
     expect(getNode(`hi`)).toBeUndefined()
   })
 
@@ -370,14 +358,17 @@ describe(`nodes db tests`, () => {
     )
     expect(getNode(`hi`)).toMatchObject({ id: `hi` })
     store.dispatch(
-      actions.deleteNode(`hi`, getNode(`hi`), {
-        name: `tests`,
-      })
+      actions.deleteNode(
+        { node: getNode(`hi`) },
+        {
+          name: `tests`,
+        }
+      )
     )
     expect(getNode(`hi`)).toBeUndefined()
     const deprecationNotice =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }). ` +
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node) ` +
       `"deleteNode" was called by tests`
     expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
   })
@@ -401,7 +392,7 @@ describe(`nodes db tests`, () => {
         )
       )
       store.dispatch(
-        actions.deleteNode(`hi`, getNode(`hi`), {
+        actions.deleteNode(getNode(`hi`), {
           name: `tests`,
         })
       )

@@ -36,7 +36,7 @@ const createFSMachine = (
     // It's possible the node was never created as sometimes tools will
     // write and then immediately delete temporary files to the file system.
     if (node) {
-      deleteNode({ node })
+      deleteNode(node)
     }
   }
 

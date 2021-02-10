@@ -425,53 +425,50 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
+ * @param {object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * deleteNode({node: node})
+ * deleteNode(node)
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (node: any, plugin?: Plugin) => {
   let id
 
-  // Check if using old method signature. Warn about incorrect usage but get
-  // node from nodeID anyway.
-  if (typeof options === `string`) {
+  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
+  if (node && node.node) {
     let msg =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }).`
-    if (args && args.name) {
-      // `plugin` used to be the third argument
-      plugin = args
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node)`
+
+    if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
     report.warn(msg)
 
-    id = options
+    id = node.node.id
   } else {
-    id = options && options.node && options.node.id
+    id = node && node.id
   }
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const node = getNode(id)
+  const internalNode = getNode(id)
   if (plugin) {
     const pluginName = plugin.name
 
     if (
-      node &&
-      typeOwners[node.internal.type] &&
-      typeOwners[node.internal.type] !== pluginName
+      internalNode &&
+      typeOwners[internalNode.internal.type] &&
+      typeOwners[internalNode.internal.type] !== pluginName
     )
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
-          The node type "${node.internal.type}" is owned by "${
-        typeOwners[node.internal.type]
+          The node type "${internalNode.internal.type}" is owned by "${
+        typeOwners[internalNode.internal.type]
       }".
 
           The node object passed to "deleteNode":
 
-          ${JSON.stringify(node, null, 4)}
+          ${JSON.stringify(internalNode, null, 4)}
 
           The plugin deleting the node:
 
@@ -487,12 +484,13 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
   }
 
-  const deleteAction = createDeleteAction(node)
+  const deleteAction = createDeleteAction(internalNode)
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node && findChildren(node.children).map(getNode).map(createDeleteAction)
+    internalNode &&
+    findChildren(internalNode.children).map(getNode).map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]

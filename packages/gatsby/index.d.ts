@@ -1091,10 +1091,6 @@ interface ActionPlugin {
   name: string
 }
 
-interface DeleteNodeArgs {
-  node: Node
-}
-
 interface CreateNodeFieldArgs {
   node: Node
   name: string
@@ -1128,9 +1124,8 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
   deleteNode(
-    options: { node: Node },
+    node: NodeInput,
     plugin?: ActionPlugin,
-    option?: ActionOptions
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */

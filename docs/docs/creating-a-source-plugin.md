@@ -446,9 +446,7 @@ exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
       newData.forEach(newDatum => {
         switch (newDatum.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)),
-            })
+            deleteNode(getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)))
             break
           case "created":
           case "updated":

@@ -485,7 +485,7 @@ exports.sourceNodes = async (
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
       touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      deleteNode(node)
     })
   }
 

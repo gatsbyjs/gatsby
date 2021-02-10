@@ -81,7 +81,7 @@ function deleteStaleNodes(state: IGatsbyState, nodes: Array<Node>): void {
   const staleNodes = getStaleNodes(state, nodes)
 
   if (staleNodes.length > 0) {
-    staleNodes.forEach(node => deleteNode({ node }))
+    staleNodes.forEach(node => deleteNode(node))
   }
 }
 
