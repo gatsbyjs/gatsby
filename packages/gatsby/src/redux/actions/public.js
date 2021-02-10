@@ -841,8 +841,6 @@ actions.createNode = (...args) => dispatch => {
  * touchNode(node)
  */
 actions.touchNode = (node: any, plugin?: Plugin) => {
-  let id
-
   // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
   if (node && node.nodeId) {
     let msg =
@@ -855,20 +853,17 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
 
     report.warn(msg)
 
-    id = node.nodeId
-  } else {
-    id = node && node.id
+    node = getNode(node.nodeId)
   }
 
-  const internalNode = getNode(id)
-  if (internalNode && !typeOwners[internalNode.internal.type]) {
-    typeOwners[internalNode.internal.type] = internalNode.internal.owner
+  if (node && !typeOwners[node.internal.type]) {
+    typeOwners[node.internal.type] = node.internal.owner
   }
 
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: id,
+    payload: node.id,
   }
 }
 
