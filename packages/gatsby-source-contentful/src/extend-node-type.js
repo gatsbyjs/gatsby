@@ -738,17 +738,9 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     return imageProps
   }
 
-  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
-  const resolutionsNode = fixedNodeType({
-    name: `ContentfulResolutions`,
-    getTracedSVG,
-  })
-  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
   const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
-  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
-  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
@@ -783,9 +775,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
   return {
     fixed: fixedNode,
-    resolutions: resolutionsNode,
     fluid: fluidNode,
-    sizes: sizesNode,
     gatsbyImageData: getGatsbyImageData(),
     resize: {
       type: new GraphQLObjectType({
