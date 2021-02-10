@@ -255,7 +255,7 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
 
     if (existingNode) {
       await actions.touchNode({ nodeId })
-      await actions.deleteNode(existingNode)
+      await actions.deleteNode({ node: existingNode })
       reportUpdate({ setAction: `DELETE` })
     }
 
