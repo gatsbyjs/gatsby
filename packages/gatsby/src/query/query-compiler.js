@@ -393,8 +393,6 @@ const processDefinitions = ({
       continue
     }
 
-    document = addExtraFields(document, schema)
-
     const query = {
       name,
       text: print(document),
@@ -484,57 +482,4 @@ const determineUsedFragmentsForDefinition = (
     }
     return { usedFragments, missingFragments }
   }
-}
-
-/**
- * Automatically add:
- *   `__typename` field to abstract types (unions, interfaces)
- *   `id` field to all object/interface types having an id
- * TODO: Remove this in v3.0 as it is a legacy from Relay compiler
- */
-const addExtraFields = (document, schema) => {
-  const typeInfo = new TypeInfo(schema)
-  const contextStack = []
-
-  const transformer = visitWithTypeInfo(typeInfo, {
-    enter: {
-      [Kind.SELECTION_SET]: node => {
-        // Entering selection set:
-        //   selection sets can be nested, so keeping their metadata stacked
-        contextStack.push({ hasTypename: false })
-      },
-      [Kind.FIELD]: node => {
-        // Entering a field of the current selection-set:
-        //   mark which fields already exist in this selection set to avoid duplicates
-        const context = contextStack[contextStack.length - 1]
-        if (
-          node.name.value === `__typename` ||
-          node?.alias?.value === `__typename`
-        ) {
-          context.hasTypename = true
-        }
-      },
-    },
-    leave: {
-      [Kind.SELECTION_SET]: node => {
-        // Modify the selection-set AST on leave (add extra fields unless they already exist)
-        const context = contextStack.pop()
-        const parentType = typeInfo.getParentType()
-        const extraFields = []
-
-        // Adding __typename to unions and interfaces (if required)
-        if (!context.hasTypename && isAbstractType(parentType)) {
-          extraFields.push({
-            kind: Kind.FIELD,
-            name: { kind: Kind.NAME, value: `__typename` },
-          })
-        }
-        return extraFields.length > 0
-          ? { ...node, selections: [...extraFields, ...node.selections] }
-          : undefined
-      },
-    },
-  })
-
-  return visit(document, transformer)
 }

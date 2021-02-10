@@ -304,7 +304,6 @@ export type ActionsUnion =
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
-  | IDeleteNodesAction
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
@@ -751,12 +750,6 @@ export interface IDeleteNodeAction {
   type: `DELETE_NODE`
   // FIXME: figure out why payload can be undefined here
   payload: IGatsbyNode | void
-}
-
-export interface IDeleteNodesAction {
-  type: `DELETE_NODES`
-  payload: Array<Identifier>
-  fullNodes: Array<IGatsbyNode>
 }
 
 export interface ISetSiteFlattenedPluginsAction {

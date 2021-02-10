@@ -457,7 +457,11 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   if (plugin) {
     const pluginName = plugin.name
 
-    if (node && typeOwners[node.internal.type] !== pluginName)
+    if (
+      node &&
+      typeOwners[node.internal.type] &&
+      typeOwners[node.internal.type] !== pluginName
+    )
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
@@ -495,40 +499,6 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   } else {
     return deleteAction
   }
-}
-
-// Marked private here because it was suppressed in documentation pages.
-/**
- * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
- */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  let msg =
-    `The "deleteNodes" action is now deprecated and will be removed in ` +
-    `Gatsby v3. Please use "deleteNode" instead.`
-  if (plugin && plugin.name) {
-    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
-  }
-  report.warn(msg)
-
-  // Also delete any nodes transformed from these.
-  const descendantNodes = _.flatten(
-    nodes.map(n => findChildren(getNode(n).children))
-  )
-
-  const nodeIds = [...nodes, ...descendantNodes]
-
-  const deleteNodesAction = {
-    type: `DELETE_NODES`,
-    plugin,
-    // Payload contains node IDs but inference-metadata requires full node instances
-    payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
-  }
-  return deleteNodesAction
 }
 
 // We add a counter to internal to make sure we maintain insertion order for
@@ -871,8 +841,6 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
 
 type CreateNodeInput = {
   node: Object,
-  fieldName?: string,
-  fieldValue?: string,
   name?: string,
   value: any,
 }
@@ -885,8 +853,6 @@ type CreateNodeInput = {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
  * @param {any} $0.value the value for the field
  * @example
@@ -899,26 +865,10 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  { node, name, value }: CreateNodeInput,
   plugin: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  if (fieldName) {
-    console.warn(
-      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
-    )
-    if (!name) {
-      name = fieldName
-    }
-  }
-  if (fieldValue) {
-    console.warn(
-      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
-    )
-    if (!value) {
-      value = fieldValue
-    }
-  }
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}

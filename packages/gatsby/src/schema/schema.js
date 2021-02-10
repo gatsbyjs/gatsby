@@ -438,12 +438,6 @@ const addExtensions = ({
         case `infer`:
         case `dontInfer`: {
           typeComposer.setExtension(`infer`, name === `infer`)
-          if (args.noDefaultResolvers != null) {
-            typeComposer.setExtension(
-              `addDefaultResolvers`,
-              !args.noDefaultResolvers
-            )
-          }
           break
         }
         case `mimeTypes`:
@@ -552,14 +546,6 @@ const addExtensions = ({
           }
         })
     })
-  }
-
-  if (typeComposer.hasExtension(`addDefaultResolvers`)) {
-    report.warn(
-      `Deprecation warning - "noDefaultResolvers" is deprecated. In Gatsby 3, ` +
-        `defined fields won't get resolvers, unless explicitly added with a ` +
-        `directive/extension.`
-    )
   }
 
   return typeComposer
