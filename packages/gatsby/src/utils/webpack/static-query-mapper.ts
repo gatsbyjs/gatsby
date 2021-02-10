@@ -158,8 +158,15 @@ export class StaticQueryMapper {
           webpackModule
         )) {
           for (const chunkGroup of chunk.groupsIterable) {
-            chunkGroupsWithPageComponents.add(chunkGroup)
-            chunkGroupsByComponentPath.set(componentPath, chunkGroup)
+            // TODO try to find another way than doing another recursion
+            if (
+              chunkGroup.origins.find(mod =>
+                mod.module.resource.includes(`_this_is_virtual_fs_path_`)
+              )
+            ) {
+              chunkGroupsWithPageComponents.add(chunkGroup)
+              chunkGroupsByComponentPath.set(componentPath, chunkGroup)
+            }
           }
         }
       }
