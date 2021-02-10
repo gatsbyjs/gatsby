@@ -11,7 +11,7 @@ export const touchValidNodes = async () => {
   const validNodeIds = await getPersistentCache({ key: CREATED_NODE_IDS })
 
   if (validNodeIds?.length) {
-    validNodeIds.forEach(nodeId => actions.touchNode(actions.getNode(nodeId)))
+    validNodeIds.forEach(nodeId => actions.touchNode({ nodeId }))
   }
 }
 
