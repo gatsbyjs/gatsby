@@ -6,7 +6,7 @@ describe(`mergeWorkboxConfig`, () => {
   const { defaultRuntimeCachingHandlers } = require(`../gatsby-node`)
   const mergeWorkboxConfig = require(`../merge-workbox-config`)
 
-  test(`runtimeCachingMergeStrategy: Default option(merge)`, () => {
+  test(`runtimeCachingMergeStrategy: Default option(merge) - Don't specify anything in config`, () => {
     // call by value
     const options = {
       runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
@@ -17,6 +17,92 @@ describe(`mergeWorkboxConfig`, () => {
     }
 
     const mergedOption = mergeWorkboxConfig(options, {})
+    expect(mergedOption).toEqual(expectedOptions)
+  })
+
+  test(`runtimeCachingMergeStrategy: When the merge option is specified - Don't specify anything in config`, () => {
+    // call by value
+    const options = {
+      runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
+    }
+
+    const expectedOptions = {
+      runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
+    }
+
+    const mergedOption = mergeWorkboxConfig(options, {}, `merge`)
+    expect(mergedOption).toEqual(expectedOptions)
+  })
+
+  test(`runtimeCachingMergeStrategy: Default option(merge)`, () => {
+    const specifiedRuntimeCaching = [
+      {
+        urlPattern: /(\.js$|\.css$|static\/)/,
+        handler: `CacheFirst`,
+      },
+      {
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
+        handler: `NetwoekFirst`,
+      },
+      {
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        handler: `StaleWhileRevalidate`,
+      },
+      {
+        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+        handler: `StaleWhileRevalidate`,
+      },
+    ]
+
+    // call by value
+    const options = {
+      runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
+    }
+
+    const expectedOptions = {
+      runtimeCaching: copyRuntimeCaching(specifiedRuntimeCaching),
+    }
+
+    const mergedOption = mergeWorkboxConfig(options, {
+      runtimeCaching: specifiedRuntimeCaching,
+    })
+    expect(mergedOption).toEqual(expectedOptions)
+  })
+
+  test(`runtimeCachingMergeStrategy: When the merge option is specified`, () => {
+    const specifiedRuntimeCaching = [
+      {
+        urlPattern: /(\.js$|\.css$|static\/)/,
+        handler: `CacheFirst`,
+      },
+      {
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
+        handler: `NetwoekFirst`,
+      },
+      {
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        handler: `StaleWhileRevalidate`,
+      },
+      {
+        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+        handler: `StaleWhileRevalidate`,
+      },
+    ]
+
+    // call by value
+    const options = {
+      runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
+    }
+
+    const expectedOptions = {
+      runtimeCaching: copyRuntimeCaching(specifiedRuntimeCaching),
+    }
+
+    const mergedOption = mergeWorkboxConfig(
+      options,
+      { runtimeCaching: specifiedRuntimeCaching },
+      `merge`
+    )
     expect(mergedOption).toEqual(expectedOptions)
   })
 
@@ -165,5 +251,41 @@ describe(`mergeWorkboxConfig`, () => {
     expect(() =>
       mergeWorkboxConfig(options, workboxConfig, `appendd`)
     ).toThrow()
+  })
+
+  test(`runtimeCachingMergeStrategy: Invalid runtimeCachingMergeStrategy(When an array is passed as a parameter)`, () => {
+    // call by value
+    const options = {
+      runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
+    }
+
+    const workboxConfig = {
+      runtimeCaching: [
+        {
+          urlPattern: /some\/path\/that\/needs\/to\/always\/get\/fetched\/from\/the\/network/,
+          handler: `NetworkFirst`,
+        },
+      ],
+    }
+
+    expect(() => mergeWorkboxConfig(options, workboxConfig, [])).toThrow()
+  })
+
+  test(`runtimeCachingMergeStrategy: Invalid runtimeCachingMergeStrategy(When an object is passed as a parameter)`, () => {
+    // call by value
+    const options = {
+      runtimeCaching: copyRuntimeCaching(defaultRuntimeCachingHandlers),
+    }
+
+    const workboxConfig = {
+      runtimeCaching: [
+        {
+          urlPattern: /some\/path\/that\/needs\/to\/always\/get\/fetched\/from\/the\/network/,
+          handler: `NetworkFirst`,
+        },
+      ],
+    }
+
+    expect(() => mergeWorkboxConfig(options, workboxConfig, {})).toThrow()
   })
 })
