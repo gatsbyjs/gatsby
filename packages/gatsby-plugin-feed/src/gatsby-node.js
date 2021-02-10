@@ -10,7 +10,7 @@ const publicPath = `./public`
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-exports.onPostBuild = async ({ graphql }, pluginOptions) => {
+exports.onPostBuild = async ({ graphql }, pluginOptions, reporter) => {
   /*
    * Run the site settings query to gather context, then
    * then run the corresponding feed for each query.
@@ -34,16 +34,22 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
       ...feed,
     }
 
-    const rssFeed = (await feed.serialize(locals)).reduce((merged, item) => {
-      merged.item(item)
-      return merged
-    }, new RSS(setup(locals)))
+    if (!feed.serialize || typeof feed.serialize !== `function`) {
+      reporter.warn(
+        `You did not pass in a valid serialize function. Your feed will not be generated.`
+      )
+    } else {
+      const rssFeed = (await feed.serialize(locals)).reduce((merged, item) => {
+        merged.item(item)
+        return merged
+      }, new RSS(setup(locals)))
 
-    const outputPath = path.join(publicPath, feed.output)
-    const outputDir = path.dirname(outputPath)
-    if (!(await fs.exists(outputDir))) {
-      await fs.mkdirp(outputDir)
+      const outputPath = path.join(publicPath, feed.output)
+      const outputDir = path.dirname(outputPath)
+      if (!(await fs.exists(outputDir))) {
+        await fs.mkdirp(outputDir)
+      }
+      await fs.writeFile(outputPath, rssFeed.xml())
     }
-    await fs.writeFile(outputPath, rssFeed.xml())
   }
 }
