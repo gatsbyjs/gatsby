@@ -276,6 +276,11 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
 union ThisOrThat = AnotherTest | OneMoreTest
 
 type Inline {
@@ -434,6 +439,11 @@ input Language {
 
 type OneMoreTest implements Node @dontInfer {
   bar: Boolean
+}
+
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
 }
 
 union ThisOrThat = AnotherTest | OneMoreTest
