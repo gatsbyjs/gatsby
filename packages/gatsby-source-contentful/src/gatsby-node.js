@@ -643,6 +643,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),
