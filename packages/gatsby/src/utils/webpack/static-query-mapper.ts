@@ -7,9 +7,11 @@ import {
   IGatsbyPageComponent,
   IGatsbyStaticQueryComponents,
 } from "../../redux/types"
+import { generateComponentChunkName } from "../js-chunk-names"
 import { enqueueFlush } from "../page-data"
 
 type ChunkGroup = Compilation["chunkGroups"][0]
+type EntryPoint = Compilation["asyncEntrypoints"][0]
 
 /**
  * Checks if a module matches a resourcePath
@@ -90,6 +92,32 @@ function getWebpackModulesByResourcePaths(
   return { webpackModulesByStaticQueryId, webpackModulesByComponentId }
 }
 
+/**
+ * Chunks can be async so the group might not represent a pageComponent group
+ * We'll need to search for it.
+ */
+function getChunkGroupsDerivedFromEntrypoint(
+  chunkGroup: ChunkGroup,
+  entrypoint: EntryPoint
+): Array<ChunkGroup> {
+  // when it's imported by any globals or async-requires we know we have the correct chunkgroups.
+  // Async modules won't have hasParent listed
+  if (chunkGroup.hasParent(entrypoint)) {
+    return [chunkGroup]
+  }
+
+  let chunkGroups: Array<ChunkGroup> = []
+  for (const parentChunkGroup of chunkGroup.getParents()) {
+    const newChunkGroup = getChunkGroupsDerivedFromEntrypoint(
+      parentChunkGroup,
+      entrypoint
+    )
+    chunkGroups = chunkGroups.concat(newChunkGroup)
+  }
+
+  return chunkGroups
+}
+
 export class StaticQueryMapper {
   private store: Store<IGatsbyState>
   private name: string
@@ -126,27 +154,43 @@ export class StaticQueryMapper {
         components
       )
 
+      const appEntryPoint = (compilation.entrypoints.has(`app`)
+        ? compilation.entrypoints.get(`app`)
+        : compilation.entrypoints.get(`commons`)) as EntryPoint
+
       // group hashes by chunkGroup for ease of use
       for (const [
         staticQueryId,
         webpackModule,
       ] of webpackModulesByStaticQueryId) {
+        let chunkGroupsDerivedFromEntrypoints: Array<ChunkGroup> = []
         for (const chunk of compilation.chunkGraph.getModuleChunksIterable(
           webpackModule
         )) {
           for (const chunkGroup of chunk.groupsIterable) {
-            const staticQueryHashes =
-              staticQueriesByChunkGroup.get(chunkGroup) ?? []
-
-            staticQueryHashes.push(
-              (staticQueryComponents.get(
-                staticQueryId
-              ) as IGatsbyStaticQueryComponents).hash
-            )
-
-            staticQueriesByChunkGroup.set(chunkGroup, staticQueryHashes)
+            if (chunkGroup === appEntryPoint) {
+              chunkGroupsDerivedFromEntrypoints.push(chunkGroup)
+            } else {
+              chunkGroupsDerivedFromEntrypoints = chunkGroupsDerivedFromEntrypoints.concat(
+                getChunkGroupsDerivedFromEntrypoint(chunkGroup, appEntryPoint)
+              )
+            }
           }
         }
+
+        // loop over all component chunkGroups or global ones
+        chunkGroupsDerivedFromEntrypoints.forEach(chunkGroup => {
+          const staticQueryHashes =
+            staticQueriesByChunkGroup.get(chunkGroup) ?? []
+
+          staticQueryHashes.push(
+            (staticQueryComponents.get(
+              staticQueryId
+            ) as IGatsbyStaticQueryComponents).hash
+          )
+
+          staticQueriesByChunkGroup.set(chunkGroup, staticQueryHashes)
+        })
       }
 
       // group chunkGroups by componentPaths for ease of use
@@ -158,12 +202,8 @@ export class StaticQueryMapper {
           webpackModule
         )) {
           for (const chunkGroup of chunk.groupsIterable) {
-            // TODO try to find another way than doing another recursion
-            if (
-              chunkGroup.origins.find(mod =>
-                mod.module.resource.includes(`_this_is_virtual_fs_path_`)
-              )
-            ) {
+            // When it's a direct import from app entrypoint (async-requires) we know we have the correct chunkGroup
+            if (chunkGroup.name === generateComponentChunkName(componentPath)) {
               chunkGroupsWithPageComponents.add(chunkGroup)
               chunkGroupsByComponentPath.set(componentPath, chunkGroup)
             }
