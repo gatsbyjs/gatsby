@@ -48,6 +48,7 @@ export const sourceNodes = async (
     cache,
     getCache,
     reporter,
+    getNode,
   },
   {
     shopName,
@@ -89,6 +90,7 @@ export const sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       reporter,
       downloadImages,
     }
