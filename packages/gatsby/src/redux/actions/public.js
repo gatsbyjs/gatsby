@@ -435,7 +435,7 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
   // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
   if (node && node.node) {
     let msg =
-      `Calling "deleteNode" with an object containing a full node is deprecated. Please pass ` +
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
       `the node directly to the function: deleteNode(node)`
 
     if (plugin && plugin.name) {

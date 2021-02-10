@@ -333,7 +333,7 @@ describe(`nodes db tests`, () => {
     )
     expect(getNode(`hi`)).toBeUndefined()
     const deprecationNotice =
-      `Calling "deleteNode" with an object containing a full node is deprecated. Please pass ` +
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
       `the node directly to the function: deleteNode(node) ` +
       `"deleteNode" was called by tests`
     expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
