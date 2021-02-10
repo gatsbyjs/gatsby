@@ -10,7 +10,7 @@ const publicPath = `./public`
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-exports.onPostBuild = async ({ graphql }, pluginOptions, reporter) => {
+exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
   /*
    * Run the site settings query to gather context, then
    * then run the corresponding feed for each query.
