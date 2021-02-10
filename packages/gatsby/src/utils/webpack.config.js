@@ -413,6 +413,10 @@ module.exports = async (
     return { rules: configRules }
   }
 
+  function getPackageRoot(pkg) {
+    return path.dirname(require.resolve(`${pkg}/package.json`))
+  }
+
   function getResolve(stage) {
     const { program } = store.getState()
     const resolve = {
@@ -424,51 +428,25 @@ module.exports = async (
         // Using directories for module resolution is mandatory because
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
-        "@babel/runtime": path.dirname(
-          require.resolve(`@babel/runtime/package.json`)
-        ),
+        "@babel/runtime": getPackageRoot(`@babel/runtime`),
         // TODO: Remove entire block when we make fast-refresh the default
         ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
           ? {
-              "react-hot-loader": path.dirname(
-                require.resolve(`react-hot-loader/package.json`)
-              ),
+              "react-hot-loader": getPackageRoot(`react-hot-loader`),
             }
           : {}),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
-        "@pmmmwh/react-refresh-webpack-plugin": path.dirname(
-          require.resolve(`@pmmmwh/react-refresh-webpack-plugin/package.json`)
+        "@pmmmwh/react-refresh-webpack-plugin": getPackageRoot(
+          `@pmmmwh/react-refresh-webpack-plugin`
         ),
-        "socket.io-client": path.dirname(
-          require.resolve(`socket.io-client/package.json`)
-        ),
+        "socket.io-client": getPackageRoot(`socket.io-client`),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
 
-        // Packages used in .cache folder - new resolution can't find them with yarn2/PnP
-        // TODO move to custom resolver
-        mitt: path.dirname(require.resolve(`mitt/package.json`)),
-        "shallow-compare": path.dirname(
-          require.resolve(`shallow-compare/package.json`)
-        ),
-        "gatsby-link": path.dirname(
-          require.resolve(`gatsby-link/package.json`)
-        ),
-        "gatsby-react-router-scroll": path.dirname(
-          require.resolve(`gatsby-react-router-scroll/package.json`)
-        ),
-        "gatsby-legacy-polyfills": path.dirname(
-          require.resolve(`gatsby-legacy-polyfills/package.json`)
-        ),
-        "@mikaelkristiansson/domready": path.dirname(
-          require.resolve(`@mikaelkristiansson/domready/package.json`)
-        ),
-        "@reach/router": path.dirname(
-          require.resolve(`@reach/router/package.json`)
-        ),
-        lodash: path.dirname(require.resolve(`lodash/package.json`)),
-        "prop-types": path.dirname(require.resolve(`prop-types/package.json`)),
+        // dedupe react
+        react: getPackageRoot(`react`),
+        "react-dom": getPackageRoot(`react-dom`),
       },
       plugins: [new CoreJSResolver()],
     }
@@ -681,9 +659,7 @@ module.exports = async (
         // allows us to resolve webpack aliases from our config
         // helpful for when react is aliased to preact-compat
         // Force commonjs as we're in node land
-        const resolver = getResolve({
-          dependencyType: `commonjs`,
-        })
+        const resolver = getResolve()
 
         // TODO figure out to make preact work with this too
         if (
@@ -712,13 +688,13 @@ module.exports = async (
 
         // User modules that do not need to be part of the bundle
         if (userExternalList.some(item => checkItem(item, request))) {
-          resolver(context, request, (err, request) => {
+          resolver(context, request, (err, newRequest) => {
             if (err) {
               callback(err)
               return
             }
 
-            callback(null, `commonjs2 ${request}`)
+            callback(null, `commonjs2 ${newRequest}`)
           })
           return
         }
