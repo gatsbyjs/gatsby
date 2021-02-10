@@ -91,6 +91,8 @@ export function queriesReducer(
       return state
     }
     case `DELETED_STALE_PAGE_DATA_FILES`: {
+      // this action is a hack/hot fix
+      // it should be removed/reverted when we start persisting pages state
       for (const queryId of action.payload.pagePathsToClear) {
         for (const component of state.trackedComponents.values()) {
           component.pages.delete(queryId)
