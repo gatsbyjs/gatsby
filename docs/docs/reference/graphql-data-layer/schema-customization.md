@@ -1078,7 +1078,7 @@ data.allTeamMember.nodes.map(node => {
 })
 ```
 
-> Note: All types implementing a queryable interface must also implement the `Node` interface, e.g.:<br/> > `type Foo implements Node & TeamMember`
+> Note: All types implementing a queryable interface must also implement the `Node` interface
 
 ## Extending third-party types
 
