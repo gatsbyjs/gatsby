@@ -34,6 +34,8 @@ export function lazyHydrate(
     objectPosition,
     backgroundColor,
     objectFit = `cover`,
+    placeholderStyle,
+    placeholderClassName,
     ...props
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
@@ -72,13 +74,15 @@ export function lazyHydrate(
     <LayoutWrapper layout={layout} width={width} height={height}>
       {!hasLoaded && (
         <Placeholder
+          className={placeholderClassName}
           {...getPlaceholderProps(
             placeholder,
             isLoaded,
             layout,
             width,
             height,
-            wrapperBackgroundColor
+            wrapperBackgroundColor,
+            placeholderStyle
           )}
         />
       )}

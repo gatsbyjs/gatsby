@@ -29,9 +29,11 @@ export interface GatsbyImageProps
   as?: ElementType
   className?: string
   class?: string
-  imgClassName?: string
   image: IGatsbyImageData
+  imgClassName?: string
   imgStyle?: CSSProperties
+  placeholderClassName?: string
+  placeholderStyle?: CSSProperties
   backgroundColor?: string
   objectFit?: CSSProperties["objectFit"]
   objectPosition?: CSSProperties["objectPosition"]

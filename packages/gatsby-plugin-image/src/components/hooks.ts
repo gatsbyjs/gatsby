@@ -181,7 +181,8 @@ export function getPlaceholderProps(
   layout: Layout,
   width?: number,
   height?: number,
-  backgroundColor?: string
+  backgroundColor?: string,
+  style?: CSSProperties
 ): PlaceholderImageAttrs {
   const wrapperStyle: CSSProperties = {}
 
@@ -216,6 +217,7 @@ export function getPlaceholderProps(
       opacity: isLoaded ? 0 : 1,
       transition: `opacity 500ms linear`,
       ...wrapperStyle,
+      ...style,
     },
   }
 

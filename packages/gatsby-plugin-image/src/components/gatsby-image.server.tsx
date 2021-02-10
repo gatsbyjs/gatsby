@@ -27,6 +27,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
   backgroundColor,
   objectFit,
   objectPosition,
+  placeholderClassName,
+  placeholderStyle,
   ...props
 }) {
   if (!image) {
@@ -93,13 +95,15 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     >
       <LayoutWrapper layout={layout} width={width} height={height}>
         <Placeholder
+          className={placeholderClassName}
           {...getPlaceholderProps(
             placeholder,
             false,
             layout,
             width,
             height,
-            placeholderBackgroundColor
+            placeholderBackgroundColor,
+            placeholderStyle
           )}
         />
 
