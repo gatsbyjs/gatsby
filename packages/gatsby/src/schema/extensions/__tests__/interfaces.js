@@ -9,8 +9,10 @@ const { createTypes, createFieldExtension } = actions
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.panic = jest.fn()
+report.warn = jest.fn()
 afterEach(() => {
   report.panic.mockClear()
+  report.warn.mockClear()
 })
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -90,6 +92,44 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
           date: Date @dateformat
         }
       `)
+    )
+  })
+
+  it(`displays a deprecation warning for interfaces with @nodeInterface directive`, async () => {
+    dispatch(
+      createTypes([
+        buildInterfaceType({
+          name: `TestInterface2`,
+          extensions: {
+            nodeInterface: true,
+          },
+          fields: {
+            id: `ID!`,
+          },
+        }),
+      ])
+    )
+    await buildSchema()
+    expect(report.warn).toBeCalledTimes(2)
+    expect(report.warn).toBeCalledWith(
+      `Deprecation warning: \`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
+        `Use interface inheritance instead.\n` +
+        `To upgrade replace the old format:\n` +
+        `  interface \`TestInterface\` @nodeInterface\n` +
+        `with the new one (in \`createTypes\` action of schema customization API):\n` +
+        `  interface \`TestInterface\` implements Node\n` +
+        `Read more about schema customization here:\n` +
+        `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
+    )
+    expect(report.warn).toBeCalledWith(
+      `Deprecation warning: \`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
+        `Use interface inheritance instead.\n` +
+        `To upgrade replace the old format:\n` +
+        `  interface \`TestInterface2\` @nodeInterface\n` +
+        `with the new one (in \`createTypes\` action of schema customization API):\n` +
+        `  interface \`TestInterface2\` implements Node\n` +
+        `Read more about schema customization here:\n` +
+        `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
     )
   })
 

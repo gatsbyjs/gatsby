@@ -460,15 +460,34 @@ const addExtensions = ({
 
   if (
     typeComposer instanceof InterfaceTypeComposer &&
-    isNodeInterface(typeComposer) &&
-    (!typeComposer.hasField(`id`) ||
-      typeComposer.getFieldType(`id`).toString() !== `ID!`)
+    isNodeInterface(typeComposer)
   ) {
-    report.panic(
-      `Interfaces with the \`nodeInterface\` extension must have a field ` +
-        `\`id\` of type \`ID!\`. Check the type definition of ` +
-        `\`${typeComposer.getTypeName()}\`.`
-    )
+    // TODO: remove nodeInterface in Gatsby v4
+    if (typeComposer.hasExtension(`nodeInterface`)) {
+      report.warn(
+        `Deprecation warning: ` +
+          `\`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
+          `Use interface inheritance instead.\n` +
+          `To upgrade replace the old format:\n` +
+          `  interface \`${typeComposer.getTypeName()}\` @nodeInterface\n` +
+          `with the new one (in \`createTypes\` action of schema customization API):\n` +
+          `  interface \`${typeComposer.getTypeName()}\` implements Node\n` +
+          `Read more about schema customization here:\n` +
+          `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
+      )
+    }
+
+    const hasCorrectIdField =
+      typeComposer.hasField(`id`) &&
+      typeComposer.getFieldType(`id`).toString() === `ID!`
+
+    if (!hasCorrectIdField) {
+      report.panic(
+        `Interfaces with the \`nodeInterface\` extension must have a field ` +
+          `\`id\` of type \`ID!\`. Check the type definition of ` +
+          `\`${typeComposer.getTypeName()}\`.`
+      )
+    }
   }
 
   if (
