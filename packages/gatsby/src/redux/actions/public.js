@@ -841,8 +841,6 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
 
 type CreateNodeInput = {
   node: Object,
-  fieldName?: string,
-  fieldValue?: string,
   name?: string,
   value: any,
 }
@@ -855,8 +853,6 @@ type CreateNodeInput = {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
  * @param {any} $0.value the value for the field
  * @example
@@ -869,26 +865,10 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  { node, name, value }: CreateNodeInput,
   plugin: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  if (fieldName) {
-    console.warn(
-      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
-    )
-    if (!name) {
-      name = fieldName
-    }
-  }
-  if (fieldValue) {
-    console.warn(
-      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
-    )
-    if (!value) {
-      value = fieldValue
-    }
-  }
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
