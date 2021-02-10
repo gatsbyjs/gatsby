@@ -6,9 +6,6 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const dotenv = require(`dotenv`)
 const { CoreJSResolver } = require(`./webpack/corejs-resolver`)
-const {
-  GatsbyNodeModulesResolver,
-} = require(`./webpack/gatsby-node-modules-resolver`)
 const { store } = require(`../redux`)
 const { actions } = require(`../redux/actions`)
 const { getPublicPath } = require(`./get-public-path`)
