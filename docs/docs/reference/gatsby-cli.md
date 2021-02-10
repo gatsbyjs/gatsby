@@ -239,7 +239,7 @@ You can type in a command, such as one of these:
 
 `staticQueries`
 
-When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
+When combined with the [GraphQL explorer](/docs/how-to/querying-data/running-queries-with-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
 For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl/).
 
