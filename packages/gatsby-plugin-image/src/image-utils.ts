@@ -186,7 +186,7 @@ export function setDefaultDimensions(
       } else if (sourceMetadata.width) {
         width = sourceMetadata.width
       } else if (height) {
-        width = Math.round(height / (4 / 3))
+        width = Math.round(height / DEFAULT_ASPECT_RATIO)
       } else {
         width = DEFAULT_FIXED_WIDTH
       }
