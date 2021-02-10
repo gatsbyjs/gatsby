@@ -352,6 +352,7 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
+  | IDeletedStalePageDataFiles
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -803,4 +804,11 @@ interface ISetProgramAction {
 interface ISetProgramExtensions {
   type: `SET_PROGRAM_EXTENSIONS`
   payload: Array<string>
+}
+
+interface IDeletedStalePageDataFiles {
+  type: `DELETED_STALE_PAGE_DATA_FILES`
+  payload: {
+    pagePathsToClear: Set<string>
+  }
 }
