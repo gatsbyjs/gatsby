@@ -64,12 +64,10 @@ const typeExtensions = {
   },
   nodeInterface: {
     description:
+      `DEPRECATED: Use interface inheritance instead, i.e. "interface Foo implements Node".\n\n` +
       `Adds root query fields for an interface. All implementing types ` +
       `must also implement the Node interface.`,
     locations: [DirectiveLocation.INTERFACE],
-    deprecationReason:
-      `Use interface inheritance instead, i.e. "interface Foo implements Node" ` +
-      `vs. "interface Foo @nodeInterface"`,
   },
 }
 
