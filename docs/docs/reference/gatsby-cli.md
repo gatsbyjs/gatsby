@@ -103,7 +103,7 @@ gatsby new my-awesome-site
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-See the [Gatsby starters docs](/docs/gatsby-starters/) for more details.
+See the [Gatsby starters docs](/docs/starters/) for more details.
 
 ### `develop`
 
