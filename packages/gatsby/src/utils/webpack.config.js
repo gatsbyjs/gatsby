@@ -283,7 +283,7 @@ module.exports = async (
       case `develop`:
       case `develop-html`:
       case `build-html`:
-        return `none` // So we don't uglify the html bundle
+        return `development` // So we don't uglify the html bundle
       default:
         return `production`
     }
