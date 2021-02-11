@@ -194,9 +194,9 @@ async function getScriptsAndStylesForTemplate(
 
     if (styleAsset.rel === `preload`) {
       // give priority to preload
-      scripts.unshift(styleAsset)
+      styles.unshift(styleAsset)
     } else {
-      scripts.push(styleAsset)
+      styles.push(styleAsset)
     }
   }
 
