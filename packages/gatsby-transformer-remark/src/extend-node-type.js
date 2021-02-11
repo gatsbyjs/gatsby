@@ -79,7 +79,7 @@ module.exports = function remarkExtendNodeType(
     getNode,
     getNodesByType,
     cache,
-    getCache: possibleGetCache,
+    getCache,
     reporter,
     ...rest
   },
@@ -90,8 +90,6 @@ module.exports = function remarkExtendNodeType(
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
-
-  const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
