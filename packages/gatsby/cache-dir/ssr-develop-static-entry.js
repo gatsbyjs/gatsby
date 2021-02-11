@@ -136,7 +136,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
         })
 
         namedChunkGroups[chunkKey].assets.forEach(asset =>
-          chunks.push({ rel: `preload`, name: asset })
+          chunks.push({ rel: `preload`, name: asset.name })
         )
 
         const childAssets = namedChunkGroups[chunkKey].childAssets
