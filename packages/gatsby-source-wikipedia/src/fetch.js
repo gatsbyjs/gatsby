@@ -2,13 +2,13 @@ const Promise = require(`bluebird`)
 const queryString = require(`query-string`)
 const fetch = require(`node-fetch`)
 
-const apiBase = `https://en.wikipedia.org/w/api.php?`
+const apiBase = (lang) => `https://${lang}.wikipedia.org/w/api.php?`
 
-const fetchNodesFromSearch = ({ query, limit = 15 }) =>
-  search({ query, limit }).then(results =>
+const fetchNodesFromSearch = ({ query, limit = 15, lang = 'en' }) =>
+  search({ query, limit, lang }).then(results =>
     Promise.map(results, async (result, queryIndex) => {
-      const rendered = await getArticle(result.id)
-      const metadata = await getMetaData(result.id)
+      const rendered = await getArticle(result.id)(lang)
+      const metadata = await getMetaData(result.id)(lang)
       return {
         id: result.id,
         title: result.title,
@@ -20,9 +20,9 @@ const fetchNodesFromSearch = ({ query, limit = 15 }) =>
     })
   )
 
-const getMetaData = name =>
+const getMetaData = name => lang =>
   fetch(
-    `${apiBase}${queryString.stringify({
+    `${apiBase(lang)}${queryString.stringify({
       action: `query`,
       titles: name,
       format: `json`,
@@ -54,9 +54,9 @@ const getMetaData = name =>
       }
     })
 
-const search = ({ query, limit }) =>
+const search = ({ query, limit, lang }) =>
   fetch(
-    `${apiBase}${queryString.stringify({
+    `${apiBase(lang)}${queryString.stringify({
       action: `opensearch`,
       search: query,
       format: `json`,
@@ -70,16 +70,16 @@ const search = ({ query, limit }) =>
         return {
           title,
           description: descriptions[i],
-          id: /en.wikipedia.org\/wiki\/(.+)$/.exec(urls[i])[1],
+          id: term
         }
       })
     )
 
-const getArticle = name =>
-  fetch(`https://en.m.wikipedia.org/wiki/${name}?action=render`)
+const getArticle = name => lang =>
+  fetch(`https://${lang}.m.wikipedia.org/wiki/${name}?action=render`)
     .then(res => res.text())
     .then(pageContent =>
-      pageContent.replace(/\/\/en\.wikipedia\.org\/wiki\//g, `/wiki/`)
+      pageContent.replace(`/\/\/${lang}\.wikipedia\.org\/wiki\//g`, `/wiki/`)
     )
 
 module.exports = { fetchNodesFromSearch, getMetaData, getArticle, search }

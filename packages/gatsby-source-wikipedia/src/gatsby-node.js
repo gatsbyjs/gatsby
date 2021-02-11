@@ -6,8 +6,8 @@ exports.sourceNodes = (
   pluginOptions
 ) => {
   const { createNode } = actions
-  return Promise.map(pluginOptions.queries, ({ query, limit }) =>
-    fetchNodesFromSearch({ query, limit }).then(results =>
+  return Promise.map(pluginOptions.queries, ({ query, limit, lang }) =>
+    fetchNodesFromSearch({ query, limit, lang }).then(results =>
       results.forEach(result => {
         result.wikipediaId = result.id
         result.id = createNodeId(result.id)
