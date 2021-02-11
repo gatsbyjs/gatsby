@@ -27,23 +27,9 @@ const dontInferExtensionName = `dontInfer`
 const typeExtensions = {
   [inferExtensionName]: {
     description: `Infer field types from field values.`,
-    args: {
-      noDefaultResolvers: {
-        type: `Boolean`,
-        description: `Don't add default resolvers to defined fields.`,
-        deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
-      },
-    },
   },
   [dontInferExtensionName]: {
     description: `Do not infer field types from field values.`,
-    args: {
-      noDefaultResolvers: {
-        type: `Boolean`,
-        description: `Don't add default resolvers to defined fields.`,
-        deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
-      },
-    },
   },
   mimeTypes: {
     description: `Define the mime-types handled by this type.`,
@@ -73,13 +59,6 @@ const typeExtensions = {
         description:
           `A list of types this type is a child of. Usually these are the ` +
           `types handled by a transformer plugin.`,
-      },
-      many: {
-        // TODO: Remove in Gatsby v3
-        type: `Boolean!`,
-        defaultValue: false,
-        description: `Specifies whether a parent can have multiple children of this type or not.`,
-        deprecationReason: `No-op. We always add both \`child[Field]\` and \`children[Field]\` to the parent type`,
       },
     },
   },

@@ -13,6 +13,8 @@ export {
   useGatsbyImage,
   useArtDirection,
   IArtDirectedImage,
+  IUseGatsbyImageArgs,
+  IUrlBuilderArgs,
 } from "./components/hooks"
 export {
   generateImageData,

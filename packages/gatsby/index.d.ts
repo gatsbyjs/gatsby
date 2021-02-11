@@ -1015,16 +1015,6 @@ export interface NodePluginArgs {
   getNodesByType(type: string): Node[]
 
   /**
-   * Compares `contentDigest` of cached node with passed value
-   * to determine if node has changed.
-   *
-   * @param id of node
-   * @param contentDigest of node
-   * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
-   */
-  hasNodeChanged(id: string, contentDigest: string): boolean
-
-  /**
    * Set of utilities to output information to user
    */
   reporter: Reporter
@@ -1095,24 +1085,10 @@ interface ActionPlugin {
   name: string
 }
 
-interface DeleteNodeArgs {
-  node: Node
-}
-
 interface CreateNodeFieldArgs {
   node: Node
   name: string
   value: string
-
-  /**
-   * @deprecated
-   */
-  fieldName?: string
-
-  /**
-   * @deprecated
-   */
-  fieldValue?: string
 }
 
 interface ActionOptions {
@@ -1142,16 +1118,9 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
   deleteNode(
-    options: { node: Node },
+    node: NodeInput,
     plugin?: ActionPlugin,
-    option?: ActionOptions
   ): void
-
-  /**
-   * @deprecated
-   * @see https://www.gatsbyjs.org/docs/actions/#deleteNodes
-   */
-  deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
   createNode(
@@ -1161,14 +1130,12 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
+  touchNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
     args: {
       node: Node
-      fieldName?: string
-      fieldValue?: string
       name?: string
       value: any
     },

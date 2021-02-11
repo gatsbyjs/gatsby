@@ -99,6 +99,7 @@ describe(`build and update schema for SitePage`, () => {
 
     fields = Object.keys(schema.getType(`SitePage`).getFields())
     expect(fields.length).toBe(12)
+    expect(fields.sort()).toEqual(initialFields.concat(`context`).sort())
 
     inputFields = Object.keys(schema.getType(`SitePageFilterInput`).getFields())
     expect(fields.length).toBe(12)

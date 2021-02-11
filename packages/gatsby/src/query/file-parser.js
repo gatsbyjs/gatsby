@@ -138,9 +138,9 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
   return ast
 }
 
-const warnForGlobalTag = file =>
-  report.warn(
-    `Using the global \`graphql\` tag is deprecated, and will not be supported in v3.\n` +
+const panicOnGlobalTag = file =>
+  report.panic(
+    `Using the global \`graphql\` tag for Gatsby's queries isn't supported as of v3.\n` +
       `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
       file
   )
@@ -190,7 +190,10 @@ async function findGraphQLTags(
           )
           if (!gqlAst) return
 
-          if (isGlobal) warnForGlobalTag(file)
+          if (isGlobal) {
+            panicOnGlobalTag(file)
+            return
+          }
 
           gqlAst.definitions.forEach(def => {
             generateQueryName({
@@ -329,7 +332,10 @@ async function findGraphQLTags(
           const { ast: gqlAst, isGlobal, hash, text } = getGraphQLTag(innerPath)
           if (!gqlAst) return
 
-          if (isGlobal) warnForGlobalTag(file)
+          if (isGlobal) {
+            panicOnGlobalTag(file)
+            return
+          }
 
           gqlAst.definitions.forEach(def => {
             generateQueryName({

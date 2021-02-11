@@ -19,6 +19,8 @@ import {
   generateImageData,
   Layout,
   EVERY_BREAKPOINT,
+  IImage,
+  ImageFormat,
 } from "../image-utils"
 const imageCache = new Set<string>()
 
@@ -88,24 +90,114 @@ export async function applyPolyfill(
   ;(window as any).objectFitPolyfill(ref.current)
 }
 
-export function useGatsbyImage({
+export interface IUrlBuilderArgs<OptionsType> {
+  width: number
+  height: number
+  baseUrl: string
+  format: ImageFormat
+  options: OptionsType
+}
+export interface IUseGatsbyImageArgs<OptionsType = {}> {
+  baseUrl: string
+  /**
+   * For constrained and fixed images, the size of the image element
+   */
+  width?: number
+  height?: number
+  /**
+   * If available, pass the source image width and height
+   */
+  sourceWidth?: number
+  sourceHeight?: number
+  /**
+   * If only one dimension is passed, then this will be used to calculate the other.
+   */
+  aspectRatio?: number
+  layout?: Layout
+  /**
+   * Returns a URL based on the passed arguments. Should be a pure function
+   */
+  urlBuilder: (args: IUrlBuilderArgs<OptionsType>) => string
+
+  /**
+   * Should be a data URI
+   */
+  placeholderURL?: string
+  backgroundColor?: string
+  /**
+   * Used in error messages etc
+   */
+  pluginName?: string
+
+  /**
+   * If you do not support auto-format, pass an array of image types here
+   */
+  formats?: Array<ImageFormat>
+
+  breakpoints?: Array<number>
+
+  /**
+   * Passed to the urlBuilder function
+   */
+  options?: OptionsType
+}
+
+/**
+ * Use this hook to generate gatsby-plugin-image data in the browser.
+ */
+export function useGatsbyImage<OptionsType>({
+  baseUrl,
+  urlBuilder,
+  sourceWidth,
+  sourceHeight,
   pluginName = `useGatsbyImage`,
+  formats = [`auto`],
   breakpoints = EVERY_BREAKPOINT,
-  ...args
-}: IGatsbyImageHelperArgs): IGatsbyImageData {
-  return generateImageData({ pluginName, breakpoints, ...args })
+  options,
+  ...props
+}: IUseGatsbyImageArgs<OptionsType>): IGatsbyImageData {
+  const generateImageSource = (
+    baseUrl: string,
+    width: number,
+    height?: number,
+    format?: ImageFormat
+  ): IImage => {
+    return {
+      width,
+      height,
+      format,
+      src: urlBuilder({ baseUrl, width, height, options, format }),
+    }
+  }
+
+  const sourceMetadata: IGatsbyImageHelperArgs["sourceMetadata"] = {
+    width: sourceWidth,
+    height: sourceHeight,
+    format: `auto`,
+  }
+
+  const args: IGatsbyImageHelperArgs = {
+    ...props,
+    pluginName,
+    generateImageSource,
+    filename: baseUrl,
+    formats,
+    breakpoints,
+    sourceMetadata,
+  }
+  return generateImageData(args)
 }
 
 export function getMainProps(
   isLoading: boolean,
   isLoaded: boolean,
-  images: any,
+  images: IGatsbyImageData["images"],
   loading?: "eager" | "lazy",
   toggleLoaded?: (loaded: boolean) => void,
   cacheKey?: string,
   ref?: RefObject<HTMLImageElement>,
   style: CSSProperties = {}
-): MainImageProps {
+): Partial<MainImageProps> {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
     if (isLoaded) {
       return

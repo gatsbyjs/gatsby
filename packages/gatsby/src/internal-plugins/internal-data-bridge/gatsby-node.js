@@ -197,5 +197,5 @@ exports.onCreatePage = ({ createContentDigest, page, actions }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  store.dispatch(actions.deleteNode({ node }))
+  store.dispatch(actions.deleteNode(node))
 })
