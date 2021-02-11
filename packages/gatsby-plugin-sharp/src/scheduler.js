@@ -6,18 +6,18 @@ const { createContentDigest } = require(`gatsby-core-utils`)
 const worker = require(`./gatsby-worker`)
 const { createOrGetProgressBar } = require(`./utils`)
 
-const processImages = async (jobId, job, boundActionCreators) => {
+const processImages = async (jobId, job, actions) => {
   try {
     await worker.IMAGE_PROCESSING(job)
   } catch (err) {
     throw err
   } finally {
-    boundActionCreators.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
+    actions.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
   }
 }
 
 const jobsInFlight = new Map()
-const scheduleJob = async (job, boundActionCreators, reporter) => {
+const scheduleJob = async (job, actions, reporter) => {
   const inputPaths = job.inputPaths.filter(
     inputPath => !fs.existsSync(path.join(job.outputDir, inputPath))
   )
@@ -74,7 +74,7 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
   }
 
   const jobId = uuidv4()
-  boundActionCreators.createJob(
+  actions.createJob(
     {
       id: jobId,
       description: `processing image ${job.inputPaths[0]}`,
@@ -89,7 +89,7 @@ const scheduleJob = async (job, boundActionCreators, reporter) => {
 
   const promise = new Promise((resolve, reject) => {
     setImmediate(() => {
-      processImages(jobId, convertedJob, boundActionCreators).then(result => {
+      processImages(jobId, convertedJob, actions).then(result => {
         progressBar.tick(transformsCount)
         resolve(result)
       }, reject)

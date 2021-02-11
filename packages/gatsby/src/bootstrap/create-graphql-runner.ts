@@ -35,7 +35,6 @@ export const createGraphQLRunner = (
     `DELETE_CACHE`,
     `CREATE_NODE`,
     `DELETE_NODE`,
-    `DELETE_NODES`,
     `SET_SCHEMA_COMPOSER`,
     `SET_SCHEMA`,
     `ADD_FIELD_TO_NODE`,

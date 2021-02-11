@@ -304,7 +304,6 @@ export type ActionsUnion =
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
-  | IDeleteNodesAction
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
@@ -353,6 +352,7 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
+  | IDeletedStalePageDataFiles
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -753,12 +753,6 @@ export interface IDeleteNodeAction {
   payload: IGatsbyNode | void
 }
 
-export interface IDeleteNodesAction {
-  type: `DELETE_NODES`
-  payload: Array<Identifier>
-  fullNodes: Array<IGatsbyNode>
-}
-
 export interface ISetSiteFlattenedPluginsAction {
   type: `SET_SITE_FLATTENED_PLUGINS`
   payload: IGatsbyState["flattenedPlugins"]
@@ -810,4 +804,11 @@ interface ISetProgramAction {
 interface ISetProgramExtensions {
   type: `SET_PROGRAM_EXTENSIONS`
   payload: Array<string>
+}
+
+interface IDeletedStalePageDataFiles {
+  type: `DELETED_STALE_PAGE_DATA_FILES`
+  payload: {
+    pagePathsToClear: Set<string>
+  }
 }

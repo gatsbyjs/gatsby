@@ -269,6 +269,17 @@ describe(`Load plugins`, () => {
               "validationErrors": Array [
                 Object {
                   "context": Object {
+                    "key": "trackingId",
+                    "label": "trackingId",
+                  },
+                  "message": "\\"trackingId\\" is required",
+                  "path": Array [
+                    "trackingId",
+                  ],
+                  "type": "any.required",
+                },
+                Object {
+                  "context": Object {
                     "key": "anonymize",
                     "label": "anonymize",
                     "value": "still not a boolean",

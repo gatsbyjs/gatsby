@@ -951,12 +951,6 @@ export interface NodePluginArgs {
 
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
-   * @deprecated Will be removed in gatsby 3.0. Use `actions` instead
-   */
-  boundActionCreators: Actions
-
-  /**
-   * Collection of functions used to programmatically modify Gatsby’s internal state.
    */
   actions: Actions
 
@@ -1091,24 +1085,10 @@ interface ActionPlugin {
   name: string
 }
 
-interface DeleteNodeArgs {
-  node: Node
-}
-
 interface CreateNodeFieldArgs {
   node: Node
   name: string
   value: string
-
-  /**
-   * @deprecated
-   */
-  fieldName?: string
-
-  /**
-   * @deprecated
-   */
-  fieldValue?: string
 }
 
 interface ActionOptions {
@@ -1138,16 +1118,9 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
   deleteNode(
-    options: { node: Node },
+    node: NodeInput,
     plugin?: ActionPlugin,
-    option?: ActionOptions
   ): void
-
-  /**
-   * @deprecated
-   * @see https://www.gatsbyjs.org/docs/actions/#deleteNodes
-   */
-  deleteNodes(nodes: string[], plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
   createNode(
@@ -1157,14 +1130,12 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
+  touchNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
     args: {
       node: Node
-      fieldName?: string
-      fieldValue?: string
       name?: string
       value: any
     },

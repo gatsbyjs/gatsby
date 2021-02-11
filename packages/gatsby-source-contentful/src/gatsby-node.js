@@ -485,7 +485,7 @@ exports.sourceNodes = async (
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
       touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      deleteNode(node)
     })
   }
 
@@ -643,6 +643,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),

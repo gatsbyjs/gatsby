@@ -161,8 +161,11 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
+  const { bindActionCreators } = require(`redux`)
   const { queryRunner } = require(`../query-runner`)
-  const { boundActionCreators } = require(`../../redux/actions`)
+  const { actions } = require(`../../redux/actions`)
+  const boundActionCreators = bindActionCreators(actions, store.dispatch)
+
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
     (acc, actionName) => {
       acc[actionName] = (...args) =>
