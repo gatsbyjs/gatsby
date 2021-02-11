@@ -4,7 +4,6 @@ const fs = require(`fs-extra`)
 const got = require(`got`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const worker = require(`./gatsby-worker`)
-const { createOrGetProgressBar } = require(`./utils`)
 
 const processImages = async (jobId, job, actions) => {
   try {
@@ -83,14 +82,9 @@ const scheduleJob = async (job, actions, reporter) => {
     { name: `gatsby-plugin-sharp` }
   )
 
-  const progressBar = createOrGetProgressBar(reporter)
-  const transformsCount = job.args.operations.length
-  progressBar.addImageToProcess(transformsCount)
-
   const promise = new Promise((resolve, reject) => {
     setImmediate(() => {
       processImages(jobId, convertedJob, actions).then(result => {
-        progressBar.tick(transformsCount)
         resolve(result)
       }, reject)
     })
