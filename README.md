@@ -161,7 +161,7 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 ### Contributing to Gatsby v1
 
-We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
+We are currently only accepting fixes for bugs in Gatsby v1. No new features will be accepted.
 
 ## :memo: License
 
