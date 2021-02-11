@@ -11,6 +11,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
@@ -188,6 +189,17 @@ const generateImageSource = (
   _fit, // We use resizingBehavior instead
   { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
 ) => {
+  // Ensure we stay within Contentfuls Image API limits
+  if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
+    height = Math.floor((height / width) * CONTENTFUL_IMAGE_MAX_SIZE)
+    width = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (height > CONTENTFUL_IMAGE_MAX_SIZE) {
+    width = Math.floor((width / height) * CONTENTFUL_IMAGE_MAX_SIZE)
+    height = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
   const src = createUrl(filename, {
     width,
     height,
@@ -697,6 +709,8 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const resolveGatsbyImageData = async (image, options) => {
+    if (!isImage(image)) return null
+
     const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
 
     const imageProps = generateImageData({
@@ -752,7 +766,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       warnedForBeta = true
     }
 
-    return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+    const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -768,6 +782,10 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         defaultValue: 50,
       },
     })
+
+    fieldConfig.type = GraphQLJSON
+
+    return fieldConfig
   }
 
   return {
