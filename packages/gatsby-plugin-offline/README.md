@@ -289,7 +289,7 @@ Result:
 ### Modifing default handlers
 
 ```javascript
-const { defaultRuntimeCachingHandlers } = require('gatsby-plugin-offline');
+const { defaultRuntimeCachingHandlers } = require('gatsby-plugin-offline/constants');
 //...
     {
       resolve: `gatsby-plugin-offline`,

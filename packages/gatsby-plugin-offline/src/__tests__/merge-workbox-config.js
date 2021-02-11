@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const copyRuntimeCaching = arr => arr.map(c => _.cloneDeep(c))
 
 describe(`mergeWorkboxConfig`, () => {
-  const { defaultRuntimeCachingHandlers } = require(`../gatsby-node`)
+  const { defaultRuntimeCachingHandlers } = require(`../constants`)
   const mergeWorkboxConfig = require(`../merge-workbox-config`)
 
   test(`runtimeCachingMergeStrategy: Default option(merge) - Don't specify anything in config`, () => {
