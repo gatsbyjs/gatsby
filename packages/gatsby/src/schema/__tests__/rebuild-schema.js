@@ -665,47 +665,6 @@ describe(`build and update individual types`, () => {
     `)
   })
 
-  it(`removes types on DELETE_NODES`, async () => {
-    const schema = await addNodeAndRebuild({
-      id: `Bar1`,
-      internal: { type: `Bar`, contentDigest: `0` },
-      children: [],
-      bar: 5,
-    })
-    expect(schema.getType(`Foo`)).toBeDefined()
-    expect(schema.getType(`Bar`)).toBeDefined()
-
-    store.dispatch(actions.deleteNodes([`Foo1`, `Bar1`]))
-    const newSchema = await rebuildTestSchema()
-    expect(newSchema.getType(`Foo`)).not.toBeDefined()
-    expect(newSchema.getType(`Bar`)).not.toBeDefined()
-  })
-
-  it(`removes fields on DELETE_NODES`, async () => {
-    let schema = await addNodeAndRebuild([
-      {
-        id: `Foo2`,
-        internal: { type: `Foo`, contentDigest: `0` },
-        children: [],
-        newKey1: `str`,
-      },
-      {
-        id: `Foo3`,
-        internal: { type: `Foo`, contentDigest: `0` },
-        children: [],
-        newKey2: `str`,
-      },
-    ])
-    let fooFields = Object.keys(schema.getType(`Foo`).getFields())
-    expect(fooFields).toEqual(initialFooFields.concat([`newKey1`, `newKey2`]))
-
-    store.dispatch(actions.deleteNodes([`Foo2`, `Foo3`]))
-
-    schema = await rebuildTestSchema()
-    fooFields = Object.keys(schema.getType(`Foo`).getFields())
-    expect(fooFields).toEqual(initialFooFields)
-  })
-
   it(`applies automatic extensions to inferred fields`, async () => {
     const node = {
       id: `NewType1`,

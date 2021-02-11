@@ -328,34 +328,6 @@ type ImageSharpResize {
   originalName: String
 }
 
-type ImageSharpResolutions {
-  base64: String
-  tracedSVG: String
-  aspectRatio: Float
-  width: Float
-  height: Float
-  src: String
-  srcSet: String
-  srcWebp: String
-  srcSetWebp: String
-  originalName: String
-}
-
-type ImageSharpSizes {
-  base64: String
-  tracedSVG: String
-  aspectRatio: Float
-  src: String
-  srcSet: String
-  srcWebp: String
-  srcSetWebp: String
-  sizes: String
-  originalImg: String
-  originalName: String
-  presentationWidth: Int
-  presentationHeight: Int
-}
-
 input ImageSharpSortInput {
   fields: [ImageSharpFieldsEnum]
   order: [SortOrderEnum] = [ASC]
