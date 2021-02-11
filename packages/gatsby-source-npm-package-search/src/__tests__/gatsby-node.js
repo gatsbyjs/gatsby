@@ -7,12 +7,12 @@ jest.mock(`got`)
 
 describe(`gatsby-source-npm-package-search`, () => {
   describe(`sourceNodes`, () => {
-    let boundActionCreators
+    let actions
     let createNodeId
     let createContentDigest
 
     beforeEach(async () => {
-      boundActionCreators = {
+      actions = {
         createNode: jest.fn(),
       }
       createNodeId = jest.fn(id => id)
@@ -29,7 +29,7 @@ describe(`gatsby-source-npm-package-search`, () => {
         ])
         await sourceNodes(
           {
-            boundActionCreators,
+            actions,
             createNodeId,
             createContentDigest,
           },
@@ -44,11 +44,11 @@ describe(`gatsby-source-npm-package-search`, () => {
       })
 
       it(`should create a package node for each search hit`, () => {
-        expect(boundActionCreators.createNode.mock.calls[0]).toMatchSnapshot()
+        expect(actions.createNode.mock.calls[0]).toMatchSnapshot()
       })
 
       it(`should create readme node for each search hit`, () => {
-        expect(boundActionCreators.createNode.mock.calls[1]).toMatchSnapshot()
+        expect(actions.createNode.mock.calls[1]).toMatchSnapshot()
       })
     })
 
@@ -62,7 +62,7 @@ describe(`gatsby-source-npm-package-search`, () => {
         ])
         await sourceNodes(
           {
-            boundActionCreators,
+            actions,
             createNodeId,
             createContentDigest,
           },

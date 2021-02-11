@@ -2,7 +2,7 @@
 title: Porting an HTML Site to Gatsby
 ---
 
-This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
+This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/docs/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
 
 **Note:** This guide can also be used to migrate a section of a site, to be served next to existing files. Pay extra attention to the section on [hosting](#hosting-the-new-website) for guidance.
 

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.1...gatsby-source-contentful@5.0.0-next.2) (2021-02-11)
+
+### Bug Fixes
+
+- add common-tags to package.jsons ([#29424](https://github.com/gatsbyjs/gatsby/issues/29424)) ([94689ad](https://github.com/gatsbyjs/gatsby/commit/94689addc401f62248928a4df1587922261c96e6))
+
+### Features
+
+- **gatsby:** Remove deleteNode with ID arg ([#29205](https://github.com/gatsbyjs/gatsby/issues/29205)) ([01b6123](https://github.com/gatsbyjs/gatsby/commit/01b6123d7b1fca922a4fe450651d39e6de4b96a1))
+- **gatsby:** Remove old touchNode signature ([#29245](https://github.com/gatsbyjs/gatsby/issues/29245)) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+- **gatsby-plugin-image:** Add resolver helper and improve custom hook ([#29342](https://github.com/gatsbyjs/gatsby/issues/29342)) ([e567aa8](https://github.com/gatsbyjs/gatsby/commit/e567aa82695cf19a7d9eb4c280be767e562c3976))
+- **gatsby-source-contentful:** improve Contentful image handling ([#29398](https://github.com/gatsbyjs/gatsby/issues/29398)) ([c1e95a4](https://github.com/gatsbyjs/gatsby/commit/c1e95a43e39870a099304fc4822001b9ad2a405a))
+
 # [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.0...gatsby-source-contentful@5.0.0-next.1) (2021-02-08)
 
 **Note:** Version bump only for package gatsby-source-contentful

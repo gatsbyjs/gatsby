@@ -41,6 +41,8 @@ directive @childOf(
 ) on OBJECT
 
 \\"\\"\\"
+DEPRECATED: Use interface inheritance instead, i.e. \\"interface Foo implements Node\\".
+
 Adds root query fields for an interface. All implementing types must also implement the Node interface.
 \\"\\"\\"
 directive @nodeInterface on INTERFACE

@@ -951,12 +951,6 @@ export interface NodePluginArgs {
 
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
-   * @deprecated Will be removed in gatsby 3.0. Use `actions` instead
-   */
-  boundActionCreators: Actions
-
-  /**
-   * Collection of functions used to programmatically modify Gatsby’s internal state.
    */
   actions: Actions
 
