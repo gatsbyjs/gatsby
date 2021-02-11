@@ -20,8 +20,7 @@ let webpackStats
 const staticQueryResultCache = new Map<string, any>()
 const inFlightStaticQueryPromise = new Map<string, Promise<any>>()
 
-const inlineCssCache = new Map<string, string>()
-const inFlightInlineCssPromise = new Map<string, Promise<string>>()
+const inlineCssPromiseCache = new Map<string, Promise<string>>()
 
 const resourcesForTemplateCache = new Map<string, IResourcesForTemplate>()
 const inFlightResourcesForTemplate = new Map<
@@ -36,8 +35,7 @@ function clearCaches(): void {
   resourcesForTemplateCache.clear()
   inFlightResourcesForTemplate.clear()
 
-  inlineCssCache.clear()
-  inFlightInlineCssPromise.clear()
+  inlineCssPromiseCache.clear()
 }
 
 const getStaticQueryPath = (hash: string): string =>
@@ -181,26 +179,17 @@ async function getScriptsAndStylesForTemplate(
   const styles: Array<IChunk> = []
   for (const styleAsset of uniqStyles.values()) {
     if (styleAsset.rel !== `prefetch`) {
-      const memoizedInlineCss = inlineCssCache.get(styleAsset.name)
-      if (memoizedInlineCss) {
-        styleAsset.content = memoizedInlineCss
-      } else {
-        let getInlineCssPromise = inFlightInlineCssPromise.get(styleAsset.name)
-        if (!getInlineCssPromise) {
-          getInlineCssPromise = fs
-            .readFile(join(process.cwd(), `public`, styleAsset.name), `utf-8`)
-            .then(content => {
-              inlineCssCache.set(styleAsset.name, content)
-              inFlightInlineCssPromise.delete(styleAsset.name)
+      let getInlineCssPromise = inlineCssPromiseCache.get(styleAsset.name)
+      if (!getInlineCssPromise) {
+        getInlineCssPromise = fs.readFile(
+          join(process.cwd(), `public`, styleAsset.name),
+          `utf-8`
+        )
 
-              return content
-            })
-
-          inFlightInlineCssPromise.set(styleAsset.name, getInlineCssPromise)
-        }
-
-        styleAsset.content = await getInlineCssPromise
+        inlineCssPromiseCache.set(styleAsset.name, getInlineCssPromise)
       }
+
+      styleAsset.content = await getInlineCssPromise
     }
 
     if (styleAsset.rel === `preload`) {
