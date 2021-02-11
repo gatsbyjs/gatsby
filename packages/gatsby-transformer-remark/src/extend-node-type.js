@@ -91,10 +91,6 @@ module.exports = function remarkExtendNodeType(
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
 
-  // if (!getCache) {
-  //   getCache = getCache => id => getCache(id)
-  // }
-
   return new Promise((resolve, reject) => {
     // Setup Remark.
     const {
