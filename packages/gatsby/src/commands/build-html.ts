@@ -134,7 +134,7 @@ const renderHTMLQueue = async (
   activity: IActivity,
   htmlComponentRendererPath: string,
   pages: Array<string>,
-  stage: Stage
+  stage: Stage = Stage.BuildHTML
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
