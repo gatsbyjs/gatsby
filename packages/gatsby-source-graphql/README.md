@@ -260,7 +260,7 @@ For details, refer to [https://www.graphql-tools.com/docs/schema-wrapping](https
 
 An use case for this feature can be seen in [this issue](https://github.com/gatsbyjs/gatsby/issues/23552).
 
-# Refetching data
+## Refetching data
 
 By default, `gatsby-source-graphql` will only refetch the data once the server is restarted. It's also possible to configure the plugin to periodically refetch the data. The option is called `refetchInterval` and specifies the timeout in seconds.
 
@@ -286,7 +286,7 @@ module.exports = {
 }
 ```
 
-# Performance tuning
+## Performance tuning
 
 By default, `gatsby-source-graphql` executes each query in a separate network request.
 But the plugin also supports query batching to improve query performance.
