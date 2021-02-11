@@ -1,7 +1,6 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
 import * as path from "path"
-import { get, isObject, flatten, uniqBy, concat } from "lodash"
 
 import { getPageHtmlFilePath } from "../../utils/page-html"
 import { IPageDataWithQueryResult } from "../../utils/page-data"
@@ -77,97 +76,145 @@ interface IScriptsAndStyles {
   reversedScripts: Array<any>
 }
 
+interface IChunk {
+  name: string
+  rel: string
+  content?: string
+}
+
 async function getScriptsAndStylesForTemplate(
   componentChunkName
 ): Promise<IScriptsAndStyles> {
-  // Create paths to scripts
-  let scriptsAndStyles = flatten(
-    [`app`, componentChunkName].map(s => {
-      const fetchKey = `assetsByChunkName[${s}]`
+  const uniqScripts = new Map<string, IChunk>()
+  const uniqStyles = new Map<string, IChunk>()
 
-      let chunks = get(webpackStats, fetchKey)
-      const namedChunkGroups = get(webpackStats, `namedChunkGroups`)
+  /**
+   * Add script or style to correct bucket. Make sure those are unique (no duplicates) and that "preload" will win over any other "rel"
+   */
+  function handleAsset(name: string, rel: string): void {
+    let uniqueAssetsMap: Map<string, IChunk> | undefined
 
-      if (!chunks) {
-        return null
+    // pick correct map depending on asset type
+    if (name.endsWith(`.js`)) {
+      uniqueAssetsMap = uniqScripts
+    } else if (name.endsWith(`.css`)) {
+      uniqueAssetsMap = uniqStyles
+    }
+
+    if (uniqueAssetsMap) {
+      const existingAsset = uniqueAssetsMap.get(name)
+
+      if (
+        existingAsset &&
+        rel === `preload` &&
+        existingAsset.rel !== `preload`
+      ) {
+        // if we already track this asset, but it's not preload - make sure we make it preload
+        // as it has higher priority
+        existingAsset.rel = `preload`
+      } else if (!existingAsset) {
+        uniqueAssetsMap.set(name, { name, rel })
+      }
+    }
+  }
+
+  // Pick up scripts and styles that are used by a template using webpack.stats.json
+  for (const chunkName of [`app`, componentChunkName]) {
+    const assets = webpackStats.assetsByChunkName[chunkName]
+    if (!assets) {
+      continue
+    }
+
+    for (const asset of assets) {
+      if (asset === `/`) {
+        continue
       }
 
-      chunks = chunks.map(chunk => {
-        if (chunk === `/`) {
-          return null
+      handleAsset(asset, `preload`)
+    }
+
+    const namedChunkGroup = webpackStats.namedChunkGroups[chunkName]
+    if (!namedChunkGroup) {
+      continue
+    }
+
+    for (const asset of namedChunkGroup.assets) {
+      handleAsset(asset, `preload`)
+    }
+
+    // Handling for webpack magic comments, for example:
+    // import(/* webpackChunkName: "<chunk_name>", webpackPrefetch: true */ `<path_to_module>`)
+    // will produce
+    // {
+    //   namedChunkGroups: {
+    //     <name_of_top_level_chunk>: {
+    //       // [...] some fields we don't care about,
+    //       childAssets: {
+    //         prefetch: [
+    //           "<chunk_name>-<chunk_hash>.js",
+    //           "<chunk_name>-<chunk_hash>.js.map",
+    //         ]
+    //       }
+    //     }
+    //   }
+    // }
+    for (const [rel, assets] of Object.entries(namedChunkGroup.childAssets)) {
+      // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
+      for (const asset of assets) {
+        handleAsset(asset, rel)
+      }
+    }
+  }
+
+  // create scripts array, making sure "preload" scripts have priority
+  const scripts: Array<IChunk> = []
+  for (const scriptAsset of uniqScripts.values()) {
+    if (scriptAsset.rel === `preload`) {
+      // give priority to preload
+      scripts.unshift(scriptAsset)
+    } else {
+      scripts.push(scriptAsset)
+    }
+  }
+
+  // create styles array, making sure "preload" styles have priority and that we read .css content for non-prefetch "rel"s for inlining
+  const styles: Array<IChunk> = []
+  for (const styleAsset of uniqStyles.values()) {
+    if (styleAsset.rel !== `prefetch`) {
+      const memoizedInlineCss = inlineCssCache.get(styleAsset.name)
+      if (memoizedInlineCss) {
+        styleAsset.content = memoizedInlineCss
+      } else {
+        let getInlineCssPromise = inFlightInlineCssPromise.get(styleAsset.name)
+        if (!getInlineCssPromise) {
+          getInlineCssPromise = fs
+            .readFile(join(process.cwd(), `public`, styleAsset.name), `utf-8`)
+            .then(content => {
+              inlineCssCache.set(styleAsset.name, content)
+              inFlightInlineCssPromise.delete(styleAsset.name)
+
+              return content
+            })
+
+          inFlightInlineCssPromise.set(styleAsset.name, getInlineCssPromise)
         }
-        return { rel: `preload`, name: chunk }
-      })
 
-      namedChunkGroups[s].assets.forEach(asset =>
-        chunks.push({ rel: `preload`, name: asset })
-      )
-
-      const childAssets = namedChunkGroups[s].childAssets
-      for (const rel in childAssets) {
-        chunks = concat(
-          chunks,
-          childAssets[rel].map(chunk => {
-            return { rel, name: chunk }
-          })
-        )
+        styleAsset.content = await getInlineCssPromise
       }
+    }
 
-      return chunks
-    })
-  )
-    .filter(s => isObject(s))
-    .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
-
-  scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
-
-  const scripts = scriptsAndStyles.filter(
-    script => script.name && script.name.endsWith(`.js`)
-  )
-  const styles = scriptsAndStyles.filter(
-    style => style.name && style.name.endsWith(`.css`)
-  )
+    if (styleAsset.rel === `preload`) {
+      // give priority to preload
+      scripts.unshift(styleAsset)
+    } else {
+      scripts.push(styleAsset)
+    }
+  }
 
   return {
     scripts,
     styles,
-    reversedStyles: await Promise.all(
-      styles
-        .slice(0)
-        .reverse()
-        .map(async style => {
-          if (style.rel !== `prefetch`) {
-            const memoizedInlineCss = inlineCssCache.get(style.name)
-            if (memoizedInlineCss) {
-              return {
-                ...style,
-                content: memoizedInlineCss,
-              }
-            }
-
-            let getInlineCssPromise = inFlightInlineCssPromise.get(style.name)
-            if (!getInlineCssPromise) {
-              getInlineCssPromise = fs
-                .readFile(join(process.cwd(), `public`, style.name), `utf-8`)
-                .then(content => {
-                  inlineCssCache.set(style.name, content)
-                  inFlightInlineCssPromise.delete(style.name)
-
-                  return content
-                })
-
-              inFlightInlineCssPromise.set(style.name, getInlineCssPromise)
-            }
-
-            return {
-              ...style,
-              content: await getInlineCssPromise,
-            }
-          }
-
-          return style
-        })
-    ),
+    reversedStyles: styles.slice(0).reverse(),
     reversedScripts: scripts.slice(0).reverse(),
   }
 }
