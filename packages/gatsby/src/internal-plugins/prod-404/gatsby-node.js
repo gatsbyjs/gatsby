@@ -1,5 +1,5 @@
-const { emitter } = require(`../../redux`)
-const { boundActionCreators } = require(`../../redux/actions`)
+const { emitter, store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 
 const PROD_404_PAGE_PATH = `/404.html`
 
@@ -19,10 +19,12 @@ exports.onCreatePage = ({ page, store, actions }) => {
 
 emitter.on(`DELETE_PAGE`, action => {
   if (page404 && action.payload.path === page404.path) {
-    boundActionCreators.deletePage({
-      ...page404,
-      path: PROD_404_PAGE_PATH,
-    })
+    store.dispatch(
+      actions.deletePage({
+        ...page404,
+        path: PROD_404_PAGE_PATH,
+      })
+    )
     page404 = null
   }
 })

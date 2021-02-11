@@ -429,7 +429,6 @@ const runAPI = async (plugin, api, args, activity) => {
         ...args,
         basePath: pathPrefix,
         pathPrefix: publicPath,
-        boundActionCreators: actions,
         actions,
         loadNodeContent,
         store,
