@@ -299,7 +299,7 @@ const { defaultRuntimeCachingHandlers } = require('gatsby-plugin-offline/constan
           runtimeCaching: [
             ...defaultRuntimeCachingHandlers.map((handler) => {
                // some logic to detect the  handler we want to modify/replace
-               if (!handler.urlPattern.test('https://www.example.org/some.png') {
+               if (!handler.urlPattern.test('https://www.example.org/some.png')) {
                    return handler;
                }
 
