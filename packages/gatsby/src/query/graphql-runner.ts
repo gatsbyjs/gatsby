@@ -173,15 +173,15 @@ export class GraphQLRunner {
     // TODO: consider a better strategy for cache purging/invalidation
     this.scheduleClearCache()
 
-    if (errors.length > 0) {
-      return { errors }
-    }
-
     if (warnings.length > 0) {
       warnings.forEach(err => {
         const message = context.path ? `\nQueried in ${context.path}` : ``
         reporter.warn(err.message + message)
       })
+    }
+
+    if (errors.length > 0) {
+      return { errors }
     }
 
     let tracer
