@@ -242,7 +242,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     runtimeCachingMergeStrategy: Joi.string()
       .valid(`merge`, `append`, `replace`)
       .description(
-        `Option where one can define how workboxConfig.runtimeCaching should be merged. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#runtime-caching-merge-strategy`
+        `Option where one can define how workboxConfig.runtimeCaching should be merged. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#option-of-runtime-caching-merge-strategy`
       ),
   })
 }

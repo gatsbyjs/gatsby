@@ -84,7 +84,7 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   ]
   ```
 
-* `runtimeCachingMergeStrategy` is option where one can define how `workboxConfig.runtimeCaching` should be merged. - see [Option of runtime caching merge strategy](https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#runtime-caching-merge-strategy). For example:
+* `runtimeCachingMergeStrategy` is option where one can define how `workboxConfig.runtimeCaching` should be merged. - see [Option of runtime caching merge strategy](#option-of-runtime-caching-merge-strategy). For example:
 
   ```javascript
   plugins: [
