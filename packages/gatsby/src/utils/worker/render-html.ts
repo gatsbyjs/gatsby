@@ -5,9 +5,13 @@ import { get, isObject, flatten, uniqBy, concat } from "lodash"
 
 import { getPageHtmlFilePath } from "../../utils/page-html"
 import { IPageDataWithQueryResult } from "../../utils/page-data"
-import { Stage } from "../../commands/types"
 
-let lastRenderHTMLCallTimestamp = 0
+/**
+ * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).
+ * As long as sessionId remains the same we can rely on memoized/cached resources for templates, css file content for inlining and static query results.
+ * If session changes we invalidate our memoization caches.
+ */
+let lastSessionId = 0
 let htmlComponentRenderer
 let webpackStats
 
@@ -22,6 +26,17 @@ const inFlightResourcesForTemplate = new Map<
   string,
   Promise<IResourcesForTemplate>
 >()
+
+function clearCaches(): void {
+  staticQueryResultCache.clear()
+  inFlightStaticQueryPromise.clear()
+
+  resourcesForTemplateCache.clear()
+  inFlightResourcesForTemplate.clear()
+
+  inlineCssCache.clear()
+  inFlightInlineCssPromise.clear()
+}
 
 const getStaticQueryPath = (hash: string): string =>
   join(`page-data`, `sq`, `d`, `${hash}.json`)
@@ -230,18 +245,20 @@ export const renderHTMLProd = async ({
   htmlComponentRendererPath,
   paths,
   envVars,
-  timestamp,
+  sessionId,
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
   envVars: Array<Array<string>>
-  timestamp: number
+  sessionId: number
 }): Promise<Array<unknown>> => {
   const publicDir = join(process.cwd(), `public`)
 
-  if (timestamp !== lastRenderHTMLCallTimestamp) {
-    staticQueryResultCache.clear()
-    resourcesForTemplateCache.clear()
+  // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
+  // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
+  if (sessionId !== lastSessionId) {
+    clearCaches()
+
     // This is being executed in child process, so we need to set some vars
     // for modules that aren't bundled by webpack.
     envVars.forEach(([key, value]) => (process.env[key] = value))
@@ -250,7 +267,7 @@ export const renderHTMLProd = async ({
 
     webpackStats = await readWebpackStats(publicDir)
 
-    lastRenderHTMLCallTimestamp = timestamp
+    lastSessionId = sessionId
   }
 
   return Bluebird.map(paths, async pagePath => {
@@ -280,22 +297,27 @@ export const renderHTMLDev = async ({
   htmlComponentRendererPath,
   paths,
   envVars,
-  timestamp,
+  sessionId,
 }: {
   htmlComponentRendererPath: string
   paths: Array<string>
   envVars: Array<Array<string>>
-  timestamp: number
+  sessionId: number
 }): Promise<Array<unknown>> => {
   const outputDir = join(process.cwd(), `.cache`, `develop-html`)
-  if (timestamp !== lastRenderHTMLCallTimestamp) {
+
+  // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
+  // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
+  if (sessionId !== lastSessionId) {
+    clearCaches()
+
     // This is being executed in child process, so we need to set some vars
     // for modules that aren't bundled by webpack.
     envVars.forEach(([key, value]) => (process.env[key] = value))
 
     htmlComponentRenderer = require(htmlComponentRendererPath)
 
-    lastRenderHTMLCallTimestamp = timestamp
+    lastSessionId = sessionId
   }
 
   return Bluebird.map(paths, async pagePath => {

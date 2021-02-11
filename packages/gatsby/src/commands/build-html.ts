@@ -146,7 +146,7 @@ const renderHTMLQueue = async (
 
   const segments = chunk(pages, 50)
 
-  const timestamp = Date.now()
+  const sessionId = Date.now()
 
   const renderHTML =
     stage === `build-html`
@@ -158,7 +158,7 @@ const renderHTMLQueue = async (
       envVars,
       htmlComponentRendererPath,
       paths: pageSegment,
-      timestamp,
+      sessionId,
     })
 
     if (activity && activity.tick) {
