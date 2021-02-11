@@ -1,10 +1,13 @@
 import fs from "fs-extra"
 import Bluebird from "bluebird"
-import { join } from "path"
+import * as path from "path"
 import { get, isObject, flatten, uniqBy, concat } from "lodash"
 
 import { getPageHtmlFilePath } from "../../utils/page-html"
 import { IPageDataWithQueryResult } from "../../utils/page-data"
+
+// we want to force posix-style joins, so Windows doesn't produce backslashes for urls
+const { join } = path.posix
 
 /**
  * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).

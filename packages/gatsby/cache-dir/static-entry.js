@@ -1,5 +1,5 @@
 const React = require(`react`)
-const { join } = require(`path`)
+const path = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
 const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
 const {
@@ -17,6 +17,9 @@ const { version: gatsbyVersion } = require(`gatsby/package.json`)
 const { grabMatchParams } = require(`./find-path`)
 
 const chunkMapping = require(`../public/chunk-map.json`)
+
+// we want to force posix-style joins, so Windows doesn't produce backslashes for urls
+const { join } = path.posix
 
 // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
