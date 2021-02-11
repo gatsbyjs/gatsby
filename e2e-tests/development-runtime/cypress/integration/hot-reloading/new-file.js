@@ -4,7 +4,7 @@ describe(`hot reloading new page component`, () => {
     // TO-DO remove `wait` below and fix this properly in core,
     // we shouldn't have to wait here and core
     // should be smart enough to recover on it's own.
-    cy.wait(1000)
+    cy.wait(3000)
   })
 
   beforeEach(() => {

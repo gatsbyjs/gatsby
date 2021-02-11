@@ -338,22 +338,31 @@ module.exports = {
   app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
-    const {
-      webpackStats: {
-        compilation: { modules },
-      },
-    } = res.locals
+    const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
 
+    if (!compilation) {
+      res.json(emptyResponse)
+      return
+    }
+
     const moduleId = req?.query?.moduleId
     const lineNumber = parseInt(req.query.lineNumber, 10)
     const columnNumber = parseInt(req.query.columnNumber, 10)
 
-    const fileModule = modules.find(m => m.id === moduleId)
+    let fileModule
+    for (const module of compilation.modules) {
+      const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+      if (moduleIdentifier === moduleId) {
+        fileModule = module
+        break
+      }
+    }
+
     const sourceMap = fileModule?._source?._sourceMap
 
     if (!sourceMap) {
