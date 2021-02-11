@@ -10,14 +10,14 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
     warn: jest.fn(),
     error: jest.fn(),
-    activityTimer: () => {
+    activityTimer: (): any => {
       return {
         start: jest.fn(),
         setStatus: jest.fn(),
         end: jest.fn(),
       }
     },
-    phantomActivity: () => {
+    phantomActivity: (): any => {
       return {
         start: jest.fn(),
         end: jest.fn(),
