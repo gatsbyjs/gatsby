@@ -73,16 +73,7 @@ const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
 }, {})
 
 module.exports = function remarkExtendNodeType(
-  {
-    type,
-    basePath,
-    getNode,
-    getNodesByType,
-    cache,
-    getCache,
-    reporter,
-    ...rest
-  },
+  { type, basePath, getNode, getNodesByType, cache, reporter, ...rest },
   pluginOptions
 ) {
   if (type.name !== `MarkdownRemark`) {
@@ -90,6 +81,8 @@ module.exports = function remarkExtendNodeType(
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
+
+  const getCache = getCache => id => getCache(id)
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
