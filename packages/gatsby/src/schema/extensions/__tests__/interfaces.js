@@ -180,9 +180,8 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
     )
     await buildSchema()
     expect(report.panic).toBeCalledWith(
-      `Interfaces with the \`nodeInterface\` extension must only be implemented ` +
-        `by types which also implement the \`Node\` interface. Check the type ` +
-        `definition of \`Wrong\`, \`WrongAgain\`.`
+      `Types implementing queryable interfaces must also implement the \`Node\` interface. ` +
+        `Check the type definition of \`Wrong\`, \`WrongAgain\`.`
     )
   })
 
@@ -719,9 +718,8 @@ describe(`Queryable Node interfaces with interface inheritance`, () => {
     )
     await buildSchema()
     expect(report.panic).toBeCalledWith(
-      `Interfaces with the \`nodeInterface\` extension must only be implemented ` +
-        `by types which also implement the \`Node\` interface. Check the type ` +
-        `definition of \`Wrong\`, \`WrongAgain\`.`
+      `Types implementing queryable interfaces must also implement the \`Node\` interface. ` +
+        `Check the type definition of \`Wrong\`, \`WrongAgain\`.`
     )
   })
 

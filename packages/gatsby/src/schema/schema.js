@@ -1326,8 +1326,7 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
   })
   if (incorrectTypes.size) {
     report.panic(
-      `Interfaces with the \`nodeInterface\` extension must only be ` +
-        `implemented by types which also implement the \`Node\` ` +
+      `Types implementing queryable interfaces must also implement the \`Node\` ` +
         `interface. Check the type definition of ` +
         `${Array.from(incorrectTypes)
           .map(t => `\`${t}\``)
