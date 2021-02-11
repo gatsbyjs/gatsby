@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.0...gatsby-source-filesystem@3.0.0-next.1) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove deleteNode with ID arg ([#29205](https://github.com/gatsbyjs/gatsby/issues/29205)) ([01b6123](https://github.com/gatsbyjs/gatsby/commit/01b6123d7b1fca922a4fe450651d39e6de4b96a1))
+
 # [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.12.0-next.0...gatsby-source-filesystem@3.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-source-filesystem

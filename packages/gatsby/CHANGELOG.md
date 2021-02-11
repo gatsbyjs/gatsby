@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.1...gatsby@3.0.0-next.2) (2021-02-11)
+
+### Bug Fixes
+
+- clear tracked queries when deleting stale page-data files ([#29431](https://github.com/gatsbyjs/gatsby/issues/29431)) ([478cf68](https://github.com/gatsbyjs/gatsby/commit/478cf68f0077d95d5e46a235cf235e01fe4eaddc))
+
+### chore
+
+- **gatsby:** do not add \_\_typename to GraphQL query ([#29399](https://github.com/gatsbyjs/gatsby/issues/29399)) ([ddb1d27](https://github.com/gatsbyjs/gatsby/commit/ddb1d279b9d7324d23c2d73e0514ac61a0172e7e))
+- **gatsby:** no implicit `childOf` with `dontInfer` ([#29369](https://github.com/gatsbyjs/gatsby/issues/29369)) ([09d6cfb](https://github.com/gatsbyjs/gatsby/commit/09d6cfbf8b641bd467e109b8c4b533777bb9dfd5))
+- **gatsby:** remove noDefaultResolvers argument from infer extension ([#29367](https://github.com/gatsbyjs/gatsby/issues/29367)) ([5d0dfa2](https://github.com/gatsbyjs/gatsby/commit/5d0dfa2cf455a86ac0b215a7ee8c4c83a71a4cd4))
+
+### Features
+
+- **gatsby:** Remove boundActionCreators ([#29129](https://github.com/gatsbyjs/gatsby/issues/29129)) ([b1f8663](https://github.com/gatsbyjs/gatsby/commit/b1f866394345117d9eec0cb47270a18a9d2bf485))
+- **gatsby:** Remove deleteNode with ID arg ([#29205](https://github.com/gatsbyjs/gatsby/issues/29205)) ([01b6123](https://github.com/gatsbyjs/gatsby/commit/01b6123d7b1fca922a4fe450651d39e6de4b96a1))
+- **gatsby:** Remove deleteNodes ([#29194](https://github.com/gatsbyjs/gatsby/issues/29194)) ([7ee8025](https://github.com/gatsbyjs/gatsby/commit/7ee802580f477530a5398337f3c6bc3d5770f37d))
+- **gatsby:** Remove fieldName & fieldValue from createNodeField ([#29207](https://github.com/gatsbyjs/gatsby/issues/29207)) ([a1f3cf6](https://github.com/gatsbyjs/gatsby/commit/a1f3cf67846285a9bbd59714ac0934c8bcfa4729))
+- **gatsby:** Remove old touchNode signature ([#29245](https://github.com/gatsbyjs/gatsby/issues/29245)) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+- **gatsby:** Remove possibility to use global graphql tag for queries ([#29291](https://github.com/gatsbyjs/gatsby/issues/29291)) ([d933462](https://github.com/gatsbyjs/gatsby/commit/d933462d64f004e1a9db2d3407797d45ff8b4762))
+- **gatsby:** track connections by default in runQuery and getAllNodes ([#29392](https://github.com/gatsbyjs/gatsby/issues/29392)) ([5cbc085](https://github.com/gatsbyjs/gatsby/commit/5cbc0858cef1b115289fc9a02ef531c7896f2f5d))
+
+### BREAKING CHANGES
+
+- **gatsby:** extensions `dateformat`, `fileByRelativePath`, `link`, `proxy` are not added automatically anymore
+
+See also https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization#-nodefaultresolvers-and-inference-modes
+
+- **gatsby:** We no longer add \_\_typename field to abstract types automatically. This will affect a minority of sites that were relying on this old behavior of Relay compiler to discriminate union and interface values in the runtime.
+
+The migration is as simple as adding \_\_typename field to the query manually.
+
+- revert whitespace changes
+- **gatsby:** child[Type] and children[Type] fields are not added automatically to types with `dontInfer` directive
+
 # [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.0...gatsby@3.0.0-next.1) (2021-02-08)
 
 **Note:** Version bump only for package gatsby

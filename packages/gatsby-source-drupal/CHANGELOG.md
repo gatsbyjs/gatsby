@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.0.0-next.0...gatsby-source-drupal@4.0.0-next.1) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove deleteNode with ID arg ([#29205](https://github.com/gatsbyjs/gatsby/issues/29205)) ([01b6123](https://github.com/gatsbyjs/gatsby/commit/01b6123d7b1fca922a4fe450651d39e6de4b96a1))
+- **gatsby:** Remove old touchNode signature ([#29245](https://github.com/gatsbyjs/gatsby/issues/29245)) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+
 # [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@3.14.0-next.0...gatsby-source-drupal@4.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-source-drupal
