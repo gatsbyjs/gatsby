@@ -172,6 +172,7 @@ describe(`mergeWorkboxConfig`, () => {
           return {
             ...handler,
             urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css|wasm)$/,
+            handler: `NetworkFirst`,
             options: {
               networkTimeoutSeconds: 1.5,
             },
@@ -198,7 +199,7 @@ describe(`mergeWorkboxConfig`, () => {
           // **** MODIFIED HANDLER ****
           // Add runtime caching of various other page resources
           urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css|wasm)$/,
-          handler: `StaleWhileRevalidate`,
+          handler: `NetworkFirst`,
           options: {
             networkTimeoutSeconds: 1.5,
           },
