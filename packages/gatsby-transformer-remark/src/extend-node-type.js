@@ -91,9 +91,9 @@ module.exports = function remarkExtendNodeType(
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
 
-  if (!getCache) {
-    getCache = getCache => id => getCache(id)
-  }
+  // if (!getCache) {
+  //   getCache = getCache => id => getCache(id)
+  // }
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -217,7 +217,7 @@ module.exports = function remarkExtendNodeType(
               files: fileNodes,
               basePath,
               reporter,
-              cache: getCache(plugin.name),
+              cache,
               getCache,
               compiler,
               ...rest,
@@ -250,7 +250,7 @@ module.exports = function remarkExtendNodeType(
               files: fileNodes,
               getNode,
               reporter,
-              cache: getCache(plugin.name),
+              cache,
               getCache,
               ...rest,
             },
