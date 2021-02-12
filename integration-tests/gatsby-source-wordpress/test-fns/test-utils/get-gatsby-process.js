@@ -8,12 +8,13 @@ exports.gatsbyCleanBeforeAll = async done => {
   const gatsbySiteDir = path.join(__dirname, `..`, `..`)
 
   const publicDir = path.join(gatsbySiteDir, `public`)
-  console.log("Deleting ​publicDir", publicDir)
   await new Promise(resolve => rimraf(publicDir, resolve))
 
   const cacheDir = path.join(gatsbySiteDir, `.cache`)
-  console.log("Deleting ​cacheDir", cacheDir)
   await new Promise(resolve => rimraf(cacheDir, resolve))
+
+  const wordpressDir = path.join(gatsbySiteDir, `WordPress`)
+  await new Promise(resolve => rimraf(wordpressDir, resolve))
 
   if (typeof done === `function`) {
     done()

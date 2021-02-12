@@ -25,18 +25,18 @@ describe(`data resolution`, () => {
     expect(data[`allWpMediaItem`].totalCount).toBe(36)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
-    expect(data[`allWpUser`].totalCount).toBe(5)
+    expect(data[`allWpUser`].totalCount).toBe(1)
     expect(data[`allWpPage`].totalCount).toBe(20)
     expect(data[`allWpPost`].totalCount).toBe(10)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpProject`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
     expect(data[`allWpCategory`].totalCount).toBe(9)
-    expect(data[`allWpMenu`].totalCount).toBe(3)
+    expect(data[`allWpMenu`].totalCount).toBe(1)
     expect(data[`allWpMenuItem`].totalCount).toBe(4)
     expect(data[`allWpTeamMember`].totalCount).toBe(1)
     expect(data[`allWpPostFormat`].totalCount).toBe(0)
-    expect(data[`allWpContentType`].totalCount).toBe(9)
+    expect(data[`allWpContentType`].totalCount).toBe(8)
   })
 
   testResolvedData({

@@ -10,19 +10,25 @@ const {
 
 jest.setTimeout(100000)
 
-const wpGraphQLURL = `http://localhost:8001/graphql`
+// we run these tests twice in a row
+// to make sure everything passes on a warm cache build
+// we don't need to re-run some tests the second time,
+// so the following allows us to do that:
+const isWarmCache = process.env.WARM_CACHE
+const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
   beforeAll(done => {
-    console.log(`Build default options`)
-
-    gatsbyCleanBeforeAll(done)
+    if (isWarmCache) {
+      done()
+    } else {
+      gatsbyCleanBeforeAll(done)
+    }
   })
 
-  test(`Default options build succeeded`, async () => {
+  testOnColdCacheOnly(`Default options build succeeded`, async () => {
     const gatsbyProcess = getGatsbyProcess(`build`, {
       DEFAULT_PLUGIN_OPTIONS: `1`,
-      WPGRAPHQL_URL: wpGraphQLURL,
     })
 
     const exitCode = await new Promise(resolve =>
@@ -39,9 +45,11 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
   let gatsbyDevelopProcess
 
   beforeAll(async done => {
-    gatsbyDevelopProcess = getGatsbyProcess(`develop`, {
-      WPGRAPHQL_URL: wpGraphQLURL,
-    })
+    if (!isWarmCache) {
+      await gatsbyCleanBeforeAll()
+    }
+
+    gatsbyDevelopProcess = getGatsbyProcess(`develop`)
 
     await on({ resources: [`http://localhost:8000`] })
     done()
