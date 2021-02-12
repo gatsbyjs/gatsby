@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index.js <OutboundLink /> matches basic snapshot 1`] = `
+<div>
+  <a>
+    link
+  </a>
+</div>
+`;
