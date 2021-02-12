@@ -1,6 +1,5 @@
 import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
-import terminalLink from "terminal-link"
 import { IFlag } from "./flags"
 import chalk from "chalk"
 import { commaListsAnd } from "common-tags"
@@ -133,7 +132,7 @@ const handleFlags = (
       message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
     }
     if (flag.umbrellaIssue) {
-      message += ` · (${terminalLink(`Umbrella Issue`, flag.umbrellaIssue)})`
+      message += ` · (Umbrella Issue (${flag.umbrellaIssue}))`
     }
     message += ` · ${flag.description}`
 
