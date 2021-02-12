@@ -34,7 +34,7 @@
     "gatsby-telemetry": "^2.0.0-next.0",
     "glob": "^7.1.6",
     "graphql": "^15.4.0",
-    "graphql-compose": "^7.24.4",
+    "graphql-compose": "^7.25.0",
     "graphql-subscriptions": "^1.1.0",
     "graphql-type-json": "^0.3.2",
     "hicat": "^0.8.0",
