@@ -26,14 +26,16 @@ async function queryResult(
   fragment,
   { additionalParameters = {}, pluginOptions = {} }
 ) {
+  const cache = {
+    // GatsbyCache
+    get: async () => null,
+    set: async () => null,
+  }
   const extendNodeTypeFields = await extendNodeType(
     {
       type: { name: `MarkdownRemark` },
-      cache: {
-        // GatsbyCache
-        get: async () => null,
-        set: async () => null,
-      },
+      cache,
+      getCache: () => cache,
       getNodesByType: type => [],
       ...additionalParameters,
     },
