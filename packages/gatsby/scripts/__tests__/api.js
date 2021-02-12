@@ -39,7 +39,6 @@ it("generates the expected api output", done => {
           "createSchemaCustomization": Object {
             "version": "2.12.0",
           },
-          "generateSideEffects": Object {},
           "onCreateBabelConfig": Object {},
           "onCreateDevServer": Object {},
           "onCreateNode": Object {},

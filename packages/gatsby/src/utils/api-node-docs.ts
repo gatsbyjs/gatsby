@@ -344,13 +344,6 @@ export const createResolvers = true
 export const preprocessSource = true
 
 /**
- * Tell plugins with expensive "side effects" from queries to start running
- * those now. This is a soon-to-be-replaced API only currently in use by
- * `gatsby-plugin-sharp`.
- */
-export const generateSideEffects = true
-
-/**
  * Let plugins extend/mutate the site's Babel configuration by calling
  * [`setBabelPlugin`](/docs/actions/#setBabelPlugin) or
  * [`setBabelPreset`](/docs/actions/#setBabelPreset).
