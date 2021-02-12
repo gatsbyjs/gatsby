@@ -8,7 +8,6 @@ const {
 
 const { testResolvedData } = require("./test-utils/test-resolved-data")
 const { queries } = require("./test-utils/queries")
-const { incrementalIt, getIsIncrement } = require(`./test-utils/incremental-it`)
 
 jest.setTimeout(100000)
 
@@ -53,6 +52,7 @@ describe(`data resolution`, () => {
       wpgql: `page`,
     },
   })
+
   it(`resolves hierarchichal categories`, async () => {
     const gatsbyResult = await fetchGraphql({
       url,
@@ -104,7 +104,7 @@ describe(`data resolution`, () => {
     expect(categoryNames.includes(`h4`)).toBeTruthy()
   })
 
-  incrementalIt(`resolves menus`, async () => {
+  it(`resolves menus`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.menus,
@@ -113,7 +113,7 @@ describe(`data resolution`, () => {
     expect(result).toMatchSnapshot()
   })
 
-  incrementalIt(`resolves pages`, async () => {
+  it(`resolves pages`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.pages,
@@ -121,14 +121,10 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    console.log({ isInc: getIsIncrement() })
-
-    expect(result.data.testPage.title).toEqual(
-      getIsIncrement() ? `Sample Page DELTA SYNC` : `Sample Page`
-    )
+    expect(result.data.testPage.title).toEqual(`Sample Page`)
   })
 
-  incrementalIt(`resolves posts`, async () => {
+  it(`resolves posts`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.posts,
@@ -136,12 +132,10 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    expect(result.data.testPost.title).toEqual(
-      getIsIncrement() ? `Hello world! DELTA SYNC` : `Hello world!`
-    )
+    expect(result.data.testPost.title).toEqual(`Hello world!`)
   })
 
-  incrementalIt(`resolves users`, async () => {
+  it(`resolves users`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.users,
@@ -149,9 +143,7 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    expect(result.data.testUser.firstName).toEqual(
-      getIsIncrement() ? `Tyler DELTA SYNC` : `Tyler`
-    )
+    expect(result.data.testUser.firstName).toEqual(`Tyler`)
   })
 
   it(`resolves root fields`, async () => {

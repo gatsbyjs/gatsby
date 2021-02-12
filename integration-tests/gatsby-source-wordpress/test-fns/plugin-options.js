@@ -27,7 +27,7 @@ describe(`plugin options`, () => {
     ]
 
     // make sure our schema doesn't have any of the default excluded types
-    // in ../../src/models/gatsby-api
+    // in gatsby-source-wordpress/src/models/gatsby-api
     excludedTypes.forEach(typeName => {
       expect(
         !!result.data.__schema.types.find(type => type.name === `Wp${typeName}`)

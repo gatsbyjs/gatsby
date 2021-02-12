@@ -4,10 +4,7 @@
   "private": true,
   "description": "A simple Gatsby WP site for running integrations tests",
   "scripts": {
-    "test": "yarn docker-start && yarn run-jest",
-    "run-jest": "jest --config=jest.config.js --runInBand && WPGQL_INCREMENT=true jest --config=jest.config.js --runInBand",
-    "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans -d",
-    "docker-rebuild": "./docker/rebuild.sh"
+    "test": "jest --config=jest.config.js --runInBand"
   },
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "license": "MIT",
