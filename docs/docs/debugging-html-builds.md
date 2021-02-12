@@ -25,8 +25,10 @@ Errors while building static HTML files generally happen for one of the followin
 4. Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
    build being inconsistent. It's possible that a change in a file like `gatsby-ssr` or `gatsby-browser` has a structure that is
    not reflected in the other file, meaning that there is a mismatch between client and server output.
+   
+5. Building static files fail. You have an environment variable defined in local `.env.production`, but don't have it set in the actual production environment.
 
-5. Some other reason :-) #1 is the most common reason building static files
+6. Some other reason :-) #1 is the most common reason building static files
    fail. If it's another reason, you have to be a bit more creative in figuring
    out the problem.
 
