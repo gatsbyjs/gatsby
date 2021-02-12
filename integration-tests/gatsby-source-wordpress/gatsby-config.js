@@ -2,10 +2,7 @@ require(`dotenv`).config({
   path: `.env.test`,
 })
 
-console.log(process.env.WPGRAPHQL_URL)
-console.log(process.env.WPGRAPHQL_URL)
-console.log(process.env.WPGRAPHQL_URL)
-console.log(process.env.WPGRAPHQL_URL)
+console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
 // this is it's own conditional object so we can run
 // an int test with all default plugin options
