@@ -2,9 +2,9 @@ const Promise = require(`bluebird`)
 const queryString = require(`query-string`)
 const fetch = require(`node-fetch`)
 
-const apiBase = (lang) => `https://${lang}.wikipedia.org/w/api.php?`
+const apiBase = lang => `https://${lang}.wikipedia.org/w/api.php?`
 
-const fetchNodesFromSearch = ({ query, limit = 15, lang = 'en' }) =>
+const fetchNodesFromSearch = ({ query, limit = 15, lang = `en` }) =>
   search({ query, limit, lang }).then(results =>
     Promise.map(results, async (result, queryIndex) => {
       const rendered = await getArticle(result.id)(lang)
@@ -70,7 +70,7 @@ const search = ({ query, limit, lang }) =>
         return {
           title,
           description: descriptions[i],
-          id: term
+          id: term,
         }
       })
     )
