@@ -103,6 +103,7 @@ async function startQueryJob(
     .query(queryJob.query, queryJob.context, {
       parentSpan,
       queryName: queryJob.id,
+      componentPath: queryJob.componentPath,
     })
     .finally(() => {
       isPending = false
