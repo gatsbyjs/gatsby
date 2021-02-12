@@ -31,6 +31,7 @@ describe(`[gatsby-source-wordpress] Build default options`, () => {
   const testFn = process.env.WPGQL_INCREMENT ? test.skip : test
 
   testFn(`Default options build succeeded`, async () => {
+    await on({ resources: [`http://localhost:8001`] })
     const gatsbyProcess = getGatsbyProcess(`build`, {
       DEFAULT_PLUGIN_OPTIONS: `1`,
     })
