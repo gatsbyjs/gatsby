@@ -279,45 +279,49 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
         toDelete: [],
       }
 
-  const buildHTMLActivityProgress = reporter.createProgress(
-    `Building static HTML for pages`,
-    toRegenerate.length,
-    0,
-    {
-      parentSpan: buildSpan,
-    }
-  )
-  buildHTMLActivityProgress.start()
-  try {
-    await doBuildPages(
-      pageRenderer,
-      toRegenerate,
-      buildHTMLActivityProgress,
-      workerPool,
-      Stage.BuildHTML
+  if (toRegenerate.length > 0) {
+    const buildHTMLActivityProgress = reporter.createProgress(
+      `Building static HTML for pages`,
+      toRegenerate.length,
+      0,
+      {
+        parentSpan: buildSpan,
+      }
     )
-  } catch (err) {
-    let id = `95313` // TODO: verify error IDs exist
-    const context = {
-      errorPath: err.context && err.context.path,
-      ref: ``,
-    }
+    buildHTMLActivityProgress.start()
+    try {
+      await doBuildPages(
+        pageRenderer,
+        toRegenerate,
+        buildHTMLActivityProgress,
+        workerPool,
+        Stage.BuildHTML
+      )
+    } catch (err) {
+      let id = `95313` // TODO: verify error IDs exist
+      const context = {
+        errorPath: err.context && err.context.path,
+        ref: ``,
+      }
 
-    const match = err.message.match(
-      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
-    )
-    if (match && match[1]) {
-      id = `95312`
-      context.ref = match[1]
-    }
+      const match = err.message.match(
+        /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+      )
+      if (match && match[1]) {
+        id = `95312`
+        context.ref = match[1]
+      }
 
-    buildHTMLActivityProgress.panic({
-      id,
-      context,
-      error: err,
-    })
+      buildHTMLActivityProgress.panic({
+        id,
+        context,
+        error: err,
+      })
+    }
+    buildHTMLActivityProgress.end()
+  } else {
+    reporter.info(`There are no new or changed html files to build.`)
   }
-  buildHTMLActivityProgress.end()
 
   if (!program.keepPageRenderer) {
     try {
