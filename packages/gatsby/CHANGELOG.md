@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.2...gatsby@3.0.0-next.3) (2021-02-12)
+
+### Features
+
+- **gatsby:** support GraphQL interface inheritance ([#29427](https://github.com/gatsbyjs/gatsby/issues/29427)) ([6365768](https://github.com/gatsbyjs/gatsby/commit/63657680436f946c94589eb639fd692048c597bd))
+
 # [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.1...gatsby@3.0.0-next.2) (2021-02-11)
 
 ### Bug Fixes

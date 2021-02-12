@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.2...gatsby-plugin-image@1.0.0-next.3) (2021-02-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Rename hooks ([#29462](https://github.com/gatsbyjs/gatsby/issues/29462)) ([4638cd6](https://github.com/gatsbyjs/gatsby/commit/4638cd678b28f7a515df465be21d9d8bcdd71d9a))
+
 # [1.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.1...gatsby-plugin-image@1.0.0-next.2) (2021-02-11)
 
 ### Bug Fixes
