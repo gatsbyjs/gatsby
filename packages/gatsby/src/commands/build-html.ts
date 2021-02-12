@@ -103,6 +103,16 @@ const doBuildRenderer = async (
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
+  if (
+    stage === Stage.BuildHTML &&
+    store.getState().html.ssrCompilationHash !== stats.hash
+  ) {
+    store.dispatch({
+      type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+      payload: stats.hash,
+    })
+  }
+
   // render-page.js is hard coded in webpack.config
   return `${directory}/public/render-page.js`
 }

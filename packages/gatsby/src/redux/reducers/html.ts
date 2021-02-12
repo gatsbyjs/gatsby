@@ -4,6 +4,7 @@ const FLAG_DIRTY_CLEARED_CACHE = 0b0000001
 const FLAG_DIRTY_NEW_PAGE = 0b0000010
 const FLAG_DIRTY_PAGE_QUERY_CHANGED = 0b0000100 // TODO: this need to be PAGE_DATA and not PAGE_QUERY, but requires some shuffling
 const FLAG_DIRTY_BROWSER_COMPILATION_HASH = 0b0100000
+const FLAG_DIRTY_SSR_COMPILATION_HASH = 0b1000000
 
 type PagePath = string
 
@@ -11,6 +12,7 @@ function initialState(): IGatsbyState["html"] {
   return {
     trackedHtmlFiles: new Map<PagePath, IHtmlFileState>(),
     browserCompilationHash: ``,
+    ssrCompilationHash: ``,
   }
 }
 
@@ -27,6 +29,7 @@ export function htmlReducer(
         // we can't just clear the cache here - we want to keep track of pages, so we mark them all as "deleted"
         // if they are recreated "isDeleted" flag will be removed
         state.browserCompilationHash = ``
+        state.ssrCompilationHash = ``
         state.trackedHtmlFiles.forEach(htmlFile => {
           htmlFile.isDeleted = true
           // there was a change somewhere, so just in case we mark those files are dirty as well
@@ -98,6 +101,16 @@ export function htmlReducer(
         state.browserCompilationHash = action.payload
         state.trackedHtmlFiles.forEach(htmlFile => {
           htmlFile.dirty |= FLAG_DIRTY_BROWSER_COMPILATION_HASH
+        })
+      }
+      return state
+    }
+
+    case `SET_SSR_WEBPACK_COMPILATION_HASH`: {
+      if (state.ssrCompilationHash !== action.payload) {
+        state.ssrCompilationHash = action.payload
+        state.trackedHtmlFiles.forEach(htmlFile => {
+          htmlFile.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
         })
       }
       return state
