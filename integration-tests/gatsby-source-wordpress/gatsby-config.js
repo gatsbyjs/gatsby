@@ -2,6 +2,11 @@ require(`dotenv`).config({
   path: `.env.test`,
 })
 
+console.log(process.env.WPGRAPHQL_URL)
+console.log(process.env.WPGRAPHQL_URL)
+console.log(process.env.WPGRAPHQL_URL)
+console.log(process.env.WPGRAPHQL_URL)
+
 // this is it's own conditional object so we can run
 // an int test with all default plugin options
 const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
