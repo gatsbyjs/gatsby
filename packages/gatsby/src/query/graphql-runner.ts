@@ -174,8 +174,12 @@ export class GraphQLRunner {
     this.scheduleClearCache()
 
     if (warnings.length > 0) {
+      // TODO: move those warnings to the caller side, e.g. query-runner.ts
       warnings.forEach(err => {
-        const message = context.path ? `\nQueried in ${context.path}` : ``
+        const message =
+          typeof context.path === `string` && context.path
+            ? `\nQueried in ${formatQueryPath(context.path)}`
+            : ``
         reporter.warn(err.message + message)
       })
     }
@@ -219,4 +223,16 @@ export class GraphQLRunner {
       }
     }
   }
+}
+
+function formatQueryPath(path: string): string {
+  // Meh
+  if (path.startsWith(`sq--`)) {
+    // e.g. "sq--src-components-bio-js" -> "src/components/bio.js"
+    const parts = path.split(`-`)
+    return parts.length > 3
+      ? `${parts.slice(2, -1).join(`/`)}.${parts[parts.length - 1]}`
+      : path
+  }
+  return path
 }

@@ -147,6 +147,26 @@ describe(`Deprecation warnings`, () => {
       `The input field Filter.foo is deprecated. Tired.\nQueried in /test`
     )
   })
+
+  it(`formats paths of static queries`, async () => {
+    await buildSchema(`
+      type Foo implements Node {
+        id: ID!
+        foo: String @deprecated(reason: "Tired.")
+      }
+    `)
+    await runQuery(
+      `query {
+        foo { foo }
+      }`,
+      {
+        path: `sq--src-components-bio-js`,
+      }
+    )
+    expect(reporter.warn).toHaveBeenCalledWith(
+      `The field Foo.foo is deprecated. Tired.\nQueried in src/components/bio.js`
+    )
+  })
 })
 
 async function buildSchema(typeDefs, nodes = []): Promise<void> {
