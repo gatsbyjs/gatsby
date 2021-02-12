@@ -6,8 +6,6 @@ If you have a large site, you may be able to improve build times for data update
 
 For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/conceptual/overview-of-the-gatsby-build-process/).
 
-> ❗ Conditional page builds do not currently account for static queries. Any query result differences will not trigger pages to rebuild.
-
 ## How to use
 
 To enable conditional page builds, use the environment variable `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true` in your `gatsby build` command, for example:
