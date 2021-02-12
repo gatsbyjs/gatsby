@@ -170,6 +170,11 @@ export interface IHtmlFileState {
   pageQueryHash: string // TODO: change to page-data hash
 }
 
+export interface IStaticQueryResultState {
+  dirty: number
+  staticQueryResultHash: string
+}
+
 export type GatsbyNodeAPI =
   | "onPreBoostrap"
   | "onPostBoostrap"
@@ -285,6 +290,7 @@ export interface IGatsbyState {
     trackedHtmlFiles: Map<Identifier, IHtmlFileState>
     browserCompilationHash: string
     ssrCompilationHash: string
+    trackedStaticQueryResults: Map<string, IStaticQueryResultState>
   }
 }
 
@@ -365,6 +371,7 @@ export type ActionsUnion =
   | IDeletedStalePageDataFiles
   | IRemovedHtml
   | IGeneratedHtml
+  | IMarkHtmlDirty
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -538,6 +545,7 @@ export interface IPageQueryRunAction {
     componentPath: string
     isPage: boolean
     resultHash: string
+    queryHash: string
   }
 }
 
@@ -832,4 +840,12 @@ interface IRemovedHtml {
 interface IGeneratedHtml {
   type: `HTML_GENERATED`
   payload: Array<string>
+}
+
+interface IMarkHtmlDirty {
+  type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`
+  payload: {
+    pages: Set<string>
+    staticQueryHashes: Set<string>
+  }
 }

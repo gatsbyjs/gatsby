@@ -85,3 +85,50 @@ export function calcDirtyHtmlFiles(
     toDelete,
   }
 }
+
+export function markHtmlDirtyIfResultOfUsedStaticQueryChanged(): void {
+  const state = store.getState()
+
+  const dirtyStaticQueryResults = new Set<string>()
+  state.html.trackedStaticQueryResults.forEach(function (
+    staticQueryResultState,
+    staticQueryHash
+  ) {
+    if (staticQueryResultState.dirty) {
+      dirtyStaticQueryResults.add(staticQueryHash)
+    }
+  })
+
+  // we have dirty static query hashes - now we need to find templates that use them
+  const dirtyTemplates = new Set<string>()
+  state.staticQueriesByTemplate.forEach(function (
+    staticQueryHashes,
+    componentPath
+  ) {
+    for (const dirtyStaticQueryHash of dirtyStaticQueryResults) {
+      if (staticQueryHashes.includes(dirtyStaticQueryHash)) {
+        dirtyTemplates.add(componentPath)
+        break // we already know this template need to rebuild, no need to check rest of queries
+      }
+    }
+  })
+
+  // mark html as dirty
+  const dirtyPages = new Set<string>()
+  for (const dirtyTemplate of dirtyTemplates) {
+    const component = state.components.get(dirtyTemplate)
+    if (component) {
+      for (const page of component.pages) {
+        dirtyPages.add(page)
+      }
+    }
+  }
+
+  store.dispatch({
+    type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`,
+    payload: {
+      pages: dirtyPages,
+      staticQueryHashes: dirtyStaticQueryResults,
+    },
+  })
+}
