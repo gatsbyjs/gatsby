@@ -144,7 +144,12 @@ export class GraphQLRunner {
     {
       parentSpan,
       queryName,
-    }: { parentSpan: Span | undefined; queryName: string }
+      componentPath,
+    }: {
+      parentSpan: Span | undefined
+      queryName: string
+      componentPath?: string | undefined
+    }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -176,10 +181,7 @@ export class GraphQLRunner {
     if (warnings.length > 0) {
       // TODO: move those warnings to the caller side, e.g. query-runner.ts
       warnings.forEach(err => {
-        const message =
-          typeof context.path === `string` && context.path
-            ? `\nQueried in ${formatQueryPath(context.path)}`
-            : ``
+        const message = componentPath ? `\nQueried in ${componentPath}` : ``
         reporter.warn(err.message + message)
       })
     }
@@ -223,16 +225,4 @@ export class GraphQLRunner {
       }
     }
   }
-}
-
-function formatQueryPath(path: string): string {
-  // Meh
-  if (path.startsWith(`sq--`)) {
-    // e.g. "sq--src-components-bio-js" -> "src/components/bio.js"
-    const parts = path.split(`-`)
-    return parts.length > 3
-      ? `${parts.slice(2, -1).join(`/`)}.${parts[parts.length - 1]}`
-      : path
-  }
-  return path
 }

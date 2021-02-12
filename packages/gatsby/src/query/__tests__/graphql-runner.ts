@@ -148,7 +148,7 @@ describe(`Deprecation warnings`, () => {
     )
   })
 
-  it(`formats paths of static queries`, async () => {
+  it(`displays componentPath when passed`, async () => {
     await buildSchema(`
       type Foo implements Node {
         id: ID!
@@ -159,12 +159,10 @@ describe(`Deprecation warnings`, () => {
       `query {
         foo { foo }
       }`,
-      {
-        path: `sq--src-components-bio-js`,
-      }
+      { componentPath: `/example/path` }
     )
     expect(reporter.warn).toHaveBeenCalledWith(
-      `The field Foo.foo is deprecated. Tired.\nQueried in src/components/bio.js`
+      `The field Foo.foo is deprecated. Tired.\nQueried in /example/path`
     )
   })
 })
@@ -185,11 +183,13 @@ async function buildSchema(typeDefs, nodes = []): Promise<void> {
 
 async function runQuery(
   query: string,
-  context = { path: `/test` }
+  params = { componentPath: `/test` }
 ): Promise<ExecutionResult> {
+  const context = { path: `/test` }
   const graphqlRunner = new GraphQLRunner(store)
   return graphqlRunner.query(query, context, {
     parentSpan: undefined,
     queryName: context.path,
+    componentPath: params.componentPath,
   })
 }
