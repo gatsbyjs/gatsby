@@ -94,6 +94,8 @@ export default () => (
 )
 ```
 
+If you want to provide custom Event Category, Event Action, Event Label or Event Value you can do that by using the corresponding `<OutboundLink>` props - `eventCategory`, `eventAction`, `eventLabel`, `eventValue`.
+
 ## The "gtagConfig.anonymize_ip" option
 
 Some countries (such as Germany) require you to use the
