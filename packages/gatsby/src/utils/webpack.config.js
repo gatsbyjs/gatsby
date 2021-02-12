@@ -660,42 +660,33 @@ module.exports = async (
         // allows us to resolve webpack aliases from our config
         // helpful for when react is aliased to preact-compat
         // Force commonjs as we're in node land
-        const resolver = getResolve()
-
-        // TODO figure out to make preact work with this too
-        if (
-          stage === `develop-html` &&
-          isCI() &&
-          process.env.GATSBY_EXPERIMENTAL_DEV_SSR
-        ) {
-          if (request === `react`) {
-            callback(
-              null,
-              `commonjs2 ${require.resolve(
-                `react/cjs/react.production.min.js`
-              )}`
-            )
-            return
-          } else if (request === `react-dom/server`) {
-            callback(
-              null,
-              `commonjs2 ${require.resolve(
-                `react-dom/cjs/react-dom-server.node.production.min.js`
-              )}`
-            )
-            return
-          }
-        }
+        const resolver = getResolve({
+          dependencyType: `commonjs`,
+        })
 
         // User modules that do not need to be part of the bundle
         if (userExternalList.some(item => checkItem(item, request))) {
-          resolver(context, request, (err, newRequest) => {
+          // TODO figure out to make preact work with this too
+          let modifiedRequest = request
+          if (
+            stage === `develop-html` &&
+            isCI() &&
+            process.env.GATSBY_EXPERIMENTAL_DEV_SSR
+          ) {
+            if (request === `react`) {
+              modifiedRequest = `react/cjs/react.production.min.js`
+            } else if (request === `react-dom/server`) {
+              modifiedRequest = `react-dom/cjs/react-dom-server.node.production.min.js`
+            }
+          }
+
+          resolver(context, modifiedRequest, (err, newRequest) => {
             if (err) {
               callback(err)
               return
             }
 
-            callback(null, `commonjs2 ${newRequest}`)
+            callback(null, newRequest)
           })
           return
         }

@@ -246,6 +246,7 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`css-loader`),
         options: {
+          url: false,
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
         },
