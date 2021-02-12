@@ -4,7 +4,11 @@ import signalExit from "signal-exit"
 import fs from "fs-extra"
 import telemetry from "gatsby-telemetry"
 
-import { doBuildPages, buildRenderer, deleteRenderer } from "./build-html"
+import {
+  buildRenderer,
+  buildHTMLPagesAndDeleteStaleArtifacts,
+  IBuildArgs,
+} from "./build-html"
 import { buildProductionBundle } from "./build-javascript"
 import { bootstrap } from "../bootstrap"
 import apiRunnerNode from "../utils/api-runner-node"
@@ -26,8 +30,7 @@ import {
 import * as buildUtils from "./build-utils"
 import { actions } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
-import { IProgram, Stage } from "./types"
-import { PackageJson } from "../.."
+import { Stage } from "./types"
 import {
   calculateDirtyQueries,
   runStaticQueries,
@@ -39,17 +42,6 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { updateSiteMetadata } from "gatsby-core-utils"
-
-interface IBuildArgs extends IProgram {
-  directory: string
-  sitePackageJson: PackageJson
-  prefixPaths: boolean
-  noUglify: boolean
-  profile: boolean
-  graphqlTracing: boolean
-  openTracingConfigFile: string
-  keepPageRenderer: boolean
-}
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   report.setVerbose(program.verbose)
@@ -202,78 +194,20 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
-  buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
-
-  const { toRegenerate, toDelete } = process.env
-    .GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
-    ? buildUtils.calcDirtyHtmlFiles(store.getState())
-    : {
-        toRegenerate: [...store.getState().pages.keys()],
-        toDelete: [],
-      }
+  const {
+    toRegenerate,
+    toDelete,
+  } = await buildHTMLPagesAndDeleteStaleArtifacts({
+    program,
+    pageRenderer,
+    workerPool,
+    buildSpan,
+  })
 
   telemetry.addSiteMeasurement(`BUILD_END`, {
     pagesCount: toRegenerate.length, // number of html files that will be written
     totalPagesCount: store.getState().pages.size, // total number of pages
   })
-
-  const buildHTMLActivityProgress = report.createProgress(
-    `Building static HTML for pages`,
-    toRegenerate.length,
-    0,
-    {
-      parentSpan: buildSpan,
-    }
-  )
-  buildHTMLActivityProgress.start()
-  try {
-    await doBuildPages(
-      pageRenderer,
-      toRegenerate,
-      buildHTMLActivityProgress,
-      workerPool,
-      Stage.BuildHTML
-    )
-  } catch (err) {
-    let id = `95313` // TODO: verify error IDs exist
-    const context = {
-      errorPath: err.context && err.context.path,
-      ref: ``,
-    }
-
-    const match = err.message.match(
-      /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
-    )
-    if (match && match[1]) {
-      id = `95312`
-      context.ref = match[1]
-    }
-
-    buildHTMLActivityProgress.panic({
-      id,
-      context,
-      error: err,
-    })
-  }
-  buildHTMLActivityProgress.end()
-
-  if (!program.keepPageRenderer) {
-    try {
-      await deleteRenderer(pageRenderer)
-    } catch (err) {
-      // pass through
-    }
-  }
-
-  if (toDelete.length > 0) {
-    const deletePageDataActivityTimer = report.activityTimer(
-      `Delete previous page data`
-    )
-    deletePageDataActivityTimer.start()
-    await buildUtils.removePageFiles(publicDir, toDelete)
-
-    deletePageDataActivityTimer.end()
-  }
 
   const postBuildActivityTimer = report.activityTimer(`onPostBuild`, {
     parentSpan: buildSpan,
