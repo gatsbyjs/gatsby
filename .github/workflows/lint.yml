@@ -1,0 +1,14 @@
+name: ❄️ Lint
+
+on: [pull_request]
+
+jobs:
+  technical-terms:
+    name: 🌌 Check technical terms
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 🧹 Scan repo
+        run: |
+          cd scripts || exit
+          sh ./check-technical-terms.sh || exit 1
