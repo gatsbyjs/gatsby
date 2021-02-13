@@ -21,9 +21,9 @@ const args = yargs
     default: JSON.stringify(
       `
     import * as React from 'react';
-    
+
     import Layout from '../components/layout';
-    
+
     export default function SomeComponent() {
       return (
         <Layout>

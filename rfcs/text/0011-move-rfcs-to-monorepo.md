@@ -49,7 +49,7 @@ title: "RFC Template"
 date: YYYY-MM-DD
 status: "IN_REVIEW" | "MERGED" | "PUBLISHED"
 # optional fields, e.g. that can be added when merging
-issue: 
+issue:
 ---
 
 # Summary

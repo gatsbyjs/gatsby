@@ -34,11 +34,11 @@ const response1 = `query {
         }
       }
     }
-  }  
+  }
 }`
 const response2 = `const options = {
   key: process.env.WHATEVER
-  
+
 }`
 
 describe(`file resource`, () => {
@@ -184,10 +184,10 @@ describe(`file resource`, () => {
       -         }
       -       }
       -     }
-      -   }  
+      -   }
       + const options = {
       +   key: process.env.WHATEVER
-      +   
+      +
         }"
     `)
     fs.readFile.mockReturnValueOnce(partialUpdate.content)

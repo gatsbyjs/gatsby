@@ -4,7 +4,7 @@ ARG WP_CONTENT_DIR=/usr/src/wordpress/wp-content
 ARG PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
 ARG UPLOADS_DIR=${WP_CONTENT_DIR}/uploads
 
-LABEL maintainer="rikki@gatsbyjs.com" 
+LABEL maintainer="rikki@gatsbyjs.com"
 
 # Set timezone, install XDebug, PHP Composer, WP-CLI
 RUN echo 'date.timezone = "UTC"' > /usr/local/etc/php/conf.d/timezone.ini \

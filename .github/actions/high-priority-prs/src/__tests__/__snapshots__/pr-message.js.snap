@@ -21,15 +21,15 @@ Array [
   },
   Object {
     "text": Object {
-      "text": "1. *<https://github.com/gatsbyjs/gatsby/pull/12761|[WIP]: chore(*): publish es versions of browser packages>* — _created_ 3 months ago — _updated_ 3 months ago 
-2. *<https://github.com/gatsbyjs/gatsby/pull/14216|[WIP] feat(schema): Node interfaces>* — _created_ 15 days ago — _updated_ 19 days ago 
-3. *<https://github.com/gatsbyjs/gatsby/pull/13502|fix(gatsby-plugin-offline): Change navigation handler logic>* — _created_ about 2 months ago — _updated_ 9 days ago 
-4. *<https://github.com/gatsbyjs/gatsby/pull/14372|remove slash>* — _created_ 8 days ago — _updated_ 8 days ago 
-5. *<https://github.com/gatsbyjs/gatsby/pull/14443|fix(gatsby): Make requests not send credentials.>* — _created_ 6 days ago — _updated_ 6 days ago 
-6. *<https://github.com/gatsbyjs/gatsby/pull/14483|remove access control headers>* — _created_ 4 days ago — _updated_ 4 days ago 
-7. *<https://github.com/gatsbyjs/gatsby/pull/14516|chore(showcase): add interplanetarygatsby.com>* — _created_ 2 days ago — _updated_ 2 days ago 
-8. *<https://github.com/gatsbyjs/gatsby/pull/14527|update testing-react-components.md>* — _created_ 1 day ago — _updated_ 1 day ago 
-9. *<https://github.com/gatsbyjs/gatsby/pull/14532|feat(showcase): add carine roitfeld site>* — _created_ 1 day ago — _updated_ 1 day ago 
+      "text": "1. *<https://github.com/gatsbyjs/gatsby/pull/12761|[WIP]: chore(*): publish es versions of browser packages>* — _created_ 3 months ago — _updated_ 3 months ago
+2. *<https://github.com/gatsbyjs/gatsby/pull/14216|[WIP] feat(schema): Node interfaces>* — _created_ 15 days ago — _updated_ 19 days ago
+3. *<https://github.com/gatsbyjs/gatsby/pull/13502|fix(gatsby-plugin-offline): Change navigation handler logic>* — _created_ about 2 months ago — _updated_ 9 days ago
+4. *<https://github.com/gatsbyjs/gatsby/pull/14372|remove slash>* — _created_ 8 days ago — _updated_ 8 days ago
+5. *<https://github.com/gatsbyjs/gatsby/pull/14443|fix(gatsby): Make requests not send credentials.>* — _created_ 6 days ago — _updated_ 6 days ago
+6. *<https://github.com/gatsbyjs/gatsby/pull/14483|remove access control headers>* — _created_ 4 days ago — _updated_ 4 days ago
+7. *<https://github.com/gatsbyjs/gatsby/pull/14516|chore(showcase): add interplanetarygatsby.com>* — _created_ 2 days ago — _updated_ 2 days ago
+8. *<https://github.com/gatsbyjs/gatsby/pull/14527|update testing-react-components.md>* — _created_ 1 day ago — _updated_ 1 day ago
+9. *<https://github.com/gatsbyjs/gatsby/pull/14532|feat(showcase): add carine roitfeld site>* — _created_ 1 day ago — _updated_ 1 day ago
 ",
       "type": "mrkdwn",
     },
@@ -79,7 +79,7 @@ Array [
       "text": "1. *<https://github.com/gatsbyjs/gatsby/pull/10540|support all of chokidar's path options for source-filesystem>* — _created_ 6 months ago — _updated_ 6 months ago — commented: <@pieh>
 2. *<https://github.com/gatsbyjs/gatsby/pull/11500|[WIP] Plugin Starter>* — _created_ 4 months ago — _updated_ 4 months ago — commented: <@jlengstorf>, <@shannonsoper>, <@kylemathews> and <@pieh>
 3. *<https://github.com/gatsbyjs/gatsby/pull/11528|fix(gatsby-remark-images): remove clickable whitespace around image when linking>* — _created_ 4 months ago — _updated_ 3 months ago — commented: <@dustin>
-4. *<https://github.com/gatsbyjs/gatsby/pull/12761|[WIP]: chore(*): publish es versions of browser packages>* — _created_ 3 months ago — _updated_ 3 months ago 
+4. *<https://github.com/gatsbyjs/gatsby/pull/12761|[WIP]: chore(*): publish es versions of browser packages>* — _created_ 3 months ago — _updated_ 3 months ago
 5. *<https://github.com/gatsbyjs/gatsby/pull/8092|Add assets to entries sorted according to their dep graph.>* — _created_ 9 months ago — _updated_ about 2 months ago — commented: <@m-allanson>, <@kylemathews>, <@pieh> and <@dustin>
 6. *<https://github.com/gatsbyjs/gatsby/pull/13393|feat(gatsby-transformer-sharp): add inside and outside fit options>* — _created_ about 2 months ago — _updated_ about 2 months ago — commented: <@pieh> and <@dustin>
 7. *<https://github.com/gatsbyjs/gatsby/pull/13241|chore(gatsby): add ie polyfill to webpack entry>* — _created_ about 2 months ago — _updated_ about 2 months ago — commented: <@Ward>

@@ -294,9 +294,9 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`only adds ids to markdown headings whose heading type is included in the passed elements prop`, () => {
     const markdownAST = remark.parse(`
     # Heading One
-  
+
     ## Heading Two
-  
+
     ### Heading Three
         `)
 
@@ -314,9 +314,9 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`does not add data to markdown headings when an empty array elements prop is passed`, () => {
     const markdownAST = remark.parse(`
     # Heading One
-  
+
     ## Heading Two
-  
+
     ### Heading Three
         `)
 
@@ -330,15 +330,15 @@ describe(`gatsby-remark-autolink-headers`, () => {
   it(`allows all six heading depths to be passed in the elements prop`, () => {
     const markdownAST = remark.parse(`
     # Heading One
-  
+
     ## Heading Two
-  
+
     ### Heading Three
 
     #### Heading Four
-  
+
     ##### Heading Five
-  
+
     ###### Heading Six
         `)
 

@@ -3,11 +3,11 @@ import { graphql } from "gatsby"
 import Img from "gatsby-image"
 
 <div>
-  <Img 
+  <Img
   fixed={data.file.childImageSharp.fixed}
   alt="headshot"/>
 
-  <Img 
+  <Img
   fixed={data.banner.childImageSharp.fixed}
   alt="headshot"/>
 </div>

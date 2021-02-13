@@ -86,7 +86,7 @@ describe(`Test plugin sitemap`, () => {
               path
             }
           }
-        } 
+        }
     }`
     const options = {
       output: `custom-sitemap.xml`,

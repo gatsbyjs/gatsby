@@ -53,7 +53,7 @@ interface GatsbyImageOptionalProps {
   loading?: `auto` | `lazy` | `eager`
   draggable?: boolean
 }
-  
+
 interface GatsbyImageFluidProps extends GatsbyImageOptionalProps {
   fluid: FluidObject | FluidObject[]
 }

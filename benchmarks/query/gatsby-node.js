@@ -24,7 +24,7 @@ const links = types.reduce((links, typeName) => {
   return links
 }, {})
 
-const linkedNodesQueryFields = `links { 
+const linkedNodesQueryFields = `links {
   ${types
     .map(
       typeName => `${typeName} {

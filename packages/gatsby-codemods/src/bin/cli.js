@@ -11,12 +11,12 @@ export function runTransform(transform, targetDir) {
 
   let args = []
 
-  args.push('--ignore-pattern=**/node_modules/**') 
-  args.push('--ignore-pattern=**/.cache/**') 
-  args.push('--ignore-pattern=**/public/**') 
+  args.push('--ignore-pattern=**/node_modules/**')
+  args.push('--ignore-pattern=**/.cache/**')
+  args.push('--ignore-pattern=**/public/**')
 
   args.push('--extensions=jsx,js,ts,tsx')
-  
+
   args = args.concat(['--transform', transformerPath, targetDir])
 
   console.log(`Executing command: jscodeshift ${args.join(' ')}`);
@@ -30,7 +30,7 @@ export function runTransform(transform, targetDir) {
     throw result.error
   }
 }
-  
+
 export function run() {
   let [transform, targetDir] = process.argv.slice(2)
 
@@ -47,7 +47,7 @@ export function run() {
   if(!targetDir) {
     console.log(`You have not provided a target directory to run the codemod against, will default to root.`)
     targetDir = `./`
-    
+
   }
   runTransform(transform, targetDir)
 }

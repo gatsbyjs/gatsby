@@ -103,10 +103,10 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       ),
       query: Joi.string().description(
         stripIndent`
-      The query for the data you need to generate the sitemap. It’s required to get the site’s URL, 
-      if you are not fetching it from site.siteMetadata.siteUrl, you will need to set a custom resolveSiteUrl function. 
-      If you override the query, you probably will also need to set a serializer to return the correct data for the sitemap. 
-      Due to how this plugin was built it is currently expected/required to fetch the page paths from allSitePage, 
+      The query for the data you need to generate the sitemap. It’s required to get the site’s URL,
+      if you are not fetching it from site.siteMetadata.siteUrl, you will need to set a custom resolveSiteUrl function.
+      If you override the query, you probably will also need to set a serializer to return the correct data for the sitemap.
+      Due to how this plugin was built it is currently expected/required to fetch the page paths from allSitePage,
       but you may use the allSitePage.edges.node or allSitePage.nodes query structure.`
       ),
       sitemapSize: Joi.number().description(

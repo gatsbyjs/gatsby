@@ -24,15 +24,15 @@ exports[`rich text renders with custom options 1`] = `
     Heading 6
   </h6>
   <p>
-    This is 
+    This is
     <b>
-      bold 
+      bold
     </b>
-    and 
+    and
     <i>
       italic
     </i>
-     and 
+     and
     <i>
       <b>
         both
@@ -65,13 +65,13 @@ exports[`rich text renders with custom options 1`] = `
     Reference tests:
   </h2>
   <p>
-    Inline Link: 
+    Inline Link:
     <span>
       Resolved inline Entry (
       7oHxo6bs0us9wIkq27qdyK
       )
     </span>
-    
+
   </p>
   <p>
     Link in list:
@@ -79,13 +79,13 @@ exports[`rich text renders with custom options 1`] = `
   <ol>
     <li>
       <p>
-        
+
         <span>
           Resolved inline Entry (
           6KpLS2NZyB3KAvDzWf4Ukh
           )
         </span>
-        
+
       </p>
     </li>
   </ol>
@@ -93,27 +93,27 @@ exports[`rich text renders with custom options 1`] = `
     Embedded Entity:
   </p>
   <h2>
-    Resolved embedded Entry: 
+    Resolved embedded Entry:
     Second Page
      (
     7oHxo6bs0us9wIkq27qdyK
     )
   </h2>
   <p>
-    
+
   </p>
   <h2>
     Embedded Asset:
   </h2>
   <h2>
-    Resolved embedded Asset: 
+    Resolved embedded Asset:
     Contentful Logo
      (
     4ZQrqcrTunWiuNaavhGYNT
     )
   </h2>
   <p>
-    
+
   </p>
 </div>
 `;
@@ -142,15 +142,15 @@ exports[`rich text renders with default options 1`] = `
     Heading 6
   </h6>
   <p>
-    This is 
+    This is
     <b>
-      bold 
+      bold
     </b>
-    and 
+    and
     <i>
       italic
     </i>
-     and 
+     and
     <i>
       <b>
         both
@@ -183,14 +183,14 @@ exports[`rich text renders with default options 1`] = `
     Reference tests:
   </h2>
   <p>
-    Inline Link: 
+    Inline Link:
     <span>
-      type: 
+      type:
       embedded-entry-inline
-       id: 
+       id:
       7oHxo6bs0us9wIkq27qdyK
     </span>
-    
+
   </p>
   <p>
     Link in list:
@@ -198,14 +198,14 @@ exports[`rich text renders with default options 1`] = `
   <ol>
     <li>
       <p>
-        
+
         <span>
-          type: 
+          type:
           embedded-entry-inline
-           id: 
+           id:
           6KpLS2NZyB3KAvDzWf4Ukh
         </span>
-        
+
       </p>
     </li>
   </ol>
@@ -214,13 +214,13 @@ exports[`rich text renders with default options 1`] = `
   </p>
   <div />
   <p>
-    
+
   </p>
   <h2>
     Embedded Asset:
   </h2>
   <p>
-    
+
   </p>
 </div>
 `;

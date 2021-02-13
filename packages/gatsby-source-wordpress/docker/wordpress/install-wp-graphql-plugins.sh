@@ -4,7 +4,7 @@ PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
 
 mkdir -p ${PLUGIN_DIR} && \
 # WP GraphQL from github release
-git clone --depth 1 -b ${WPGRAPHQL_VERSION} https://github.com/wp-graphql/wp-graphql.git ${PLUGIN_DIR}/wp-graphql && \ 
+git clone --depth 1 -b ${WPGRAPHQL_VERSION} https://github.com/wp-graphql/wp-graphql.git ${PLUGIN_DIR}/wp-graphql && \
 
 # Install wp-gatsby using git, and apply a diff
 git clone --depth 1 -b ${WPGATSBY_VERSION} https://github.com/gatsbyjs/wp-gatsby.git ${PLUGIN_DIR}/wp-gatsby && \

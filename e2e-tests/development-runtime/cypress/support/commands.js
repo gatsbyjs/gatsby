@@ -24,7 +24,7 @@ Cypress.Commands.add(`lifecycleCallOrder`, expectedActionCallOrder =>
     if (expectedActionCallOrderLength > actionsLength) {
       return false
     }
-    
+
     let prevActionIndex = -1
     for (let i = 0; i < actionsLength; i += 1) {
       const nextActionIndex = prevActionIndex + 1

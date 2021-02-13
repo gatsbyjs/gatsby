@@ -65,7 +65,7 @@ export default function attrs({
           } catch (e) {
             // TODO add info about minimum Gatsby version once this is merged
             const msg = stripIndent`
-            Could not read image data file "${filename}". 
+            Could not read image data file "${filename}".
             This may mean that the images in "${this.filename}" were not processed.
             Please ensure that your gatsby version is at least 2.24.78.`
             error += msg

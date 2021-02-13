@@ -7,7 +7,7 @@ const AssetBlock = ({ asset, maxWidth = 1280 }) => (
           margin: `auto`,
           marginLeft: `calc(50% - 45w)`,
           marginRight: `calc(50% - 45vw)`,
-  
+
           [mediaQueries.phablet]: {
             marginLeft: `calc(50% - 40vw)`,
             marginRight: `calc(50% - 40vw)`,

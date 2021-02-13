@@ -36,7 +36,7 @@ This guide assumes you already have a Gatsby project to deploy. If you need a pr
 4. Follow the instructions to add a **CNAME** key and value to your DNS host provider.
 5. Click **OK**.
 
-Wait for the certificate to be generated and access your new custom domain.  
+Wait for the certificate to be generated and access your new custom domain.
 Note: your DNS might take some time to update your domain.
 
 ## Support

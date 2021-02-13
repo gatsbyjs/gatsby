@@ -9,7 +9,7 @@ async function run() {
         console.error("Please pass a path to the plugin directory")
         return
     }
-    
+
 
     const rootDir = path.resolve(pluginPath)
     if(!fs.existsSync(rootDir)) {
@@ -59,10 +59,10 @@ async function run() {
 
     if(!pluginOptionsSchema) {
         console.error("The plugin does not include a pluginOptionsSchema")
-        return 
+        return
     }
 
-    let optionsSchema 
+    let optionsSchema
 
     try {
         const schema = pluginOptionsSchema({ Joi })
@@ -77,10 +77,10 @@ async function run() {
 
     if(!fs.existsSync(schemataPath)) {
         console.error("Could not find output file")
-        return 
+        return
     }
 
-    const json = await fs.readJSON(schemataPath) 
+    const json = await fs.readJSON(schemataPath)
 
     json[pluginName] = optionsSchema
 
@@ -90,4 +90,4 @@ async function run() {
 
 }
 
-run() 
+run()
