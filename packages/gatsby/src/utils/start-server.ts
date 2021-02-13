@@ -282,6 +282,38 @@ module.exports = {
     res.end()
   })
 
+  app.get(`/__preview/:pluginName`, async (req, res) => {
+    console.log(req.params, req.query)
+    // Check if there's a plugin by this name & if it has the right exported API
+    // invoke the API
+    // if get response w/ an node id — get its page & return redirect
+    const apiResults = await apiRunnerNode(`resolveNodeId`, {
+      objectData: req.query,
+    })
+    console.log({ apiResults })
+    const nodeId = apiResults[0]
+    console.log(`nodeId`, nodeId)
+    const pagesBynode = store.getState().queries.byNode
+    console.log(pagesBynode)
+
+    const pagePathSet = pagesBynode.get(nodeId)
+    console.log({ pagePathSet })
+    const pagePath = pagePathSet?.values()?.next()?.value
+    console.log({ pagePath })
+    if (pagePath && typeof pagePath === `string`) {
+      res.redirect(pagePath)
+    } else {
+      res.send(req.params)
+      res.end()
+    }
+  })
+
+  // app.get(`/__preview/`, (req, res) => {
+  // console.log(req.params)
+  // res.send(JSON.stringify(req, null, 4))
+  // res.end()
+  // })
+
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     launchEditor(req.query.fileName, req.query.lineNumber)
     res.end()

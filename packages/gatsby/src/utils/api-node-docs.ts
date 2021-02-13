@@ -463,3 +463,4 @@ export const onCreateDevServer = true
  * }
  */
 export const pluginOptionsSchema = true
+export const resolveNodeId = true

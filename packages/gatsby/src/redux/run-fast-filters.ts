@@ -382,6 +382,8 @@ function convertAndApplyFastFilters(
     }
   }
 
+  console.log({ filters, firstOnly, filtersCache })
+  filtersCache = new Map()
   if (filters.length === 0) {
     const filterCacheKey = createFilterCacheKey(nodeTypeNames, null)
     if (!filtersCache.has(filterCacheKey)) {
