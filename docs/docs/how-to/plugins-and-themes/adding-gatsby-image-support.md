@@ -29,7 +29,7 @@ const generateImageSource = (baseURL, width, height, format, fit, options) => {
 
 ### Create the resolver function
 
-You then can use the function created in the previous step to build your resolver function. It can be an async function, and it should return the value from `generateImageData` to An example resolver could look like this:
+You then can use the function created in the previous step to build your resolver function. It can be an async function, and it should return the value from `generateImageData`. An example resolver could look like this:
 
 ```js::title=gatsby-source-example/gatsby-node.js
 
@@ -37,14 +37,14 @@ import { generateImageData } from "gatsby-plugin-image"
 
 
 const resolveGatsbyImageData = async (image, options) => {
-   // The `image` argument is the node to which you are attaching the resolver,z
+   // The `image` argument is the node to which you are attaching the resolver,
    // so the values will depend on your data type.
   const filename = image.src
 
   const sourceMetadata = {
     width: image.width,
     height: image.height,
-    format: image.mimeType.split("/")[1]
+    format: image.mimeType.split("/")[1] // gets a value like "jpeg" from "image/jpeg"
   }
 
   // Generating placeholders is optional, but recommended
@@ -76,7 +76,7 @@ const resolveGatsbyImageData = async (image, options) => {
 
 ### Add the resolver
 
-`gatsby-plugin-image/graphql-utils` includes a utility function to help register the resolver inside the Gatsby `createResolvers` API hook. It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are buildign queries in GraphiQL. You can pass additional arguments supported by your plugin, for example image options such as quality.
+`gatsby-plugin-image/graphql-utils` includes a utility function to help register the resolver inside the Gatsby [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL. You can pass additional arguments supported by your plugin, for example image options such as quality.
 
 The arguments:
 
