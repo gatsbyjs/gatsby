@@ -49,6 +49,7 @@ exports.sourceNodes = ({
 
   function createNodeHelper(type, nodePartial) {
     const node = {
+      template: `default`,
       ...nodePartial,
       internal: {
         type,
@@ -63,6 +64,21 @@ exports.sourceNodes = ({
   createNodeHelper(`DepPageQuery`, {
     id: `page-query-stable`,
     label: `Stable (always created)`,
+  })
+
+  // used to create pages and queried by them
+  createNodeHelper(`DepPageQuery`, {
+    id: `page-query-stable-alternative`,
+    label: `Stable (always created)`,
+    // this is just so we always create at least one page with alternative template to avoid changing compilation hash (async-requires change) (sigh: we should be able to mark module as template even without any pages to avoid that warning)
+    template: `alternative`,
+  })
+
+  createNodeHelper(`DepPageQuery`, {
+    id: `page-query-template-change`,
+    label: `Stable (always created)`,
+    // use default template in first run, but alternative in next ones
+    template: runNumber <= 1 ? `default` : `alternative`,
   })
 
   createNodeHelper(`DepPageQuery`, {
@@ -134,6 +150,7 @@ exports.createPages = async ({ actions, graphql }) => {
       allDepPageQuery {
         nodes {
           id
+          template
         }
       }
     }
@@ -142,7 +159,10 @@ exports.createPages = async ({ actions, graphql }) => {
   for (const depPageQueryNode of data.allDepPageQuery.nodes) {
     actions.createPage({
       path: `/${depPageQueryNode.id}/`,
-      component: require.resolve(`./src/templates/deps-page-query`),
+      component:
+        depPageQueryNode.template === `alternative`
+          ? require.resolve(`./src/templates/deps-page-query-alternative`)
+          : require.resolve(`./src/templates/deps-page-query`),
       context: {
         id: depPageQueryNode.id,
       },

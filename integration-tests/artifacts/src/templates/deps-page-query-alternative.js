@@ -1,10 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
 
-export default function DepPageQueryPage({ data }) {
+export default function DepPageQueryAlternativePage({ data }) {
   return (
     <>
-      <h1>Default template for depPageQuery</h1>
+      <h1>Alternative template for depPageQuery</h1>
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
   )
