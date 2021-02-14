@@ -27,7 +27,6 @@ const {
   getNodes,
   getNode,
   getNodesByType,
-  hasNodeChanged,
   getNodeAndSavePathDependency,
 } = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -113,7 +112,6 @@ const deferredAction = type => (...args) => {
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
   `deleteNode`,
-  `deleteNodes`,
   `touchNode`,
   `createParentChildLink`,
   `createNodeField`,
@@ -431,7 +429,6 @@ const runAPI = async (plugin, api, args, activity) => {
         ...args,
         basePath: pathPrefix,
         pathPrefix: publicPath,
-        boundActionCreators: actions,
         actions,
         loadNodeContent,
         store,
@@ -440,7 +437,6 @@ const runAPI = async (plugin, api, args, activity) => {
         getNodes,
         getNode,
         getNodesByType,
-        hasNodeChanged,
         reporter: extendedLocalReporter,
         getNodeAndSavePathDependency,
         cache,

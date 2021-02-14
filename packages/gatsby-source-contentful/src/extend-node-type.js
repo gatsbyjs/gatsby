@@ -11,6 +11,7 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
@@ -188,6 +189,17 @@ const generateImageSource = (
   _fit, // We use resizingBehavior instead
   { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
 ) => {
+  // Ensure we stay within Contentfuls Image API limits
+  if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
+    height = Math.floor((height / width) * CONTENTFUL_IMAGE_MAX_SIZE)
+    width = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (height > CONTENTFUL_IMAGE_MAX_SIZE) {
+    width = Math.floor((width / height) * CONTENTFUL_IMAGE_MAX_SIZE)
+    height = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
   const src = createUrl(filename, {
     width,
     height,
@@ -697,6 +709,8 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const resolveGatsbyImageData = async (image, options) => {
+    if (!isImage(image)) return null
+
     const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
 
     const imageProps = generateImageData({
@@ -738,17 +752,9 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     return imageProps
   }
 
-  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
-  const resolutionsNode = fixedNodeType({
-    name: `ContentfulResolutions`,
-    getTracedSVG,
-  })
-  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
   const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
-  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
-  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
@@ -760,7 +766,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       warnedForBeta = true
     }
 
-    return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+    const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -775,17 +781,16 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: GraphQLInt,
         defaultValue: 50,
       },
-      backgroundColor: {
-        type: GraphQLString,
-      },
     })
+
+    fieldConfig.type = GraphQLJSON
+
+    return fieldConfig
   }
 
   return {
     fixed: fixedNode,
-    resolutions: resolutionsNode,
     fluid: fluidNode,
-    sizes: sizesNode,
     gatsbyImageData: getGatsbyImageData(),
     resize: {
       type: new GraphQLObjectType({

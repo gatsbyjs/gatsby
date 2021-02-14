@@ -187,10 +187,6 @@ export default (pagePath, isClientOnlyPage, callback) => {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
-          // pathContext was deprecated in v2. Renamed to pageContext
-          pathContext: pageData.result
-            ? pageData.result.pageContext
-            : undefined,
         }
 
         let pageElement

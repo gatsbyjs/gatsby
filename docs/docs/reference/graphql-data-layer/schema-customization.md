@@ -1000,18 +1000,17 @@ export const query = graphql`
 `
 ```
 
-### Queryable interfaces with the `@nodeInterface` extension
+### Queryable interfaces
 
-Since Gatsby 2.13.22, you can achieve the same thing as above by adding the `@nodeInterface`
-extension to the `TeamMember` interface. This will treat the interface like a normal
-top-level type that implements the `Node` interface, and thus automatically add root
-query fields for the interface.
+Since Gatsby 3.0.0, you can use interface inheritance to achieve the same thing as above:
+`TeamMember implements Node`. This will treat the interface like a normal top-level type that
+implements the `Node` interface, and thus automatically add root query fields for the interface.
 
 ```js:title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
-    interface TeamMember @nodeInterface {
+    interface TeamMember implements Node {
       id: ID!
       name: String!
       firstName: String!
@@ -1079,8 +1078,7 @@ data.allTeamMember.nodes.map(node => {
 })
 ```
 
-> Note: All types implementing an interface with the `@nodeInterface` extension
-> must also implement the `Node` interface.
+> Note: All types implementing a queryable interface must also implement the `Node` interface
 
 ## Extending third-party types
 

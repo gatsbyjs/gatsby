@@ -29,7 +29,7 @@ Source data from WordPress in a scaleable and efficient way with WPGraphQL 🚀
 
 This plugin works by merging the [WPGraphQL schema & data](https://docs.wpgraphql.com/guides/about-wpgraphql/) with the [Gatsby schema & Node model](https://www.gatsbyjs.com/docs/node-model/) which allows us to efficiently cache WP data in Gatsby. What this means is that incremental builds, fast builds, and CMS Previews work beautifully! 💅
 
-# Docs 📖
+## Docs 📖
 
 - 👩‍🎤 [Why use this plugin?](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/why-use-this-plugin.md)
 - 🏃‍ [Installation & Getting started](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/getting-started.md)
@@ -44,6 +44,7 @@ This plugin works by merging the [WPGraphQL schema & data](https://docs.wpgraphq
 - 🛠 [Debugging and troubleshooting](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/debugging-and-troubleshooting.md)
 - 🏞 [Community and Support](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/community-and-support.md)
 - 💡 [Contribution](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/contribution.md)
+- 🧓 [v3 Documentation](https://github.com/gatsbyjs/gatsby/blob/1da331a5352e3f7cb18f69050b7199481d85fbcb/packages/gatsby-source-wordpress/README.md)
 
 ## Relevant Links 🔗
 

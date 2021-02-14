@@ -102,7 +102,13 @@ export const apiFinished = (
  * @private
  */
 export const replaceStaticQuery = (
-  args: any,
+  args: {
+    name: string
+    componentPath: string
+    id: string
+    query: string
+    hash: string
+  },
   plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {

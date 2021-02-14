@@ -44,6 +44,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     getNodesByType,
     reporter,
     assetDownloadWorkers,
+    getNode,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
@@ -75,7 +76,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       // to compare a modified asset to a cached version?
       if (cacheRemoteData) {
         fileNodeID = cacheRemoteData.fileNodeID // eslint-disable-line prefer-destructuring
-        touchNode({ nodeId: cacheRemoteData.fileNodeID })
+        touchNode(getNode(cacheRemoteData.fileNodeID))
       }
 
       // If we don't have cached data, download the file
