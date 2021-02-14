@@ -258,15 +258,6 @@ jobs:
       - e2e-test:
           test_path: integration-tests/artifacts
 
-  # temporary
-  integration_tests_artifacts_conditional_page_builds:
-    executor: node
-    steps:
-      - e2e-test:
-          test_path: integration-tests/artifacts
-    environment:
-      GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: 1
-
   integration_tests_ssr:
     executor: node
     steps:
@@ -605,8 +596,6 @@ workflows:
       - integration_tests_structured_logging:
           <<: *e2e-test-workflow
       - integration_tests_artifacts:
-          <<: *e2e-test-workflow
-      - integration_tests_artifacts_conditional_page_builds:
           <<: *e2e-test-workflow
       - integration_tests_ssr:
           <<: *e2e-test-workflow

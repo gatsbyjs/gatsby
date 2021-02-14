@@ -271,13 +271,9 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 }> {
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
-  const { toRegenerate, toDelete } = process.env
-    .GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
-    ? buildUtils.calcDirtyHtmlFiles(store.getState())
-    : {
-        toRegenerate: [...store.getState().pages.keys()],
-        toDelete: [],
-      }
+  const { toRegenerate, toDelete } = buildUtils.calcDirtyHtmlFiles(
+    store.getState()
+  )
 
   if (toRegenerate.length > 0) {
     const buildHTMLActivityProgress = reporter.createProgress(
