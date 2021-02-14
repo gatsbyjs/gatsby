@@ -6,7 +6,7 @@ If you have a large site, you may be able to improve build times for data update
 
 For more info on the standard build process, please see the [overview of the Gatsby build process](/docs/conceptual/overview-of-the-gatsby-build-process/).
 
-> ❗ Conditional page builds do not currently account for static queries. Any query result differences will not trigger pages to rebuild.
+> ❗ Conditional page builds do not currently account for static queries. Any query result differences will not trigger pages to rebuild. You can use [ESLint plugin Gatsby No Static Queries](https://www.npmjs.com/package/eslint-plugin-gatsby-no-static-queries) to help you find components in your code that are using static queries and may need to be updated. e.g. A static query to query a single file to use with the [Gatsby Image](https://www.gatsbyjs.com/plugins/gatsby-image/) component is most-likely OK, as the file doesn't change. However a static query in a menu component that queries menu items from an external system and is rendered on each page is likely to create issues.
 
 ## How to use
 
