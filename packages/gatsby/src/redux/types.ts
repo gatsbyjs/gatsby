@@ -167,7 +167,7 @@ export interface IComponentState {
 export interface IHtmlFileState {
   dirty: number
   isDeleted: boolean
-  pageQueryHash: string // TODO: change to page-data hash
+  pageDataHash: string
 }
 
 export interface IStaticQueryResultState {
@@ -788,8 +788,10 @@ export interface ISetResolvedNodesAction {
 export interface IAddPageDataStatsAction {
   type: `ADD_PAGE_DATA_STATS`
   payload: {
+    pagePath: string
     filePath: SystemPath
     size: number
+    pageDataHash: string
   }
 }
 
