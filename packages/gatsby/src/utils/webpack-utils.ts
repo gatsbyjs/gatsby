@@ -218,7 +218,6 @@ export const createWebpackUtils = (
     },
 
     miniCssExtract: (options = {}) => {
-      // production always uses MiniCssExtractPlugin
       return {
         loader: MiniCssExtractPlugin.loader,
         options,
