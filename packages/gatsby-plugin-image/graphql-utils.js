@@ -1,1 +1,1 @@
-export * from "./dist/resolver-utils"
+module.exports = require("./dist/resolver-utils")

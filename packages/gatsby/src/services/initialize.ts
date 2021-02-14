@@ -227,24 +227,8 @@ export async function initialize({
   }
 
   // theme gatsby configs can be functions or objects
-  if (config && config.__experimentalThemes) {
-    reporter.warn(
-      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
-    )
-    const themes = await loadThemes(config, {
-      useLegacyThemes: true,
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = themes.config
-
-    store.dispatch({
-      type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes,
-    })
-  } else if (config) {
+  if (config) {
     const plugins = await loadThemes(config, {
-      useLegacyThemes: false,
       configFilePath,
       rootDir: program.directory,
     })

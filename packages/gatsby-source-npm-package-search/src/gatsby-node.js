@@ -73,10 +73,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.sourceNodes = async (
-  { boundActionCreators, createNodeId, createContentDigest },
+  { actions, createNodeId, createContentDigest },
   { keywords }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 

@@ -131,11 +131,11 @@ export const renderDevHTML = ({
       isClientOnlyPage = true
     }
 
-    const { boundActionCreators } = require(`../../redux/actions`)
-    const { createServerVisitedPage } = boundActionCreators
+    const { actions } = require(`../../redux/actions`)
+    const { createServerVisitedPage } = actions
     // Record this page was requested. This will kick off adding its page
     // component to the ssr bundle (if that's not already happened)
-    createServerVisitedPage(pageObj.componentChunkName)
+    store.dispatch(createServerVisitedPage(pageObj.componentChunkName))
 
     // Ensure the query has been run and written out.
     try {

@@ -425,49 +425,50 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
+ * @param {object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * deleteNode({node: node})
+ * deleteNode(node)
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (node: any, plugin?: Plugin) => {
   let id
 
-  // Check if using old method signature. Warn about incorrect usage but get
-  // node from nodeID anyway.
-  if (typeof options === `string`) {
+  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
+  if (node && node.node) {
     let msg =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }).`
-    if (args && args.name) {
-      // `plugin` used to be the third argument
-      plugin = args
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node)`
+
+    if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
     report.warn(msg)
 
-    id = options
+    id = node.node.id
   } else {
-    id = options && options.node && options.node.id
+    id = node && node.id
   }
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const node = getNode(id)
+  const internalNode = getNode(id)
   if (plugin) {
     const pluginName = plugin.name
 
-    if (node && typeOwners[node.internal.type] !== pluginName)
+    if (
+      internalNode &&
+      typeOwners[internalNode.internal.type] &&
+      typeOwners[internalNode.internal.type] !== pluginName
+    )
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
-          The node type "${node.internal.type}" is owned by "${
-        typeOwners[node.internal.type]
+          The node type "${internalNode.internal.type}" is owned by "${
+        typeOwners[internalNode.internal.type]
       }".
 
           The node object passed to "deleteNode":
 
-          ${JSON.stringify(node, null, 4)}
+          ${JSON.stringify(internalNode, null, 4)}
 
           The plugin deleting the node:
 
@@ -483,52 +484,19 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
   }
 
-  const deleteAction = createDeleteAction(node)
+  const deleteAction = createDeleteAction(internalNode)
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node && findChildren(node.children).map(getNode).map(createDeleteAction)
+    internalNode &&
+    findChildren(internalNode.children).map(getNode).map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
   } else {
     return deleteAction
   }
-}
-
-// Marked private here because it was suppressed in documentation pages.
-/**
- * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
- */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  let msg =
-    `The "deleteNodes" action is now deprecated and will be removed in ` +
-    `Gatsby v3. Please use "deleteNode" instead.`
-  if (plugin && plugin.name) {
-    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
-  }
-  report.warn(msg)
-
-  // Also delete any nodes transformed from these.
-  const descendantNodes = _.flatten(
-    nodes.map(n => findChildren(getNode(n).children))
-  )
-
-  const nodeIds = [...nodes, ...descendantNodes]
-
-  const deleteNodesAction = {
-    type: `DELETE_NODES`,
-    plugin,
-    // Payload contains node IDs but inference-metadata requires full node instances
-    payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
-  }
-  return deleteNodesAction
 }
 
 // We add a counter to internal to make sure we maintain insertion order for
@@ -836,28 +804,26 @@ actions.createNode = (...args) => dispatch => {
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
+ * @param {Object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * touchNode({ nodeId: `a-node-id` })
+ * touchNode(node)
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
-  let nodeId = _.get(options, `nodeId`)
-
-  // Check if using old method signature. Warn about incorrect usage
-  if (typeof options === `string`) {
-    console.warn(
-      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
-    )
+actions.touchNode = (node: any, plugin?: Plugin) => {
+  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
+  if (node && node.nodeId) {
+    let msg =
+      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
+      `the node directly to the function: touchNode(node)`
 
     if (plugin && plugin.name) {
-      console.log(`"touchNode" was called by ${plugin.name}`)
+      msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    nodeId = options
+    report.warn(msg)
+
+    node = getNode(node.nodeId)
   }
 
-  const node = getNode(nodeId)
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
   }
@@ -865,14 +831,12 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: nodeId,
+    payload: node.id,
   }
 }
 
 type CreateNodeInput = {
   node: Object,
-  fieldName?: string,
-  fieldValue?: string,
   name?: string,
   value: any,
 }
@@ -885,8 +849,6 @@ type CreateNodeInput = {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
  * @param {any} $0.value the value for the field
  * @example
@@ -899,26 +861,10 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  { node, name, value }: CreateNodeInput,
   plugin: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  if (fieldName) {
-    console.warn(
-      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
-    )
-    if (!name) {
-      name = fieldName
-    }
-  }
-  if (fieldValue) {
-    console.warn(
-      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
-    )
-    if (!value) {
-      value = fieldValue
-    }
-  }
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}

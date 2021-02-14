@@ -2,12 +2,8 @@ import * as fs from "fs"
 import * as path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
-import {
-  defaultIcons,
-  doesIconExist,
-  addDigestToPath,
-  favicons,
-} from "./common"
+import { defaultIcons, addDigestToPath, favicons } from "./common"
+import { doesIconExist } from "./node-helpers"
 
 import pluginOptionsSchema from "./pluginOptionsSchema"
 

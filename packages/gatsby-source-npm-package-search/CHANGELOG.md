@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@3.0.0-next.0...gatsby-source-npm-package-search@3.0.0-next.1) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove boundActionCreators ([#29129](https://github.com/gatsbyjs/gatsby/issues/29129)) ([b1f8663](https://github.com/gatsbyjs/gatsby/commit/b1f866394345117d9eec0cb47270a18a9d2bf485))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.11.0-next.0...gatsby-source-npm-package-search@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-source-npm-package-search
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.10.0-next.0...gatsby-source-npm-package-search@2.11.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-source-npm-package-search ([#29184](https://github.com/gatsbyjs/gatsby/issues/29184)) ([f70af26](https://github.com/gatsbyjs/gatsby/commit/f70af26de3218f833a4cc8b8559f083f6d84b27d))
+
 # [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-npm-package-search@2.9.0-next.0...gatsby-source-npm-package-search@2.10.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-source-npm-package-search

@@ -24,7 +24,7 @@ import {
   showSevenDayFeedbackRequest,
 } from "../utils/feedback"
 import * as buildUtils from "./build-utils"
-import { boundActionCreators } from "../redux/actions"
+import { actions } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { IProgram, Stage } from "./types"
 import { PackageJson } from "../.."
@@ -178,9 +178,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     if (cachedPageData) {
       cachedPageData.forEach((_value, key) => {
         if (!pages.has(key)) {
-          boundActionCreators.removePageData({
-            id: key,
-          })
+          store.dispatch(actions.removePageData({ id: key }))
         }
       })
     }
@@ -201,7 +199,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     })
   }
 
-  boundActionCreators.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`)
+  store.dispatch(actions.setProgramStatus(`BOOTSTRAP_QUERY_RUNNING_FINISHED`))
 
   await db.saveState()
 
@@ -245,6 +243,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   } finally {
     buildSSRBundleActivityProgress.end()
   }
+
+  telemetry.addSiteMeasurement(`BUILD_END`, {
+    pagesCount: pagePaths.length, // number of html files that will be written
+    totalPagesCount: store.getState().pages.size, // total number of pages
+  })
 
   const buildHTMLActivityProgress = report.createProgress(
     `Building static HTML for pages`,

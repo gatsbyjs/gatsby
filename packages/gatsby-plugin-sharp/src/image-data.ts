@@ -13,6 +13,7 @@ const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
+
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -114,7 +115,14 @@ export async function generateImageData({
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,
+    duotone,
   } = transformOptions
+
+  if (duotone && (!duotone.highlight || !duotone.shadow)) {
+    reporter.warn(
+      `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+    )
+  }
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 

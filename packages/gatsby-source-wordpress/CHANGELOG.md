@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.2...gatsby-source-wordpress@5.0.0-next.3) (2021-02-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.1...gatsby-source-wordpress@5.0.0-next.2) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove old touchNode signature ([#29245](https://github.com/gatsbyjs/gatsby/issues/29245)) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+
+# [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.0...gatsby-source-wordpress@5.0.0-next.1) (2021-02-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@4.1.0-next.1...gatsby-source-wordpress@5.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.12.0-next.0...gatsby-source-wordpress@4.1.0-next.1) (2021-02-04)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.11.0-next.0...gatsby-source-wordpress@3.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 # [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.10.0-next.1...gatsby-source-wordpress@3.11.0-next.0) (2021-01-18)
 
 ### Bug Fixes

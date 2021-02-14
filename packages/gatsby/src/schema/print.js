@@ -218,12 +218,16 @@ const printObjectType = tc => {
 
 const printInterfaceType = tc => {
   const type = tc.getType()
+  const interfaces = type.getInterfaces()
+  const implementedInterfaces = interfaces.length
+    ? ` implements ` + interfaces.map(i => i.name).join(` & `)
+    : ``
   const extensions = tc.getExtensions()
   const directives = tc.schemaComposer.getDirectives()
   const printedDirectives = printDirectives(extensions, directives)
   return (
     printDescription(type) +
-    `interface ${type.name}${printedDirectives}` +
+    `interface ${type.name}${implementedInterfaces}${printedDirectives}` +
     printFields(Object.values(type.getFields()), directives)
   )
 }

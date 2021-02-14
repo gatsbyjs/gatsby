@@ -115,17 +115,6 @@ export const shouldUpdateScroll = true
 export const registerServiceWorker = true
 
 /**
- * Allow a plugin to replace the page component renderer.
- * @deprecated Use [wrapPageElement](#wrapPageElement) to decorate page element.
- * @param {object} $0
- * @param {object} $0.props The props of the page.
- * @param {object} $0.loader The gatsby loader.
- * @param {pluginOptions} pluginOptions
- * @returns {ReactNode} Replaced default page renderer
- */
-export const replaceComponentRenderer = true
-
-/**
  * Allow a plugin to wrap the page element.
  *
  * This is useful for setting wrapper components around pages that won't get

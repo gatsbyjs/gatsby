@@ -13,13 +13,6 @@ describe(`Production gatsby-image`, () => {
           .its(`length`)
           .should(`eq`, 1)
       })
-
-      it(`contains position relative`, () => {
-        cy.getTestElement(fluidTestId)
-          .find(`.gatsby-image-wrapper`)
-          .should(`have.attr`, `style`)
-          .and(`contains`, `position:relative`)
-      })
     })
   })
 
