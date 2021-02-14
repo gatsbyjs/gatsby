@@ -31,7 +31,13 @@ module.exports = (api, args, defaultReturn, argTransform) => {
       }
       return result
     } catch (e) {
-      throw new Error(`Plugin: ${plugin.name}: ${e.message}`)
+      if (plugin.name !== `default-site-plugin`) {
+        // default-site-plugin is user code and will print proper stack trace,
+        // so no point in annotating error message pointing out which plugin is root of the problem
+        e.message += ` (from plugin: ${plugin.name})`
+      }
+
+      throw e
     }
   })
 
