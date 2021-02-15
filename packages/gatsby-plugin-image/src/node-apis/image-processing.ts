@@ -8,10 +8,13 @@ import {
 import fs from "fs-extra"
 import path from "path"
 import { watchImage } from "./watcher"
-import type { FileSystemNode } from "gatsby-source-filesystem"
 import { IStaticImageProps } from "../components/static-image.server"
 import { ISharpGatsbyImageArgs } from "../image-utils"
-
+import {
+  createFileNode,
+  createRemoteFileNode,
+  FileSystemNode,
+} from "gatsby/utils"
 const supportedTypes = new Set([`image/png`, `image/jpeg`, `image/webp`])
 export interface IImageMetadata {
   isFixed: boolean
@@ -24,27 +27,16 @@ export async function createImageNode({
   fullPath,
   createNodeId,
   createNode,
-  reporter,
 }: {
   fullPath: string
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
-  reporter: Reporter
 }): Promise<FileSystemNode | undefined> {
   if (!fs.existsSync(fullPath)) {
     return undefined
   }
 
-  let file: FileSystemNode
-  try {
-    const {
-      createFileNode,
-    } = require(`gatsby-source-filesystem/create-file-node`)
-    file = await createFileNode(fullPath, createNodeId, {})
-  } catch (e) {
-    reporter.panic(`Please install gatsby-source-filesystem`)
-    return undefined
-  }
+  const file = await createFileNode(fullPath, createNodeId, {})
 
   if (!file) {
     return undefined
@@ -86,14 +78,6 @@ export async function writeImages({
       let file: FileSystemNode | undefined
       let fullPath
       if (isRemoteURL(src)) {
-        let createRemoteFileNode
-        try {
-          createRemoteFileNode = require(`gatsby-source-filesystem`)
-            .createRemoteFileNode
-        } catch (e) {
-          reporter.panic(`Please install gatsby-source-filesystem`)
-        }
-
         try {
           file = await createRemoteFileNode({
             url: src,
@@ -126,15 +110,7 @@ export async function writeImages({
           return
         }
 
-        try {
-          const {
-            createFileNode,
-          } = require(`gatsby-source-filesystem/create-file-node`)
-
-          file = await createFileNode(fullPath, createNodeId, {})
-        } catch (e) {
-          reporter.panic(`Please install gatsby-source-filesystem`)
-        }
+        file = await createFileNode(fullPath, createNodeId, {})
       }
 
       if (!file) {

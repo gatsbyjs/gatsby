@@ -21,7 +21,7 @@ jest.mock(`gatsby-source-filesystem`, () => {
 const normalize = require(`../normalize`)
 const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 const { sourceNodes } = require(`../gatsby-node`)
 const { handleWebhookUpdate } = require(`../utils`)

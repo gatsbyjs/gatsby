@@ -19,6 +19,12 @@ export function createFileNodeFromBuffer(
   args: CreateFileNodeFromBufferArgs
 ): Promise<FileSystemNode>
 
+export function createFileNode(
+  path: string,
+  createNodeId: (input: string) => string,
+  pluginOptions: Record<string, unknown>
+): Promise<FileSystemNode>
+
 export interface CreateFilePathArgs {
   node: Node
   getNode: Function

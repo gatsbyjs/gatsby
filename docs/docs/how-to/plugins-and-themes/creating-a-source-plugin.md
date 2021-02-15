@@ -455,7 +455,7 @@ const fetch = require("node-fetch")
 const gql = require("graphql-tag")
 const WebSocket = require("ws")
 // highlight-start
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 // highlight-end
 ```
 

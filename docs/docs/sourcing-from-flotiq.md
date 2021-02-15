@@ -127,7 +127,7 @@ The next step is implementing these queries in your `gatsby-node.js` file:
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const { createFilePath } = require(`gatsby/utils`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 

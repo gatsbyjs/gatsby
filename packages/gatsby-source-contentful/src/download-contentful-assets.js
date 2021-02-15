@@ -1,5 +1,5 @@
 const ProgressBar = require(`progress`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 const bar = new ProgressBar(
   `Downloading Contentful Assets [:bar] :current/:total :elapsed secs :percent`,

@@ -1,7 +1,7 @@
 const path = require(`path`)
 const { loadNodeContent } = require(`../`)
 
-describe(`gatsby-source-filesystem`, () => {
+describe(`gatsby filesystem utils`, () => {
   it(`can load the content of a file`, async () => {
     const content = await loadNodeContent({
       absolutePath: path.join(__dirname, `../index.js`),

@@ -1,7 +1,7 @@
 import chokidar, { FSWatcher } from "chokidar"
 import { Actions, ParentSpanPluginArgs, GatsbyCache, Reporter } from "gatsby"
 import { createImageNode, IImageMetadata, writeImage } from "./image-processing"
-import type { FileSystemNode } from "gatsby-source-filesystem"
+import type { FileSystemNode } from "gatsby/utils"
 
 let watcher: FSWatcher | undefined
 

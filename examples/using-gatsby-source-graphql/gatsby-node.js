@@ -2,7 +2,7 @@ const path = require(`path`)
 const remark = require(`remark`)
 const html = require(`remark-html`)
 const dateformat = require(`dateformat`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 const { makeBlogPath } = require(`./src/utils`)
 
 exports.createPages = async ({ actions, graphql }) => {

@@ -1,5 +1,5 @@
 const fs = require(`fs`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 const NUM_IMAGES = parseInt(process.env.NUM_IMAGES || 100, 10)
 

@@ -1,4 +1,4 @@
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 const WebSocket = require("ws")
 const { ApolloClient } = require("apollo-client")
 const { InMemoryCache } = require("apollo-cache-inmemory")

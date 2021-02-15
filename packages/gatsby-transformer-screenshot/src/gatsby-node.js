@@ -1,6 +1,6 @@
 const axios = require(`axios`)
 const Queue = require(`better-queue`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 const SCREENSHOT_ENDPOINT = `https://h7iqvn4842.execute-api.us-east-2.amazonaws.com/prod/screenshot`
 const LAMBDA_CONCURRENCY_LIMIT = 50

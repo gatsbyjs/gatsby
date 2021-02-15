@@ -78,7 +78,7 @@ After restarting your development server, you should see the relative paths for 
 Now you'll have to create slugs. As the logic for creating slugs from file names can get tricky, the `gatsby-source-filesystem` plugin ships with a function for creating slugs. Let's use that.
 
 ```javascript:title=gatsby-node.js
-const { createFilePath } = require(`gatsby-source-filesystem`) // highlight-line
+const { createFilePath } = require(`gatsby/utils`) // highlight-line
 
 exports.onCreateNode = ({ node, getNode }) => {
   if (node.internal.type === `MarkdownRemark`) {
@@ -94,7 +94,7 @@ Now you can add your new slugs directly onto the `MarkdownRemark` nodes. This is
 To do so, you'll use a function passed to your API implementation called [`createNodeField`](/docs/reference/config-files/actions/#createNodeField). This function allows you to create additional fields on nodes created by other plugins. Only the original creator of a node can directly modify the node—all other plugins (including your `gatsby-node.js`) must use this function to create additional fields.
 
 ```javascript:title=gatsby-node.js
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const { createFilePath } = require(`gatsby/utils`)
 // highlight-next-line
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions // highlight-line
@@ -134,7 +134,7 @@ Now that the slugs are created, you can create the pages.
 In the same `gatsby-node.js` file, add the following.
 
 ```javascript:title=gatsby-node.js
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const { createFilePath } = require(`gatsby/utils`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
@@ -203,7 +203,7 @@ Then update `gatsby-node.js`
 
 ```javascript:title=gatsby-node.js
 const path = require(`path`) // highlight-line
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const { createFilePath } = require(`gatsby/utils`)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions

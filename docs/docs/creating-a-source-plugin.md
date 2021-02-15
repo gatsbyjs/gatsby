@@ -318,7 +318,7 @@ npm install gatsby-source-filesystem
 2. Create File nodes using the `createRemoteFileNode` function exported by `gatsby-source-filesystem`:
 
 ```javascript:title=source-plugin/gatsby-node.js
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 exports.onCreateNode = async ({
   actions: { createNode },
@@ -344,7 +344,7 @@ exports.onCreateNode = async ({
 3. Add the ID of the new File node to your source plugin's node.
 
 ```javascript:title=source-plugin/gatsby-node.js
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 exports.onCreateNode = async ({
   actions: { createNode },

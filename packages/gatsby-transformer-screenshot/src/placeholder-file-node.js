@@ -1,5 +1,5 @@
 const path = require(`path`)
-const { createFileNode } = require(`gatsby-source-filesystem/create-file-node`)
+const { createFileNode } = require(`gatsby/utils`)
 
 let placeholderFileNode
 const getPlaceholderFileNode = async ({ createNode, createNodeId }) => {

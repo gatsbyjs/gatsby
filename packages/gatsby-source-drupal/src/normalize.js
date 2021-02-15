@@ -1,5 +1,5 @@
 const { URL } = require(`url`)
-const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const { createRemoteFileNode } = require(`gatsby/utils`)
 
 const nodeFromData = (datum, createNodeId) => {
   const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
