@@ -34,7 +34,6 @@ export function watchImage({
           fullPath: path,
           createNodeId,
           createNode,
-          reporter,
         })
         if (!node) {
           reporter.warn(`Could not process image ${path}`)
