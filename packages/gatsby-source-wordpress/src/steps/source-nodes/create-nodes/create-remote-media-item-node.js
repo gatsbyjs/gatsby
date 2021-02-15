@@ -5,8 +5,8 @@ import { bold } from "chalk"
 
 import retry from "async-retry"
 
-import { createFileNodeFromBuffer, createRemoteFileNode } from "gatsby/utils"
-
+import { createFileNodeFromBuffer } from "gatsby/utils"
+import { createRemoteFileNode } from "./create-remote-file-node"
 import store from "~/store"
 
 import urlToPath from "~/utils/url-to-path"
