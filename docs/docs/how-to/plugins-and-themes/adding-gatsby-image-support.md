@@ -33,7 +33,7 @@ You then can use the function created in the previous step to build your resolve
 
 ```js::title=gatsby-source-example/gatsby-node.js
 
-import { generateImageData } from "gatsby-plugin-image"
+import { generateImageData, getLowResolutionImageURL } from "gatsby-plugin-image"
 
 
 const resolveGatsbyImageData = async (image, options) => {
@@ -50,20 +50,7 @@ const resolveGatsbyImageData = async (image, options) => {
     format: image.mimeType.split("/")[1]
   }
 
-  // Generating placeholders is optional, but recommended
-  let placeholderURL
-
-  if(options.placeholder === "blurred") {
-    // This would be your own function to generate a low-resolution placeholder
-    placeholderURL: await getBase64Image({ filename })
-  }
-
-  // You could also calculate dominant color, and pass that as `backgroundColor`
-  // gatsby-plugin-sharp includes helpers that you can use to generate a tracedSVG or calculate
-  // the dominant color of a local file, if you don't want to handle it in your plugin
-
-
-  return generateImageData({
+  const imageDataArgs = {
     ...options,
     // Passing the plugin name allows for better error messages
     pluginName: `gatsby-source-example`,
@@ -72,7 +59,24 @@ const resolveGatsbyImageData = async (image, options) => {
     placeholderURL
     generateImageSource,
     options,
-  })
+  }
+
+  // Generating placeholders is optional, but recommended
+  if(options.placeholder === "blurred") {
+    // This function returns the URL for a 20px-wide image, to use as a blurred placeholder
+    // You need to download the image and convert it to a base64-encoded data URI
+    const lowResImage = getLowResolutionImageURL(imageDataArgs)
+
+    // This would be your own function to download and generate a low-resolution placeholder
+    imageDataArgs.placeholderURL =  await getBase64Image(lowResImage)
+  }
+
+  // You could also calculate dominant color, and pass that as `backgroundColor`
+  // gatsby-plugin-sharp includes helpers that you can use to generate a tracedSVG or calculate
+  // the dominant color of a local file, if you don't want to handle it in your plugin
+
+
+  return generateImageData(imageDataArgs)
 }
 
 ```
