@@ -1,3 +1,7 @@
+import fs from "fs"
+import path from "path"
+import os from "os"
+
 jest.mock(`axios`, () => {
   return {
     get: jest.fn(path => {
@@ -12,7 +16,7 @@ jest.mock(`axios`, () => {
   }
 })
 
-jest.mock(`gatsby-source-filesystem`, () => {
+jest.mock(`gatsby/utils`, () => {
   return {
     createRemoteFileNode: jest.fn(),
   }
@@ -22,9 +26,16 @@ const normalize = require(`../normalize`)
 const downloadFileSpy = jest.spyOn(normalize, `downloadFile`)
 
 const { createRemoteFileNode } = require(`gatsby/utils`)
-
 const { sourceNodes } = require(`../gatsby-node`)
 const { handleWebhookUpdate } = require(`../utils`)
+
+const createMockCache = () => {
+  return {
+    get: jest.fn(),
+    set: jest.fn(),
+    directory: fs.mkdtempSync(path.join(os.tmpdir(), `gatsby-source-drupal`)),
+  }
+}
 
 describe(`gatsby-source-drupal`, () => {
   let nodes = {}
@@ -42,6 +53,7 @@ describe(`gatsby-source-drupal`, () => {
       forEach: jest.fn(() => nodes),
     }
   })
+  const cache = createMockCache()
 
   const activity = {
     start: jest.fn(),
@@ -68,6 +80,7 @@ describe(`gatsby-source-drupal`, () => {
     actions,
     reporter,
     store,
+    cache,
     getNode: id => nodes[id],
     getNodes,
   }
