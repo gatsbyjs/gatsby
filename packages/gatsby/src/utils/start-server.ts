@@ -121,7 +121,13 @@ module.exports = {
         Stage.DevelopHTML,
         activity.span
       )
-      await doBuildPages(rendererPath, [`/`], activity, workerPool)
+      await doBuildPages(
+        rendererPath,
+        [`/`],
+        activity,
+        workerPool,
+        Stage.DevelopHTML
+      )
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -514,7 +520,7 @@ module.exports = {
           res.send(e).status(500)
         }
       } else {
-        res.sendFile(directoryPath(`public/index.html`), err => {
+        res.sendFile(directoryPath(`.cache/develop-html/index.html`), err => {
           if (err) {
             res.status(500).end()
           }

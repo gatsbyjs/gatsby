@@ -263,7 +263,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
       pageRenderer,
       pagePaths,
       buildHTMLActivityProgress,
-      workerPool
+      workerPool,
+      Stage.BuildHTML
     )
   } catch (err) {
     let id = `95313` // TODO: verify error IDs exist
