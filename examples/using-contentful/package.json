@@ -7,8 +7,8 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-core-utils": "next",
-    "gatsby-image": "next",
     "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-image": "next",
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-typography": "next",
     "gatsby-source-contentful": "next",

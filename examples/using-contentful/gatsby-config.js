@@ -3,6 +3,7 @@ module.exports = {
     title: `Gatsby with Contentful`,
   },
   plugins: [
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-contentful`,
       options: {
