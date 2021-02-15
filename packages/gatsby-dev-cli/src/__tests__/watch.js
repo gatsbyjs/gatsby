@@ -475,7 +475,7 @@ describe(`dependency changes`, () => {
       })
     })
 
-    it(`watching gatsby-source-filesystem and having gatsby-source-wordpress installs gatsby-source-wordpress`, async () => {
+    it(`watching gatsby-source-filesystem and having gatsby-source-drupal installs gatsby-source-drupal`, async () => {
       checkDepsChanges.mockImplementationOnce(
         mockDepsChanges([`gatsby-source-filesystem`])
       )
@@ -486,7 +486,7 @@ describe(`dependency changes`, () => {
         monoRepoPackages,
         localPackages: [
           `gatsby`,
-          `gatsby-source-wordpress`,
+          `gatsby-source-drupal`,
           `gatsby-plugin-sharp`,
         ],
       })
@@ -499,12 +499,12 @@ describe(`dependency changes`, () => {
       await callReadyCallback()
 
       assertPublish({
-        include: [`gatsby-source-wordpress`, `gatsby-source-filesystem`],
+        include: [`gatsby-source-drupal`, `gatsby-source-filesystem`],
         exclude: [`gatsby`, `gatsby-plugin-sharp`],
       })
 
       assertInstall({
-        include: [`gatsby-source-wordpress`],
+        include: [`gatsby-source-drupal`],
         exclude: [`gatsby`, `gatsby-source-filesystem`, `gatsby-plugin-sharp`],
       })
     })
@@ -543,7 +543,7 @@ describe(`dependency changes`, () => {
       })
     })
 
-    it(`watching gatsby-source-filesystem and not having gatsby-source-filesystem or gatsby-source-wordpress, installs nothing`, async () => {
+    it(`watching gatsby-source-filesystem and not having gatsby-source-filesystem or gatsby-source-drupal, installs nothing`, async () => {
       checkDepsChanges.mockImplementationOnce(
         mockDepsChanges([`gatsby-source-filesystem`])
       )
@@ -567,7 +567,7 @@ describe(`dependency changes`, () => {
         exclude: [
           `gatsby`,
           `gatsby-source-filesystem`,
-          `gatsby-source-wordpress`,
+          `gatsby-source-drupal`,
           `gatsby-plugin-sharp`,
         ],
       })
@@ -577,13 +577,13 @@ describe(`dependency changes`, () => {
         exclude: [
           `gatsby`,
           `gatsby-source-filesystem`,
-          `gatsby-source-wordpress`,
+          `gatsby-source-drupal`,
           `gatsby-plugin-sharp`,
         ],
       })
     })
 
-    it(`watching gatsby-source-filesystem and both having gatsby-source-filesystem and gatsby-source-wordpress, should install both`, async () => {
+    it(`watching gatsby-source-filesystem and both having gatsby-source-filesystem and gatsby-source-drupal, should install both`, async () => {
       checkDepsChanges.mockImplementationOnce(
         mockDepsChanges([`gatsby-source-filesystem`])
       )
@@ -594,7 +594,7 @@ describe(`dependency changes`, () => {
         monoRepoPackages,
         localPackages: [
           `gatsby`,
-          `gatsby-source-wordpress`,
+          `gatsby-source-drupal`,
           `gatsby-source-filesystem`,
           `gatsby-plugin-sharp`,
         ],
@@ -608,12 +608,12 @@ describe(`dependency changes`, () => {
       await callReadyCallback()
 
       assertPublish({
-        include: [`gatsby-source-filesystem`, `gatsby-source-wordpress`],
+        include: [`gatsby-source-filesystem`, `gatsby-source-drupal`],
         exclude: [`gatsby`, `gatsby-plugin-sharp`],
       })
 
       assertInstall({
-        include: [`gatsby-source-filesystem`, `gatsby-source-wordpress`],
+        include: [`gatsby-source-filesystem`, `gatsby-source-drupal`],
         exclude: [`gatsby`, `gatsby-plugin-sharp`],
       })
     })
