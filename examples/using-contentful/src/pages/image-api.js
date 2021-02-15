@@ -275,7 +275,7 @@ const ImageAPI = props => {
       <p>
         You can show a traced SVG preview to your users. This works equivalent
         to the responsive fluid feature except that you have to use the
-        GatsbyContentfulFixed_tracedSVG fragment
+        GatsbyContentfulFluid_tracedSVG fragment
       </p>
       {assets.map(({ node: { title, traced } }) => (
         <Img
