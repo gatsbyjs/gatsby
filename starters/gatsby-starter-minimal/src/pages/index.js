@@ -125,8 +125,8 @@ const IndexPage = () => {
             {docLink.text}
           </a>
         </li>
-        {links.map((link,indx) => (
-          <li key={indx} style={{ ...listItemStyles, color: link.color }}>
+        {links.map(link => (
+          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
             <span>
               <a
                 style={linkStyle}
