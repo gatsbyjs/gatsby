@@ -1,11 +1,31 @@
-const fs = require(`fs-extra`)
+const {
+  createFilePath,
+  createRemoteFileNode,
+  createFileNodeFromBuffer,
+  loadNodeContent,
+} = require(`gatsby/utils`)
 
-function loadNodeContent(fileNode) {
-  return fs.readFile(fileNode.absolutePath, `utf-8`)
-}
+/**
+ * @deprecated You should import this from "gatsby/utils"
+ * Re-exporting for backward-compatibility
+ */
 
-exports.createFilePath = require(`./create-file-path`)
-exports.createRemoteFileNode = require(`./create-remote-file-node`)
-exports.createFileNodeFromBuffer = require(`./create-file-node-from-buffer`)
+exports.createFilePath = createFilePath
 
+/**
+ * @deprecated You should import this from "gatsby/utils"
+ * Re-exporting for backward-compatibility
+ */
+exports.createRemoteFileNode = createRemoteFileNode
+
+/**
+ * @deprecated You should import this from "gatsby/utils"
+ * Re-exporting for backward-compatibility
+ */
+exports.createFileNodeFromBuffer = createFileNodeFromBuffer
+
+/**
+ * @deprecated You should import this from "gatsby/utils"
+ * Re-exporting for backward-compatibility
+ */
 exports.loadNodeContent = loadNodeContent

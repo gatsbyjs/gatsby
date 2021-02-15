@@ -3,7 +3,7 @@ const fs = require(`fs`)
 const path = require(`path`)
 const { Machine, interpret } = require(`xstate`)
 
-const { createFileNode } = require(`./create-file-node`)
+const { createFileNode } = require(`gatsby/utils`)
 const { ERROR_MAP } = require(`./error-utils`)
 
 exports.onPreInit = ({ reporter }) => {

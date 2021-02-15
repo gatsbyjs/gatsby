@@ -1,102 +1,48 @@
-import { Node, Store, NodePluginArgs } from "gatsby"
+import {
+  createFilePath,
+  createRemoteFileNode,
+  createFileNodeFromBuffer,
+  CreateFilePathArgs,
+  CreateRemoteFileNodeArgs,
+  CreateFileNodeFromBufferArgs,
+  FileSystemNode,
+} from "gatsby/utils"
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilepath
+ * @deprecated Import from "gatsby/utils" instead
  */
-export function createFilePath(args: CreateFilePathArgs): string
+
+export { createFilePath }
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createremotefilenode
+ * @deprecated Import from "gatsby/utils" instead
  */
-export function createRemoteFileNode(
-  args: CreateRemoteFileNodeArgs
-): Promise<FileSystemNode>
+export { createRemoteFileNode }
 
 /**
- * @see https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=files#createfilenodefrombuffer
+ * @deprecated Import from "gatsby/utils" instead
  */
-export function createFileNodeFromBuffer(
-  args: CreateFileNodeFromBufferArgs
-): Promise<FileSystemNode>
+export { createFileNodeFromBuffer }
 
-export interface CreateFilePathArgs {
-  node: Node
-  getNode: Function
-  basePath?: string
-  trailingSlash?: boolean
-}
+/**
+ * @deprecated Import from "gatsby/utils" instead
+ */
+export { CreateFilePathArgs }
 
-export interface CreateRemoteFileNodeArgs {
-  url: string
-  store: Store
-  // TODO: use GatsbyCache type (requires gatsby@2.22.13)
-  cache: NodePluginArgs["cache"]
-  createNode: Function
-  createNodeId: Function
-  parentNodeId?: string
-  auth?: {
-    htaccess_user: string
-    htaccess_pass: string
-  }
-  httpHeaders?: object
-  ext?: string
-  name?: string
-  reporter: object
-}
+/**
+ * @deprecated Import from "gatsby/utils" instead
+ */
+export { CreateFileNodeFromBufferArgs }
 
-export interface CreateFileNodeFromBufferArgs {
-  buffer: Buffer
-  store: Store
-  // TODO: use GatsbyCache type (requires gatsby@2.22.13)
-  cache: NodePluginArgs["cache"]
-  createNode: Function
-  createNodeId: Function
-  parentNodeId?: string
-  hash?: string
-  ext?: string
-  name?: string
-}
+/**
+ * @deprecated Import from "gatsby/utils" instead
+ */
+export { CreateRemoteFileNodeArgs }
 
-export interface FileSystemNode extends Node {
-  absolutePath: string
-  accessTime: string
-  birthTime: Date
-  changeTime: string
-  extension: string
-  modifiedTime: string
-  prettySize: string
-  relativeDirectory: string
-  relativePath: string
-  sourceInstanceName: string
-
-  // parsed path typings
-  base: string
-  dir: string
-  ext: string
-  name: string
-  root: string
-
-  // stats
-  atime: Date
-  atimeMs: number
-  /**
-   * @deprecated Use `birthTime` instead
-   */
-  birthtime: Date
-  /**
-   * @deprecated Use `birthTime` instead
-   */
-  birthtimeMs: number
-  ctime: Date
-  ctimeMs: number
-  gid: number
-  mode: number
-  mtime: Date
-  mtimeMs: number
-  size: number
-  uid: number
-}
-
+/**
+ * @deprecated Import from "gatsby/utils" instead
+ */
+export { FileSystemNode }
 export interface FileSystemConfig {
   resolve: "gatsby-source-filesystem"
   options: FileSystemOptions

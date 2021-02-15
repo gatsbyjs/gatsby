@@ -1,5 +1,6 @@
 const path = require(`path`)
 const Url = require(`url`)
+const fs = require(`fs-extra`)
 
 /**
  * getParsedPath
@@ -51,4 +52,8 @@ export function getRemoteFileName(url) {
  */
 export function createFilePath(directory, filename, ext) {
   return path.join(directory, `${filename}${ext}`)
+}
+
+export function loadNodeContent(fileNode) {
+  return fs.readFile(fileNode.absolutePath, `utf-8`)
 }

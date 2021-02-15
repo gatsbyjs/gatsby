@@ -11,7 +11,7 @@ jest.mock(`path`, () => {
   }
 })
 
-jest.mock(`gatsby/utils`, () => {
+jest.mock(`../create-file-node`, () => {
   return {
     createFileNode: jest.fn(() => Promise.resolve({})),
   }
@@ -24,7 +24,7 @@ jest.mock(`chokidar`, () => {
 })
 
 const chokidar = require(`chokidar`)
-const { createFileNode } = require(`gatsby/utils`)
+const { createFileNode } = require(`../create-file-node`)
 
 const mitt = require(`mitt`)
 

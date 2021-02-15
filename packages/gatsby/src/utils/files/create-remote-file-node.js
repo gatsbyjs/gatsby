@@ -17,7 +17,7 @@ const cacheIdForExtensions = url => `create-remote-file-node-extension-${url}`
 
 let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
-/********************
+/** ******************
  * Type Definitions *
  ********************/
 
@@ -58,7 +58,7 @@ const CONNECTION_TIMEOUT = process.env.GATSBY_CONNECTION_TIMEOUT || 30000
 
 const INCOMPLETE_RETRY_LIMIT = process.env.GATSBY_INCOMPLETE_RETRY_LIMIT || 3
 
-/********************
+/** ******************
  * Queue Management *
  ********************/
 
@@ -99,7 +99,7 @@ async function pushToQueue(task, cb) {
   }
 }
 
-/******************
+/** ****************
  * Core Functions *
  ******************/
 
@@ -129,6 +129,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
           requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
         )
       } else {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
       }
     }
@@ -194,6 +195,7 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
               )
             )
           } else {
+            // eslint-disable-next-line prefer-promise-reject-errors
             reject(
               `Failed to download ${url} after ${INCOMPLETE_RETRY_LIMIT} attempts`
             )
@@ -366,11 +368,12 @@ const pushTask = task =>
         resolve(task)
       })
       .on(`failed`, err => {
+        // eslint-disable-next-line prefer-promise-reject-errors
         reject(`failed to process ${task.url}\n${err}`)
       })
   })
 
-/***************
+/** *************
  * Entry Point *
  ***************/
 
@@ -396,7 +399,6 @@ module.exports = function createRemoteFileNode({
   createNodeId,
   ext = null,
   name = null,
-  reporter,
 }) {
   if (showFlagWarning) {
     showFlagWarning = false
@@ -440,6 +442,7 @@ module.exports = function createRemoteFileNode({
   }
 
   if (!url || isWebUri(url) === undefined) {
+    // eslint-disable-next-line prefer-promise-reject-errors
     return Promise.reject(
       `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
     )
