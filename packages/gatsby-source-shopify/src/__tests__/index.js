@@ -1,4 +1,4 @@
-jest.mock(`gatsby-source-filesystem`, () => {
+jest.mock(`gatsby/utils`, () => {
   return {
     createRemoteFileNode: jest.fn(),
   }
