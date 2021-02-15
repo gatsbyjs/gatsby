@@ -36,7 +36,11 @@ const ImageAPI = props => {
         <ul>
           <li>
             <a href="#constrained">Constrained</a>
+          </li>
+          <li>
             <a href="#fixed">Fixed</a>
+          </li>
+          <li>
             <a href="#full-width">Full width</a>
           </li>
         </ul>
@@ -49,6 +53,8 @@ const ImageAPI = props => {
         <ul>
           <li>
             <a href="#blurred">Blurred</a>
+          </li>
+          <li>
             <a href="#traced">Traced SVG</a>
           </li>
         </ul>
