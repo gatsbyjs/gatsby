@@ -6,12 +6,17 @@ let runNumber = parseInt(process.env.ARTIFACTS_RUN_SETUP, 10) || 1
 let isFirstRun = runNumber === 1
 
 let changedBrowserCompilationHash
+let changedSsrCompilationHash
 let regeneratedPages = []
 let deletedPages = []
 
 exports.onPreInit = ({ emitter }) => {
   emitter.on(`SET_WEBPACK_COMPILATION_HASH`, action => {
     changedBrowserCompilationHash = action.payload
+  })
+
+  emitter.on(`SET_SSR_WEBPACK_COMPILATION_HASH`, action => {
+    changedSsrCompilationHash = action.payload
   })
 
   emitter.on(`HTML_GENERATED`, action => {
@@ -131,6 +136,7 @@ exports.createPages = async ({ actions, graphql }) => {
 exports.onPreBuild = () => {
   console.log(`[test] onPreBuild`)
   changedBrowserCompilationHash = `not-changed`
+  changedSsrCompilationHash = `not-changed`
   regeneratedPages = []
   deletedPages = []
 }
@@ -157,6 +163,7 @@ exports.onPostBuild = async ({ graphql }) => {
     {
       allPages: data.allSitePage.nodes.map(node => node.path),
       changedBrowserCompilationHash,
+      changedSsrCompilationHash,
       generated: regeneratedPages,
       removed: deletedPages,
     }

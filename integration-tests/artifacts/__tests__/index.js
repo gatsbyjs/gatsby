@@ -134,7 +134,7 @@ function assertFileExistenceForPagePaths({ pagePaths, type, shouldExist }) {
   )
 }
 
-function assertWebpackBundleChanges({ browser, runNumber }) {
+function assertWebpackBundleChanges({ browser, ssr, runNumber }) {
   describe(`webpack bundle invalidation`, () => {
     it(`browser bundle ${browser ? `DID` : `DIDN'T`} change`, () => {
       if (browser) {
@@ -143,6 +143,18 @@ function assertWebpackBundleChanges({ browser, runNumber }) {
         )
       } else {
         expect(manifest[runNumber].changedBrowserCompilationHash).toEqual(
+          `not-changed`
+        )
+      }
+    })
+
+    it(`ssr bundle ${ssr ? `DID` : `DIDN'T`} change`, () => {
+      if (ssr) {
+        expect(manifest[runNumber].changedSsrCompilationHash).not.toEqual(
+          `not-changed`
+        )
+      } else {
+        expect(manifest[runNumber].changedSsrCompilationHash).toEqual(
           `not-changed`
         )
       }
@@ -337,7 +349,7 @@ describe(`First run (baseline)`, () => {
   })
 
   // first run - this means bundles changed (from nothing to something)
-  assertWebpackBundleChanges({ browser: true, runNumber })
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 })
 
 describe(`Second run (different pages created, data changed)`, () => {
@@ -418,7 +430,7 @@ describe(`Second run (different pages created, data changed)`, () => {
   })
 
   // second run - only data changed and no bundle should have changed
-  assertWebpackBundleChanges({ browser: false, runNumber })
+  assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
 })
 
 describe(`Third run (js change, all pages are recreated)`, () => {
@@ -504,8 +516,8 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     })
   })
 
-  // third run - we modify module used by browser bundle - browser bundle should change
-  assertWebpackBundleChanges({ browser: true, runNumber })
+  // third run - we modify module used by both ssr and browser bundle - both bundles should change
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 })
 
 describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
@@ -588,7 +600,8 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   })
 
   // Fourth run - we change gatsby-browser, so browser bundle change,
-  assertWebpackBundleChanges({ browser: true, runNumber })
+  // but ssr bundle also change because chunk-map file is changed due to browser bundle change
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 })
 
 describe(`Fifth run (.cache is deleted but public isn't)`, () => {
@@ -659,6 +672,99 @@ describe(`Fifth run (.cache is deleted but public isn't)`, () => {
     })
   })
 
-  // Fifth run - because cache was deleted before run - browser bundle was "invalidated" (because there was nothing before)
-  assertWebpackBundleChanges({ browser: true, runNumber })
+  // Fifth run - because cache was deleted before run - both browser and ssr bundles were "invalidated" (because there was nothing before)
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
+})
+
+describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () => {
+  const runNumber = 6
+
+  const expectedPages = [
+    `/stale-pages/only-not-in-first`,
+    `/page-query-dynamic-6/`,
+  ]
+
+  const unexpectedPages = [
+    `/stale-pages/only-in-first/`,
+    `/page-query-dynamic-1/`,
+    `/page-query-dynamic-2/`,
+    `/page-query-dynamic-3/`,
+    `/page-query-dynamic-4/`,
+    `/page-query-dynamic-5/`,
+  ]
+
+  let changedFileOriginalContent
+  const changedFileAbspath = path.join(
+    process.cwd(),
+    `src`,
+    `components`,
+    `post-body-components-ssr.js`
+  )
+
+  beforeAll(async () => {
+    // make change to some .js
+    changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
+    filesToRevert[changedFileAbspath] = changedFileOriginalContent
+
+    const newContent = changedFileOriginalContent.replace(
+      /SSR/g,
+      `SSR (see I told you)`
+    )
+
+    if (newContent === changedFileOriginalContent) {
+      throw new Error(`Test setup failed`)
+    }
+
+    fs.writeFileSync(changedFileAbspath, newContent)
+    await runGatsbyWithRunTestSetup(runNumber)()
+  })
+
+  describe(`html files`, () => {
+    const type = `html`
+
+    describe(`should have expected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+
+    it(`should recreate all html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        manifest[runNumber].allPages.sort()
+      )
+    })
+  })
+
+  describe(`page-data files`, () => {
+    const type = `page-data`
+
+    describe(`should have expected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+  })
+
+  // Sixth run - only ssr bundle should change as only file used by ssr was changed
+  assertWebpackBundleChanges({ browser: false, ssr: true, runNumber })
 })
