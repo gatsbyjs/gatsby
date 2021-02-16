@@ -22,11 +22,15 @@ exports.gatsbyCleanBeforeAll = async done => {
 }
 
 exports.getGatsbyProcess = (command = `develop`, env = {}) =>
-  spawn(gatsbyBin, [command], {
-    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-    env: {
-      ...process.env,
-      NODE_ENV: command === `develop` ? `development` : `production`,
-      ...env,
-    },
-  })
+  spawn(
+    gatsbyBin,
+    [command, ...(command === `develop` ? ["-H", "localhost"] : [])],
+    {
+      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+      env: {
+        ...process.env,
+        NODE_ENV: command === `develop` ? `development` : `production`,
+        ...env,
+      },
+    }
+  )
