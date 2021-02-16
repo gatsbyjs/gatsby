@@ -29,6 +29,7 @@
     "ncp": "^2.0.0",
     "nodemon": "^2.0.7",
     "normalize.css": "^8.0.1",
+    "path-browserify": "^1.0.1",
     "prism-react-renderer": "^1.1.1",
     "query-string": "^6.13.8",
     "react": "^16.12.0",
