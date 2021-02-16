@@ -134,15 +134,6 @@ exports.onCreatePage = ({ page, actions }) => {
       actions.createPage(page)
       break
 
-    case `/path-context/`:
-      actions.createPage({
-        ...page,
-        context: {
-          foo: `bar`,
-        },
-      })
-      break
-
     case `/`:
       // use index page as template
       // (mimics)

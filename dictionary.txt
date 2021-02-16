@@ -548,7 +548,6 @@ JAMstack
 JAMStack
 jankiness
 Javascript
-Javscript
 jbampton
 joi
 Joi
@@ -636,7 +635,6 @@ modelling
 modularity
 modularize
 modularizing
-modyfing
 mongodb
 monorepo
 monorepos

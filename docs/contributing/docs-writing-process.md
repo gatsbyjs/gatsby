@@ -32,7 +32,7 @@ Does docs coverage exist anywhere on `gatsbyjs.com`? If so, would an alternative
 
 ### Tutorials vs. recipes vs. guides:
 
-- [**Tutorials**](/tutorial/) are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
+- [**Tutorials**](/docs/tutorial/) are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
 - [**Recipes**](/docs/recipes/) are shorter, more concise tutorials that limit their scope to a single task or outcome by using prerequisites and limited steps. Additional resources at the end lead the user to a logical next step. Recipes are for developers of all skill levels.
 - [**Guides**](/docs/guides/) are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. They are often aimed at a more advanced audience due to the subject matter but should be approachable to anyone.
 
