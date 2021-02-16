@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.3...gatsby@3.0.0-next.4) (2021-02-15)
+
+### Bug Fixes
+
+- **gatsby:** skip unions in input types ([#29479](https://github.com/gatsbyjs/gatsby/issues/29479)) ([8ef695d](https://github.com/gatsbyjs/gatsby/commit/8ef695dfae16c46e46641f2559ccc64b79aaaae2))
+- drop terminal-link ([#29472](https://github.com/gatsbyjs/gatsby/issues/29472)) ([260c297](https://github.com/gatsbyjs/gatsby/commit/260c29795537bb2e5bf04f0f719b5aeadbb3cc16))
+
+### Features
+
+- **gatsby:** display GraphQL deprecations as CLI warnings ([#29450](https://github.com/gatsbyjs/gatsby/issues/29450)) ([bfd8c8c](https://github.com/gatsbyjs/gatsby/commit/bfd8c8c41db5fea654a9b84c54bbf63db0ce3a54))
+
 # [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.2...gatsby@3.0.0-next.3) (2021-02-12)
 
 ### Features

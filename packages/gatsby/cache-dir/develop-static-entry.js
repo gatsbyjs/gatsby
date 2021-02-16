@@ -26,7 +26,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, callback) => {
+export default ({ pagePath }) => {
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
   ]
@@ -117,5 +117,5 @@ export default (pagePath, callback) => {
   htmlStr = renderToStaticMarkup(htmlElement)
   htmlStr = `<!DOCTYPE html>${htmlStr}`
 
-  callback(null, htmlStr)
+  return htmlStr
 }

@@ -155,10 +155,9 @@ export const getSortInput = <TSource = any, TContext = any>({
   //   type Baz {
   //     fooBar: FooBar
   //   }
-  // Unfortunately there is no way to just exclude such fields from the input type in graphql-compose v7+,
-  // so simply replacing them with booleans as the least confusing option :/
+  // Passing `fallbackType: null` allows us to skip this field in the input type
   const inputTypeComposer = toInputObjectType(typeComposer, {
-    fallbackType: schemaComposer.getSTC(`Boolean`),
+    fallbackType: null,
   })
   const sortOrderEnumTC = getSortOrderEnum({ schemaComposer })
   const fieldsEnumTC = getFieldsEnum({
