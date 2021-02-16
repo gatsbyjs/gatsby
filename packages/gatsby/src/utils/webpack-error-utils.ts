@@ -89,6 +89,7 @@ const transformWebpackError = (
   const context: ITransformedWebpackError["context"] = {
     stage,
     stageLabel: stageCodeToReadableLabel[stage],
+    // TODO use formatWebpackMessages like in warnings
     sourceMessage:
       castedWebpackError.error?.message ?? castedWebpackError.message,
   }

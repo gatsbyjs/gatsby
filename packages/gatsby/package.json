@@ -244,6 +244,7 @@
   },
   "scripts": {
     "build": "npm run build:types && npm run build:src && npm run build:internal-plugins && npm run build:rawfiles && npm run build:cjs",
+    "postbuild-withadmin-currently-breaks-webpack5": "node scripts/output-api-file.js && yarn workspace gatsby-admin build",
     "postbuild": "node scripts/output-api-file.js",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",

@@ -298,6 +298,7 @@ module.exports = async (
       }),
       // Webpack expects extensions when importing to mimic ESM spec.
       // Not all libraries have adapted so we don't enforce its behaviour
+      // @see https://github.com/webpack/webpack/issues/11467
       {
         test: /\.m?js/,
         resolve: {
@@ -444,7 +445,8 @@ module.exports = async (
         "socket.io-client": getPackageRoot(`socket.io-client`),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
 
-        // dedupe react
+        // SSR can have many react versions as some packages use their own version. React works best with 1 version.
+        // By resolving react,react-dom from gatsby we'll get the site versions of react & react-dom because it's specified as a peerdependency.
         react: getPackageRoot(`react`),
         "react-dom": getPackageRoot(`react-dom`),
       },

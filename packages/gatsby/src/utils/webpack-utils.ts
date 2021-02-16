@@ -9,7 +9,6 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
-// import semver from "semver"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
