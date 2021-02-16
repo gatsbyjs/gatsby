@@ -202,6 +202,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     buildSSRBundleActivityProgress.end()
   }
 
+  buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
+
   const { toRegenerate, toDelete } = process.env
     .GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES
     ? buildUtils.calcDirtyHtmlFiles(store.getState())

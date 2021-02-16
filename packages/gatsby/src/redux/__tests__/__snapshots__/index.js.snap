@@ -22,6 +22,7 @@ Object {
         "pageQueryHash": "",
       },
     },
+    "trackedStaticQueryResults": Map {},
   },
   "jobsV2": Object {
     "complete": Map {},

@@ -359,12 +359,15 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/stale-pages/only-not-in-first`,
     `/page-query-changing-data-but-not-id/`,
     `/page-query-dynamic-2/`,
+    `/static-query-result-tracking/should-invalidate/`,
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
     `/stale-pages/stable/`,
     `/page-query-stable/`,
     `/page-query-changing-but-not-invalidating-html/`,
+    `/static-query-result-tracking/stable/`,
+    `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
   ]
 
   const expectedPages = [
