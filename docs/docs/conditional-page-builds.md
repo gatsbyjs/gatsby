@@ -50,12 +50,8 @@ Done in 154.501 sec
 
 - To enable this build option you will need to set an environment variable, which requires access to do so in your build environment.
 
-- This feature is not available with `gatsby develop`.
-
 - You should not try to use this flag alongside Incremental Builds in Gatsby Cloud, as it uses a different process and may conflict with it.
 
 - You will need to persist the `.cache` and `public` directories between builds. This allows for comparisons and reuse of previously built files. If `.cache` directory was not persisted then a full build will be triggered. If `public` directory was not persisted then you might experience failing builds or builds that are missing certain assets.
 
 - Any code changes (templates, components, source handling, new plugins etc) will prompt the creation of a new webpack compilation hash and trigger a full build.
-
-Note: When using the `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` flag it is important to do so consistently when building your project. Otherwise, the cache will be cleared and the necessary data for comparison will no longer be available, removing the ability to check for incremental data changes.

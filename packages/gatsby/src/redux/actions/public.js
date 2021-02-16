@@ -1325,19 +1325,6 @@ actions.setPageData = (pageData: PageData) => {
 }
 
 /**
- * Remove page data from the store.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- */
-actions.removePageData = (id: PageDataRemove) => {
-  return {
-    type: `REMOVE_PAGE_DATA`,
-    payload: id,
-  }
-}
-
-/**
  * Record that a page was visited on the server..
  *
  * @param {Object} $0

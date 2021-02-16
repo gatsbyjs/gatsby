@@ -6,48 +6,11 @@ import {
   getPageHtmlFilePath,
 } from "../utils/page-html"
 import { removePageData, fixedPagePath } from "../utils/page-data"
+import { store } from "../redux"
 import { IGatsbyState } from "../redux/types"
 
 const checkFolderIsEmpty = (path: string): boolean =>
   fs.existsSync(path) && !fs.readdirSync(path).length
-
-export const getChangedPageDataKeys = (
-  state: IGatsbyState,
-  cachedPageData: Map<string, string>
-): Array<string> => {
-  if (cachedPageData && state.pageData) {
-    const pageKeys: Array<string> = []
-    state.pageData.forEach((newPageDataHash: string, key: string) => {
-      if (!cachedPageData.has(key)) {
-        pageKeys.push(key)
-      } else {
-        const previousPageDataHash = cachedPageData.get(key)
-        if (newPageDataHash !== previousPageDataHash) {
-          pageKeys.push(key)
-        }
-      }
-    })
-    return pageKeys
-  }
-
-  return [...state.pages.keys()]
-}
-
-export const collectRemovedPageData = (
-  state: IGatsbyState,
-  cachedPageData: Map<string, string>
-): Array<string> => {
-  if (cachedPageData && state.pageData) {
-    const deletedPageKeys: Array<string> = []
-    cachedPageData.forEach((_value: string, key: string) => {
-      if (!state.pageData.has(key)) {
-        deletedPageKeys.push(key)
-      }
-    })
-    return deletedPageKeys
-  }
-  return []
-}
 
 const checkAndRemoveEmptyDir = (publicDir: string, pagePath: string): void => {
   const pageHtmlDirectory = path.dirname(
@@ -78,9 +41,16 @@ export const removePageFiles = async (
   publicDir: string,
   pageKeys: Array<string>
 ): Promise<void> => {
-  const removePages = pageKeys.map(pagePath =>
-    removePageHtmlFile({ publicDir }, pagePath)
-  )
+  const removePages = pageKeys.map(pagePath => {
+    const removePromise = removePageHtmlFile({ publicDir }, pagePath)
+    removePromise.then(() => {
+      store.dispatch({
+        type: `HTML_REMOVED`,
+        payload: pagePath,
+      })
+    })
+    return removePromise
+  })
 
   const removePageDataList = pageKeys.map(pagePath =>
     removePageData(publicDir, pagePath)
@@ -92,4 +62,26 @@ export const removePageFiles = async (
       checkAndRemoveEmptyDir(publicDir, pagePath)
     })
   })
+}
+
+export function calcDirtyHtmlFiles(
+  state: IGatsbyState
+): { toRegenerate: Array<string>; toDelete: Array<string> } {
+  const toRegenerate: Array<string> = []
+  const toDelete: Array<string> = []
+
+  state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
+    if (htmlFile.isDeleted || !state.pages.has(path)) {
+      // FIXME: checking pages state here because pages are not persisted
+      // and because of that `isDeleted` might not be set ...
+      toDelete.push(path)
+    } else if (htmlFile.dirty) {
+      toRegenerate.push(path)
+    }
+  })
+
+  return {
+    toRegenerate,
+    toDelete,
+  }
 }
