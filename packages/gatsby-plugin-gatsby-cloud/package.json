@@ -1,0 +1,40 @@
+{
+  "name": "gatsby-plugin-gatsby-cloud",
+  "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
+  "version": "1.0.0",
+  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "dependencies": {
+    "@babel/runtime": "^7.11.2",
+    "fs-extra": "^8.1.0",
+    "kebab-hash": "^0.1.2",
+    "lodash": "^4.17.20",
+    "webpack-assets-manifest": "^3.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "babel-preset-gatsby-package": "^0.5.3",
+    "cross-env": "^5.2.1",
+    "jest": "^26.0.1"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "http/2-server-push",
+    "gastby-cloud"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "gatsby": "^2.0.0"
+  },
+  "scripts": {
+    "test": "jest ./src/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  }
+}
