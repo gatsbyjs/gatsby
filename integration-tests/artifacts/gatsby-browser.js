@@ -9,12 +9,14 @@ exports.wrapRootElement = ({ element }) => (
   </>
 )
 
-exports.wrapPageElement = ({ element, props }) => {
+function PageWrapper({ children }) {
   const data = useMoreInfoQuery()
   return (
     <>
       <h1>{data.site.siteMetadata.moreInfo}</h1>
-      {element}
+      {children}
     </>
   )
 }
+
+exports.wrapPageElement = ({ element }) => <PageWrapper>{element}</PageWrapper>

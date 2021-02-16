@@ -25,7 +25,7 @@
 
 # gatsby-source-wordpress v4
 
-Source data from WordPress in a scaleable and efficient way with WPGraphQL 🚀
+Source data from WordPress in a scalable and efficient way with WPGraphQL 🚀
 
 This plugin works by merging the [WPGraphQL schema & data](https://docs.wpgraphql.com/guides/about-wpgraphql/) with the [Gatsby schema & Node model](https://www.gatsbyjs.com/docs/node-model/) which allows us to efficiently cache WP data in Gatsby. What this means is that incremental builds, fast builds, and CMS Previews work beautifully! 💅
 
