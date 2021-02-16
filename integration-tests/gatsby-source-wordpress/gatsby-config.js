@@ -15,6 +15,11 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
       },
       type: {
+        MediaItem: {
+          localFile: {
+            requestConcurrency: 20,
+          },
+        },
         TypeLimitTest: {
           limit: 1,
         },
