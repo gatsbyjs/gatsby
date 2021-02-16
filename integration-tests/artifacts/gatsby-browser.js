@@ -4,24 +4,21 @@ const Github = require(`./src/components/github`).default
 
 exports.wrapRootElement = ({ element }) => {
   return (
-      <>
-        <Github />
-        {element}
-      </>
-    )
-  }
-
-  function PageElement() {
-    const data = useMoreInfoQuery()
-
-    return <h1>{data.site.siteMetadata.moreInfo}</h1>
-  }
-
-exports.wrapPageElement = ({ element, props }) => {
-  return (
     <>
-      <PageElement />
+      <Github />
       {element}
     </>
   )
 }
+
+function PageWrapper({ children }) {
+  const data = useMoreInfoQuery()
+  return (
+    <>
+      <h1>{data.site.siteMetadata.moreInfo}</h1>
+      {children}
+    </>
+  )
+}
+
+exports.wrapPageElement = ({ element }) => <PageWrapper>{element}</PageWrapper>

@@ -5,7 +5,7 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk } from "lodash"
 import webpack from "webpack"
 
-import { emitter } from "../redux"
+import { emitter, store } from "../redux"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
@@ -100,6 +100,16 @@ const doBuildRenderer = async (
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
+  if (
+    stage === Stage.BuildHTML &&
+    store.getState().html.ssrCompilationHash !== stats.hash
+  ) {
+    store.dispatch({
+      type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+      payload: stats.hash,
+    })
+  }
+
   // render-page.js is hard coded in webpack.config
   return `${directory}/public/render-page.js`
 }
@@ -157,6 +167,13 @@ const renderHTMLQueue = async (
       paths: pageSegment,
       sessionId,
     })
+
+    if (stage === `build-html`) {
+      store.dispatch({
+        type: `HTML_GENERATED`,
+        payload: pageSegment,
+      })
+    }
 
     if (activity && activity.tick) {
       activity.tick(pageSegment.length)
