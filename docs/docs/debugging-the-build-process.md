@@ -159,7 +159,7 @@ After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` c
 In your project directory instead of running `npm run develop` run the following command:
 
 ```shell
-node --no-lazy node_modules/.bin/gatsby develop --inspect-brk
+node --no-lazy --inspect-brk node_modules/.bin/gatsby develop
 ```
 
 - `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
