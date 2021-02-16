@@ -12514,10 +12514,10 @@ graphiql@^1.3.2:
     graphql-language-service "^3.1.2"
     markdown-it "^10.0.0"
 
-graphql-compose@^7.24.4:
-  version "7.24.4"
-  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-7.24.4.tgz#78e7bef8749cc59df1539dfab4fae0dab156188b"
-  integrity sha512-FcJwzn3nOtgC3UZR8OLn1LsQBA4xkV4utFVYDh6OIIUHWO5aINHUoarznc2/82aqlyF50MZzFa4hx9tZx2u0Yg==
+graphql-compose@^7.25.0:
+  version "7.25.0"
+  resolved "https://registry.yarnpkg.com/graphql-compose/-/graphql-compose-7.25.0.tgz#cd893172616ce56b0566e62fd249fb7782332d38"
+  integrity sha512-Zd2G62Sq0ZQW+qXds/LgSi3YSulmk2t2YS3WJfHvNslkEbyAcE1mFiy7c1wU0tl3woB0vPRwI0jAYtSSG6llNA==
   dependencies:
     graphql-type-json "0.3.2"
     object-path "0.11.5"

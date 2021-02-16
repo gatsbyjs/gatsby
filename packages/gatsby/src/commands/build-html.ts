@@ -5,7 +5,7 @@ import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk } from "lodash"
 import webpack from "webpack"
 
-import { emitter } from "../redux"
+import { emitter, store } from "../redux"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 
@@ -133,7 +133,8 @@ const renderHTMLQueue = async (
   workerPool: IWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
-  pages: Array<string>
+  pages: Array<string>,
+  stage: Stage = Stage.BuildHTML
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -145,12 +146,27 @@ const renderHTMLQueue = async (
 
   const segments = chunk(pages, 50)
 
+  const sessionId = Date.now()
+
+  const renderHTML =
+    stage === `build-html`
+      ? workerPool.renderHTMLProd
+      : workerPool.renderHTMLDev
+
   await Bluebird.map(segments, async pageSegment => {
-    await workerPool.renderHTML({
+    await renderHTML({
       envVars,
       htmlComponentRendererPath,
       paths: pageSegment,
+      sessionId,
     })
+
+    if (stage === `build-html`) {
+      store.dispatch({
+        type: `HTML_GENERATED`,
+        payload: pageSegment,
+      })
+    }
 
     if (activity && activity.tick) {
       activity.tick(pageSegment.length)
@@ -179,10 +195,11 @@ export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
-  workerPool: IWorkerPool
+  workerPool: IWorkerPool,
+  stage: Stage
 ): Promise<void> => {
   try {
-    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths)
+    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
     const prettyError = await createErrorFromString(
       error.stack,
@@ -209,6 +226,6 @@ export const buildHTML = async ({
   workerPool: IWorkerPool
 }): Promise<void> => {
   const rendererPath = await buildRenderer(program, stage, activity.span)
-  await doBuildPages(rendererPath, pagePaths, activity, workerPool)
+  await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
   await deleteRenderer(rendererPath)
 }
