@@ -509,7 +509,7 @@ module.exports = async (
 
   if (stage === `build-html` || stage === `develop-html`) {
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
-    config.target = `node${major}.${minor}`
+    config.target = `node12.13`
   } else {
     config.target = `browserslist:${getBrowsersList(program.directory).join(
       `,`
