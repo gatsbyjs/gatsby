@@ -4,6 +4,8 @@ require(`dotenv`).config({
 
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
+const requestConcurrency = 3
+
 // this is it's own conditional object so we can run
 // an int test with all default plugin options
 const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
@@ -17,7 +19,7 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
       type: {
         MediaItem: {
           localFile: {
-            requestConcurrency: 20,
+            requestConcurrency,
           },
         },
         TypeLimitTest: {
@@ -53,7 +55,15 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
       },
     }
-  : {}
+  : {
+      type: {
+        MediaItem: {
+          localFile: {
+            requestConcurrency,
+          },
+        },
+      },
+    }
 
 module.exports = {
   plugins: [
