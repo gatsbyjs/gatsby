@@ -3,7 +3,7 @@ title: Adding Gatsby Image support to your plugin
 ---
 
 The [new Gatsby image plugin](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image) includes React components for displaying images, and these can be used with data from plugins. The plugin handles all of the hard parts of displaying responsive images that follow best practices for performance. In fact we are confident that it is the fastest way to render images in React, as it can handle blur-up and lazy-loading before React hydration.
-Support for these are available out of the box in `gatsby-transformer-sharp`, so if your plugin downloads images and processes them locally then your users can use the [`gatsbyImageData` resolver](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image#dynamic-images). However, if your CDN can deliver images of multiple sizes, then the plugin includes a toolkit to allow you to give your users the same great experience without needing to download the images locally. It also allows you to create components that display these images dynamically at runtime, without needing to add a GraphQL resolver.
+Support for these are available out of the box in `gatsby-transformer-sharp`, so if your plugin downloads images and processes them locally then your users can use the [`gatsbyImageData` resolver](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image#dynamic-images). However, if your CDN can deliver images of multiple sizes with a URL-based API, then the plugin includes a toolkit to allow you to give your users the same great experience without needing to download the images locally. It also allows you to create components that display these images dynamically at runtime, without needing to add a GraphQL resolver.
 
 ## Adding a `gatsbyImageData` GraphQL resolver
 
@@ -11,13 +11,13 @@ You can give your users the best experience by adding a `gatsbyImageData` resolv
 
 There are three steps to add a basic `gatsbyImageData` resolver:
 
-1. Create a `generateImageSource` function
-2. Create a resolver function
-3. Add the resolver
+1. [Create the `generateImageSource` function](#create-the-generateimagesource-function)
+2. [Create the resolver function](#create-the-resolver-function)
+3. [Add the resolver](#add-the-resolver)
 
 ### Create the `generateImageSource` function
 
-The `generateImageSource` function is where you define your image URLs. The image plugin calculates which sizes and formats are needed, according to the format, size and breakpoints requested by the user. For each of these, your function is passed the base URL, width, height and format (i.e. the image filetype), as well as any custom options that your plugin needs. You then return the generated URL. The returned object also includes width, height and format. This means you can return a different value from the one requested. For example, if the function requests an unsupported format or size, you can return a different one which will be used instead.
+The `generateImageSource` function is where you generate your image URLs. The image plugin calculates which sizes and formats are needed, according to the format, size and breakpoints requested by the user. For each of these, your function is passed the base URL, width, height and format (i.e. the image filetytpe), as well as any custom options that your plugin needs. You then return the generated URL. The returned object also includes width, height and format. This means you can return a different value from the one requested. For example, if the function requests an unsupported format or size, you can return a different one which will be used instead.
 
 ```js:title=gatsby-source-example/gatsby-node.js
 // In this example we use a custom `quality` option
@@ -83,7 +83,7 @@ const resolveGatsbyImageData = async (image, options) => {
 
 ### Add the resolver
 
-`gatsby-plugin-image/graphql-utils` includes a utility function to help register the resolver inside the Gatsby [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL. You can pass additional arguments supported by your plugin, for example image options such as quality.
+You should register the resolver using the [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). `gatsby-plugin-image/graphql-utils` includes an optional utility function to help with this. It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL. You can pass additional arguments supported by your plugin, for example image options such as quality. However if you want complete control over the resolver args, then you can create it yourself from scratch. We recommend keeping the args similar to the default, as this is what users will be expecting, and it means you benefit from the plugin documentation. At a minimum, you should always expose `layout`, `width` and `height` as args.
 
 The arguments:
 
@@ -110,13 +110,13 @@ export function createResolvers({ createResolvers }) {
 
 ## Adding a custom image component
 
-If you have a URL-based image API, you can create a custom image component that wraps `<GatsbyImage />` and displays images generated at runtime. If you have a source plugin, this could accept your native image object, but it could equally just take a base URL and generate the image based on that. This is a good solution for pure image hosts that aren't handling their own CMS data.
+If you have a URL-based image API, you can create a custom image component that wraps `<GatsbyImage />` and displays images generated at runtime. If you have a source plugin, this could accept your native image object, but it could equally just take a base URL and generate the image based on that. This is a good solution for image CDNs that aren't handling their own CMS data, and can generate a transformed image from just a source URL and dimensions.
 
 There are three steps to create a custom image component:
 
-1. Create your URL builder function
-2. Create your image data function
-3. Create your wrapper component
+1. [Create your URL builder function](#create-your-url-builder-function)
+2. [Create your image data function](#create-your-image-data-function)
+3. [Create your wrapper component](#create-your-wrapper-component) (optional)
 
 ### Create your URL builder function
 
@@ -146,7 +146,7 @@ export function getExampleImageData({ image, ...props }) {
     sourceHeight: image.height,
     urlBuilder,
     pluginName: "gatsby-source-example",
-    // If your host supports auto-format, pass this as the formats array
+    // If your host supports auto-format/content negotiation, pass this as the formats array
     formats: ["auto"],
     ...props,
   })
@@ -183,7 +183,7 @@ interface ImageComponentProps
 }
 ```
 
-Your component can accept just a URL if that's enough to identify the image, or you could pass a full object. This could be an object that you have passed in through your GraphQL API, or it could be data coming from outside of Gatsby, such as via search results or a shopping cart API.
+Your component can accept just a URL if that's enough to identify the image, or you could pass a full object. This could be an object that you have passed in through your GraphQL API, or it could be data coming from outside of Gatsby, such as via search results or a shopping cart API. Unlike the GraphQL resolvers or the built-in `StaticImage` component, this can be dynamic data that changes at runtime.
 
 For best results you should pass in the dimensions of the source image, so if this data is available then you should ensure it is included. This means the plugin can calculate aspect ratio, and the maximum size image to request.
 
@@ -255,3 +255,7 @@ A different component for an image CDN might not expect the user to know the dim
   alt=""
 />
 ```
+
+## Other considerations
+
+You should add `gatsby-plugin-image` as a peer dependency to your plugin, and tell your users to install it in your docs. Don't add it as a direct dependency, as this could lead to multiple versions being installed. You can refer users to [the `gatsby-plugin-image` docs](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image/) for instructions on using the component, but be sure to document the specifics of your own resolver: it may not be immediately clear to users that the args are different from those in sharp. You may want to highlight specific differences, such as if you don't support AVIF images, or if you do support GIFs, as well as explaining the placeholders that you support.
