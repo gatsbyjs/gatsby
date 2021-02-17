@@ -28,6 +28,10 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     transpileTemplateLiterals: Joi.boolean()
       .default(true)
       .description(`Transpile tagged template literals into optimized code.`),
+    topLevelImportPaths: Joi.array()
+      .default([])
+      .items(Joi.string())
+      .description(`Top level import paths allowed to identify library`),
     pure: Joi.boolean()
       .default(false)
       .description(
