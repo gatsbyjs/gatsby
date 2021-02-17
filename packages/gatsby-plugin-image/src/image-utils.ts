@@ -215,7 +215,7 @@ export function getLowResolutionImageURL(
     filename,
     width,
     Math.round(width / aspectRatio),
-    `jpg`,
+    args.sourceMetadata.format || `jpg`,
     args.fit,
     args.options
   )?.src
