@@ -97,7 +97,7 @@ export interface IUrlBuilderArgs<OptionsType> {
   format: ImageFormat
   options: OptionsType
 }
-export interface IUseGatsbyImageArgs<OptionsType = {}> {
+export interface IGetImageDataArgs<OptionsType = {}> {
   baseUrl: string
   /**
    * For constrained and fixed images, the size of the image element
@@ -145,7 +145,7 @@ export interface IUseGatsbyImageArgs<OptionsType = {}> {
 /**
  * Use this hook to generate gatsby-plugin-image data in the browser.
  */
-export function useGatsbyImage<OptionsType>({
+export function getImageData<OptionsType>({
   baseUrl,
   urlBuilder,
   sourceWidth,
@@ -155,7 +155,7 @@ export function useGatsbyImage<OptionsType>({
   breakpoints = EVERY_BREAKPOINT,
   options,
   ...props
-}: IUseGatsbyImageArgs<OptionsType>): IGatsbyImageData {
+}: IGetImageDataArgs<OptionsType>): IGatsbyImageData {
   const generateImageSource = (
     baseUrl: string,
     width: number,
@@ -393,7 +393,7 @@ export interface IArtDirectedImage {
  * @param artDirected Array of objects which each contains a `media` string which is a media query
  * such as `(min-width: 320px)`, and the image object to use when that query matches.
  */
-export function useArtDirection(
+export function withArtDirection(
   defaultImage: IGatsbyImageData,
   artDirected: Array<IArtDirectedImage>
 ): IGatsbyImageData {
