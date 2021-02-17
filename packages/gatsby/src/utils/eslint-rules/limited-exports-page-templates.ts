@@ -23,15 +23,14 @@ function hasOneValidNamedDeclaration(
   // Checks for:
   // const query = graphql``
   // export { query }
-  if (
-    node.type === `ExportNamedDeclaration` &&
-    node.declaration === null &&
-    varName
-  ) {
+  if (node.type === `ExportNamedDeclaration` && node.declaration === null) {
     // For export { foobar, query } the declaration will be null and specifiers exists
     // For { foobar, query } it'll return true, for { query } it'll return false
-    const nonQueryExports = node.specifiers.some(
-      e => e.exported.name !== varName
+    // It will ignore any { default } declarations since these are allowed
+    const nonQueryExports = node.specifiers.some(e =>
+      varName
+        ? e.exported.name !== varName && e.exported.name !== `default`
+        : e.exported.name !== `default`
     )
     return !nonQueryExports
   }
