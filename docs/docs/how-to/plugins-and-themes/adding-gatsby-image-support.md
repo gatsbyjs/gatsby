@@ -2,12 +2,12 @@
 title: Adding Gatsby Image support to your plugin
 ---
 
-The [new Gatsby image plugin](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image) includes React components for displaying images, and these can be used with data from plugins. The plugin handles all of the hard parts of displaying responsive images that follow best practices for performance. In fact we are confident that it is the fastest way to render images in React, as it can handle blur-up and lazy-loading before React hydration.
+The [new Gatsby image plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) includes React components for displaying images, and these can be used with data from plugins. The plugin handles all of the hard parts of displaying responsive images that follow best practices for performance. In fact we are confident that it is the fastest way to render images in React, as it can handle blur-up and lazy-loading before React hydration.
 Support for these are available out of the box in `gatsby-transformer-sharp`, so if your plugin downloads images and processes them locally then your users can use the [`gatsbyImageData` resolver](https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image#dynamic-images). However, if your CDN can deliver images of multiple sizes with a URL-based API, then the plugin includes a toolkit to allow you to give your users the same great experience without needing to download the images locally. It also allows you to create components that display these images dynamically at runtime, without needing to add a GraphQL resolver.
 
 ## Adding a `gatsbyImageData` GraphQL resolver
 
-You can give your users the best experience by adding a `gatsbyImageData` resolver to your image nodes. This allows you to generate low-resolution or traced SVG images as inline data URIs, so your users can have blurred placeholders. You can also calculate the image's dominant color for an alternative placeholder. These are the same placeholders that are included with `gatsby-transformer-sharp`, and will give the best experience for your users. If you are able to deliver these directly from your CMS or other data source then this is ideal, but otherwise you can use helper functions included in `gatsby-plugin-sharp`.
+You can give your users the best experience by adding a `gatsbyImageData` resolver to your image nodes. This allows you to generate low-resolution or traced SVG images as inline data URIs to use as placeholders. You can also calculate the image's dominant color for an alternative placeholder. These are the same placeholders that are included with `gatsby-transformer-sharp`, and will give the best experience for your users. If you are able to deliver these directly from your CMS or other data source then this is ideal, but otherwise you can use helper functions included in `gatsby-plugin-sharp`.
 
 There are three steps to add a basic `gatsbyImageData` resolver:
 
@@ -83,7 +83,7 @@ const resolveGatsbyImageData = async (image, options) => {
 
 ### Add the resolver
 
-You should register the resolver using the [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). `gatsby-plugin-image/graphql-utils` includes an optional utility function to help with this. It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL. 
+You should register the resolver using the [`createResolvers` API hook](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createResolvers). `gatsby-plugin-image/graphql-utils` includes an optional utility function to help with this. It registers the resolver with all of the base arguments needed to create the image data, such as width, aspect ratio, layout and background color. These are defined with comprehensive descriptions that are visible when your users are building queries in GraphiQL.
 
 You can pass additional arguments supported by your plugin, for example, image options such as quality. However, if you want complete control over the resolver args, then you will want to create it yourself from scratch. We recommend keeping the args similar to the default, as this is what users will be expecting, and it means you benefit from the plugin documentation. At a minimum, you should always expose `layout`, `width` and `height` as args.
 
@@ -130,11 +130,11 @@ function urlBuilder({ baseUrl, width, height, format, options }) {
 }
 ```
 
-If your host supports it, we recommend using auto-format to deliver next-generation image formats to supported browsers. In this case, ignore the `format` option.
+If your host supports it, we recommend using auto-format to deliver next-generation image formats such as WebP or AVIF to supported browsers. In this case, ignore the `format` option.
 
 ### Create your image data function
 
-This is a similar to the image resolver described above. However because it executes in the browser, the functions that you use should be fast, and synchronous, and you can't use node APIs. You will not be downloading and generating base64 placeholders, for example, or calculating dominant colors. If you have these values pre-calculated then you can pass these in and use them, but they need to be available in the props that you pass to the function at runtime.
+This is similar to the image resolver described above. However, because it executes in the browser you can't use node APIs. Because it needs to run before the image loads, it should be fast and synchronous. You will not be downloading and generating base64 placeholders, for example, or calculating dominant colors. If you have these values pre-calculated then you can pass these in and use them, but they need to be available in the props that you pass to the function at runtime. Any placeholder that is generated asynchronously would defeat the purpose: it prevents SSR, and is almost certainly slower than just downloading the main image.
 
 The function should accept the props that will be passed into your component, and at a minimum it needs to take the props required by the `getImageData` helper function from `gatsby-plugin-image`. Here is an example for an image host:
 
