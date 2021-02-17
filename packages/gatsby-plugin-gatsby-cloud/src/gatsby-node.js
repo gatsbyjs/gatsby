@@ -62,3 +62,15 @@ exports.onPostBuild = async (
     createRedirects(pluginData, redirects, rewrites, siblingStaticPaths),
   ])
 }
+
+exports.pluginOptionsSchema = ({ Joi }) => {
+  return Joi.object({
+    headers: Joi.object().pattern(/^/, Joi.array().items(Joi.string())).description(`Option to add headers for a filename`),
+    allPageHeaders: Joi.array().items(Joi.string()).description(`Option to add headers for all files`),
+    mergeSecurityHeaders: Joi.boolean().description(`Option to include default Gatsby Cloud security headers (true by default)`),
+    mergeLinkHeaders: Joi.boolean().description(`Option to include default Gatsby Cloud link headers (true by default)`),
+    mergeCachingHeaders: Joi.boolean().description(`Option to include default Gatsby Cloud caching headers (true by default)`),
+    transformHeaders: Joi.function().arity(2).description(`Option to transform headers using a function`),
+    generateMatchPathRewrites: Joi.boolean().description(`Option to include redirect rules for client only paths (set to true by default)`),
+  })
+}

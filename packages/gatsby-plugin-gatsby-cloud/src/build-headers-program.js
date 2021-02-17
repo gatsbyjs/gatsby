@@ -208,38 +208,6 @@ function stringifyHeaders(headers) {
 
 // program methods
 
-const validateUserOptions = (pluginOptions, reporter) => headers => {
-  if (!validHeaders(headers, reporter)) {
-    throw new Error(
-      `The "headers" option to gatsby-plugin-gatsby-cloud is in the wrong shape. ` +
-        `You should pass in a object with string keys (representing the paths) and an array ` +
-        `of strings as the value (representing the headers). ` +
-        `Check your gatsby-config.js.`
-    )
-  }
-
-  ;[`mergeSecurityHeaders`, `mergeLinkHeaders`, `mergeCachingHeaders`].forEach(
-    mergeOption => {
-      if (!_.isBoolean(pluginOptions[mergeOption])) {
-        throw new Error(
-          `The "${mergeOption}" option to gatsby-plugin-gatsby-cloud must be a boolean. ` +
-            `Check your gatsby-config.js.`
-        )
-      }
-    }
-  )
-
-  if (!_.isFunction(pluginOptions.transformHeaders)) {
-    throw new Error(
-      `The "transformHeaders" option to gatsby-plugin-gatsby-cloud must be a function ` +
-        `that returns an array of header strings. ` +
-        `Check your gatsby-config.js.`
-    )
-  }
-
-  return headers
-}
-
 const mapUserLinkHeaders = ({
   manifest,
   pathPrefix,
@@ -336,7 +304,6 @@ export default function buildHeadersProgram(
   reporter
 ) {
   return _.flow(
-    validateUserOptions(pluginOptions, reporter),
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
     applyCachingHeaders(pluginData, pluginOptions),
