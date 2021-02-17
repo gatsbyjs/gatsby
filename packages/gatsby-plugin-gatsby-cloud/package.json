@@ -3,6 +3,9 @@
   "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "fs-extra": "^8.1.0",
@@ -17,6 +20,7 @@
     "cross-env": "^7.0.3",
     "jest": "^26.0.1"
   },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-gatsby-cloud#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -27,6 +31,11 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-plugin-gatsby-cloud"
   },
   "scripts": {
     "test": "jest ./src/__tests__",
