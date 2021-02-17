@@ -172,13 +172,7 @@ module.exports = async (
       case `develop`:
         return {
           polyfill: directoryPath(`.cache/polyfill-entry`),
-          commons: [
-            process.env.GATSBY_HOT_LOADER !== `fast-refresh` &&
-              `${require.resolve(
-                `webpack-hot-middleware/client`
-              )}?path=${getHmrPath()}`,
-            directoryPath(`.cache/app`),
-          ].filter(Boolean),
+          commons: [directoryPath(`.cache/app`)],
         }
       case `develop-html`:
         return {
@@ -222,8 +216,7 @@ module.exports = async (
       case `develop`:
         configPlugins = configPlugins
           .concat([
-            process.env.GATSBY_HOT_LOADER === `fast-refresh` &&
-              plugins.fastRefresh(),
+            plugins.fastRefresh(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
@@ -265,9 +258,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-          ? `cheap-module-source-map`
-          : `eval-cheap-module-source-map`
+        return `eval-cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -350,10 +341,7 @@ module.exports = async (
         }
 
         // Enforce fast-refresh rules even with local eslint config
-        if (
-          isCustomEslint &&
-          process.env.GATSBY_HOT_LOADER === `fast-refresh`
-        ) {
+        if (isCustomEslint) {
           configRules = configRules.concat([rules.eslintRequired()])
         }
 
@@ -362,19 +350,6 @@ module.exports = async (
             oneOf: [rules.cssModules(), rules.css()],
           },
         ])
-
-        // RHL will patch React, replace React-DOM by React-🔥-DOM and work with fiber directly
-        // It's necessary to remove the warning in console (https://github.com/gatsbyjs/gatsby/issues/11934)
-        // TODO: Remove entire block when we make fast-refresh the default
-        if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
-          configRules.push({
-            include: /node_modules\/react-dom/,
-            test: /\.jsx?$/,
-            use: {
-              loader: require.resolve(`./webpack-hmr-hooks-patch`),
-            },
-          })
-        }
 
         break
       }
@@ -433,12 +408,6 @@ module.exports = async (
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
         "@babel/runtime": getPackageRoot(`@babel/runtime`),
-        // TODO: Remove entire block when we make fast-refresh the default
-        ...(process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-          ? {
-              "react-hot-loader": getPackageRoot(`react-hot-loader`),
-            }
-          : {}),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),

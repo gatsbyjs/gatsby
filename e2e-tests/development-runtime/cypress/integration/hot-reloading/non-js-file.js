@@ -1,21 +1,32 @@
 const TEMPLATE = `SUB_TITLE`
 const TEST_ID = `sub-title`
+const message = `This is a sub-title`
 
 describe(`hot reloading non-js file`, () => {
   beforeEach(() => {
+    cy.exec(
+      `npm run update -- --file content/2018-12-14-hello-world.md --replacements "${message}:%${TEMPLATE}%" --exact`
+    )
+    cy.wait(1000)
+
     cy.visit(`/2018-12-14-hello-world/`).waitForRouteChange()
   })
 
   it(`displays placeholder content on launch`, () => {
-    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, TEMPLATE)
+    cy.get(`[data-testid="${TEST_ID}"]`)
+      .invoke(`text`)
+      .should(`contain`, TEMPLATE)
   })
 
-  it.skip(`hot reloads with new content`, () => {
-    const message = `This is a sub-title`
+  it(`hot reloads with new content`, () => {
+    cy.get(`[data-testid="${TEST_ID}"]`)
+      .invoke(`text`)
+      .should(`contain`, TEMPLATE)
     cy.exec(
       `npm run update -- --file content/2018-12-14-hello-world.md --replacements "${TEMPLATE}:${message}"`
     )
+    cy.wait(1000)
 
-    cy.getTestElement(TEST_ID).invoke(`text`).should(`eq`, message)
+    cy.get(`[data-testid="${TEST_ID}"]`).invoke(`text`).should(`eq`, message)
   })
 })
