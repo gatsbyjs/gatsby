@@ -4,9 +4,13 @@ import * as path from "path"
 
 import { getPageHtmlFilePath } from "../../utils/page-html"
 import { IPageDataWithQueryResult } from "../../utils/page-data"
-
+import { IRenderHtmlResult } from "../../commands/build-html"
 // we want to force posix-style joins, so Windows doesn't produce backslashes for urls
 const { join } = path.posix
+
+declare global {
+  let unsafeBuiltinUsage: Array<string> | undefined
+}
 
 /**
  * Used to track if renderHTMLProd / renderHTMLDev are called within same "session" (from same renderHTMLQueue call).
@@ -291,8 +295,10 @@ export const renderHTMLProd = async ({
   paths: Array<string>
   envVars: Array<Array<string>>
   sessionId: number
-}): Promise<Array<unknown>> => {
+}): Promise<IRenderHtmlResult> => {
   const publicDir = join(process.cwd(), `public`)
+
+  const unsafeBuiltinsUsageByPagePath = {}
 
   // Check if we need to do setup and cache clearing. Within same session we can reuse memoized data,
   // but it's not safe to reuse them in different sessions. Check description of `lastSessionId` for more details
@@ -308,28 +314,43 @@ export const renderHTMLProd = async ({
     webpackStats = await readWebpackStats(publicDir)
 
     lastSessionId = sessionId
+
+    if (global.unsafeBuiltinUsage && global.unsafeBuiltinUsage.length > 0) {
+      unsafeBuiltinsUsageByPagePath[`__import_time__`] =
+        global.unsafeBuiltinUsage
+    }
   }
 
-  return Bluebird.map(paths, async pagePath => {
+  await Bluebird.map(paths, async pagePath => {
     try {
       const pageData = await readPageData(publicDir, pagePath)
       const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-      const htmlString = htmlComponentRenderer.default({
+      const { html, unsafeBuiltinsUsage } = htmlComponentRenderer.default({
         pagePath,
         pageData,
         ...resourcesForTemplate,
       })
 
-      return fs.outputFile(getPageHtmlFilePath(publicDir, pagePath), htmlString)
+      if (unsafeBuiltinsUsage.length > 0) {
+        unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
+      }
+
+      return fs.outputFile(getPageHtmlFilePath(publicDir, pagePath), html)
     } catch (e) {
+      if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
+        unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
+      }
       // add some context to error so we can display more helpful message
       e.context = {
         path: pagePath,
+        unsafeBuiltinsUsageByPagePath,
       }
       throw e
     }
   })
+
+  return { unsafeBuiltinsUsageByPagePath }
 }
 
 // TODO: remove when DEV_SSR is done

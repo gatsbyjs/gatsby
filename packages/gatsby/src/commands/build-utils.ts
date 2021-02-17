@@ -70,12 +70,18 @@ export function calcDirtyHtmlFiles(
   const toRegenerate: Array<string> = []
   const toDelete: Array<string> = []
 
+  if (state.html.unsafeBuiltinWasUsedInSSR) {
+    console.warn(
+      `Previous build used unsafe builtin method. We need to rebuild all pages`
+    )
+  }
+
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
     if (htmlFile.isDeleted || !state.pages.has(path)) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
       toDelete.push(path)
-    } else if (htmlFile.dirty) {
+    } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
       toRegenerate.push(path)
     }
   })

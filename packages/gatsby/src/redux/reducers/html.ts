@@ -21,6 +21,7 @@ function initialState(): IGatsbyState["html"] {
     browserCompilationHash: ``,
     ssrCompilationHash: ``,
     trackedStaticQueryResults: new Map<string, IStaticQueryResultState>(),
+    unsafeBuiltinWasUsedInSSR: false,
   }
 }
 
@@ -39,6 +40,7 @@ export function htmlReducer(
         state.browserCompilationHash = ``
         state.ssrCompilationHash = ``
         state.trackedStaticQueryResults.clear()
+        state.unsafeBuiltinWasUsedInSSR = false
         state.trackedHtmlFiles.forEach(htmlFile => {
           htmlFile.isDeleted = true
           // there was a change somewhere, so just in case we mark those files are dirty as well
@@ -145,6 +147,10 @@ export function htmlReducer(
     case `SET_SSR_WEBPACK_COMPILATION_HASH`: {
       if (state.ssrCompilationHash !== action.payload) {
         state.ssrCompilationHash = action.payload
+        // we will mark every html file as dirty, so we can safely reset
+        // unsafeBuiltinWasUsedInSSR flag, which might be set again if
+        // ssr bundle continue to use those
+        state.unsafeBuiltinWasUsedInSSR = false
         state.trackedHtmlFiles.forEach(htmlFile => {
           htmlFile.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
         })
@@ -186,6 +192,11 @@ export function htmlReducer(
           staticQueryResult.dirty = 0
         }
       }
+      return state
+    }
+
+    case `SSR_USED_UNSAFE_BUILTIN`: {
+      state.unsafeBuiltinWasUsedInSSR = true
       return state
     }
   }
