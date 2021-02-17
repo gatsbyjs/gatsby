@@ -183,7 +183,7 @@ function transformLink(manifest, publicFolder, pathPrefix) {
       } else {
         throw new Error(
           `Could not find the file specified in the Link header \`${header}\`.` +
-            `The gatsby-plugin-gastby-cloud is looking for a matching file (with or without a ` +
+            `The gatsby-plugin-gatsby-cloud is looking for a matching file (with or without a ` +
             `webpack hash). Check the public folder and your gatsby-config.js to ensure you are ` +
             `pointing to a public file.`
         )
