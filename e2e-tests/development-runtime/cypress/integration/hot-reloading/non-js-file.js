@@ -13,20 +13,16 @@ describe(`hot reloading non-js file`, () => {
   })
 
   it(`displays placeholder content on launch`, () => {
-    cy.get(`[data-testid="${TEST_ID}"]`)
-      .invoke(`text`)
-      .should(`contain`, TEMPLATE)
+    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, TEMPLATE)
   })
 
   it(`hot reloads with new content`, () => {
-    cy.get(`[data-testid="${TEST_ID}"]`)
-      .invoke(`text`)
-      .should(`contain`, TEMPLATE)
+    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, TEMPLATE)
     cy.exec(
       `npm run update -- --file content/2018-12-14-hello-world.md --replacements "${TEMPLATE}:${message}"`
     )
     cy.wait(1000)
 
-    cy.get(`[data-testid="${TEST_ID}"]`).invoke(`text`).should(`eq`, message)
+    cy.getTestElement(TEST_ID).invoke(`text`).should(`eq`, message)
   })
 })
