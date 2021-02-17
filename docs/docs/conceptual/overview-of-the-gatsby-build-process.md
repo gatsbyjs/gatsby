@@ -304,7 +304,7 @@ Page queries that were queued up earlier from query extraction are run so the da
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
 
-Gatsby will smartly rebuild only needed HTML files. This might mean 0 html files being generated if nothing that was used for html files changed, some part of pages in case if data that is used changed or all files in case of code change.
+Gatsby will smartly rebuild only needed HTML files. This can result in no HTML files being generated if nothing used for HTML files changed. The opposite can also be true and lead to a full site rebuild when data is used on all pages or when a code change happens.
 
 ## What do you get from a successful build?
 
