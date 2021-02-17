@@ -23,12 +23,13 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     return Promise.resolve()
   }
 
-  if (fs.existsSync(path)) {
-    report.error(
-      `Printing type definitions aborted. The file \`${path}\` already exists.`
-    )
-    return Promise.resolve()
-  }
+  // TODO: allow if update is true
+  // if (fs.existsSync(path)) {
+  //   report.error(
+  //     `Printing type definitions aborted. The file \`${path}\` already exists.`
+  //   )
+  //   return Promise.resolve()
+  // }
 
   const internalTypes = [
     `Boolean`,
@@ -60,7 +61,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
     }
 
     const plugin = tc.getExtension(`plugin`)
-    if (internalPlugins.includes(plugin)) {
+    if (!plugin || internalPlugins.includes(plugin)) {
       return true
     }
 
@@ -151,7 +152,7 @@ const printTypeDefinitions = ({ config, schemaComposer }) => {
   try {
     typeDefs.forEach(tc => printedTypeDefs.push(printType(tc)))
     report.info(`Writing GraphQL type definitions to ${path}`)
-    return fs.writeFile(path, printedTypeDefs.join(`\n\n`))
+    return fs.writeFile(path, printedTypeDefs.filter(Boolean).join(`\n\n`))
   } catch (error) {
     report.error(`Failed writing type definitions to \`${path}\`.`, error)
     return Promise.resolve()
@@ -166,11 +167,14 @@ const printType = (tc, typeName) => {
   } else if (tc instanceof UnionTypeComposer) {
     return printUnionType(tc)
   } else if (tc instanceof EnumTypeComposer) {
-    return printEnumType(tc)
+    return ``
+    // return printEnumType(tc)
   } else if (tc instanceof ScalarTypeComposer) {
-    return printScalarType(tc)
+    return ``
+    // return printScalarType(tc)
   } else if (tc instanceof InputTypeComposer) {
-    return printInputObjectType(tc)
+    return ``
+    // return printInputObjectType(tc)
   } else {
     throw new Error(`Did not recognize type of ${typeName}.`)
   }
@@ -199,16 +203,24 @@ const printObjectType = tc => {
     ? ` implements ` + interfaces.map(i => i.name).join(` & `)
     : ``
   const extensions = tc.getExtensions()
-  if (tc.hasInterface(`Node`)) {
-    extensions.dontInfer = null
-  }
+  // if (tc.hasInterface(`Node`)) {
+  //   extensions.dontInfer = null
+  // }
   const directives = tc.schemaComposer.getDirectives()
   const printedDirectives = printDirectives(extensions, directives)
-  const fields = tc.hasInterface(`Node`)
+  const allFields = tc.hasInterface(`Node`)
     ? Object.values(type.getFields()).filter(
         field => ![`id`, `parent`, `children`, `internal`].includes(field.name)
       )
     : Object.values(type.getFields())
+  const fields = allFields.filter(
+    f =>
+      tc.getFieldExtension(f.name, `createdFrom`) === `inference` ||
+      tc.getFieldExtension(f.name, `plugin`) === `internal-inference-snapshot`
+  )
+  if (!fields.length) {
+    return ``
+  }
   return (
     printDescription(type) +
     `type ${type.name}${implementedInterfaces}${printedDirectives}` +

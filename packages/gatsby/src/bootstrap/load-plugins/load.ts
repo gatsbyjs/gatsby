@@ -260,6 +260,13 @@ export function loadPlugins(
     )
   }
 
+  // Add inference snapshot plugin
+  plugins.push(
+    processPlugin(
+      path.join(__dirname, `../../internal-plugins/internal-inference-snapshot`)
+    )
+  )
+
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
     resolve: slash(process.cwd()),
