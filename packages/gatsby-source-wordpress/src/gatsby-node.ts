@@ -1,6 +1,8 @@
 import { runApisInSteps } from "./utils/run-steps"
 import * as steps from "./steps"
 
+import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-actions/update"
+
 module.exports = runApisInSteps({
   onPreInit: [steps.setErrorMap, steps.tempPreventMultipleInstances],
 
@@ -12,6 +14,21 @@ module.exports = runApisInSteps({
     steps.ingestRemoteSchema,
     steps.createSchemaCustomization,
   ],
+
+  resolveNodeId: async ({
+    objectData: { id, token, user_id: userDatabaseId },
+  }) => {
+    await fetchAndCreateSingleNode({
+      actionType: `PREVIEW`,
+      isPreview: true,
+      id,
+      token,
+      singleName: `post`,
+      userDatabaseId,
+    })
+
+    return id
+  },
 
   sourceNodes: [
     steps.setGatsbyApiToState,
