@@ -12,6 +12,18 @@ Object {
       "query": "",
     },
   },
+  "html": Object {
+    "browserCompilationHash": "",
+    "ssrCompilationHash": "",
+    "trackedHtmlFiles": Map {
+      "/my-sweet-new-page/" => Object {
+        "dirty": 2,
+        "isDeleted": false,
+        "pageDataHash": "",
+      },
+    },
+    "trackedStaticQueryResults": Map {},
+  },
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
@@ -48,7 +60,6 @@ Object {
       },
     },
   },
-  "pageData": Map {},
   "pageDataStats": Map {},
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},

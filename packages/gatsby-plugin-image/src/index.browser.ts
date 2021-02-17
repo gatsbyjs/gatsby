@@ -18,6 +18,7 @@ export {
 } from "./components/hooks"
 export {
   generateImageData,
+  getLowResolutionImageURL,
   IGatsbyImageHelperArgs,
   IImage,
   ImageFormat,
