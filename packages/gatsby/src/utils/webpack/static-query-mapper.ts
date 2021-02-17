@@ -2,6 +2,7 @@ import path from "path"
 import { Store } from "redux"
 import { Compiler, Module, NormalModule, Compilation } from "webpack"
 import ConcatenatedModule from "webpack/lib/optimize/ConcatenatedModule"
+import { isEqual } from "lodash"
 import {
   IGatsbyState,
   IGatsbyPageComponent,
@@ -234,21 +235,34 @@ export class StaticQueryMapper {
           }
         }
 
-        this.store.dispatch({
-          type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
-          payload: {
-            componentPath: component.componentPath,
-            pages: component.pages,
-          },
-        })
+        // modules, chunks, chunkgroups can all have not-deterministic orders so
+        // just sort array of static queries we produced to ensure final result is deterministic
+        const staticQueryHashes = Array.from(allStaticQueries).sort()
 
-        this.store.dispatch({
-          type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
-          payload: {
-            componentPath: component.componentPath,
-            staticQueryHashes: Array.from(allStaticQueries),
-          },
-        })
+        if (
+          !isEqual(
+            this.store
+              .getState()
+              .staticQueriesByTemplate.get(component.componentPath),
+            staticQueryHashes
+          )
+        ) {
+          this.store.dispatch({
+            type: `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+            payload: {
+              componentPath: component.componentPath,
+              pages: component.pages,
+            },
+          })
+
+          this.store.dispatch({
+            type: `SET_STATIC_QUERIES_BY_TEMPLATE`,
+            payload: {
+              componentPath: component.componentPath,
+              staticQueryHashes,
+            },
+          })
+        }
       })
 
       // In dev mode we want to write page-data when compilation succeeds
