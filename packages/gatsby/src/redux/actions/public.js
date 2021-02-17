@@ -50,6 +50,8 @@ const ensureWindowsDriveIsUppercase = filePath => {
     : filePath
 }
 
+const deprecationWarnings = new Set()
+
 const findChildren = initialChildren => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
@@ -944,6 +946,24 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.module?.rules) {
+    config.module.rules.forEach(rule => {
+      if (!rule.resolve) {
+        // TODO move message to gatsbyjs.com/docs - change to structured
+        const key = `${plugin.name}-setWebpackConfig`
+        if (!deprecationWarnings.has(key)) {
+          report.warn(
+            `[deprecation] ${plugin.name} added a new module rule to the webpack config without specyfing the resolve property. This option will become mandatory in the next release. For more information go to https://webpack.js.org/configuration/module/#ruleresolve`
+          )
+        }
+        deprecationWarnings.add(key)
+        rule.resolve = {
+          fullySpecified: false,
+        }
+      }
+    })
+  }
+
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -961,6 +981,24 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.module?.rules && plugin) {
+    config.module.rules.forEach(rule => {
+      if (!rule.resolve) {
+        // TODO move message to gatsbyjs.com/docs - change to structured
+        const key = `${plugin.name}-setWebpackConfig`
+        if (!deprecationWarnings.has(key)) {
+          report.warn(
+            `[deprecation] ${plugin.name} added a new module rule to the webpack config without specyfing the resolve property. This option will become mandatory in the next release. For more information go to https://webpack.js.org/configuration/module/#ruleresolve`
+          )
+        }
+        deprecationWarnings.add(key)
+        rule.resolve = {
+          fullySpecified: false,
+        }
+      }
+    })
+  }
+
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,

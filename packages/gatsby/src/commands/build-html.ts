@@ -7,6 +7,7 @@ import webpack from "webpack"
 import * as path from "path"
 
 import { emitter, store } from "../redux"
+import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
 import * as buildUtils from "./build-utils"
@@ -17,11 +18,6 @@ import { PackageJson } from "../.."
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
-
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
-  suspend: () => void
-  resume: () => void
-}
 
 export interface IBuildArgs extends IProgram {
   directory: string
@@ -37,11 +33,12 @@ export interface IBuildArgs extends IProgram {
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
 let needToRecompileSSRBundle = true
-export const getDevSSRWebpack = (): Record<
-  IWebpackWatchingPauseResume,
-  webpack.Compiler,
-  needToRecompileSSRBundle
-> => {
+
+export const getDevSSRWebpack = (): {
+  devssrWebpackWatcher: IWebpackWatchingPauseResume
+  devssrWebpackCompiler: webpack.Compiler
+  needToRecompileSSRBundle: boolean
+} => {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
