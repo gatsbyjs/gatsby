@@ -7,7 +7,7 @@ import {
 
 const FLAG_DIRTY_CLEARED_CACHE = 0b0000001
 const FLAG_DIRTY_NEW_PAGE = 0b0000010
-const FLAG_DIRTY_PAGE_QUERY_CHANGED = 0b0000100 // TODO: this need to be PAGE_DATA and not PAGE_QUERY, but requires some shuffling
+const FLAG_DIRTY_PAGE_DATA_CHANGED = 0b0000100
 const FLAG_DIRTY_STATIC_QUERY_FIRST_RUN = 0b0001000
 const FLAG_DIRTY_STATIC_QUERY_RESULT_CHANGED = 0b0010000
 const FLAG_DIRTY_BROWSER_COMPILATION_HASH = 0b0100000
@@ -58,7 +58,7 @@ export function htmlReducer(
         htmlFile = {
           dirty: FLAG_DIRTY_NEW_PAGE,
           isDeleted: false,
-          pageQueryHash: ``,
+          pageDataHash: ``,
         }
         state.trackedHtmlFiles.set(path, htmlFile)
       } else if (htmlFile.isDeleted) {
@@ -87,20 +87,7 @@ export function htmlReducer(
     }
 
     case `PAGE_QUERY_RUN`: {
-      if (action.payload.isPage) {
-        const htmlFile = state.trackedHtmlFiles.get(action.payload.path)
-        if (!htmlFile) {
-          // invariant
-          throw new Error(
-            `[html reducer] I received event that query for a page finished running, but I'm not aware of the page it ran for (?)`
-          )
-        }
-
-        if (htmlFile.pageQueryHash !== action.payload.resultHash) {
-          htmlFile.pageQueryHash = action.payload.resultHash
-          htmlFile.dirty |= FLAG_DIRTY_PAGE_QUERY_CHANGED
-        }
-      } else {
+      if (!action.payload.isPage) {
         // static query case
         let staticQueryResult = state.trackedStaticQueryResults.get(
           action.payload.queryHash
@@ -121,6 +108,21 @@ export function htmlReducer(
         }
       }
 
+      return state
+    }
+    case `ADD_PAGE_DATA_STATS`: {
+      const htmlFile = state.trackedHtmlFiles.get(action.payload.pagePath)
+      if (!htmlFile) {
+        // invariant
+        throw new Error(
+          `[html reducer] I received event that query for a page finished running, but I'm not aware of the page it ran for (?)`
+        )
+      }
+
+      if (htmlFile.pageDataHash !== action.payload.pageDataHash) {
+        htmlFile.pageDataHash = action.payload.pageDataHash
+        htmlFile.dirty |= FLAG_DIRTY_PAGE_DATA_CHANGED
+      }
       return state
     }
 
