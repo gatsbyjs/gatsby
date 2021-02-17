@@ -86,6 +86,9 @@ module.exports = {
             password: process.env.HTACCESS_PASSWORD,
           },
         },
+        schema: {
+          requestConcurrency,
+        },
         ...wpPluginOptions,
       },
     },
