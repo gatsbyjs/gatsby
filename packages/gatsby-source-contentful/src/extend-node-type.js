@@ -21,7 +21,7 @@ const {
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
-const downloadWithRetry = require(`./download-with-retry`)
+const downloadWithRetry = require(`./download-with-retry`).default
 const {
   ImageFormatType,
   ImageResizingBehavior,
