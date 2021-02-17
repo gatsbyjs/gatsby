@@ -254,28 +254,12 @@ Array [
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.doc",
   },
   Object {
-    "id": "cG9zdDoxMDQ0OQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample-mp4-file.mp4",
-  },
-  Object {
-    "id": "cG9zdDoxMDQ1Mw==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample-mov-file.mov",
-  },
-  Object {
     "id": "cG9zdDoxMDQ2Nw==",
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sampleinline-html.doc",
   },
   Object {
     "id": "cG9zdDoxMDQ3MQ==",
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample-avi-fileinline-html.avi",
-  },
-  Object {
-    "id": "cG9zdDoxMDQ3NQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample-mp4-fileinline-html.mp4",
-  },
-  Object {
-    "id": "cG9zdDoxMDQ3OQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample-mov-fileinline-html.mov",
   },
   Object {
     "id": "cG9zdDoxMDQ=",

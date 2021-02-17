@@ -4,7 +4,14 @@ require(`dotenv`).config({
 
 console.log(`Sourcing data from ` + process.env.WPGRAPHQL_URL)
 
-const requestConcurrency = 3
+const requestConcurrency = 1
+
+const mediaItemTypeSettings = {
+  localFile: {
+    requestConcurrency,
+    maxFileSizeBytes: 10485760,
+  },
+}
 
 // this is it's own conditional object so we can run
 // an int test with all default plugin options
@@ -17,11 +24,7 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
         },
       },
       type: {
-        MediaItem: {
-          localFile: {
-            requestConcurrency,
-          },
-        },
+        MediaItem: mediaItemTypeSettings,
         TypeLimitTest: {
           limit: 1,
         },
@@ -57,11 +60,7 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
     }
   : {
       type: {
-        MediaItem: {
-          localFile: {
-            requestConcurrency,
-          },
-        },
+        MediaItem: mediaItemTypeSettings,
       },
     }
 
