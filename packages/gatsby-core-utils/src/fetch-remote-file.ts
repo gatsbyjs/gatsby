@@ -214,7 +214,11 @@ export async function fetchRemoteFile({
     }
   }
 
-  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
+  const filename = createFilePath(
+    path.join(pluginCacheDir, digest),
+    name,
+    ext as string
+  )
   // If the status code is 200, move the piped temp file to the real name.
   if (response.statusCode === 200) {
     await fs.move(tmpFilename, filename, { overwrite: true })
