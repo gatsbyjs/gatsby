@@ -30,7 +30,6 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
-    "develop:fast-refresh": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true GATSBY_HOT_LOADER=fast-refresh gatsby develop",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",

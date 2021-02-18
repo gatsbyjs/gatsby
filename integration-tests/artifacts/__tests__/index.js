@@ -463,13 +463,11 @@ describe(`Second run (different pages created, data changed)`, () => {
       })
     })
 
-    if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-      it(`should recreate only some html files`, () => {
-        expect(manifest[runNumber].generated.sort()).toEqual(
-          expectedPagesToBeGenerated.sort()
-        )
-      })
-    }
+    it(`should recreate only some html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        expectedPagesToBeGenerated.sort()
+      )
+    })
   })
 
   describe(`page-data files`, () => {
