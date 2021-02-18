@@ -12,6 +12,7 @@ const {
   GraphQLFloat,
   GraphQLNonNull,
   GraphQLJSON,
+  GraphQLList,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
@@ -32,6 +33,8 @@ const {
 // and store the image cache away from the gatsby cache. After all, the gatsby
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
+
+const validImageFormats = new Set([`jpg`, `png`, `webp`])
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -198,6 +201,13 @@ const generateImageSource = (
   if (height > CONTENTFUL_IMAGE_MAX_SIZE) {
     width = Math.floor((width / height) * CONTENTFUL_IMAGE_MAX_SIZE)
     height = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (!validImageFormats.has(toFormat)) {
+    console.warn(
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+    )
+    return undefined
   }
 
   const src = createUrl(filename, {
@@ -780,6 +790,16 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       quality: {
         type: GraphQLInt,
         defaultValue: 50,
+      },
+      formats: {
+        type: GraphQLList(ImageFormatType),
+        description: stripIndent`
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, and WEBP.
+            The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+            not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
+            both PNG and JPG is not supported and will be ignored. 
+        `,
+        defaultValue: [``, `webp`],
       },
     })
 
