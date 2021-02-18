@@ -46,14 +46,6 @@ const tableOfContentsCacheKey = (node, appliedTocOptions) =>
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
-// TODO: remove this check with next major release
-const safeGetCache = ({ getCache, cache }) => id => {
-  if (!getCache) {
-    return cache
-  }
-  return getCache(id)
-}
-
 /**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
@@ -87,7 +79,7 @@ module.exports = function remarkExtendNodeType(
     getNode,
     getNodesByType,
     cache,
-    getCache: possibleGetCache,
+    getCache,
     reporter,
     ...rest
   },
@@ -98,8 +90,6 @@ module.exports = function remarkExtendNodeType(
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
-
-  const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -645,15 +635,13 @@ module.exports = function remarkExtendNodeType(
       tableOfContents: {
         type: `String`,
         args: {
-          // TODO:(v3) set default value to false
           absolute: {
             type: `Boolean`,
-            defaultValue: true,
+            defaultValue: false,
           },
-          // TODO:(v3) set default value to empty string
           pathToSlugField: {
             type: `String`,
-            defaultValue: `fields.slug`,
+            defaultValue: ``,
           },
           maxDepth: `Int`,
           heading: `String`,
