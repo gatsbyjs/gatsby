@@ -6,7 +6,7 @@ exports.createSchemaCustomization = ({ actions, store, reporter }) => {
   const { createTypes, printTypeDefinitions } = actions
 
   const options = {
-    path: path.resolve(directory + `/schema.gql`),
+    path: path.resolve(directory + `/inference.gql`),
   }
 
   const filePath = options.path
