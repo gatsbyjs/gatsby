@@ -37,6 +37,16 @@ module.exports = {
 }
 ```
 
+If you're using TypeScript and Emotion's `css` prop, you will also need to add an additional type to your `tsconfig.json`.
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@emotion/react/types/css-prop"]
+  }
+}
+```
+
 ## Options
 
 The plugin supports the same options that you can pass into [`@emotion/babel-plugin`](https://emotion.sh/docs/@emotion/babel-plugin#options).
