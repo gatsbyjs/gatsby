@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.0.0-next.2...gatsby-source-shopify@4.0.0-next.3) (2021-02-18)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** Don't remove version string from Shopify image URLs ([#29458](https://github.com/gatsbyjs/gatsby/issues/29458)) ([f25ea67](https://github.com/gatsbyjs/gatsby/commit/f25ea673384eca87ed288dcc8c6160d7dd2d0df3))
+
 # [4.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.0.0-next.1...gatsby-source-shopify@4.0.0-next.2) (2021-02-15)
 
 **Note:** Version bump only for package gatsby-source-shopify

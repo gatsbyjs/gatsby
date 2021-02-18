@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.4...gatsby-plugin-image@1.0.0-next.5) (2021-02-18)
+
+### Features
+
+- **gatsby-plugin-image:** Add getLowResolutionImageURL plugin helper ([#29518](https://github.com/gatsbyjs/gatsby/issues/29518)) ([4b7fe37](https://github.com/gatsbyjs/gatsby/commit/4b7fe37ac39897ab76090ef76cff19d98fa5924b))
+
 # [1.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.3...gatsby-plugin-image@1.0.0-next.4) (2021-02-17)
 
 **Note:** Version bump only for package gatsby-plugin-image
