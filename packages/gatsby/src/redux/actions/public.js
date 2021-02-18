@@ -830,10 +830,13 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
     typeOwners[node.internal.type] = node.internal.owner
   }
 
+  // incase a node or node id that doesn't exist is passed
+  const nodeId = node?.id || false
+
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: node.id,
+    payload: nodeId,
   }
 }
 
