@@ -123,7 +123,7 @@ import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 
-export default ({ data }) => {
+export default () => {
   const data = useStaticQuery(query);
   return (
     <div>
