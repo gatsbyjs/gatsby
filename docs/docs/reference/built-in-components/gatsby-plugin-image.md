@@ -236,3 +236,77 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 | `pngOptions`                            | None                                                                 | Options to pass to sharp when generating PNG images.                                                                                                                                                                                                                                                                                                                                                          |
 | `webpOptions`                           | None                                                                 | Options to pass to sharp when generating WebP images.                                                                                                                                                                                                                                                                                                                                                         |
 | `avifOptions`                           | None                                                                 | Options to pass to sharp when generating AVIF images.                                                                                                                                                                                                                                                                                                                                                         |
+
+## Helper functions
+
+### `getImage`
+
+Pass a `File` object to this, and it will return the `gatsbyImageData` object, or `undefined`.
+
+```js
+import { getImage } from "gatsby-plugin-image"
+
+const image = getImage(data.avatar)
+
+// This is the same as:
+
+const image = data?.avatar?.childImageSharp?.gatsbyImageData
+```
+
+### `getSrc`
+
+Get the default image `src`. This will be the fallback, so usually jpg or png.
+
+### `getSrcSet`
+
+Get the default image `srcset`. This will be the fallback, so usually jpg or png.
+
+### `withArtDirection`
+
+As standard, the plugin displays different image resolutions at different screen sizes, but it also supports art direction, which is where a visually-different image is displayed at different sizes. This could include displaying a simplified logo or a tighter crop on a profile picture when viewing on a small screen. To do this, you can use the `withArtDirection` function. You need both images available from GraphQL, and you should be able to write a media query for each size. The first argument is the default image. This is displayed when no media queries match, but it also used to set the layout, size, placeholder and most other options. You then pass an array of "art directed images", which are objects with `media` and `image` values.
+
+```jsx
+import { GatsbyImage, getImage, withArtDirection } from "gatsby-plugin-image"
+
+export function MyImage({ data }) {
+  const images = withArtDirection(getImage(data.largeImage), [
+    {
+      media: "(max-width: 1024px)",
+      image: getImage(data.smallImage),
+    },
+  ])
+
+  return <GatsbyImage image={images} />
+}
+```
+
+When the screen is less than 1024px wide, then it will display `smallImage`, otherwise it will display `largeImage`.
+
+The aspect ratio is set by the default image, and doesn't automatically change with the different sources. The way to handle this is to use CSS media queries. For example, you could use this CSS to change the size of the container in small images:
+
+```css:title=style.css
+@media screen and (max-width: 1024px) {
+  .art-directed {
+    width: 400px;
+    height: 300px;
+  }
+}
+```
+
+You can then apply this using plain CSS, or the styling system of your choice. e.g.
+
+```jsx
+import { GatsbyImage, getImage, withArtDirection } from "gatsby-plugin-image"
+import "./style.css"
+
+export function MyImage({ data }) {
+  const images = withArtDirection(getImage(data.largeImage), [
+    {
+      media: "(max-width: 1024px)",
+      image: getImage(data.smallImage),
+    },
+  ])
+
+  return <GatsbyImage className="art-directed" image={images} />
+}
+```
