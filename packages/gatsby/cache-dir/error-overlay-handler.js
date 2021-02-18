@@ -1,33 +1,8 @@
-const overlayPackage =
-  process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-    ? require(`react-error-overlay`)
-    : require(`@pmmmwh/react-refresh-webpack-plugin/overlay`)
+const overlayPackage = require(`@pmmmwh/react-refresh-webpack-plugin/overlay`)
 
 const ErrorOverlay = {
-  showCompileError:
-    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-      ? overlayPackage.reportBuildError
-      : overlayPackage.showCompileError,
-  clearCompileError:
-    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-      ? overlayPackage.dismissBuildError
-      : overlayPackage.clearCompileError,
-}
-
-if (process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
-  // Report runtime errors
-  overlayPackage.startReportingRuntimeErrors({
-    onError: () => {},
-    filename: `/commons.js`,
-  })
-  overlayPackage.setEditorHandler(errorLocation =>
-    window.fetch(
-      `/__open-stack-frame-in-editor?fileName=` +
-        window.encodeURIComponent(errorLocation.fileName) +
-        `&lineNumber=` +
-        window.encodeURIComponent(errorLocation.lineNumber || 1)
-    )
-  )
+  showCompileError: overlayPackage.showCompileError,
+  clearCompileError: overlayPackage.clearCompileError,
 }
 
 const errorMap = {}
