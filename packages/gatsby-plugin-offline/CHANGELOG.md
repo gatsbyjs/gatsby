@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.10.0...gatsby-plugin-offline@3.10.1) (2021-02-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-offline:** Cache avif images ([#29394](https://github.com/gatsbyjs/gatsby/issues/29394)) ([#29429](https://github.com/gatsbyjs/gatsby/issues/29429)) ([72c4a5a](https://github.com/gatsbyjs/gatsby/commit/72c4a5aa617058439902d56634c6cbcb75cc98bb))
+
 # [3.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@3.10.0-next.0...gatsby-plugin-offline@3.10.0) (2021-02-02)
 
 **Note:** Version bump only for package gatsby-plugin-offline
