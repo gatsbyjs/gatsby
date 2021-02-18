@@ -20,8 +20,8 @@ export interface IFetchRemoteFileOptions {
     htaccess_user?: string
   }
   httpHeaders?: OutgoingHttpHeaders
-  ext: string
-  name: string
+  ext?: string
+  name?: string
 }
 
 const cacheIdForHeaders = (url: string): string =>
