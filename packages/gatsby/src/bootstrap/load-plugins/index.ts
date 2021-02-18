@@ -11,7 +11,6 @@ import {
   handleMultipleReplaceRenderers,
   ExportType,
   ICurrentAPIs,
-  validateConfigPluginsOptions,
 } from "./validate"
 import {
   IPluginInfo,
@@ -19,7 +18,9 @@ import {
   ISiteConfig,
   IRawSiteConfig,
 } from "./types"
+import { validateConfigPluginsOptions } from "gatsby-plugin-utils"
 import { IPluginRefObject, PluginRef } from "gatsby-plugin-utils/dist/types"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 
 const getAPI = (
   api: { [exportType in ExportType]: { [api: string]: boolean } }
@@ -82,13 +83,14 @@ const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
 
 export async function loadPlugins(
   rawConfig: IRawSiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string | null = null,
+  reporter?: Reporter
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)
 
   // Show errors for invalid plugin configuration
-  await validateConfigPluginsOptions(config, rootDir)
+  await validateConfigPluginsOptions(config, rootDir, reporter)
 
   const currentAPIs = getAPI({
     browser: browserAPIs,

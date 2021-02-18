@@ -269,7 +269,12 @@ export async function initialize({
     parentSpan,
   })
   activity.start()
-  const flattenedPlugins = await loadPlugins(config, program.directory)
+  const flattenedPlugins = await loadPlugins(
+    config,
+    program.directory,
+    reporter
+  )
+
   activity.end()
 
   // Multiple occurrences of the same name-version-pair can occur,
