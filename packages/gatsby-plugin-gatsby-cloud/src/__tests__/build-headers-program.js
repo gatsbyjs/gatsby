@@ -289,24 +289,4 @@ describe(`build-headers-program`, () => {
       await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
     ).toMatchSnapshot()
   })
-
-  it(`with badly headers configuration`, async () => {
-    const pluginData = await createPluginData()
-
-    const pluginOptions = {
-      ...DEFAULT_OPTIONS,
-      mergeSecurityHeaders: true,
-      headers: {
-        "X-Frame-Options": [`sameorigin`],
-      },
-    }
-
-    await buildHeadersProgram(pluginData, pluginOptions, reporter)
-
-    expect(reporter.warn).toHaveBeenCalled()
-
-    expect(
-      await fs.readFile(pluginData.publicFolder(HEADERS_FILENAME), `utf8`)
-    ).toMatchSnapshot()
-  })
 })
