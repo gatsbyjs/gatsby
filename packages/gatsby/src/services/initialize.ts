@@ -297,14 +297,12 @@ export async function initialize({
   const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
-  // For Conditional Page Builds, we do want to remove those when there is `public` dir
-  // but cache doesn't exist
+  // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
+  // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
     process.env.NODE_ENV === `production` &&
-    (!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES ||
-      (publicDirExists && !cacheJsonDirExists))
+    publicDirExists &&
+    !cacheJsonDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
