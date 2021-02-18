@@ -1,44 +1,35 @@
-import React from "react"
-import Overlay from "./overlay"
+import * as React from "react"
 import Anser from "anser"
-import CodeFrame from "./code-frame"
-import { prettifyStack } from "../utils"
+import { Overlay, Header, Body, Footer } from "./overlay"
+import { CodeFrame } from "./code-frame"
+import { prettifyStack, getLineNumberFromAnser, openInEditor } from "../utils"
 
-const BuildError = ({ error, open, dismiss }) => {
-  const [file, cause, _emptyLine, ...rest] = error.split(`\n`)
-  const [_fullPath, _detailedError] = rest
+export function BuildError({ error }) {
+  const noop = React.useCallback(() => {}, [])
+  const [file, cause, , ...rest] = error.split(`\n`)
+  const [, _detailedError] = rest
   const detailedError = Anser.ansiToJson(_detailedError, {
     remove_empty: true,
     json: true,
   })
-  const lineNumberRegex = /^[0-9]*:[0-9]*$/g
-  const lineNumberFiltered = detailedError.filter(
-    d => d.content !== ` ` && d.content.match(lineNumberRegex)
-  )[0]?.content
-  const lineNumber = lineNumberFiltered.substr(
-    0,
-    lineNumberFiltered.indexOf(`:`)
-  )
+  const lineNumber = getLineNumberFromAnser(detailedError)
   const decoded = prettifyStack(rest)
 
-  const header = (
-    <>
-      <div data-gatsby-overlay="header__cause-file">
-        <p>{cause}</p>
-        <span>{file}</span>
-      </div>
-      <button
-        onClick={() => open(file, lineNumber)}
-        data-gatsby-overlay="header__open-in-editor"
-      >
-        Open in editor
-      </button>
-    </>
+  return (
+    <Overlay>
+      <Header open={openInEditor(file, lineNumber)} dismiss={noop}>
+        <div data-gatsby-overlay="header__cause-file">
+          <p>{cause}</p>
+          <span>{file}</span>
+        </div>
+      </Header>
+      <Body>
+        <CodeFrame decoded={decoded} />
+      </Body>
+      <Footer>
+        This error occurred during the build process and can only be dismissed
+        by fixing the error.
+      </Footer>
+    </Overlay>
   )
-
-  const body = <CodeFrame decoded={decoded} />
-
-  return <Overlay header={header} body={body} dismiss={dismiss} />
 }
-
-export default BuildError

@@ -1,10 +1,3 @@
-const overlayPackage = require(`@pmmmwh/react-refresh-webpack-plugin/overlay`)
-
-const ErrorOverlay = {
-  showCompileError: overlayPackage.showCompileError,
-  clearCompileError: overlayPackage.clearCompileError,
-}
-
 const errorMap = {}
 
 function flat(arr) {
@@ -35,9 +28,12 @@ const handleErrorOverlay = () => {
   }
 
   if (errorStringsToDisplay.length > 0) {
-    ErrorOverlay.showCompileError(errorStringsToDisplay.join(`\n\n`))
+    window.___emitter.emit(`FAST_REFRESH`, {
+      action: `SHOW_COMPILE_ERROR`,
+      payload: errorStringsToDisplay.join(`\n\n`),
+    })
   } else {
-    ErrorOverlay.clearCompileError()
+    window.___emitter.emit(`FAST_REFRESH`, { action: `CLEAR_COMPILE_ERROR` })
   }
 }
 
@@ -52,5 +48,3 @@ export const reportError = (errorID, error) => {
   }
   handleErrorOverlay()
 }
-
-export { errorMap }

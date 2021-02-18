@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 
 function css(strings, ...keys) {
   const lastIndex = strings.length - 1
@@ -8,7 +8,7 @@ function css(strings, ...keys) {
   )
 }
 
-const Style = () => (
+export const Style = () => (
   <style
     dangerouslySetInnerHTML={{
       __html: css`
@@ -64,8 +64,9 @@ const Style = () => (
             "Segoe UI Symbol" !important;
           background: var(--color-ansi-bright-white);
           position: fixed;
-          max-width: 75%;
-          min-width: 600px;
+          width: 100%;
+          max-width: 50%;
+          min-width: 320px;
           max-height: 90%;
           top: 50%;
           left: 50%;
@@ -79,8 +80,9 @@ const Style = () => (
         }
 
         [data-gatsby-overlay="header"] {
-          display: flex;
-          align-items: center;
+          display: grid;
+          grid-gap: var(--space-sm);
+          grid-template-columns: 1fr;
           color: var(--dimmedWhite);
           background: var(--gatsby);
           padding: var(--space);
@@ -93,16 +95,23 @@ const Style = () => (
           overflow: auto;
         }
 
-        [data-gatsby-overlay="body"] pre {
+        [data-gatsby-overlay="pre"] {
           margin: 0;
           color: var(--color-ansi-fg);
           background: var(--color-ansi-bg);
           padding: var(--space-sm);
           border-radius: var(--radii);
+          overflow: auto;
+        }
+
+        [data-gatsby-overlay="header__open-close"] {
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-end;
         }
 
         [data-gatsby-overlay="header__cause-file"] {
-          flex: 1;
+          word-break: break-word;
         }
 
         [data-gatsby-overlay="header__cause-file"] p {
@@ -124,11 +133,10 @@ const Style = () => (
           color: var(--white);
           border: 1px solid var(--gatsby);
           background: var(--gatsbyLight);
-          font-size: 1em;
-          height: 2em;
+          font-size: 0.9em;
+          height: 32px;
           min-width: 2em;
           padding: 0.25em 0.75em;
-          margin-left: var(--space-lg);
         }
 
         [data-gatsby-overlay="header__close-button"] {
@@ -138,13 +146,13 @@ const Style = () => (
           background-color: var(--gatsbyLight);
           color: var(--white);
           appearance: none;
-          height: 36px;
-          width: 36px;
+          height: 32px;
+          width: 32px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           border-radius: var(--radii);
-          margin-left: 1rem;
+          margin-left: var(--space-sm);
         }
 
         [data-gatsby-overlay="body__error-message-header"] {
@@ -166,5 +174,3 @@ const Style = () => (
     }}
   />
 )
-
-export default Style
