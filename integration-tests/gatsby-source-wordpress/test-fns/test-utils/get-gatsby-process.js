@@ -21,7 +21,7 @@ exports.gatsbyCleanBeforeAll = async done => {
   }
 }
 
-exports.getGatsbyProcess = (command = `develop`, env = {}) =>
+exports.spawnGatsbyProcess = (command = `develop`, env = {}) =>
   spawn(
     gatsbyBin,
     [command, ...(command === `develop` ? ["-H", "localhost"] : [])],

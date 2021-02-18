@@ -4,7 +4,7 @@ require(`dotenv`).config({
 
 const on = require(`wait-on`)
 const {
-  getGatsbyProcess,
+  spawnGatsbyProcess,
   gatsbyCleanBeforeAll,
 } = require(`../test-fns/test-utils/get-gatsby-process`)
 
@@ -27,7 +27,7 @@ describe(`[gatsby-source-wordpress] Build default options`, () => {
   })
 
   testOnColdCacheOnly(`Default options build succeeded`, async () => {
-    const gatsbyProcess = getGatsbyProcess(`build`, {
+    const gatsbyProcess = spawnGatsbyProcess(`build`, {
       DEFAULT_PLUGIN_OPTIONS: `1`,
     })
 
@@ -49,7 +49,7 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
       await gatsbyCleanBeforeAll()
     }
 
-    gatsbyDevelopProcess = getGatsbyProcess(`develop`)
+    gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
 
     await on({ resources: [`http://localhost:8000`] })
     done()

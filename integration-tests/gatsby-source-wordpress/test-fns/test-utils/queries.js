@@ -19,9 +19,9 @@ exports.queries = {
       allWpComment {
         totalCount
       }
-      allWpProject {
-        totalCount
-      }
+      # allWpProject {
+      #   totalCount
+      # }
       allWpTaxonomy {
         totalCount
       }
@@ -41,9 +41,9 @@ exports.queries = {
           mediaItemUrl
         }
       }
-      allWpTeamMember {
-        totalCount
-      }
+      # allWpTeamMember {
+      #   totalCount
+      # }
       allWpPostFormat {
         totalCount
       }
@@ -593,9 +593,9 @@ exports.queries = {
   `,
   pages: /* GraphQL */ `
     {
-      testPage: wpPage(id: { eq: "cG9zdDoy" }) {
-        title
-      }
+      # testPage: wpPage(id: { eq: "cG9zdDoy" }) {
+      #   title
+      # }
       allWpPage(sort: { fields: date }) {
         nodes {
           uri

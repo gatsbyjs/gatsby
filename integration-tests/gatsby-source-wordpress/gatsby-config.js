@@ -79,14 +79,14 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         url: process.env.WPGRAPHQL_URL,
-        auth: {
-          htaccess: {
-            username: process.env.HTACCESS_USERNAME,
-            password: process.env.HTACCESS_PASSWORD,
-          },
-        },
         schema: {
-          requestConcurrency,
+          requestConcurrency: 10,
+        },
+        production: {
+          hardCacheMediaFiles: true,
+        },
+        develop: {
+          hardCacheMediaFiles: true,
         },
         ...wpPluginOptions,
       },

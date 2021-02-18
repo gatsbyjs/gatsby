@@ -1,182 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 1`] = `
-"
-<figure class=\\"wp-block-image size-large\\"><span class=\\"wp-image-95 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:1024px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.796875%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQL/2gAMAwEAAhADEAAAAYNsLGYAn//EABsQAAICAwEAAAAAAAAAAAAAAAECAAMQERIh/9oACAEBAAEFAgIy6xX61w5E/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERE//aAAgBAwEBPwHKqkP/xAAXEQADAQAAAAAAAAAAAAAAAAABEBET/9oACAECAQE/AdIYv//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEABj8CX//EABkQAQEBAQEBAAAAAAAAAAAAAAEAIRExYf/aAAgBAQABPyEliB9JNsJczfbl/9oADAMBAAIAAwAAABA0D//EABcRAAMBAAAAAAAAAAAAAAAAAAABESH/2gAIAQMBAT8Q1WJz/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERQf/aAAgBAgEBPxCEbKf/xAAYEAADAQEAAAAAAAAAAAAAAAAAARExIf/aAAgBAQABPxBTRZFdOYKwK6cr05F2knR29P/Z\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\"/><img sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcSet=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" src=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcset=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" src=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></figure>
-
-
-
-<figure class=\\"wp-block-image size-large\\"><span class=\\"wp-image-95 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:1024px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.796875%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQD/8QAFQEBAQAAAAAAAAAAAAAAAAAAAQL/2gAMAwEAAhADEAAAAYNsLGYAn//EABsQAAICAwEAAAAAAAAAAAAAAAECAAMQERIh/9oACAEBAAEFAgIy6xX61w5E/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERE//aAAgBAwEBPwHKqkP/xAAXEQADAQAAAAAAAAAAAAAAAAABEBET/9oACAECAQE/AdIYv//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEABj8CX//EABkQAQEBAQEBAAAAAAAAAAAAAAEAIRExYf/aAAgBAQABPyEliB9JNsJczfbl/9oADAMBAAIAAwAAABA0D//EABcRAAMBAAAAAAAAAAAAAAAAAAABESH/2gAIAQMBAT8Q1WJz/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERQf/aAAgBAgEBPxCEbKf/xAAYEAADAQEAAAAAAAAAAAAAAAAAARExIf/aAAgBAQABPxBTRZFdOYKwK6cr05F2knR29P/Z\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\"/><img sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcSet=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" src=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcset=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/b95e4/aperture-vintage-346923-unsplash-scaled.jpg 256w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/1779b/aperture-vintage-346923-unsplash-scaled.jpg 512w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg 1024w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/6afe2/aperture-vintage-346923-unsplash-scaled.jpg 1536w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/7a411/aperture-vintage-346923-unsplash-scaled.jpg 2048w,
-/static/d48dfc77ee2f40d5eb835c6d6e3b594f/bb9a8/aperture-vintage-346923-unsplash-scaled.jpg 2560w\\" src=\\"/static/d48dfc77ee2f40d5eb835c6d6e3b594f/87945/aperture-vintage-346923-unsplash-scaled.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></figure>
-"
-`;
-
-exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 2`] = `
-"
-<figure class=\\"wp-block-image size-large\\"><span class=\\"wp-image-9210 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:1024px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.796875%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAABAAF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAdQzsaCRo//EABoQAAIDAQEAAAAAAAAAAAAAAAECAAMRBBL/2gAIAQEAAQUCCiEt7as7L+g47Fm//8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAIAQMBAT8BV//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EAB0QAQACAQUBAAAAAAAAAAAAAAEAESECEBIiMVH/2gAIAQEABj8CviDFTB5MtbdSn7L1OZ//xAAaEAADAAMBAAAAAAAAAAAAAAAAAREhMWFB/9oACAEBAAE/IcXuUhyBfOiRtLQigsl6G6xj/9oADAMBAAIAAwAAABCIH//EABYRAQEBAAAAAAAAAAAAAAAAAAABIf/aAAgBAwEBPxCYp//EABcRAQADAAAAAAAAAAAAAAAAAAABETH/2gAIAQIBAT8QnFP/xAAbEAEAAwEAAwAAAAAAAAAAAAABABEhMVFhcf/aAAgBAQABPxAyChoRL7vYXpqztx2AQmCJDPMtRfYRjgpdDfRFyVLfhU//2Q==\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/10c24fa98787424af0f35941810fe96d/b95e4/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 256w,
-/static/10c24fa98787424af0f35941810fe96d/1779b/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 512w,
-/static/10c24fa98787424af0f35941810fe96d/87945/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1024w,
-/static/10c24fa98787424af0f35941810fe96d/6afe2/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1536w,
-/static/10c24fa98787424af0f35941810fe96d/7a411/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2048w,
-/static/10c24fa98787424af0f35941810fe96d/bb9a8/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2560w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\"/><img sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcSet=\\"/static/10c24fa98787424af0f35941810fe96d/b95e4/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 256w,
-/static/10c24fa98787424af0f35941810fe96d/1779b/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 512w,
-/static/10c24fa98787424af0f35941810fe96d/87945/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1024w,
-/static/10c24fa98787424af0f35941810fe96d/6afe2/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1536w,
-/static/10c24fa98787424af0f35941810fe96d/7a411/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2048w,
-/static/10c24fa98787424af0f35941810fe96d/bb9a8/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2560w\\" src=\\"/static/10c24fa98787424af0f35941810fe96d/87945/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/10c24fa98787424af0f35941810fe96d/b95e4/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 256w,
-/static/10c24fa98787424af0f35941810fe96d/1779b/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 512w,
-/static/10c24fa98787424af0f35941810fe96d/87945/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1024w,
-/static/10c24fa98787424af0f35941810fe96d/6afe2/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1536w,
-/static/10c24fa98787424af0f35941810fe96d/7a411/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2048w,
-/static/10c24fa98787424af0f35941810fe96d/bb9a8/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2560w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcset=\\"/static/10c24fa98787424af0f35941810fe96d/b95e4/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 256w,
-/static/10c24fa98787424af0f35941810fe96d/1779b/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 512w,
-/static/10c24fa98787424af0f35941810fe96d/87945/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1024w,
-/static/10c24fa98787424af0f35941810fe96d/6afe2/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 1536w,
-/static/10c24fa98787424af0f35941810fe96d/7a411/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2048w,
-/static/10c24fa98787424af0f35941810fe96d/bb9a8/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg 2560w\\" src=\\"/static/10c24fa98787424af0f35941810fe96d/87945/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></figure>
-"
-`;
-
-exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 3`] = `
-"
-<figure class=\\"wp-block-image size-large\\"><span class=\\"wp-image-9204 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:1024px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:150%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMEAQX/xAAWAQEBAQAAAAAAAAAAAAAAAAABAgD/2gAMAwEAAhADEAAAAZKLFyxnTBszU3CiQ2//xAAdEAACAgMAAwAAAAAAAAAAAAACAwABBBETECIj/9oACAEBAAEFAsYBMzCynG6il0KyL6crmteGPWsp098nHJrf/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAEQEf/aAAgBAwEBPwFG3//EABYRAAMAAAAAAAAAAAAAAAAAAAAQEf/aAAgBAgEBPwEj/8QAHxAAAQMFAAMAAAAAAAAAAAAAAAECEhARISIxMnGh/9oACAEBAAY/AtrmrcHj9G27Yi1q+zLqxcuaRJIqcP/EABwQAQEBAQADAQEAAAAAAAAAAAERACExQXFRkf/aAAgBAQABPyGOXHgPe4qnoGeOv5ywYqX7ucxsa1PLcAAEDxoVnn3qtHxhqn5kTD3miFIO7//aAAwDAQACAAMAAAAQaP1O/8QAGREAAQUAAAAAAAAAAAAAAAAAABARIVGh/9oACAEDAQE/EIDLxf/EABcRAAMBAAAAAAAAAAAAAAAAAAABERD/2gAIAQIBAT8QZQ3M/8QAGxABAAMBAQEBAAAAAAAAAAAAAQARITFxQVH/2gAIAQEAAT8QXYpQ56Yy0bVOw/dZSM8yDrAGOtBYjXO61eHydfhMIsAAfAnCB9K7HgIDRfGYhtLgFWJFcyc0UG3Z4T//2Q==\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/2c594d7889daf83b48d0ad9852ee0925/b95e4/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 256w,
-/static/2c594d7889daf83b48d0ad9852ee0925/1779b/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 512w,
-/static/2c594d7889daf83b48d0ad9852ee0925/87945/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1024w,
-/static/2c594d7889daf83b48d0ad9852ee0925/6afe2/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1536w,
-/static/2c594d7889daf83b48d0ad9852ee0925/7865f/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1707w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\"/><img sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcSet=\\"/static/2c594d7889daf83b48d0ad9852ee0925/b95e4/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 256w,
-/static/2c594d7889daf83b48d0ad9852ee0925/1779b/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 512w,
-/static/2c594d7889daf83b48d0ad9852ee0925/87945/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1024w,
-/static/2c594d7889daf83b48d0ad9852ee0925/6afe2/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1536w,
-/static/2c594d7889daf83b48d0ad9852ee0925/7865f/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1707w\\" src=\\"/static/2c594d7889daf83b48d0ad9852ee0925/87945/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/2c594d7889daf83b48d0ad9852ee0925/b95e4/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 256w,
-/static/2c594d7889daf83b48d0ad9852ee0925/1779b/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 512w,
-/static/2c594d7889daf83b48d0ad9852ee0925/87945/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1024w,
-/static/2c594d7889daf83b48d0ad9852ee0925/6afe2/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1536w,
-/static/2c594d7889daf83b48d0ad9852ee0925/7865f/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1707w\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 1024px) 100vw, 1024px\\" srcset=\\"/static/2c594d7889daf83b48d0ad9852ee0925/b95e4/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 256w,
-/static/2c594d7889daf83b48d0ad9852ee0925/1779b/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 512w,
-/static/2c594d7889daf83b48d0ad9852ee0925/87945/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1024w,
-/static/2c594d7889daf83b48d0ad9852ee0925/6afe2/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1536w,
-/static/2c594d7889daf83b48d0ad9852ee0925/7865f/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg 1707w\\" src=\\"/static/2c594d7889daf83b48d0ad9852ee0925/87945/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></figure>
-"
-`;
-
-exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 4`] = `
 "<p>Wysiwyh Editor Field test content.</p>
 <p>&nbsp;</p>
 <h1>H1</h1>
-<p><span class=\\"alignnone size-medium wp-image-7756 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:300px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.66666666666667%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQBAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAABAP/aAAwDAQACEAMQAAAB1akIFoSC/8QAGxABAAEFAQAAAAAAAAAAAAAAAgABAxAREhT/2gAIAQEAAQUC6Ed4E+k4VZuf/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAEDAQE/AYiI/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAECAQE/Aays/8QAGBAAAgMAAAAAAAAAAAAAAAAAAAEgMTL/2gAIAQEABj8CsZlw/8QAGhABAQACAwAAAAAAAAAAAAAAAQARYSExUf/aAAgBAQABPyHTmwcodW0iwB4xwL//2gAMAwEAAgADAAAAEIjv/8QAFREBAQAAAAAAAAAAAAAAAAAAAGH/2gAIAQMBAT8QUn//xAAWEQEBAQAAAAAAAAAAAAAAAAAAEWH/2gAIAQIBAT8Qg0f/xAAcEAEAAgMAAwAAAAAAAAAAAAABABEhQYFRkeH/2gAIAQEAAT8QqPvMgTBCD2VhWIW2GYwdvY4ANh5j7vc//9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616x3744-1-scaled.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616x3744-1-scaled.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616x3744-1-scaled.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616x3744-1-scaled.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616x3744-1-scaled.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616x3744-1-scaled.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\"/><img sizes=\\"(max-width: 300px) 100vw, 300px\\" srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616x3744-1-scaled.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616x3744-1-scaled.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616x3744-1-scaled.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616x3744-1-scaled.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616x3744-1-scaled.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616x3744-1-scaled.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616x3744-1-scaled.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616x3744-1-scaled.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616x3744-1-scaled.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616x3744-1-scaled.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616x3744-1-scaled.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616x3744-1-scaled.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616x3744-1-scaled.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616x3744-1-scaled.jpg 75w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616x3744-1-scaled.jpg 150w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616x3744-1-scaled.jpg 300w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616x3744-1-scaled.jpg 450w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616x3744-1-scaled.jpg 600w,
-/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616x3744-1-scaled.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616x3744-1-scaled.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span> <span class=\\"alignnone size-medium wp-image-7752 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:200px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:150%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEEAwL/xAAXAQEBAQEAAAAAAAAAAAAAAAACAAED/9oADAMBAAIQAxAAAAGmabjkkYDOmzcpCgs//8QAGxAAAgIDAQAAAAAAAAAAAAAAAQIAEQMQEiH/2gAIAQEAAQUCOaZHsWYX9LXoBrdZyZZhbX//xAAWEQADAAAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8BcP/EABURAQEAAAAAAAAAAAAAAAAAABEg/9oACAECAQE/ASP/xAAYEAACAwAAAAAAAAAAAAAAAAAAIQEgMf/aAAgBAQAGPwIUCphKyv8A/8QAHBAAAwEAAgMAAAAAAAAAAAAAAAERITFRQWFx/9oACAEBAAE/IYJIkOHb7HbWGLESQqYkrpP4UcvfI9bETNOT/9oADAMBAAIAAwAAABD43Q3/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREQ/9oACAEDAQE/EMiIP//EABcRAQEBAQAAAAAAAAAAAAAAAAARAUH/2gAIAQIBAT8QzXUVX//EAB8QAQADAAEEAwAAAAAAAAAAAAEAESFBMWFxoVGBkf/aAAgBAQABPxBAroK1PiIW4oHq8Swv8quOpdXF9peDkwGLLfUFQidYrNwov6qJO/lHYvNRmFNb+qm7HtvM/9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181x1772-1.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181x1772-1.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181x1772-1.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181x1772-1.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181x1772-1.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181x1772-1.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\"/><img sizes=\\"(max-width: 200px) 100vw, 200px\\" srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181x1772-1.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181x1772-1.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181x1772-1.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181x1772-1.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181x1772-1.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181x1772-1.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181x1772-1.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181x1772-1.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181x1772-1.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181x1772-1.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181x1772-1.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181x1772-1.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181x1772-1.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181x1772-1.jpg 50w,
-/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181x1772-1.jpg 100w,
-/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181x1772-1.jpg 200w,
-/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181x1772-1.jpg 300w,
-/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181x1772-1.jpg 400w,
-/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181x1772-1.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181x1772-1.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></p>
-"
-`;
-
-exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 5`] = `
-"<figure class=\\"wp-block-image size-large\\"><span class=\\"wp-image-10515 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:683px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:149.70760233918128%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAIDBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAABlnzpYtiBmNQdbBnln//EABsQAAIDAQEBAAAAAAAAAAAAAAECAAMSBBEi/9oACAEBAAEFAlUwIGmDOlbXPPSUllv01pdrLW93qBiDsz2f/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAHBAAAgICAwAAAAAAAAAAAAAAACEBERAxAnGB/9oACAEBAAY/AtYRCXZfJeiINll5/8QAHBABAAMAAwEBAAAAAAAAAAAAAQARITFBcVGB/9oACAEBAAE/Ie28nAT6gPICHiUtlUTnUheuvI1404EDUsH5HCBQ5OJZbevMsOM//9oADAMBAAIAAwAAABAL4LD/xAAWEQEBAQAAAAAAAAAAAAAAAAAQARH/2gAIAQMBAT8QJh//xAAVEQEBAAAAAAAAAAAAAAAAAAAQAf/aAAgBAgEBPxAp/8QAHRABAQACAgMBAAAAAAAAAAAAAREAITFhQVGhgf/aAAgBAQABPxAgoDkzjJhDrxiEPTmnNMYQAG2sv5jO6PODdHzGITBNeVbkAwGw3fuKWNeKL2O8iB5N9OMLFvRwc62q93FygXP/2Q==\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/692883c30b67d3946b6fd3eea439d8be/e1745/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 171w,
-/static/692883c30b67d3946b6fd3eea439d8be/3fecb/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 342w,
-/static/692883c30b67d3946b6fd3eea439d8be/5a620/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 683w,
-/static/692883c30b67d3946b6fd3eea439d8be/d4899/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1025w,
-/static/692883c30b67d3946b6fd3eea439d8be/223ef/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1366w,
-/static/692883c30b67d3946b6fd3eea439d8be/7865f/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1707w\\" sizes=\\"(max-width: 683px) 100vw, 683px\\"/><img sizes=\\"(max-width: 683px) 100vw, 683px\\" srcSet=\\"/static/692883c30b67d3946b6fd3eea439d8be/e1745/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 171w,
-/static/692883c30b67d3946b6fd3eea439d8be/3fecb/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 342w,
-/static/692883c30b67d3946b6fd3eea439d8be/5a620/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 683w,
-/static/692883c30b67d3946b6fd3eea439d8be/d4899/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1025w,
-/static/692883c30b67d3946b6fd3eea439d8be/223ef/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1366w,
-/static/692883c30b67d3946b6fd3eea439d8be/7865f/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1707w\\" src=\\"/static/692883c30b67d3946b6fd3eea439d8be/5a620/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/692883c30b67d3946b6fd3eea439d8be/e1745/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 171w,
-/static/692883c30b67d3946b6fd3eea439d8be/3fecb/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 342w,
-/static/692883c30b67d3946b6fd3eea439d8be/5a620/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 683w,
-/static/692883c30b67d3946b6fd3eea439d8be/d4899/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1025w,
-/static/692883c30b67d3946b6fd3eea439d8be/223ef/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1366w,
-/static/692883c30b67d3946b6fd3eea439d8be/7865f/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1707w\\" sizes=\\"(max-width: 683px) 100vw, 683px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 683px) 100vw, 683px\\" srcset=\\"/static/692883c30b67d3946b6fd3eea439d8be/e1745/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 171w,
-/static/692883c30b67d3946b6fd3eea439d8be/3fecb/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 342w,
-/static/692883c30b67d3946b6fd3eea439d8be/5a620/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 683w,
-/static/692883c30b67d3946b6fd3eea439d8be/d4899/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1025w,
-/static/692883c30b67d3946b6fd3eea439d8be/223ef/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1366w,
-/static/692883c30b67d3946b6fd3eea439d8be/7865f/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg 1707w\\" src=\\"/static/692883c30b67d3946b6fd3eea439d8be/5a620/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></figure>
+<p><span class=\\"alignnone size-medium wp-image-7756 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:300px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.66666666666667%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQBAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAABAP/aAAwDAQACEAMQAAAB1akIFoSC/8QAGxABAAEFAQAAAAAAAAAAAAAAAgABAxAREhT/2gAIAQEAAQUC6Ed4E+k4VZuf/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAEDAQE/AYiI/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAECAQE/Aays/8QAGBAAAgMAAAAAAAAAAAAAAAAAAAEgMTL/2gAIAQEABj8CsZlw/8QAGhABAQACAwAAAAAAAAAAAAAAAQARYSExUf/aAAgBAQABPyHTmwcodW0iwB4xwL//2gAMAwEAAgADAAAAEIjv/8QAFREBAQAAAAAAAAAAAAAAAAAAAGH/2gAIAQMBAT8QUn//xAAWEQEBAQAAAAAAAAAAAAAAAAAAEWH/2gAIAQIBAT8Qg0f/xAAcEAEAAgMAAwAAAAAAAAAAAAABABEhQYFRkeH/2gAIAQEAAT8QqPvMgTBCD2VhWIW2GYwdvY4ANh5j7vc//9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\"/><img sizes=\\"(max-width: 300px) 100vw, 300px\\" srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span> <span class=\\"alignnone size-medium wp-image-7752 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:200px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:150%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEEAwL/xAAXAQEBAQEAAAAAAAAAAAAAAAACAAED/9oADAMBAAIQAxAAAAGmabjkkYDOmzcpCgs//8QAGxAAAgIDAQAAAAAAAAAAAAAAAQIAEQMQEiH/2gAIAQEAAQUCOaZHsWYX9LXoBrdZyZZhbX//xAAWEQADAAAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8BcP/EABURAQEAAAAAAAAAAAAAAAAAABEg/9oACAECAQE/ASP/xAAYEAACAwAAAAAAAAAAAAAAAAAAIQEgMf/aAAgBAQAGPwIUCphKyv8A/8QAHBAAAwEAAgMAAAAAAAAAAAAAAAERITFRQWFx/9oACAEBAAE/IYJIkOHb7HbWGLESQqYkrpP4UcvfI9bETNOT/9oADAMBAAIAAwAAABD43Q3/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREQ/9oACAEDAQE/EMiIP//EABcRAQEBAQAAAAAAAAAAAAAAAAARAUH/2gAIAQIBAT8QzXUVX//EAB8QAQADAAEEAwAAAAAAAAAAAAEAESFBMWFxoVGBkf/aAAgBAQABPxBAroK1PiIW4oHq8Swv8quOpdXF9peDkwGLLfUFQidYrNwov6qJO/lHYvNRmFNb+qm7HtvM/9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\"/><img sizes=\\"(max-width: 200px) 100vw, 200px\\" srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></p>
 "
 `;
 
 exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves correct number of nodes 1`] = `
 Array [
-  Object {
-    "id": "cG9zdDo3NzQ0",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/101-2621x1747-1-scaled.jpg",
-  },
   Object {
     "id": "cG9zdDo3NzQ4",
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1002-4312x2868-1-scaled.jpg",
@@ -194,108 +67,12 @@ Array [
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1003-1181x1772-1.jpg",
   },
   Object {
-    "id": "cG9zdDo3NzY0",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1004-5616x3744-1-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDo3NzYw",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/10-2500x1667-1.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5MjA0",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/09/windows-W1N58KDE8r0-unsplash-1-scaled-e1600819839939.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5MjEw",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/09/windows-W1N58KDE8r0-unsplash-scaled-e1600819062167.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5NQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/aperture-vintage-346923-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5Ng==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/brandon-siu-608784-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5Nw==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/casey-horner-512022-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5NzIy",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/09/imagename-300x163-1-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5ODI3",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/09/5642fae96ade14100be5-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDo5OQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/03/avatar.jpg",
-  },
-  Object {
-    "id": "cG9zdDoxMDA=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/federico-bottos-442265-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDoxMDE=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/jordan-steranka-504707-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDoxMDI=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/kristopher-roller-110203-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDoxMDM=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/zoltan-tasi-482489-unsplash-scaled.jpg",
-  },
-  Object {
     "id": "cG9zdDoxMDQ0NQ==",
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.doc",
   },
   Object {
-    "id": "cG9zdDoxMDQ2Nw==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sampleinline-html.doc",
-  },
-  Object {
-    "id": "cG9zdDoxMDQ3MQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample-avi-fileinline-html.avi",
-  },
-  Object {
-    "id": "cG9zdDoxMDQ=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2018/10/wordpress-logotype-standard.pdf",
-  },
-  Object {
     "id": "cG9zdDoxMDQzOQ==",
     "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.pdf",
-  },
-  Object {
-    "id": "cG9zdDoxMDUxNQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/jessie-mccall-a9_8YKoqIYo-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDoxMDYyMQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/mattmullenweg-interview.mp3",
-  },
-  Object {
-    "id": "cG9zdDoxMDYyNw==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/giphy.mp4",
-  },
-  Object {
-    "id": "cG9zdDoxMDcwNQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/BabyElephantWalk60.wav",
-  },
-  Object {
-    "id": "cG9zdDoxMDcxNQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/Screen-Shot-2020-07-30-at-1.34.09-PM.png",
-  },
-  Object {
-    "id": "cG9zdDoxMDkyNw==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/karsten-winegeart-5zzY1WvIRRQ-unsplash-scaled.jpg",
-  },
-  Object {
-    "id": "cG9zdDoxOTU=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/03/1024x1024-300x300-1.png",
   },
   Object {
     "id": "cG9zdDozNjI=",
@@ -423,305 +200,13 @@ Object {
               "name": "Tyler",
             },
           },
-          "title": "Sample Page",
-          "uri": "/sample-page/",
-          "wpChildren": Object {
-            "nodes": Array [
-              Object {
-                "title": "Child page",
-              },
-            ],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Members",
-          "uri": "/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Activity",
-          "uri": "/activity/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Child page",
-          "uri": "/sample-page/child-page/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "French home page",
-          "uri": "/french-home-page/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
           "title": "ACF Field Test",
           "uri": "/acf-field-test/",
           "wpChildren": Object {
             "nodes": Array [],
           },
         },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Yoast SEO",
-          "uri": "/beautiful_slug/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Cart",
-          "uri": "/cart/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Shop",
-          "uri": "/shop/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "My account",
-          "uri": "/my-account/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Checkout",
-          "uri": "/checkout/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Inline gatsby-image Gutenberg test",
-          "uri": "/inline-gatsby-image-test/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Edited inline html image test",
-          "uri": "/edited-inline-html-image-test/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "inline html image edited after this post was saved",
-          "uri": "/inline-html-image-edited-after-this-post-was-saved/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Image test 1",
-          "uri": "/image-test-1/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Image test 1 duplicate",
-          "uri": "/image-test-1-duplicate/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Image test 1 french",
-          "uri": "/image-test-1-french/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Relative image path",
-          "uri": "/relative-image-path/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Inline image with http protocol",
-          "uri": "/inline-image-with-http-protocol/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
-        Object {
-          "acfPageFields": Object {
-            "fieldGroupName": "acfPageFields",
-          },
-          "author": Object {
-            "node": Object {
-              "name": "Tyler",
-            },
-          },
-          "title": "Inline html non-image media items",
-          "uri": "/inline-html-non-image-media-items/",
-          "wpChildren": Object {
-            "nodes": Array [],
-          },
-        },
       ],
-    },
-    "testPage": Object {
-      "title": "Sample Page",
     },
   },
   "extensions": Object {},
@@ -744,118 +229,6 @@ Object {
               },
             },
           },
-          "featuredImage": null,
-          "title": "Gutenberg: Image Alignment",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Widget Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Common Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Classic Block",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Embed Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Formatting Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Layout Element Blocks",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "Gutenberg: Columns",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
           "featuredImage": Object {
             "node": Object {
               "altText": "",
@@ -863,20 +236,6 @@ Object {
             },
           },
           "title": "Hello world!",
-        },
-        Object {
-          "author": Object {
-            "node": Object {
-              "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
-              },
-              "comments": Object {
-                "nodes": Array [],
-              },
-            },
-          },
-          "featuredImage": null,
-          "title": "hierarchical category test",
         },
       ],
     },
@@ -931,98 +290,14 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
-                "title": "Inline html non-image media items",
-              },
-              Object {
-                "title": "Inline image with http protocol",
-              },
-              Object {
-                "title": "Relative image path",
-              },
-              Object {
-                "title": "Image test 1 french",
-              },
-              Object {
-                "title": "Image test 1 duplicate",
-              },
-              Object {
-                "title": "Image test 1",
-              },
-              Object {
-                "title": "inline html image edited after this post was saved",
-              },
-              Object {
-                "title": "Edited inline html image test",
-              },
-              Object {
-                "title": "Inline gatsby-image Gutenberg test",
-              },
-              Object {
-                "title": "My account",
-              },
-              Object {
-                "title": "Checkout",
-              },
-              Object {
-                "title": "Cart",
-              },
-              Object {
-                "title": "Shop",
-              },
-              Object {
-                "title": "Yoast SEO",
-              },
-              Object {
                 "title": "ACF Field Test",
-              },
-              Object {
-                "title": "French home page",
-              },
-              Object {
-                "title": "Child page",
-              },
-              Object {
-                "title": "Members",
-              },
-              Object {
-                "title": "Activity",
-              },
-              Object {
-                "title": "Sample Page",
               },
             ],
           },
           "posts": Object {
             "nodes": Array [
               Object {
-                "title": "hierarchical category test",
-              },
-              Object {
                 "title": "Hello world!",
-              },
-              Object {
-                "title": "Gutenberg: Columns",
-              },
-              Object {
-                "title": "Gutenberg: Layout Element Blocks",
-              },
-              Object {
-                "title": "Gutenberg: Formatting Blocks",
-              },
-              Object {
-                "title": "Gutenberg: Embed Blocks",
-              },
-              Object {
-                "title": "Gutenberg: Classic Block",
-              },
-              Object {
-                "title": "Gutenberg: Common Blocks",
-              },
-              Object {
-                "title": "Gutenberg: Widget Blocks",
-              },
-              Object {
-                "title": "Gutenberg: Image Alignment",
               },
             ],
           },
@@ -1040,22 +315,7 @@ Object {
 exports[`[gatsby-source-wordpress] Run tests on develop build filtered type definitions Date field resolver is working 1`] = `
 Object {
   "data": Object {
-    "wpPage": Object {
-      "databaseId": 2,
-      "date": "2020-02-25T17:54:21",
-      "dateGmt": "2020-02-25T17:54:21",
-      "dayOfMonth": "25",
-      "dayOfMonthGmt": "25",
-      "dayOfWeekName": "Tuesday",
-      "dayOfWeekNameGmt": "Tuesday",
-      "dayOfWeekNumber": "2",
-      "dayOfWeekNumberGmt": "2",
-      "id": "cG9zdDoy",
-      "month": "February",
-      "monthGmt": "February",
-      "year": "2020",
-      "yearGmt": "2020",
-    },
+    "wpPage": null,
   },
   "extensions": Object {},
 }
@@ -1151,7 +411,6 @@ Array [
       "posts",
       "slug",
       "taxonomy",
-      "teamMembers",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -1267,16 +526,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpCategoryToTaxonomyConnectionEdgeFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpCategoryToTeamMemberConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpCategoryToTeamMemberConnectionFilterInput",
   },
   Object {
     "fields": Array [
@@ -2487,7 +1736,6 @@ Array [
       "posts",
       "slug",
       "taxonomy",
-      "teamMembers",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -2573,16 +1821,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpPostFormatToTaxonomyConnectionEdgeFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpPostFormatToTeamMemberConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpPostFormatToTeamMemberConnectionFilterInput",
   },
   Object {
     "fields": Array [
@@ -2689,98 +1927,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "acfProject",
-      "author",
-      "authorDatabaseId",
-      "authorId",
-      "content",
-      "contentType",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "enclosure",
-      "featuredImage",
-      "featuredImageDatabaseId",
-      "featuredImageId",
-      "guid",
-      "id",
-      "lastEditedBy",
-      "link",
-      "modified",
-      "modifiedGmt",
-      "slug",
-      "status",
-      "template",
-      "title",
-      "uri",
-      "nodeType",
-      "parent",
-      "children",
-      "internal",
-    ],
-    "name": "WpProject",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "distinct",
-      "group",
-    ],
-    "name": "WpProjectConnection",
-  },
-  Object {
-    "fields": Array [
-      "next",
-      "node",
-      "previous",
-    ],
-    "name": "WpProjectEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "WpProjectFieldsEnum",
-  },
-  Object {
-    "fields": null,
-    "name": "WpProjectFilterInput",
-  },
-  Object {
-    "fields": null,
-    "name": "WpProjectFilterListInput",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "field",
-      "fieldValue",
-    ],
-    "name": "WpProjectGroupConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpProjectSortInput",
-  },
-  Object {
-    "fields": Array [
-      "fieldGroupName",
-      "image",
-      "projectUrl",
-    ],
-    "name": "WpProject_Acfproject",
-  },
-  Object {
-    "fields": null,
-    "name": "WpProject_AcfprojectFilterInput",
-  },
-  Object {
-    "fields": Array [
       "postsPerPage",
     ],
     "name": "WpReadingSettings",
@@ -2829,7 +1975,6 @@ Array [
       "posts",
       "slug",
       "taxonomy",
-      "teamMembers",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -2918,16 +2063,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "nodes",
-    ],
-    "name": "WpTagToTeamMemberConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTagToTeamMemberConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
       "archivePath",
       "connectedContentTypes",
       "description",
@@ -3010,158 +2145,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpTaxonomyToContentTypeConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "acfData",
-      "author",
-      "authorDatabaseId",
-      "authorId",
-      "categories",
-      "commentCount",
-      "commentStatus",
-      "comments",
-      "content",
-      "contentType",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "enclosure",
-      "excerpt",
-      "featuredImage",
-      "featuredImageDatabaseId",
-      "featuredImageId",
-      "guid",
-      "id",
-      "isRevision",
-      "lastEditedBy",
-      "link",
-      "menuOrder",
-      "modified",
-      "modifiedGmt",
-      "pingStatus",
-      "pinged",
-      "postFormats",
-      "slug",
-      "status",
-      "tags",
-      "template",
-      "title",
-      "toPing",
-      "uri",
-      "nodeType",
-      "parent",
-      "children",
-      "internal",
-    ],
-    "name": "WpTeamMember",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "distinct",
-      "group",
-    ],
-    "name": "WpTeamMemberConnection",
-  },
-  Object {
-    "fields": Array [
-      "next",
-      "node",
-      "previous",
-    ],
-    "name": "WpTeamMemberEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberFieldsEnum",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberFilterInput",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberFilterListInput",
-  },
-  Object {
-    "fields": Array [
-      "totalCount",
-      "edges",
-      "nodes",
-      "pageInfo",
-      "field",
-      "fieldValue",
-    ],
-    "name": "WpTeamMemberGroupConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberSortInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpTeamMemberToCategoryConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberToCategoryConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpTeamMemberToCommentConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberToCommentConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpTeamMemberToPostFormatConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberToPostFormatConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpTeamMemberToTagConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMemberToTagConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "fieldGroupName",
-      "name",
-      "portrait",
-      "projects",
-      "title",
-      "twitterlink",
-      "webSite",
-    ],
-    "name": "WpTeamMember_Acfdata",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMember_AcfdataFilterInput",
-  },
-  Object {
-    "fields": null,
-    "name": "WpTeamMember_Acfdata_Projects",
   },
   Object {
     "fields": Array [
@@ -3489,10 +2472,8 @@ Array [
       "nickname",
       "pages",
       "posts",
-      "projects",
       "roles",
       "slug",
-      "teamMembers",
       "translationFilterTests",
       "typeLimit0Tests",
       "typeLimitTests",
@@ -3636,26 +2617,6 @@ Array [
   Object {
     "fields": null,
     "name": "WpUserToPostConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpUserToProjectConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpUserToProjectConnectionFilterInput",
-  },
-  Object {
-    "fields": Array [
-      "nodes",
-    ],
-    "name": "WpUserToTeamMemberConnection",
-  },
-  Object {
-    "fields": null,
-    "name": "WpUserToTeamMemberConnectionFilterInput",
   },
   Object {
     "fields": Array [
@@ -3843,7 +2804,6 @@ Array [
       "posts",
       "slug",
       "taxonomy",
-      "teamMembers",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -3937,25 +2897,6 @@ Array [
       "node",
     ],
     "name": "CategoryToTaxonomyConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "CategoryToTeamMemberConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "CategoryToTeamMemberConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "CategoryToTeamMemberConnectionWhereArgs",
   },
   Object {
     "fields": Array [
@@ -4301,17 +3242,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "CreateProjectInput",
-  },
-  Object {
-    "fields": Array [
-      "clientMutationId",
-      "project",
-    ],
-    "name": "CreateProjectPayload",
-  },
-  Object {
-    "fields": null,
     "name": "CreateTagInput",
   },
   Object {
@@ -4320,17 +3250,6 @@ Array [
       "tag",
     ],
     "name": "CreateTagPayload",
-  },
-  Object {
-    "fields": null,
-    "name": "CreateTeamMemberInput",
-  },
-  Object {
-    "fields": Array [
-      "clientMutationId",
-      "teamMember",
-    ],
-    "name": "CreateTeamMemberPayload",
   },
   Object {
     "fields": null,
@@ -4482,18 +3401,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "DeleteProjectInput",
-  },
-  Object {
-    "fields": Array [
-      "clientMutationId",
-      "deletedId",
-      "project",
-    ],
-    "name": "DeleteProjectPayload",
-  },
-  Object {
-    "fields": null,
     "name": "DeleteTagInput",
   },
   Object {
@@ -4503,18 +3410,6 @@ Array [
       "tag",
     ],
     "name": "DeleteTagPayload",
-  },
-  Object {
-    "fields": null,
-    "name": "DeleteTeamMemberInput",
-  },
-  Object {
-    "fields": Array [
-      "clientMutationId",
-      "deletedId",
-      "teamMember",
-    ],
-    "name": "DeleteTeamMemberPayload",
   },
   Object {
     "fields": null,
@@ -5327,7 +4222,6 @@ Array [
       "posts",
       "slug",
       "taxonomy",
-      "teamMembers",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -5381,25 +4275,6 @@ Array [
       "node",
     ],
     "name": "PostFormatToTaxonomyConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "PostFormatToTeamMemberConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "PostFormatToTeamMemberConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "PostFormatToTeamMemberConnectionWhereArgs",
   },
   Object {
     "fields": null,
@@ -5597,62 +4472,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "acfProject",
-      "author",
-      "authorDatabaseId",
-      "authorId",
-      "content",
-      "contentType",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "editingLockedBy",
-      "enclosure",
-      "enqueuedScripts",
-      "enqueuedStylesheets",
-      "featuredImage",
-      "featuredImageDatabaseId",
-      "featuredImageId",
-      "guid",
-      "id",
-      "isPreview",
-      "isRestricted",
-      "lastEditedBy",
-      "link",
-      "modified",
-      "modifiedGmt",
-      "preview",
-      "previewRevisionDatabaseId",
-      "previewRevisionId",
-      "slug",
-      "status",
-      "template",
-      "title",
-      "uri",
-    ],
-    "name": "Project",
-  },
-  Object {
-    "fields": null,
-    "name": "ProjectIdType",
-  },
-  Object {
-    "fields": Array [
-      "node",
-    ],
-    "name": "ProjectToPreviewConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "fieldGroupName",
-      "image",
-      "projectUrl",
-    ],
-    "name": "Project_Acfproject",
-  },
-  Object {
-    "fields": Array [
       "postsPerPage",
     ],
     "name": "ReadingSettings",
@@ -5707,9 +4526,7 @@ Array [
       "createPage",
       "createPost",
       "createPostFormat",
-      "createProject",
       "createTag",
-      "createTeamMember",
       "createTranslationFilterTest",
       "createTypeLimit0Test",
       "createTypeLimitTest",
@@ -5721,9 +4538,7 @@ Array [
       "deletePage",
       "deletePost",
       "deletePostFormat",
-      "deleteProject",
       "deleteTag",
-      "deleteTeamMember",
       "deleteTranslationFilterTest",
       "deleteTypeLimit0Test",
       "deleteTypeLimitTest",
@@ -5738,9 +4553,7 @@ Array [
       "updateMediaItem",
       "updatePage",
       "updatePost",
-      "updateProject",
       "updateSettings",
-      "updateTeamMember",
       "updateTranslationFilterTest",
       "updateTypeLimit0Test",
       "updateTypeLimitTest",
@@ -5781,8 +4594,6 @@ Array [
       "postFormat",
       "postFormats",
       "posts",
-      "project",
-      "projects",
       "readingSettings",
       "registeredScripts",
       "registeredStylesheets",
@@ -5792,8 +4603,6 @@ Array [
       "tags",
       "taxonomies",
       "taxonomy",
-      "teamMember",
-      "teamMembers",
       "termNode",
       "terms",
       "theme",
@@ -6090,25 +4899,6 @@ Array [
       "nodes",
       "pageInfo",
     ],
-    "name": "RootQueryToProjectConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "RootQueryToProjectConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "RootQueryToProjectConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
     "name": "RootQueryToTagConnection",
   },
   Object {
@@ -6136,25 +4926,6 @@ Array [
       "node",
     ],
     "name": "RootQueryToTaxonomyConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "RootQueryToTeamMemberConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "RootQueryToTeamMemberConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "RootQueryToTeamMemberConnectionWhereArgs",
   },
   Object {
     "fields": Array [
@@ -6331,7 +5102,6 @@ Array [
       "posts",
       "slug",
       "taxonomy",
-      "teamMembers",
       "termGroupId",
       "termTaxonomyId",
       "uri",
@@ -6388,25 +5158,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "TagToTeamMemberConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "TagToTeamMemberConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "TagToTeamMemberConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
       "archivePath",
       "connectedContentTypes",
       "description",
@@ -6453,203 +5204,6 @@ Array [
       "node",
     ],
     "name": "TaxonomyToContentTypeConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "acfData",
-      "author",
-      "authorDatabaseId",
-      "authorId",
-      "categories",
-      "commentCount",
-      "commentStatus",
-      "comments",
-      "content",
-      "contentType",
-      "databaseId",
-      "date",
-      "dateGmt",
-      "desiredSlug",
-      "editingLockedBy",
-      "enclosure",
-      "enqueuedScripts",
-      "enqueuedStylesheets",
-      "excerpt",
-      "featuredImage",
-      "featuredImageDatabaseId",
-      "featuredImageId",
-      "guid",
-      "id",
-      "isPreview",
-      "isRestricted",
-      "isRevision",
-      "lastEditedBy",
-      "link",
-      "menuOrder",
-      "modified",
-      "modifiedGmt",
-      "pingStatus",
-      "pinged",
-      "postFormats",
-      "preview",
-      "previewRevisionDatabaseId",
-      "previewRevisionId",
-      "revisionOf",
-      "revisions",
-      "slug",
-      "status",
-      "tags",
-      "template",
-      "title",
-      "toPing",
-      "uri",
-    ],
-    "name": "TeamMember",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberCategoriesInput",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberCategoriesNodeInput",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberIdType",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberPostFormatsInput",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberPostFormatsNodeInput",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberTagsInput",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberTagsNodeInput",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "TeamMemberToCategoryConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "TeamMemberToCategoryConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberToCategoryConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "TeamMemberToCommentConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "TeamMemberToCommentConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberToCommentConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "TeamMemberToPostFormatConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "TeamMemberToPostFormatConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberToPostFormatConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "node",
-    ],
-    "name": "TeamMemberToPreviewConnectionEdge",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "TeamMemberToRevisionConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "TeamMemberToRevisionConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberToRevisionConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "TeamMemberToTagConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "TeamMemberToTagConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMemberToTagConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "fieldGroupName",
-      "name",
-      "portrait",
-      "projects",
-      "title",
-      "twitterlink",
-      "webSite",
-    ],
-    "name": "TeamMember_Acfdata",
-  },
-  Object {
-    "fields": null,
-    "name": "TeamMember_Acfdata_Projects",
   },
   Object {
     "fields": Array [
@@ -6959,17 +5513,6 @@ Array [
   },
   Object {
     "fields": null,
-    "name": "UpdateProjectInput",
-  },
-  Object {
-    "fields": Array [
-      "clientMutationId",
-      "project",
-    ],
-    "name": "UpdateProjectPayload",
-  },
-  Object {
-    "fields": null,
     "name": "UpdateSettingsInput",
   },
   Object {
@@ -6993,17 +5536,6 @@ Array [
       "tag",
     ],
     "name": "UpdateTagPayload",
-  },
-  Object {
-    "fields": null,
-    "name": "UpdateTeamMemberInput",
-  },
-  Object {
-    "fields": Array [
-      "clientMutationId",
-      "teamMember",
-    ],
-    "name": "UpdateTeamMemberPayload",
   },
   Object {
     "fields": null,
@@ -7072,12 +5604,10 @@ Array [
       "nickname",
       "pages",
       "posts",
-      "projects",
       "registeredDate",
       "revisions",
       "roles",
       "slug",
-      "teamMembers",
       "translationFilterTests",
       "typeLimit0Tests",
       "typeLimitTests",
@@ -7229,44 +5759,6 @@ Array [
   Object {
     "fields": null,
     "name": "UserToPostConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "UserToProjectConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "UserToProjectConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "UserToProjectConnectionWhereArgs",
-  },
-  Object {
-    "fields": Array [
-      "edges",
-      "nodes",
-      "pageInfo",
-    ],
-    "name": "UserToTeamMemberConnection",
-  },
-  Object {
-    "fields": Array [
-      "cursor",
-      "node",
-    ],
-    "name": "UserToTeamMemberConnectionEdge",
-  },
-  Object {
-    "fields": null,
-    "name": "UserToTeamMemberConnectionWhereArgs",
   },
   Object {
     "fields": Array [
