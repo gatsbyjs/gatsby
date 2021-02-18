@@ -120,15 +120,18 @@ This is what a component using `gatsby-image` looks like:
 
 ```jsx
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, useStaticQuery } from "gatsby"
 import Img from "gatsby-image"
 
-export default ({ data }) => (
-  <div>
-    <h1>Hello gatsby-image</h1>
-    <Img fixed={data.file.childImageSharp.fixed} />
-  </div>
-)
+export default ({ data }) => {
+  const data = useStaticQuery(query);
+  return (
+    <div>
+      <h1>Hello gatsby-image</h1>
+      <Img fixed={data.file.childImageSharp.fixed} />
+    </div>
+  )
+}
 
 export const query = graphql`
   query {
