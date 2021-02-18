@@ -12,6 +12,18 @@ import {
 
 import { GatsbyCache } from "gatsby"
 
+export interface IFetchRemoteFileOptions {
+  url: string
+  cache: GatsbyCache
+  auth?: {
+    htaccess_pass?: string
+    htaccess_user?: string
+  }
+  httpHeaders?: OutgoingHttpHeaders
+  ext: string
+  name: string
+}
+
 const cacheIdForHeaders = (url: string): string =>
   `create-remote-file-node-headers-${url}`
 const cacheIdForExtensions = (url: string): string =>
@@ -142,18 +154,6 @@ const requestRemoteNode = (
       })
     })
   })
-
-interface IFetchRemoteFileOptions {
-  url: string
-  cache: GatsbyCache
-  auth?: {
-    htaccess_pass?: string
-    htaccess_user?: string
-  }
-  httpHeaders?: OutgoingHttpHeaders
-  ext: string
-  name: string
-}
 
 export async function fetchRemoteFile({
   url,
