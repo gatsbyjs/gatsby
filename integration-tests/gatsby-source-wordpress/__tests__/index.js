@@ -51,6 +51,14 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
 
     gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
 
+    // if the Gatsby process exits in an error state, exit
+    // the test process with the same error code
+    gatsbyDevelopProcess.on(`exit`, code => {
+      if (code !== 0) {
+        process.exit(code)
+      }
+    })
+
     await on({ resources: [`http://localhost:8000`] })
     done()
   })
