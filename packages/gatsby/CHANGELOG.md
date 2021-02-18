@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.5...gatsby@3.0.0-next.6) (2021-02-18)
+
+### Features
+
+- **conditional-page-builds:** make it default ([#29548](https://github.com/gatsbyjs/gatsby/issues/29548)) ([348a5bf](https://github.com/gatsbyjs/gatsby/commit/348a5bf989a955345d1b958e25978ed90864cd72))
+
+# [3.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.4...gatsby@3.0.0-next.5) (2021-02-17)
+
+### Bug Fixes
+
+- **conditional-page-builds:** track page data and not page query ([#29498](https://github.com/gatsbyjs/gatsby/issues/29498)) ([31a23d8](https://github.com/gatsbyjs/gatsby/commit/31a23d873d4b1fa76d4c432fcecfe54876c0af1d))
+
+### Features
+
+- **conditional-page-builds:** track ssr compilation hash ([#29482](https://github.com/gatsbyjs/gatsby/issues/29482)) ([2157ca9](https://github.com/gatsbyjs/gatsby/commit/2157ca9a08887256e22bb75e899b3964ba5d675c))
+- **conditional-page-builds:** track static query results ([#29486](https://github.com/gatsbyjs/gatsby/issues/29486)) ([16d16ce](https://github.com/gatsbyjs/gatsby/commit/16d16ce0824006c25576f32772cecb8fa3101c75))
+- **gatsby:** upgrade webpack to version 5 ([#29145](https://github.com/gatsbyjs/gatsby/issues/29145)) ([a7a3991](https://github.com/gatsbyjs/gatsby/commit/a7a3991ca2ad450abaacdc168e9900dad995b584))
+
 # [3.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.3...gatsby@3.0.0-next.4) (2021-02-15)
 
 ### Bug Fixes

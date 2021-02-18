@@ -291,11 +291,18 @@ export async function initialize({
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
+  const cacheDirectory = `${program.directory}/.cache`
+  const publicDirectory = `${program.directory}/public`
+
+  const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
+  const publicDirExists = fs.existsSync(publicDirectory)
+
+  // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
+  // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
-    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.env.NODE_ENV === `production`
+    process.env.NODE_ENV === `production` &&
+    publicDirExists &&
+    !cacheJsonDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
@@ -327,7 +334,6 @@ export async function initialize({
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes: any = await Promise.all([
-    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
@@ -350,13 +356,10 @@ export async function initialize({
       a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
-  const cacheDirectory = `${program.directory}/.cache`
-  const publicDirectory = `${program.directory}/public`
 
   // .cache directory exists in develop at this point
   // so checking for .cache/json as a heuristic (could be any expected file)
-  const cacheIsCorrupt =
-    fs.existsSync(`${cacheDirectory}/json`) && !fs.existsSync(publicDirectory)
+  const cacheIsCorrupt = cacheJsonDirExists && !publicDirExists
 
   if (cacheIsCorrupt) {
     reporter.info(reporter.stripIndent`
