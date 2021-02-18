@@ -279,7 +279,14 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`css-loader`),
         options: {
-          url: false,
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
+
+            return true
+          },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
         },
