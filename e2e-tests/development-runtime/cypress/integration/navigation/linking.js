@@ -143,42 +143,6 @@ describe(`navigation`, () => {
     })
   })
 
-  describe(`All location changes should trigger an effect (react-hot-loader)`, () => {
-    beforeEach(() => {
-      cy.visit(`/navigation-effects`).waitForRouteChange()
-    })
-
-    it(`should trigger an effect after a search param has changed`, () => {
-      cy.findByTestId(`effect-message`).should(
-        `have.text`,
-        `Waiting for effect`
-      )
-      cy.findByTestId(`send-search-message`).click().waitForRouteChange()
-      cy.findByTestId(`effect-message`).should(
-        `have.text`,
-        `?message=searchParam`
-      )
-    })
-
-    it(`should trigger an effect after the hash has changed`, () => {
-      cy.findByTestId(`effect-message`).should(
-        `have.text`,
-        `Waiting for effect`
-      )
-      cy.findByTestId(`send-hash-message`).click().waitForRouteChange()
-      cy.findByTestId(`effect-message`).should(`have.text`, `#message-hash`)
-    })
-
-    it(`should trigger an effect after the state has changed`, () => {
-      cy.findByTestId(`effect-message`).should(`have.text`, ``)
-      cy.findByTestId(`send-state-message`).click().waitForRouteChange()
-      cy.findByTestId(`effect-message`).should(
-        `have.text`,
-        `this is a message using the state`
-      )
-    })
-  })
-
   // TODO: Check if this is the correct behavior
   describe(`All location changes should trigger an effect (fast-refresh)`, () => {
     beforeEach(() => {
