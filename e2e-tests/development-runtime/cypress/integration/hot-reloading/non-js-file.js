@@ -10,6 +10,8 @@ describe(`hot reloading non-js file`, () => {
     cy.wait(1000)
 
     cy.visit(`/2018-12-14-hello-world/`).waitForRouteChange()
+
+    cy.wait(1000)
   })
 
   it(`displays placeholder content on launch`, () => {
@@ -18,11 +20,13 @@ describe(`hot reloading non-js file`, () => {
 
   it(`hot reloads with new content`, () => {
     cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, TEMPLATE)
+
     cy.exec(
       `npm run update -- --file content/2018-12-14-hello-world.md --replacements "${TEMPLATE}:${message}"`
     )
 
-    cy.waitForHmr()
+    // wati for socket.io to update
+    cy.wait(5000)
 
     cy.getTestElement(TEST_ID).invoke(`text`).should(`eq`, message)
   })
