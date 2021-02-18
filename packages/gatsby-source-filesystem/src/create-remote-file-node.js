@@ -5,7 +5,6 @@ const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const fileType = require(`file-type`)
-const { createProgress } = require(`./utils`)
 
 const { createFileNode } = require(`./create-file-node`)
 const {
@@ -15,10 +14,6 @@ const {
 } = require(`./utils`)
 const cacheIdForHeaders = url => `create-remote-file-node-headers-${url}`
 const cacheIdForExtensions = url => `create-remote-file-node-extension-${url}`
-
-let bar
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
 
 let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
@@ -77,14 +72,6 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
-})
-
-// when the queue is empty we stop the progressbar
-queue.on(`drain`, () => {
-  if (bar) {
-    bar.done()
-  }
-  totalJobs = 0
 })
 
 /**
@@ -458,14 +445,6 @@ module.exports = function createRemoteFileNode({
     )
   }
 
-  if (totalJobs === 0) {
-    bar = createProgress(`Downloading remote files`, reporter)
-    bar.start()
-  }
-
-  totalJobs += 1
-  bar.total = totalJobs
-
   const fileDownloadPromise = pushTask({
     url,
     cache,
@@ -478,11 +457,7 @@ module.exports = function createRemoteFileNode({
     name,
   })
 
-  processingCache[url] = fileDownloadPromise.then(node => {
-    bar.tick()
-
-    return node
-  })
+  processingCache[url] = fileDownloadPromise.then(node => node)
 
   return processingCache[url]
 }

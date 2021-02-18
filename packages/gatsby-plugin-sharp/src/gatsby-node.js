@@ -7,29 +7,14 @@ const {
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
-const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-// create the progressbar once and it will be killed in another lifecycle
-const finishProgressBar = () => {
-  const progressBar = getProgressBar()
-  if (progressBar) {
-    progressBar.done()
-  }
-}
-
-exports.onPostBuild = () => finishProgressBar()
-
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
   if (!_lazyJobsEnabled()) {
-    finishProgressBar()
     return
   }
-
-  createOrGetProgressBar()
-  finishProgressBar()
 
   app.use(async (req, res, next) => {
     const decodedURI = decodeURIComponent(req.path)
@@ -119,10 +104,7 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
   }
 }
 
-exports.onPreBootstrap = async (
-  { actions, emitter, reporter, cache, store },
-  pluginOptions
-) => {
+exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
   setActions(actions)
   setPluginOptions(pluginOptions)
 
@@ -174,8 +156,6 @@ exports.onPreBootstrap = async (
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
-        const progress = createOrGetProgressBar(reporter)
-        progress.addImageToProcess(imageCount)
       }
     })
 
@@ -188,9 +168,6 @@ exports.onPreBootstrap = async (
           return
         }
 
-        const imageCount = imageCountInJobsMap.get(jobContentDigest)
-        const progress = createOrGetProgressBar(reporter)
-        progress.tick(imageCount)
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })

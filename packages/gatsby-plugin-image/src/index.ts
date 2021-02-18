@@ -9,14 +9,15 @@ export { StaticImage } from "./components/static-image.server"
 export {
   getImage,
   getSrc,
-  useGatsbyImage,
-  useArtDirection,
+  getImageData,
+  withArtDirection,
   IArtDirectedImage,
-  IUseGatsbyImageArgs,
+  IGetImageDataArgs,
   IUrlBuilderArgs,
 } from "./components/hooks"
 export {
   generateImageData,
+  getLowResolutionImageURL,
   IGatsbyImageHelperArgs,
   ISharpGatsbyImageArgs,
   IImage,

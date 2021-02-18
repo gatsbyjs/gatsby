@@ -220,7 +220,9 @@ const processTypeComposer = async ({
       await addTypeToRootQuery({ schemaComposer, typeComposer, parentSpan })
     }
   } else if (typeComposer instanceof InterfaceTypeComposer) {
-    if (typeComposer.getExtension(`nodeInterface`)) {
+    if (isNodeInterface(typeComposer)) {
+      await addNodeInterfaceFields({ schemaComposer, typeComposer, parentSpan })
+
       // We only process field extensions for queryable Node interfaces, so we get
       // the input args on the root query type, e.g. `formatString` etc. for `dateformat`
       await processFieldExtensions({
@@ -448,22 +450,44 @@ const addExtensions = ({
           break
         case `nodeInterface`:
           if (typeComposer instanceof InterfaceTypeComposer) {
-            if (
-              !typeComposer.hasField(`id`) ||
-              typeComposer.getFieldType(`id`).toString() !== `ID!`
-            ) {
-              report.panic(
-                `Interfaces with the \`nodeInterface\` extension must have a field ` +
-                  `\`id\` of type \`ID!\`. Check the type definition of ` +
-                  `\`${typeComposer.getTypeName()}\`.`
-              )
-            }
             typeComposer.setExtension(`nodeInterface`, true)
           }
           break
         default:
       }
     })
+  }
+
+  if (
+    typeComposer instanceof InterfaceTypeComposer &&
+    isNodeInterface(typeComposer)
+  ) {
+    // TODO: remove nodeInterface in Gatsby v4
+    if (typeComposer.hasExtension(`nodeInterface`)) {
+      report.warn(
+        `Deprecation warning: ` +
+          `\`@nodeInterface\` extension is deprecated and will be removed in Gatsby v4. ` +
+          `Use interface inheritance instead.\n` +
+          `To upgrade replace the old format:\n` +
+          `  interface \`${typeComposer.getTypeName()}\` @nodeInterface\n` +
+          `with the new one (in \`createTypes\` action of schema customization API):\n` +
+          `  interface \`${typeComposer.getTypeName()}\` implements Node\n` +
+          `Read more about schema customization here:\n` +
+          `https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/`
+      )
+    }
+
+    const hasCorrectIdField =
+      typeComposer.hasField(`id`) &&
+      typeComposer.getFieldType(`id`).toString() === `ID!`
+
+    if (!hasCorrectIdField) {
+      report.panic(
+        `Interfaces with the \`nodeInterface\` extension must have a field ` +
+          `\`id\` of type \`ID!\`. Check the type definition of ` +
+          `\`${typeComposer.getTypeName()}\`.`
+      )
+    }
   }
 
   if (
@@ -646,6 +670,27 @@ const createTypeComposerFromGatsbyType = ({
           schemaComposer.typeMapper.convertOutputFieldConfigMap(
             type.config.fields
           ),
+        interfaces: () => {
+          if (type.config.interfaces) {
+            return type.config.interfaces.map(iface => {
+              if (typeof iface === `string`) {
+                // Sadly, graphql-compose runs this function too early - before we have
+                // all of those interfaces actually created in the schema, so have to create
+                // a temporary placeholder composer :/
+                if (!schemaComposer.has(iface)) {
+                  const tmpComposer = schemaComposer.createInterfaceTC(iface)
+                  tmpComposer.setExtension(`isPlaceholder`, true)
+                  return tmpComposer
+                }
+                return schemaComposer.getIFTC(iface)
+              } else {
+                return iface
+              }
+            })
+          } else {
+            return []
+          }
+        },
       })
       break
     }
@@ -953,10 +998,7 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
         )
         return
       }
-      if (
-        type instanceof InterfaceTypeComposer &&
-        !type.hasExtension(`nodeInterface`)
-      ) {
+      if (type instanceof InterfaceTypeComposer && !isNodeInterface(type)) {
         report.error(
           `The \`childOf\` extension can only be used on interface types that ` +
             `have the \`@nodeInterface\` extension.\n` +
@@ -987,11 +1029,11 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
     const typeComposer = schemaComposer.getAnyTC(parent)
     if (
       typeComposer instanceof InterfaceTypeComposer &&
-      !typeComposer.hasExtension(`nodeInterface`)
+      !isNodeInterface(typeComposer)
     ) {
       report.error(
         `With the \`childOf\` extension, children fields can only be added to ` +
-          `interfaces which have the \`@nodeInterface\` extension.\n` +
+          `interfaces which implement the \`Node\` interface.\n` +
           `Check the type definition of \`${typeComposer.getTypeName()}\`.`
       )
       return
@@ -1008,11 +1050,11 @@ const addConvenienceChildrenFields = ({ schemaComposer }) => {
       parentTypes.forEach(typeComposer => {
         if (
           typeComposer instanceof InterfaceTypeComposer &&
-          !typeComposer.hasExtension(`nodeInterface`)
+          !isNodeInterface(typeComposer)
         ) {
           report.error(
             `With the \`childOf\` extension, children fields can only be added to ` +
-              `interfaces which have the \`@nodeInterface\` extension.\n` +
+              `interfaces which implement the \`Node\` interface.\n` +
               `Check the type definition of \`${typeComposer.getTypeName()}\`.`
           )
           return
@@ -1256,13 +1298,15 @@ const validate = (type, value) => {
   }
 }
 
+// TODO: remove nodeInterface in Gatsby v4
+const isNodeInterface = interfaceTypeComposer =>
+  interfaceTypeComposer.hasExtension(`nodeInterface`) ||
+  interfaceTypeComposer.hasInterface(`Node`)
+
 const checkQueryableInterfaces = ({ schemaComposer }) => {
   const queryableInterfaces = new Set()
   schemaComposer.forEach(type => {
-    if (
-      type instanceof InterfaceTypeComposer &&
-      type.getExtension(`nodeInterface`)
-    ) {
+    if (type instanceof InterfaceTypeComposer && isNodeInterface(type)) {
       queryableInterfaces.add(type.getTypeName())
     }
   })
@@ -1282,8 +1326,7 @@ const checkQueryableInterfaces = ({ schemaComposer }) => {
   })
   if (incorrectTypes.size) {
     report.panic(
-      `Interfaces with the \`nodeInterface\` extension must only be ` +
-        `implemented by types which also implement the \`Node\` ` +
+      `Types implementing queryable interfaces must also implement the \`Node\` ` +
         `interface. Check the type definition of ` +
         `${Array.from(incorrectTypes)
           .map(t => `\`${t}\``)

@@ -45,7 +45,7 @@ See the [File System Route API](/docs/reference/routing/file-system-route-api/) 
 
 ### Using `gatsby-node.js`
 
-The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modyfing the `path`, you can use [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), including the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/config-files/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
+The File System Route API should be enough to get you through most use cases but if you need extra control, e.g. for passing data via `pageContext` or modifying the `path`, you can use [Gatsby Node APIs](/docs/reference/config-files/gatsby-node/), including the [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) function, inside your `gatsby-node.js` file. This function will give you access to the [`createPage`](/docs/reference/config-files/actions/#createPage) action, which is at the core of programmatically creating a page. Here's an example for creating pages from Markdown files sourced by Gatsby's data layer:
 
 ```js:title=gatsby-node.js
 exports.createPages = async function ({ actions, graphql }) {

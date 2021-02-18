@@ -68,15 +68,7 @@ describe(`Filter input`, () => {
     const parentFilterInput = schema.getType(`ParentFilterInput`)
     const fields = parentFilterInput.getFields()
     expect(fields.id).toBeDefined()
-
-    // graphql-compose v7 requires union type to be replaced by a fallback type
-    // (we chose to use boolean as a fallback as it is the least confusing of all options)
-    expect(fields.nested).toBeDefined()
-    expect(fields.nested.type.name).toEqual(`ParentNestedFilterInput`)
-    const nestedInput = schema.getType(`ParentNestedFilterInput`)
-    expect(nestedInput.getFields().union.type.name).toEqual(
-      `BooleanQueryOperatorInput`
-    )
+    expect(fields.nested).not.toBeDefined()
   })
 })
 

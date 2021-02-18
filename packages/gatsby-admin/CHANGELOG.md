@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.4...gatsby-admin@0.10.0-next.5) (2021-02-17)
+
+### Features
+
+- **gatsby:** upgrade webpack to version 5 ([#29145](https://github.com/gatsbyjs/gatsby/issues/29145)) ([a7a3991](https://github.com/gatsbyjs/gatsby/commit/a7a3991ca2ad450abaacdc168e9900dad995b584))
+
+# [0.10.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.3...gatsby-admin@0.10.0-next.4) (2021-02-15)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.2...gatsby-admin@0.10.0-next.3) (2021-02-12)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.1...gatsby-admin@0.10.0-next.2) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-admin
+
 # [0.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.0...gatsby-admin@0.10.0-next.1) (2021-02-08)
 
 **Note:** Version bump only for package gatsby-admin
