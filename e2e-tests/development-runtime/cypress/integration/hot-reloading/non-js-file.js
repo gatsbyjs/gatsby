@@ -21,7 +21,8 @@ describe(`hot reloading non-js file`, () => {
     cy.exec(
       `npm run update -- --file content/2018-12-14-hello-world.md --replacements "${TEMPLATE}:${message}"`
     )
-    cy.wait(1000)
+
+    cy.waitForHmr()
 
     cy.getTestElement(TEST_ID).invoke(`text`).should(`eq`, message)
   })
