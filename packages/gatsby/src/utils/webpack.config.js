@@ -290,15 +290,6 @@ module.exports = async (
       rules.js({
         modulesThatUseGatsby,
       }),
-      // Webpack expects extensions when importing to mimic ESM spec.
-      // Not all libraries have adapted so we don't enforce its behaviour
-      // @see https://github.com/webpack/webpack/issues/11467
-      {
-        test: /\.m?js/,
-        resolve: {
-            fullySpecified: false
-        }
-      },
       rules.yaml(),
       rules.fonts(),
       rules.images(),
@@ -423,6 +414,13 @@ module.exports = async (
         "react-dom": getPackageRoot(`react-dom`),
       },
       plugins: [new CoreJSResolver()],
+      // https://webpack.js.org/configuration/module/#resolvefullyspecified
+      // Does not force extensions for ESM modules
+      byDependency: {
+        esm: {
+          fullySpecified: false,
+        },
+      },
     }
 
     const target =
