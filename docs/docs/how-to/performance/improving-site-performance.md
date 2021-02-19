@@ -30,7 +30,7 @@ There are two options for this: 
 
 For additional precision, run Lighthouse multiple times and take the median result. 
 
-### Third, quantify the impact of each change you make 
+### Step 3: Quantify the impact of each change you make 
 
 While you're doing performance-improvement work, it's important to understand the impact of each change or set of changes. You may find that one change gives you a 2-point Lighthouse improvement and another gives you a 20-point improvement.
 
