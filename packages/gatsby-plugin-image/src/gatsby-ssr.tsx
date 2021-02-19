@@ -40,6 +40,7 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     transform: translateZ(0px);
     transition: opacity 250ms linear;
     will-change: opacity;
+    content-visibility: auto;
   }
   .gatsby-image-wrapper-constrained {
     display: inline-block;

@@ -93,6 +93,7 @@ export async function applyPolyfill(
       /* webpackChunkName: "gatsby-plugin-image-objectfit-polyfill" */ `objectFitPolyfill`
     )
   }
+  // eslint-disable-next-line @typescript-eslint/no-extra-semi
   ;(window as any).objectFitPolyfill(ref.current)
 }
 
@@ -248,10 +249,10 @@ export function getMainProps(
       transition: `opacity 250ms linear`,
       width: `100%`,
       willChange: `opacity`,
+      contentVisibility: `auto`,
       ...style,
-    }
+    } as CSSProperties
   }
-
   const result = {
     ...images,
     loading,
