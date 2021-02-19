@@ -32,6 +32,7 @@ const reducer = (state, event) => {
 const initialState = {
   runtimeErrorIndex: 0,
   buildError: null,
+  graphqlErrors: [],
   errors: [],
 }
 

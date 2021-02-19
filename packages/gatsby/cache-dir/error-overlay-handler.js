@@ -29,11 +29,11 @@ const handleErrorOverlay = () => {
 
   if (errorStringsToDisplay.length > 0) {
     window.___emitter.emit(`FAST_REFRESH`, {
-      action: `SHOW_COMPILE_ERROR`,
+      action: `SHOW_GRAPHQL_ERRORS`,
       payload: errorStringsToDisplay.join(`\n\n`),
     })
   } else {
-    window.___emitter.emit(`FAST_REFRESH`, { action: `CLEAR_COMPILE_ERROR` })
+    window.___emitter.emit(`FAST_REFRESH`, { action: `CLEAR_GRAPHQL_ERRORS` })
   }
 }
 
