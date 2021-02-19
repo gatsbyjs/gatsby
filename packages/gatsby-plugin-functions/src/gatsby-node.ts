@@ -46,6 +46,23 @@ export async function onPreBootstrap(
   //   path: path.join(functionsDirectory, `month.js`),
   // })
 
+  const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
+    if (key.match(/^GATSBY_/)) {
+      acc[key] = JSON.stringify(process.env[key])
+    }
+    return acc
+  }, {})
+
+  const varObject = Object.keys(gatsbyVarObject).reduce(
+    (acc, key) => {
+      acc[`process.env.${key}`] = gatsbyVarObject[key]
+      return acc
+    },
+    {
+      "process.env": `({})`,
+    }
+  )
+
   await Promise.all(
     files.map(file => {
       const config = {
@@ -68,6 +85,7 @@ export async function onPreBootstrap(
             },
           ],
         },
+        plugins: [new webpack.DefinePlugin(varObject)],
         // devtool: `source-map`,
       }
 
