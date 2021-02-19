@@ -209,13 +209,15 @@ export const pageQuery = graphql`
         raw
         references {
           ... on ContentfulPage {
-            # contentful_id is required to resolve the references
+            # __typename and contentful_id are required to resolve the references
+            __typename
             contentful_id
             title
             slug
           }
           ... on ContentfulAsset {
-            # contentful_id is required to resolve the references
+            # __typename and contentful_id are required to resolve the references
+            __typename
             contentful_id
             fluid(maxWidth: 600) {
               ...GatsbyContentfulFluid_withWebp
