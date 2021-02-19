@@ -119,7 +119,7 @@ There's a couple ways to detect this:
 Start by identifying critical paths on your site -- destinations you really care about. This might be your home page, a signup page, a product template, and so on. Other site stakeholders may have opinions; it's worth quickly consulting them.\
 Then, inspect the critical paths for large third-party libraries and unneeded components. Repeat the process from steps two and three to identify optimization opportunities.
 
-#### Fifth, on critical paths, lazy-load below-the-fold components
+#### Step 5: On critical paths, lazy-load below-the-fold components
 
 Gatsby's default behavior is to bundle the entire page together. However, there may be some components that don't need to be loaded right away. Perhaps your home page is quite long and you're willing to defer loading elements farther down on the page if it makes the initial page load faster.
 
