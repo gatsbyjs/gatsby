@@ -140,7 +140,7 @@ After installing gatsby-plugin-preact, you'll need to use [Preact Developer Tool
 
 When working with CSS and fonts, there are certain additional patterns you'll need to follow or tools to use in order to optimize performance.
 
-#### First, check for globally bundled CSS
+#### Step 1: Check for globally bundled CSS
 
 Without properly scoped and imported CSS you can end up with a large bundle with all your CSS getting pulled in on every page. What you want, instead, is a small bundle pulling in only needed CSS.
 
