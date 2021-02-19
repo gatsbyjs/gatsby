@@ -32,6 +32,5 @@ node_modules
 yarn.lock
 src
 flow-typed
-coverage
 decls
 examples

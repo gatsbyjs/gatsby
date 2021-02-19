@@ -30,6 +30,5 @@ yarn.lock
 __tests__
 __fixtures__
 flow-typed
-coverage
 decls
 examples

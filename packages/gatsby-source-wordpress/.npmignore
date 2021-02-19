@@ -40,9 +40,7 @@ build/Release
 node_modules
 *.un~
 yarn.lock
-src
 flow-typed
-coverage
 decls
 examples
 
