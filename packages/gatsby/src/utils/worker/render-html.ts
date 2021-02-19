@@ -137,9 +137,10 @@ async function getScriptsAndStylesForTemplate(
     }
 
     for (const asset of namedChunkGroup.assets) {
-      handleAsset(asset, `preload`)
+      handleAsset(asset.name, `preload`)
     }
 
+    // TODO: figure out childAssets for webpack@5 - there is no longer `childAssets` in webpack.stats.json
     // Handling for webpack magic comments, for example:
     // import(/* webpackChunkName: "<chunk_name>", webpackPrefetch: true */ `<path_to_module>`)
     // will produce
@@ -156,12 +157,12 @@ async function getScriptsAndStylesForTemplate(
     //     }
     //   }
     // }
-    for (const [rel, assets] of Object.entries(namedChunkGroup.childAssets)) {
-      // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
-      for (const asset of assets) {
-        handleAsset(asset, rel)
-      }
-    }
+    // for (const [rel, assets] of Object.entries(namedChunkGroup.childAssets)) {
+    //   // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
+    //   for (const asset of assets) {
+    //     handleAsset(asset, rel)
+    //   }
+    // }
   }
 
   // create scripts array, making sure "preload" scripts have priority

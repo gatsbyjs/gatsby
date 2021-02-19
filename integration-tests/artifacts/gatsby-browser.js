@@ -2,12 +2,14 @@ const React = require(`react`)
 const { useMoreInfoQuery } = require("./src/hooks/use-more-info-query")
 const Github = require(`./src/components/github`).default
 
-exports.wrapRootElement = ({ element }) => (
-  <>
-    <Github />
-    {element}
-  </>
-)
+exports.wrapRootElement = ({ element }) => {
+  return (
+    <>
+      <Github />
+      {element}
+    </>
+  )
+}
 
 function PageWrapper({ children }) {
   const data = useMoreInfoQuery()

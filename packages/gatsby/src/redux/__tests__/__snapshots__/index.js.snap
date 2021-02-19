@@ -19,7 +19,7 @@ Object {
       "/my-sweet-new-page/" => Object {
         "dirty": 2,
         "isDeleted": false,
-        "pageQueryHash": "",
+        "pageDataHash": "",
       },
     },
     "trackedStaticQueryResults": Map {},

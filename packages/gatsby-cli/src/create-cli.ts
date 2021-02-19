@@ -243,18 +243,20 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
           type: `string`,
           describe: `Tracer configuration file (OpenTracing compatible). See https://gatsby.dev/tracing`,
         })
-        // log-pages and write-to-file are specific to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
-        // because of that they are hidden from `--help` but still defined so `yargs` know about them
+        // log-pages and write-to-file were added specifically to experimental GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES feature
+        // in gatsby@2. They are useful, but not very applicable (specifically `--write-to-file`) as generic approach, as it only
+        // list pages without other artifacts, so it's useful in very narrow scope. Because we don't have alternative right now
+        // those toggles are kept for users that rely on them, but we won't promote them and will keep them "hidden".
         .option(`log-pages`, {
           type: `boolean`,
           default: false,
-          describe: `Log the pages that changes since last build (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          describe: `Log the pages that changes since last build.`,
           hidden: true,
         })
         .option(`write-to-file`, {
           type: `boolean`,
           default: false,
-          describe: `Save the log of changed pages for future comparison (only available when using GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES).`,
+          describe: `Save the log of changed pages for future comparison.`,
           hidden: true,
         }),
     handler: handlerP(

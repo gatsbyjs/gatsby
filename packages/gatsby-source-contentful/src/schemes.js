@@ -4,6 +4,7 @@ const ImageFormatType = new GraphQLEnumType({
   name: `ContentfulImageFormat`,
   values: {
     NO_CHANGE: { value: `` },
+    AUTO: { value: `` },
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },

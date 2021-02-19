@@ -97,6 +97,14 @@ export interface IGatsbyStaticQueryComponents {
   query: string
   hash: string
 }
+
+export interface IGatsbyPageComponent {
+  componentPath: SystemPath
+  query: string
+  pages: Set<string>
+  isInBootstrap: boolean
+}
+
 export interface IDefinitionMeta {
   name: string
   def: DefinitionNode
@@ -167,7 +175,7 @@ export interface IComponentState {
 export interface IHtmlFileState {
   dirty: number
   isDeleted: boolean
-  pageQueryHash: string // TODO: change to page-data hash
+  pageDataHash: string
 }
 
 export interface IStaticQueryResultState {
@@ -228,15 +236,7 @@ export interface IGatsbyState {
     deletedQueries: Set<Identifier>
     dirtyQueriesListToEmitViaWebsocket: Array<string>
   }
-  components: Map<
-    SystemPath,
-    {
-      componentPath: SystemPath
-      query: string
-      pages: Set<string>
-      isInBootstrap: boolean
-    }
-  >
+  components: Map<IGatsbyPageComponent["componentPath"], IGatsbyPageComponent>
   staticQueryComponents: Map<
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
@@ -788,8 +788,10 @@ export interface ISetResolvedNodesAction {
 export interface IAddPageDataStatsAction {
   type: `ADD_PAGE_DATA_STATS`
   payload: {
+    pagePath: string
     filePath: SystemPath
     size: number
+    pageDataHash: string
   }
 }
 

@@ -19,7 +19,6 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { getReactHotLoaderStrategy } from "../utils/get-react-hot-loader-strategy"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
@@ -165,24 +164,6 @@ export async function initialize({
 
   // Setup flags
   if (config) {
-    // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
-    if (
-      config.flags?.FAST_REFRESH &&
-      process.env.GATSBY_HOT_LOADER &&
-      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-    ) {
-      delete config.flags.FAST_REFRESH
-      reporter.warn(
-        reporter.stripIndent(`
-          Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
-
-          Will use react-hot-loader.
-
-          To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
-        `)
-      )
-    }
-
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
       availableFlags,
@@ -215,8 +196,6 @@ export async function initialize({
       telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
-
-  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
@@ -297,14 +276,12 @@ export async function initialize({
   const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
   const publicDirExists = fs.existsSync(publicDirectory)
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
-  // For Conditional Page Builds, we do want to remove those when there is `public` dir
-  // but cache doesn't exist
+  // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
+  // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
     process.env.NODE_ENV === `production` &&
-    (!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES ||
-      (publicDirExists && !cacheJsonDirExists))
+    publicDirExists &&
+    !cacheJsonDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
