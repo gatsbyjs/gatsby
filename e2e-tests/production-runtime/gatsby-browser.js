@@ -1,5 +1,6 @@
 const Wrapper = require(`./src/wrap-root-element`).default
 require(`./src/index.css`)
+require(`typeface-merriweather`)
 
 if (typeof window !== `undefined`) {
   window.___PageComponentLifecycleCallsLog = []

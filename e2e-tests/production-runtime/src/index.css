@@ -2,3 +2,15 @@
   position: relative;
   z-index: 9001; /* it's over 9000 */
 }
+
+.dog-background {
+  background: url("/dog-thumbnail.jpg");
+  width: 640px;
+  height: 427px;
+}
+
+.merriweather {
+  font-family: "Merriweather";
+  font-weight: bold;
+  font-size: 18px;
+}
