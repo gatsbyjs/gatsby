@@ -127,7 +127,7 @@ One way you can do this is to lazy-load below-the-fold components using `loadabl
 
 We recommend you use the [gatsby plugin to install loadable-components](https://www.gatsbyjs.com/plugins/gatsby-plugin-loadable-components-ssr/). 
 
-#### Sixth, consider using the preact plugin
+#### Step 6: Consider using the Preact plugin
 
 [Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [Gatsby-plugin-preact](https://www.gatsbyjs.com/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of Javascript from your bundle.
 
