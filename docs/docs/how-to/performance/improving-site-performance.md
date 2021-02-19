@@ -158,7 +158,7 @@ If you're using a CSS-in-JS library like styled-components or emotion, use the r
 
 These plugins server-side render the styles; otherwise, the output HTML will intersperse `<style>` tags with HTML elements, which can cause the browser to perform costly layout reflow.
 
-#### Third, optimize fonts
+#### Step 3: Optimize fonts
 
 Font files can usually be reduced in size significantly. If your font file is over 50kb, it's too large. In addition, fonts block page load, so it's important to think about reducing network calls.
 
