@@ -114,7 +114,7 @@ There's a couple ways to detect this:
 
 - If you need the data, but not right away (perhaps it's lower in the page, or being used by an event handler), you might consider switching to asynchronously fetching it.  
 
-#### Fourth, on critical paths, identify unneeded code & components
+#### Step 4: On critical paths, identify unneeded code & components
 
 Start by identifying critical paths on your site -- destinations you really care about. This might be your home page, a signup page, a product template, and so on. Other site stakeholders may have opinions; it's worth quickly consulting them.\
 Then, inspect the critical paths for large third-party libraries and unneeded components. Repeat the process from steps two and three to identify optimization opportunities.
