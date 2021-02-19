@@ -10,7 +10,7 @@ This document is a brief guide to improve your Gatsby site's performance.
 
 Because websites are hard to make fast and easy to make slow, performance improvement isn't just something that takes place at one point in time. Instead, performance is a system that you put in place to maintain and extend performance gains over time.
 
-### First, choose a testing tool
+### Step 1: Choose a testing tool
 
 In order to get a baseline, you need to decide what you consider the "source of truth".
 
