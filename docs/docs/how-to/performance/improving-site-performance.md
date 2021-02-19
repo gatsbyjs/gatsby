@@ -82,7 +82,9 @@ Among all assets, Javascript can be uniquely costly to your performance. This is
 
 - With third-party npm modules, it's easy to accidentally add a lot of JavaScript you don't actually need.
 
-#### First, profile your bundle
+To reduce your JavaScript bundle size, follow the steps below.
+
+#### Step 1: Profile your bundle
 
 The first step to fix this is to figure out what's going on. Use gatsby-plugin-webpack-bundle-analyzer to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
 
