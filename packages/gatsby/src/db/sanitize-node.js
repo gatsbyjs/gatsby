@@ -31,7 +31,7 @@ const sanitizeNode = (data, isNode = true, path = new Set()) => {
       data = omitUndefined(returnData)
     }
 
-    // arrays and plain objects are supported - no need to to sanitize
+    // arrays and plain objects are supported - no need to sanitize
     return data
   }
 

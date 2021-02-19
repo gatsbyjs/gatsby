@@ -38,8 +38,8 @@ class Search extends Component {
     const dataToSearch = new JsSearch.Search(`isbn`)
 
     /**
-     *  defines a indexing strategy for the data
-     * more more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
+     * defines an indexing strategy for the data
+     * more about it in here https://github.com/bvaughn/js-search#configuring-the-index-strategy
      */
     dataToSearch.indexStrategy = new JsSearch.PrefixIndexStrategy()
 
