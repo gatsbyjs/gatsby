@@ -62,9 +62,6 @@ function replaceRule(value, stage) {
         return {
           ...rule,
           loader: MiniCssExtractPlugin.loader,
-          options: {
-            hmr: true,
-          },
         }
       }
 

@@ -33,7 +33,7 @@ exports.onCreateWebpackConfig = (
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ hmr: false }),
+      !isSSR && loaders.miniCssExtract(),
       loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
