@@ -127,7 +127,7 @@ Gatsby's default behavior is to bundle the entire page together. However, there 
 
 One way you can do this is to lazy-load below-the-fold components using `loadable-components`. `loadable-components` is the recommended lazy-loading solution for all server-side-rendered React applications, including Gatsby websites.
 
-We recommend you use the [gatsby plugin to install loadable-components](https://www.gatsbyjs.com/plugins/gatsby-plugin-loadable-components-ssr/). 
+We recommend you use the [gatsby plugin to install `loadable-components`](https://www.gatsbyjs.com/plugins/gatsby-plugin-loadable-components-ssr/). 
 
 #### Step 6: Consider using the Preact plugin
 
