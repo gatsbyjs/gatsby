@@ -18,7 +18,7 @@ In this case, your options are likely between a technologically forward e-commer
 
 ### Choosing additional content systems
 
-Once an organization selects a main e-commerce platform, it may also want or need other content stores that will get pulled into the website. They might choose a CMS like Contentful for complex content modelling, or Wordpress for blog content authoring. They might choose Yotpo for customer reviews or Salsify for product information management.
+Once an organization selects a main e-commerce platform, it may also want or need other content stores that will get pulled into the website. They might choose a CMS like Contentful for complex content modelling, or WordPress for blog content authoring. They might choose Yotpo for customer reviews or Salsify for product information management.
 
 ### Why organizations build e-commerce sites with Gatsby
 
@@ -26,7 +26,7 @@ Organizations looking for a JAMStack e-commerce site that go with Gatsby typical
 
 From a conversion perspective, Gatsby’s lightning-fast performance is a huge win: Gatsby automates code splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources, and more to ensure your site is fully optimized.
 
-And with Gatsby’s pre-built integrations, it can pull data in from all of these sources (Shopify, plus Wordpress, Contentful, Yotpo, etc) and make it available for the React components.
+And with Gatsby’s pre-built integrations, it can pull data in from all of these sources (Shopify, plus WordPress, Contentful, Yotpo, etc) and make it available for the React components.
 
 ### Specific e-commerce development considerations
 
@@ -42,6 +42,6 @@ Additional resources:
 
 - [What is Headless Commerce?](https://www.bigcommerce.com/articles/headless-commerce/#unlocking-flexibility-examples-of-headless-commerce-in-action), an overview from BigCommerce.
 - [Gatsby Shopify Starter](https://github.com/AlexanderProd/gatsby-shopify-starter)
-- Sell Things Fast With Gatsby and Shopify by Trevor Harmon [blog post](https://thetrevorharmon.com/blog/sell-things-fast-with-gatsby-and-shopify), [video](https://www.youtube.com/watch?v=tUtuGAFOjYI&t=16m59s) and [Github repo](https://github.com/thetrevorharmon/sell-things-fast/)
+- Sell Things Fast With Gatsby and Shopify by Trevor Harmon [blog post](https://thetrevorharmon.com/blog/sell-things-fast-with-gatsby-and-shopify), [video](https://www.youtube.com/watch?v=tUtuGAFOjYI&t=16m59s) and [GitHub repo](https://github.com/thetrevorharmon/sell-things-fast/)
 - [Gatsby Use Cases: E-commerce](https://www.gatsbyjs.com/use-cases/e-commerce)
 - [Best e-commerce solutions for Jamstack websites](https://bejamas.io/blog/jamstack-ecommerce/) from the Bejamas blog.

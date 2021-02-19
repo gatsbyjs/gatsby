@@ -87,14 +87,14 @@ Take that query and make the query directly to your WP instance GraphQL API like
 
     #### If it does have missing data:
 
-    this means you're experiencing a bug on the WPGraphQL side of things. Seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL Github repo](https://github.com/wp-graphql/wp-graphql), or the Github repo for the WPGraphQL extension that manages the fields you're having trouble with.
+    this means you're experiencing a bug on the WPGraphQL side of things. Seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL GitHub repo](https://github.com/wp-graphql/wp-graphql), or the GitHub repo for the WPGraphQL extension that manages the fields you're having trouble with.
     To help them debug you should narrow down exactly which combination of fields in the generated query you copied is causing issues. Comment out fields 1 by 1 until the problem goes away to determine which combination of fields isn't working.
 
     **Note:** A common cause of this problem is that you're using ACF and you've named multiple fields with the same name but in different field groups. Identify conflicting field names and rename them.
 
     #### If it does not have missing data:
 
-    This means it's a `gatsby-source-wordpress` bug. Open an issue in the [Github repo](https://github.com/gatsbyjs/gatsby/issues/new).
+    This means it's a `gatsby-source-wordpress` bug. Open an issue in the [GitHub repo](https://github.com/gatsbyjs/gatsby/issues/new).
 
 ### Node Sourcing GraphQL errors
 
@@ -117,7 +117,7 @@ Now run `gatsby develop` or `gatsby build` again. When the process exits on your
 
 Within this file will be the query made during node sourcing to fetch data from WPGraphQL into Gatsby.
 
-You can use this query to reproduce your error message and debug your error message outside of Gatsby. If you're stuck seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL Github repo](https://github.com/wp-graphql/wp-graphql), or the Github repo for the WPGraphQL extension that manages the fields you're having trouble with.
+You can use this query to reproduce your error message and debug your error message outside of Gatsby. If you're stuck seek help in the [WPGraphQL Slack](https://wpgql-slack.herokuapp.com/) or open an issue in the [WPGraphQL GitHub repo](https://github.com/wp-graphql/wp-graphql), or the GitHub repo for the WPGraphQL extension that manages the fields you're having trouble with.
 
 ### WordPress 50\* errors
 
