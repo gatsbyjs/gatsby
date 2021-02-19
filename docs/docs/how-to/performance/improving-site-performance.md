@@ -22,23 +22,24 @@ These tools measure what are known as "Core Web Vitals", which measure both time
 
 Site performance monitoring becomes increasingly important the more long-lasting your project is. You can put a lot of effort into performance work -- but then ship a performance regression that wipes out all your hard work!
 
-There are two options for this: 
+There are two options for this:
 
 - Gatsby Cloud has Lighthouse performance reports built into its CI/CD. Every time someone opens a pull request or merges into master, a Lighthouse report will be run and the performance score displayed.
 
-- Use a third-party service that offers performance monitoring. Different services offer different options -- scheduled runs on a daily basis or CI/CD integration through Github
+- Use a third-party service that offers performance monitoring. Different services offer different options -- schedule runs on a daily basis or CI/CD integration through Github (or your source control service).
 
-For additional precision, run Lighthouse multiple times and take the median result. 
+For additional precision, run Lighthouse multiple times and take the median result.
 
 ### Step 3: Quantify the impact of each change you make 
 
 While you're doing performance-improvement work, it's important to understand the impact of each change or set of changes. You may find that one change gives you a 2-point Lighthouse improvement and another gives you a 20-point improvement.
 
- There's an easy way to measure this:
+There's an easy way to measure this:
 
 1. Write a pull request with each change or set of changes, using a service like Gatsby Cloud or Netlify that generates deploy previews per-PR.
-2. Run Lighthouse tests against the deploy preview for that branch and the deploy preview for master. Do not compare the live site to a deploy preview since the CDN setup may differ. 
-3. Calculate the difference in Lighthouse scores that each script
+2. Run Lighthouse tests against the deploy preview for that branch and the deploy preview for master. Do not compare the live site to a deploy preview since the CDN setup may differ.
+3. Calculate the difference in Lighthouse scores
+4. If you don't see a significant difference from a change, consider batching similar changes together until the difference is noticeable and thinking about the changes as a group
 
 Performance work can be surprisingly nonlinear in impact.
 
@@ -46,25 +47,31 @@ Performance work can be surprisingly nonlinear in impact.
 
 When you run a test in your testing tool of choice, it will give you a number of recommendations. While this can feel like a laundry list of issues, it can be helpful to understand the five core categories that these issues are bucketed into.
 
-- Blocking calls & third-party scripts. 
-- Javascript bundle size. 
+- Blocking calls & third-party scripts.
+- Javascript bundle size.
 - Stylesheets and font files.
-- Images and other media. 
+- Images and other media.
 - Resource requests & CDN caching configuration.
 
-Every site is different, and the recommendations will give some guidance as to where the highest effort to impact ratio is on your site. 
+Every site is different, and the recommendations will give some guidance as to where the highest effort to impact ratio is on your site.
 
 ### Address third-party-script impact
 
 Various types of calls made in your HTML, like calls to external font files, will block page load or page interactivity in different ways. In addition, third-party scripts can execute "eagerly", often delaying page load while they do so.
 
-#### First, lazy load all analytics plugins
+#### Step 1: Remove unneeded and high-cost, low-value scripts
 
-One of the lowest-hanging fruits is to set your scripts to load lazily rather than "eagerly" (the default). Any <script> tags being embedded manually can be set to <script async>.
+For each script, it can be helpful to understand the business purpose, relative importance, and who's using the data. This will allow you to identify and remove any unused scripts.
 
-#### Second, inline scripts
+There may also be relatively unimportant scripts that have a high performance costs; these are also good candidates for removal.
 
-Rather than loading third-party scripts from external sources, you can inline scripts in your code to reduce the cost of a network call. There are a number of ways to do this. We recommend you [use onPreRenderHTML](https://www.gatsbyjs.org/docs/ssr-apis/#onPreRenderHTML) to add your script tag to the DOM; if possible put the scripts lower in your DOM so that they are parsed and evaluated later.
+#### Step 2: lazy load or inline scripts
+
+One of the lowest-hanging fruits is to set your scripts to load lazily rather than "eagerly" (the default). Any `<script>` tags being embedded manually can be set to `<script async>`.
+
+For slightly more effort, you can get additional performance gains; rather than loading third-party scripts from external sources, you can inline scripts in your code to reduce the cost of a network call.
+
+There are a number of ways to do this. We recommend you [use onPreRenderHTML](https://www.gatsbyjs.org/docs/ssr-apis/#onPreRenderHTML) to add your script tag to the DOM; if possible put the scripts lower in your DOM so that they are parsed and evaluated later.
 
 Other options include:
 
@@ -92,13 +99,13 @@ The first step to fix this is to figure out what's going on. Use `gatsby-plugin-
 
 Start by auditing your `commons.js` -- the bundle that is shared by all components.
 
-The first thing to do is inspect third-party package size. Anything over 50kb, and certainly 100kb, is worth examining whether it's needed. Some common culprits include: Moment.js ([see deprecation notice](https://momentjs.com/docs/#/-project-status/)), Lodash, Material UI (see [this description](https://www.freecodecamp.org/news/gatsby-perfect-lighthouse-score/#step3droppingmaterialuifortailwindcss)), but you'll want to inspect your individual libraries.
+The first thing to do is inspect third-party package size. Anything over 50kb, and certainly 100kb, is worth examining whether it's needed. Some common culprits include: [Moment.js](https://momentjs.com/docs/#/-project-status/), Lodash, [Material UI](https://www.freecodecamp.org/news/gatsby-perfect-lighthouse-score/#step3droppingmaterialuifortailwindcss), but you'll want to inspect your individual libraries.
 
 To prevent large imports from recurring, consider using a tool that displays the size of library imports you're pulling in. The [Import Cost](https://marketplace.visualstudio.com/items?itemName=wix.vscode-import-cost) extension for Visual Studio Code and [BundlePhobia](https://bundlephobia.com/) are good resources.
 
 In addition, eyeball all the medium-sized packages (10-50kb). If it doesn't look like there's a good reason for that particular package to be in the commons, carefully audit your import structure
 
-One edge case: If you're [importing Redux globally](/docs/adding-redux-store/), Redux can pull in data bundles that don't seem to be related. If you're only using Redux on a page or two, you may want to check the impact by removing it entirely and running Lighthouse. 
+One edge case: If you're [importing Redux globally](/docs/adding-redux-store/), Redux can pull in data bundles that don't seem to be related. If you're only using Redux on a page or two, you may want to check the impact by removing it entirely and running Lighthouse.
 
 #### Step 3: Audit your `commons.js` file for components and data that don't need to be on every page
 
@@ -108,17 +115,18 @@ For example, let's say you have a header that imports a JSON object in order to 
 
 There's a couple ways to detect this:
 
-- Notice components and data that don't seem to be needed on every page. If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon} from './icons/my-icon.js`. 
+- _Notice components and data that don't seem to be needed on every page._ If you're using v2 of Gatsby, certain methods of importing can cause code to get bundled on pages it doesn't belong on. Try replacing indirect import statements like `import { myIcon } from './icons/index.js'` with direct imports like `import { myIcon} from './icons/my-icon.js`.
 
-- Watch for unexpectedly large data imports. If you notice large JSON objects, and you do need the data (or some portion of it), there are a couple options.
+- _Watch for unexpectedly large data imports._ If you notice large JSON objects, and you do need the data (or some portion of it), there are a couple options.
 
-- If you only need a small portion of that data, consider getting it a different way. Split up the JSON file, [query it via GraphQL](https://www.gatsbyjs.com/plugins/gatsby-transformer-json/), or import it in `gatsby-node.js` and pass through only the subset of data you need. 
+  - If you only need a small portion of that data, consider getting it a different way. Split up the JSON file, [query it via GraphQL](https://www.gatsbyjs.com/plugins/gatsby-transformer-json/), or import it in `gatsby-node.js` and pass through only the subset of data you need.
 
-- If you need the data, but not right away (perhaps it's lower in the page, or being used by an event handler), you might consider switching to asynchronously fetching it.  
+  - If you need the data, but not right away (perhaps it's lower in the page, or being used by an event handler), you might consider switching to asynchronously fetching it.
 
 #### Step 4: On critical paths, identify unneeded code & components
 
-Start by identifying critical paths on your site -- destinations you really care about. This might be your home page, a signup page, a product template, and so on. Other site stakeholders may have opinions; it's worth quickly consulting them.\
+Start by identifying critical paths on your site -- destinations you really care about. This might be your home page, a signup page, a product template, and so on. Other site stakeholders may have opinions; it's worth quickly consulting them.
+
 Then, inspect the critical paths for large third-party libraries and unneeded components. Repeat the process from steps two and three to identify optimization opportunities.
 
 #### Step 5: On critical paths, lazy-load below-the-fold components
@@ -127,7 +135,7 @@ Gatsby's default behavior is to bundle the entire page together. However, there 
 
 One way you can do this is to lazy-load below-the-fold components using `loadable-components`. `loadable-components` is the recommended lazy-loading solution for all server-side-rendered React applications, including Gatsby websites.
 
-We recommend you use the [gatsby plugin to install `loadable-components`](https://www.gatsbyjs.com/plugins/gatsby-plugin-loadable-components-ssr/). 
+We recommend you use the [gatsby plugin to install `loadable-components`](https://www.gatsbyjs.com/plugins/gatsby-plugin-loadable-components-ssr/).
 
 #### Step 6: Consider using the Preact plugin
 
@@ -136,7 +144,7 @@ We recommend you use the [gatsby plugin to install `loadable-components`](https:
 This step can make sense if the `framework.js` bundle is a large part of your overall bundle size, and want to further optimize.
 
 Using Preact is an advanced way to decrease bundle size. Note that in certain, occasional edge cases this can create ill-documented, odd user interactions. We do not recommend this for sites with complex UI logic, like a SaaS app.\
-After installing gatsby-plugin-preact, you'll need to use [Preact Developer Tools](https://chrome.google.com/webstore/detail/preact-developer-tools/ilcajpmogmhpliinlbcdebhbcanbghmd?hl=en) instead of [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) to inspect your component behavior.
+After installing `gatsby-plugin-preact`, you'll need to use [Preact Developer Tools](https://chrome.google.com/webstore/detail/preact-developer-tools/ilcajpmogmhpliinlbcdebhbcanbghmd?hl=en) instead of [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) to inspect your component behavior.
 
 ### Styling & Fonts
 
@@ -164,11 +172,11 @@ These plugins server-side render the styles; otherwise, the output HTML will int
 
 Font files can usually be reduced in size significantly. If your font file is over 50kb, it's too large. In addition, fonts block page load, so it's important to think about reducing network calls.
 
-- **Prefer `woff2`. Don't use `ttf`.** `woff2` is a compressed font format, supported by [browsers used by over 95% of Internet users](https://caniuse.com/woff2). [A few legacy browsers need `woff`](https://caniuse.com/woff).Like using `avif` and `webp` instead of `png` and jpg, using the correct format can significantly cut down the amount of data sent over the network.  
-- **Self-host rather than installing from an external CDN.** Having the font file available locally will save a trip over the network and reduce blocking time. 
+- **Prefer `woff2`. Don't use `ttf`.** `woff2` is a compressed font format, supported by [browsers used by over 95% of Internet users](https://caniuse.com/woff2). [A few legacy browsers need `woff`](https://caniuse.com/woff).Like using `avif` and `webp` instead of `png` and jpg, using the correct format can significantly cut down the amount of data sent over the network.
+- **Self-host rather than installing from an external CDN.** Having the font file available locally will save a trip over the network and reduce blocking time.
 - **Use Latin font subsets only** (if creating a Latin-language site). It's common to accidentally include font extensions (Greek, Cyrillic, Devnagari, Chinese) when typically you only need the Latin base set. The [Google Webfonts Helper app](https://google-webfonts-helper.herokuapp.com/fonts/SourceSansPro) can help you do this with free fonts.
 
-Font optimizations are usually small, but easy performance wins. 
+Font optimizations are usually small, but easy performance wins.
 
 ### Images & Media
 
@@ -176,25 +184,25 @@ Media files are often the largest files on a site, and so can delay page load si
 
 [Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image/) is our approach to optimizing image loading performance. It does three basic things:
 
-1. It delays non-essential work for images not above the fold to avoid esource congestion. 
+1. It delays non-essential work for images not above the fold to avoid esource congestion.
 2. It provides a placeholder during image fetch.
 3. It minimizes image file size to reduce request roundtrip time.
 
 The `gatsby-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/), or [how to implement Gatsby Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/), to a [Gatsby Image reference](/docs/reference/built-in-components/gatsby-image/).
 
-Implementing Gatsby Image is typically the bulk of image- and media-related performance optimization. 
+Implementing Gatsby Image is typically the bulk of image- and media-related performance optimization.
 
 ### Resource Requests & CDN Configuration
 
 Part of the work in loading a Gatsby site is minimizing the time to transport bits over the network. There's a number of ways to do this.
 
-First, load critical assets from your main domain where possible. Some people use another domain for their images. This can have a 300ms delay when it comes to LCP compared to loading it from the main CDN. This is sometimes necessitated by company policies; try to avoid it if possible.
+- _Load critical assets from your main domain where possible_. Some people use another domain for their images. This can have a 300ms delay when it comes to LCP compared to loading it from the main CDN. This is sometimes necessitated by company policies; try to avoid it if possible.
 
-Second, preconnect to subdomains using [gatsby-plugin-preconnect](https://www.gatsbyjs.com/plugins/gatsby-plugin-preconnect/).
+- _Preconnect to subdomains_ using [gatsby-plugin-preconnect](https://www.gatsbyjs.com/plugins/gatsby-plugin-preconnect/). The impact of this is very site-specific, and while it's usually positive, we've seen this actually slow down page loads on occasion, so you'll want to test this.
 
-Third, utilize Gatsby Link. Gatsby Link is our approach to optimizing the intra-site navigation  experience. We pre-load linked pages on your site so that transitioning between pages is smooth and seamless. [Here's a guide to using Gatsby Link](/docs/linking-between-pages/#the-gatsby-link-component).
+- _Utilize Gatsby Link._ Gatsby Link is our approach to optimizing the intra-site navigation experience. We pre-load linked pages on your site so that transitioning between pages is smooth and seamless. [Here's a guide to using Gatsby Link](/docs/linking-between-pages/#the-gatsby-link-component).
 
-Fourth, implement proper CDN caching policies. Configuration differs on a per-CDN basis, but since Gatsby generates unique bundle names via hashes, bundles can be cached indefinitely since they are immutable. 
+- _Implement proper CDN caching policies._ Configuration differs on a per-CDN basis, but since Gatsby generates unique bundle names via hashes, bundles can be cached indefinitely since they are immutable.
 
 ## Additional Resources
 
