@@ -86,7 +86,7 @@ To reduce your JavaScript bundle size, follow the steps below.
 
 #### Step 1: Profile your bundle
 
-The first step to fix this is to figure out what's going on. Use gatsby-plugin-webpack-bundle-analyzer to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
+The first step to fix this is to figure out what's going on. Use `gatsby-plugin-webpack-bundle-analyzer` to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
 
 #### Step 2: Remove unneeded third-party imports from `commons.js`
 
