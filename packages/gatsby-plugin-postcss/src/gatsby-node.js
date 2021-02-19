@@ -18,6 +18,7 @@ exports.onCreateWebpackConfig = (
   // eslint-disable-next-line no-unused-vars
   { cssLoaderOptions = {}, postCssPlugins, plugins, ...postcssLoaderOptions }
 ) => {
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
   const config = getConfig()
   const cssRules = findCssRules(config)
 
@@ -35,14 +36,18 @@ exports.onCreateWebpackConfig = (
   }
   const postcssRule = {
     test: CSS_PATTERN,
-    use: [
-      loaders.css({ ...cssLoaderOptions, importLoaders: 1 }),
-      postcssLoader,
-    ],
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ ...cssLoaderOptions, importLoaders: 1 }),
+          postcssLoader,
+        ],
   }
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
+      loaders.miniCssExtract(),
       loaders.css({ ...cssLoaderOptions, importLoaders: 1, modules: true }),
       postcssLoader,
     ],

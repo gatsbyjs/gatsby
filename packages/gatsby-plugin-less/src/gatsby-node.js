@@ -1,9 +1,10 @@
 import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
-  { actions, loaders },
+  { actions, stage, loaders },
   { cssLoaderOptions = {}, postCssPlugins, loaderOptions, lessOptions }
 ) => {
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
   const { setWebpackConfig } = actions
 
   const lessLoader = {
@@ -18,12 +19,14 @@ exports.onCreateWebpackConfig = (
 
   const lessRule = {
     test: /\.less$/,
-    use: [
-      loaders.miniCssExtract(),
-      loaders.css({ ...cssLoaderOptions, importLoaders: 2 }),
-      loaders.postcss({ plugins: postCssPlugins }),
-      lessLoader,
-    ],
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ ...cssLoaderOptions, importLoaders: 2 }),
+          loaders.postcss({ plugins: postCssPlugins }),
+          lessLoader,
+        ],
   }
   const lessRuleModules = {
     test: /\.module\.less$/,

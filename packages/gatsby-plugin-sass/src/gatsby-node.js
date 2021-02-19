@@ -28,11 +28,13 @@ exports.onCreateWebpackConfig = (
 
   const sassRule = {
     test: sassRuleTest || /\.s(a|c)ss$/,
-    use: [
-      loaders.miniCssExtract(),
-      loaders.css({ importLoaders: 2, ...cssLoaderOptions }),
-      loaders.postcss({ plugins: postCssPlugins }),
-    ],
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ importLoaders: 2, ...cssLoaderOptions }),
+          loaders.postcss({ plugins: postCssPlugins }),
+        ],
   }
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,

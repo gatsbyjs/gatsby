@@ -23,9 +23,10 @@
 const resolve = require(`./resolve`)
 
 exports.onCreateWebpackConfig = (
-  { actions, loaders },
+  { actions, stage, loaders },
   { postCssPlugins, ...stylusOptions }
 ) => {
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
   const { setWebpackConfig } = actions
 
   const stylusLoader = {
@@ -37,12 +38,14 @@ exports.onCreateWebpackConfig = (
 
   const stylusRule = {
     test: /\.styl$/,
-    use: [
-      loaders.miniCssExtract(),
-      loaders.css({ importLoaders: 2 }),
-      loaders.postcss({ plugins: postCssPlugins }),
-      stylusLoader,
-    ],
+    use: isSSR
+      ? [loaders.null()]
+      : [
+          loaders.miniCssExtract(),
+          loaders.css({ importLoaders: 2 }),
+          loaders.postcss({ plugins: postCssPlugins }),
+          stylusLoader,
+        ],
   }
 
   const stylusRuleModules = {
