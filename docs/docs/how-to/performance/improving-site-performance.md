@@ -152,7 +152,7 @@ A "good" scenario is having between 20-40% of unused code -- this includes, for 
 
 You can dig deeper by scroll through the page on the usage drawer to look at the unused CSS and get a sense of whether it is needed for that page. To fix these issues, look at moving to a modular CSS solution [like CSS modules](/docs/how-to/styling/css-modules/).
 
-#### Second, if you're using a CSS-in-JS library, use the Gatsby plugin
+#### Step 2: If you're using a CSS-in-JS library, use the Gatsby plugin
 
 If you're using a CSS-in-JS library like styled-components or emotion, use the relevant plugin: [gatsby-plugin-styled-components](https://www.gatsbyjs.com/plugins/gatsby-plugin-styled-components/) or [gatsby-plugin-emotion](https://www.gatsbyjs.com/plugins/gatsby-plugin-emotion/).
 
