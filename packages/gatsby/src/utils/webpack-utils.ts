@@ -55,6 +55,12 @@ type CSSModulesOptions =
       exportOnlyLocals?: boolean
     }
 
+type MiniCSSExtractLoaderModuleOptions =
+  | undefined
+  | boolean
+  | {
+      namedExport?: boolean
+    }
 /**
  * Utils that produce webpack `loader` objects
  */
@@ -216,10 +222,29 @@ export const createWebpackUtils = (
       }
     },
 
-    miniCssExtract: (options = {}) => {
+    miniCssExtract: (
+      options: {
+        modules?: MiniCSSExtractLoaderModuleOptions
+      } = {}
+    ) => {
+      let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
+
+      const { modules, ...restOptions } = options
+
+      if (typeof modules === `boolean` && options.modules) {
+        moduleOptions = {
+          namedExport: true,
+        }
+      } else {
+        moduleOptions = modules
+      }
+
       return {
         loader: MiniCssExtractPlugin.loader,
-        options,
+        options: {
+          modules: moduleOptions,
+          ...restOptions,
+        },
       }
     },
 
@@ -227,7 +252,8 @@ export const createWebpackUtils = (
       let modulesOptions: CSSModulesOptions = false
       if (options.modules) {
         modulesOptions = {
-          auto: false,
+          auto: undefined,
+          namedExport: true,
           localIdentName: `[name]--[local]--[hash:base64:5]`,
           exportLocalsConvention: `dashesOnly`,
           exportOnlyLocals: isSSR,
@@ -584,7 +610,7 @@ export const createWebpackUtils = (
     const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
       const { browsers, ...restOptions } = options
       const use = [
-        loaders.miniCssExtract(),
+        loaders.miniCssExtract(restOptions),
         loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
