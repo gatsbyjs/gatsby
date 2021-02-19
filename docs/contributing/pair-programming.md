@@ -30,7 +30,7 @@ We also expect the following from pair programming participants:
 
 ## How to sign up
 
-Fill in the [request a pairing session form][form] to reserve your spot. The Gatsby team will be notified. You should get an email shortly with next steps.
+Fill in the [request a pairing session form][form] to reserve your spot. The Gatsby team will be notified. You should get an email shortly with the next steps.
 
 [Reserve your spot today][form] and let’s build something amazing together!
 
