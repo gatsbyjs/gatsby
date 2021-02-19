@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.6...gatsby-plugin-image@1.0.0-next.7) (2021-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correct default enum value ([#29607](https://github.com/gatsbyjs/gatsby/issues/29607)) ([7e8b91c](https://github.com/gatsbyjs/gatsby/commit/7e8b91c5a0d7f171a72c7088ace8d5fa3fdc39a8))
+
 # [1.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.5...gatsby-plugin-image@1.0.0-next.6) (2021-02-19)
 
 ### Bug Fixes
