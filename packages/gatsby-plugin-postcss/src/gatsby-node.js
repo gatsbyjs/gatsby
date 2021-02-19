@@ -15,14 +15,11 @@ const findCssRules = config =>
 
 exports.onCreateWebpackConfig = (
   { actions, stage, loaders, getConfig },
-  { cssLoaderOptions = {}, postCssPlugins, ...postcssLoaderOptions }
+  // eslint-disable-next-line no-unused-vars
+  { cssLoaderOptions = {}, postCssPlugins, plugins, ...postcssLoaderOptions }
 ) => {
-  const isProduction = !stage.includes(`develop`)
-  const isSSR = stage.includes(`html`)
   const config = getConfig()
   const cssRules = findCssRules(config)
-
-  delete postcssLoaderOptions.plugins
 
   if (!postcssLoaderOptions.postcssOptions) {
     postcssLoaderOptions.postcssOptions = {}
@@ -34,13 +31,14 @@ exports.onCreateWebpackConfig = (
 
   const postcssLoader = {
     loader: resolve(`postcss-loader`),
-    options: { sourceMap: !isProduction, ...postcssLoaderOptions },
+    options: postcssLoaderOptions,
   }
   const postcssRule = {
     test: CSS_PATTERN,
-    use: isSSR
-      ? [loaders.null()]
-      : [loaders.css({ ...cssLoaderOptions, importLoaders: 1 }), postcssLoader],
+    use: [
+      loaders.css({ ...cssLoaderOptions, importLoaders: 1 }),
+      postcssLoader,
+    ],
   }
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
@@ -50,21 +48,7 @@ exports.onCreateWebpackConfig = (
     ],
   }
 
-  if (!isSSR) {
-    postcssRule.use.unshift(loaders.miniCssExtract())
-    postcssRuleModules.use.unshift(loaders.miniCssExtract({ hmr: false }))
-  }
-
-  const postcssRules = { oneOf: [] }
-
-  switch (stage) {
-    case `develop`:
-    case `build-javascript`:
-    case `build-html`:
-    case `develop-html`:
-      postcssRules.oneOf.push(...[postcssRuleModules, postcssRule])
-      break
-  }
+  const postcssRules = { oneOf: [postcssRuleModules, postcssRule] }
 
   if (cssRules) {
     cssRules.oneOf.unshift(...postcssRules.oneOf)
