@@ -189,7 +189,7 @@ function prepareTextNode(id, node, key, text) {
     [key]: str,
     internal: {
       type: _.camelCase(`${node.internal.type} ${key} TextNode`),
-      mediaType: `text/markdown`,
+      mediaType: `text/plain`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
       contentDigest: node.updatedAt,
