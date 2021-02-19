@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.6...gatsby@3.0.0-next.7) (2021-02-19)
+
+### Bug Fixes
+
+- **css-modules:** fix webpack config for css modules ([#29596](https://github.com/gatsbyjs/gatsby/issues/29596)) ([c43fb52](https://github.com/gatsbyjs/gatsby/commit/c43fb520ae7f7e028ac77ac39e89c411cbaf1452))
+- **gatsby:** fix deprecation export messages ([#29563](https://github.com/gatsbyjs/gatsby/issues/29563)) ([15b55f0](https://github.com/gatsbyjs/gatsby/commit/15b55f09ba97c7cabe368900bcdc4c120f988d47))
+- **gatsby:** prevent errors when backwards compat node.nodeId is for a deleted node in touchNode ([#29575](https://github.com/gatsbyjs/gatsby/issues/29575)) ([077eb16](https://github.com/gatsbyjs/gatsby/commit/077eb16f78cf72f2f4291bd4e51de61a5d6d826c))
+
+### Features
+
+- remove react-hot-loader ([#29540](https://github.com/gatsbyjs/gatsby/issues/29540)) ([a5210b2](https://github.com/gatsbyjs/gatsby/commit/a5210b2550b9646656aae28c28cb5be580cd5677))
+
 # [3.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.5...gatsby@3.0.0-next.6) (2021-02-18)
 
 ### Features

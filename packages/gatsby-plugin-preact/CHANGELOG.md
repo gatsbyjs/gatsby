@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.0.0-next.0...gatsby-plugin-preact@5.0.0-next.1) (2021-02-19)
+
+### Features
+
+- remove react-hot-loader ([#29540](https://github.com/gatsbyjs/gatsby/issues/29540)) ([a5210b2](https://github.com/gatsbyjs/gatsby/commit/a5210b2550b9646656aae28c28cb5be580cd5677))
+
 # [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@4.8.0-next.0...gatsby-plugin-preact@5.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-plugin-preact

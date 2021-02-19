@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.5...gatsby-plugin-image@1.0.0-next.6) (2021-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Apply inline styles and img size ([3f7f06c](https://github.com/gatsbyjs/gatsby/commit/3f7f06cb6f0c7be2ddde709283b7d116fa88cd6a))
+- **gatsby-plugin-image:** Apply inline styles and img size ([#29603](https://github.com/gatsbyjs/gatsby/issues/29603)) ([9db36db](https://github.com/gatsbyjs/gatsby/commit/9db36dbe165c35105cef4ad95f4802061ff5fcc5))
+- **gatsby-source-contentful:** Correct supported image formats ([#29562](https://github.com/gatsbyjs/gatsby/issues/29562)) ([3b4d32f](https://github.com/gatsbyjs/gatsby/commit/3b4d32f0b2d6aef3193213252c3eb813cc2cbea9))
+
+### Reverts
+
+- Revert "fix(gatsby-plugin-image): Apply inline styles and img size" (#29602) ([8d0f48f](https://github.com/gatsbyjs/gatsby/commit/8d0f48f02ec0b631320dcb980f69944804f72803)), closes [#29602](https://github.com/gatsbyjs/gatsby/issues/29602)
+
 # [1.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.4...gatsby-plugin-image@1.0.0-next.5) (2021-02-18)
 
 ### Features
