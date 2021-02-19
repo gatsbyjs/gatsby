@@ -39,7 +39,7 @@ exports.onCreateWebpackConfig = (
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
-      loaders.miniCssExtract(),
+      loaders.miniCssExtract({ modules: true }),
       loaders.css({ importLoaders: 2, ...cssLoaderOptions, modules: true }),
       loaders.postcss({ plugins: postCssPlugins }),
     ],

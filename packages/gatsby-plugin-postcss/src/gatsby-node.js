@@ -47,7 +47,7 @@ exports.onCreateWebpackConfig = (
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
-      loaders.miniCssExtract(),
+      loaders.miniCssExtract({ modules: true }),
       loaders.css({ ...cssLoaderOptions, importLoaders: 1, modules: true }),
       postcssLoader,
     ],
