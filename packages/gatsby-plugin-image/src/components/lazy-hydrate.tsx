@@ -84,8 +84,6 @@ export function lazyHydrate(
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
-        width={width}
-        height={height}
         className={imgClassName}
         {...getMainProps(
           isLoading,
