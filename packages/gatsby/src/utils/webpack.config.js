@@ -709,7 +709,7 @@ module.exports = async (
         (acc, builtinModule) => {
           if (builtinModulesToTrack.includes(builtinModule)) {
             acc[builtinModule] = `commonjs ${path.join(
-              process.cwd(),
+              program.directory,
               `.cache`,
               `ssr-builtin-trackers`,
               builtinModule
