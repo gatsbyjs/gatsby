@@ -55,35 +55,6 @@ function replaceRule(value, stage) {
     return null
   }
 
-  // use MiniCssExtractPlugin.loader in development
-  if (stage === `develop` && value.test && isCssRule(value)) {
-    function replaceStyleLoader(rule) {
-      if (rule.loader.includes(`style-loader`)) {
-        return {
-          ...rule,
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            hmr: true,
-          },
-        }
-      }
-
-      return rule
-    }
-
-    if (value.use) {
-      return {
-        ...value,
-        use: value.use.map(replaceStyleLoader),
-      }
-    } else if (value.loader) {
-      return {
-        ...value,
-        loader: replaceStyleLoader(value),
-      }
-    }
-  }
-
   return value
 }
 
