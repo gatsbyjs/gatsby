@@ -92,7 +92,11 @@
   },
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.14"
+    "csstype": "2.6.14",
+    "chokidar/fsevents": "^2.3.2",
+    "gatsby-cli/rollup/fsevents": "^2.1.2",
+    "gatsby-recipes/rollup/fsevents": "^2.1.2",
+    "fsevents": "^1.2.9"
   },
   "engines": {
     "yarn": "^1.17.3",
