@@ -38,8 +38,8 @@ There's an easy way to measure this:
 
 1. Write a pull request with each change or set of changes, using a service like Gatsby Cloud or Netlify that generates deploy previews per-PR.
 2. Run Lighthouse tests against the deploy preview for that branch and the deploy preview for master. Do not compare the live site to a deploy preview since the CDN setup may differ.
-3. Calculate the difference in Lighthouse scores
-4. If you don't see a significant difference from a change, consider batching similar changes together until the difference is noticeable and thinking about the changes as a group
+3. Calculate the difference in Lighthouse scores.
+4. If you don't see a significant difference from a change, consider batching similar changes together until the difference is noticeable and thinking about the changes as a group.
 
 Performance work can be surprisingly nonlinear in impact.
 
