@@ -98,7 +98,7 @@ In addition, eyeball all the medium-sized packages (10-50kb). If it doesn't look
 
 One edge case: If you're [importing Redux globally](/docs/adding-redux-store/), Redux can pull in data bundles that don't seem to be related. If you're only using Redux on a page or two, you may want to check the impact by removing it entirely and running Lighthouse. 
 
-#### Third, audit your commons.js for components and data that don't need to be on every page
+#### Step 3: Audit your `commons.js` file for components and data that don't need to be on every page
 
 One common challenge is inadvertently pulling in more code or data than you intend to your commons bundle.
 
