@@ -421,7 +421,6 @@ module.exports = async (
         // By resolving react,react-dom from gatsby we'll get the site versions of react & react-dom because it's specified as a peerdependency.
         react: getPackageRoot(`react`),
         "react-dom": getPackageRoot(`react-dom`),
-        "\\.scss$": false,
       },
       plugins: [new CoreJSResolver()],
     }
