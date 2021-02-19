@@ -6,7 +6,7 @@ Cypress.on(`uncaught:exception`, (err, runnable) => {
 })
 
 const waitForAPIOptions = {
-  timeout: 3000,
+  timeout: 10000,
 }
 
 function assertOnNavigate(
