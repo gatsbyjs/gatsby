@@ -86,7 +86,7 @@ Among all assets, Javascript can be uniquely costly to your performance. This is
 
 The first step to fix this is to figure out what's going on. Use gatsby-plugin-webpack-bundle-analyzer to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
 
-#### Second, remove unneeded third-party imports from commons.js
+#### Step 2: Remove unneeded third-party imports from `commons.js`
 
 Start by auditing your `commons.js` -- the bundle that is shared by all components.
 
