@@ -830,10 +830,17 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
     typeOwners[node.internal.type] = node.internal.owner
   }
 
+  const nodeId = node?.id
+
+  if (!nodeId) {
+    // if we don't have a node id, we don't want to dispatch this action
+    return []
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: node.id,
+    payload: nodeId,
   }
 }
 
