@@ -18,7 +18,7 @@ Lighthouse / PageSpeed Insights and Webpagetest are the most common website perf
 
 These tools measure what are known as "Core Web Vitals", which measure both time to page load and time to page interactivity. [Google's official page](https://web.dev/vitals/) has more detail on what these metrics are.
 
-### Second, set up performance monitoring 
+### Step 2: Set up performance monitoring 
 
 Site performance monitoring becomes increasingly important the more long-lasting your project is. You can put a lot of effort into performance work -- but then ship a performance regression that wipes out all your hard work!
 
