@@ -66,7 +66,7 @@ export default [
     value: `sass`,
   },
   {
-    label: `Add Typescript`,
+    label: `Add TypeScript`,
     value: `typescript`,
   },
   {
