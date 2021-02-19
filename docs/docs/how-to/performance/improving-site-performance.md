@@ -178,7 +178,7 @@ Media files are often the largest files on a site, and so can delay page load si
 - Second, it provides a placeholder during image fetch.
 - Third, it minimizes image file size to reduce request roundtrip time.
 
-The gatsby-image documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/), or [how to implement Gatsby Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/), to a [Gatsby Image reference](/docs/reference/built-in-components/gatsby-image/).
+The `gatsby-image` documentation is fairly exhaustive, ranging from [why image optimization is important](/docs/conceptual/using-gatsby-image/), or [how to implement Gatsby Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/), to a [Gatsby Image reference](/docs/reference/built-in-components/gatsby-image/).
 
 Implementing Gatsby Image is typically the bulk of image- and media-related performance optimization. 
 
