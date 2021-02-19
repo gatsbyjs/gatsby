@@ -36,9 +36,9 @@ While you're doing performance-improvement work, it's important to understand th
 
  There's an easy way to measure this:
 
-- First, write a pull request with each change or set of changes, using a service like Gatsby Cloud or Netlify that generates deploy previews per-PR.
-- Second, run Lighthouse tests against the deploy preview for that branch and the deploy preview for master. Do not compare the live site to a deploy preview since the CDN setup may differ. 
-- Third, calculate the difference in Lighthouse scores that each script
+1. Write a pull request with each change or set of changes, using a service like Gatsby Cloud or Netlify that generates deploy previews per-PR.
+2. Run Lighthouse tests against the deploy preview for that branch and the deploy preview for master. Do not compare the live site to a deploy preview since the CDN setup may differ. 
+3. Calculate the difference in Lighthouse scores that each script
 
 Performance work can be surprisingly nonlinear in impact.
 
