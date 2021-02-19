@@ -74,13 +74,13 @@ Other options include:
 
 ### Reduce your Javascript bundle cost
 
-Among all assets, Javascript can be uniquely costly to your performance. This is due to three main reasons.
+Among all assets, Javascript can be uniquely costly to your performance. This is due to three main reasons:
 
-- First, like other assets, it needs to be loaded into your browser, 
+- Like other assets, it needs to be loaded into your browser.
 
-- Second, unlike most other assets, it's code. That means it needs to be parsed by your browser, which can "block" other work from happening. 
+- Unlike most other assets, it's code. That means it needs to be parsed by your browser, which can "block" other work from happening.
 
-- Third, with third-party npm modules, it's easy to accidentally add a lot of Javascript you don't actually need. 
+- With third-party npm modules, it's easy to accidentally add a lot of JavaScript you don't actually need.
 
 #### First, profile your bundle
 
