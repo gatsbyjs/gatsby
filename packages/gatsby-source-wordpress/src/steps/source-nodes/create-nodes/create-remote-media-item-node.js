@@ -167,7 +167,7 @@ export const getFileNodeByMediaItemNode = async ({
   ) {
     let node = await helpers.getNode(existingNodeMeta.id)
 
-    // some of the cached node metas dont necessarily need to be a File
+    // some of the cached node metas don't necessarily need to be a File
     // so make sure we return a File node if what we get isn't one
     if (node && node.internal && node.internal.type !== `File`) {
       if (node.localFile && node.localFile.id) {

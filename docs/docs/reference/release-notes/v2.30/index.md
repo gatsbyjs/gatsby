@@ -170,7 +170,7 @@ Please note that this is only supported in `StaticImage`.
 - `gatsby-source-graphql`: add HTTP error reporting, via [#28786](https://github.com/gatsbyjs/gatsby/pull/28786)
 - `gatsby-source-filesystem`: retry a download in `createRemoteFileNode` if a file is incomplete, via [#28547](https://github.com/gatsbyjs/gatsby/pull/28547)
 - `gatsby-plugin-schema-snapshot`: fix warning `The type Foo does not explicitly define the field childBar`, via [#28483](https://github.com/gatsbyjs/gatsby/pull/28483)
-- `gatsby-source-contentful`: dont re-create nodes unnecessarily, via [#28642](https://github.com/gatsbyjs/gatsby/pull/28642)
+- `gatsby-source-contentful`: don't re-create nodes unnecessarily, via [#28642](https://github.com/gatsbyjs/gatsby/pull/28642)
 
 ## Contributors
 

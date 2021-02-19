@@ -86,7 +86,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- **gatsby-source-contentful:** dont re-create nodes ([#28642](https://github.com/gatsbyjs/gatsby/issues/28642)) ([3a51e22](https://github.com/gatsbyjs/gatsby/commit/3a51e2256eb548d21fe47ee0a078ee6fa027e845))
+- **gatsby-source-contentful:** don't re-create nodes ([#28642](https://github.com/gatsbyjs/gatsby/issues/28642)) ([3a51e22](https://github.com/gatsbyjs/gatsby/commit/3a51e2256eb548d21fe47ee0a078ee6fa027e845))
 
 # [4.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.4.0-next.2...gatsby-source-contentful@4.4.0-next.3) (2020-12-17)
 
@@ -452,7 +452,7 @@ If you were relying on the `id` property in the `sys` object, you should be awar
 
 ### Bug Fixes
 
-- **gatsby-source-contentful:** dont ship fixtures when publishing ([#25472](https://github.com/gatsbyjs/gatsby/issues/25472)) ([0c5aea8](https://github.com/gatsbyjs/gatsby/commit/0c5aea8))
+- **gatsby-source-contentful:** don't ship fixtures when publishing ([#25472](https://github.com/gatsbyjs/gatsby/issues/25472)) ([0c5aea8](https://github.com/gatsbyjs/gatsby/commit/0c5aea8))
 
 ## [2.3.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@2.3.21...gatsby-source-contentful@2.3.22) (2020-07-02)
 

@@ -129,7 +129,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-plugin-page-creator:** juggle reporter dont depend on cli ([#26357](https://github.com/gatsbyjs/gatsby/issues/26357)) ([2cef73b](https://github.com/gatsbyjs/gatsby/commit/2cef73b))
+- **gatsby-plugin-page-creator:** juggle reporter don't depend on cli ([#26357](https://github.com/gatsbyjs/gatsby/issues/26357)) ([2cef73b](https://github.com/gatsbyjs/gatsby/commit/2cef73b))
 
 ## [2.3.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@2.3.20...gatsby-plugin-page-creator@2.3.21) (2020-08-10)
 

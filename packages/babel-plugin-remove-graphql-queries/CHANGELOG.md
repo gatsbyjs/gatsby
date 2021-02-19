@@ -185,7 +185,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- dont remove query declaration hash, terser will remove it anyway and it can be useful for 3rd party tools ([#20672](https://github.com/gatsbyjs/gatsby/issues/20672)) ([150da45](https://github.com/gatsbyjs/gatsby/commit/150da45))
+- don't remove query declaration hash, terser will remove it anyway and it can be useful for 3rd party tools ([#20672](https://github.com/gatsbyjs/gatsby/issues/20672)) ([150da45](https://github.com/gatsbyjs/gatsby/commit/150da45))
 
 ## [2.7.24](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.7.23...babel-plugin-remove-graphql-queries@2.7.24) (2020-03-06)
 
