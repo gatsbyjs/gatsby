@@ -615,10 +615,6 @@ export const createWebpackUtils = (
         loaders.postcss({ browsers }),
       ]
 
-      if (!isSSR) {
-        use.unshift(loaders.miniCssExtract())
-      }
-
       return {
         use,
         test: /\.css$/,
