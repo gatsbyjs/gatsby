@@ -1,4 +1,4 @@
-import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
+import { apiRunner, apiRunnerAsync } from "../api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
 import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
@@ -9,9 +9,9 @@ import {
   shouldUpdateScroll,
   init as navigationInit,
   RouteUpdates,
-} from "./navigation"
-import emitter from "./emitter"
-import PageRenderer from "./page-renderer"
+} from "../navigation"
+import emitter from "../emitter"
+import PageRenderer from "../page-renderer"
 import asyncRequires from "$virtual/async-requires"
 import {
   setLoader,
@@ -19,9 +19,9 @@ import {
   publicLoader,
   PageResourceStatus,
   getStaticQueryResults,
-} from "./loader"
-import EnsureResources from "./ensure-resources"
-import stripPrefix from "./strip-prefix"
+} from "../loader"
+import EnsureResources from "../ensure-resources"
+import stripPrefix from "../strip-prefix"
 
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
@@ -40,7 +40,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
   if (apiRunner(`registerServiceWorker`).length > 0) {
-    require(`./register-service-worker`)
+    require(`../register-service-worker`)
   }
 
   // In gatsby v2 if Router is used in page using matchPaths

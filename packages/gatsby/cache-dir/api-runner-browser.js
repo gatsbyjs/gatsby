@@ -18,7 +18,9 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
   }
 
   let results = plugins.map(plugin => {
-    if (!plugin.plugin[api]) {
+    const mod = plugin.plugin()
+
+    if (!mod[api]) {
       return undefined
     }
 
@@ -26,7 +28,7 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
     args.loadPage = loadPage
     args.loadPageSync = loadPageSync
 
-    const result = plugin.plugin[api](args, plugin.options)
+    const result = mod[api](args, plugin.options)
     if (result && argTransform) {
       args = argTransform({ args, result, plugin })
     }
@@ -46,10 +48,10 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
 }
 
 exports.apiRunnerAsync = (api, args, defaultReturn) =>
-  plugins.reduce(
-    (previous, next) =>
-      next.plugin[api]
-        ? previous.then(() => next.plugin[api](args, next.options))
-        : previous,
-    Promise.resolve()
-  )
+  plugins.reduce((previous, next) => {
+    const mod = next.plugin()
+
+    return mod[api]
+      ? previous.then(() => mod[api](args, next.options))
+      : previous
+  }, Promise.resolve())
