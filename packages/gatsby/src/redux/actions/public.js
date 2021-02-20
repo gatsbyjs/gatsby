@@ -951,6 +951,18 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -968,6 +980,18 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
