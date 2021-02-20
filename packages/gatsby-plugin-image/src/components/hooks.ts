@@ -38,18 +38,31 @@ export function storeImageloaded(cacheKey?: string): void {
 export function hasImageLoaded(cacheKey: string): boolean {
   return imageCache.has(cacheKey)
 }
-
+export type IGatsbyImageDataParent<T = never> = T & {
+  gatsbyImageData: IGatsbyImageData
+}
 export type FileNode = Node & {
-  childImageSharp?: Node & {
-    gatsbyImageData?: IGatsbyImageData
-  }
+  childImageSharp?: IGatsbyImageDataParent<Node>
 }
 
-export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
-  file?.childImageSharp?.gatsbyImageData
+export const isGatsbyImageDataParent = <T>(
+  node: IGatsbyImageDataParent<T> | any
+): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
 
-export const getSrc = (file: FileNode): string | undefined =>
-  file?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
+export const getImage = (
+  node: FileNode | IGatsbyImageDataParent
+): IGatsbyImageData | undefined =>
+  isGatsbyImageDataParent(node)
+    ? node.gatsbyImageData
+    : node?.childImageSharp?.gatsbyImageData
+
+export const getSrc = (
+  node: FileNode | IGatsbyImageDataParent
+): string | undefined => getImage(node)?.images?.fallback?.src
+
+export const getSrcSet = (
+  node: FileNode | IGatsbyImageDataParent
+): string | undefined => getImage(node)?.images?.fallback?.srcSet
 
 export function getWrapperProps(
   width: number,
