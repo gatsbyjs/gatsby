@@ -1,6 +1,5 @@
 const path = require(`path`)
 const Url = require(`url`)
-const ProgressBar = require(`progress`)
 
 /**
  * getParsedPath
