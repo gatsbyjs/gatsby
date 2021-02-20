@@ -35,6 +35,10 @@ const fileNode = {
 }
 
 describe(`The image helper functions`, () => {
+  it(`getImage returns the same data if passed gatsbyImageData`, () => {
+    expect(getImage(imageData)).toEqual(imageData)
+  })
+
   it(`getImage gets an image from a FileNode`, () => {
     expect(getImage(fileNode)?.images.fallback?.src).toEqual(`imagesrc.jpg`)
   })
@@ -43,12 +47,20 @@ describe(`The image helper functions`, () => {
     expect(getImage(dataParent)?.images.fallback?.src).toEqual(`imagesrc.jpg`)
   })
 
+  it(`getSrc gets src from am image data object`, () => {
+    expect(getSrc(imageData)).toEqual(`imagesrc.jpg`)
+  })
+
   it(`getSrc gets src from a FileNode`, () => {
     expect(getSrc(fileNode)).toEqual(`imagesrc.jpg`)
   })
 
   it(`getSrc gets src from an IGatsbyImageDataParent`, () => {
     expect(getSrc(dataParent)).toEqual(`imagesrc.jpg`)
+  })
+
+  it(`getSrcSet gets srcSet from am image data object`, () => {
+    expect(getSrcSet(imageData)).toEqual(`imagesrcset.jpg 1x`)
   })
 
   it(`getSrcSet gets srcSet from a FileNode`, () => {

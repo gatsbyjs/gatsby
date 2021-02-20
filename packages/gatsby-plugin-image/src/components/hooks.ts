@@ -45,24 +45,30 @@ export type FileNode = Node & {
   childImageSharp?: IGatsbyImageDataParent<Node>
 }
 
+export const isGatsbyImageData = (
+  node: IGatsbyImageData | any
+): node is IGatsbyImageData => Boolean(node?.images?.fallback?.src) // 🦆
+
 export const isGatsbyImageDataParent = <T>(
   node: IGatsbyImageDataParent<T> | any
 ): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
 
-export const getImage = (
-  node: FileNode | IGatsbyImageDataParent
-): IGatsbyImageData | undefined =>
-  isGatsbyImageDataParent(node)
-    ? node.gatsbyImageData
-    : node?.childImageSharp?.gatsbyImageData
+type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
+export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
+  if (isGatsbyImageData(node)) {
+    return node
+  }
+  if (isGatsbyImageDataParent(node)) {
+    return node.gatsbyImageData
+  }
+  return node?.childImageSharp?.gatsbyImageData
+}
 
-export const getSrc = (
-  node: FileNode | IGatsbyImageDataParent
-): string | undefined => getImage(node)?.images?.fallback?.src
+export const getSrc = (node: ImageDataLike): string | undefined =>
+  getImage(node)?.images?.fallback?.src
 
-export const getSrcSet = (
-  node: FileNode | IGatsbyImageDataParent
-): string | undefined => getImage(node)?.images?.fallback?.srcSet
+export const getSrcSet = (node: ImageDataLike): string | undefined =>
+  getImage(node)?.images?.fallback?.srcSet
 
 export function getWrapperProps(
   width: number,
