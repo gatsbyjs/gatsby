@@ -690,15 +690,11 @@ module.exports = async (
           isCI() &&
           process.env.GATSBY_EXPERIMENTAL_DEV_SSR
         ) {
-          if (request === `react`) {
-            callback(null, `react/cjs/react.production.min.js`)
-            return
-          } else if (request === `react-dom/server`) {
-            callback(
+          if (request === `react-dom/server`) {
+            return callback(
               null,
               `react-dom/cjs/react-dom-server.node.production.min.js`
             )
-            return
           }
         }
 
