@@ -287,6 +287,32 @@ module.exports = async (
     // Common config for every env.
     // prettier-ignore
     let configRules = [
+      // Webpack expects extensions when importing ESM modules as that's what the spec describes.
+      // Not all libraries have adapted so we don't enforce its behaviour
+      // @see https://github.com/webpack/webpack/issues/11467
+      {
+        test: /\.mjs$/i,
+        resolve: {
+          byDependency: {
+            esm: {
+              fullySpecified: false
+            }
+          }
+        }
+      },
+      {
+        test: /\.js$/i,
+        descriptionData: {
+          type: `module`
+        },
+        resolve: {
+          byDependency: {
+            esm: {
+              fullySpecified: false
+            }
+          }
+        }
+      },
       rules.js({
         modulesThatUseGatsby,
       }),
@@ -414,13 +440,6 @@ module.exports = async (
         "react-dom": getPackageRoot(`react-dom`),
       },
       plugins: [new CoreJSResolver()],
-      // https://webpack.js.org/configuration/module/#resolvefullyspecified
-      // Does not force extensions for ESM modules
-      byDependency: {
-        esm: {
-          fullySpecified: false,
-        },
-      },
     }
 
     const target =
