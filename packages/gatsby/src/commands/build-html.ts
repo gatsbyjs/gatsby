@@ -24,6 +24,8 @@ export interface IBuildArgs extends IProgram {
   sitePackageJson: PackageJson
   prefixPaths: boolean
   noUglify: boolean
+  logPages: boolean
+  writeToFile: boolean
   profile: boolean
   graphqlTracing: boolean
   openTracingConfigFile: string
