@@ -246,7 +246,7 @@ export default function About({ data }) {
 
 // highlight-start
 export const query = graphql`
-  query {
+  query SiteTitleQuery {
     site {
       siteMetadata {
         title
@@ -294,7 +294,7 @@ import { rhythm } from "../utils/typography"
 export default function Layout({ children }) {
   const data = useStaticQuery(
     graphql`
-      query {
+      query SiteTitleQuery {
         site {
           siteMetadata {
             title
