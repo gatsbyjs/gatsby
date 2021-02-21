@@ -37,7 +37,7 @@ const resolveTheme = async (
         const { resolve } = resolvePlugin(themeName, rootDir)
         themeDir = resolve
       } catch (localErr) {
-        // catch shouldn't be empty :shrug:
+        reporter.panic(`Failed to resolve ${themeName}`, localErr)
       }
     }
 
