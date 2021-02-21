@@ -344,7 +344,6 @@ export type ActionsUnion =
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
@@ -638,14 +637,6 @@ export interface ICreateRedirectAction {
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
   cacheIsCorrupt?: boolean
-}
-
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
 }
 
 export interface IRemoveTemplateComponentAction {

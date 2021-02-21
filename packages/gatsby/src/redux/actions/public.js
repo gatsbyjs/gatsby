@@ -1356,20 +1356,6 @@ actions.createPageDependency = (
 }
 
 /**
- * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
- */
-actions.setPageData = (pageData: PageData) => {
-  return {
-    type: `SET_PAGE_DATA`,
-    payload: pageData,
-  }
-}
-
-/**
  * Record that a page was visited on the server..
  *
  * @param {Object} $0
