@@ -13294,10 +13294,10 @@ history@^4.10.1:
     tiny-warning "^1.0.0"
     value-equal "^1.0.1"
 
-hjson@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/hjson/-/hjson-3.2.1.tgz#20de41dc87fc9a10d1557d0230b0e02afb1b09ac"
-  integrity sha512-OhhrFMeC7dVuA1xvxuXGTv/yTdhTvbe8hz+3LgVNsfi9+vgz0sF/RrkuX8eegpKaMc9cwYwydImBH6iePoJtdQ==
+hjson@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/hjson/-/hjson-3.2.2.tgz#a5a81138f4c0bb427e4b2ac917fafd4b454436cf"
+  integrity sha512-MkUeB0cTIlppeSsndgESkfFD21T2nXPRaBStLtf3cAYA2bVEFdXlodZB0TukwZiobPD1Ksax5DK4RTZeaXCI3Q==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
