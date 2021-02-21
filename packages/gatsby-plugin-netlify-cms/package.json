@@ -35,10 +35,10 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.7",
-    "netlify-cms-app": "^2.14.23",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "gatsby": "^3.0.0-next.0",
+    "netlify-cms-app": "^2.9.0",
+    "react": "^16.8.4 || ^17.0.0",
+    "react-dom": "^16.8.4 || ^17.0.0"
   },
   "repository": {
     "type": "git",
