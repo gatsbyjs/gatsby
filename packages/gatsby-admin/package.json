@@ -19,7 +19,6 @@
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "csstype": "^2.6.14",
-    "formik": "^2.2.6",
     "gatsby": "^3.0.0-next.7",
     "gatsby-interface": "^0.0.244",
     "gatsby-plugin-typescript": "^3.0.0-next.1",
