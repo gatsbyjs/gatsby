@@ -24,7 +24,7 @@ function assertOnNavigate(
   cy.getTestElement(`dom-marker`).contains(assertShouldBe)
 }
 
-const runTests = (testNameSuffix = `Unknown scenario`) => {
+function runTests(testNameSuffix) {
   it(`Loads index - ${testNameSuffix}`, () => {
     cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`dom-marker`).contains(`index`)
@@ -63,52 +63,46 @@ const runTests = (testNameSuffix = `Unknown scenario`) => {
   })
 }
 
-const getTestNameSuffix = (scenario, args) => {
-  if (scenario === `blockAssetsForChunk` && args.chunk === `app`) {
-    return `Blocked "app" chunk`
-  } else if (scenario === `blockAssetsForPage`) {
-    return `Blocked "${args.filter}" for "${args.pagePath}"`
-  }
-
-  return undefined
-}
-
-const runBlockedScenario = (scenario, args) => {
-  describe(`Block resources`, () => {
-    before(done => {
-      cy.task(`restoreAllBlockedResources`).then(() => {
-        cy.task(scenario, args).then(() => {
-          done()
+const runBlockedScenario = args => {
+  before(() => {
+    cy.task("getAssetsForPage", {
+      pagePath: args.pagePath,
+      filter: args.filter,
+    }).then(urls => {
+      for (const url of urls) {
+        cy.intercept(url, {
+          statusCode: 404,
+          body: "",
         })
-      })
+      }
     })
-
-    runTests(getTestNameSuffix(scenario, args))
   })
+
+  runTests(`Blocked "${args.filter}" for "${args.pagePath}"`)
 }
 
 const runSuiteForPage = (label, pagePath) => {
   describe(`Missing "${label}" resources`, () => {
     describe(`Missing "${label}" page query results`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `page-data`,
       })
     })
     describe(`Missing "${label}" page page-template asset`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `page-template`,
       })
     })
     describe(`Missing "${label}" page extra assets`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `extra`,
       })
     })
     describe(`Missing all "${label}" page assets`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `all`,
       })
@@ -117,24 +111,28 @@ const runSuiteForPage = (label, pagePath) => {
 }
 
 describe(`Every resources available`, () => {
-  it(`Restore resources`, () => {
-    cy.task(`restoreAllBlockedResources`)
-  })
   runTests(`Every resource available`)
 })
 
 describe(`Missing top level resources`, () => {
   describe(`Deleted app chunk assets`, () => {
-    runBlockedScenario(`blockAssetsForChunk`, { chunk: `app` })
+    before(() => {
+      cy.task("getAssetsForChunk", {
+        filter: "app",
+      }).then(urls => {
+        for (const url of urls) {
+          cy.intercept(url, {
+            statusCode: 404,
+            body: "",
+          })
+        }
+      })
+    })
+
+    runTests(`Blocked "app" chunk`)
   })
 })
 
 runSuiteForPage(`Index`, `/`)
 runSuiteForPage(`Page-2`, `/page-2/`)
 runSuiteForPage(`404`, `/404.html`)
-
-describe(`Cleanup`, () => {
-  it(`Restore resources`, () => {
-    cy.task(`restoreAllBlockedResources`)
-  })
-})
