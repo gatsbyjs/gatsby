@@ -325,7 +325,7 @@ exports.sourceNodes = async (
   }
 
   createTypes(`
-  interface ContentfulEntry @nodeInterface {
+  interface ContentfulEntry implements Node {
     contentful_id: String!
     id: ID!
     node_locale: String!
