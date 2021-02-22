@@ -241,7 +241,9 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 
 ### `getImage`
 
-Pass a `File` object to this, and it will return the `gatsbyImageData` object, or `undefined`.
+Safely get a `gatsbyImageData` object. It accepts several different sorts of object, and is null-safe, returning `undefined` if the object passed, or any intermediate children are undefined.
+
+If passed a `File` object, it will return `file?.childImageSharp?.gatsbyImage`. If passed a node such as a `ContentfulAsset` that includes a `gatsbyImageData` field, it will return the `gatsbyImageData` object. If passed a `gatsbyImageData` object itself, it will return the same object.
 
 ```js
 import { getImage } from "gatsby-plugin-image"
@@ -255,7 +257,15 @@ const image = data?.avatar?.childImageSharp?.gatsbyImageData
 
 ### `getSrc`
 
-Get the default image `src`. This will be the fallback, so usually jpg or png.
+Get the default image `src` as a string. This will be the fallback, so usually jpg or png. Accepts the same types as `getImage`.
+
+```jsx
+import { getImage } from "gatsby-plugin-image"
+//...
+const src = getSrc(data.hero)
+
+return <meta property="og:image" content={src} />
+```
 
 ### `getSrcSet`
 
