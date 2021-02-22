@@ -17339,6 +17339,15 @@ mdast-util-inject@^1.1.0:
   dependencies:
     mdast-util-to-string "^1.0.0"
 
+mdast-util-math@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/mdast-util-math/-/mdast-util-math-0.1.2.tgz#629a0793bd8822432917e5ddda5279492390cc2b"
+  integrity sha512-fogAitds+wH+QRas78Yr1TwmQGN4cW/G2WRw5ePuNoJbBSPJCxIOCE8MTzHgWHVSpgkRaPQTgfzXRE1CrwWSlg==
+  dependencies:
+    longest-streak "^2.0.0"
+    mdast-util-to-markdown "^0.6.0"
+    repeat-string "^1.0.0"
+
 mdast-util-to-hast@9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/mdast-util-to-hast/-/mdast-util-to-hast-9.1.0.tgz#6ef121dd3cd3b006bf8650b1b9454da0faf79ffe"
@@ -17733,6 +17742,14 @@ micromark-extension-gfm@^0.3.0:
     micromark-extension-gfm-table "~0.4.0"
     micromark-extension-gfm-tagfilter "~0.3.0"
     micromark-extension-gfm-task-list-item "~0.3.0"
+
+micromark-extension-math@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/micromark-extension-math/-/micromark-extension-math-0.1.2.tgz#5d7bb2b86018da4a758c05f3991664430ee4d711"
+  integrity sha512-ZJXsT2eVPM8VTmcw0CPSDeyonOn9SziGK3Z+nkf9Vb6xMPeU+4JMEnO6vzDL10562Favw8Vste74f54rxJ/i6Q==
+  dependencies:
+    katex "^0.12.0"
+    micromark "~2.11.0"
 
 micromark@^2.11.3, micromark@~2.11.0, micromark@~2.11.3:
   version "2.11.4"
@@ -22389,12 +22406,13 @@ remark-lint@^7.0.0, remark-lint@^7.0.1:
   dependencies:
     remark-message-control "^6.0.0"
 
-remark-math@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/remark-math/-/remark-math-1.0.6.tgz#49eb3dd15d298734c9ae21673115389793af4d1b"
-  integrity sha512-I43wU/QOQpXvVFXKjA4FHp5xptK65+5F6yolm8+69/JV0EqSOB64wURUZ3JK50JtnTL8FvwLiH2PZ+fvsBxviA==
+remark-math@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/remark-math/-/remark-math-4.0.0.tgz#494ddd50766555ad2332e3afca7796a76452256f"
+  integrity sha512-lH7SoQenXtQrvL0bm+mjZbvOk//YWNuyR+MxV18Qyv8rgFmMEGNuB0TSCQDkoDaiJ40FCnG8lxErc/zhcedYbw==
   dependencies:
-    trim-trailing-lines "^1.1.0"
+    mdast-util-math "^0.1.0"
+    micromark-extension-math "^0.1.0"
 
 remark-mdx@1.6.16:
   version "1.6.16"
@@ -23135,13 +23153,13 @@ retext-sentence-spacing@^4.0.0:
     unist-util-is "^4.0.0"
     unist-util-visit "^2.0.0"
 
-retext-smartypants@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/retext-smartypants/-/retext-smartypants-3.0.3.tgz#9c982dcc210ae3bb36f4bc46aae802798fce43f9"
-  integrity sha512-/0fIipYayOvvucn3yjxvWwyT9P6p8gbpqdqUQNs1+L7av2hxatmiA9sk+fygJSDn5OXRyhBzcezvTbEmEabfIQ==
+retext-smartypants@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/retext-smartypants/-/retext-smartypants-4.0.0.tgz#77478bd9775b4d7505122b0799594339e08d4fda"
+  integrity sha512-Mknd05zuIycr4Z/hNDxA8ktqv7pG7wYdTZc68a2MJF+Ibg/WloR5bbyrEjijwNwHRR+xWsovkLH4OQIz/mghdw==
   dependencies:
     nlcst-to-string "^2.0.0"
-    unist-util-visit "^1.0.0"
+    unist-util-visit "^2.0.0"
 
 retext-spell@^4.0.0:
   version "4.0.0"
@@ -23178,14 +23196,6 @@ retext-syntax-urls@^2.0.0:
     unist-util-is "^4.0.0"
     unist-util-modify-children "^1.1.1"
     unist-util-position "^3.0.0"
-
-retext@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/retext/-/retext-5.0.0.tgz#5d9018c4a677d6103c142362d76f50eb1d398bf6"
-  dependencies:
-    retext-latin "^2.0.0"
-    retext-stringify "^2.0.0"
-    unified "^6.0.0"
 
 retext@^7.0.1:
   version "7.0.1"
@@ -25744,7 +25754,7 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-trim-trailing-lines@^1.0.0, trim-trailing-lines@^1.1.0:
+trim-trailing-lines@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/trim-trailing-lines/-/trim-trailing-lines-1.1.1.tgz#e0ec0810fd3c3f1730516b45f49083caaf2774d9"
 
