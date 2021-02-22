@@ -2,6 +2,7 @@ import JestWorker from "jest-worker"
 import fs from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import report from "gatsby-cli/lib/reporter"
+import { isCI } from "gatsby-core-utils"
 
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
@@ -13,7 +14,15 @@ const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
     numWorkers: 1,
-    forkOptions: { silent: false },
+    forkOptions: {
+      silent: false,
+      env: {
+        ...process.env,
+        NODE_ENV: isCI() ? `production` : `development`,
+        forceColors: true,
+        GATSBY_EXPERIMENTAL_DEV_SSR: true,
+      },
+    },
   })
 
   // jest-worker is lazy with forking but we want to fork immediately so the user

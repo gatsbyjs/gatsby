@@ -692,20 +692,8 @@ module.exports = async (
         // User modules that do not need to be part of the bundle
         if (userExternalList.some(item => checkItem(item, request))) {
           // TODO figure out to make preact work with this too
-          let modifiedRequest = request
-          if (
-            stage === `develop-html` &&
-            isCI() &&
-            process.env.GATSBY_EXPERIMENTAL_DEV_SSR
-          ) {
-            if (request === `react`) {
-              modifiedRequest = `react/cjs/react.production.min.js`
-            } else if (request === `react-dom/server`) {
-              modifiedRequest = `react-dom/cjs/react-dom-server.node.production.min.js`
-            }
-          }
 
-          resolver(context, modifiedRequest, (err, newRequest) => {
+          resolver(context, request, (err, newRequest) => {
             if (err) {
               callback(err)
               return
