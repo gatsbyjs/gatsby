@@ -6,7 +6,6 @@ const path = require(`path`)
 function fetchUntil(url, filter, timeout = 1000) {
   return new Promise(resolve => {
     fetch(url).then(res => {
-      console.log(res.status)
       if (filter(res)) {
         resolve(res)
       } else {
