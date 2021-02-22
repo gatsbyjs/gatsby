@@ -31,7 +31,7 @@ describe(`SSR`, () => {
     expect(childProcess.code).toEqual(0)
   }, 15000)
 
-  test.only(`it generates an error page correctly`, async () => {
+  test(`it generates an error page correctly`, async () => {
     const src = path.join(__dirname, `/fixtures/bad-page.js`)
     const dest = path.join(__dirname, `../src/pages/bad-page.js`)
     fs.copySync(src, dest)
