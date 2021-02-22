@@ -13,6 +13,11 @@ import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
+// ensure in develop we have at least some .css (even if it's empty).
+// this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
+// this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
+import "./blank.css"
+
 // Enable fast-refresh for virtual sync-requires
 module.hot.accept(`$virtual/async-requires`, () => {
   // Manually reload
