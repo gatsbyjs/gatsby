@@ -1,6 +1,8 @@
-import { Reporter } from "gatsby"
+import reporter from "gatsby/reporter"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { IPluginOptions } from "./gatsby-api"
+
+type Reporter = typeof reporter
 
 type ITimerReporter = ReturnType<Reporter["activityTimer"]>
 

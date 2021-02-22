@@ -1,12 +1,14 @@
 import _ from "lodash"
 import slugify, { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { Reporter } from "gatsby"
+import reporter from "gatsby/reporter"
 import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
   stripTrailingSlash,
 } from "./path-utils"
+
+type Reporter = typeof reporter
 
 const doubleForwardSlashes = /\/\/+/g
 

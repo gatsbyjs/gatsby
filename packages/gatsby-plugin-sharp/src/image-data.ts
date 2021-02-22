@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-expressions */
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import reporter from "gatsby/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
 import { createTransformObject, mergeDefaults } from "./plugin-options"
 import { reportError } from "./report-error"
+
+type Reporter = typeof reporter
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 

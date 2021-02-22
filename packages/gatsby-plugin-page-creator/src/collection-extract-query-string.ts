@@ -1,8 +1,10 @@
 import { generateQueryFromString } from "./extract-query"
 import fs from "fs-extra"
-import { Reporter } from "gatsby"
+import reporter from "gatsby/reporter"
 import { extractModel } from "./path-utils"
 import { CODES, prefixId } from "./error-utils"
+
+type Reporter = typeof reporter
 
 // This Function opens up the actual collection file and extracts the queryString used in the
 export function collectionExtractQueryString(
