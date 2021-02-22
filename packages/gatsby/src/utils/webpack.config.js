@@ -18,7 +18,6 @@ import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 import { StaticQueryMapper } from "./webpack/static-query-mapper"
-import { TmpMiniCssExtractContentHashOverWrite } from "./webpack/tmp-mini-css-extract-contenthash-overwrite"
 import { getBrowsersList } from "./browserslist"
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
@@ -241,8 +240,6 @@ module.exports = async (
             filename: `[name].[contenthash].css`,
             chunkFilename: `[name].[contenthash].css`,
           }),
-          // remove after https://github.com/webpack-contrib/mini-css-extract-plugin/issues/701
-          new TmpMiniCssExtractContentHashOverWrite(),
           // Write out stats object mapping named dynamic imports (aka page
           // components) to all their async chunks.
           plugins.extractStats(),
