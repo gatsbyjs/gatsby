@@ -489,7 +489,6 @@ module.exports = async (
       hints: false,
     },
     mode: getMode(),
-    cache: false,
 
     resolveLoader: getResolveLoader(),
     resolve: getResolve(stage),
