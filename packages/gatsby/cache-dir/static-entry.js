@@ -342,12 +342,13 @@ export default ({
     })
 
     // Add page metadata for the current page
-    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";/*]]>*/`
+    const windowPageData = `/*<![CDATA[*/window.pagePath=document.getElementById("gatsby-script-loader").getAttribute("data-path");/*]]>*/`
 
     postBodyComponents.push(
       <script
         key={`script-loader`}
         id={`gatsby-script-loader`}
+        data-path={pagePath}
         dangerouslySetInnerHTML={{
           __html: windowPageData,
         }}
