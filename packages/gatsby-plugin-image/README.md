@@ -1,6 +1,4 @@
-# gatsby-plugin-image (beta)
-
-_The new Gatsby Image plugin is currently in beta, but you can try it out now_
+# gatsby-plugin-image
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
