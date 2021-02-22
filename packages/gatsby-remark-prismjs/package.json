@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "parse-numeric-range": "^0.0.2",
-    "unist-util-visit": "^1.4.1"
+    "parse-numeric-range": "^1.2.0",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -18,7 +18,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.3",
     "prismjs": "^1.21.0",
-    "remark": "^9.0.0"
+    "remark": "^13.0.0"
   },
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
