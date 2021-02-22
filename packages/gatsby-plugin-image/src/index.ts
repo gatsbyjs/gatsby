@@ -9,6 +9,7 @@ export { StaticImage } from "./components/static-image.server"
 export {
   getImage,
   getSrc,
+  getSrcSet,
   getImageData,
   withArtDirection,
   IArtDirectedImage,
@@ -17,6 +18,7 @@ export {
 } from "./components/hooks"
 export {
   generateImageData,
+  getLowResolutionImageURL,
   IGatsbyImageHelperArgs,
   ISharpGatsbyImageArgs,
   IImage,

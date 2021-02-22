@@ -161,7 +161,6 @@ Some things we do in order to create an inclusive, welcoming community include:
 - Friendlier robots
 - Implicit trust
 - Active gratitude
-- [Active mentorship](/contributing/pair-programming/)
 
 We’ve built an active community with thousands of contributors, and we want to live the example of what a great open source community can be.
 

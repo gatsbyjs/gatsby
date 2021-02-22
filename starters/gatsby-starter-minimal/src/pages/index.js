@@ -126,7 +126,7 @@ const IndexPage = () => {
           </a>
         </li>
         {links.map(link => (
-          <li style={{ ...listItemStyles, color: link.color }}>
+          <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
             <span>
               <a
                 style={linkStyle}

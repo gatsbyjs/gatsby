@@ -106,7 +106,7 @@ export function getErrorFormatter(): PrettyError {
 export async function createErrorFromString(
   errorStr: string = ``,
   sourceMapFile: string
-): Promise<Error | ErrorWithCodeFrame> {
+): Promise<ErrorWithCodeFrame> {
   let [message, ...rest] = errorStr.split(/\r\n|[\n\r]/g)
   // pull the message from the first line then remove the `Error:` prefix
   // FIXME: when https://github.com/AriaMinaei/pretty-error/pull/49 is merged
