@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "remark-math": "^1.0.6",
-    "unist-util-visit": "^1.4.1"
+    "remark-math": "^4.0.0",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -29,7 +29,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "katex": "^0.10.0"
+    "katex": "^0.12.0"
   },
   "repository": {
     "type": "git",
