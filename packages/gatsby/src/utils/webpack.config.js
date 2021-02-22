@@ -505,9 +505,46 @@ module.exports = async (
     )}`
   }
 
+  const isCssModule = module => module.type === `css/mini-extract`
+  if (stage === `develop`) {
+    config.optimization = {
+      splitChunks: {
+        chunks: `all`,
+        cacheGroups: {
+          default: false,
+          defaultVendors: false,
+          framework: {
+            chunks: `all`,
+            name: `framework`,
+            // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+            test: new RegExp(
+              `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+                `|`
+              )})[\\\\/]`
+            ),
+            priority: 40,
+            // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+            enforce: true,
+          },
+          // Bundle all css & lazy css into one stylesheet to make sure lazy components do not break
+          // TODO make an exception for css-modules
+          styles: {
+            test(module) {
+              return isCssModule(module)
+            },
+
+            name: `commons`,
+            priority: 40,
+            enforce: true,
+          },
+        },
+      },
+      minimizer: [],
+    }
+  }
+
   if (stage === `build-javascript`) {
     const componentsCount = store.getState().components.size
-    const isCssModule = module => module.type === `css/mini-extract`
 
     const splitChunks = {
       chunks: `all`,

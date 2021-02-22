@@ -9,18 +9,18 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import { Indicator } from "./loading-indicator/indicator"
 import DevLoader from "./dev-loader"
-import syncRequires from "$virtual/sync-requires"
+import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
 // Enable fast-refresh for virtual sync-requires
-module.hot.accept(`$virtual/sync-requires`, () => {
+module.hot.accept(`$virtual/async-requires`, () => {
   // Manually reload
 })
 
 window.___emitter = emitter
 
-const loader = new DevLoader(syncRequires, matchPaths)
+const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
