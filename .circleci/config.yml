@@ -1,5 +1,5 @@
 orbs:
-  win: circleci/windows@2.2.0
+  win: circleci/windows@2.4.0
   slack: circleci/slack@3.4.1
 
 executors:
