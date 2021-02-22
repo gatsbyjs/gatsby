@@ -3,9 +3,6 @@
 exports[`webpack utils dependencies returns default values without any options 1`] = `
 Object {
   "exclude": [Function],
-  "resolve": Object {
-    "fullySpecified": false,
-  },
   "test": /\\\\\\.\\(js\\|mjs\\)\\$/,
   "type": "javascript/auto",
   "use": Array [
@@ -35,9 +32,6 @@ Object {
 exports[`webpack utils js returns default values without any options 1`] = `
 Object {
   "include": [Function],
-  "resolve": Object {
-    "fullySpecified": false,
-  },
   "test": /\\\\\\.\\(js\\|mjs\\|jsx\\)\\$/,
   "type": "javascript/auto",
   "use": Array [

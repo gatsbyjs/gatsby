@@ -284,18 +284,35 @@ module.exports = async (
     // Common config for every env.
     // prettier-ignore
     let configRules = [
-      rules.js({
-        modulesThatUseGatsby,
-      }),
-      // Webpack expects extensions when importing to mimic ESM spec.
+      // Webpack expects extensions when importing ESM modules as that's what the spec describes.
       // Not all libraries have adapted so we don't enforce its behaviour
       // @see https://github.com/webpack/webpack/issues/11467
       {
-        test: /\.m?js/,
+        test: /\.mjs$/i,
         resolve: {
-            fullySpecified: false
+          byDependency: {
+            esm: {
+              fullySpecified: false
+            }
+          }
         }
       },
+      {
+        test: /\.js$/i,
+        descriptionData: {
+          type: `module`
+        },
+        resolve: {
+          byDependency: {
+            esm: {
+              fullySpecified: false
+            }
+          }
+        }
+      },
+      rules.js({
+        modulesThatUseGatsby,
+      }),
       rules.yaml(),
       rules.fonts(),
       rules.images(),
