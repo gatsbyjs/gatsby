@@ -2,7 +2,7 @@
 title: Gatsby Image plugin
 ---
 
-This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options.
+This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. While most of these options are used whichever data source you are using for your images, you should refer to the documentation of your source plugin if you are using images from a CMS, as the exact options are likely to vary.
 
 ## Components
 
@@ -106,9 +106,12 @@ This component accepts all [shared props](#shared-props), as well as the one bel
 There are a few differences between how you specify options for `StaticImage` and `GatsbyImage`:
 
 1. **How to pass options:** When using `StaticImage`, options are passed as props to the component, whereas for the `GatsbyImage` component they are passed to the `gatsbyImageData` GraphQL resolver.
-1. **Option values:** In the `StaticImage` component, props such as `layout` and `placeholder` take a _string_, while the resolver takes a _[a GraphQL enum](https://graphql.org/learn/schema/#enumeration-types)_, which is in upper case by convention and is not quoted like a string. Both syntaxes are shown in the reference below.
 
-**Note:** It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the IDE.
+2. **Option values:** In the `StaticImage` component, props such as `layout` and `placeholder` take a _string_, while the resolver takes a _[a GraphQL enum](https://graphql.org/learn/schema/#enumeration-types)_, which is in upper case by convention and is not quoted like a string. Both syntaxes are shown in the reference below.
+
+**Important:** For dynamic images, these options are for the `gatsbyImageData` resolver on [sharp nodes](https://www.gatsbyjs.com/plugins/gatsby-transformer-sharp). If you are using `gatsbyImageData` from a different plugin, such as a CMS or image host, you should refer to that plugin's documentation for the options, as they will differ from these. Static images use sharp under the hood, so these options apply when using the `StaticImage` component too.
+
+It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the IDE.
 
 Both static and dynamic images have the following options available:
 
@@ -239,6 +242,8 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 
 ## Helper functions
 
+There are a number of utility functions to help you work with `gatsbyImageData` objects. We stringly recommend that you do not try to access the internals of these objects directly, as the format could change.
+
 ### `getImage`
 
 Safely get a `gatsbyImageData` object. It accepts several different sorts of object, and is null-safe, returning `undefined` if the object passed, or any intermediate children are undefined.
@@ -260,7 +265,7 @@ const image = data?.avatar?.childImageSharp?.gatsbyImageData
 Get the default image `src` as a string. This will be the fallback, so usually jpg or png. Accepts the same types as `getImage`.
 
 ```jsx
-import { getImage } from "gatsby-plugin-image"
+import { getSrc } from "gatsby-plugin-image"
 //...
 const src = getSrc(data.hero)
 
