@@ -11,6 +11,7 @@
     "@contentful/rich-text-react-renderer": "^14.1.2",
     "@contentful/rich-text-types": "^14.1.2",
     "@hapi/joi": "^15.1.1",
+    "@vercel/fetch-retry": "^5.0.3",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "common-tags": "^1.8.0",
