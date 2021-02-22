@@ -34,7 +34,7 @@ For example, if you're querying for a list of pages:
 
 ```js
 {
-	wp {
+  wp {
     pages {
       nodes {
         title
@@ -50,11 +50,11 @@ So your query would change to look like this:
 
 ```
 {
-	allWpPage {
-		nodes {
-			title
-		}
-	}
+  allWpPage {
+    nodes {
+      title
+    }
+  }
 }
 ```
 

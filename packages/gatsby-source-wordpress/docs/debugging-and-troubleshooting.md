@@ -39,7 +39,7 @@ Take that query and make the query directly to your WP instance GraphQL API like
 {
   pages {
     nodes {
-    	id
+      id
       title
     }
   }
@@ -54,10 +54,10 @@ Take that query and make the query directly to your WP instance GraphQL API like
    ```js
    {
      resolve: `gatsby-source-wordpress`,
-   	options: {
-   		debug: {
+     options: {
+       debug: {
          graphql: {
-         	writeQueriesToDisk: true,
+           writeQueriesToDisk: true,
          },
        },
      },
@@ -103,10 +103,10 @@ If your build is erroring on a GraphQL error returned in the response from a Gra
 ```js
 {
   resolve: `gatsby-source-wordpress`,
-	options: {
-		debug: {
+  options: {
+    debug: {
       graphql: {
-      	writeQueriesToDisk: true,
+        writeQueriesToDisk: true,
       },
     },
   },
@@ -136,8 +136,8 @@ To determine how many concurrent GraphQL requests your server can handle, enable
 ```js
 {
   resolve: `gatsby-source-wordpress`,
-	options: {
-		verbose: true,
+  options: {
+    verbose: true,
   },
 },
 ```
