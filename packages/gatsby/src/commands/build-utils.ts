@@ -1,6 +1,8 @@
 import fs from "fs-extra"
 import path from "path"
 
+import reporter from "gatsby-cli/lib/reporter"
+
 import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
@@ -71,7 +73,7 @@ export function calcDirtyHtmlFiles(
   const toDelete: Array<string> = []
 
   if (state.html.unsafeBuiltinWasUsedInSSR) {
-    console.warn(
+    reporter.warn(
       `Previous build used unsafe builtin method. We need to rebuild all pages`
     )
   }
