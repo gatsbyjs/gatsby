@@ -169,7 +169,11 @@ function assertHTMLCorrectness(runNumber) {
         ? `component---src-templates-deps-page-query-js`
         : `component---src-templates-deps-page-query-alternative-js`
 
+    const expectedBackground =
+      runNumber < 6 ? `white` : runNumber === 6 ? `yellow` : `green`
+
     let pageDataContent
+    let htmlContent
     beforeAll(() => {
       pageDataContent = fs.readJsonSync(
         path.join(
@@ -180,12 +184,8 @@ function assertHTMLCorrectness(runNumber) {
           `page-data.json`
         )
       )
-    })
 
-    it(`html built is using correct template (${
-      runNumber <= 1 ? `default` : `alternative`
-    })`, () => {
-      const htmlContent = fs.readFileSync(
+      htmlContent = fs.readFileSync(
         path.join(
           process.cwd(),
           `public`,
@@ -194,7 +194,20 @@ function assertHTMLCorrectness(runNumber) {
         ),
         `utf-8`
       )
+    })
 
+    it(`correct css is inlined in html file (${expectedBackground})`, () => {
+      expect(htmlContent).toMatch(
+        new RegExp(
+          `<style>\\s*body\\s*{\\s*background:\\s*${expectedBackground};\\s*}\\s*<\\/style>`,
+          `gm`
+        )
+      )
+    })
+
+    it(`html built is using correct template (${
+      runNumber <= 1 ? `default` : `alternative`
+    })`, () => {
       expect(htmlContent).toContain(
         runNumber <= 1
           ? `<h1>Default template for depPageQuery</h1>`
@@ -763,21 +776,16 @@ describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () =
   ]
 
   let changedFileOriginalContent
-  const changedFileAbspath = path.join(
-    process.cwd(),
-    `src`,
-    `components`,
-    `post-body-components-ssr.js`
-  )
+  const changedFileAbspath = path.join(process.cwd(), `gatsby-ssr.js`)
 
   beforeAll(async () => {
-    // make change to some .js
+    // make change to gatsby-ssr
     changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
     filesToRevert[changedFileAbspath] = changedFileOriginalContent
 
     const newContent = changedFileOriginalContent.replace(
-      /SSR/g,
-      `SSR (see I told you)`
+      `\`body {\\nbackground: white;\\n}\``,
+      `fs.readFileSync(\`./css-to-inline.css\`, \`utf-8\`)`
     )
 
     if (newContent === changedFileOriginalContent) {
@@ -836,6 +844,94 @@ describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () =
 
   // Sixth run - only ssr bundle should change as only file used by ssr was changed
   assertWebpackBundleChanges({ browser: false, ssr: true, runNumber })
+
+  assertHTMLCorrectness(runNumber)
+})
+
+describe(`Seventh run (no change in any file that is bundled, we change untracked file, but previous build used unsafe method so all should rebuild)`, () => {
+  const runNumber = 7
+
+  const expectedPages = [
+    `/stale-pages/only-not-in-first`,
+    `/page-query-dynamic-7/`,
+  ]
+
+  const unexpectedPages = [
+    `/stale-pages/only-in-first/`,
+    `/page-query-dynamic-1/`,
+    `/page-query-dynamic-2/`,
+    `/page-query-dynamic-3/`,
+    `/page-query-dynamic-4/`,
+    `/page-query-dynamic-5/`,
+    `/page-query-dynamic-6/`,
+  ]
+
+  let changedFileOriginalContent
+  const changedFileAbspath = path.join(process.cwd(), `css-to-inline.css`)
+
+  beforeAll(async () => {
+    // make change to gatsby-ssr
+    changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
+    filesToRevert[changedFileAbspath] = changedFileOriginalContent
+
+    const newContent = changedFileOriginalContent.replace(/yellow/g, `green`)
+
+    if (newContent === changedFileOriginalContent) {
+      throw new Error(`Test setup failed`)
+    }
+
+    fs.writeFileSync(changedFileAbspath, newContent)
+    await runGatsbyWithRunTestSetup(runNumber)()
+  })
+
+  describe(`html files`, () => {
+    const type = `html`
+
+    describe(`should have expected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+
+    it(`should recreate all html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        manifest[runNumber].allPages.sort()
+      )
+    })
+  })
+
+  describe(`page-data files`, () => {
+    const type = `page-data`
+
+    describe(`should have expected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+  })
+
+  // Seventh run - no bundle should change as we don't change anything that IS bundled
+  assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
 })
