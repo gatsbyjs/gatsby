@@ -17,9 +17,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
 import { IPluginOptions } from "~/models/gatsby-api"
-import reporter from "gatsby/reporter"
-
-type Reporter = typeof reporter
+import { Reporter } from "gatsby/reporter"
 
 export const inPreviewMode = (): boolean =>
   !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT &&

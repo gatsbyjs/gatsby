@@ -1,6 +1,4 @@
-import reporter from "gatsby/reporter"
-
-type Reporter = typeof reporter
+import { Reporter } from "gatsby/reporter"
 
 export const CODES = {
   Generic: `12101`,

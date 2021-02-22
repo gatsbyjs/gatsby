@@ -1,7 +1,5 @@
-import reporter from "gatsby/reporter"
+import { Reporter } from "gatsby/reporter"
 import { formatLogMessage } from "../utils/format-log-message"
-
-type Reporter = typeof reporter
 
 let isWpSourcePluginInstalled = false
 

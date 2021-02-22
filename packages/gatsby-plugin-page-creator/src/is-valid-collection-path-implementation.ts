@@ -1,9 +1,7 @@
 import sysPath from "path"
-import reporter from "gatsby/reporter"
+import { Reporter } from "gatsby/reporter"
 import { CODES, prefixId } from "./error-utils"
 import { matchAllPolyfill } from "./path-utils"
-
-type Reporter = typeof reporter
 
 // This file is a helper for consumers. It's going to log an error to them if they
 // in any way have an incorrect filepath setup for us to predictably use collection
