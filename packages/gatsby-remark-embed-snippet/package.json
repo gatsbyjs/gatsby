@@ -9,8 +9,8 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "normalize-path": "^3.0.0",
-    "parse-numeric-range": "^0.0.2",
-    "unist-util-map": "^1.0.5"
+    "parse-numeric-range": "^1.2.0",
+    "unist-util-map": "^2.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
