@@ -91,7 +91,7 @@ const parseLine = (line, code, index, actions) => {
 
       if (directiveRange) {
         const strippedDirectiveRange = directiveRange.slice(1, -1)
-        const range = rangeParser.parse(strippedDirectiveRange)
+        const range = rangeParser(strippedDirectiveRange)
         if (range.length > 0) {
           range.forEach(relativeIndex => {
             actions.flag(feature, index + relativeIndex, flagSource)
