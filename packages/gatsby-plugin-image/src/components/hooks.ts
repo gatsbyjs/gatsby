@@ -38,18 +38,41 @@ export function storeImageloaded(cacheKey?: string): void {
 export function hasImageLoaded(cacheKey: string): boolean {
   return imageCache.has(cacheKey)
 }
-
+export type IGatsbyImageDataParent<T = never> = T & {
+  gatsbyImageData: IGatsbyImageData
+}
 export type FileNode = Node & {
-  childImageSharp?: Node & {
-    gatsbyImageData?: IGatsbyImageData
-  }
+  childImageSharp?: IGatsbyImageDataParent<Node>
 }
 
-export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
-  file?.childImageSharp?.gatsbyImageData
+const isGatsbyImageData = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyImageData | any
+): node is IGatsbyImageData =>
+  // 🦆 check for a deep prop to be sure this is a valid gatsbyImageData object
+  Boolean(node?.images?.fallback?.src)
 
-export const getSrc = (file: FileNode): string | undefined =>
-  file?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
+const isGatsbyImageDataParent = <T>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyImageDataParent<T> | any
+): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
+
+type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
+export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
+  if (isGatsbyImageData(node)) {
+    return node
+  }
+  if (isGatsbyImageDataParent(node)) {
+    return node.gatsbyImageData
+  }
+  return node?.childImageSharp?.gatsbyImageData
+}
+
+export const getSrc = (node: ImageDataLike): string | undefined =>
+  getImage(node)?.images?.fallback?.src
+
+export const getSrcSet = (node: ImageDataLike): string | undefined =>
+  getImage(node)?.images?.fallback?.srcSet
 
 export function getWrapperProps(
   width: number,
