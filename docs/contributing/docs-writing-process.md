@@ -32,7 +32,7 @@ Does docs coverage exist anywhere on `gatsbyjs.com`? If so, would an alternative
 
 ### Tutorials vs. recipes vs. guides:
 
-- [**Tutorials**](/tutorial/) are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
+- [**Tutorials**](/docs/tutorial/) are step-by-step learning materials that show a user how to do something without skipping steps. Tutorials must consider a beginner experience, but can be useful for anyone.
 - [**Recipes**](/docs/recipes/) are shorter, more concise tutorials that limit their scope to a single task or outcome by using prerequisites and limited steps. Additional resources at the end lead the user to a logical next step. Recipes are for developers of all skill levels.
 - [**Guides**](/docs/guides/) are different than tutorials, and the two main sections are Reference Guides and Conceptual Guides. Instead of “steps 1-4”, guides use standalone headings and sections to explain how to accomplish the task. They are often aimed at a more advanced audience due to the subject matter but should be approachable to anyone.
 
@@ -57,7 +57,7 @@ Here are some tips for gathering information on a given topic within Gatsby:
 
 3. You can also search the web for additional examples outside of the Gatsby GitHub org or docs site. Be sure to check Gatsby versions and only reference the most current examples unless for a specific purpose.
 
-4. In the event there is no information available to write a greenfield doc after trying all the above steps, such as for a new integration, try interviewing Gatsby core team members to help to produce an outline and content tips. See [Pair Programming program](/contributing/pair-programming/).
+4. In the event there is no information available to write a greenfield doc after trying all the above steps, such as for a new integration, try asking Gatsby core team members to help to produce an outline and content tips. Please open a [documentation issue](https://github.com/gatsbyjs/gatsby/issues/new/choose) for this then.
 
 5. **For Gatsby inkteam members:** You can also search in the Gatsby Slack internally for related information. It’s possible other team members have discussed the issue, or even compiled trouble points into a doc. Look and ask around as part of your discovery work.
 
@@ -90,7 +90,6 @@ Apply feedback from pull request reviews in order for them to be accepted. Furth
 - [How to File an Issue](/contributing/how-to-file-an-issue/)
 - [Gatsby Style Guide](/contributing/gatsby-style-guide/)
 - [Markdown Syntax Doc](/docs/how-to/routing/mdx/markdown-syntax/)
-- [Pair Programming](/contributing/pair-programming/) for interviewing the core team only
 - [Blog Post Guidelines](/contributing/blog-contributions/)
 - [Docs site setup instructions](/contributing/docs-contributions/#docs-site-setup-instructions)
 - [How to Open a Pull Request](/contributing/how-to-open-a-pull-request/)

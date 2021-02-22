@@ -37,7 +37,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       lastPublisher: NPMPackageOwner
       _searchInternal: NPMPackage_searchInternal
     }
-    type NPMPackageReadme implements Node @dontInfer {
+    type NPMPackageReadme implements Node @dontInfer @mimeTypes(types: ["text/markdown"]) {
       slug: String!
     }
     type NPMPackageRepository {
@@ -73,10 +73,10 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 exports.sourceNodes = async (
-  { boundActionCreators, createNodeId, createContentDigest },
+  { actions, createNodeId, createContentDigest },
   { keywords }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 

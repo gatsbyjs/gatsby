@@ -10,12 +10,15 @@ export { LaterHydrator } from "./components/later-hydrator"
 export {
   getImage,
   getSrc,
-  useGatsbyImage,
-  useArtDirection,
+  getImageData,
+  withArtDirection,
   IArtDirectedImage,
+  IGetImageDataArgs,
+  IUrlBuilderArgs,
 } from "./components/hooks"
 export {
   generateImageData,
+  getLowResolutionImageURL,
   IGatsbyImageHelperArgs,
   IImage,
   ImageFormat,

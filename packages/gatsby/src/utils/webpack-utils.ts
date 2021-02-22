@@ -6,10 +6,9 @@ import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
-import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin"
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
-import semver from "semver"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
@@ -20,11 +19,7 @@ import {
 
 import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
-import {
-  eslintConfig,
-  mergeRequiredConfigIn,
-  eslintRequiredConfig,
-} from "./eslint-config"
+import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 
 type LoaderResolver<T = {}> = (options?: T) => Loader
 
@@ -40,17 +35,46 @@ type PluginFactory = (...args: any) => Plugin
 
 type BuiltinPlugins = typeof builtinPlugins
 
+type CSSModulesOptions =
+  | boolean
+  | string
+  | {
+      mode?: "local" | "global" | "pure" | Function
+      auto?: boolean
+      exportGlobals?: boolean
+      localIdentName?: string
+      localIdentContext?: string
+      localIdentHashPrefix?: string
+      namedExport?: boolean
+      exportLocalsConvention?:
+        | "asIs"
+        | "camelCaseOnly"
+        | "camelCase"
+        | "dashes"
+        | "dashesOnly"
+      exportOnlyLocals?: boolean
+    }
+
+type MiniCSSExtractLoaderModuleOptions =
+  | undefined
+  | boolean
+  | {
+      namedExport?: boolean
+    }
 /**
  * Utils that produce webpack `loader` objects
  */
 interface ILoaderUtils {
-  json: LoaderResolver
   yaml: LoaderResolver
-  null: LoaderResolver
-  raw: LoaderResolver
-
   style: LoaderResolver
-  css: LoaderResolver
+  css: LoaderResolver<{
+    url?: boolean | Function
+    import?: boolean | Function
+    modules?: CSSModulesOptions
+    sourceMap?: boolean
+    importLoaders?: number
+    esModule?: boolean
+  }>
   postcss: LoaderResolver<{
     browsers?: Array<string>
     overrideBrowserslist?: Array<string>
@@ -69,6 +93,7 @@ interface ILoaderUtils {
   exports: LoaderResolver
 
   eslint(schema: GraphQLSchema): Loader
+  eslintRequired(): Loader
 }
 
 interface IModuleThatUseGatsby {
@@ -103,6 +128,7 @@ interface IRuleUtils {
   postcss: ContextualRuleFactory<{ overrideBrowserOptions: Array<string> }>
 
   eslint: (schema: GraphQLSchema) => RuleSetRule
+  eslintRequired: () => RuleSetRule
 }
 
 type PluginUtils = BuiltinPlugins & {
@@ -161,8 +187,6 @@ export const createWebpackUtils = (
     return rule
   }
 
-  let ident = 0
-
   const loaders: ILoaderUtils = {
     json: (options = {}) => {
       return {
@@ -170,7 +194,6 @@ export const createWebpackUtils = (
         loader: require.resolve(`json-loader`),
       }
     },
-
     yaml: (options = {}) => {
       return {
         options,
@@ -199,49 +222,63 @@ export const createWebpackUtils = (
       }
     },
 
-    miniCssExtract: (options = {}) => {
-      if (PRODUCTION) {
-        // production always uses MiniCssExtractPlugin
-        return {
-          loader: MiniCssExtractPlugin.loader,
-          options,
-        }
-      } else if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-        // develop with ssr also uses MiniCssExtractPlugin
-        return {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            ...options,
-            // enable hmr for browser bundle, ssr bundle doesn't need it
-            hmr: stage === `develop`,
-          },
+    miniCssExtract: (
+      options: {
+        modules?: MiniCSSExtractLoaderModuleOptions
+      } = {}
+    ) => {
+      let moduleOptions: MiniCSSExtractLoaderModuleOptions = undefined
+
+      const { modules, ...restOptions } = options
+
+      if (typeof modules === `boolean` && options.modules) {
+        moduleOptions = {
+          namedExport: true,
         }
       } else {
-        // develop without ssr is using style-loader
-        return {
-          loader: require.resolve(`style-loader`),
-          options,
-        }
+        moduleOptions = modules
+      }
+
+      return {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          modules: moduleOptions,
+          ...restOptions,
+        },
       }
     },
 
     css: (options = {}) => {
-      return {
-        loader: isSSR
-          ? require.resolve(`css-loader/locals`)
-          : require.resolve(`css-loader`),
-        options: {
-          sourceMap: !PRODUCTION,
-          camelCase: `dashesOnly`,
-          // https://github.com/webpack-contrib/css-loader/issues/406
+      let modulesOptions: CSSModulesOptions = false
+      if (options.modules) {
+        modulesOptions = {
+          auto: undefined,
+          namedExport: true,
           localIdentName: `[name]--[local]--[hash:base64:5]`,
-          ...options,
+          exportLocalsConvention: `dashesOnly`,
+          exportOnlyLocals: isSSR,
+        }
+
+        if (typeof options.modules === `object`) {
+          modulesOptions = {
+            ...modulesOptions,
+            ...options.modules,
+          }
+        }
+      }
+
+      return {
+        loader: require.resolve(`css-loader`),
+        options: {
+          url: false,
+          sourceMap: !PRODUCTION,
+          modules: modulesOptions,
         },
       }
     },
 
     postcss: (options = {}) => {
-      let {
+      const {
         plugins,
         overrideBrowserslist = supportedBrowsers,
         ...postcssOpts
@@ -250,23 +287,33 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`postcss-loader`),
         options: {
-          ident: `postcss-${++ident}`,
+          execute: false,
           sourceMap: !PRODUCTION,
-          plugins: (loader: Loader): Array<postcss.Plugin<any>> => {
-            plugins =
-              (typeof plugins === `function` ? plugins(loader) : plugins) || []
+          // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+          postcssOptions: (loaderContext: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let postCSSPlugins: Array<postcss.Plugin<any>> = []
+            if (plugins) {
+              postCSSPlugins =
+                typeof plugins === `function` ? plugins(loaderContext) : plugins
+            }
 
             const autoprefixerPlugin = autoprefixer({
               overrideBrowserslist,
               flexbox: `no-2009`,
-              ...((plugins.find(
+              ...((postCSSPlugins.find(
                 plugin => plugin.postcssPlugin === `autoprefixer`
               ) as autoprefixer.Autoprefixer)?.options ?? {}),
             })
 
-            return [flexbugs, autoprefixerPlugin, ...plugins]
+            postCSSPlugins.unshift(autoprefixerPlugin)
+            postCSSPlugins.unshift(flexbugs)
+
+            return {
+              plugins: postCSSPlugins,
+              ...postcssOpts,
+            }
           },
-          ...postcssOpts,
         },
       }
     },
@@ -335,17 +382,10 @@ export const createWebpackUtils = (
       }
     },
 
-    imports: (options = {}) => {
+    eslintRequired: () => {
       return {
-        options,
-        loader: require.resolve(`imports-loader`),
-      }
-    },
-
-    exports: (options = {}) => {
-      return {
-        options,
-        loader: require.resolve(`exports-loader`),
+        options: eslintRequiredConfig,
+        loader: require.resolve(`eslint-loader`),
       }
     },
   }
@@ -496,10 +536,22 @@ export const createWebpackUtils = (
     }
   }
 
+  rules.eslintRequired = (): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      use: [loaders.eslintRequired()],
+    }
+  }
+
   rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml$/,
-      use: [loaders.json(), loaders.yaml()],
+      type: `json`,
+      use: [loaders.yaml()],
     }
   }
 
@@ -552,13 +604,10 @@ export const createWebpackUtils = (
     const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
       const { browsers, ...restOptions } = options
       const use = [
+        loaders.miniCssExtract(restOptions),
         loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
       ]
-      if (!isSSR)
-        use.unshift(
-          loaders.miniCssExtract({ hmr: !PRODUCTION && !restOptions.modules })
-        )
 
       return {
         use,
@@ -614,10 +663,7 @@ export const createWebpackUtils = (
     ...options
   }: { terserOptions?: TerserPlugin.TerserPluginOptions } = {}): Plugin =>
     new TerserPlugin({
-      // TODO add proper cache keys
-      cache: path.join(program.directory, `.cache`, `webpack`, `terser`),
       exclude: /\.min\.js/,
-      sourceMap: true,
       terserOptions: {
         ie8: false,
         mangle: {
@@ -639,7 +685,7 @@ export const createWebpackUtils = (
 
   plugins.minifyCss = (
     options = {
-      cssProcessorPluginOptions: {
+      minimizerOptions: {
         preset: [
           `default`,
           {
@@ -702,7 +748,7 @@ export const createWebpackUtils = (
         ],
       },
     }
-  ): OptimizeCssAssetsPlugin => new OptimizeCssAssetsPlugin(options)
+  ): CssMinimizerPlugin => new CssMinimizerPlugin(options)
 
   plugins.fastRefresh = (): Plugin =>
     new ReactRefreshWebpackPlugin({
@@ -753,51 +799,4 @@ export function reactHasJsxRuntime(): boolean {
   // }
 
   return false
-}
-
-export function ensureRequireEslintRules(config: Configuration): Configuration {
-  if (!config.module) {
-    config.module = {
-      rules: [],
-    }
-  }
-  // for fast refresh we want to ensure that that there is eslint rule running
-  // because user might have added their own `eslint-loader` let's check if there is one
-  // and adjust it to add the rule or append new loader with required rule
-  const rule = config.module.rules.find(rule => {
-    if (typeof rule.loader === `string`) {
-      return (
-        rule.loader === `eslint-loader` ||
-        rule.loader.endsWith(`eslint-loader/index.js`) ||
-        rule.loader.endsWith(`eslint-loader/dist/cjs.js`)
-      )
-    }
-
-    return false
-  })
-
-  if (rule) {
-    if (typeof rule.options !== `string`) {
-      if (!rule.options) {
-        rule.options = {}
-      }
-      mergeRequiredConfigIn(rule.options)
-    }
-  } else {
-    config.module.rules.push({
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [
-        {
-          loader: require.resolve(`eslint-loader`),
-          options: eslintRequiredConfig,
-        },
-      ],
-    })
-  }
-
-  return config
 }

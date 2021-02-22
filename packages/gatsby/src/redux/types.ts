@@ -97,6 +97,14 @@ export interface IGatsbyStaticQueryComponents {
   query: string
   hash: string
 }
+
+export interface IGatsbyPageComponent {
+  componentPath: SystemPath
+  query: string
+  pages: Set<string>
+  isInBootstrap: boolean
+}
+
 export interface IDefinitionMeta {
   name: string
   def: DefinitionNode
@@ -164,6 +172,17 @@ export interface IComponentState {
   errors: number
 }
 
+export interface IHtmlFileState {
+  dirty: number
+  isDeleted: boolean
+  pageDataHash: string
+}
+
+export interface IStaticQueryResultState {
+  dirty: number
+  staticQueryResultHash: string
+}
+
 export type GatsbyNodeAPI =
   | "onPreBoostrap"
   | "onPostBoostrap"
@@ -217,15 +236,7 @@ export interface IGatsbyState {
     deletedQueries: Set<Identifier>
     dirtyQueriesListToEmitViaWebsocket: Array<string>
   }
-  components: Map<
-    SystemPath,
-    {
-      componentPath: SystemPath
-      query: string
-      pages: Set<string>
-      isInBootstrap: boolean
-    }
-  >
+  components: Map<IGatsbyPageComponent["componentPath"], IGatsbyPageComponent>
   staticQueryComponents: Map<
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
@@ -266,7 +277,6 @@ export interface IGatsbyState {
       string | { typeOrTypeDef: DocumentNode; plugin: IGatsbyPlugin }
     >
   }
-  themes: any // TODO
   logs: IGatsbyCLIState
   inferenceMetadata: {
     step: string // TODO make enum or union
@@ -275,8 +285,14 @@ export interface IGatsbyState {
     }
   }
   pageDataStats: Map<SystemPath, number>
-  pageData: Map<Identifier, string>
   visitedPages: Map<string, Set<string>>
+  html: {
+    trackedHtmlFiles: Map<Identifier, IHtmlFileState>
+    browserCompilationHash: string
+    ssrCompilationHash: string
+    trackedStaticQueryResults: Map<string, IStaticQueryResultState>
+    unsafeBuiltinWasUsedInSSR: boolean
+  }
 }
 
 export interface ICachedReduxState {
@@ -287,10 +303,10 @@ export interface ICachedReduxState {
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
-  pageData: IGatsbyState["pageData"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
+  html: IGatsbyState["html"]
 }
 
 export type ActionsUnion =
@@ -305,7 +321,6 @@ export type ActionsUnion =
   | ICreateTypes
   | IDeleteCacheAction
   | IDeleteNodeAction
-  | IDeleteNodesAction
   | IDeletePageAction
   | IPageQueryRunAction
   | IPrintTypeDefinitions
@@ -326,11 +341,10 @@ export type ActionsUnion =
   | ISetGraphQLDefinitionsAction
   | ISetSiteFlattenedPluginsAction
   | ISetWebpackCompilationHashAction
+  | ISetSSRWebpackCompilationHashAction
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
-  | IRemovePageDataAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
@@ -354,6 +368,11 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
+  | IDeletedStalePageDataFiles
+  | IRemovedHtml
+  | IGeneratedHtml
+  | IMarkHtmlDirty
+  | ISSRUsedUnsafeBuiltin
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -526,6 +545,8 @@ export interface IPageQueryRunAction {
     path: string
     componentPath: string
     isPage: boolean
+    resultHash: string
+    queryHash: string
   }
 }
 
@@ -615,29 +636,9 @@ export interface ICreateRedirectAction {
   payload: IRedirect
 }
 
-export interface ISetResolvedThemesAction {
-  type: `SET_RESOLVED_THEMES`
-  payload: any // TODO
-}
-
 export interface IDeleteCacheAction {
   type: `DELETE_CACHE`
   cacheIsCorrupt?: boolean
-}
-
-export interface IRemovePageDataAction {
-  type: `REMOVE_PAGE_DATA`
-  payload: {
-    id: Identifier
-  }
-}
-
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
 }
 
 export interface IRemoveTemplateComponentAction {
@@ -695,6 +696,11 @@ export interface IRemoveStaticQuery {
 export interface ISetWebpackCompilationHashAction {
   type: `SET_WEBPACK_COMPILATION_HASH`
   payload: IGatsbyState["webpackCompilationHash"]
+}
+
+export interface ISetSSRWebpackCompilationHashAction {
+  type: `SET_SSR_WEBPACK_COMPILATION_HASH`
+  payload: string
 }
 
 export interface IUpdatePluginsHashAction {
@@ -759,12 +765,6 @@ export interface IDeleteNodeAction {
   payload: IGatsbyNode | void
 }
 
-export interface IDeleteNodesAction {
-  type: `DELETE_NODES`
-  payload: Array<Identifier>
-  fullNodes: Array<IGatsbyNode>
-}
-
 export interface ISetSiteFlattenedPluginsAction {
   type: `SET_SITE_FLATTENED_PLUGINS`
   payload: IGatsbyState["flattenedPlugins"]
@@ -781,8 +781,10 @@ export interface ISetResolvedNodesAction {
 export interface IAddPageDataStatsAction {
   type: `ADD_PAGE_DATA_STATS`
   payload: {
+    pagePath: string
     filePath: SystemPath
     size: number
+    pageDataHash: string
   }
 }
 
@@ -816,4 +818,33 @@ interface ISetProgramAction {
 interface ISetProgramExtensions {
   type: `SET_PROGRAM_EXTENSIONS`
   payload: Array<string>
+}
+
+interface IDeletedStalePageDataFiles {
+  type: `DELETED_STALE_PAGE_DATA_FILES`
+  payload: {
+    pagePathsToClear: Set<string>
+  }
+}
+
+interface IRemovedHtml {
+  type: `HTML_REMOVED`
+  payload: string
+}
+
+interface IGeneratedHtml {
+  type: `HTML_GENERATED`
+  payload: Array<string>
+}
+
+interface IMarkHtmlDirty {
+  type: `HTML_MARK_DIRTY_BECAUSE_STATIC_QUERY_RESULT_CHANGED`
+  payload: {
+    pages: Set<string>
+    staticQueryHashes: Set<string>
+  }
+}
+
+interface ISSRUsedUnsafeBuiltin {
+  type: `SSR_USED_UNSAFE_BUILTIN`
 }
