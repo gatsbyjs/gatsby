@@ -52,7 +52,7 @@ function warnForDeprecation() {
   }
   warnedForDeprecation = true
   console.warn(
-    `[gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to the new Gatsby image plugin for better performance and a simpler API. See https://gatsby.dev/migrate-images to learn how.`
+    `[gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to "gatsby-plugin-image" for better performance and a simpler API. See https://gatsby.dev/migrate-images to learn how.`
   )
 }
 
