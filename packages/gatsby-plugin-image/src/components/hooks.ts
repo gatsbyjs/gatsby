@@ -60,6 +60,12 @@ export function getWrapperProps(
 
   let className = `gatsby-image-wrapper`
 
+  // If the plugin isn't installed we need to apply the styles inline
+  if (!global.GATSBY___IMAGE) {
+    wrapperStyle.position = `relative`
+    wrapperStyle.overflow = `hidden`
+  }
+
   if (layout === `fixed`) {
     wrapperStyle.width = width
     wrapperStyle.height = height
