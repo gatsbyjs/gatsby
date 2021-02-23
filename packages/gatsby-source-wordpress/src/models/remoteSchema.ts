@@ -23,6 +23,7 @@ interface IRemoteSchemaState {
     internal: string
     plugin: string
     actionOptions: string
+    fields: string
   }
 }
 
