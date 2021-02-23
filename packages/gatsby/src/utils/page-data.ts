@@ -205,7 +205,7 @@ export async function flush(): Promise<void> {
 
   if (!flushQueue.idle()) {
     await new Promise(resolve => {
-      flushQueue.drain = resolve
+      flushQueue.drain = resolve as () => unknown
     })
   }
 

@@ -132,8 +132,11 @@ const objectType = typeBuilderApi => {
   })
 
   // if all child fields are excluded, this type shouldn't exist.
-  if (!Object.keys(transformedFields).length) {
-    return false
+  // check null first, otherwise cause:
+  // TypeError: Cannot convert undefined or null to object at Function.keys (<anonymous>)
+  // Also cause wordpress blog site build failure in createSchemaCustomization step
+  if (!transformedFields || !Object.keys(transformedFields).length) {
+    return
   }
 
   let objectType = {

@@ -43,10 +43,10 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { updateSiteMetadata } from "gatsby-core-utils"
+import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
-  report.setVerbose(program.verbose)
+  report.setVerbose(isTruthy(process.env.VERBOSE) || program.verbose)
 
   if (program.profile) {
     report.warn(

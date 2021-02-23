@@ -7,12 +7,13 @@ import {
   ToggleRefinement,
 } from "react-instantsearch-dom"
 import algoliaConfig from "../utils/algolia-config"
+import { ReactNode } from "react"
 
 export default function InstantSearchProvider({
   children,
   searchState,
 }: {
-  children: React.ReactNode
+  children: ReactNode
   searchState?: string
 }): JSX.Element {
   return (
