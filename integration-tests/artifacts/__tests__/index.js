@@ -396,6 +396,33 @@ describe(`First run (baseline)`, () => {
         manifest[runNumber].allPages.sort()
       )
     })
+
+    describe(`should add <link> for webpack's magic comments`, () => {
+      let htmlContent
+      beforeAll(() => {
+        htmlContent = fs.readFileSync(
+          path.join(
+            process.cwd(),
+            `public`,
+            `dynamic-imports-magic-comments`,
+            `index.html`
+          ),
+          `utf-8`
+        )
+      })
+
+      it(`has prefetch link`, () => {
+        expect(htmlContent).toMatch(
+          /<link\s+as="script"\s+rel="prefetch"\s+href="\/magic-comment-prefetch-\w+.js"\s*\/>/g
+        )
+      })
+
+      it(`has preload link`, () => {
+        expect(htmlContent).toMatch(
+          /<link\s+as="script"\s+rel="preload"\s+href="\/magic-comment-preload-\w+.js"\s*\/>/g
+        )
+      })
+    })
   })
 
   describe(`page-data files`, () => {
