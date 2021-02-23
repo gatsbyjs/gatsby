@@ -10,13 +10,12 @@ Object {
           "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 35,
           "line": 1,
           "offset": 34,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -52,13 +51,12 @@ Object {
           "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -94,13 +92,12 @@ Object {
           "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >Click me</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -136,13 +133,12 @@ Object {
           "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" >Custom link text</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 36,
           "line": 1,
           "offset": 35,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -178,13 +174,12 @@ Object {
           "value": "<a href=\\"https://babeljs.io/repl/#?presets=react&code_lz=MYewdgzgLgBAZiEMC8MBEAjAhgJzQbiA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -220,13 +215,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqIQ6WgAsA9LVLzy8ei3mRYxBPyEgJbAB4FZtEVGY1GDJlIA8LCADcABBBYBeADogATqSktL4AfPbyTs4hIPoyCkoqajAaWoQkVnS2SCDWcLSuYIGunq6-AEZofr4A3DF6QA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 41,
           "line": 1,
           "offset": 40,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -262,13 +256,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 26,
           "line": 1,
           "offset": 25,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -304,13 +297,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" >Click me</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 26,
           "line": 1,
           "offset": 25,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -346,13 +338,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" >Custom link text</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 42,
           "line": 1,
           "offset": 41,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -388,13 +379,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqJw0QiRD8hICWwAeBABa0RUZjUYMmUgDwsIANwAEEFgF4AOiABOpUrQcA-IwHpTZ9_OFIWGIEZBA9ekYkcIo4WgswFwsbCwcAIzRHBwBueQUgA\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 26,
           "line": 1,
           "offset": 25,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -430,13 +420,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTzMBOMTE0QgoaenCYAaEIOEBaFqQC2SEORgAPGSBT9SKBbQCeHBKICMAVgLWQsgAIAjNM5hQA9DUHqA7AQALAQADCAAvrIqaBCUoui0ABaetKSemlIwLJ6QsMQI4ZEgsWxaBIm0KlDMNIwMIiAAPCwQAG4ABBAsALwAOnKkpLT9AHyNni2tIxGyCcmp6fD02bmEJDV09eq1Uu1gg-3d7f2u_P0A3BGFQA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 41,
           "line": 1,
           "offset": 40,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -472,13 +461,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqIQ6WgAsA9LVLzy8ei3mRYxBPyEgJbAB4FZtEVGY1GDJlIA8cdOQAEEFgF4AOuFKkfAHz28k5o5AEg-jIKSipqMBpahCRWdLZIINZwtC5gfi4eLj4ARmgATj4A3JF6QA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 41,
           "line": 1,
           "offset": 40,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -514,13 +502,12 @@ Object {
           "value": "<a href=\\"https://codesandbox.io/api/v1/sandboxes/define?parameters=N4IgZglgNgpgziAXKADgQwMYGs0HMYB0AVnAPYB2SoGFALjObVSACYwoNvkYTxUC-AGhABbNBEqIQ6WgAsA9LVLzy8ei3mRYxBPyEgJbAB4FZtEVGY1GDJlIA8LCADcABBBYBeADogATqSktL4AfPbyTs4hIPoyCkoqajAaWoQkVnS2SCDWcLSuYIGunq6-AEZofr4A3DHCcYrKqnnJ8mjkQbIwfgBi0GkIyDmZjNm5-YWkxaUgFVUgtbFoco2JLSn9BBhwg9QjdsPkeQVFJeWVNTF6QA\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 95,
           "line": 1,
           "offset": 94,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -556,13 +543,12 @@ Object {
           "value": "<a href=\\"/redirect-to-codepen/path/to/nested/file.js\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 37,
           "line": 1,
           "offset": 36,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -598,13 +584,12 @@ Object {
           "value": "<a href=\\"/redirect-to-codepen/file.js\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 22,
           "line": 1,
           "offset": 21,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -640,13 +625,12 @@ Object {
           "value": "<a href=\\"/redirect-to-codepen/file.js\\" >Click me</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 22,
           "line": 1,
           "offset": 21,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -682,13 +666,12 @@ Object {
           "value": "<a href=\\"/redirect-to-codepen/file.js\\" >Custom link text</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 38,
           "line": 1,
           "offset": 37,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -724,13 +707,12 @@ Object {
           "value": "<a href=\\"/redirect-to-codepen/file.js\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 22,
           "line": 1,
           "offset": 21,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -766,13 +748,12 @@ Object {
           "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 35,
           "line": 1,
           "offset": 34,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -808,13 +789,12 @@ Object {
           "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -850,13 +830,12 @@ Object {
           "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >Click me</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -892,13 +871,12 @@ Object {
           "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" >Custom link text</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 36,
           "line": 1,
           "offset": 35,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -934,13 +912,12 @@ Object {
           "value": "<a href=\\"http://ramdajs.com/repl/#?const%20foo%20%3D%20%22bar%22%3B\\" target=\\"_blank\\" rel=\\"noreferrer\\">REPL</a>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
