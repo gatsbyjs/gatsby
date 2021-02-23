@@ -20,8 +20,6 @@ export function writeVirtualLoadingIndicatorModule(): void {
         : false
   }
 
-  console.log(`wat`, { indicatorEnabled })
-
   writeModule(
     `$virtual/loading-indicator.js`,
     `
