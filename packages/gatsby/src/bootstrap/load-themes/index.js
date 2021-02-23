@@ -85,11 +85,9 @@ const resolveTheme = async (
 // off track and creating their own set of themes
 const processTheme = (
   { themeName, themeConfig, themeSpec, themeDir, configFilePath },
-  { useLegacyThemes, rootDir }
+  { rootDir }
 ) => {
-  const themesList = useLegacyThemes
-    ? themeConfig && themeConfig.__experimentalThemes
-    : themeConfig && themeConfig.plugins
+  const themesList = themeConfig && themeConfig.plugins
   // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
@@ -98,7 +96,7 @@ const processTheme = (
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
       const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
-      return processTheme(themeObj, { useLegacyThemes, rootDir: themeDir })
+      return processTheme(themeObj, { rootDir: themeDir })
     }).then(arr =>
       arr.concat([
         { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
@@ -110,12 +108,9 @@ const processTheme = (
   }
 }
 
-module.exports = async (
-  config,
-  { useLegacyThemes = false, configFilePath, rootDir }
-) => {
+module.exports = async (config, { configFilePath, rootDir }) => {
   const themesA = await Promise.mapSeries(
-    useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
+    config.plugins || [],
     async themeSpec => {
       const themeObj = await resolveTheme(
         themeSpec,
@@ -123,7 +118,7 @@ module.exports = async (
         true,
         rootDir
       )
-      return processTheme(themeObj, { useLegacyThemes, rootDir })
+      return processTheme(themeObj, { rootDir })
     }
   ).then(arr => _.flattenDeep(arr))
 

@@ -72,6 +72,9 @@ plugins: [
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
       includeCollections: ["shop", "content"],
+      // Download Images Locally
+      // set to false if you plan on using shopify's CDN
+      downloadImages: true,
 
       // Allow overriding the default queries
       // This allows you to include/exclude extra fields when sourcing nodes
@@ -469,8 +472,8 @@ To learn more about image processing, check the documentation of
 ```js
 const path = require("path")
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
   const pages = await graphql(`
     {

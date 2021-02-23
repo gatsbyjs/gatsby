@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.0.0-next.0...create-gatsby@1.0.0-next.1) (2021-02-08)
+
+**Note:** Version bump only for package create-gatsby
+
+# [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.6.0-next.1...create-gatsby@1.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.6.0-next.0...create-gatsby@0.6.0-next.1) (2021-02-04)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.5.0-next.0...create-gatsby@0.6.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.4.0-next.1...create-gatsby@0.5.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.4.0-next.0...create-gatsby@0.4.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package create-gatsby
+
+# [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.4...create-gatsby@0.4.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package create-gatsby
+
 # [0.3.0-next.4](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@0.3.0-next.3...create-gatsby@0.3.0-next.4) (2020-12-17)
 
 **Note:** Version bump only for package create-gatsby

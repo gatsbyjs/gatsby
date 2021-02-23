@@ -1,65 +1,20 @@
 const {
-  setBoundActionCreators,
+  setActions,
   // queue: jobQueue,
   // reportError,
   _unstable_createJob,
+  _lazyJobsEnabled,
 } = require(`./index`)
 const { pathExists } = require(`fs-extra`)
-const { slash, isCI } = require(`gatsby-core-utils`)
-const { trackFeatureIsUsed } = require(`gatsby-telemetry`)
-const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
 const path = require(`path`)
 
-function prepareLazyImagesExperiment(reporter) {
-  if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
-    return
-  }
-  if (process.env.gatsby_executing_command !== `develop`) {
-    // We don't want to ever have this flag enabled for anything other than develop
-    // in case someone have this env var globally set
-    delete process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES
-    return
-  }
-  if (isCI()) {
-    delete process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES
-    reporter.warn(
-      `Lazy Image Processing experiment is not available in CI environment. Continuing with regular mode.`
-    )
-    return
-  }
-  // We show a different notice for GATSBY_EXPERIMENTAL_FAST_DEV umbrella
-  if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
-    reporter.info(
-      `[gatsby-plugin-sharp] The lazy image processing experiment is enabled`
-    )
-  }
-  trackFeatureIsUsed(`LazyImageProcessing`)
-}
-
-exports.onPreInit = ({ reporter }) => {
-  prepareLazyImagesExperiment(reporter)
-}
-
-// create the progressbar once and it will be killed in another lifecycle
-const finishProgressBar = () => {
-  const progressBar = getProgressBar()
-  if (progressBar) {
-    progressBar.done()
-  }
-}
-
-exports.onPostBuild = () => finishProgressBar()
-
 exports.onCreateDevServer = async ({ app, cache, reporter }) => {
-  if (!process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES) {
-    finishProgressBar()
+  if (!_lazyJobsEnabled()) {
     return
   }
-
-  createOrGetProgressBar()
-  finishProgressBar()
 
   app.use(async (req, res, next) => {
     const decodedURI = decodeURIComponent(req.path)
@@ -149,11 +104,8 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
   }
 }
 
-exports.onPreBootstrap = async (
-  { actions, emitter, reporter, cache, store },
-  pluginOptions
-) => {
-  setBoundActionCreators(actions)
+exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
+  setActions(actions)
   setPluginOptions(pluginOptions)
 
   // below is a hack / hot fix for confusing progress bar behaviour
@@ -204,8 +156,6 @@ exports.onPreBootstrap = async (
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
-        const progress = createOrGetProgressBar(reporter)
-        progress.addImageToProcess(imageCount)
       }
     })
 
@@ -218,9 +168,6 @@ exports.onPreBootstrap = async (
           return
         }
 
-        const imageCount = imageCountInJobsMap.get(jobContentDigest)
-        const progress = createOrGetProgressBar(reporter)
-        progress.tick(imageCount)
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })
@@ -245,4 +192,27 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     stripMetadata: Joi.boolean().default(true),
     defaultQuality: Joi.number().default(50),
     failOnError: Joi.boolean().default(true),
+    defaults: Joi.object({
+      formats: Joi.array().items(
+        Joi.string().valid(`auto`, `png`, `jpg`, `webp`, `avif`)
+      ),
+      placeholder: Joi.string().valid(
+        `tracedSVG`,
+        `dominantColor`,
+        `blurred`,
+        `none`
+      ),
+      quality: Joi.number(),
+      breakpoints: Joi.array().items(Joi.number()),
+      backgroundColor: Joi.string(),
+      transformOptions: Joi.object(),
+      tracedSVGOptions: Joi.object(),
+      blurredOptions: Joi.object(),
+      jpgOptions: Joi.object(),
+      pngOptions: Joi.object(),
+      webpOptions: Joi.object(),
+      avifOptions: Joi.object(),
+    }).description(
+      `Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/`
+    ),
   })

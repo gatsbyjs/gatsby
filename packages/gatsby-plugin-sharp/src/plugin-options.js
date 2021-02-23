@@ -71,6 +71,23 @@ exports.createTransformObject = args => {
   return _.pickBy(options, _.identity)
 }
 
+/**
+ * Used for gatsbyImageData and StaticImage only
+ */
+exports.mergeDefaults = args => doMergeDefaults(args, pluginOptions.defaults)
+
+const customizer = (objValue, srcValue) =>
+  Array.isArray(objValue) ? srcValue : undefined
+
+function doMergeDefaults(args, defaults) {
+  if (!defaults) {
+    return args
+  }
+  return _.mergeWith({}, defaults, args, customizer)
+}
+
+exports.doMergeDefaults = doMergeDefaults
+
 exports.healOptions = (
   { defaultQuality: quality, base64Width },
   args,

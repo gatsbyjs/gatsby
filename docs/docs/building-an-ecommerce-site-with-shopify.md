@@ -17,7 +17,7 @@ If you are already comfortable with Gatsby and Shopify, you might want to check 
 
 1. If you do not already have one ready, [create a Gatsby site](/docs/quick-start).
 
-2. Install the [`gatsby-source-shopify`](/packages/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
+2. Install the [`gatsby-source-shopify`](/plugins/gatsby-source-shopify/) plugin and [`shopify-buy`](https://github.com/Shopify/js-buy-sdk) package.
 
 ```shell
 npm install gatsby-source-shopify shopify-buy
@@ -87,7 +87,7 @@ const ProductsPage = ({ data }) => (
       {data.allShopifyProduct.edges.map(({ node }) => (
         <li key={node.shopifyId}>
           <h3>
-            <Link to={`/product/${node.handle}`}>{node.title}</Link>
+            <Link to={`/products/${node.handle}`}>{node.title}</Link>
             {" - "}${node.priceRange.minVariantPrice.amount}
           </h3>
           <p>{node.description}</p>
@@ -181,7 +181,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // The product "handle" is generated automatically by Shopify
   result.data.allShopifyProduct.edges.forEach(({ node }) => {
     createPage({
-      path: `/product/${node.handle}`,
+      path: `/products/${node.handle}`,
       component: path.resolve(`./src/templates/product.js`),
       context: {
         product: node,

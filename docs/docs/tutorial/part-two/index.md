@@ -285,14 +285,14 @@ export default function About() {
       <p>CSS Modules are cool</p>
       {/* highlight-start */}
       <User
-        username="Jane Doe"
-        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        username="Maria Randall"
+        avatar="https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/tutorial/part-two/pexels-daniel-xavier-1102341.jpg"
+        excerpt="I'm Maria Randall. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
       />
       <User
-        username="Bob Smith"
-        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-        excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        username="Daniela Dewitt"
+        avatar="https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/tutorial/part-two/pexels-guilherme-almeida-1858175.jpg"
+        excerpt="I'm Daniela Dewitt. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
       />
       {/* highlight-end */}
     </Container>
@@ -322,11 +322,11 @@ If you're interested in further reading, check out [Christopher "vjeux" Chedeau'
 
 Gatsby supports almost every possible styling option (if there isn't a plugin yet for your favorite CSS option, [please contribute one!](/contributing/how-to-contribute/))
 
-- [Typography.js](/packages/gatsby-plugin-typography/)
-- [Sass](/packages/gatsby-plugin-sass/)
-- [JSS](/packages/gatsby-plugin-jss/)
-- [Stylus](/packages/gatsby-plugin-stylus/)
-- [PostCSS](/packages/gatsby-plugin-postcss/)
+- [Typography.js](/plugins/gatsby-plugin-typography/)
+- [Sass](/plugins/gatsby-plugin-sass/)
+- [JSS](/plugins/gatsby-plugin-jss/)
+- [Stylus](/plugins/gatsby-plugin-stylus/)
+- [PostCSS](/plugins/gatsby-plugin-postcss/)
 
 and more!
 

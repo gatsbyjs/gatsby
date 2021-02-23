@@ -1,7 +1,7 @@
 import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
-  { actions, stage, rules, plugins, loaders },
+  { actions, stage, loaders },
   {
     cssLoaderOptions = {},
     postCssPlugins,
@@ -9,19 +9,18 @@ exports.onCreateWebpackConfig = (
     sassRuleTest,
     sassRuleModulesTest,
     sassOptions = {},
+    // eslint-disable-next-line no-unused-vars
+    plugins,
     ...sassLoaderOptions
   }
 ) => {
   const { setWebpackConfig } = actions
-  const PRODUCTION = stage !== `develop`
-  const isSSR = stage.includes(`html`)
-
-  delete sassLoaderOptions.plugins
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
 
   const sassLoader = {
     loader: resolve(`sass-loader`),
     options: {
-      sourceMap: useResolveUrlLoader ? true : !PRODUCTION,
+      sourceMap: useResolveUrlLoader ? true : undefined,
       sassOptions,
       ...sassLoaderOptions,
     },
@@ -35,43 +34,36 @@ exports.onCreateWebpackConfig = (
           loaders.miniCssExtract(),
           loaders.css({ importLoaders: 2, ...cssLoaderOptions }),
           loaders.postcss({ plugins: postCssPlugins }),
-          sassLoader,
         ],
   }
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ hmr: false }),
+      loaders.miniCssExtract({ modules: true }),
       loaders.css({ importLoaders: 2, ...cssLoaderOptions, modules: true }),
       loaders.postcss({ plugins: postCssPlugins }),
-      sassLoader,
-    ].filter(Boolean),
+    ],
   }
   if (useResolveUrlLoader && !isSSR) {
-    sassRule.use.splice(-1, 0, {
+    sassRule.use.push({
       loader: `resolve-url-loader`,
       options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
     })
-    sassRuleModules.use.splice(-1, 0, {
+    sassRuleModules.use.push({
       loader: `resolve-url-loader`,
       options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
     })
   }
 
-  let configRules = []
+  // add sass loaders
+  sassRule.use.push(sassLoader)
+  sassRuleModules.use.push(sassLoader)
 
-  switch (stage) {
-    case `develop`:
-    case `build-javascript`:
-    case `build-html`:
-    case `develop-html`:
-      configRules = configRules.concat([
-        {
-          oneOf: [sassRuleModules, sassRule],
-        },
-      ])
-      break
-  }
+  const configRules = [
+    {
+      oneOf: [sassRuleModules, sassRule],
+    },
+  ]
 
   setWebpackConfig({
     module: {
@@ -98,17 +90,17 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(`An array of postCss plugins`),
     sassRuleTest: Joi.object()
       .instance(RegExp)
-      .description(`Override the file regex for SASS`),
+      .description(`Override the file regex for Sass`),
     sassRuleModulesTest: Joi.object()
       .instance(RegExp)
-      .description(`Override the file regex for SASS`),
+      .description(`Override the file regex for Sass`),
     useResolveUrlLoader: Joi.alternatives().try(
       Joi.boolean(),
       Joi.object({}).unknown(true)
     )
       .description(`This plugin resolves url() paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of sass-loader and this is documented in the readme.
 
-        Using resolve-url-loader provides a workaround, if you want to use relative url just install the plugin and then add it to your sass plugin options configuration.`),
+        Using resolve-url-loader provides a workaround, if you want to use relative url just install the plugin and then add it to your Sass plugin options configuration.`),
     // TODO: Use alternatives() to also allow function. Currently some bug in our schema validation (test)
     sassOptions: Joi.object({
       file: Joi.string()
@@ -129,7 +121,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       functions: Joi.object()
         .pattern(MATCH_ALL_KEYS, Joi.function().maxArity(2))
         .description(
-          `functions is an Object that holds a collection of custom functions that may be invoked by the sass files being compiled.`
+          `functions is an Object that holds a collection of custom functions that may be invoked by the Sass files being compiled.`
         ),
       includePaths: Joi.array()
         .items(Joi.string())

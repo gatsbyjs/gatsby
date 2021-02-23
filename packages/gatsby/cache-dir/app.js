@@ -9,19 +9,23 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import { Indicator } from "./loading-indicator/indicator"
 import DevLoader from "./dev-loader"
-import syncRequires from "$virtual/sync-requires"
+import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
-if (process.env.GATSBY_HOT_LOADER === `fast-refresh` && module.hot) {
-  module.hot.accept(`$virtual/sync-requires`, () => {
-    // Manually reload
-  })
-}
+// ensure in develop we have at least some .css (even if it's empty).
+// this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
+// this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
+import "./blank.css"
+
+// Enable fast-refresh for virtual sync-requires
+module.hot.accept(`$virtual/async-requires`, () => {
+  // Manually reload
+})
 
 window.___emitter = emitter
 
-const loader = new DevLoader(syncRequires, matchPaths)
+const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
@@ -119,9 +123,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    // TODO replace with hydrate once dev SSR is ready
-    // but only for SSRed pages.
-    ReactDOM.render
+    // Client only pages have any empty body so we just do a normal
+    // render to avoid React complaining about hydration mis-matches.
+    document.getElementById(`___gatsby`).children.length === 0
+      ? ReactDOM.render
+      : ReactDOM.hydrate
   )[0]
 
   let dismissLoadingIndicator

@@ -224,7 +224,7 @@ The types passed in are used to determine child relations of the node.
 
 #### Defining child relations
 
-The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` or `children[MyType]` as a field on the parent.
+The `@childOf` extension can be used to explicitly define what node types or media types a node is a child of and immediately add `child[MyType]` and `children[MyType]` fields on the parent.
 
 The `types` argument takes an array of strings and determines what node types the node is a child of:
 
@@ -251,20 +251,6 @@ The `mimeTypes` and `types` arguments can be combined as follows:
 # Adds `childMdx` as a child to `File` nodes *and* nodes with `@mimeTypes` set to "text/markdown" or "text/x-markdown"
 type Mdx implements Node
   @childOf(types: ["File"], mimeTypes: ["text/markdown", "text/x-markdown"]) {
-  id: ID!
-}
-```
-
-If `many: true` is set, then instead of creating a single child field on the parent, it will create multiple:
-
-```graphql
-# Adds `childMdx1` with type `Mdx1` to `File`.
-type Mdx1 implements Node @childOf(types: ["File"]) {
-  id: ID!
-}
-
-# Adds `childrenMdx2` with type `[Mdx2]` as a field of `File`.
-type Mdx2 implements Node @childOf(types: ["File"], many: true) {
   id: ID!
 }
 ```
@@ -1014,18 +1000,17 @@ export const query = graphql`
 `
 ```
 
-### Queryable interfaces with the `@nodeInterface` extension
+### Queryable interfaces
 
-Since Gatsby 2.13.22, you can achieve the same thing as above by adding the `@nodeInterface`
-extension to the `TeamMember` interface. This will treat the interface like a normal
-top-level type that implements the `Node` interface, and thus automatically add root
-query fields for the interface.
+Since Gatsby 3.0.0, you can use interface inheritance to achieve the same thing as above:
+`TeamMember implements Node`. This will treat the interface like a normal top-level type that
+implements the `Node` interface, and thus automatically add root query fields for the interface.
 
 ```js:title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = `
-    interface TeamMember @nodeInterface {
+    interface TeamMember implements Node {
       id: ID!
       name: String!
       firstName: String!
@@ -1093,8 +1078,7 @@ data.allTeamMember.nodes.map(node => {
 })
 ```
 
-> Note: All types implementing an interface with the `@nodeInterface` extension
-> must also implement the `Node` interface.
+> Note: All types implementing a queryable interface must also implement the `Node` interface
 
 ## Extending third-party types
 

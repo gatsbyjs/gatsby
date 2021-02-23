@@ -41,8 +41,8 @@ describe(`GatsbyImage server`, () => {
   })
 
   describe(`style verifications`, () => {
-    it(`has a valid style attributes for fluid layout`, () => {
-      const layout = `fluid`
+    it(`has a valid className for fullWidth layout`, () => {
+      const layout = `fullWidth`
 
       const image: IGatsbyImageData = {
         width: 100,
@@ -59,22 +59,9 @@ describe(`GatsbyImage server`, () => {
       )
 
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
-      expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
-        CSSStyleDeclaration {
-          "0": "position",
-          "1": "overflow",
-          "_importants": Object {
-            "overflow": undefined,
-            "position": undefined,
-          },
-          "_length": 2,
-          "_onChange": [Function],
-          "_values": Object {
-            "overflow": "hidden",
-            "position": "relative",
-          },
-        }
-      `)
+      expect((wrapper as HTMLElement).className).toMatchInlineSnapshot(
+        `"gatsby-image-wrapper"`
+      )
     })
 
     it(`has a valid style attributes for fixed layout`, () => {
@@ -97,29 +84,23 @@ describe(`GatsbyImage server`, () => {
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
       expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
         CSSStyleDeclaration {
-          "0": "position",
-          "1": "overflow",
-          "2": "width",
-          "3": "height",
+          "0": "width",
+          "1": "height",
           "_importants": Object {
             "height": undefined,
-            "overflow": undefined,
-            "position": undefined,
             "width": undefined,
           },
-          "_length": 4,
+          "_length": 2,
           "_onChange": [Function],
           "_values": Object {
             "height": "100px",
-            "overflow": "hidden",
-            "position": "relative",
             "width": "100px",
           },
         }
       `)
     })
 
-    it(`has a valid style attributes for constrained layout`, () => {
+    it(`has a valid className for constrained layout`, () => {
       const layout = `constrained`
 
       const image: IGatsbyImageData = {
@@ -137,25 +118,9 @@ describe(`GatsbyImage server`, () => {
       )
 
       const wrapper = document.querySelector(`[data-gatsby-image-wrapper=""]`)
-      expect((wrapper as HTMLElement).style).toMatchInlineSnapshot(`
-        CSSStyleDeclaration {
-          "0": "position",
-          "1": "overflow",
-          "2": "display",
-          "_importants": Object {
-            "display": undefined,
-            "overflow": undefined,
-            "position": undefined,
-          },
-          "_length": 3,
-          "_onChange": [Function],
-          "_values": Object {
-            "display": "inline-block",
-            "overflow": "hidden",
-            "position": "relative",
-          },
-        }
-      `)
+      expect((wrapper as HTMLElement).className).toMatchInlineSnapshot(
+        `"gatsby-image-wrapper gatsby-image-wrapper-constrained"`
+      )
     })
   })
 
@@ -170,7 +135,6 @@ describe(`GatsbyImage server`, () => {
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -186,14 +150,15 @@ describe(`GatsbyImage server`, () => {
           data-main-image=""
           decoding="async"
           loading="lazy"
-          sizes="192x192"
           style="opacity: 0;"
         />
       `)
     })
 
     it(`has a valid src value when fallback is provided in images`, () => {
-      const images = { fallback: { src: `some-src-fallback.jpg` } }
+      const images = {
+        fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` },
+      }
 
       const image: IGatsbyImageData = {
         width: 100,
@@ -201,7 +166,6 @@ describe(`GatsbyImage server`, () => {
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -233,6 +197,7 @@ icon64px.png 64w,
 icon-retina.png 2x,
 icon-ultra.png 3x,
 icon.svg`,
+          sizes: `192x192`,
         },
       }
 
@@ -242,7 +207,6 @@ icon.svg`,
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -278,7 +242,6 @@ icon.svg`,
         layout: `constrained`,
         images,
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -294,7 +257,6 @@ icon.svg`,
           data-main-image=""
           decoding="async"
           loading="lazy"
-          sizes="192x192"
           style="opacity: 0;"
         />
       `)
@@ -317,9 +279,11 @@ icon.svg`,
         width: 100,
         height: 100,
         layout: `constrained`,
-        images: { sources },
+        images: {
+          sources,
+          fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` },
+        },
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -333,12 +297,14 @@ icon.svg`,
         <picture>
           <source
             media="some-media"
+            sizes="192x192"
             srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
           />
           <img
             alt="A fake image for testing purpose"
             data-gatsby-image-ssr=""
             data-main-image=""
+            data-src="some-src-fallback.jpg"
             decoding="async"
             loading="lazy"
             sizes="192x192"
@@ -350,14 +316,13 @@ icon.svg`,
   })
 
   describe(`placeholder verifications`, () => {
-    it(`has a placeholder in a div with valid styles for fluid layout`, () => {
+    it(`has a placeholder in a div with valid styles for fullWidth layout`, () => {
       const image: IGatsbyImageData = {
         width: 100,
         height: 100,
-        layout: `fluid`,
+        layout: `fullWidth`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -383,7 +348,6 @@ icon.svg`,
         layout: `fixed`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 
@@ -409,7 +373,6 @@ icon.svg`,
         layout: `constrained`,
         images: {},
         placeholder: { sources: [] },
-        sizes: `192x192`,
         backgroundColor: `red`,
       }
 

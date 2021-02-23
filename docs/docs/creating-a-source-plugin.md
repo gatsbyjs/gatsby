@@ -265,7 +265,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       author: Author @link(from: "author.name" by: "name") // highlight-line
       # ... other fields
     }
-    
+
     type Author implements Node {
       name: String!
       post: Post @link // highlight-line
@@ -305,7 +305,7 @@ This loose coupling between the data source and the transformer plugins allow Ga
 
 #### Sourcing and optimizing images from remote locations
 
-A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/packages/gatsby-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
+A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/plugins/gatsby-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
 
 This can be achieved by the following steps:
 
@@ -437,7 +437,7 @@ exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(`YourSourceType`).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(`YourSourceType`).forEach(node => touchNode(node)
 
   // ensure a plugin is in a preview mode and/or supports listening
   if (pluginOptions.preview) {
@@ -446,9 +446,7 @@ exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
       newData.forEach(newDatum => {
         switch (newDatum.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)),
-            })
+            deleteNode(getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)))
             break
           case "created":
           case "updated":

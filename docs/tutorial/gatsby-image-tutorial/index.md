@@ -13,7 +13,7 @@ By the end of this tutorial, you’ll have done the following:
 
 ## Prerequisites
 
-This tutorial assumes you already have a Gatsby project up and running as well as images you'd like to render on your page. To set up a Gatsby site, check out the [main tutorial](/tutorial/) or the [quick start](/docs/quick-start/).
+This tutorial assumes you already have a Gatsby project up and running as well as images you'd like to render on your page. To set up a Gatsby site, check out the [main tutorial](/docs/tutorial/) or the [quick start](/docs/quick-start/).
 
 In this tutorial you'll learn how to set up `gatsby-image`, a React component that optimizes responsive images using GraphQL and Gatsby's data layer. You'll be informed of a number of ways to use `gatsby-image` and some gotchas.
 
@@ -91,7 +91,7 @@ export const query = graphql`
 `
 ```
 
-_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/packages/gatsby-image/#fragments)._
+_**Note:** This query won't work in GraphiQL as it doesn't support implicit fragments. This will work in your Gatsby pages and components. [See the `gatsby-image` docs for more details](/plugins/gatsby-image/#fragments)._
 
 There are a couple of things to note here.
 
@@ -157,7 +157,7 @@ export default HomePage
 
 ## Querying for multiple images from YAML data
 
-Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/packages/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
+Another way to source images is through YAML (or Markdown). This example uses the `gatsby-transformer-yaml` plugin to query the YAML files. More information about that plugin can be found in the [Gatsby plugin library](/plugins/gatsby-transformer-yaml/?=gatsby-transformer-yaml).
 
 Here's an example of a query from a list of conferences in a YAML file with an image for each one:
 

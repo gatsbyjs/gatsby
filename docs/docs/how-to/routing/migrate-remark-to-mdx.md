@@ -62,6 +62,13 @@ const result = await graphql(
       ) {
 ```
 
+Don't forget to update the `posts` constant by replacing `allMarkdownRemark` with `allMdx`.
+
+```diff:title=gatsby-node.js
+-const posts = result.data.allMarkdownRemark.nodes
++const posts = result.data.allMdx.nodes
+```
+
 Also, update `onCreateNode` which creates the blog post slugs to watch for the node type of `Mdx` instead of `MarkdownRemark`.
 
 ```diff:title=gatsby-node.js

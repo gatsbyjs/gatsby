@@ -5,7 +5,7 @@ const queryString = require(`query-string`)
 const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged, createContentDigest },
+  { actions, getNode, createNodeId, createContentDigest },
   pluginOptions
 ) => {
   const { createNode } = actions

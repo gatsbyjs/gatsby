@@ -6,7 +6,7 @@ Parses CSV files into JSON arrays.
 
 `npm install gatsby-transformer-csv`
 
-Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
+Note: You generally will use this plugin together with the [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/) plugin. `gatsby-source-filesystem` reads in the files then this plugin _transforms_ the files into data you can query.
 
 ## How to use
 
@@ -28,7 +28,7 @@ module.exports = {
 }
 ```
 
-### Configuration
+### Configuration
 
 The example above is the minimal configuration required to begin working. Additional
 customization of the parsing process is possible using the parameters listed in

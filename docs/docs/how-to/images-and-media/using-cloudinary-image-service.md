@@ -4,7 +4,7 @@ title: Using Cloudinary image service for media optimization
 
 Cloudinary is a cloud-based end-to-end media management platform that provides solutions to help site creators serve optimized media files (images and videos) to their audiences. It also provides a lot of optional transformations that can be carried out on these media assets.
 
-In this guide you will take a look at the [gatsby-source-cloudinary](/packages/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/packages/gatsby-transformer-cloudinary/) plugins which you can use to improve the experience of handling images on Gatsby sites.
+In this guide you will take a look at the [gatsby-source-cloudinary](/plugins/gatsby-source-cloudinary/) and [gatsby-transformer-cloudinary](/plugins/gatsby-transformer-cloudinary/) plugins which you can use to improve the experience of handling images on Gatsby sites.
 
 Plugins are generally used to abstract functionality in Gatsby. In this case, the `gatsby-source-cloudinary` plugin is a [source plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) which helps to connect Cloudinary media storage capabilities to your site.
 
@@ -77,7 +77,7 @@ module.exports = {
 
 Note that `gatsby-source-cloudinary` takes the following options:
 
-- **`cloudName`** , **`apiKey`** , and **`apiSecret`** **:** These are credentials from your Cloudinary console, stored as three separate environment variables for security.
+- **`cloudName`**, **`apiKey`**, and **`apiSecret`** **:** These are credentials from your Cloudinary console, stored as three separate environment variables for security.
 - **`resourceType`** **:** This is the resource type of the media assets - either an image or a video.
 - **`prefix`** **:** This is the folder (in your Cloudinary account) in which the files reside. In the example above, the folder is called `gatsby-source-cloudinary`. Assign a name of your choice.
   Other optional options are `type`, `tags`, and `maxResult`.
@@ -152,5 +152,5 @@ module.exports = {
 
 - [Faster Sites with Optimized Media Assets by William Imoh](/blog/2020-01-12-faster-sites-with-optimized-media-assets/)
 - [Gatsby Transformer Cloudinary](https://www.npmjs.com/package/gatsby-transformer-cloudinary)
-- [Gatsby Source Cloudinary](/packages/gatsby-source-cloudinary/)
+- [Gatsby Source Cloudinary](/plugins/gatsby-source-cloudinary/)
 - [Aspect ratio parameter](https://cloudinary.com/documentation/image_transformation_reference#aspect_ratio_parameter)

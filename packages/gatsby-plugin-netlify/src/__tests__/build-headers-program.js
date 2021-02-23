@@ -16,7 +16,7 @@ describe(`build-headers-program`, () => {
 
   beforeEach(() => {
     reporter = {
-      warn: jest.fn(),
+      panic: jest.fn(),
     }
     fs.existsSync.mockClear()
     fs.existsSync.mockReturnValue(true)
@@ -175,7 +175,7 @@ describe(`build-headers-program`, () => {
 
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
+    expect(reporter.panic).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(`_headers`),
       `utf8`
@@ -210,7 +210,7 @@ describe(`build-headers-program`, () => {
 
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
+    expect(reporter.panic).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(`_headers`),
       `utf8`
@@ -242,7 +242,7 @@ describe(`build-headers-program`, () => {
 
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
+    expect(reporter.panic).not.toHaveBeenCalled()
     const output = await fs.readFile(
       pluginData.publicFolder(`_headers`),
       `utf8`
@@ -261,7 +261,7 @@ describe(`build-headers-program`, () => {
 
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
+    expect(reporter.panic).not.toHaveBeenCalled()
     expect(
       await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
     ).toMatchSnapshot()
@@ -284,7 +284,7 @@ describe(`build-headers-program`, () => {
 
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
-    expect(reporter.warn).not.toHaveBeenCalled()
+    expect(reporter.panic).not.toHaveBeenCalled()
     expect(
       await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
     ).toMatchSnapshot()
@@ -303,10 +303,6 @@ describe(`build-headers-program`, () => {
 
     await buildHeadersProgram(pluginData, pluginOptions, reporter)
 
-    expect(reporter.warn).toHaveBeenCalled()
-
-    expect(
-      await fs.readFile(pluginData.publicFolder(`_headers`), `utf8`)
-    ).toMatchSnapshot()
+    expect(reporter.panic).toHaveBeenCalled()
   })
 })

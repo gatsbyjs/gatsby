@@ -17,7 +17,7 @@ Source plugins convert data from any source into a format that Gatsby can proces
 
 There may not be [an existing plugin](/plugins/?=gatsby-source) for your data source, so you can create your own.
 
-_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/packages/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/packages/gatsby-transformer-yaml/) to make queryable data from files._
+_**NOTE:** if your data is local i.e. on your file system and part of your site's repo, then you generally don't want to create a new source plugin. Instead you want to use [gatsby-source-filesystem](/plugins/gatsby-source-filesystem/) which handles reading and watching files for you. You can then use [transformer plugins](/plugins/?=gatsby-transformer) like [gatsby-transformer-yaml](/plugins/gatsby-transformer-yaml/) to make queryable data from files._
 
 ## How to create a source plugin
 
@@ -269,7 +269,7 @@ exports.sourceNodes = async ({
 // ...
 ```
 
-You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `localhost:4000`.
+You can read about each of the packages that are working together in [Apollo's docs](https://www.apollographql.com/docs/react/). The end result is creating a `client` that you can use to call methods like `query` to get data from the source it's configured to work with. In this case, that is `http://localhost:4000` where you should have the API running. If you can't configure the API to run locally, you can update the URLs for the client to use `gatsby-source-plugin-api.glitch.me` where a version of the API is deployed, instead of `http://localhost:4000`.
 
 #### Query data from the API
 
@@ -764,9 +764,9 @@ exports.sourceNodes = async (
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
   // highlight-end
 
@@ -786,9 +786,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   // highlight-start
@@ -811,9 +811,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   if (pluginOptions.previewMode) {
@@ -854,9 +854,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   if (pluginOptions.previewMode) {
@@ -887,9 +887,7 @@ exports.sourceNodes = async (
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(nodeId),
-            })
+            deleteNode(getNode(nodeId))
             break
           case "created":
           case "updated":
@@ -924,8 +922,8 @@ You can test that this is working by running the site again and updating one of 
 
 Follow these steps to test it out:
 
-1. Open up your site at `localhost:8000` after you run `gatsby develop`
-2. Open up the GraphQL playground at `localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
+1. Open up your site at `http://localhost:8000` after you run `gatsby develop`
+2. Open up the GraphQL playground at `http://localhost:4000` (if you are running the `api` folder locally) or `https://gatsby-source-plugin-api.glitch.me/` and first run a query for posts:
 
 ```graphql
 query {

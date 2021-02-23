@@ -10,8 +10,6 @@ import telemetry from "gatsby-telemetry"
 import apiRunnerNode from "../utils/api-runner-node"
 import handleFlags from "../utils/handle-flags"
 import { getBrowsersList } from "../utils/browserslist"
-import { showExperimentNoticeAfterTimeout } from "../utils/show-experiment-notice"
-import sampleSiteForExperiment from "../utils/sample-site-for-experiment"
 import { Store, AnyAction } from "redux"
 import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
@@ -21,17 +19,21 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { getReactHotLoaderStrategy } from "../utils/get-react-hot-loader-strategy"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
 import { IGatsbyState } from "../redux/types"
 import { IBuildContext } from "./types"
+import availableFlags from "../utils/flags"
 
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions
+}
+
+interface IPluginResolutionSSR extends IPluginResolution {
+  name: string
 }
 
 // If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
@@ -41,40 +43,20 @@ if (
   process.env.GATSBY_EXPERIMENTAL_FAST_DEV &&
   !isCI()
 ) {
-  process.env.GATSBY_EXPERIMENTAL_LAZY_IMAGES = `true`
-  process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND = `true`
   process.env.GATSBY_EXPERIMENTAL_DEV_SSR = `true`
+  process.env.PRESERVE_FILE_DOWNLOAD_CACHE = `true`
+  process.env.PRESERVE_WEBPACK_CACHE = `true`
 
   reporter.info(`
-Three fast dev experiments are enabled: Query on Demand, Development SSR, and Lazy Images (only with gatsby-plugin-sharp@^2.10.0).
+Three fast dev experiments are enabled: Development SSR, preserving file download cache and preserving webpack cache.
 
 Please give feedback on their respective umbrella issues!
 
-- https://gatsby.dev/query-on-demand-feedback
 - https://gatsby.dev/dev-ssr-feedback
-- https://gatsby.dev/lazy-images-feedback
+- https://gatsby.dev/cache-clearing-feedback
   `)
 
   telemetry.trackFeatureIsUsed(`FastDev`)
-}
-
-if (
-  process.env.gatsby_executing_command === `develop` &&
-  !process.env.GATSBY_EXPERIMENTAL_DEV_SSR &&
-  !isCI() &&
-  sampleSiteForExperiment(`DEV_SSR`, 5)
-) {
-  showExperimentNoticeAfterTimeout(
-    `Server Side Rendering (SSR) in Development`,
-    `gatsby.dev/dev-ssr-feedback`,
-    `which helps surface issues with build errors more quickly. Here's how to try it:
-
-module.exports = {
-  flags : { DEV_SSR: true },
-  plugins: [...]
-}`,
-    1 // Show this immediately to the subset of sites selected.
-  )
 }
 
 // Show stack trace on unhandled promises.
@@ -95,6 +77,12 @@ export async function initialize({
   store: Store<IGatsbyState, AnyAction>
   workerPool: JestWorker
 }> {
+  if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
+    reporter.info(
+      `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`
+    )
+    telemetry.trackFeatureIsUsed(`DisableCachePersistence`)
+  }
   if (!args) {
     reporter.panic(`Missing program args`)
   }
@@ -176,25 +164,6 @@ export async function initialize({
 
   // Setup flags
   if (config) {
-    // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
-    if (
-      config.flags?.FAST_REFRESH &&
-      process.env.GATSBY_HOT_LOADER &&
-      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-    ) {
-      delete config.flags.FAST_REFRESH
-      reporter.warn(
-        reporter.stripIndent(`
-          Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
-
-          Will use react-hot-loader.
-
-          To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
-        `)
-      )
-    }
-
-    const availableFlags = require(`../utils/flags`).default
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
       availableFlags,
@@ -217,7 +186,9 @@ export async function initialize({
 
     //  track usage of feature
     enabledConfigFlags.forEach(flag => {
-      telemetry.trackFeatureIsUsed(flag.telemetryId)
+      if (flag.telemetryId) {
+        telemetry.trackFeatureIsUsed(flag.telemetryId)
+      }
     })
 
     // Track the usage of config.flags
@@ -225,8 +196,6 @@ export async function initialize({
       telemetry.trackFeatureIsUsed(`ConfigFlags`)
     }
   }
-
-  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
 
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
@@ -241,24 +210,8 @@ export async function initialize({
   }
 
   // theme gatsby configs can be functions or objects
-  if (config && config.__experimentalThemes) {
-    reporter.warn(
-      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
-    )
-    const themes = await loadThemes(config, {
-      useLegacyThemes: true,
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = themes.config
-
-    store.dispatch({
-      type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes,
-    })
-  } else if (config) {
+  if (config) {
     const plugins = await loadThemes(config, {
-      useLegacyThemes: false,
       configFilePath,
       rootDir: program.directory,
     })
@@ -282,15 +235,9 @@ export async function initialize({
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
     } else if (isCI()) {
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-      reporter.warn(
-        `Experimental Query on Demand feature is not available in CI environment. Continuing with regular mode.`
+      reporter.verbose(
+        `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
       )
-    } else {
-      // We already show a notice for this flag.
-      if (!process.env.GATSBY_EXPERIMENTAL_FAST_DEV) {
-        reporter.info(`Using experimental Query on Demand feature`)
-      }
-      telemetry.trackFeatureIsUsed(`QueryOnDemand`)
     }
   }
 
@@ -323,11 +270,18 @@ export async function initialize({
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
+  const cacheDirectory = `${program.directory}/.cache`
+  const publicDirectory = `${program.directory}/public`
+
+  const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
+  const publicDirExists = fs.existsSync(publicDirectory)
+
+  // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
+  // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
-    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.env.NODE_ENV === `production`
+    process.env.NODE_ENV === `production` &&
+    publicDirExists &&
+    !cacheJsonDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
@@ -359,7 +313,6 @@ export async function initialize({
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes: any = await Promise.all([
-    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
@@ -382,13 +335,10 @@ export async function initialize({
       a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
-  const cacheDirectory = `${program.directory}/.cache`
-  const publicDirectory = `${program.directory}/public`
 
   // .cache directory exists in develop at this point
   // so checking for .cache/json as a heuristic (could be any expected file)
-  const cacheIsCorrupt =
-    fs.existsSync(`${cacheDirectory}/json`) && !fs.existsSync(publicDirectory)
+  const cacheIsCorrupt = cacheJsonDirExists && !publicDirExists
 
   if (cacheIsCorrupt) {
     reporter.info(reporter.stripIndent`
@@ -562,15 +512,18 @@ export async function initialize({
   }
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
+  const isResolvedSSR = (plugin): plugin is IPluginResolutionSSR =>
+    !!plugin.resolve
 
-  const ssrPlugins: Array<IPluginResolution> = flattenedPlugins
+  const ssrPlugins: Array<IPluginResolutionSSR> = flattenedPlugins
     .map(plugin => {
       return {
+        name: plugin.name,
         resolve: hasAPIFile(`ssr`, plugin),
         options: plugin.pluginOptions,
       }
     })
-    .filter(isResolved)
+    .filter(isResolvedSSR)
 
   const browserPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
@@ -606,6 +559,7 @@ export async function initialize({
     .map(
       plugin =>
         `{
+      name: '${plugin.name}',
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`

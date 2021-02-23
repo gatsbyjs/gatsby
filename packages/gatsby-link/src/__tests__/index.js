@@ -5,7 +5,7 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, { navigate, withPrefix, withAssetPrefix } from "../"
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -22,16 +22,6 @@ const getInstance = (props, pathPrefix = ``) => {
 const getNavigate = () => {
   global.___navigate = jest.fn()
   return navigate
-}
-
-const getPush = () => {
-  global.___push = jest.fn()
-  return push
-}
-
-const getReplace = () => {
-  global.___replace = jest.fn()
-  return replace
 }
 
 const getWithPrefix = (pathPrefix = ``) => {
@@ -241,16 +231,6 @@ describe(`<Link />`, () => {
       setup({ linkProps: { to } })
       expect(console.warn).toBeCalled()
     })
-  })
-
-  it(`push is called with correct args`, () => {
-    getPush()(`/some-path`)
-    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
-  })
-
-  it(`replace is called with correct args`, () => {
-    getReplace()(`/some-path`)
-    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
   })
 
   describe(`uses push or replace adequately`, () => {

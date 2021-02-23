@@ -126,7 +126,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 ```
 
 > 💡 Note: There's also a plugin to simplify the creation of client-only routes in your site:
-> [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/).
+> [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths/).
 
 The above code (as well as the `gatsby-plugin-create-client-paths` plugin) updates the `/app` page at build time to add the `matchPath` parameter in the page object to make it so that the configured pages (in this case, everything after `/app`, like `/app/dashboard` or `/app/user`) can be navigated to by Reach Router.
 

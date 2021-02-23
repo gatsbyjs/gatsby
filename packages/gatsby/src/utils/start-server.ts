@@ -1,7 +1,5 @@
 import webpackHotMiddleware from "webpack-hot-middleware"
-import webpackDevMiddleware, {
-  WebpackDevMiddleware,
-} from "webpack-dev-middleware"
+import webpackDevMiddleware from "webpack-dev-middleware"
 import got from "got"
 import webpack from "webpack"
 import express from "express"
@@ -9,7 +7,7 @@ import compression from "compression"
 import graphqlHTTP from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError } from "graphql"
+import { formatError, FragmentDefinitionNode, Kind } from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -63,19 +61,10 @@ interface IServer {
   webpackWatching: IWebpackWatchingPauseResume
 }
 
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
+export interface IWebpackWatchingPauseResume {
   suspend: () => void
   resume: () => void
 }
-
-// context seems to be public, but not documented API
-// see https://github.com/webpack/webpack-dev-middleware/issues/656
-type PatchedWebpackDevMiddleware = WebpackDevMiddleware &
-  express.RequestHandler & {
-    context: {
-      watching: IWebpackWatchingPauseResume
-    }
-  }
 
 export async function startServer(
   program: IProgram,
@@ -121,7 +110,13 @@ module.exports = {
         Stage.DevelopHTML,
         activity.span
       )
-      await doBuildPages(rendererPath, [`/`], activity, workerPool)
+      await doBuildPages(
+        rendererPath,
+        [`/`],
+        activity,
+        workerPool,
+        Stage.DevelopHTML
+      )
     } catch (err) {
       if (err.name !== `WebpackError`) {
         report.panic(err)
@@ -193,6 +188,15 @@ module.exports = {
   } else {
     graphiqlExplorer(app, {
       graphqlEndpoint,
+      getFragments: function getFragments(): Array<FragmentDefinitionNode> {
+        const fragments: Array<FragmentDefinitionNode> = []
+        for (const def of store.getState().definitions.values()) {
+          if (def.def.kind === Kind.FRAGMENT_DEFINITION) {
+            fragments.push(def.def)
+          }
+        }
+        return fragments
+      },
     })
   }
 
@@ -331,33 +335,40 @@ module.exports = {
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
 
-  const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
-    logLevel: `silent`,
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
-    watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
     stats: `errors-only`,
     serverSideRender: true,
-  }) as unknown) as PatchedWebpackDevMiddleware
+  })
 
   app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
-    const {
-      webpackStats: {
-        compilation: { modules },
-      },
-    } = res.locals
+    const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
 
+    if (!compilation) {
+      res.json(emptyResponse)
+      return
+    }
+
     const moduleId = req?.query?.moduleId
     const lineNumber = parseInt(req.query.lineNumber, 10)
     const columnNumber = parseInt(req.query.columnNumber, 10)
 
-    const fileModule = modules.find(m => m.id === moduleId)
+    let fileModule
+    for (const module of compilation.modules) {
+      const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+      if (moduleIdentifier === moduleId) {
+        fileModule = module
+        break
+      }
+    }
+
     const sourceMap = fileModule?._source?._sourceMap
 
     if (!sourceMap) {
@@ -481,7 +492,7 @@ module.exports = {
     // This isn't used in development.
     if (fullUrl.endsWith(`app-data.json`)) {
       res.json({ webpackCompilationHash: `123` })
-      // If this gets here, it's a non-existant file so just send back 404.
+      // If this gets here, it's a non-existent file so just send back 404.
     } else if (fullUrl.endsWith(`.json`)) {
       res.json({}).status(404)
     } else {
@@ -505,7 +516,7 @@ module.exports = {
           res.send(e).status(500)
         }
       } else {
-        res.sendFile(directoryPath(`public/index.html`), err => {
+        res.sendFile(directoryPath(`.cache/develop-html/index.html`), err => {
           if (err) {
             res.status(500).end()
           }

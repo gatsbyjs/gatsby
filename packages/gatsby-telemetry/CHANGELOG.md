@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@2.0.0-next.0...gatsby-telemetry@2.0.0-next.1) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [2.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.11.0-next.0...gatsby-telemetry@2.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.0-next.1...gatsby-telemetry@1.11.0-next.0) (2021-01-28)
+
+### Features
+
+- **gatsby:** distinguish total number of pages from number of written html files ([#29149](https://github.com/gatsbyjs/gatsby/issues/29149)) ([e676944](https://github.com/gatsbyjs/gatsby/commit/e676944d629eab2b92446d3dac72f9a290fa4367))
+
+# [1.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.10.0-next.0...gatsby-telemetry@1.10.0-next.1) (2021-01-26)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.9.0-next.1...gatsby-telemetry@1.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [1.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.9.0-next.0...gatsby-telemetry@1.9.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.8.0-next.1...gatsby-telemetry@1.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-telemetry
+
+# [1.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.8.0-next.0...gatsby-telemetry@1.8.0-next.1) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-telemetry
+
 # [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-telemetry@1.7.0-next.0...gatsby-telemetry@1.8.0-next.0) (2020-12-10)
 
 **Note:** Version bump only for package gatsby-telemetry

@@ -125,7 +125,7 @@ Using the `id` as an access point to query for other properties in the template 
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
   const queryResults = await graphql(`
     query AllProducts {
       allProducts {
@@ -137,21 +137,20 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `);
+  `)
 
-  const productTemplate = path.resolve(`src/templates/product.js`);
+  const productTemplate = path.resolve(`src/templates/product.js`)
   queryResults.data.allProducts.nodes.forEach(node => {
     createPage({
       path: `/products/${node.id}`,
       component: productTemplate,
       context: {
         // This time the entire product is passed down as context
-        product: node
-      }
-    });
-  });
-};
-};
+        product: node,
+      },
+    })
+  })
+}
 ```
 
 > You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).
@@ -207,7 +206,7 @@ trailing slashes.
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
 _Note: There's also a plugin that will remove all trailing slashes from pages automatically:
-[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
+[gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/)_.
 
 _Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
 
