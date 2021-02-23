@@ -20,6 +20,10 @@ export const buildTypeName = name => {
     return name
   }
 
+  if (name === `Filter`) {
+    name = `FilterType`
+  }
+
   return prefix + name
 }
 
