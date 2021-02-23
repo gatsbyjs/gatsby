@@ -44,11 +44,10 @@ export function getCodeFrameInformation(stackTrace) {
 
 const lineNumberRegex = /^[0-9]*:[0-9]*$/g
 
-export function getLineNumberFromAnser(error) {
-  const lineNumberFiltered = error.filter(
-    d => d.content !== ` ` && d.content.match(lineNumberRegex)
-  )[0]?.content
-  return lineNumberFiltered.substr(0, lineNumberFiltered.indexOf(`:`))
+export function getLineNumber(error) {
+  const match = error.match(lineNumberRegex)
+
+  return match?.[1]
 }
 
 export function formatFilename(filename) {

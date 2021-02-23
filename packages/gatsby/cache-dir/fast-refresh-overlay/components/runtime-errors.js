@@ -19,7 +19,7 @@ export function RuntimeErrors({ errors, dismiss }) {
   return (
     <Overlay>
       <Header
-        open={openInEditor(moduleId, res.sourcePosition.line)}
+        open={openInEditor(moduleId, res.sourcePosition?.line)}
         dismiss={dismiss}
       >
         <div data-gatsby-overlay="header__cause-file">

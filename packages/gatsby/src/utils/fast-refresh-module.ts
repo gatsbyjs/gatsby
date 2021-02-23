@@ -3,18 +3,24 @@ import mitt from "mitt"
 declare global {
   // eslint-disable-next-line @typescript-eslint/interface-name-prefix
   interface Window {
-    ___emitter: mitt.Emitter
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    _gatsbyEvents: Array<any> | { push: Function }
   }
 }
 
+window._gatsbyEvents = window._gatsbyEvents || []
+
 export function clearCompileError(): void {
-  window.___emitter.emit(`FAST_REFRESH`, { action: `CLEAR_COMPILE_ERROR` })
+  window._gatsbyEvents.push([`FAST_REFRESH`, { action: `CLEAR_COMPILE_ERROR` }])
 }
 
-export function clearRuntimeErrors(hasRuntimeErrors): void {
-  if (typeof hasRuntimeErrors !== `undefined`) {
+export function clearRuntimeErrors(dismissOverlay: boolean): void {
+  if (typeof dismissOverlay === `undefined` || dismissOverlay) {
     // Fast Refresh weird behavior
-    window.___emitter.emit(`FAST_REFRESH`, { action: `CLEAR_RUNTIME_ERRORS` })
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      { action: `CLEAR_RUNTIME_ERRORS` },
+    ])
   }
 }
 
@@ -23,10 +29,13 @@ export function showCompileError(message): void {
     return
   }
 
-  window.___emitter.emit(`FAST_REFRESH`, {
-    action: `SHOW_COMPILE_ERROR`,
-    payload: message,
-  })
+  window._gatsbyEvents.push([
+    `FAST_REFRESH`,
+    {
+      action: `SHOW_COMPILE_ERROR`,
+      payload: message,
+    },
+  ])
 }
 
 export function showRuntimeErrors(errors): void {
@@ -34,10 +43,13 @@ export function showRuntimeErrors(errors): void {
     return
   }
 
-  window.___emitter.emit(`FAST_REFRESH`, {
-    action: `SHOW_RUNTIME_ERRORS`,
-    payload: errors,
-  })
+  window._gatsbyEvents.push([
+    `FAST_REFRESH`,
+    {
+      action: `SHOW_RUNTIME_ERRORS`,
+      payload: errors,
+    },
+  ])
 }
 
 export function isWebpackCompileError(error): boolean {
@@ -49,9 +61,12 @@ export function isWebpackCompileError(error): boolean {
 
 export function handleRuntimeError(error): void {
   if (error && !isWebpackCompileError(error)) {
-    window.___emitter.emit(`FAST_REFRESH`, {
-      action: `HANDLE_RUNTIME_ERROR`,
-      payload: [error],
-    })
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `HANDLE_RUNTIME_ERROR`,
+        payload: [error],
+      },
+    ])
   }
 }

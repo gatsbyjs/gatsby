@@ -40,13 +40,22 @@ function DevOverlay({ children }) {
   const [state, dispatch] = React.useReducer(reducer, initialState)
 
   React.useEffect(() => {
-    window.___emitter.on(`FAST_REFRESH`, e => {
-      dispatch(e)
+    const gatsbyEvents = window._gatsbyEvents
+    window._gatsbyEvents = {
+      push: ([channel, event]) => {
+        if (channel === `FAST_REFRESH`) {
+          dispatch(event)
+        }
+      },
+    }
+
+    gatsbyEvents.forEach(([channel, event]) => {
+      if (channel === `FAST_REFRESH`) {
+        dispatch(event)
+      }
     })
     return () => {
-      window.___emitter.off(`FAST_REFRESH`, e => {
-        dispatch(e)
-      })
+      window._gatsbyEvents = []
     }
   }, [dispatch])
 
@@ -60,12 +69,7 @@ function DevOverlay({ children }) {
 
   return (
     <React.Fragment>
-      <ErrorBoundary
-        clearErrors={() => console.log(`clear`)}
-        onError={error => console.log(error)}
-      >
-        {children ?? null}
-      </ErrorBoundary>
+      <ErrorBoundary hasErrors={hasErrors}>{children ?? null}</ErrorBoundary>
       {hasErrors ? (
         <ShadowPortal>
           <Style />
