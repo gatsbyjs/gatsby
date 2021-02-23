@@ -2,10 +2,8 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-import FloatingImage from "../components/floating-image"
-import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
-
+import PageTitle from "../components/page-title"
 const BlurUp = ({ data, location }) => (
   <Layout
     location={location}
@@ -13,10 +11,9 @@ const BlurUp = ({ data, location }) => (
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
-    <FloatingImage
-      imageMobile={getImage(data.floatingImageMobile.localFile)}
-      imageDesktop={getImage(data.floatingImage.localFile)}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
       The default Blur Up technique uses progressive loading to make a fast,

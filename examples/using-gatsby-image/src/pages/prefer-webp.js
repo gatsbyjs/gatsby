@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
 
@@ -13,10 +12,9 @@ const PreferWebp = ({ data, location }) => (
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Prefer WebP</PageTitle>
-    <FloatingImage
-      imageMobile={getImage(data.floatingImageMobile.localFile)}
-      imageDesktop={getImage(data.floatingImage.localFile)}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
       WebP is a modern image format that provides both lossless and lossy

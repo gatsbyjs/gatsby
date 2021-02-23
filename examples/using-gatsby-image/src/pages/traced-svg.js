@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import ImageGallery from "../components/image-gallery"
 
@@ -15,10 +14,9 @@ const TracedSVG = ({ data, location }) => (
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Traced SVG Placeholders</PageTitle>
-    <FloatingImage
-      imageMobile={getImage(data.floatingImageMobile.localFile)}
-      imageDesktop={getImage(data.floatingImage.localFile)}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
       Generates a{` `}
@@ -59,21 +57,16 @@ export const query = graphql`
         }
       }
     }
-    floatingImageMobile: unsplashImagesYaml(
-      title: { eq: "Pug without hoodie" }
-    ) {
-      localFile {
-        childImageSharp {
-          gatsbyImageData(width: 120, placeholder: TRACED_SVG, layout: FIXED)
-        }
-      }
-    }
     floatingImage: unsplashImagesYaml(title: { eq: "Pug without hoodie" }) {
       credit
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 200, placeholder: TRACED_SVG, layout: FIXED)
+          gatsbyImageData(
+            width: 200
+            placeholder: TRACED_SVG
+            layout: CONSTRAINED
+          )
         }
       }
     }

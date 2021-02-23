@@ -1,6 +1,7 @@
+// @ts-check
 import React from "react"
 import { graphql } from "gatsby"
-import { GatsbyImage, getImage, useArtDirection } from "gatsby-plugin-image"
+import { GatsbyImage, getImage, withArtDirection } from "gatsby-plugin-image"
 
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
@@ -8,14 +9,13 @@ import Layout from "../components/layout"
 import "./art-direction.css"
 
 const PreferWebp = ({ data, location }) => {
-  const images = useArtDirection(getImage(data.floatingImage.localFile), [
+  const images = withArtDirection(getImage(data.floatingImage.localFile), [
     {
       media: "(max-width: 1024px)",
       image: getImage(data.floatingImageMobile.localFile),
     },
   ])
 
-  console.log(images)
   return (
     <Layout
       location={location}
@@ -26,7 +26,7 @@ const PreferWebp = ({ data, location }) => {
       <GatsbyImage
         className="art-directed"
         image={images}
-        title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+        alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
       />
       <p>
         WebP is a modern image format that provides both lossless and lossy

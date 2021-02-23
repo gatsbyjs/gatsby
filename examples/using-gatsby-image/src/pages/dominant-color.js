@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import ImageGallery from "../components/image-gallery"
-import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
 
@@ -13,10 +12,9 @@ const DominantColor = ({ data, location }) => (
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Dominant Color Placeholders</PageTitle>
-    <FloatingImage
-      imageMobile={getImage(data.floatingImageMobile.localFile)}
-      imageDesktop={getImage(data.floatingImage.localFile)}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
       The default Blur Up technique uses progressive loading to make a fast,
@@ -73,19 +71,6 @@ export const query = graphql`
         }
       }
     }
-    floatingImageMobile: unsplashImagesYaml(
-      title: { eq: "Pug without hoodie" }
-    ) {
-      localFile {
-        childImageSharp {
-          gatsbyImageData(
-            width: 120
-            placeholder: DOMINANT_COLOR
-            layout: FIXED
-          )
-        }
-      }
-    }
     floatingImage: unsplashImagesYaml(title: { eq: "Pug without hoodie" }) {
       credit
       title
@@ -94,7 +79,7 @@ export const query = graphql`
           gatsbyImageData(
             width: 200
             placeholder: DOMINANT_COLOR
-            layout: FIXED
+            layout: CONSTRAINED
           )
         }
       }

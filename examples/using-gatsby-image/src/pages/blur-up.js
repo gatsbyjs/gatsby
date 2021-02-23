@@ -2,7 +2,6 @@ import React from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import ImageGallery from "../components/image-gallery"
-import FloatingImage from "../components/floating-image"
 import PageTitle from "../components/page-title"
 import Layout from "../components/layout"
 
@@ -13,10 +12,9 @@ const BlurUp = ({ data, location }) => (
     imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
   >
     <PageTitle>Blur Up</PageTitle>
-    <FloatingImage
-      imageMobile={getImage(data.floatingImageMobile.localFile)}
-      imageDesktop={getImage(data.floatingImage.localFile)}
-      title={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
+    <GatsbyImage
+      image={getImage(data.floatingImage.localFile)}
+      alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
       The default Blur Up technique uses progressive loading to make a fast,
@@ -55,16 +53,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 720, layout: CONSTRAINED)
-        }
-      }
-    }
-    floatingImageMobile: unsplashImagesYaml(
-      title: { eq: "Pug without hoodie" }
-    ) {
-      localFile {
-        childImageSharp {
-          gatsbyImageData(width: 120, layout: FIXED)
+          gatsbyImageData(width: 720, layout: CONSTRAINED, placeholder: BLURRED)
         }
       }
     }
@@ -73,7 +62,7 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 200, layout: FIXED)
+          gatsbyImageData(width: 200, layout: CONSTRAINED, placeholder: BLURRED)
         }
       }
     }
