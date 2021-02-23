@@ -96,7 +96,7 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
-    const args = []
+    const args: Array<string> = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
