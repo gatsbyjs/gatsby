@@ -2,7 +2,7 @@ const COUNT_ID = `count`
 
 describe(`hooks`, () => {
   beforeEach(() => {
-    cy.visit(`/hooks`).waitForRouteChange()
+    cy.visit(`/hooks`, { failOnStatusCode: false }).waitForRouteChange()
   })
 
   it(`displays initial state`, () => {

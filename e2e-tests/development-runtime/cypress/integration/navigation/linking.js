@@ -79,7 +79,9 @@ describe(`navigation`, () => {
 
   describe(`non-existent route`, () => {
     beforeEach(() => {
-      cy.getTestElement(`broken-link`).click().waitForRouteChange()
+      cy.getTestElement(`broken-link`)
+        .click({ failOnStatusCode: false })
+        .waitForRouteChange()
     })
 
     it(`displays 404 page on broken link`, () => {
@@ -134,7 +136,7 @@ describe(`navigation`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
-      cy.visit(`/`).waitForRouteChange()
+      cy.visit(`/`, { failOnStatusCode: false }).waitForRouteChange()
       cy.window()
         .then(win => win.___navigate(`/안녕404/`))
         .waitForRouteChange()
