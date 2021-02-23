@@ -1,4 +1,6 @@
 import * as React from "react"
+import { lock, unlock } from "../helpers/lock-body"
+import a11yTrap from "../helpers/focus-trap"
 
 function Backdrop() {
   return <div data-gatsby-overlay="backdrop" />
@@ -26,68 +28,115 @@ export function VisuallyHidden({ children }) {
 }
 
 export function Overlay({ children }) {
+  React.useEffect(() => {
+    lock()
+
+    return () => {
+      unlock()
+    }
+  }, [])
+
+  const [overlay, setOverlay] = React.useState(null)
+  const onOverlay = React.useCallback(el => {
+    setOverlay(el)
+  }, [])
+
+  React.useEffect(() => {
+    if (overlay === null) {
+      return
+    }
+
+    const handle = a11yTrap({ context: overlay })
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      handle.disengage()
+    }
+  }, [overlay])
+
   return (
-    <>
+    <div data-gatsby-overlay ref={onOverlay}>
       <Backdrop />
       <div
-        tabIndex="-1"
         data-gatsby-overlay="root"
         role="dialog"
-        aria-labelledby="overlay-labelledby"
-        aria-describedby="overlay-describedby"
+        aria-labelledby="gatsby-overlay-labelledby"
+        aria-describedby="gatsby-overlay-describedby"
         aria-modal="true"
       >
         {children}
       </div>
-    </>
+    </div>
   )
 }
 
-export function Header({ open = undefined, dismiss, children }) {
+export function CloseButton({ dismiss }) {
   return (
-    <header data-gatsby-overlay="header">
+    <button data-gatsby-overlay="header__close-button" onClick={dismiss}>
+      <svg
+        aria-hidden={true}
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <VisuallyHidden>Close</VisuallyHidden>
+        <path
+          d="M18 6L6 18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M6 6L18 18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  )
+}
+
+export function HeaderOpenClose({ open, dismiss, children, ...rest }) {
+  return (
+    <div data-gatsby-overlay="header__top" {...rest}>
+      {children}
       <div data-gatsby-overlay="header__open-close">
         {open && (
           <button onClick={open} data-gatsby-overlay="header__open-in-editor">
             Open in editor
           </button>
         )}
-        <button data-gatsby-overlay="header__close-button" onClick={dismiss}>
-          <svg
-            aria-hidden={true}
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <VisuallyHidden>Close</VisuallyHidden>
-            <path
-              d="M18 6L6 18"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M6 6L18 18"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+        {dismiss && <CloseButton dismiss={dismiss} />}
       </div>
+    </div>
+  )
+}
+
+export function Header({ children, ...rest }) {
+  return (
+    <header data-gatsby-overlay="header" {...rest}>
       {children}
     </header>
   )
 }
 
-export function Body({ children }) {
-  return <div data-gatsby-overlay="body">{children}</div>
+export function Body({ children, ...rest }) {
+  return (
+    <div data-gatsby-overlay="body" {...rest}>
+      {children}
+    </div>
+  )
 }
 
-export function Footer({ children }) {
-  return <footer data-gatsby-overlay="footer">{children}</footer>
+export function Footer({ children, ...rest }) {
+  return (
+    <footer data-gatsby-overlay="footer" {...rest}>
+      {children}
+    </footer>
+  )
 }

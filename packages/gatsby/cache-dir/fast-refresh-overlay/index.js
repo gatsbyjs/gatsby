@@ -11,7 +11,7 @@ const reducer = (state, event) => {
       return { ...state, buildError: null }
     }
     case `CLEAR_RUNTIME_ERRORS`: {
-      return { ...state, runtimeErrorIndex: 0, errors: [] }
+      return { ...state, errors: [] }
     }
     case `SHOW_COMPILE_ERROR`: {
       return { ...state, buildError: event.payload }
@@ -20,8 +20,19 @@ const reducer = (state, event) => {
     case `SHOW_RUNTIME_ERRORS`: {
       return { ...state, errors: event.payload }
     }
+    case `SHOW_GRAPHQL_ERRORS`: {
+      return { ...state, graphqlErrors: event.payload }
+    }
+    case `CLEAR_GRAPHQL_ERRORS`: {
+      return { ...state, graphqlErrors: [] }
+    }
     case `DISMISS`: {
-      return { ...state, runtimeErrorIndex: 0, buildError: null, errors: [] }
+      return {
+        ...state,
+        buildError: null,
+        errors: [],
+        graphqlErrors: [],
+      }
     }
     default: {
       return state
@@ -30,10 +41,9 @@ const reducer = (state, event) => {
 }
 
 const initialState = {
-  runtimeErrorIndex: 0,
+  errors: [],
   buildError: null,
   graphqlErrors: [],
-  errors: [],
 }
 
 function DevOverlay({ children }) {

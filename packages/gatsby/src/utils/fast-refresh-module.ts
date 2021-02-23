@@ -1,10 +1,23 @@
-import mitt from "mitt"
-
 declare global {
   // eslint-disable-next-line @typescript-eslint/interface-name-prefix
   interface Window {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _gatsbyEvents: Array<any> | { push: Function }
+    _gatsbyEvents:
+      | Array<
+          | Array<
+              | string
+              | {
+                  action: string
+                }
+            >
+          | Array<
+              | string
+              | {
+                  action: string
+                  payload?: string | Array<unknown>
+                }
+            >
+        >
+      | { push: Function }
   }
 }
 
@@ -16,7 +29,6 @@ export function clearCompileError(): void {
 
 export function clearRuntimeErrors(dismissOverlay: boolean): void {
   if (typeof dismissOverlay === `undefined` || dismissOverlay) {
-    // Fast Refresh weird behavior
     window._gatsbyEvents.push([
       `FAST_REFRESH`,
       { action: `CLEAR_RUNTIME_ERRORS` },

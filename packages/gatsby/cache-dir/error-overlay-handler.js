@@ -28,12 +28,18 @@ const handleErrorOverlay = () => {
   }
 
   if (errorStringsToDisplay.length > 0) {
-    window.___emitter.emit(`FAST_REFRESH`, {
-      action: `SHOW_GRAPHQL_ERRORS`,
-      payload: errorStringsToDisplay.join(`\n\n`),
-    })
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      {
+        action: `SHOW_GRAPHQL_ERRORS`,
+        payload: errorStringsToDisplay.join(`\n\n`),
+      },
+    ])
   } else {
-    window.___emitter.emit(`FAST_REFRESH`, { action: `CLEAR_GRAPHQL_ERRORS` })
+    window._gatsbyEvents.push([
+      `FAST_REFRESH`,
+      { action: `CLEAR_GRAPHQL_ERRORS` },
+    ])
   }
 }
 
