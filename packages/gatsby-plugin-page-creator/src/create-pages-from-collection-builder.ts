@@ -1,7 +1,7 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
 import { createPath } from "gatsby-page-utils"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "./get-match-path"

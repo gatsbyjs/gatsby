@@ -10,6 +10,7 @@ export { LaterHydrator } from "./components/later-hydrator"
 export {
   getImage,
   getSrc,
+  getSrcSet,
   getImageData,
   withArtDirection,
   IArtDirectedImage,

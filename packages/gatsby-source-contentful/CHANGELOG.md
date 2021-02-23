@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.8...gatsby-source-contentful@5.0.0-next.9) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.7...gatsby-source-contentful@5.0.0-next.8) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.6...gatsby-source-contentful@5.0.0-next.7) (2021-02-19)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Correct supported image formats ([#29562](https://github.com/gatsbyjs/gatsby/issues/29562)) ([3b4d32f](https://github.com/gatsbyjs/gatsby/commit/3b4d32f0b2d6aef3193213252c3eb813cc2cbea9))
+
 # [5.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.5...gatsby-source-contentful@5.0.0-next.6) (2021-02-18)
 
 ### Bug Fixes
@@ -209,13 +223,15 @@ export const pageQuery = graphql`
         raw
         references {
           ... on ContentfulPage {
-            # contentful_id is required to resolve the references
+            # __typename and contentful_id are required to resolve the references
+            __typename
             contentful_id
             title
             slug
           }
           ... on ContentfulAsset {
-            # contentful_id is required to resolve the references
+            # __typename and contentful_id are required to resolve the references
+            __typename
             contentful_id
             fluid(maxWidth: 600) {
               ...GatsbyContentfulFluid_withWebp

@@ -1117,10 +1117,7 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
-  deleteNode(
-    node: NodeInput,
-    plugin?: ActionPlugin,
-  ): void
+  deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
   createNode(
@@ -1298,6 +1295,8 @@ export interface Cache {
 }
 
 export interface GatsbyCache {
+  name: string
+  directory: string
   /**
    * Retrieve cached value
    * @param key Cache key
@@ -1434,7 +1433,7 @@ export interface PrefetchPathnameArgs extends BrowserPluginArgs {
 
 export interface RouteUpdateArgs extends BrowserPluginArgs {
   location: Location
-  prevLocation: Location | null;
+  prevLocation: Location | null
 }
 
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {

@@ -45,7 +45,7 @@ const resolveGatsbyImageData = async (image, options) => {
     width: image.width,
     height: image.height,
     // In this example, the node has a value like "image/png", which needs
-    // converting to a value such as "png". If this omitted, the funciton will
+    // converting to a value such as "png". If this omitted, the function will
     // attempt to work it out from the file extension.
     format: image.mimeType.split("/")[1]
   }

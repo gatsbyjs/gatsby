@@ -291,6 +291,7 @@ export interface IGatsbyState {
     browserCompilationHash: string
     ssrCompilationHash: string
     trackedStaticQueryResults: Map<string, IStaticQueryResultState>
+    unsafeBuiltinWasUsedInSSR: boolean
   }
 }
 
@@ -344,7 +345,6 @@ export type ActionsUnion =
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
@@ -372,6 +372,7 @@ export type ActionsUnion =
   | IRemovedHtml
   | IGeneratedHtml
   | IMarkHtmlDirty
+  | ISSRUsedUnsafeBuiltin
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -640,14 +641,6 @@ export interface IDeleteCacheAction {
   cacheIsCorrupt?: boolean
 }
 
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
-}
-
 export interface IRemoveTemplateComponentAction {
   type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
@@ -845,4 +838,8 @@ interface IMarkHtmlDirty {
     pages: Set<string>
     staticQueryHashes: Set<string>
   }
+}
+
+interface ISSRUsedUnsafeBuiltin {
+  type: `SSR_USED_UNSAFE_BUILTIN`
 }

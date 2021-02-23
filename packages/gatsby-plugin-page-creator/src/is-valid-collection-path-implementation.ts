@@ -1,5 +1,5 @@
 import sysPath from "path"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import { CODES, prefixId } from "./error-utils"
 
 // This file is a helper for consumers. It's going to log an error to them if they

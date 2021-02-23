@@ -168,7 +168,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
             BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
             DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
             TRACED_SVG: a low-resolution traced SVG of the image.
-            NONE: no placeholder. Set "background" to use a fixed background color.`,
+            NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       formats: {
         type: GraphQLList(ImageFormatType),
@@ -178,7 +178,7 @@ export function getGatsbyImageFieldConfig<TSource, TContext>(
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
             both PNG and JPG is not supported and will be ignored. 
         `,
-        defaultValue: [`auto`, `webp`],
+        defaultValue: [``, `webp`],
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLFloat),
