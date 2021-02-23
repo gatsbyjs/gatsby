@@ -1,5 +1,5 @@
 import sysPath from "path"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import { CODES, prefixId } from "./error-utils"
 import { matchAllPolyfill } from "./path-utils"
 

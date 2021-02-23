@@ -1,5 +1,3 @@
-jest.mock(`gatsby-cli/lib/reporter`)
-jest.mock(`progress`)
 const { getRemoteFileExtension, getRemoteFileName } = require(`../utils`)
 
 describe(`create remote file node`, () => {
