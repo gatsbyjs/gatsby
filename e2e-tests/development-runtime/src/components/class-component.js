@@ -1,11 +1,9 @@
 import React, { Component } from "react"
 
 class ClassComponent extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      custom: true,
-    }
+  // eslint-disable-next-line no-undef
+  state = {
+    custom: true,
   }
 
   render() {
