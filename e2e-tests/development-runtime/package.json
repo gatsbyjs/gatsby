@@ -44,7 +44,7 @@
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "start-server-and-debug": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
     "@testing-library/cypress": "^7.0.0",

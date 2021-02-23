@@ -295,6 +295,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
+      <script key={`framework`} src="/framework.js" />,
       <script key={`commons`} src="/commons.js" />,
     ]),
   })

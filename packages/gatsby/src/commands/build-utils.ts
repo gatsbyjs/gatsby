@@ -1,6 +1,8 @@
 import fs from "fs-extra"
 import path from "path"
 
+import reporter from "gatsby-cli/lib/reporter"
+
 import {
   remove as removePageHtmlFile,
   getPageHtmlFilePath,
@@ -70,12 +72,18 @@ export function calcDirtyHtmlFiles(
   const toRegenerate: Array<string> = []
   const toDelete: Array<string> = []
 
+  if (state.html.unsafeBuiltinWasUsedInSSR) {
+    reporter.warn(
+      `Previous build used unsafe builtin method. We need to rebuild all pages`
+    )
+  }
+
   state.html.trackedHtmlFiles.forEach(function (htmlFile, path) {
     if (htmlFile.isDeleted || !state.pages.has(path)) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
       toDelete.push(path)
-    } else if (htmlFile.dirty) {
+    } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
       toRegenerate.push(path)
     }
   })
