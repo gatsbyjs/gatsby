@@ -126,7 +126,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     undefined,
     // Client only pages have any empty body so we just do a normal
     // render to avoid React complaining about hydration mis-matches.
-    document.getElementById(`___gatsby`).children.length === 0
+    document.getElementById(`gatsby-focus-wrapper`).children.length === 0
       ? ReactDOM.render
       : ReactDOM.hydrate
   )[0]
