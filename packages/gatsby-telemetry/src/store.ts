@@ -28,7 +28,7 @@ export class Store {
 
   async flushFile(
     filePath: string,
-    flushOperation: Function
+    flushOperation: (contents: string) => Promise<boolean>
   ): Promise<boolean> {
     const now = `${Date.now()}-${process.pid}`
     let success = false
@@ -57,7 +57,9 @@ export class Store {
     return true
   }
 
-  async startFlushEvents(flushOperation: Function): Promise<boolean> {
+  async startFlushEvents(
+    flushOperation: (contents: string) => Promise<boolean>
+  ): Promise<boolean> {
     try {
       await this.flushFile(this.bufferFilePath, flushOperation)
       const files = readdirSync(this.baseDir)

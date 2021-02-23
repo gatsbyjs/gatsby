@@ -1,5 +1,12 @@
-import PostBodyComponents from "./src/components/post-body-components-ssr"
+import * as React from "react"
+import * as fs from "fs"
 
-export function onRenderBody({ setPostBodyComponents }) {
-  setPostBodyComponents(PostBodyComponents)
+export function onRenderBody({ setHeadComponents }) {
+  setHeadComponents(
+    <style
+      dangerouslySetInnerHTML={{
+        __html: `body {\nbackground: white;\n}`,
+      }}
+    />
+  )
 }

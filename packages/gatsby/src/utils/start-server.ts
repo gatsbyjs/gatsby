@@ -1,7 +1,5 @@
 import webpackHotMiddleware from "webpack-hot-middleware"
-import webpackDevMiddleware, {
-  WebpackDevMiddleware,
-} from "webpack-dev-middleware"
+import webpackDevMiddleware from "webpack-dev-middleware"
 import got from "got"
 import webpack from "webpack"
 import express from "express"
@@ -63,19 +61,10 @@ interface IServer {
   webpackWatching: IWebpackWatchingPauseResume
 }
 
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
+export interface IWebpackWatchingPauseResume {
   suspend: () => void
   resume: () => void
 }
-
-// context seems to be public, but not documented API
-// see https://github.com/webpack/webpack-dev-middleware/issues/656
-type PatchedWebpackDevMiddleware = WebpackDevMiddleware &
-  express.RequestHandler & {
-    context: {
-      watching: IWebpackWatchingPauseResume
-    }
-  }
 
 export async function startServer(
   program: IProgram,
@@ -346,33 +335,40 @@ module.exports = {
   // We serve by default an empty index.html that sets up the dev environment.
   app.use(developStatic(`public`, { index: false }))
 
-  const webpackDevMiddlewareInstance = (webpackDevMiddleware(compiler, {
-    logLevel: `silent`,
+  const webpackDevMiddlewareInstance = webpackDevMiddleware(compiler, {
     publicPath: devConfig.output.publicPath,
-    watchOptions: devConfig.devServer ? devConfig.devServer.watchOptions : null,
     stats: `errors-only`,
     serverSideRender: true,
-  }) as unknown) as PatchedWebpackDevMiddleware
+  })
 
   app.use(webpackDevMiddlewareInstance)
 
   app.get(`/__original-stack-frame`, async (req, res) => {
-    const {
-      webpackStats: {
-        compilation: { modules },
-      },
-    } = res.locals
+    const compilation = res.locals?.webpack?.devMiddleware?.stats?.compilation
     const emptyResponse = {
       codeFrame: `No codeFrame could be generated`,
       sourcePosition: null,
       sourceContent: null,
     }
 
+    if (!compilation) {
+      res.json(emptyResponse)
+      return
+    }
+
     const moduleId = req?.query?.moduleId
     const lineNumber = parseInt(req.query.lineNumber, 10)
     const columnNumber = parseInt(req.query.columnNumber, 10)
 
-    const fileModule = modules.find(m => m.id === moduleId)
+    let fileModule
+    for (const module of compilation.modules) {
+      const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+      if (moduleIdentifier === moduleId) {
+        fileModule = module
+        break
+      }
+    }
+
     const sourceMap = fileModule?._source?._sourceMap
 
     if (!sourceMap) {

@@ -30,7 +30,7 @@ export interface IGatsbyPage {
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
-  context: {}
+  context: Record<string, unknown>
   updatedAt: number
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
@@ -97,6 +97,14 @@ export interface IGatsbyStaticQueryComponents {
   query: string
   hash: string
 }
+
+export interface IGatsbyPageComponent {
+  componentPath: SystemPath
+  query: string
+  pages: Set<string>
+  isInBootstrap: boolean
+}
+
 export interface IDefinitionMeta {
   name: string
   def: DefinitionNode
@@ -228,15 +236,7 @@ export interface IGatsbyState {
     deletedQueries: Set<Identifier>
     dirtyQueriesListToEmitViaWebsocket: Array<string>
   }
-  components: Map<
-    SystemPath,
-    {
-      componentPath: SystemPath
-      query: string
-      pages: Set<string>
-      isInBootstrap: boolean
-    }
-  >
+  components: Map<IGatsbyPageComponent["componentPath"], IGatsbyPageComponent>
   staticQueryComponents: Map<
     IGatsbyStaticQueryComponents["id"],
     IGatsbyStaticQueryComponents
@@ -291,6 +291,7 @@ export interface IGatsbyState {
     browserCompilationHash: string
     ssrCompilationHash: string
     trackedStaticQueryResults: Map<string, IStaticQueryResultState>
+    unsafeBuiltinWasUsedInSSR: boolean
   }
 }
 
@@ -344,7 +345,6 @@ export type ActionsUnion =
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
@@ -372,6 +372,7 @@ export type ActionsUnion =
   | IRemovedHtml
   | IGeneratedHtml
   | IMarkHtmlDirty
+  | ISSRUsedUnsafeBuiltin
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -640,14 +641,6 @@ export interface IDeleteCacheAction {
   cacheIsCorrupt?: boolean
 }
 
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
-}
-
 export interface IRemoveTemplateComponentAction {
   type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
@@ -688,11 +681,6 @@ export interface IClearPendingPageDataWriteAction {
 export interface IDeletePageAction {
   type: `DELETE_PAGE`
   payload: IGatsbyPage
-}
-
-export interface IReplaceStaticQueryAction {
-  type: `REPLACE_STATIC_QUERY`
-  payload: IGatsbyStaticQueryComponents
 }
 
 export interface IRemoveStaticQuery {
@@ -850,4 +838,8 @@ interface IMarkHtmlDirty {
     pages: Set<string>
     staticQueryHashes: Set<string>
   }
+}
+
+interface ISSRUsedUnsafeBuiltin {
+  type: `SSR_USED_UNSAFE_BUILTIN`
 }

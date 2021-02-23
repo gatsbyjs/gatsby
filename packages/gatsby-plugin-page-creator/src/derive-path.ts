@@ -1,6 +1,6 @@
 import _ from "lodash"
 import slugify, { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,

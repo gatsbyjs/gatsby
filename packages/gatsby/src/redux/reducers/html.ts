@@ -21,6 +21,7 @@ function initialState(): IGatsbyState["html"] {
     browserCompilationHash: ``,
     ssrCompilationHash: ``,
     trackedStaticQueryResults: new Map<string, IStaticQueryResultState>(),
+    unsafeBuiltinWasUsedInSSR: false,
   }
 }
 
@@ -39,6 +40,7 @@ export function htmlReducer(
         state.browserCompilationHash = ``
         state.ssrCompilationHash = ``
         state.trackedStaticQueryResults.clear()
+        state.unsafeBuiltinWasUsedInSSR = false
         state.trackedHtmlFiles.forEach(htmlFile => {
           htmlFile.isDeleted = true
           // there was a change somewhere, so just in case we mark those files are dirty as well
@@ -87,6 +89,12 @@ export function htmlReducer(
     }
 
     case `PAGE_QUERY_RUN`: {
+      // Despite action name, this action is actually emitted for both page and static queries.
+      // In here we actually only care about static query result (particularly its hash).
+      // We don't care about page query result because we don't actually use page query result
+      // directly when generating html. We care about page-data (which contains page query result).
+      // Handling of page-data that transitively handles page query result is done in handler for
+      // `ADD_PAGE_DATA_STATS` action.
       if (!action.payload.isPage) {
         // static query case
         let staticQueryResult = state.trackedStaticQueryResults.get(
@@ -139,6 +147,10 @@ export function htmlReducer(
     case `SET_SSR_WEBPACK_COMPILATION_HASH`: {
       if (state.ssrCompilationHash !== action.payload) {
         state.ssrCompilationHash = action.payload
+        // we will mark every html file as dirty, so we can safely reset
+        // unsafeBuiltinWasUsedInSSR flag, which might be set again if
+        // ssr bundle continue to use those
+        state.unsafeBuiltinWasUsedInSSR = false
         state.trackedHtmlFiles.forEach(htmlFile => {
           htmlFile.dirty |= FLAG_DIRTY_SSR_COMPILATION_HASH
         })
@@ -180,6 +192,11 @@ export function htmlReducer(
           staticQueryResult.dirty = 0
         }
       }
+      return state
+    }
+
+    case `SSR_USED_UNSAFE_BUILTIN`: {
+      state.unsafeBuiltinWasUsedInSSR = true
       return state
     }
   }

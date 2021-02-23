@@ -20,14 +20,16 @@ import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
 import * as WorkerPool from "../utils/worker/pool"
-import { structureWebpackErrors } from "../utils/webpack-error-utils"
+import {
+  structureWebpackErrors,
+  reportWebpackWarnings,
+} from "../utils/webpack-error-utils"
 import {
   userGetsSevenDayFeedback,
   userPassesFeedbackRequestHeuristic,
   showFeedbackRequest,
   showSevenDayFeedbackRequest,
 } from "../utils/feedback"
-import * as buildUtils from "./build-utils"
 import { actions } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { Stage } from "./types"
@@ -122,6 +124,10 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   let stats
   try {
     stats = await buildProductionBundle(program, buildActivityTimer.span)
+
+    if (stats.hasWarnings()) {
+      reportWebpackWarnings(stats.compilation.warnings, report)
+    }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
   } finally {
@@ -233,10 +239,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   workerPool.end()
   buildActivity.end()
 
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.argv.includes(`--log-pages`)
-  ) {
+  if (program.logPages) {
     if (toRegenerate.length) {
       report.info(
         `Built pages:\n${toRegenerate
@@ -254,10 +257,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.argv.includes(`--write-to-file`)
-  ) {
+  if (program.writeToFile) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `newPages.txt`

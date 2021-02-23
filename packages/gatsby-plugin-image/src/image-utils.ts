@@ -194,9 +194,31 @@ export function setDefaultDimensions(
 
     if (aspectRatio && !height) {
       height = Math.round(width / aspectRatio)
+    } else if (!aspectRatio) {
+      aspectRatio = width / height
     }
   }
   return { ...args, width, height, aspectRatio, layout, formats }
+}
+
+/**
+ * Use this for getting an image for the blurred placeholder. This ensures the
+ * aspect ratio and crop match the main image
+ */
+export function getLowResolutionImageURL(
+  args: IGatsbyImageHelperArgs,
+  width = 20
+): string {
+  args = setDefaultDimensions(args)
+  const { generateImageSource, filename, aspectRatio } = args
+  return generateImageSource(
+    filename,
+    width,
+    Math.round(width / aspectRatio),
+    args.sourceMetadata.format || `jpg`,
+    args.fit,
+    args.options
+  )?.src
 }
 
 export function generateImageData(

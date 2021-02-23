@@ -828,10 +828,17 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
     typeOwners[node.internal.type] = node.internal.owner
   }
 
+  const nodeId = node?.id
+
+  if (!nodeId) {
+    // if we don't have a node id, we don't want to dispatch this action
+    return []
+  }
+
   return {
     type: `TOUCH_NODE`,
     plugin,
-    payload: node.id,
+    payload: nodeId,
   }
 }
 
@@ -944,6 +951,18 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -961,6 +980,18 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -1307,20 +1338,6 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
-  }
-}
-
-/**
- * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
- */
-actions.setPageData = (pageData: PageData) => {
-  return {
-    type: `SET_PAGE_DATA`,
-    payload: pageData,
   }
 }
 

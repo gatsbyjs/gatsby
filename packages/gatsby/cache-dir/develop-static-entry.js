@@ -104,12 +104,14 @@ export default ({ pagePath }) => {
     body: ``,
     headComponents: headComponents.concat([
       <script key={`io`} src="/socket.io/socket.io.js" />,
+      <link key="styles" rel="stylesheet" href="/commons.css" />,
     ]),
     htmlAttributes,
     bodyAttributes,
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
+      <script key={`framework`} src="/framework.js" />,
       <script key={`commons`} src="/commons.js" />,
     ]),
   })
