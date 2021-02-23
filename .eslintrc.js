@@ -29,6 +29,11 @@ module.exports = {
     before: true,
     after: true,
     spyOn: true,
+    // These should be in scope but for some reason eslint can't see them
+    NodeJS: true,
+    JSX: true,
+    NodeRequire: true,
+    TimerHandler: true,
     __PATH_PREFIX__: true,
     __BASE_PATH__: true,
     __ASSET_PREFIX__: true,
@@ -48,8 +53,10 @@ module.exports = {
     "no-unused-vars": [
       "warn",
       {
-        varsIgnorePattern: "^_"
-      }
+        varsIgnorePattern: "^_",
+        argsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      },
     ],
     "consistent-return": ["error"],
     "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
@@ -93,7 +100,9 @@ module.exports = {
         ...TSEslint.configs.recommended.rules,
         // We should absolutely avoid using ts-ignore, but it's not always possible.
         // particular when a dependencies types are incorrect.
-        "@typescript-eslint/ban-ts-ignore": "warn",
+        "@typescript-eslint/ban-ts-comment": {
+          "ts-ignore": "allow-with-description",
+        },
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
         // and outputs declaratively typed. So this let's us ignore the parameters
@@ -102,16 +111,38 @@ module.exports = {
           "error",
           { ignoreParameters: true },
         ],
-        "@typescript-eslint/camelcase": [
+        "@typescript-eslint/ban-types": [
           "error",
           {
-            // This rule tries to ensure we use camelCase for all variables, properties
-            // functions, etc. However, it is not always possible to ensure properties
-            // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
-            // this rule. This allows properties to be whatever they need to be.
-            properties: "never",
-            // Allow unstable api's to use `unstable_`, which is easier to grep
-            allow: ["^unstable_"],
+            extendDefaults: true,
+            types: {
+              "{}": false,
+              object: {
+                fixWith: "Record<string, unknown>",
+              },
+            },
+          },
+        ],
+        "@typescript-eslint/naming-convention": [
+          {
+            selector: "default",
+            format: ["camelCase"],
+          },
+          { selector: "variable", format: ["camelCase", "UPPER_CASE"] },
+          {
+            selector: "parameter",
+            format: ["camelCase"],
+            leadingUnderscore: "allow",
+            prefix: ["unstable_", ""],
+          },
+          {
+            selector: "typeLike",
+            format: ["PascalCase"],
+          },
+          {
+            selector: "interface",
+            format: ["PascalCase"],
+            prefix: ["I"],
           },
         ],
         // This rule tries to prevent using `require()`. However in node code,
@@ -127,6 +158,7 @@ module.exports = {
         // -  baz: string;
         // +  baz: string
         // }
+        "@typescript-eslint/no-extra-semi": false,
         "@typescript-eslint/member-delimiter-style": [
           "error",
           {
@@ -134,13 +166,6 @@ module.exports = {
               delimiter: "none",
             },
           },
-        ],
-        // This ensures all interfaces are named with an I as a prefix
-        // e.g.,
-        // interface IFoo {}
-        "@typescript-eslint/interface-name-prefix": [
-          "error",
-          { prefixWithI: "always" },
         ],
         "@typescript-eslint/no-empty-function": "off",
         // This ensures that we always type the return type of functions

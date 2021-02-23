@@ -2,6 +2,7 @@ import {
   GatsbyImage as GatsbyImageBrowser,
   IGatsbyImageData,
 } from "./gatsby-image.browser"
+import React from "react"
 import {
   _getStaticImage,
   propTypes,

@@ -7,6 +7,7 @@
     "allowJs": true /* Allow javascript files to be compiled. */,
     // "checkJs": true,                       /* Report errors in .js files. */
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
+    // If you're getting a warning about declarationDir, it's probably this https://github.com/developit/microbundle/issues/771
     "declaration": false /* Generates corresponding '.d.ts' file. */,
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */

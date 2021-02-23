@@ -1,5 +1,5 @@
 import * as path from "path"
-import { Loader, RuleSetRule, Plugin, Configuration } from "webpack"
+import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
 import postcss from "postcss"
 import autoprefixer from "autoprefixer"
@@ -39,7 +39,11 @@ type CSSModulesOptions =
   | boolean
   | string
   | {
-      mode?: "local" | "global" | "pure" | Function
+      mode?:
+        | "local"
+        | "global"
+        | "pure"
+        | ((resourcePath: string) => "local" | "global" | "pure")
       auto?: boolean
       exportGlobals?: boolean
       localIdentName?: string
@@ -68,8 +72,10 @@ interface ILoaderUtils {
   yaml: LoaderResolver
   style: LoaderResolver
   css: LoaderResolver<{
-    url?: boolean | Function
-    import?: boolean | Function
+    url?: boolean | ((url: string, resourcePath: string) => boolean)
+    import?:
+      | boolean
+      | ((url: string, media: string, resourcePath: string) => boolean)
     modules?: CSSModulesOptions
     sourceMap?: boolean
     importLoaders?: number
@@ -86,6 +92,9 @@ interface ILoaderUtils {
   file: LoaderResolver
   url: LoaderResolver
   js: LoaderResolver
+  json: LoaderResolver
+  null: LoaderResolver
+  raw: LoaderResolver
   dependencies: LoaderResolver
 
   miniCssExtract: LoaderResolver

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../global.d.ts" />
 
-import React, { Fragment, FunctionComponent } from "react"
+import React, { Fragment, FunctionComponent, ReactElement } from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
 
@@ -62,7 +62,7 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
   height,
   children,
 }) {
-  let sizer: JSX.Element | null = null
+  let sizer: ReactElement | null = null
   if (layout === `fullWidth`) {
     sizer = (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />

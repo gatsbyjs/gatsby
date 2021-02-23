@@ -9,6 +9,7 @@ import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
 import { emitter } from "../../redux"
+import { Stats } from "webpack"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -99,7 +100,7 @@ const ensurePathComponentInSSRBundle = async (
   )
 
   if (!found) {
-    await new Promise(resolve => {
+    await new Promise<void>(resolve => {
       let readAttempts = 0
       const searchForStringInterval = setInterval(async () => {
         readAttempts += 1
@@ -170,7 +171,7 @@ export const renderDevHTML = ({
       needToRecompileSSRBundle
     ) {
       let isResolved = false
-      await new Promise(resolve => {
+      await new Promise<Stats | void>(resolve => {
         function finish(stats: Stats): void {
           emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
           if (!isResolved) {
