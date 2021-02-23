@@ -4,12 +4,12 @@
   </a>
 </p>
 <h1 align="center">
-  Gatsby v2
+  Gatsby v3
 </h1>
 
 <h3 align="center">
   ⚛️ 📄 🚀
-</h3>
+</h3>s
 <h3 align="center">
   Fast in every way that matters
 </h3>
@@ -140,8 +140,9 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 ## 💼 Migration Guides
 
-Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v2 to your site without starting from scratch!
+Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v3 to your site without starting from scratch!
 
+- [Migrate from v2 to v3](https://gatsby.dev/2-3)
 - [Migrate a Gatsby site from v1 to v2](https://www.gatsbyjs.com/docs/migrating-from-v1-to-v2/)
 - Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://www.gatsbyjs.com/docs/migrating-from-v0-to-v1/)
 
