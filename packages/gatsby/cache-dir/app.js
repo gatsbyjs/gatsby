@@ -12,7 +12,6 @@ import DevLoader from "./dev-loader"
 import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
-
 import { LoadingIndicatorEventHandler } from "./loading-indicator"
 
 // ensure in develop we have at least some .css (even if it's empty).
