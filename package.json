@@ -104,7 +104,7 @@
   ],
   "private": true,
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --cache --ext .js,.jsx,.ts,.tsx --fix",
+    "*.{js,jsx,ts,tsx}": "eslint --ext .js,.jsx,.ts,.tsx --fix",
     "*.{md,css,scss,yaml,yml}": "prettier --write",
     "*.svg": "svgo --pretty --indent=2 --config=svgo.yml --multipass"
   },
@@ -129,7 +129,7 @@
     "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error -p lint:code lint:docs lint:other",
-    "lint:code": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
+    "lint:code": "eslint --ext .js,.jsx,.ts,.tsx .",
     "lint:docs": "remark docs/{contributing,docs,tutorial}",
     "lint:scripts": "sh scripts/lint-shell-scripts.sh",
     "lint:other": "npm run prettier -- --check",
