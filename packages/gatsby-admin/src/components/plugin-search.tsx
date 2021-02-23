@@ -1,5 +1,6 @@
 /* @jsx jsx */
 import { jsx } from "strict-ui"
+import React from "react"
 import { connectAutoComplete } from "react-instantsearch-dom"
 import {
   Combobox,

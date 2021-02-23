@@ -2,18 +2,28 @@ import JestWorker from "jest-worker"
 import fs from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
 import report from "gatsby-cli/lib/reporter"
+import { isCI } from "gatsby-core-utils"
 
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
 import { emitter } from "../../redux"
+import { Stats } from "webpack"
 
 const startWorker = (): any => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
     numWorkers: 1,
-    forkOptions: { silent: false },
+    forkOptions: {
+      silent: false,
+      env: {
+        ...process.env,
+        NODE_ENV: isCI() ? `production` : `development`,
+        forceColors: true,
+        GATSBY_EXPERIMENTAL_DEV_SSR: true,
+      },
+    },
   })
 
   // jest-worker is lazy with forking but we want to fork immediately so the user
@@ -90,7 +100,7 @@ const ensurePathComponentInSSRBundle = async (
   )
 
   if (!found) {
-    await new Promise(resolve => {
+    await new Promise<void>(resolve => {
       let readAttempts = 0
       const searchForStringInterval = setInterval(async () => {
         readAttempts += 1
@@ -161,7 +171,7 @@ export const renderDevHTML = ({
       needToRecompileSSRBundle
     ) {
       let isResolved = false
-      await new Promise(resolve => {
+      await new Promise<Stats | void>(resolve => {
         function finish(stats: Stats): void {
           emitter.off(`DEV_SSR_COMPILATION_DONE`, finish)
           if (!isResolved) {

@@ -1040,7 +1040,7 @@ describe(`Type conflicts`, () => {
 describe(`Type change detection`, () => {
   let initialMetadata
 
-  const nodes = (): Array<object> => [
+  const nodes = (): Array<Record<string, unknown>> => [
     { foo: `foo` },
     { object: { foo: `foo`, bar: `bar` } },
     { list: [`item`], bar: `bar` },
@@ -1050,12 +1050,14 @@ describe(`Type change detection`, () => {
   ]
 
   const addOne = (
-    node: object,
+    node: Record<string, unknown>,
     metadata: ITypeMetadata = initialMetadata
   ): ITypeMetadata => addNode(_.cloneDeep(metadata), node as Node)
 
-  const deleteOne = (node: object, metadata = initialMetadata): ITypeMetadata =>
-    deleteNode(_.cloneDeep(metadata), node as Node)
+  const deleteOne = (
+    node: Record<string, unknown>,
+    metadata = initialMetadata
+  ): ITypeMetadata => deleteNode(_.cloneDeep(metadata), node as Node)
 
   beforeEach(() => {
     initialMetadata = addNodes(undefined, nodes() as Array<Node>)

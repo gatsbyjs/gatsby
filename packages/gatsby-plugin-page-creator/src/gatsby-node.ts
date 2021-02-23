@@ -166,7 +166,7 @@ Please pick a path to an existing directory.`,
 export function setFieldsOnGraphQLNodeType(
   { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
   { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions }
-): object {
+): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
     const collectionQuery = _.camelCase(`all ${type.name}`)
@@ -180,7 +180,7 @@ export function setFieldsOnGraphQLNodeType(
             },
           },
           resolve: (
-            source: object,
+            source: Record<string, unknown>,
             { filePath }: { filePath: string }
           ): string => {
             // This is a quick hack for attaching parents to the node.

@@ -167,7 +167,7 @@ Convert the source image to one of the following available options: `NO_CHANGE`,
 
 #### toFormatBase64
 
-base64 image uses the image format from the source , or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
+base64 image uses the image format from the source, or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
 
 `WEBP` allows for a smaller data size, allowing you to reduce your HTML size when transferring over the network, or to use a larger base64 placeholder width default for improved image placeholder quality.
 

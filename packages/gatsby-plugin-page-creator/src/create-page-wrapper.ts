@@ -10,7 +10,7 @@ import { createClientOnlyPage } from "./create-client-only-page"
 import { createPagesFromCollectionBuilder } from "./create-pages-from-collection-builder"
 import systemPath from "path"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 
 function pathIsCollectionBuilder(path: string): boolean {
   return path.includes(`{`)

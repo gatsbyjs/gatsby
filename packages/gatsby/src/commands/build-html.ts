@@ -35,7 +35,6 @@ export interface IBuildArgs extends IProgram {
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
 let needToRecompileSSRBundle = true
-
 export const getDevSSRWebpack = (): {
   devssrWebpackWatcher: IWebpackWatchingPauseResume
   devssrWebpackCompiler: webpack.Compiler
@@ -103,7 +102,7 @@ const runWebpack = (
             return resolve(stats)
           }
         }
-      )
+      ) as IWebpackWatchingPauseResume
     }
   })
 
