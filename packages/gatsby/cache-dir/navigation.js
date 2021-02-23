@@ -16,7 +16,13 @@ const redirectMap = redirects.reduce((map, redirect) => {
 }, {})
 
 function maybeRedirect(pathname) {
-  const redirect = redirectMap[pathname]
+  const redirect = Object.keys(redirectMap).find(redirect => {
+    if (redirectMap[redirect].ignoreCase) {
+      return redirect.toLowerCase() === pathname.toLowerCase()
+    }
+
+    return redirect === pathname
+  })
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
