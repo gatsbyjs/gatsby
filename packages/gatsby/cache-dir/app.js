@@ -172,7 +172,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
         apiRunner(`onInitialClientRender`)
 
         // Render query on demand overlay
-        if (process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR) {
+        if (process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR && process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`) {
           const indicatorMountElement = document.createElement(`div`)
           indicatorMountElement.setAttribute(
             `id`,
