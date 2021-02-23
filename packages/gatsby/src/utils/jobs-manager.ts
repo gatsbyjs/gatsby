@@ -1,4 +1,4 @@
-import uuidv4 from "uuid/v4"
+import { v4 as uuidv4 } from "uuid"
 import path from "path"
 import hasha from "hasha"
 import fs from "fs-extra"

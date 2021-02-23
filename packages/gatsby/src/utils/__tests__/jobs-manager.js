@@ -3,6 +3,11 @@ const _ = require(`lodash`)
 const { slash } = require(`gatsby-core-utils`)
 let jobManager = null
 
+jest.mock(`uuid`, () => {
+  const uuid = jest.requireActual(`uuid`)
+  return { v4: jest.fn(uuid.v4) }
+})
+
 // I need a mock to spy on
 jest.mock(`p-defer`, () =>
   jest.fn().mockImplementation(jest.requireActual(`p-defer`))
@@ -35,16 +40,12 @@ jest.mock(
   { virtual: true }
 )
 
-jest.mock(`uuid/v4`, () =>
-  jest.fn().mockImplementation(jest.requireActual(`uuid/v4`))
-)
-
 const worker = require(`/node_modules/gatsby-plugin-test/gatsby-worker.js`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
-const uuidv4 = require(`uuid/v4`)
+const { v4: uuidv4 } = require(`uuid`)
 
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 

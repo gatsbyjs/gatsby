@@ -87,7 +87,7 @@ describe(`gatsby-remark-code-repls`, () => {
     it(`should warn about an empty examples directory`, async () => {
       readdir.mockResolvedValue([])
 
-      spyOn(console, `warn`) // eslint-disable-line no-undef
+      spyOn(console, `warn`)
 
       await createPages(createPagesParams)
 

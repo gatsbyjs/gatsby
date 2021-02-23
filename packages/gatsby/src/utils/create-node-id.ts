@@ -1,4 +1,4 @@
-import uuidv5 from "uuid/v5"
+import { v5 as uuidv5 } from "uuid"
 import report from "gatsby-cli/lib/reporter"
 
 const seedConstant = `638f7a53-c567-4eca-8fc1-b23efb1cfb2b`

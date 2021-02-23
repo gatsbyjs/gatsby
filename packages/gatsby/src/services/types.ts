@@ -6,7 +6,7 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { Express } from "express"
 import JestWorker from "jest-worker"
-import { Actor, AnyEventObject } from "xstate"
+import { ActorRef, AnyEventObject } from "xstate"
 import { Compiler } from "webpack"
 import { WebsocketManager } from "../utils/websocket-manager"
 import { IWebpackWatchingPauseResume } from "../utils/start-server"
@@ -34,12 +34,12 @@ export interface IBuildContext {
   app?: Express
   nodesMutatedDuringQueryRun?: boolean
   nodesMutatedDuringQueryRunRecompileCount?: number
-  mutationListener?: Actor<unknown, AnyEventObject>
+  mutationListener?: ActorRef<AnyEventObject>
   nodeMutationBatch?: Array<IMutationAction>
   compiler?: Compiler
   websocketManager?: WebsocketManager
   webpackWatching?: IWebpackWatchingPauseResume
-  webpackListener?: Actor<unknown, AnyEventObject>
+  webpackListener?: ActorRef<AnyEventObject>
   queryFilesDirty?: boolean
   sourceFilesDirty?: boolean
   pendingQueryRuns?: Set<string>
