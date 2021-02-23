@@ -1,8 +1,11 @@
 import React, { Component } from "react"
 
 class ClassComponent extends Component {
-  state = {
-    custom: true,
+  constructor(props) {
+    super(props)
+    this.state = {
+      custom: true,
+    }
   }
 
   render() {
