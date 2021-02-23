@@ -2,7 +2,7 @@
 title: Gatsby Image plugin
 ---
 
-This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. While most of these options are used whichever data source you are using for your images, you should refer to the documentation of your source plugin if you are using images from a CMS, as the exact options are likely to vary.
+This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. While most of these options are available regardless of where you source your images, be sure to refer to the documentation of your source plugin if you are using images from a CMS, as the exact options are likely to vary.
 
 ## Components
 
@@ -107,11 +107,11 @@ There are a few differences between how you specify options for `StaticImage` an
 
 1. **How to pass options:** When using `StaticImage`, options are passed as props to the component, whereas for the `GatsbyImage` component they are passed to the `gatsbyImageData` GraphQL resolver.
 
-2. **Option values:** In the `StaticImage` component, props such as `layout` and `placeholder` take a _string_, while the resolver takes a _[a GraphQL enum](https://graphql.org/learn/schema/#enumeration-types)_, which is in upper case by convention and is not quoted like a string. Both syntaxes are shown in the reference below.
+2. **Option values:** In the `StaticImage` component, props such as `layout` and `placeholder` take a _string_, while the resolver takes a _[a GraphQL enum](https://graphql.org/learn/schema/#enumeration-types)_, which is upper case by convention and is not quoted like a string. Both syntaxes are shown in the reference below.
 
 **Important:** For dynamic images, these options are for the `gatsbyImageData` resolver on [sharp nodes](https://www.gatsbyjs.com/plugins/gatsby-transformer-sharp). If you are using `gatsbyImageData` from a different plugin, such as a CMS or image host, you should refer to that plugin's documentation for the options, as they will differ from these. Static images use sharp under the hood, so these options apply when using the `StaticImage` component too.
 
-It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the IDE.
+It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the browser.
 
 Both static and dynamic images have the following options available:
 
@@ -246,9 +246,9 @@ There are a number of utility functions to help you work with `gatsbyImageData` 
 
 ### `getImage`
 
-Safely get a `gatsbyImageData` object. It accepts several different sorts of object, and is null-safe, returning `undefined` if the object passed, or any intermediate children are undefined.
+Safely get a `gatsbyImageData` object. It accepts several different sorts of objects, and is null-safe, returning `undefined` if the object passed, or any intermediate children are undefined.
 
-If passed a `File` object, it will return `file?.childImageSharp?.gatsbyImage`. If passed a node such as a `ContentfulAsset` that includes a `gatsbyImageData` field, it will return the `gatsbyImageData` object. If passed a `gatsbyImageData` object itself, it will return the same object.
+If passed a `File` object, it will return `file?.childImageSharp?.gatsbyImageData`. If passed a node such as a `ContentfulAsset` that includes a `gatsbyImageData` field, it will return the `gatsbyImageData` object. If passed a `gatsbyImageData` object itself, it will return the same object.
 
 ```js
 import { getImage } from "gatsby-plugin-image"
@@ -278,7 +278,9 @@ Get the default image `srcset`. This will be the fallback, so usually jpg or png
 
 ### `withArtDirection`
 
-As standard, the plugin displays different image resolutions at different screen sizes, but it also supports art direction, which is where a visually-different image is displayed at different sizes. This could include displaying a simplified logo or a tighter crop on a profile picture when viewing on a small screen. To do this, you can use the `withArtDirection` function. You need both images available from GraphQL, and you should be able to write a media query for each size. The first argument is the default image. This is displayed when no media queries match, but it also used to set the layout, size, placeholder and most other options. You then pass an array of "art directed images", which are objects with `media` and `image` values.
+By default, the plugin displays different image resolutions at different screen sizes, but it also supports art direction, which is where a visually-different image is displayed at different sizes. This could include displaying a simplified logo or a tighter crop on a profile picture when viewing on a small screen. To do this, you can use the `withArtDirection` function. You need both images available from GraphQL, and you should be able to write a media query for each size. 
+
+The first argument is the default image. This is displayed when no media queries match, but it is also used to set the layout, size, placeholder and most other options. You then pass an array of "art directed images" which are objects with `media` and `image` values.
 
 ```jsx
 import { GatsbyImage, getImage, withArtDirection } from "gatsby-plugin-image"
@@ -295,7 +297,7 @@ export function MyImage({ data }) {
 }
 ```
 
-When the screen is less than 1024px wide, then it will display `smallImage`, otherwise it will display `largeImage`.
+When the screen is less than 1024px wide, it will display `smallImage`. Otherwise, it will display `largeImage`.
 
 The aspect ratio is set by the default image, and doesn't automatically change with the different sources. The way to handle this is to use CSS media queries. For example, you could use this CSS to change the size of the container in small images:
 
