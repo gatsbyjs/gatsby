@@ -10,7 +10,7 @@ in the service worker.
 
 ## Install
 
-`npm install --save gatsby-plugin-offline`
+`npm install gatsby-plugin-offline`
 
 ## How to use
 
@@ -146,9 +146,10 @@ const options = {
       handler: `CacheFirst`,
     },
     {
-      // page-data.json files are not content hashed
-      urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`,
+      // page-data.json files, static query results and app-data.json
+      // are not content hashed
+      urlPattern: /^https?:.*\/page-data\/.*\.json/,
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Add runtime caching of various other page resources

@@ -1,29 +1,34 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const babel = require(`@babel/core`)
-const t = require(`@babel/types`)
-const declare = require(`@babel/helper-plugin-utils`).declare
-const Joi = require(`@hapi/joi`)
-const glob = require(`glob`)
-const prettier = require(`prettier`)
-const resolveCwd = require(`resolve-cwd`)
-const { slash } = require(`gatsby-core-utils`)
+import fs from "fs-extra"
+import path from "path"
+import { transform } from "@babel/core"
+import * as t from "@babel/types"
+import { declare } from "@babel/helper-plugin-utils"
+import * as Joi from "@hapi/joi"
+import glob from "glob"
+import prettier from "prettier"
+import { slash } from "gatsby-core-utils"
+import fetch from "node-fetch"
 
-const getDiff = require(`../utils/get-diff`)
-const resourceSchema = require(`../resource-schema`)
+import lock from "../lock"
+import getDiff from "../utils/get-diff"
+import resourceSchema from "../resource-schema"
 
-const isDefaultExport = require(`./utils/is-default-export`)
-const buildPluginNode = require(`./utils/build-plugin-node`)
-const getObjectFromNode = require(`./utils/get-object-from-node`)
-const { getValueFromNode } = require(`./utils/get-object-from-node`)
-const { REQUIRES_KEYS } = require(`./utils/constants`)
+import isDefaultExport from "./utils/is-default-export"
+import buildPluginNode from "./utils/build-plugin-node"
+import getObjectFromNode from "./utils/get-object-from-node"
+import { getValueFromNode } from "./utils/get-object-from-node"
+import { REQUIRES_KEYS } from "./utils/constants"
 
-const { read: readPackageJSON } = require(`../npm/package`)
+import { read as readPackageJSON } from "../npm/package"
 
 const fileExists = filePath => fs.existsSync(filePath)
 
 const listShadowableFilesForTheme = (directory, theme) => {
-  const themePath = path.dirname(resolveCwd(path.join(theme, `package.json`)))
+  const themePath = path.dirname(
+    require.resolve(slash(path.join(theme, `package.json`)), {
+      paths: [directory],
+    })
+  )
   const themeSrcPath = path.join(themePath, `src`)
   const shadowableThemeFiles = glob.sync(themeSrcPath + `/**/*.*`, {
     follow: true,
@@ -43,13 +48,20 @@ const listShadowableFilesForTheme = (directory, theme) => {
 }
 
 const getOptionsForPlugin = node => {
-  if (!t.isObjectExpression(node)) {
+  if (!t.isObjectExpression(node) && !t.isLogicalExpression(node)) {
     return undefined
   }
 
-  const options = node.properties.find(
-    property => property.key.name === `options`
-  )
+  let options
+
+  // When a plugin is added conditionally with && {}
+  if (t.isLogicalExpression(node)) {
+    options = node.right.properties.find(
+      property => property.key.name === `options`
+    )
+  } else {
+    options = node.properties.find(property => property.key.name === `options`)
+  }
 
   if (options) {
     return getObjectFromNode(options.value)
@@ -80,6 +92,13 @@ const getKeyForPlugin = node => {
     return key ? getValueFromNode(key.value) : null
   }
 
+  // When a plugin is added conditionally with && {}
+  if (t.isLogicalExpression(node)) {
+    const key = node.right.properties.find(p => p.key.name === `__key`)
+
+    return key ? getValueFromNode(key.value) : null
+  }
+
   return null
 }
 
@@ -94,13 +113,64 @@ const getNameForPlugin = node => {
     return resolve ? getValueFromNode(resolve.value) : null
   }
 
+  // When a plugin is added conditionally with && {}
+  if (t.isLogicalExpression(node)) {
+    const resolve = node.right.properties.find(p => p.key.name === `resolve`)
+
+    return resolve ? getValueFromNode(resolve.value) : null
+  }
+
   return null
 }
 
-const getDescriptionForPlugin = async name => {
-  const pkg = await readPackageJSON({}, name)
+const getDescriptionForPlugin = async (root, name) => {
+  const pkg = await readPackageJSON(root, name)
 
-  return pkg ? pkg.description : null
+  return pkg?.description || ``
+}
+
+const readmeCache = new Map()
+
+const getPath = (module, file, root) => {
+  try {
+    return require.resolve(`${module}/${file}`, { paths: [root] })
+  } catch (e) {
+    return undefined
+  }
+}
+
+const getReadmeForPlugin = async (root, name) => {
+  if (readmeCache.has(name)) {
+    return readmeCache.get(name)
+  }
+
+  let readmePath
+
+  const readmes = [`readme.txt`, `readme`, `readme.md`, `README`, `README.md`]
+  while (!readmePath && readmes.length) {
+    readmePath = getPath(name, readmes.pop(), root)
+  }
+
+  try {
+    if (readmePath) {
+      const readme = await fs.readFile(readmePath, `utf8`)
+      if (readme) {
+        readmeCache.set(name, readme)
+      }
+      return readme
+    }
+
+    const readme = await fetch(`https://unpkg.com/${name}/README.md`)
+      .then(res => res.text())
+      .catch(() => null)
+
+    if (readme) {
+      readmeCache.set(name, readme)
+    }
+    return readme || ``
+  } catch (err) {
+    return ``
+  }
 }
 
 const addPluginToConfig = (src, { name, options, key }) => {
@@ -111,7 +181,7 @@ const addPluginToConfig = (src, { name, options, key }) => {
     key,
   })
 
-  const { code } = babel.transform(src, {
+  const { code } = transform(src, {
     plugins: [addPlugins.plugin],
     configFile: false,
   })
@@ -126,7 +196,7 @@ const removePluginFromConfig = (src, { id, name, key }) => {
     shouldAdd: false,
   })
 
-  const { code } = babel.transform(src, {
+  const { code } = transform(src, {
     plugins: [addPlugins.plugin],
     configFile: false,
   })
@@ -137,7 +207,7 @@ const removePluginFromConfig = (src, { id, name, key }) => {
 const getPluginsFromConfig = src => {
   const getPlugins = new BabelPluginGetPluginsFromGatsbyConfig()
 
-  babel.transform(src, {
+  transform(src, {
     plugins: [getPlugins.plugin],
     configFile: false,
   })
@@ -147,30 +217,58 @@ const getPluginsFromConfig = src => {
 
 const getConfigPath = root => path.join(root, `gatsby-config.js`)
 
+const defaultConfig = `/**
+ * Configure your Gatsby site with this file.
+ *
+ * See: https://www.gatsbyjs.com/docs/gatsby-config/
+ */
+
+module.exports = {
+  plugins: [],
+}`
+
 const readConfigFile = async root => {
   let src
   try {
     src = await fs.readFile(getConfigPath(root), `utf8`)
   } catch (e) {
     if (e.code === `ENOENT`) {
-      src = `/**
- * Configure your Gatsby site with this file.
- *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
- */
-
-module.exports = {
-  plugins: [],
-}`
+      src = defaultConfig
     } else {
       throw e
     }
   }
 
+  if (src === ``) {
+    src = defaultConfig
+  }
+
   return src
 }
 
+class MissingInfoError extends Error {
+  constructor(foo = `bar`, ...params) {
+    // Pass remaining arguments (including vendor specific ones) to parent constructor
+    super(...params)
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, MissingInfoError)
+    }
+
+    this.name = `MissingInfoError`
+    // Custom debugging information
+    this.foo = foo
+    this.date = new Date()
+  }
+}
+
 const create = async ({ root }, { name, options, key }) => {
+  const release = await lock(`gatsby-config.js`)
+  // TODO generalize this — it's for the demo.
+  if (options?.accessToken === `(Known after install)`) {
+    throw new MissingInfoError({ name, options, key })
+  }
   const configSrc = await readConfigFile(root)
   const prettierConfig = await prettier.resolveConfig(root)
 
@@ -179,7 +277,9 @@ const create = async ({ root }, { name, options, key }) => {
 
   await fs.writeFile(getConfigPath(root), code)
 
-  return await read({ root }, key || name)
+  const config = await read({ root }, key || name)
+  release()
+  return config
 }
 
 const read = async ({ root }, id) => {
@@ -190,8 +290,11 @@ const read = async ({ root }, id) => {
       plugin => plugin.key === id || plugin.name === id
     )
 
-    if (plugin) {
-      const description = await getDescriptionForPlugin(id)
+    if (plugin?.name) {
+      const [description, readme] = await Promise.all([
+        getDescriptionForPlugin(root, id),
+        getReadmeForPlugin(root, id),
+      ])
       const { shadowedFiles, shadowableFiles } = listShadowableFilesForTheme(
         root,
         plugin.name
@@ -199,7 +302,8 @@ const read = async ({ root }, id) => {
 
       return {
         id,
-        description: description || null,
+        description,
+        readme,
         ...plugin,
         shadowedFiles,
         shadowableFiles,
@@ -242,56 +346,113 @@ class BabelPluginAddPluginsToGatsbyConfig {
             )
 
             if (shouldAdd) {
-              const plugins = pluginNodes.value.elements.map(getPlugin)
-              const matches = plugins.filter(plugin => {
-                if (!key) {
-                  return plugin.name === pluginOrThemeName
-                }
+              if (t.isCallExpression(pluginNodes.value)) {
+                const plugins = pluginNodes.value.callee.object.elements.map(
+                  getPlugin
+                )
+                const matches = plugins.filter(plugin => {
+                  if (!key) {
+                    return plugin.name === pluginOrThemeName
+                  }
 
-                return plugin.key === key
-              })
-
-              if (!matches.length) {
-                const pluginNode = buildPluginNode({
-                  name: pluginOrThemeName,
-                  options,
-                  key,
+                  return plugin.key === key
                 })
 
-                pluginNodes.value.elements.push(pluginNode)
+                if (!matches.length) {
+                  const pluginNode = buildPluginNode({
+                    name: pluginOrThemeName,
+                    options,
+                    key,
+                  })
+
+                  pluginNodes.value.callee.object.elements.push(pluginNode)
+                } else {
+                  pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.map(
+                    node => {
+                      const plugin = getPlugin(node)
+
+                      if (plugin.key !== key) {
+                        return node
+                      }
+
+                      if (!plugin.key && plugin.name !== pluginOrThemeName) {
+                        return node
+                      }
+
+                      return buildPluginNode({
+                        name: pluginOrThemeName,
+                        options,
+                        key,
+                      })
+                    }
+                  )
+                }
               } else {
-                pluginNodes.value.elements = pluginNodes.value.elements.map(
+                const plugins = pluginNodes.value.elements.map(getPlugin)
+                const matches = plugins.filter(plugin => {
+                  if (!key) {
+                    return plugin.name === pluginOrThemeName
+                  }
+
+                  return plugin.key === key
+                })
+
+                if (!matches.length) {
+                  const pluginNode = buildPluginNode({
+                    name: pluginOrThemeName,
+                    options,
+                    key,
+                  })
+
+                  pluginNodes.value.elements.push(pluginNode)
+                } else {
+                  pluginNodes.value.elements = pluginNodes.value.elements.map(
+                    node => {
+                      const plugin = getPlugin(node)
+
+                      if (plugin.key !== key) {
+                        return node
+                      }
+
+                      if (!plugin.key && plugin.name !== pluginOrThemeName) {
+                        return node
+                      }
+
+                      return buildPluginNode({
+                        name: pluginOrThemeName,
+                        options,
+                        key,
+                      })
+                    }
+                  )
+                }
+              }
+            } else {
+              if (t.isCallExpression(pluginNodes.value)) {
+                pluginNodes.value.callee.object.elements = pluginNodes.value.callee.object.elements.filter(
                   node => {
                     const plugin = getPlugin(node)
 
-                    if (plugin.key !== key) {
-                      return node
+                    if (key) {
+                      return plugin.key !== key
                     }
 
-                    if (!plugin.key && plugin.name !== pluginOrThemeName) {
-                      return node
+                    return plugin.name !== pluginOrThemeName
+                  }
+                )
+              } else {
+                pluginNodes.value.elements = pluginNodes.value.elements.filter(
+                  node => {
+                    const plugin = getPlugin(node)
+
+                    if (key) {
+                      return plugin.key !== key
                     }
 
-                    return buildPluginNode({
-                      name: pluginOrThemeName,
-                      options,
-                      key,
-                    })
+                    return plugin.name !== pluginOrThemeName
                   }
                 )
               }
-            } else {
-              pluginNodes.value.elements = pluginNodes.value.elements.filter(
-                node => {
-                  const plugin = getPlugin(node)
-
-                  if (key) {
-                    return plugin.key !== key
-                  }
-
-                  return plugin.name !== pluginOrThemeName
-                }
-              )
             }
 
             path.stop()
@@ -321,7 +482,21 @@ class BabelPluginGetPluginsFromGatsbyConfig {
 
             const plugins = right.properties.find(p => p.key.name === `plugins`)
 
-            plugins.value.elements.map(node => {
+            let pluginsList = []
+
+            if (t.isCallExpression(plugins.value)) {
+              pluginsList = plugins.value.callee.object?.elements
+            } else {
+              pluginsList = plugins.value.elements
+            }
+
+            if (!pluginsList) {
+              throw new Error(
+                `Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`
+              )
+            }
+
+            pluginsList.map(node => {
               this.state.push(getPlugin(node))
             })
           },
@@ -331,40 +506,39 @@ class BabelPluginGetPluginsFromGatsbyConfig {
   }
 }
 
-module.exports.addPluginToConfig = addPluginToConfig
-module.exports.getPluginsFromConfig = getPluginsFromConfig
-module.exports.removePluginFromConfig = removePluginFromConfig
+export { addPluginToConfig, getPluginsFromConfig, removePluginFromConfig }
+export { create, create as update, read, destroy }
 
-module.exports.create = create
-module.exports.update = create
-module.exports.read = read
-module.exports.destroy = destroy
-module.exports.config = {}
+export const config = {}
 
-module.exports.all = async ({ root }) => {
+export const all = async ({ root }, processPlugins = true) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
+  return Promise.all(
+    plugins.map(({ name }) => (processPlugins ? read({ root }, name) : name))
+  )
 }
 
 const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
+  isLocal: Joi.boolean(),
+  readme: Joi.string().optional().allow(null).allow(``),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),
   ...resourceSchema,
 }
 
 const validate = resource => {
-  if (REQUIRES_KEYS.includes(resource.name) && !resource.key) {
+  if (REQUIRES_KEYS.includes(resource.name) && !resource._key) {
     return {
       error: `${resource.name} requires a key to be set`,
     }
   }
 
-  if (resource.key && resource.key === resource.name) {
+  if (resource._key && resource._key === resource.name) {
     return {
       error: `${resource.name} requires a key to be different than the plugin name`,
     }
@@ -373,10 +547,12 @@ const validate = resource => {
   return Joi.validate(resource, schema, { abortEarly: false })
 }
 
-exports.schema = schema
-exports.validate = validate
+export { schema, validate }
 
-module.exports.plan = async ({ root }, { id, key, name, options }) => {
+export const plan = async (
+  { root },
+  { id, key, name, options, isLocal = false }
+) => {
   const fullName = id || name
   const prettierConfig = await prettier.resolveConfig(root)
   let configSrc = await readConfigFile(root)
@@ -395,6 +571,7 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     ...prettierConfig,
     parser: `babel`,
   })
+
   const diff = await getDiff(configSrc, newContents)
 
   return {
@@ -404,5 +581,6 @@ module.exports.plan = async ({ root }, { id, key, name, options }) => {
     currentState: configSrc,
     newState: newContents,
     describe: `Install ${fullName} in gatsby-config.js`,
+    dependsOn: isLocal ? null : [{ resourceName: `NPMPackage`, name }],
   }
 }

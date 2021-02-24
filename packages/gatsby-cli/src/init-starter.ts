@@ -9,14 +9,14 @@ import isValid from "is-valid-path"
 import sysPath from "path"
 import prompts from "prompts"
 import url from "url"
-
+import { updateSiteMetadata } from "gatsby-core-utils"
 import report from "./reporter"
-import { getPackageManager, promptPackageManager } from "./util/package-manager"
-import { isTTY } from "./util/is-tty"
+import { getPackageManager, setPackageManager } from "./util/package-manager"
+import reporter from "./reporter"
 
 const spawnWithArgs = (
   file: string,
-  args: string[],
+  args: Array<string>,
   options?: execa.Options
 ): execa.ExecaChildProcess =>
   execa(file, args, { stdio: `inherit`, preferLocal: false, ...options })
@@ -28,26 +28,13 @@ const spawn = (
   const [file, ...args] = cmd.split(/\s+/)
   return spawnWithArgs(file, args, options)
 }
-// Checks the existence of yarn package and user preference if it exists
+// Checks the existence of yarn package
 // We use yarnpkg instead of yarn to avoid conflict with Hadoop yarn
 // Refer to https://github.com/yarnpkg/yarn/issues/673
-const shouldUseYarn = async (): Promise<boolean> => {
+const checkForYarn = (): boolean => {
   try {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
-
-    let packageManager = getPackageManager()
-    if (!packageManager) {
-      // if package manager is not set:
-      //  - prompt user to pick package manager if in interactive console
-      //  - default to yarn if not in interactive console
-      if (isTTY()) {
-        packageManager = (await promptPackageManager()) || `yarn`
-      } else {
-        packageManager = `yarn`
-      }
-    }
-
-    return packageManager === `yarn`
+    return true
   } catch (e) {
     return false
   }
@@ -113,8 +100,17 @@ const install = async (rootPath: string): Promise<void> => {
   report.info(`Installing packages...`)
   process.chdir(rootPath)
 
+  const npmConfigUserAgent = process.env.npm_config_user_agent
+
   try {
-    if (await shouldUseYarn()) {
+    if (!getPackageManager()) {
+      if (npmConfigUserAgent?.includes(`yarn`)) {
+        setPackageManager(`yarn`)
+      } else {
+        setPackageManager(`npm`)
+      }
+    }
+    if (getPackageManager() === `yarn` && checkForYarn()) {
       await fs.remove(`package-lock.json`)
       await spawn(`yarnpkg`)
     } else {
@@ -341,8 +337,31 @@ export async function initStarter(
   trackCli(`NEW_PROJECT`, {
     starterName: hostedInfo ? hostedInfo.shortcut() : `local:starter`,
   })
-  if (hostedInfo) await clone(hostedInfo, rootPath)
-  else await copy(starterPath, rootPath)
+  if (hostedInfo) {
+    await clone(hostedInfo, rootPath)
+  } else {
+    await copy(starterPath, rootPath)
+  }
+
+  const sitePath = sysPath.resolve(rootPath)
+
+  const sitePackageJson = await fs
+    .readJSON(sysPath.join(sitePath, `package.json`))
+    .catch(() => {
+      reporter.verbose(
+        `Could not read "${sysPath.join(sitePath, `package.json`)}"`
+      )
+    })
+
+  await updateSiteMetadata(
+    {
+      name: sitePackageJson?.name || rootPath,
+      sitePath,
+      lastRun: Date.now(),
+    },
+    false
+  )
+
   successMessage(rootPath)
   trackCli(`NEW_PROJECT_END`)
 }

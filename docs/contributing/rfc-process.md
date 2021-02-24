@@ -47,7 +47,7 @@ Some changes do not require an RFC:
 - Rephrasing, reorganizing or refactoring addition or removal of warnings
 - Additions that strictly improve objective, numerical quality
   criteria (speedup, better browser support)
-- Additions only likely to be _noticed by_ other implementors-of-Gatsby,
+- Additions only likely to be _noticed by_ other implements-of-Gatsby,
   invisible to users-of-Gatsby.
 
 ## What the process is
@@ -84,7 +84,7 @@ Gatsby.
   member will merge the RFCs associated pull request, at which point the RFC will
   become 'active'.
 
-## The RFC life-cycle
+## The RFC lifecycle
 
 Once an RFC becomes active, then authors may implement it and submit the
 feature as a pull request to the Gatsby repo. Becoming 'active' is not a rubber
@@ -106,7 +106,7 @@ to the document.
 
 ## Implementing an RFC
 
-The author of an RFC is not obligated to implement it. Of course, the RFC
+The author of an RFC is not obligated to implement it. The RFC
 author (like any other developer) is welcome to post an implementation for
 review after the RFC has been accepted.
 

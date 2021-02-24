@@ -1,11 +1,10 @@
-import React from "react"
-import { loadStripe } from "@stripe/stripe-js"
+import React, { useState } from "react"
+import getStripe from "../utils/stripejs"
 
 const buttonStyles = {
   fontSize: "13px",
   textAlign: "center",
-  color: "#fff",
-  outline: "none",
+  color: "#000",
   padding: "12px 60px",
   boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
   backgroundColor: "rgb(255, 178, 56)",
@@ -13,25 +12,40 @@ const buttonStyles = {
   letterSpacing: "1.5px",
 }
 
-const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
-
-const redirectToCheckout = async event => {
-  event.preventDefault()
-  const stripe = await stripePromise
-  const { error } = await stripe.redirectToCheckout({
-    items: [{ sku: process.env.GATSBY_BUTTON_SKU_ID, quantity: 1 }],
-    successUrl: `${window.location.origin}/page-2/`,
-    cancelUrl: `${window.location.origin}/`,
-  })
-
-  if (error) {
-    console.warn("Error:", error)
-  }
+const buttonDisabledStyles = {
+  opacity: "0.5",
+  cursor: "not-allowed",
 }
 
 const Checkout = () => {
+  const [loading, setLoading] = useState(false)
+
+  const redirectToCheckout = async event => {
+    event.preventDefault()
+    setLoading(true)
+
+    const stripe = await getStripe()
+    const { error } = await stripe.redirectToCheckout({
+      mode: "payment",
+      lineItems: [{ price: process.env.GATSBY_BUTTON_PRICE_ID, quantity: 1 }],
+      successUrl: `${window.location.origin}/page-2/`,
+      cancelUrl: `${window.location.origin}/`,
+    })
+
+    if (error) {
+      console.warn("Error:", error)
+      setLoading(false)
+    }
+  }
+
   return (
-    <button style={buttonStyles} onClick={redirectToCheckout}>
+    <button
+      disabled={loading}
+      style={
+        loading ? { ...buttonStyles, ...buttonDisabledStyles } : buttonStyles
+      }
+      onClick={redirectToCheckout}
+    >
       BUY MY BOOK
     </button>
   )

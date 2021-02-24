@@ -22,7 +22,6 @@ Object {
         "corejs": 3,
         "exclude": Array [
           "transform-typeof-symbol",
-          "transform-regenerator",
           "es.symbol",
           "es.symbol.async-iterator",
           "es.symbol.has-instance",

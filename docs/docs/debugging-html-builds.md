@@ -19,7 +19,7 @@ Errors while building static HTML files generally happen for one of the followin
 
 3. You mix up `import` and `require` calls in the same file. This might lead to
    "WebpackError: Invariant Violation: Minified React error #130" [since webpack 4
-   is stricter than v3](/docs/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
+   is stricter than v3](/docs/reference/release-notes/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
    The solution is to only use `import` and this also extends to `gatsby-ssr` and `gatsby-browser` files.
 
 4. Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
@@ -55,7 +55,7 @@ So, the worst has happened and you're using an npm module that expects `window`
 to be defined. You may be able to file an issue and get the module patched, but
 what to do in the mean time?
 
-One solution is to [customize](/docs/add-custom-webpack-config) your webpack
+One solution is to [customize](/docs/how-to/custom-configuration/add-custom-webpack-config) your webpack
 configuration to replace the offending module with a dummy module during server
 rendering.
 
@@ -63,7 +63,7 @@ rendering.
 
 ```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === "build-html") {
+  if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
         rules: [

@@ -8,6 +8,7 @@ const knownOptions = {
     alwaysSendReferrer: `boolean`,
     allowAnchor: `boolean`,
     cookieName: `string`,
+    cookieFlags: `string`,
     cookieExpires: `number`,
     storeGac: `boolean`,
     legacyCookieDomain: `string`,

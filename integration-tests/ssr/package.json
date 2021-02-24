@@ -1,0 +1,41 @@
+{
+  "name": "ssr",
+  "description": "A simplified bare-bones starter for Gatsby.",
+  "version": "0.1.0",
+  "author": "Sid Chatterjee",
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "dependencies": {
+    "gatsby": "^3.0.0-next.0",
+    "gatsby-plugin-postcss": "^3.3.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "tailwindcss": "1"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.2",
+    "fs-extra": "^9.0.0",
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
+    "jest-diff": "^24.0.0",
+    "npm-run-all": "4.1.5",
+    "start-server-and-test": "^1.11.3"
+  },
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-hello-world"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "clean": "gatsby clean",
+    "develop": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop",
+    "serve": "gatsby serve",
+    "start-dev-server": "start-server-and-test develop http://localhost:8000 test:jest",
+    "test": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true npm-run-all -s build start-dev-server",
+    "test-output": "node test-output.js",
+    "test:jest": "jest --config=jest.config.js --runInBand"
+  }
+}

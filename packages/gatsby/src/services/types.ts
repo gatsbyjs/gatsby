@@ -6,17 +6,21 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { Express } from "express"
 import JestWorker from "jest-worker"
+import { Actor, AnyEventObject } from "xstate"
+import { Compiler } from "webpack"
+import { WebsocketManager } from "../utils/websocket-manager"
+import { IWebpackWatchingPauseResume } from "../utils/start-server"
 export interface IGroupedQueryIds {
-  pageQueryIds: string[]
-  staticQueryIds: string[]
+  pageQueryIds: Array<string>
+  staticQueryIds: Array<string>
 }
 
 export interface IMutationAction {
   type: string
-  payload: unknown[]
+  payload: Array<unknown>
+  resolve?: (result: unknown) => void
 }
 export interface IBuildContext {
-  firstRun: boolean
   program?: IProgram
   store?: Store<IGatsbyState, AnyAction>
   parentSpan?: Span
@@ -24,7 +28,19 @@ export interface IBuildContext {
   graphqlRunner?: GraphQLRunner
   queryIds?: IGroupedQueryIds
   webhookBody?: Record<string, unknown>
+  webhookSourcePluginName?: string
   refresh?: boolean
   workerPool?: JestWorker
   app?: Express
+  nodesMutatedDuringQueryRun?: boolean
+  nodesMutatedDuringQueryRunRecompileCount?: number
+  mutationListener?: Actor<unknown, AnyEventObject>
+  nodeMutationBatch?: Array<IMutationAction>
+  compiler?: Compiler
+  websocketManager?: WebsocketManager
+  webpackWatching?: IWebpackWatchingPauseResume
+  webpackListener?: Actor<unknown, AnyEventObject>
+  queryFilesDirty?: boolean
+  sourceFilesDirty?: boolean
+  pendingQueryRuns?: Set<string>
 }

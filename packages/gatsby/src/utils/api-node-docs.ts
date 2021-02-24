@@ -11,6 +11,14 @@ export const resolvableExtensions = true
  * complete so you can query your data in order to create pages.
  *
  * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
+ *
+ * @param {object} $0 See the [documentation for `Node API Helpers` for more details](/docs/node-api-helpers)
+ * @param {Actions} $0.actions See the [list of documented actions](/docs/actions)
+ * @param {function} $0.actions.createPages [Documentation for this action](/docs/actions/#createPage)
+ * @param {function} $0.graphql: Query GraphQL API. See [examples here](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs)
+ * @param {GatsbyReporter} $0.reporter Log issues. See [GatsbyReporter documentation](/docs/node-api-helpers/#GatsbyReporter) for more details
+ * @returns {Promise<void>} No return value required, but the caller will `await` any promise that's returned
+ *
  * @example
  * const path = require(`path`)
  *
@@ -134,6 +142,17 @@ export const sourceNodes = true
 export const onCreateNode = true
 
 /**
+ * Called before scheduling a `onCreateNode` callback for a plugin. If it returns falsy
+ * then Gatsby will not schedule the `onCreateNode` callback for this node for this plugin.
+ * Note: this API does not receive the regular `api` that other callbacks get as first arg.
+ *
+ * @gatsbyVersion 2.24.80
+ * @example
+ * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
+ */
+export const unstable_shouldOnCreateNode = true
+
+/**
  * Called when a new page is created. This extension API is useful
  * for programmatically manipulating pages created by other plugins e.g.
  * if you want paths without trailing slashes.
@@ -163,10 +182,10 @@ export const onCreatePage = true
  *
  * Many transformer plugins use this to add fields that take arguments.
  *
- * * [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
+ * * [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/)
  * adds an "excerpt" field where the user when writing their query can specify
  * how many characters to prune the markdown source to.
- * * [`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/) exposes
+ * * [`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/) exposes
  * many image transformation options as GraphQL fields.
  *
  * @param {object} $0
@@ -287,8 +306,8 @@ export const createSchemaCustomization = true
  * @param {GraphQLSchema} $0.intermediateSchema Current GraphQL schema
  * @param {function} $0.createResolvers Add custom resolvers to GraphQL field configs
  * @param {object} $1
- * @param {object} $1.resolvers An object map of GraphQL type names to custom resolver functions.
- * @param {object} $1.options Optional createResolvers options.
+ * @param {object} $1.resolvers An object map of GraphQL type names to custom resolver functions
+ * @param {object} $1.options Optional createResolvers options
  * @param {object} $1.options.ignoreNonexistentTypes Silences the warning when trying to add resolvers for types that don't exist. Useful for optional extensions.
  * @example
  * exports.createResolvers = ({ createResolvers }) => {
@@ -325,16 +344,21 @@ export const createResolvers = true
 export const preprocessSource = true
 
 /**
- * Tell plugins with expensive "side effects" from queries to start running
- * those now. This is a soon-to-be-replaced API only currently in use by
- * `gatsby-plugin-sharp`.
- */
-export const generateSideEffects = true
-
-/**
- * Let plugins extend/mutate the site's Babel configuration.
- * This API will change before 2.0 as it needs still to be converted to use
- * Redux actions.
+ * Let plugins extend/mutate the site's Babel configuration by calling
+ * [`setBabelPlugin`](/docs/actions/#setBabelPlugin) or
+ * [`setBabelPreset`](/docs/actions/#setBabelPreset).
+ * @param {object} $0
+ * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
+ * 'build-javascript', or 'build-html'
+ * @param {object} $0.actions
+ * @param {object} options The Babel configuration
+ * @example
+ * exports.onCreateBabelConfig = ({ actions }) => {
+ *   actions.setBabelPlugin({
+ *     name: `babel-plugin-that-i-like`,
+ *     options: {}
+ *   })
+ * }
  */
 export const onCreateBabelConfig = true
 
@@ -404,8 +428,8 @@ export const onPostBuild = true
 export const onPreExtractQueries = true
 
 /**
- * Run when gatsby develop server is started, its useful to add proxy and middleware
- * to the dev server app
+ * Run when the `gatsby develop` server is started. It can be used for adding proxies and Express middleware
+ * to the server.
  * @param {object} $0
  * @param {Express} $0.app The [Express app](https://expressjs.com/en/4x/api.html#app) used to run the dev server
  * @example
@@ -416,3 +440,19 @@ export const onPreExtractQueries = true
  * }
  */
 export const onCreateDevServer = true
+
+/**
+ * Run during the bootstrap phase. Plugins can use this to define a schema for their options using
+ * [Joi](https://joi.dev) to validate the options users pass to the plugin.
+ * @gatsbyVersion 2.25.0
+ * @param {object} $0
+ * @param {Joi} $0.Joi The instance of [Joi](https://joi.dev) to define the schema
+ * @example
+ * exports.pluginOptionsSchema = ({ Joi }) => {
+ *   return Joi.object({
+ *     // Validate that the anonymize option is defined by the user and is a boolean
+ *     anonymize: Joi.boolean().required(),
+ *   })
+ * }
+ */
+export const pluginOptionsSchema = true

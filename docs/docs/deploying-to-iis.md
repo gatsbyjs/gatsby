@@ -60,7 +60,7 @@ you have to be careful to copy any changes to `web.config` on your server back t
                   <add input="{REQUEST_FILENAME}" pattern="(.*\.html)|(sw\.js)|(app\-data\.json)|(page\-data\.json)" />
                 </preCondition>
                 <preCondition name="IsCachePermanentlyFile">
-                  <add input="{REQUEST_FILENAME}" pattern="(.*\.js)|(.*\.css)" />
+                  <add input="{REQUEST_FILENAME}" pattern="((.*\.js)|(.*\.css))$" />
                 </preCondition>
               </preConditions>
             </outboundRules>

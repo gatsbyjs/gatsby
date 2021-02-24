@@ -5,6 +5,8 @@ import {
   createPagesStatefully,
   buildSchema,
   sourceNodes,
+  rebuildSchemaWithSitePage,
+  writeOutRedirects as writeOutRedirectsAndWatch,
 } from "../../services"
 import { IDataLayerContext } from "./types"
 
@@ -17,4 +19,6 @@ export const dataLayerServices: Record<
   createPages,
   buildSchema,
   createPagesStatefully,
+  rebuildSchemaWithSitePage,
+  writeOutRedirectsAndWatch,
 }

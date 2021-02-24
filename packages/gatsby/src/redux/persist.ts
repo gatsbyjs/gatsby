@@ -13,11 +13,6 @@ import { IGatsbyNode, ICachedReduxState } from "./types"
 import { sync as globSync } from "glob"
 import report from "gatsby-cli/lib/reporter"
 
-const getLegacyCacheFile = (): string =>
-  // TODO: remove this legacy stuff in v3 (fairly benign change but still)
-  // This is a function for the case that somebody does a process.chdir (#19800)
-  path.join(process.cwd(), `.cache/redux.state`)
-
 const getReduxCacheFolder = (): string =>
   // This is a function for the case that somebody does a process.chdir (#19800)
   path.join(process.cwd(), `.cache/redux`)
@@ -29,10 +24,6 @@ function reduxChunkedNodesFilePrefix(dir: string): string {
   return path.join(dir, `redux.node.state_`)
 }
 
-function readFromLegacyCache(): ICachedReduxState {
-  return v8.deserialize(readFileSync(getLegacyCacheFile()))
-}
-
 export function readFromCache(): ICachedReduxState {
   // The cache is stored in two steps; the nodes in chunks and the rest
   // First we revive the rest, then we inject the nodes into that obj (if any)
@@ -41,10 +32,6 @@ export function readFromCache(): ICachedReduxState {
   // of reading them is not relevant.
 
   const reduxCacheFolder = getReduxCacheFolder()
-
-  if (!existsSync(reduxCacheFolder)) {
-    return readFromLegacyCache()
-  }
 
   const obj: ICachedReduxState = v8.deserialize(
     readFileSync(reduxSharedFile(reduxCacheFolder))
@@ -55,7 +42,7 @@ export function readFromCache(): ICachedReduxState {
     reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
   ).map(file => v8.deserialize(readFileSync(file)))
 
-  const nodes: [string, IGatsbyNode][] = [].concat(...chunks)
+  const nodes: Array<[string, IGatsbyNode]> = [].concat(...chunks)
 
   if (!chunks.length) {
     report.info(
@@ -70,7 +57,7 @@ export function readFromCache(): ICachedReduxState {
   return obj
 }
 
-function guessSafeChunkSize(values: [string, IGatsbyNode][]): number {
+function guessSafeChunkSize(values: Array<[string, IGatsbyNode]>): number {
   // Pick a few random elements and measure their size then pick a chunk size
   // ceiling based on the worst case. Each test takes time so there's trade-off.
   // This attempts to prevent small sites with very large pages from OOMing.
@@ -114,7 +101,7 @@ function prepareCacheFolder(
 
   if (map) {
     // Now store the nodes separately, chunk size determined by a heuristic
-    const values: [string, IGatsbyNode][] = [...map.entries()]
+    const values: Array<[string, IGatsbyNode]> = [...map.entries()]
     const chunkSize = guessSafeChunkSize(values)
     const chunks = Math.ceil(values.length / chunkSize)
 
@@ -168,10 +155,6 @@ export function writeToCache(contents: ICachedReduxState): void {
 
   // Now try to yolorimraf the old cache folder
   try {
-    const legacy = getLegacyCacheFile()
-    if (existsSync(legacy)) {
-      removeSync(legacy)
-    }
     if (bakName !== ``) {
       removeSync(bakName)
     }

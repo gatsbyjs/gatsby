@@ -24,12 +24,15 @@ const getCustomOptions = stage => {
 const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   const pluginBabelConfig = loadCachedConfig()
 
-  const { stage } = options
+  const { stage, reactRuntime } = options
 
   // Required plugins/presets
   const requiredPlugins = [
     babel.createConfigItem(
-      [resolve(`babel-plugin-remove-graphql-queries`), { stage }],
+      [
+        resolve(`babel-plugin-remove-graphql-queries`),
+        { stage, staticQueryDir: `page-data/sq/d` },
+      ],
       {
         type: `plugin`,
       }
@@ -46,10 +49,9 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
     )
   }
 
-  // TODO: Remove entire block when we make fast-refresh the default
-  if (stage === `develop` && process.env.GATSBY_HOT_LOADER !== `fast-refresh`) {
+  if (stage === `develop`) {
     requiredPlugins.push(
-      babel.createConfigItem([resolve(`react-hot-loader/babel`)], {
+      babel.createConfigItem([resolve(`react-refresh/babel`)], {
         type: `plugin`,
       })
     )
@@ -64,6 +66,7 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
         resolve(`babel-preset-gatsby`),
         {
           stage,
+          reactRuntime,
         },
       ],
       {

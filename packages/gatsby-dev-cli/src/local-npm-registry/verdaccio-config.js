@@ -4,6 +4,7 @@ const os = require(`os`)
 const verdaccioConfig = {
   storage: path.join(os.tmpdir(), `verdaccio`, `storage`),
   port: 4873, // default
+  max_body_size: `1000mb`,
   web: {
     enable: true,
     title: `gatsby-dev`,

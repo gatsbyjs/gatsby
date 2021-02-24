@@ -25,7 +25,10 @@ const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
 const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
-const createMDXNode = require(`../utils/create-mdx-node`)
+const {
+  createMdxNodeExtraBabel,
+  createMdxNodeLessBabel,
+} = require(`../utils/create-mdx-node`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
 
 const DEFAULT_OPTIONS = {
@@ -89,7 +92,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function (content) {
+module.exports = async function mdxLoader(content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,
@@ -122,15 +125,23 @@ module.exports = async function (content) {
 
   let mdxNode
   try {
-    // This node attempts to break the chicken-egg problem, where parsing mdx
-    // allows for custom plugins, which can receive a mdx node
-    ;({ mdxNode } = await createMDXNode({
-      id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
-      node: fileNode,
-      content,
-      options,
-      getNodesByType,
-    }))
+    // This fakeNodeIdMDXFileABugIfYouSeeThis node object attempts to break the chicken-egg problem,
+    // where parsing mdx allows for custom plugins, which can receive a mdx node.
+    if (options.lessBabel) {
+      ;({ mdxNode } = await createMdxNodeLessBabel({
+        id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+        node: fileNode,
+        content,
+        options,
+        getNodesByType,
+      }))
+    } else {
+      mdxNode = await createMdxNodeExtraBabel({
+        id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+        node: fileNode,
+        content,
+      })
+    }
   } catch (e) {
     return callback(e)
   }

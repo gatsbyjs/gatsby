@@ -2,19 +2,19 @@
   "name": "ecommerce-gatsby-tutorial",
   "private": true,
   "description": "Accept payments in your Gatsby site using Stripe Checkout.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "@thorwebdev",
   "dependencies": {
-    "@stripe/stripe-js": "^1.7.0",
-    "gatsby": "^2.23.12",
-    "gatsby-image": "^2.4.9",
-    "gatsby-plugin-manifest": "^2.4.14",
-    "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-react-helmet": "^3.3.6",
-    "gatsby-plugin-sharp": "^2.6.14",
-    "gatsby-source-filesystem": "^2.3.14",
-    "gatsby-source-stripe": "^2.2.2",
-    "gatsby-transformer-sharp": "^2.5.7",
+    "@stripe/stripe-js": "^1.9.0",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-source-stripe": "^3.1.1",
+    "gatsby-transformer-sharp": "next",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -32,7 +32,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "prettier": "2.1.1"
   },
   "repository": {
     "type": "git",

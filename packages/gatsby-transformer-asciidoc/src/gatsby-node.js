@@ -1,6 +1,16 @@
 const asciidoc = require(`asciidoctor`)()
 const _ = require(`lodash`)
 
+function unstable_shouldOnCreateNode({ node }, pluginOptions = {}) {
+  const extensionsConfig = pluginOptions.fileExtensions
+
+  // make extensions configurable and use adoc and asciidoc as default
+  const supportedExtensions =
+    extensionsConfig instanceof Array ? extensionsConfig : [`adoc`, `asciidoc`]
+
+  return supportedExtensions.includes(node.extension)
+}
+
 async function onCreateNode(
   {
     node,
@@ -13,15 +23,7 @@ async function onCreateNode(
   },
   pluginOptions
 ) {
-  const extensionsConfig = pluginOptions.fileExtensions
-
-  // make extensions configurable and use adoc and asciidoc as default
-  const supportedExtensions =
-    typeof extensionsConfig !== `undefined` && extensionsConfig instanceof Array
-      ? extensionsConfig
-      : [`adoc`, `asciidoc`]
-
-  if (!supportedExtensions.includes(node.extension)) {
+  if (!unstable_shouldOnCreateNode({ node }, pluginOptions)) {
     return
   }
 
@@ -86,9 +88,9 @@ async function onCreateNode(
       children: [],
       html,
       document: {
-        title: title.getCombined(),
-        subtitle: title.hasSubtitle() ? title.getSubtitle() : ``,
-        main: title.getMain(),
+        title: title?.getCombined() ?? ``,
+        subtitle: title?.hasSubtitle() ? title.getSubtitle() : ``,
+        main: title?.getMain() ?? ``,
       },
       revision,
       author,
@@ -138,4 +140,5 @@ const extractPageAttributes = allAttributes =>
     return pageAttributes
   }, {})
 
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 exports.onCreateNode = onCreateNode

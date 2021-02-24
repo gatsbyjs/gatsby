@@ -42,7 +42,7 @@ This also downloads the files and initializes the site by running `npm install`.
 
 If you don't specify a custom starter, your site will be created from the [default starter](https://github.com/gatsbyjs/gatsby-starter-default).
 
-> **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/setting-up-gatsby-without-gatsby-new/).
+> **Note:** If you work for an Enterprise-level company where you are unable to pull from public GitHub repositories, you can still set up Gatsby. Check out the [docs to learn more](/docs/using-gatsby-professionally/using-gatsby-professionally/setting-up-gatsby-without-gatsby-new/).
 
 ### Using a local starter
 
@@ -67,8 +67,8 @@ Official starters are maintained by Gatsby.
 | [gatsby-starter-default](https://github.com/gatsbyjs/gatsby-starter-default)                 | [Demo](https://gatsby-starter-default-demo.netlify.app/)     | Appropriate for most use cases | General Gatsby site          |
 | [gatsby-starter-blog](https://github.com/gatsbyjs/gatsby-starter-blog)                       | [Demo](https://gatsby-starter-blog-demo.netlify.app/)        | Create a basic blog            | Blog post pages and listings |
 | [gatsby-starter-hello-world](https://github.com/gatsbyjs/gatsby-starter-hello-world)         | [Demo](https://gatsby-starter-hello-world-demo.netlify.app/) | Learn Gatsby                   | Gatsby bare essentials       |
-| [gatsby-starter-blog-theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)           | [Docs](/docs/themes/getting-started/)                        | Blog posts and pages           | Gatsby themes                |
-| [gatsby-starter-theme-workspace](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) | [Docs](/docs/themes/building-themes/)                        | Building Gatsby Themes         | Minimal theme workspace      |
+| [gatsby-starter-blog-theme](https://github.com/gatsbyjs/gatsby-starter-blog-theme)           | [Docs](/docs/how-to/new-site-with-theme)                     | Blog posts and pages           | Gatsby themes                |
+| [gatsby-starter-theme-workspace](https://github.com/gatsbyjs/gatsby-starter-theme-workspace) | [Docs](/docs/how-to/plugins-and-themes/building-themes/)     | Building Gatsby Themes         | Minimal theme workspace      |
 
 ## Modifying starters
 
@@ -83,4 +83,5 @@ Learn [how to make a starter](/docs/creating-a-starter/) in the Gatsby docs. Sta
 Community starters are created and maintained by Gatsby community members.
 
 - Looking for a starter for a particular use case? Browse starters that have been submitted to the [Starter Library](/starters/).
-- Created a starter you'd like to share? Follow [these steps to submit your starter](/contributing/submit-to-starter-library/) to the Starter Library.
+
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.

@@ -3,7 +3,7 @@ title: Docs & Blog Components
 tableOfContentsDepth: 2
 ---
 
-The Gatsbyjs.org site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
+The Gatsby docs site has a handful of components that have been developed to facilitate writing new content for the blog and the docs. There are also components that help organize and lay out content in various pages across the website.
 
 This guide documents what components are available and explains how to use them. You can also refer to the [code for this page on GitHub](https://github.com/gatsbyjs/gatsby/blob/master/docs/contributing/docs-and-blog-components.md) to see to how each component can be used, because they are all embedded here!
 
@@ -23,7 +23,7 @@ The `<GuideList />` is a component that renders an `h2` heading and a list of li
 
 The Guide List component takes one prop:
 
-- `slug` (required) - the value of which is already available on every page's context on Gatsbyjs.org by default
+- `slug` (required) - the value of which is already available on every page's context on the site by default
 
 The slug is used to find a matching value in one of the `yaml` files that sets up the hierarchical structure for how the guides in the [docs](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/doc-links.yaml), [tutorial](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/tutorial-links.yaml), and [contributing](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/contributing-links.yaml) section are organized. It finds the matching entry in the hierarchy and renders the pages that are children of it in a list.
 
@@ -201,7 +201,7 @@ Doing so will break localized versions of the page, which are stored in other re
 
 New docs and blog posts are added to the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs/) folder inside the Gatsby repository. They are stored as `.md` (Markdown) or `.mdx` (MDX) files and can be written using Markdown, or using inline JSX thanks to MDX. Writing in Markdown will output tags that are styled according to [Gatsby's design guidelines](/guidelines/color/).
 
-You can read more about writing in Markdown in the [Markdown syntax guide](/docs/mdx/markdown-syntax).
+You can read more about writing in Markdown in the [Markdown syntax guide](/docs/how-to/routing/mdx/markdown-syntax).
 
 ### Frontmatter
 
@@ -354,4 +354,4 @@ plugins: [
 ]
 ```
 
-Line numbers and line highlighting can be added to code blocks as well, and is explained in detail in the [`gatsby-remark-prismjs` README](/packages/gatsby-remark-prismjs/?=remark#optional-add-line-highlighting-styles).
+Line numbers and line highlighting can be added to code blocks as well, and is explained in detail in the [`gatsby-remark-prismjs` README](/plugins/gatsby-remark-prismjs/?=remark#optional-add-line-highlighting-styles).

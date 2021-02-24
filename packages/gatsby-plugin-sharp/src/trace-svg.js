@@ -1,8 +1,9 @@
 const { promisify } = require(`bluebird`)
 const _ = require(`lodash`)
 const tmpDir = require(`os`).tmpdir()
+const path = require(`path`)
 const sharp = require(`./safe-sharp`)
-
+const filenamify = require(`filenamify`)
 const duotone = require(`./duotone`)
 const { getPluginOptions, healOptions } = require(`./plugin-options`)
 const { reportError } = require(`./report-error`)
@@ -109,7 +110,12 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
 
   const optionsHash = createContentDigest(options)
 
-  const tmpFilePath = `${tmpDir}/${file.internal.contentDigest}-${file.name}-${optionsHash}.${file.extension}`
+  const tmpFilePath = path.join(
+    tmpDir,
+    filenamify(
+      `${file.internal.contentDigest}-${file.name}-${optionsHash}.${file.extension}`
+    )
+  )
 
   try {
     await exports.memoizedPrepareTraceSVGInputFile({
@@ -130,7 +136,7 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
       turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
     }
 
-    const optionsSVG = _.defaults(args, defaultArgs)
+    const optionsSVG = _.defaults({}, args, defaultArgs)
 
     // `srcset` attribute rejects URIs with literal spaces
     const encodeSpaces = str => str.replace(/ /gi, `%20`)

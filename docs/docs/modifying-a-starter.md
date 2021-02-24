@@ -6,9 +6,9 @@ While a Gatsby [starter](/docs/starters/) is a working website out of the box, c
 
 ## Prerequisites
 
-What you need to know will depend on the starter you choose and the data or functionality you'd like to modify. Even if you choose _not_ to modify the starter's components, you may still want to update text, use data from an external source, and modify the style (CSS) of the site. To do this, you'll write some [Markdown](/docs/mdx/markdown-syntax/) and [JSON](https://www.digitalocean.com/community/tutorials/an-introduction-to-json).
+What you need to know will depend on the starter you choose and the data or functionality you'd like to modify. Even if you choose _not_ to modify the starter's components, you may still want to update text, use data from an external source, and modify the style (CSS) of the site. To do this, you'll write some [Markdown](/docs/how-to/routing/mdx/markdown-syntax/) and [JSON](https://www.digitalocean.com/community/tutorials/an-introduction-to-json).
 
-To modify the functionality of a starter, you'll want a basic understanding of [JSX](/docs/glossary#jsx) syntax for updating components and making new ones. You'll also want some knowledge of [GraphQL](/docs/graphql-concepts/) for querying your data. Start with these and add to your skills as you continue to add functionality to your starter.
+To modify the functionality of a starter, you'll want a basic understanding of [JSX](/docs/glossary#jsx) syntax for updating components and making new ones. You'll also want some knowledge of [GraphQL](/docs/conceptual/graphql-concepts/) for querying your data. Start with these and add to your skills as you continue to add functionality to your starter.
 
 ## Choosing a starter
 
@@ -23,12 +23,12 @@ Taking the default Gatsby starter as an example, dedicate some time to looking t
 ![Default starter file structure in VS Code](./images/default-files-zoom.png)
 
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
-- `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/gatsby-config/) for more information.
+- `gatsby-config.js`: a space to add configurable data and plugins. Among the [API files](/docs/api-files/), `gatsby-config.js` is the one you're most likely to need to modify. See [Gatsby Config](/docs/reference/config-files/gatsby-config/) for more information.
 - `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [default starter's package.json](https://github.com/gatsbyjs/gatsby-starter-default/blob/master/package.json) file.
 - `README.md`: this should include instructions for how to install and configure the starter, a list of its features or structure, and helpful tips. If you plan to share the source code for your site with other people, you can replace this information with documentation for your specific project.
-- `static`: a directory for static assets, such as a `favicon.ico` file. You can add whatever static files you need in here and they'll be copied to the `public` folder. If you're not sure which files belong here, check out the [Reference Guide to the static folder](/docs/static-folder/).
+- `static`: a directory for static assets, such as a `favicon.ico` file. You can add whatever static files you need in here and they'll be copied to the `public` folder. If you're not sure which files belong here, check out the [How-To Guide about the static folder](/docs/how-to/images-and-media/static-folder/).
 
-If you'd like to read descriptions of all of these files, as well as the other files that make up a Gatsby site, check out the [Gatsby project structure](/docs/gatsby-project-structure/) documentation.
+If you'd like to read descriptions of all of these files, as well as the other files that make up a Gatsby site, check out the [Gatsby project structure](/docs/reference/gatsby-project-structure/) documentation.
 
 ## Adding content
 
@@ -58,7 +58,7 @@ const SpeakingPage = () => (
 export default SpeakingPage
 ```
 
-At this point, you can navigate to `http://localhost:8000/speaking` in your browser to view this page! You can also [add pages from Markdown](/docs/adding-markdown-pages/) or [source data from a content management system](/docs/headless-cms/) (CMS) like WordPress. You may even choose a specific starter _because_ it's built to work well with a certain CMS. Try explicitly searching the [Gatsby Starter Library](/starters/) for your preferred system. Once there, check out the category filter. You'll see several options prefixed with "CMS:". Choose the option(s) that best fit your goals for the project.
+At this point, you can navigate to `http://localhost:8000/speaking` in your browser to view this page! You can also [add pages from Markdown](/docs/how-to/routing/adding-markdown-pages/) or [source data from a content management system](/docs/how-to/sourcing-data/headless-cms/) (CMS) like WordPress. You may even choose a specific starter _because_ it's built to work well with a certain CMS. Try explicitly searching the [Gatsby Starter Library](/starters/) for your preferred system. Once there, check out the category filter. You'll see several options prefixed with "CMS:". Choose the option(s) that best fit your goals for the project.
 
 ## Querying data
 
@@ -141,7 +141,7 @@ const Layout = ({ children }) => {
         <footer>
           © {new Date().getFullYear()}, Built with
           {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <a href="https://www.gatsbyjs.com">Gatsby</a>
         </footer>
       </div>
     </>

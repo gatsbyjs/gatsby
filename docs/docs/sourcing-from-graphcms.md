@@ -4,101 +4,131 @@ title: Sourcing from GraphCMS
 
 ## Headless the GraphCMS way
 
-[GraphCMS](https://graphcms.com?ref="gatsby-headless-docs-top") is a headless CMS that is optimized for working with GraphQL. Content structures like posts, authors, products and more are broken down into content types called "models." These models can then be queried with the familiar GraphQL syntax.
-
-One of the benefits of GraphCMS when working with Gatsby is that it supports GraphQL natively which allows you to test your content queries before even starting your Gatsby project.
+[GraphCMS](https://graphcms.com?referrer=gatsby-headless-docs-top) is a GraphQL native Headless Content Management System (Headless CMS) that lets you programmatically deliver content across platforms. With features like an intuitive schema builder, GraphQL mutations API, and out of the box localization, GraphCMS enables you to rapidly build digital projects with your preferred frameworks and languages.
 
 ## Getting started
 
-In this guide you'll create a complete project capable of querying data from GraphCMS.
+In this guide you'll create a Gatsby site capable of querying data from GraphCMS.
 
-### Install the boilerplate
+### Prerequisites
 
-To begin, let's create a Gatsby starter site.
+This guide assumes the following:
+
+- You have an active GraphCMS account
+- You've created a new GraphCMS project (preferably using the `Blog Starter` template)
+
+All schema and data references in this guide are from the GraphCMS `Blog Starter` template.
+
+### Create a new Gatsby site
+
+To begin, let's create a new Gatsby site using the default starter.
 
 ```shell
 gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-default
 ```
 
-Navigate inside of the project with `cd gatsby-site`.
+Once finished, navigate inside of the project with `cd gatsby-site`.
 
-### Add the source plugin
+### Add the `gatsby-source-graphcms` plugin
 
-Additionally, you need the `gatsby-source-graphql` library. Because GraphCMS uses GraphQL natively, you will take advantage of Gatsby's ability to simply stitch two GraphQL APIs together, reducing the time required to transform content. There is no need to use a special gatsby-source-x-cms plugin, the GraphQL source plugin is all you need.
+In order to fetch data from your GraphCMS project, you will need to install [`gatsby-source-graphcms`](https://github.com/GraphCMS/gatsby-source-graphcms).
 
-You can install this component with:
+You can install this package with:
 
 ```shell
-  # Optionally with `npm install`
-  npm install --save gatsby-source-graphql
+npm install gatsby-source-graphcms
 ```
 
 ### Configure the plugin
 
-The last step required before you can query your data is to configure the `gatsby-source-graphql` plugin. Open `gatsby-config.js` and add the following object to the plugins array. This example uses an open API from GraphCMS but you will most likely want to replace this with your own API and provide a `fieldName` that makes the most sense to your project. [Here's more information on working with GraphCMS APIs.](https://docs.graphcms.com/docs/api)
+The last step required before you can query your data is to configure `gatsby-source-graphcms`. Inside of `gatsby-config.js`, add a new plugin configuration.
+
+> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [in the How-To Guide about environment variables](/docs/how-to/local-development/environment-variables).
 
 ```js
 {
-    resolve: "gatsby-source-graphql",
-        options: {
-        // The top level query type, can be anything you want!
-        typeName: "GCMS",
-        // The field you'll query against, can also be anything you want.
-        fieldName: "gcms",
-        // Your API endpoint, available from the dashboard and settings window.
-        // You can use this endpoint that features US mountains for now.
-        url: "https://api-euwest.graphcms.com/v1/cjm7tab4c04ro019omujh708u/master",
+  resolve: 'gatsby-source-graphcms',
+    options: {
+      // Your GraphCMS API endpoint. Available from your project settings.
+      endpoint: process.env.GRAPHCMS_ENDPOINT
+      // A PAT (Permanent Auth Token) for your project. Required if your project is not available publicly, or you want to scope access to a specific content stage (i.e. draft content).
+      token: process.env.GRAPHCMS_TOKEN
     },
 },
 ```
 
-If everything works correctly, you should now have your GraphCMS data added to the Gatsby source API!
+### Inspecting the schema
 
-### Querying for content
-
-From the root of your project, run the development environment with `gatsby develop`. Once the server has started and is error free, you should be able to open the following URL in your browser:
+Start the Gatsby development environment with `gatsby develop`. Once running, you will be able to access the GraphiQL explorer in your browser:
 
 `http://localhost:8000/___graphql`
 
-This will show you an interface where you can test your new content API.
+From here, you will be able to browse the generated GraphQL schema of your Gatsby project.
 
-Try running this query:
+![GraphCMS Schema](./images/graphcms-schema.png)
+
+The generated Gatsby types for the GraphCMS project models will all be prefixed accordingly. For example, the `Post` model from our GraphCMS project becomes a `GraphCMS_Post` type inside of Gatsby. This prefix can be [configured](https://github.com/GraphCMS/gatsby-source-graphcms#options).
+
+Query fields also follow a similar naming convention and are prefixed by the same value as types. Gatsby will generate two root query fields per type. For example, for our `Post` model Gatsby will generate the following root query fields:
+
+- `allGraphCmsPost` for querying multiple `Post` entries
+- `graphCmsPost` for querying a single `Post` entry
+
+### Querying for content
+
+![GraphCMS Query](./images/graphcms-query.png)
+
+Using the generated schema, we can begin to write GraphQL queries for Gatsby data. Consider the query below, which will return a full list of all available `GraphCMS_Post` nodes.
 
 ```graphql
-query {
-  gcms {
-    mountains {
-      title
-      elevation
-      image {
+{
+  allGraphCmsPost {
+    nodes {
+      id
+      content {
+        markdown
+      }
+      coverImage {
         url
       }
+      date
+      slug
+      title
     }
   }
 }
 ```
 
-Again, if everything is working properly, you should see a successful response in the shape of:
-
 ```json
 {
   "data": {
-    "gcms": {
-      "mountains": [
+    "allGraphCmsPost": {
+      "nodes": [
         {
-          "title": "Denali",
-          "elevation": 6190,
-          "image": {
-            "url": "https://media.graphcms.com//J0rGKdjuSwCk7QrFxVDQ"
-          }
+          "id": "Post:ckadrcx4g00pw01525c5d2e56",
+          "content": {
+            "markdown": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quid ergo? Huius ego nunc auctoritatem sequens idem faciam. Duo Reges: constructio interrete. Sed in rebus apertissimis nimium longi sumus. Itaque his sapiens semper vacabit. Non semper, inquam;\n\n\n\nVerum hoc idem saepe faciamus. Quamquam haec quidem praeposita recte et reiecta dicere licebit.\n\n\n\nAt coluit ipse amicitias. Certe non potest. Bonum incolumis acies: misera caecitas. Quo studio Aristophanem putamus aetatem in litteris duxisse? Idem iste, inquam, de voluptate quid sentit? Facillimum id quidem est, inquam.\n"
+          },
+          "coverImage": {
+            "url": "https://media.graphcms.com/QEg7oQCTEeEjLSEPQJtg"
+          },
+          "date": "2020-05-05",
+          "slug": "technical-seo-with-graphcms",
+          "title": "Technical SEO with GraphCMS"
         },
         {
-          "title": "Mount Elbert",
-          "elevation": 4401,
-          "image": {
-            "url": "https://media.graphcms.com//JNonajrqT6SOyUKgC4L2"
-          }
+          "id": "Post:ckadrfuu000pe0148kels2b5e",
+          "content": {
+            "markdown": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id enim natura desiderat. Falli igitur possumus. Negat enim summo bono afferre incrementum diem. Indicant pueri, in quibus ut in speculis natura cernitur.\n\n\n\n# Lorem Ipsum\n\n\n\nNe amores quidem sanctos a sapiente alienos esse arbitrantur. Summus dolor plures dies manere non potest? Expectoque quid ad id, quod quaerebam, respondeas. Non est ista, inquam, Piso, magna dissensio. Respondeat totidem verbis. Non est igitur summum malum dolor.\n\n\n\nHic ambiguo ludimur. Nam Pyrrho, Aristo, Erillus iam diu abiecti. Si longus, levis dictata sunt. Duo Reges: constructio interrete. Deinde dolorem quem maximum?\n"
+          },
+          "coverImage": {
+            "url": "https://media.graphcms.com/gzYJIkMRRHCq0JLDOqgU"
+          },
+          "date": "2020-05-01",
+          "slug": "union-types-and-sortable-relations",
+          "title": "Union Types and Sortable Relations with GraphCMS"
         }
+
         // ...more results
       ]
     }
@@ -106,56 +136,106 @@ Again, if everything is working properly, you should see a successful response i
 }
 ```
 
-### Getting content on the page
+### Query implementation
 
-For the purpose of this tutorial I've removed all the layout, SEO, link or other components that comprise a page in the Gatsby starter. The components are still there and 99% of users will likely want to put them back in once they understand what's happening in the code. You are just looking at the nails for right now, but the hammers, saws and other tools are still in the toolbox. Open the index file located at `src/pages/index.js` and replace the content with this code:
+Gatsby offers two means of data querying: [page queries](/docs/how-to/querying-data/page-query) and [static queries](/docs/how-to/querying-data/static-query).
+
+#### Page query
+
+Page queries run at build time and can accept GraphQL variables via page context. As the name suggest, they can only be used on pages and **not** on non-page components.
+
+The resulting data is available via the page props `data` key.
 
 ```jsx
 import React from "react"
-import { StaticQuery } from "gatsby"
+import { graphql } from "gatsby"
 
-const IndexPage = () => (
-  <StaticQuery
-    query={graphql`
-      query {
-        gcms {
-          mountains {
-            title
-            elevation
-          }
+function IndexPage({ data: { posts } }) {
+  return (
+    <ul>
+      {posts.nodes.map(post => (
+        <li key={post.id}>
+          <h3>{post.title}</h3>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export const pageQuery = graphql`
+  query IndexPageQuery {
+    posts: allGraphCmsPost {
+      nodes {
+        id
+        content {
+          markdown
         }
+        coverImage {
+          url
+        }
+        date
+        slug
+        title
       }
-    `}
-    render={data => (
-      <div>
-        <h1>USA Mountains</h1>
-        <ul>
-          {data.gcms.mountains.map(mountain => {
-            const { title, elevation } = mountain
-            return (
-              <li>
-                <strong>{title}:</strong>
-                {elevation}
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    )}
-  />
-)
+    }
+  }
+`
 
 export default IndexPage
 ```
 
-With this code, you have:
+#### Static query hook
 
-1. Added the `StaticQuery` component to a page that allows you to fetch content from the GraphQL API.
-2. Fetched some simplified data from the Mountain API, namely the title and elevation.
-3. Rendered the list in the StaticQuery's RenderProp called "render".
+Static queries also run at build time, but can be used in all components via the `useStaticQuery` hook or `<StaticQuery />` component. However they do **not** accept GraphQL variables.
+
+```jsx
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
+
+function IndexPage() {
+  const { posts } = useStaticQuery(graphql`
+    {
+      posts: allGraphCmsPost {
+        nodes {
+          id
+          content {
+            markdown
+          }
+          coverImage {
+            url
+          }
+          date
+          slug
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <ul>
+      {posts.nodes.map(post => (
+        <li key={post.id}>
+          <h3>{post.title}</h3>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export default IndexPage
+```
+
+## Learn more
+
+For additional examples of how to query and use GraphCMS data in the context of Gatsby, check out the following references:
+
+- [`gatsby-source-graphcms`](https://github.com/GraphCMS/gatsby-source-graphcms)
+- [`gatsby-starter-graphcms-blog`](https://github.com/GraphCMS/gatsby-starter-graphcms-blog)
+- [`graphcms-examples`](https://github.com/GraphCMS/graphcms-examples)
 
 ## Summary
 
-Hopefully you've seen how easy it is to start working with GraphCMS and Gatsby. With projects of all sizes gravitating towards the benefits of the JAM stack, the time has never been better to learn how to work with Gatsby. Adding a content API in the backend with GraphCMS provides a scalable CMS that you can start using within minutes and keep using for the life of your project.
+With projects of all sizes transitioning to an API-first approach, creating, enriching, and delivering your content via API to your Gatsby projects is a breeze. Adding a content API in the backend with GraphCMS provides a scalable CMS that you can start using within minutes, and have your project up and running quickly.
 
-[Check out GraphCMS today and build "fast websites", fast!](https://graphcms.com?ref="gatsby-headless-docs-bottom")
+Try GraphCMS by [getting started with the free-forever community plan](https://graphcms.com?referrer=gatsby-headless-docs-bottom&utm_source=gatsby&utm_medium=referral)

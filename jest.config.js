@@ -28,10 +28,12 @@ module.exports = {
   coveragePathIgnorePatterns: ignoreDirs,
   testPathIgnorePatterns: [
     `<rootDir>/examples/`,
-    `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
+    `<rootDir>/packages/gatsby-admin/.cache/`,
+    `<rootDir>/deprecated-packages/`,
     `__tests__/fixtures`,
+    `__testfixtures__/`,
   ],
   transform: {
     "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,

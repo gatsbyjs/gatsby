@@ -2,12 +2,10 @@ import * as fs from "fs"
 import * as path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
-import {
-  defaultIcons,
-  doesIconExist,
-  addDigestToPath,
-  favicons,
-} from "./common"
+import { defaultIcons, addDigestToPath, favicons } from "./common"
+import { doesIconExist } from "./node-helpers"
+
+import pluginOptionsSchema from "./pluginOptionsSchema"
 
 sharp.simd(true)
 
@@ -58,8 +56,11 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
+exports.pluginOptionsSchema = pluginOptionsSchema
+
 /**
  * Setup pluginOption defaults
+ * TODO: Remove once pluginOptionsSchema is stable
  */
 exports.onPreInit = (_, pluginOptions) => {
   pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
@@ -179,7 +180,7 @@ const makeManifest = async ({
       const exists = fs.existsSync(iconPath)
       //create destination directory if it doesn't exist
       if (!exists) {
-        fs.mkdirSync(iconPath)
+        fs.mkdirSync(iconPath, { recursive: true })
       }
       paths[iconPath] = true
     }
@@ -253,6 +254,10 @@ const makeManifest = async ({
     // the resized image(s)
     if (faviconIsEnabled) {
       await processIconSet(favicons)
+
+      if (metadata.format === `svg`) {
+        fs.copyFileSync(icon, path.join(`public`, `favicon.svg`))
+      }
     }
   }
 

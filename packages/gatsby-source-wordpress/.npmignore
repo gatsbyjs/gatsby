@@ -1,3 +1,16 @@
+src
+test-site
+docker-compose.yml
+babel.config.js
+.gitignore
+generate-plugin-options-docs.md
+jest-transformer.js
+jest.config.js
+loadershim.js
+tsconfig.json
+docker
+docs
+
 # Logs
 logs
 *.log
@@ -32,3 +45,5 @@ flow-typed
 coverage
 decls
 examples
+
+*.env*

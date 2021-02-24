@@ -5,6 +5,7 @@ const {
   getCustomOptions,
   mergeConfigItemOptions,
 } = require(`./babel-loader-helpers`)
+const { getBrowsersList } = require(`./browserslist`)
 
 /**
  * Gatsby's custom loader for webpack & babel
@@ -24,12 +25,24 @@ const {
 module.exports = babelLoader.custom(babel => {
   const toReturn = {
     // Passed the loader options.
-    customOptions({ stage = `test`, ...options }) {
+    customOptions({
+      stage = `test`,
+      reactRuntime = `classic`,
+      rootDir = process.cwd(),
+      ...options
+    }) {
       return {
         custom: {
           stage,
+          reactRuntime,
         },
         loader: {
+          cacheIdentifier: JSON.stringify({
+            browerslist: getBrowsersList(rootDir),
+            babel: babel.version,
+            gatsbyPreset: require(`babel-preset-gatsby/package.json`).version,
+            env: babel.getEnv(),
+          }),
           sourceType: `unambiguous`,
           ...getCustomOptions(stage),
           ...options,

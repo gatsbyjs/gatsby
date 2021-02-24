@@ -7,8 +7,8 @@ const {
 } = require(`@graphql-tools/wrap`)
 const { linkToExecutor } = require(`@graphql-tools/links`)
 const { createHttpLink } = require(`apollo-link-http`)
-const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+const { fetchWrapper } = require(`./fetch`)
 const { createDataloaderLink } = require(`./batching/dataloader-link`)
 
 const {
@@ -26,12 +26,13 @@ exports.sourceNodes = async (
     typeName,
     fieldName,
     headers = {},
-    fetch = nodeFetch,
+    fetch = fetchWrapper,
     fetchOptions = {},
     createLink,
     createSchema,
     refetchInterval,
     batch = false,
+    transformSchema,
   } = options
 
   invariant(
@@ -95,21 +96,29 @@ exports.sourceNodes = async (
     return {}
   }
 
-  const schema = wrapSchema(
-    {
-      schema: introspectionSchema,
-      executor: linkToExecutor(link),
-    },
-    [
-      new StripNonQueryTransform(),
-      new RenameTypes(name => `${typeName}_${name}`),
-      new NamespaceUnderFieldTransform({
-        typeName,
-        fieldName,
+  const defaultTransforms = [
+    new StripNonQueryTransform(),
+    new RenameTypes(name => `${typeName}_${name}`),
+    new NamespaceUnderFieldTransform({
+      typeName,
+      fieldName,
+      resolver,
+    }),
+  ]
+
+  const schema = transformSchema
+    ? transformSchema({
+        schema: introspectionSchema,
+        link,
         resolver,
-      }),
-    ]
-  )
+        defaultTransforms,
+        options,
+      })
+    : wrapSchema({
+        schema: introspectionSchema,
+        executor: linkToExecutor(link),
+        transforms: defaultTransforms,
+      })
 
   addThirdPartySchema({ schema })
 

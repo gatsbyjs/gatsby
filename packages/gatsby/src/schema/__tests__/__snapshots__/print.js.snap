@@ -80,22 +80,22 @@ type Directory implements Node @dontInfer {
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
 }
 
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
-}
-
-type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
-  first: Inline
-  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
-}
-
-interface ITest @nodeInterface {
-  id: ID!
-  date: Date @dateformat(formatString: \\"YYYY\\")
 }
 
 type Inline {
@@ -108,6 +108,24 @@ type Nested {
 
 input Baz {
   qux: Boolean
+}
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }
 
 type Test implements Node @dontInfer {
@@ -138,6 +156,10 @@ type Nested {
 
 input Baz {
   qux: Boolean
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }"
 `;
 
@@ -212,6 +234,16 @@ type Directory implements Node @dontInfer {
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
 }
 
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
@@ -244,7 +276,28 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
 union ThisOrThat = AnotherTest | OneMoreTest
+
+type Inline {
+  foo: Nested
+}
+
+input Baz {
+  qux: Boolean
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
 
 type Test implements Node @dontInfer {
   foo: Int
@@ -346,6 +399,16 @@ type Directory implements Node @dontInfer {
   birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
 }
 
+type Site implements Node @dontInfer {
+  buildTime: Date @dateformat
+  siteMetadata: SiteSiteMetadata
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
@@ -378,12 +441,12 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
-union ThisOrThat = AnotherTest | OneMoreTest
-
-type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
-  first: Inline
-  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
 }
+
+union ThisOrThat = AnotherTest | OneMoreTest
 
 type Inline {
   foo: Nested
@@ -391,6 +454,19 @@ type Inline {
 
 input Baz {
   qux: Boolean
+}
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}
+
+type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
+}
+
+type FooChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
+  bar: String
 }
 
 type Test implements Node @dontInfer {

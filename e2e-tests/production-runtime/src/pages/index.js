@@ -57,11 +57,6 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
-        <Link to="/path-context/" data-testid="path-context">
-          Path Context
-        </Link>
-      </li>
-      <li>
         <Link to="/안녕" data-testid="page-with-unicode-path">
           Go to page with unicode path
         </Link>
@@ -69,6 +64,27 @@ const IndexPage = ({ pageContext }) => (
       <li>
         <Link to="subdirectory/page-1" data-testid="subdir-link">
           Go to subdirectory
+        </Link>
+      </li>
+      <li>
+        <Link to="collection-routing/root" data-testid="collection-link">
+          Go to collection routing
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/foo"
+          data-testid="client-dynamic-route-foo"
+        >
+          Go to dynamic route (id: foo)
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/splat/blah/blah/blah"
+          data-testid="client-dynamic-route-splat"
+        >
+          Go to client route splat (splat: blah/blah/blah)
         </Link>
       </li>
     </ul>

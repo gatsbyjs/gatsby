@@ -7,7 +7,7 @@ Embeds the contents of specified files as code snippets.
 **Note**: This plugin depends on [gatsby-remark-prismjs](https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/) and [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/) plugins
 
 ```shell
-npm install --save gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-remark
+npm install gatsby-remark-embed-snippet gatsby-remark-prismjs gatsby-transformer-remark prismjs
 ```
 
 ## Configuration
@@ -396,7 +396,7 @@ As an alternative to selecting a range of lines from a file, you can add `start-
 
 You can specify that you want to only include a named snippet from the embed by using the syntax `{snippet: "snippet-name"}`.
 
-**Javascript example**:
+**JavaScript example**:
 
 ```markdown
 The function to use is:

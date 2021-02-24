@@ -29,6 +29,11 @@ module.exports = {
     before: true,
     after: true,
     spyOn: true,
+    // These should be in scope but for some reason eslint can't see them
+    NodeJS: true,
+    JSX: true,
+    NodeRequire: true,
+    TimerHandler: true,
     __PATH_PREFIX__: true,
     __BASE_PATH__: true,
     __ASSET_PREFIX__: true,
@@ -43,6 +48,14 @@ module.exports = {
       "error",
       {
         allowTaggedTemplates: true,
+      },
+    ],
+    "no-unused-vars": [
+      "warn",
+      {
+        varsIgnorePattern: "^_",
+        argsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
       },
     ],
     "consistent-return": ["error"],
@@ -80,15 +93,6 @@ module.exports = {
       },
     },
     {
-      files: ["www/**/*"],
-      rules: {
-        // We need to import React to use the Fragment shorthand (`<>`).
-        // When we use theme-ui's JSX pragma, it lists React as an unused var
-        // even though it's still needed.
-        "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
-      },
-    },
-    {
       files: ["*.ts", "*.tsx"],
       parser: "@typescript-eslint/parser",
       plugins: ["@typescript-eslint/eslint-plugin"],
@@ -96,7 +100,9 @@ module.exports = {
         ...TSEslint.configs.recommended.rules,
         // We should absolutely avoid using ts-ignore, but it's not always possible.
         // particular when a dependencies types are incorrect.
-        "@typescript-eslint/ban-ts-ignore": "warn",
+        "@typescript-eslint/ban-ts-comment": {
+          "ts-ignore": "allow-with-description",
+        },
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
         // and outputs declaratively typed. So this let's us ignore the parameters
@@ -105,11 +111,42 @@ module.exports = {
           "error",
           { ignoreParameters: true },
         ],
-        // This rule tries to ensure we use camelCase for all variables, properties
-        // functions, etc. However, it is not always possible to ensure properties
-        // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
-        // this rule. This allows properties to be whatever they need to be.
-        "@typescript-eslint/camelcase": ["error", { properties: "never" }],
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            extendDefaults: true,
+            types: {
+              "{}": {
+                fixWith: "Record<string, unknown>",
+              },
+              object: {
+                fixWith: "Record<string, unknown>",
+              },
+            },
+          },
+        ],
+        "@typescript-eslint/naming-convention": [
+          {
+            selector: "default",
+            format: ["camelCase"],
+          },
+          { selector: "variable", format: ["camelCase", "UPPER_CASE"] },
+          {
+            selector: "parameter",
+            format: ["camelCase"],
+            leadingUnderscore: "allow",
+            prefix: ["unstable_", ""],
+          },
+          {
+            selector: "typeLike",
+            format: ["PascalCase"],
+          },
+          {
+            selector: "interface",
+            format: ["PascalCase"],
+            prefix: ["I"],
+          },
+        ],
         // This rule tries to prevent using `require()`. However in node code,
         // there are times where this makes sense. And it specifically is causing
         // problems in our tests where we often want this functionality for module
@@ -123,6 +160,7 @@ module.exports = {
         // -  baz: string;
         // +  baz: string
         // }
+        "@typescript-eslint/no-extra-semi": false,
         "@typescript-eslint/member-delimiter-style": [
           "error",
           {
@@ -130,13 +168,6 @@ module.exports = {
               delimiter: "none",
             },
           },
-        ],
-        // This ensures all interfaces are named with an I as a prefix
-        // e.g.,
-        // interface IFoo {}
-        "@typescript-eslint/interface-name-prefix": [
-          "error",
-          { prefixWithI: "always" },
         ],
         "@typescript-eslint/no-empty-function": "off",
         // This ensures that we always type the return type of functions
@@ -168,6 +199,7 @@ module.exports = {
         // bump to @typescript-eslint/parser started showing Flow related errors in ts(x) files
         // so disabling them in .ts(x) files
         "flowtype/no-types-missing-file-annotation": "off",
+        "@typescript-eslint/array-type": ["error", { default: "generic" }],
       },
     },
   ],

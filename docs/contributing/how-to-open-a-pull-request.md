@@ -33,9 +33,7 @@ The Gatsby core team uses a triaging process outlined in [Managing Pull Requests
 
 For any kind of change to files in the Gatsby repo, you can follow the below steps. Be sure to check out additional tips for contributing to various parts of the repo later in this doc, such as docs changes, blog posts, starters, or code improvements and tests.
 
-Some PRs can be done completely from the [GitHub UI](https://help.github.com/en/articles/creating-a-pull-request), such as edits to README files or docs.
-
-To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), you can fork the repo and install parts of it to run on your local machine.
+To test changes locally against the Gatsby [site and project files](https://github.com/gatsbyjs/gatsby), fork the repo and install parts of it to run on your local machine.
 
 - [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
 
@@ -95,10 +93,7 @@ Instructions for making changes to the Gatsby source code, tests, internals, API
 
 ### Starters or Site Showcase
 
-There are specific pages about contributing to various parts of the Gatsby ecosystem:
-
-- [Showcase submissions](/contributing/site-showcase-submissions/)
-- [Starter library](/contributing/submit-to-starter-library/)
+**Note:** Showcase and starter contributions are currently paused while the Gatsby team develops a new workflow for sharing your Gatsby sites with the community.
 
 ### Blog posts
 
@@ -152,8 +147,6 @@ The Gatsby GitHub repo is very active, so it's likely you'll need to update your
 
 For more information on working with upstream repos, [visit the GitHub docs](https://help.github.com/en/articles/configuring-a-remote-for-a-fork).
 
-_**Note:** as a member of the Gatsby repo, you can also clone it directly (instead of forking and using an upstream remote workflow). You can then push changes to [feature branches](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows) to open PRs._
-
 ## Additional resources
 
 - CSS Tricks: [How to Contribute to an Open Source Project](https://css-tricks.com/how-to-contribute-to-an-open-source-project/)
@@ -164,4 +157,4 @@ _**Note:** as a member of the Gatsby repo, you can also clone it directly (inste
 - [Feature Branching and Workflows](https://git-scm.com/book/en/v1/Git-Branching-Branching-Workflows)
 - [Resolving merge conflicts](https://help.github.com/en/articles/resolving-a-merge-conflict-on-github)
 - [Managing Pull Requests](/contributing/managing-pull-requests/) on the Gatsby core team
-- [Guide on Markdown Syntax](/docs/mdx/markdown-syntax/)
+- [Guide on Markdown Syntax](/docs/how-to/routing/mdx/markdown-syntax/)

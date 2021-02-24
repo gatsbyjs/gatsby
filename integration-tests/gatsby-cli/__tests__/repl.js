@@ -35,7 +35,6 @@ describe(`gatsby repl`, () => {
     logs.should.contain(`success onPreExtractQueries`)
     logs.should.contain(`success update schema`)
     logs.should.contain(`success extract queries from components`)
-    logs.should.contain(`success write out requires`)
     logs.should.contain(`success write out redirect data`)
     logs.should.contain(`success onPostBootstrap`)
     logs.should.contain(`info bootstrap finished`)

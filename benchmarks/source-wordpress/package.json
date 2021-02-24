@@ -23,7 +23,7 @@
     "gatsby-plugin-benchmark-reporting": "*",
     "gatsby-plugin-sharp": "^2.6.2",
     "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-source-wordpress-experimental": "^0.1.10",
+    "gatsby-source-wordpress": "^4.0.0",
     "gatsby-transformer-sharp": "^2.5.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

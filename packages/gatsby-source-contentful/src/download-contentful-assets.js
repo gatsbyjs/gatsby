@@ -9,7 +9,23 @@ const bar = new ProgressBar(
   }
 )
 
-let totalJobs = 0
+/**
+ * @name distributeWorkload
+ * @param workers A list of async functions to complete
+ * @param {number} count The number of task runners to use (see assetDownloadWorkers in config)
+ */
+
+async function distributeWorkload(workers, count = 50) {
+  const methods = workers.slice()
+
+  async function task() {
+    while (methods.length > 0) {
+      await methods.pop()()
+    }
+  }
+
+  await Promise.all(new Array(count).fill(undefined).map(() => task()))
+}
 
 /**
  * @name downloadContentfulAssets
@@ -27,16 +43,18 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     getCache,
     getNodesByType,
     reporter,
+    assetDownloadWorkers,
+    getNode,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
 
-  await Promise.all(
-    getNodesByType(`ContentfulAsset`).map(async node => {
-      totalJobs += 1
-      bar.total = totalJobs
+  const assetNodes = getNodesByType(`ContentfulAsset`)
+  bar.total = assetNodes.length
 
+  await distributeWorkload(
+    assetNodes.map(node => async () => {
       let fileNodeID
       const { contentful_id: id, node_locale: locale } = node
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
@@ -58,7 +76,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       // to compare a modified asset to a cached version?
       if (cacheRemoteData) {
         fileNodeID = cacheRemoteData.fileNodeID // eslint-disable-line prefer-destructuring
-        touchNode({ nodeId: cacheRemoteData.fileNodeID })
+        touchNode(getNode(cacheRemoteData.fileNodeID))
       }
 
       // If we don't have cached data, download the file
@@ -90,7 +108,8 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       }
 
       return node
-    })
+    }),
+    assetDownloadWorkers
   )
 }
 exports.downloadContentfulAssets = downloadContentfulAssets

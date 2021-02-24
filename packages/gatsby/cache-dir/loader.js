@@ -92,7 +92,7 @@ export class BaseLoader {
     // }
     this.pageDb = new Map()
     this.inFlightDb = new Map()
-    this.staticQueryDb = new Map()
+    this.staticQueryDb = {}
     this.pageDataDb = new Map()
     this.prefetchTriggered = new Set()
     this.prefetchCompleted = new Set()
@@ -190,7 +190,10 @@ export class BaseLoader {
   loadPageDataJson(rawPath) {
     const pagePath = findPath(rawPath)
     if (this.pageDataDb.has(pagePath)) {
-      return Promise.resolve(this.pageDataDb.get(pagePath))
+      const pageData = this.pageDataDb.get(pagePath)
+      if (process.env.BUILD_STAGE !== `develop` || !pageData.stale) {
+        return Promise.resolve(pageData)
+      }
     }
 
     return this.fetchPageDataJson({ pagePath }).then(pageData => {
@@ -209,7 +212,9 @@ export class BaseLoader {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
-      return Promise.resolve(page.payload)
+      if (process.env.BUILD_STAGE !== `develop` || !page.payload.stale) {
+        return Promise.resolve(page.payload)
+      }
     }
 
     if (this.inFlightDb.has(pagePath)) {
@@ -258,13 +263,13 @@ export class BaseLoader {
       const staticQueryBatchPromise = Promise.all(
         staticQueryHashes.map(staticQueryHash => {
           // Check for cache in case this static query result has already been loaded
-          if (this.staticQueryDb.has(staticQueryHash)) {
-            const jsonPayload = this.staticQueryDb.get(staticQueryHash)
+          if (this.staticQueryDb[staticQueryHash]) {
+            const jsonPayload = this.staticQueryDb[staticQueryHash]
             return { staticQueryHash, jsonPayload }
           }
 
           return this.memoizedGet(
-            `${__PATH_PREFIX__}/static/d/${staticQueryHash}.json`
+            `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
           ).then(req => {
             const jsonPayload = JSON.parse(req.responseText)
             return { staticQueryHash, jsonPayload }
@@ -275,7 +280,7 @@ export class BaseLoader {
 
         staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
           staticQueryResultsMap[staticQueryHash] = jsonPayload
-          this.staticQueryDb.set(staticQueryHash, jsonPayload)
+          this.staticQueryDb[staticQueryHash] = jsonPayload
         })
 
         return staticQueryResultsMap
@@ -369,7 +374,15 @@ export class BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    throw new Error(`doPrefetch not implemented`)
+    const pageDataUrl = createPageDataUrl(pagePath)
+    return prefetchHelper(pageDataUrl, {
+      crossOrigin: `anonymous`,
+      as: `fetch`,
+    }).then(() =>
+      // This was just prefetched, so will return a response from
+      // the cache instead of making another request to the server
+      this.loadPageDataJson(pagePath)
+    )
   }
 
   hovering(rawPath) {
@@ -394,7 +407,7 @@ export class BaseLoader {
   isPageNotFound(rawPath) {
     const pagePath = findPath(rawPath)
     const page = this.pageDb.get(pagePath)
-    return page && page.notFound === true
+    return !page || page.notFound
   }
 
   loadAppData(retries = 0) {
@@ -448,27 +461,15 @@ export class ProdLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
-    const pageDataUrl = createPageDataUrl(pagePath)
-    return prefetchHelper(pageDataUrl, {
-      crossOrigin: `anonymous`,
-      as: `fetch`,
+    return super.doPrefetch(pagePath).then(result => {
+      if (result.status !== PageResourceStatus.Success) {
+        return Promise.resolve()
+      }
+      const pageData = result.payload
+      const chunkName = pageData.componentChunkName
+      const componentUrls = createComponentUrls(chunkName)
+      return Promise.all(componentUrls.map(prefetchHelper)).then(() => pageData)
     })
-      .then(() =>
-        // This was just prefetched, so will return a response from
-        // the cache instead of making another request to the server
-        this.loadPageDataJson(pagePath)
-      )
-      .then(result => {
-        if (result.status !== PageResourceStatus.Success) {
-          return Promise.resolve()
-        }
-        const pageData = result.payload
-        const chunkName = pageData.componentChunkName
-        const componentUrls = createComponentUrls(chunkName)
-        return Promise.all(componentUrls.map(prefetchHelper)).then(
-          () => pageData
-        )
-      })
   }
 
   loadPageDataJson(rawPath) {
@@ -503,21 +504,6 @@ export const setLoader = _loader => {
 }
 
 export const publicLoader = {
-  // Deprecated methods. As far as we're aware, these are only used by
-  // core gatsby and the offline plugin, however there's a very small
-  // chance they're called by others.
-  getResourcesForPathname: rawPath => {
-    console.warn(
-      `Warning: getResourcesForPathname is deprecated. Use loadPage instead`
-    )
-    return instance.i.loadPage(rawPath)
-  },
-  getResourcesForPathnameSync: rawPath => {
-    console.warn(
-      `Warning: getResourcesForPathnameSync is deprecated. Use loadPageSync instead`
-    )
-    return instance.i.loadPageSync(rawPath)
-  },
   enqueue: rawPath => instance.prefetch(rawPath),
 
   // Real methods
@@ -532,3 +518,11 @@ export const publicLoader = {
 }
 
 export default publicLoader
+
+export function getStaticQueryResults() {
+  if (instance) {
+    return instance.staticQueryDb
+  } else {
+    return {}
+  }
+}

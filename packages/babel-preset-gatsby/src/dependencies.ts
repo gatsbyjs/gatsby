@@ -44,8 +44,6 @@ export default (_?: unknown, options: IPresetOptions = {}) => {
           exclude: [
             // Exclude transforms that make all code slower (https://github.com/facebook/create-react-app/pull/5278)
             `transform-typeof-symbol`,
-            // we have @babel/plugin-transform-runtime that takes care of this
-            `transform-regenerator`,
             ...polyfillsToExclude,
           ],
         },

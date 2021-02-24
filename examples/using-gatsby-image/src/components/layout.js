@@ -104,7 +104,7 @@ const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
         <li>
           See the
           {` `}
-          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
             <code>gatsby-image</code> project README
           </a>
           {` `} for documentation on using the plugin
@@ -112,11 +112,11 @@ const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
         <li>
           Read the docs:
           <br />
-          <a href="https://www.gatsbyjs.org/docs/using-gatsby-image/">
+          <a href="https://www.gatsbyjs.com/docs/using-gatsby-image/">
             Using gatsby-image to prevent image bloat
           </a>
           <br />
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp/">
             Using fragments in gatsby-plugin-sharp
           </a>
         </li>
@@ -129,7 +129,7 @@ const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
         </li>
       </ul>
     </Main>
-    <LogoLink href="https://www.gatsbyjs.org/">
+    <LogoLink href="https://www.gatsbyjs.com/">
       <Logo src={logo} alt="Gatsby" />
     </LogoLink>
   </Container>

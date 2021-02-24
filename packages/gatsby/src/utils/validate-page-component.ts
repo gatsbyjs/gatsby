@@ -81,14 +81,15 @@ export function validatePageComponent(
         fileContent.includes(`module.exports`) ||
         fileContent.includes(`exports.default`) ||
         fileContent.includes(`exports["default"]`) ||
-        fileContent.match(/export \{.* as default.*\}/s)
+        fileContent.match(/export \{.* as default.*\}/s) ||
+        fileContent.match(/export \{\s*default\s*\}/s)
 
       if (!includesDefaultExport) {
         return {
           error: {
             id: `11328`,
             context: {
-              component,
+              fileName: component,
             },
           },
           panicOnBuild: true,

@@ -1,8 +1,14 @@
 const PreactRefreshPlugin = require(`@prefresh/webpack`)
 
-exports.onPreInit = () => {
-  // force fast-refresh in gatsby
-  process.env.GATSBY_HOT_LOADER = `fast-refresh`
+exports.onCreateBabelConfig = ({ actions, stage }) => {
+  if (stage === `develop`) {
+    // enable react-refresh babel plugin to enable hooks
+    // @see https://github.com/JoviDeCroock/prefresh/tree/master/packages/webpack#using-hooks
+    actions.setBabelPlugin({
+      name: `@prefresh/babel-plugin`,
+      stage,
+    })
+  }
 }
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
@@ -16,16 +22,10 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
       plugin => plugin.constructor.name !== `ReactRefreshPlugin`
     )
     actions.replaceWebpackConfig(webpackConfig)
-
-    // enable react-refresh babel plugin to enable hooks
-    // @see https://github.com/JoviDeCroock/prefresh/tree/master/packages/webpack#using-hooks
-    actions.setBabelPlugin({
-      name: `react-refresh/babel`,
-    })
   }
 
   // add preact to the framework bundle
-  if (stage === `build-javascript`) {
+  if (stage === `build-javascript` || stage === `develop`) {
     const webpackConfig = getConfig()
     if (
       webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test

@@ -13,23 +13,23 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DAYS_BEFORE_STALE: 20
-          DAYS_BEFORE_CLOSE: 10
+          DAYS_BEFORE_CLOSE: 40
           OPERATIONS_PER_RUN: 5000
           STALE_ISSUE_MESSAGE: |
             Hiya!
 
             This issue has gone quiet. Spooky quiet. 👻
 
-            We get a lot of issues, so we currently close issues after 30 days of inactivity. It’s been at least 20 days since the last update here.
-            If we missed this issue or if you want to keep it open, please reply here. You can also add the label "not stale" to keep this issue open!
+            We get a lot of issues, so we currently close issues after 60 days of inactivity. It’s been at least 20 days since the last update here.
+            If we missed this issue or if you want to keep it open, please reply here.
             As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/) for more information about opening PRs, triaging issues, and contributing!
 
             Thanks for being a part of the Gatsby community! 💪💜
           CLOSE_MESSAGE: |
             Hey again!
 
-            It’s been 30 days since anything happened on this issue, so our friendly neighborhood robot (that’s me!) is going to close it.
-            Please keep in mind that I’m only a robot, so if I’ve closed this issue in error, I’m `HUMAN_EMOTION_SORRY`. Please feel free to reopen this issue or create a new one if you need anything else.
+            It’s been 60 days since anything happened on this issue, so our friendly neighborhood robot (that’s me!) is going to close it.
+            Please keep in mind that I’m only a robot, so if I’ve closed this issue in error, I’m `HUMAN_EMOTION_SORRY`. Please feel free to comment on this issue or create a new one if you need anything else.
             As a friendly reminder: the best way to see this issue, or any other, fixed is to open a Pull Request. Check out [gatsby.dev/contribute](https://www.gatsbyjs.org/contributing/how-to-contribute/) for more information about opening PRs, triaging issues, and contributing!
 
             Thanks again for being part of the Gatsby community! 💪💜

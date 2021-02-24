@@ -70,7 +70,7 @@ async function processBufferNode({
     // If the user did not provide an extension and we couldn't get
     // one from remote file, try and guess one
     if (typeof ext === `undefined`) {
-      const filetype = fileType(buffer)
+      const filetype = await fileType.fromBuffer(buffer)
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
 

@@ -2,11 +2,13 @@ const _ = require(`lodash`)
 
 /// Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
-  forceBase64Format: false,
+  base64Width: 20,
+  forceBase64Format: ``, // valid formats: png,jpg,webp
   useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
   stripMetadata: true,
   lazyImageGeneration: true,
   defaultQuality: 50,
+  failOnError: true, // matches default of the sharp api constructor (https://sharp.pixelplumbing.com/api-constructor)
 }
 
 const generalArgs = {
@@ -37,6 +39,7 @@ exports.setPluginOptions = opts => {
 }
 
 exports.getPluginOptions = () => pluginOptions
+exports.getPluginOptionsDefaults = () => pluginDefaults
 
 /**
  * Creates a transform object
@@ -68,8 +71,25 @@ exports.createTransformObject = args => {
   return _.pickBy(options, _.identity)
 }
 
+/**
+ * Used for gatsbyImageData and StaticImage only
+ */
+exports.mergeDefaults = args => doMergeDefaults(args, pluginOptions.defaults)
+
+const customizer = (objValue, srcValue) =>
+  Array.isArray(objValue) ? srcValue : undefined
+
+function doMergeDefaults(args, defaults) {
+  if (!defaults) {
+    return args
+  }
+  return _.mergeWith({}, defaults, args, customizer)
+}
+
+exports.doMergeDefaults = doMergeDefaults
+
 exports.healOptions = (
-  { defaultQuality: quality },
+  { defaultQuality: quality, base64Width },
   args,
   fileExtension = ``,
   defaultArgs = {}
@@ -80,6 +100,7 @@ exports.healOptions = (
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
   options.toFormat = options.toFormat.toLowerCase()
   options.toFormatBase64 = options.toFormatBase64.toLowerCase()
+  options.base64Width = options.base64Width || base64Width
 
   // when toFormat is not set we set it based on fileExtension
   if (options.toFormat === ``) {

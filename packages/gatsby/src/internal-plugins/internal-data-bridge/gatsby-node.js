@@ -3,8 +3,8 @@ const chokidar = require(`chokidar`)
 const systemPath = require(`path`)
 const _ = require(`lodash`)
 
-const { emitter } = require(`../../redux`)
-const { boundActionCreators } = require(`../../redux/actions`)
+const { emitter, store } = require(`../../redux`)
+const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../redux/nodes`)
 
 function transformPackageJson(json) {
@@ -43,9 +43,7 @@ const createPageId = path => `SitePage ${path}`
 
 exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   const { createNode } = actions
-  const state = store.getState()
-  const { program } = state
-  const { flattenedPlugins } = state
+  const { program, flattenedPlugins, config } = store.getState()
 
   // Add our default development page since we know it's going to
   // exist and we need a node to exist so its query works :-)
@@ -87,8 +85,8 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       siteMetadata: {
         ...configCopy.siteMetadata,
       },
-      port: state.program.proxyPort,
-      host: state.program.host,
+      port: program.proxyPort,
+      host: program.host,
       ...configCopy,
     }
     createNode({
@@ -103,7 +101,7 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     })
   }
 
-  createGatsbyConfigNode(state.config)
+  createGatsbyConfigNode(config)
 
   const buildTime = moment()
     .subtract(process.uptime(), `seconds`)
@@ -127,6 +125,10 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     program.directory,
     `gatsby-config.js`
   )
+  watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+}
+
+function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
   chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
     const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
     try {
@@ -141,16 +143,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       }
     }
   })
-}
-
-exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
-  const typeDefs = `
-    type Site implements Node {
-      buildTime: Date @dateformat
-    }
-  `
-  createTypes(typeDefs)
 }
 
 exports.createResolvers = ({ createResolvers }) => {
@@ -205,5 +197,5 @@ exports.onCreatePage = ({ createContentDigest, page, actions }) => {
 emitter.on(`DELETE_PAGE`, action => {
   const nodeId = createPageId(action.payload.path)
   const node = getNode(nodeId)
-  boundActionCreators.deleteNode({ node })
+  store.dispatch(actions.deleteNode(node))
 })

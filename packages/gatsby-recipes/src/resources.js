@@ -1,23 +1,14 @@
-const fileResource = require(`./providers/fs/file`)
-const directoryResource = require(`./providers/fs/directory`)
-const gatsbyPageResource = require(`./providers/gatsby/page`)
-const gatsbyPluginResource = require(`./providers/gatsby/plugin`)
-const gatsbyShadowFileResource = require(`./providers/gatsby/shadow-file`)
-const npmPackageResource = require(`./providers/npm/package`)
-const npmPackageScriptResource = require(`./providers/npm/script`)
-const npmPackageJsonResource = require(`./providers/npm/package-json`)
-const gitIgnoreResource = require(`./providers/git/ignore`)
-
-const componentResourceMapping = {
-  File: fileResource,
-  Directory: directoryResource,
-  GatsbyPage: gatsbyPageResource,
-  GatsbyPlugin: gatsbyPluginResource,
-  GatsbyShadowFile: gatsbyShadowFileResource,
-  NPMPackage: npmPackageResource,
-  NPMScript: npmPackageScriptResource,
-  NPMPackageJson: npmPackageJsonResource,
-  GitIgnore: gitIgnoreResource,
-}
-
-module.exports = componentResourceMapping
+export * as File from "./providers/fs/file"
+export * as Directory from "./providers/fs/directory"
+export * as GatsbyPage from "./providers/gatsby/page"
+export * as GatsbyPlugin from "./providers/gatsby/plugin"
+export * as GatsbyShadowFile from "./providers/gatsby/shadow-file"
+export * as GatsbySiteMetadata from "./providers/gatsby/site-metadata"
+export * as NPMPackage from "./providers/npm/package"
+export * as NPMScript from "./providers/npm/script"
+export * as NPMPackageJson from "./providers/npm/package-json"
+export * as GitIgnore from "./providers/git/ignore"
+export * as ContentfulSpace from "./providers/contentful/space"
+export * as ContentfulEnvironment from "./providers/contentful/environment"
+export * as ContentfulType from "./providers/contentful/type"
+export * as ContentfulEntry from "./providers/contentful/entry"
