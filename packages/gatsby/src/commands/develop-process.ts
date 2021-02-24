@@ -1,5 +1,6 @@
 import { syncStaticDir } from "../utils/get-static-dir"
 import reporter from "gatsby-cli/lib/reporter"
+import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
 import { isTruthy } from "gatsby-core-utils"
 import express from "express"
