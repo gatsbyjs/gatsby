@@ -10,25 +10,22 @@ import { globalHistory } from "@reach/router/lib/history"
 import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
-const redirectMap = redirects.reduce((map, redirect) => {
-  map[redirect.fromPath] = redirect
-  return map
-}, {})
+
+let redirectMap = new Map()
+let redirectIgnoreCaseMap = new Map()
+
+redirects.forEach(redirect => {
+  if (redirect.ignoreCase) {
+    redirectIgnoreCaseMap.set(redirect.fromPath, redirect)
+  } else {
+    redirectMap.set(redirect.fromPath, redirect)
+  }
+})
 
 function maybeRedirect(pathname) {
-  let redirect = redirectMap[pathname]
+  let redirect = redirectMap.get(pathname)
   if (!redirect) {
-    const redirectPath = Object.keys(redirectMap).find(possibleRedirectFrom => {
-      const possibleRedirect = redirectMap[possibleRedirectFrom]
-      if (possibleRedirect.ignoreCase) {
-        return (
-          possibleRedirect.fromPath.toLowerCase() === pathname.toLowerCase()
-        )
-      }
-
-      return possibleRedirect.fromPath === pathname
-    })
-    redirect = redirectMap[redirectPath]
+    redirect = redirectsIgnoreCaseMap.get(pathname.toLowercase())
   }
 
   if (redirect != null) {
