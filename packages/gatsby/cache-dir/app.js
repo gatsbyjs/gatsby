@@ -187,6 +187,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           )
         }
       })
+
+      module.hot.accept([`./root`, `./api-runner-browser`], () => {
+        // because `./root` for some reason is imported with commonjs
+        // we need to re-require it - https://webpack.js.org/api/hot-module-replacement/#accept
+        // > When using CommonJS you need to update dependencies manually by using require()
+        // > in the callback.Omitting the callback doesn't make sense here.
+
+        const NewRoot = preferDefault(require(`./root`))
+        renderer(<NewRoot />, rootElement)
+      })
     })
   })
 })
