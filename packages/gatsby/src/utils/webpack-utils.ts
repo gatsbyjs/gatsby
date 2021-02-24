@@ -520,17 +520,6 @@ export const createWebpackUtils = (
     rules.dependencies = dependencies
   }
 
-  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
-    return {
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [plugins.eslint(schema)],
-    }
-  }
-
   rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml$/,
