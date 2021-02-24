@@ -755,9 +755,11 @@ export const createWebpackUtils = (
   plugins.eslint = (schema: GraphQLSchema): Plugin => {
     const options = {
       extensions: [`js`, `jsx`],
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
+      exclude: [
+        `/node_modules/`,
+        `/bower_components/`,
+        VIRTUAL_MODULES_BASE_PATH,
+      ],
       ...eslintConfig(schema, jsxRuntimeExists),
     }
     //@ts-ignore
@@ -767,9 +769,11 @@ export const createWebpackUtils = (
   plugins.eslintRequired = (): Plugin => {
     const options = {
       extensions: [`js`, `jsx`],
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
+      exclude: [
+        `/node_modules/`,
+        `/bower_components/`,
+        VIRTUAL_MODULES_BASE_PATH,
+      ],
       ...eslintRequiredConfig,
     }
     //@ts-ignore
