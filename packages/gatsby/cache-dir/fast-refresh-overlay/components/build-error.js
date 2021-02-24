@@ -3,8 +3,8 @@ import { Overlay, Header, Body, Footer, HeaderOpenClose } from "./overlay"
 import { CodeFrame } from "./code-frame"
 import { prettifyStack, openInEditor } from "../utils"
 
+// Error that is thrown on e.g. webpack errors and thus can't be dismissed and must be fixed
 export function BuildError({ error }) {
-  console.log({ buildError: error })
   // Incoming build error shape is like this:
   // ./relative-path-to-file
   // Additional information (sometimes empty line => handled in "prettifyStack" function)

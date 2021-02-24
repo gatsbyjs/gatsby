@@ -6,7 +6,7 @@ export function CodeFrame({ decoded }) {
       <code data-gatsby-overlay="pre__code">
         {decoded
           ? decoded.map((entry, index) => {
-              // Check if content is "Enter" and render other element
+              // Check if content is "Enter" and render other element that collapses
               // Otherwise an empty line would be printed
               if (
                 index === 0 &&

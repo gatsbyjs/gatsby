@@ -55,7 +55,7 @@ export function Overlay({ children }) {
   }, [overlay])
 
   return (
-    <div data-gatsby-overlay ref={onOverlay}>
+    <div data-gatsby-overlay="wrapper" ref={onOverlay}>
       <Backdrop />
       <div
         data-gatsby-overlay="root"

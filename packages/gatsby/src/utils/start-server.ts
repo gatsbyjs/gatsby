@@ -278,7 +278,8 @@ module.exports = {
   })
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
-    launchEditor(req.query.fileName, req.query.lineNumber)
+    const fileName = path.resolve(process.cwd(), req.query.fileName)
+    launchEditor(fileName, req.query.lineNumber)
     res.end()
   })
 

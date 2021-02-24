@@ -1,9 +1,14 @@
 import * as React from "react"
 
 export class ErrorBoundary extends React.Component {
-  componentDidCatch() {}
+  state = { error: null }
+
+  componentDidCatch(error) {
+    this.setState({ error })
+  }
 
   render() {
-    return this.props.hasErrors ? null : this.props.children
+    // Without this check => possible infinite loop
+    return this.state.error && this.props.hasErrors ? null : this.props.children
   }
 }

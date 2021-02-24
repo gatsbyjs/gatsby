@@ -16,7 +16,7 @@ function ChevronIcon() {
       aria-hidden="true"
       data-gatsby-overlay="chevron-icon"
     >
-      <path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"></path>
+      <path d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z" />
     </svg>
   )
 }
