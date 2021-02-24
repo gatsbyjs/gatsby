@@ -25,7 +25,7 @@ redirects.forEach(redirect => {
 function maybeRedirect(pathname) {
   let redirect = redirectMap.get(pathname)
   if (!redirect) {
-    redirect = redirectIgnoreCaseMap.get(pathname.toLowercase())
+    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
   }
 
   if (redirect != null) {
@@ -74,7 +74,7 @@ const navigate = (to, options = {}) => {
   let { pathname } = parsePath(to)
   let redirect = redirectMap.get(pathname)
   if (!redirect) {
-    redirect = redirectIgnoreCaseMap.get(pathname.toLowercase())
+    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
   }
 
   // If we're redirecting, just replace the passed in pathname
