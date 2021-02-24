@@ -21,12 +21,14 @@ import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 
-type LoaderResolver<T = {}> = (options?: T) => Loader
+type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
 
 type LoaderOptions = Record<string, any>
-type RuleFactory<T = {}> = (options?: T & LoaderOptions) => RuleSetRule
+type RuleFactory<T = Record<string, unknown>> = (
+  options?: T & LoaderOptions
+) => RuleSetRule
 
-type ContextualRuleFactory<T = {}> = RuleFactory<T> & {
+type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   internal?: RuleFactory<T>
   external?: RuleFactory<T>
 }
@@ -279,7 +281,15 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`css-loader`),
         options: {
-          url: false,
+          // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
+
+            return true
+          },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
         },
