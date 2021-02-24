@@ -29,7 +29,7 @@ describe(`Lazy images`, () => {
 
     await kill()
 
-    expect(response.status).toBe(200)
+    expect(response.status).toBe(404)
 
     const images = glob.sync(`${basePath}/public/**/*.png`)
     expect(images.length).toBe(6)
