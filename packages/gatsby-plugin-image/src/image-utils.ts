@@ -170,7 +170,7 @@ export function setDefaultDimensions(
   layout = camelCase(layout) as Layout
 
   if (width && height) {
-    return args
+    return { ...args, formats, layout }
   }
   if (sourceMetadata.width && sourceMetadata.height && !aspectRatio) {
     aspectRatio = sourceMetadata.width / sourceMetadata.height
