@@ -31,6 +31,11 @@ export function initializeYurnalistLogger(): void {
     [LogLevels.Info]: yurnalist.info.bind(yurnalist),
     [LogLevels.Success]: yurnalist.success.bind(yurnalist),
     [LogLevels.Debug]: yurnalist.verbose.bind(yurnalist),
+    [LogLevels.Deprecation]: (text: string): void => {
+      yurnalist.log(
+        `\n${chalk.black.bgYellow(` ${LogLevels.Deprecation} `)}\n\n${text}\n`
+      )
+    },
     [ActivityLogLevels.Success]: yurnalist.success.bind(yurnalist),
     [ActivityLogLevels.Failed]: (text: string): void => {
       yurnalist.log(`${chalk.red(`failed`)} ${text}`)
@@ -53,6 +58,24 @@ export function initializeYurnalistLogger(): void {
           }
           if (action.payload.statusText) {
             message += ` - ${action.payload.statusText}`
+          }
+
+          if (
+            action.payload.level === LogLevels.Deprecation &&
+            action.payload.pluginName
+          ) {
+            let pluginNameMessage: null | string = null
+            if (action.payload.pluginName === `default-site-plugin`) {
+              pluginNameMessage = `Your gatsby-node.js`
+            } else {
+              pluginNameMessage = `Plugin: ${action.payload.pluginName} - upgrade to the latest version or contact the plugin author.`
+            }
+
+            message += `\n${chalk.gray(
+              `\n${`─`.repeat(
+                pluginNameMessage.length
+              )}\n${pluginNameMessage}\n${`─`.repeat(pluginNameMessage.length)}`
+            )}`
           }
           yurnalistMethod(message)
         }
