@@ -4,6 +4,7 @@ import { ShadowPortal } from "./components/portal"
 import { Style } from "./style"
 import { BuildError } from "./components/build-error"
 import { RuntimeErrors } from "./components/runtime-errors"
+import { GraphqlErrors } from "./components/graphql-errors"
 
 const reducer = (state, event) => {
   switch (event.action) {
@@ -21,7 +22,10 @@ const reducer = (state, event) => {
       return { ...state, errors: state.errors.concat(event.payload) }
     }
     case `SHOW_GRAPHQL_ERRORS`: {
-      return { ...state, graphqlErrors: event.payload }
+      return {
+        ...state,
+        graphqlErrors: event.payload,
+      }
     }
     case `CLEAR_GRAPHQL_ERRORS`: {
       return { ...state, graphqlErrors: [] }
@@ -71,13 +75,28 @@ function DevOverlay({ children }) {
 
   const dismiss = () => {
     dispatch({ action: `DISMISS` })
+    window._gatsbyEvents = []
   }
 
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
-  const hasErrors = hasBuildError || hasRuntimeErrors
+  const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
+  const hasErrors = hasBuildError || hasRuntimeErrors || hasGraphqlErrors
 
-  // let errorComponent with switch statement for line 88-92
+  // This component has a deliberate order (priority)
+  const ErrorComponent = () => {
+    if (hasBuildError) {
+      return <BuildError error={state.buildError} />
+    }
+    if (hasRuntimeErrors) {
+      return <RuntimeErrors errors={state.errors} dismiss={dismiss} />
+    }
+    if (hasGraphqlErrors) {
+      return <GraphqlErrors errors={state.graphqlErrors} dismiss={dismiss} />
+    }
+
+    return null
+  }
 
   return (
     <React.Fragment>
@@ -85,11 +104,7 @@ function DevOverlay({ children }) {
       {hasErrors ? (
         <ShadowPortal>
           <Style />
-          {hasBuildError ? (
-            <BuildError error={state.buildError} />
-          ) : hasRuntimeErrors ? (
-            <RuntimeErrors errors={state.errors} dismiss={dismiss} />
-          ) : undefined}
+          <ErrorComponent />
         </ShadowPortal>
       ) : undefined}
     </React.Fragment>

@@ -47,7 +47,8 @@ function WrappedAccordionItem({ error, open }) {
 }
 
 export function RuntimeErrors({ errors, dismiss }) {
-  const hasMultipleErrors = errors.length > 1
+  const deduplicatedErrors = React.useMemo(() => [...new Set(errors)], [errors])
+  const hasMultipleErrors = deduplicatedErrors.length > 1
 
   return (
     <Overlay>
@@ -71,10 +72,10 @@ export function RuntimeErrors({ errors, dismiss }) {
           list below to fix {hasMultipleErrors ? `them` : `it`}:
         </p>
         <Accordion>
-          {errors.map((error, index) => (
+          {deduplicatedErrors.map((error, index) => (
             <WrappedAccordionItem
               open={index === 0}
-              key={error.message}
+              key={`${error.message}-${index}`}
               error={error}
             />
           ))}

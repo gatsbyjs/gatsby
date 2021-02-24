@@ -42,7 +42,6 @@ export const Style = () => (
           --color-ansi-bright-red: #d91e18;
           --color-ansi-bright-yellow: #aa5d00;
           --radii: 5px;
-          --z-index-negative: -1;
           --z-index-elevated: 1000;
           --space: 1.5em;
           --space-sm: 1em;
@@ -58,7 +57,6 @@ export const Style = () => (
           bottom: 0;
           height: 100%;
           width: 100%;
-          z-index: var(--z-index-negative);
           backdrop-filter: blur(10px);
           cursor: not-allowed;
         }
@@ -208,6 +206,14 @@ export const Style = () => (
           justify-content: center;
           border-radius: var(--radii);
           margin-left: var(--space-sm);
+        }
+
+        [data-gatsby-overlay="body__graphql-error-message"] {
+          margin-top: var(--space);
+        }
+
+        [data-gatsby-overlay="codeframe__bottom"] {
+          margin-top: var(--space);
         }
 
         [data-gatsby-overlay="body__error-message-header"] {
