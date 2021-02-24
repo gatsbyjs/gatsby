@@ -116,7 +116,9 @@ module.exports = {
           {
             extendDefaults: true,
             types: {
-              "{}": false,
+              "{}": {
+                fixWith: "Record<string, unknown>",
+              },
               object: {
                 fixWith: "Record<string, unknown>",
               },
