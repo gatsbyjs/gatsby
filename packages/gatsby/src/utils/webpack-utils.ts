@@ -520,28 +520,6 @@ export const createWebpackUtils = (
     rules.dependencies = dependencies
   }
 
-  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
-    return {
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [plugins.eslint(schema)],
-    }
-  }
-
-  rules.eslintRequired = (): RuleSetRule => {
-    return {
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [plugins.eslintRequired()],
-    }
-  }
-
   rules.yaml = (): RuleSetRule => {
     return {
       test: /\.ya?ml$/,
@@ -772,6 +750,28 @@ export const createWebpackUtils = (
   }
 
   plugins.eslintRequired = (): Plugin => new ESLintPlugin(eslintRequiredConfig)
+
+  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      use: [plugins.eslint(schema)],
+    }
+  }
+
+  rules.eslintRequired = (): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      use: [plugins.eslintRequired()],
+    }
+  }
 
   return {
     loaders,
