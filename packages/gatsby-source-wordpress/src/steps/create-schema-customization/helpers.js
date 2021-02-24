@@ -20,6 +20,12 @@ export const buildTypeName = name => {
     return name
   }
 
+  // this is for cases where buildTypeName is called
+  // on a field name that's already been transformed
+  if (name.startsWith(prefix)) {
+    return name
+  }
+
   return prefix + name
 }
 

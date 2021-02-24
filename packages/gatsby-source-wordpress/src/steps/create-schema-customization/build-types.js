@@ -29,12 +29,12 @@ const unionType = typeBuilderApi => {
     name: buildTypeName(type.name),
     types,
     resolveType: node => {
-      if (node.type) {
-        return buildTypeName(node.type)
+      if (node?.__typename) {
+        return buildTypeName(node.__typename)
       }
 
-      if (node.__typename) {
-        return buildTypeName(node.__typename)
+      if (node?.type) {
+        return buildTypeName(node.type)
       }
 
       return null

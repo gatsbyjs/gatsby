@@ -55,8 +55,11 @@ export const transformListOfUnions = ({ field, fieldName }) => {
 
         if (node) {
           accumulator.push(node)
-        } else if (!item.id) {
-          accumulator.push(item)
+        } else {
+          accumulator.push({
+            ...item,
+            __typename: buildTypeName(item.__typename),
+          })
         }
 
         return accumulator
