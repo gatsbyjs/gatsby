@@ -160,7 +160,7 @@
     "webpack": "^5.16.0",
     "webpack-dev-middleware": "^4.1.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-hot-middleware": "^2.25.0",
+    "@gatsbyjs/webpack-hot-middleware": "^2.25.1",
     "webpack-merge": "^5.7.3",
     "webpack-stats-plugin": "^1.0.3",
     "webpack-virtual-modules": "^0.3.2",

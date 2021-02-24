@@ -1,4 +1,4 @@
-import webpackHotMiddleware from "webpack-hot-middleware"
+import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
 import got from "got"
 import webpack from "webpack"
@@ -369,14 +369,23 @@ module.exports = {
       }
     }
 
-    const sourceMap = fileModule?._source?._sourceMap
+    // We need the internal webpack file that is used in the bundle, not the module source.
+    // It doesn't have the correct sourceMap.
+    const webpackSource = compilation.codeGenerationResults
+      .get(fileModule)
+      ?.sources.get(`javascript`)
+
+    const sourceMap = webpackSource?.map()
 
     if (!sourceMap) {
       res.json(emptyResponse)
       return
     }
 
-    const position = { line: lineNumber, column: columnNumber }
+    const position = {
+      line: lineNumber,
+      column: columnNumber,
+    }
     const result = await findOriginalSourcePositionAndContent(
       sourceMap,
       position
