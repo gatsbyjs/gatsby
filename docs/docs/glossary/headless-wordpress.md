@@ -7,7 +7,7 @@ Learn what <q>headless WordPress</q> means, how it differs from other ways of us
 
 ## What is Headless WordPress?
 
-_Headless WordPress_ is the usage of the content editing and management capabilities of WordPress, decoupled from the front-end templating features of the CMS.
+A _headless WordPress_ site is one that uses WordPress for managing content and some other custom frontend stack to display that content. Headless WordPress enables content writers to use a familiar interface while giving web developers the flexibility to use any frontend technology stack.
 
 > Note: WordPress has two products: an open source, self-hosted package that you can [download](https://wordpress.org/) from WordPress.org; and a hosted service, [WordPress.com](https://wordpress.com/). This article applies to both.
 
