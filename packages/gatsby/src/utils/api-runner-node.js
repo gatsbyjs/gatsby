@@ -175,7 +175,6 @@ function extendLocalReporterToCatchPluginErrors({
   let panic = reporter.panic
   let panicOnBuild = reporter.panicOnBuild
 
-  const isDefaultPlugin = pluginName === `default-site-plugin`
   const addPluginNameToErrorMeta = (errorMeta, pluginName) =>
     typeof errorMeta === `string`
       ? {
@@ -236,7 +235,7 @@ function extendLocalReporterToCatchPluginErrors({
     deprecate: args => {
       reporter.deprecate({
         ...args,
-        pluginName: isDefaultPlugin ? pluginName : pluginName,
+        pluginName,
       })
     },
     activityTimer: (...args) => {
