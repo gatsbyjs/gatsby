@@ -18,7 +18,17 @@ const redirectMap = redirects.reduce((map, redirect) => {
 function maybeRedirect(pathname) {
   let redirect = redirectMap[pathname]
   if (!redirect) {
-    redirect = redirectMap[pathname.toLowerCase()]
+    const redirectPath = Object.keys(redirectMap).find(possibleRedirectFrom => {
+      const possibleRedirect = redirectMap[possibleRedirectFrom]
+      if (possibleRedirect.ignoreCase) {
+        return (
+          possibleRedirect.fromPath.toLowerCase() === pathname.toLowerCase()
+        )
+      }
+
+      return possibleRedirect.fromPath === pathname
+    })
+    redirect = redirectMap[redirectPath]
   }
 
   if (redirect != null) {

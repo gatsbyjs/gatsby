@@ -20,6 +20,7 @@ export const writeRedirects = async (): Promise<void> => {
       ({ redirectInBrowser, isPermanent, ignoreCase, fromPath, ...rest }) => {
         return {
           fromPath: ignoreCase ? fromPath.toLowerCase() : fromPath,
+          ignoreCase,
           ...rest,
         }
       }
