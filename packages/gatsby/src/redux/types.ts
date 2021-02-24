@@ -14,6 +14,7 @@ export interface IRedirect {
   toPath: string
   isPermanent?: boolean
   redirectInBrowser?: boolean
+  ignoreCase: boolean
   // Users can add anything to this createRedirect API
   [key: string]: any
 }
