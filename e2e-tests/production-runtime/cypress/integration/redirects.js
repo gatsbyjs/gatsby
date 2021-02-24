@@ -1,4 +1,4 @@
-describe.only(`Redirects`, () => {
+describe(`Redirects`, () => {
   it(`are case insensitive when ignoreCase is set to true`, () => {
     cy.visit(`/Longue-PAGE`, { failOnStatusCode: false }).waitForRouteChange()
 
