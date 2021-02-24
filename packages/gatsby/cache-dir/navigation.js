@@ -11,8 +11,8 @@ import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
 
-let redirectMap = new Map()
-let redirectIgnoreCaseMap = new Map()
+const redirectMap = new Map()
+const redirectIgnoreCaseMap = new Map()
 
 redirects.forEach(redirect => {
   if (redirect.ignoreCase) {
