@@ -5,9 +5,7 @@ Cypress.on(`window:before:load`, win => {
 
 const runTests = () => {
   it(`should redirect page to index page when there is no such page`, () => {
-    cy.visit(`/redirect-without-page`, {
-      failOnStatusCode: false,
-    }).waitForRouteChange()
+    cy.visit(`/redirect-without-page`).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/`)
     cy.then(() => {
@@ -44,7 +42,7 @@ const runTests = () => {
   })
 
   it(`should redirect to a dynamically-created replacement page`, () => {
-    cy.visit(`/redirect-me/`, { failOnStatusCode: false }).waitForRouteChange()
+    cy.visit(`/redirect-me/`).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/pt/redirect-me/`)
     cy.then(() => {
@@ -67,9 +65,7 @@ describe(`redirect`, () => {
 
     // this is sanity check for this group
     it(`make sure 404 is present`, () => {
-      cy.visit(`/______not_existing_page`, {
-        failOnStatusCode: false,
-      }).waitForRouteChange()
+      cy.visit(`/______not_existing_page`).waitForRouteChange()
       cy.findByText("Preview custom 404 page").click()
       cy.findByText("A custom 404 page wasn't detected", {
         exact: false,
@@ -104,9 +100,7 @@ describe(`redirect`, () => {
     })
 
     it(`make sure 404 is NOT present`, () => {
-      cy.visit(`/______not_existing_page`, {
-        failOnStatusCode: false,
-      }).waitForRouteChange()
+      cy.visit(`/______not_existing_page`).waitForRouteChange()
       cy.findByText("Preview custom 404 page").click()
       cy.findByText("A custom 404 page wasn't detected", {
         exact: false,
