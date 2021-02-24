@@ -4,10 +4,16 @@ import got from "got"
 import webpack from "webpack"
 import express from "express"
 import compression from "compression"
-import graphqlHTTP from "express-graphql"
+import { graphqlHTTP, OptionsData as GraphqlOptionsData } from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError, FragmentDefinitionNode, Kind } from "graphql"
+import {
+  formatError,
+  FragmentDefinitionNode,
+  Kind,
+  GraphQLError,
+  GraphQLFormattedError,
+} from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -65,6 +71,8 @@ export interface IWebpackWatchingPauseResume {
   suspend: () => void
   resume: () => void
 }
+
+type HTTPMethod = "get" | "post" | "put" | "patch" | "head" | "delete"
 
 export async function startServer(
   program: IProgram,
@@ -203,7 +211,7 @@ module.exports = {
   app.use(
     graphqlEndpoint,
     graphqlHTTP(
-      (): graphqlHTTP.OptionsData => {
+      (): GraphqlOptionsData => {
         const { schema, schemaCustomization } = store.getState()
 
         if (!schemaCustomization.composer) {
@@ -226,7 +234,9 @@ module.exports = {
             context: {},
             customContext: schemaCustomization.context,
           }),
-          customFormatErrorFn(err): unknown {
+          customFormatErrorFn(
+            err: GraphQLError
+          ): GraphQLFormattedError & { stack: Array<string> } {
             return {
               ...formatError(err),
               stack: err.stack ? err.stack.split(`\n`) : [],
@@ -433,7 +443,11 @@ module.exports = {
         req
           .pipe(
             got
-              .stream(proxiedUrl, { headers, method, decompress: false })
+              .stream(proxiedUrl, {
+                headers,
+                method: method as HTTPMethod,
+                decompress: false,
+              })
               .on(`response`, response =>
                 res.writeHead(response.statusCode || 200, response.headers)
               )
