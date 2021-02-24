@@ -26,7 +26,12 @@ aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn --frozen-lockfile
+      command: yarn
+
+  check_lockfile: &check_lockfile
+    run:
+      name: Check for dirty lockfile
+      command: ./scripts/check-lockfile.sh || exit 1
 
   persist_cache: &persist_cache
     save_cache:
@@ -177,6 +182,7 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *check_lockfile
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
       - run: git status yarn.lock -s | grep "M yarn.lock" && echo "yarn.lock is dirty. Please ensure changes have been committed" && exit 1
