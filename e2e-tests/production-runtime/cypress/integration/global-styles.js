@@ -30,9 +30,12 @@ describe(`Global style from gatsby-browser.js`, () => {
     )
   })
 
-  it(`should resolve relative path in url()`, () => {
-    cy.wait("@font").should(req => {
-      expect(req.response.statusCode).to.be.gte(200)
+  // Service worker is handling requests so this one is cached by previous runs
+  if (!Cypress.env(`TEST_PLUGIN_OFFLINE`)) {
+    it(`should resolve relative path in url()`, () => {
+      cy.wait("@font").should(req => {
+        expect(req.response.statusCode).to.be.gte(200)
+      })
     })
-  })
+  }
 })
