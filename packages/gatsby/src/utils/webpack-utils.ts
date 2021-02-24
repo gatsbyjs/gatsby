@@ -281,7 +281,15 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`css-loader`),
         options: {
-          url: false,
+          // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
+
+            return true
+          },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
         },
