@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.5...gatsby@2.32.6) (2021-02-24)
+
+### Features
+
+- **gatsby:** Respect VERBOSE env var ([#29708](https://github.com/gatsbyjs/gatsby/issues/29708)) ([#29713](https://github.com/gatsbyjs/gatsby/issues/29713)) ([49f19fd](https://github.com/gatsbyjs/gatsby/commit/49f19fd0575f5715b47028ac56472690809606b3))
+
 ## [2.32.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.4...gatsby@2.32.5) (2021-02-24)
 
 ### Bug Fixes
