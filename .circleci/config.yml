@@ -178,7 +178,7 @@ jobs:
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *persist_cache
-      - run: ./scripts/check-lockfile.sh
+      - run: ./scripts/check-lockfile.sh || exit 1
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
