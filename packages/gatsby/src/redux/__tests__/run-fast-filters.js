@@ -353,7 +353,7 @@ describe(`fast filter tests`, () => {
         filtersCache: new Map(),
       })
 
-      expect(resultMany).toBe([])
+      expect(resultMany).toEqual([])
     })
 
     it(`elemMatch on array of objects`, async () => {
