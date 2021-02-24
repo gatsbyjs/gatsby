@@ -9,6 +9,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
+import ESLintPlugin from "eslint-webpack-plugin"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
@@ -102,9 +103,6 @@ interface ILoaderUtils {
   miniCssExtract: LoaderResolver
   imports: LoaderResolver
   exports: LoaderResolver
-
-  eslint(schema: GraphQLSchema): Loader
-  eslintRequired(): Loader
 }
 
 interface IModuleThatUseGatsby {
@@ -152,6 +150,8 @@ type PluginUtils = BuiltinPlugins & {
   fastRefresh: PluginFactory
   eslintGraphqlSchemaReload: PluginFactory
   virtualModules: PluginFactory
+  eslint: PluginFactory
+  eslintRequired: PluginFactory
 }
 
 /**
@@ -383,22 +383,6 @@ export const createWebpackUtils = (
         loader: require.resolve(`babel-loader`),
       }
     },
-
-    eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema, jsxRuntimeExists)
-
-      return {
-        options,
-        loader: require.resolve(`eslint-loader`),
-      }
-    },
-
-    eslintRequired: () => {
-      return {
-        options: eslintRequiredConfig,
-        loader: require.resolve(`eslint-loader`),
-      }
-    },
   }
 
   /**
@@ -543,7 +527,7 @@ export const createWebpackUtils = (
       exclude: (modulePath: string): boolean =>
         modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
         vendorRegex.test(modulePath),
-      use: [loaders.eslint(schema)],
+      use: [plugins.eslint(schema)],
     }
   }
 
@@ -554,7 +538,7 @@ export const createWebpackUtils = (
       exclude: (modulePath: string): boolean =>
         modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
         vendorRegex.test(modulePath),
-      use: [loaders.eslintRequired()],
+      use: [plugins.eslintRequired()],
     }
   }
 
@@ -781,6 +765,13 @@ export const createWebpackUtils = (
 
   plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
     new GatsbyWebpackVirtualModules()
+
+  plugins.eslint = (schema: GraphQLSchema): Plugin => {
+    const options = eslintConfig(schema, jsxRuntimeExists)
+    return new ESLintPlugin(options)
+  }
+
+  plugins.eslintRequired = (): Plugin => new ESLintPlugin(eslintRequiredConfig)
 
   return {
     loaders,
