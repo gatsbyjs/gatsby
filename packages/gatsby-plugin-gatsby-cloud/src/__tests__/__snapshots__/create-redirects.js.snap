@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create-redirects should assemble a redirects file 1`] = `"{\\"redirects\\":[{\\"fromPath\\":\\"/old-url\\",\\"toPath\\":\\"/new-url\\",\\"isPermanent\\":true},{\\"fromPath\\":\\"/url_that_is/not_pretty\\",\\"toPath\\":\\"/pretty/url\\",\\"statusCode\\":201}],\\"rewrites\\":[{\\"fromPath\\":\\"/url_that_is/ugly\\",\\"toPath\\":\\"/not_ugly/url\\"},{\\"fromPath\\":\\"/path2/*splatparam\\",\\"toPath\\":\\"/path2/[...splatparam]/\\"},{\\"fromPath\\":\\"/path/*\\",\\"toPath\\":\\"/path/[...]/\\"},{\\"fromPath\\":\\"/path3/:level1/:level2\\",\\"toPath\\":\\"/path3/[level1]/[level2]/\\"},{\\"fromPath\\":\\"/path4/:param1\\",\\"toPath\\":\\"/path4/[param1]/\\"}]}"`;

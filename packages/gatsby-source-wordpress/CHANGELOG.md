@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.7...gatsby-source-wordpress@5.0.0-next.8) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.6...gatsby-source-wordpress@5.0.0-next.7) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.5...gatsby-source-wordpress@5.0.0-next.6) (2021-02-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.4...gatsby-source-wordpress@5.0.0-next.5) (2021-02-17)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.3...gatsby-source-wordpress@5.0.0-next.4) (2021-02-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.2...gatsby-source-wordpress@5.0.0-next.3) (2021-02-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.1...gatsby-source-wordpress@5.0.0-next.2) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove old touchNode signature ([#29245](https://github.com/gatsbyjs/gatsby/issues/29245)) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+
 # [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.0...gatsby-source-wordpress@5.0.0-next.1) (2021-02-08)
 
 **Note:** Version bump only for package gatsby-source-wordpress

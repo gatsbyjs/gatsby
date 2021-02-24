@@ -22,6 +22,7 @@ exports.onPreBootstrap = (
     actions,
     createNodeId,
     getCache,
+    getNode,
     getNodesByType,
     createContentDigest,
     reporter,
@@ -61,7 +62,7 @@ exports.onPreBootstrap = (
     } else {
       // Screenshot hasn't yet expired, touch the image node
       // to prevent garbage collection
-      touchNode({ nodeId: n.screenshotFile___NODE })
+      touchNode(getNode(n.screenshotFile___NODE))
     }
   })
 

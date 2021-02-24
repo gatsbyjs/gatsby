@@ -256,7 +256,7 @@ describe(`gatsby-node`, () => {
       // don't allow mutations (this isn't traversing so only top level is frozen)
       currentNodeMap.set(node.id, Object.freeze(node))
     })
-    actions.deleteNode = ({ node }) => {
+    actions.deleteNode = node => {
       currentNodeMap.delete(node.id)
     }
     actions.touchNode = jest.fn()

@@ -396,7 +396,7 @@ As an alternative to selecting a range of lines from a file, you can add `start-
 
 You can specify that you want to only include a named snippet from the embed by using the syntax `{snippet: "snippet-name"}`.
 
-**Javascript example**:
+**JavaScript example**:
 
 ```markdown
 The function to use is:

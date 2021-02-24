@@ -7,11 +7,12 @@ import {
   DoneEventObject,
 } from "xstate"
 import { IBuildContext } from "../../services"
-import { boundActionCreators } from "../../redux/actions"
+import { actions } from "../../redux/actions"
 import { listenForMutations } from "../../services/listen-for-mutations"
 import { DataLayerResult } from "../data-layer"
 import { saveState } from "../../db"
 import reporter from "gatsby-cli/lib/reporter"
+import { store } from "../../redux"
 import { ProgramStatus } from "../../redux/types"
 import { createWebpackWatcher } from "../../services/listen-to-webpack"
 import { callRealApi } from "../../utils/call-deferred-api"
@@ -47,8 +48,8 @@ export const assignStoreAndWorkerPool = assign<IBuildContext, DoneEventObject>(
 )
 
 const setQueryRunningFinished = async (): Promise<void> => {
-  boundActionCreators.setProgramStatus(
-    ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED
+  store.dispatch(
+    actions.setProgramStatus(ProgramStatus.BOOTSTRAP_QUERY_RUNNING_FINISHED)
   )
 }
 
@@ -153,8 +154,8 @@ export const panicBecauseOfInfiniteLoop: ActionFunction<
 > = () => {
   reporter.panic(
     reporter.stripIndent(`
-  Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely. 
-  Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query. 
+  Panicking because nodes appear to be being changed every time we run queries. This would cause the site to recompile infinitely.
+  Check custom resolvers to see if they are unconditionally creating or mutating nodes on every query.
   This may happen if they create nodes with a field that is different every time, such as a timestamp or unique id.`)
   )
 }

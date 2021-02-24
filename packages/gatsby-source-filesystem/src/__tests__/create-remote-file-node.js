@@ -22,31 +22,16 @@ jest.mock(`got`, () => {
   }
 })
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    createProgress: jest.fn(),
-  }
-})
 jest.mock(`../create-file-node`, () => {
   return {
     createFileNode: jest.fn(),
   }
 })
-const reporter = require(`gatsby-cli/lib/reporter`)
-const progressBar = {
-  start: jest.fn(),
-  total: 0,
-  tick: jest.fn(),
-}
-reporter.createProgress.mockImplementation(() => progressBar)
+const reporter = require(`gatsby/reporter`)
 
 const got = require(`got`)
 const createRemoteFileNode = require(`../create-remote-file-node`)
 const { createFileNode } = require(`../create-file-node`)
-
-beforeEach(() => {
-  progressBar.tick.mockClear()
-})
 
 const createMockCache = () => {
   return {
@@ -90,9 +75,6 @@ describe(`create-remote-file-node`, () => {
         expect(value).rejects.toMatch(
           `url passed to createRemoteFileNode is either missing or not a proper web uri: `
         )
-
-        expect(progressBar.total).toBe(0)
-        expect(progressBar.tick).not.toHaveBeenCalled()
       })
     })
   })
@@ -157,9 +139,6 @@ describe(`create-remote-file-node`, () => {
 
     it(`invokes ProgressBar tick`, async () => {
       await setup()
-
-      expect(progressBar.total).toBe(1)
-      expect(progressBar.tick).toHaveBeenCalledTimes(1)
     })
 
     describe(`requesting remote image`, () => {

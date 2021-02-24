@@ -14,6 +14,14 @@ Since `v3` used the WP REST API and `v4` uses WPGraphQL, the data shape and avai
 
 If you have any custom code which you've added to make connections between nodes work in `v3`, you will get to delete that code (yay!) because WPGraphQL has excellent support built in for connection fields between nodes (for example `Page.author` or `User.pages`).
 
+## Migrating from `gatsby-source-wordpress-experimental`
+
+This is the easiest migration since both plugins are one and the same (as of `gatsby-source-wordpress@4.0.0`).
+
+- Uninstall the experimental plugin `npm uninstall gatsby-source-wordpress-experimental`
+- Install the stable plugin `npm install gatsby-source-wordpress`
+- Then update `gatsby-config.js` to remove `-experimental` from the plugin name.
+
 ## Migrating from `gatsby-source-graphql`
 
 You're in luck! :four_leaf_clover: This will likely be a very easy migration!
@@ -26,7 +34,7 @@ For example, if you're querying for a list of pages:
 
 ```js
 {
-	wp {
+  wp {
     pages {
       nodes {
         title
@@ -42,11 +50,11 @@ So your query would change to look like this:
 
 ```
 {
-	allWpPage {
-		nodes {
-			title
-		}
-	}
+  allWpPage {
+    nodes {
+      title
+    }
+  }
 }
 ```
 

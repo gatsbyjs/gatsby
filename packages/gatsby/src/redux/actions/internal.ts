@@ -102,7 +102,13 @@ export const apiFinished = (
  * @private
  */
 export const replaceStaticQuery = (
-  args: any,
+  args: {
+    name: string
+    componentPath: string
+    id: string
+    query: string
+    hash: string
+  },
   plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
@@ -225,7 +231,7 @@ export const setProgramStatus = (
  * @private
  */
 export const pageQueryRun = (
-  { path, componentPath, isPage },
+  payload: IPageQueryRunAction["payload"],
   plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
@@ -233,7 +239,7 @@ export const pageQueryRun = (
     type: `PAGE_QUERY_RUN`,
     plugin,
     traceId,
-    payload: { path, componentPath, isPage },
+    payload,
   }
 }
 

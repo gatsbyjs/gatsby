@@ -7,7 +7,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
-import { GatsbyNode } from "../../../"
+import { GatsbyNode, PackageJson } from "../../../"
 import {
   IPluginInfo,
   IFlattenedPlugin,
@@ -444,7 +444,7 @@ export const handleMultipleReplaceRenderers = ({
 
 export function warnOnIncompatiblePeerDependency(
   name: string,
-  packageJSON: object
+  packageJSON: PackageJson
 ): void {
   // Note: In the future the peer dependency should be enforced for all plugins.
   const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)

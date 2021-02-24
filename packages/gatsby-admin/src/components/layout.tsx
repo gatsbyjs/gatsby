@@ -5,8 +5,9 @@ import { Helmet } from "react-helmet"
 import Providers from "./providers"
 import Navbar from "./navbar"
 import { PageviewTracker } from "./pageview-tracker"
+import { ReactNode } from "react"
 
-function Layout({ children }: { children: React.ReactNode }): JSX.Element {
+function Layout({ children }: { children: ReactNode }): JSX.Element {
   return (
     <Providers>
       <Helmet>
