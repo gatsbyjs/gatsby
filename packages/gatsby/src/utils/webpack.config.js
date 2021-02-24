@@ -234,6 +234,19 @@ module.exports = async (
         if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
           configPlugins.push(plugins.extractStats())
         }
+
+        const isCustomEslint = hasLocalEslint(program.directory)
+
+        // if no local eslint config, then add gatsby config
+        if (!isCustomEslint) {
+          configPlugins.push(plugins.eslint())
+        }
+
+        // Enforce fast-refresh rules even with local eslint config
+        if (isCustomEslint) {
+          configPlugins.push(plugins.eslintRequired())
+        }
+
         break
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
@@ -347,18 +360,6 @@ module.exports = async (
       case `develop`: {
         // get schema to pass to eslint config and program for directory
         const { schema, program } = store.getState()
-
-        const isCustomEslint = hasLocalEslint(program.directory)
-
-        // if no local eslint config, then add gatsby config
-        if (!isCustomEslint) {
-          configRules = configRules.concat([rules.eslint(schema)])
-        }
-
-        // Enforce fast-refresh rules even with local eslint config
-        if (isCustomEslint) {
-          configRules = configRules.concat([rules.eslintRequired()])
-        }
 
         configRules = configRules.concat([
           {
