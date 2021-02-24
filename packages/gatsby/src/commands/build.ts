@@ -38,7 +38,7 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { updateSiteMetadata } from "gatsby-core-utils"
+import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 
 let cachedPageData
 let cachedWebpackCompilationHash
@@ -61,7 +61,7 @@ interface IBuildArgs extends IProgram {
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
-  report.setVerbose(program.verbose)
+  report.setVerbose(isTruthy(process.env.VERBOSE) || program.verbose)
 
   if (program.profile) {
     report.warn(
