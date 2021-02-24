@@ -746,7 +746,7 @@ export const createWebpackUtils = (
 
   plugins.eslint = (schema: GraphQLSchema): Plugin => {
     const options = {
-      files: /\.jsx?$/,
+      extensions: [`js`, `jsx`],
       exclude: (modulePath: string): boolean =>
         modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
         vendorRegex.test(modulePath),
@@ -758,7 +758,7 @@ export const createWebpackUtils = (
 
   plugins.eslintRequired = (): Plugin => {
     const options = {
-      files: /\.jsx?$/,
+      extensions: [`js`, `jsx`],
       exclude: (modulePath: string): boolean =>
         modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
         vendorRegex.test(modulePath),
