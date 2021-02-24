@@ -1305,6 +1305,7 @@ actions.createRedirect = ({
     payload: {
       fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
+      ignoreCase,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
