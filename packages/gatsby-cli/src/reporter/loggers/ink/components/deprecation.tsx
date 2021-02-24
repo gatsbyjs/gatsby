@@ -13,7 +13,11 @@ export const Deprecation: FunctionComponent<IDeprecationProps> = React.memo(
   ({ details }) => {
     let pluginNameMessage: string | null = null
     if (details.pluginName) {
-      pluginNameMessage = `Plugin: ${details.pluginName} - upgrade to the latest version or contact the plugin author.`
+      if (details.pluginName === `default-site-plugin`) {
+        pluginNameMessage = `Your gatsby-node.js`
+      } else {
+        pluginNameMessage = `Plugin: ${details.pluginName} - upgrade to the latest version or contact the plugin author.`
+      }
     }
 
     return (
