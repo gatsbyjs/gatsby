@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.4...gatsby@2.32.5) (2021-02-24)
+
+### Bug Fixes
+
+- **gatsby:** more reliable way to use prod versions of react/react-dom ([#29683](https://github.com/gatsbyjs/gatsby/issues/29683)) ([01d07b3](https://github.com/gatsbyjs/gatsby/commit/01d07b339ff32d1fca81f031c1772ad09322e367)), closes [/github.com/gatsbyjs/gatsby/discussions/28138#discussioncomment-371276](https://github.com//github.com/gatsbyjs/gatsby/discussions/28138/issues/discussioncomment-371276)
+
 ## [2.32.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.3...gatsby@2.32.4) (2021-02-18)
 
 ### Bug Fixes

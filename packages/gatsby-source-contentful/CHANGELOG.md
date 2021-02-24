@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.6.2...gatsby-source-contentful@4.6.3) (2021-02-24)
+
+### Bug Fixes
+
+- **contentful:** retry on network errors when checking credentials ([#29664](https://github.com/gatsbyjs/gatsby/issues/29664)) ([#29672](https://github.com/gatsbyjs/gatsby/issues/29672)) ([2625159](https://github.com/gatsbyjs/gatsby/commit/26251592c17c1345744fa2e74fdc5b33243559d9))
+
 ## [4.6.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@4.6.1...gatsby-source-contentful@4.6.2) (2021-02-18)
 
 ### Bug Fixes
