@@ -236,10 +236,12 @@ module.exports = async (
         }
 
         const isCustomEslint = hasLocalEslint(program.directory)
+        // get schema to pass to eslint config and program for directory
+        const { schema } = store.getState()
 
         // if no local eslint config, then add gatsby config
         if (!isCustomEslint) {
-          configPlugins.push(plugins.eslint())
+          configPlugins.push(plugins.eslint(schema))
         }
 
         // Enforce fast-refresh rules even with local eslint config
@@ -359,9 +361,6 @@ module.exports = async (
 
     switch (stage) {
       case `develop`: {
-        // get schema to pass to eslint config and program for directory
-        const { schema, program } = store.getState()
-
         configRules = configRules.concat([
           {
             oneOf: [rules.cssModules(), rules.css()],
