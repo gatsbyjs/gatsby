@@ -21,7 +21,7 @@ Gatsby [supports WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/)
 npm install gatsby-source-wordpress
 ```
 
-The `gatsby-source-wordpress` plugin works with self-hosted WordPress sites and those hosted by WordPress.com. Be aware, however, that the WordPress.com API supports a smaller set of features than that of self-hosted WordPress sites. 
+The `gatsby-source-wordpress` plugin works with self-hosted WordPress sites and those hosted by WordPress.com. Be aware, however, that the WordPress.com API supports a smaller set of features than that of self-hosted WordPress sites.
 
 Headless WordPress enables content writers to use a familiar interface while giving web developers the flexibility to use any frontend technology stack.
 
