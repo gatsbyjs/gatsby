@@ -798,7 +798,7 @@ actions.createNode = (...args) => dispatch => {
   })
 }
 
-let touchNodeDeprecationWarningDisplayedMessages = new Set()
+const touchNodeDeprecationWarningDisplayedMessages = new Set()
 
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
