@@ -201,7 +201,7 @@ You can query data from any location to source at build time using functions and
 You'll use several modules from npm to making fetching data with GraphQL easier. Install them in the `source-plugin` project with:
 
 ```shell:title=source-plugin
-npm install @apollo/client graphql subscriptions-transport-ws ws
+npm install @apollo-client graphql subscriptions-transport-ws ws
 ```
 
 _Note: The libraries used here are specifically chosen so that the source plugin can support [GraphQL subscriptions](https://www.apollographql.com/docs/react/data/subscriptions/). You can fetch data the same way you would in any other Node.js app or however you are most comfortable._
