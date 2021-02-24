@@ -307,7 +307,7 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
-    const enquirer = new Enquirer<Record<string, {}>>()
+    const enquirer = new Enquirer<Record<string, Record<string, unknown>>>()
     enquirer.use(plugin)
 
     pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }

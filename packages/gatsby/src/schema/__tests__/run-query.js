@@ -473,7 +473,7 @@ describe(`Filter fields`, () => {
       })
 
       // Note: no coercion, so [8]=='8' is true but the comparison is strict
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
     })
   })
 
@@ -769,7 +769,7 @@ describe(`Filter fields`, () => {
 
       // Nothing is lt null so zero nodes should match
       // (Note: this is different from `lte`, which does return nulls here!)
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
       expect(
         allNodes.filter(node => node.nil === needle).length
       ).toBeGreaterThan(0) // They should _exist_...
@@ -972,7 +972,7 @@ describe(`Filter fields`, () => {
       // Nothing is gt null so zero nodes should match
       // (Note: this is different from `gte`, which does return nulls here!)
       expect(result?.length ?? 0).toEqual(new Set(result ?? []).size) // result should contain unique elements
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
       expect(
         allNodes.filter(node => node.nil === needle).length
       ).toBeGreaterThan(0) // They should _exist_...
@@ -1188,7 +1188,7 @@ describe(`Filter fields`, () => {
         name: { regex: `/"/` },
       })
 
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
       expect(allNodes.filter(node => node.name === `"`).length).toEqual(0)
     })
   })
@@ -1506,7 +1506,7 @@ describe(`Filter fields`, () => {
         },
       })
 
-      expect(result).toEqual(null)
+      expect(result).toEqual([])
     })
 
     it(`handles the elemMatch operator for array of objects (1)`, async () => {
