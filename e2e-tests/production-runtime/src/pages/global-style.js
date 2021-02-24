@@ -15,6 +15,14 @@ const GlobalStyle = () => (
     <div data-testid="global-style-custom-font" className="merriweather">
       I'm a custom font
     </div>
+    <div
+      data-testid="global-style-fullurl"
+      className="dog-background-dither"
+    ></div>
+    <div
+      data-testid="global-style-urlwithoutprotocol"
+      className="dog-background-flip"
+    ></div>
   </Layout>
 )
 
