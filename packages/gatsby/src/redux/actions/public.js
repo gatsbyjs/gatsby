@@ -1315,7 +1315,7 @@ actions.createRedirect = ({
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
-  ignoreCase = true,
+  ignoreCase = false,
   ...rest
 }) => {
   let pathPrefix = ``
