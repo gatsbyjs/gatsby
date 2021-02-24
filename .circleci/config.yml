@@ -185,7 +185,6 @@ jobs:
       - <<: *check_lockfile
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
-      - run: git status yarn.lock -s | grep "M yarn.lock" && echo "yarn.lock is dirty. Please ensure changes have been committed" && exit 1
       # Persist the workspace again with all packages already built
       - persist_to_workspace:
           root: ./
