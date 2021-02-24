@@ -64,7 +64,7 @@ function runTests(testNameSuffix) {
 }
 
 const runBlockedScenario = args => {
-  before(() => {
+  beforeEach(() => {
     cy.task("getAssetsForPage", {
       pagePath: args.pagePath,
       filter: args.filter,
@@ -74,11 +74,25 @@ const runBlockedScenario = args => {
           statusCode: 404,
           body: "",
         })
+        cy.log(`intercept ${url}`)
       }
     })
   })
 
-  runTests(`Blocked "${args.filter}" for "${args.pagePath}"`)
+  afterEach(() => {
+    // check if assets are actually stubbed
+    cy.task("getAssetsForPage", {
+      pagePath: args.pagePath,
+      filter: args.filter,
+    }).then(urls => {
+      expect(Object.keys(cy.state("routes")).length).to.equal(urls.length)
+    })
+  })
+
+  runTests(`Blocked "${args.filter}" for "${args.pagePath}"`, {
+    ...args,
+    task: "getAssetsForPage",
+  })
 }
 
 const runSuiteForPage = (label, pagePath) => {
@@ -116,7 +130,7 @@ describe(`Every resources available`, () => {
 
 describe(`Missing top level resources`, () => {
   describe(`Deleted app chunk assets`, () => {
-    before(() => {
+    beforeEach(() => {
       cy.task("getAssetsForChunk", {
         filter: "app",
       }).then(urls => {
@@ -125,7 +139,17 @@ describe(`Missing top level resources`, () => {
             statusCode: 404,
             body: "",
           })
+          cy.log(`intercept ${url}`)
         }
+      })
+    })
+
+    afterEach(() => {
+      // check if assets are actually stubbed
+      cy.task("getAssetsForChunk", {
+        filter: "app",
+      }).then(urls => {
+        expect(Object.keys(cy.state("routes")).length).to.equal(urls.length)
       })
     })
 

@@ -34,7 +34,7 @@ const filterAssets = (assetsForPath, filter) => {
 function getAssetsForChunk({ filter }) {
   const assetManifest = getAssetManifest()
 
-  return assetManifest[filter]
+  return assetManifest[filter].map(asset => `/${asset}`)
 }
 
 function getAssetsForPage({ pagePath, filter }) {
