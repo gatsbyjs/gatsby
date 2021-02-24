@@ -213,7 +213,7 @@ module.exports = async (
     ]
 
     switch (stage) {
-      case `develop`:
+      case `develop`: {
         configPlugins = configPlugins
           .concat([
             plugins.fastRefresh(),
@@ -248,6 +248,7 @@ module.exports = async (
         }
 
         break
+      }
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
           plugins.extractText({
