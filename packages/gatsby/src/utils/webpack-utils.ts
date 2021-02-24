@@ -520,27 +520,16 @@ export const createWebpackUtils = (
     rules.dependencies = dependencies
   }
 
-  // rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
-  //   return {
-  //     enforce: `pre`,
-  //     test: /\.jsx?$/,
-  //     exclude: (modulePath: string): boolean =>
-  //       modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-  //       vendorRegex.test(modulePath),
-  //     use: [plugins.eslint(schema)],
-  //   }
-  // }
-
-  // rules.eslintRequired = (): RuleSetRule => {
-  //   return {
-  //     enforce: `pre`,
-  //     test: /\.jsx?$/,
-  //     exclude: (modulePath: string): boolean =>
-  //       modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-  //       vendorRegex.test(modulePath),
-  //     use: [plugins.eslintRequired()],
-  //   }
-  // }
+  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
+    return {
+      enforce: `pre`,
+      test: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      use: [plugins.eslint(schema)],
+    }
+  }
 
   rules.yaml = (): RuleSetRule => {
     return {
@@ -767,11 +756,28 @@ export const createWebpackUtils = (
     new GatsbyWebpackVirtualModules()
 
   plugins.eslint = (schema: GraphQLSchema): Plugin => {
-    const options = eslintConfig(schema, jsxRuntimeExists)
+    const options = {
+      files: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      ...eslintConfig(schema, jsxRuntimeExists),
+    }
+    //@ts-ignore
     return new ESLintPlugin(options)
   }
 
-  plugins.eslintRequired = (): Plugin => new ESLintPlugin(eslintRequiredConfig)
+  plugins.eslintRequired = (): Plugin => {
+    const options = {
+      files: /\.jsx?$/,
+      exclude: (modulePath: string): boolean =>
+        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
+        vendorRegex.test(modulePath),
+      ...eslintRequiredConfig,
+    }
+    //@ts-ignore
+    return new ESLintPlugin(options)
+  }
 
   return {
     loaders,
