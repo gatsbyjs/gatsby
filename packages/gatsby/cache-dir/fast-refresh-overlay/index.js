@@ -18,7 +18,7 @@ const reducer = (state, event) => {
     }
     case `HANDLE_RUNTIME_ERROR`:
     case `SHOW_RUNTIME_ERRORS`: {
-      return { ...state, errors: event.payload }
+      return { ...state, errors: state.errors.concat(event.payload) }
     }
     case `SHOW_GRAPHQL_ERRORS`: {
       return { ...state, graphqlErrors: event.payload }
@@ -76,6 +76,8 @@ function DevOverlay({ children }) {
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
   const hasErrors = hasBuildError || hasRuntimeErrors
+
+  // let errorComponent with switch statement for line 88-92
 
   return (
     <React.Fragment>

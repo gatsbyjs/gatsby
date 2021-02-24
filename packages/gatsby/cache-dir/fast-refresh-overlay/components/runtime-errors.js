@@ -6,18 +6,8 @@ import { CodeFrame } from "./code-frame"
 import { getCodeFrameInformation, openInEditor } from "../utils"
 import { Accordion, AccordionItem } from "./accordion"
 
-/*
-        <div data-gatsby-overlay="header__cause-file">
-          <h1 id="gatsby-overlay-labelledby">Unhandled Runtime Error</h1>
-          <span>{moduleId}</span>
-        </div>
- */
-
-export function RuntimeErrors({ errors, dismiss }) {
-  console.log({ runtimeerrors: errors })
-
-  const stacktrace = StackTrace.parse(errors[0])
-  const hasMultipleErrors = errors.length > 1
+function WrappedAccordionItem({ error, open }) {
+  const stacktrace = StackTrace.parse(error)
   const {
     moduleId,
     lineNumber,
@@ -26,6 +16,38 @@ export function RuntimeErrors({ errors, dismiss }) {
   } = getCodeFrameInformation(stacktrace)
 
   const res = useStackFrame({ moduleId, lineNumber, columnNumber })
+  const line = res.sourcePosition?.line
+
+  return (
+    <AccordionItem
+      open={open}
+      title={
+        <>
+          Error in function{` `}
+          <span data-font-weight="bold">{functionName}</span> in{` `}
+          <span data-font-weight="bold">{moduleId}</span>
+        </>
+      }
+    >
+      <p data-gatsby-overlay="body__error-message">{error.message}</p>
+      <div data-gatsby-overlay="codeframe__top">
+        <div>
+          {moduleId}:{line}
+        </div>
+        <button
+          data-gatsby-overlay="body__open-in-editor"
+          onClick={() => openInEditor(moduleId, line)}
+        >
+          Open in Editor
+        </button>
+      </div>
+      <CodeFrame decoded={res.decoded} />
+    </AccordionItem>
+  )
+}
+
+export function RuntimeErrors({ errors, dismiss }) {
+  const hasMultipleErrors = errors.length > 1
 
   return (
     <Overlay>
@@ -37,10 +59,7 @@ export function RuntimeErrors({ errors, dismiss }) {
               : `Unhandled Runtime Error`}
           </h1>
         </div>
-        <HeaderOpenClose
-          open={() => openInEditor(moduleId, res.sourcePosition?.line)}
-          dismiss={dismiss}
-        />
+        <HeaderOpenClose dismiss={dismiss} />
       </Header>
       <Body>
         <p
@@ -52,19 +71,13 @@ export function RuntimeErrors({ errors, dismiss }) {
           list below to fix {hasMultipleErrors ? `them` : `it`}:
         </p>
         <Accordion>
-          <AccordionItem
-            open
-            title={
-              <>
-                Error in function{` `}
-                <span data-font-weight="bold">{functionName}</span> in{` `}
-                <span data-font-weight="bold">{moduleId}</span>
-              </>
-            }
-          >
-            <p data-gatsby-overlay="body__error-message">{errors[0].message}</p>
-            <CodeFrame decoded={res.decoded} />
-          </AccordionItem>
+          {errors.map((error, index) => (
+            <WrappedAccordionItem
+              open={index === 0}
+              key={error.message}
+              error={error}
+            />
+          ))}
         </Accordion>
       </Body>
     </Overlay>

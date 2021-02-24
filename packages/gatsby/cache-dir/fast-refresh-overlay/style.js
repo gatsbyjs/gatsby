@@ -16,10 +16,14 @@ export const Style = () => (
           --gatsby: #663399;
           --gatsbyLight: #9158ca;
           --dimmedWhite: rgba(255, 255, 255, 0.8);
+          --codeFrame-bg: #eeeeee;
+          --codeFrame-color: #414141;
+          --codeFrame-button-bg: white;
           --white: #ffffff;
           --black: #000000;
           --color-ansi-selection: rgba(95, 126, 151, 0.48);
           --color-ansi-bg: #fafafa;
+          --color-ansi-bg-darker: #eeeeee;
           --color-ansi-fg: #545454;
           --color-ansi-white: #969896;
           --color-ansi-black: #141414;
@@ -165,6 +169,29 @@ export const Style = () => (
           height: 32px;
           min-width: 2em;
           padding: 0.25em 0.75em;
+          appearance: none;
+        }
+
+        [data-gatsby-overlay="codeframe__top"] {
+          display: flex;
+          justify-content: space-between;
+          background: var(--codeFrame-bg);
+          padding: 0.5em var(--space-sm);
+          color: var(--codeFrame-color);
+        }
+
+        [data-gatsby-overlay="body__open-in-editor"] {
+          align-items: center;
+          border-radius: var(--radii);
+          justify-content: center;
+          cursor: pointer;
+          color: var(--codeFrame-color);
+          border: none;
+          background: var(--codeFrame-button-bg);
+          font-size: 0.9em;
+          min-width: 2em;
+          padding: 0.25em 0.75em;
+          appearance: none;
         }
 
         [data-gatsby-overlay="header__close-button"] {
@@ -227,7 +254,7 @@ export const Style = () => (
           width: 100%;
           min-height: 2.5em;
           margin: 0;
-          padding: 0.75em 0;
+          padding: 1em 0;
           cursor: pointer;
           appearance: none;
         }
@@ -256,7 +283,7 @@ export const Style = () => (
         [data-accordion-active="true"]
           [data-gatsby-overlay="accordion__item__content"] {
           display: block;
-          padding-bottom: var(--space-sm);
+          padding-bottom: var(--space);
           transition: padding 0.11s cubic-bezier(0.2, 0, 0.38, 0.9);
         }
 
