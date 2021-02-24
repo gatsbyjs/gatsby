@@ -201,6 +201,10 @@ class Reporter {
     text: string
     pluginName?: string
   }): void => {
+    if (!code) {
+      throw new Error(`"code" is required param for reporter.deprecate`)
+    }
+
     const cacheKey = `${pluginName ?? ``}-${code}`
 
     if (deprecationCache.has(cacheKey)) {
