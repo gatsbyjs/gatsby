@@ -1,6 +1,5 @@
 import sampleSiteForExperiment from "../sample-site-for-experiment"
 
-jest.mock(`gatsby-telemetry/lib/repository-id`)
 import {
   getRepositoryId,
   IRepositoryId,
@@ -8,6 +7,8 @@ import {
 ;((getRepositoryId as unknown) as jest.Mock<IRepositoryId>).mockReturnValue({
   repositoryId: `mockId`,
 })
+
+jest.mock(`gatsby-telemetry/lib/repository-id`)
 
 describe(`sampleSiteForExperiment`, () => {
   it(`returns true or false depending on if they randomly are bucketed in or not`, () => {
