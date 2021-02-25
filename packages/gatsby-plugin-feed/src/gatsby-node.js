@@ -59,7 +59,7 @@ exports.onPostBuild = async ({ graphql }, pluginOptions) => {
 
     const outputPath = path.join(publicPath, feed.output)
     const outputDir = path.dirname(outputPath)
-    if (!(await fs.exists(outputDir))) {
+    if (!(await fs.pathExists(outputDir))) {
       await fs.mkdirp(outputDir)
     }
     await fs.writeFile(outputPath, rssFeed.xml())
