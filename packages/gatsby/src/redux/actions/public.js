@@ -1131,6 +1131,8 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
@@ -1226,6 +1228,8 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
@@ -1251,6 +1255,8 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
