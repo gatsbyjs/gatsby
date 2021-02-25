@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 1`] = `true`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: a 1`] = `true`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 2`] = `false`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: b 1`] = `false`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 3`] = `true`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: c 1`] = `false`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 4`] = `true`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: d 1`] = `true`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 5`] = `false`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: e 1`] = `true`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 6`] = `true`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: f 1`] = `false`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 7`] = `false`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: h 1`] = `false`;
 
-exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not 8`] = `false`;
+exports[`sampleSiteForExperiment returns true or false depending on if they randomly are bucketed in or not: i 1`] = `false`;

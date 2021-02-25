@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.3...gatsby-source-filesystem@3.0.0-next.4) (2021-02-25)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
 # [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.2...gatsby-source-filesystem@3.0.0-next.3) (2021-02-22)
 
 ### Features

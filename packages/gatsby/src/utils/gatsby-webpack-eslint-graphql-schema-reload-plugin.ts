@@ -7,15 +7,10 @@
 import { store } from "../redux"
 import { eslintConfig } from "./eslint-config"
 import { hasLocalEslint } from "./local-eslint-config-finder"
-import { RuleSetRule, Compiler, RuleSetQuery } from "webpack"
+import { Compiler } from "webpack"
 import { GraphQLSchema } from "graphql"
 import { reactHasJsxRuntime } from "./webpack-utils"
-
-function isEslintRule(rule?: RuleSetRule): boolean {
-  const options = rule?.use?.[0]?.options
-  return options && typeof options.useEslintrc !== `undefined`
-}
-
+import ESLintPlugin from "eslint-webpack-plugin"
 export class GatsbyWebpackEslintGraphqlSchemaReload {
   private plugin: { name: string }
   private schema: GraphQLSchema | null
@@ -25,10 +20,11 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
     this.schema = null
   }
 
-  findEslintOptions(compiler: Compiler): RuleSetQuery | undefined {
-    const rules = compiler.options.module?.rules.find(isEslintRule)?.use
-    const rule = Array.isArray(rules) ? rules[0] : rules
-    return typeof rule === `object` ? rule?.options : undefined
+  findEslintOptions(compiler: Compiler): any | undefined {
+    const plugin = compiler.options.plugins.find(
+      item => item instanceof ESLintPlugin
+    )
+    return typeof plugin === `object` ? plugin?.options : undefined
   }
 
   apply(compiler: Compiler): void {
