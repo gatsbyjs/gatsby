@@ -16,7 +16,15 @@ export const writeRedirects = async (): Promise<void> => {
   const browserRedirects = redirects
     .filter(r => r.redirectInBrowser)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .map(({ redirectInBrowser, isPermanent, ...rest }) => rest)
+    .map(
+      ({ redirectInBrowser, isPermanent, ignoreCase, fromPath, ...rest }) => {
+        return {
+          fromPath: ignoreCase ? fromPath.toLowerCase() : fromPath,
+          ignoreCase,
+          ...rest,
+        }
+      }
+    )
 
   const newHash = crypto
     .createHash(`md5`)

@@ -9,6 +9,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
+import ESLintPlugin from "eslint-webpack-plugin"
 
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
@@ -21,12 +22,14 @@ import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 
-type LoaderResolver<T = {}> = (options?: T) => Loader
+type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
 
 type LoaderOptions = Record<string, any>
-type RuleFactory<T = {}> = (options?: T & LoaderOptions) => RuleSetRule
+type RuleFactory<T = Record<string, unknown>> = (
+  options?: T & LoaderOptions
+) => RuleSetRule
 
-type ContextualRuleFactory<T = {}> = RuleFactory<T> & {
+type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   internal?: RuleFactory<T>
   external?: RuleFactory<T>
 }
@@ -100,9 +103,6 @@ interface ILoaderUtils {
   miniCssExtract: LoaderResolver
   imports: LoaderResolver
   exports: LoaderResolver
-
-  eslint(schema: GraphQLSchema): Loader
-  eslintRequired(): Loader
 }
 
 interface IModuleThatUseGatsby {
@@ -150,6 +150,8 @@ type PluginUtils = BuiltinPlugins & {
   fastRefresh: PluginFactory
   eslintGraphqlSchemaReload: PluginFactory
   virtualModules: PluginFactory
+  eslint: PluginFactory
+  eslintRequired: PluginFactory
 }
 
 /**
@@ -279,7 +281,15 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`css-loader`),
         options: {
-          url: false,
+          // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
+
+            return true
+          },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
         },
@@ -379,22 +389,6 @@ export const createWebpackUtils = (
           ...options,
         },
         loader: require.resolve(`babel-loader`),
-      }
-    },
-
-    eslint: (schema: GraphQLSchema) => {
-      const options = eslintConfig(schema, jsxRuntimeExists)
-
-      return {
-        options,
-        loader: require.resolve(`eslint-loader`),
-      }
-    },
-
-    eslintRequired: () => {
-      return {
-        options: eslintRequiredConfig,
-        loader: require.resolve(`eslint-loader`),
       }
     },
   }
@@ -532,28 +526,6 @@ export const createWebpackUtils = (
       }
     }
     rules.dependencies = dependencies
-  }
-
-  rules.eslint = (schema: GraphQLSchema): RuleSetRule => {
-    return {
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [loaders.eslint(schema)],
-    }
-  }
-
-  rules.eslintRequired = (): RuleSetRule => {
-    return {
-      enforce: `pre`,
-      test: /\.jsx?$/,
-      exclude: (modulePath: string): boolean =>
-        modulePath.includes(VIRTUAL_MODULES_BASE_PATH) ||
-        vendorRegex.test(modulePath),
-      use: [loaders.eslintRequired()],
-    }
   }
 
   rules.yaml = (): RuleSetRule => {
@@ -779,6 +751,34 @@ export const createWebpackUtils = (
 
   plugins.virtualModules = (): GatsbyWebpackVirtualModules =>
     new GatsbyWebpackVirtualModules()
+
+  plugins.eslint = (schema: GraphQLSchema): Plugin => {
+    const options = {
+      extensions: [`js`, `jsx`],
+      exclude: [
+        `/node_modules/`,
+        `/bower_components/`,
+        VIRTUAL_MODULES_BASE_PATH,
+      ],
+      ...eslintConfig(schema, jsxRuntimeExists),
+    }
+    //@ts-ignore
+    return new ESLintPlugin(options)
+  }
+
+  plugins.eslintRequired = (): Plugin => {
+    const options = {
+      extensions: [`js`, `jsx`],
+      exclude: [
+        `/node_modules/`,
+        `/bower_components/`,
+        VIRTUAL_MODULES_BASE_PATH,
+      ],
+      ...eslintRequiredConfig,
+    }
+    //@ts-ignore
+    return new ESLintPlugin(options)
+  }
 
   return {
     loaders,

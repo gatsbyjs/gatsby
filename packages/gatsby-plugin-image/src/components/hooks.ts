@@ -126,7 +126,7 @@ export interface IUrlBuilderArgs<OptionsType> {
   format: ImageFormat
   options: OptionsType
 }
-export interface IGetImageDataArgs<OptionsType = {}> {
+export interface IGetImageDataArgs<OptionsType = Record<string, unknown>> {
   baseUrl: string
   /**
    * For constrained and fixed images, the size of the image element

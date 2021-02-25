@@ -10,7 +10,7 @@ import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
 import { findPageByPath } from "./find-page-by-path"
-import socketIO from "socket.io"
+import { Server as SocketIO, Socket } from "socket.io"
 
 export interface IPageQueryResult {
   id: string
@@ -31,7 +31,7 @@ function hashPaths(paths: Array<string>): Array<string> {
 
 interface IClientInfo {
   activePath: string | null
-  socket: socketIO.Socket
+  socket: Socket
 }
 
 export class WebsocketManager {
@@ -40,19 +40,22 @@ export class WebsocketManager {
   errors: Map<string, string> = new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
-  websocket: socketIO.Server | undefined
+  websocket: SocketIO | undefined
 
-  init = ({
-    server,
-  }: {
-    server: HTTPSServer | HTTPServer
-  }): socketIO.Server => {
-    this.websocket = socketIO(server, {
+  init = ({ server }: { server: HTTPSServer | HTTPServer }): SocketIO => {
+    // make typescript happy, else it complained about this.websocket being undefined
+    const websocket = new SocketIO(server, {
       // we see ping-pong timeouts on gatsby-cloud when socket.io is running for a while
       // increasing it should help
       // @see https://github.com/socketio/socket.io/issues/3259#issuecomment-448058937
       pingTimeout: 30000,
+      // whitelist all (https://github.com/expressjs/cors#configuration-options)
+      cors: {
+        origin: true,
+      },
+      cookie: true,
     })
+    this.websocket = websocket
 
     const updateServerActivePaths = (): void => {
       const serverActivePaths = new Set<string>()
@@ -64,7 +67,7 @@ export class WebsocketManager {
       this.activePaths = serverActivePaths
     }
 
-    this.websocket.on(`connection`, socket => {
+    websocket.on(`connection`, socket => {
       const clientInfo: IClientInfo = {
         activePath: null,
         socket,
@@ -148,10 +151,10 @@ export class WebsocketManager {
       this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this)
     )
 
-    return this.websocket
+    return websocket
   }
 
-  getSocket = (): socketIO.Server | undefined => this.websocket
+  getSocket = (): SocketIO | undefined => this.websocket
 
   emitStaticQueryData = (data: IStaticQueryResult): void => {
     this.staticQueryResults.set(data.id, data)
