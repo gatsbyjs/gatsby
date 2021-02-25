@@ -216,7 +216,7 @@ module.exports = async (
       case `develop`: {
         configPlugins = configPlugins
           .concat([
-            plugins.fastRefresh(),
+            plugins.fastRefresh({ modulesThatUseGatsby }),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),

@@ -103,7 +103,7 @@ const Root = () => (
 )
 
 // Let site, plugins wrap the site e.g. for Redux.
-const WrappedRoot = apiRunner(
+const rootWrappedWithWrapRootElement = apiRunner(
   `wrapRootElement`,
   { element: <Root /> },
   <Root />,
@@ -112,8 +112,12 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => (
-  <FastRefreshOverlay>
-    <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-  </FastRefreshOverlay>
-)
+function RootWrappedWithOverlayAndProvider() {
+  return (
+    <FastRefreshOverlay>
+      <StaticQueryStore>{rootWrappedWithWrapRootElement}</StaticQueryStore>
+    </FastRefreshOverlay>
+  )
+}
+
+export default RootWrappedWithOverlayAndProvider

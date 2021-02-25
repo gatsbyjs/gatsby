@@ -13,16 +13,14 @@ import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 import { LoadingIndicatorEventHandler } from "./loading-indicator"
-
+import Root from "./root"
 // ensure in develop we have at least some .css (even if it's empty).
 // this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
 // this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
 import "./blank.css"
 
-// Enable fast-refresh for virtual sync-requires
-module.hot.accept(`$virtual/async-requires`, () => {
-  // Manually reload
-})
+// Enable fast-refresh for virtual sync-requires and gatsby-browser
+module.hot.accept([`$virtual/async-requires`, `./api-runner-browser`])
 
 window.___emitter = emitter
 
@@ -160,8 +158,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
-    const preferDefault = m => (m && m.default) || m
-    const Root = preferDefault(require(`./root`))
     domReady(() => {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
@@ -186,16 +182,6 @@ apiRunnerAsync(`onClientEntry`).then(() => {
             indicatorMountElement
           )
         }
-      })
-
-      module.hot.accept([`./root`, `./api-runner-browser`], () => {
-        // because `./root` for some reason is imported with commonjs
-        // we need to re-require it - https://webpack.js.org/api/hot-module-replacement/#accept
-        // > When using CommonJS you need to update dependencies manually by using require()
-        // > in the callback.Omitting the callback doesn't make sense here.
-
-        const NewRoot = preferDefault(require(`./root`))
-        renderer(<NewRoot />, rootElement)
       })
     })
   })
