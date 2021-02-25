@@ -50,6 +50,16 @@ export default function preset(_, options = {}) {
     }
   }
 
+  let importSource = undefined
+
+  if (options.reactImportSource && options.reactRuntime !== `automatic`) {
+    throw Error(
+      `\`@babel/preset-react\` requires reactRuntime \`automatic\` in order to use \`importSource\`.`
+    )
+  } else if (options.reactImportSource) {
+    importSource = options.reactImportSource
+  }
+
   return {
     presets: [
       [
@@ -83,9 +93,7 @@ export default function preset(_, options = {}) {
               : `React.createElement`,
           development: stage === `develop`,
           runtime: options.reactRuntime || `classic`,
-          ...(options.reactImportSource
-            ? { importSource: options.reactImportSource }
-            : {}),
+          importSource,
         },
       ],
     ],
