@@ -446,7 +446,7 @@ module.exports = async (
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
       resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
+        getPackageRoot(`@gatsbyjs/reach-router`),
         `es`
       )
     }
