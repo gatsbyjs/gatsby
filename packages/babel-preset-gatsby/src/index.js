@@ -30,7 +30,7 @@ export function loadCachedConfig() {
 }
 
 export default function preset(_, options = {}) {
-  let { targets = null } = options
+  let { targets = null, reactImportSource = null } = options
 
   const stage = options.stage || `test`
   const pluginBabelConfig = loadCachedConfig()
@@ -54,14 +54,10 @@ export default function preset(_, options = {}) {
     }
   }
 
-  let importSource = undefined
-
-  if (options.reactImportSource && options.reactRuntime !== `automatic`) {
+  if (reactImportSource && options.reactRuntime !== `automatic`) {
     throw Error(
       `\`@babel/preset-react\` requires reactRuntime \`automatic\` in order to use \`importSource\`.`
     )
-  } else if (options.reactImportSource) {
-    importSource = options.reactImportSource
   }
 
   return {
@@ -97,7 +93,7 @@ export default function preset(_, options = {}) {
               : `React.createElement`,
           development: stage === `develop`,
           runtime: options.reactRuntime || `classic`,
-          importSource,
+          ...(reactImportSource && { importSource: reactImportSource }),
         },
       ],
     ],
