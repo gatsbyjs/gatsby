@@ -1,11 +1,18 @@
-import { createStore, combineReducers } from "redux"
+import { createStore, combineReducers, Store, CombinedState } from "redux"
 import { reducer } from "./reducer"
-import { ActionsUnion, ISetLogs } from "./types"
+import { ActionsUnion, ISetLogs, IGatsbyCLIState } from "./types"
 import { isInternalAction } from "./utils"
 import { createStructuredLoggingDiagnosticsMiddleware } from "./diagnostics"
 import { Actions } from "../constants"
 
-let store = createStore(
+export type GatsbyCLIStore = Store<
+  CombinedState<{
+    logs: IGatsbyCLIState
+  }>,
+  ActionsUnion
+>
+
+let store: GatsbyCLIStore = createStore(
   combineReducers({
     logs: reducer,
   }),
@@ -16,7 +23,6 @@ const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
   store
 )
 
-export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
 type ActionLogListener = (action: ActionsUnion) => any
 type Thunk = (...args: Array<any>) => ActionsUnion
