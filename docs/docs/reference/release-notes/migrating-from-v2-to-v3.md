@@ -594,8 +594,10 @@ In most cases you won't have to do anything to be v3 compatible, but there are a
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
 ```diff:title=package.json
-"peerDependencies": {
--  "gatsby": "^2.32.0",
-+  "gatsby": "^3.0.0",
+{
+  "peerDependencies": {
+-   "gatsby": "^2.32.0",
++   "gatsby": "^3.0.0",
+  }
 }
 ```
