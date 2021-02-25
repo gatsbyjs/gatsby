@@ -12,6 +12,7 @@ import DevLoader from "./dev-loader"
 import syncRequires from "$virtual/sync-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { LoadingIndicatorEventHandler } from "./loading-indicator"
 
 if (process.env.GATSBY_HOT_LOADER === `fast-refresh` && module.hot) {
   module.hot.accept(`$virtual/sync-requires`, () => {
@@ -164,6 +165,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
+
+        // Render query on demand overlay
+        if (
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+        ) {
+          const indicatorMountElement = document.createElement(`div`)
+          indicatorMountElement.setAttribute(
+            `id`,
+            `query-on-demand-indicator-element`
+          )
+          document.body.append(indicatorMountElement)
+          ReactDOM.render(
+            <LoadingIndicatorEventHandler />,
+            indicatorMountElement
+          )
+        }
       })
     })
   })
