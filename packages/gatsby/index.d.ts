@@ -1205,6 +1205,7 @@ export interface Actions {
       redirectInBrowser?: boolean
       force?: boolean
       statusCode?: number
+      ignoreCase?: boolean
       [key: string]: unknown
     },
     plugin?: ActionPlugin

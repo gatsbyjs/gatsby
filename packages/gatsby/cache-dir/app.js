@@ -12,6 +12,7 @@ import DevLoader from "./dev-loader"
 import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { LoadingIndicatorEventHandler } from "./loading-indicator"
 
 // ensure in develop we have at least some .css (even if it's empty).
 // this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
@@ -168,6 +169,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
+
+        // Render query on demand overlay
+        if (
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+        ) {
+          const indicatorMountElement = document.createElement(`div`)
+          indicatorMountElement.setAttribute(
+            `id`,
+            `query-on-demand-indicator-element`
+          )
+          document.body.append(indicatorMountElement)
+          ReactDOM.render(
+            <LoadingIndicatorEventHandler />,
+            indicatorMountElement
+          )
+        }
       })
     })
   })

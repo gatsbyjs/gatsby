@@ -14,6 +14,7 @@ export interface IRedirect {
   toPath: string
   isPermanent?: boolean
   redirectInBrowser?: boolean
+  ignoreCase: boolean
   // Users can add anything to this createRedirect API
   [key: string]: any
 }
@@ -30,7 +31,7 @@ export interface IGatsbyPage {
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
-  context: {}
+  context: Record<string, unknown>
   updatedAt: number
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
@@ -681,11 +682,6 @@ export interface IClearPendingPageDataWriteAction {
 export interface IDeletePageAction {
   type: `DELETE_PAGE`
   payload: IGatsbyPage
-}
-
-export interface IReplaceStaticQueryAction {
-  type: `REPLACE_STATIC_QUERY`
-  payload: IGatsbyStaticQueryComponents
 }
 
 export interface IRemoveStaticQuery {
