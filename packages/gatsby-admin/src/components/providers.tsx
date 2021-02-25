@@ -133,7 +133,7 @@ const theme = merge(recipesTheme, {
   },
 })
 
-const GraphQLProvider: React.FC<{}> = ({ children }) => {
+const GraphQLProvider: React.FC<Record<string, unknown>> = ({ children }) => {
   const services = useServices()
   const [client, setClient] = React.useState<Client | null>(() =>
     services
@@ -158,7 +158,7 @@ const GraphQLProvider: React.FC<{}> = ({ children }) => {
   return <Provider value={client}>{children}</Provider>
 }
 
-const Providers: React.FC<{}> = ({ children }) => (
+const Providers: React.FC<Record<string, unknown>> = ({ children }) => (
   <StrictUIProvider theme={theme}>
     <ThemeProvider theme={theme}>
       {/* NOTE(@mxstbr): The GraphQLProvider needs to be in the ServicesProvider */}

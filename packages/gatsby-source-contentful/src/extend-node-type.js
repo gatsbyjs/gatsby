@@ -4,7 +4,6 @@ const path = require(`path`)
 const crypto = require(`crypto`)
 
 const sortBy = require(`lodash/sortBy`)
-const axios = require(`axios`)
 const {
   GraphQLObjectType,
   GraphQLBoolean,
@@ -12,6 +11,8 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
+  GraphQLList,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
@@ -21,11 +22,19 @@ const {
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
+const downloadWithRetry = require(`./download-with-retry`).default
+const {
+  ImageFormatType,
+  ImageResizingBehavior,
+  ImageCropFocusType,
+} = require(`./schemes`)
 
 // By default store the images in `.cache` but allow the user to override
 // and store the image cache away from the gatsby cache. After all, the gatsby
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
+
+const validImageFormats = new Set([`jpg`, `png`, `webp`])
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -48,12 +57,6 @@ const inFlightBase64Cache = new Map()
 // This cache contains the resolved base64 fetches. This prevents async calls for promises that have resolved.
 // The images are based on urls with w=20 and should be relatively small (<2kb) but it does stick around in memory
 const resolvedBase64Cache = new Map()
-
-const {
-  ImageFormatType,
-  ImageResizingBehavior,
-  ImageCropFocusType,
-} = require(`./schemes`)
 
 // @see https://www.contentful.com/developers/docs/references/images-api/#/reference/resizing-&-cropping/specify-width-&-height
 const CONTENTFUL_IMAGE_MAX_SIZE = 4000
@@ -110,7 +113,8 @@ const getBase64Image = imageProps => {
   }
 
   const loadImage = async () => {
-    const imageResponse = await axios.get(requestUrl, {
+    const imageResponse = await downloadWithRetry({
+      url: requestUrl,
       responseType: `arraybuffer`,
     })
 
@@ -188,6 +192,24 @@ const generateImageSource = (
   _fit, // We use resizingBehavior instead
   { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
 ) => {
+  // Ensure we stay within Contentfuls Image API limits
+  if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
+    height = Math.floor((height / width) * CONTENTFUL_IMAGE_MAX_SIZE)
+    width = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (height > CONTENTFUL_IMAGE_MAX_SIZE) {
+    width = Math.floor((width / height) * CONTENTFUL_IMAGE_MAX_SIZE)
+    height = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (!validImageFormats.has(toFormat)) {
+    console.warn(
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+    )
+    return undefined
+  }
+
   const src = createUrl(filename, {
     width,
     height,
@@ -697,6 +719,8 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const resolveGatsbyImageData = async (image, options) => {
+    if (!isImage(image)) return null
+
     const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
 
     const imageProps = generateImageData({
@@ -738,17 +762,9 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     return imageProps
   }
 
-  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
-  const resolutionsNode = fixedNodeType({
-    name: `ContentfulResolutions`,
-    getTracedSVG,
-  })
-  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
   const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
-  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
-  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
@@ -760,7 +776,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
       warnedForBeta = true
     }
 
-    return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+    const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -775,17 +791,26 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: GraphQLInt,
         defaultValue: 50,
       },
-      backgroundColor: {
-        type: GraphQLString,
+      formats: {
+        type: GraphQLList(ImageFormatType),
+        description: stripIndent`
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, and WEBP.
+            The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+            not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
+            both PNG and JPG is not supported and will be ignored. 
+        `,
+        defaultValue: [``, `webp`],
       },
     })
+
+    fieldConfig.type = GraphQLJSON
+
+    return fieldConfig
   }
 
   return {
     fixed: fixedNode,
-    resolutions: resolutionsNode,
     fluid: fluidNode,
-    sizes: sizesNode,
     gatsbyImageData: getGatsbyImageData(),
     resize: {
       type: new GraphQLObjectType({

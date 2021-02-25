@@ -75,23 +75,4 @@ describe(`respectDNT`, () => {
       DO_NOT_TRACK_STRING
     )
   })
-
-  it(`listens to respectDNT deprecated option`, () => {
-    const mocks = {
-      setHeadComponents: jest.fn(),
-      setPostBodyComponents: jest.fn(),
-    }
-    const pluginOptions = {
-      trackingIds: [`GA_TRACKING_ID`],
-      respectDNT: true,
-      pluginConfig: {},
-    }
-
-    onRenderBody(mocks, pluginOptions)
-    const [, config] = mocks.setPostBodyComponents.mock.calls[0][0]
-
-    expect(config.props.dangerouslySetInnerHTML.__html).toContain(
-      DO_NOT_TRACK_STRING
-    )
-  })
 })

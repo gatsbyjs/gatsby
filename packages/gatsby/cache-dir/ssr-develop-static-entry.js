@@ -136,7 +136,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
         })
 
         namedChunkGroups[chunkKey].assets.forEach(asset =>
-          chunks.push({ rel: `preload`, name: asset })
+          chunks.push({ rel: `preload`, name: asset.name })
         )
 
         const childAssets = namedChunkGroups[chunkKey].childAssets
@@ -187,10 +187,6 @@ export default (pagePath, isClientOnlyPage, callback) => {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
-          // pathContext was deprecated in v2. Renamed to pageContext
-          pathContext: pageData.result
-            ? pageData.result.pageContext
-            : undefined,
         }
 
         let pageElement
@@ -299,6 +295,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
+      <script key={`framework`} src="/framework.js" />,
       <script key={`commons`} src="/commons.js" />,
     ]),
   })

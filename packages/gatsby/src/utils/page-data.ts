@@ -3,6 +3,7 @@ import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
 import fastq from "fastq"
 import path from "path"
+import { createContentDigest } from "gatsby-core-utils"
 import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
@@ -100,8 +101,10 @@ export async function writePageData(
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
+      pagePath,
       filePath: outputFilePath,
       size: pageDataSize,
+      pageDataHash: createContentDigest(bodyStr),
     },
   })
 
@@ -202,7 +205,7 @@ export async function flush(): Promise<void> {
 
   if (!flushQueue.idle()) {
     await new Promise(resolve => {
-      flushQueue.drain = resolve
+      flushQueue.drain = resolve as () => unknown
     })
   }
 
@@ -256,10 +259,20 @@ export async function handleStalePageData(): Promise<void> {
   })
 
   const deletionPromises: Array<Promise<void>> = []
-  pageDataFilesFromPreviousBuilds.forEach(pageDataFilePath => {
+  const pagePathsToClear = new Set<string>()
+  for (const pageDataFilePath of pageDataFilesFromPreviousBuilds) {
     if (!expectedPageDataFiles.has(pageDataFilePath)) {
+      const stalePageDataContent = await fs.readJson(pageDataFilePath)
+      pagePathsToClear.add(stalePageDataContent.path)
       deletionPromises.push(fs.remove(pageDataFilePath))
     }
+  }
+
+  store.dispatch({
+    type: `DELETED_STALE_PAGE_DATA_FILES`,
+    payload: {
+      pagePathsToClear,
+    },
   })
 
   await Promise.all(deletionPromises)
