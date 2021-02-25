@@ -50,4 +50,24 @@ describe(`babel-preset-gatsby`, () => {
       }),
     ])
   })
+
+  it(`Allows to configure react importSource`, () => {
+    const { presets } = preset(null, {
+      reactImportSource: `@emotion/react`,
+      reactRuntime: `automatic`,
+    })
+
+    expect(presets[1]).toEqual([
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
+      expect.objectContaining({
+        importSource: `@emotion/react`,
+      }),
+    ])
+  })
+
+  it(`Fails to configure react importSource if source is classic`, () => {
+    expect(() => preset(null, { reactImportSource: `@emotion/react` })).toThrow(
+      `@babel/preset-react\` requires reactRuntime \`automatic\` in order to use \`importSource\`.`
+    )
+  })
 })
