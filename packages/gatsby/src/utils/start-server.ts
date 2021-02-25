@@ -279,7 +279,8 @@ module.exports = {
 
   app.get(`/__open-stack-frame-in-editor`, (req, res) => {
     const fileName = path.resolve(process.cwd(), req.query.fileName)
-    launchEditor(fileName, req.query.lineNumber)
+    const lineNumber = parseInt(req.query.lineNumber, 10)
+    launchEditor(fileName, isNaN(lineNumber) ? 1 : lineNumber)
     res.end()
   })
 
