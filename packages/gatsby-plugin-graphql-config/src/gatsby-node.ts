@@ -1,8 +1,27 @@
 import * as fs from "fs-extra"
 import { resolve, join } from "path"
-import { GraphQLSchema, printSchema } from "gatsby/graphql"
-import type { GatsbyReduxStore } from "gatsby/src/redux"
-import type { IStateProgram } from "gatsby/src/internal"
+import { GraphQLSchema, printSchema, DefinitionNode } from "gatsby/graphql"
+import type { NodePluginArgs, Store } from "gatsby"
+
+interface IStateProgram {
+  directory: string
+  https: boolean
+  host: string
+  port: string
+}
+
+interface IDefinitionMeta {
+  name: string
+  def: DefinitionNode
+  filePath: string
+  text: string
+  templateLoc: any
+  printedAst: string
+  isHook: boolean
+  isStaticQuery: boolean
+  isFragment: boolean
+  hash: string
+}
 
 async function cacheGraphQLConfig(program: IStateProgram): Promise<void> {
   try {
@@ -43,10 +62,11 @@ async function cacheGraphQLConfig(program: IStateProgram): Promise<void> {
 
 const createFragmentCacheHandler = (
   cacheDirectory: string,
-  store: GatsbyReduxStore
+  store: NodePluginArgs["store"]
 ) => async (): Promise<void> => {
   try {
-    const currentDefinitions = store.getState().definitions
+    const currentDefinitions: Map<string, IDefinitionMeta> = store.getState()
+      .definitions
 
     const fragmentString = Array.from(currentDefinitions.entries())
       .filter(([_, def]) => def.isFragment)
@@ -88,7 +108,7 @@ const cacheSchema = async (
 
 const createSchemaCacheHandler = (
   cacheDirectory: string,
-  store: GatsbyReduxStore
+  store: Store
 ) => async (): Promise<void> => {
   const { schema } = store.getState()
   await cacheSchema(cacheDirectory, schema)
@@ -98,7 +118,7 @@ export async function onPostBootstrap({
   store,
   emitter,
 }: {
-  store: GatsbyReduxStore
+  store: Store
   emitter: any
 }): Promise<void> {
   const { program, schema } = store.getState()
