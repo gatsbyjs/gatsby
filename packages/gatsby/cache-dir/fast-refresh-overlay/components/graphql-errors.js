@@ -4,7 +4,10 @@ import { Accordion, AccordionItem } from "./accordion"
 import { openInEditor } from "../utils"
 
 function WrappedAccordionItem({ error, open }) {
-  const title = error?.error?.message || error.context.sourceMessage
+  const title =
+    error?.error?.message ||
+    error.context.sourceMessage ||
+    `Unknown GraphQL error`
   const docsUrl = error?.docsUrl
   const filePath = error?.filePath
   const lineNumber = error?.location?.start?.line

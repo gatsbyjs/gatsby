@@ -8,37 +8,41 @@ import { Accordion, AccordionItem } from "./accordion"
 
 function WrappedAccordionItem({ error, open }) {
   const stacktrace = StackTrace.parse(error)
-  const {
-    moduleId,
-    lineNumber,
-    columnNumber,
-    functionName,
-  } = getCodeFrameInformation(stacktrace)
+  const codeFrameInformation = getCodeFrameInformation(stacktrace)
+  const filePath = codeFrameInformation?.moduleId
+  const lineNumber = codeFrameInformation?.lineNumber
+  const columnNumber = codeFrameInformation?.columnNumber
+  const name = codeFrameInformation?.functionName
 
-  const res = useStackFrame({ moduleId, lineNumber, columnNumber })
+  const res = useStackFrame({ moduleId: filePath, lineNumber, columnNumber })
   const line = res.sourcePosition?.line
 
+  const Title = () => {
+    if (!name) {
+      return <>Unknown Runtime Error</>
+    }
+
+    return (
+      <>
+        Error in function{` `}
+        <span data-font-weight="bold">{name}</span> in{` `}
+        <span data-font-weight="bold">
+          {filePath}:{line}
+        </span>
+      </>
+    )
+  }
+
   return (
-    <AccordionItem
-      open={open}
-      title={
-        <>
-          Error in function{` `}
-          <span data-font-weight="bold">{functionName}</span> in{` `}
-          <span data-font-weight="bold">
-            {moduleId}:{line}
-          </span>
-        </>
-      }
-    >
+    <AccordionItem open={open} title={<Title />}>
       <p data-gatsby-overlay="body__error-message">{error.message}</p>
       <div data-gatsby-overlay="codeframe__top">
         <div>
-          {moduleId}:{line}
+          {filePath}:{line}
         </div>
         <button
           data-gatsby-overlay="body__open-in-editor"
-          onClick={() => openInEditor(moduleId, line)}
+          onClick={() => openInEditor(filePath, line)}
         >
           Open in Editor
         </button>
