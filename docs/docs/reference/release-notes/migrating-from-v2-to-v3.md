@@ -8,17 +8,9 @@ Looking for the v2 docs? [Find them here.](https://v2.gatsbyjs.com)
 
 ## Introduction
 
-This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. TODO
+This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. Since the last major release was in September 2018, Gatsby v3 includes a couple of breaking changes. If you're curious what's new, head over to the [v3.0 release notes](/docs/reference/release-notes/v3.0).
 
 > If you want to start fresh, run `npm init gatsby` or `yarn create gatsby` in your terminal.
-
-## Why you should upgrade
-
-This documentation page covers the _how_ of migrating from v2 to v3. If you're curious what's new, read the [v3.0 release notes](/docs/reference/release-notes/v3.0).
-
-## What we'll cover
-
-short list of contents, point to sidebar at the right
 
 ## Updating Your Dependencies
 
@@ -584,5 +576,20 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
       id: ID!
     }
   `)
+}
+```
+
+## For Plugin Maintainers
+
+In most cases you won't have to do anything to be v3 compatible, but there are a few things you can do to be certain your plugin won't throw any warnings or errors.
+
+### Setting the proper peer dependencies
+
+`gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
+
+```diff:title=package.json
+"peerDependencies": {
+-  "gatsby": "^2.32.0"
++  "gatsby": "^3.0.0"
 }
 ```
