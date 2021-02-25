@@ -1,23 +1,16 @@
+type Channel = "FAST_REFRESH"
+type Event = [
+  Channel,
+  {
+    action: string
+    payload?: any
+  }
+]
+
 declare global {
   // eslint-disable-next-line @typescript-eslint/interface-name-prefix
   interface Window {
-    _gatsbyEvents:
-      | Array<
-          | Array<
-              | string
-              | {
-                  action: string
-                }
-            >
-          | Array<
-              | string
-              | {
-                  action: string
-                  payload?: string | Array<unknown>
-                }
-            >
-        >
-      | { push: Function }
+    _gatsbyEvents: Array<Event> | { push: (event: Event) => void }
   }
 }
 
