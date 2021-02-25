@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.12.5",
     "@hapi/joi": "^15.1.1",
     "common-tags": "^1.8.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.1.0",
     "gatsby-plugin-utils": "^1.0.0-next.0",
     "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"
