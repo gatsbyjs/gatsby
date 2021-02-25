@@ -431,6 +431,9 @@ module.exports = async (
           `@pmmmwh/react-refresh-webpack-plugin`
         ),
         "socket.io-client": getPackageRoot(`socket.io-client`),
+        "webpack-hot-middleware": getPackageRoot(
+          `@gatsbyjs/webpack-hot-middleware`
+        ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
 
         // SSR can have many react versions as some packages use their own version. React works best with 1 version.

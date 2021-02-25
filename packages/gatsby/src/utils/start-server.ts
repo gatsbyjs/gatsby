@@ -1,4 +1,4 @@
-import webpackHotMiddleware from "webpack-hot-middleware"
+import webpackHotMiddleware from "@gatsbyjs/webpack-hot-middleware"
 import webpackDevMiddleware from "webpack-dev-middleware"
 import got from "got"
 import webpack from "webpack"
