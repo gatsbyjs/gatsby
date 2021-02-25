@@ -423,6 +423,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 }
 
+const deleteNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * Delete a node
  * @param {object} node A node object. See the "createNode" action for more information about the node object details.
@@ -441,7 +443,10 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
     if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
-    report.warn(msg)
+    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
     id = node.node.id
   } else {
@@ -798,6 +803,8 @@ actions.createNode = (...args) => dispatch => {
   })
 }
 
+const touchNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
@@ -819,7 +826,10 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
       msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    report.warn(msg)
+    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      touchNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
     node = getNode(node.nodeId)
   }
@@ -1276,6 +1286,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
  * @example
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
@@ -1291,6 +1302,7 @@ actions.createRedirect = ({
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
+  ignoreCase = true,
   ...rest
 }) => {
   let pathPrefix = ``
@@ -1303,6 +1315,7 @@ actions.createRedirect = ({
     payload: {
       fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
+      ignoreCase,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
