@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.0.0-next.6...gatsby-cli@3.0.0-next.7) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby:** fix fs empty webpack5 deprecation ([#29631](https://github.com/gatsbyjs/gatsby/issues/29631)) ([893219e](https://github.com/gatsbyjs/gatsby/commit/893219ebceb84c5eb43beebbdeefe81fece33330))
+
+### Features
+
+- **conditional-page-builds:** track potentially unsafe Node.js builtin modules usage ([#29560](https://github.com/gatsbyjs/gatsby/issues/29560)) ([fe737d0](https://github.com/gatsbyjs/gatsby/commit/fe737d0784b11dd03f6d3b8c69cf964de5bd50f5))
+
 # [3.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.0.0-next.5...gatsby-cli@3.0.0-next.6) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-cli
