@@ -55,25 +55,6 @@ describe(`Job actions/reducer`, () => {
     )
   })
 
-  it(`displays deprecation warnings once`, () => {
-    actions.createJob({ id: `test job 2` })
-    actions.createJob({ id: `test job 2` })
-    actions.setJob({ id: `test job 2`, progress: 40 })
-    actions.setJob({ id: `test job 2`, progress: 50 })
-    actions.endJob({ id: `test job 2` })
-    actions.endJob({ id: `test job 2` })
-    expect(reporter.warn).toHaveBeenCalledTimes(3) // 3 not 6
-    expect(reporter.warn).toHaveBeenCalledWith(
-      `Action "createJob" is deprecated. Please use "createJobV2" instead`
-    )
-    expect(reporter.warn).toHaveBeenCalledWith(
-      `Action "setJob" is deprecated. Please use "createJobV2" instead`
-    )
-    expect(reporter.warn).toHaveBeenCalledWith(
-      `Action "endJob" is deprecated. Please use "createJobV2" instead`
-    )
-  })
-
   it(`allows creating jobs`, () => {
     expect(actions.createJob({ id: `test job` })).toMatchSnapshot()
   })
