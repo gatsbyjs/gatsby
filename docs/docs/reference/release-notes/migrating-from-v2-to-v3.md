@@ -378,7 +378,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 To make upgrade easier, check the CLI output of your site on the latest v2 and follow suggestions
 when you see a warning like this:
 
-```
+```shell
 warning Deprecation warning: In Gatsby v3 fields `Foo.childBar` and `Foo.childrenBar`
 will not be added automatically because type `Bar` does not explicitly list type `Foo`
 in `childOf` extension.
@@ -431,7 +431,7 @@ In Gatsby v2 we add those extensions for you automatically but display a depreca
 To make upgrade easier, check the CLI output of your site on the latest v2 and follow suggestions
 when you see a warning like this:
 
-```
+```shell
 warning Deprecation warning: adding inferred extension `link` for field Foo.bar
 In Gatsby v3, only fields with an explicit directive/extension will be resolved correctly.
 Add the following type definition to fix this:
