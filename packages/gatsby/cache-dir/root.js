@@ -12,7 +12,6 @@ import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 import FastRefreshOverlay from "./fast-refresh-overlay"
-
 import { reportError, clearError } from "./error-overlay-handler"
 import { LoadingIndicatorEventHandler } from "./loading-indicator"
 
@@ -148,9 +147,5 @@ const ConditionalFastRefreshOverlay = ({ children }) => {
 export default () => (
   <ConditionalFastRefreshOverlay>
     <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-    {process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true` && (
-        <LoadingIndicatorEventHandler />
-      )}
   </ConditionalFastRefreshOverlay>
 )

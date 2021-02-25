@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.7...gatsby@2.32.8) (2021-02-25)
+
+**Note:** Version bump only for package gatsby
+
+## [2.32.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.6...gatsby@2.32.7) (2021-02-25)
+
+### Features
+
+- **gatsby:** ignore case option in create redirect ([#29742](https://github.com/gatsbyjs/gatsby/issues/29742)) ([91b9d66](https://github.com/gatsbyjs/gatsby/commit/91b9d66891d3a7972c340cb9c9bf141c56ec8027))
+
 ## [2.32.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.5...gatsby@2.32.6) (2021-02-24)
 
 ### Features

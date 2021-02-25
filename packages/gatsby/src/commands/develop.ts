@@ -8,7 +8,7 @@ import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import socket from "socket.io"
+import { Server as SocketIO } from "socket.io"
 import fs from "fs-extra"
 import onExit from "signal-exit"
 import {
@@ -344,7 +344,13 @@ module.exports = async (program: IProgram): Promise<void> => {
     : http.createServer()
   statusServer.listen(statusServerPort)
 
-  const io = socket(statusServer)
+  const io = new SocketIO(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
   const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return
