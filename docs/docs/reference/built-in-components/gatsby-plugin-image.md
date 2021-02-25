@@ -278,7 +278,7 @@ Get the default image `srcset`. This will be the fallback, so usually jpg or png
 
 ### `withArtDirection`
 
-By default, the plugin displays different image resolutions at different screen sizes, but it also supports art direction, which is where a visually-different image is displayed at different sizes. This could include displaying a simplified logo or a tighter crop on a profile picture when viewing on a small screen. To do this, you can use the `withArtDirection` function. You need both images available from GraphQL, and you should be able to write a media query for each size. 
+By default, the plugin displays different image resolutions at different screen sizes, but it also supports art direction, which is where a visually-different image is displayed at different sizes. This could include displaying a simplified logo or a tighter crop on a profile picture when viewing on a small screen. To do this, you can use the `withArtDirection` function. You need both images available from GraphQL, and you should be able to write a media query for each size.
 
 The first argument is the default image. This is displayed when no media queries match, but it is also used to set the layout, size, placeholder and most other options. You then pass an array of "art directed images" which are objects with `media` and `image` values.
 
