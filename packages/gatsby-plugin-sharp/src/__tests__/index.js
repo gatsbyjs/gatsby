@@ -38,7 +38,7 @@ const {
   setPluginOptions,
 } = require(`../plugin-options`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby/reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),

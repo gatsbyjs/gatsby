@@ -1591,4 +1591,102 @@ describe(`Query schema`, () => {
       expect(results.data).toEqual(expected)
     })
   })
+
+  describe(`with regex filter`, () => {
+    /**
+     * double-escape character escape sequences when written inline (test only)
+     * (see also the test src/utils/__tests__/prepare-regex.ts)
+     */
+    it(`escape sequences work when correctly escaped`, async () => {
+      const query = `
+        {
+          allMarkdown(filter: { frontmatter: { authors: { elemMatch: { email: { regex: "/^\\\\w{6}\\\\d@\\\\w{7}\\\\.COM$/i" } } } } }) {
+            nodes {
+              frontmatter {
+                authors {
+                  email
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    /**
+     * queries are read from file and parsed with babel
+     */
+    it.only(`escape sequences work when correctly escaped`, async () => {
+      const fs = require(`fs`)
+      const path = require(`path`)
+      const babel = require(`@babel/parser`)
+      const fileContent = fs.readFileSync(
+        path.join(__dirname, `./fixtures/regex-query.js`),
+        `utf-8`
+      )
+      const ast = babel.parse(fileContent)
+      const query = ast.program.body[0].expression.right.quasis[0].value.raw
+
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+  })
 })

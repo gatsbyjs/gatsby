@@ -104,6 +104,17 @@ const transformWebpackError = (
     id = `98124`
     context.packageName = matches?.[1]
     context.sourceMessage = matches?.[0]
+
+    // get Breaking change message out of error
+    // it shows extra information for things that changed with webpack
+    const BreakingChangeRegex = /BREAKING CHANGE[\D\n\d]+$/
+    if (BreakingChangeRegex.test(castedWebpackError.message)) {
+      const breakingMatch = castedWebpackError.message.match(
+        BreakingChangeRegex
+      )
+
+      context.deprecationReason = breakingMatch?.[0]
+    }
   }
 
   return {

@@ -50,8 +50,6 @@ const ensureWindowsDriveIsUppercase = filePath => {
     : filePath
 }
 
-const deprecationWarnings = new Set()
-
 const findChildren = initialChildren => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
@@ -953,22 +951,16 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
-  if (config.module?.rules) {
-    config.module.rules.forEach(rule => {
-      if (!rule.resolve) {
-        // TODO move message to gatsbyjs.com/docs - change to structured
-        const key = `${plugin.name}-setWebpackConfig`
-        if (!deprecationWarnings.has(key)) {
-          report.warn(
-            `[deprecation] ${plugin.name} added a new module rule to the webpack config without specyfing the resolve property. This option will become mandatory in the next release. For more information go to https://webpack.js.org/configuration/module/#ruleresolve`
-          )
-        }
-        deprecationWarnings.add(key)
-        rule.resolve = {
-          fullySpecified: false,
-        }
-      }
-    })
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
   }
 
   return {
@@ -988,22 +980,16 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
-  if (config.module?.rules && plugin) {
-    config.module.rules.forEach(rule => {
-      if (!rule.resolve) {
-        // TODO move message to gatsbyjs.com/docs - change to structured
-        const key = `${plugin.name}-setWebpackConfig`
-        if (!deprecationWarnings.has(key)) {
-          report.warn(
-            `[deprecation] ${plugin.name} added a new module rule to the webpack config without specyfing the resolve property. This option will become mandatory in the next release. For more information go to https://webpack.js.org/configuration/module/#ruleresolve`
-          )
-        }
-        deprecationWarnings.add(key)
-        rule.resolve = {
-          fullySpecified: false,
-        }
-      }
-    })
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
   }
 
   return {
@@ -1352,20 +1338,6 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
-  }
-}
-
-/**
- * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
- */
-actions.setPageData = (pageData: PageData) => {
-  return {
-    type: `SET_PAGE_DATA`,
-    payload: pageData,
   }
 }
 

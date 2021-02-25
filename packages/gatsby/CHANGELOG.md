@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.7...gatsby@3.0.0-next.8) (2021-02-22)
+
+### Bug Fixes
+
+- **gatsby:** cleanup fullySpecified resolving ([#29576](https://github.com/gatsbyjs/gatsby/issues/29576)) ([1343d38](https://github.com/gatsbyjs/gatsby/commit/1343d38a6f22e8919eacbfdcb718fbdc409a03dc))
+
+### Features
+
+- **gatsby-core-utils:** Add file download functions ([#29531](https://github.com/gatsbyjs/gatsby/issues/29531)) ([1a9469d](https://github.com/gatsbyjs/gatsby/commit/1a9469d67a19007faebebfb8ce876970c5e0ffaf))
+
 # [3.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.6...gatsby@3.0.0-next.7) (2021-02-19)
 
 ### Bug Fixes

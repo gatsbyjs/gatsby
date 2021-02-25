@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.3...gatsby-recipes@0.11.0-next.4) (2021-02-22)
+
+### Bug Fixes
+
+- **gatsby-recipes:** change 'Typescript' to 'TypeScript' ([#29587](https://github.com/gatsbyjs/gatsby/issues/29587)) ([d7c4459](https://github.com/gatsbyjs/gatsby/commit/d7c4459cf1d26944ac1804d21f17ef161b32e267))
+
 # [0.11.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.2...gatsby-recipes@0.11.0-next.3) (2021-02-17)
 
 **Note:** Version bump only for package gatsby-recipes

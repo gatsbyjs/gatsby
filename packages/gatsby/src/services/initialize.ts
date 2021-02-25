@@ -233,7 +233,7 @@ export async function initialize({
       // we don't want to ever have this flag enabled for anything than develop
       // in case someone have this env var globally set
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-    } else if (isCI()) {
+    } else if (isCI() && !process.env.CYPRESS_SUPPORT) {
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
       reporter.verbose(
         `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`

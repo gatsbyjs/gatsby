@@ -1,5 +1,5 @@
 import * as path from "path"
-import { Loader, RuleSetRule, Plugin, Configuration } from "webpack"
+import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
 import postcss from "postcss"
 import autoprefixer from "autoprefixer"
@@ -21,12 +21,14 @@ import { builtinPlugins } from "./webpack-plugins"
 import { IProgram, Stage } from "../commands/types"
 import { eslintConfig, eslintRequiredConfig } from "./eslint-config"
 
-type LoaderResolver<T = {}> = (options?: T) => Loader
+type LoaderResolver<T = Record<string, unknown>> = (options?: T) => Loader
 
 type LoaderOptions = Record<string, any>
-type RuleFactory<T = {}> = (options?: T & LoaderOptions) => RuleSetRule
+type RuleFactory<T = Record<string, unknown>> = (
+  options?: T & LoaderOptions
+) => RuleSetRule
 
-type ContextualRuleFactory<T = {}> = RuleFactory<T> & {
+type ContextualRuleFactory<T = Record<string, unknown>> = RuleFactory<T> & {
   internal?: RuleFactory<T>
   external?: RuleFactory<T>
 }
@@ -39,7 +41,11 @@ type CSSModulesOptions =
   | boolean
   | string
   | {
-      mode?: "local" | "global" | "pure" | Function
+      mode?:
+        | "local"
+        | "global"
+        | "pure"
+        | ((resourcePath: string) => "local" | "global" | "pure")
       auto?: boolean
       exportGlobals?: boolean
       localIdentName?: string
@@ -68,8 +74,10 @@ interface ILoaderUtils {
   yaml: LoaderResolver
   style: LoaderResolver
   css: LoaderResolver<{
-    url?: boolean | Function
-    import?: boolean | Function
+    url?: boolean | ((url: string, resourcePath: string) => boolean)
+    import?:
+      | boolean
+      | ((url: string, media: string, resourcePath: string) => boolean)
     modules?: CSSModulesOptions
     sourceMap?: boolean
     importLoaders?: number
@@ -86,6 +94,9 @@ interface ILoaderUtils {
   file: LoaderResolver
   url: LoaderResolver
   js: LoaderResolver
+  json: LoaderResolver
+  null: LoaderResolver
+  raw: LoaderResolver
   dependencies: LoaderResolver
 
   miniCssExtract: LoaderResolver
@@ -270,7 +281,15 @@ export const createWebpackUtils = (
       return {
         loader: require.resolve(`css-loader`),
         options: {
-          url: false,
+          // Absolute urls (https or //) are not send to this function. Only resolvable paths absolute or relative ones.
+          url: function (url: string): boolean {
+            // When an url starts with /
+            if (url.startsWith(`/`)) {
+              return false
+            }
+
+            return true
+          },
           sourceMap: !PRODUCTION,
           modules: modulesOptions,
         },
@@ -408,9 +427,6 @@ export const createWebpackUtils = (
     } = {}): RuleSetRule => {
       return {
         test: /\.(js|mjs|jsx)$/,
-        resolve: {
-          fullySpecified: false,
-        },
         include: (modulePath: string): boolean => {
           // when it's not coming from node_modules we treat it as a source file.
           if (!vendorRegex.test(modulePath)) {
@@ -504,9 +520,6 @@ export const createWebpackUtils = (
 
       return {
         test: /\.(js|mjs)$/,
-        resolve: {
-          fullySpecified: false,
-        },
         exclude: (modulePath: string): boolean => {
           // If dep is user land code, exclude
           if (!vendorRegex.test(modulePath)) {
