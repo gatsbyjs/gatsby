@@ -4,7 +4,7 @@ title: Migrating from v2 to v3
 
 Looking for the v2 docs? [Find them here.](https://v2.gatsbyjs.com)
 
-> This document is a work in progress. Have you run into something that's not covered here? [Add you changes to GitHub!](#link-to-github)
+> This document is a work in progress. Have you run into something that's not covered here? [Add your changes to GitHub!](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v2-to-v3.md)
 
 ## Introduction
 
@@ -14,7 +14,7 @@ This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. TODO
 
 ## Why you should upgrade
 
-This documentation page covers the _how_ of migrating from v2 to v3. If you're curious what's new, read the [v3.0 release notes](#link-to-release-notes).
+This documentation page covers the _how_ of migrating from v2 to v3. If you're curious what's new, read the [v3.0 release notes](/docs/reference/release-notes/v3.0).
 
 ## What we'll cover
 
@@ -46,6 +46,8 @@ npm install gatsby@latest
 
 Update your `package.json` to use the latest version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Many plugins won't need updating so they well might keep working (if not, please check their repository for the current status). You can run an npm script to see all outdated dependencies.
 
+#### npm
+
 ```shell
 npm outdated
 ```
@@ -65,7 +67,21 @@ Install the new package with:
 npm install gatsby-plugin-sharp@latest
 ```
 
+#### yarn
+
+TODO
+
+#### Updating community plugins
+
+TODO: What about peerDependencies? → We should add a note in the section “Update Gatsby Related Packages” since people will get warnings in their console. Ward suggests we drop the full warning in the migration doc with then a tip on how to resolve.
+
 ## Handling Breaking Changes
+
+This section explains breaking changes that were made for Gatsby v3. Most, if not all, of those changes had a deprecation message in v2. In order to successfully update you'll need to resolve these changes.
+
+### Minimal Node.js version 12.13.0
+
+Gatsby now requires at least `12.13.0` for its Node.js version.
 
 ### Gatsby's Link component
 
@@ -337,7 +353,7 @@ export const query = graphql`
 `
 ```
 
-### Schema customization: add explicit `childOf` extension to types with disabled inference
+### Schema Customization: Add explicit `childOf` extension to types with disabled inference
 
 Imagine you have node type `Foo` that has several child nodes of type `Bar` (so you expect field `Foo.childBar` to exist).
 In Gatsby v2 this field was added automatically even if inference was disabled for type `Foo`.
@@ -389,7 +405,7 @@ Related docs:
 - [Child/parent fields](https://www.gatsbyjs.com/docs/schema-inference/#childparent-fields)
 - [Schema generation](https://www.gatsbyjs.com/docs/schema-generation/#4-parent--children-relationships)
 
-### Schema customization: extensions must be set explicitly
+### Schema Customization: Extensions must be set explicitly
 
 Starting with v3 whenever you define a field of complex type, you must also assign
 the corresponding extension (or a custom resolver):
@@ -434,7 +450,7 @@ You can still fix those warnings temporarily in your site's `gatsby-node.js` unt
 
 If you don't see any warnings - you are safe to upgrade to v3. Read more about custom extensions in [this blog post](https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization/).
 
-### Schema customization: removed `noDefaultResolvers` argument from inference directives
+### Schema Customization: Removed `noDefaultResolvers` argument from inference directives
 
 Search for `noDefaultResolvers` entries and remove them:
 
@@ -460,7 +476,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 [Read deprecation announcement](https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization/#-nodefaultresolvers-and-inference-modes).
 
-### Schema customization: remove `many` argument from `childOf` directive
+### Schema Customization: Remove `many` argument from `childOf` directive
 
 It is no longer needed in Gatsby v3:
 
@@ -477,7 +493,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-### Schema customization: consistent return for `nodeModel.runQuery`
+### Schema Customization: Consistent return for `nodeModel.runQuery`
 
 For Gatsby v2, `nodeModel.runQuery` with `firstOnly: false` returns `null` when nothing is found.
 In v3 it returns an empty array instead.
@@ -513,6 +529,8 @@ exports.createResolvers = ({ createResolvers }) => {
 So do not confuse those two cases.
 
 ## Resolving Deprecations
+
+This section explains deprecations that were made for Gatsby v3. The old behaviors will be removed in v4. You can still use the old behaviors in v3 but we recommend updating to the new signatures.
 
 ### `touchNode`
 
