@@ -49,6 +49,11 @@ export class WebsocketManager {
       // increasing it should help
       // @see https://github.com/socketio/socket.io/issues/3259#issuecomment-448058937
       pingTimeout: 30000,
+      // whitelist all (https://github.com/expressjs/cors#configuration-options)
+      cors: {
+        origin: true,
+      },
+      cookie: true,
     })
     this.websocket = websocket
 

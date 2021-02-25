@@ -344,7 +344,13 @@ module.exports = async (program: IProgram): Promise<void> => {
     : http.createServer()
   statusServer.listen(statusServerPort)
 
-  const io = socket(statusServer)
+  const io = socket(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
   const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return
