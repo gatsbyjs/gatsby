@@ -423,6 +423,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 }
 
+const deleteNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * Delete a node
  * @param {object} node A node object. See the "createNode" action for more information about the node object details.
@@ -441,7 +443,10 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
     if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
-    report.warn(msg)
+    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
     id = node.node.id
   } else {
