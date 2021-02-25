@@ -16,7 +16,7 @@
     "esModuleInterop": true,
     "jsx": "preserve",
     "paths": {
-      "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router"]
+      "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router/*"]
     }
   },
   "exclude": ["peril/*", "examples/*"]
