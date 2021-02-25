@@ -803,6 +803,8 @@ actions.createNode = (...args) => dispatch => {
   })
 }
 
+const touchNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
@@ -824,7 +826,10 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
       msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    report.warn(msg)
+    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      touchNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
     node = getNode(node.nodeId)
   }
