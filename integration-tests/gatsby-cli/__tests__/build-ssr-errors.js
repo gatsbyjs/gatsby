@@ -35,7 +35,9 @@ describe(`gatsby build (SSR errors)`, () => {
     // // Stack trace
     logs.should.contain(`WebpackError: ReferenceError: window is not defined`)
     logs.should.contain(`- gatsby-ssr.js:3`)
-    logs.should.contain(`  gatsby-ssr.js:3:3`)
+    logs.should.contain(
+      `  gatsby-starter-default-build-ssr-errors/gatsby-ssr.js:3:3`
+    )
 
     expect(code).not.toBe(0)
   })

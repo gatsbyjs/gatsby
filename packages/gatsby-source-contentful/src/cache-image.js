@@ -3,7 +3,7 @@ const { resolve, parse } = require(`path`)
 
 const { pathExists, createWriteStream } = require(`fs-extra`)
 
-const downloadWithRetry = require(`./download-with-retry`)
+const downloadWithRetry = require(`./download-with-retry`).default
 
 const inFlightImageCache = new Map()
 

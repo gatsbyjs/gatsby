@@ -103,6 +103,7 @@ async function startQueryJob(
     .query(queryJob.query, queryJob.context, {
       parentSpan,
       queryName: queryJob.id,
+      componentPath: queryJob.componentPath,
     })
     .finally(() => {
       isPending = false
@@ -206,20 +207,10 @@ export async function queryRunner(
       path: queryJob.id,
       componentPath: queryJob.componentPath,
       isPage: queryJob.isPage,
+      resultHash,
+      queryHash: queryJob.hash,
     })
   )
 
-  // Sets pageData to the store, here for easier access to the resultHash
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    queryJob.isPage
-  ) {
-    store.dispatch(
-      actions.setPageData({
-        id: queryJob.id,
-        resultHash,
-      })
-    )
-  }
   return result
 }
