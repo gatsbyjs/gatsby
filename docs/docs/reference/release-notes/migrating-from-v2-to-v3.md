@@ -65,7 +65,13 @@ TODO
 
 #### Updating community plugins
 
-TODO: What about peerDependencies? → We should add a note in the section “Update Gatsby Related Packages” since people will get warnings in their console. Ward suggests we drop the full warning in the migration doc with then a tip on how to resolve.
+Using community plugins you might see warnings like these in your terminal:
+
+```shell
+warning Plugin gatsby-plugin-acme is not compatible with your gatsby version 3.0.0 - It requires gatsby@^2.32.0
+```
+
+This is because the plugin needs to set its `peerDependencies` to the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
 ## Handling Breaking Changes
 
