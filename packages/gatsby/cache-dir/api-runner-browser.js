@@ -5,6 +5,20 @@ const {
   loadPageSync,
 } = require(`./loader`).publicLoader
 
+function getApi(api, plugin) {
+  if (plugin[api]) {
+    return plugin[api]
+  }
+
+  if (api === `wrapPageElement`) {
+    return plugin[`WrapPageElement`]
+  } else if (api === `wrapRootElement`) {
+    return plugin[`WrapRootElement`]
+  }
+
+  return false
+}
+
 exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
   // Hooks for gatsby-cypress's API handler
   if (process.env.CYPRESS_SUPPORT) {
@@ -18,15 +32,19 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
   }
 
   let results = plugins.map(plugin => {
-    if (!plugin.plugin[api]) {
+    const apiToRun = getApi(api, plugin.plugin)
+    if (!apiToRun) {
       return undefined
     }
+    // if (!plugin.plugin[api]) {
+    //   return undefined
+    // }
 
     args.getResourceURLsForPathname = getResourceURLsForPathname
     args.loadPage = loadPage
     args.loadPageSync = loadPageSync
 
-    const result = plugin.plugin[api](args, plugin.options)
+    const result = apiToRun(args, plugin.options)
     if (result && argTransform) {
       args = argTransform({ args, result, plugin })
     }
@@ -46,10 +64,10 @@ exports.apiRunner = (api, args = {}, defaultReturn, argTransform) => {
 }
 
 exports.apiRunnerAsync = (api, args, defaultReturn) =>
-  plugins.reduce(
-    (previous, next) =>
-      next.plugin[api]
-        ? previous.then(() => next.plugin[api](args, next.options))
-        : previous,
-    Promise.resolve()
-  )
+  plugins.reduce((previous, next) => {
+    const apiToRun = getApi(api, next.plugin)
+
+    return apiToRun
+      ? previous.then(() => apiToRun(args, next.options))
+      : previous
+  }, Promise.resolve())
