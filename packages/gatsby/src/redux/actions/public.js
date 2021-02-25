@@ -70,6 +70,15 @@ const findChildren = initialChildren => {
   return children
 }
 
+const displayedWarnings = new Set()
+const warnOnce = (message, key) => {
+  let messageId = key ?? message
+  if (!displayedWarnings.has(messageId)) {
+    displayedWarnings.add(messageId)
+    report.warn(message)
+  }
+}
+
 import type { Plugin } from "./types"
 
 type Job = {
@@ -1130,10 +1139,18 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1214,10 +1231,18 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
  *
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
 actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `SET_JOB`,
     plugin,
@@ -1231,10 +1256,18 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * endJob({ id: `write file id: 123` })
  */
 actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `END_JOB`,
     plugin,
