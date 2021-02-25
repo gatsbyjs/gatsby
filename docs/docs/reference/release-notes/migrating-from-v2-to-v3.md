@@ -595,7 +595,7 @@ In most cases you won't have to do anything to be v3 compatible, but there are a
 
 ```diff:title=package.json
 "peerDependencies": {
--  "gatsby": "^2.32.0"
-+  "gatsby": "^3.0.0"
+-  "gatsby": "^2.32.0",
++  "gatsby": "^3.0.0",
 }
 ```
