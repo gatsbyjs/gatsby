@@ -36,7 +36,7 @@ npm install gatsby@latest
 
 ### Update Gatsby related packages
 
-Update your `package.json` to use the latest version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Many plugins won't need updating so they well might keep working (if not, please check their repository for the current status). You can run an npm script to see all outdated dependencies.
+Update your `package.json` to use the latest version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Many plugins won't need updating so they may keep working (if not, please check their repository for the current status). You can run an npm script to see all outdated dependencies.
 
 #### npm
 
@@ -98,7 +98,7 @@ const Form = () => (
 
 ### Removal of `__experimentalThemes`
 
-The deprecated `__experimentalThemes` key inside `gatsby-config.js` was removed. You'll need to define your Gatsby themes inside the `plugins` array like any other plugin.
+The deprecated `__experimentalThemes` key inside `gatsby-config.js` was removed. You'll need to define your Gatsby themes inside the `plugins` array instead.
 
 ```diff:title=gatsby-config.js
 module.exports = {
@@ -140,7 +140,7 @@ exports.createPages = (gatsbyArgs, pluginArgs) => {
 
 ### Removal of `deleteNodes`
 
-The deprecated API `deleteNodes` was removed. Please iterate over the `nodes` yourself and call `deleteNode`:
+The deprecated API `deleteNodes` was removed. Please iterate over the `nodes` instead and call `deleteNode`:
 
 ```diff
 const nodes = ["an-array-of-nodes"]
@@ -168,7 +168,7 @@ exports.onCreateNode = ({ node, actions }) => {
 
 ### Removal of `hasNodeChanged` from public API surface
 
-The check whether a node has changed or not is already happening internally so it's not necessary to use this API in your plugins anymore.
+This API is no longer necessary as there is an internal check for whether or not a node has changed.
 
 ### Removal of `sizes` & `resolutions` for image queries
 
@@ -274,7 +274,7 @@ export const query = graphql`
 
 ### CSS Modules are imported as ESModules
 
-The web moves forward and so are we. ESModules allow us to better treeshake and generate smaller files. From now on you'll need to import cssModules as: `import { box } from './mystyles.module.css'`
+The web moves forward and so do we. ESModules allow us to better treeshake and generate smaller files. From now on you'll need to import cssModules as: `import { box } from './mystyles.module.css'`
 
 ```diff:title=src/components/Box.js
 import React from "react"
@@ -313,7 +313,7 @@ const query = {
 
 ### GraphQL: `__typename` field is no longer added automatically
 
-In v2 we used to add implicit `__typename` field when querying for a field of abstract type (interface or union).
+In v2 we used to add the `__typename` field implicitly when querying for a field of abstract type (interface or union).
 In v3 `__typename` has to be added explicitly in your query:
 
 ```diff:title=src/pages/index.js
@@ -350,7 +350,7 @@ export const query = graphql`
 Imagine you have node type `Foo` that has several child nodes of type `Bar` (so you expect field `Foo.childBar` to exist).
 In Gatsby v2 this field was added automatically even if inference was disabled for type `Foo`.
 
-In Gatsby v3 you must declare paret-child relationship explicitly for this case:
+In Gatsby v3 you must declare a parent-child relationship explicitly for this case:
 
 ```diff:title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
@@ -367,7 +367,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-To make upgrade easier, check the CLI output of your site on the latest v2 and follow suggestions
+To make upgrading easier, check the CLI output of your site on the latest v2 and follow the suggestions
 when you see a warning like this:
 
 ```shell
@@ -387,7 +387,7 @@ https://www.gatsbyjs.com/docs/actions/#createTypes
 If you don't see any warnings - you are safe to upgrade to v3.
 
 If this warning is displayed for a type defined by some plugin - open an issue in the plugin repo
-with suggestion to upgrade (and a link to this guide).
+with a suggestion to upgrade (and a link to this guide).
 
 You can still fix those warnings temporarily in your site's `gatsby-node.js` until it is fixed in the plugin.
 
@@ -420,7 +420,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 In Gatsby v2 we add those extensions for you automatically but display a deprecation warning.
 
-To make upgrade easier, check the CLI output of your site on the latest v2 and follow suggestions
+To make upgrading easier, check the CLI output of your site on the latest v2 and follow suggestions
 when you see a warning like this:
 
 ```shell
@@ -436,7 +436,7 @@ https://www.gatsbyjs.com/docs/actions/#createTypes
 ```
 
 If this warning is displayed for a type defined by some plugin - open an issue in the plugin repo
-with suggestion to upgrade (and a link to this guide).
+with a suggestion to upgrade (and a link to this guide).
 
 You can still fix those warnings temporarily in your site's `gatsby-node.js` until it is fixed in the plugin.
 
