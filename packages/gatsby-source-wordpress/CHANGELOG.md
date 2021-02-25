@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.8...gatsby-source-wordpress@5.0.0-next.9) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** remove hard tabs from Markdown ([#29627](https://github.com/gatsbyjs/gatsby/issues/29627)) ([0038683](https://github.com/gatsbyjs/gatsby/commit/0038683e7a6bcf8340265a3a46714bc87b32dd96))
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+- **gatsby-source-wordpress:** Add missing tests ([#29406](https://github.com/gatsbyjs/gatsby/issues/29406)) ([06e9337](https://github.com/gatsbyjs/gatsby/commit/06e933758b176505ca46f532a13db5dc5b1681e9))
+
 # [5.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.7...gatsby-source-wordpress@5.0.0-next.8) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-source-wordpress

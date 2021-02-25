@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.8...gatsby-plugin-image@1.0.0-next.9) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Apply defaults when width and height are set ([#29726](https://github.com/gatsbyjs/gatsby/issues/29726)) ([3be9541](https://github.com/gatsbyjs/gatsby/commit/3be9541ade911ab4041715a37aed0eb65db4c313))
+
+### Features
+
+- **gatsby-plugin-image:** Allow image helpers to take other node types ([#29625](https://github.com/gatsbyjs/gatsby/issues/29625)) ([eaab2df](https://github.com/gatsbyjs/gatsby/commit/eaab2dfa1a7e1c1e64ffb78487f3f6c324f892ce))
+
 # [1.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.7...gatsby-plugin-image@1.0.0-next.8) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-plugin-image
