@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.0.0-next.1...gatsby-plugin-netlify-cms@5.0.0-next.2) (2021-02-25)
+
+### Features
+
+- **gatsby-plugin-netlify-cms:** fix compatibility for webpack5 ([#29642](https://github.com/gatsbyjs/gatsby/issues/29642)) ([7e03dc7](https://github.com/gatsbyjs/gatsby/commit/7e03dc75971e325987712d4f8c5c821db28812d8))
+
 # [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.0.0-next.0...gatsby-plugin-netlify-cms@5.0.0-next.1) (2021-02-19)
 
 ### Bug Fixes

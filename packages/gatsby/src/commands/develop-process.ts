@@ -1,7 +1,7 @@
 import { syncStaticDir } from "../utils/get-static-dir"
 import reporter from "gatsby-cli/lib/reporter"
-import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
+import { isTruthy } from "gatsby-core-utils"
 import express from "express"
 import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
@@ -80,7 +80,7 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
-  reporter.setVerbose(program.verbose)
+  reporter.setVerbose(isTruthy(process.env.VERBOSE) || program.verbose)
 
   if (program.debugInfo) {
     openDebuggerPort(program.debugInfo)

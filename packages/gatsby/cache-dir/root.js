@@ -12,7 +12,6 @@ import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 import FastRefreshOverlay from "./fast-refresh-overlay"
-import { LoadingIndicatorEventHandler } from "./loading-indicator"
 
 navigationInit()
 
@@ -116,9 +115,5 @@ const WrappedRoot = apiRunner(
 export default () => (
   <FastRefreshOverlay>
     <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-    {process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true` && (
-        <LoadingIndicatorEventHandler />
-      )}
   </FastRefreshOverlay>
 )

@@ -31,7 +31,7 @@ describe(`gatsby-plugin-preact`, () => {
       },
     })
 
-    expect(getConfig).toHaveBeenCalledTimes(1)
+    expect(getConfig).toHaveBeenCalledTimes(2)
     expect(actions.setBabelPlugin).toHaveBeenCalledTimes(1)
     expect(actions.setBabelPlugin).toHaveBeenCalledWith({
       name: `@prefresh/babel-plugin`,
