@@ -1,4 +1,4 @@
-// Copied from https://github.com/vercel/next.js
+// Adapted from https://github.com/vercel/next.js
 // License: MIT
 // Copyright (c) 2021 Vercel, Inc.
 //
@@ -17,6 +17,7 @@ export function lock() {
 
     const scrollBarGap =
       window.innerWidth - document.documentElement.clientWidth
+    const rootElement = document.getElementById(`___gatsby`)
 
     if (scrollBarGap > 0) {
       previousBodyPaddingRight = document.body.style.paddingRight
@@ -25,6 +26,7 @@ export function lock() {
 
     previousBodyOverflowSetting = document.body.style.overflow
     document.body.style.overflow = `hidden`
+    rootElement.setAttribute(`aria-hidden`, `true`)
   })
 }
 
@@ -33,6 +35,9 @@ export function unlock() {
     if (activeLocks === 0 || --activeLocks !== 0) {
       return
     }
+
+    const rootElement = document.getElementById(`___gatsby`)
+    rootElement.removeAttribute(`aria-hidden`)
 
     if (previousBodyPaddingRight !== undefined) {
       document.body.style.paddingRight = previousBodyPaddingRight
