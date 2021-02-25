@@ -1,7 +1,4 @@
 {
-  "gatsby-plugin-google-analytics": {
-    "message": "Add the Google Analytics tracking script"
-  },
   "gatsby-plugin-image": {
     "message": "Add responsive images",
     "plugins": [
@@ -16,12 +13,14 @@
       }
     }
   },
+  "gatsby-plugin-google-analytics": {
+    "message": "Add the Google Analytics tracking script"
+  },
   "gatsby-plugin-react-helmet": {
     "message": "Add page meta tags with React Helmet",
     "dependencies": ["react-helmet"]
   },
   "gatsby-plugin-sitemap": { "message": "Add an automatic sitemap" },
-  "gatsby-plugin-offline": { "message": "Enable offline functionality" },
   "gatsby-plugin-manifest": {
     "message": "Generate a manifest file",
     "options": {
