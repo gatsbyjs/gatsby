@@ -25,7 +25,9 @@ function WrappedAccordionItem({ error, open }) {
         <>
           Error in function{` `}
           <span data-font-weight="bold">{functionName}</span> in{` `}
-          <span data-font-weight="bold">{moduleId}</span>
+          <span data-font-weight="bold">
+            {moduleId}:{line}
+          </span>
         </>
       }
     >

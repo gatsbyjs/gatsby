@@ -18,6 +18,7 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
     },
     sourceContent: null,
   })
+
   React.useEffect(() => {
     async function fetchData() {
       const res = await fetch(url)
@@ -32,5 +33,6 @@ export function useStackFrame({ moduleId, lineNumber, columnNumber }) {
     }
     fetchData()
   }, [])
+
   return response
 }

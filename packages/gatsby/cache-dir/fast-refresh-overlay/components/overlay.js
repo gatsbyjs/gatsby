@@ -59,7 +59,7 @@ export function Overlay({ children }) {
       <Backdrop />
       <div
         data-gatsby-overlay="root"
-        role="dialog"
+        role="alertdialog"
         aria-labelledby="gatsby-overlay-labelledby"
         aria-describedby="gatsby-overlay-describedby"
         aria-modal="true"
@@ -73,6 +73,7 @@ export function Overlay({ children }) {
 export function CloseButton({ dismiss }) {
   return (
     <button data-gatsby-overlay="header__close-button" onClick={dismiss}>
+      <VisuallyHidden>Close</VisuallyHidden>
       <svg
         aria-hidden={true}
         width="24"
@@ -81,7 +82,6 @@ export function CloseButton({ dismiss }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <VisuallyHidden>Close</VisuallyHidden>
         <path
           d="M18 6L6 18"
           stroke="currentColor"
