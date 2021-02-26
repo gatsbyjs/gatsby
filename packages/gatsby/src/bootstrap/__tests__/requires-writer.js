@@ -1,6 +1,6 @@
 const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
-const { match } = require(`@reach/router/lib/utils`)
+const { match } = require(`@gatsbyjs/reach-router/lib/utils`)
 
 const now = Date.now()
 

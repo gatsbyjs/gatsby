@@ -341,7 +341,7 @@ module.exports = async (
       // Gatsby main router changes it, to keep v2 behaviour.
       // We will need to most likely remove this for v3.
       {
-        test: require.resolve(`@reach/router/es/index`),
+        test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
@@ -424,6 +424,7 @@ module.exports = async (
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
         "@babel/runtime": getPackageRoot(`@babel/runtime`),
+        "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
@@ -448,7 +449,7 @@ module.exports = async (
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
       resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
+        getPackageRoot(`@gatsbyjs/reach-router`),
         `es`
       )
     }
