@@ -371,10 +371,15 @@ module.exports = {
       }
     }
 
+    if (!fileModule) {
+      res.json(emptyResponse)
+      return
+    }
+
     // We need the internal webpack file that is used in the bundle, not the module source.
     // It doesn't have the correct sourceMap.
-    const webpackSource = compilation.codeGenerationResults
-      .get(fileModule)
+    const webpackSource = compilation?.codeGenerationResults
+      ?.get(fileModule)
       ?.sources.get(`javascript`)
 
     const sourceMap = webpackSource?.map()

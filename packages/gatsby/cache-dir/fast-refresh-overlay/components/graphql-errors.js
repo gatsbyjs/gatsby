@@ -1,7 +1,8 @@
 import * as React from "react"
 import { Body, Header, HeaderOpenClose, Overlay } from "./overlay"
 import { Accordion, AccordionItem } from "./accordion"
-import { openInEditor } from "../utils"
+import { openInEditor, prettifyStack } from "../utils"
+import { CodeFrame } from "./code-frame"
 
 function WrappedAccordionItem({ error, open }) {
   const title =
@@ -12,6 +13,7 @@ function WrappedAccordionItem({ error, open }) {
   const filePath = error?.filePath
   const lineNumber = error?.location?.start?.line
   const columnNumber = error?.location?.start?.column
+
   let locString = ``
   if (typeof lineNumber !== `undefined`) {
     locString += `:${lineNumber}`
@@ -19,6 +21,9 @@ function WrappedAccordionItem({ error, open }) {
       locString += `:${columnNumber}`
     }
   }
+
+  // Sometimes the GraphQL error text has ANSI in it. If it's only text, it'll be passed through
+  const decoded = prettifyStack(error.text)
 
   return (
     <AccordionItem open={open} title={title}>
@@ -41,9 +46,7 @@ function WrappedAccordionItem({ error, open }) {
             {locString}
           </div>
         )}
-        <pre data-gatsby-overlay="pre">
-          <code data-gatsby-overlay="pre__code">{error.text}</code>
-        </pre>
+        <CodeFrame decoded={decoded} />
         {docsUrl && (
           <div data-gatsby-overlay="codeframe__bottom">
             See our docs page for more info on this error:{` `}
