@@ -402,7 +402,7 @@ describe(`Load plugins`, () => {
       expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
 
-    it(`validates locally resolved plugin schemas`, async () => {
+    it(`validates local plugin schemas using require.resolve`, async () => {
       await loadPlugins({
         plugins: [
           {
