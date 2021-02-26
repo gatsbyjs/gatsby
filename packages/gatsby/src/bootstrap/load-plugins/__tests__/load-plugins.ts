@@ -401,5 +401,47 @@ describe(`Load plugins`, () => {
       `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
+
+    it(`validates locally resolved plugin schemas`, async () => {
+      await loadPlugins({
+        plugins: [
+          {
+            resolve: require.resolve(`./fixtures/local-plugin`),
+            options: {
+              optionalString: 1234,
+            },
+          },
+        ],
+      })
+
+      expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
+      // expect((reporter.error as jest.Mock).mock.calls[0])
+      //   .toMatchInlineSnapshot(`
+      //   Array [
+      //     Object {
+      //       "context": Object {
+      //         "configDir": null,
+      //         "pluginName": "gatsby-remark-autolink-headers",
+      //         "validationErrors": Array [
+      //           Object {
+      //             "context": Object {
+      //               "key": "maintainCase",
+      //               "label": "maintainCase",
+      //               "value": "should be boolean",
+      //             },
+      //             "message": "\\"maintainCase\\" must be a boolean",
+      //             "path": Array [
+      //               "maintainCase",
+      //             ],
+      //             "type": "boolean.base",
+      //           },
+      //         ],
+      //       },
+      //       "id": "11331",
+      //     },
+      //   ]
+      // `)
+      expect(mockProcessExit).toHaveBeenCalledWith(1)
+    })
   })
 })
