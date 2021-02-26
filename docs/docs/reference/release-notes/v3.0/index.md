@@ -16,7 +16,7 @@ Key highlights of this release:
 - [webpack 5](#webpack-5)
 - [React 17](#react-17)
 - [Fast Refresh](#fast-refresh)
-- [jsx-factory & eslint-plugin](#todo)
+- [babel-preset-gatsby](#babel-preset-gatsby)
 - [Miscellaneous changes in plugins](#miscellaneous-changes-in-plugins)
 
 Also check out [notable bugfixes](#notable-bugfixes).
@@ -68,7 +68,7 @@ We also added two new ESLint rules inside the default configuration that will wa
 - No anonymous default exports
 - Page templates must only export one default export (the page) and `query` as a named export
 
-## babel-preset-gatsby
+## `babel-preset-gatsby`
 
 `babel-preset-gatsby` now accepts `reactImportSource` which is passed to the underlying `@babel/preset-react` importSource field. Note that this field is only supported when `reactRuntime` is `automatic`, it is `classic` by default.
 
