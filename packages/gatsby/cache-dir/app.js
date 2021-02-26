@@ -14,6 +14,7 @@ import asyncRequires from "$virtual/async-requires"
 import matchPaths from "$virtual/match-paths.json"
 import { LoadingIndicatorEventHandler } from "./loading-indicator"
 import Root from "./root"
+import { init as navigationInit } from "./navigation"
 // ensure in develop we have at least some .css (even if it's empty).
 // this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
 // this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
@@ -29,6 +30,8 @@ setLoader(loader)
 loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
+
+navigationInit()
 
 // Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
 // bundle. This ensures hot reloading doesn't break when someone first adds
