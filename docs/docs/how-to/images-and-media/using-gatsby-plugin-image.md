@@ -200,4 +200,4 @@ If your site uses the old `gatsby-image` component, you can use a codemod to hel
 npx gatsby-codemods gatsby-plugin-image
 ```
 
-This will convert all GraphQL queries and components to use the new plugin. For more information see the full migration guide.
+This will convert all GraphQL queries and components to use the new plugin. For more information see the full [migration guide](/docs/reference/release-notes/image-migration-guide/).
