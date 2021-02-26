@@ -7,7 +7,7 @@ module.exports = {
       },
     },
     {
-      resolve: require.resolve(`./plugins/local-plugin`),
+      resolve: require.resolve(`./local-plugin-with-path`),
       options: {
         required: true,
       },

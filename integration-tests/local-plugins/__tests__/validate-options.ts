@@ -22,9 +22,16 @@ beforeAll(async () => {
 
   await mkdirp(basePath)
 
+  await copy(`${rootPath}/local-plugin-with-path`, `${basePath}/local-plugin-with-path`)
   await copy(`${rootPath}/plugins`, `${basePath}/plugins`)
   await copy(`${rootPath}/gatsby-config.js`, `${basePath}/gatsby-config.js`)
   await copy(`${rootPath}/package.json`, `${basePath}/package.json`)
+
+  execFileSync(`yarn`, [`build`], {
+    cwd: basePath,
+    /* stdio: "inherit", /* for debugging/verbosity */
+    shell: true /* Windows-compat */,
+  })
 }, 1000000)
 
 afterAll(async () => {
@@ -37,13 +44,14 @@ afterAll(async () => {
 })
 
 it("should invoke pluginOptionsSchema for validating local plugin", async () => {
-  execFileSync(`yarn`, [`build`], {
-    cwd: basePath,
-    /* stdio: "inherit", /* for debugging/verbosity */
-    shell: true /* Windows-compat */,
-  })
-
   const pluginLoadedPath = join(basePath, "public", "local-plugin-loaded")
+  expect(await exists(pluginLoadedPath)).toBe(true)
+  const fileBuffer = await readFile(pluginLoadedPath)
+  expect(fileBuffer.toString()).toBe("VALIDATION RAN")
+})
+
+it("should invoke pluginOptionsSchema for validating local plugin using require.resolve", async () => {
+  const pluginLoadedPath = join(basePath, "public", "local-plugin-with-path-loaded")
   expect(await exists(pluginLoadedPath)).toBe(true)
   const fileBuffer = await readFile(pluginLoadedPath)
   expect(fileBuffer.toString()).toBe("VALIDATION RAN")
