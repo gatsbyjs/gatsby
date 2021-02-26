@@ -1,16 +1,21 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require("fs")
+const path = require("path")
 
-let validatedOptionsSchema = false;
+let validatedOptionsSchema = "DID NOT RUN VALIDATION"
 
 exports.pluginOptionsSchema = ({ Joi }) => {
-  validatedOptionsSchema = true;
+  validatedOptionsSchema = "VALIDATION RAN"
   return Joi.object({
     required: Joi.boolean().required(),
     optionalString: Joi.string(),
   })
 }
 
+exports.onPreInit = ({ reporter }) => reporter.info("Initialized local-plugin")
+
 exports.onPostBuild = () => {
-  fs.writeFileSync(path.join('./public', 'local-plugin-loaded'), validatedOptionsSchema.toString());
+  fs.writeFileSync(
+    path.join("./public", "local-plugin-loaded"),
+    validatedOptionsSchema
+  )
 }

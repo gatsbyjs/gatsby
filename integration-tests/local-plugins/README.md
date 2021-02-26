@@ -4,4 +4,4 @@ Before running suite, run `yarn` in the folder to create the `node_modules` and 
 
 ## Validating Plugin Options
 
-The test suite includes tests to validate that the local plugins are loaded and that they have run the `pluginOptionsSchema` routine by dropping a file into the build folder.
+The tests will verify local plugin options schema validation by dropping a file into the build folder with a flag that flips if the `pluginOptionsSchema` export is invoked.

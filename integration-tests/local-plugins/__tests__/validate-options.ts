@@ -7,15 +7,15 @@ const {
   remove,
   stat,
   writeFile,
-  exists
+  exists,
 } = require(`fs-extra`)
 const { resolve, join } = require(`path`)
 
-let basePath: string;
-let rootPath: string;
+let basePath: string
+let rootPath: string
 
 beforeAll(async () => {
-  basePath = resolve(`${__dirname}/base`)
+  basePath = resolve(`${__dirname}/fixtures`)
   rootPath = resolve(`${__dirname}/..`)
 
   await remove(basePath)
@@ -28,14 +28,23 @@ beforeAll(async () => {
 }, 1000000)
 
 afterAll(async () => {
+  // Wait to avoid `EBUSY: resource busy or locked, rmdir` on Windows
+  const waitForWindowsBeingSlow = new Promise(resolve =>
+    setTimeout(resolve, 600)
+  )
+  await waitForWindowsBeingSlow
   await remove(basePath)
 })
 
-it('should validate local plugin options schema', async () => {
-  execFileSync(`yarn`, [`build`], { cwd: basePath, stdio: 'inherit', shell: true })
+it("should invoke pluginOptionsSchema for validating local plugin", async () => {
+  execFileSync(`yarn`, [`build`], {
+    cwd: basePath,
+    /* stdio: "inherit", /* for debugging/verbosity */
+    shell: true /* Windows-compat */,
+  })
 
-  const pluginLoadedPath = join(basePath, 'public', 'local-plugin-loaded');
-  expect(await exists(pluginLoadedPath)).toBe(true);
-  const contents = await readFile(pluginLoadedPath)
-  expect(contents.toString()).toBe('true');
+  const pluginLoadedPath = join(basePath, "public", "local-plugin-loaded")
+  expect(await exists(pluginLoadedPath)).toBe(true)
+  const fileBuffer = await readFile(pluginLoadedPath)
+  expect(fileBuffer.toString()).toBe("VALIDATION RAN")
 })

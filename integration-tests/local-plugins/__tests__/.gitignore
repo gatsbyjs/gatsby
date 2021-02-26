@@ -1,1 +1,2 @@
-base
+# Jest will ignore on subsequent runs but leave it out of git too
+fixtures
