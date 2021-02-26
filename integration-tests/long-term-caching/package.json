@@ -11,8 +11,8 @@
   "dependencies": {
     "gatsby": "^3.0.0-next.0",
     "gray-percentage": "^2.0.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
