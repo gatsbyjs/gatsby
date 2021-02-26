@@ -155,12 +155,12 @@ The `gatsby-theme-events/package.json` file should now include the following:
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
-    "gatsby": "^2.9.11",
+    "gatsby": "^3.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   }
