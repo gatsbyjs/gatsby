@@ -31,11 +31,11 @@ exports.onCreateWebpackConfig = (
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
-      loaders.miniCssExtract({ modules: true }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
-    ],
+    ].filter(Boolean),
   }
 
   const configRules = [

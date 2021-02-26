@@ -10,6 +10,7 @@ describe(`gatsby-plugin-stylus`, () => {
     miniCssExtract: () => `miniCssExtract`,
     css: args => `css(${JSON.stringify(args)})`,
     postcss: args => `postcss(${JSON.stringify(args)})`,
+    null: () => `null`,
   }
 
   const { onCreateWebpackConfig } = require(`../gatsby-node`)
@@ -45,7 +46,7 @@ describe(`gatsby-plugin-stylus`, () => {
           {
             actions,
             loaders,
-            stage: `develop`,
+            stage,
           },
           options
         )
