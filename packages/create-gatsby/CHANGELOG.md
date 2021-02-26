@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.0.0-next.2...create-gatsby@1.1.0-next.0) (2021-02-26)
+
+### Features
+
+- **create-gatsby:** Remove offline plugin ([#29771](https://github.com/gatsbyjs/gatsby/issues/29771)) ([27adffe](https://github.com/gatsbyjs/gatsby/commit/27adffe1ade6dc5c1dcf649bc204b45bf85c700f))
+
 # [1.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.0.0-next.1...create-gatsby@1.0.0-next.2) (2021-02-25)
 
 **Note:** Version bump only for package create-gatsby

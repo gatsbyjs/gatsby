@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.0.0-next.3...gatsby-plugin-mdx@2.1.0-next.0) (2021-02-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** fix relative imports ([#29775](https://github.com/gatsbyjs/gatsby/issues/29775)) ([e79fc6b](https://github.com/gatsbyjs/gatsby/commit/e79fc6b8b0da2bb5aaec8e0ff06073af9c466401))
+
 # [2.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.0.0-next.2...gatsby-plugin-mdx@2.0.0-next.3) (2021-02-25)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
