@@ -54,7 +54,7 @@ export const buildGatsbyNodeObjectResolver = ({ field, fieldName }) => async (
     schema: { typePrefix: prefix },
   } = getPluginOptions()
 
-  if (!existingNode.__typename.startsWith(prefix)) {
+  if (existingNode?.__typename && !existingNode.__typename.startsWith(prefix)) {
     existingNode.__typename = buildTypeName(existingNode.__typename)
   }
 
