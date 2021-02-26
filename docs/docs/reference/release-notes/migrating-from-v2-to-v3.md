@@ -585,6 +585,28 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
 }
 ```
 
+## Using `fs` in SSR
+
+Gatsby v3 introduce incremental builds for HTML generation. For this feature to work correctly Gatsby needs to track all inputs used to generate HTML file. Arbitrary code execution in `gatsby-ssr.js` files allow usage of `fs` module which is marked as unsafe and result in disabling of this feature. To migrate you can use `import` instead of `fs`:
+
+```diff:title=gatsby-ssr.js
+import * as React from "react"
+-import * as fs from "fs"
+-import * as path from "path"
++import stylesToInline from "!!raw-loader!/some-auto-generated.css"
+
+export function onRenderBody({ setHeadComponents }) {
+-  const stylesToInline = fs.readFileSync(path.join(process.cwd(), `some-auto-generated.css`))
+  setHeadComponents(
+    <style
+      dangerouslySetInnerHTML={{
+        __html: stylesToInline,
+      }}
+    />
+  )
+}
+```
+
 ## For Plugin Maintainers
 
 In most cases you won't have to do anything to be v3 compatible, but there are a few things you can do to be certain your plugin won't throw any warnings or errors.
