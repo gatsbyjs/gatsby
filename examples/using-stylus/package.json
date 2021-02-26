@@ -16,8 +16,8 @@
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-stylus": "next",
     "gatsby-plugin-typography": "next",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19"
   }

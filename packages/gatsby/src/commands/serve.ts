@@ -4,7 +4,7 @@ import fs from "fs-extra"
 import compression from "compression"
 import express from "express"
 import chalk from "chalk"
-import { match as reachMatch } from "@reach/router/lib/utils"
+import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
 

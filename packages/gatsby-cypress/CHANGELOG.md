@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.1.0-next.0...gatsby-cypress@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.0.0-next.0...gatsby-cypress@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-cypress
+
 # [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.12.0-next.0...gatsby-cypress@1.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-cypress
