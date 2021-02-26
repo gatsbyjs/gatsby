@@ -10,7 +10,7 @@ The new Gatsby Image plugin is currently in beta, but you can try it out now and
 
 ## Getting started
 
-First you need to install the following packages:
+First, you need to install the following packages:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
@@ -23,7 +23,6 @@ module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
-    `gatsby-source-filesystem`,
     `gatsby-transformer-sharp`,
   ],
 }
