@@ -8,8 +8,8 @@
     "gatsby": "^2.0.118",
     "gatsby-plugin-image": "^0.0.2",
     "gatsby-plugin-sharp": "^2.0.20",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"

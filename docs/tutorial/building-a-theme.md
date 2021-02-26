@@ -107,8 +107,8 @@ You should now see the following dependencies in your `site/package.json`:
   "dependencies": {
     "gatsby": "^2.9.11",
     "gatsby-theme-events": "*",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   }
 }
 ```
@@ -155,14 +155,14 @@ The `gatsby-theme-events/package.json` file should now include the following:
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
 ```
@@ -1335,13 +1335,13 @@ It's important to namespace your theme. It helps differentiate between published
   },
   "peerDependencies": {
     "gatsby": "^2.13.19",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
     "gatsby": "^2.13.19",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "dependencies": {
     "@emotion/react": "^11.0.0",

@@ -150,6 +150,7 @@ export const onCreateNode = true
  * @example
  * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_shouldOnCreateNode = true
 
 /**

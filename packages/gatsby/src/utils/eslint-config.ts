@@ -12,7 +12,7 @@ export const eslintRequiredConfig: CLIEngine.Options = {
   // @ts-ignore
   emitWarning: true,
   baseConfig: {
-    parser: require.resolve(`babel-eslint`),
+    parser: require.resolve(`@babel/eslint-parser`),
     parserOptions: {
       ecmaVersion: 2020,
       sourceType: `module`,

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.1...gatsby-link@3.1.0-next.2) (2021-02-26)
+
+### Bug Fixes
+
+- **gatsby:** Use vendored @reach/router ([#29772](https://github.com/gatsbyjs/gatsby/issues/29772)) ([8754e0c](https://github.com/gatsbyjs/gatsby/commit/8754e0c6eb1b8f88422e60f31a1dca37925e8b2e))
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.1.0-next.0...gatsby-link@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-link
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@3.0.0-next.0...gatsby-link@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-link
+
 # [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-link@2.12.0-next.1...gatsby-link@3.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-link
