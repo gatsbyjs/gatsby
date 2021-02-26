@@ -113,6 +113,16 @@ This section explains breaking changes that were made for Gatsby v3. Most, if no
 
 Gatsby now requires at least `12.13.0` for its Node.js version.
 
+### Webpack upgraded from version 4 to version 5
+
+We tried our best to mitigate as much of the breaking change as we could. Some are sadly inevitable. In our breaking change section and deprecation section, you'll find the most common problems and how to solve them. We suggest looking at the [official webpack 5 blog post](https://webpack.js.org/blog/2020-10-10-webpack-5-release/) to get a comprehensive list of what changed.
+
+If you hit any problems along the way, make sure the gatsby plugin or webpack plugin supports version 5.
+
+### Eslint upgraded from version 6 to version 7
+
+If you're using Gatsby's default eslint rules (no custom eslintrc file), you shouldn't notice any issues. If you do have a custom eslint config, make sure to read the [Eslint 6 to 7 migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0)
+
 ### Gatsby's Link component
 
 The APIs `push`, `replace` & `navigateTo` in `gatsby-link` (an internal package) were deprecated in v2 and now with v3 completely removed. Please use `navigate` instead.
@@ -328,6 +338,51 @@ const Box = ({ children }) => (
 )
 
 export default Box
+```
+
+### File assets (fonts, pdfs, ...) are imported as ESModules
+
+Assets are handled as ESM modules. Make sure to switch your require functions into imports.
+
+```diff:title=src/components/Layout.js
+import React from "react"
+import { Helmet } from "react-helmet";
++ import myFont from '../assets/fonts/myfont.woff2'
+
+const Layout = ({ children }) => (
+  <div>
+    <Helmet>
+-      <link rel="preload" href={require('../assets/fonts/myfont.woff2')} as="fonts/woff2" crossOrigin="anonymous" type="font/woff2" />
++      <link rel="preload" href={myFont} as="fonts/woff2" crossOrigin="anonymous" type="font/woff2" />
+    </Helmet>
+    {children}
+  </div>
+)
+
+export default Layout
+```
+
+### Webpack 5 node configuration changed (node.fs, node.path, ...)
+
+Some components need you to patch/disable node apis in the browser like path or fs. Webpack removed these automatic polyfills. You now have to manually set them in your configurations
+
+```diff:title=gatsby-node.js
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+-    node: {
+-      fs: "empty",
+-      path: "mock",
+-    },
++    resolve: {
++       alias: {
++          path: require.resolve("path-browserify")
++       },
++       fallback: {
++         fs: false,
++       }
++    }
+  })
+}
 ```
 
 ### GraphQL: character escape sequences in `regex` filter
@@ -619,6 +674,39 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
   `)
 }
 ```
+
+### JSON imports - follow the JSON modules web spec
+
+JSON modules are coming to the web. JSON modules only allow you to import the default export and no sub properties. If you do import properties, you'll get a warning along these lines:
+
+```
+Should not import the named export 'myProp' from default-exporting module (only default export is available soon)
+```
+
+```diff:title=src/components/Navigation.js
+import React from "react"
+- import { items } from "../data/navigation.json"
++ import navigationData from "../data/navigation.json"
+
+const Navigation = () => (
+  <nav>
+    <ul>
+-      {items.map(item => {
+-        return <li><a href={item.to}>{item.text}</a></li>
+-      })}
++      {navigationData.items.map(item => {
++        return <li><a href={item.to}>{item.text}</a></li>
++      })}
+    </ul>
+  </nav>
+)
+
+export default Navigation
+```
+
+### Webpack deprecation Messages
+
+When running community gatsby plugins, you might see "DEP*WEBPACK*" messages popup during the "Building Javascript" phase or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with Webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will built fine. There are cases that it won't and the reasons why could be cryptic.
 
 ## Using `fs` in SSR
 
