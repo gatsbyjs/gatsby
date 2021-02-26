@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.4...babel-preset-gatsby@1.1.0-next.0) (2021-02-26)
+
+### Features
+
+- **babel-preset-gatsby:** allow setting importSource on preset-react ([#29260](https://github.com/gatsbyjs/gatsby/issues/29260)) ([f72ff77](https://github.com/gatsbyjs/gatsby/commit/f72ff7747afb1a71d53ba9258bd9a8838c0b062f))
+
 # [1.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.3...babel-preset-gatsby@1.0.0-next.4) (2021-02-25)
 
 **Note:** Version bump only for package babel-preset-gatsby
