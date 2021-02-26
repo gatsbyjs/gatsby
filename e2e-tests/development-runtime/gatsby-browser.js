@@ -1,4 +1,3 @@
-// const Wrapper = require(`./src/wrap-root-element`).default
 import WrapRootElement from "./src/wrap-root-element"
 import * as React from "react"
 
