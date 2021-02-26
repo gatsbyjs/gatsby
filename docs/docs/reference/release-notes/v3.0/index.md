@@ -52,6 +52,10 @@ TODO
 
 After adding our initial Fast Refresh integration back in November 2020, we worked on it over the last couple of releases. For Gatsby v3 we further improved usability, reliability, and accessibility to make it the default overlay. With this the old `react-hot-loader` is removed and you can benefit from all the new features it has: Fast Refresh is faster, handles errors better, and preserves state across re-renders.
 
+Here's a preview:
+
+![Three error overlays from left to right: Compile error, GraphQL errors, and runtime errors](./compile-graphql-runtime-errors.jpg)
+
 We built a custom error overlay that aims to give you helpful information to fix your bugs more quickly. It features:
 
 - A clear indication whether it's a runtime error, compile error, or GraphQL error
