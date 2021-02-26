@@ -1,4 +1,7 @@
 {
+  "gatsby-plugin-gatsby-cloud": {
+    "message": "Build and host for free on Gatsby Cloud"
+  },
   "gatsby-plugin-image": {
     "message": "Add responsive images",
     "plugins": [
