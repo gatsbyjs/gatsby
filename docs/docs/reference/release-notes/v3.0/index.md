@@ -104,7 +104,11 @@ When using the `tableOfContents` functionality, the defaults have changed. `abso
 
 ## Notable bugfixes
 
-TODO
+- Migrate to latest Contentful SDK in `gatsby-source-contentful`, via [PR #29520](https://github.com/gatsbyjs/gatsby/pull/29520)
+- Add plugin options validation to `gatsby-plugin-canonical-urls`, via [PR #29688](https://github.com/gatsbyjs/gatsby/pull/29688)
+- Support `topLevelImportPaths` option for `gatsby-plugin-styled-components`, via [PR #29544](https://github.com/gatsbyjs/gatsby/pull/29544)
+- Drop `terminal-link` from our CLI as in some terminals it turned lines blank, via [PR #29472](https://github.com/gatsbyjs/gatsby/pull/29472)
+- Update the `pathExist` function in `gatsby-plugin-feed`, via [PR #29616](https://github.com/gatsbyjs/gatsby/pull/29616)
 
 ## Contributors
 
