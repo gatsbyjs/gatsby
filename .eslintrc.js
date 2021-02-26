@@ -127,22 +127,60 @@ module.exports = {
           },
         ],
         "camelcase": "off",
+        // TODO: These rules allow a lot of stuff and don't really enforce. If we want to apply our styleguide, we'd need to fix a lot of stuff
         "@typescript-eslint/naming-convention": [
           "error",
           {
             selector: "default",
             format: ["camelCase"],
           },
-          { selector: "variable", format: ["camelCase", "UPPER_CASE"] },
+          {
+            selector: "variable",
+            format: ["camelCase", "UPPER_CASE", "PascalCase"],
+            leadingUnderscore: "allowSingleOrDouble",
+            trailingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "function",
+            format: ["camelCase", "PascalCase"],
+            leadingUnderscore: "allow",
+          },
           {
             selector: "parameter",
-            format: ["camelCase"],
-            leadingUnderscore: "allow",
-            prefix: ["unstable_"],
+            format: ["camelCase", "PascalCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "enumMember",
+            format: ["camelCase", "UPPER_CASE", "PascalCase"]
           },
           {
             selector: "typeLike",
             format: ["PascalCase"],
+          },
+          {
+            selector: "typeAlias",
+            format: ["camelCase", "PascalCase"]
+          },
+          {
+            selector: "property",
+            format: ["PascalCase", "UPPER_CASE", "camelCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "objectLiteralProperty",
+            format: ["PascalCase", "UPPER_CASE", "camelCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
+            trailingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "enum",
+            format: ["PascalCase", "UPPER_CASE"]
+          },
+          {
+            selector: "method",
+            format: ["PascalCase", "camelCase"],
+            leadingUnderscore: "allowSingleOrDouble",
           },
           {
             selector: "interface",
@@ -156,6 +194,7 @@ module.exports = {
         // mocking. At this point it's easier to have it off and just encourage
         // using top-level imports via code reviews.
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-extra-semi": "off",
         // This rule ensures that typescript types do not have semicolons
         // at the end of their lines, since our prettier setup is to have no semicolons
         // e.g.,
