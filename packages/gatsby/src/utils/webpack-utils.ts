@@ -585,10 +585,10 @@ export const createWebpackUtils = (
     const css: IRuleUtils["css"] = (options = {}): RuleSetRule => {
       const { browsers, ...restOptions } = options
       const use = [
-        loaders.miniCssExtract(restOptions),
+        !isSSR && loaders.miniCssExtract(restOptions),
         loaders.css({ ...restOptions, importLoaders: 1 }),
         loaders.postcss({ browsers }),
-      ]
+      ].filter(Boolean)
 
       return {
         use,
