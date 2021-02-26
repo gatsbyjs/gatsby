@@ -13,19 +13,15 @@ const addLogEntry = (action, location) => {
   })
 }
 
-// export const onPreRouteUpdate = ({ location }) => {
-//   addLogEntry(`onPreRouteUpdate`, location)
-// }
+export const onPreRouteUpdate = ({ location }) => {
+  addLogEntry(`onPreRouteUpdate`, location)
+}
 
-// export const onRouteUpdate = ({ location }) => {
-//   addLogEntry(`onRouteUpdate`, location)
-// }
-// export const onPrefetchPathname = ({ pathname }) => {
-//   addLogEntry(`onPrefetchPathname`, pathname)
-// }
-
-export const wrapPageElement = ({ element }) => {
-  return <div style={{ borderLeft: "30px solid yellow" }}>{element}</div>
+export const onRouteUpdate = ({ location }) => {
+  addLogEntry(`onRouteUpdate`, location)
+}
+export const onPrefetchPathname = ({ pathname }) => {
+  addLogEntry(`onPrefetchPathname`, pathname)
 }
 
 export const wrapRootElement = ({ element }) => (
