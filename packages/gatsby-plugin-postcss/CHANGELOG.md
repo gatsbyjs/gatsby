@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0-v3rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.0.0-v3rc.0...gatsby-plugin-postcss@4.0.0-v3rc.1) (2021-02-26)
+
+### Bug Fixes
+
+- **mini-css-extract:** don't use loader in ssr ([#29801](https://github.com/gatsbyjs/gatsby/issues/29801)) ([#29809](https://github.com/gatsbyjs/gatsby/issues/29809)) ([b667111](https://github.com/gatsbyjs/gatsby/commit/b667111c59da23855daffe20ca2b8ed6fbf96809))
+
 # [4.0.0-v3rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.0.0-next.1...gatsby-plugin-postcss@4.0.0-v3rc.0) (2021-02-26)
 
 **Note:** Version bump only for package gatsby-plugin-postcss

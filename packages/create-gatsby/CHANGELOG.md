@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-v3rc.1](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.0.0-v3rc.0...create-gatsby@1.0.0-v3rc.1) (2021-02-26)
+
+### Features
+
+- **create-gatsby:** Add support for cloud plugin ([#29807](https://github.com/gatsbyjs/gatsby/issues/29807)) ([#29812](https://github.com/gatsbyjs/gatsby/issues/29812)) ([40c18f5](https://github.com/gatsbyjs/gatsby/commit/40c18f5610dd5d2e879d2ca7cb8436b49a8cc9fd))
+
 # [1.0.0-v3rc.0](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.0.0-next.2...create-gatsby@1.0.0-v3rc.0) (2021-02-26)
 
 ### Features

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-v3rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.0...gatsby@3.0.0-v3rc.1) (2021-02-26)
+
+### Bug Fixes
+
+- **gatsby:** Update styles & overlay for Fast Refresh ([#29797](https://github.com/gatsbyjs/gatsby/issues/29797)) ([#29808](https://github.com/gatsbyjs/gatsby/issues/29808)) ([fefa6b1](https://github.com/gatsbyjs/gatsby/commit/fefa6b1cffafc64971bf16377c85f5ee489987e9))
+- **gatsby:** Use vendored @reach/router ([#29772](https://github.com/gatsbyjs/gatsby/issues/29772)) ([#29811](https://github.com/gatsbyjs/gatsby/issues/29811)) ([bd856ef](https://github.com/gatsbyjs/gatsby/commit/bd856efac1334b2385ced7ecb25c92e046882487))
+- **mini-css-extract:** don't use loader in ssr ([#29801](https://github.com/gatsbyjs/gatsby/issues/29801)) ([#29809](https://github.com/gatsbyjs/gatsby/issues/29809)) ([b667111](https://github.com/gatsbyjs/gatsby/commit/b667111c59da23855daffe20ca2b8ed6fbf96809))
+
 # [3.0.0-v3rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.9...gatsby@3.0.0-v3rc.0) (2021-02-26)
 
 ### Bug Fixes
