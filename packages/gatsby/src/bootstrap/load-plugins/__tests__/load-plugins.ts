@@ -415,32 +415,43 @@ describe(`Load plugins`, () => {
       })
 
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
-      // expect((reporter.error as jest.Mock).mock.calls[0])
-      //   .toMatchInlineSnapshot(`
-      //   Array [
-      //     Object {
-      //       "context": Object {
-      //         "configDir": null,
-      //         "pluginName": "gatsby-remark-autolink-headers",
-      //         "validationErrors": Array [
-      //           Object {
-      //             "context": Object {
-      //               "key": "maintainCase",
-      //               "label": "maintainCase",
-      //               "value": "should be boolean",
-      //             },
-      //             "message": "\\"maintainCase\\" must be a boolean",
-      //             "path": Array [
-      //               "maintainCase",
-      //             ],
-      //             "type": "boolean.base",
-      //           },
-      //         ],
-      //       },
-      //       "id": "11331",
-      //     },
-      //   ]
-      // `)
+      expect((reporter.error as jest.Mock).mock.calls[0])
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "context": Object {
+              "configDir": null,
+              "pluginName": "<PROJECT_ROOT>/packages/gatsby/src/bootstrap/load-plugins/__tests__/fixtures/local-plugin/index.js",
+              "validationErrors": Array [
+                Object {
+                  "context": Object {
+                    "key": "required",
+                    "label": "required",
+                  },
+                  "message": "\\"required\\" is required",
+                  "path": Array [
+                    "required",
+                  ],
+                  "type": "any.required",
+                },
+                Object {
+                  "context": Object {
+                    "key": "optionalString",
+                    "label": "optionalString",
+                    "value": 1234,
+                  },
+                  "message": "\\"optionalString\\" must be a string",
+                  "path": Array [
+                    "optionalString",
+                  ],
+                  "type": "string.base",
+                },
+              ],
+            },
+            "id": "11331",
+          },
+        ]
+      `)
       expect(mockProcessExit).toHaveBeenCalledWith(1)
     })
   })
