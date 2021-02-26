@@ -15,7 +15,9 @@
   },
   "peerDependencies": {
     "@mdx-js/mdx": "^1.0.0",
-    "@mdx-js/react": "^1.0.0"
+    "@mdx-js/react": "^1.0.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "dependencies": {
     "@babel/core": "^7.12.3",
