@@ -31,7 +31,7 @@ const getNodeEditLink = node => {
 
 const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
   // if the lazyNodes plugin option is set we don't need to find
-  // image node id's because those nodes will be fetched lazily in resolvers
+  // image node id's because those nodes will be fetched lazily in resolvers.
   if (pluginOptions.type.MediaItem.lazyNodes) {
     return []
   }
