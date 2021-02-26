@@ -85,9 +85,9 @@ function DevOverlay({ children }) {
 
   // This component has a deliberate order (priority)
   const ErrorComponent = () => {
-    // if (hasBuildError) {
-    //   return <BuildError error={state.buildError} />
-    // }
+    if (hasBuildError) {
+      return <BuildError error={state.buildError} />
+    }
     if (hasRuntimeErrors) {
       return <RuntimeErrors errors={state.errors} dismiss={dismiss} />
     }
