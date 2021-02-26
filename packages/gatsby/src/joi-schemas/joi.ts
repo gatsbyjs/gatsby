@@ -86,6 +86,7 @@ export const pageSchema: Joi.ObjectSchema<IGatsbyPage> = Joi.object()
     component: Joi.string().required(),
     componentChunkName: Joi.string().required(),
     context: Joi.object(),
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     pluginCreator___NODE: Joi.string(),
     pluginCreatorId: Joi.string(),
   })

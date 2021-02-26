@@ -42,7 +42,8 @@ export const Style = () => (
           --color-ansi-bright-red: #d91e18;
           --color-ansi-bright-yellow: #aa5d00;
           --radii: 5px;
-          --z-index-elevated: 1000;
+          --z-index-backdrop: 8000;
+          --z-index-overlay: 9000;
           --space: 1.5em;
           --space-sm: 1em;
           --space-lg: 2.5em;
@@ -59,6 +60,7 @@ export const Style = () => (
           width: 100%;
           backdrop-filter: blur(10px);
           cursor: not-allowed;
+          z-index: var(--z-index-backdrop);
         }
 
         [data-gatsby-overlay="root"] {
@@ -79,18 +81,22 @@ export const Style = () => (
           border-radius: var(--radii);
           display: inline-flex;
           flex-direction: column;
-          z-index: var(--z-index-elevated);
+          z-index: var(--z-index-overlay);
         }
 
         [data-gatsby-overlay="header"] {
           display: grid;
           grid-gap: var(--space-sm);
-          grid-template-columns: 1fr;
+          grid-template-columns: 1fr auto;
           color: var(--dimmedWhite);
           background: var(--gatsby);
           padding: var(--space);
           border-top-left-radius: var(--radii);
           border-top-right-radius: var(--radii);
+        }
+
+        [data-gatsby-error-type="build-error"][data-gatsby-overlay="header"] {
+          grid-template-columns: 1fr;
         }
 
         [data-gatsby-overlay="body"] {
@@ -144,6 +150,9 @@ export const Style = () => (
 
         header[data-gatsby-error-type="runtime-error"]
           [data-gatsby-overlay="header__cause-file"]
+          h1,
+        header[data-gatsby-error-type="graphql-error"]
+          [data-gatsby-overlay="header__cause-file"]
           h1 {
           color: var(--white);
         }
@@ -172,10 +181,13 @@ export const Style = () => (
 
         [data-gatsby-overlay="codeframe__top"] {
           display: flex;
+          flex-wrap: wrap;
+          align-items: center;
           justify-content: space-between;
           background: var(--codeFrame-bg);
           padding: 0.5em var(--space-sm);
           color: var(--codeFrame-color);
+          word-break: break-word;
         }
 
         [data-gatsby-overlay="body__open-in-editor"] {
@@ -190,6 +202,14 @@ export const Style = () => (
           min-width: 2em;
           padding: 0.25em 0.75em;
           appearance: none;
+          margin-right: var(--space-sm);
+        }
+
+        [data-gatsby-overlay="codeframe__top"]
+          [data-gatsby-overlay="body__open-in-editor"] {
+          margin-right: 0;
+          margin-top: 0.5em;
+          margin-bottom: 0.5em;
         }
 
         [data-gatsby-overlay="header__close-button"] {
@@ -205,7 +225,6 @@ export const Style = () => (
           align-items: center;
           justify-content: center;
           border-radius: var(--radii);
-          margin-left: var(--space-sm);
         }
 
         [data-gatsby-overlay="body__graphql-error-message"] {
@@ -227,7 +246,7 @@ export const Style = () => (
         }
 
         [data-gatsby-overlay="footer"] {
-          padding: 0 var(--space) var(--space) var(--space);
+          padding-top: var(--space);
         }
 
         [data-gatsby-overlay="accordion"] {
@@ -312,7 +331,8 @@ export const Style = () => (
         }
 
         @media (min-width: 768px) {
-          [data-gatsby-overlay="header"] {
+          [data-gatsby-overlay="header"],
+          [data-gatsby-error-type="build-error"][data-gatsby-overlay="header"] {
             grid-template-columns: 1fr auto;
           }
         }
