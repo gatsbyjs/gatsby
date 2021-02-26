@@ -100,9 +100,10 @@ module.exports = {
         ...TSEslint.configs.recommended.rules,
         // We should absolutely avoid using ts-ignore, but it's not always possible.
         // particular when a dependencies types are incorrect.
-        "@typescript-eslint/ban-ts-comment": {
-          "ts-ignore": "allow-with-description",
-        },
+        "@typescript-eslint/ban-ts-comment": [
+          "warn",
+          { "ts-ignore": "allow-with-description" }
+        ],
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
         // and outputs declaratively typed. So this let's us ignore the parameters
@@ -125,7 +126,9 @@ module.exports = {
             },
           },
         ],
+        "camelcase": "off",
         "@typescript-eslint/naming-convention": [
+          "error",
           {
             selector: "default",
             format: ["camelCase"],
@@ -135,7 +138,7 @@ module.exports = {
             selector: "parameter",
             format: ["camelCase"],
             leadingUnderscore: "allow",
-            prefix: ["unstable_", ""],
+            prefix: ["unstable_"],
           },
           {
             selector: "typeLike",
@@ -160,7 +163,6 @@ module.exports = {
         // -  baz: string;
         // +  baz: string
         // }
-        "@typescript-eslint/no-extra-semi": false,
         "@typescript-eslint/member-delimiter-style": [
           "error",
           {
