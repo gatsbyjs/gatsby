@@ -68,13 +68,39 @@ We also added two new ESLint rules inside the default configuration that will wa
 - No anonymous default exports
 - Page templates must only export one default export (the page) and `query` as a named export
 
-## jsx-factory & eslint-plugin
+## babel-preset-gatsby
 
-TODO
+`babel-preset-gatsby` now accepts `reactImportSource` which is passed to the underlying `@babel/preset-react` importSource field. Note that this field is only supported when `reactRuntime` is `automatic`, it is `classic` by default.
+
+Configuration looks like this.
+
+```json
+{
+  "presets": [
+    [
+      "babel-preset-gatsby",
+      {
+        "reactRuntime": "automatic",
+        "reactImportSource": "@emotion/react"
+      }
+    ]
+  ]
+}
+```
+
+## ESLint
+
+Gatsby no longer uses the deprecated `eslint-loader`, we've moved to `eslint-webpack-plugin`.
 
 ## Miscellaneous changes in plugins
 
-TODO
+### `gatsby-transformer-remark`
+
+When using the `tableOfContents` functionality, the defaults have changed. `absolute` now defaults to `false` and `pathToSlugField` defaults to an empty string.
+
+### `gatsby-react-router-scroll`
+
+`ScrollContainer`, previously deprecated, has now been removed. Please use the `useScrollRestoration`hook instead.
 
 ## Notable bugfixes
 
