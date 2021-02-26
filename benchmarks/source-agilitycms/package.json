@@ -28,8 +28,8 @@
     "gatsby-source-filesystem": "^2.2.1",
     "gatsby-transformer-sharp": "^2.4.1",
     "node-fetch": "^2.6.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",
     "truncate-html": "^1.0.2"
   },

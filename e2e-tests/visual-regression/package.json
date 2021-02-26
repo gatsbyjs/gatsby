@@ -11,8 +11,8 @@
     "gatsby-plugin-sharp": "^2.0.20",
     "gatsby-source-filesystem": "^2.3.35",
     "gatsby-transformer-sharp": "^2.5.19",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"

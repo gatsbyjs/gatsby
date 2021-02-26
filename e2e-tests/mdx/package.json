@@ -9,8 +9,8 @@
     "gatsby": "^2.0.118",
     "gatsby-plugin-mdx": "^1.2.19",
     "gatsby-source-filesystem": "^2.3.14",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "theme-ui": "^0.3.1"
   },
   "keywords": [

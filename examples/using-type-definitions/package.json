@@ -11,8 +11,8 @@
     "gatsby-transformer-json": "next",
     "gatsby-transformer-sharp": "next",
     "prop-types": "^15.7.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [

@@ -33,7 +33,9 @@
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0"
+    "gatsby": "^3.0.0-next.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "engines": {
     "node": ">=12.13.0"

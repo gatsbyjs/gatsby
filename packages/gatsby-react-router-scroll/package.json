@@ -25,8 +25,8 @@
   "main": "index.js",
   "peerDependencies": {
     "@reach/router": "^1.0.0",
-    "react": "^16.4.2 || ^17.0.0",
-    "react-dom": "^16.4.2 || ^17.0.0"
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "repository": {
     "type": "git",

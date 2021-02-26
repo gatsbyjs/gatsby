@@ -16,8 +16,8 @@
     "gatsby-plugin-offline": "next",
     "gatsby-plugin-sass": "next",
     "node-sass": "^4.14.1",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "tachyons-sass": "^4.9.5"
   }
 }
