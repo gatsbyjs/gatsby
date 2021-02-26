@@ -34,7 +34,15 @@ If you're looking for an overview of all breaking changes and how to migrate, pl
 
 ## Incremental Builds in OSS
 
-TODO
+Previously we had something called "Conditional Page Builds" behind a flag in Gatsby v2. It had some gotchas and quirks and wasn't ready yet for GA. With Gatsby v3 we improved this feature, and activated it by default for everyone! So incremental builds is available in OSS now.
+
+TODO -- some more stuff
+
+Take a project powered by Shopify as an example. You have your listing of all products and then individual product pages -- when you change one single product, only that page should be rebuilt. In the screenshot below you can see exactly that (the sentence "Hello World" was added to the description):
+
+![Side-by-side view of a Shopify store instance on the left, and the preview on the right. At the bottom the terminal shows that after the change only one page was rebuilt](./incremental-builds-in-oss.jpg)
+
+The screenshot is taken from a lengthy video about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on YouTube there.
 
 ## `gatsby-plugin-image`
 
