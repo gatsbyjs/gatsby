@@ -9516,7 +9516,7 @@ core-js-compat@3.9.0, core-js-compat@^3.8.1, core-js-compat@^3.9.0:
     browserslist "^4.16.3"
     semver "7.0.0"
 
-core-js-compat@^3.6.2, core-js-compat@^3.6.5:
+core-js-compat@^3.6.2:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.6.5.tgz#2a51d9a4e25dfd6e690251aa81f99e3c05481f1c"
   integrity sha512-7ItTKOhOZbznhXAQ2g/slGg1PJV5zDO/WdkTwi7UEOJmkvsE32PWvx6mKtDjiMpjnR2CNf6BAD6sSxIlv7ptng==
@@ -13211,13 +13211,6 @@ gatsby-interface@^0.0.244:
     lodash.sample "^4.2.1"
     markdown-to-jsx "^7.0.0"
     theme-ui "^0.2.49"
-
-gatsby-legacy-polyfills@^1.0.0-next.1:
-  version "1.0.0-next.1"
-  resolved "https://registry.yarnpkg.com/gatsby-legacy-polyfills/-/gatsby-legacy-polyfills-1.0.0-next.1.tgz#6deae0e4a28df46c611e5307e93fff5ccb9e2070"
-  integrity sha512-S6evI6uaTsMPGYV69krS2VMrMaZaHQ3y/WIxRBKdBa0Bgh4Y8Zuia/iMM+KKr4S99E30sy/sX/9bxYZahHQI3w==
-  dependencies:
-    core-js-compat "^3.6.5"
 
 gatsby-node-helpers@^0.3.0:
   version "0.3.0"
