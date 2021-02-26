@@ -94,6 +94,13 @@ const links = [
       "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
     color: "#000000",
   },
+  {
+    text: "Build and Host",
+    url: "https://www.gatsbyjs.com/cloud",
+    description:
+      "✨ New ✨ Now you’re ready to show the world! Build and host your new Gatsby site for free on Gatsby Cloud.",
+    color: "#f1e05a",
+  },
 ]
 
 // markup
