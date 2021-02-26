@@ -146,10 +146,12 @@ export const Style = () => (
           margin-bottom: 0;
           font-size: 1.25em;
           font-weight: 400;
-          color: var(--white);
         }
 
         header[data-gatsby-error-type="runtime-error"]
+          [data-gatsby-overlay="header__cause-file"]
+          h1,
+        header[data-gatsby-error-type="graphql-error"]
           [data-gatsby-overlay="header__cause-file"]
           h1 {
           color: var(--white);

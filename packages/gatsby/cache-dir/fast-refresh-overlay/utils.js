@@ -1,5 +1,7 @@
 import Anser from "anser"
 
+const enterRegex = /^\s$/
+
 export function prettifyStack(errorInformation) {
   let txt
   if (Array.isArray(errorInformation)) {
@@ -14,11 +16,7 @@ export function prettifyStack(errorInformation) {
   })
   // Sometimes the first line/entry is an "Enter", so we need to filter this out
   const [firstLine, ...rest] = generated
-  if (
-    firstLine.content ===
-    `
-`
-  ) {
+  if (enterRegex.test(firstLine.content)) {
     return rest
   }
   return generated
