@@ -190,7 +190,7 @@ This API is no longer necessary as there is an internal check for whether or not
 
 The `sizes` and `resolutions` queries were deprecated in v2 in favor of `fluid` and `fixed`.
 
-While `fluid`, `fixed`, and `gatsby-image` will continue to work in v3, we highly recommend migrating to the new `gatsby-plugin-image`. Read the [Using the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image/) guide to learn more about its benefits and on how to use it.
+While `fluid`, `fixed`, and `gatsby-image` will continue to work in v3, we highly recommend migrating to the new `gatsby-plugin-image`. Read the [Migrating from gatsby-image to gatsby-plugin-image](/docs/reference/release-notes/image-migration-guide/) guide to learn more about its benefits and on how to use it.
 
 ```diff
 import React from "react"
