@@ -31,8 +31,6 @@ loader.setApiRunner(apiRunner)
 
 window.___loader = publicLoader
 
-navigationInit()
-
 // Do dummy dynamic import so the jsonp __webpack_require__.e is added to the commons.js
 // bundle. This ensures hot reloading doesn't break when someone first adds
 // a dynamic import.
@@ -161,6 +159,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
+    navigationInit()
+
     domReady(() => {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
