@@ -34,6 +34,12 @@ Or run
 npm install gatsby@latest
 ```
 
+**Please note:** If you use **npm 7** you'll want to use the `--legacy-peer-deps` option when following the instructions in this guide. For example, the above command would be:
+
+```shell
+npm install gatsby@latest --legacy-peer-deps
+```
+
 ### Update Gatsby related packages
 
 Update your `package.json` to use the latest version of Gatsby related packages. You should upgrade any package name that starts with `gatsby-*`. Note, this only applies to plugins managed in the [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby) repository. If you're using community plugins, they might not be upgraded yet. Many plugins won't need updating so they may keep working (if not, please check their repository for the current status). You can run an npm script to see all outdated dependencies.
@@ -61,7 +67,11 @@ npm install gatsby-plugin-sharp@latest
 
 #### yarn
 
-TODO
+```shell
+yarn upgrade-interactive --latest
+```
+
+You'll be given an overview of packages where you can select to upgrade them to `latest`.
 
 #### Updating community plugins
 
