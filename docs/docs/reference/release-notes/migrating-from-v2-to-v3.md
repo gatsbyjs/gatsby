@@ -190,9 +190,12 @@ This API is no longer necessary as there is an internal check for whether or not
 
 The `sizes` and `resolutions` queries were deprecated in v2 in favor of `fluid` and `fixed`.
 
+While `fluid`, `fixed`, and `gatsby-image` will continue to work in v3, we highly recommend migrating to the new `gatsby-plugin-image`. Read the [Using the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image/) guide to learn more about its benefits and on how to use it.
+
 ```diff
 import React from "react"
 import { graphql } from "gatsby"
+import Img from "gatsby-image"
 
 const Example = ({ data }) => {
   <div>
@@ -409,9 +412,9 @@ You can still fix those warnings temporarily in your site's `gatsby-node.js` unt
 
 Related docs:
 
-- [childOf directive](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#defining-child-relations)
-- [Child/parent fields](https://www.gatsbyjs.com/docs/schema-inference/#childparent-fields)
-- [Schema generation](https://www.gatsbyjs.com/docs/schema-generation/#4-parent--children-relationships)
+- [childOf directive](/docs/reference/graphql-data-layer/schema-customization/#defining-child-relations)
+- [child/parent fields](/docs/schema-inference/#childparent-fields)
+- [schema generation](/docs/schema-generation/#4-parent--children-relationships)
 
 ### Schema Customization: Extensions must be set explicitly
 
@@ -456,7 +459,7 @@ with a suggestion to upgrade (and a link to this guide).
 
 You can still fix those warnings temporarily in your site's `gatsby-node.js` until it is fixed in the plugin.
 
-If you don't see any warnings - you are safe to upgrade to v3. Read more about custom extensions in [this blog post](https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization/).
+If you don't see any warnings - you are safe to upgrade to v3. Read more about custom extensions in [this blog post](/blog/2019-05-17-improvements-to-schema-customization/).
 
 ### Schema Customization: Removed `noDefaultResolvers` argument from inference directives
 
@@ -482,7 +485,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-[Read deprecation announcement](https://www.gatsbyjs.com/blog/2019-05-17-improvements-to-schema-customization/#-nodefaultresolvers-and-inference-modes).
+[Read deprecation announcement](/blog/2019-05-17-improvements-to-schema-customization/#-nodefaultresolvers-and-inference-modes).
 
 ### Schema Customization: Remove `many` argument from `childOf` directive
 
@@ -533,7 +536,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 ```
 
-**Note:** when using argument `firstOnly: true` the returned value is `object` or `null`.
+**Note:** When using argument `firstOnly: true` the returned value is `object` or `null`.
 So do not confuse those two cases.
 
 ## Resolving Deprecations
@@ -579,7 +582,7 @@ exports.onCreateNode = ({ actions, node }) => {
 
 ### `@nodeInterface`
 
-For Gatsby v2 `@nodeInterface` was the recommended way to implement [queryable interfaces](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
+For Gatsby v2 `@nodeInterface` was the recommended way to implement [queryable interfaces](/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
 Now it is deprecated in favor of interface inheritance:
 
 ```diff:title=gatsby-node.js
