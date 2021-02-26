@@ -7,11 +7,21 @@ export function prettifyStack(errorInformation) {
   } else {
     txt = errorInformation
   }
-  return Anser.ansiToJson(txt, {
+  const generated = Anser.ansiToJson(txt, {
     remove_empty: true,
     use_classes: true,
     json: true,
   })
+  // Sometimes the first line/entry is an "Enter", so we need to filter this out
+  const [firstLine, ...rest] = generated
+  if (
+    firstLine.content ===
+    `
+`
+  ) {
+    return rest
+  }
+  return generated
 }
 
 export function openInEditor(file, lineNumber = 1) {
