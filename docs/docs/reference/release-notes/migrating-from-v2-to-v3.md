@@ -83,6 +83,28 @@ warning Plugin gatsby-plugin-acme is not compatible with your gatsby version 3.0
 
 This is because the plugin needs to set its `peerDependencies` to the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
+#### Handling dependencies for plugins that are not yet updated
+
+ℹ️ If you run into the scenarios listed below, you will need to leverage yarn resolutions until the plugin authors upgrade the plugins they maintain.
+
+Gatsby has an _amazing_ ecosystem of plugins that make it easier to get up and running, and to incorporate various data sources and functionality into your Gatsby project. Part of that huge ecosystem includes ... 🥁 ... dependency trees!
+
+Depending on how the plugin authors have declared dependencies (e.g. marking a package as a dependency instead of a peerDependency) within those plugins, there could be a myriad of failures that arise. If you encounter any of these issues when migrating your project to Gatsby Version 3, we recommend that you leverage [Yarn resolutions](https://yarnpkg.com/configuration/manifest#resolutions) within your `package.json`.
+
+👉 Hint: If your rely on a plugin that is not found within the [list of plugins within the Gatsby framework](https://github.com/gatsbyjs/gatsby/tree/master/packages), you very well may need to use the following resolutions in the near term.
+
+The specific resolutions we recommend at this time are found below:
+
+```json:title=package.json
+{
+  "resolutions": {
+    "graphql": "^15.4.0",
+    "graphql-compose": "^7.25.0",
+    "webpack": "^5.24.2"
+  }
+}
+```
+
 ## Handling Breaking Changes
 
 This section explains breaking changes that were made for Gatsby v3. Most, if not all, of those changes had a deprecation message in v2. In order to successfully update you'll need to resolve these changes.
