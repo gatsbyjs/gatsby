@@ -10,13 +10,13 @@ The new Gatsby Image plugin is currently in beta, but you can try it out now and
 
 ## Getting started
 
-First, you need to install the following packages:
+1. Install the following packages:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-You then need to add the plugins to your `gatsby-config.js`:
+2. Add the plugins to your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -29,6 +29,8 @@ module.exports = {
 ```
 
 If you already have some of these plugins installed, please check that they're updated to the latest version.
+
+Note that `gatsby-source-filesystem` is not included in this config. If you are sourcing from your local filesystem to use `GatsbyImage` please configure accordingly. Otherwise, downloading the dependency without configuration is sufficient.
 
 <!-- TODO: add exact minimum version when we reach GA -->
 
