@@ -31,7 +31,6 @@
     "ansi-html": "^0.0.7",
     "autoprefixer": "^9.8.4",
     "axios": "^0.21.1",
-    "babel-eslint": "^10.1.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-add-module-exports": "^1.0.4",
     "babel-plugin-dynamic-import-node": "^2.3.3",
