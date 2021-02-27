@@ -73,11 +73,12 @@ const buildSchema = async ({
     inferenceMetadata,
     parentSpan,
   })
+  // const { printSchema } = require(`graphql`)
+  const schema = schemaComposer.buildSchema()
+
   // Freeze all type composers except SitePage (as we will rebuild it at a later stage)
   freezeTypeComposers(schemaComposer, new Set([`SitePage`]))
 
-  // const { printSchema } = require(`graphql`)
-  const schema = schemaComposer.buildSchema()
   // console.log(printSchema(schema))
   return schema
 }
