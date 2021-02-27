@@ -827,7 +827,11 @@ const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
           const normalizedPath = path.replace(/\\/g, ``)
 
           // replace normalized match with relative path
-          const thisMatchRegex = new RegExp(normalizedMatch, `g`)
+          const thisMatchRegex = new RegExp(
+            normalizedMatch + `(?!/?wp-content|/?wp-admin|/?wp-includes)`,
+            `g`
+          )
+
           nodeString = nodeString.replace(thisMatchRegex, normalizedPath)
         } catch (e) {
           console.error(e)
