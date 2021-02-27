@@ -1,5 +1,5 @@
 import { IGatsbyPage, IGatsbyState } from "../redux/types"
-import { match } from "@reach/router/lib/utils"
+import { match } from "@gatsbyjs/reach-router/lib/utils"
 
 export function findPageByPath(
   state: IGatsbyState,
