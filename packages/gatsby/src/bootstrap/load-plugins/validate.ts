@@ -4,8 +4,10 @@ import * as semver from "semver"
 import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
-import { slash } from "gatsby-core-utils"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
+import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
+import { stripIndent } from "common-tags"
+import { trackCli } from "gatsby-telemetry"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
 import { GatsbyNode, PackageJson } from "../../../"
@@ -15,9 +17,7 @@ import {
   IPluginInfoOptions,
   ISiteConfig,
 } from "./types"
-import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
-import { stripIndent } from "common-tags"
-import { trackCli } from "gatsby-telemetry"
+import { resolvePlugin } from "./load"
 
 interface IApi {
   version?: string
@@ -189,13 +189,9 @@ async function validatePluginsOptions(
     plugins.map(async plugin => {
       let gatsbyNode
       try {
-        // Handle local plugins which may have an absolute path
-        // versus regular plugin paths
-        const resolvePath = path.isAbsolute(plugin.resolve)
-          ? path.dirname(plugin.resolve)
-          : plugin.resolve
-
-        gatsbyNode = require(slash(`${resolvePath}/gatsby-node`))
+        const resolvedPlugin = resolvePlugin(plugin.resolve, rootDir)
+        console.log(plugin, resolvedPlugin)
+        gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
       } catch (err) {
         gatsbyNode = {}
       }
