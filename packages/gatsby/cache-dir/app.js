@@ -13,16 +13,15 @@ import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 import { LoadingIndicatorEventHandler } from "./loading-indicator"
-
+import Root from "./root"
+import { init as navigationInit } from "./navigation"
 // ensure in develop we have at least some .css (even if it's empty).
 // this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
 // this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
 import "./blank.css"
 
-// Enable fast-refresh for virtual sync-requires
-module.hot.accept(`$virtual/async-requires`, () => {
-  // Manually reload
-})
+// Enable fast-refresh for virtual sync-requires and gatsby-browser
+module.hot.accept([`$virtual/async-requires`, `./api-runner-browser`])
 
 window.___emitter = emitter
 
@@ -160,8 +159,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
-    const preferDefault = m => (m && m.default) || m
-    const Root = preferDefault(require(`./root`))
+    navigationInit()
+
     domReady(() => {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
