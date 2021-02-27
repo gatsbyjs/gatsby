@@ -29,18 +29,13 @@ beforeAll(async () => {
 
   execFileSync(`yarn`, [`build`], {
     cwd: basePath,
-    stdio: "inherit", /* for debugging/verbosity */
+    /* stdio: "inherit", /* for debugging/verbosity */
     shell: true /* Windows-compat */,
   })
 }, 1000000)
 
 afterAll(async () => {
-  // Wait to avoid `EBUSY: resource busy or locked, rmdir` on Windows
-  const waitForWindowsBeingSlow = new Promise(resolve =>
-    setTimeout(resolve, 600)
-  )
-  await waitForWindowsBeingSlow
-  //await remove(basePath)
+  await remove(basePath)
 })
 
 it("should invoke pluginOptionsSchema for validating local plugin", async () => {
