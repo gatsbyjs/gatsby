@@ -807,7 +807,7 @@ const replaceFileLinks = async ({
 
 export const getWpLinkRegex = wpUrl =>
   new RegExp(
-    `["']${wpUrl}(?!/wp-content|/wp-admin|/wp-includes)(/[^'"]+)["']`,
+    `["']${wpUrl}(?!/wp-content|/wp-admin|/wp-includes)(/[^'"]*)["']`,
     `gim`
   )
 
