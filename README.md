@@ -9,7 +9,7 @@
 
 <h3 align="center">
   ⚛️ 📄 🚀
-</h3>s
+</h3>
 <h3 align="center">
   Fast in every way that matters
 </h3>
@@ -160,9 +160,9 @@ Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how
 
 This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
 
-### Contributing to Gatsby v1
+### Contributing to Gatsby v2
 
-We are currently only accepting bug fixes for Gatsby v1. No new features will be accepted.
+We are currently only accepting bug fixes for Gatsby v2. No new features will be accepted.
 
 ## :memo: License
 
