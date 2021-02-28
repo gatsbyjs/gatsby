@@ -2341,16 +2341,16 @@
   dependencies:
     "@babel/plugin-syntax-jsx" "^7.2.0"
 
-"@emotion/babel-plugin@^11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.0.0.tgz#e6f40fa81ef52775773a53d50220c597ebc5c2ef"
-  integrity sha512-w3YP0jlqrNwBBaSI6W+r80fOKF6l9QmsPfLNx5YWSHwrxjVZhM+L50gY7YCVAvlfr1/qdD1vsFN+PDZmLvt42Q==
+"@emotion/babel-plugin@^11.0.0", "@emotion/babel-plugin@^11.2.0":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.2.0.tgz#f25c6df8ec045dad5ae6ca63df0791673b98c920"
+  integrity sha512-lsnQBnl3l4wu/FJoyHnYRpHJeIPNkOBMbtDUIXcO8luulwRKZXPvA10zd2eXVN6dABIWNX4E34en/jkejIg/yA==
   dependencies:
     "@babel/helper-module-imports" "^7.7.0"
     "@babel/plugin-syntax-jsx" "^7.12.1"
     "@babel/runtime" "^7.7.2"
     "@emotion/hash" "^0.8.0"
-    "@emotion/memoize" "^0.7.4"
+    "@emotion/memoize" "^0.7.5"
     "@emotion/serialize" "^1.0.0"
     babel-plugin-macros "^2.6.1"
     convert-source-map "^1.5.0"
@@ -2359,14 +2359,14 @@
     source-map "^0.5.7"
     stylis "^4.0.3"
 
-"@emotion/babel-preset-css-prop@^11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@emotion/babel-preset-css-prop/-/babel-preset-css-prop-11.0.0.tgz#25b868affa620b9e97024b67f67ad32c03a0510e"
-  integrity sha512-E7z3jMf1OyThGpp3ngYGxOSGX5AdoSQTuqM9QgJNAHFh3Fi8N5CbWx6g+IdySJ8bjPiMgFQsIeEhkyy+4mDpCQ==
+"@emotion/babel-preset-css-prop@^11.2.0":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@emotion/babel-preset-css-prop/-/babel-preset-css-prop-11.2.0.tgz#c7e945f56b2610b438f0dc8ae5253fc55488de0e"
+  integrity sha512-9XLQm2eLPYTho+Cx1LQTDA1rATjoAaB4O+ds55XDvoAa+Z16Hhg8y5Vihj3C8E6+ilDM8SV5A9Z6z+yj0YIRBg==
   dependencies:
     "@babel/plugin-transform-react-jsx" "^7.12.1"
     "@babel/runtime" "^7.7.2"
-    "@emotion/babel-plugin" "^11.0.0"
+    "@emotion/babel-plugin" "^11.2.0"
     "@emotion/babel-plugin-jsx-pragmatic" "^0.1.5"
 
 "@emotion/cache@^10.0.27":
@@ -2430,10 +2430,15 @@
   dependencies:
     "@emotion/memoize" "^0.7.4"
 
-"@emotion/memoize@0.7.4", "@emotion/memoize@^0.7.1", "@emotion/memoize@^0.7.4":
+"@emotion/memoize@0.7.4":
   version "0.7.4"
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.4.tgz#19bf0f5af19149111c40d98bb0cf82119f5d9eeb"
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
+
+"@emotion/memoize@^0.7.1", "@emotion/memoize@^0.7.4", "@emotion/memoize@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.5.tgz#2c40f81449a4e554e9fc6396910ed4843ec2be50"
+  integrity sha512-igX9a37DR2ZPGYtV6suZ6whr8pTFtyHL3K/oLUotxpSVO2ASaprmAe2Dkq7tBo7CRY7MMDrAa9nuQP9/YG8FxQ==
 
 "@emotion/react@^11.1.4":
   version "11.1.4"
