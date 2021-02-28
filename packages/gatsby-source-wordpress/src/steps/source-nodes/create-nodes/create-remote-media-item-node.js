@@ -5,9 +5,10 @@ import { bold } from "chalk"
 
 import retry from "async-retry"
 
-import { createFileNodeFromBuffer } from "gatsby-source-filesystem"
-
-import createRemoteFileNode from "./create-remote-file-node/index"
+import {
+  createFileNodeFromBuffer,
+  createRemoteFileNode,
+} from "gatsby-source-filesystem"
 
 import store from "~/store"
 

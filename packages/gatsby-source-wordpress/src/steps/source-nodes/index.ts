@@ -6,7 +6,6 @@ import { fetchAndCreateAllNodes } from "./fetch-nodes/fetch-nodes"
 import { LAST_COMPLETED_SOURCE_TIME } from "~/constants"
 import store from "~/store"
 import fetchAndCreateNonNodeRootFields from "./create-nodes/fetch-and-create-non-node-root-fields"
-import { allowFileDownloaderProgressBarToClear } from "./create-nodes/create-remote-file-node/progress-bar-promise"
 import { sourcePreviews } from "~/steps/preview"
 
 const sourceNodes: Step = async (helpers, pluginOptions) => {
@@ -65,7 +64,6 @@ const sourceNodes: Step = async (helpers, pluginOptions) => {
 
   await nonNodeRootFieldsPromise
 
-  allowFileDownloaderProgressBarToClear()
   await helpers.cache.set(LAST_COMPLETED_SOURCE_TIME, now)
 
   const { dispatch } = store
