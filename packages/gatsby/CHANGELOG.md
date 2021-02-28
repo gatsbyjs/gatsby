@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-v3rc.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.1...gatsby@3.0.0-v3rc.2) (2021-02-28)
+
+### Bug Fixes
+
+- query on demand loading indicator always active on preact. ([#29829](https://github.com/gatsbyjs/gatsby/issues/29829)) ([#29836](https://github.com/gatsbyjs/gatsby/issues/29836)) ([aafe584](https://github.com/gatsbyjs/gatsby/commit/aafe5843c158d99c7d7a8739b55cf8dfa72e334a))
+- **gatsby:** eslint linting ([#29796](https://github.com/gatsbyjs/gatsby/issues/29796)) ([#29814](https://github.com/gatsbyjs/gatsby/issues/29814)) ([32fee71](https://github.com/gatsbyjs/gatsby/commit/32fee713b1d01ccba7689a01affd68dd4eee466f))
+- **gatsby:** workaround graphql-compose issue ([#29822](https://github.com/gatsbyjs/gatsby/issues/29822)) ([#29834](https://github.com/gatsbyjs/gatsby/issues/29834)) ([b8d21f8](https://github.com/gatsbyjs/gatsby/commit/b8d21f8fdb650bbed945ab136240924b8e6ac6e8))
+- **hmr:** accept hot updates for modules above page templates ([#29752](https://github.com/gatsbyjs/gatsby/issues/29752)) ([#29835](https://github.com/gatsbyjs/gatsby/issues/29835)) ([34f5b8c](https://github.com/gatsbyjs/gatsby/commit/34f5b8cb115fa7575bfe88f7436c00e1b3c4dc24))
+
 # [3.0.0-v3rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.0...gatsby@3.0.0-v3rc.1) (2021-02-26)
 
 ### Bug Fixes

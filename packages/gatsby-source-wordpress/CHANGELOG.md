@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-v3rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-v3rc.0...gatsby-source-wordpress@5.0.0-v3rc.1) (2021-02-28)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** auto-rename types named "Filter" ([#29718](https://github.com/gatsbyjs/gatsby/issues/29718)) ([#29815](https://github.com/gatsbyjs/gatsby/issues/29815)) ([cb499e6](https://github.com/gatsbyjs/gatsby/commit/cb499e6b4cd63d68a40da64e5b885fde93c827b8))
+- **gatsby-source-wordpress:** HTML image regex's ([#29778](https://github.com/gatsbyjs/gatsby/issues/29778)) ([#29816](https://github.com/gatsbyjs/gatsby/issues/29816)) ([bca7951](https://github.com/gatsbyjs/gatsby/commit/bca7951718985bdd34c57e9941ae354099ed43b8))
+
 # [5.0.0-v3rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.9...gatsby-source-wordpress@5.0.0-v3rc.0) (2021-02-26)
 
 **Note:** Version bump only for package gatsby-source-wordpress
