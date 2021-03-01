@@ -304,9 +304,21 @@ export class AnalyticsTracker {
 
     const decoration = this.metadataCache[type]
     delete this.metadataCache[type]
-    const eventType = `CLI_ERROR_${type}`
+    const eventType = `ERROR_${type}`
 
     this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+  }
+
+  captureMessage(type: string, tags: ITelemetryTagsPayload = {}): void {
+    if (!this.isTrackingEnabled()) {
+      return
+    }
+
+    const decoration = this.metadataCache[type]
+    delete this.metadataCache[type]
+    const eventType = `MESSAGE_${type}`
+
+    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
   }
 
   captureBuildError(type: string, tags: ITelemetryTagsPayload = {}): void {

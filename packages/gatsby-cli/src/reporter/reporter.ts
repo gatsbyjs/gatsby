@@ -1,13 +1,17 @@
 import { stripIndent } from "common-tags"
 import chalk from "chalk"
-import { trackError } from "gatsby-telemetry"
+import { trackError, trackMessage } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
 
 import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
-import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
+import {
+  IErrorMapEntry,
+  ErrorId,
+  ErrorCategory,
+} from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
 import { IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
@@ -25,6 +29,9 @@ export interface IActivityArgs {
 }
 
 let isVerbose = false
+
+// only show deprecations once
+const deprecationCache = new Set()
 
 /**
  * Reporter module.
@@ -183,6 +190,42 @@ class Reporter {
         text,
       })
     }
+  }
+
+  deprecate = ({
+    pluginName,
+    code,
+    ...messageObj
+  }: {
+    code: string
+    text: string
+    pluginName?: string
+  }): void => {
+    if (!code) {
+      throw new Error(`"code" is required param for reporter.deprecate`)
+    }
+
+    const cacheKey = `${pluginName ?? ``}-${code}`
+
+    if (deprecationCache.has(cacheKey)) {
+      return
+    }
+
+    deprecationCache.add(cacheKey)
+
+    const structuredLog = {
+      ids: code,
+      level: LogLevels.Deprecation,
+      category: (pluginName
+        ? `THIRD_PARTY`
+        : `USER`) as keyof typeof ErrorCategory,
+      pluginName,
+      ...messageObj,
+    }
+
+    trackMessage({ message: structuredLog, pluginName })
+
+    reporterActions.createLog(structuredLog)
   }
 
   success = (text?: string): CreateLogAction =>

@@ -4,6 +4,7 @@ import {
   ITelemetryTagsPayload,
   ITelemetryOptsPayload,
   IDefaultTelemetryTagsPayload,
+  IStructuredError,
 } from "./telemetry"
 import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
@@ -53,6 +54,16 @@ export function captureEvent(
 
 export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
   instance.captureError(input, tags)
+}
+
+export function trackMessage(
+  tags: ITelemetryTagsPayload & {
+    message: IStructuredError & {
+      level: NonNullable<IStructuredError["level"]>
+    }
+  }
+): void {
+  instance.captureMessage(tags.message.level, tags)
 }
 
 export function trackBuildError(
@@ -127,6 +138,7 @@ module.exports = {
   trackFeatureIsUsed,
   trackCli,
   trackError,
+  trackMessage,
   trackBuildError,
   setDefaultTags,
   decorateEvent,

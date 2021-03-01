@@ -232,6 +232,12 @@ function extendLocalReporterToCatchPluginErrors({
     error,
     panic,
     panicOnBuild,
+    deprecate: args => {
+      reporter.deprecate({
+        ...args,
+        pluginName,
+      })
+    },
     activityTimer: (...args) => {
       const activity = reporter.activityTimer.apply(reporter, args)
 

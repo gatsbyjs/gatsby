@@ -13,6 +13,7 @@ export enum Actions {
 }
 
 export enum LogLevels {
+  Deprecation = `DEPRECATION`,
   Debug = `DEBUG`,
   Success = `SUCCESS`,
   Info = `INFO`,
