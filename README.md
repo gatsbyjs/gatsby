@@ -36,7 +36,7 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />
   </a>
   <a href="https://twitter.com/intent/follow?screen_name=gatsbyjs">
-    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @gatsbyjs" />
+    <img src="https://img.shields.io/twitter/follow/gatsbyjs.svg?label=Follow%20@gatsbyjs" alt="Follow @GatsbyJS" />
   </a>
 </p>
 
@@ -52,8 +52,8 @@
   <a href="https://www.gatsbyjs.com/showcase/">Showcase</a>
   <span> · </span>
   <a href="https://www.gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
-  <span> · </span>
-  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>
+  <br />
+  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
 </h3>
@@ -88,7 +88,7 @@ Gatsby is a modern web framework for blazing fast websites.
 - [Learning Gatsby](#-learning-gatsby)
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
-- [License](#memo-license)
+- [License](#-license)
 - [Thanks to Our Contributors and Sponsors](#-thanks)
 
 ## 🚀 Get Up and Running in 5 Minutes
@@ -107,8 +107,9 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    Get your Gatsby blog set up in a single command:
 
    ```shell
-   # create a new Gatsby site using the default starter
-   gatsby new my-blazing-fast-site
+   # Create a new Gatsby site using the interactive setup wizard
+   # Give it this name: My Gatsby site
+   gatsby new
    ```
 
 3. **Start the site in `develop` mode.**
@@ -116,13 +117,13 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
    Next, move into your new site’s directory and start it up:
 
    ```shell
-   cd my-blazing-fast-site/
+   cd my-gatsby-site/
    gatsby develop
    ```
 
 4. **Open the source code and start editing!**
 
-   Your site is now running at `http://localhost:8000`. Open the `my-blazing-fast-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
+   Your site is now running at `http://localhost:8000`. Open the `my-gatsby-site` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes, and the browser will update in real time!
 
 At this point, you’ve got a fully functional Gatsby website. For additional information on how you can customize your Gatsby site, see our [plugins](https://gatsbyjs.com/plugins/) and [the official tutorial](https://www.gatsbyjs.com/tutorial/).
 
@@ -132,7 +133,7 @@ Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/).
 
 - **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-- **To dive straight into code samples head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the “<i>Guides</i>”, “<i>API Reference</i>”, and “<i>Advanced Tutorials</i>” sections in the sidebar.
+- **To dive straight into code samples head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the “<i>How-to Guides</i>”, “<i>Reference</i>”, and “<i>Conceptual Guides</i>” sections in the sidebar.
 
 We welcome suggestions for improving our docs. See the [“how to contribute”](https://www.gatsbyjs.com/contributing/how-to-contribute/) documentation for more details.
 
@@ -142,9 +143,8 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v3 to your site without starting from scratch!
 
-- [Migrate from v2 to v3](https://gatsby.dev/2-3)
-- [Migrate a Gatsby site from v1 to v2](https://www.gatsbyjs.com/docs/migrating-from-v1-to-v2/)
-- Still on v0? Start here: [Migrate a Gatsby site from v0 to v1](https://www.gatsbyjs.com/docs/migrating-from-v0-to-v1/)
+- [Migrate from v2 to v3](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/)
+- [Migrate from v1 to v2](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v1-to-v2/)
 
 ## ❗ Code of Conduct
 
@@ -164,10 +164,10 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 We are currently only accepting bug fixes for Gatsby v2. No new features will be accepted.
 
-## :memo: License
+## 📝 License
 
 Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for hosting [Gatsby](https://www.gatsbyjs.com) and our example sites.
+Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for our example sites.
