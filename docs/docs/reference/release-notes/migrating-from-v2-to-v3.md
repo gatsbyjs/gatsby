@@ -12,6 +12,14 @@ This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. Since t
 
 > If you want to start fresh, run `npm init gatsby` or `yarn create gatsby` in your terminal.
 
+## Table of Contents
+
+- [Updating Your Dependencies](#updating-your-dependencies)
+- [Handling Breaking Changes](#handling-breaking-changes)
+- [Resolving Deprecations](#resolving-deprecations)
+- [For Plugin Maintainers](#for-plugin-maintainers)
+- [Known issues](#known-issues)
+
 ## Updating Your Dependencies
 
 First, you need to update your dependencies.
@@ -704,9 +712,9 @@ const Navigation = () => (
 export default Navigation
 ```
 
-### Webpack deprecation Messages
+### webpack deprecation messages
 
-When running community gatsby plugins, you might see "DEP*WEBPACK*" messages popup during the "Building Javascript" phase or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with Webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will built fine. There are cases that it won't and the reasons why could be cryptic.
+When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building Javascript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
 
 ## Using `fs` in SSR
 
@@ -746,3 +754,24 @@ In most cases you won't have to do anything to be v3 compatible, but there are a
   }
 }
 ```
+
+## Known Issues
+
+This section is a work in progress and will be expanded when necessary. It's a list of known issues you might run into while upgrading Gatsby to v3 and how to solve them.
+
+### `reach-router`
+
+We vendored [reach-router](https://github.com/gatsbyjs/reach-router) to make it work for React 17. We added a webpack alias so that you can continue using it as usual, however you might run into an error like this after upgrading:
+
+```shell
+Generating development JavaScript bundle failed
+
+Can't resolve '@gatsbyjs/reach-router/lib/utils' in '/c/Users/xxx/test/node_modules/gatsby-link'
+
+If you're trying to use a package make sure that '@gatsbyjs/reach-router/lib/utils' is installed. If you're trying to use a local file make sure that the path
+is correct.
+
+File: node_modules/gatsby-link/index.js:24:13
+```
+
+This is because in your `.cache` you still have the old package and its imports around. Run `gatsby clean` to remove the outdated cache.
