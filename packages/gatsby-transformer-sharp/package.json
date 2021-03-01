@@ -33,7 +33,7 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "gatsby-plugin-sharp": "^2.0.0-beta.3"
+    "gatsby-plugin-sharp": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
