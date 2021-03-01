@@ -157,6 +157,16 @@ Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-w
 
 This release includes a new plugin, `gatsby-plugin-image`, replacing the old `gatsby-image` plugin. Built from the ground up for speed and best practices, it's the most performant way to use images in React. If you saw your scores drop with recent Lighthouse updates, migrating to this plugin should help you get top scores again. It comes with a new, simplified GraphQL API (no more fragments), as well as a new `StaticImage` component that's as easy to use as an `<img>` tag.
 
+The `GatsbyImage` component supports three responsive layout types, as shown in the video below.
+
+<video controls autoplay loop>
+  <source
+    type="video/mp4"
+    src="/docs/reference/built-in-components/layouts.mp4"
+  />
+  <p>Your browser does not support the video element.</p>
+</video>
+
 There is a codemod available to help migrate from `gatsby-image`. Support is included in all sources that use `childImageSharp`, as well as out of the box support in several CMS plugins, with more coming soon.
 
 For more information, see:
