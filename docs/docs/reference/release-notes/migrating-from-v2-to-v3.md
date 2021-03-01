@@ -748,7 +748,7 @@ When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages po
 
 ## Using `fs` in SSR
 
-Gatsby v3 introduce incremental builds for HTML generation. For this feature to work correctly Gatsby needs to track all inputs used to generate HTML file. Arbitrary code execution in `gatsby-ssr.js` files allow usage of `fs` module which is marked as unsafe and result in disabling of this feature. To migrate you can use `import` instead of `fs`:
+Gatsby v3 introduces incremental builds for HTML generation. For this feature to work correctly, Gatsby needs to track all inputs used to generate HTML file. Arbitrary code execution in `gatsby-ssr.js` files allow usage of `fs` module, which is marked as unsafe and results in disabling of this feature. To migrate, you can use `import` instead of `fs`:
 
 ```diff:title=gatsby-ssr.js
 import * as React from "react"
