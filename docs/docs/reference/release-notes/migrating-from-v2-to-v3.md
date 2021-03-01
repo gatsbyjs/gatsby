@@ -775,3 +775,27 @@ File: node_modules/gatsby-link/index.js:24:13
 ```
 
 Make sure that you have updated all dependencies. It's also possible that you have an outdated `.cache` folder around. Run `gatsby clean` to remove the outdated cache.
+
+In some situations the webpack alias will be ignored, so you will need to add your own alias. The most common example is in Jest tests. For these you should add the following to your Jest config:
+
+Configuring using a `jest.config.js` file:
+
+```js
+module.exports = {
+  moduleNameMapper: {
+    "^@reach/router(.*)": "<rootDir>/node_modules/@gatsbyjs/reach-router$1",
+  },
+}
+```
+
+Configuring using `package.json`:
+
+```json
+{
+  "jest": {
+    "moduleNameMapper": {
+      "^@reach/router(.*)": "<rootDir>/node_modules/@gatsbyjs/reach-router$1"
+    }
+  }
+}
+```
