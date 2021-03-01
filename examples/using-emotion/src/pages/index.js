@@ -1,7 +1,8 @@
 import React, { Fragment } from "react"
 import { Helmet } from "react-helmet"
 import styled from "@emotion/styled"
-import { css, Global } from "@emotion/react"
+import { Global } from "@emotion/react"
+import { css } from "@emotion/css"
 
 // Emotion supports different styling options, all of which are supported by gatsby-plugin-emotion out of the box
 

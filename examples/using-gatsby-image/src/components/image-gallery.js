@@ -6,6 +6,8 @@ import numeral from "numeral"
 import { mq, gutter, offset, offsetXxl } from "../utils/presets"
 import { options, scale } from "../utils/typography"
 
+const Buffer = require("buffer/").Buffer
+
 const OuterContainer = styled(`div`)`
   background: #fff;
 

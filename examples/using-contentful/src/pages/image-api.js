@@ -201,7 +201,6 @@ const ImageAPI = props => {
       node {
         title
         fluid(maxWidth: 613) {
-          sizes
           src
           srcSet
         }
@@ -275,14 +274,14 @@ const ImageAPI = props => {
       <h2>Traced SVG previews</h2>
       <p>
         You can show a traced SVG preview to your users. This works equivalent
-        to the responsive sizes feature except that you have to use the
-        GatsbyContentfulSizes_tracedSVG fragment
+        to the responsive fluid feature except that you have to use the
+        GatsbyContentfulFixed_tracedSVG fragment
       </p>
       {assets.map(({ node: { title, traced } }) => (
         <Img
           key={traced.src}
           alt={title}
-          sizes={traced}
+          fluid={traced}
           style={{
             marginRight: rhythm(1 / 2),
             marginBottom: rhythm(1 / 2),
@@ -299,8 +298,8 @@ const ImageAPI = props => {
     edges {
       node {
         title
-        sizes(maxWidth: 614) {
-          ...GatsbyContentfulSizes_tracedSVG
+        fluid(maxWidth: 614) {
+          ...GatsbyContentfulFluid_tracedSVG
         }
       }
     }
@@ -338,8 +337,8 @@ export const pageQuery = graphql`
           fluid(maxWidth: 613) {
             ...GatsbyContentfulFluid_noBase64
           }
-          traced: sizes(maxWidth: 614) {
-            ...GatsbyContentfulSizes_tracedSVG
+          traced: fluid(maxWidth: 614) {
+            ...GatsbyContentfulFluid_tracedSVG
           }
         }
       }
