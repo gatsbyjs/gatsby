@@ -28,7 +28,7 @@ Major dependency updates:
 - [webpack 5](#webpack-5)
 - [React 17](#react-17)
 - [GraphQL 15](#graphql-15)
-- [Eslint 7](#eslint-7)
+- [ESLint 7](#eslint-7)
 
 Also check out [notable bugfixes and improvements](#notable-bugfixes-and-improvements).
 
@@ -117,7 +117,7 @@ webpack config or community plugins that do not support webpack 5 yet, you may f
 
 Please refer to React's own [release notes](https://reactjs.org/blog/2020/10/20/react-v17.html) for a full list of changes.
 
-The minimum version of Gatsby is now 16.9.0 to support Fast-Refresh, React Hooks, Suspense by default. We've also made sure we're 100% compatible with React 17. To use the new [React JSX transformer](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) have a look at the [`babel-preset-gatsby`](#babel-preset-gatsby) section below.
+The minimum version of Gatsby is now 16.9.0 to support Fast Refresh, React Hooks, and Suspense by default. We've also made sure we're 100% compatible with React 17. To use the new [React JSX transform](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) have a look at the [`babel-preset-gatsby`](#babel-preset-gatsby) section below.
 
 With this change, we'll be adding more experiments to support [Concurrent mode](https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html) and [React Server Components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) in future releases.
 
@@ -145,11 +145,11 @@ Also, Gatsby now displays GraphQL deprecations as CLI warnings when queries. Exa
 
 ![GraphQL deprecation warning in CLI](./graphql-deprecation-warnings.png)
 
-## Eslint 7
+## ESLint 7
 
-Please refer to `eslint`'s own [migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0) to update your custom eslint files.
+Please refer to `eslint`'s own [migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0) to update your custom ESLint files.
 
-If you rely on Gatsby's default eslint configuration - you should have a smooth transition. We upgraded the underlying rules so you might get some new warnings/errors.
+If you rely on Gatsby's default ESLint configuration you should have a smooth transition. We upgraded the underlying rules so you might get some new warnings/errors.
 
 Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-webpack-plugin`. By using the plugin, behaviour has changed a little bit as warnings and errors are displayed later than in version 2.
 
@@ -188,12 +188,25 @@ For Gatsby v3 bump we’ve also bumped `gatsby-source-wordpress` to `5.0.0`. It 
 be a straight-forward update from `gatsby-source-wordpress@^4.0.0`, no additional changes
 from you are required.
 
+- Fixed a bug where adding a post type named "Filter" would break options queries [PR #29718](https://github.com/gatsbyjs/gatsby/pull/29718)
+- Fixed an html field gatsby-image regression that would prevent image transforms in certain situations [PR #29778](https://github.com/gatsbyjs/gatsby/pull/29778) and [PR #29813](https://github.com/gatsbyjs/gatsby/pull/29813)
+
 ## gatsby-source-contentful@5.0.0
 
 - Migrated to the latest Contentful SDK, via [PR #29520](https://github.com/gatsbyjs/gatsby/pull/29520)
 - Compatibility with `gatsby-plugin-image`
 - Retries when downloading assets
 - Retries on network errors
+
+## gatsby-plugin-gatsby-cloud@1.0.0
+
+Gatsby Cloud now includes Hosting for all your Gatsby projects. `gatsby-plugin-gatsby-cloud` is a new plugin that you need to install when using Gatsby Cloud Hosting. It generates redirects and rewrites for your client side routes automatically and even allows you to set custom Headers on a per-file basis.
+
+For Gatsby v3 we’ve also bumped `gatsby-plugin-gatsby-cloud` to `2.0.0`. It should
+be a straight-forward update from `gatsby-plugin-gatsby-cloud@^1.0.0`, no additional changes
+from you are required.
+
+Read more about `gatsby-plugin-gatsby-cloud` at the [README](/packages/gatsby-plugin-gatsby-cloud/README.md).
 
 ## Miscellaneous changes in plugins
 
