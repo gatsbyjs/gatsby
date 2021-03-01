@@ -7,19 +7,29 @@ version: "3.0.0"
 
 ---
 
-Welcome to `gatsby@3.0.0` release (March 2021 #1)
+Welcome to `gatsby@3.0.0` release (March 2021 #1).
+
+This is the first major bump of Gatsby since [september 2018](https://www.npmjs.com/package/gatsby/v/2.0.0)!
+We’ve tried to make migration smooth, please refer to the [migration guide](/docs/reference/release-notes/migrating-from-v2-to-v3/)
+and [report](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you encounter any issues when migrating.
 
 Key highlights of this release:
 
-- [Incremental Builds in OSS](#incremental-builds-in-oss)
-- [gatsby-plugin-image](#gatsby-plugin-image)
-- [webpack 5](#webpack-5)
-- [React 17](#react-17)
-- [Fast Refresh](#fast-refresh)
-- [babel-preset-gatsby](#babel-preset-gatsby)
+- [Incremental Builds in OSS](#incremental-builds-in-oss) - regenerate HTML only when necessary; faster re-builds
+- [Fast Refresh](#fast-refresh) - new hot-reloading engine, error recovery, better DX
+- [gatsby-plugin-image@1.0.0](#gatsby-plugin-image100)
+- [gatsby-source-wordpress@5.0.0](#gatsby-source-wordpress500) - brand new, significantly improved integration with Wordpress
+- [gatsby-source-contentful@5.0.0](#gatsby-source-contentful500)
 - [Miscellaneous changes in plugins](#miscellaneous-changes-in-plugins)
 
-Also check out [notable bugfixes](#notable-bugfixes).
+Major dependency updates:
+
+- [Node 12](#node-12)
+- [webpack 5](#webpack-5)
+- [React 17](#react-17)
+- [GraphQL 15](#graphql-15)
+
+Also check out [notable bugfixes and improvements](#notable-bugfixes-and-improvements).
 
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
@@ -59,18 +69,6 @@ As we mentioned, Gatsby tracks "inputs" used to generate HTML file. However, `ga
 
 If your `gatsby-ssr` (either site itself or plugin) make use of FS reads, head over to [migrating from v2 to v3 guide](/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-SSR) and check how to migrate.
 
-## `gatsby-plugin-image`
-
-TODO
-
-## webpack 5
-
-TODO
-
-## React 17
-
-TODO
-
 ## Fast Refresh
 
 After adding our initial Fast Refresh integration back in November 2020, we worked on it over the last couple of releases. For Gatsby v3 we further improved usability, reliability, and accessibility to make it the default overlay. With this the old `react-hot-loader` is removed and you can benefit from all the new features it has: Fast Refresh is faster, handles errors better, and preserves state across re-renders.
@@ -91,7 +89,86 @@ We also added two new ESLint rules inside the default configuration that will wa
 - No anonymous default exports
 - Page templates must only export one default export (the page) and `query` as a named export
 
-## `babel-preset-gatsby`
+## Node 12
+
+We are dropping support for Node 10 as it is approaching maintenance EOL date (2021-04-30).
+The new required version of Node is `12.13.0`. See the main changes in [Node 12 release notes](https://nodejs.org/en/blog/release/v12.0.0/).
+
+Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
+
+## webpack 5
+
+Please refer to webpack own [release notes](https://webpack.js.org/blog/2020-10-10-webpack-5-release/) for a full list of changes.
+
+Key changes in the new webpack version:
+
+- Improve build performance with Persistent Caching.
+- Improve Long Term Caching with better algorithms and defaults.
+- Improve bundle size with better Tree Shaking and Code Generation.
+- Improve compatibility with the web platform.
+- Clean up internal structures that were left in a weird state while implementing features in v4 without introducing any breaking changes.
+- Prepare for future features by introducing breaking changes now, allowing us to stay on v5 for as long as possible.
+
+We’ve tried to fence you from the burden of manual webpack migration but if you are using a custom
+webpack config or community plugins that do not support webpack5 yet, you may find [webpack migration guide](https://webpack.js.org/migrate/5/) useful.
+
+#### Changes to ESLint
+
+Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-webpack-plugin`.
+
+## React 17
+
+Please refer to React own [release notes](https://reactjs.org/blog/2020/10/20/react-v17.html) for a full list of changes.
+
+## GraphQL 15
+
+Please refer to `graphql-js` own [release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) for a full list of changes.
+
+With this upgrade we can finally leverage interface inheritance for [queryable interfaces](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
+You no longer need to use `@nodeInterface` directive in schema customization:
+
+```diff
+exports.createSchemaCustomization = function createSchemaCustomization({ actions }) {
+  const { createTypes } = actions
+  createTypes(`
+-   interface Foo @nodeInterface
++   interface Foo implements Node
+    {
+      id: ID!
+    }
+  `)
+}
+```
+
+Also, Gatsby now displays GraphQL deprecations as CLI warnings when queries. Example output:
+![GraphQL deprecation warning in CLI](./graphql-deprecation-warnings.png)
+
+## gatsby-plugin-image@1.0.0
+
+TODOC
+
+## gatsby-source-wordpress@5.0.0
+
+Recently we’ve announced the brand new Wordpress integration. Refer to [this blog post](https://www.gatsbyjs.com/blog/wordpress-integration)
+for full details.
+
+The originally published version of renewed `gatsby-source-wordpress` is `4.0.0`. It is
+fully compatible with Gatsby v2.
+
+For Gatsby v3 bump we’ve also bumped the `gatsby-source-wordpress` to `5.0.0`. It should
+be a straight-forward update from `gatsby-source-wordpress@^4.0.0`, no additional changes
+from you are required.
+
+## gatsby-source-contentful@5.0.0
+
+- Migrated to the latest Contentful SDK, via [PR #29520](https://github.com/gatsbyjs/gatsby/pull/29520)
+- Compatibility with `gatsby-plugin-image`
+- Retries when downloading assets
+- Retries on network errors
+
+## Miscellaneous changes in plugins
+
+### `babel-preset-gatsby`
 
 `babel-preset-gatsby` now accepts `reactImportSource` which is passed to the underlying `@babel/preset-react` importSource field. Note that this field is only supported when `reactRuntime` is `automatic`, it is `classic` by default.
 
@@ -111,11 +188,9 @@ Configuration looks like this.
 }
 ```
 
-## ESLint
+### `gatsby-plugin-guessjs`
 
-Gatsby no longer uses the deprecated `eslint-loader`, we've moved to `eslint-webpack-plugin`.
-
-## Miscellaneous changes in plugins
+The plugin is **deprecated**. It is not compatible with Gatsby v3.
 
 ### `gatsby-transformer-remark`
 
@@ -125,16 +200,30 @@ When using the `tableOfContents` functionality, the defaults have changed. `abso
 
 `ScrollContainer`, previously deprecated, has now been removed. Please use the `useScrollRestoration`hook instead.
 
-## Notable bugfixes
+### `gatsby-core-utils`
 
-- Migrate to latest Contentful SDK in `gatsby-source-contentful`, via [PR #29520](https://github.com/gatsbyjs/gatsby/pull/29520)
-- Add plugin options validation to `gatsby-plugin-canonical-urls`, via [PR #29688](https://github.com/gatsbyjs/gatsby/pull/29688)
-- Support `topLevelImportPaths` option for `gatsby-plugin-styled-components`, via [PR #29544](https://github.com/gatsbyjs/gatsby/pull/29544)
+Introduce `fetchRemoteNode` utility (supersedes file download utils from `gatsby-source-filesystem`) via [PR #29531](https://github.com/gatsbyjs/gatsby/pull/29531)
+
+### `gatsby-plugin-styled-components`
+
+Support `topLevelImportPaths` option, via [PR #29544](https://github.com/gatsbyjs/gatsby/pull/29544)
+
+### `gatsby-plugin-canonical-urls`
+
+Add plugin options validation to `gatsby-plugin-canonical-urls`, via [PR #29688](https://github.com/gatsbyjs/gatsby/pull/29688)
+
+## Notable bugfixes and improvements
+
 - Drop `terminal-link` from our CLI as in some terminals it turned lines blank, via [PR #29472](https://github.com/gatsbyjs/gatsby/pull/29472)
 - Update the `pathExist` function in `gatsby-plugin-feed`, via [PR #29616](https://github.com/gatsbyjs/gatsby/pull/29616)
+- Cache avif images in `gatsby-plugin-offline`, via [PR #29394](https://github.com/gatsbyjs/gatsby/pull/29394)
+- Improve efficiency when writing html files to disk, via [PR #29219](https://github.com/gatsbyjs/gatsby/pull/29219)
+- 10-20% faster sourcing by memoizing actions when running plugins, via [PR #29240](https://github.com/gatsbyjs/gatsby/pull/29240)
+- Do not miss page invalidations when using `runQuery` in custom resolvers, via [PR #29392](https://github.com/gatsbyjs/gatsby/pull/29392)
+- Upgrade typescript to 4.0, via [PR #29388](https://github.com/gatsbyjs/gatsby/pull/29388)
 
 ## Contributors
 
-A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.31.0-next.0...gatsby@2.31.0) to this release 💜
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.0-next.0...gatsby@3.0.0) to this release 💜
 
 TODO: Needs to be generated after with the script
