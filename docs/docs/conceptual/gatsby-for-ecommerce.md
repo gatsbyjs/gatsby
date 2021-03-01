@@ -10,7 +10,7 @@ The website functions because these front-end capabilities integrate with a wide
 
 ### Choosing a main e-commerce platform
 
-Most businesses choose a central e-commerce platform as their source of truth for these functionality. Some businesses choose to run entirely on these platforms, which can be quicker to get started with but lock you in to their choices for website creation (eg Liquid Templates for Shopify).
+Most businesses choose a central e-commerce platform as their source of truth for these functionality. Some businesses choose to run entirely on these platforms, which can be quicker to get started with but lock you in to their choices for website creation (e.g. Liquid Templates for Shopify).
 
 If you're using or considering Gatsby, your organization is likely optimizing for specific properties of your website (such as performance, development environment, design, user experience, and security) and are therefore considering a "JAMstack", "decoupled" or "content mesh" architecture.
 
@@ -35,7 +35,7 @@ E-commerce tends to have a number of specific requirements. When building a Gats
 - **Persisting a cart across site pages and between sessions** (ie, if the user closes their browser and reopens it tomorrow, the items should still be there). This can be handled either through local-storage or through the shopify-buy JS library.
 - **Product search** can be done client-side if the SKU count is small enough to store all products in a global state. Alternatively, it can be handled through the e-commerce provider’s search features, or if those aren’t robust enough, a third-party search provider like Algolia.
 - **Surfacing price adjustments** like tax, shipping, discounts/promos to the user while browsing the site. Different e-commerce solutions provide different levels of API access to these objects.
-- **Handling checkout.** In order to comply with PCI regulations around storing credit card information, e-commerce providers typically exert strong control over the "buy" or "checkout" experience. Shopify requires all checkout flows using their platform to use their hosted checkout pages, though it's common to wrap them in a subdomain of the main site (eg the Gatsby/Shopify site [strivectin.com](strivectin.com] wraps a `myshopify.com` URL under a `shop.strivectin.com` URL for checkout).
+- **Handling checkout.** In order to comply with PCI regulations around storing credit card information, e-commerce providers typically exert strong control over the "buy" or "checkout" experience. Shopify requires all checkout flows using their platform to use their hosted checkout pages, though it's common to wrap them in a subdomain of the main site (e.g. the Gatsby/Shopify site [strivectin.com](strivectin.com] wraps a `myshopify.com` URL under a `shop.strivectin.com` URL for checkout).
 - **Handling account pages.** Again, many sites choose to wrap their e-commerce provider’s account pages under their own domain.
 
 Additional resources:

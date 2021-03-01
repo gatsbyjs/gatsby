@@ -17,7 +17,7 @@ const imageNodes = {
 
     pushNodeMeta(state, { id, sourceUrl, modifiedGmt }) {
       const nodeUrl = stripImageSizesFromUrl(sourceUrl)
-      // dont overwrite the lookup table in case we have multiple
+      // don't overwrite the lookup table in case we have multiple
       // sized urls for the same image
       if (!state.nodeMetaByUrl[nodeUrl]) {
         state.nodeMetaByUrl[nodeUrl] = {
