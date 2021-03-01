@@ -411,7 +411,6 @@ const imageNodeType = ({
     args: {
       layout: {
         type: ImageLayoutType,
-        defaultValue: `constrained`,
         description: stripIndent`
         The layout for the image.
         FIXED: A static image sized, that does not resize according to the screen width
