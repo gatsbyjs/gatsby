@@ -78,7 +78,7 @@ Gatsby is a modern web framework for blazing fast websites.
 
 - **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
-  hosted entirely free on services like GitHub Pages and Netlify.
+  hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
 
 [**Learn how to use Gatsby for your next project.**](https://www.gatsbyjs.com/docs/)
 
