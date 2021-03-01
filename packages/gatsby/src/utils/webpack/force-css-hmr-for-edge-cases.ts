@@ -34,8 +34,14 @@ export class ForceCssHMRForEdgeCases {
         }
 
         const seenCssInThisCompilation = new Set<string>()
+        /**
+         * We will get list of css modules that are removed in this compilation
+         * by starting with list of css used in last compilation and removing
+         * all modules that are used in this one.
+         */
+        const cssRemovedInThisCompilation = this.previouslySeenCss
 
-        let anyCssChanged = false
+        let newOrUpdatedCss = false
 
         for (const chunk of compilation.chunks) {
           const getModuleHash = (module: Module): string => {
@@ -70,19 +76,22 @@ export class ForceCssHMRForEdgeCases {
 
               if (isUsingMiniCssExtract) {
                 seenCssInThisCompilation.add(key)
-                this.previouslySeenCss.delete(key)
+                cssRemovedInThisCompilation.delete(key)
 
                 const hash = getModuleHash(module)
                 if (records.chunkModuleHashes[key] !== hash) {
-                  anyCssChanged = true
+                  newOrUpdatedCss = true
                 }
               }
             }
           }
         }
 
+        // If css file was edited or new css import was added (`newOrUpdatedCss`)
+        // or if css import was removed (`cssRemovedInThisCompilation.size > 0`)
+        // trick Webpack's HMR into thinking `blank.css` file changed.
         if (
-          (anyCssChanged || this.previouslySeenCss.size > 0) &&
+          (newOrUpdatedCss || cssRemovedInThisCompilation.size > 0) &&
           this.originalBlankCssHash &&
           this.blankCssKey
         ) {
