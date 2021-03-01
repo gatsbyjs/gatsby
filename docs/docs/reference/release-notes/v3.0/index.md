@@ -155,7 +155,16 @@ Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-w
 
 ## gatsby-plugin-image@1.0.0
 
-TODOC
+This release includes a new plugin, `gatsby-plugin-image`, replacing the old `gatsby-image` plugin. Built from the ground up for speed and best practices, it's the most performant way to use images in React. If you saw your scores drop with recent Lighthouse updates, migrating to this plugin should help you get top scores again. It comes with a new, simplified GraphQL API (no more fragments), as well as a new `StaticImage` component that's as easy to use as an `<img>` tag.
+
+There is a codemod available to help migrate from `gatsby-image`. Support is included in all sources that use `childImageSharp`, as well as out of the box support in several CMS plugins, with more coming soon.
+
+For more information, see:
+
+- [Migrating from gatsby-image to gatsby-plugin-image](/docs/reference/release-notes/image-migration-guide/)
+- [The step-by-step guide to using gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image/)
+- [The reference guide](/docs/reference/built-in-components/gatsby-plugin-image/)
+- [The plugin README](/plugins/gatsby-plugin-image/)
 
 ## gatsby-source-wordpress@5.0.0
 
