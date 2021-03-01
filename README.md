@@ -89,7 +89,7 @@ Gatsby is a modern web framework for blazing fast websites.
 - [Migration Guides](#-migration-guides)
 - [How to Contribute](#-how-to-contribute)
 - [License](#-license)
-- [Thanks to Our Contributors and Sponsors](#-thanks)
+- [Thanks to Our Contributors](#-thanks)
 
 ## 🚀 Get Up and Running in 5 Minutes
 
@@ -158,7 +158,7 @@ Check out our [**Contributing Guide**](https://www.gatsbyjs.com/contributing/how
 
 ### A note on how this repository is organized
 
-This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](/packages) managed in this codebase, even though we publish them to NPM as separate packages.
+This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) managed using [Lerna](https://github.com/lerna/lerna). This means there are [multiple packages](https://github.com/gatsbyjs/gatsby/tree/master/packages) managed in this codebase, even though we publish them to NPM as separate packages.
 
 ### Contributing to Gatsby v2
 
@@ -170,4 +170,4 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks to our many contributors and to [Netlify](https://www.netlify.com/) for our example sites.
+Thanks to our many contributors who create plugins, starters, videos, blog posts, and anything else you can think of. We also really appreciate any community members who help with issues & PRs inside our repository or answer questions on Discord & GitHub Discussions. A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
