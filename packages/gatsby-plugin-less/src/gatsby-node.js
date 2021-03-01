@@ -28,6 +28,11 @@ exports.onCreateWebpackConfig = (
           lessLoader,
         ],
   }
+
+  if (!isSSR) {
+    lessRule.sideEffects = true
+  }
+
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [

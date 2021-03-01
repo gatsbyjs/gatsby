@@ -48,6 +48,10 @@ exports.onCreateWebpackConfig = (
         ],
   }
 
+  if (!isSSR) {
+    stylusRule.sideEffects = true
+  }
+
   const stylusRuleModules = {
     test: /\.module\.styl$/,
     use: [

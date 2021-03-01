@@ -347,6 +347,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / No options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -402,6 +403,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / PostCss plugins 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -462,6 +464,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / Sass options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -522,6 +525,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / css-loader options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -577,6 +581,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule modules test opt
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -632,6 +637,7 @@ exports[`gatsby-plugin-sass Stage: build-javascript / sass rule test options 1`]
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -687,6 +693,7 @@ exports[`gatsby-plugin-sass Stage: develop / No options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -742,6 +749,7 @@ exports[`gatsby-plugin-sass Stage: develop / PostCss plugins 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -802,6 +810,7 @@ exports[`gatsby-plugin-sass Stage: develop / Sass options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -862,6 +871,7 @@ exports[`gatsby-plugin-sass Stage: develop / css-loader options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -917,6 +927,7 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule modules test options 1`] 
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",
@@ -972,6 +983,7 @@ exports[`gatsby-plugin-sass Stage: develop / sass rule test options 1`] = `
                   ],
                 },
                 Object {
+                  "sideEffects": true,
                   "test": /\\\\\\.global\\\\\\.s\\(a\\|c\\)ss\\$/,
                   "use": Array [
                     "miniCssExtract",

@@ -36,6 +36,11 @@ exports.onCreateWebpackConfig = (
           loaders.postcss({ plugins: postCssPlugins }),
         ],
   }
+
+  if (!isSSR) {
+    sassRule.sideEffects = true
+  }
+
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
