@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-v3rc.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-v3rc.0...gatsby-plugin-image@1.0.0-v3rc.1) (2021-03-01)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Update peerdeps ([#29880](https://github.com/gatsbyjs/gatsby/issues/29880)) ([#29888](https://github.com/gatsbyjs/gatsby/issues/29888)) ([85bb8ea](https://github.com/gatsbyjs/gatsby/commit/85bb8ea883a6ad3a847751d92c267654a20e1ea1))
+
 # [1.0.0-v3rc.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.9...gatsby-plugin-image@1.0.0-v3rc.0) (2021-02-26)
 
 **Note:** Version bump only for package gatsby-plugin-image

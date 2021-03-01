@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-v3rc.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-v3rc.2...gatsby-source-wordpress@5.0.0-v3rc.3) (2021-03-01)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** image fixes ([#29813](https://github.com/gatsbyjs/gatsby/issues/29813)) ([#29886](https://github.com/gatsbyjs/gatsby/issues/29886)) ([c8bf571](https://github.com/gatsbyjs/gatsby/commit/c8bf571b70b86684a755aecb8973993d2226c5de))
+
 # [5.0.0-v3rc.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-v3rc.1...gatsby-source-wordpress@5.0.0-v3rc.2) (2021-03-01)
 
 **Note:** Version bump only for package gatsby-source-wordpress

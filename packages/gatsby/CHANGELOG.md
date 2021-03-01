@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-v3rc.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.3...gatsby@3.0.0-v3rc.4) (2021-03-01)
+
+### Bug Fixes
+
+- **gatsby:** Remove `react-hot-loader` deps & other unused deps ([#29864](https://github.com/gatsbyjs/gatsby/issues/29864)) ([#29876](https://github.com/gatsbyjs/gatsby/issues/29876)) ([c266b83](https://github.com/gatsbyjs/gatsby/commit/c266b835d8f8d4d069b04f4ddd2313f8da28de57))
+- **gatsby:** with some custom babel configs array spreading with Set is not safe ([#29885](https://github.com/gatsbyjs/gatsby/issues/29885)) ([#29889](https://github.com/gatsbyjs/gatsby/issues/29889)) ([222ca3f](https://github.com/gatsbyjs/gatsby/commit/222ca3f2faf6892e063d156c370fb1c857092a74))
+
 # [3.0.0-v3rc.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.2...gatsby@3.0.0-v3rc.3) (2021-03-01)
 
 ### Bug Fixes
