@@ -774,4 +774,4 @@ is correct.
 File: node_modules/gatsby-link/index.js:24:13
 ```
 
-This is because in your `.cache` you still have the old package and its imports around. Run `gatsby clean` to remove the outdated cache.
+Make sure that you have updated all dependencies. It's also possible that you have an outdated `.cache` folder around. Run `gatsby clean` to remove the outdated cache.
