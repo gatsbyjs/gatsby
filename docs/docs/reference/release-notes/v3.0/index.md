@@ -178,6 +178,9 @@ For Gatsby v3 bump we’ve also bumped `gatsby-source-wordpress` to `5.0.0`. It 
 be a straight-forward update from `gatsby-source-wordpress@^4.0.0`, no additional changes
 from you are required.
 
+- Fixed a bug where adding a post type named "Filter" would break options queries [PR #29718](https://github.com/gatsbyjs/gatsby/pull/29718)
+- Fixed an html field gatsby-image regression that would prevent image transforms in certain situations [PR #29778](https://github.com/gatsbyjs/gatsby/pull/29778) and [PR #29813](https://github.com/gatsbyjs/gatsby/pull/29813)
+
 ## gatsby-source-contentful@5.0.0
 
 - Migrated to the latest Contentful SDK, via [PR #29520](https://github.com/gatsbyjs/gatsby/pull/29520)
