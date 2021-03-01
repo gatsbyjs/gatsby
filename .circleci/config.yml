@@ -616,6 +616,8 @@ workflows:
           <<: *e2e-test-workflow
       - integration_tests_images:
           <<: *e2e-test-workflow
+      - integration_tests_local_plugins:
+          <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:
             - bootstrap
