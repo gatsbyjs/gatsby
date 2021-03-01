@@ -18,6 +18,7 @@ import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 import { StaticQueryMapper } from "./webpack/static-query-mapper"
+import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { getBrowsersList } from "./browserslist"
 import { builtinModules } from "module"
 
@@ -217,6 +218,7 @@ module.exports = async (
         configPlugins = configPlugins
           .concat([
             plugins.fastRefresh({ modulesThatUseGatsby }),
+            new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
