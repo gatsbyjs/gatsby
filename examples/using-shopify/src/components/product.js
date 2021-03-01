@@ -6,7 +6,6 @@ import ImagePicker from "./image-picker"
 
 import * as styles from "./product.module.css"
 
-console.log({ styles })
 function Product({ description, fields, showDetail, title, images }) {
   return (
     <div className={styles.product}>
