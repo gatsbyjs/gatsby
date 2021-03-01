@@ -10,13 +10,13 @@ export const route = ({ app, program, store }): any =>
   app.get(`*`, async (req, res, next) => {
     trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
 
-    const pathObj = findPageByPath(store.getState(), req.path)
+    const pathObj = findPageByPath(store.getState(), decodeURI(req.path))
 
     if (!pathObj) {
       return next()
     }
 
-    await appendPreloadHeaders(req.path, res)
+    await appendPreloadHeaders(pathObj.path, res)
 
     const htmlActivity = report.phantomActivity(`building HTML for path`, {})
     htmlActivity.start()
@@ -152,7 +152,7 @@ export const route = ({ app, program, store }): any =>
           node.js, it errored.
         </p>
         <ul>
-          <li><strong>URL path:</strong> <code>${req.path}</code></li>
+          <li><strong>URL path:</strong> <code>${pathObj.path}</code></li>
           <li><strong>File path:</strong> <code>${error.filename}</code></li>
         </ul>
         <h3>error</h3>
