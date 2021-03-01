@@ -2,7 +2,7 @@
 title: Migrating from v2 to v3
 ---
 
-Looking for the v2 docs? [Find them here.](https://v2.gatsbyjs.com)
+Looking for the [v2 docs](https://v2.gatsbyjs.com)?
 
 > This document is a work in progress. Have you run into something that's not covered here? [Add your changes to GitHub!](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v2-to-v3.md)
 
@@ -58,7 +58,7 @@ Update your `package.json` to use the latest version of Gatsby related packages.
 npm outdated
 ```
 
-Compare the "Wanted" and "Latest" versions and update their versions accordingly. For example, if you have this oudated version:
+Compare the "Wanted" and "Latest" versions and update their versions accordingly. For example, if you have this outdated version:
 
 ```shell
 > npm outdated
@@ -83,7 +83,7 @@ You'll be given an overview of packages where you can select to upgrade them to 
 
 #### Updating community plugins
 
-Using community plugins you might see warnings like these in your terminal:
+Using community plugins, you might see warnings like these in your terminal:
 
 ```shell
 warning Plugin gatsby-plugin-acme is not compatible with your gatsby version 3.0.0 - It requires gatsby@^2.32.0
@@ -121,7 +121,7 @@ The specific resolutions we recommend at this time are found below:
 
 ## Handling Breaking Changes
 
-This section explains breaking changes that were made for Gatsby v3. Most, if not all, of those changes had a deprecation message in v2. In order to successfully update you'll need to resolve these changes.
+This section explains breaking changes that were made for Gatsby v3. Most, if not all, of those changes had a deprecation message in v2. In order to successfully update, you'll need to resolve these changes.
 
 ### Minimal Node.js version 12.13.0
 
@@ -130,17 +130,17 @@ The new required version of Node is `12.13.0`. See the main changes in [Node 12 
 
 Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
-### Webpack upgraded from version 4 to version 5
+### webpack upgraded from version 4 to version 5
 
 We tried our best to mitigate as much of the breaking change as we could. Some are sadly inevitable. In our breaking change section and deprecation section, you'll find the most common problems and how to solve them. We suggest looking at the [official webpack 5 blog post](https://webpack.js.org/blog/2020-10-10-webpack-5-release/) to get a comprehensive list of what changed.
 
-If you hit any problems along the way, make sure the gatsby plugin or webpack plugin supports version 5.
+If you hit any problems along the way, make sure the Gatsby plugin or webpack plugin supports version 5.
 
-### Eslint upgraded from version 6 to version 7
+### ESLint upgraded from version 6 to version 7
 
-If you're using Gatsby's default eslint rules (no custom eslintrc file), you shouldn't notice any issues. If you do have a custom eslint config, make sure to read the [Eslint 6 to 7 migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0)
+If you're using Gatsby's default ESLint rules (no custom `eslintrc` file), you shouldn't notice any issues. If you do have a custom ESLint config, make sure to read the [ESLint 6 to 7 migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0)
 
-### Gatsby's Link component
+### Gatsby's `Link` component
 
 The APIs `push`, `replace` & `navigateTo` in `gatsby-link` (an internal package) were deprecated in v2 and now with v3 completely removed. Please use `navigate` instead.
 
@@ -233,13 +233,13 @@ exports.onCreateNode = ({ node, actions }) => {
 
 ### Removal of `hasNodeChanged` from public API surface
 
-This API is no longer necessary as there is an internal check for whether or not a node has changed.
+This API is no longer necessary, as there is an internal check for whether or not a node has changed.
 
 ### Removal of `sizes` & `resolutions` for image queries
 
 The `sizes` and `resolutions` queries were deprecated in v2 in favor of `fluid` and `fixed`.
 
-While `fluid`, `fixed`, and `gatsby-image` will continue to work in v3, we highly recommend migrating to the new `gatsby-plugin-image`. Read the [Migrating from gatsby-image to gatsby-plugin-image](/docs/reference/release-notes/image-migration-guide/) guide to learn more about its benefits and on how to use it.
+While `fluid`, `fixed`, and `gatsby-image` will continue to work in v3, we highly recommend migrating to the new `gatsby-plugin-image`. Read the [Migrating from `gatsby-image` to `gatsby-plugin-image`](/docs/reference/release-notes/image-migration-guide/) guide to learn more about its benefits and how to use it.
 
 ```diff
 import React from "react"
@@ -317,7 +317,7 @@ A couple of `gatsby-browser` APIs were removed. In the list below you can find t
 
 ### Using a global `graphql` tag for queries
 
-Until now your were able to use the `graphql` tag for queries without explicitly importing it from Gatsby. You now have to import it: `import { graphql } from 'gatsby'`
+Until now you were able to use the `graphql` tag for queries without explicitly importing it from Gatsby. You now have to import it: `import { graphql } from 'gatsby'`
 
 ```diff:title=src/pages/index.js
 import React from "react"
@@ -381,7 +381,7 @@ const Layout = ({ children }) => (
 export default Layout
 ```
 
-When you're using `require with expression` or `require.context` which is not recommended. You'll have to append `.default` to your require statement to make it work.
+If you're using `require with expression` or `require.context` (which is not recommended), you'll have to append `.default` to your require statement to make it work.
 
 ```diff:title=src/components/Layout.js
 import React from "react"
@@ -400,9 +400,9 @@ const Layout = ({ children, font }) => (
 export default Layout
 ```
 
-### Webpack 5 node configuration changed (node.fs, node.path, ...)
+### webpack 5 node configuration changed (node.fs, node.path, ...)
 
-Some components need you to patch/disable node apis in the browser like path or fs. Webpack removed these automatic polyfills. You now have to manually set them in your configurations
+Some components need you to patch/disable node APIs in the browser, like `path` or `fs`. webpack removed these automatic polyfills. You now have to manually set them in your configurations:
 
 ```diff:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ actions }) => {
@@ -425,10 +425,10 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 
 ### GraphQL: character escape sequences in `regex` filter
 
-In v2 backslashes in `regex` filters of GraphQL queries had to be escaped
+In v2, backslashes in `regex` filters of GraphQL queries had to be escaped
 _twice_, so `/\w+/` needed to be written as `"/\\\\w+/"`.
 
-In v3 you only need to escape once:
+In v3, you only need to escape once:
 
 ```diff:title=src/pages/index.js
 const query = {
@@ -447,8 +447,8 @@ const query = {
 
 ### GraphQL: `__typename` field is no longer added automatically
 
-In v2 we used to add the `__typename` field implicitly when querying for a field of abstract type (interface or union).
-In v3 `__typename` has to be added explicitly in your query:
+In v2, the `__typename` field used to be added implicitly when querying for a field of abstract type (interface or union).
+In v3, `__typename` has to be added explicitly in your query:
 
 ```diff:title=src/pages/index.js
 import React from "react"
@@ -518,12 +518,12 @@ Add the following type definition to fix this:
 https://www.gatsbyjs.com/docs/actions/#createTypes
 ```
 
-If you don't see any warnings - you are safe to upgrade to v3.
+If you don't see any warnings, you are safe to upgrade to v3.
 
-If this warning is displayed for a type defined by some plugin - open an issue in the plugin repo
+If this warning is displayed for a type defined by some plugin, open an issue in the plugin repo
 with a suggestion to upgrade (and a link to this guide).
 
-You can still fix those warnings temporarily in your site's `gatsby-node.js` until it is fixed in the plugin.
+You can still fix those warnings temporarily in your site's `gatsby-node.js` file until it is fixed in the plugin.
 
 Related docs:
 
@@ -533,7 +533,7 @@ Related docs:
 
 ### Schema Customization: Extensions must be set explicitly
 
-Starting with v3 whenever you define a field of complex type, you must also assign
+Starting with v3, whenever you define a field of complex type, you must also assign
 the corresponding extension (or a custom resolver):
 
 ```diff:title=gatsby-node.js
@@ -552,7 +552,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-In Gatsby v2 we add those extensions for you automatically but display a deprecation warning.
+In Gatsby v2, we add those extensions for you automatically but display a deprecation warning.
 
 To make upgrading easier, check the CLI output of your site on the latest v2 and follow suggestions
 when you see a warning like this:
@@ -569,12 +569,12 @@ Add the following type definition to fix this:
 https://www.gatsbyjs.com/docs/actions/#createTypes
 ```
 
-If this warning is displayed for a type defined by some plugin - open an issue in the plugin repo
+If this warning is displayed for a type defined by some plugin, open an issue in the plugin repo
 with a suggestion to upgrade (and a link to this guide).
 
 You can still fix those warnings temporarily in your site's `gatsby-node.js` until it is fixed in the plugin.
 
-If you don't see any warnings - you are safe to upgrade to v3. Read more about custom extensions in [this blog post](/blog/2019-05-17-improvements-to-schema-customization/).
+If you don't see any warnings, you are safe to upgrade to v3. Read more about custom extensions in [this blog post](/blog/2019-05-17-improvements-to-schema-customization/).
 
 ### Schema Customization: Removed `noDefaultResolvers` argument from inference directives
 
@@ -600,11 +600,11 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-[Read deprecation announcement](/blog/2019-05-17-improvements-to-schema-customization/#-nodefaultresolvers-and-inference-modes).
+[Deprecation announcement for `noDefaultResolvers`](/blog/2019-05-17-improvements-to-schema-customization/#-nodefaultresolvers-and-inference-modes).
 
 ### Schema Customization: Remove `many` argument from `childOf` directive
 
-It is no longer needed in Gatsby v3:
+The `many` argument is no longer needed for the `childOf` directive in Gatsby v3:
 
 ```diff:title=gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
@@ -671,7 +671,7 @@ exports.sourceNodes = ({ actions, getNodesByType }) => {
 }
 ```
 
-In case you only have an ID at hand (e.g. getting it from cache or as `__NODE`) you can use the `getNode()` API:
+In case you only have an ID at hand (e.g. getting it from cache or as `__NODE`), you can use the `getNode()` API:
 
 ```js:title=gatsby-node.js
 exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
@@ -684,7 +684,7 @@ exports.sourceNodes = async ({ actions, getNodesByType, cache }) => {
 
 ### `deleteNode`
 
-For Gatsby v2 the `deleteNode` API accepted `node` as a named argument. This now has been deprecated in favor of passing the full `node` to the function.
+For Gatsby v2, the `deleteNode` API accepted `node` as a named argument. This now has been deprecated in favor of passing the full `node` to the function.
 
 ```diff:title=gatsby-node.js
 exports.onCreateNode = ({ actions, node }) => {
@@ -697,7 +697,7 @@ exports.onCreateNode = ({ actions, node }) => {
 
 ### `@nodeInterface`
 
-For Gatsby v2 `@nodeInterface` was the recommended way to implement [queryable interfaces](/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
+For Gatsby v2, `@nodeInterface` was the recommended way to implement [queryable interfaces](/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
 Now it is deprecated in favor of interface inheritance:
 
 ```diff:title=gatsby-node.js
@@ -713,9 +713,9 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
 }
 ```
 
-### JSON imports - follow the JSON modules web spec
+### JSON imports: follow the JSON modules web spec
 
-JSON modules are coming to the web. JSON modules only allow you to import the default export and no sub properties. If you do import properties, you'll get a warning along these lines:
+JSON modules are coming to the web. JSON modules only allow you to import the default export and no sub-properties. If you do import properties, you'll get a warning along these lines:
 
 ```
 Should not import the named export 'myProp' from default-exporting module (only default export is available soon)
@@ -770,7 +770,7 @@ export function onRenderBody({ setHeadComponents }) {
 
 ## For Plugin Maintainers
 
-In most cases you won't have to do anything to be v3 compatible, but there are a few things you can do to be certain your plugin won't throw any warnings or errors.
+In most cases, you won't have to do anything to be v3 compatible, but there are a few things you can do to be certain your plugin won't throw any warnings or errors.
 
 ### Setting the proper peer dependencies
 
@@ -791,7 +791,7 @@ This section is a work in progress and will be expanded when necessary. It's a l
 
 ### `reach-router`
 
-We vendored [reach-router](https://github.com/gatsbyjs/reach-router) to make it work for React 17. We added a webpack alias so that you can continue using it as usual, however you might run into an error like this after upgrading:
+We vendored [reach-router](https://github.com/gatsbyjs/reach-router) to make it work for React 17. We added a webpack alias so that you can continue using it as usual. However, you might run into an error like this after upgrading:
 
 ```shell
 Generating development JavaScript bundle failed
@@ -806,7 +806,7 @@ File: node_modules/gatsby-link/index.js:24:13
 
 Make sure that you have updated all dependencies. It's also possible that you have an outdated `.cache` folder around. Run `gatsby clean` to remove the outdated cache.
 
-In some situations the webpack alias will be ignored, so you will need to add your own alias. The most common example is in Jest tests. For these you should add the following to your Jest config:
+In some situations the webpack alias will be ignored, so you will need to add your own alias. The most common example is in Jest tests. For these, you should add the following to your Jest config:
 
 Configuring using a `jest.config.js` file:
 
