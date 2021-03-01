@@ -49,7 +49,7 @@
     "compression": "^1.7.4",
     "convert-hrtime": "^3.0.0",
     "copyfiles": "^2.3.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.9.0",
     "cors": "^2.8.5",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.2.0",
