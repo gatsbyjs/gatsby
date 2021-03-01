@@ -99,7 +99,7 @@ const setNameInPackage = async (
     delete packageJson.author
   }
 
-  await fs.writeJSON(packageJsonPath, packageJson)
+  await fs.writeJSON(packageJsonPath, packageJson, { spaces: 2 })
 }
 
 // Executes `npm install` or `yarn install` in rootPath.
@@ -139,7 +139,11 @@ const install = async (
       reporter.success(`Installed Gatsby`)
       reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
 
-      await execa(`npm`, [`install`, ...config, ...packages], options)
+      await execa(
+        `npm`,
+        [`install`, ...config, `--legacy-peer-deps`, ...packages],
+        options
+      )
       await clearLine()
     }
 
