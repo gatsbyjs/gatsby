@@ -125,7 +125,10 @@ This section explains breaking changes that were made for Gatsby v3. Most, if no
 
 ### Minimal Node.js version 12.13.0
 
-Gatsby now requires at least `12.13.0` for its Node.js version.
+We are dropping support for Node 10 as it is approaching maintenance EOL date (2021-04-30).
+The new required version of Node is `12.13.0`. See the main changes in [Node 12 release notes](https://nodejs.org/en/blog/release/v12.0.0/).
+
+Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-release-working-group) for version statuses.
 
 ### Webpack upgraded from version 4 to version 5
 
