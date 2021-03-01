@@ -45,7 +45,7 @@
   "license": "MIT",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "gatsby-plugin-sharp": "^2.6.14",
+    "gatsby-plugin-sharp": "^3.0.0-next.0",
     "sharp": "^0.26.0"
   },
   "repository": {
