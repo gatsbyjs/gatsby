@@ -13,14 +13,6 @@ export const Style = () => (
     dangerouslySetInnerHTML={{
       __html: css`
         :host {
-          --gatsby: #663399;
-          --gatsbyLight: #9158ca;
-          --dimmedWhite: rgba(255, 255, 255, 0.8);
-          --codeFrame-bg: #eeeeee;
-          --codeFrame-color: #414141;
-          --codeFrame-button-bg: white;
-          --white: #ffffff;
-          --black: #000000;
           --color-ansi-selection: rgba(95, 126, 151, 0.48);
           --color-ansi-bg: #fafafa;
           --color-ansi-bg-darker: #eeeeee;
@@ -41,6 +33,18 @@ export const Style = () => (
           --color-ansi-bright-magenta: #795da3;
           --color-ansi-bright-red: #d91e18;
           --color-ansi-bright-yellow: #aa5d00;
+          --importantLight: #ffffff;
+          --importantDark: #000000;
+          --backdrop: rgba(72, 67, 79, 0.5);
+          --color: rgb(69, 74, 83);
+          --background: var(--color-ansi-bright-white);
+          --primary: #663399;
+          --primaryLight: #9158ca;
+          --link: var(--primary);
+          --dimmedBg: rgba(255, 255, 255, 0.8);
+          --codeFrame-bg: #eeeeee;
+          --codeFrame-color: #414141;
+          --codeFrame-button-bg: white;
           --radii: 5px;
           --z-index-backdrop: 8000;
           --z-index-overlay: 9000;
@@ -50,7 +54,7 @@ export const Style = () => (
         }
 
         [data-gatsby-overlay="backdrop"] {
-          background: rgba(72, 67, 79, 0.5);
+          background: var(--backdrop);
           position: absolute;
           top: 0;
           left: 0;
@@ -67,7 +71,8 @@ export const Style = () => (
           font: 18px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
-          background: var(--color-ansi-bright-white);
+          background: var(--background);
+          color: var(--color);
           position: fixed;
           width: 100%;
           max-width: 60%;
@@ -84,12 +89,22 @@ export const Style = () => (
           z-index: var(--z-index-overlay);
         }
 
+        [data-gatsby-overlay="root"] a {
+          color: var(--link);
+          text-decoration: none;
+          font-weight: 500;
+        }
+
+        [data-gatsby-overlay="root"] a:hover {
+          text-decoration: underline;
+        }
+
         [data-gatsby-overlay="header"] {
           display: grid;
           grid-gap: var(--space-sm);
           grid-template-columns: 1fr auto;
-          color: var(--dimmedWhite);
-          background: var(--gatsby);
+          color: var(--dimmedBg);
+          background: var(--primary);
           padding: var(--space);
           border-top-left-radius: var(--radii);
           border-top-right-radius: var(--radii);
@@ -113,6 +128,7 @@ export const Style = () => (
           margin-top: 0;
           font-weight: 500;
           font-size: 1.25em;
+          color: var(--importantDark);
         }
 
         [data-gatsby-overlay="pre"] {
@@ -120,7 +136,7 @@ export const Style = () => (
           color: var(--color-ansi-fg);
           background: var(--color-ansi-bg);
           padding: var(--space-sm);
-          border-radius: var(--radii);
+          border-radius: 0 0 var(--radii) var(--radii);
           overflow: auto;
         }
 
@@ -154,12 +170,12 @@ export const Style = () => (
         header[data-gatsby-error-type="graphql-error"]
           [data-gatsby-overlay="header__cause-file"]
           h1 {
-          color: var(--white);
+          color: var(--importantLight);
         }
 
         [data-gatsby-overlay="header__cause-file"] span {
           font-size: 1.25em;
-          color: var(--white);
+          color: var(--importantLight);
           font-weight: 500;
         }
 
@@ -169,9 +185,9 @@ export const Style = () => (
           justify-content: center;
           line-height: 1;
           cursor: pointer;
-          color: var(--white);
-          border: 1px solid var(--gatsby);
-          background: var(--gatsbyLight);
+          color: var(--importantLight);
+          border: 1px solid var(--primary);
+          background: var(--primaryLight);
           font-size: 0.9em;
           height: 32px;
           min-width: 2em;
@@ -216,8 +232,8 @@ export const Style = () => (
           cursor: pointer;
           border: 0;
           padding: 0;
-          background-color: var(--gatsbyLight);
-          color: var(--white);
+          background-color: var(--primaryLight);
+          color: var(--importantLight);
           appearance: none;
           height: 32px;
           width: 32px;
@@ -231,13 +247,17 @@ export const Style = () => (
           margin-top: var(--space);
         }
 
+        [data-gatsby-overlay="codeframe__top"]:first-of-type {
+          border-radius: var(--radii) var(--radii) 0 0;
+        }
+
         [data-gatsby-overlay="codeframe__bottom"] {
           margin-top: var(--space);
         }
 
         [data-gatsby-overlay="body__error-message-header"] {
           font-size: 1.2em;
-          color: var(--black);
+          color: var(--importantDark);
           margin-bottom: 1em;
         }
 
@@ -295,7 +315,7 @@ export const Style = () => (
           width: 100%;
           text-align: left;
           font-size: 18px;
-          color: var(--black);
+          color: var(--importantDark);
         }
 
         [data-gatsby-overlay="accordion__item__content"] {
