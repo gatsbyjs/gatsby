@@ -28,6 +28,7 @@ Major dependency updates:
 - [webpack 5](#webpack-5)
 - [React 17](#react-17)
 - [GraphQL 15](#graphql-15)
+- [Eslint 7](#eslint-7)
 
 Also check out [notable bugfixes and improvements](#notable-bugfixes-and-improvements).
 
@@ -107,16 +108,18 @@ Key changes in the new webpack version:
 - Clean up internal structures that were left in a weird state while implementing features in v4 without introducing any breaking changes
 - Prepare for future features by introducing breaking changes now, allowing us to stay on v5 for as long as possible
 
+What does that mean for your Gatsby site? Gatsby is now able to tree-shake on a page level instead of an app level. You'll see reductions up to 20% on file size. Recurring users benefit from the improved hashing algorithms as unchanged files will stay in the browser cache.
+
 We’ve tried to fence you from the burden of manual webpack migration but if you are using a custom
 webpack config or community plugins that do not support webpack 5 yet, you may find the [webpack migration guide](https://webpack.js.org/migrate/5/) useful.
-
-#### Changes to ESLint
-
-Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-webpack-plugin`.
 
 ## React 17
 
 Please refer to React's own [release notes](https://reactjs.org/blog/2020/10/20/react-v17.html) for a full list of changes.
+
+The minimum version of Gatsby is now 16.9.0 to support Fast-Refresh, React Hooks, Suspense by default. We've also made sure we're 100% compatible with React 17. To use the new [React JSX transformer](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) have a look at the [`babel-preset-gatsby`](#babel-preset-gatsby) section below.
+
+With this change, we'll be adding more experiments to support [Concurrent mode](https://reactjs.org/blog/2019/11/06/building-great-user-experiences-with-concurrent-mode-and-suspense.html) and [React Server Components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) in future releases.
 
 ## GraphQL 15
 
@@ -141,6 +144,14 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
 Also, Gatsby now displays GraphQL deprecations as CLI warnings when queries. Example output:
 
 ![GraphQL deprecation warning in CLI](./graphql-deprecation-warnings.png)
+
+## Eslint 7
+
+Please refer to `eslint`'s own [migration guide](https://eslint.org/docs/user-guide/migrating-to-7.0.0) to update your custom eslint files.
+
+If you rely on Gatsby's default eslint configuration - you should have a smooth transition. We upgraded the underlying rules so you might get some new warnings/errors.
+
+Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-webpack-plugin`. By using the plugin, behaviour has changed a little bit as warnings and errors are displayed later than in version 2.
 
 ## gatsby-plugin-image@1.0.0
 
