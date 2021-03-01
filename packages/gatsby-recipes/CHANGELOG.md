@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.12.0-next.0...gatsby-recipes@0.12.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.5...gatsby-recipes@0.12.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.11.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.4...gatsby-recipes@0.11.0-next.5) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.11.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.3...gatsby-recipes@0.11.0-next.4) (2021-02-22)
+
+### Bug Fixes
+
+- **gatsby-recipes:** change 'Typescript' to 'TypeScript' ([#29587](https://github.com/gatsbyjs/gatsby/issues/29587)) ([d7c4459](https://github.com/gatsbyjs/gatsby/commit/d7c4459cf1d26944ac1804d21f17ef161b32e267))
+
+# [0.11.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.2...gatsby-recipes@0.11.0-next.3) (2021-02-17)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.1...gatsby-recipes@0.11.0-next.2) (2021-02-15)
+
+### Bug Fixes
+
+- **gatsby:** skip unions in input types ([#29479](https://github.com/gatsbyjs/gatsby/issues/29479)) ([8ef695d](https://github.com/gatsbyjs/gatsby/commit/8ef695dfae16c46e46641f2559ccc64b79aaaae2))
+
+# [0.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.11.0-next.0...gatsby-recipes@0.11.0-next.1) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.10.0-next.1...gatsby-recipes@0.11.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.10.0-next.0...gatsby-recipes@0.10.0-next.1) (2021-02-04)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.9.0-next.1...gatsby-recipes@0.10.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.9.0-next.0...gatsby-recipes@0.9.0-next.1) (2021-01-26)
+
+**Note:** Version bump only for package gatsby-recipes
+
+# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.8.0-next.1...gatsby-recipes@0.9.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
 # [0.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.8.0-next.0...gatsby-recipes@0.8.0-next.1) (2021-01-12)
 
 **Note:** Version bump only for package gatsby-recipes

@@ -86,6 +86,13 @@ export const store: GatsbyReduxStore = configureStore(readState())
 
 // Persist state.
 export const saveState = (): void => {
+  if (process.env.GATSBY_DISABLE_CACHE_PERSISTENCE) {
+    // do not persist cache if above env var is set.
+    // this is to temporarily unblock builds that hit the v8.serialize related
+    // Node.js buffer size exceeding kMaxLength fatal crashes
+    return undefined
+  }
+
   const state = store.getState()
 
   return writeToCache({
@@ -96,10 +103,10 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
-    pageData: state.pageData,
     pendingPageDataWrites: state.pendingPageDataWrites,
     staticQueriesByTemplate: state.staticQueriesByTemplate,
     queries: state.queries,
+    html: state.html,
   })
 }
 

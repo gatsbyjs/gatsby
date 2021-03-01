@@ -2,7 +2,7 @@ import React, { FunctionComponent, ImgHTMLAttributes } from "react"
 import * as PropTypes from "prop-types"
 import { Picture, SourceProps } from "./picture"
 
-export type PlaceholderProps = ImgHTMLAttributes<{}> & {
+export type PlaceholderProps = ImgHTMLAttributes<HTMLImageElement> & {
   fallback?: string
   sources?: Array<SourceProps>
 }

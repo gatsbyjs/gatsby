@@ -1,7 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
 const {
@@ -221,9 +221,11 @@ class BabelPluginTransformRelativeImports {
               const valueAbsPath = path.resolve(parentFilepath, nodePath)
               const replacementPath =
                 loaders +
-                path.relative(
-                  path.join(cache.directory, MDX_SCOPES_LOCATION),
-                  valueAbsPath
+                slash(
+                  path.relative(
+                    path.join(cache.directory, MDX_SCOPES_LOCATION),
+                    valueAbsPath
+                  )
                 )
               node.value = replacementPath
             }

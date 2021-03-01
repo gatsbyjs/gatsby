@@ -85,10 +85,11 @@ export async function writeImages({
     async ([hash, { src, ...args }]) => {
       let file: FileSystemNode | undefined
       let fullPath
-      if (process.env.GATSBY_EXPERIMENTAL_REMOTE_IMAGES && isRemoteURL(src)) {
+      if (isRemoteURL(src)) {
         let createRemoteFileNode
         try {
-          ;({ createRemoteFileNode } = require(`gatsby-source-filesystem`))
+          createRemoteFileNode = require(`gatsby-source-filesystem`)
+            .createRemoteFileNode
         } catch (e) {
           reporter.panic(`Please install gatsby-source-filesystem`)
         }

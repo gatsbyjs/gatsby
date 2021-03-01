@@ -29,6 +29,11 @@ module.exports = {
     before: true,
     after: true,
     spyOn: true,
+    // These should be in scope but for some reason eslint can't see them
+    NodeJS: true,
+    JSX: true,
+    NodeRequire: true,
+    TimerHandler: true,
     __PATH_PREFIX__: true,
     __BASE_PATH__: true,
     __ASSET_PREFIX__: true,
@@ -48,8 +53,10 @@ module.exports = {
     "no-unused-vars": [
       "warn",
       {
-        varsIgnorePattern: "^_"
-      }
+        varsIgnorePattern: "^_",
+        argsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      },
     ],
     "consistent-return": ["error"],
     "filenames/match-regex": ["error", "^[a-z-\\d\\.]+$", true],
@@ -93,7 +100,10 @@ module.exports = {
         ...TSEslint.configs.recommended.rules,
         // We should absolutely avoid using ts-ignore, but it's not always possible.
         // particular when a dependencies types are incorrect.
-        "@typescript-eslint/ban-ts-ignore": "warn",
+        "@typescript-eslint/ban-ts-comment": [
+          "warn",
+          { "ts-ignore": "allow-with-description" }
+        ],
         // This rule is great. It helps us not throw on types for areas that are
         // easily inferrable. However we have a desire to have all function inputs
         // and outputs declaratively typed. So this let's us ignore the parameters
@@ -102,16 +112,80 @@ module.exports = {
           "error",
           { ignoreParameters: true },
         ],
-        "@typescript-eslint/camelcase": [
+        "@typescript-eslint/ban-types": [
           "error",
           {
-            // This rule tries to ensure we use camelCase for all variables, properties
-            // functions, etc. However, it is not always possible to ensure properties
-            // are camelCase. Specifically we have `node.__gatsby_resolve` which breaks
-            // this rule. This allows properties to be whatever they need to be.
-            properties: "never",
-            // Allow unstable api's to use `unstable_`, which is easier to grep
-            allow: ["^unstable_"],
+            extendDefaults: true,
+            types: {
+              "{}": {
+                fixWith: "Record<string, unknown>",
+              },
+              object: {
+                fixWith: "Record<string, unknown>",
+              },
+            },
+          },
+        ],
+        "camelcase": "off",
+        // TODO: These rules allow a lot of stuff and don't really enforce. If we want to apply our styleguide, we'd need to fix a lot of stuff
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            selector: "default",
+            format: ["camelCase"],
+          },
+          {
+            selector: "variable",
+            format: ["camelCase", "UPPER_CASE", "PascalCase"],
+            leadingUnderscore: "allowSingleOrDouble",
+            trailingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "function",
+            format: ["camelCase", "PascalCase"],
+            leadingUnderscore: "allow",
+          },
+          {
+            selector: "parameter",
+            format: ["camelCase", "PascalCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "enumMember",
+            format: ["camelCase", "UPPER_CASE", "PascalCase"]
+          },
+          {
+            selector: "typeLike",
+            format: ["PascalCase"],
+          },
+          {
+            selector: "typeAlias",
+            format: ["camelCase", "PascalCase"]
+          },
+          {
+            selector: "property",
+            format: ["PascalCase", "UPPER_CASE", "camelCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "objectLiteralProperty",
+            format: ["PascalCase", "UPPER_CASE", "camelCase", "snake_case"],
+            leadingUnderscore: "allowSingleOrDouble",
+            trailingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "enum",
+            format: ["PascalCase", "UPPER_CASE"]
+          },
+          {
+            selector: "method",
+            format: ["PascalCase", "camelCase"],
+            leadingUnderscore: "allowSingleOrDouble",
+          },
+          {
+            selector: "interface",
+            format: ["PascalCase"],
+            prefix: ["I"],
           },
         ],
         // This rule tries to prevent using `require()`. However in node code,
@@ -120,6 +194,7 @@ module.exports = {
         // mocking. At this point it's easier to have it off and just encourage
         // using top-level imports via code reviews.
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-extra-semi": "off",
         // This rule ensures that typescript types do not have semicolons
         // at the end of their lines, since our prettier setup is to have no semicolons
         // e.g.,
@@ -134,13 +209,6 @@ module.exports = {
               delimiter: "none",
             },
           },
-        ],
-        // This ensures all interfaces are named with an I as a prefix
-        // e.g.,
-        // interface IFoo {}
-        "@typescript-eslint/interface-name-prefix": [
-          "error",
-          { prefixWithI: "always" },
         ],
         "@typescript-eslint/no-empty-function": "off",
         // This ensures that we always type the return type of functions
@@ -178,7 +246,7 @@ module.exports = {
   ],
   settings: {
     react: {
-      version: "16.4.2",
+      version: "16.9.0",
     },
   },
 }

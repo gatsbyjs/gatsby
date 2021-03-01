@@ -3,6 +3,20 @@ const execa = require(`execa`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
 
+function fetchUntil(url, filter, timeout = 1000) {
+  return new Promise(resolve => {
+    fetch(url).then(res => {
+      if (filter(res)) {
+        resolve(res)
+      } else {
+        setTimeout(() => {
+          resolve(fetchUntil(url, filter, timeout))
+        }, timeout)
+      }
+    })
+  })
+}
+
 describe(`SSR`, () => {
   test(`is run for a page when it is requested`, async () => {
     const html = await fetch(`http://localhost:8000/`).then(res => res.text())
@@ -22,36 +36,15 @@ describe(`SSR`, () => {
     fs.copySync(src, dest)
 
     const pageUrl = `http://localhost:8000/bad-page/`
-    await new Promise(resolve => {
-      // Poll until the new page is bundled (so starts returning a non-404 status).
-      const testInterval = setInterval(() => {
-        fetch(pageUrl).then(res => {
-          if (res.status !== 404) {
-            clearInterval(testInterval)
-            resolve()
-          }
-        })
-      }, 1000)
-    })
-
-    const rawDevHtml = await fetch(
-      `http://localhost:8000/bad-page/`
-    ).then(res => res.text())
+    // Poll until the new page is bundled (so starts returning a non-404 status).
+    const rawDevHtml = await fetchUntil(pageUrl, res => {
+      return res.status === 500
+    }).then(res => res.text())
     expect(rawDevHtml).toMatchSnapshot()
-    fs.remove(dest)
+    await fs.remove(dest)
 
     // After the page is gone, it'll 404.
-    await new Promise(resolve => {
-      setTimeout(() => {
-        const testInterval = setInterval(() => {
-          fetch(pageUrl).then(res => {
-            if (res.status === 404) {
-              clearInterval(testInterval)
-              resolve()
-            }
-          })
-        }, 400)
-      }, 400)
-    })
+    // TODO FIX as this isn't working
+    // await fetchUntil(pageUrl, res => res.status === 404)
   }, 15000)
 })

@@ -5,6 +5,7 @@ import * as hooks from "../hooks"
 
 type GlobalOverride = NodeJS.Global &
   typeof global.globalThis & {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     GATSBY___IMAGE: boolean
     SERVER: boolean
   }
@@ -36,9 +37,9 @@ describe(`GatsbyImage browser`, () => {
     beforeHydrationContent = document.createElement(`div`)
     beforeHydrationContent.innerHTML = `
       <div
-        class="gatsby-image-wrapper"
+        class="gatsby-image-wrapper gatsby-image-wrapper-constrained"
         data-gatsby-image-wrapper=""
-        style="position: relative; display: inline-block;"
+        style="position: relative;"
       >
         <div
           style="max-width: 100px; display: block;"

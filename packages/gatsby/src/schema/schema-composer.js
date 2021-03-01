@@ -13,8 +13,8 @@ const createSchemaComposer = ({ fieldExtensions } = {}) => {
   schemaComposer._directives = [...BUILT_IN_DIRECTIVES]
 
   getNodeInterface({ schemaComposer })
-  schemaComposer.addAsComposer(GraphQLDate)
-  schemaComposer.addAsComposer(GraphQLJSON)
+  schemaComposer.add(GraphQLDate)
+  schemaComposer.add(GraphQLJSON)
   addDirectives({ schemaComposer, fieldExtensions })
   return schemaComposer
 }

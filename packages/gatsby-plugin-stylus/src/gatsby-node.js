@@ -23,17 +23,15 @@
 const resolve = require(`./resolve`)
 
 exports.onCreateWebpackConfig = (
-  { actions, stage, rules, plugins, loaders },
+  { actions, stage, loaders },
   { postCssPlugins, ...stylusOptions }
 ) => {
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
   const { setWebpackConfig } = actions
-  const PRODUCTION = stage !== `develop`
-  const isSSR = stage.includes(`html`)
 
   const stylusLoader = {
     loader: resolve(`stylus-loader`),
     options: {
-      sourceMap: !PRODUCTION,
       ...stylusOptions,
     },
   }
@@ -53,27 +51,18 @@ exports.onCreateWebpackConfig = (
   const stylusRuleModules = {
     test: /\.module\.styl$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ hmr: false }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
     ].filter(Boolean),
   }
 
-  let configRules = []
-
-  switch (stage) {
-    case `develop`:
-    case `build-javascript`:
-    case `build-html`:
-    case `develop-html`:
-      configRules = configRules.concat([
-        {
-          oneOf: [stylusRuleModules, stylusRule],
-        },
-      ])
-      break
-  }
+  const configRules = [
+    {
+      oneOf: [stylusRuleModules, stylusRule],
+    },
+  ]
 
   setWebpackConfig({
     module: {

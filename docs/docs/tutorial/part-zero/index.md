@@ -97,7 +97,7 @@ sudo apt-get install curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
 ```
 
-4. Confirm this has worked. The output should be a version number.
+4. Confirm this has worked. The output should be a version number. (Note that you may have to reload your bash configuration. Close and restart the terminal or run `source ~/.bashrc`.)
 
 ```shell
 nvm --version

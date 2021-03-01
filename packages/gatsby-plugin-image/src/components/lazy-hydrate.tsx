@@ -15,7 +15,7 @@ import { ReactElement } from "react"
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
-  toggleIsLoaded: Function
+  toggleIsLoaded: (toggle: boolean) => void
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
 
@@ -59,7 +59,7 @@ export function lazyHydrate(
   }
 
   const cacheKey = JSON.stringify(images)
-  const hasLoaded = !hydrated.current && hasImageLoaded(cacheKey)
+  const hasLoaded = hasImageLoaded(cacheKey)
 
   imgStyle = {
     objectFit,
@@ -84,6 +84,8 @@ export function lazyHydrate(
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
+        width={width}
+        height={height}
         className={imgClassName}
         {...getMainProps(
           isLoading,

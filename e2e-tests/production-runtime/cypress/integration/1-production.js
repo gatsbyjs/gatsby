@@ -115,13 +115,6 @@ describe(`Production build tests`, () => {
       .should(`exist`)
   })
 
-  it(`should pass pathContext to props`, () => {
-    cy.visit(`/path-context`).waitForRouteChange()
-
-    // `bar` is set in gatsby-node createPages
-    cy.getTestElement(`path-context-foo`).contains(`bar`)
-  })
-
   it(`Uses env vars`, () => {
     cy.visit(`/env-vars`).waitForRouteChange()
 
@@ -139,7 +132,7 @@ describe(`Production build tests`, () => {
 
   describe(`Supports unicode characters in urls`, () => {
     it(`Can navigate directly`, () => {
-      cy.visit(`/안녕/`, {
+      cy.visit(encodeURI(`/안녕/`), {
         // Cypress seems to think it's 404
         // even if it's not. 404 page doesn't have
         // `page-2-message` element so the test will fail on
@@ -163,7 +156,7 @@ describe(`Production build tests`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
-      cy.visit(`/안녕404/`, {
+      cy.visit(encodeURI(`/안녕404/`), {
         failOnStatusCode: false,
       }).waitForRouteChange()
 

@@ -1,4 +1,4 @@
-const fetchGraphql = require(`gatsby-source-wordpress-experimental/dist/utils/fetch-graphql`)
+const fetchGraphql = require(`gatsby-source-wordpress/dist/utils/fetch-graphql`)
   .default
 
 const faker = require(`faker`)

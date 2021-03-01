@@ -52,8 +52,8 @@ const setup = (version?: string): ReturnType<typeof getCLI> => {
 }
 
 describe(`error handling`, () => {
-  it(`panics on Node < 10.13.0`, () => {
-    ;[`6.0.0`, `8.0.0`, `10.0.0`].forEach(version => {
+  it(`panics on Node < 12.13.0`, () => {
+    ;[`6.0.0`, `8.0.0`, `10.0.0`, `12.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).toHaveBeenCalledTimes(1)
@@ -95,8 +95,8 @@ describe(`error handling`, () => {
 // })
 
 describe(`normal behavior`, () => {
-  it(`does not panic on Node >= 10.13.0`, () => {
-    ;[`10.13.0`, `12.0.0`, `13.0.0`].forEach(version => {
+  it(`does not panic on Node >= 12.13.0`, () => {
+    ;[`12.13.0`, `13.0.0`, `14.0.0`].forEach(version => {
       const { reporter } = setup(version)
 
       expect(reporter.panic).not.toHaveBeenCalled()

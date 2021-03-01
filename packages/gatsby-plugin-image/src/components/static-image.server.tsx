@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, ReactElement } from "react"
 import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 import PropTypes from "prop-types"
@@ -6,7 +6,7 @@ import { ISharpGatsbyImageArgs } from "../image-utils"
 
 export interface IStaticImageProps
   extends Omit<GatsbyImageProps, "image">,
-    ISharpGatsbyImageArgs {
+    Omit<ISharpGatsbyImageArgs, "backgroundColor"> {
   src: string
 }
 
@@ -40,7 +40,7 @@ export function _getStaticImage(
     blurredOptions,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...props
-  }): JSX.Element {
+  }): ReactElement {
     if (__error) {
       console.warn(__error)
     }
@@ -91,12 +91,12 @@ export const propTypes = {
     if (props.layout === undefined) {
       return undefined
     }
-    if (validLayouts.has(props.layout.toLowerCase())) {
+    if (validLayouts.has(props.layout)) {
       return undefined
     }
 
     return new Error(
-      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "fixed". Valid values are "fixed", "fullWidth" or "constrained".`
+      `Invalid value ${props.layout}" provided for prop "layout". Defaulting to "constrained". Valid values are "fixed", "fullWidth" or "constrained".`
     )
   },
 }
