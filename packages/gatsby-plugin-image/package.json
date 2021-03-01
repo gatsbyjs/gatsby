@@ -65,9 +65,8 @@
   },
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "gatsby-image": "*",
-    "gatsby-plugin-sharp": "*",
-    "gatsby-source-filesystem": "*",
+    "gatsby-plugin-sharp": "^3.0.0-next.0",
+    "gatsby-source-filesystem": "^3.0.0-next.0",
     "react": "^16.9.0 || ^17.0.0",
     "react-dom": "^16.9.0 || ^17.0.0"
   },
