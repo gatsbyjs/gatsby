@@ -379,6 +379,25 @@ const Layout = ({ children }) => (
 export default Layout
 ```
 
+When you're using `require with expression` or `require.context` which is not recommended. You'll have to append `.default` to your require statement to make it work.
+
+```diff:title=src/components/Layout.js
+import React from "react"
+import { Helmet } from "react-helmet";
+
+const Layout = ({ children, font }) => (
+  <div>
+    <Helmet>
+-      <link rel="preload" href={require('../assets/fonts/' + font + '.woff2')} as="fonts/woff2" crossOrigin="anonymous" type="font/woff2" />
++      <link rel="preload" href={require('../assets/fonts/' + font + '.woff2').default} as="fonts/woff2" crossOrigin="anonymous" type="font/woff2" /
+    </Helmet>
+    {children}
+  </div>
+)
+
+export default Layout
+```
+
 ### Webpack 5 node configuration changed (node.fs, node.path, ...)
 
 Some components need you to patch/disable node apis in the browser like path or fs. Webpack removed these automatic polyfills. You now have to manually set them in your configurations
