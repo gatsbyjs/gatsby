@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-v3rc.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.2...gatsby@3.0.0-v3rc.3) (2021-03-01)
+
+### Bug Fixes
+
+- **gatsby:** fix some css HMR edge cases ([#29839](https://github.com/gatsbyjs/gatsby/issues/29839)) ([#29865](https://github.com/gatsbyjs/gatsby/issues/29865)) ([fdc1fe2](https://github.com/gatsbyjs/gatsby/commit/fdc1fe29c507e0b2dbb7b8fee765176cd2e9c5a9))
+- **gatsby:** Fix various small DEV_SSR bugs exposed in development_runtime tests ([#29720](https://github.com/gatsbyjs/gatsby/issues/29720)) ([#29866](https://github.com/gatsbyjs/gatsby/issues/29866)) ([f070422](https://github.com/gatsbyjs/gatsby/commit/f070422daf39272ee453936585bdb4b644dd39aa))
+- **gatsby:** Improve Fast Refresh overlay styles ([#29855](https://github.com/gatsbyjs/gatsby/issues/29855)) ([#29861](https://github.com/gatsbyjs/gatsby/issues/29861)) ([e7453c3](https://github.com/gatsbyjs/gatsby/commit/e7453c39810fe39497b9660f582350e97b5becef))
+- **gatsby-plugin-preact:** fix fast-refresh ([#29831](https://github.com/gatsbyjs/gatsby/issues/29831)) ([#29860](https://github.com/gatsbyjs/gatsby/issues/29860)) ([e8a7e3b](https://github.com/gatsbyjs/gatsby/commit/e8a7e3be95adfcd1efa9e1db71ebb2e4c82105db))
+
 # [3.0.0-v3rc.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.1...gatsby@3.0.0-v3rc.2) (2021-02-28)
 
 ### Bug Fixes
