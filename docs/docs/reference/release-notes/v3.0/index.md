@@ -188,6 +188,14 @@ from you are required.
 - Retries when downloading assets
 - Retries on network errors
 
+## gatsby-plugin-gatsby-cloud@1.0.0
+
+Gatsby Cloud now includes Hosting for all your Gatsby projects. `gatsby-plugin-gatsby-cloud` is a new plugin that you need to install when using Gatsby Cloud Hosting. It generates redirects and rewrites for your client side routes automatically and even allows you to set custom Headers on a per-file basis.
+
+For Gatsby v3 we’ve also bumped `gatsby-plugin-gatsby-cloud` to `2.0.0`. It should
+be a straight-forward update from `gatsby-plugin-gatsby-cloud@^1.0.0`, no additional changes
+from you are required.
+
 ## Miscellaneous changes in plugins
 
 ### `babel-preset-gatsby`
