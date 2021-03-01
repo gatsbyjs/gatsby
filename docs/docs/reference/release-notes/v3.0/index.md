@@ -9,16 +9,16 @@ version: "3.0.0"
 
 Welcome to `gatsby@3.0.0` release (March 2021 #1).
 
-This is the first major bump of Gatsby since [september 2018](https://www.npmjs.com/package/gatsby/v/2.0.0)!
+This is the first major bump of Gatsby since [September 2018](https://www.npmjs.com/package/gatsby/v/2.0.0)!
 We’ve tried to make migration smooth, please refer to the [migration guide](/docs/reference/release-notes/migrating-from-v2-to-v3/)
-and [report](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you encounter any issues when migrating.
+and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you encounter any issues when migrating.
 
 Key highlights of this release:
 
 - [Incremental Builds in OSS](#incremental-builds-in-oss) - regenerate HTML only when necessary; faster re-builds
 - [Fast Refresh](#fast-refresh) - new hot-reloading engine, error recovery, better DX
 - [gatsby-plugin-image@1.0.0](#gatsby-plugin-image100)
-- [gatsby-source-wordpress@5.0.0](#gatsby-source-wordpress500) - brand new, significantly improved integration with Wordpress
+- [gatsby-source-wordpress@5.0.0](#gatsby-source-wordpress500) - brand new, significantly improved integration with WordPress
 - [gatsby-source-contentful@5.0.0](#gatsby-source-contentful500)
 - [Miscellaneous changes in plugins](#miscellaneous-changes-in-plugins)
 
@@ -52,20 +52,18 @@ Take a project powered by Shopify as an example. You have your listing of all pr
 
 The screenshot is taken from a lengthy video about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on YouTube there.
 
-(when a new page is added and/or when something that was used to generate HTML files changed since last build)
-
 ### How does it work?
 
-Gatsby tracks "inputs" used to generate HTML file and when those change since last build, HTML file is marked to be regenerated (if they don't change we can reuse HTML files generated in previous build). In particular we track:
+Gatsby tracks "inputs" when generating HTML files. When those inputs change since the last build, the HTML files are marked to be regenerated (if they don't change we can reuse HTML files generated in previous build). In particular we track:
 
-- which page template page is using
+- which page template the page is using
 - result of page query
 - results of static queries used by a page template
-- frontend source code (shared and also browser (`gatsby-browser`) / SSR (`gatsby-ssr`) specifically)
+- frontend source code (shared and also browser `gatsby-browser` / SSR `gatsby-ssr` specifically)
 
 ### Gotchas
 
-As we mentioned, Gatsby tracks "inputs" used to generate HTML file. However, `gatsby-ssr` file allows some arbitrary code execution. This includes for example `fs` reads. While Gatsby could also track files that are read, the custom code that does those reads might have some special logic that Gatsby is not aware of. If Gatsby discovers that those are used, it will disable Incremental Builds mode to stay on the safe side (there will be warnings mentioning "unsafe builtin method").
+As we mentioned, Gatsby tracks "inputs" used to generate HTML files. However, the `gatsby-ssr` file allows some arbitrary code execution. This includes for example `fs` reads. While Gatsby could also track files that are read, the custom code that does those reads might have some special logic that Gatsby is not aware of. If Gatsby discovers that those are used, it will disable "Incremental Builds"-mode to stay on the safe side (there will be warnings mentioning "unsafe builtin method").
 
 If your `gatsby-ssr` (either site itself or plugin) make use of FS reads, head over to [migrating from v2 to v3 guide](/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-SSR) and check how to migrate.
 
@@ -102,15 +100,15 @@ Please refer to webpack own [release notes](https://webpack.js.org/blog/2020-10-
 
 Key changes in the new webpack version:
 
-- Improve build performance with Persistent Caching.
-- Improve Long Term Caching with better algorithms and defaults.
-- Improve bundle size with better Tree Shaking and Code Generation.
-- Improve compatibility with the web platform.
-- Clean up internal structures that were left in a weird state while implementing features in v4 without introducing any breaking changes.
-- Prepare for future features by introducing breaking changes now, allowing us to stay on v5 for as long as possible.
+- Improve build performance with Persistent Caching
+- Improve Long Term Caching with better algorithms and defaults
+- Improve bundle size with better Tree Shaking and Code Generation
+- Improve compatibility with the web platform
+- Clean up internal structures that were left in a weird state while implementing features in v4 without introducing any breaking changes
+- Prepare for future features by introducing breaking changes now, allowing us to stay on v5 for as long as possible
 
 We’ve tried to fence you from the burden of manual webpack migration but if you are using a custom
-webpack config or community plugins that do not support webpack5 yet, you may find [webpack migration guide](https://webpack.js.org/migrate/5/) useful.
+webpack config or community plugins that do not support webpack 5 yet, you may find the [webpack migration guide](https://webpack.js.org/migrate/5/) useful.
 
 #### Changes to ESLint
 
@@ -118,11 +116,11 @@ Gatsby no longer uses the deprecated `eslint-loader`, we’ve moved to `eslint-w
 
 ## React 17
 
-Please refer to React own [release notes](https://reactjs.org/blog/2020/10/20/react-v17.html) for a full list of changes.
+Please refer to React's own [release notes](https://reactjs.org/blog/2020/10/20/react-v17.html) for a full list of changes.
 
 ## GraphQL 15
 
-Please refer to `graphql-js` own [release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) for a full list of changes.
+Please refer to `graphql-js`'s own [release notes](https://github.com/graphql/graphql-js/releases/tag/v15.0.0) for a full list of changes.
 
 With this upgrade we can finally leverage interface inheritance for [queryable interfaces](https://www.gatsbyjs.com/docs/reference/graphql-data-layer/schema-customization/#queryable-interfaces-with-the-nodeinterface-extension).
 You no longer need to use `@nodeInterface` directive in schema customization:
@@ -141,6 +139,7 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
 ```
 
 Also, Gatsby now displays GraphQL deprecations as CLI warnings when queries. Example output:
+
 ![GraphQL deprecation warning in CLI](./graphql-deprecation-warnings.png)
 
 ## gatsby-plugin-image@1.0.0
@@ -149,13 +148,13 @@ TODOC
 
 ## gatsby-source-wordpress@5.0.0
 
-Recently we’ve announced the brand new Wordpress integration. Refer to [this blog post](https://www.gatsbyjs.com/blog/wordpress-integration)
+Recently we’ve announced the brand new WordPress integration. Refer to [this blog post](/blog/wordpress-integration/)
 for full details.
 
 The originally published version of renewed `gatsby-source-wordpress` is `4.0.0`. It is
 fully compatible with Gatsby v2.
 
-For Gatsby v3 bump we’ve also bumped the `gatsby-source-wordpress` to `5.0.0`. It should
+For Gatsby v3 bump we’ve also bumped `gatsby-source-wordpress` to `5.0.0`. It should
 be a straight-forward update from `gatsby-source-wordpress@^4.0.0`, no additional changes
 from you are required.
 
