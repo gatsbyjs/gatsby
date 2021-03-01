@@ -87,7 +87,7 @@ export class ForceCssHMRForEdgeCases {
           this.blankCssKey
         ) {
           records.chunkModuleHashes[this.blankCssKey] =
-            this.originalBlankCssHash + this.hackCounter++
+            this.originalBlankCssHash + String(this.hackCounter++)
         }
 
         this.previouslySeenCss = seenCssInThisCompilation
