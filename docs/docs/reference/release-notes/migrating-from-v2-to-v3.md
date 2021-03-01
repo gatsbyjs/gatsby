@@ -99,11 +99,11 @@ This is because the plugin needs to set its `peerDependencies` to the new versio
 
 #### Handling dependencies for plugins that are not yet updated
 
-If you run into the scenarios listed below, you will need to leverage yarn resolutions until the plugin authors upgrade the plugins they maintain.
+If you run into the scenarios listed below, you will need to use yarn resolutions until the plugin authors upgrade the plugins they maintain.
 
 Gatsby has an _amazing_ ecosystem of plugins that make it easier to get up and running, and to incorporate various data sources and functionality into your Gatsby project. Part of that huge ecosystem includes dependency trees!
 
-Depending on how the plugin authors have declared dependencies (e.g. marking a package as a dependency instead of a peerDependency) within those plugins, there could be a myriad of failures that arise. If you encounter any of these issues when migrating your project to Gatsby Version 3, we recommend that you leverage [Yarn resolutions](https://yarnpkg.com/configuration/manifest#resolutions) within your `package.json`.
+Depending on how the plugin authors have declared dependencies (e.g. marking a package as a dependency instead of a peerDependency) within those plugins, there could be a myriad of failures that arise. If you encounter any of these issues when migrating your project to Gatsby Version 3, we recommend that you use [Yarn resolutions](https://yarnpkg.com/configuration/manifest#resolutions) within your `package.json`.
 
 **Please note:** If your rely on a plugin that is not found within the [list of plugins within the Gatsby framework](https://github.com/gatsbyjs/gatsby/tree/master/packages), you very well may need to use the following resolutions in the near term.
 
