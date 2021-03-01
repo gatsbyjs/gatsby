@@ -89,7 +89,13 @@ Using community plugins you might see warnings like these in your terminal:
 warning Plugin gatsby-plugin-acme is not compatible with your gatsby version 3.0.0 - It requires gatsby@^2.32.0
 ```
 
-This is because the plugin needs to set its `peerDependencies` to the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
+If you are using npm 7, the warning may instead be an error:
+
+```shell
+npm ERR! ERESOLVE unable to resolve dependency tree
+```
+
+This is because the plugin needs to set its `peerDependencies` to the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
 #### Handling dependencies for plugins that are not yet updated
 
