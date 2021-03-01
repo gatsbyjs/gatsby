@@ -196,6 +196,8 @@ For Gatsby v3 we’ve also bumped `gatsby-plugin-gatsby-cloud` to `2.0.0`. It sh
 be a straight-forward update from `gatsby-plugin-gatsby-cloud@^1.0.0`, no additional changes
 from you are required.
 
+Read more about `gatsby-plugin-gatsby-cloud` at the [README](/packages/gatsby-plugin-gatsby-cloud/README.md).
+
 ## Miscellaneous changes in plugins
 
 ### `babel-preset-gatsby`
