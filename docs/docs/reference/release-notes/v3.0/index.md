@@ -34,15 +34,30 @@ If you're looking for an overview of all breaking changes and how to migrate, pl
 
 ## Incremental Builds in OSS
 
-Previously we had something called "Conditional Page Builds" behind a flag in Gatsby v2. It had some gotchas and quirks and wasn't ready yet for GA. With Gatsby v3 we improved this feature, and activated it by default for everyone! So incremental builds is available in OSS now.
-
-TODO -- some more stuff
+Gatsby v2 introduced experimental "Conditional Page Builds" (enabled by `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` environment variable). It had some gotchas and quirks and wasn't ready yet for GA. With Gatsby v3 we improved this feature, and activated it by default for everyone! So incremental builds is available in OSS now. This improvement is (re)generating only subset of HTML files that needs to be generated. To be able to use it you will need to keep to `.cache` and `public` directories from previous builds.
 
 Take a project powered by Shopify as an example. You have your listing of all products and then individual product pages -- when you change one single product, only that page should be rebuilt. In the screenshot below you can see exactly that (the sentence "Hello World" was added to the description):
 
 ![Side-by-side view of a Shopify store instance on the left, and the preview on the right. At the bottom the terminal shows that after the change only one page was rebuilt](./incremental-builds-in-oss.jpg)
 
 The screenshot is taken from a lengthy video about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on YouTube there.
+
+(when a new page is added and/or when something that was used to generate HTML files changed since last build)
+
+### How does it work?
+
+Gatsby tracks "inputs" used to generate HTML file and when those change since last build, HTML file is marked to be regenerated (if they don't change we can reuse HTML files generated in previous build). In particular we track:
+
+- which page template page is using
+- result of page query
+- results of static queries used by a page template
+- frontend source code (shared and also browser (`gatsby-browser`) / SSR (`gatsby-ssr`) specifically)
+
+### Gotchas
+
+As we mentioned, Gatsby tracks "inputs" used to generate HTML file. However, `gatsby-ssr` file allows some arbitrary code execution. This includes for example `fs` reads. While Gatsby could also track files that are read, the custom code that does those reads might have some special logic that Gatsby is not aware of. If Gatsby discovers that those are used, it will disable Incremental Builds mode to stay on the safe side (there will be warnings mentioning "unsafe builtin method").
+
+If your `gatsby-ssr` (either site itself or plugin) make use of FS reads, head over to [migrating from v2 to v3 guide](/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-SSR) and check how to migrate.
 
 ## `gatsby-plugin-image`
 
