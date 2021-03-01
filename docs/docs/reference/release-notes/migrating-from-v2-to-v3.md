@@ -357,6 +357,8 @@ const Box = ({ children }) => (
 export default Box
 ```
 
+You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`.
+
 ### File assets (fonts, pdfs, ...) are imported as ESModules
 
 Assets are handled as ESM modules. Make sure to switch your require functions into imports.
