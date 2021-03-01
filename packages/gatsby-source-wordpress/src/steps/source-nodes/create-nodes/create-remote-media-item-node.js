@@ -138,6 +138,9 @@ export const errorPanicker = ({
       )
     )
     reporter.panic(error)
+  } else {
+    console.error(error)
+    reporter.panic()
   }
 }
 
