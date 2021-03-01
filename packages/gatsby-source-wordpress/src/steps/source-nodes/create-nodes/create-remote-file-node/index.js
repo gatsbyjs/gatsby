@@ -8,7 +8,6 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const { createProgress } = require(`gatsby-source-filesystem/utils`)
 
 const { createFileNode } = require(`gatsby-source-filesystem/create-file-node`)
 const {
@@ -431,7 +430,7 @@ module.exports = ({
   }
 
   if (totalJobs === 0) {
-    bar = createProgress(`Downloading remote files`, reporter)
+    bar = reporter.createProgress(`Downloading remote files`)
     bar.start()
   }
 
