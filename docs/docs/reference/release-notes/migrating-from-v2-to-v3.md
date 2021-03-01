@@ -805,3 +805,22 @@ Configuring using `package.json`:
   }
 }
 ```
+
+### webpack EACCES
+
+You might see errors like these when using Windows or WSL:
+
+```shell
+Watchpack Error (initial scan): Error: EACCES: permission denied, lstat '/c/DumpStack.log.tmp'
+Watchpack Error (initial scan): Error: EACCES: permission denied, lstat '/c/hiberfil.sys'
+Watchpack Error (initial scan): Error: EACCES: permission denied, lstat '/c/pagefile.sys'
+Watchpack Error (initial scan): Error: EACCES: permission denied, lstat '/c/swapfile.sys'
+```
+
+Gatsby will continue to work. Please track the [upstream issue](https://github.com/webpack/watchpack/issues/187) to see how and when this will be fixed.
+
+### yarn workspaces
+
+Workspaces and their hoisting of dependencies can cause you troubles if you incrementally want to update a package. For example, if you use `gatsby-plugin-emotion` in multiple packages but only update its version in one, you might end up with multiple versions inside your project. Run `yarn why package-name` (in this example `yarn why gatsby-plugin-emotion`) to check if different versions are installed.
+
+We recommend updating all dependencies at once and re-checking it with `yarn why package-name`. You should only see one version found now.
