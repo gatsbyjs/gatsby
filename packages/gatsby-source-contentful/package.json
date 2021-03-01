@@ -26,7 +26,6 @@
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1",
     "p-queue": "^6.6.2",
-    "progress": "^2.0.3",
     "qs": "^6.9.6",
     "retry-axios": "^2.4.0"
   },
