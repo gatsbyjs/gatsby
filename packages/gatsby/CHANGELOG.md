@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.8...gatsby@2.32.9) (2021-03-01)
+
+### Bug Fixes
+
+- query on demand loading indicator always active on preact. ([#29829](https://github.com/gatsbyjs/gatsby/issues/29829)) ([#29882](https://github.com/gatsbyjs/gatsby/issues/29882)) ([706a754](https://github.com/gatsbyjs/gatsby/commit/706a754479a161a8c8bf99be7971e1ab06401229))
+
 ## [2.32.8](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.7...gatsby@2.32.8) (2021-02-25)
 
 **Note:** Version bump only for package gatsby
