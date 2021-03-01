@@ -122,7 +122,7 @@ Please refer to the [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/ar
 
 2. If your site has built, you can click on the url for _YOUR-SITE-NAME.gatsbyjs.io_ to see it live!
 
-3. You can also connect a custom domain by clicking the "Add Domain" button and following instructions there to set up your DNS records. 
+3. You can also connect a custom domain by clicking the "Add Domain" button and following instructions there to set up your DNS records.
 
    > The [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/sections/360012243573-Deploying-to-a-Hosting-Service) provide specific instructions on how to connect your domain and add DNS records.
 
