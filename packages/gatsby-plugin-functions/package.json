@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-functions",
-  "version": "0.1.0-4",
+  "version": "0.1.0-5",
   "description": "Gatsby plugin that automatically creates serverless functions from files in specified directories",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "cross-env": "^7.0.2"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0"
   },
   "engines": {
     "node": ">=10.13.0"
