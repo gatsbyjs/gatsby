@@ -12,26 +12,27 @@ The new Gatsby Image plugin is currently in beta, but you can try it out now and
 
 ## Getting started
 
-First you need to install the following packages:
+1. Install the following packages:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-You then need to add the plugins to your `gatsby-config.js`:
+2. Add the plugins to your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
-    `gatsby-source-filesystem`,
     `gatsby-transformer-sharp`,
   ],
 }
 ```
 
 If you already have some of these plugins installed, please check that they're updated to the latest version.
+
+Note that `gatsby-source-filesystem` is not included in this config. If you are sourcing from your local filesystem to use `GatsbyImage` please configure accordingly. Otherwise, downloading the dependency without configuration is sufficient.
 
 <!-- TODO: add exact minimum version when we reach GA -->
 
@@ -201,4 +202,4 @@ If your site uses the old `gatsby-image` component, you can use a codemod to hel
 npx gatsby-codemods gatsby-plugin-image
 ```
 
-This will convert all GraphQL queries and components to use the new plugin. For more information see the full migration guide.
+This will convert all GraphQL queries and components to use the new plugin. For more information see the full [migration guide](/docs/reference/release-notes/image-migration-guide/).
