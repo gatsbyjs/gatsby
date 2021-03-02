@@ -161,10 +161,7 @@ This release includes a new plugin, `gatsby-plugin-image`, replacing the old `ga
 The `GatsbyImage` component supports three responsive layout types, as shown in the video below.
 
 <video controls autoplay loop>
-  <source
-    type="video/mp4"
-    src="/docs/reference/built-in-components/layouts.mp4"
-  />
+  <source type="video/mp4" src="../../built-in-components/layouts.mp4" />
   <p>Your browser does not support the video element.</p>
 </video>
 
