@@ -35,7 +35,7 @@
     "glob": "^7.1.6",
     "got": "^11.7.0",
     "graphql-query-compress": "^1.2.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.0",
     "p-queue": "^6.3.0",
     "read-chunk": "^3.2.0",

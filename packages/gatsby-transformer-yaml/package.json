@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "js-yaml": "^3.14.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "unist-util-select": "^1.5.0"
   },
   "devDependencies": {
