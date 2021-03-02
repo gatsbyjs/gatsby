@@ -175,7 +175,7 @@ describe(`Production build tests`, () => {
 
   describe(`Supports encodable characters in urls`, () => {
     it(`Can navigate directly`, () => {
-      cy.visit(encodeURI(`/foo/@something/bar`)).waitForRouteChange()
+      cy.visit(`/foo/@something/bar`).waitForRouteChange()
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)
         .should(`equal`, `Hi from the second page`)
@@ -191,7 +191,7 @@ describe(`Production build tests`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
-      cy.visit(encodeURI(`/foo/@something/bar404/`), {
+      cy.visit(`/foo/@something/bar404/`, {
         failOnStatusCode: false,
       }).waitForRouteChange()
 
