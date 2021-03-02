@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-v3rc.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.4...gatsby@3.0.0-v3rc.5) (2021-03-02)
+
+### Bug Fixes
+
+- **gatsby:** Add dir=ltr to Fast Refresh overlay ([#29900](https://github.com/gatsbyjs/gatsby/issues/29900)) ([#29908](https://github.com/gatsbyjs/gatsby/issues/29908)) ([df50ce7](https://github.com/gatsbyjs/gatsby/commit/df50ce729c5c764f35aab80324196fb1151ca592))
+
 # [3.0.0-v3rc.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-v3rc.3...gatsby@3.0.0-v3rc.4) (2021-03-01)
 
 ### Bug Fixes
