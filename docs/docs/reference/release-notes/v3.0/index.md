@@ -256,7 +256,7 @@ Add plugin options validation to `gatsby-plugin-canonical-urls`, via [PR #29688]
 
 ## Notable bugfixes and improvements
 
-- Dropp `terminal-link` from our CLI as in some terminals it turned lines blank, via [PR #29472](https://github.com/gatsbyjs/gatsby/pull/29472)
+- Drop `terminal-link` from our CLI as in some terminals it turned lines blank, via [PR #29472](https://github.com/gatsbyjs/gatsby/pull/29472)
 - Update the `pathExist` function in `gatsby-plugin-feed`, via [PR #29616](https://github.com/gatsbyjs/gatsby/pull/29616)
 - Cache AVIF images in `gatsby-plugin-offline`, via [PR #29394](https://github.com/gatsbyjs/gatsby/pull/29394)
 - Improve efficiency when writing HTML files to disk, via [PR #29219](https://github.com/gatsbyjs/gatsby/pull/29219)
