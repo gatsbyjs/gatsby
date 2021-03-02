@@ -51,7 +51,7 @@ Take a project powered by Shopify as an example. You have your listing of all pr
 
 ![Side-by-side view of a Shopify store instance on the left, and the preview on the right. At the bottom the terminal shows that after the change only one page was rebuilt](./incremental-builds-in-oss.jpg)
 
-The screenshot is taken from a lengthy video about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on YouTube.
+The screenshot is taken from a talk about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on YouTube.
 
 ### How does it work?
 
@@ -64,7 +64,7 @@ Gatsby tracks "inputs" when generating HTML files. In particular we track:
 
 When those inputs change since the last build, the HTML files are marked to be regenerated. If they don't change, we can reuse HTML files generated in previous build.
 
-### Gotchas
+### Avoid direct filesystem calls
 
 As we mentioned, Gatsby tracks "inputs" used to generate HTML files. However, the `gatsby-ssr` file allows some arbitrary code execution. This includes for example `fs` reads. While Gatsby could also track files that are read, the custom code that does those reads might have some special logic that Gatsby is not aware of. If Gatsby discovers that those are used, it will disable "Incremental Builds"-mode to stay on the safe side (there will be warnings mentioning "unsafe builtin method").
 
@@ -103,16 +103,15 @@ Please refer to the webpack [release notes](https://webpack.js.org/blog/2020-10-
 
 Key changes in the new webpack version:
 
-- Improve build performance with Persistent Caching
-- Improve Long-Term Caching with better algorithms and defaults
-- Improve bundle size with better Tree Shaking and Code Generation
-- Improve compatibility with the web platform
-- Clean up internal structures that were left in a weird state while implementing features in v4 without introducing any breaking changes
-- Prepare for future features by introducing breaking changes now, allowing us to stay on v5 for as long as possible
+- Improved build performance with Persistent Caching
+- Improved Long-Term Caching with better algorithms and defaults
+- Improved bundle size with better Tree Shaking and Code Generation
+- Improved compatibility with the web platform
+- Cleaned up internal structures
 
-What does that mean for your Gatsby site? Gatsby is now able to tree-shake on a page level instead of an app level. You'll see reductions up to 20% on file size. Recurring users benefit from the improved hashing algorithms as unchanged files will stay in the browser cache.
+What does that mean for your Gatsby site? Gatsby is now able to tree-shake on a page level instead of an app level. You'll see reductions up to 20% on file size. Users returning to your site will benefit from the improved hashing algorithms as unchanged files will be loaded from the browser cache.
 
-We’ve tried to fence you from the burden of manual webpack migration, but if you are using a custom
+We’ve tried to protect you from the burden of manual webpack migration, but if you are using a custom
 webpack config or community plugins that do not support webpack 5 yet, you may find the [webpack migration guide](https://webpack.js.org/migrate/5/) useful.
 
 ## React 17
