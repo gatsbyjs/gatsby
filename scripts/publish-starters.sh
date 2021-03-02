@@ -37,7 +37,8 @@ for folder in $GLOB; do
   if [ -n "$(git status --porcelain)" ]; then
     git add .
     git commit -m "$COMMIT_MESSAGE"
-    git push origin master
+    DEFAULT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+    git push origin $DEFAULT_BRANCH_NAME
   fi
 
   cd "$BASE"
