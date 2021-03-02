@@ -98,7 +98,7 @@ const remoteSchema: IRemoteSchemaStore = {
       internal: `wpInternal`,
       plugin: `wpPlugin`,
       actionOptions: `wpActionOptions`,
-      fields: 'wpFields',
+      fields: `wpFields`,
     },
   },
 
