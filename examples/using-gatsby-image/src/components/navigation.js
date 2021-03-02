@@ -1,8 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css as cssClass } from "emotion"
+import { css } from "@emotion/css"
 import styled from "@emotion/styled"
-import { css } from "@emotion/react"
 import { MdLink } from "react-icons/md"
 import { scale, rhythm, options } from "../utils/typography"
 import { mq, elevation, gutter, colors, animation } from "../utils/presets"
@@ -40,7 +39,7 @@ const linkStyle = css`
 const assignActiveStyles = ({ isPartiallyCurrent }) =>
   isPartiallyCurrent
     ? {
-        className: cssClass`
+        className: css`
           ${linkStyle};
 
           && {
@@ -65,7 +64,7 @@ const assignActiveStyles = ({ isPartiallyCurrent }) =>
         `,
       }
     : {
-        className: cssClass`
+        className: css`
           ${linkStyle};
         `,
       }
