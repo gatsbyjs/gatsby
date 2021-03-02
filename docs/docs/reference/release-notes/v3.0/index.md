@@ -66,7 +66,16 @@ When those inputs change since the last build, the HTML files are marked to be r
 
 ### Avoid direct filesystem calls
 
-As we mentioned, Gatsby tracks "inputs" used to generate HTML files. However, the `gatsby-ssr` file allows some arbitrary code execution. This includes for example `fs` reads. While Gatsby could also track files that are read, the custom code that does those reads might have some special logic that Gatsby is not aware of. If Gatsby discovers that those are used, it will disable "Incremental Builds"-mode to stay on the safe side (there will be warnings mentioning "unsafe builtin method").
+As we mentioned, Gatsby tracks "inputs" used to generate HTML files. However, the `gatsby-ssr` file allows some arbitrary code execution like using the [`fs` module](https://nodejs.org/api/fs.html). For example:
+
+```js:title=gatsby-ssr.js
+const fs = require(`fs`)
+const someUntrackedInput = fs.readFileSync(`some-path.txt`)
+
+// Rest of gatsby-ssr.js file
+```
+
+While Gatsby could also track files that are read, the custom code that does those reads might have some special logic that Gatsby is not aware of. In the above example the filename could be generated and changed between builds, or the file read itself could change -- so we see this as "arbitrary" file reading. If Gatsby discovers that `fs` modules are used, it will disable "Incremental Builds"-mode to stay on the safe side (there will be warnings mentioning "unsafe builtin method").
 
 If your `gatsby-ssr` (either site itself or plugin) make use of `fs` reads, head over to [migrating from v2 to v3 guide](/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-SSR) and check how to migrate.
 
