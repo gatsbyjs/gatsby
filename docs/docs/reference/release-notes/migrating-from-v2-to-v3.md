@@ -16,7 +16,7 @@ This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. Since t
 
 - [Updating Your Dependencies](#updating-your-dependencies)
 - [Handling Breaking Changes](#handling-breaking-changes)
-- [Resolving Deprecations](#resolving-deprecations)
+- [Future Breaking Changes](#future-breaking-changes)
 - [For Plugin Maintainers](#for-plugin-maintainers)
 - [Known issues](#known-issues)
 
@@ -132,7 +132,7 @@ Check [Node’s releases document](https://github.com/nodejs/Release#nodejs-rele
 
 ### webpack upgraded from version 4 to version 5
 
-We tried our best to mitigate as much of the breaking change as we could. Some are sadly inevitable. In our breaking change section and deprecation section, you'll find the most common problems and how to solve them. We suggest looking at the [official webpack 5 blog post](https://webpack.js.org/blog/2020-10-10-webpack-5-release/) to get a comprehensive list of what changed.
+We tried our best to mitigate as much of the breaking change as we could. Some are sadly inevitable. We suggest looking at the [official webpack 5 blog post](https://webpack.js.org/blog/2020-10-10-webpack-5-release/) to get a comprehensive list of what changed.
 
 If you hit any problems along the way, make sure the Gatsby plugin or webpack plugin supports version 5.
 
@@ -340,9 +340,9 @@ export const query = graphql`
 `
 ```
 
-### CSS Modules are imported as ESModules
+### CSS Modules are imported as ES Modules
 
-The web moves forward and so do we. ESModules allow us to better treeshake and generate smaller files. From now on you'll need to import cssModules as: `import { box } from './mystyles.module.css'`
+The web moves forward and so do we. ES Modules allow us to better treeshake and generate smaller files. From now on you'll need to import cssModules as: `import { box } from './mystyles.module.css'`
 
 ```diff:title=src/components/Box.js
 import React from "react"
@@ -359,9 +359,9 @@ export default Box
 
 You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`.
 
-### File assets (fonts, pdfs, ...) are imported as ESModules
+### File assets (fonts, pdfs, ...) are imported as ES Modules
 
-Assets are handled as ESM modules. Make sure to switch your require functions into imports.
+Assets are handled as ES Modules. Make sure to switch your require functions into imports.
 
 ```diff:title=src/components/Layout.js
 import React from "react"
@@ -554,8 +554,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 
 In Gatsby v2, we add those extensions for you automatically but display a deprecation warning.
 
-To make upgrading easier, check the CLI output of your site on the latest v2 and follow suggestions
-when you see a warning like this:
+To make upgrading easier, when you see a warning like the one below, check the CLI output of your site on the latest v2 and follow the suggestions provided.
 
 ```shell
 warning Deprecation warning: adding inferred extension `link` for field Foo.bar
@@ -654,9 +653,9 @@ exports.createResolvers = ({ createResolvers }) => {
 **Note:** When using argument `firstOnly: true` the returned value is `object` or `null`.
 So do not confuse those two cases.
 
-## Resolving Deprecations
+## Future Breaking Changes
 
-This section explains deprecations that were made for Gatsby v3. The old behaviors will be removed in v4. You can still use the old behaviors in v3 but we recommend updating to the new signatures.
+This section explains deprecations that were made for Gatsby v3. These old behaviors will be removed in v4, at which point they will no longer work. For now, you can still use the old behaviors in v3, but we recommend updating to the new signatures to make future updates easier.
 
 ### `touchNode`
 
