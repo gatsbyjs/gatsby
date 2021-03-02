@@ -19,7 +19,7 @@ for folder in $GLOB; do
   # FIX-ME: there are changes in gatsbyjs/gatsby-starter-wordpress-blog that
   # are not applied in this repo, so until we make starter in this repo
   # source of truth we should skip it.
-  if [ "gatsby-starter-wordpress-blog" == "$NAME" ]; then
+  if [ "gatsby-starter-wordpress-blog" = "$NAME" ]; then
     continue
   fi
 
@@ -35,7 +35,7 @@ for folder in $GLOB; do
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r "$BASE/$folder/." .
 
-  if [ "$IS_WORKSPACE" == null ]; then
+  if [ "$IS_WORKSPACE" = null ]; then
     rm -f yarn.lock
     if [ "$MINIMAL_STARTER" != "$NAME" ]; then # ignore minimal starter because we don't want any lock files for create-gatsby
       yarn import # generate a new yarn.lock file based on package-lock.json, gatsby new does this is new CLI versions but will ignore if file exists
