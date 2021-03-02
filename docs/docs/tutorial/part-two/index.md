@@ -154,7 +154,7 @@ First, create a new `Container` component.
 
 ```jsx:title=src/components/container.js
 import React from "react"
-import containerStyles from "./container.module.css"
+import * as containerStyles from "./container.module.css"
 
 export default function Container({ children }) {
   return <div className={containerStyles.container}>{children}</div>
@@ -243,7 +243,7 @@ In this section, you'll create a list of people with names, avatars, and short L
 ```javascript:title=src/pages/about-css-modules.js
 import React from "react"
 // highlight-next-line
-import styles from "./about-css-modules.module.css"
+import * as styles from "./about-css-modules.module.css"
 import Container from "../components/container"
 
 // highlight-next-line
@@ -261,7 +261,7 @@ If you compare that to your CSS file, you'll see that each class is now a key in
 
 ```jsx:title=src/pages/about-css-modules.js
 import React from "react"
-import styles from "./about-css-modules.module.css"
+import * as styles from "./about-css-modules.module.css"
 import Container from "../components/container"
 
 console.log(styles)

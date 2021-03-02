@@ -682,7 +682,7 @@ Here's an example with a class named `.my-class-name`:
 
 ```diff
 import React from "react"
-import myStyles from "./my.module.css"
+import * as myStyles from "./my.module.css"
 
 export default function Component({ children }) (
 -  <div className={myStyles['my-class-name']}>
