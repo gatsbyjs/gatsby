@@ -6,7 +6,7 @@ This guide will walk you through building and deploying your Gatsby site on [Gat
 
 ## Why Use Gatsby Cloud
 
-Gatsby Cloud is a platform of stable, trusted tools launched by the team behind Gatsby.js in late 2019 that enables web creators to build better websites. It offers unique features that remove friction in your team's workflow including:
+Gatsby Cloud is a platform of stable, trusted tools launched by the team behind Gatsby in late 2019 that enables web creators to build better websites. It offers unique features that remove friction in your team's workflow including:
 
 - [**Quick Connect**](https://support.gatsbyjs.com/hc/en-us/articles/360061317133-Quick-Connect) that empowers new users to create projects in minutes with a Content Management System (CMS), sample content, and connected Gatsby starter.
 - [**Real-time Preview**](https://support.gatsbyjs.com/hc/en-us/articles/360055676874-CMS-Previews) to simplify content creation and collaboration. Preview offers a private playground for developers, designers, marketers, and content creators by providing a shareable temporary URL for viewing changes immediately and in context. With instant updates triggered by a CMS or webhooks, it’s a shareable, hot-reloading preview.
@@ -36,7 +36,7 @@ If you want to work with a CMS without automatic integration support you still c
 - Drupal
 - Strapi
 
-In addition, Gatsby Cloud offers a POST endpoint for manually integrating with CMSs that support webhooks.
+In addition, Gatsby Cloud offers a `POST` endpoint for manually integrating with CMSs that support webhooks.
 
 ### Hosting Integrations
 
@@ -120,7 +120,7 @@ Please refer to the [Gatsby Cloud Docs](https://support.gatsbyjs.com/hc/en-us/ar
 
 1. Navigate to your site in your Gatsby Cloud [Dashboard](https://www.gatsbyjs.com/dashboard/sites). Under the _Site Settings_ tab, navigate to the _Hosting_ subsection.
 
-2. If your site has built, you can click on the url for _YOUR-SITE-NAME.gatsbyjs.io_ to see it live!
+2. If your site has built, you can click on the url for `YOUR-SITE-NAME.gatsbyjs.io` to see it live!
 
 3. You can also connect a custom domain by clicking the "Add Domain" button and following instructions there to set up your DNS records.
 
