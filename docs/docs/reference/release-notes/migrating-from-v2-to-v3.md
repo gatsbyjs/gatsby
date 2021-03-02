@@ -18,7 +18,7 @@ This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. Since t
 - [Handling Breaking Changes](#handling-breaking-changes)
 - [Future Breaking Changes](#future-breaking-changes)
 - [For Plugin Maintainers](#for-plugin-maintainers)
-- [Known issues](#known-issues)
+- [Known Issues](#known-issues)
 
 ## Updating Your Dependencies
 
@@ -357,7 +357,7 @@ const Box = ({ children }) => (
 export default Box
 ```
 
-You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`.
+You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
 ### File assets (fonts, pdfs, ...) are imported as ES Modules
 
