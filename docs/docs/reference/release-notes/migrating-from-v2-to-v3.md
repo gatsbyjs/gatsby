@@ -4,7 +4,7 @@ title: Migrating from v2 to v3
 
 Looking for the [v2 docs](https://v2.gatsbyjs.com)?
 
-> This document is a work in progress. Have you run into something that's not covered here? [Add your changes to GitHub!](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v2-to-v3.md)
+> Have you run into something that's not covered here? [Add your changes to GitHub!](https://github.com/gatsbyjs/gatsby/tree/master/docs/docs/reference/release-notes/migrating-from-v2-to-v3.md)
 
 ## Introduction
 
