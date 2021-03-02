@@ -142,7 +142,7 @@ exports.createSchemaCustomization = function createSchemaCustomization({ actions
 }
 ```
 
-Also, Gatsby now displays GraphQL deprecations as CLI warnings when queries. Example output:
+Also, Gatsby now displays GraphQL deprecations as CLI warnings. Example output:
 
 ![GraphQL deprecation warning in CLI](./graphql-deprecation-warnings.png)
 
