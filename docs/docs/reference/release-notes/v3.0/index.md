@@ -163,7 +163,7 @@ If you rely on Gatsby's default ESLint configuration, you should have a smooth t
 
 Gatsby no longer uses the deprecated `eslint-loader`. We’ve moved to `eslint-webpack-plugin`. By using the plugin, behaviour has changed a little bit, as warnings and errors are displayed later than in version 2.
 
-## gatsby-plugin-image@1.0.0
+## `gatsby-plugin-image@1.0.0`
 
 This release includes a new plugin, `gatsby-plugin-image`, replacing the old `gatsby-image` plugin. Built from the ground up for speed and best practices, it's the most performant way to use images in React. If you saw your scores drop with recent Lighthouse updates, migrating to this plugin should help you get top scores again. It comes with a new, simplified GraphQL API (no more fragments), as well as a new `StaticImage` component that's as easy to use as an `<img>` tag.
 
@@ -183,7 +183,7 @@ For more information, see:
 - [Reference Guide: Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/)
 - [The `gatsby-plugin-image` README](/plugins/gatsby-plugin-image/)
 
-## gatsby-source-wordpress@5.0.0
+## `gatsby-source-wordpress@5.0.0`
 
 Recently we’ve announced the brand new WordPress integration. Refer to this post on the Gatsby Blog for the full details: [Announcing Gatsby’s New WordPress Integration](/blog/wordpress-integration/)
 
@@ -197,14 +197,14 @@ from you are required.
 - Fixed a bug where adding a post type named "Filter" would break options queries [PR #29718](https://github.com/gatsbyjs/gatsby/pull/29718)
 - Fixed an HTML field `gatsby-image` regression that would prevent image transforms in certain situations [PR #29778](https://github.com/gatsbyjs/gatsby/pull/29778) and [PR #29813](https://github.com/gatsbyjs/gatsby/pull/29813)
 
-## gatsby-source-contentful@5.0.0
+## `gatsby-source-contentful@5.0.0`
 
 - Migrated to the latest Contentful SDK, via [PR #29520](https://github.com/gatsbyjs/gatsby/pull/29520)
 - Compatibility with `gatsby-plugin-image`
 - Retries when downloading assets
 - Retries on network errors
 
-## gatsby-plugin-gatsby-cloud@1.0.0
+## `gatsby-plugin-gatsby-cloud@1.0.0`
 
 Gatsby Cloud now includes Hosting for all your Gatsby projects. `gatsby-plugin-gatsby-cloud` is a new plugin that you need to install when using Gatsby Cloud Hosting. It generates redirects and rewrites for your client side routes automatically and even allows you to set custom Headers on a per-file basis.
 
