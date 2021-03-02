@@ -15,7 +15,7 @@ and [let us know](https://github.com/gatsbyjs/gatsby/issues/new/choose) if you e
 
 Key highlights of this release:
 
-- [Incremental Builds in OSS](#incremental-builds-in-oss) - regenerate HTML only when necessary; faster re-builds
+- [Incremental Builds in OSS](#incremental-builds-in-oss) - regenerate HTML only when necessary, leading to faster builds
 - [Fast Refresh](#fast-refresh) - new hot-reloading engine, error recovery, better DX
 - [gatsby-plugin-image@1.0.0](#gatsby-plugin-image100)
 - [gatsby-source-wordpress@5.0.0](#gatsby-source-wordpress500) - brand-new, significantly improved integration with WordPress
