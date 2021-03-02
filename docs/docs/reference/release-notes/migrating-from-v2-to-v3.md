@@ -770,9 +770,7 @@ export function onRenderBody({ setHeadComponents }) {
 
 ## For Plugin Maintainers
 
-In most cases, you won't have to do anything to be v3 compatible, but there are a few things you can do to be certain your plugin won't throw any warnings or errors.
-
-### Setting the proper peer dependencies
+In most cases, you won't have to do anything to be v3 compatible. But one thing you can do to be certain your plugin won't throw any warnings or errors is to set the proper peer dependencies.
 
 `gatsby` should be included under `peerDependencies` of your plugin and it should specify the proper versions of support.
 
@@ -804,7 +802,7 @@ is correct.
 File: node_modules/gatsby-link/index.js:24:13
 ```
 
-Make sure that you have updated all dependencies. It's also possible that you have an outdated `.cache` folder around. Run `gatsby clean` to remove the outdated cache.
+To resolve the error above, make sure that you have updated all dependencies. It's also possible that you have an outdated `.cache` folder around. Run `gatsby clean` to remove the outdated cache.
 
 In some situations the webpack alias will be ignored, so you will need to add your own alias. The most common example is in Jest tests. For these, you should add the following to your Jest config:
 
