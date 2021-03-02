@@ -3,14 +3,14 @@ import {
   getImgTagMatchesWithUrl,
 } from "../dist/steps/source-nodes/create-nodes/process-node"
 
+const wpUrl = `wp.fakesite.com`
+
 test(`HTML image transformation regex matches images`, async () => {
-  const wpUrl = `http://wp.fakesite.com`
+  const nodeString = `<img src=\\"https://${wpUrl}/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg\\" />
 
-  const nodeString = `<img src=\\"https://wp.fakesite.com/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg />
+  <img src=\\"http://${wpUrl}/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg\\" />
 
-  <img src=\\"http://wp.fakesite.com/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg />
-
-  <img src=\\"/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg />`
+  <img src=\\"/wp-content/uploads/2020/01/©SDM-Yep-©Hi-000-Header.jpg\\" />`
 
   const matches = getImgSrcRemoteFileMatchesFromNodeString(nodeString)
 
@@ -18,7 +18,7 @@ test(`HTML image transformation regex matches images`, async () => {
 
   const imgTagMatches = getImgTagMatchesWithUrl({
     nodeString,
-    wpUrl,
+    wpUrl: `https://${wpUrl}`,
   })
 
   expect(imgTagMatches.length).toBe(3)
