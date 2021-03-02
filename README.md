@@ -170,4 +170,6 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks to our many contributors who create plugins, starters, videos, blog posts, and anything else you can think of. We also really appreciate any community members who help with issues & PRs inside our repository or answer questions on Discord & GitHub Discussions. A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
+Thanks goes out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
+
+A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.
