@@ -1,6 +1,8 @@
 ---
-title: Using the beta Gatsby Image plugin
+title: Using the Gatsby Image plugin
 ---
+
+_If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
