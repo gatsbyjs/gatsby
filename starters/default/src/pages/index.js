@@ -13,8 +13,8 @@ const IndexPage = () => (
     <p>Now go build something great.</p>
     <StaticImage
       src="../images/gatsby-astronaut.png"
-      width="300"
-      quality="95"
+      width={300}
+      quality={95}
       alt="A Gatsby astronaut"
       style={{ marginBottom: `1.45rem` }}
     />
