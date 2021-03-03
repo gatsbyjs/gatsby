@@ -213,11 +213,14 @@ export class BaseLoader {
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       if (process.env.BUILD_STAGE !== `develop` || !page.payload.stale) {
-        return Promise.resolve({
-          error: page.error,
-          status: page.status,
-          ...page.payload,
-        })
+        if (page.error) {
+          return {
+            error: page.error,
+            status: page.status,
+          }
+        }
+
+        return Promise.resolve(page.payload)
       }
     }
 
@@ -312,11 +315,14 @@ export class BaseLoader {
 
             this.pageDb.set(pagePath, finalResult)
 
-            return {
-              error: finalResult.error,
-              status: finalResult.status,
-              ...payload,
+            if (finalResult.error) {
+              return {
+                error: finalResult.error,
+                status: finalResult.status,
+              }
             }
+
+            return payload
           })
           // when static-query fail to load we throw a better error
           .catch(err => {
