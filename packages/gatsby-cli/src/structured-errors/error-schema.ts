@@ -1,4 +1,4 @@
-import Joi from "@hapi/joi"
+import Joi from "joi"
 import { ILocationPosition, IStructuredError } from "./types"
 
 export const Position: Joi.ObjectSchema<ILocationPosition> = Joi.object().keys({
@@ -20,9 +20,9 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
         })
       )
       .allow(null),
-    category: Joi.string().valid([`USER`, `SYSTEM`, `THIRD_PARTY`]),
-    level: Joi.string().valid([`ERROR`, `WARNING`, `INFO`, `DEBUG`]),
-    type: Joi.string().valid([`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`]),
+    category: Joi.string().valid(`USER`, `SYSTEM`, `THIRD_PARTY`),
+    level: Joi.string().valid(`ERROR`, `WARNING`, `INFO`, `DEBUG`),
+    type: Joi.string().valid(`GRAPHQL`, `CONFIG`, `WEBPACK`, `PLUGIN`),
     filePath: Joi.string(),
     location: Joi.object({
       start: Position.required(),

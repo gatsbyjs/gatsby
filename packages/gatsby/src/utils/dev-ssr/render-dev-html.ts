@@ -59,8 +59,13 @@ export const restartWorker = (htmlComponentRendererPath): void => {
 
 const searchFileForString = (substring, filePath): Promise<boolean> =>
   new Promise(resolve => {
+    const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
+
     // See if the chunk is in the newComponents array (not the notVisited).
-    const chunkRegex = RegExp(`exports.ssrComponents.*${substring}.*}`, `gs`)
+    const chunkRegex = RegExp(
+      `exports.ssrComponents.*${escapedSubString}.*}`,
+      `gs`
+    )
     const stream = fs.createReadStream(filePath)
     let found = false
     stream.on(`data`, function (d) {

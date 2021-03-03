@@ -25,12 +25,29 @@ export class ScrollHandler extends React.Component<
 
   _stateStorage: SessionStorage = new SessionStorage()
 
+  // @see https://www.html5rocks.com/en/tutorials/speed/animations/
+  _isTicking = false
+  _latestKnownScrollY = 0
   scrollListener = (): void => {
-    const { key } = this.props.location
+    this._latestKnownScrollY = window.scrollY
+
+    if (!this._isTicking) {
+      this._isTicking = true
+      requestAnimationFrame(this._saveScroll.bind(this))
+    }
+  }
+
+  _saveScroll(): void {
+    const key = this.props.location.key || null
 
     if (key) {
-      this._stateStorage.save(this.props.location, key, window.scrollY)
+      this._stateStorage.save(
+        this.props.location,
+        key,
+        this._latestKnownScrollY
+      )
     }
+    this._isTicking = false
   }
 
   componentDidMount(): void {

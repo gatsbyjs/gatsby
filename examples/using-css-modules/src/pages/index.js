@@ -1,30 +1,30 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import indexStyles from "../styles/index.module.css"
+import { index, subheader, link } from "../styles/index.module.css"
 
 class IndexComponent extends React.Component {
   render() {
     return (
-      <div className={indexStyles.index}>
+      <div className={index}>
         <h1>Hello world</h1>
-        <h2 className={indexStyles.subheader}>
+        <h2 className={subheader}>
           {`You've`} arrived at the world renowned css modules & gatsby example
           site
         </h2>
         <p>
-          <Link className={indexStyles.link} to="/another-page/">
+          <Link className={link} to="/another-page/">
             Travel through the cyber linkspace
           </Link>
         </p>
         <p>
-          <Link className={indexStyles.link} to="/sassy-page/">
+          <Link className={link} to="/sassy-page/">
             Partake of sassy goodness
           </Link>
         </p>
         <p>
           <a
-            className={indexStyles.link}
+            className={link}
             href="https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules"
           >
             Code for example site on GitHub

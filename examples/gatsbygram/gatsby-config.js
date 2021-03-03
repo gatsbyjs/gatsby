@@ -53,6 +53,7 @@ module.exports = {
         background_color: `#f7f7f7`,
         theme_color: `#191919`,
         display: `minimal-ui`,
+        icon: `./static/images/logo.png`,
       },
     },
     // This plugin generates a service worker and AppShell

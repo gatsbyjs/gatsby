@@ -75,6 +75,10 @@ const buildSchema = async ({
   })
   // const { printSchema } = require(`graphql`)
   const schema = schemaComposer.buildSchema()
+
+  // Freeze all type composers except SitePage (as we will rebuild it at a later stage)
+  freezeTypeComposers(schemaComposer, new Set([`SitePage`]))
+
   // console.log(printSchema(schema))
   return schema
 }
@@ -119,6 +123,25 @@ const rebuildSchemaWithSitePage = async ({
 module.exports = {
   buildSchema,
   rebuildSchemaWithSitePage,
+}
+
+// Workaround for https://github.com/graphql-compose/graphql-compose/issues/319
+//  FIXME: remove this when fixed in graphql-compose
+const freezeTypeComposers = (schemaComposer, excluded) => {
+  Array.from(schemaComposer.values()).forEach(tc => {
+    const isCompositeTC =
+      tc instanceof ObjectTypeComposer || tc instanceof InterfaceTypeComposer
+
+    if (isCompositeTC && !excluded.has(tc.getTypeName())) {
+      // typeComposer.getType() actually mutates the underlying GraphQL type
+      //   and always re-assigns type._fields with a thunk.
+      //   It causes continuous redundant field re-definitions when running queries
+      //   (affects performance significantly).
+      //   Prevent the mutation and "freeze" the type:
+      const type = tc.getType()
+      tc.getType = () => type
+    }
+  })
 }
 
 const updateSchemaComposer = async ({

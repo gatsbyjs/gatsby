@@ -15,6 +15,14 @@ for folder in $GLOB; do
   cd "$BASE"
 
   NAME=$(jq -r '.name' "$folder/package.json")
+
+  # FIX-ME: there are changes in gatsbyjs/gatsby-starter-wordpress-blog that
+  # are not applied in this repo, so until we make starter in this repo
+  # source of truth we should skip it.
+  if [ "gatsby-starter-wordpress-blog" = "$NAME" ]; then
+    continue
+  fi
+
   IS_WORKSPACE=$(jq -r '.workspaces' "$folder/package.json")
   CLONE_DIR="__${NAME}__clone__"
 
@@ -37,7 +45,8 @@ for folder in $GLOB; do
   if [ -n "$(git status --porcelain)" ]; then
     git add .
     git commit -m "$COMMIT_MESSAGE"
-    git push origin master
+    DEFAULT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+    git push origin $DEFAULT_BRANCH_NAME
   fi
 
   cd "$BASE"

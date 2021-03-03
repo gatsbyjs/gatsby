@@ -21,7 +21,7 @@ Today's building blocks for the web are components of HTML, CSS, and JavaScript.
 
 We believe that in 5 or 10 years, we'll look back at many of these blocks like we look back at machine code or assembly language today; low-level languages that are great compile targets for higher-level languages that are easier to write in.
 
-Using abstractions like React components, `gatsby-image`, and `gatsby-link`, we've begun to craft this higher-level language. But we're just getting started. Gatsby is a playground for discovering new building blocks for the web.
+Using abstractions like React components, `gatsby-plugin-image`, and `gatsby-link`, we've begun to craft this higher-level language. But we're just getting started. Gatsby is a playground for discovering new building blocks for the web.
 
 To [quote Alan Kay](https://www.youtube.com/watch?v=NdSD07U5uBs):
 
@@ -97,7 +97,7 @@ If you were designing a user interface, you might move advanced or rarely-used f
 
 Progressive disclosure simplifies the experience for most people without limiting the abilities of more advanced users.
 
-We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (e.g. dependencies) yourself.
+We progressively disclose complexity by making features such as modifying webpack / Babel config, `gatsby-plugin-image`, and `gatsby-link` opt-in, simple one-off configuration choices. We avoid all-or-nothing "ejection" scenarios where to add further customization you have to leave the tool behind and manage all complexity (e.g. dependencies) yourself.
 
 [Read more here](https://lengstorf.com/progressive-disclosure-of-complexity/).
 

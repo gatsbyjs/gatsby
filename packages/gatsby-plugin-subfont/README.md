@@ -22,7 +22,7 @@ module.exports = {
       resolve: `gatsby-plugin-subfont`,
       options: {
         silent: true,
-        fallback: false,
+        fallbacks: false,
         inlineFonts: true,
       },
     },

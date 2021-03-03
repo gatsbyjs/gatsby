@@ -19,7 +19,7 @@ import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
 import { getSizer } from "./layout-wrapper"
 
-// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
   extends Omit<
     ImgHTMLAttributes<HTMLImageElement>,

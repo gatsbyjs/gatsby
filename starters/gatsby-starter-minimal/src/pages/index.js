@@ -3,7 +3,7 @@ import * as React from "react"
 // styles
 const pageStyles = {
   color: "#232129",
-  padding: "96px",
+  padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
 }
 const headingStyles = {
@@ -29,15 +29,16 @@ const listStyles = {
   paddingLeft: 0,
 }
 const listItemStyles = {
-  fontWeight: "300",
-  fontSize: "24px",
-  maxWidth: "560px",
+  fontWeight: 300,
+  fontSize: 24,
+  maxWidth: 560,
+  marginBottom: 30,
 }
 
 const linkStyle = {
   color: "#8954A8",
   fontWeight: "bold",
-  fontSize: "16px",
+  fontSize: 16,
   verticalAlign: "5%",
 }
 
@@ -49,7 +50,10 @@ const docLinkStyle = {
 
 const descriptionStyle = {
   color: "#232129",
-  fontSize: "14px",
+  fontSize: 14,
+  marginTop: 10,
+  marginBottom: 0,
+  lineHeight: 1.25,
 }
 
 const docLink = {
@@ -57,6 +61,23 @@ const docLink = {
   url: "https://www.gatsbyjs.com/docs/",
   color: "#8954A8",
 }
+
+const badgeStyle = {
+  color: "#fff",
+  backgroundColor: "#088413",
+  border: "1px solid #088413",
+  fontSize: 11,
+  fontWeight: "bold",
+  letterSpacing: 1,
+  borderRadius: 4,
+  padding: "4px 6px",
+  display: "inline-block",
+  position: "relative",
+  top: -2,
+  marginLeft: 10,
+  lineHeight: 1,
+}
+
 // data
 const links = [
   {
@@ -92,7 +113,15 @@ const links = [
     url: "https://www.gatsbyjs.com/plugins",
     description:
       "Add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-    color: "#000000",
+    color: "#8EB814",
+  },
+  {
+    text: "Build and Host",
+    url: "https://www.gatsbyjs.com/cloud",
+    badge: true,
+    description:
+      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
+    color: "#663399",
   },
 ]
 
@@ -134,6 +163,11 @@ const IndexPage = () => {
               >
                 {link.text}
               </a>
+              {link.badge && (
+                <span style={badgeStyle} aria-label="New Badge">
+                  NEW!
+                </span>
+              )}
               <p style={descriptionStyle}>{link.description}</p>
             </span>
           </li>
