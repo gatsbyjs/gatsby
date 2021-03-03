@@ -146,6 +146,12 @@ exports.createPages = async ({ actions, graphql }) => {
     createPageHelper(`only-not-in-first`)
   }
 
+  createPageHelper(
+    `sometimes-i-have-trailing-slash-sometimes-i-dont${
+      runNumber % 2 === 0 ? `/` : ``
+    }`
+  )
+
   const { data } = await graphql(`
     {
       allDepPageQuery {
