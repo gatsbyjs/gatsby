@@ -84,6 +84,11 @@ exports.createPages = async function createPages({
   })
 
   createPage({
+    path: `/foo/@something/bar`,
+    component: path.resolve(`src/pages/page-2.js`),
+  })
+
+  createPage({
     path: `/client-only-paths/static`,
     component: path.resolve(`src/templates/static-page.js`),
   })
