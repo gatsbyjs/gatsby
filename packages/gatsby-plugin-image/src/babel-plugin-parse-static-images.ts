@@ -5,7 +5,6 @@ import fs from "fs-extra"
 import path from "path"
 import { slash } from "gatsby-core-utils"
 
-import template from "@babel/template"
 import { stripIndent } from "common-tags"
 
 /**
@@ -15,8 +14,10 @@ import { stripIndent } from "common-tags"
 
 export default function attrs({
   types: t,
+  template,
 }: {
   types: typeof types
+  template: any
 }): PluginObj {
   return {
     visitor: {
