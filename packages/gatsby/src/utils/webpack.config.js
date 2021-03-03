@@ -506,9 +506,7 @@ module.exports = async (
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node12.13`
   } else {
-    config.target = `browserslist:${getBrowsersList(program.directory).join(
-      `,`
-    )}`
+    config.target = [`web`, `es5`]
   }
 
   const isCssModule = module => module.type === `css/mini-extract`
