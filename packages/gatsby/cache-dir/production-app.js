@@ -152,9 +152,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   publicLoader.loadPage(browserLoc.pathname).then(page => {
     if (!page || page.status === PageResourceStatus.Error) {
-      throw new Error(
-        `page resources for ${browserLoc.pathname} not found. Not rendering React`
-      )
+      const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
+
+      // if the chunk throws an error we want to capture the real error
+      // This should help with https://github.com/gatsbyjs/gatsby/issues/19618
+      if (page && page.error) {
+        console.error(message)
+        throw page.error
+      }
+
+      throw new Error(message)
     }
 
     window.___webpackCompilationHash = page.page.webpackCompilationHash
