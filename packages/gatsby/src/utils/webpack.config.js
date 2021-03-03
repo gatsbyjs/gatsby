@@ -135,7 +135,9 @@ module.exports = async (
       case `develop`:
         return {
           path: directory,
-          filename: `[name].js`,
+          // Adding a timestamp fixes a Safari bug
+          // @see https://github.com/gatsbyjs/gatsby/issues/29952
+          filename: `[name].js?v=${Date.now()}`,
           // Add /* filename */ comments to generated require()s in the output.
           pathinfo: true,
           // Point sourcemap entries to original disk location (format as URL on Windows)
