@@ -143,6 +143,41 @@ describe(`navigation`, () => {
     })
   })
 
+  describe(`Supports encodable characters in urls`, () => {
+    it(`Can navigate directly`, () => {
+      cy.visit(`/foo/@something/bar`).waitForRouteChange()
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`Can navigate on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.getTestElement(`page-with-encodable-path`).click().waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
+      cy.visit(`/foo/@something/bar404/`, {
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.window()
+        .then(win => win.___navigate(`/foo/@something/bar404/`))
+        .waitForRouteChange()
+
+      cy.get(`h1`).invoke(`text`).should(`eq`, `Gatsby.js development 404 page`)
+    })
+  })
+
   // TODO: Check if this is the correct behavior
   describe(`All location changes should trigger an effect (fast-refresh)`, () => {
     beforeEach(() => {
