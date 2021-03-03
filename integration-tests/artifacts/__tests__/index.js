@@ -369,7 +369,11 @@ describe(`First run (baseline)`, () => {
     })
   })
 
-  const expectedPages = [`stale-pages/stable`, `stale-pages/only-in-first`]
+  const expectedPages = [
+    `stale-pages/stable`,
+    `stale-pages/only-in-first`,
+    `page-that-will-have-trailing-slash-removed`,
+  ]
   const unexpectedPages = [`stale-pages/only-not-in-first`]
 
   describe(`html files`, () => {
@@ -468,6 +472,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/page-query-changing-but-not-invalidating-html/`,
     `/static-query-result-tracking/stable/`,
     `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
+    `/page-that-will-have-trailing-slash-removed`,
   ]
 
   const expectedPages = [
@@ -542,6 +547,7 @@ describe(`Third run (js change, all pages are recreated)`, () => {
   const expectedPages = [
     `/stale-pages/only-not-in-first`,
     `/page-query-dynamic-3/`,
+    `/page-that-will-have-trailing-slash-removed`,
   ]
 
   const unexpectedPages = [
