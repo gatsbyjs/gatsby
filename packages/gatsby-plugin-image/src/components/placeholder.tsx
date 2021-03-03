@@ -7,25 +7,36 @@ export type PlaceholderProps = ImgHTMLAttributes<HTMLImageElement> & {
   sources?: Array<SourceProps>
 }
 
-export const Placeholder: FunctionComponent<PlaceholderProps> = function Placeholder({
-  fallback,
-  ...props
-}) {
-  if (fallback) {
-    return (
-      <Picture
-        {...props}
-        fallback={{
-          src: fallback,
-        }}
-        aria-hidden
-        alt=""
-      />
-    )
-  } else {
-    return <div {...props}></div>
-  }
+function isEqual(
+  prevProps: PlaceholderProps,
+  nextProps: PlaceholderProps
+): boolean {
+  return (
+    prevProps.fallback === nextProps.fallback &&
+    JSON.stringify(prevProps.style) === JSON.stringify(nextProps.style)
+  )
 }
+
+export const Placeholder: FunctionComponent<PlaceholderProps> = React.memo(
+  function Placeholder({ fallback, ...props }) {
+    console.log({ props })
+    if (fallback) {
+      return (
+        <Picture
+          {...props}
+          fallback={{
+            src: fallback,
+          }}
+          aria-hidden
+          alt=""
+        />
+      )
+    } else {
+      return <div {...props}></div>
+    }
+  },
+  isEqual
+)
 
 Placeholder.displayName = `Placeholder`
 Placeholder.propTypes = {
