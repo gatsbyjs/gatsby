@@ -1,5 +1,8 @@
-import * as types from "@babel/types"
-import { PluginObj } from "@babel/core"
+import type {
+  PluginObj,
+  template as BabelTemplate,
+  types as BabelTypes,
+} from "@babel/core"
 import { hashOptions, evaluateImageAttributes } from "./babel-helpers"
 import fs from "fs-extra"
 import path from "path"
@@ -16,8 +19,8 @@ export default function attrs({
   types: t,
   template,
 }: {
-  types: typeof types
-  template: any
+  types: typeof BabelTypes
+  template: typeof BabelTemplate
 }): PluginObj {
   return {
     visitor: {
