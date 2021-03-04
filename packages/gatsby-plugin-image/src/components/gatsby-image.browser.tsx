@@ -8,6 +8,7 @@ import React, {
   useState,
   RefObject,
   CSSProperties,
+  WeakValidationMap,
 } from "react"
 import {
   getWrapperProps,
@@ -18,6 +19,7 @@ import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
 import { getSizer } from "./layout-wrapper"
+import PropTypes from "prop-types"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
@@ -215,4 +217,19 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
 ) {
   return <GatsbyImageHydrator {...props} />
 }
+
+export const propTypes = {
+  image: PropTypes.object.isRequired,
+  alt: (props: GatsbyImageProps): Error | undefined => {
+    if (props.alt || props.alt === ``) {
+      return undefined
+    }
+    return new Error(
+      `The "alt" prop is required for GatsbyImage. If the image is purely presentational, pass an empty string: e.g. alt="". More info: https://a11y-style-guide.com/style-guide/section-media.html`
+    )
+  },
+}
+
+GatsbyImage.propTypes = propTypes as WeakValidationMap<GatsbyImageProps>
+
 GatsbyImage.displayName = `GatsbyImage`
