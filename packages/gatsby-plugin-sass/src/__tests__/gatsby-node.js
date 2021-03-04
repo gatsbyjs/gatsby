@@ -37,6 +37,9 @@ describe(`gatsby-plugin-sass`, () => {
       "css-loader options": {
         cssLoaderOptions: {
           camelCase: false,
+          modules: {
+            exportLocalsConvention: `camelCaseOnly`,
+          },
         },
       },
       "sass rule test options": {

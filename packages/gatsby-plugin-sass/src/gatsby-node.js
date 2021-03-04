@@ -40,7 +40,7 @@ exports.onCreateWebpackConfig = (
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
       !isSSR && loaders.miniCssExtract({ modules: true }),
-      loaders.css({ importLoaders: 2, ...cssLoaderOptions, modules: true }),
+      loaders.css({ importLoaders: 2, ...cssLoaderOptions }),
       loaders.postcss({ plugins: postCssPlugins }),
     ].filter(Boolean),
   }
@@ -83,7 +83,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     cssLoaderOptions: Joi.object({})
       .unknown(true)
       .description(
-        `Pass in options for css-loader: https://github.com/webpack-contrib/css-loader/tree/version-1#options`
+        `Pass in options for css-loader: https://github.com/webpack-contrib/css-loader#options`
       ),
     postCssPlugins: Joi.array()
       .items(Joi.any())
