@@ -555,6 +555,18 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
     return
   }
 
+  if (e.message.includes(`self signed certificate`)) {
+    reporter.panic({
+      id: CODES.SelfSignedCert,
+      context: {
+        sourceMessage: formatLogMessage(
+          `${e.message}\n\nSee the docs for more information:\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/using-self-signed-certificates.md`
+        ),
+      },
+    })
+  }
+
+  // generic error if none of the above exit the process
   reporter.panic({
     id: CODES.BadResponse,
     context: {
