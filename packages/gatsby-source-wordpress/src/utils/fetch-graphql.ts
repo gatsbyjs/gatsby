@@ -308,7 +308,10 @@ const handleFetchErrors = async ({
       previewRequestConcurrency,
     } = store.getState().gatsbyApi.pluginOptions.schema
 
-    console.error(e)
+    if (`message` in e) {
+      console.error(new Error(e.message).stack)
+    }
+
     reporter.panic({
       id: CODES.WordPress500ishError,
       context: {
