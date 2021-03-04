@@ -71,7 +71,7 @@ const findChildren = initialChildren => {
 
 const displayedWarnings = new Set()
 const warnOnce = (message, key) => {
-  let messageId = key ?? message
+  const messageId = key ?? message
   if (!displayedWarnings.has(messageId)) {
     displayedWarnings.add(messageId)
     report.warn(message)

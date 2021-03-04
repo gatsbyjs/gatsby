@@ -11,7 +11,7 @@ const path = require(`path`)
 const packlist = require(`npm-packlist`)
 const { execSync } = require(`child_process`)
 
-let argv = yargs
+const argv = yargs
   .command(
     `* <bump>`,
     `Clear previously built and potentially stale files in packages`,

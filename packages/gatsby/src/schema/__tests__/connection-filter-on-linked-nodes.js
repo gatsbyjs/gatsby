@@ -62,7 +62,7 @@ async function queryResult(nodes, query) {
 
 describe(`filtering on linked nodes`, () => {
   it(`filters on linked nodes via id`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `child_2_link`,
@@ -94,7 +94,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`returns nested linked fields`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       [
         {
           id: `child_2`,
@@ -129,7 +129,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`returns all matching linked nodes`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `child_2_link`,
@@ -161,7 +161,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`handles elemMatch operator`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `1`,

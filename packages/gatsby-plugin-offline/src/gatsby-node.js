@@ -1,12 +1,12 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
-let fs = require(`fs`)
-let workboxBuild = require(`workbox-build`)
+const fs = require(`fs`)
+const workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
-let getResourcesFromHTML = require(`./get-resources-from-html`)
+const getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.onPreBootstrap = ({ cache }) => {
   const appShellSourcePath = path.join(__dirname, `app-shell.js`)

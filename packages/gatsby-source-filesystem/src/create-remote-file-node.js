@@ -9,7 +9,7 @@ const { getRemoteFileExtension, createFilePath } = require(`./utils`)
 
 let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
-/********************
+/** ******************
  * Type Definitions *
  ********************/
 
@@ -43,7 +43,7 @@ let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
  * @param  {Reporter} [options.reporter]
  */
 
-/********************
+/** ******************
  * Queue Management *
  ********************/
 
@@ -84,7 +84,7 @@ async function pushToQueue(task, cb) {
   }
 }
 
-/******************
+/** ****************
  * Core Functions *
  ******************/
 
@@ -179,7 +179,7 @@ const pushTask = task =>
       })
   })
 
-/***************
+/** *************
  * Entry Point *
  ***************/
 
