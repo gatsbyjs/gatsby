@@ -13,13 +13,16 @@ import { CODES } from "./report"
 
 let http = null
 
-const getHttp = (limit = 50): RateLimitedAxiosInstance => {
-  if (!http) {
-    http = rateLimit(axios.create(), {
-      maxRPS: limit,
-    })
-  }
-  return http
+// this is an object so that we can override getHttp in our tests
+export const moduleHelpers = {
+  getHttp: (limit = 50): RateLimitedAxiosInstance => {
+    if (!http) {
+      http = rateLimit(axios.create(), {
+        maxRPS: limit,
+      })
+    }
+    return http
+  },
 }
 
 interface IHandleErrorOptionsInput {
@@ -133,8 +136,8 @@ const handleGraphQLErrors = async ({
 }: IHandleGraphQLErrorsInput): Promise<void> => {
   const pluginOptions = getPluginOptions()
 
-  const json = response.data
-  const { errors } = json
+  const json = response?.data
+  const { errors } = json || {}
 
   if (!errors) {
     return
@@ -326,7 +329,9 @@ const handleFetchErrors = async ({
         ),
       },
     })
+    return
   }
+
   if (
     e.message.includes(`Request failed with status code 50`) &&
     [`502`, `503`, `504`].includes(e.message)
@@ -346,6 +351,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
         ),
       },
     })
+
+    return
   } else if (e.message.includes(`Request failed with status code 500`)) {
     reporter.panic({
       id: CODES.WordPress500ishError,
@@ -354,9 +361,7 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
           `${e.message}
 
 Your WordPress server is either overloaded or encountered a PHP error.
-
-${errorContext}
-
+${errorContext ? `\n${errorContext}\n` : ``}
 Enable WP_DEBUG, WP_DEBUG_LOG, and WPGRAPHQL_DEBUG, run another build and then check your WordPress instance's debug.log file.
 
 If you don't see any errors in debug.log:
@@ -366,6 +371,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
         ),
       },
     })
+
+    return
   }
 
   const unauthorized = e.message.includes(`Request failed with status code 401`)
@@ -386,6 +393,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
         ),
       },
     })
+
+    return
   } else if (unauthorized) {
     reporter.panic({
       id: CODES.Authentication,
@@ -409,6 +418,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
         ),
       },
     })
+
+    return
   }
 
   const forbidden = e.message.includes(`Request failed with status code 403`)
@@ -422,6 +433,8 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
         ),
       },
     })
+
+    return
   }
 
   const redirected = e.message.includes(`GraphQL request was redirected`)
@@ -441,6 +454,8 @@ ${slackChannelSupportMessage}`
         ),
       },
     })
+
+    return
   }
 
   const responseReturnedHtml = !!response?.headers[`content-type`].includes(
@@ -461,11 +476,13 @@ ${slackChannelSupportMessage}`
     try {
       const urlWithoutTrailingSlash = url.replace(/\/$/, ``)
 
-      const response: AxiosResponse = await getHttp(limit).post(
-        `${urlWithoutTrailingSlash}/graphql`,
-        { query, variables },
-        requestOptions
-      )
+      const response: AxiosResponse = await moduleHelpers
+        .getHttp(limit)
+        .post(
+          `${urlWithoutTrailingSlash}/graphql`,
+          { query, variables },
+          requestOptions
+        )
 
       const contentType = response?.headers[`content-type`]
 
@@ -489,6 +506,8 @@ ${slackChannelSupportMessage}`
             ),
           },
         })
+
+        return
       }
     } catch (err) {
       // elsewise, continue to handle HTML response as normal
@@ -541,6 +560,8 @@ ${slackChannelSupportMessage}`
         ),
       },
     })
+
+    return
   } else if (responseReturnedHtml && !isFirstRequest) {
     reporter.panic({
       id: CODES.WordPressFilters,
@@ -554,6 +575,8 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
         ),
       },
     })
+
+    return
   }
 
   const sharedEmptyStringReponseError = `\n\nAn empty string was returned instead of a response when making a GraphQL request.\nThis may indicate that you have a WordPress filter running which is causing WPGraphQL\nto return an empty string instead of a response.\nPlease open an issue with a reproduction at\nhttps://github.com/gatsbyjs/gatsby/issues/new\nfor more help\n\n${errorContext}\n`
@@ -572,6 +595,8 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
           sourceMessage: formatLogMessage(sharedEmptyStringReponseError),
         },
       })
+
+      return
     }
 
     return
@@ -586,6 +611,8 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
         ),
       },
     })
+
+    return
   }
 
   // generic error if none of the above exit the process
@@ -593,7 +620,7 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
     id: CODES.BadResponse,
     context: {
       sourceMessage: formatLogMessage(
-        `${e.message} ${
+        `${e.stack} ${
           errorContext ? `\n\n` + errorContext : ``
         }\n\n${genericError({ url })}`,
         {
@@ -602,6 +629,8 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
       ),
     },
   })
+
+  return
 }
 
 export interface IJSON {
@@ -692,11 +721,9 @@ const fetchGraphql = async ({
       requestOptions.auth = htaccessCredentials
     }
 
-    response = await getHttp(limit).post(
-      url,
-      { query, variables },
-      requestOptions
-    )
+    response = await moduleHelpers
+      .getHttp(limit)
+      .post(url, { query, variables }, requestOptions)
 
     if (response.data === ``) {
       throw new Error(`GraphQL request returned an empty string.`)
@@ -755,7 +782,7 @@ const fetchGraphql = async ({
     })
   }
 
-  return response.data
+  return response?.data
 }
 
 export default fetchGraphql
