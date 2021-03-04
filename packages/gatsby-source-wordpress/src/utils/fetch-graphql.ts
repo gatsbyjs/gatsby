@@ -249,7 +249,7 @@ const genericError = ({ url }: { url: string }): string =>
 
 const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
 
-const getLowerRequestConcurrencyOptionMessage = () => {
+const getLowerRequestConcurrencyOptionMessage = (): string => {
   const {
     requestConcurrency,
     previewRequestConcurrency,
