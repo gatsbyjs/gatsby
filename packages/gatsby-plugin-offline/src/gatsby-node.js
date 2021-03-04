@@ -1,4 +1,5 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
+/* eslint-disable prefer-const */
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
 const path = require(`path`)

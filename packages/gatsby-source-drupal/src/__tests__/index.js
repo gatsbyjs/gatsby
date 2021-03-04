@@ -193,8 +193,8 @@ describe(`gatsby-source-drupal`, () => {
       `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
       `/sites/default/files/forth-image.png`,
     ].map(fileUrl => new URL(fileUrl, baseUrl).href)
-    //first call without basicAuth (no fileSystem defined)
-    //(the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
+    // first call without basicAuth (no fileSystem defined)
+    // (the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
@@ -202,7 +202,7 @@ describe(`gatsby-source-drupal`, () => {
         auth: {},
       })
     )
-    //2nd call with basicAuth (public: fileSystem defined)
+    // 2nd call with basicAuth (public: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
@@ -213,7 +213,7 @@ describe(`gatsby-source-drupal`, () => {
         },
       })
     )
-    //3rd call without basicAuth (s3: fileSystem defined)
+    // 3rd call without basicAuth (s3: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
@@ -221,7 +221,7 @@ describe(`gatsby-source-drupal`, () => {
         auth: {},
       })
     )
-    //4th call with basicAuth (private: fileSystem defined)
+    // 4th call with basicAuth (private: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       8,
       expect.objectContaining({

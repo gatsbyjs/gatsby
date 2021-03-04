@@ -372,6 +372,7 @@ export type ActionsUnion =
   | ISetProgramExtensions
   | IDeletedStalePageDataFiles
   | IRemovedHtml
+  | ITrackedHtmlCleanup
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
@@ -827,6 +828,11 @@ interface IDeletedStalePageDataFiles {
 interface IRemovedHtml {
   type: `HTML_REMOVED`
   payload: string
+}
+
+interface ITrackedHtmlCleanup {
+  type: `HTML_TRACKED_PAGES_CLEANUP`
+  payload: Set<string>
 }
 
 interface IGeneratedHtml {

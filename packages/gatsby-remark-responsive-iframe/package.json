@@ -10,7 +10,7 @@
     "@babel/runtime": "^7.12.5",
     "cheerio": "^1.0.0-rc.3",
     "common-tags": "^1.8.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "unist-util-visit": "^1.4.1"
   },
   "devDependencies": {

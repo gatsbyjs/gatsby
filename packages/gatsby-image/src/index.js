@@ -20,7 +20,7 @@ const logDeprecationNotice = (prop, replacement) => {
 
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
-  let convertedProps = { ...props }
+  const convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
   if (resolutions) {

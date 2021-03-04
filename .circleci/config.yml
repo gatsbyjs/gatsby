@@ -200,7 +200,7 @@ jobs:
       - run:
           name: "remove workspaces from package.json"
           command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:docs

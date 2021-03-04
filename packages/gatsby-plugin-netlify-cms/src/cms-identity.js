@@ -1,4 +1,4 @@
-/* global __PATH_PREFIX__ CMS_PUBLIC_PATH */
+/* global CMS_PUBLIC_PATH */
 import netlifyIdentityWidget from "netlify-identity-widget"
 
 window.netlifyIdentity = netlifyIdentityWidget

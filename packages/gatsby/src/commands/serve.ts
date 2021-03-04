@@ -101,6 +101,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const root = path.join(program.directory, `public`)
 
   const app = express()
+  // eslint-disable-next-line new-cap
   const router = express.Router()
 
   app.use(telemetry.expressMiddleware(`SERVE`))
