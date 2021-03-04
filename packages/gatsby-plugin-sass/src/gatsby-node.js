@@ -32,7 +32,11 @@ exports.onCreateWebpackConfig = (
       ? [loaders.null()]
       : [
           loaders.miniCssExtract(),
-          loaders.css({ importLoaders: 2, ...cssLoaderOptions }),
+          loaders.css({
+            importLoaders: 2,
+            ...cssLoaderOptions,
+            modules: false,
+          }),
           loaders.postcss({ plugins: postCssPlugins }),
         ],
   }
