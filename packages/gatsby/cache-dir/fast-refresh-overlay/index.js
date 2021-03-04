@@ -1,126 +1,114 @@
-import React from "react"
-import client from "webpack-hot-middleware/client"
+import * as React from "react"
+import { ErrorBoundary } from "./components/error-boundary"
+import { ShadowPortal } from "./components/portal"
+import { Style } from "./style"
+import { BuildError } from "./components/build-error"
+import { RuntimeErrors } from "./components/runtime-errors"
+import { GraphqlErrors } from "./components/graphql-errors"
 
-import ErrorBoundary from "./components/error-boundary"
-import Portal from "./components/portal"
-import Style from "./components/style"
-import BuildError from "./components/build-error"
-import RuntimeError from "./components/runtime-error"
-
-export default class FastRefreshOverlay extends React.Component {
-  state = {
-    errors: [],
-    buildError: null,
-    currentIndex: 0,
-  }
-
-  _isMounted = false
-
-  dismiss = () => {
-    // eslint-disable-next-line no-invalid-this
-    this.setState({ errors: [], currenIndex: 0, buildError: null })
-  }
-
-  addBuildError = error => {
-    // eslint-disable-next-line no-invalid-this
-    this.setState({ buildError: error })
-  }
-
-  open = (file, lineNumber = 1) => {
-    window.fetch(
-      `/__open-stack-frame-in-editor?fileName=` +
-        window.encodeURIComponent(file) +
-        `&lineNumber=` +
-        window.encodeURIComponent(lineNumber)
-    )
-  }
-
-  componentDidMount() {
-    this._isMounted = true
-
-    client.useCustomOverlay({
-      showProblems: (type, data) => {
-        if (this._isMounted) {
-          this.addBuildError(data[0])
-        }
-      },
-      // We rely on Fast Refresh notifying us on updates as HMR notification is "not at the right time"
-      clear: () => {
-        this.setState({ buildError: null })
-      },
-    })
-
-    // TODO: Maybe only do this? Investigate if third-party stuff should be visible
-
-    // window.addEventListener(`error`, error => {
-    //   setProblems(s =>
-    //     s.concat({
-    //       type: `RUNTIME_ERROR`,
-    //       error,
-    //     })
-    //   )
-    // })
-
-    // TODO: Add e2e test case, e.g. useEffect in a component to fetch invalid URL
-
-    // window.addEventListener(`unhandledrejection`, error => {
-    //   setProblems(s =>
-    //     s.concat({
-    //       type: `RUNTIME_ERROR`,
-    //       error: error.reason,
-    //     })
-    //   )
-    // })
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false
-  }
-
-  render() {
-    const { errors, currentIndex, buildError } = this.state
-    const error = errors[currentIndex]
-    const hasBuildError = buildError !== null
-    const hasRuntimeError = Boolean(errors.length)
-
-    const hasErrors = hasBuildError || hasRuntimeError
-
-    return (
-      <React.Fragment>
-        <ErrorBoundary
-          clearErrors={() => {
-            this.setState({ errors: [], buildError: null })
-          }}
-          onError={error => {
-            this.setState(prevState => {
-              const insertedError = { type: `RUNTIME_ERROR`, error }
-              return {
-                errors: [...prevState.errors, insertedError],
-              }
-            })
-          }}
-        >
-          {this.props.children ?? null}
-        </ErrorBoundary>
-        {hasErrors ? (
-          <Portal>
-            <Style />
-            {hasBuildError ? (
-              <BuildError
-                error={buildError}
-                open={this.open}
-                dismiss={this.dismiss}
-              />
-            ) : hasRuntimeError ? (
-              <RuntimeError
-                error={error}
-                open={this.open}
-                dismiss={this.dismiss}
-              />
-            ) : undefined}
-          </Portal>
-        ) : undefined}
-      </React.Fragment>
-    )
+const reducer = (state, event) => {
+  switch (event.action) {
+    case `CLEAR_COMPILE_ERROR`: {
+      return { ...state, buildError: null }
+    }
+    case `CLEAR_RUNTIME_ERRORS`: {
+      return { ...state, errors: [] }
+    }
+    case `SHOW_COMPILE_ERROR`: {
+      return { ...state, buildError: event.payload }
+    }
+    case `HANDLE_RUNTIME_ERROR`:
+    case `SHOW_RUNTIME_ERRORS`: {
+      return { ...state, errors: state.errors.concat(event.payload) }
+    }
+    case `SHOW_GRAPHQL_ERRORS`: {
+      return {
+        ...state,
+        graphqlErrors: event.payload,
+      }
+    }
+    case `CLEAR_GRAPHQL_ERRORS`: {
+      return { ...state, graphqlErrors: [] }
+    }
+    case `DISMISS`: {
+      return {
+        ...state,
+        buildError: null,
+        errors: [],
+        graphqlErrors: [],
+      }
+    }
+    default: {
+      return state
+    }
   }
 }
+
+const initialState = {
+  errors: [],
+  buildError: null,
+  graphqlErrors: [],
+}
+
+function DevOverlay({ children }) {
+  const [state, dispatch] = React.useReducer(reducer, initialState)
+
+  React.useEffect(() => {
+    const gatsbyEvents = window._gatsbyEvents || []
+    window._gatsbyEvents = {
+      push: ([channel, event]) => {
+        if (channel === `FAST_REFRESH`) {
+          dispatch(event)
+        }
+      },
+    }
+
+    gatsbyEvents.forEach(([channel, event]) => {
+      if (channel === `FAST_REFRESH`) {
+        dispatch(event)
+      }
+    })
+    return () => {
+      window._gatsbyEvents = []
+    }
+  }, [dispatch])
+
+  const dismiss = () => {
+    dispatch({ action: `DISMISS` })
+    window._gatsbyEvents = []
+  }
+
+  const hasBuildError = state.buildError !== null
+  const hasRuntimeErrors = Boolean(state.errors.length)
+  const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
+  const hasErrors = hasBuildError || hasRuntimeErrors || hasGraphqlErrors
+
+  // This component has a deliberate order (priority)
+  const ErrorComponent = () => {
+    if (hasBuildError) {
+      return <BuildError error={state.buildError} />
+    }
+    if (hasRuntimeErrors) {
+      return <RuntimeErrors errors={state.errors} dismiss={dismiss} />
+    }
+    if (hasGraphqlErrors) {
+      return <GraphqlErrors errors={state.graphqlErrors} dismiss={dismiss} />
+    }
+
+    return null
+  }
+
+  return (
+    <React.Fragment>
+      <ErrorBoundary hasErrors={hasErrors}>{children ?? null}</ErrorBoundary>
+      {hasErrors ? (
+        <ShadowPortal>
+          <Style />
+          <ErrorComponent />
+        </ShadowPortal>
+      ) : undefined}
+    </React.Fragment>
+  )
+}
+
+export default DevOverlay

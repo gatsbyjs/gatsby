@@ -28,7 +28,7 @@ The CSS in a CSS module is no different than normal CSS, but the extension of th
 ```jsx:title=src/components/container.js
 import React from "react"
 // highlight-next-line
-import containerStyles from "./container.module.css"
+import * as containerStyles from "./container.module.css"
 
 export default function Container({ children }) {
   return (
@@ -48,7 +48,7 @@ Here's an example where the class name `container` is added to the DOM along wit
 
 ```jsx:title=src/components/container.js
 import React from "react"
-import containerStyles from "./container.module.css"
+import * as containerStyles from "./container.module.css"
 
 export default function Container({ children }) {
   return (

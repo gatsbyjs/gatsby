@@ -1,13 +1,4 @@
-const ProgressBar = require(`progress`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
-
-const bar = new ProgressBar(
-  `Downloading Contentful Assets [:bar] :current/:total :elapsed secs :percent`,
-  {
-    total: 0,
-    width: 30,
-  }
-)
 
 /**
  * @name distributeWorkload
@@ -44,14 +35,18 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     getNodesByType,
     reporter,
     assetDownloadWorkers,
+    getNode,
   } = gatsbyFunctions
 
   // Any ContentfulAsset nodes will be downloaded, cached and copied to public/static
   // regardless of if you use `localFile` to link an asset or not.
 
   const assetNodes = getNodesByType(`ContentfulAsset`)
-  bar.total = assetNodes.length
-
+  const bar = reporter.createProgress(
+    `Downloading Contentful Assets`,
+    assetNodes.length
+  )
+  bar.start()
   await distributeWorkload(
     assetNodes.map(node => async () => {
       let fileNodeID
@@ -59,6 +54,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
       if (!node.file) {
+        reporter.log(id, locale)
         reporter.warn(`The asset with id: ${id}, contains no file.`)
         return Promise.resolve()
       }
@@ -75,7 +71,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
       // to compare a modified asset to a cached version?
       if (cacheRemoteData) {
         fileNodeID = cacheRemoteData.fileNodeID // eslint-disable-line prefer-destructuring
-        touchNode({ nodeId: cacheRemoteData.fileNodeID })
+        touchNode(getNode(cacheRemoteData.fileNodeID))
       }
 
       // If we don't have cached data, download the file

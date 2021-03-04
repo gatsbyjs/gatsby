@@ -136,7 +136,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
         })
 
         namedChunkGroups[chunkKey].assets.forEach(asset =>
-          chunks.push({ rel: `preload`, name: asset })
+          chunks.push({ rel: `preload`, name: asset.name })
         )
 
         const childAssets = namedChunkGroups[chunkKey].childAssets
@@ -187,16 +187,22 @@ export default (pagePath, isClientOnlyPage, callback) => {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
-          // pathContext was deprecated in v2. Renamed to pageContext
-          pathContext: pageData.result
-            ? pageData.result.pageContext
-            : undefined,
         }
 
-        const pageElement = createElement(
-          syncRequires.ssrComponents[componentChunkName],
-          props
-        )
+        let pageElement
+        if (
+          syncRequires.ssrComponents[componentChunkName] &&
+          !isClientOnlyPage
+        ) {
+          pageElement = createElement(
+            syncRequires.ssrComponents[componentChunkName],
+            props
+          )
+        } else {
+          // If this is a client-only page or the pageComponent didn't finish
+          // compiling yet, just render an empty component.
+          pageElement = () => null
+        }
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -276,7 +282,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = isClientOnlyPage ? `` : generateBodyHTML()
+  const bodyStr = generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
@@ -289,6 +295,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
+      <script key={`framework`} src="/framework.js" />,
       <script key={`commons`} src="/commons.js" />,
     ]),
   })

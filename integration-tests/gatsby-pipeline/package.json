@@ -11,8 +11,8 @@
     "gatsby-source-filesystem": "latest",
     "gatsby-transformer-sharp": "latest",
     "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
@@ -36,6 +36,6 @@
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

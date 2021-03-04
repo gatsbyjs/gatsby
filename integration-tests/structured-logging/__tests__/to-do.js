@@ -105,12 +105,12 @@ const commonAssertions = events => {
     const actionSchema = joi.alternatives().try(
       joi
         .object({
-          type: joi.string().required().valid([`SET_STATUS`]),
+          type: joi.string().required().valid(`SET_STATUS`),
           // TODO: We should change this to always be an Object I think pieh
           payload: joi
             .string()
             .required()
-            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`]),
+            .valid(`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
@@ -121,12 +121,7 @@ const commonAssertions = events => {
           type: joi
             .string()
             .required()
-            .valid([
-              `ACTIVITY_START`,
-              `ACTIVITY_UPDATE`,
-              `ACTIVITY_END`,
-              `LOG`,
-            ]),
+            .valid(`ACTIVITY_START`, `ACTIVITY_UPDATE`, `ACTIVITY_END`, `LOG`),
           payload: joi.object(),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
@@ -135,7 +130,7 @@ const commonAssertions = events => {
     )
 
     const eventSchema = joi.object({
-      type: joi.string().required().valid([`LOG_ACTION`]),
+      type: joi.string().required().valid(`LOG_ACTION`),
       action: actionSchema,
     })
     events.forEach(event => {

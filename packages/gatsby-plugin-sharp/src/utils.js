@@ -1,86 +1,4 @@
-import ProgressBar from "progress"
 import sharp from "./safe-sharp"
-// TODO remove in V3
-export function createGatsbyProgressOrFallbackToExternalProgressBar(
-  message,
-  reporter
-) {
-  if (reporter && reporter.createProgress) {
-    return reporter.createProgress(message)
-  }
-
-  const bar = new ProgressBar(
-    ` [:bar] :current/:total :elapsed s :percent ${message}`,
-    {
-      total: 0,
-      width: 30,
-      clear: true,
-    }
-  )
-
-  return {
-    start() {},
-    tick(increment = 1) {
-      bar.tick(increment)
-    },
-    done() {},
-    set total(value) {
-      bar.total = value
-    },
-  }
-}
-
-let progressBar
-let pendingImagesCounter = 0
-let firstPass = true
-export const createOrGetProgressBar = reporter => {
-  if (!progressBar) {
-    progressBar = createGatsbyProgressOrFallbackToExternalProgressBar(
-      `Generating image thumbnails`,
-      reporter
-    )
-
-    const originalDoneFn = progressBar.done
-
-    // TODO this logic should be moved to the reporter.
-    // when done is called we remove the progressbar instance and reset all the things
-    // this will be called onPostBuild or when devserver is created
-    progressBar.done = () => {
-      originalDoneFn.call(progressBar)
-      progressBar = null
-      pendingImagesCounter = 0
-    }
-
-    progressBar.addImageToProcess = imageCount => {
-      if (pendingImagesCounter === 0) {
-        progressBar.start()
-      }
-      pendingImagesCounter += imageCount
-      progressBar.total = pendingImagesCounter
-    }
-
-    // when we create a progressBar for the second time so when .done() has been called before
-    // we create a modified tick function that automatically stops the progressbar when total is reached
-    // this is used for development as we're watching for changes
-    if (!firstPass) {
-      let progressBarCurrentValue = 0
-      const originalTickFn = progressBar.tick
-      progressBar.tick = (ticks = 1) => {
-        originalTickFn.call(progressBar, ticks)
-        progressBarCurrentValue += ticks
-
-        if (progressBarCurrentValue === pendingImagesCounter) {
-          progressBar.done()
-        }
-      }
-    }
-    firstPass = false
-  }
-
-  return progressBar
-}
-
-export const getProgressBar = () => progressBar
 
 export function rgbToHex(red, green, blue) {
   return `#${(blue | (green << 8) | (red << 16) | (1 << 24))
@@ -128,7 +46,6 @@ export function fixedImageSizes({
   height,
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  srcSetBreakpoints,
   reporter,
 }) {
   let aspectRatio = imgDimensions.width / imgDimensions.height
@@ -204,7 +121,8 @@ export function responsiveImageSizes({
   height,
   transformOptions = {},
   outputPixelDensities = DEFAULT_PIXEL_DENSITIES,
-  srcSetBreakpoints,
+  breakpoints,
+  layout,
 }) {
   const { fit = `cover` } = transformOptions
 
@@ -250,24 +168,23 @@ export function responsiveImageSizes({
 
   width = Math.round(width)
 
-  // Create sizes (in width) for the image if no custom breakpoints are
-  // provided. If the max width of the container for the rendered markdown file
-  // is 800px, the sizes would then be: 200, 400, 800, 1600 if using
-  // the default outputPixelDensities
-  //
-  // This is enough sizes to provide close to the optimal image size for every
-  // device size / screen resolution while (hopefully) not requiring too much
-  // image processing time (Sharp has optimizations thankfully for creating
-  // multiple sizes of the same input file)
-  if (srcSetBreakpoints?.length > 0) {
-    sizes = srcSetBreakpoints.filter(size => size <= imgDimensions.width)
+  if (breakpoints?.length > 0) {
+    sizes = breakpoints.filter(size => size <= imgDimensions.width)
+
+    // If a larger breakpoint has been filtered-out, add the actual image width instead
+    if (
+      sizes.length < breakpoints.length &&
+      !sizes.includes(imgDimensions.width)
+    ) {
+      sizes.push(imgDimensions.width)
+    }
   } else {
     sizes = densities.map(density => Math.round(density * width))
     sizes = sizes.filter(size => size <= imgDimensions.width)
   }
 
   // ensure that the size passed in is included in the final output
-  if (!sizes.includes(width)) {
+  if (layout === `constrained` && !sizes.includes(width)) {
     sizes.push(width)
   }
   sizes = sizes.sort((a, b) => a - b)
@@ -361,4 +278,25 @@ export function getDimensionsAndAspectRatio(dimensions, options) {
     height,
     aspectRatio: width / height,
   }
+}
+
+const dominantColorCache = new Map()
+
+export const getDominantColor = async absolutePath => {
+  let dominantColor = dominantColorCache.get(absolutePath)
+  if (dominantColor) {
+    return dominantColor
+  }
+
+  const pipeline = sharp(absolutePath)
+  const { dominant } = await pipeline.stats()
+
+  // Fallback in case sharp doesn't support dominant
+  dominantColor = dominant
+    ? rgbToHex(dominant.r, dominant.g, dominant.b)
+    : `rgba(0,0,0,0.5)`
+
+  dominantColorCache.set(absolutePath, dominantColor)
+
+  return dominantColor
 }

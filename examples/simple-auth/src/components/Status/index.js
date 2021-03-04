@@ -1,13 +1,13 @@
 import React from "react"
 import { Link, navigate } from "@reach/router"
 import { getCurrentUser, isLoggedIn, logout } from "../../utils/auth"
-import styles from "./status.module.css"
+import { status, status__text } from "./status.module.css"
 
 export default () => {
   let details
   if (!isLoggedIn()) {
     details = (
-      <p className={styles[`status__text`]}>
+      <p className={status__text}>
         To get the full app experience, you’ll need to
         {` `}
         <Link to="/app/login">log in</Link>.
@@ -17,7 +17,7 @@ export default () => {
     const { name, email } = getCurrentUser()
 
     details = (
-      <p className={styles[`status__text`]}>
+      <p className={status__text}>
         Logged in as {name} ({email}
         )!
         {` `}
@@ -34,5 +34,5 @@ export default () => {
     )
   }
 
-  return <div className={styles.status}>{details}</div>
+  return <div className={status}>{details}</div>
 }

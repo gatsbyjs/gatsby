@@ -1,7 +1,7 @@
 // Move this to gatsby-core-utils?
 import { Actions, CreatePagesArgs } from "gatsby"
 import { createPath } from "gatsby-page-utils"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { reverseLookupParams } from "./extract-query"
 import { getMatchPath } from "./get-match-path"
@@ -92,7 +92,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
   // 2. Get the nodes out of the data. We very much expect data to come back in a known shape:
   //    data = { [key: string]: { nodes: Array<ACTUAL_DATA> } }
   const nodes = (Object.values(Object.values(data)[0])[0] as any) as Array<
-    Record<string, object>
+    Record<string, Record<string, unknown>>
   >
 
   if (nodes) {
@@ -107,7 +107,7 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
-  const paths = nodes.map((node: Record<string, object>) => {
+  const paths = nodes.map((node: Record<string, Record<string, unknown>>) => {
     // URL path for the component and node
     const { derivedPath, errors } = derivePath(
       filePath,

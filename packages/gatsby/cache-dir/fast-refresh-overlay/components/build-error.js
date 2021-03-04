@@ -1,44 +1,37 @@
-import React from "react"
-import Overlay from "./overlay"
-import Anser from "anser"
-import CodeFrame from "./code-frame"
-import { prettifyStack } from "../utils"
+import * as React from "react"
+import { Overlay, Header, Body, Footer, HeaderOpenClose } from "./overlay"
+import { CodeFrame } from "./code-frame"
+import { prettifyStack, openInEditor } from "../utils"
 
-const BuildError = ({ error, open, dismiss }) => {
-  const [file, cause, _emptyLine, ...rest] = error.split(`\n`)
-  const [_fullPath, _detailedError] = rest
-  const detailedError = Anser.ansiToJson(_detailedError, {
-    remove_empty: true,
-    json: true,
-  })
-  const lineNumberRegex = /^[0-9]*:[0-9]*$/g
-  const lineNumberFiltered = detailedError.filter(
-    d => d.content !== ` ` && d.content.match(lineNumberRegex)
-  )[0]?.content
-  const lineNumber = lineNumberFiltered.substr(
-    0,
-    lineNumberFiltered.indexOf(`:`)
+// Error that is thrown on e.g. webpack errors and thus can't be dismissed and must be fixed
+export function BuildError({ error }) {
+  // Incoming build error shape is like this:
+  // Sometimes "Enter"
+  // ./relative-path-to-file
+  // Additional information (sometimes empty line => handled in "prettifyStack" function)
+  // /absolute-path-to-file
+  // Errors/Warnings
+  const decoded = prettifyStack(error)
+  const [filePath] = decoded
+  const file = filePath.content.split(`\n`)[0]
+
+  return (
+    <Overlay>
+      <Header data-gatsby-error-type="build-error">
+        <div data-gatsby-overlay="header__cause-file">
+          <h1 id="gatsby-overlay-labelledby">Failed to compile</h1>
+          <span>{file}</span>
+        </div>
+        <HeaderOpenClose open={() => openInEditor(file, 1)} dismiss={false} />
+      </Header>
+      <Body>
+        <h2>Source</h2>
+        <CodeFrame decoded={decoded} />
+        <Footer id="gatsby-overlay-describedby">
+          This error occurred during the build process and can only be dismissed
+          by fixing the error.
+        </Footer>
+      </Body>
+    </Overlay>
   )
-  const decoded = prettifyStack(rest)
-
-  const header = (
-    <>
-      <div data-gatsby-overlay="header__cause-file">
-        <p>{cause}</p>
-        <span>{file}</span>
-      </div>
-      <button
-        onClick={() => open(file, lineNumber)}
-        data-gatsby-overlay="header__open-in-editor"
-      >
-        Open in editor
-      </button>
-    </>
-  )
-
-  const body = <CodeFrame decoded={decoded} />
-
-  return <Overlay header={header} body={body} dismiss={dismiss} />
 }
-
-export default BuildError

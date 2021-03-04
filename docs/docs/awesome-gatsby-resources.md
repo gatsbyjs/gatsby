@@ -60,7 +60,7 @@ See the [unofficial list of themes](https://gatsbytemplates.io/)
 
 ## Gatsby tutorials
 
-- [Official tutorial](/tutorial/)
+- [Official tutorial](/docs/tutorial/)
 - [Creating a blog with Gatsby](/blog/2017-07-19-creating-a-blog-with-gatsby/)
 - [Level Up Tutorials series on creating a blog](https://www.youtube.com/watch?v=b2H7fWhQcdE&list=PLLnpHn493BHHfoINKLELxDch3uJlSapxg)
 - [Level up Tutorials Pro Gatsby series](https://www.leveluptutorials.com/store/products/tutorials/lut-dd020)

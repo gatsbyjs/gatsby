@@ -66,7 +66,7 @@ export default [
     value: `sass`,
   },
   {
-    label: `Add Typescript`,
+    label: `Add TypeScript`,
     value: `typescript`,
   },
   {
@@ -88,10 +88,6 @@ export default [
   {
     label: `Add GitHub Pages deployment with Travis CI`,
     value: `travis-deploy-github-pages`,
-  },
-  {
-    label: `Add Headless WordPress integration`,
-    value: `wordpress`,
   },
   {
     label: `Add e-commerce powered by Snipcart`,

@@ -4,7 +4,7 @@ import { MdChevronRight } from "react-icons/md"
 
 import ImagePicker from "./image-picker"
 
-import styles from "./product.module.css"
+import * as styles from "./product.module.css"
 
 function Product({ description, fields, showDetail, title, images }) {
   return (

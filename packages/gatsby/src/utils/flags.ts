@@ -95,7 +95,7 @@ const activeFlags: Array<IFlag> = [
     description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => {
-      if (sampleSiteForExperiment(`DEV_SSR`, 5)) {
+      if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
         return `OPT_IN`
       } else {
         return true
@@ -154,16 +154,6 @@ const activeFlags: Array<IFlag> = [
     experimental: false,
     description: `Don't delete the downloaded files cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
-    testFitness: (): fitnessEnum => true,
-  },
-  {
-    name: `FAST_REFRESH`,
-    env: `GATSBY_FAST_REFRESH`,
-    command: `develop`,
-    telemetryId: `FastRefresh`,
-    experimental: false,
-    description: `Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.`,
-    umbrellaIssue: `https://gatsby.dev/fast-refresh-feedback`,
     testFitness: (): fitnessEnum => true,
   },
   {

@@ -42,7 +42,8 @@ export function Indicator({ visible = true }) {
       <Style />
       <div
         data-gatsby-loading-indicator="root"
-        data-gatsby-loading-indicator-visible={visible}
+        // preact doesn't render data attributes with a literal bool false value to dom
+        data-gatsby-loading-indicator-visible={visible.toString()}
         aria-live="assertive"
       >
         <div data-gatsby-loading-indicator="spinner" aria-hidden="true">

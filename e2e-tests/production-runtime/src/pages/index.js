@@ -57,12 +57,12 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
-        <Link to="/path-context/" data-testid="path-context">
-          Path Context
+        <Link to="/안녕" data-testid="page-with-unicode-path">
+          Go to page with unicode path
         </Link>
       </li>
       <li>
-        <Link to="/안녕" data-testid="page-with-unicode-path">
+        <Link to="/foo/@something/bar" data-testid="page-with-encodable-path">
           Go to page with unicode path
         </Link>
       </li>
