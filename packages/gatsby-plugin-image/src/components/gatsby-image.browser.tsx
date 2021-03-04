@@ -220,14 +220,14 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
 
 export const propTypes = {
   image: PropTypes.object.isRequired,
-  alt: (props: GatsbyImageProps): Error | undefined => {
-    if (props.alt || props.alt === ``) {
-      return undefined
+  alt: ((props: GatsbyImageProps, ...rest): Error | undefined => {
+    if (!props.alt && props.alt !== ``) {
+      return new Error(
+        `The "alt" prop is required for GatsbyImage. If the image is purely presentational then pass an empty string: e.g. alt="". Learn more: https://a11y-style-guide.com/style-guide/section-media.html`
+      )
     }
-    return new Error(
-      `The "alt" prop is required for GatsbyImage. If the image is purely presentational, pass an empty string: e.g. alt="". More info: https://a11y-style-guide.com/style-guide/section-media.html`
-    )
-  },
+    return PropTypes.string(props, ...rest)
+  }) as PropTypes.Validator<string>,
 }
 
 GatsbyImage.propTypes = propTypes as WeakValidationMap<GatsbyImageProps>
