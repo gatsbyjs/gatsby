@@ -3,6 +3,7 @@ const prepareMappingChildNode = require(`./mapping`)
 const sanitizeName = require(`./sanitize-name`)
 const queryString = require(`query-string`)
 const stringifyObjectIds = require(`./stringify-object-ids`)
+const preprocessAggregations = require(`./preprocess-aggregations`)
 
 exports.sourceNodes = (
   { actions, getNode, createNodeId, createContentDigest },
@@ -34,22 +35,55 @@ exports.sourceNodes = (
     .connect()
     .then(client => {
       const db = client.db(dbName)
+
       let collection = pluginOptions.collection || [`documents`]
       if (!Array.isArray(collection)) {
         collection = [collection]
       }
 
+      // Format aggregations & Determine whether to use `collection.find` or `collection.aggregate`
+      const aggregations = preprocessAggregations(
+        pluginOptions.aggregations || {}
+      )
+      const useCollection = !Object.keys(aggregations).length
+
       return Promise.all(
-        collection.map(col =>
-          createNodes(
-            db,
-            pluginOptions,
-            dbName,
-            createNode,
-            createNodeId,
-            col,
-            createContentDigest
-          )
+        Object.entries(useCollection ? collection : aggregations).reduce(
+          (acc, [key, value]) => {
+            if (useCollection) {
+              // Map to `createNodes` calls for collection
+              return [
+                ...acc,
+                createNodes(
+                  db,
+                  pluginOptions,
+                  dbName,
+                  createNode,
+                  createNodeId,
+                  value,
+                  createContentDigest
+                ),
+              ]
+            } else {
+              // Flatten & map to `createNodes` calls for aggregation
+              return [
+                ...acc,
+                ...Object.entries(value).map(aggregation =>
+                  createNodes(
+                    db,
+                    pluginOptions,
+                    dbName,
+                    createNode,
+                    createNodeId,
+                    key,
+                    createContentDigest,
+                    aggregation
+                  )
+                ),
+              ]
+            }
+          },
+          []
         )
       )
         .then(() => {
@@ -67,7 +101,7 @@ exports.sourceNodes = (
     })
 }
 
-function idToString(id) {
+function mongoIdToString(id) {
   return id.hasOwnProperty(`toHexString`) ? id.toHexString() : String(id)
 }
 
@@ -78,14 +112,17 @@ function createNodes(
   createNode,
   createNodeId,
   collectionName,
-  createContentDigest
+  createContentDigest,
+  aggregation
 ) {
   const { preserveObjectIds = false, query = {} } = pluginOptions
   return new Promise((resolve, reject) => {
     let collection = db.collection(collectionName)
-    let cursor = collection.find(
-      query[collectionName] ? query[collectionName] : {}
-    )
+
+    // Create cursor via `find` or `aggregate` depending on if `aggregation` is given
+    let cursor = aggregation
+      ? collection.aggregate(aggregation[1])
+      : collection.find(query[collectionName] ? query[collectionName] : {})
 
     // Execute the each command, triggers for each document
     cursor.toArray((err, documents) => {
@@ -94,8 +131,6 @@ function createNodes(
       }
 
       documents.forEach(({ _id, ...item }) => {
-        const id = idToString(_id)
-
         // only call recursive function to preserve relations represented by objectids if pluginoption set.
         if (preserveObjectIds) {
           for (let key in item) {
@@ -103,17 +138,25 @@ function createNodes(
           }
         }
 
+        const mongodb_id = mongoIdToString(_id)
+        const id = `${
+          aggregation ? aggregation[0] : ``
+        }${dbName}${collectionName}${mongodb_id}`
+        const sanitizedAggregationName = aggregation
+          ? sanitizeName(aggregation[0])
+          : ``
+        const internalType = `mongodb${sanitizedAggregationName}${sanitizeName(
+          dbName
+        )}${sanitizeName(collectionName)}`
         const node = {
           // Data for the node.
           ...item,
           id: createNodeId(`${id}`),
-          mongodb_id: id,
+          mongodb_id: mongodb_id,
           parent: `__${collectionName}__`,
           children: [],
           internal: {
-            type: `mongodb${sanitizeName(dbName)}${sanitizeName(
-              collectionName
-            )}`,
+            type: internalType,
             content: JSON.stringify(item),
             contentDigest: createContentDigest(item),
           },
