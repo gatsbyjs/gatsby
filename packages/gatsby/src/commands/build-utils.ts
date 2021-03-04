@@ -66,15 +66,11 @@ export const removePageFiles = async (
   })
 }
 
-// almost c&p from `cache-dir/normalize-page-path
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
   }
-  if (path.charAt(path.length - 1) === `/`) {
-    return path.slice(0, -1)
-  }
-  return path
+  return path.endsWith(`/`) ? path.slice(0, -1) : path
 }
 
 type PageGenerationAction = "delete" | "regenerate" | "reuse"
