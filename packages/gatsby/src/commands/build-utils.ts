@@ -66,11 +66,80 @@ export const removePageFiles = async (
   })
 }
 
+function normalizePagePath(path: string): string {
+  if (path === `/`) {
+    return `/`
+  }
+  return path.endsWith(`/`) ? path.slice(0, -1) : path
+}
+
+type PageGenerationAction = "delete" | "regenerate" | "reuse"
+const pageGenerationActionPriority: Record<PageGenerationAction, number> = {
+  // higher the number, higher the priority
+  regenerate: 2,
+  reuse: 1,
+  delete: 0,
+}
+
 export function calcDirtyHtmlFiles(
   state: IGatsbyState
-): { toRegenerate: Array<string>; toDelete: Array<string> } {
-  const toRegenerate: Array<string> = []
-  const toDelete: Array<string> = []
+): {
+  toRegenerate: Array<string>
+  toDelete: Array<string>
+  toCleanupFromTrackedState: Set<string>
+} {
+  const toRegenerate = new Set<string>()
+  const toDelete = new Set<string>()
+  const toCleanupFromTrackedState = new Set<string>()
+  const normalizedPagePathToAction = new Map<
+    string,
+    {
+      actualPath: string
+      action: PageGenerationAction
+    }
+  >()
+
+  /**
+   * multiple page paths can result in same html and page-data filenames
+   * so we need to keep that in mind when generating list of pages
+   * to regenerate and more importantly - to delete (so we don't delete html and page-data file
+   * when path changes slightly but it would still result in same html and page-data filenames
+   * for example adding/removing trailing slash between builds or even mid build with plugins
+   * like `gatsby-plugin-remove-trailing-slashes`)
+   */
+  function markActionForPage(path: string, action: PageGenerationAction): void {
+    const normalizedPagePath = normalizePagePath(path)
+
+    const previousAction = normalizedPagePathToAction.get(normalizedPagePath)
+    let overwritePreviousAction = false
+    if (previousAction) {
+      const previousActionPriority =
+        pageGenerationActionPriority[previousAction.action]
+      const currentActionPriority = pageGenerationActionPriority[action]
+
+      if (currentActionPriority > previousActionPriority) {
+        overwritePreviousAction = true
+        toCleanupFromTrackedState.add(previousAction.actualPath)
+        if (previousAction.action === `delete`) {
+          // "reuse" or "regenerate" will take over, so we should
+          // remove path from list of paths to delete
+          toDelete.delete(previousAction.actualPath)
+        }
+      }
+    }
+
+    if (!previousAction || overwritePreviousAction) {
+      normalizedPagePathToAction.set(normalizedPagePath, {
+        actualPath: path,
+        action,
+      })
+      if (action === `delete`) {
+        toDelete.add(path)
+      } else if (action === `regenerate`) {
+        toRegenerate.add(path)
+      }
+    }
+  }
 
   if (state.html.unsafeBuiltinWasUsedInSSR) {
     reporter.warn(
@@ -82,15 +151,18 @@ export function calcDirtyHtmlFiles(
     if (htmlFile.isDeleted || !state.pages.has(path)) {
       // FIXME: checking pages state here because pages are not persisted
       // and because of that `isDeleted` might not be set ...
-      toDelete.push(path)
+      markActionForPage(path, `delete`)
     } else if (htmlFile.dirty || state.html.unsafeBuiltinWasUsedInSSR) {
-      toRegenerate.push(path)
+      markActionForPage(path, `regenerate`)
+    } else {
+      markActionForPage(path, `reuse`)
     }
   })
 
   return {
-    toRegenerate,
-    toDelete,
+    toRegenerate: Array.from(toRegenerate),
+    toDelete: Array.from(toDelete),
+    toCleanupFromTrackedState,
   }
 }
 
