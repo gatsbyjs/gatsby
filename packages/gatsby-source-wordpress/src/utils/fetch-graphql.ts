@@ -309,7 +309,7 @@ const handleFetchErrors = async ({
     } = store.getState().gatsbyApi.pluginOptions.schema
 
     if (`message` in e) {
-      console.error(new Error(e.message).stack)
+      console.error(formatLogMessage(new Error(e.message).stack))
     }
 
     reporter.panic({
