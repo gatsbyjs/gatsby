@@ -3,7 +3,8 @@ const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
 const nodeFromData = (datum, createNodeId) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
-  const preservedId = typeof attributeId !== `undefined` ? { attributeId } : {}
+  const preservedId =
+    typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
   return {
     id: createNodeId(datum.id),
     drupal_id: datum.id,

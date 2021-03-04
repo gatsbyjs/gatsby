@@ -14,7 +14,9 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    requireConfigFile: false,
+    babelOptions: {
+      configFile: `./.babelrc.js`,
+    },
   },
   env: {
     browser: true,
