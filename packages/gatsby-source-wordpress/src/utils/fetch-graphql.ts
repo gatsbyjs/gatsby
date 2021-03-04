@@ -302,7 +302,10 @@ const handleFetchErrors = async ({
       },
     })
   }
-  if (e.message.includes(`Request failed with status code 50`)) {
+  if (
+    e.message.includes(`Request failed with status code 50`) &&
+    [`502`, `503`, `504`].includes(e.message)
+  ) {
     const {
       requestConcurrency,
       previewRequestConcurrency,
