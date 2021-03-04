@@ -3,7 +3,7 @@ import store from "../dist/store"
 
 describe(`fetchGraphQL helper`, () => {
   let mock
-  let panicMessages = []
+  const panicMessages = []
 
   beforeAll(() => {
     const sharedError = `Request failed with status code`
