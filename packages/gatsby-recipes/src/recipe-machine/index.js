@@ -130,24 +130,20 @@ const recipeMachine = Machine(
         invoke: {
           id: `createPlan`,
           src: (context, event) => async (cb, onReceive) => {
-            try {
-              let result = await createPlan(context, cb)
-              // Validate dependencies are met in the resources plan
-              result = result.map(r => {
-                const matches = findDependencyMatch(result, r)
-                // If there's any errors, replace the resource
-                // with the error
-                if (matches.some(m => m.error)) {
-                  r.error = matches[0].error
-                  delete r.diff
-                }
-                return r
-              })
+            let result = await createPlan(context, cb)
+            // Validate dependencies are met in the resources plan
+            result = result.map(r => {
+              const matches = findDependencyMatch(result, r)
+              // If there's any errors, replace the resource
+              // with the error
+              if (matches.some(m => m.error)) {
+                r.error = matches[0].error
+                delete r.diff
+              }
+              return r
+            })
 
-              return result
-            } catch (e) {
-              throw e
-            }
+            return result
           },
           onDone: {
             target: `presentPlan`,

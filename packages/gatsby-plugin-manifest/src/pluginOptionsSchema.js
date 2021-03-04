@@ -23,7 +23,7 @@ export default function pluginOptionSchema({ Joi }) {
       `itunes`,
       `microsoft`,
       `webapp`
-    ) //https://w3c.github.io/manifest-app-info/#platform-member
+    ) // https://w3c.github.io/manifest-app-info/#platform-member
     .description(`The platform on which the application can be found.`)
 
   const FingerPrint = Joi.object().keys({

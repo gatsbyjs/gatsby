@@ -34,7 +34,7 @@ export default async function writeRedirectsFile(
     // The order for rest params (key-value pairs) is arbitrary.
     const pieces = [fromPath, toPath, status]
 
-    for (let key in rest) {
+    for (const key in rest) {
       const value = rest[key]
 
       if (typeof value === `string` && value.includes(` `)) {
