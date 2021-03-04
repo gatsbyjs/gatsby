@@ -88,6 +88,7 @@ exports.onCreateWebpackConfig = (
     enableIdentityWidget = true,
     htmlTitle = `Content Manager`,
     htmlFavicon = ``,
+    identityWidgetInitConfig = {},
     manualInit = false,
     includeRobots = false,
   }
@@ -217,6 +218,7 @@ exports.onCreateWebpackConfig = (
       new webpack.DefinePlugin({
         __PATH__PREFIX__: pathPrefix,
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
+        IDENTITY_WIDGET_INIT_CONFIG: JSON.stringify(identityWidgetInitConfig),
       }),
 
       new CopyPlugin({

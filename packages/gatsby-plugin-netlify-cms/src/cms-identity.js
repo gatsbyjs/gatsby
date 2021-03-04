@@ -1,4 +1,4 @@
-/* global __PATH_PREFIX__ CMS_PUBLIC_PATH */
+/* global __PATH_PREFIX__ CMS_PUBLIC_PATH  IDENTITY_WIDGET_INIT_CONFIG */
 import netlifyIdentityWidget from "netlify-identity-widget"
 
 window.netlifyIdentity = netlifyIdentityWidget
@@ -21,5 +21,5 @@ netlifyIdentityWidget.on(`init`, user => {
 // Boot on next tick to prevent clashes with css injected into NetlifyCMS
 // preview pane.
 setImmediate(() => {
-  netlifyIdentityWidget.init()
+  netlifyIdentityWidget.init(IDENTITY_WIDGET_INIT_CONFIG)
 })
