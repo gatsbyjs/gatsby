@@ -614,34 +614,7 @@ describe(`actual compiling`, () => {
       },
     })
 
-    expect(errors).toMatchInlineSnapshot(
-      `
-      Array [
-        Object {
-          "context": Object {
-            "closestFragment": "PostsJsonFragment",
-            "codeFrame": "   1 | query mockFileQuery {
-         2 |              allPostsJson {
-         3 |                nodes {
-      >  4 |                  ...PostJsonFragment
-           |                  ^^^^^^^^^^^^^^^^^^^
-         5 |                }
-         6 |             }
-         7 |           }
-         8 |` +
-        ` ` +
-        `
-         9 |           fragment PostsJsonFragment on PostsJson {
-        10 |             id
-        11 |           }",
-            "fragmentName": "PostJsonFragment",
-          },
-          "filePath": "mockFile",
-          "id": "85908",
-        },
-      ]
-    `,
-      `
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
           "context": Object {
@@ -664,8 +637,7 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `
-    )
+    `)
     expect(result).toEqual(new Map())
   })
 
