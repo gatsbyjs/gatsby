@@ -743,7 +743,7 @@ export default Navigation
 
 ### webpack deprecation messages
 
-When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building Javascript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
+When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building JavaScript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
 
 ## Using `fs` in SSR
 

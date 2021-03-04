@@ -36,7 +36,7 @@ Another option is to use an external search engine. This solution is much more s
 There are many options available, including both self-hosted and commercially hosted open source:
 
 - [ElasticSearch](https://www.elastic.co/products/elasticsearch) — OSS and has commercial hosting available
-- [Solr](http://lucene.apache.org/solr/) — OSS and has commercial hosting available
+- [Solr](https://solr.apache.org) — OSS and has commercial hosting available
 - [Algolia](https://www.algolia.com/) — Commercial
 
 Of these, the most common solution is Algolia. The Gatsby docs include a guide to adding Algolia to your site:
