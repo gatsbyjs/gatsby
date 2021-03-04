@@ -241,7 +241,7 @@ const handleGraphQLErrors = async ({
 
 const ensureStatementsAreTrue = `${bold(
   `Please ensure the following statements are true`
-)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`
+)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed and active in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`
 
 // @todo add a link to docs page for debugging
 const genericError = ({ url }: { url: string }): string =>
@@ -495,7 +495,7 @@ ${slackChannelSupportMessage}`
         sourceMessage: formatLogMessage(
           `${errorContext || ``}\n\n${
             e.message
-          } \n\nReceived HTML as a response. Are you sure ${url} is the correct URL?\n\nIf that URL redirects to the correct URL via WordPress in the browser,\nor you've entered the wrong URL in settings,\nyou might receive this error.\nVisit that URL in your browser, and if it looks good, copy/paste it from your URL bar to your config.\n\n${ensureStatementsAreTrue}${
+          } \n\nReceived HTML as a response. Are you sure ${url} is the correct URL and WPGraphQL is active?\n\nIf you're sure WPGraphQL is active, visit that URL in a browser - if it redirects to the correct URL,\nor you've entered the wrong URL in settings,\nyou might receive this error.\nVisit that URL in your browser and if it looks good copy/paste it from your URL bar to your gatsby-config.js.\n\n${ensureStatementsAreTrue}${
             copyHtmlResponseOnError
               ? `\n\nCopied HTML response to your clipboard.`
               : `\n\n${bold(
@@ -524,11 +524,11 @@ ${slackChannelSupportMessage}`
       id: CODES.WordPressFilters,
       context: {
         sourceMessage: formatLogMessage(
-          `${errorContext}\n\n${e.message}\n\nThere are some WordPress PHP filters in your site which are adding additional output to the GraphQL response.\nThese may have been added via custom code or via a plugin.\n\nYou will need to debug this and remove these filters during GraphQL requests using something like the following:
+          `${errorContext}\n\n${e.message}\n\nEither WPGraphQL is not active or there are some WordPress PHP filters in your site which are adding additional output to the GraphQL response.\nThese may have been added via custom code or via a plugin.\n\nYou will need to debug this and remove these filters during GraphQL requests using something like the following:
 
 if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
-  return exampleReturnEarlyInFilter( $data );
-}\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object\n\n${slackChannelSupportMessage}`
+  return;
+}\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object`
         ),
       },
     })
