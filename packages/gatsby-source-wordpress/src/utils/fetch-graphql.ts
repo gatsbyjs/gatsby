@@ -316,14 +316,15 @@ const handleFetchErrors = async ({
       id: CODES.WordPress500ishError,
       context: {
         sourceMessage: formatLogMessage(
-          [
-            `Your wordpress server at ${bold(url)} appears to be overloaded.`,
-            `\nTry reducing the ${bold(
-              `requestConcurrency`
-            )} for content updates or the ${bold(
-              `previewRequestConcurrency`
-            )} for previews:`,
-            `\n{
+          `Your wordpress server at ${bold(url)} appears to be overloaded.
+
+Try reducing the ${bold(
+            `requestConcurrency`
+          )} for content updates or the ${bold(
+            `previewRequestConcurrency`
+          )} for previews:
+
+{
   resolve: 'gatsby-source-wordpress',
   options: {
     schema: {
@@ -331,11 +332,12 @@ const handleFetchErrors = async ({
       previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
     }
   },
-}`,
-            `\nThe ${bold(
-              `GATSBY_CONCURRENT_REQUEST`
-            )} environment variable is no longer used to control concurrency.\nIf you were previously using that, you'll need to use the settings above instead.`,
-          ].join(`\n`),
+}
+
+The ${bold(
+            `GATSBY_CONCURRENT_REQUEST`
+          )} environment variable is no longer used to control concurrency.
+If you were previously using that, you'll need to use the settings above instead.`,
           { useVerboseStyle: true }
         ),
       },
