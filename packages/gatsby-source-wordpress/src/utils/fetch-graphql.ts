@@ -457,11 +457,12 @@ ${slackChannelSupportMessage}`
     if (!missingCredentials) {
       requestOptions.auth = htaccessCredentials
     }
+
     try {
       const urlWithoutTrailingSlash = url.replace(/\/$/, ``)
 
       const response: AxiosResponse = await getHttp(limit).post(
-        [urlWithoutTrailingSlash, `/graphql`].join(``),
+        `${urlWithoutTrailingSlash}/graphql`,
         { query, variables },
         requestOptions
       )
