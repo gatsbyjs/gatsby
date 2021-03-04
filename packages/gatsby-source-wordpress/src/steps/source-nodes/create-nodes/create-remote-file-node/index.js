@@ -21,7 +21,7 @@ let bar
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
 
-/** ******************
+/********************
  * Type Definitions *
  ********************/
 
@@ -61,7 +61,7 @@ const STALL_TIMEOUT = 30000
 const CONNECTION_RETRY_LIMIT = 5
 const CONNECTION_TIMEOUT = 30000
 
-/** ******************
+/********************
  * Queue Management *
  ********************/
 
@@ -134,7 +134,7 @@ async function pushToQueue(task, cb) {
   }
 }
 
-/** ****************
+/******************
  * Core Functions *
  ******************/
 
@@ -350,7 +350,7 @@ const pushTask = task =>
       })
   })
 
-/** *************
+/***************
  * Entry Point *
  ***************/
 

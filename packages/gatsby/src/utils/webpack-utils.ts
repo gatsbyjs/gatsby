@@ -784,7 +784,7 @@ export const createWebpackUtils = (
       ],
       ...eslintConfig(schema, jsxRuntimeExists),
     }
-    //@ts-ignore
+    // @ts-ignore
     return new ESLintPlugin(options)
   }
 
@@ -798,7 +798,7 @@ export const createWebpackUtils = (
       ],
       ...eslintRequiredConfig,
     }
-    //@ts-ignore
+    // @ts-ignore
     return new ESLintPlugin(options)
   }
 

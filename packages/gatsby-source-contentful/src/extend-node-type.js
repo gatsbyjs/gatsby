@@ -317,7 +317,8 @@ const resolveFixed = (image, options) => {
     })
     .join(`,\n`)
 
-  let pickedHeight, pickedWidth
+  let pickedHeight
+  let pickedWidth
   if (options.height) {
     pickedHeight = options.height
     pickedWidth = options.height * desiredAspectRatio
@@ -449,8 +450,8 @@ const resolveResize = (image, options) => {
     }
   }
 
-  let pickedHeight = options.height,
-    pickedWidth = options.width
+  let pickedHeight = options.height
+  let pickedWidth = options.width
 
   if (pickedWidth === undefined) {
     pickedWidth = pickedHeight * aspectRatio

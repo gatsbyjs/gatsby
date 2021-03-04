@@ -41,7 +41,7 @@ exports.onRenderBody = (
       matchedPages.forEach(p => {
         if (p && p.componentChunkName) {
           const fetchKey = `assetsByChunkName[${p.componentChunkName}]`
-          let chunks = _.get(stats, fetchKey)
+          const chunks = _.get(stats, fetchKey)
           componentUrls = [...componentUrls, ...chunks]
         }
       })

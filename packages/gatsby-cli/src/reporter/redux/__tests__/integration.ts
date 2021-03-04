@@ -4,7 +4,8 @@ import { ISetStatus } from "../types"
 jest.useFakeTimers()
 
 describe(`integration`, () => {
-  let dispatchSpy, internalActions
+  let dispatchSpy
+  let internalActions
 
   const getDispatchedSetStatusActions = (): Array<ISetStatus> =>
     dispatchSpy.mock.calls
