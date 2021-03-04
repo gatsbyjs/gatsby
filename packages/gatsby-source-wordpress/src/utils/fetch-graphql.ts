@@ -334,7 +334,9 @@ const handleFetchErrors = async ({
 
   if (
     e.message.includes(`Request failed with status code 50`) &&
-    [`502`, `503`, `504`].includes(e.message)
+    (e.message.includes(`502`) ||
+      e.message.includes(`503`) ||
+      e.message.includes(`504`))
   ) {
     if (`message` in e) {
       console.error(formatLogMessage(new Error(e.message).stack))
