@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.1...gatsby@3.0.2) (2021-03-04)
+
+### Bug Fixes
+
+- **gatsby:** handle case of removing trailing slash in inc builds ([#29953](https://github.com/gatsbyjs/gatsby/issues/29953)) ([#30001](https://github.com/gatsbyjs/gatsby/issues/30001)) ([d050050](https://github.com/gatsbyjs/gatsby/commit/d050050b95cea729f20c990069f2917f2a9e927e))
+
 ## [3.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0...gatsby@3.0.1) (2021-03-03)
 
 ### Bug Fixes

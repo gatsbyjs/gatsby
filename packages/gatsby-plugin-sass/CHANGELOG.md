@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0...gatsby-plugin-sass@4.0.1) (2021-03-04)
+
+### Bug Fixes
+
+- **gatsby-plugin-sass:** Change `modules` option around ([#29986](https://github.com/gatsbyjs/gatsby/issues/29986)) ([#30002](https://github.com/gatsbyjs/gatsby/issues/30002)) ([27db8e7](https://github.com/gatsbyjs/gatsby/commit/27db8e7c4d02bd13b86257092701d6e62c34272a))
+
 # [4.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sass@4.0.0-v3rc.2...gatsby-plugin-sass@4.0.0) (2021-03-02)
 
 **Note:** Version bump only for package gatsby-plugin-sass
