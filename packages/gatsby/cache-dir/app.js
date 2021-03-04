@@ -117,14 +117,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const rootElement = document.getElementById(`___gatsby`)
 
+  const focusEl = document.getElementById(`gatsby-focus-wrapper`)
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
     // Client only pages have any empty body so we just do a normal
     // render to avoid React complaining about hydration mis-matches.
-    document.getElementById(`___gatsby`).children.length === 0
-      ? ReactDOM.render
-      : ReactDOM.hydrate
+    focusEl && focusEl.children.length > 0 ? ReactDOM.hydrate : ReactDOM.render
   )[0]
 
   let dismissLoadingIndicator
