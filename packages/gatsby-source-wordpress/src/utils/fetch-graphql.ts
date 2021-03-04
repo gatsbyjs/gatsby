@@ -253,18 +253,20 @@ const getLowerRequestConcurrencyOptionMessage = () => {
   const {
     requestConcurrency,
     previewRequestConcurrency,
+    perPage,
   } = store.getState().gatsbyApi.pluginOptions.schema
 
   return `Try reducing the ${bold(
     `requestConcurrency`
   )} for content updates or the ${bold(
     `previewRequestConcurrency`
-  )} for previews:
+  )} for previews, and/or reducing the schema.perPage option:
 
 {
   resolve: 'gatsby-source-wordpress',
   options: {
     schema: {
+      perPage: 20, // currently set to ${perPage}
       requestConcurrency: 5, // currently set to ${requestConcurrency}
       previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
     }
@@ -349,7 +351,9 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
       id: CODES.WordPress500ishError,
       context: {
         sourceMessage: formatLogMessage(
-          `Your WordPress server at is either overloaded or encountered a PHP error.
+          `${e.message}
+
+Your WordPress server at is either overloaded or encountered a PHP error.
 
 ${errorContext}
 
