@@ -85,7 +85,6 @@ describe(`fetchGraphQL helper`, () => {
     await fetchGraphQL({
       query: `wpgraphql-deactivated`,
       url: `fake url`,
-      isFirstRequest: true,
     })
 
     expect(
