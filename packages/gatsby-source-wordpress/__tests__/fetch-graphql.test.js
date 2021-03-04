@@ -1,4 +1,3 @@
-// const consoleWarnSpy = jest.spyOn(console, `warn`).mockImplementation()
 import fetchGraphQL, { moduleHelpers } from "../dist/utils/fetch-graphql"
 import store from "../dist/store"
 
