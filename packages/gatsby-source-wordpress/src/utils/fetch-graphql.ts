@@ -353,7 +353,7 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
         sourceMessage: formatLogMessage(
           `${e.message}
 
-Your WordPress server at is either overloaded or encountered a PHP error.
+Your WordPress server is either overloaded or encountered a PHP error.
 
 ${errorContext}
 
