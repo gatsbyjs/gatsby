@@ -141,7 +141,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-/** *
+/***
  * Localization algorithm
  *
  * 1. Make list of all resolvable IDs worrying just about the default ids not

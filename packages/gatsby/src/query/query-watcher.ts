@@ -1,4 +1,4 @@
-/** *
+/***
  * Jobs of this module
  * - Maintain the list of components in the Redux store. So monitor new components
  *   and add/remove components.

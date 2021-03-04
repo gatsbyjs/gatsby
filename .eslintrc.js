@@ -76,7 +76,11 @@ module.exports = {
     "prefer-promise-reject-errors": `warn`,
     "no-prototype-builtins": `warn`,
     "guard-for-in": `warn`,
-    "spaced-comment": [`error`, `always`, { markers: [`/`] }],
+    "spaced-comment": [
+      `error`,
+      `always`,
+      { markers: [`/`], exceptions: [`*`, `+`] },
+    ],
     camelcase: [
       `error`,
       {
