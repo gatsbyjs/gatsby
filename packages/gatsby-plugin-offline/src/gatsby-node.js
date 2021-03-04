@@ -1,12 +1,13 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
-const fs = require(`fs`)
-const workboxBuild = require(`workbox-build`)
+/* eslint-disable prefer-const */
+let fs = require(`fs`)
+let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
 
-const getResourcesFromHTML = require(`./get-resources-from-html`)
+let getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.onPreBootstrap = ({ cache }) => {
   const appShellSourcePath = path.join(__dirname, `app-shell.js`)
