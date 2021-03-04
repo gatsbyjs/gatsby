@@ -249,6 +249,29 @@ const genericError = ({ url }: { url: string }): string =>
 
 const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
 
+const getLowerRequestConcurrencyOptionMessage = () => {
+  const {
+    requestConcurrency,
+    previewRequestConcurrency,
+  } = store.getState().gatsbyApi.pluginOptions.schema
+
+  return `Try reducing the ${bold(
+    `requestConcurrency`
+  )} for content updates or the ${bold(
+    `previewRequestConcurrency`
+  )} for previews:
+
+{
+  resolve: 'gatsby-source-wordpress',
+  options: {
+    schema: {
+      requestConcurrency: 5, // currently set to ${requestConcurrency}
+      previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
+    }
+  },
+}`
+}
+
 interface IHandleFetchErrors {
   e: Error
   reporter: GatsbyReporter
@@ -306,11 +329,6 @@ const handleFetchErrors = async ({
     e.message.includes(`Request failed with status code 50`) &&
     [`502`, `503`, `504`].includes(e.message)
   ) {
-    const {
-      requestConcurrency,
-      previewRequestConcurrency,
-    } = store.getState().gatsbyApi.pluginOptions.schema
-
     if (`message` in e) {
       console.error(formatLogMessage(new Error(e.message).stack))
     }
@@ -319,28 +337,27 @@ const handleFetchErrors = async ({
       id: CODES.WordPress500ishError,
       context: {
         sourceMessage: formatLogMessage(
-          `Your wordpress server at ${bold(url)} appears to be overloaded.
+          `Your WordPress server at ${bold(url)} appears to be overloaded.
 
-Try reducing the ${bold(
-            `requestConcurrency`
-          )} for content updates or the ${bold(
-            `previewRequestConcurrency`
-          )} for previews:
+${getLowerRequestConcurrencyOptionMessage()}`,
+          { useVerboseStyle: true }
+        ),
+      },
+    })
+  } else if (e.message.includes(`Request failed with status code 500`)) {
+    reporter.panic({
+      id: CODES.WordPress500ishError,
+      context: {
+        sourceMessage: formatLogMessage(
+          `Your WordPress server at is either overloaded or encountered a PHP error.
 
-{
-  resolve: 'gatsby-source-wordpress',
-  options: {
-    schema: {
-      requestConcurrency: 5, // currently set to ${requestConcurrency}
-      previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
-    }
-  },
-}
+${errorContext}
 
-The ${bold(
-            `GATSBY_CONCURRENT_REQUEST`
-          )} environment variable is no longer used to control concurrency.
-If you were previously using that, you'll need to use the settings above instead.`,
+Enable WP_DEBUG, WP_DEBUG_LOG, and WPGRAPHQL_DEBUG, run another build and then check your WordPress instance's debug.log file.
+
+If you don't see any errors in debug.log:
+
+${getLowerRequestConcurrencyOptionMessage()}`,
           { useVerboseStyle: true }
         ),
       },
