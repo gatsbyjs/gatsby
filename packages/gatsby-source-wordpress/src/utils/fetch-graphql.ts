@@ -241,7 +241,7 @@ const handleGraphQLErrors = async ({
 
 const ensureStatementsAreTrue = `${bold(
   `Please ensure the following statements are true`
-)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
+)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`
 
 // @todo add a link to docs page for debugging
 const genericError = ({ url }: { url: string }): string =>
