@@ -185,6 +185,7 @@ export default class FFMPEG {
     { getCache, createNode, createNodeId }
   ) => {
     const { type } = video.internal
+    let contentDigest = video.internal.contentDigest
 
     let fileType = null
     if (type === `File`) {
@@ -207,8 +208,14 @@ export default class FFMPEG {
     }
 
     if (type === `ContentfulAsset`) {
+      contentDigest = createContentDigest([
+        video.contentful_id,
+        video.file.url,
+        video.file.details.size,
+      ])
       path = await cacheContentfulVideo({
         video,
+        contentDigest,
         cacheDir: this.cacheDirOriginal,
       })
     }
@@ -241,7 +248,7 @@ export default class FFMPEG {
         })
         .screenshots({
           timestamps,
-          filename: `${name}-%ss.png`,
+          filename: `${contentDigest}-%ss.png`,
           folder: tmpDir,
           size: `${width}x?`,
         })
