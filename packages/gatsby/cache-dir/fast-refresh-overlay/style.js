@@ -192,6 +192,8 @@ export const Style = () => (
         }
 
         [data-gatsby-overlay="header__open-in-editor"] {
+          --ring-opacity: 0.9;
+          --ring-color: rgba(54, 32, 102, var(--ring-opacity));
           align-items: center;
           border-radius: var(--radii);
           justify-content: center;
@@ -407,7 +409,8 @@ export const Style = () => (
             --ring-color: rgba(217, 186, 232, var(--ring-opacity));
           }
 
-          [data-gatsby-overlay="header__close-button"] {
+          [data-gatsby-overlay="header__close-button"],
+          [data-gatsby-overlay="header__open-in-editor"] {
             --ring-color: rgba(177, 122, 204, var(--ring-opacity));
           }
         }
