@@ -1,7 +1,7 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate, Location, BaseContext } from "@reach/router"
+import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import { StaticQueryContext } from "gatsby"
