@@ -25,13 +25,20 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends BaseLoader {
   constructor(asyncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      asyncRequires.components[chunkName]
-        ? asyncRequires.components[chunkName]()
-            .then(preferDefault)
-            // loader will handle the case when component is null
-            .catch(() => null)
-        : Promise.resolve()
+    const loadComponent = chunkName => {
+      if (!asyncRequires.components[chunkName]) {
+        throw new Error(
+          `We couldn't find the correct component chunk with the name "${chunkName}"`
+        )
+      }
+
+      return (
+        asyncRequires.components[chunkName]()
+          .then(preferDefault)
+          // loader will handle the case when component is error
+          .catch(err => err)
+      )
+    }
     super(loadComponent, matchPaths)
 
     const socket = getSocket()
