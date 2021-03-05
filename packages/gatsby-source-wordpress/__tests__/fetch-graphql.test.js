@@ -1,3 +1,4 @@
+import chalk from "chalk"
 import fetchGraphQL, { moduleHelpers } from "../dist/utils/fetch-graphql"
 import store from "../dist/store"
 
@@ -74,7 +75,9 @@ describe(`fetchGraphQL helper`, () => {
       url: `fake url`,
     })
 
-    const errorMessage = `Your WordPress server at \x1B[1mfake url\x1B[22m appears to be overloaded.`
+    const errorMessage = `Your WordPress server at ${chalk.bold(
+      `fake url`
+    )} appears to be overloaded.`
 
     expect(panicMessages[1].includes(errorMessage)).toBeTruthy()
     expect(panicMessages[2].includes(errorMessage)).toBeTruthy()
