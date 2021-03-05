@@ -95,6 +95,12 @@ const runSuiteForPage = (label, pagePath) => {
         filter: `page-data`,
       })
     })
+    describe(`Missing "${label}" static query results`, () => {
+      runBlockedScenario(`blockAssetsForPage`, {
+        pagePath,
+        filter: `static-query-data`,
+      })
+    })
     describe(`Missing "${label}" page page-template asset`, () => {
       runBlockedScenario(`blockAssetsForPage`, {
         pagePath,

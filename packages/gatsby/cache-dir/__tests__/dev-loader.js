@@ -372,7 +372,7 @@ describe(`Dev loader`, () => {
 
     it(`should return an error when component cannot be loaded`, async () => {
       const syncRequires = createSyncRequires({
-        chunk: false,
+        chunk: Promise.resolve(false),
       })
       const devLoader = new DevLoader(syncRequires, [])
       const pageData = {

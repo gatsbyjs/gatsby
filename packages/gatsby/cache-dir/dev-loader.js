@@ -23,8 +23,15 @@ function mergePageEntry(cachedPage, newPageData) {
 
 class DevLoader extends BaseLoader {
   constructor(syncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      Promise.resolve(syncRequires.components[chunkName])
+    const loadComponent = chunkName => {
+      if (!syncRequires.components[chunkName]) {
+        throw new Error(
+          `We couldn't find the correct component chunk with the name "${chunkName}"`
+        )
+      }
+
+      return Promise.resolve(syncRequires.components[chunkName])
+    }
 
     super(loadComponent, matchPaths)
 

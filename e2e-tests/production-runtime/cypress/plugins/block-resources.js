@@ -38,7 +38,7 @@ const blockAssetsForChunk = ({ chunk, filter }) => {
   return null
 }
 
-const restorePageData = hiddenPath => {
+const restorePageDataOrStaticQuery = hiddenPath => {
   if (path.basename(hiddenPath).charAt(0) !== `_`) {
     throw new Error(`hiddenPath should have _ prefix`)
   }
@@ -62,11 +62,22 @@ const getHiddenPageDataPath = pagePath => {
 const blockPageData = pagePath =>
   moveAsset(getPageDataPath(pagePath), getHiddenPageDataPath(pagePath))
 
+const getStaticQueryPath = hash => {
+  return path.join(publicDir, `page-data`, `sq`, `d`, `${hash}.json`)
+}
+
+const getHiddenStaticQueryPath = hash => {
+  return path.join(publicDir, `page-data`, `sq`, `d`, `_${hash}.json`)
+}
+
+const blockStaticQueryData = hash =>
+  moveAsset(getStaticQueryPath(hash), getHiddenStaticQueryPath(hash))
+
 const filterAssets = (assetsForPath, filter) =>
   assetsForPath.filter(asset => {
     if (filter === `all`) {
       return true
-    } else if (filter === `page-data`) {
+    } else if (filter === `page-data` || filter === "static-query-data") {
       return false
     }
 
@@ -93,6 +104,10 @@ const blockAssetsForPage = ({ pagePath, filter }) => {
     blockPageData(pagePath)
   }
 
+  if (filter === `all` || filter === `static-query-data`) {
+    blockStaticQueryData(pageData.staticQueryHashes[0])
+  }
+
   console.log(`Blocked assets for path "${pagePath}" [${filter}]`)
   return null
 }
@@ -105,9 +120,21 @@ const restore = () => {
 
   allAssets.forEach(restoreAsset)
 
-  const globPattern = path.join(publicDir, `/page-data/**`, `_page-data.json`)
-  const hiddenPageDatas = glob.sync(globPattern)
-  hiddenPageDatas.forEach(restorePageData)
+  const pageDataGlobPattern = path.join(
+    publicDir,
+    `/page-data/**`,
+    `_page-data.json`
+  )
+  const hiddenPageDatas = glob.sync(pageDataGlobPattern)
+  hiddenPageDatas.forEach(restorePageDataOrStaticQuery)
+
+  const staticQueryGlobPattern = path.join(
+    publicDir,
+    `/page-data/sq/d`,
+    `_*.json`
+  )
+  const hiddenStaticQueries = glob.sync(staticQueryGlobPattern)
+  hiddenStaticQueries.forEach(restorePageDataOrStaticQuery)
 
   console.log(`Restored resources`)
   return null
