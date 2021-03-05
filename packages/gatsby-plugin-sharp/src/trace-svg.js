@@ -117,40 +117,37 @@ exports.notMemoizedtraceSVG = async ({ file, args, fileArgs, reporter }) => {
     )
   )
 
-  try {
-    await exports.memoizedPrepareTraceSVGInputFile({
-      tmpFilePath,
-      file,
-      options,
-      reporter,
-    })
+  await exports.memoizedPrepareTraceSVGInputFile({
+    tmpFilePath,
+    file,
+    options,
+    reporter,
+  })
 
-    const svgToMiniDataURI = require(`mini-svg-data-uri`)
-    const potrace = require(`potrace`)
-    const trace = promisify(potrace.trace)
+  const svgToMiniDataURI = require(`mini-svg-data-uri`)
+  const potrace = require(`potrace`)
+  const trace = promisify(potrace.trace)
 
-    const defaultArgs = {
-      color: `lightgray`,
-      optTolerance: 0.4,
-      turdSize: 100,
-      turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
-    }
-
-    const optionsSVG = _.defaults({}, args, defaultArgs)
-
-    // `srcset` attribute rejects URIs with literal spaces
-    const encodeSpaces = str => str.replace(/ /gi, `%20`)
-
-    return trace(tmpFilePath, optionsSVG)
-      .then(optimize)
-      .then(svgToMiniDataURI)
-      .then(encodeSpaces)
-  } catch (e) {
-    throw e
+  const defaultArgs = {
+    color: `lightgray`,
+    optTolerance: 0.4,
+    turdSize: 100,
+    turnPolicy: potrace.Potrace.TURNPOLICY_MAJORITY,
   }
+
+  const optionsSVG = _.defaults({}, args, defaultArgs)
+
+  // `srcset` attribute rejects URIs with literal spaces
+  const encodeSpaces = str => str.replace(/ /gi, `%20`)
+
+  return trace(tmpFilePath, optionsSVG)
+    .then(optimize)
+    .then(svgToMiniDataURI)
+    .then(encodeSpaces)
 }
 
-let memoizedPrepareTraceSVGInputFile, memoizedTraceSVG
+let memoizedPrepareTraceSVGInputFile
+let memoizedTraceSVG
 const createMemoizedFunctions = () => {
   exports.memoizedPrepareTraceSVGInputFile = memoizedPrepareTraceSVGInputFile = _.memoize(
     exports.notMemoizedPrepareTraceSVGInputFile,

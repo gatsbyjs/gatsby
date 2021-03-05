@@ -169,7 +169,7 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fluid`, () => {
-    let actions = {}
+    const actions = {}
     beforeEach(() => {
       actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve())
       setActions(actions)
@@ -412,7 +412,7 @@ describe(`gatsby-plugin-sharp`, () => {
   })
 
   describe(`fixed`, () => {
-    let actions = {}
+    const actions = {}
     beforeEach(() => {
       actions.createJobV2 = jest.fn().mockReturnValue(Promise.resolve())
       setActions(actions)
@@ -684,12 +684,12 @@ describe(`gatsby-plugin-sharp`, () => {
     }
 
     it(`fixed`, async () => {
-      let result = await fixed({ file, args })
+      const result = await fixed({ file, args })
       expect(result).toMatchSnapshot()
     })
 
     it(`fluid`, async () => {
-      let result = await fluid({ file, args })
+      const result = await fluid({ file, args })
       expect(result).toMatchSnapshot()
     })
   })

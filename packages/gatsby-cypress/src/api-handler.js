@@ -1,3 +1,4 @@
+/* eslint-disable @babel/no-invalid-this */
 let resolve = null
 let awaitingAPI = null
 
