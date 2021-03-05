@@ -1,7 +1,7 @@
 const React = require(`react`)
 const path = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
+const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
 const { merge, flattenDeep, replace } = require(`lodash`)
 const { StaticQueryContext } = require(`gatsby`)
 const fs = require(`fs`)
