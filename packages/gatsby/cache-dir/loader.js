@@ -556,7 +556,7 @@ export const publicLoader = {
   getResourceURLsForPathname: rawPath =>
     instance.getResourceURLsForPathname(rawPath),
   loadPage: rawPath => instance.loadPage(rawPath),
-  // TODO add deprecation to v4 so people use withErrorDetails and than we can remove in v5 and change default behviour
+  // TODO add deprecation to v4 so people use withErrorDetails and then we can remove in v5 and change default behaviour
   loadPageSync: (rawPath, options = {}) =>
     instance.loadPageSync(rawPath, options),
   prefetch: rawPath => instance.prefetch(rawPath),
