@@ -348,12 +348,20 @@ export class BaseLoader {
     return inFlightPromise
   }
 
-  // returns undefined if loading page ran into errors
+  // returns undefined if the page does not exists in cache
   loadPageSync(rawPath) {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
-      const pageData = this.pageDb.get(pagePath).payload
-      return pageData
+      const pageData = this.pageDb.get(pagePath)
+
+      if (pageData.payload) {
+        return pageData.payload
+      }
+
+      return {
+        error: pageData.error,
+        status: pageData.status,
+      }
     }
     return undefined
   }
