@@ -45,7 +45,7 @@ const createFSMachine = (
   // After 'ready', we handle the 'add' event without putting it into a queue.
   let pathQueue = []
   const flushPathQueue = () => {
-    let queue = pathQueue.slice()
+    const queue = pathQueue.slice()
     pathQueue = null
     return Promise.all(
       // eslint-disable-next-line consistent-return

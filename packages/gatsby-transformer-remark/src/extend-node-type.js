@@ -118,7 +118,7 @@ module.exports = function remarkExtendNodeType(
     for (const plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins(
+        for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
         )) {
           if (_.isArray(parserPlugin)) {
@@ -302,7 +302,7 @@ module.exports = function remarkExtendNodeType(
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      const appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
 
       const tocKey = tableOfContentsCacheKey(markdownNode, appliedTocOptions)
 
@@ -651,7 +651,7 @@ module.exports = function remarkExtendNodeType(
       wordCount: {
         type: `MarkdownWordCount`,
         resolve(markdownNode) {
-          let counts = {}
+          const counts = {}
 
           unified()
             .use(parse)

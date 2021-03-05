@@ -163,6 +163,17 @@ export function htmlReducer(
       return state
     }
 
+    case `HTML_TRACKED_PAGES_CLEANUP`: {
+      // this is to cleanup variants of page paths that don't result in artifacts deletion
+      // but page path should be pruned for cases like page changing path from "/foo" to "/foo/" (or vice versa)
+      // where produced artifacts filenames are the same and we don't want to delete them after building,
+      // but we still want to cleanup state here.
+      for (const path of action.payload) {
+        state.trackedHtmlFiles.delete(path)
+      }
+      return state
+    }
+
     case `HTML_GENERATED`: {
       for (const path of action.payload) {
         const htmlFile = state.trackedHtmlFiles.get(path)

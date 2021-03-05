@@ -66,7 +66,7 @@ async function genMDX(
     }
   }
 
-  let results = {
+  const results = {
     mdast: undefined,
     hast: undefined,
     html: undefined,
@@ -128,7 +128,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
   )
 
   debug(`running mdx`)
-  let code = await mdx(content, {
+  const code = await mdx(content, {
     filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(

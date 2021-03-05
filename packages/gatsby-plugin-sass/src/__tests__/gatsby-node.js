@@ -37,6 +37,9 @@ describe(`gatsby-plugin-sass`, () => {
       "css-loader options": {
         cssLoaderOptions: {
           camelCase: false,
+          modules: {
+            exportLocalsConvention: `camelCaseOnly`,
+          },
         },
       },
       "sass rule test options": {
@@ -49,7 +52,7 @@ describe(`gatsby-plugin-sass`, () => {
   }
 
   tests.stages.forEach(stage => {
-    for (let label in tests.options) {
+    for (const label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {
         onCreateWebpackConfig({ actions, loaders, stage }, options)
