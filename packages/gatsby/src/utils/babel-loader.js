@@ -4,6 +4,7 @@ const {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
+  addRequiredPresetOptions,
 } = require(`./babel-loader-helpers`)
 const { getBrowsersList } = require(`./browserslist`)
 
@@ -76,6 +77,9 @@ module.exports = babelLoader.custom(babel => {
           plugins: [...options.plugins, ...requiredPlugins],
           presets: [...options.presets, ...requiredPresets],
         }
+        // User-defined preset likely contains `babel-preset-gatsby`
+        // Make sure to pass required dynamic options (e.g. `stage` to it):
+        addRequiredPresetOptions(babel, options.presets, customOptions)
       }
 
       // Merge in presets/plugins added from gatsby plugins.
