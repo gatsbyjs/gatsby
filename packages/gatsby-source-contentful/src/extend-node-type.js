@@ -664,9 +664,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-let warnedForBeta = false
-
-exports.extendNodeType = ({ type, store, reporter }) => {
+exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -769,14 +767,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
-    if (!warnedForBeta) {
-      reporter.warn(
-        stripIndent`
-      Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
-      )
-      warnedForBeta = true
-    }
-
     const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
