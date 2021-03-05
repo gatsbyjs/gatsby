@@ -307,8 +307,11 @@ export const sourcePreviews = async (
   pluginOptions: IPluginOptions
 ): Promise<void> => {
   const {
-    debug: { preview: inPreviewDebugMode },
+    debug: { preview: inPreviewDebugModeOption },
   } = getPluginOptions()
+
+  const inPreviewDebugMode =
+    inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG
 
   if (inPreviewDebugMode) {
     reporter.info(`Sourcing previews for the following webhook:`)
