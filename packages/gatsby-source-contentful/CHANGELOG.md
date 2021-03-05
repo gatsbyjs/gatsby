@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0...gatsby-source-contentful@5.0.1) (2021-03-05)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Remove image beta warning ([#29980](https://github.com/gatsbyjs/gatsby/issues/29980)) ([#30048](https://github.com/gatsbyjs/gatsby/issues/30048)) ([ab41976](https://github.com/gatsbyjs/gatsby/commit/ab419769691cf4922993bf50074c7ff9534e7f59))
+
 # [5.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-v3rc.2...gatsby-source-contentful@5.0.0) (2021-03-02)
 
 **Note:** Version bump only for package gatsby-source-contentful

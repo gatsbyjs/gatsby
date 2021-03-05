@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.2...gatsby@3.0.3) (2021-03-05)
+
+### Bug Fixes
+
+- **gatsby:** always pass `stage` option to `babel-preset-gatsby` ([#30047](https://github.com/gatsbyjs/gatsby/issues/30047)) ([#30051](https://github.com/gatsbyjs/gatsby/issues/30051)) ([ec57576](https://github.com/gatsbyjs/gatsby/commit/ec57576e9a30bd5086fccb36ac32e5314d27cb34))
+
 ## [3.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.1...gatsby@3.0.2) (2021-03-04)
 
 ### Bug Fixes
