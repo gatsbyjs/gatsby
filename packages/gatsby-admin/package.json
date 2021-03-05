@@ -25,7 +25,7 @@
     "gatsby-plugin-typescript": "^3.1.0-next.1",
     "gatsby-plugin-webfonts": "^1.1.4",
     "gatsby-source-graphql": "^3.1.0-next.1",
-    "lodash-es": "^4.17.20",
+    "lodash-es": "^4.17.21",
     "ncp": "^2.0.0",
     "nodemon": "^2.0.7",
     "normalize.css": "^8.0.1",

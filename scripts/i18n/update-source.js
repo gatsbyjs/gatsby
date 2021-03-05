@@ -4,7 +4,7 @@ const path = require(`path`)
 
 require(`dotenv`).config()
 
-let logger = log4js.getLogger(`update-source`)
+const logger = log4js.getLogger(`update-source`)
 logger.level = `info`
 
 const protocol = `https://`

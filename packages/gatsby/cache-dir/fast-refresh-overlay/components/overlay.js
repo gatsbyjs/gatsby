@@ -63,6 +63,7 @@ export function Overlay({ children }) {
         aria-labelledby="gatsby-overlay-labelledby"
         aria-describedby="gatsby-overlay-describedby"
         aria-modal="true"
+        dir="ltr"
       >
         {children}
       </div>

@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "github-slugger": "^1.3.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mdast-util-to-string": "^1.1.0",
     "unist-util-visit": "^1.4.1"
   },

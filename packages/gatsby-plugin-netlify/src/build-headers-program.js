@@ -93,7 +93,7 @@ function headersPath(pathPrefix, path) {
 }
 
 function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
-  let linksByPage = {}
+  const linksByPage = {}
 
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
   const hasAppData = existsSync(appDataPath)

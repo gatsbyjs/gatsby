@@ -146,7 +146,7 @@ async function queryResult(nodes, query) {
   })
   store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
-  let context = { path: `foo` }
+  const context = { path: `foo` }
   return graphql(schema, query, undefined, {
     ...context,
     nodeModel: new LocalNodeModel({
@@ -159,7 +159,7 @@ async function queryResult(nodes, query) {
 
 describe(`connection input fields`, () => {
   it(`returns list of distinct values in a field`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       `
         {
@@ -196,7 +196,7 @@ describe(`connection input fields`, () => {
   })
 
   it(`handles the group connection field`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       ` {
         allTest {
@@ -227,7 +227,7 @@ describe(`connection input fields`, () => {
   })
 
   it(`handles the nested group connection field`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       ` {
         allTest {
@@ -255,7 +255,7 @@ describe(`connection input fields`, () => {
   })
 
   it(`can query object arrays`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes(),
       `
         {

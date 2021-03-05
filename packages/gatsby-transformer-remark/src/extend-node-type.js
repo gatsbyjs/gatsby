@@ -6,7 +6,6 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const mdastToString = require(`mdast-util-to-string`)
-const Promise = require(`bluebird`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -116,10 +115,10 @@ module.exports = function remarkExtendNodeType(
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (let plugin of pluginOptions.plugins) {
+    for (const plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins(
+        for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
         )) {
           if (_.isArray(parserPlugin)) {
@@ -193,8 +192,8 @@ module.exports = function remarkExtendNodeType(
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      // Use a for loop to run remark plugins serially.
+      for (const plugin of pluginOptions.plugins) {
         const requiredPlugin = require(plugin.resolve)
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
@@ -204,7 +203,7 @@ module.exports = function remarkExtendNodeType(
           : undefined
 
         if (defaultFunction) {
-          return defaultFunction(
+          await defaultFunction(
             {
               markdownAST,
               markdownNode,
@@ -220,10 +219,8 @@ module.exports = function remarkExtendNodeType(
             },
             plugin.pluginOptions
           )
-        } else {
-          return Promise.resolve()
         }
-      })
+      }
 
       return markdownAST
     }
@@ -236,7 +233,7 @@ module.exports = function remarkExtendNodeType(
       // Execute the remark plugins that can mutate the node
       // before parsing its content
       //
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
+      // Use for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
         const requiredPlugin = require(plugin.resolve)
         if (typeof requiredPlugin.mutateSource === `function`) {
@@ -305,7 +302,7 @@ module.exports = function remarkExtendNodeType(
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      const appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
 
       const tocKey = tableOfContentsCacheKey(markdownNode, appliedTocOptions)
 
@@ -654,7 +651,7 @@ module.exports = function remarkExtendNodeType(
       wordCount: {
         type: `MarkdownWordCount`,
         resolve(markdownNode) {
-          let counts = {}
+          const counts = {}
 
           unified()
             .use(parse)

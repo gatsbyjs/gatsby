@@ -1,27 +1,5 @@
-Cypress.on(`uncaught:exception`, (err, runnable) => {
-  // returning false here prevents Cypress from
-  // failing the test
-  console.log(err)
-  return false
-})
-
 const waitForAPIOptions = {
   timeout: 10000,
-}
-
-function assertOnNavigate(
-  page = null,
-  locationAssert,
-  shouldLocationAssert,
-  assertShouldBe
-) {
-  if (page) {
-    cy.getTestElement(page).click()
-  }
-  cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-    .location(`pathname`)
-    .should(locationAssert, shouldLocationAssert)
-  cy.getTestElement(`dom-marker`).contains(assertShouldBe)
 }
 
 function runTests(testNameSuffix) {
@@ -63,11 +41,11 @@ function runTests(testNameSuffix) {
   })
 }
 
-const runBlockedScenario = args => {
+const runBlockedScenario = ({ filter, pagePath }) => {
   beforeEach(() => {
     cy.task("getAssetsForPage", {
-      pagePath: args.pagePath,
-      filter: args.filter,
+      pagePath,
+      filter,
     }).then(urls => {
       for (const url of urls) {
         cy.intercept(url, {
@@ -82,17 +60,14 @@ const runBlockedScenario = args => {
   afterEach(() => {
     // check if assets are actually stubbed
     cy.task("getAssetsForPage", {
-      pagePath: args.pagePath,
-      filter: args.filter,
+      pagePath,
+      filter,
     }).then(urls => {
       expect(Object.keys(cy.state("routes")).length).to.equal(urls.length)
     })
   })
 
-  runTests(`Blocked "${args.filter}" for "${args.pagePath}"`, {
-    ...args,
-    task: "getAssetsForPage",
-  })
+  runTests(`Blocked "${filter}" for "${pagePath}"`)
 }
 
 const runSuiteForPage = (label, pagePath) => {
@@ -101,6 +76,12 @@ const runSuiteForPage = (label, pagePath) => {
       runBlockedScenario({
         pagePath,
         filter: `page-data`,
+      })
+    })
+    describe(`Missing "${label}" static query results`, () => {
+      runBlockedScenario({
+        pagePath,
+        filter: `static-query-data`,
       })
     })
     describe(`Missing "${label}" page page-template asset`, () => {
