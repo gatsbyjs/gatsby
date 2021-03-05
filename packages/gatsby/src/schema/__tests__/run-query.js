@@ -2376,7 +2376,7 @@ describe(`collection fields`, () => {
       },
     })
 
-    // 0 doesnt have it, 1 has it as an object, 2 has it as null
+    // 0 doesn't have it, 1 has it as an object, 2 has it as null
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`0`)
@@ -2393,7 +2393,7 @@ describe(`collection fields`, () => {
       },
     })
 
-    // 0 doesnt have it, 1 has it as an object, 2 has it as null
+    // 0 doesn't have it, 1 has it as an object, 2 has it as null
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`1`)

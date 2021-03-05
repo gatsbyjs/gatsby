@@ -41,7 +41,7 @@ If adding this manually to your project, the file needs to contain a few require
 image: node:latest
 
 # This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+# https://docs.gitlab.com/ce/ci/yaml/README.html#cache
 cache:
   paths:
     - node_modules/
