@@ -135,6 +135,20 @@ describe(`plugin-options-form`, () => {
           },
         ],
       },
+      {
+        message: `Configure the Strapi plugin.\nSee \u001b[94mhttps://www.gatsbyjs.com/plugins/gatsby-source-strapi/\u001b[39m for help.`,
+        multiple: true,
+        name: `gatsby-source-strapi`,
+        type: `forminput`,
+        choices: [
+          {
+            hint: `The Strapi API root URL`,
+            initial: undefined,
+            message: `apiURL`,
+            name: `apiURL`,
+          },
+        ],
+      },
     ])
   })
 })
