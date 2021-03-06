@@ -23,7 +23,7 @@
   </a>
 </p>
 
-# gatsby-source-wordpress v4
+# gatsby-source-wordpress v5
 
 Source data from WordPress in a scalable and efficient way with WPGraphQL 🚀
 
