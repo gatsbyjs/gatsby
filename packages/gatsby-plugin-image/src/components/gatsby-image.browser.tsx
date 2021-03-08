@@ -18,6 +18,7 @@ import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
 import { getSizer } from "./layout-wrapper"
+import { propTypes } from "./gatsby-image.server"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
@@ -215,4 +216,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
 ) {
   return <GatsbyImageHydrator {...props} />
 }
+
+GatsbyImage.propTypes = propTypes
+
 GatsbyImage.displayName = `GatsbyImage`
