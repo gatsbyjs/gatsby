@@ -66,7 +66,6 @@ export const Style = () => (
           height: 100%;
           width: 100%;
           backdrop-filter: blur(10px);
-          cursor: not-allowed;
           z-index: var(--z-index-backdrop);
         }
 
@@ -318,6 +317,7 @@ export const Style = () => (
           padding: 1em 0;
           cursor: pointer;
           appearance: none;
+          user-select: text;
         }
 
         [data-gatsby-overlay="accordion__item__heading"] svg {
