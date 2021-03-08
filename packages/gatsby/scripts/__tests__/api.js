@@ -25,9 +25,6 @@ it("generates the expected api output", done => {
           "onServiceWorkerUpdateFound": Object {},
           "onServiceWorkerUpdateReady": Object {},
           "registerServiceWorker": Object {},
-          "replaceComponentRenderer": Object {
-            "deprecated": true,
-          },
           "replaceHydrateFunction": Object {},
           "shouldUpdateScroll": Object {},
           "wrapPageElement": Object {},
@@ -42,7 +39,6 @@ it("generates the expected api output", done => {
           "createSchemaCustomization": Object {
             "version": "2.12.0",
           },
-          "generateSideEffects": Object {},
           "onCreateBabelConfig": Object {},
           "onCreateDevServer": Object {},
           "onCreateNode": Object {},

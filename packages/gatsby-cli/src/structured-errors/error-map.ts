@@ -49,8 +49,15 @@ const errors = {
     level: Level.ERROR,
   },
   "98124": {
-    text: (context): string =>
-      `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`,
+    text: (context): string => {
+      let message = `${context.stageLabel} failed\n\n${context.sourceMessage}\n\nIf you're trying to use a package make sure that '${context.packageName}' is installed. If you're trying to use a local file make sure that the path is correct.`
+
+      if (context.deprecationReason) {
+        message += `\n\n${context.deprecationReason}`
+      }
+
+      return message
+    },
     type: Type.WEBPACK,
     level: Level.ERROR,
     category: ErrorCategory.USER,

@@ -1,7 +1,7 @@
 import { syncStaticDir } from "../utils/get-static-dir"
 import reporter from "gatsby-cli/lib/reporter"
-import chalk from "chalk"
 import telemetry from "gatsby-telemetry"
+import { isTruthy } from "gatsby-core-utils"
 import express from "express"
 import inspector from "inspector"
 import { initTracer } from "../utils/tracer"
@@ -50,7 +50,7 @@ if (process.send) {
 onExit(() => {
   telemetry.trackCli(`DEVELOP_STOP`, {
     siteMeasurements: {
-      pagesCount: store.getState().pages.size,
+      totalPagesCount: store.getState().pages.size,
     },
   })
 })
@@ -66,6 +66,10 @@ interface IDevelopArgs extends IProgram {
 }
 
 const openDebuggerPort = (debugInfo: IDebugInfo): void => {
+  if (inspector.url() !== undefined) {
+    return // fixes #26708
+  }
+
   if (debugInfo.break) {
     inspector.open(debugInfo.port, undefined, true)
     // eslint-disable-next-line no-debugger
@@ -76,7 +80,7 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
-  reporter.setVerbose(program.verbose)
+  reporter.setVerbose(isTruthy(process.env.VERBOSE) || program.verbose)
 
   if (program.debugInfo) {
     openDebuggerPort(program.debugInfo)
@@ -97,15 +101,6 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     }
   )
 
-  if (process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES) {
-    reporter.panic(
-      `The flag ${chalk.yellow(
-        `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES`
-      )} is not available with ${chalk.cyan(
-        `gatsby develop`
-      )}, please retry using ${chalk.cyan(`gatsby build`)}`
-    )
-  }
   initTracer(program.openTracingConfigFile)
   markWebpackStatusAsPending()
   reporter.pendingActivity({ id: `webpack-develop` })
@@ -132,6 +127,7 @@ module.exports = async (program: IDevelopArgs): Promise<void> => {
     program,
     parentSpan,
     app,
+    pendingQueryRuns: new Set([`/`]),
   })
 
   const service = interpret(machine)

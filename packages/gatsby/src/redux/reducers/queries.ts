@@ -10,9 +10,10 @@ type ComponentPath = string
 type NodeId = string
 type ConnectionName = string
 
-export const FLAG_DIRTY_PAGE = 0b0001
+export const FLAG_DIRTY_NEW_PAGE = 0b0001
 export const FLAG_DIRTY_TEXT = 0b0010
 export const FLAG_DIRTY_DATA = 0b0100
+export const FLAG_DIRTY_PAGE_CONTEXT = 0b1000
 
 export const FLAG_ERROR_EXTRACTION = 0b0001
 
@@ -69,7 +70,10 @@ export function queriesReducer(
       let query = state.trackedQueries.get(path)
       if (!query || action.contextModified) {
         query = registerQuery(state, path)
-        query.dirty = setFlag(query.dirty, FLAG_DIRTY_PAGE)
+        query.dirty = setFlag(
+          query.dirty,
+          action.contextModified ? FLAG_DIRTY_PAGE_CONTEXT : FLAG_DIRTY_NEW_PAGE
+        )
         state = trackDirtyQuery(state, path)
       }
       registerComponent(state, componentPath).pages.add(path)
@@ -84,6 +88,20 @@ export function queriesReducer(
       //   This is OK for cold cache but with warm cache we will re-run all of those queries (unnecessarily).
       //   We will reconcile the state after createPages API call and actually delete those queries.
       state.deletedQueries.add(action.payload.path)
+      return state
+    }
+    case `DELETED_STALE_PAGE_DATA_FILES`: {
+      // this action is a hack/hot fix
+      // it should be removed/reverted when we start persisting pages state
+      for (const queryId of action.payload.pagePathsToClear) {
+        for (const component of state.trackedComponents.values()) {
+          component.pages.delete(queryId)
+        }
+        state = clearNodeDependencies(state, queryId)
+        state = clearConnectionDependencies(state, queryId)
+        state.trackedQueries.delete(queryId)
+      }
+
       return state
     }
     case `API_FINISHED`: {

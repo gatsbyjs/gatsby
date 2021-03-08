@@ -4,7 +4,7 @@ Provides drop-in support for Sass/SCSS stylesheets
 
 ## Install
 
-`npm install node-sass gatsby-plugin-sass`
+`npm install sass gatsby-plugin-sass`
 
 ## How to use
 
@@ -31,7 +31,7 @@ import "./src/index.scss"
 
 ## Other options
 
-If you need to pass options to Sass use the plugins options, see [node-sass](https://github.com/sass/node-sass)/[dart-sass](https://github.com/sass/dart-sass) docs
+If you need to pass options to Sass use the plugins options, see [`node-sass`](https://github.com/sass/node-sass)/[`dart-sass`](https://github.com/sass/dart-sass) docs
 for all available options.
 
 ```javascript:title=gatsby-config.js
@@ -39,15 +39,17 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      includePaths: ["absolute/path/a", "absolute/path/b"],
-      ...
+      sassOptions: {
+        includePaths: ["absolute/path/a", "absolute/path/b"],
+        ...
+      }
     },
   },
 ]
 ```
 
-If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader/tree/version-1):
-**Note:** Gatsby is using `css-loader@1.0.1`.
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader):
+**Note:** Gatsby is using `css-loader@^5.0.0`.
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -64,10 +66,10 @@ plugins: [
 
 ### Alternative Sass Implementations
 
-By default the node implementation of Sass (`node-sass`) is used. To use the implementation written in Dart (`dart-sass`), you can install `sass` instead of `node-sass` and pass it into the options as the implementation:
+By default, the Dart implementation of Sass (`sass`) is used. To use the implementation written in Node (`node-sass`), you can install `node-sass` instead of `sass` and pass it into the options as the implementation:
 
 ```shell
-npm install --save-dev sass
+npm install node-sass
 ```
 
 ```javascript:title=gatsby-config.js
@@ -75,7 +77,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      implementation: require("sass"),
+      implementation: require("node-sass"),
     },
   },
 ]
@@ -95,7 +97,9 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [somePostCssPlugin()],
-      precision: 6,
+      sassOptions: {
+        precision: 6,
+      },
     },
   },
 ]
@@ -111,7 +115,9 @@ plugins: [
     resolve: `gatsby-plugin-sass`,
     options: {
       postCssPlugins: [somePostCssPlugin()],
-      precision: 8,
+      sassOptions: {
+        precision: 8,
+      },
     },
   },
 ]
@@ -122,7 +128,7 @@ plugins: [
 Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
 Any file with the `module` extension will use CSS Modules.
 
-## SASS & CSS Modules file Regexes
+## Sass & CSS Modules file Regexes
 
 To override the file regex for Sass or CSS modules,
 
@@ -131,7 +137,7 @@ plugins: [
   {
     resolve: `gatsby-plugin-sass`,
     options: {
-      // Override the file regex for SASS
+      // Override the file regex for Sass
       sassRuleTest: /\.global\.s(a|c)ss$/,
       // Override the file regex for CSS modules
       sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
@@ -147,11 +153,11 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your Sass output you can specify plugins
 in the plugin options.
 
-## Relative paths & url()
+## Relative paths & `url()`
 
-This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [sass-loader](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
+This plugin resolves `url()` paths relative to the entry SCSS/Sass file not – as might be expected – the location relative to the declaration. Under the hood, it makes use of [`sass-loader`](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url) and this is documented in the [readme](https://github.com/webpack-contrib/sass-loader/blob/master/README.md#problems-with-url).
 
-Using [resolve-url-loader](https://github.com/bholloway/resolve-url-loader) provides a workaround, if you want to use relative url just install the plugin and then add it to your sass plugin options configuration.
+Using [`resolve-url-loader`](https://github.com/bholloway/resolve-url-loader) provides a workaround, if you want to use relative url just install the plugin and then add it to your Sass plugin options configuration.
 
 First:
 
@@ -172,7 +178,7 @@ plugins: [
 ]
 ```
 
-You can also configure resolve-url-plugin providing some options (see [plugin documentation](https://github.com/bholloway/resolve-url-loader) for all options):
+You can also configure `resolve-url-plugin` providing some options (see [plugin documentation](https://github.com/bholloway/resolve-url-loader) for all options):
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -189,7 +195,7 @@ plugins: [
 ]
 ```
 
-NOTE that adding resolve-url-loader will use `sourceMap: true` on sass-loader (as it is required for the plugin to work), you can then activate/deactivate source-map for Sass files in the plugin:
+**Please note:** Adding `resolve-url-loader` will use `sourceMap: true` on `sass-loader` (as it is required for the plugin to work), you can then activate/deactivate source-map for Sass files in the plugin:
 
 ```javascript:title=gatsby-config.js
 plugins: [
@@ -209,6 +215,12 @@ plugins: [
 ## Breaking changes history
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
+
+### v3.0.0
+
+- `sass-loader` is updated to v10 which adds support for `node-sass@^5.0.0` but also switches the default `implementation` to `sass`. webpack also recommends using `sass` so this is reflected in the documentation here, too. In the [deprecation notice of node-sass](https://sass-lang.com/blog/libsass-is-deprecated#how-do-i-migrate) it is noted that switching from `node-sass` to `sass` is straightforward as both packages use the same JavaScript API.
+- All options for both [`node-sass`](https://github.com/sass/node-sass#options) & [`sass`](https://github.com/sass/dart-sass/blob/master/README.md#javascript-api) are moved into the `sassOptions` object
+- You're now able to override the `importLoaders` option. If you have this in your options but don't intend to override it, you'll need to remove it
 
 ### v2.0.0
 

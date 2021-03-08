@@ -7,8 +7,6 @@ import { definitionsReducer } from "./definitions"
 import { staticQueryComponentsReducer } from "./static-query-components"
 import { statusReducer } from "./status"
 import { webpackReducer } from "./webpack"
-import { pageDataReducer } from "./page-data"
-import { themesReducer } from "./themes"
 import { webpackCompilationHashReducer } from "./webpack-compilation-hash"
 import { configReducer } from "./config"
 import { lastActionReducer } from "./last-action"
@@ -27,7 +25,8 @@ import { schemaCustomizationReducer } from "./schema-customization"
 import { inferenceMetadataReducer } from "./inference-metadata"
 import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
 import { queriesReducer } from "./queries"
-import { clientVisitedPageReducer } from "./client-visited-page"
+import { visitedPagesReducer } from "./visited-page"
+import { htmlReducer } from "./html"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -44,7 +43,7 @@ export {
   configReducer as config,
   schemaReducer as schema,
   pagesReducer as pages,
-  clientVisitedPageReducer as clientVisitedPages,
+  visitedPagesReducer as visitedPages,
   statusReducer as status,
   componentsReducer as components,
   staticQueryComponentsReducer as staticQueryComponents,
@@ -55,12 +54,11 @@ export {
   redirectsReducer as redirects,
   babelrcReducer as babelrc,
   schemaCustomizationReducer as schemaCustomization,
-  themesReducer as themes,
   logReducer as logs,
   inferenceMetadataReducer as inferenceMetadata,
   pageDataStatsReducer as pageDataStats,
-  pageDataReducer as pageData,
   pendingPageDataWritesReducer as pendingPageDataWrites,
   staticQueriesByTemplateReducer as staticQueriesByTemplate,
   queriesReducer as queries,
+  htmlReducer as html,
 }

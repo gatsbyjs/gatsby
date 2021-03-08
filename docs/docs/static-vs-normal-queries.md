@@ -10,7 +10,7 @@ Static queries differ from Gatsby page queries in a number of ways. For pages, G
 
 In contrast, static queries do not take variables. This is because static queries are used inside specific components, and can appear lower in the component tree. Data fetched with a static query won't be dynamic (i.e. **they can't use variables**, hence the name "static" query), but they can be called at any level in the component tree.
 
-_For more information on the practical differences in usage between static and normal queries, refer to the guide on [static query](/docs/static-query/#how-staticquery-differs-from-page-query). This guide discusses the differences in how they are handled internally by Gatsby_
+_For more information on the practical differences in usage between static and normal queries, refer to the guide on [static query](/docs/how-to/querying-data/static-query/#how-staticquery-differs-from-page-query). This guide discusses the differences in how they are handled internally by Gatsby_
 
 ## Keeping track of site queries during build in Redux stores
 

@@ -57,6 +57,7 @@ describe(`Process contentful data (by name)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(id => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createNodesForContentType({
         contentTypeItem,
@@ -65,6 +66,7 @@ describe(`Process contentful data (by name)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -74,6 +76,177 @@ describe(`Process contentful data (by name)`, () => {
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
+
+    // Relevant to compare to compare warm and cold situation. Actual number not relevant.
+    expect(createNode.mock.calls.length).toBe(74) // "cold build entries" count
+  })
+
+  it(`creates nodes for each asset`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const assets = currentSyncData.assets
+    assets.forEach(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+})
+
+describe(`Skip existing nodes in warm build`, () => {
+  it(`creates nodes for each entry`, () => {
+    const entryList = normalize.buildEntryList({
+      mergedSyncData: currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = normalize.buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+      defaultLocale,
+      locales,
+    })
+
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: true,
+    })
+
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    let doReturn = true
+    const getNode = jest.fn(id => {
+      if (doReturn) {
+        doReturn = false
+        // Note: the relevant part for this test is that the same digest is returned
+        // so it skips generating the node and any of its children. Actual shape of
+        // returned is not relevant to test so update if anything breaks.
+        return {
+          id,
+          internal: { contentDigest: entryList[0][0].sys.updatedAt },
+        }
+      }
+      // All other nodes are new ("unknown")
+      return undefined
+    })
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createNodesForContentType({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        getNode,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: true,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+
+    // Relevant to compare to compare warm and cold situation. Actual number not relevant.
+    // This number ought to be less than the cold build
+    expect(createNode.mock.calls.length).toBe(71) // "warm build where entry was not changed" count
+  })
+
+  it(`creates nodes for each asset`, () => {
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    const assets = currentSyncData.assets
+    assets.forEach(assetItem => {
+      normalize.createAssetNodes({
+        assetItem,
+        createNode,
+        createNodeId,
+        defaultLocale,
+        locales,
+        space,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+  })
+})
+
+describe(`Process existing mutated nodes in warm build`, () => {
+  it(`creates nodes for each entry`, () => {
+    const entryList = normalize.buildEntryList({
+      mergedSyncData: currentSyncData,
+      contentTypeItems,
+    })
+
+    const resolvable = normalize.buildResolvableSet({
+      assets: currentSyncData.assets,
+      entryList,
+      defaultLocale,
+      locales,
+    })
+
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
+      contentTypeItems,
+      entryList,
+      resolvable,
+      defaultLocale,
+      locales,
+      space,
+      useNameForId: true,
+    })
+
+    const createNode = jest.fn()
+    const createNodeId = jest.fn(id => id)
+    let doReturn = true
+    const getNode = jest.fn(id => {
+      if (doReturn) {
+        doReturn = false
+        // Note: the relevant part for this test is that the same digest is returned
+        // so it skips generating the node and any of its children. Actual shape of
+        // returned is not relevant to test so update if anything breaks.
+        return {
+          id,
+          internal: {
+            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+          },
+        }
+      }
+      // All other nodes are new ("unknown")
+      return undefined
+    })
+    contentTypeItems.forEach((contentTypeItem, i) => {
+      normalize.createNodesForContentType({
+        contentTypeItem,
+        restrictedNodeFields,
+        conflictFieldPrefix,
+        entries: entryList[i],
+        createNode,
+        createNodeId,
+        getNode,
+        resolvable,
+        foreignReferenceMap,
+        defaultLocale,
+        locales,
+        space,
+        useNameForId: true,
+      })
+    })
+    expect(createNode.mock.calls).toMatchSnapshot()
+
+    // Relevant to compare to compare warm and cold situation. Actual number not relevant.
+    // This number ought to be the same as the cold build
+    expect(createNode.mock.calls.length).toBe(74) // "warm build where entry was changed" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -133,6 +306,7 @@ describe(`Process contentful data (by id)`, () => {
   it(`creates nodes for each entry`, () => {
     const createNode = jest.fn()
     const createNodeId = jest.fn(id => id)
+    const getNode = jest.fn(id => undefined) // All nodes are new
     contentTypeItems.forEach((contentTypeItem, i) => {
       normalize.createNodesForContentType({
         contentTypeItem,
@@ -141,6 +315,7 @@ describe(`Process contentful data (by id)`, () => {
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,

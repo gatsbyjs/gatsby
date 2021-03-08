@@ -11,6 +11,17 @@ describe(`NodeModel`, () => {
   let schema
   const createPageDependency = jest.fn()
 
+  const allNodeTypes = [
+    `File`,
+    `Directory`,
+    `Site`,
+    `SitePage`,
+    `Author`,
+    `Contributor`,
+    `RemoteFile`,
+    `Post`,
+  ]
+
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
@@ -239,9 +250,15 @@ describe(`NodeModel`, () => {
         expect(result.length).toBe(3)
       })
 
-      it(`creates page dependencies`, () => {
+      it(`creates page dependencies with all connection types`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
-        expect(createPageDependency).toHaveBeenCalledTimes(9)
+        allNodeTypes.forEach(typeName => {
+          expect(createPageDependency).toHaveBeenCalledWith({
+            path: `/`,
+            connection: typeName,
+          })
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
       })
 
       it(`creates page dependencies when called with context and connection type`, () => {
@@ -249,11 +266,31 @@ describe(`NodeModel`, () => {
           .withContext({ path: `/` })
           .getAllNodes({ type: `Post` }, { connectionType: `Post` })
         expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Post`,
+        })
       })
 
-      it(`does not create page dependencies when called with context without connection type`, () => {
+      it(`creates page dependencies with all connection types when called with context without connection type`, () => {
         nodeModel.withContext({ path: `/` }).getAllNodes()
-        expect(createPageDependency).toHaveBeenCalledTimes(0)
+        allNodeTypes.forEach(typeName => {
+          expect(createPageDependency).toHaveBeenCalledWith({
+            path: `/`,
+            connection: typeName,
+          })
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
+      })
+
+      it(`allows to opt-out of automatic dependency tracking`, () => {
+        nodeModel.getAllNodes({}, { path: `/`, track: false })
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of automatic dependency tracking with context`, () => {
+        nodeModel.withContext({ path: `/` }).getAllNodes({}, { track: false })
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`returns empty array when no nodes of type found`, () => {
@@ -331,14 +368,10 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -354,14 +387,10 @@ describe(`NodeModel`, () => {
           firstOnly,
           type,
         })
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -385,6 +414,68 @@ describe(`NodeModel`, () => {
           path: `/`,
           connection: `Post`,
         })
+      })
+
+      it(`creates page dependencies with individual nodes when connectionType is null`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { path: `/`, connectionType: null }
+        )
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`allows to opt-out of dependency tracking`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { path: `/`, track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of dependency tracking with context`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.withContext({ path: `/` }).runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`doesn't allow querying union types`, () => {
@@ -610,6 +701,28 @@ describe(`NodeModel`, () => {
             contentDigest: `5`,
           },
         },
+        {
+          id: `id6`,
+          Meta: {
+            Date: `1`,
+            Category: `Gatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `6`,
+          },
+        },
+        {
+          id: `id7`,
+          Meta: {
+            Date: `2`,
+            Category: `NotGatsby`,
+          },
+          internal: {
+            type: `Test5`,
+            contentDigest: `7`,
+          },
+        },
       ])()
       store.dispatch({ type: `DELETE_CACHE` })
       nodes.forEach(node =>
@@ -712,6 +825,23 @@ describe(`NodeModel`, () => {
                 resolve(source) {
                   // Swap sorting order for test
                   return source.Date === `1` ? `2` : `1`
+                },
+              },
+            },
+          }),
+          typeBuilders.buildObjectType({
+            name: `Test5Meta`,
+            fields: {
+              Date: {
+                type: `String`,
+                resolve(source) {
+                  return source.Date
+                },
+              },
+              Category: {
+                type: `String`,
+                resolve(source) {
+                  return source.Category
                 },
               },
             },
@@ -882,6 +1012,44 @@ describe(`NodeModel`, () => {
 
       expect(Array.isArray(result2)).toBeTruthy()
       expect(result2.map(node => node.id)).toEqual([`id4`, `id5`])
+    })
+
+    it(`sorts correctly by fields with custom resolvers`, async () => {
+      // See https://github.com/gatsbyjs/gatsby/issues/28047
+      nodeModel.replaceFiltersCache()
+
+      // This is required to setup a state after which the error reveals itself
+      const result1 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { id: { regex: `/non-existing/` } },
+          },
+          firstOnly: true,
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      // Filter by the same regex with sorting
+      const result2 = await nodeModel.runQuery(
+        {
+          query: {
+            filter: { id: { regex: `/id/` } },
+            sort: {
+              fields: [`Meta.Date`],
+              order: [`desc`],
+            },
+          },
+          firstOnly: false,
+          type: `Test5`,
+        },
+        { path: `/` }
+      )
+
+      expect(result1).toEqual(null)
+
+      expect(Array.isArray(result2)).toBeTruthy()
+      expect(result2.map(node => node.id)).toEqual([`id7`, `id6`])
     })
 
     it(`handles nulish values within array of interface type`, async () => {

@@ -142,6 +142,9 @@ const queriesTest = ({ typesFirstRun, typesSecondRun, dataSecondRun }) => {
             "name": "foo",
           },
           Object {
+            "name": "childrenChildOfParentParentAdditionForTransformer",
+          },
+          Object {
             "name": "childChildOfParentParentAdditionForTransformer",
           },
         ],

@@ -8,7 +8,7 @@ import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import socket from "socket.io"
+import { Server as SocketIO } from "socket.io"
 import fs from "fs-extra"
 import onExit from "signal-exit"
 import {
@@ -71,12 +71,12 @@ const doesConfigChangeRequireRestart = (
 const getDebugPort = (port?: number): number => port ?? 9229
 
 export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
-  if (program.hasOwnProperty(`inspect`)) {
+  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
       break: false,
     }
-  } else if (program.hasOwnProperty(`inspectBrk`)) {
+  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
     return {
       port: getDebugPort(program.inspectBrk),
       break: true,
@@ -96,7 +96,7 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
-    const args = []
+    const args: Array<string> = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
@@ -203,6 +203,12 @@ module.exports = async (program: IProgram): Promise<void> => {
   // which users will access
   const proxyPort = program.port
   const debugInfo = getDebugInfo(program)
+
+  const rootFile = (file: string): string => path.join(program.directory, file)
+
+  // Require gatsby-config.js before accessing process.env, to enable the user to change
+  // environment variables from the config file.
+  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
 
   // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
   // when the browser should prompt the user to restart the develop process.
@@ -338,7 +344,13 @@ module.exports = async (program: IProgram): Promise<void> => {
     : http.createServer()
   statusServer.listen(statusServerPort)
 
-  const io = socket(statusServer)
+  const io = new SocketIO(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
   const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return
@@ -403,10 +415,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     }
   )
 
-  const rootFile = (file: string): string => path.join(program.directory, file)
-
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
-  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
   let watcher: chokidar.FSWatcher = null
 
   if (!isCI()) {

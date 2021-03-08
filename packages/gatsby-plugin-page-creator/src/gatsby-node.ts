@@ -10,8 +10,13 @@ import {
   PluginCallback,
 } from "gatsby"
 import { trackFeatureIsUsed } from "gatsby-telemetry"
-import { parse, GraphQLString } from "graphql"
-import { createPath, watchDirectory } from "gatsby-page-utils"
+import { parse, GraphQLString } from "gatsby/graphql"
+import {
+  createPath,
+  watchDirectory,
+  IPathIgnoreOptions,
+} from "gatsby-page-utils"
+import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
 import { derivePath } from "./derive-path"
@@ -20,8 +25,9 @@ import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 
 interface IOptions extends PluginOptions {
   path: string
-  pathCheck: boolean
-  ignore: Array<string>
+  pathCheck?: boolean
+  ignore?: IPathIgnoreOptions | string | Array<string> | null
+  slugify?: ISlugifyOptions
 }
 
 const knownCollections = new Map()
@@ -40,7 +46,12 @@ export async function createPagesStatefully(
   }: CreatePagesArgs & {
     traceId: "initial-createPages"
   },
-  { path: pagesPath, pathCheck = true, ignore }: IOptions,
+  {
+    path: pagesPath,
+    pathCheck = true,
+    ignore,
+    slugify: slugifyOptions,
+  }: IOptions,
   doneCb: PluginCallback
 ): Promise<void> {
   try {
@@ -80,7 +91,15 @@ Please pick a path to an existing directory.`,
     // Get initial list of files.
     const files = await glob(pagesGlob, { cwd: pagesPath })
     files.forEach(file => {
-      createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
+      createPage(
+        file,
+        pagesDirectory,
+        actions,
+        graphql,
+        reporter,
+        ignore,
+        slugifyOptions
+      )
     })
 
     const knownFiles = new Set(files)
@@ -95,9 +114,10 @@ Please pick a path to an existing directory.`,
               addedPath,
               pagesDirectory,
               actions,
-              ignore,
               graphql,
-              reporter
+              reporter,
+              ignore,
+              slugifyOptions
             )
             knownFiles.add(addedPath)
           }
@@ -143,12 +163,10 @@ Please pick a path to an existing directory.`,
   }
 }
 
-export function setFieldsOnGraphQLNodeType({
-  getNode,
-  type,
-  store,
-  reporter,
-}: SetFieldsOnGraphQLNodeTypeArgs): object {
+export function setFieldsOnGraphQLNodeType(
+  { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
+  { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions }
+): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
     const collectionQuery = _.camelCase(`all ${type.name}`)
@@ -162,7 +180,7 @@ export function setFieldsOnGraphQLNodeType({
             },
           },
           resolve: (
-            source: object,
+            source: Record<string, unknown>,
             { filePath }: { filePath: string }
           ): string => {
             // This is a quick hack for attaching parents to the node.
@@ -178,7 +196,12 @@ export function setFieldsOnGraphQLNodeType({
             }
 
             validatePathQuery(filePath, extensions)
-            const { derivedPath } = derivePath(filePath, sourceCopy, reporter)
+            const { derivedPath } = derivePath(
+              filePath,
+              sourceCopy,
+              reporter,
+              slugifyOptions
+            )
 
             return createPath(derivedPath)
           },

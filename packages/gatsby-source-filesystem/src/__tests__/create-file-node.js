@@ -11,7 +11,7 @@ describe(`create-file-node`, () => {
   beforeEach(() => {
     // If this breaks, note that the actual values here are not relevant. They just need to be mocked because
     // otherwise the tests change due to changing timestamps. The returned object should mimic the real fs.stat
-    // Note: async tests should run in serial so this mock should not cause cross test polution on this thread.
+    // Note: async tests should run in serial so this mock should not cause cross test pollution on this thread.
     fs.stat = jest.fn().mockResolvedValue(
       Promise.resolve({
         isDirectory() {

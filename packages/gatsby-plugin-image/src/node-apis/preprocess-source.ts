@@ -15,13 +15,13 @@ export async function preprocessSource({
   store,
   createNodeId,
   actions: { createNode },
-}: PreprocessSourceArgs): Promise<string> {
+}: PreprocessSourceArgs): Promise<void> {
   if (
     !contents.includes(`StaticImage`) ||
     !contents.includes(`gatsby-plugin-image`) ||
     !extensions.includes(path.extname(filename))
   ) {
-    return contents
+    return
   }
   const root = store.getState().program.directory
 
@@ -41,7 +41,8 @@ export async function preprocessSource({
     sourceDir,
     createNodeId,
     createNode,
+    store,
   })
 
-  return contents
+  return
 }

@@ -7,7 +7,7 @@ import buildHeadersProgram from "./build-headers-program"
 import createRedirects from "./create-redirects"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 
-let assetsManifest = {}
+const assetsManifest = {}
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
 exports.onCreateWebpackConfig = ({ actions, stage }) => {
@@ -53,11 +53,11 @@ exports.onPostBuild = async (
   ])
 }
 
-const MATH_ALL_KEYS = /^/
+const MATCH_ALL_KEYS = /^/
 const pluginOptionsSchema = function ({ Joi }) {
   // headers is a specific type used by Netlify: https://www.gatsbyjs.com/plugins/gatsby-plugin-netlify/#headers
   const headersSchema = Joi.object()
-    .pattern(MATH_ALL_KEYS, Joi.array().items(Joi.string()))
+    .pattern(MATCH_ALL_KEYS, Joi.array().items(Joi.string()))
     .description(`Add more Netlify headers to specific pages`)
 
   return Joi.object({

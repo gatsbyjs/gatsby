@@ -2,23 +2,27 @@ import Enquirer from "enquirer"
 import cmses from "./cmses.json"
 import styles from "./styles.json"
 import features from "./features.json"
-import { initStarter, getPackageManager } from "./init-starter"
+import { initStarter, getPackageManager, gitSetup } from "./init-starter"
 import { installPlugins } from "./install-plugins"
 import c from "ansi-colors"
 import path from "path"
 import fs from "fs"
 import { plugin } from "./components/plugin"
 import { makePluginConfigQuestions } from "./plugin-options-form"
-import { center, rule, wrap } from "./components/utils"
+import { center, wrap } from "./components/utils"
 import { stripIndent } from "common-tags"
 import { trackCli } from "./tracking"
 import crypto from "crypto"
+import { reporter } from "./reporter"
+import { setSiteMetadata } from "./site-metadata"
+import { makeNpmSafe } from "./utils"
 
 const sha256 = (str: string): string =>
   crypto.createHash(`sha256`).update(str).digest(`hex`)
 
 const md5 = (str: string): string =>
   crypto.createHash(`md5`).update(str).digest(`hex`)
+
 /**
  * Hide string on windows (for emojis)
  */
@@ -28,8 +32,7 @@ const w = (input: string): string => (process.platform === `win32` ? `` : input)
 const INVALID_FILENAMES = /[<>:"/\\|?*\u0000-\u001F]/g
 const INVALID_WINDOWS = /^(con|prn|aux|nul|com\d|lpt\d)$/i
 
-// We're using a fork because it points to the canary version of gatsby
-const DEFAULT_STARTER = `https://github.com/ascorbic/gatsby-starter-hello-world.git`
+const DEFAULT_STARTER = `https://github.com/gatsbyjs/gatsby-starter-minimal.git`
 
 const makeChoices = (
   options: Record<string, { message: string; dependencies?: Array<string> }>,
@@ -51,6 +54,10 @@ const makeChoices = (
 export const validateProjectName = async (
   value: string
 ): Promise<string | boolean> => {
+  if (!value) {
+    return `You have not provided a directory name for your site. Please do so when running with the 'y' flag.`
+  }
+  value = value.trim()
   if (INVALID_FILENAMES.test(value)) {
     return `The destination "${value}" is not a valid filename. Please try again, avoiding special characters.`
   }
@@ -65,16 +72,17 @@ export const validateProjectName = async (
 
 // The enquirer types are not accurate
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const questions: any = [
+export const questions = (initialFolderName: string, skip: boolean): any => [
   {
     type: `textinput`,
     name: `project`,
     message: `What would you like to name the folder where your site will be created?`,
     hint: path.basename(process.cwd()),
     separator: `/`,
-    initial: `my-gatsby-site`,
+    initial: initialFolderName,
     format: (value: string): string => c.cyan(value),
     validate: validateProjectName,
+    skip,
   },
   {
     type: `selectinput`,
@@ -99,6 +107,7 @@ export const questions: any = [
   },
 ]
 interface IAnswers {
+  name: string
   project: string
   styling?: keyof typeof styles
   cms?: keyof typeof cmses
@@ -135,13 +144,20 @@ export type PluginConfigMap = Record<string, Record<string, unknown>>
 const removeKey = (plugin: string): string => plugin.split(`:`)[0]
 
 export async function run(): Promise<void> {
+  const [flag, siteDirectory] = process.argv.slice(2)
+
+  let yesFlag = false
+  if (flag === `-y`) {
+    yesFlag = true
+  }
+
   trackCli(`CREATE_GATSBY_START`)
 
   const { version } = require(`../package.json`)
 
-  console.log(c.grey(`create-gatsby version ${version}`))
+  reporter.info(c.grey(`create-gatsby version ${version}`))
 
-  console.log(
+  reporter.info(
     `
 
 
@@ -151,23 +167,48 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 `
   )
 
-  console.log(
-    wrap(
-      `This command will generate a new Gatsby site for you in ${c.bold(
-        process.cwd()
-      )} with the setup you select. ${c.white.bold(
-        `Let's answer some questions:\n`
-      )}`,
-      process.stdout.columns
+  if (!yesFlag) {
+    reporter.info(
+      wrap(
+        `This command will generate a new Gatsby site for you in ${c.bold(
+          process.cwd()
+        )} with the setup you select. ${c.white.bold(
+          `Let's answer some questions:\n\n`
+        )}`,
+        process.stdout.columns
+      )
     )
-  )
-  console.log(``)
+  }
 
   const enquirer = new Enquirer<IAnswers>()
 
   enquirer.use(plugin)
 
-  const data = await enquirer.prompt(questions)
+  let data
+  let siteName
+  if (!yesFlag) {
+    ;({ name: siteName } = await enquirer.prompt({
+      type: `textinput`,
+      name: `name`,
+      message: `What would you like to call your site?`,
+      initial: `My Gatsby Site`,
+      format: (value: string): string => c.cyan(value),
+    } as any))
+
+    data = await enquirer.prompt(questions(makeNpmSafe(siteName), yesFlag))
+  } else {
+    const warn = await validateProjectName(siteDirectory)
+    if (typeof warn === `string`) {
+      reporter.warn(warn)
+      return
+    }
+    siteName = siteDirectory
+    data = await enquirer.prompt(
+      questions(makeNpmSafe(siteDirectory), yesFlag)[0]
+    )
+  }
+
+  data.project = data.project.trim()
 
   trackCli(`CREATE_GATSBY_SELECT_OPTION`, {
     name: `project_name`,
@@ -260,78 +301,86 @@ ${center(c.blueBright.bold.underline(`Welcome to Gatsby!`))}
 
   const config = makePluginConfigQuestions(plugins)
   if (config.length) {
-    console.log(
+    reporter.info(
       `\nGreat! A few of the selections you made need to be configured. Please fill in the options for each plugin now:\n`
     )
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_START`)
 
-    const enquirer = new Enquirer<Record<string, {}>>()
+    const enquirer = new Enquirer<Record<string, Record<string, unknown>>>()
     enquirer.use(plugin)
 
     pluginConfig = { ...pluginConfig, ...(await enquirer.prompt(config)) }
 
     trackCli(`CREATE_GATSBY_SET_PLUGINS_STOP`)
   }
-
-  console.log(`
+  if (!yesFlag) {
+    reporter.info(`
 
 ${c.bold(`Thanks! Here's what we'll now do:`)}
 
     ${messages.join(`\n    `)}
   `)
 
-  const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
-    type: `confirm`,
-    name: `confirm`,
-    initial: `Yes`,
-    message: `Shall we do this?`,
-    format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
-  })
+    const { confirm } = await new Enquirer<{ confirm: boolean }>().prompt({
+      type: `confirm`,
+      name: `confirm`,
+      initial: `Yes`,
+      message: `Shall we do this?`,
+      format: value => (value ? c.greenBright(`Yes`) : c.red(`No`)),
+    })
 
-  if (!confirm) {
-    trackCli(`CREATE_GATSBY_CANCEL`)
+    if (!confirm) {
+      trackCli(`CREATE_GATSBY_CANCEL`)
 
-    console.log(`OK, bye!`)
-    return
+      reporter.info(`OK, bye!`)
+      return
+    }
   }
 
-  await initStarter(DEFAULT_STARTER, data.project, packages.map(removeKey))
-
-  console.log(
-    c.green(c.symbols.check) + ` Created site in ` + c.green(data.project)
+  await initStarter(
+    DEFAULT_STARTER,
+    data.project,
+    packages.map(removeKey),
+    siteName
   )
+
+  reporter.success(`Created site in ${c.green(data.project)}`)
+
+  const fullPath = path.resolve(data.project)
 
   if (plugins.length) {
-    console.log(c.bold(`${w(`🔌 `)}Installing plugins...`))
-    await installPlugins(plugins, pluginConfig, path.resolve(data.project), [])
+    reporter.info(`${w(`🔌 `)}Setting-up plugins...`)
+    await installPlugins(plugins, pluginConfig, fullPath, [])
   }
+  await setSiteMetadata(fullPath, `title`, siteName)
+
+  await gitSetup(data.project)
 
   const pm = await getPackageManager()
-
   const runCommand = pm === `npm` ? `npm run` : `yarn`
 
-  console.log(
+  reporter.info(
     stripIndent`
     ${w(`🎉  `)}Your new Gatsby site ${c.bold(
-      data.project
-    )} has been successfully bootstrapped
-    at ${c.bold(path.resolve(data.project))}.
+      siteName
+    )} has been successfully created
+    at ${c.bold(fullPath)}.
     `
   )
-  console.log(`Start by going to the directory with\n
+  reporter.info(`Start by going to the directory with\n
   ${c.magenta(`cd ${data.project}`)}
   `)
 
-  console.log(`Start the local development server with\n
+  reporter.info(`Start the local development server with\n
   ${c.magenta(`${runCommand} develop`)}
   `)
 
-  console.log(`See all commands at\n
+  reporter.info(`See all commands at\n
   ${c.blueBright(`https://www.gatsbyjs.com/docs/gatsby-cli/`)}
   `)
 
-  const siteHash = md5(path.resolve(data.project))
+  const siteHash = md5(fullPath)
   trackCli(`CREATE_GATSBY_SUCCESS`, { siteHash })
 }
 

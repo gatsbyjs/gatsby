@@ -1,6 +1,6 @@
 import _ from "lodash"
-import slugify from "@sindresorhus/slugify"
-import { Reporter } from "gatsby"
+import slugify, { Options as ISlugifyOptions } from "@sindresorhus/slugify"
+import { Reporter } from "gatsby/reporter"
 import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
@@ -17,7 +17,8 @@ const doubleForwardSlashes = /\/\/+/g
 export function derivePath(
   path: string,
   node: Record<string, any>,
-  reporter: Reporter
+  reporter: Reporter,
+  slugifyOptions?: ISlugifyOptions
 ): { errors: number; derivedPath: string } {
   // 0. Since this function will be called for every path times count of nodes the errors will be counted and then the calling function will throw the error once
   let errors = 0
@@ -54,7 +55,7 @@ export function derivePath(
     }
 
     // 3.d  Safely slugify all values (to keep URL structures) and remove any trailing slash
-    const value = stripTrailingSlash(safeSlugify(nodeValue))
+    const value = stripTrailingSlash(safeSlugify(nodeValue, slugifyOptions))
 
     // 3.e  replace the part of the slug with the actual value
     modifiedPath = modifiedPath.replace(slugPart, value)
@@ -74,10 +75,13 @@ export function derivePath(
 // If the node value is meant to be a slug, like `foo/bar`, the slugify
 // function will remove the slashes. This is a hack to make sure the slashes
 // stick around in the final url structuring
-function safeSlugify(nodeValue: string): string {
+function safeSlugify(
+  nodeValue: string,
+  slugifyOptions?: ISlugifyOptions
+): string {
   // The incoming GraphQL data can also be a number
   const input = String(nodeValue)
   const tempArr = input.split(`/`)
 
-  return tempArr.map(v => slugify(v)).join(`/`)
+  return tempArr.map(v => slugify(v, slugifyOptions)).join(`/`)
 }

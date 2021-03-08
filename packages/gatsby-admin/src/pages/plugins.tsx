@@ -3,9 +3,9 @@ import { jsx, Flex } from "strict-ui"
 import { PageProps } from "gatsby"
 import { useQuery } from "urql"
 import { Spinner } from "theme-ui"
-import { Global } from "@emotion/core"
+import { Global } from "@emotion/react"
 import { useMutation } from "urql"
-import { useState, Fragment, useEffect } from "react"
+import { useState, Fragment, useEffect, FormEvent } from "react"
 import {
   AnchorButton,
   Button,
@@ -70,8 +70,10 @@ const markdownRenderers = {
           style={style}
         >
           {tokens.map((line, i) => (
+            // eslint-disable-next-line react/jsx-key
             <div {...getLineProps({ line, key: i })}>
               {line.map((token, key) => (
+                // eslint-disable-next-line react/jsx-key
                 <span {...getTokenProps({ token, key })} />
               ))}
             </div>
@@ -319,7 +321,7 @@ export default function PluginView(
           <Flex
             as="form"
             // @ts-ignore
-            onSubmit={(evt: React.FormEvent): void => {
+            onSubmit={(evt: FormEvent): void => {
               evt.preventDefault()
               setValidationError(null)
               let json

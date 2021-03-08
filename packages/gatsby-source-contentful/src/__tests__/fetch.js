@@ -83,13 +83,21 @@ beforeAll(() => {
   }
 })
 
+const start = jest.fn()
+const end = jest.fn()
+
+const mockActivity = {
+  start,
+  end,
+  done: end,
+}
+
 const reporter = {
   info: jest.fn(),
   verbose: jest.fn(),
   panic: jest.fn(),
-  activityTimer: () => {
-    return { start: jest.fn(), end: jest.fn() }
-  },
+  activityTimer: jest.fn(() => mockActivity),
+  createProgress: jest.fn(() => mockActivity),
 }
 
 beforeEach(() => {
@@ -173,26 +181,6 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
   })
 })
 
-it(`panics when localeFilter reduces locale list to 0`, async () => {
-  await fetchData({
-    pluginConfig: createPluginConfig({
-      accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-      spaceId: `rocybtov1ozk`,
-      pageLimit: 50,
-      localeFilter: () => false,
-    }),
-    reporter,
-  })
-
-  expect(reporter.panic).toBeCalledWith(
-    expect.objectContaining({
-      context: {
-        sourceMessage: `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`,
-      },
-    })
-  )
-})
-
 describe(`Displays troubleshooting tips and detailed plugin options on contentful client error`, () => {
   it(`Generic fallback error`, async () => {
     mockClient.getLocales.mockImplementation(() => {
@@ -267,7 +255,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API 404 response handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
-      err.response = { status: 404 }
+      err.responseData = { status: 404 }
       throw err
     })
 
@@ -307,7 +295,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API authorization error handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
-      err.response = { status: 401 }
+      err.responseData = { status: 401 }
       throw err
     })
 

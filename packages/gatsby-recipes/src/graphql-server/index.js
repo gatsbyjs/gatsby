@@ -29,7 +29,7 @@ export default async function startGraphQLServer(programPath, forceStart) {
         all: true,
         env: {
           // Chalk doesn't want to output color in a child process
-          // as it (correctly) thinks it's not in a normal terminal environemnt.
+          // as it (correctly) thinks it's not in a normal terminal environment.
           // Since we're just returning data, we'll override that.
           FORCE_COLOR: `true`,
         },

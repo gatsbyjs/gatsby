@@ -1,5 +1,6 @@
 import {
-  FLAG_DIRTY_PAGE,
+  FLAG_DIRTY_NEW_PAGE,
+  FLAG_DIRTY_PAGE_CONTEXT,
   FLAG_DIRTY_TEXT,
   FLAG_ERROR_EXTRACTION,
   queriesReducer as reducer,
@@ -108,8 +109,8 @@ describe(`create page`, () => {
 
     expect(state).toMatchObject({
       trackedQueries: new Map([
-        [`/foo`, { dirty: FLAG_DIRTY_PAGE, running: 0 }],
-        [`/bar`, { dirty: FLAG_DIRTY_PAGE, running: 0 }],
+        [`/foo`, { dirty: FLAG_DIRTY_NEW_PAGE, running: 0 }],
+        [`/bar`, { dirty: FLAG_DIRTY_NEW_PAGE, running: 0 }],
       ]),
     })
   })
@@ -132,7 +133,7 @@ describe(`create page`, () => {
     state = createPage(state, Pages.foo, { contextModified: true })
 
     expect(state.trackedQueries.get(`/foo`)).toMatchObject({
-      dirty: FLAG_DIRTY_PAGE,
+      dirty: FLAG_DIRTY_PAGE_CONTEXT,
     })
   })
 
@@ -461,14 +462,14 @@ describe(`query extraction`, () => {
     state = reducer(state, queryExtracted(ComponentQueries.bar, {} as any))
 
     expect(state.trackedQueries.get(`/bar`)).toMatchObject({
-      dirty: FLAG_DIRTY_PAGE | FLAG_DIRTY_TEXT,
+      dirty: FLAG_DIRTY_NEW_PAGE | FLAG_DIRTY_TEXT,
     })
     expect(state.trackedQueries.get(`/bar2`)).toMatchObject({
-      dirty: FLAG_DIRTY_PAGE | FLAG_DIRTY_TEXT,
+      dirty: FLAG_DIRTY_NEW_PAGE | FLAG_DIRTY_TEXT,
     })
     // Sanity check
     expect(state.trackedQueries.get(`/foo`)).toMatchObject({
-      dirty: FLAG_DIRTY_PAGE,
+      dirty: FLAG_DIRTY_NEW_PAGE,
     })
   })
 
@@ -478,7 +479,7 @@ describe(`query extraction`, () => {
     expect(state.trackedQueries.get(`/foo`)).toMatchObject({ dirty: 0 })
     // sanity-check (we didn't run or extract /bar)
     expect(state.trackedQueries.get(`/bar`)).toMatchObject({
-      dirty: FLAG_DIRTY_PAGE,
+      dirty: FLAG_DIRTY_NEW_PAGE,
     })
   })
 

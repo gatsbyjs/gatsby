@@ -7,9 +7,11 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "2.24.82-dev-1603131999086",
+    "gatsby": "^3.0.0-next.0",
+    "gatsby-plugin-postcss": "^3.3.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "tailwindcss": "1"
   },
   "devDependencies": {
     "cross-env": "^5.0.2",
@@ -29,7 +31,7 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "gatsby develop",
+    "develop": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop",
     "serve": "gatsby serve",
     "start-dev-server": "start-server-and-test develop http://localhost:8000 test:jest",
     "test": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true npm-run-all -s build start-dev-server",

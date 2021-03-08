@@ -7,7 +7,7 @@ import { ExecutionResult, GraphQLError } from "graphql"
 
 import path from "path"
 import { store } from "../redux"
-import { boundActionCreators } from "../redux/actions"
+import { actions } from "../redux/actions"
 import { getCodeFrame } from "./graphql-errors"
 import errorParser from "./error-parser"
 
@@ -63,6 +63,7 @@ function panicQueryJobError(
       message: e.message,
       filePath: undefined,
       location: undefined,
+      error: e,
     })
 
     structuredError.context = {
@@ -98,15 +99,16 @@ async function startQueryJob(
     }
   }, 15000)
 
-  try {
-    return await graphqlRunner.query(queryJob.query, queryJob.context, {
+  return graphqlRunner
+    .query(queryJob.query, queryJob.context, {
       parentSpan,
       queryName: queryJob.id,
+      componentPath: queryJob.componentPath,
     })
-  } finally {
-    isPending = false
-    clearTimeout(timeoutId)
-  }
+    .finally(() => {
+      isPending = false
+      clearTimeout(timeoutId)
+    })
 }
 
 export async function queryRunner(
@@ -116,11 +118,13 @@ export async function queryRunner(
 ): Promise<IExecutionResult> {
   const { program } = store.getState()
 
-  boundActionCreators.queryStart({
-    path: queryJob.id,
-    componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
-  })
+  store.dispatch(
+    actions.queryStart({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      isPage: queryJob.isPage,
+    })
+  )
 
   // Run query
   let result: IExecutionResult
@@ -198,21 +202,15 @@ export async function queryRunner(
   }
 
   // Broadcast that a page's query has run.
-  boundActionCreators.pageQueryRun({
-    path: queryJob.id,
-    componentPath: queryJob.componentPath,
-    isPage: queryJob.isPage,
-  })
-
-  // Sets pageData to the store, here for easier access to the resultHash
-  if (
-    process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    queryJob.isPage
-  ) {
-    boundActionCreators.setPageData({
-      id: queryJob.id,
+  store.dispatch(
+    actions.pageQueryRun({
+      path: queryJob.id,
+      componentPath: queryJob.componentPath,
+      isPage: queryJob.isPage,
       resultHash,
+      queryHash: queryJob.hash,
     })
-  }
+  )
+
   return result
 }

@@ -2,14 +2,16 @@ import { murmurhash } from "babel-plugin-remove-graphql-queries/murmur"
 import { JSXOpeningElement } from "@babel/types"
 import { NodePath } from "@babel/core"
 import { getAttributeValues } from "babel-jsx-utils"
+import camelCase from "camelcase"
 
 export const SHARP_ATTRIBUTES = new Set([
   `src`,
   `layout`,
-  `maxWidth`,
-  `maxHeight`,
+  `formats`,
+  `aspectRatio`,
   `quality`,
-  `jpegOptions`,
+  `avifOptions`,
+  `jpgOptions`,
   `pngOptions`,
   `webpOptions`,
   `blurredOptions`,
@@ -19,15 +21,40 @@ export const SHARP_ATTRIBUTES = new Set([
   `placeholder`,
   `tracedSVGOptions`,
   `sizes`,
-  `background`,
+  `backgroundColor`,
 ])
+
+export function normalizeProps(
+  props: Record<string, unknown>
+): Record<string, unknown> {
+  const out = {
+    ...props,
+  }
+
+  if (out.layout) {
+    out.layout = camelCase(out.layout as string)
+  }
+
+  if (out.placeholder) {
+    out.placeholder = camelCase(out.placeholder as string)
+    if (out.placeholder === `tracedSvg`) {
+      out.placeholder = `tracedSVG`
+    }
+  }
+
+  if (Array.isArray(out.formats)) {
+    out.formats = out.formats.map((format: string) => format.toLowerCase())
+  }
+
+  return out
+}
 
 export function evaluateImageAttributes(
   nodePath: NodePath<JSXOpeningElement>,
   onError?: (prop: string) => void
 ): Record<string, unknown> {
   // Only get attributes that we need for generating the images
-  return getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES)
+  return normalizeProps(getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES))
 }
 
 export function hashOptions(options: unknown): string {

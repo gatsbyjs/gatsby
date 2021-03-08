@@ -1,7 +1,9 @@
-/* global SERVER */
-import React, { Fragment, FunctionComponent } from "react"
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference path="../global.d.ts" />
+
+import React, { Fragment, FunctionComponent, ReactElement } from "react"
 import terserMacro from "../../macros/terser.macro"
-import { Layout } from "../utils"
+import { Layout } from "../image-utils"
 
 export interface ILayoutWrapperProps {
   layout: Layout
@@ -37,14 +39,31 @@ if (hasNativeLazyLoadSupport) {
   />
 )
 
+export function getSizer(
+  layout: Layout,
+  width: number,
+  height: number
+): string {
+  let sizer: string | null = null
+  if (layout === `fullWidth`) {
+    sizer = `<div aria-hidden="true" style="padding-top: ${
+      (height / width) * 100
+    }%;"></div>`
+  }
+  if (layout === `constrained`) {
+    sizer = `<div style="max-width: ${width}px; display: block;"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E" style="max-width: 100%; display: block; position: static;"></div>`
+  }
+  return sizer
+}
+
 export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
   layout,
   width,
   height,
   children,
 }) {
-  let sizer: JSX.Element | null = null
-  if (layout === `fluid`) {
+  let sizer: ReactElement | null = null
+  if (layout === `fullWidth`) {
     sizer = (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
@@ -66,12 +85,15 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
       </div>
     )
   }
-
   return (
     <Fragment>
       {sizer}
       {children}
-      {SERVER && <NativeScriptLoading />}
+
+      {
+        // eslint-disable-next-line no-undef
+        SERVER && <NativeScriptLoading />
+      }
     </Fragment>
   )
 }

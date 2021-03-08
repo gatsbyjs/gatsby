@@ -9,7 +9,7 @@ This tutorial will use [gatsby-personal-starter-blog](https://github.com/thomasw
 ## Prerequisites
 
 - A GitHub account
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 
 ## Set up a Netlify CMS-managed Gatsby site in 5 steps:
 

@@ -1,3 +1,7 @@
+## :warning: This package is now deprecated
+
+The `gatsby-image` package is now deprecated. The new [Gatsby image plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) has better performance, cool new features and a simpler API. See [the migration guide](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/) to learn how to upgrade.
+
 # gatsby-image
 
 Speedy, optimized images without the work.
@@ -7,7 +11,7 @@ Gatsby's GraphQL queries. It combines
 [Gatsby's native image processing](https://image-processing.gatsbyjs.org/)
 capabilities with advanced image loading techniques to easily and completely
 optimize image loading for your sites. `gatsby-image` uses
-[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/)
+[gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/)
 to power its image transformations.
 
 _Note: gatsby-image is **not** a drop-in replacement for `<img />`. It's
@@ -82,7 +86,7 @@ effect as well as lazy loading of images further down the screen.
 
 `npm install gatsby-image`
 
-Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
+Depending on the gatsby starter you used, you may need to include [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) and [gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/) as well, and make sure they are installed and included in your gatsby-config.
 
 ```shell
 npm install gatsby-transformer-sharp gatsby-plugin-sharp
@@ -206,8 +210,8 @@ Note,
 you can not currently use these fragments in the GraphiQL IDE.
 
 Plugins supporting `gatsby-image` currently include
-[gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/),
-[gatsby-source-contentful](/packages/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
+[gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/),
+[gatsby-source-contentful](/plugins/gatsby-source-contentful/), [gatsby-source-datocms](https://github.com/datocms/gatsby-source-datocms) and [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity).
 
 Their fragments are:
 
@@ -268,7 +272,7 @@ For more information about these options, please see the
 [Gatsby Image API](https://www.gatsbyjs.org/docs/gatsby-image/#image-query-fragments).
 
 _Please see the
-[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp/#tracedsvg)
+[gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp/#tracedsvg)
 documentation for more information on `tracedSVG` and its configuration
 options._
 
@@ -418,7 +422,7 @@ While you could achieve a similar effect with plain CSS media queries, `gatsby-i
 
 ## Image processing arguments
 
-[gatsby-plugin-sharp](/packages/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
+[gatsby-plugin-sharp](/plugins/gatsby-plugin-sharp) supports many additional arguments for transforming your images like
 `quality`, `sizeByPixelDensity`, `pngCompressionLevel`, `cropFocus`, `grayscale` and many more. See its documentation for more.
 
 ## Some other stuff to be aware of

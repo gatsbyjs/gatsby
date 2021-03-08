@@ -9,7 +9,7 @@ arbitrary locations outside of `src/pages/` or in remote CMSes.
 For instance, let's say you have a Gatsby website, and you want to add
 support for MDX so you can start your blog. The posts will live in
 `content/posts/`. You can do this with the help of
-`gatsby-source-filesystem` and [`createPages`](/docs/node-apis/#createPages) in
+`gatsby-source-filesystem` and [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) in
 `gatsby-node.js`.
 
 ## Source MDX pages from the filesystem
@@ -24,7 +24,7 @@ root.
 
 > **Note**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](/packages/gatsby-plugin-mdx#extensions) if you want.
+> extension](/plugins/gatsby-plugin-mdx#extensions) if you want.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
 ```
 
 You can read about
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
+[`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem)
 if you'd like to learn more.
 
 ## Add MDX files
@@ -136,7 +136,7 @@ that will result in:
 is a function from `gatsby-source-filesystem` that translates file
 paths to usable URLs.
 
-[`onCreateNode`](/docs/node-apis/#onCreateNode)
+[`onCreateNode`](/docs/reference/config-files/gatsby-node/#onCreateNode)
 is a Gatsby lifecycle method that gets called whenever a new node is
 created. In this case only `MDX` nodes are touched.
 
@@ -214,7 +214,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 ```
 
 For further reading, check out the
-[createPages](/docs/node-apis/#createPages)
+[createPages](/docs/reference/config-files/gatsby-node/#createPages)
 API.
 
 ## Make a template for your posts

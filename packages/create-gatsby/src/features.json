@@ -1,6 +1,6 @@
 {
-  "gatsby-plugin-google-analytics": {
-    "message": "Add the Google Analytics tracking script"
+  "gatsby-plugin-gatsby-cloud": {
+    "message": "Build and host for free on Gatsby Cloud"
   },
   "gatsby-plugin-image": {
     "message": "Add responsive images",
@@ -16,13 +16,20 @@
       }
     }
   },
+  "gatsby-plugin-google-analytics": {
+    "message": "Add the Google Analytics tracking script"
+  },
   "gatsby-plugin-react-helmet": {
     "message": "Add page meta tags with React Helmet",
     "dependencies": ["react-helmet"]
   },
   "gatsby-plugin-sitemap": { "message": "Add an automatic sitemap" },
-  "gatsby-plugin-offline": { "message": "Enable offline functionality" },
-  "gatsby-plugin-manifest": { "message": "Generate a manifest file" },
+  "gatsby-plugin-manifest": {
+    "message": "Generate a manifest file",
+    "options": {
+      "gatsby-plugin-manifest": { "icon": "src/images/icon.png" }
+    }
+  },
   "gatsby-transformer-remark": {
     "message": "Add Markdown support (without MDX)",
     "plugins": ["gatsby-source-filesystem:pages"],

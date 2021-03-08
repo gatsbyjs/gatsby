@@ -1,5 +1,7 @@
 import { getConfigStore } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
+import chalk from "chalk"
+import telemetry from "gatsby-telemetry"
 
 type CancelExperimentNoticeCallback = () => void
 
@@ -9,15 +11,26 @@ export type CancelExperimentNoticeCallbackOrUndefined =
 
 const ONE_DAY = 24 * 60 * 60 * 1000
 
+interface INoticeObject {
+  noticeText: string
+  umbrellaLink: string
+  experimentIdentifier: string
+}
+
+const noticesToShow: Array<INoticeObject> = []
+const configStoreKey = (experimentIdentifier): string =>
+  `lastExperimentNotice.${experimentIdentifier}`
+
 export function showExperimentNoticeAfterTimeout(
   experimentIdentifier: string,
+  umbrellaLink: string,
   noticeText: string,
   showNoticeAfterMs: number,
   minimumIntervalBetweenNoticesMs: number = ONE_DAY
 ): CancelExperimentNoticeCallbackOrUndefined {
-  const configStoreKey = `lastExperimentNotice.${experimentIdentifier}`
-
-  const lastTimeWeShowedNotice = getConfigStore().get(configStoreKey)
+  const lastTimeWeShowedNotice = getConfigStore().get(
+    configStoreKey(experimentIdentifier)
+  )
 
   if (lastTimeWeShowedNotice) {
     if (Date.now() - lastTimeWeShowedNotice < minimumIntervalBetweenNoticesMs) {
@@ -26,12 +39,43 @@ export function showExperimentNoticeAfterTimeout(
   }
 
   const noticeTimeout = setTimeout(() => {
-    reporter.info(`\n\n${noticeText}\n\n`)
-
-    getConfigStore().set(configStoreKey, Date.now())
+    noticesToShow.push({ noticeText, umbrellaLink, experimentIdentifier })
   }, showNoticeAfterMs)
 
   return function clearNoticeTimeout(): void {
     clearTimeout(noticeTimeout)
+  }
+}
+
+export const createNoticeMessage = (notices): string => {
+  let message = `\nHi from the Gatsby maintainers! Based on what we see in your site, these coming
+features may help you. All of these can be enabled within gatsby-config.js via
+flags (samples below)`
+
+  notices.forEach(
+    notice =>
+      (message += `
+
+${chalk.bgBlue.bold(notice.experimentIdentifier)} (${notice.umbrellaLink}), ${
+        notice.noticeText
+      }\n`)
+  )
+
+  return message
+}
+
+export const showExperimentNotices = (): void => {
+  if (noticesToShow.length > 0) {
+    telemetry.trackCli(`InviteToTryExperiment`)
+    // Store that we're showing the invite.
+    noticesToShow.forEach(notice =>
+      getConfigStore().set(
+        configStoreKey(notice.experimentIdentifier),
+        Date.now()
+      )
+    )
+
+    const message = createNoticeMessage(noticesToShow)
+    reporter.info(message)
   }
 }

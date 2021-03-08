@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@3.1.0-next.0...gatsby-plugin-feed@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@3.0.0-next.2...gatsby-plugin-feed@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@3.0.0-next.1...gatsby-plugin-feed@3.0.0-next.2) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-feed:** Exists function and update version fs-extra ([#29616](https://github.com/gatsbyjs/gatsby/issues/29616)) ([5fb6064](https://github.com/gatsbyjs/gatsby/commit/5fb606416a2d0697319501787a0a47cf74142001))
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@3.0.0-next.0...gatsby-plugin-feed@3.0.0-next.1) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.14.0-next.0...gatsby-plugin-feed@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.13.0-next.0...gatsby-plugin-feed@2.14.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.12.0-next.1...gatsby-plugin-feed@2.13.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.12.0-next.0...gatsby-plugin-feed@2.12.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.11.0-next.1...gatsby-plugin-feed@2.12.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.11.0-next.0...gatsby-plugin-feed@2.11.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.10.0-next.0...gatsby-plugin-feed@2.11.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.9.0-next.0...gatsby-plugin-feed@2.10.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-feed
+
 # [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-feed@2.8.0-next.0...gatsby-plugin-feed@2.9.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-feed

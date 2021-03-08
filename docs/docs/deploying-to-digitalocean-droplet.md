@@ -249,7 +249,7 @@ There's a lot more to learn about DigitalOcean's Droplets, Ubuntu configurations
 
 - [Microblog - Create a new non-root user with `sudo` privileges on Ubuntu-based DigitalOcean Droplet configured with SSH](https://dev.to/mistryvatsal/microblog-create-a-new-non-root-user-with-sudo-privileges-on-ubuntu-based-digitalocean-droplet-configured-with-ssh-1l3)
 - [Official DigitalOcean Docs](https://www.digitalocean.com/docs/)
-- [Official Nginx Docs](http://nginx.org/en/docs/)
-- [Configuring HTTPS Servers with Nginx](http://nginx.org/en/docs/http/configuring_https_servers.html)
+- [Official Nginx Docs](https://nginx.org/en/docs/)
+- [Configuring HTTPS Servers with Nginx](https://nginx.org/en/docs/http/configuring_https_servers.html)
 - [How To Install Nginx on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04)
 - [How To Secure Nginx with Let's Encrypt on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04)

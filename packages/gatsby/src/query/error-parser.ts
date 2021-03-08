@@ -10,12 +10,14 @@ interface IErrorParser {
         end?: SourceLocation
       }
     | undefined
+  error?: Error
 }
 
 const errorParser = ({
   message,
   filePath = undefined,
   location = undefined,
+  error = undefined,
 }: IErrorParser): IMatch => {
   // Handle GraphQL errors. A list of regexes to match certain
   // errors to specific callbacks
@@ -128,9 +130,17 @@ const errorParser = ({
     {
       regex: /[\s\S]*/gm,
       cb: (match): IMatch => {
-        return {
-          id: `85901`,
-          context: { sourceMessage: match[0] },
+        if (error instanceof Error) {
+          return {
+            id: `85901`,
+            error, // show stack trace
+            context: { sourceMessage: match[0] },
+          }
+        } else {
+          return {
+            id: `85901`,
+            context: { sourceMessage: match[0] },
+          }
         }
       },
     },

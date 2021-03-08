@@ -35,7 +35,7 @@ Looking for information on Gatsby CLI recipes? [Read the press release](/blog/20
 
 ## What are recipes?
 
-Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
+Craving a happy medium between [full-length tutorials](/docs/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## [1. Pages and layouts](/docs/recipes/pages-layouts/)
 
@@ -68,11 +68,11 @@ There are so many ways to add styles to your website; Gatsby supports almost eve
 - [Using a plugin](/docs/recipes/working-with-plugins#using-a-plugin)
 - [Creating a new plugin using a plugin starter](/docs/recipes/working-with-plugins#creating-a-new-plugin-using-a-plugin-starter)
 
-## [4. Working with starters](/docs/recipes/working-with-starters/)
+## [4. Working with starters](/docs/how-to/local-development/starters/)
 
 [Starters](/docs/starters/) are boilerplate Gatsby sites maintained officially, or by the community.
 
-- [Using a starter](/docs/recipes/working-with-starters#using-a-starter)
+- [Using a starter](/docs/how-to/local-development/starters#using-a-starter)
 
 ## [5. Working with themes](/docs/recipes/working-with-themes/)
 

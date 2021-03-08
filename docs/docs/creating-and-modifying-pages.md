@@ -7,12 +7,12 @@ Gatsby makes it easy to programmatically control your pages.
 Pages can be created in three ways:
 
 - By creating React components in the `src/pages` directory. (Note that you must make the component the [default export](https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export).)
-- By using the [File System Route API](/docs/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
-- In your site's `gatsby-node.js` file, by implementing the API [`createPages`](/docs/node-apis/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
+- By using the [File System Route API](/docs/reference/routing/file-system-route-api/) to programmatically create pages from GraphQL and to create client-only routes.
+- In your site's `gatsby-node.js` file, by implementing the API [`createPages`](/docs/reference/config-files/gatsby-node/#createPages). ([Plugins](/docs/plugins/) can also implement `createPages` and create pages for you.)
 
-Pages can also be modified by you after their creation. For example, you could change the `path` to create internationalized routes (see [gatsby-theme-i18n](https://github.com/gatsbyjs/themes/blob/1ddd07c4248239e6323833c6d6d572ac0a0d57a1/packages/gatsby-theme-i18n/gatsby-node.js#L132-L172) for instance) by implementing the API [`onCreatePage`](/docs/node-apis/#onCreatePage).
+Pages can also be modified by you after their creation. For example, you could change the `path` to create internationalized routes (see [gatsby-theme-i18n](https://github.com/gatsbyjs/themes/blob/1ddd07c4248239e6323833c6d6d572ac0a0d57a1/packages/gatsby-theme-i18n/gatsby-node.js#L132-L172) for instance) by implementing the API [`onCreatePage`](/docs/reference/config-files/gatsby-node/#onCreatePage).
 
-> **Note:** For most use cases you'll be able to use the [File System Route API](/docs/file-system-route-api/) to create pages. Please read on if you need more control over the page creation or consume data outside of Gatsby's GraphQL data layer.
+> **Note:** For most use cases you'll be able to use the [File System Route API](/docs/reference/routing/file-system-route-api/) to create pages. Please read on if you need more control over the page creation or consume data outside of Gatsby's GraphQL data layer.
 
 ## Debugging help
 
@@ -125,7 +125,7 @@ Using the `id` as an access point to query for other properties in the template 
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
   const queryResults = await graphql(`
     query AllProducts {
       allProducts {
@@ -137,21 +137,20 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `);
+  `)
 
-  const productTemplate = path.resolve(`src/templates/product.js`);
+  const productTemplate = path.resolve(`src/templates/product.js`)
   queryResults.data.allProducts.nodes.forEach(node => {
     createPage({
       path: `/products/${node.id}`,
       component: productTemplate,
       context: {
         // This time the entire product is passed down as context
-        product: node
-      }
-    });
-  });
-};
-};
+        product: node,
+      },
+    })
+  })
+}
 ```
 
 > You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).
@@ -207,7 +206,7 @@ trailing slashes.
 To do this, in your site's `gatsby-node.js` add code similar to the following:
 
 _Note: There's also a plugin that will remove all trailing slashes from pages automatically:
-[gatsby-plugin-remove-trailing-slashes](/packages/gatsby-plugin-remove-trailing-slashes/)_.
+[gatsby-plugin-remove-trailing-slashes](/plugins/gatsby-plugin-remove-trailing-slashes/)_.
 
 _Note: If you need to perform an asynchronous action within `onCreatePage` you can return a promise or use an `async` function._
 
@@ -266,4 +265,4 @@ Page context is serialized before being passed to pages. This means it can't be 
 
 ## Creating client-only routes
 
-In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](/docs/client-only-routes-and-user-authentication/).
+In specific cases, you might want to create a site with client-only portions that are gated by authentication. For more on how to achieve this, refer to [client-only routes & user authentication](/docs/how-to/routing/client-only-routes-and-user-authentication/).

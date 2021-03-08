@@ -3,6 +3,112 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.1...gatsby-source-wordpress@5.1.0-next.2) (2021-02-28)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** auto-rename types named "Filter" ([#29718](https://github.com/gatsbyjs/gatsby/issues/29718)) ([fb225be](https://github.com/gatsbyjs/gatsby/commit/fb225bee7669b55039fc2525a3149091e8ede8e8))
+- **gatsby-source-wordpress:** HTML image regex's ([#29778](https://github.com/gatsbyjs/gatsby/issues/29778)) ([f6edccf](https://github.com/gatsbyjs/gatsby/commit/f6edccf8440acc29002ea2c89a815fe863c94670))
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.0...gatsby-source-wordpress@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.9...gatsby-source-wordpress@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.8...gatsby-source-wordpress@5.0.0-next.9) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** remove hard tabs from Markdown ([#29627](https://github.com/gatsbyjs/gatsby/issues/29627)) ([0038683](https://github.com/gatsbyjs/gatsby/commit/0038683e7a6bcf8340265a3a46714bc87b32dd96))
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+- **gatsby-source-wordpress:** Add missing tests ([#29406](https://github.com/gatsbyjs/gatsby/issues/29406)) ([06e9337](https://github.com/gatsbyjs/gatsby/commit/06e933758b176505ca46f532a13db5dc5b1681e9))
+
+# [5.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.7...gatsby-source-wordpress@5.0.0-next.8) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.6...gatsby-source-wordpress@5.0.0-next.7) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.5...gatsby-source-wordpress@5.0.0-next.6) (2021-02-18)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.4...gatsby-source-wordpress@5.0.0-next.5) (2021-02-17)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.3...gatsby-source-wordpress@5.0.0-next.4) (2021-02-15)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.2...gatsby-source-wordpress@5.0.0-next.3) (2021-02-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.1...gatsby-source-wordpress@5.0.0-next.2) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove old touchNode signature ([#29245](https://github.com/gatsbyjs/gatsby/issues/29245)) ([0927cb0](https://github.com/gatsbyjs/gatsby/commit/0927cb007d0774bed8cf5ead3130ff6b7c3393b7))
+
+# [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.0...gatsby-source-wordpress@5.0.0-next.1) (2021-02-08)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@4.1.0-next.1...gatsby-source-wordpress@5.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.12.0-next.0...gatsby-source-wordpress@4.1.0-next.1) (2021-02-04)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.11.0-next.0...gatsby-source-wordpress@3.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.10.0-next.1...gatsby-source-wordpress@3.11.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.10.0-next.0...gatsby-source-wordpress@3.10.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.9.0-next.2...gatsby-source-wordpress@3.10.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.9.0-next.1...gatsby-source-wordpress@3.9.0-next.2) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.9.0-next.0...gatsby-source-wordpress@3.9.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.8.0-next.0...gatsby-source-wordpress@3.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.2...gatsby-source-wordpress@3.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [3.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.1...gatsby-source-wordpress@3.7.0-next.2) (2020-11-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 # [3.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@3.7.0-next.0...gatsby-source-wordpress@3.7.0-next.1) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-source-wordpress

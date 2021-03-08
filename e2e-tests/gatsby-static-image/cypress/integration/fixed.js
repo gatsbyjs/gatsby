@@ -28,4 +28,10 @@ describe(`fixed`, () => {
       .should(`exist`)
   })
 
+  it(`includes sizes attribute`, () => {
+    cy.getTestElement(fixedTestId)
+      .find(`[data-main-image]`)
+      .should(`have.attr`, `sizes`)
+      .should(`equal`, `500px`)
+  })
 })

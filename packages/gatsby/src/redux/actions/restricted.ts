@@ -264,10 +264,12 @@ export const actions = {
     extension: GraphQLFieldExtensionDefinition,
     plugin: IGatsbyPlugin,
     traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateFieldExtension> => (
-    dispatch,
-    getState
-  ): void => {
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateFieldExtension
+  > => (dispatch, getState): void => {
     const { name } = extension || {}
     const { fieldExtensions } = getState().schemaCustomization
 
@@ -369,7 +371,7 @@ export const actions = {
    *   actions.createResolverContext({ getHtml })
    * }
    * // The context value can then be accessed in any field resolver like this:
-   * exports.createSchemaCustomization = ({ actions }) => {
+   * exports.createSchemaCustomization = ({ actions, schema }) => {
    *   actions.createTypes(schema.buildObjectType({
    *     name: 'Test',
    *     interfaces: ['Node'],
@@ -389,9 +391,12 @@ export const actions = {
     context: IGatsbyPluginContext,
     plugin: IGatsbyPlugin,
     traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateResolverContext> => (
-    dispatch
-  ): void => {
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateResolverContext
+  > => (dispatch): void => {
     if (!context || typeof context !== `object`) {
       report.error(
         `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
@@ -461,7 +466,7 @@ type AvailableActionsByAPI = Record<
 >
 
 const set = (
-  availableActionsByAPI: {},
+  availableActionsByAPI: Record<string, any>,
   api: API,
   actionName: RestrictionActionNames,
   action: SomeActionCreator

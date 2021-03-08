@@ -224,6 +224,7 @@ describe(`Query schema`, () => {
             edges {
               node {
                 childMarkdown { frontmatter { title } }
+                childrenMarkdown { frontmatter { title } }
               }
             }
           }
@@ -236,16 +237,23 @@ describe(`Query schema`, () => {
             {
               node: {
                 childMarkdown: { frontmatter: { title: `Markdown File 1` } },
+                childrenMarkdown: [
+                  { frontmatter: { title: `Markdown File 1` } },
+                ],
               },
             },
             {
               node: {
                 childMarkdown: { frontmatter: { title: `Markdown File 2` } },
+                childrenMarkdown: [
+                  { frontmatter: { title: `Markdown File 2` } },
+                ],
               },
             },
             {
               node: {
                 childMarkdown: null,
+                childrenMarkdown: [],
               },
             },
           ],
@@ -261,6 +269,7 @@ describe(`Query schema`, () => {
           allFile {
             edges {
               node {
+                childAuthor { name }
                 childrenAuthor { name }
               }
             }
@@ -273,16 +282,19 @@ describe(`Query schema`, () => {
           edges: [
             {
               node: {
+                childAuthor: null,
                 childrenAuthor: [],
               },
             },
             {
               node: {
+                childAuthor: null,
                 childrenAuthor: [],
               },
             },
             {
               node: {
+                childAuthor: { name: `Author 2` },
                 childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }],
               },
             },
@@ -1570,6 +1582,104 @@ describe(`Query schema`, () => {
                 reviewer: {
                   name: `Author 2`,
                 },
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+  })
+
+  describe(`with regex filter`, () => {
+    /**
+     * double-escape character escape sequences when written inline (test only)
+     * (see also the test src/utils/__tests__/prepare-regex.ts)
+     */
+    it(`escape sequences work when correctly escaped`, async () => {
+      const query = `
+        {
+          allMarkdown(filter: { frontmatter: { authors: { elemMatch: { email: { regex: "/^\\\\w{6}\\\\d@\\\\w{7}\\\\.COM$/i" } } } } }) {
+            nodes {
+              frontmatter {
+                authors {
+                  email
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    /**
+     * queries are read from file and parsed with babel
+     */
+    it.only(`escape sequences work when correctly escaped`, async () => {
+      const fs = require(`fs`)
+      const path = require(`path`)
+      const babel = require(`@babel/parser`)
+      const fileContent = fs.readFileSync(
+        path.join(__dirname, `./fixtures/regex-query.js`),
+        `utf-8`
+      )
+      const ast = babel.parse(fileContent)
+      const query = ast.program.body[0].expression.right.quasis[0].value.raw
+
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
               },
             },
           ],

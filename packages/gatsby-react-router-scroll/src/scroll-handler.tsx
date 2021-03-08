@@ -1,5 +1,5 @@
 import * as React from "react"
-import { LocationContext } from "@reach/router"
+import { LocationContext } from "@gatsbyjs/reach-router"
 import PropTypes from "prop-types"
 import { SessionStorage } from "./session-storage"
 
@@ -25,12 +25,29 @@ export class ScrollHandler extends React.Component<
 
   _stateStorage: SessionStorage = new SessionStorage()
 
+  // @see https://www.html5rocks.com/en/tutorials/speed/animations/
+  _isTicking = false
+  _latestKnownScrollY = 0
   scrollListener = (): void => {
-    const { key } = this.props.location
+    this._latestKnownScrollY = window.scrollY
+
+    if (!this._isTicking) {
+      this._isTicking = true
+      requestAnimationFrame(this._saveScroll.bind(this))
+    }
+  }
+
+  _saveScroll(): void {
+    const key = this.props.location.key || null
 
     if (key) {
-      this._stateStorage.save(this.props.location, key, window.scrollY)
+      this._stateStorage.save(
+        this.props.location,
+        key,
+        this._latestKnownScrollY
+      )
     }
+    this._isTicking = false
   }
 
   componentDidMount(): void {
@@ -61,7 +78,16 @@ export class ScrollHandler extends React.Component<
       scrollPosition = this._stateStorage.read(this.props.location, key)
     }
 
-    if (hash && scrollPosition === 0) {
+    /**  There are two pieces of state: the browser url and
+     * history state which keeps track of scroll position
+     * Native behaviour prescribes that we ought to restore scroll position
+     * when a user navigates back in their browser (this is the `POP` action)
+     * Currently, reach router has a bug that prevents this at https://github.com/reach/router/issues/228
+     * So we _always_ stick to the url as a source of truth — if the url
+     * contains a hash, we scroll to it
+     */
+
+    if (hash) {
       this.scrollToHash(decodeURI(hash), prevProps)
     } else {
       this.windowScroll(scrollPosition, prevProps)

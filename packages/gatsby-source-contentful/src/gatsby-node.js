@@ -4,7 +4,8 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
-const fetch = require(`node-fetch`)
+const fetch = require(`@vercel/fetch-retry`)(require(`node-fetch`))
+const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
@@ -28,22 +29,28 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
 
-  await fetch(`https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}`, {
-    headers: {
-      Authorization: `Bearer ${pluginOptions.accessToken}`,
-      "Content-Type": `application/json`,
-    },
-  })
+  await fetch(
+    `https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}/environments/${pluginOptions.environment}/content_types`,
+    {
+      headers: {
+        Authorization: `Bearer ${pluginOptions.accessToken}`,
+        "Content-Type": `application/json`,
+      },
+    }
+  )
     .then(res => res.ok)
     .then(ok => {
-      if (!ok)
-        throw new Error(
-          `Cannot access Contentful space "${maskText(
-            pluginOptions.spaceId
-          )}" with access token "${maskText(
-            pluginOptions.accessToken
-          )}". Make sure to double check them!`
-        )
+      if (!ok) {
+        const errorMessage = `Cannot access Contentful space "${maskText(
+          pluginOptions.spaceId
+        )}" on environment "${
+          pluginOptions.environment
+        } with access token "${maskText(
+          pluginOptions.accessToken
+        )}". Make sure to double check them!`
+
+        throw new Error(errorMessage)
+      }
     })
 
   return undefined
@@ -163,7 +170,11 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, deleteNode, touchNode, createTypes } = actions
 
-  let currentSyncData, contentTypeItems, defaultLocale, locales, space
+  let currentSyncData
+  let contentTypeItems
+  let defaultLocale
+  let locales
+  let space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
       `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
@@ -193,23 +204,29 @@ exports.sourceNodes = async (
    * with all data from subsequent syncs. Afterwards the references get
    * resolved via the Contentful JS SDK.
    */
-  let syncToken = await cache.get(CACHE_SYNC_TOKEN)
+  const syncToken = await cache.get(CACHE_SYNC_TOKEN)
   let previousSyncData = {
     assets: [],
     entries: [],
   }
-  let cachedData = await cache.get(CACHE_SYNC_DATA)
+  const cachedData = await cache.get(CACHE_SYNC_DATA)
 
   if (cachedData) {
     previousSyncData = cachedData
   }
 
+  const fetchActivity = reporter.activityTimer(
+    `Contentful: Fetch data (${sourceId})`,
+    {
+      parentSpan,
+    }
+  )
+
   if (forceCache) {
     // If the cache has data, use it. Otherwise do a remote fetch anyways and prime the cache now.
     // If present, do NOT contact contentful, skip the round trips entirely
     reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in`,
-      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Skipping remote fetch, using data stored in \`${process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE}\``
     )
     ;({
       currentSyncData,
@@ -253,28 +270,63 @@ exports.sourceNodes = async (
         `Note: \`GATSBY_CONTENTFUL_OFFLINE\` was set but it either was not \`true\`, we _are_ online, or we are in production mode, so the flag is ignored.`
       )
     }
+
+    fetchActivity.start()
+    ;({
+      currentSyncData,
+      contentTypeItems,
+      defaultLocale,
+      locales,
+      space,
+    } = await fetchData({
+      syncToken,
+      reporter,
+      pluginConfig,
+      parentSpan,
+    }))
+
+    if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
+      reporter.info(
+        `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
+          process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
+      )
+      fs.writeFileSync(
+        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
+        v8.serialize({
+          currentSyncData,
+          contentTypeItems,
+          defaultLocale,
+          locales,
+          space,
+        })
+      )
+    }
   }
 
-  const fetchActivity = reporter.activityTimer(
-    `Contentful: Fetch data (${sourceId})`,
-    {
-      parentSpan,
-    }
+  const allLocales = locales
+  locales = locales.filter(pluginConfig.get(`localeFilter`))
+  reporter.verbose(
+    `Default locale: ${defaultLocale}.   All locales: ${allLocales
+      .map(({ code }) => code)
+      .join(`, `)}`
   )
-
-  fetchActivity.start()
-  ;({
-    currentSyncData,
-    contentTypeItems,
-    defaultLocale,
-    locales,
-    space,
-  } = await fetchData({
-    syncToken,
-    reporter,
-    pluginConfig,
-    parentSpan,
-  }))
+  if (allLocales.length !== locales.length) {
+    reporter.verbose(
+      `After plugin.options.localeFilter: ${locales
+        .map(({ code }) => code)
+        .join(`, `)}`
+    )
+  }
+  if (locales.length === 0) {
+    reporter.panic({
+      id: CODES.LocalesMissing,
+      context: {
+        sourceMessage: `Please check if your localeFilter is configured properly. Locales '${allLocales
+          .map(item => item.code)
+          .join(`,`)}' were found but were filtered down to none.`,
+      },
+    })
+  }
 
   createTypes(`
   interface ContentfulEntry @nodeInterface {
@@ -304,7 +356,15 @@ exports.sourceNodes = async (
 
   const gqlTypes = contentTypeItems.map(contentTypeItem =>
     schema.buildObjectType({
-      name: _.upperFirst(_.camelCase(`Contentful ${contentTypeItem.name}`)),
+      name: _.upperFirst(
+        _.camelCase(
+          `Contentful ${
+            pluginConfig.get(`useNameForId`)
+              ? contentTypeItem.name
+              : contentTypeItem.sys.id
+          }`
+        )
+      ),
       fields: {
         contentful_id: { type: `String!` },
         id: { type: `ID!` },
@@ -316,26 +376,10 @@ exports.sourceNodes = async (
 
   createTypes(gqlTypes)
 
-  if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
-    reporter.info(
-      `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE was set. Writing v8 serialized glob of remote data to: ` +
-        process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE
-    )
-    fs.writeFileSync(
-      process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE,
-      v8.serialize({
-        currentSyncData,
-        contentTypeItems,
-        defaultLocale,
-        locales,
-        space,
-      })
-    )
-  }
   fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
-    `Contentful: Proccess data (${sourceId})`,
+    `Contentful: Process data (${sourceId})`,
     {
       parentSpan,
     }
@@ -445,7 +489,7 @@ exports.sourceNodes = async (
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
       touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      deleteNode(node)
     })
   }
 
@@ -498,17 +542,17 @@ exports.sourceNodes = async (
 
   reporter.verbose(`Resolving Contentful references`)
 
-  const newOrUpdatedEntries = []
+  const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.push(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => _.includes(newOrUpdatedEntries, `${n.id}___${n.sys.type}`))
+    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
     .forEach(n => {
       if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
         foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
@@ -563,6 +607,7 @@ exports.sourceNodes = async (
         entries: entryList[i],
         createNode,
         createNodeId,
+        getNode,
         resolvable,
         foreignReferenceMap,
         defaultLocale,
@@ -602,6 +647,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),

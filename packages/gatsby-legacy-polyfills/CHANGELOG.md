@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@1.1.0-next.0...gatsby-legacy-polyfills@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@1.0.0-next.1...gatsby-legacy-polyfills@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [1.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@1.0.0-next.0...gatsby-legacy-polyfills@1.0.0-next.1) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.8.0-next.0...gatsby-legacy-polyfills@1.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.7.0-next.0...gatsby-legacy-polyfills@0.8.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.6.0-next.0...gatsby-legacy-polyfills@0.7.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [0.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.5.0-next.0...gatsby-legacy-polyfills@0.6.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [0.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.4.0-next.0...gatsby-legacy-polyfills@0.5.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
+# [0.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.3.0-next.0...gatsby-legacy-polyfills@0.4.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-legacy-polyfills
+
 # [0.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.2.0-next.0...gatsby-legacy-polyfills@0.3.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-legacy-polyfills

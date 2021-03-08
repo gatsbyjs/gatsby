@@ -15,9 +15,11 @@ import { ReactElement } from "react"
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   isLoading: boolean
   isLoaded: boolean // alwaystype SetStateAction<S> = S | ((prevState: S) => S);
-  toggleIsLoaded: Function
+  toggleIsLoaded: (toggle: boolean) => void
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
+
+const IS_DEV = process.env.NODE_ENV === `development`
 
 export function lazyHydrate(
   {
@@ -27,12 +29,24 @@ export function lazyHydrate(
     isLoaded,
     toggleIsLoaded,
     ref,
+    imgClassName,
+    imgStyle = {},
+    objectPosition,
+    backgroundColor,
+    objectFit = `cover`,
     ...props
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
   hydrated: MutableRefObject<boolean>
 ): (() => void) | null {
-  const { width, height, layout, images, placeholder, backgroundColor } = image
+  const {
+    width,
+    height,
+    layout,
+    images,
+    placeholder,
+    backgroundColor: wrapperBackgroundColor,
+  } = image
 
   if (!root.current) {
     return null
@@ -40,12 +54,19 @@ export function lazyHydrate(
 
   const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
   // On first server hydration do nothing
-  if (hasNativeLazyLoadSupport && hasSSRHtml && !hydrated.current) {
+  if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
     return null
   }
 
   const cacheKey = JSON.stringify(images)
-  const hasLoaded = !hydrated.current && hasImageLoaded(cacheKey)
+  const hasLoaded = hasImageLoaded(cacheKey)
+
+  imgStyle = {
+    objectFit,
+    objectPosition,
+    backgroundColor,
+    ...imgStyle,
+  }
 
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
@@ -57,12 +78,15 @@ export function lazyHydrate(
             layout,
             width,
             height,
-            backgroundColor
+            wrapperBackgroundColor
           )}
         />
       )}
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
+        width={width}
+        height={height}
+        className={imgClassName}
         {...getMainProps(
           isLoading,
           hasLoaded || isLoaded,
@@ -70,13 +94,15 @@ export function lazyHydrate(
           loading,
           toggleIsLoaded,
           cacheKey,
-          ref
+          ref,
+          imgStyle
         )}
       />
     </LayoutWrapper>
   )
 
-  const doRender = hydrated.current ? render : hydrate
+  // Force render to mitigate "Expected server HTML to contain a matching" in develop
+  const doRender = hydrated.current || IS_DEV ? render : hydrate
   doRender(component, root.current)
   hydrated.current = true
 

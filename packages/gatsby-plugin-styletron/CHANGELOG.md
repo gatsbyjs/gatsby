@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.1.0-next.0...gatsby-plugin-styletron@6.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+# [6.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@6.0.0-next.0...gatsby-plugin-styletron@6.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+# [6.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.8.0-next.0...gatsby-plugin-styletron@6.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+# [5.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.7.0-next.0...gatsby-plugin-styletron@5.8.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+# [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.6.0-next.0...gatsby-plugin-styletron@5.7.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.5.0-next.0...gatsby-plugin-styletron@5.6.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+# [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.4.0-next.0...gatsby-plugin-styletron@5.5.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.3.0-next.0...gatsby-plugin-styletron@5.4.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-styletron
+
 # [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styletron@5.2.0-next.0...gatsby-plugin-styletron@5.3.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-styletron

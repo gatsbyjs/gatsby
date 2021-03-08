@@ -36,7 +36,6 @@ describe(`gatsby new`, () => {
     )
     logs.should.contain(`success Created starter directory layout`)
     logs.should.contain(`info Installing packages...`)
-    logs.should.contain(`success Saved lockfile.`)
     logs.should.contain(
       `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
     )
@@ -57,7 +56,6 @@ describe(`gatsby new`, () => {
     )
     logs.should.contain(`success Created starter directory layout`)
     logs.should.contain(`info Installing packages...`)
-    logs.should.contain(`success Saved lockfile.`)
     logs.should.contain(
       `Your new Gatsby site has been successfully bootstrapped. Start developing it by running:`
     )
@@ -79,14 +77,7 @@ describe(`gatsby new`, () => {
     expect(code).toBe(1)
   })
 
-  it(`runs the prompted starter selection process when no arguments are passed`, () => {
-    const [_, logs] = GatsbyCLI.from(cwd).invoke([`new`])
-
-    logs.should.contain(`What is your project called?`)
-  })
-
-  it(`runs create-gatsby when no arguments are provided to gatsby new with the GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW flag set`, () => {
-    process.env.GATSBY_EXPERIMENTAL_GATSBY_NEW_FLOW = true // when this flag is removed we can remove this line
+  it(`runs create-gatsby when no arguments are provided to gatsby new`, () => {
     const [_, logs] = GatsbyCLI.from(cwd).invoke([`new`])
 
     logs.should.contain(`Welcome to Gatsby!`)

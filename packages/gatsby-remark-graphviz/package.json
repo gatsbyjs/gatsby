@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-graphviz",
   "description": "Processes graphviz code blocks and renders to SVG using viz.js",
-  "version": "1.6.0-next.1",
+  "version": "2.1.0-next.1",
   "author": "Anthony Marcar <anthony@moocar.me>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -15,8 +15,8 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.8.0-next.0",
-    "cross-env": "^7.0.2",
+    "babel-preset-gatsby-package": "^1.1.0-next.1",
+    "cross-env": "^7.0.3",
     "hast-util-to-html": "^4.0.1",
     "mdast-util-to-hast": "^3.0.4",
     "remark": "^9.0.0",
@@ -37,7 +37,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -50,6 +50,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

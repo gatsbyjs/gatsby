@@ -1,19 +1,33 @@
 import { execSync } from "child_process"
-import execa from "execa"
+import execa, { Options } from "execa"
 import fs from "fs-extra"
 import path from "path"
 import { reporter } from "./reporter"
 import { spin } from "tiny-spin"
 import { getConfigStore } from "./get-config-store"
 type PackageManager = "yarn" | "npm"
+import c from "ansi-colors"
+import { clearLine, makeNpmSafe } from "./utils"
 
-const packageMangerConfigKey = `cli.packageManager`
+const packageManagerConfigKey = `cli.packageManager`
 
-export const getPackageManager = (): PackageManager =>
-  getConfigStore().get(packageMangerConfigKey)
+export const getPackageManager = (
+  npmConfigUserAgent?: string
+): PackageManager => {
+  const configStore = getConfigStore()
+  const actualPackageManager = configStore.get(packageManagerConfigKey)
 
-export const setPackageManager = (packageManager: PackageManager): void => {
-  getConfigStore().set(packageMangerConfigKey, packageManager)
+  if (actualPackageManager) {
+    return actualPackageManager
+  }
+
+  if (npmConfigUserAgent?.includes(`yarn`)) {
+    configStore.set(packageManagerConfigKey, `yarn`)
+    return `yarn`
+  }
+
+  configStore.set(packageManagerConfigKey, `npm`)
+  return `npm`
 }
 
 // Checks the existence of yarn package
@@ -24,6 +38,9 @@ const checkForYarn = (): boolean => {
     execSync(`yarnpkg --version`, { stdio: `ignore` })
     return true
   } catch (e) {
+    reporter.info(
+      `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
+    )
     return false
   }
 }
@@ -31,11 +48,8 @@ const checkForYarn = (): boolean => {
 // Initialize newly cloned directory as a git repo
 const gitInit = async (
   rootPath: string
-): Promise<execa.ExecaReturnBase<string>> => {
-  reporter.info(`Initialising git in ${rootPath}`)
-
-  return await execa(`git`, [`init`], { cwd: rootPath })
-}
+): Promise<execa.ExecaReturnBase<string>> =>
+  await execa(`git`, [`init`], { cwd: rootPath })
 
 // Create a .gitignore file if it is missing in the new directory
 const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
@@ -43,7 +57,6 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
     return
   }
 
-  reporter.info(`Creating minimal .gitignore in ${rootPath}`)
   await fs.writeFile(
     path.join(rootPath, `.gitignore`),
     `.cache\nnode_modules\npublic\n`
@@ -52,8 +65,6 @@ const maybeCreateGitIgnore = async (rootPath: string): Promise<void> => {
 
 // Create an initial git commit in the new directory
 const createInitialGitCommit = async (rootPath: string): Promise<void> => {
-  reporter.info(`Create initial git commit in ${rootPath}`)
-
   await execa(`git`, [`add`, `-A`], { cwd: rootPath })
   // use execSync instead of spawn to handle git clients using
   // pgp signatures (with password)
@@ -68,6 +79,29 @@ const createInitialGitCommit = async (rootPath: string): Promise<void> => {
   }
 }
 
+const setNameInPackage = async (
+  sitePath: string,
+  name: string
+): Promise<void> => {
+  const packageJsonPath = path.join(sitePath, `package.json`)
+  const packageJson = await fs.readJSON(packageJsonPath)
+  packageJson.name = makeNpmSafe(name)
+  packageJson.description = name
+  delete packageJson.license
+  try {
+    const result = await execa(`git`, [`config`, `user.name`])
+    if (result.failed) {
+      delete packageJson.author
+    } else {
+      packageJson.author = result.stdout
+    }
+  } catch (e) {
+    delete packageJson.author
+  }
+
+  await fs.writeJSON(packageJsonPath, packageJson, { spaces: 2 })
+}
+
 // Executes `npm install` or `yarn install` in rootPath.
 const install = async (
   rootPath: string,
@@ -75,47 +109,49 @@ const install = async (
 ): Promise<void> => {
   const prevDir = process.cwd()
 
-  let stop = spin(`Installing packages...`)
+  reporter.info(`${c.blueBright(c.symbols.pointer)} Installing Gatsby...`)
 
   process.chdir(rootPath)
 
   const npmConfigUserAgent = process.env.npm_config_user_agent
 
-  const silent = `--silent`
-
   try {
-    if (!getPackageManager()) {
-      if (npmConfigUserAgent?.includes(`yarn`)) {
-        setPackageManager(`yarn`)
-      } else {
-        setPackageManager(`npm`)
-      }
-    }
-    if (getPackageManager() === `yarn` && checkForYarn()) {
-      if (await fs.pathExists(`package-lock.json`)) {
-        if (!(await fs.pathExists(`yarn.lock`))) {
-          await execa(`yarnpkg`, [`import`])
-        }
-        await fs.remove(`package-lock.json`)
-      }
+    const pm = getPackageManager(npmConfigUserAgent)
 
-      const args = packages.length ? [`add`, silent, ...packages] : [silent]
-      await execa(`yarnpkg`, args)
+    const options: Options = {
+      stderr: `inherit`,
+    }
+
+    const config = [`--loglevel`, `error`, `--color`, `always`]
+
+    if (pm === `yarn` && checkForYarn()) {
+      const args = packages.length
+        ? [`add`, `--silent`, ...packages]
+        : [`--silent`]
+
+      await fs.remove(`package-lock.json`)
+      await execa(`yarnpkg`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
+      await execa(`npm`, [`install`, ...config], options)
+      await clearLine()
 
-      await execa(`npm`, [`install`, silent])
-      stop()
-      stop = spin(`Installing plugins...`)
-      await execa(`npm`, [`install`, silent, ...packages])
-      stop()
+      reporter.success(`Installed Gatsby`)
+      reporter.info(`${c.blueBright(c.symbols.pointer)} Installing plugins...`)
+
+      await execa(
+        `npm`,
+        [`install`, ...config, `--legacy-peer-deps`, ...packages],
+        options
+      )
+      await clearLine()
     }
+
+    reporter.success(`Installed plugins`)
   } catch (e) {
     reporter.panic(e.message)
   } finally {
     process.chdir(prevDir)
-    stop()
-    reporter.success(`Installed packages`)
   }
 }
 
@@ -126,9 +162,7 @@ const clone = async (
   branch?: string
 ): Promise<void> => {
   const branchProps = branch ? [`-b`, branch] : []
-
   const stop = spin(`Cloning site template`)
-
   const args = [
     `clone`,
     ...branchProps,
@@ -141,15 +175,19 @@ const clone = async (
 
   try {
     await execa(`git`, args)
+
+    reporter.success(`Created site from template`)
   } catch (err) {
     reporter.panic(err.message)
   }
+
   stop()
-  reporter.success(`Created site from template`)
   await fs.remove(path.join(rootPath, `.git`))
+
+  await fs.remove(path.join(rootPath, `LICENSE`))
 }
 
-async function gitSetup(rootPath: string): Promise<void> {
+export async function gitSetup(rootPath: string): Promise<void> {
   await gitInit(rootPath)
   await maybeCreateGitIgnore(rootPath)
   await createInitialGitCommit(rootPath)
@@ -161,14 +199,16 @@ async function gitSetup(rootPath: string): Promise<void> {
 export async function initStarter(
   starter: string,
   rootPath: string,
-  packages: Array<string>
+  packages: Array<string>,
+  siteName: string
 ): Promise<void> {
   const sitePath = path.resolve(rootPath)
 
   await clone(starter, sitePath)
 
+  await setNameInPackage(sitePath, siteName)
+
   await install(rootPath, packages)
 
-  await gitSetup(rootPath)
   // trackCli(`NEW_PROJECT_END`);
 }

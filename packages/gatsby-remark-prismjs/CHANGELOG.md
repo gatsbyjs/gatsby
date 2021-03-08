@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@4.1.0-next.0...gatsby-remark-prismjs@4.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@4.0.0-next.0...gatsby-remark-prismjs@4.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.14.0-next.0...gatsby-remark-prismjs@4.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.13.0-next.0...gatsby-remark-prismjs@3.14.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.12.0-next.0...gatsby-remark-prismjs@3.13.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.11.0-next.0...gatsby-remark-prismjs@3.12.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.10.0-next.0...gatsby-remark-prismjs@3.11.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.9.0-next.0...gatsby-remark-prismjs@3.10.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-remark-prismjs
+
 # [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-prismjs@3.8.0-next.0...gatsby-remark-prismjs@3.9.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-remark-prismjs

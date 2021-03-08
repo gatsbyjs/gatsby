@@ -1,13 +1,26 @@
 import { errorSchema } from "../error-schema"
 
-test(`throws invalid on an invalid error`, () => {
-  expect(errorSchema.validate({ lol: `true` })).rejects.toBeDefined()
+test(`returns invalid on an invalid error`, () => {
+  expect(errorSchema.validate({ lol: `true` })).toMatchInlineSnapshot(`
+    Object {
+      "error": [ValidationError: "lol" is not allowed],
+      "value": Object {
+        "lol": "true",
+      },
+    }
+  `)
 })
 
-test(`does not throw on a valid schema`, () => {
+test(`returns a valid value`, () => {
   expect(
     errorSchema.validate({
       context: {},
     })
-  ).resolves.toEqual(expect.any(Object))
+  ).toMatchInlineSnapshot(`
+    Object {
+      "value": Object {
+        "context": Object {},
+      },
+    }
+  `)
 })

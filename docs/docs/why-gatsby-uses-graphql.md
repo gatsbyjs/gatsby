@@ -13,7 +13,7 @@ Without providing some context, it can seem like GraphQL is overkill for somethi
   lessonTitle="Create a Gatsby Page Without Any Data"
 />
 
-For any kind of pages that aren’t directly created in `src/pages/`, you’ll need Gatsby’s [`createPages` Node API](/docs/node-apis/#createPages) to create pages programmatically.
+For any kind of pages that aren’t directly created in `src/pages/`, you’ll need Gatsby’s [`createPages` Node API](/docs/reference/config-files/gatsby-node/#createPages) to create pages programmatically.
 
 All that’s required to create a page is a `path` where it should be created and the component that should be rendered there.
 
@@ -215,12 +215,12 @@ Using `data/products.json` as an example, by using GraphQL we’re able to solve
 
 In order to load the product and image data into GraphQL, you need to add a few [Gatsby plugins](/plugins/). Namely, you need plugins to:
 
-- Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/packages/gatsby-source-filesystem/))
-- Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/packages/gatsby-transformer-json/))
-- Optimize images ([`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/))
-- Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/packages/gatsby-transformer-sharp/))
+- Load the JSON file into Gatsby’s internal data store, which can be queried using GraphQL ([`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem/))
+- Convert JSON files into a format you can query with GraphQL ([`gatsby-transformer-json`](/plugins/gatsby-transformer-json/))
+- Optimize images ([`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/))
+- Add data about optimized images to Gatsby’s data store ([`gatsby-transformer-sharp`](/plugins/gatsby-transformer-sharp/))
 
-In addition to the plugins, we’ll use [`gatsby-image`](/packages/gatsby-image/) to display the optimized images with lazy loading.
+In addition to the plugins, we’ll use [`gatsby-image`](/plugins/gatsby-image/) to display the optimized images with lazy loading.
 
 Install these packages using the command line:
 
@@ -256,7 +256,7 @@ GATSBY_GRAPHQL_IDE=playground gatsby develop
 
 You can explore the available data schema using the “Docs” tab at the right.
 
-One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”.
+One of the available options is `allProductsJson`, which contains “edges”, and those contain “nodes”. The `allProductsJson` option was created by the JSON transformer plugin ([`gatsby-transformer-json`](/plugins/gatsby-transformer-json/)).
 
 The JSON transformer plugin has created one node for each product, and inside the node you can select the data you need for that product.
 
@@ -317,7 +317,7 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
 }
 ```
 
-You need to use the `graphql` helper that’s available to the [`createPages` Node API](/docs/node-apis/#createPages) to execute the query. To make sure that the result of the query comes back before continuing, use [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
+You need to use the `graphql` helper that’s available to the [`createPages` Node API](/docs/reference/config-files/gatsby-node/#createPages) to execute the query. To make sure that the result of the query comes back before continuing, use [`async`/`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function).
 
 The results that come back are very similar to the contents of `data/products.json`, so you can loop through the results and create a page for each.
 
@@ -373,7 +373,7 @@ A few notes about this file:
 
 1. The result of the query is added to the template component as the `data` prop.
 2. The image path was automatically converted by the Sharp transformer into a “child node” that includes optimized versions of the image.
-3. The query uses a [GraphQL fragment](/packages/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
+3. The query uses a [GraphQL fragment](/plugins/gatsby-image/#fragments) to query all the required data for optimized images. GraphQL fragments _do not work_ in the GraphQL Playground.
 4. The `img` tag has been swapped out for a `gatsby-image` component named `Image`. Instead of a `src` attribute, it accepts an object with optimized image data.
 
 Save this file, run `gatsby develop`, then open `http://localhost:8000/gql/purple-hat/`:

@@ -25,12 +25,11 @@ This guide assumes you already have a Gatsby project to deploy. If you need a pr
 
 You can set up a Gatsby site on Render in two quick steps:
 
-1. Create a new **Web Service** on Render, and give Render permission to access your GitHub repo.
+1. Create a new **Static Site** on Render, and give Render permission to access your GitHub repo.
 2. Use the following values during creation:
 
    |                       |                                            |
    | --------------------- | ------------------------------------------ |
-   | **Environment**       | `Static Site`                              |
    | **Build Command**     | `gatsby build` (or your own build command) |
    | **Publish Directory** | `public` (or your own output directory)    |
 

@@ -15,7 +15,7 @@ npm install gatsby-source-contentful
 
 ## How to use
 
-First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about dotenv and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
+First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about `dotenv` and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
 
 ### Using Delivery API
 
@@ -56,7 +56,7 @@ module.exports = {
 
 ### Download assets for static distribution
 
-Downloads and caches Contentful Assets to the local filesystem. Useful for reduced data usage in development or projects where you want the assets copied locally with builds for deploying without links to Contentful's CDN.
+Downloads and caches Contentful assets to the local filesystem. Useful for reduced data usage in development or projects where you want the assets copied locally with builds for deploying without links to Contentful's CDN.
 
 Enable this feature with the `downloadLocal: true` option.
 
@@ -127,15 +127,15 @@ If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFL
 
 **`spaceId`** [string][required]
 
-Contentful spaceId
+Contentful space ID
 
 **`accessToken`** [string][required]
 
-Contentful delivery api key, when using the Preview API use your Preview API key
+Contentful delivery API key, when using the Preview API use your Preview API key
 
 **`host`** [string][optional] [default: `'cdn.contentful.com'`]
 
-The base host for all the API requests, by default it's 'cdn.contentful.com', if you want to use the Preview API set it to `'preview.contentful.com'`. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.
+The base host for all the API requests, by default it's `'cdn.contentful.com'`, if you want to use the Preview API set it to `'preview.contentful.com'`. You can use your own host for debugging/testing purposes as long as you respect the same Contentful JSON structure.
 
 **`environment`** [string][optional] [default: 'master']
 
@@ -149,7 +149,7 @@ You can pass in any other options available in the [contentful.js SDK](https://g
 
 **`localeFilter`** [function][optional] [default: `() => true`]
 
-Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in contentful and only want to get the data from one selected locale.
+Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in Contentful and only want to get the data from one selected locale.
 
 For example, to filter locales on only germany `localeFilter: locale => locale.code === 'de-DE'`
 
@@ -165,13 +165,13 @@ Axios proxy configuration. See the [axios request config documentation](https://
 
 **`useNameForId`** [boolean][optional] [default: `true`]
 
-Use the content's `name` when generating the GraphQL schema e.g. a Content Type called `[Component] Navigation bar` will be named `contentfulComponentNavigationBar`.
+Use the content's `name` when generating the GraphQL schema e.g. a content type called `[Component] Navigation bar` will be named `contentfulComponentNavigationBar`.
 
-When set to `false`, the content's internal ID will be used instead e.g. a Content Type with the ID `navigationBar` will be called `contentfulNavigationBar`.
+When set to `false`, the content's internal ID will be used instead e.g. a content type with the ID `navigationBar` will be called `contentfulNavigationBar`.
 
-Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, Content Types' IDs will be auto-generated (e.g. when creating a new Content Type without specifying an ID) which means the name in the GraphQL schema will be something like `contentfulC6XwpTaSiiI2Ak2Ww0oi6qa`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
+Using the ID is a much more stable property to work with as it will change less often. However, in some scenarios, content types' IDs will be auto-generated (e.g. when creating a new content type without specifying an ID) which means the name in the GraphQL schema will be something like `contentfulC6XwpTaSiiI2Ak2Ww0oi6qa`. This won't change and will still function perfectly as a valid field name but it is obviously pretty ugly to work with.
 
-If you are confident your Content Types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
+If you are confident your content types will have natural-language IDs (e.g. `blogPost`), then you should set this option to `false`. If you are unable to ensure this, then you should leave this option set to `true` (the default).
 
 **`pageLimit`** [number][optional] [default: `100`]
 
@@ -179,7 +179,7 @@ Number of entries to retrieve from Contentful at a time. Due to some technical l
 
 **`assetDownloadWorkers`** [number][optional] [default: `50`]
 
-Number of workers to use when downloading contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
+Number of workers to use when downloading Contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
 
 ## Notes on Contentful Content Models
 
@@ -222,7 +222,7 @@ You might do this in your `gatsby-node.js` using Gatsby's [`createPages`](https:
 
 ### Query for a single node
 
-To query for a single `image` asset with the title 'foo' and a width of 1600px:
+To query for a single `image` asset with the title `'foo'` and a width of 1600px:
 
 ```javascript
 export const assetQuery = graphql`
@@ -270,7 +270,7 @@ On Contentful, a "Long text" field uses Markdown by default. The field is expose
 }
 ```
 
-Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a childMarkdownRemark on the "Long text" field and expose the generated html as a child node:
+Unless the text is Markdown-free, you cannot use the returned value directly. In order to handle the Markdown content, you must use a transformer plugin such as [`gatsby-transformer-remark`](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/). The transformer will create a `childMarkdownRemark` on the "Long text" field and expose the generated html as a child node:
 
 ```graphql
 {
@@ -321,7 +321,7 @@ When Contentful pulls the data, all localizations will be pulled. Therefore, if 
 
 More typically your `Asset` nodes will be mixed inside of your `ContentType` nodes, so you'll query them together. All the same formatting rules for `Asset` and `ContentType` nodes apply.
 
-To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`, `subtitle`, LongText field `body` and heroImage `Asset` field, we use `allContentful${entryTypeName}` to return all instances of that `ContentType`:
+To get **all** the `CaseStudy` nodes with `ShortText` fields `id`, `slug`, `title`, `subtitle`, `LongText` field `body` and `heroImage` asset field, we use `allContentful${entryTypeName}` to return all instances of that `ContentType`:
 
 ```graphql
 {
@@ -349,7 +349,45 @@ To get **all** the `CaseStudy` nodes with ShortText fields `id`, `slug`, `title`
 }
 ```
 
-When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [gatsby-image](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [gatsby-plugin-sharp](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that gatsby-source-contentful also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
+When querying images you can use the `fixed`, `fluid` or `resize` nodes to get different sizes for the image (for example for using [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image/)). Their usage is documented at the [`gatsby-plugin-sharp`](https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/) package. The only difference is that `gatsby-source-contentful` also allows setting only the `width` parameter for these node types, the height will then automatically be calculated according to the aspect ratio.
+
+## Using the new Gatsby image plugin
+
+You can now use the beta [gatsby-plugin-image](https://gatsbyjs.com/plugins/gatsby-plugin-image/) to display high-performance, responsive images from Contentful. This plugin is the replacement for gatsby-image, and is currently in beta, but can help deliver improved performance, with a cleaner API. Support in gatsby-source-contentful is still experimental.
+
+To use it:
+
+1.  Install the plugins:
+
+```shell
+npm install gatsby-plugin-image gatsby-plugin-sharp
+```
+
+2. Add the plugins to your `gatsby-config.js`:
+
+```javascript
+module.exports = {
+  plugins: [
+    `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
+    // ...etc
+  ],
+}
+```
+
+3. You can then query for image data using the new `gatsbyImageData` resolver:
+
+```graphql
+{
+  allContentfulBlogPost {
+    nodes {
+      heroImage {
+        gatsbyImageData(layout: FULL_WIDTH)
+      }
+    }
+  }
+}
+```
 
 ## More on Queries with Contentful and Gatsby
 
@@ -358,33 +396,34 @@ It is strongly recommended that you take a look at how data flows in a real Cont
 
 ## [Contentful Rich Text](https://www.contentful.com/developers/docs/concepts/rich-text/)
 
-Rich Text feature is supported in this source plugin, you can use the following query to get the json output:
+Rich Text feature is supported in this source plugin, you can use the following query to get the JSON output:
 
 ### Query Rich Text content and references
 
 ```graphql
-{
-  allContentfulBlogPost {
-    edges {
-      node {
-        bodyRichText {
-          raw
-          references {
-            ... on ContentfulAsset {
-              contentful_id
-              fixed(width: 1600) {
-                width
-                height
-                src
-                srcSet
-              }
-            }
-            ... on ContentfulBlogPost {
-              contentful_id
-              title
-              slug
-            }
+query pageQuery($id: String!) {
+  contentfulBlogPost(id: { eq: $id }) {
+    title
+    slug
+    # This is the rich text field
+    bodyRichText {
+      raw
+      references {
+        ... on ContentfulAsset {
+          contentful_id
+          __typename
+          fixed(width: 1600) {
+            width
+            height
+            src
+            srcSet
           }
+        }
+        ... on ContentfulBlogPost {
+          contentful_id
+          __typename
+          title
+          slug
         }
       }
     }
@@ -420,7 +459,7 @@ const options = {
   },
 }
 
-function BlogPostTemplate({ data, pageContext }) {
+function BlogPostTemplate({ data }) {
   const { bodyRichText } = data.contentfulBlogPost
 
   return <div>{bodyRichText && renderRichText(richTextField, options)}</div>

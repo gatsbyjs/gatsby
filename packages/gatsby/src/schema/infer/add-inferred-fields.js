@@ -8,6 +8,7 @@ import { isFile } from "./is-file"
 import { isDate } from "../types/date"
 import { addDerivedType } from "../types/derived-types"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
+import { printDirectives } from "../print"
 const { getNode, getNodes } = require(`../../redux/nodes`)
 
 const addInferredFields = ({
@@ -21,9 +22,6 @@ const addInferredFields = ({
     typeComposer,
     defaults: {
       shouldAddFields: true,
-      shouldAddDefaultResolvers: typeComposer.hasExtension(`infer`)
-        ? false
-        : true,
     },
   })
   addInferredFieldsImpl({
@@ -94,42 +92,6 @@ const addInferredFieldsImpl = ({
       if (config.shouldAddFields) {
         typeComposer.addFields({ [key]: fieldConfig })
         typeComposer.setFieldExtension(key, `createdFrom`, `inference`)
-      }
-    } else {
-      // Deprecated, remove in v3
-      if (config.shouldAddDefaultResolvers) {
-        // Add default resolvers to existing fields if the type matches
-        // and the field has neither args nor resolver explicitly defined.
-        const field = typeComposer.getField(key)
-        if (
-          field.type.toString().replace(/[[\]!]/g, ``) ===
-            fieldConfig.type.toString() &&
-          _.isEmpty(field.args) &&
-          !field.resolve
-        ) {
-          const { extensions } = fieldConfig
-          if (extensions) {
-            Object.keys(extensions)
-              .filter(name =>
-                // It is okay to list allowed extensions explicitly here,
-                // since this is deprecated anyway and won't change.
-                [`dateformat`, `fileByRelativePath`, `link`, `proxy`].includes(
-                  name
-                )
-              )
-              .forEach(name => {
-                if (!typeComposer.hasFieldExtension(key, name)) {
-                  typeComposer.setFieldExtension(key, name, extensions[name])
-                  report.warn(
-                    `Deprecation warning - adding inferred resolver for field ` +
-                      `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
-                      `only fields with an explicit directive/extension will ` +
-                      `get a resolver.`
-                  )
-                }
-              })
-          }
-        }
       }
     }
   })
@@ -346,9 +308,7 @@ const getSimpleFieldConfig = ({
           if (lists !== arrays) return null
         } else {
           // When the field type has not been explicitly defined, we
-          // don't need to continue in case of @dontInfer, because
-          // "addDefaultResolvers: true" only makes sense for
-          // pre-existing types.
+          // don't need to continue in case of @dontInfer
           if (!config.shouldAddFields) return null
 
           const typeName = createTypeName(selector)
@@ -436,8 +396,5 @@ const getInferenceConfig = ({ typeComposer, defaults }) => {
     shouldAddFields: typeComposer.hasExtension(`infer`)
       ? typeComposer.getExtension(`infer`)
       : defaults.shouldAddFields,
-    shouldAddDefaultResolvers: typeComposer.hasExtension(`addDefaultResolvers`)
-      ? typeComposer.getExtension(`addDefaultResolvers`)
-      : defaults.shouldAddDefaultResolvers,
   }
 }

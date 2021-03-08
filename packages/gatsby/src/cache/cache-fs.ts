@@ -1,5 +1,6 @@
 // Initial file from https://github.com/rolandstarke/node-cache-manager-fs-hash @ af52d2d
-/*!
+/* eslint-disable @babel/no-invalid-this, no-useless-catch */
+/* !
 The MIT License (MIT)
 
 Copyright (c) 2017 Roland Starke
@@ -22,7 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
 const fs = require(`fs`)
 const crypto = require(`crypto`)
 const path = require(`path`)
@@ -37,6 +37,8 @@ import reporter from "gatsby-cli/lib/reporter"
 // mechanism was using fs-based locks. Doing it in-memory reduces IO pressure and
 // we currently don't support two concurrent builds at the same time anyways.
 const globalGatsbyCacheLock = new Map()
+
+let showLockTimeoutWarning = true // Only show this once
 
 /**
  * construction of the disk storage
@@ -65,7 +67,7 @@ function DiskStore(options): void {
     subdirs: options.subdirs || false,
     zip: options.zip || false,
     lockFile: {
-      //check lock at 0ms 50ms 100ms ... 400ms 1400ms 1450ms... up to 10 seconds, after that just asume the lock is staled
+      // check lock at 0ms 50ms 100ms ... 400ms 1400ms 1450ms... up to 10 seconds, after that just assume the lock is staled
       wait: 400,
       pollPeriod: 50,
       stale: 10 * 1000,
@@ -101,7 +103,7 @@ DiskStore.prototype.set = wrapCallback(async function (key, val, options) {
   }
 
   if (this.options.subdirs) {
-    //check if subdir exists or create it
+    // check if subdir exists or create it
     const dir = path.dirname(filePath)
     await promisify(fs.access)(dir, fs.constants.W_OK).catch(function () {
       return promisify(fs.mkdir)(dir).catch(err => {
@@ -137,7 +139,7 @@ DiskStore.prototype.get = wrapCallback(async function (key) {
         if (err.code === `ENOENT`) {
           throw err
         }
-        //maybe the file is currently written to, lets lock it and read again
+        // maybe the file is currently written to, lets lock it and read again
         try {
           await this._lock(filePath)
           return await jsonFileStore.read(filePath, this.options)
@@ -148,17 +150,17 @@ DiskStore.prototype.get = wrapCallback(async function (key) {
         }
       })
     if (data.expireTime <= Date.now()) {
-      //cache expired
+      // cache expired
       this.del(key).catch(() => 0 /* ignore */)
       return undefined
     }
     if (data.key !== key) {
-      //hash collision
+      // hash collision
       return undefined
     }
     return data.val
   } catch (err) {
-    //file does not exist lets return a cache miss
+    // file does not exist lets return a cache miss
     if (err.code === `ENOENT`) {
       return undefined
     } else {
@@ -174,7 +176,7 @@ DiskStore.prototype.del = wrapCallback(async function (key) {
   const filePath = this._getFilePathByKey(key)
   try {
     if (this.options.subdirs) {
-      //check if the folder exists to fail faster
+      // check if the folder exists to fail faster
       const dir = path.dirname(filePath)
       await promisify(fs.access)(dir, fs.constants.W_OK)
     }
@@ -182,7 +184,7 @@ DiskStore.prototype.del = wrapCallback(async function (key) {
     await this._lock(filePath)
     await jsonFileStore.delete(filePath, this.options)
   } catch (err) {
-    //ignore deleting non existing keys
+    // ignore deleting non existing keys
     if (err.code !== `ENOENT`) {
       throw err
     }
@@ -215,7 +217,7 @@ DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
       stats.isFile() &&
       /[/\\]diskstore-[0-9a-fA-F/\\]+(\.json|-\d\.bin)/.test(fileOrDir)
     ) {
-      //delete the file if it is a diskstore file
+      // delete the file if it is a diskstore file
       await unlink(fileOrDir)
     }
   }
@@ -235,9 +237,12 @@ function innerLock(resolve, reject, filePath): void {
   try {
     let lockTime = globalGatsbyCacheLock.get(filePath) ?? 0
     if (lockTime > 0 && Date.now() - lockTime > 10 * 1000) {
-      reporter.verbose(
-        `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later.`
-      )
+      if (showLockTimeoutWarning) {
+        showLockTimeoutWarning = false
+        reporter.verbose(
+          `Warning: lock file older than 10s, ignoring it... There is a possibility this leads to caching problems later. This warning will only be shown once.`
+        )
+      }
       lockTime = 0
       globalGatsbyCacheLock.delete(filePath)
     }
@@ -279,7 +284,7 @@ DiskStore.prototype._getFilePathByKey = function (key): string {
     .update(key + ``)
     .digest(`hex`)
   if (this.options.subdirs) {
-    //create subdirs with the first 3 chars of the hash
+    // create subdirs with the first 3 chars of the hash
     return path.join(
       this.options.path,
       `diskstore-` + hash.substr(0, 3),

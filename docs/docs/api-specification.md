@@ -8,7 +8,7 @@ The two top priorities of the API are : a) enable a broad and robust plugin ecos
 
 ## Prerequisites
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/conceptual/gatsby-lifecycle-apis/).
 
 ## Plugins
 
@@ -21,13 +21,13 @@ Plugins can extend Gatsby in many ways:
 - Adding things to the rendered HTML (e.g. meta tags, analytics JS snippets like Google Analytics)
 - Writing out things to build directory based on site data (e.g. service worker, sitemap, RSS feed)
 
-A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin for the CSS-in-JS library [Glamor](/packages/gatsby-plugin-glamor/):
+A single plugin can use multiple APIs to accomplish its purpose. E.g. the plugin for the CSS-in-JS library [Glamor](/plugins/gatsby-plugin-glamor/):
 
 1. modifies the webpack config to add its plugin
 2. adds a Babel plugin to replace React's default createElement
 3. modifies server rendering to extract out the critical CSS for each rendered page and inline the CSS in the `<head>` of that HTML page.
 
-Plugins can also depend on other plugins. [The Sharp plugin](/packages/gatsby-plugin-sharp/) exposes a number of high-level APIs for transforming images that several other Gatsby image plugins depend on. [gatsby-transformer-remark](/packages/gatsby-transformer-remark/) does basic markdown->HTML transformation but exposes an API to allow other plugins to intervene in the conversion process e.g. [gatsby-remark-prismjs](/packages/gatsby-remark-prismjs/) which adds highlighting to code blocks.
+Plugins can also depend on other plugins. [The Sharp plugin](/plugins/gatsby-plugin-sharp/) exposes a number of high-level APIs for transforming images that several other Gatsby image plugins depend on. [gatsby-transformer-remark](/plugins/gatsby-transformer-remark/) does basic markdown->HTML transformation but exposes an API to allow other plugins to intervene in the conversion process e.g. [gatsby-remark-prismjs](/plugins/gatsby-remark-prismjs/) which adds highlighting to code blocks.
 
 Transformer plugins are decoupled from source plugins. Transformer plugins look at the media type of new nodes created by source plugins to decide if they can transform it or not. Which means that a markdown transformer plugin can transform markdown from any source without any other configuration e.g. from a file, a code comment, or external service like Trello which supports markdown in some of its data fields.
 

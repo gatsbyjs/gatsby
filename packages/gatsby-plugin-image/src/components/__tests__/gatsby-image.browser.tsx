@@ -1,10 +1,11 @@
 import React from "react"
-import { GatsbyImage, ISharpGatsbyImageData } from "../gatsby-image.browser"
+import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
 type GlobalOverride = NodeJS.Global &
   typeof global.globalThis & {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     GATSBY___IMAGE: boolean
     SERVER: boolean
   }
@@ -14,7 +15,7 @@ jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
 describe(`GatsbyImage browser`, () => {
   let beforeHydrationContent: HTMLDivElement
-  let image: ISharpGatsbyImageData
+  let image: IGatsbyImageData
 
   beforeEach(() => {
     console.warn = jest.fn()
@@ -26,19 +27,19 @@ describe(`GatsbyImage browser`, () => {
     image = {
       width: 100,
       height: 100,
-      layout: `fluid`,
-      images: { fallback: { src: `some-src-fallback.jpg` } },
+      layout: `fullWidth`,
+      images: { fallback: { src: `some-src-fallback.jpg`, sizes: `192x192` } },
       placeholder: { sources: [] },
-      sizes: `192x192`,
+
       backgroundColor: `red`,
     }
 
     beforeHydrationContent = document.createElement(`div`)
     beforeHydrationContent.innerHTML = `
       <div
-        class="gatsby-image-wrapper"
+        class="gatsby-image-wrapper gatsby-image-wrapper-constrained"
         data-gatsby-image-wrapper=""
-        style="position: relative; display: inline-block;"
+        style="position: relative;"
       >
         <div
           style="max-width: 100px; display: block;"
@@ -107,7 +108,7 @@ describe(`GatsbyImage browser`, () => {
   })
 
   it(`cleans up the DOM when unmounting`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = false
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
 
     const { container, unmount } = render(
       <GatsbyImage image={image} alt="Alt content" />
@@ -124,7 +125,7 @@ describe(`GatsbyImage browser`, () => {
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
     // hydrated.current is false and not resolved yet
-    ;(hooks as any).hasNativeLazyLoadSupport = true
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />,
@@ -146,7 +147,7 @@ describe(`GatsbyImage browser`, () => {
 
     // In this scenario,
     // hasSSRHtml is true and resolved through "beforeHydrationContent" and hydrate: true
-    ;(hooks as any).hasNativeLazyLoadSupport = true
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
     ;(hooks as any).storeImageloaded = jest.fn()
 
     const { container } = render(
@@ -168,12 +169,12 @@ describe(`GatsbyImage browser`, () => {
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
     expect(hooks.storeImageloaded).toBeCalledWith(
-      `{"fallback":{"src":"some-src-fallback.jpg"}}`
+      `{"fallback":{"src":"some-src-fallback.jpg","sizes":"192x192"}}`
     )
   })
 
   it(`relies on intersection observer when the SSR element is not resolved`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = true
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => true
     const onStartLoadSpy = jest.fn()
 
     const { container } = render(
@@ -190,7 +191,7 @@ describe(`GatsbyImage browser`, () => {
   })
 
   it(`relies on intersection observer when browser does not support lazy loading`, async () => {
-    ;(hooks as any).hasNativeLazyLoadSupport = false
+    ;(hooks as any).hasNativeLazyLoadSupport = (): boolean => false
     const onStartLoadSpy = jest.fn()
 
     const { container } = render(

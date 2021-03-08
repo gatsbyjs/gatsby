@@ -25,11 +25,11 @@ Before you begin writing, make sure to read the rest of this style guide.
 Docs can cover a broad range of topics. Please see the following
 examples:
 
-- [Reference guides](/docs/add-404-page/)
+- [Reference guides](/docs/how-to/adding-common-features/add-404-page/)
 - [Reference guide overviews](/docs/styling/)
 - [Recipes](/docs/recipes/)
-- [Tutorials](/tutorial/part-one/)
-- [Plugin README](/packages/gatsby-source-filesystem/)
+- [Tutorials](/docs/tutorial/part-one/)
+- [Plugin README](/plugins/gatsby-source-filesystem/)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
 Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents, as well as tips for different types of guide articles.
@@ -166,14 +166,12 @@ When referencing another page within [gatsbyjs.com](https://www.gatsbyjs.com/) h
 ```markdown
 <!-- Good -->
 
-[Gatsby's glossary](/docs/glossary)
+[Gatsby's glossary](/docs/glossary/)
 
 <!-- Bad -->
 
-[Gatsby's glossary](https://www.gatsbyjs.com/docs/glossary)
+[Gatsby's glossary](https://www.gatsbyjs.com/docs/glossary/)
 ```
-
-Note: Links to Gatsby Cloud/Gatsby Inc. are located at [gatsbyjs.com](https://www.gatsbyjs.com/) and should be referenced using an absolute path (domain included). See also [Referencing Gatsby Cloud](#referencing-gatsby-cloud)
 
 ### Mark localhost URLs as code strings
 
@@ -474,7 +472,7 @@ wording.
 
 ### Referencing Gatsby Cloud
 
-While Gatsby Cloud is hosted on a separate site, [gatsbyjs.com](https://www.gatsbyjs.com/), it is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
+[gatsbyjs.com](https://www.gatsbyjs.com/) is part of the Gatsby [founding organization](/blog/2018-05-24-launching-new-gatsby-company/) and focused specifically on Gatsby sites. There are various parts of the OSS documentation that may benefit from pointing to Gatsby Cloud as a potential platform to explore.
 
 The guidelines for doing so are as follows:
 

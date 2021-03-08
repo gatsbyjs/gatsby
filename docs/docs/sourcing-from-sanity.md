@@ -255,6 +255,6 @@ module.exports = {
 }
 ```
 
-This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+This example is based off [Gatsby Docs' implementation](/docs/how-to/local-development/environment-variables/).
 
 <CloudCallout />

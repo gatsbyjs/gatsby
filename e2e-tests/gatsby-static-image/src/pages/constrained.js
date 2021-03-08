@@ -3,33 +3,27 @@ import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 
-const FluidPage = () => (
+const ConstrainedPage = () => (
   <Layout>
-    <div data-testid="image-fluid">
+    <div data-testid="image-constrained">
+      <StaticImage src="../images/citrus-fruits.jpg" alt="Citrus fruits" />
+    </div>
+    <div data-testid="image-constrained-limit">
       <StaticImage
         src="../images/citrus-fruits.jpg"
-        layout="constrained"
+        width={500}
         alt="Citrus fruits"
       />
     </div>
-    <div data-testid="image-fluid-png">
+    <div data-testid="image-constrained-override">
       <StaticImage
-        src="../images/gatsby-icon.png"
-        layout="constrained"
-        alt="Gatsby icon"
-      />
-    </div>
-    <div data-testid="image-fluid-relative">
-      <StaticImage
-        src="../../content/relative.jpg"
-        layout="constrained"
+        src="../images/citrus-fruits.jpg"
+        width={500}
+        sizes="100vw"
         alt="Citrus fruits"
       />
-    </div>
-    <div data-testid="invalid-image">
-      <StaticImage src="./does-not-exist.jpg" layout="constrained" />
     </div>
   </Layout>
 )
 
-export default FluidPage
+export default ConstrainedPage

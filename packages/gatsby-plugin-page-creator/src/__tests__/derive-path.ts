@@ -1,5 +1,5 @@
 import { derivePath } from "../derive-path"
-import reporter from "gatsby-cli/lib/reporter"
+import reporter from "gatsby/reporter"
 
 describe(`derive-path`, () => {
   it(`has basic support`, () => {
@@ -311,5 +311,58 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/muenchner-weisswuerstchen`)
+  })
+
+  it(`supports custom slugify options`, () => {
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `BAR and baz`,
+        },
+        reporter,
+        { separator: `_` }
+      ).derivedPath
+    ).toEqual(`foo/bar_and_baz`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `Déjà Vu!`,
+        },
+        reporter,
+        { lowercase: false }
+      ).derivedPath
+    ).toEqual(`foo/Deja-Vu`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `fooBar`,
+        },
+        reporter,
+        { decamelize: false }
+      ).derivedPath
+    ).toEqual(`foo/foobar`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `this-is`,
+        },
+        reporter,
+        { customReplacements: [[`this-is`, `the-way`]] }
+      ).derivedPath
+    ).toEqual(`foo/the-way`)
+    expect(
+      derivePath(
+        `foo/{Model.name}`,
+        {
+          name: `_foo_bar`,
+        },
+        reporter,
+        { preserveLeadingUnderscore: true }
+      ).derivedPath
+    ).toEqual(`foo/_foo-bar`)
   })
 })

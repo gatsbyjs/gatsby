@@ -511,17 +511,20 @@ export { create, create as update, read, destroy }
 
 export const config = {}
 
-export const all = async ({ root }) => {
+export const all = async ({ root }, processPlugins = true) => {
   const configSrc = await readConfigFile(root)
   const plugins = getPluginsFromConfig(configSrc)
 
-  return Promise.all(plugins.map(({ name }) => read({ root }, name)))
+  return Promise.all(
+    plugins.map(({ name }) => (processPlugins ? read({ root }, name) : name))
+  )
 }
 
 const schema = {
   name: Joi.string(),
   description: Joi.string().optional().allow(null).allow(``),
   options: Joi.object(),
+  isLocal: Joi.boolean(),
   readme: Joi.string().optional().allow(null).allow(``),
   shadowableFiles: Joi.array().items(Joi.string()),
   shadowedFiles: Joi.array().items(Joi.string()),

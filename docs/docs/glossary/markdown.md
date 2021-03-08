@@ -47,7 +47,7 @@ When converted to HTML, the preceding Markdown will become the markup below.
 </figure>
 ```
 
-You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) and [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
+You can use Markdown files as a content source for your Gatsby site. To do so, you'll need to install two plugins: [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem) and [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/). As with Gatsby itself, you can install both using [npm](/docs/glossary/#npm).
 
 ```shell
 npm install gatsby-source-filesystem gatsby-transformer-remark
@@ -59,7 +59,7 @@ You can also try a [Gatsby starter](https://www.gatsbyjs.com/starters/?c=Markdow
 
 ## Learn more about Markdown
 
-- [Markdown syntax](/docs/mdx/markdown-syntax/) from the Gatsby docs
+- [Markdown syntax](/docs/how-to/routing/mdx/markdown-syntax/) from the Gatsby docs
 - [CommonMark](https://commonmark.org/), a proposed Markdown specification
-- [Sourcing from the Filesystem](/docs/sourcing-from-the-filesystem/) from the Gatsby docs
-- [Adding Markdown Pages](/docs/adding-markdown-pages/) from the Gatsby docs
+- [Sourcing from the Filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem) from the Gatsby docs
+- [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/) from the Gatsby docs

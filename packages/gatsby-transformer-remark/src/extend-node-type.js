@@ -6,7 +6,6 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 const mdastToToc = require(`mdast-util-toc`)
 const mdastToString = require(`mdast-util-to-string`)
-const Promise = require(`bluebird`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
 const stringify = require(`remark-stringify`)
@@ -46,14 +45,6 @@ const tableOfContentsCacheKey = (node, appliedTocOptions) =>
 const withPathPrefix = (url, pathPrefix) =>
   (pathPrefix + url).replace(/\/\//, `/`)
 
-// TODO: remove this check with next major release
-const safeGetCache = ({ getCache, cache }) => id => {
-  if (!getCache) {
-    return cache
-  }
-  return getCache(id)
-}
-
 /**
  * Map that keeps track of generation of AST to not generate it multiple
  * times in parallel.
@@ -87,7 +78,7 @@ module.exports = function remarkExtendNodeType(
     getNode,
     getNodesByType,
     cache,
-    getCache: possibleGetCache,
+    getCache,
     reporter,
     ...rest
   },
@@ -98,8 +89,6 @@ module.exports = function remarkExtendNodeType(
   }
   pluginsCacheStr = pluginOptions.plugins.map(p => p.name).join(``)
   pathPrefixCacheStr = basePath || ``
-
-  const getCache = safeGetCache({ cache, getCache: possibleGetCache })
 
   return new Promise((resolve, reject) => {
     // Setup Remark.
@@ -126,10 +115,10 @@ module.exports = function remarkExtendNodeType(
     }
     let remark = new Remark().data(`settings`, remarkOptions)
 
-    for (let plugin of pluginOptions.plugins) {
+    for (const plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
       if (_.isFunction(requiredPlugin.setParserPlugins)) {
-        for (let parserPlugin of requiredPlugin.setParserPlugins(
+        for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
         )) {
           if (_.isArray(parserPlugin)) {
@@ -203,8 +192,8 @@ module.exports = function remarkExtendNodeType(
       if (process.env.NODE_ENV !== `production` || !fileNodes) {
         fileNodes = getNodesByType(`File`)
       }
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
-      await Promise.each(pluginOptions.plugins, plugin => {
+      // Use a for loop to run remark plugins serially.
+      for (const plugin of pluginOptions.plugins) {
         const requiredPlugin = require(plugin.resolve)
         // Allow both exports = function(), and exports.default = function()
         const defaultFunction = _.isFunction(requiredPlugin)
@@ -214,11 +203,12 @@ module.exports = function remarkExtendNodeType(
           : undefined
 
         if (defaultFunction) {
-          return defaultFunction(
+          await defaultFunction(
             {
               markdownAST,
               markdownNode,
               getNode,
+              getNodesByType,
               files: fileNodes,
               basePath,
               reporter,
@@ -229,10 +219,8 @@ module.exports = function remarkExtendNodeType(
             },
             plugin.pluginOptions
           )
-        } else {
-          return Promise.resolve()
         }
-      })
+      }
 
       return markdownAST
     }
@@ -245,7 +233,7 @@ module.exports = function remarkExtendNodeType(
       // Execute the remark plugins that can mutate the node
       // before parsing its content
       //
-      // Use Bluebird's Promise function "each" to run remark plugins serially.
+      // Use for loop to run remark plugins serially.
       for (const plugin of pluginOptions.plugins) {
         const requiredPlugin = require(plugin.resolve)
         if (typeof requiredPlugin.mutateSource === `function`) {
@@ -314,7 +302,7 @@ module.exports = function remarkExtendNodeType(
 
     async function getTableOfContents(markdownNode, gqlTocOptions) {
       // fetch defaults
-      let appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
+      const appliedTocOptions = { ...tocOptions, ...gqlTocOptions }
 
       const tocKey = tableOfContentsCacheKey(markdownNode, appliedTocOptions)
 
@@ -363,7 +351,8 @@ module.exports = function remarkExtendNodeType(
     }
 
     async function getHTMLAst(markdownNode) {
-      const cachedAst = await cache.get(htmlAstCacheKey(markdownNode))
+      const key = htmlAstCacheKey(markdownNode)
+      const cachedAst = await cache.get(key)
       if (cachedAst) {
         return cachedAst
       } else {
@@ -371,7 +360,7 @@ module.exports = function remarkExtendNodeType(
         const htmlAst = markdownASTToHTMLAst(ast)
 
         // Save new HTML AST to cache and return
-        await cache.set(htmlAstCacheKey(markdownNode), htmlAst)
+        await cache.set(key, htmlAst)
         return htmlAst
       }
     }
@@ -643,15 +632,13 @@ module.exports = function remarkExtendNodeType(
       tableOfContents: {
         type: `String`,
         args: {
-          // TODO:(v3) set default value to false
           absolute: {
             type: `Boolean`,
-            defaultValue: true,
+            defaultValue: false,
           },
-          // TODO:(v3) set default value to empty string
           pathToSlugField: {
             type: `String`,
-            defaultValue: `fields.slug`,
+            defaultValue: ``,
           },
           maxDepth: `Int`,
           heading: `String`,
@@ -664,7 +651,7 @@ module.exports = function remarkExtendNodeType(
       wordCount: {
         type: `MarkdownWordCount`,
         resolve(markdownNode) {
-          let counts = {}
+          const counts = {}
 
           unified()
             .use(parse)

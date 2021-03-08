@@ -43,16 +43,12 @@ export default function (mdxSrc, cb, context, isApply, isStream = false) {
 
   const component = new Function(...scopeKeys, transformCodeForEval(srcCode))
 
-  try {
-    const result = render(
-      component(...scopeValues),
-      cb,
-      context,
-      isApply,
-      isStream
-    )
-    return result
-  } catch (e) {
-    throw e
-  }
+  const result = render(
+    component(...scopeValues),
+    cb,
+    context,
+    isApply,
+    isStream
+  )
+  return result
 }

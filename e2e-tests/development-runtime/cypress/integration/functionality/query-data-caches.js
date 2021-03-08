@@ -87,22 +87,24 @@ function pageTitleAndDataAssertion(config) {
     cy.findByText(`Preview custom 404 page`).click()
   }
 
-  cy.getTestElement(`${config.prefix || ``}page-path`)
-    .invoke(`text`)
-    .should(`equal`, getExpectedCanonicalPath(config))
+  cy.findByTestId(`${config.prefix || ``}page-path`).should(
+    `have.text`,
+    getExpectedCanonicalPath(config)
+  )
 
-  cy.getTestElement(`${config.prefix || ``}query-data-caches-page-title`)
-    .invoke(`text`)
-    .should(`equal`, `This is page ${config.page}`)
+  cy.findByTestId(`${config.prefix || ``}query-data-caches-page-title`).should(
+    `have.text`,
+    `This is page ${config.page}`
+  )
 
-  cy.getTestElement(`${config.prefix || ``}${config.queryType}-query-result`)
-    .invoke(`text`)
-    .should(
-      `equal`,
-      `${config.slug} / ${
-        config.page === config.initialPage ? `initial-page` : `second-page`
-      }: ${config.data}`
-    )
+  cy.findByTestId(
+    `${config.prefix || ``}${config.queryType}-query-result`
+  ).should(
+    `have.text`,
+    `${config.slug} / ${
+      config.page === config.initialPage ? `initial-page` : `second-page`
+    }: ${config.data}`
+  )
 }
 
 function runTests(config) {
@@ -119,7 +121,7 @@ function runTests(config) {
     data: `before-edit`,
   })
 
-  cy.getTestElement(`page-b-link`).click().waitForRouteChange()
+  cy.findByTestId(`page-b-link`).click().waitForRouteChange()
 
   // assert we navigated
   pageTitleAndDataAssertion({ ...config, page: `B`, data: `before-edit` })
@@ -131,10 +133,10 @@ function runTests(config) {
   pageTitleAndDataAssertion({ ...config, page: `B`, data: `after-edit` })
 
   if (config.navigateBack === `link`) {
-    cy.getTestElement(`page-a-link`).click().waitForRouteChange()
+    cy.findByTestId(`page-a-link`).click().waitForRouteChange()
   } else if (config.navigateBack === `history`) {
     // this is just making sure page components don't have link to navigate back (asserting correct setup)
-    cy.getTestElement(`page-a-link`).should(`not.exist`)
+    cy.findByTestId(`page-a-link`).should(`not.exist`)
     cy.go(`back`).waitForRouteChange()
   }
 
@@ -148,204 +150,267 @@ function runTests(config) {
   assertNotReloading()
 }
 
-describe(`Navigate from static page A to page B, invalidate some data resources for static page A, navigate back to static page A`, () => {
-  describe(`Navigating back with gatsby-link`, () => {
-    it(`page query (page has trailing slash)`, () => {
-      const config = {
-        slug: `page-query-with-trailing-slash-A-to-B-to-A-link`,
-        queryType: `page`,
-        navigateBack: `link`,
-        initialPage: `A`,
-      }
+describe(`Keeping caches up-to-date when updating data`, () => {
+  describe(`Navigate from static page A to page B, invalidate some data resources for static page A, navigate back to static page A`, () => {
+    describe(`Navigating back with gatsby-link`, () => {
+      it(`page query (page has trailing slash)`, () => {
+        const config = {
+          slug: `page-query-with-trailing-slash-A-to-B-to-A-link`,
+          queryType: `page`,
+          navigateBack: `link`,
+          initialPage: `A`,
+        }
 
-      runTests(config)
+        runTests(config)
+      })
+
+      it(`page query (page doesn't have trailing slash)`, () => {
+        const config = {
+          slug: `page-query-no-trailing-slash-A-to-B-to-A-link`,
+          trailingSlash: false,
+          queryType: `page`,
+          navigateBack: `link`,
+          initialPage: `A`,
+        }
+
+        runTests(config)
+      })
+
+      it(`static query (page has trailing slash)`, () => {
+        const config = {
+          slug: `static-query-with-trailing-slash-A-to-B-to-A-link`,
+          queryType: `static`,
+          navigateBack: `link`,
+          initialPage: `A`,
+        }
+
+        runTests(config)
+      })
+
+      it(`static query (page doesn't have trailing slash)`, () => {
+        const config = {
+          slug: `static-query-no-trailing-slash-A-to-B-to-A-link`,
+          trailingSlash: false,
+          queryType: `static`,
+          navigateBack: `link`,
+          initialPage: `A`,
+        }
+
+        runTests(config)
+      })
     })
 
-    it(`page query (page doesn't have trailing slash)`, () => {
-      const config = {
-        slug: `page-query-no-trailing-slash-A-to-B-to-A-link`,
-        trailingSlash: false,
-        queryType: `page`,
-        navigateBack: `link`,
-        initialPage: `A`,
-      }
+    describe(`Navigating back with history.back()`, () => {
+      it(`page query (page has trailing slash)`, () => {
+        const config = {
+          slug: `page-query-with-trailing-slash-A-to-B-to-A-history`,
+          queryType: `page`,
+          navigateBack: `history`,
+          initialPage: `A`,
+        }
 
-      runTests(config)
-    })
+        runTests(config)
+      })
 
-    it(`static query (page has trailing slash)`, () => {
-      const config = {
-        slug: `static-query-with-trailing-slash-A-to-B-to-A-link`,
-        queryType: `static`,
-        navigateBack: `link`,
-        initialPage: `A`,
-      }
+      it(`page query (page doesn't have trailing slash)`, () => {
+        const config = {
+          slug: `page-query-no-trailing-slash-A-to-B-to-A-history`,
+          trailingSlash: false,
+          queryType: `page`,
+          navigateBack: `history`,
+          initialPage: `A`,
+        }
 
-      runTests(config)
-    })
+        runTests(config)
+      })
 
-    it(`static query (page doesn't have trailing slash)`, () => {
-      const config = {
-        slug: `static-query-no-trailing-slash-A-to-B-to-A-link`,
-        trailingSlash: false,
-        queryType: `static`,
-        navigateBack: `link`,
-        initialPage: `A`,
-      }
+      it(`static query (page has trailing slash)`, () => {
+        const config = {
+          slug: `static-query-with-trailing-slash-A-to-B-to-A-history`,
+          queryType: `static`,
+          navigateBack: `history`,
+          initialPage: `A`,
+        }
 
-      runTests(config)
+        runTests(config)
+      })
+
+      it(`static query (page doesn't have trailing slash)`, () => {
+        const config = {
+          slug: `static-query-no-trailing-slash-A-to-B-to-A-history`,
+          trailingSlash: false,
+          queryType: `static`,
+          navigateBack: `history`,
+          initialPage: `A`,
+        }
+
+        runTests(config)
+      })
     })
   })
 
-  describe(`Navigating back with history.back()`, () => {
-    it(`page query (page has trailing slash)`, () => {
-      const config = {
-        slug: `page-query-with-trailing-slash-A-to-B-to-A-history`,
-        queryType: `page`,
-        navigateBack: `history`,
-        initialPage: `A`,
-      }
+  describe(`Navigate from client-only page A to page B, invalidate some data resources for client-only page A, navigate back to client-only page A`, () => {
+    describe(`Navigating back with gatsby-link`, () => {
+      it(`page query`, () => {
+        const config = {
+          slug: `page-query-CO-to-B-to-CO-link`,
+          queryType: `page`,
+          navigateBack: `link`,
+          initialPage: `client-only`,
+        }
 
-      runTests(config)
+        runTests(config)
+      })
+
+      it(`static query`, () => {
+        const config = {
+          slug: `static-query-CO-to-B-to-CO-link`,
+          queryType: `static`,
+          navigateBack: `link`,
+          initialPage: `client-only`,
+        }
+
+        runTests(config)
+      })
     })
 
-    it(`page query (page doesn't have trailing slash)`, () => {
-      const config = {
-        slug: `page-query-no-trailing-slash-A-to-B-to-A-history`,
-        trailingSlash: false,
-        queryType: `page`,
-        navigateBack: `history`,
-        initialPage: `A`,
-      }
+    describe(`Navigating back with history.back()`, () => {
+      it(`page query`, () => {
+        const config = {
+          slug: `page-query-CO-to-B-to-CO-history`,
+          queryType: `page`,
+          navigateBack: `history`,
+          initialPage: `client-only`,
+        }
 
-      runTests(config)
+        runTests(config)
+      })
+
+      it(`static query`, () => {
+        const config = {
+          slug: `static-query-CO-to-B-to-CO-history`,
+          queryType: `static`,
+          navigateBack: `history`,
+          initialPage: `client-only`,
+        }
+
+        runTests(config)
+      })
+    })
+  })
+
+  describe(`Navigate from 404 page A to page B, invalidate some data resources for 404 page A, navigate back to 404 page A`, () => {
+    describe(`Navigating back with gatsby-link`, () => {
+      it(`page query`, () => {
+        const config = {
+          slug: `page-query-404-to-B-to-404-link`,
+          queryType: `page`,
+          navigateBack: `link`,
+          initialPage: `404`,
+          prefix: `page-link-`,
+        }
+
+        runTests(config)
+      })
+
+      it(`static query`, () => {
+        const config = {
+          slug: `static-query-404-to-B-to-404-link`,
+          queryType: `static`,
+          navigateBack: `link`,
+          initialPage: `404`,
+          prefix: `static-link-`,
+        }
+
+        runTests(config)
+      })
     })
 
-    it(`static query (page has trailing slash)`, () => {
-      const config = {
-        slug: `static-query-with-trailing-slash-A-to-B-to-A-history`,
-        queryType: `static`,
-        navigateBack: `history`,
-        initialPage: `A`,
-      }
+    describe(`Navigating back with history.back()`, () => {
+      it(`page query`, () => {
+        const config = {
+          slug: `page-query-404-to-B-to-404-history`,
+          queryType: `page`,
+          navigateBack: `history`,
+          initialPage: `404`,
+          prefix: `page-history-`,
+        }
 
-      runTests(config)
-    })
+        runTests(config)
+      })
 
-    it(`static query (page doesn't have trailing slash)`, () => {
-      const config = {
-        slug: `static-query-no-trailing-slash-A-to-B-to-A-history`,
-        trailingSlash: false,
-        queryType: `static`,
-        navigateBack: `history`,
-        initialPage: `A`,
-      }
+      it(`static query`, () => {
+        const config = {
+          slug: `static-query-404-to-B-to-404-history`,
+          queryType: `static`,
+          navigateBack: `history`,
+          initialPage: `404`,
+          prefix: `static-history-`,
+        }
 
-      runTests(config)
+        runTests(config)
+      })
     })
   })
 })
 
-describe(`Navigate from client-only page A to page B, invalidate some data resources for client-only page A, navigate back to client-only page A`, () => {
-  describe(`Navigating back with gatsby-link`, () => {
-    it(`page query`, () => {
+describe(`Keeping caches up to date when modifying list of static query hashes assigned to a template`, () => {
+  describe(`using gatsby-link`, () => {
+    it(`Navigate from page A to page B, add static query to page A, navigate back to page A`, () => {
       const config = {
-        slug: `page-query-CO-to-B-to-CO-link`,
-        queryType: `page`,
-        navigateBack: `link`,
-        initialPage: `client-only`,
-      }
-
-      runTests(config)
-    })
-
-    it(`static query`, () => {
-      const config = {
-        slug: `static-query-CO-to-B-to-CO-link`,
+        slug: `adding-static-query-A-to-B-to-A-link`,
         queryType: `static`,
         navigateBack: `link`,
-        initialPage: `client-only`,
+        initialPage: `A`,
       }
 
-      runTests(config)
-    })
-  })
+      cy.visit(`/query-data-caches/${config.slug}/page-A/`).waitForRouteChange()
 
-  describe(`Navigating back with history.back()`, () => {
-    it(`page query`, () => {
-      const config = {
-        slug: `page-query-CO-to-B-to-CO-history`,
-        queryType: `page`,
-        navigateBack: `history`,
-        initialPage: `client-only`,
+      setupForAssertingNotReloading()
+
+      // baseline assertions
+      pageTitleAndDataAssertion({
+        ...config,
+        page: config.initialPage,
+        data: `from-hardcoded-data`,
+      })
+
+      cy.getTestElement(`page-b-link`).click().waitForRouteChange()
+
+      // assert we navigated
+      pageTitleAndDataAssertion({
+        ...config,
+        page: `B`,
+        data: `from-static-query-results`,
+      })
+
+      cy.exec(
+        `npm run update -- --file src/pages/query-data-caches/${config.slug}/page-A.js --replacements "adding-static-query-blank:adding-static-query-with-data" --exact`
+      )
+
+      // TODO: get rid of this wait
+      // We currently have timing issue when emitting both webpack's HMR and page-data.
+      // Problem is we need to potentially wait for webpack recompilation before we emit page-data (due to dependency graph traversal).
+      // Even if we could delay emitting data on the "server" side - this doesn't guarantee that messages are received
+      // and handled in correct order (ideally they are applied at the exact same time actually, because ordering might still cause issues if we change query text and component render function)
+      cy.wait(10000)
+
+      if (config.navigateBack === `link`) {
+        cy.getTestElement(`page-a-link`).click().waitForRouteChange()
+      } else if (config.navigateBack === `history`) {
+        // this is just making sure page components don't have link to navigate back (asserting correct setup)
+        cy.getTestElement(`page-a-link`).should(`not.exist`)
+        cy.go(`back`).waitForRouteChange()
       }
 
-      runTests(config)
-    })
+      // assert data on page we previously visited is updated
+      pageTitleAndDataAssertion({
+        ...config,
+        page: config.initialPage,
+        data: `from-static-query-results`,
+      })
 
-    it(`static query`, () => {
-      const config = {
-        slug: `static-query-CO-to-B-to-CO-history`,
-        queryType: `static`,
-        navigateBack: `history`,
-        initialPage: `client-only`,
-      }
-
-      runTests(config)
-    })
-  })
-})
-
-describe(`Navigate from 404 page A to page B, invalidate some data resources for 404 page A, navigate back to 404 page A`, () => {
-  describe(`Navigating back with gatsby-link`, () => {
-    it(`page query`, () => {
-      const config = {
-        slug: `page-query-404-to-B-to-404-link`,
-        queryType: `page`,
-        navigateBack: `link`,
-        initialPage: `404`,
-        prefix: `page-link-`,
-      }
-
-      runTests(config)
-    })
-
-    it(`static query`, () => {
-      const config = {
-        slug: `static-query-404-to-B-to-404-link`,
-        queryType: `static`,
-        navigateBack: `link`,
-        initialPage: `404`,
-        prefix: `static-link-`,
-      }
-
-      runTests(config)
-    })
-  })
-
-  describe(`Navigating back with history.back()`, () => {
-    it(`page query`, () => {
-      const config = {
-        slug: `page-query-404-to-B-to-404-history`,
-        queryType: `page`,
-        navigateBack: `history`,
-        initialPage: `404`,
-        prefix: `page-history-`,
-      }
-
-      runTests(config)
-    })
-
-    it(`static query`, () => {
-      const config = {
-        slug: `static-query-404-to-B-to-404-history`,
-        queryType: `static`,
-        navigateBack: `history`,
-        initialPage: `404`,
-        prefix: `static-history-`,
-      }
-
-      runTests(config)
+      assertNotReloading()
     })
   })
 })

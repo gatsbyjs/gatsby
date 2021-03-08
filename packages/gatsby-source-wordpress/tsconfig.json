@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["*"]
+    },
+    "lib": ["ESNext", "DOM"],
+    "target": "ES6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"]
+}

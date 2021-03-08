@@ -21,8 +21,10 @@
       const $ = cheerio.load(htmlStr)
       // There are many script tag differences
       $(`script`).remove()
-      // Only added in production. Dev uses css-loader
+      // Only added in production
       $(`#gatsby-global-css`).remove()
+      // Only added in development
+      $(`link[data-identity='gatsby-dev-css']`).remove()
       // Only in prod
       $(`link[rel="preload"]`).remove()
       // Only in prod
@@ -42,9 +44,24 @@
       )
     )
 
-    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res =>
-      res.text()
-    )
+    // Fetch once to trigger re-compilation.
+    await fetch(`${devSiteBasePath}/${path}`)
+
+    // Then wait for 6 seconds to ensure it's ready to go.
+    // Otherwise, tests are flaky depending on the speed of the testing machine.
+    await new Promise(resolve => {
+      setTimeout(() => resolve(), 6000)
+    })
+
+    let devStatus = 200
+    const rawDevHtml = await fetch(`${devSiteBasePath}/${path}`).then(res => {
+      devStatus = res.status
+      return res.text()
+    })
+
+    if (devStatus !== 200) {
+      return false
+    }
 
     const devHtml = format(filterHtml(rawDevHtml))
     const diffResult = diff(devHtml, builtHtml, {

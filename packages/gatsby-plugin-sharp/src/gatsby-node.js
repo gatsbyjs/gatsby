@@ -1,25 +1,111 @@
 const {
-  setBoundActionCreators,
+  setActions,
   // queue: jobQueue,
   // reportError,
+  _unstable_createJob,
+  _lazyJobsEnabled,
 } = require(`./index`)
-const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
+const { pathExists } = require(`fs-extra`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
+const path = require(`path`)
 
-// create the progressbar once and it will be killed in another lifecycle
-const finishProgressBar = () => {
-  const progressBar = getProgressBar()
-  if (progressBar) {
-    progressBar.done()
+exports.onCreateDevServer = async ({ app, cache, reporter }) => {
+  if (!_lazyJobsEnabled()) {
+    return
+  }
+
+  app.use(async (req, res, next) => {
+    const decodedURI = decodeURIComponent(req.path)
+    const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
+
+    if (await pathExists(pathOnDisk)) {
+      return res.sendFile(pathOnDisk)
+    }
+
+    const jobContentDigest = await cache.get(decodedURI)
+    const cacheResult = jobContentDigest
+      ? await cache.get(jobContentDigest)
+      : null
+
+    if (!cacheResult) {
+      return next()
+    }
+
+    // We are going to run a job for a single operation only
+    // and postpone all other operations
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
+    const {
+      matchingJob,
+      jobWithRemainingOperations,
+    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
+
+    await _unstable_createJob(matchingJob, { reporter })
+    await cache.cache.del(decodedURI)
+
+    if (jobWithRemainingOperations.args.operations.length > 0) {
+      // There are still some operations pending for this job - replace the cached job
+      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+    } else {
+      // No operations left to process - purge the cache
+      await cache.cache.del(jobContentDigest)
+    }
+
+    return res.sendFile(pathOnDisk)
+  })
+}
+
+// Split the job into two jobs:
+//  - first job with a single operation matching requestedPathOnDisk
+//  - second job with all other operations
+// so the two resulting jobs are only different by their operations
+function splitOperationsByRequestedFile(job, requestedPathOnDisk) {
+  const matchingJob = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+  const jobWithRemainingOperations = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+
+  job.args.operations.forEach(op => {
+    const operationPath = path.resolve(path.join(job.outputDir, op.outputPath))
+    if (operationPath === requestedPathOnDisk) {
+      matchingJob.args.operations.push(op)
+    } else {
+      jobWithRemainingOperations.args.operations.push(op)
+    }
+  })
+  if (matchingJob.args.operations.length === 0) {
+    throw new Error(
+      `Could not find matching operation for ${requestedPathOnDisk}`
+    )
+  }
+  return { matchingJob, jobWithRemainingOperations }
+}
+
+// So something is wrong with the reporter, when I do this in preBootstrap,
+// the progressbar gets not updated
+exports.onPostBootstrap = async ({ reporter, cache, store }) => {
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // recreate jobs that haven't been triggered by develop yet
+    // removing stale jobs has already kicked in so we know these still need to process
+    for (const [contentDigest] of store.getState().jobsV2.complete) {
+      const job = await cache.get(contentDigest)
+
+      if (job) {
+        // we don't have to await, gatsby does this for us
+        _unstable_createJob(job, { reporter })
+      }
+    }
   }
 }
 
-exports.onPostBuild = () => finishProgressBar()
-exports.onCreateDevServer = () => finishProgressBar()
-
-exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
-  setBoundActionCreators(actions)
+exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
+  setActions(actions)
   setPluginOptions(pluginOptions)
 
   // below is a hack / hot fix for confusing progress bar behaviour
@@ -40,20 +126,48 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
 
     emitter.on(`CREATE_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
+        if (action.payload.job.args.isLazy) {
+          // we have to remove some internal pieces
+          const job = {
+            name: action.payload.job.name,
+            inputPaths: action.payload.job.inputPaths.map(input => input.path),
+            outputDir: action.payload.job.outputDir,
+            args: {
+              ...action.payload.job.args,
+              isLazy: false,
+            },
+          }
+          cache.set(action.payload.job.contentDigest, job)
+
+          action.payload.job.args.operations.forEach(op => {
+            const cacheKey = slash(
+              path.relative(
+                path.join(process.cwd(), `public`),
+                path.join(action.payload.job.outputDir, op.outputPath)
+              )
+            )
+
+            cache.set(`/${cacheKey}`, action.payload.job.contentDigest)
+          })
+
+          return
+        }
+
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
-        const progress = createOrGetProgressBar(reporter)
-        progress.addImageToProcess(imageCount)
       }
     })
 
     emitter.on(`END_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
         const jobContentDigest = action.payload.jobContentDigest
-        const imageCount = imageCountInJobsMap.get(jobContentDigest)
-        const progress = createOrGetProgressBar(reporter)
-        progress.tick(imageCount)
+
+        // when it's lazy we didn't set it
+        if (!imageCountInJobsMap.has(jobContentDigest)) {
+          return
+        }
+
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })
@@ -78,4 +192,27 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     stripMetadata: Joi.boolean().default(true),
     defaultQuality: Joi.number().default(50),
     failOnError: Joi.boolean().default(true),
+    defaults: Joi.object({
+      formats: Joi.array().items(
+        Joi.string().valid(`auto`, `png`, `jpg`, `webp`, `avif`)
+      ),
+      placeholder: Joi.string().valid(
+        `tracedSVG`,
+        `dominantColor`,
+        `blurred`,
+        `none`
+      ),
+      quality: Joi.number(),
+      breakpoints: Joi.array().items(Joi.number()),
+      backgroundColor: Joi.string(),
+      transformOptions: Joi.object(),
+      tracedSVGOptions: Joi.object(),
+      blurredOptions: Joi.object(),
+      jpgOptions: Joi.object(),
+      pngOptions: Joi.object(),
+      webpOptions: Joi.object(),
+      avifOptions: Joi.object(),
+    }).description(
+      `Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/`
+    ),
   })

@@ -55,11 +55,11 @@ function createPropNodes(
   createContentDigest
 ) {
   const { createNode } = actions
-  let children = new Array(component.props.length)
+  const children = new Array(component.props.length)
 
   component.props.forEach((prop, i) => {
-    let propNodeId = propsId(node.id, prop.name)
-    let content = JSON.stringify(prop)
+    const propNodeId = propsId(node.id, prop.name)
+    const content = JSON.stringify(prop)
 
     let propNode = {
       ...prop,

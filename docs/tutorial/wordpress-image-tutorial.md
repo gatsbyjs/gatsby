@@ -6,7 +6,7 @@ title: "Adding Images to a WordPress Site"
 
 The version of `gatsby-source-wordpress` that this tutorial uses will soon be deprecated and replaced with a complete rewrite in the next major version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
 
-Please follow the tutorial on [creating a new site with `gatsby-source-wordpress-experimental`](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental/blob/master/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
+Please follow the tutorial on [creating a new site with `gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
 
 ## What this tutorial covers:
 
@@ -29,7 +29,7 @@ gatsby new images-tutorial-site
 cd images-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/plugins/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install gatsby-source-wordpress

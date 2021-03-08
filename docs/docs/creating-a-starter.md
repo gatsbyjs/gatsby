@@ -10,7 +10,7 @@ For a starter to work properly, it needs to include some files (see the [Hello W
 
 - `README.md`: instructions for how to install and configure your starter, a list of its features or structure, and any helpful tips.
 - `package.json`: the "command center" for Gatsby dependencies and scripts. Find an example in the [Hello World starter's package.json](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/package.json) file.
-- `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/gatsby-config/) for more information.
+- `gatsby-config.js`: a space to add configurable data and plugins. See [Gatsby Config](/docs/reference/config-files/gatsby-config/) for more information.
 - `src/pages`: a directory for page components to live, with at least one [index.js file (example)](https://github.com/gatsbyjs/gatsby-starter-hello-world/blob/master/src/pages/index.js).
 - `static`: a directory for static assets, such as a `favicon.ico` file.
 - `.gitignore`: a file telling Git which resources to leave out of source control, such as the `node_modules` directory, log files, Gatsby `.cache` and `public` directories.

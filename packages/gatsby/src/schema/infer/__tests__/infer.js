@@ -36,6 +36,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 const report = require(`gatsby-cli/lib/reporter`)
 afterEach(() => {
   report.error.mockClear()
+  report.warn.mockClear()
 })
 
 const makeNodes = () => [
@@ -524,7 +525,12 @@ describe(`GraphQL type inference`, () => {
           name: `Repro`,
           interfaces: [`Node`],
           fields: {
-            field_that_needs_to_be_sanitized_: `String`,
+            field_that_needs_to_be_sanitized_: {
+              type: `String`,
+              extensions: {
+                proxy: { from: `field_that_needs_to_be_sanitized?` },
+              },
+            },
             _another__field_that_needs_to_be_sanitized: {
               type: `String`,
               resolve: source =>

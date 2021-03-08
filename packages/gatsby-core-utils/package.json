@@ -1,6 +1,6 @@
 {
   "name": "gatsby-core-utils",
-  "version": "1.6.0-next.0",
+  "version": "2.1.0-next.1",
   "description": "A collection of gatsby utils used in different gatsby packages",
   "keywords": [
     "gatsby",
@@ -31,6 +31,7 @@
   "dependencies": {
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
+    "file-type": "^16.2.0",
     "fs-extra": "^8.1.0",
     "node-object-hash": "^2.0.0",
     "proper-lockfile": "^4.1.1",
@@ -41,11 +42,11 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@types/ci-info": "2.0.0",
-    "babel-preset-gatsby-package": "^0.8.0-next.0",
-    "cross-env": "^7.0.2",
-    "typescript": "^3.9.7"
+    "babel-preset-gatsby-package": "^1.1.0-next.1",
+    "cross-env": "^7.0.3",
+    "typescript": "^4.1.5"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

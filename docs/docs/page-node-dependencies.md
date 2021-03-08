@@ -20,11 +20,11 @@ Passing `nodeId` tells Gatsby that the page depends specifically on this node. S
 
 #### Node Model
 
-[Node Model](/docs/node-model/) is an API used in GraphQL resolvers to retrieve nodes from the data store. It's used internally in resolvers provided by Gatsby core and it can be used in resolvers provided by plugins via `context.nodeModel`. It calls `createPageAction` under the hood because Node Model is aware of the path of the query as well as the nodes being retrieved.
+[Node Model](/docs/reference/graphql-data-layer/node-model/) is an API used in GraphQL resolvers to retrieve nodes from the data store. It's used internally in resolvers provided by Gatsby core and it can be used in resolvers provided by plugins via `context.nodeModel`. It calls `createPageAction` under the hood because Node Model is aware of the path of the query as well as the nodes being retrieved.
 
 #### `getNodeAndSavePathDependency` helper
 
-[`getNodeAndSavePathDependency`](/docs/node-api-helpers/#getNodeAndSavePathDependency) is a convenience wrapper around `getNode` and `createPageDependency`. It is not used internally. It's a legacy API for plugins to record data dependencies and is equivalent to `nodeModel.getNodeById`. The Node Model variant should be used instead as its API is less error prone. (Node Model is `path` aware and doesn't require you to pass it.)
+[`getNodeAndSavePathDependency`](/docs/reference/config-files/node-api-helpers/#getNodeAndSavePathDependency) is a convenience wrapper around `getNode` and `createPageDependency`. It is not used internally. It's a legacy API for plugins to record data dependencies and is equivalent to `nodeModel.getNodeById`. The Node Model variant should be used instead as its API is less error prone. (Node Model is `path` aware and doesn't require you to pass it.)
 
 ## How dependencies are stored
 

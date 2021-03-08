@@ -1,6 +1,7 @@
 /* eslint-disable no-invalid-this */
 
 import { store, emitter } from "../redux"
+import { IAddPendingTemplateDataWriteAction } from "../redux/types"
 import { clearDirtyQueriesListToEmitViaWebsocket } from "../redux/actions/internal"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
@@ -9,7 +10,7 @@ import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
 import { findPageByPath } from "./find-page-by-path"
-import socketIO from "socket.io"
+import { Server as SocketIO, Socket } from "socket.io"
 
 export interface IPageQueryResult {
   id: string
@@ -30,7 +31,7 @@ function hashPaths(paths: Array<string>): Array<string> {
 
 interface IClientInfo {
   activePath: string | null
-  socket: socketIO.Socket
+  socket: Socket
 }
 
 export class WebsocketManager {
@@ -39,19 +40,22 @@ export class WebsocketManager {
   errors: Map<string, string> = new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
-  websocket: socketIO.Server | undefined
+  websocket: SocketIO | undefined
 
-  init = ({
-    server,
-  }: {
-    server: HTTPSServer | HTTPServer
-  }): socketIO.Server => {
-    this.websocket = socketIO(server, {
+  init = ({ server }: { server: HTTPSServer | HTTPServer }): SocketIO => {
+    // make typescript happy, else it complained about this.websocket being undefined
+    const websocket = new SocketIO(server, {
       // we see ping-pong timeouts on gatsby-cloud when socket.io is running for a while
       // increasing it should help
       // @see https://github.com/socketio/socket.io/issues/3259#issuecomment-448058937
       pingTimeout: 30000,
+      // whitelist all (https://github.com/expressjs/cors#configuration-options)
+      cors: {
+        origin: true,
+      },
+      cookie: true,
     })
+    this.websocket = websocket
 
     const updateServerActivePaths = (): void => {
       const serverActivePaths = new Set<string>()
@@ -63,7 +67,7 @@ export class WebsocketManager {
       this.activePaths = serverActivePaths
     }
 
-    this.websocket.on(`connection`, socket => {
+    websocket.on(`connection`, socket => {
       const clientInfo: IClientInfo = {
         activePath: null,
         socket,
@@ -119,16 +123,38 @@ export class WebsocketManager {
     })
 
     if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
-      emitter.on(`CREATE_PAGE`, this.emitDirtyQueriesIds)
-      emitter.on(`CREATE_NODE`, this.emitDirtyQueriesIds)
-      emitter.on(`DELETE_NODE`, this.emitDirtyQueriesIds)
-      emitter.on(`QUERY_EXTRACTED`, this.emitDirtyQueriesIds)
+      // page-data marked stale due to dirty query tracking
+      const boundEmitStalePageDataPathsFromDirtyQueryTracking = this.emitStalePageDataPathsFromDirtyQueryTracking.bind(
+        this
+      )
+      emitter.on(
+        `CREATE_PAGE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `CREATE_NODE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `DELETE_NODE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `QUERY_EXTRACTED`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
     }
 
-    return this.websocket
+    // page-data marked stale due to static query hashes change
+    emitter.on(
+      `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+      this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this)
+    )
+
+    return websocket
   }
 
-  getSocket = (): socketIO.Server | undefined => this.websocket
+  getSocket = (): SocketIO | undefined => this.websocket
 
   emitStaticQueryData = (data: IStaticQueryResult): void => {
     this.staticQueryResults.set(data.id, data)
@@ -187,20 +213,35 @@ export class WebsocketManager {
     }
   }
 
-  emitDirtyQueriesIds = (): void => {
+  emitStalePageDataPathsFromDirtyQueryTracking(): void {
     const dirtyQueries = store.getState().queries
       .dirtyQueriesListToEmitViaWebsocket
 
-    if (dirtyQueries.length > 0) {
+    if (this.emitStalePageDataPaths(dirtyQueries)) {
+      store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+    }
+  }
+
+  emitStalePageDataPathsFromStaticQueriesAssignment(
+    pendingTemplateDataWrite: IAddPendingTemplateDataWriteAction
+  ): void {
+    this.emitStalePageDataPaths(
+      Array.from(pendingTemplateDataWrite.payload.pages)
+    )
+  }
+
+  emitStalePageDataPaths(stalePageDataPaths: Array<string>): boolean {
+    if (stalePageDataPaths.length > 0) {
       if (this.websocket) {
         this.websocket.send({
-          type: `dirtyQueries`,
-          payload: { dirtyQueries },
+          type: `stalePageData`,
+          payload: { stalePageDataPaths },
         })
 
-        store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+        return true
       }
     }
+    return false
   }
 }
 

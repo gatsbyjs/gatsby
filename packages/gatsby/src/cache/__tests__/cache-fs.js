@@ -70,10 +70,12 @@ describe(`DiskStore`, function () {
       // this.slow(30)
 
       await Promise.all(
-        Array.apply(null, Array(30)).map(async function (v, i) {
-          const data = await cache.get(`not existing key` + i)
-          expect(data).toEqual(undefined)
-        })
+        Array(30)
+          .fill()
+          .map(async function (v, i) {
+            const data = await cache.get(`not existing key` + i)
+            expect(data).toEqual(undefined)
+          })
       )
     })
   })
@@ -86,7 +88,7 @@ describe(`DiskStore`, function () {
       expect(countFilesInCacheDir()).toEqual(2)
     })
 
-    it(`should save buffers in seperate files promise`, async function () {
+    it(`should save buffers in separate files promise`, async function () {
       await cache.set(`key`, Buffer.alloc(100000))
       expect(countFilesInCacheDir()).toEqual(2)
     })
@@ -248,11 +250,11 @@ describe(`DiskStore`, function () {
         cache2.get(`key`),
         cache3.get(`key`),
       ])
-      //all caches should be the same
+      // all caches should be the same
       expect(values[0]).toEqual(values[1])
       expect(values[0]).toEqual(values[2])
 
-      //the cache should be one of the values that was stored to it
+      // the cache should be one of the values that was stored to it
       try {
         expect(values[0]).toEqual(values[1])
       } catch (e) {

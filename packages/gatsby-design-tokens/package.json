@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "2.3.0-next.0",
+  "version": "3.1.0-next.1",
   "description": "Gatsby Design Tokens",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "agadoo": "^1.1.0",
-    "cross-env": "^7.0.2",
-    "microbundle": "^0.12.4",
+    "cross-env": "^7.0.3",
+    "microbundle": "^0.13.0",
     "preval.macro": "^3.0.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

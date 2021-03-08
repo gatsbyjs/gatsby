@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@reach/router"
-import { resolve } from "@reach/router/lib/utils"
+import { Link, Location } from "@gatsbyjs/reach-router"
+import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 
 import { parsePath } from "./parse-path"
 
@@ -93,6 +93,14 @@ const createIntersectionObserver = (el, cb) => {
   return { instance: io, el }
 }
 
+function GatsbyLinkLocationWrapper(props) {
+  return (
+    <Location>
+      {({ location }) => <GatsbyLink {...props} _location={location} />}
+    </Location>
+  )
+}
+
 class GatsbyLink extends React.Component {
   constructor(props) {
     super(props)
@@ -108,23 +116,35 @@ class GatsbyLink extends React.Component {
     this.handleRef = this.handleRef.bind(this)
   }
 
+  _prefetch() {
+    let currentPath = window.location.pathname
+
+    // reach router should have the correct state
+    if (this.props._location && this.props._location.pathname) {
+      currentPath = this.props._location.pathname
+    }
+
+    const rewrittenPath = rewriteLinkPath(this.props.to, currentPath)
+    const newPathName = parsePath(rewrittenPath).pathname
+
+    // Prefech is used to speed up next navigations. When you use it on the current navigation,
+    // there could be a race-condition where Chrome uses the stale data instead of waiting for the network to complete
+    if (currentPath !== newPathName) {
+      ___loader.enqueue(newPathName)
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     // Preserve non IO functionality if no support
     if (this.props.to !== prevProps.to && !this.state.IOSupported) {
-      ___loader.enqueue(
-        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-          .pathname
-      )
+      this._prefetch()
     }
   }
 
   componentDidMount() {
     // Preserve non IO functionality if no support
     if (!this.state.IOSupported) {
-      ___loader.enqueue(
-        parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-          .pathname
-      )
+      this._prefetch()
     }
   }
 
@@ -148,10 +168,7 @@ class GatsbyLink extends React.Component {
     if (this.state.IOSupported && ref) {
       // If IO supported and element reference found, setup Observer functionality
       this.io = createIntersectionObserver(ref, () => {
-        ___loader.enqueue(
-          parsePath(rewriteLinkPath(this.props.to, window.location.pathname))
-            .pathname
-        )
+        this._prefetch()
       })
     }
   }
@@ -181,70 +198,68 @@ class GatsbyLink extends React.Component {
       partiallyActive,
       state,
       replace,
+      _location,
       /* eslint-enable no-unused-vars */
       ...rest
     } = this.props
+
     if (process.env.NODE_ENV !== `production` && !isLocalLink(to)) {
       console.warn(
         `External link ${to} was detected in a Link component. Use the Link component only for internal links. See: https://gatsby.dev/internal-links`
       )
     }
 
+    const prefixedTo = rewriteLinkPath(to, _location.pathname)
+    if (!isLocalLink(prefixedTo)) {
+      return <a href={prefixedTo} {...rest} />
+    }
+
     return (
-      <Location>
-        {({ location }) => {
-          const prefixedTo = rewriteLinkPath(to, location.pathname)
-          return isLocalLink(prefixedTo) ? (
-            <Link
-              to={prefixedTo}
-              state={state}
-              getProps={getProps}
-              innerRef={this.handleRef}
-              onMouseEnter={e => {
-                if (onMouseEnter) {
-                  onMouseEnter(e)
-                }
-                ___loader.hovering(parsePath(prefixedTo).pathname)
-              }}
-              onClick={e => {
-                if (onClick) {
-                  onClick(e)
-                }
-
-                if (
-                  e.button === 0 && // ignore right clicks
-                  !this.props.target && // let browser handle "target=_blank"
-                  !e.defaultPrevented && // onClick prevented default
-                  !e.metaKey && // ignore clicks with modifier keys...
-                  !e.altKey &&
-                  !e.ctrlKey &&
-                  !e.shiftKey
-                ) {
-                  e.preventDefault()
-
-                  let shouldReplace = replace
-                  const isCurrent =
-                    encodeURI(prefixedTo) === window.location.pathname
-                  if (typeof replace !== `boolean` && isCurrent) {
-                    shouldReplace = true
-                  }
-                  // Make sure the necessary scripts and data are
-                  // loaded before continuing.
-                  window.___navigate(prefixedTo, {
-                    state,
-                    replace: shouldReplace,
-                  })
-                }
-
-                return true
-              }}
-              {...rest}
-            />
-          ) : (
-            <a href={prefixedTo} {...rest} />
-          )
+      <Link
+        to={prefixedTo}
+        state={state}
+        getProps={getProps}
+        innerRef={this.handleRef}
+        onMouseEnter={e => {
+          if (onMouseEnter) {
+            onMouseEnter(e)
+          }
+          ___loader.hovering(parsePath(prefixedTo).pathname)
         }}
-      </Location>
+        onClick={e => {
+          if (onClick) {
+            onClick(e)
+          }
+
+          if (
+            e.button === 0 && // ignore right clicks
+            !this.props.target && // let browser handle "target=_blank"
+            !e.defaultPrevented && // onClick prevented default
+            !e.metaKey && // ignore clicks with modifier keys...
+            !e.altKey &&
+            !e.ctrlKey &&
+            !e.shiftKey
+          ) {
+            e.preventDefault()
+
+            let shouldReplace = replace
+            const isCurrent = encodeURI(prefixedTo) === _location.pathname
+
+            if (typeof replace !== `boolean` && isCurrent) {
+              shouldReplace = true
+            }
+            // Make sure the necessary scripts and data are
+            // loaded before continuing.
+            window.___navigate(prefixedTo, {
+              state,
+              replace: shouldReplace,
+            })
+          }
+
+          return true
+        }}
+        {...rest}
+      />
     )
   }
 }
@@ -257,31 +272,10 @@ GatsbyLink.propTypes = {
   state: PropTypes.object,
 }
 
-const showDeprecationWarning = (functionName, altFunctionName, version) =>
-  console.warn(
-    `The "${functionName}" method is now deprecated and will be removed in Gatsby v${version}. Please use "${altFunctionName}" instead.`
-  )
-
 export default React.forwardRef((props, ref) => (
-  <GatsbyLink innerRef={ref} {...props} />
+  <GatsbyLinkLocationWrapper innerRef={ref} {...props} />
 ))
 
 export const navigate = (to, options) => {
   window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
-}
-
-export const push = to => {
-  showDeprecationWarning(`push`, `navigate`, 3)
-  window.___push(rewriteLinkPath(to, window.location.pathname))
-}
-
-export const replace = to => {
-  showDeprecationWarning(`replace`, `navigate`, 3)
-  window.___replace(rewriteLinkPath(to, window.location.pathname))
-}
-
-// TODO: Remove navigateTo for Gatsby v3
-export const navigateTo = to => {
-  showDeprecationWarning(`navigateTo`, `navigate`, 3)
-  return push(to)
 }

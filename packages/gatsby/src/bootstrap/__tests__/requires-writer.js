@@ -1,11 +1,11 @@
 const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
-const { match } = require(`@reach/router/lib/utils`)
+const { match } = require(`@gatsbyjs/reach-router/lib/utils`)
 
 const now = Date.now()
 
 const generatePagesState = pages => {
-  let state = new Map()
+  const state = new Map()
   pages.forEach(page => {
     state.set(page.path, {
       component: ``,
@@ -30,7 +30,6 @@ describe(`requires-writer`, () => {
   const program = {
     directory: `/dir`,
   }
-  const clientVisitedPages = new Set()
   const originalDateNow = global.Date.now
 
   beforeEach(() => {
@@ -62,7 +61,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       expect(spy).toBeCalledWith(
@@ -110,7 +108,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/login/`).path)
@@ -144,7 +141,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/app/clients/static`).path)
@@ -169,7 +165,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       expect(matchPaths[0].path).toBe(pages.get(`/`).path)
@@ -224,7 +219,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       expect(matchPaths.map(p => p.matchPath)).toMatchInlineSnapshot(`
@@ -251,7 +245,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       const matchPathsForInvertedInput = matchPaths
@@ -259,7 +252,6 @@ describe(`requires-writer`, () => {
       await requiresWriter.writeAll({
         pages,
         program,
-        clientVisitedPages,
       })
 
       expect(matchPathsForInvertedInput).toEqual(matchPaths)
@@ -271,7 +263,6 @@ describe(`requires-writer`, () => {
         await requiresWriter.writeAll({
           pages,
           program,
-          clientVisitedPages,
         })
 
         const allMatchingPages = matchPaths

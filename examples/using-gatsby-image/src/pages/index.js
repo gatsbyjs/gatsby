@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import { css } from "@emotion/core"
+import { css } from "@emotion/css"
 import { FaGithub } from "react-icons/fa"
 
 import Layout from "../components/layout"

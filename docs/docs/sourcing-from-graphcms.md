@@ -43,7 +43,7 @@ npm install gatsby-source-graphcms
 
 The last step required before you can query your data is to configure `gatsby-source-graphcms`. Inside of `gatsby-config.js`, add a new plugin configuration.
 
-> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [here](https://www.gatsbyjs.com/docs/environment-variables).
+> We recommend using environment variables with your GraphCMS `token` and `endpoint` values. You can learn more about using environment variables with Gatsby [in the How-To Guide about environment variables](/docs/how-to/local-development/environment-variables).
 
 ```js
 {
@@ -138,7 +138,7 @@ Using the generated schema, we can begin to write GraphQL queries for Gatsby dat
 
 ### Query implementation
 
-Gatsby offers two means of data querying: [page queries](https://www.gatsbyjs.com/docs/page-query) and [static queries](https://www.gatsbyjs.com/docs/static-query).
+Gatsby offers two means of data querying: [page queries](/docs/how-to/querying-data/page-query) and [static queries](/docs/how-to/querying-data/static-query).
 
 #### Page query
 

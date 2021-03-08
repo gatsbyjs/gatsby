@@ -21,8 +21,9 @@ export default function pluginOptionSchema({ Joi }) {
       `chrome_web_store`,
       `play`,
       `itunes`,
-      `microsoft`
-    ) //https://w3c.github.io/manifest-app-info/#platform-member
+      `microsoft`,
+      `webapp`
+    ) // https://w3c.github.io/manifest-app-info/#platform-member
     .description(`The platform on which the application can be found.`)
 
   const FingerPrint = Joi.object().keys({
@@ -92,13 +93,10 @@ export default function pluginOptionSchema({ Joi }) {
       platform: platform.required(),
       url: Joi.string()
         .uri()
-        .required()
         .description(`The URL at which the application can be found.`),
-      id: Joi.string()
-        .required()
-        .description(
-          `The ID used to represent the application on the specified platform.`
-        ),
+      id: Joi.string().description(
+        `The ID used to represent the application on the specified platform.`
+      ),
       min_version: Joi.string()
         .optional()
         .description(
@@ -112,6 +110,46 @@ export default function pluginOptionSchema({ Joi }) {
         ),
     })
     .or(`url`, `id`)
+
+  /**
+   * This only includes items in the draft, but allows unknown keys in params
+   * @see https://w3c.github.io/web-share-target/
+   */
+  const ShareTarget = Joi.object().keys({
+    action: Joi.string()
+      .uri({ allowRelative: true })
+      .required()
+      .description(`The URL for the web share target.`),
+    method: Joi.string()
+      .optional()
+      .description(`The HTTP request method for the web share target`),
+    enctype: Joi.string()
+      .optional()
+      .description(
+        `Specifies how the share data is encoded in the body of a POST request. It is ignored when method is "GET"`
+      ),
+    params: Joi.object()
+      .required()
+      .keys({
+        title: Joi.string()
+          .optional()
+          .description(
+            `The name of the query parameter used for the title of the document being shared`
+          ),
+        text: Joi.string()
+          .optional()
+          .description(
+            `The name of the query parameter used for the arbitrary text that forms the body of the message being shared`
+          ),
+        url: Joi.string()
+          .optional()
+          .description(
+            `The name of the query parameter used for the URL string referring to a resource being shared`
+          ),
+      })
+      // Allow unknown keys, because the spec is an unofficial draft and Google already seems to have added support for keys that are not in the spec
+      .unknown(true),
+  })
 
   const WebAppManifest = Joi.object().keys({
     background_color: Joi.string()
@@ -190,6 +228,9 @@ export default function pluginOptionSchema({ Joi }) {
       .description(
         `The related_applications field is an array of objects specifying native applications that are installable by, or accessible to, the underlying platform.`
       ),
+    share_target: ShareTarget.optional().description(
+      `Allows websites to declare themselves as web share targets, which can receive shared content from either the Web Share API, or system events (e.g., shares from native apps).`
+    ),
     scope: Joi.string()
       .optional()
       .description(

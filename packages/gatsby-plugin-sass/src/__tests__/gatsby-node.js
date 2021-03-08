@@ -27,7 +27,9 @@ describe(`gatsby-plugin-sass`, () => {
     options: {
       "No options": {},
       "Sass options": {
-        includePaths: [`absolute/path/a`, `absolute/path/b`],
+        sassOptions: {
+          includePaths: [`absolute/path/a`, `absolute/path/b`],
+        },
       },
       "PostCss plugins": {
         postCssPlugins: [`test1`],
@@ -47,7 +49,7 @@ describe(`gatsby-plugin-sass`, () => {
   }
 
   tests.stages.forEach(stage => {
-    for (let label in tests.options) {
+    for (const label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {
         onCreateWebpackConfig({ actions, loaders, stage }, options)
@@ -66,24 +68,24 @@ describe(`pluginOptionsSchema`, () => {
       `"sassRuleTest" must be of type object`,
       `"sassRuleModulesTest" must be of type object`,
       `"useResolveUrlLoader" must be one of [boolean, object]`,
-      `"file" must be a string`,
-      `"data" must be a string`,
-      `"importer" must be of type function`,
-      `"functions" must be of type object`,
-      `"includePaths" must be an array`,
-      `"indentedSyntax" must be a boolean`,
-      `"indentType" must be a string`,
-      `"indentWidth" must be less than or equal to 10`,
-      `"linefeed" must be one of [cr, crlf, lf, lfcr]`,
-      `"omitSourceMapUrl" must be a boolean`,
-      `"outFile" must be a string`,
-      `"outputStyle" must be one of [nested, expanded, compact, compressed]`,
-      `"precision" must be a number`,
-      `"sourceComments" must be a boolean`,
-      `"sourceMap" must be one of [boolean, string]`,
-      `"sourceMapContents" must be a boolean`,
-      `"sourceMapEmbed" must be a boolean`,
-      `"sourceMapRoot" must be a string`,
+      `"sassOptions.file" must be a string`,
+      `"sassOptions.data" must be a string`,
+      `"sassOptions.importer" must be of type function`,
+      `"sassOptions.functions" must be of type object`,
+      `"sassOptions.includePaths" must be an array`,
+      `"sassOptions.indentedSyntax" must be a boolean`,
+      `"sassOptions.indentType" must be a string`,
+      `"sassOptions.indentWidth" must be less than or equal to 10`,
+      `"sassOptions.linefeed" must be one of [cr, crlf, lf, lfcr]`,
+      `"sassOptions.omitSourceMapUrl" must be a boolean`,
+      `"sassOptions.outFile" must be a string`,
+      `"sassOptions.outputStyle" must be one of [nested, expanded, compact, compressed]`,
+      `"sassOptions.precision" must be a number`,
+      `"sassOptions.sourceComments" must be a boolean`,
+      `"sassOptions.sourceMap" must be one of [boolean, string]`,
+      `"sassOptions.sourceMapContents" must be a boolean`,
+      `"sassOptions.sourceMapEmbed" must be a boolean`,
+      `"sassOptions.sourceMapRoot" must be a string`,
     ]
 
     const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
@@ -93,24 +95,26 @@ describe(`pluginOptionsSchema`, () => {
       sassRuleTest: `This should be a regexp`,
       sassRuleModulesTest: `This should be a regexp`,
       useResolveUrlLoader: `This should be a boolean`,
-      file: 123, // should be a string
-      data: 123, // should be a string
-      importer: `This should be a function`,
-      functions: `This should be an object of { string: function }`,
-      includePaths: 123, // should be an array of string
-      indentedSyntax: `"useResolveUrlLoader" must be a boolean`,
-      indentType: 123, // this should be a string
-      indentWidth: 40,
-      linefeed: `This should be cr, crlf, lf or lfcr`,
-      omitSourceMapUrl: `This should be a boolean`,
-      outFile: 123, // This should be a string
-      outputStyle: `This should be nested, expanded, compact or compressed`,
-      precision: `This should be a number`,
-      sourceComments: `This should be a boolean`,
-      sourceMap: 123, // This should be a string or a boolean
-      sourceMapContents: `This should be a boolean`,
-      sourceMapEmbed: `This should be a boolean`,
-      sourceMapRoot: 123, // This should be a string
+      sassOptions: {
+        file: 123, // should be a string
+        data: 123, // should be a string
+        importer: `This should be a function`,
+        functions: `This should be an object of { string: function }`,
+        includePaths: 123, // should be an array of string
+        indentedSyntax: `"useResolveUrlLoader" must be a boolean`,
+        indentType: 123, // this should be a string
+        indentWidth: 40,
+        linefeed: `This should be cr, crlf, lf or lfcr`,
+        omitSourceMapUrl: `This should be a boolean`,
+        outFile: 123, // This should be a string
+        outputStyle: `This should be nested, expanded, compact or compressed`,
+        precision: `This should be a number`,
+        sourceComments: `This should be a boolean`,
+        sourceMap: 123, // This should be a string or a boolean
+        sourceMapContents: `This should be a boolean`,
+        sourceMapEmbed: `This should be a boolean`,
+        sourceMapRoot: 123, // This should be a string
+      },
     })
 
     expect(errors).toEqual(expectedErrors)
@@ -124,30 +128,32 @@ describe(`pluginOptionsSchema`, () => {
       sassRuleTest: /\.global\.s(a|c)ss$/,
       sassRuleModulesTest: /\.mod\.s(a|c)ss$/,
       useResolveUrlLoader: false,
-      file: `../path-to-file`,
-      data: `{ some: data }`,
-      importer: function () {
-        return { file: `path-to-file`, contents: `data` }
-      },
-      functions: {
-        "headings($from: 0, $to: 6)": function () {
-          return []
+      sassOptions: {
+        file: `../path-to-file`,
+        data: `{ some: data }`,
+        importer: function () {
+          return { file: `path-to-file`, contents: `data` }
         },
+        functions: {
+          "headings($from: 0, $to: 6)": function () {
+            return []
+          },
+        },
+        includePaths: [`some`, `path`],
+        indentedSyntax: true,
+        indentType: `tabs`,
+        indentWidth: 7,
+        linefeed: `crlf`,
+        omitSourceMapUrl: true,
+        outFile: `somewhere-around.css`,
+        outputStyle: `expanded`,
+        precision: 12,
+        sourceComments: true,
+        sourceMap: true,
+        sourceMapContents: true,
+        sourceMapEmbed: true,
+        sourceMapRoot: `some-source-map-root`,
       },
-      includePaths: [`some`, `path`],
-      indentedSyntax: true,
-      indentType: `tabs`,
-      indentWidth: 7,
-      linefeed: `crlf`,
-      omitSourceMapUrl: true,
-      outFile: `somewhere-around.css`,
-      outputStyle: `expanded`,
-      precision: 12,
-      sourceComments: true,
-      sourceMap: true,
-      sourceMapContents: true,
-      sourceMapEmbed: true,
-      sourceMapRoot: `some-source-map-root`,
     })
 
     expect(isValid).toBe(true)

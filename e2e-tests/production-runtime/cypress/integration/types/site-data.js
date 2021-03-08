@@ -9,7 +9,7 @@ describe(`the site data object`, () => {
       .should(`equal`, `Gatsby Default Starter`)
   })
 
-  it(`description is overriden by value in config`, () => {
+  it(`description is overridden by value in config`, () => {
     cy.getTestElement(`description`)
       .invoke(`text`)
       .should(`equal`, `This is site for production runtime e2e tests`)

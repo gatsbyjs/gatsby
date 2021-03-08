@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.0...gatsby-dev-cli@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.0.0-next.0...gatsby-dev-cli@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.15.0-next.0...gatsby-dev-cli@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.14.0-next.0...gatsby-dev-cli@2.15.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.13.0-next.1...gatsby-dev-cli@2.14.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.13.0-next.0...gatsby-dev-cli@2.13.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-dev-cli ([#28971](https://github.com/gatsbyjs/gatsby/issues/28971)) ([2e10dae](https://github.com/gatsbyjs/gatsby/commit/2e10dae130d77861bb229d21fd7e46046f5c73d7))
+
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.12.0-next.0...gatsby-dev-cli@2.13.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.11.0-next.1...gatsby-dev-cli@2.12.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.11.0-next.0...gatsby-dev-cli@2.11.0-next.1) (2020-12-03)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.10.0-next.0...gatsby-dev-cli@2.11.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-dev-cli:** Correctly catch 404s from NPM when a package hasn't been published yet ([#28297](https://github.com/gatsbyjs/gatsby/issues/28297)) ([c993d52](https://github.com/gatsbyjs/gatsby/commit/c993d52bff1b2255ba8a2c0d04726bfdb71b070a))
+
 # [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@2.9.0-next.0...gatsby-dev-cli@2.10.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-dev-cli

@@ -41,5 +41,5 @@ If you are using this plugin with React hooks, you may notice some errors like `
 
 ## Examples
 
-- [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/site-metadata.js)
+- [kentcdodds.com](https://github.com/kentcdodds/kentcdodds.com/blob/master/src/components/seo/index.js)
 - [Jason Lengstorf personal website](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/master/src/components/SEO/SEO.js)

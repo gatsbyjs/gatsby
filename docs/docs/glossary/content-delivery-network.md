@@ -15,7 +15,7 @@ By shortening the physical distance between request and response, you reduce the
 
 > NOTE: For a more complete explanation of how the internet works, watch [_How the Internet Works in 5 Minutes_](https://www.youtube.com/watch?v=7_LPdttKXPc).
 
-An origin can be a traditional web server, or an object storage service such as [Amazon's S3](/docs/deploying-to-s3-cloudfront/) or [Azure Storage](/blog/2018-11-05-deploying-gatsby-to-azure/). For content created by [static site generators](/docs/glossary/static-site-generator/), such as Gatsby, object storage is a quick and low-cost way to deploy a site to an origin. Object storage also eliminates the need to manage servers.
+An origin can be a traditional web server, or an object storage service such as [Amazon's S3](/docs/how-to/previews-deploys-hosting/deploying-to-s3-cloudfront/) or [Azure Storage](/blog/2018-11-05-deploying-gatsby-to-azure/). For content created by [static site generators](/docs/glossary/static-site-generator/), such as Gatsby, object storage is a quick and low-cost way to deploy a site to an origin. Object storage also eliminates the need to manage servers.
 
 A CDN sits between your origin and the DNS servers that direct incoming requests to your site. When the CDN receives a request, it checks to see whether there's a copy of the resource in its cache. If there is, it responds with the cached resource. If there is not, the CDN requests it from the origin and caches the response. Future requests for that resource are then served from the cache.
 

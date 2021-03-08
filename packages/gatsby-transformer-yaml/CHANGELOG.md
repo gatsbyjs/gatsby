@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@3.1.0-next.0...gatsby-transformer-yaml@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@3.0.0-next.0...gatsby-transformer-yaml@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.12.0-next.0...gatsby-transformer-yaml@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.11.0-next.0...gatsby-transformer-yaml@2.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.10.0-next.0...gatsby-transformer-yaml@2.11.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.9.0-next.1...gatsby-transformer-yaml@2.10.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.9.0-next.0...gatsby-transformer-yaml@2.9.0-next.1) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-yaml ([#28602](https://github.com/gatsbyjs/gatsby/issues/28602)) ([08aa940](https://github.com/gatsbyjs/gatsby/commit/08aa9402f0c112cc58e0ab7ba47b1c22ed134d6c))
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.8.0-next.0...gatsby-transformer-yaml@2.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.7.0-next.0...gatsby-transformer-yaml@2.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-yaml
+
 # [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-yaml@2.6.0-next.0...gatsby-transformer-yaml@2.7.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-transformer-yaml

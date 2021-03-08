@@ -7,6 +7,7 @@ import React, {
   ImgHTMLAttributes,
   useState,
   RefObject,
+  CSSProperties,
 } from "react"
 import {
   getWrapperProps,
@@ -15,31 +16,38 @@ import {
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
-import { Layout } from "../utils"
+import { Layout } from "../image-utils"
+import { getSizer } from "./layout-wrapper"
+import { propTypes } from "./gatsby-image.server"
 
-export type GatsbyImageProps = Omit<
-  ImgHTMLAttributes<HTMLImageElement>,
-  "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
-> & {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface GatsbyImageProps
+  extends Omit<
+    ImgHTMLAttributes<HTMLImageElement>,
+    "placeholder" | "onLoad" | "src" | "srcSet" | "width" | "height"
+  > {
   alt: string
   as?: ElementType
   className?: string
-  image: ISharpGatsbyImageData
+  class?: string
+  imgClassName?: string
+  image: IGatsbyImageData
+  imgStyle?: CSSProperties
+  backgroundColor?: string
+  objectFit?: CSSProperties["objectFit"]
+  objectPosition?: CSSProperties["objectPosition"]
   onLoad?: () => void
   onError?: () => void
-  onStartLoad?: Function
+  onStartLoad?: (props: { wasCached?: boolean }) => void
 }
 
-export interface ISharpGatsbyImageData {
+export interface IGatsbyImageData {
   layout: Layout
-  height?: number
+  width: number
+  height: number
   backgroundColor?: string
-  sizes?: string
   images: Pick<MainImageProps, "sources" | "fallback">
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
-  width?: number
-  maxHeight?: number
-  maxWidth?: number
 }
 
 let hasShownWarning = false
@@ -48,9 +56,12 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   as: Type = `div`,
   style,
   className,
+  class: preactClass,
   onStartLoad,
   image,
   onLoad: customOnLoad,
+  backgroundColor,
+  loading = `lazy`,
   ...props
 }) {
   if (!image) {
@@ -59,7 +70,10 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     }
     return null
   }
-  const { width, height, layout, images, backgroundColor } = image
+  if (preactClass) {
+    className = preactClass
+  }
+  const { width, height, layout, images } = image
 
   const root = useRef<HTMLElement>()
   const hydrated = useRef(false)
@@ -68,7 +82,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
   >(null)
   const lazyHydrator = useRef<(() => void) | null>(null)
   const ref = useRef<HTMLImageElement | undefined>()
-  const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport)
+  const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport())
   const [isLoaded, toggleIsLoaded] = useState(false)
 
   if (!global.GATSBY___IMAGE && !hasShownWarning) {
@@ -91,19 +105,20 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       ) as HTMLImageElement
 
       // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport && hasSSRHtml && global.GATSBY___IMAGE) {
+      if (hasNativeLazyLoadSupport() && hasSSRHtml && global.GATSBY___IMAGE) {
         onStartLoad?.({ wasCached: false })
 
         if (hasSSRHtml.complete) {
           customOnLoad?.()
           storeImageloaded(JSON.stringify(images))
-        }
-        hasSSRHtml.addEventListener(`load`, function onLoad() {
-          hasSSRHtml.removeEventListener(`load`, onLoad)
+        } else {
+          hasSSRHtml.addEventListener(`load`, function onLoad() {
+            hasSSRHtml.removeEventListener(`load`, onLoad)
 
-          customOnLoad?.()
-          storeImageloaded(JSON.stringify(images))
-        })
+            customOnLoad?.()
+            storeImageloaded(JSON.stringify(images))
+          })
+        }
         return undefined
       }
 
@@ -140,7 +155,8 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     if (root.current) {
       const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
       // On first server hydration do nothing
-      if (hasNativeLazyLoadSupport && hasSSRHtml && !hydrated.current) {
+      if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
+        hydrated.current = true
         return
       }
 
@@ -155,6 +171,7 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
               toggleIsLoaded(true)
             },
             ref,
+            loading,
             ...props,
           },
           root,
@@ -174,16 +191,21 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     props,
   ])
 
+  const sizer = getSizer(layout, width, height)
+
   return (
     <Type
       {...wrapperProps}
       style={{
         ...wStyle,
         ...style,
+        backgroundColor,
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
       ref={root}
-      dangerouslySetInnerHTML={{ __html: `` }}
+      dangerouslySetInnerHTML={{
+        __html: sizer,
+      }}
       suppressHydrationWarning
     />
   )
@@ -194,4 +216,7 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
 ) {
   return <GatsbyImageHydrator {...props} />
 }
+
+GatsbyImage.propTypes = propTypes
+
 GatsbyImage.displayName = `GatsbyImage`

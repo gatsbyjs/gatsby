@@ -8,6 +8,6 @@ Create a .env file from the template:
 
 Update data:
 
-```sh
+```shell
 yarn date-update
 ```

@@ -49,7 +49,7 @@ module.exports = (
 
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
-  let rawHtmlNodes = []
+  const rawHtmlNodes = []
   visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
@@ -57,7 +57,7 @@ module.exports = (
   })
 
   // This will only work for markdown syntax image tags
-  let markdownImageNodes = []
+  const markdownImageNodes = []
 
   visitWithParents(
     markdownAST,
@@ -146,7 +146,7 @@ module.exports = (
       return resolve()
     }
 
-    let fluidResult = await fluid({
+    const fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
@@ -212,44 +212,74 @@ module.exports = (
       />
     `.trim()
 
-    // if options.withWebp is enabled, generate a webp version and change the image tag to a picture tag
-    if (options.withWebp) {
-      const webpFluidResult = await fluid({
-        file: imageNode,
-        args: _.defaults(
-          { toFormat: `WEBP` },
-          // override options if it's an object, otherwise just pass through defaults
-          options.withWebp === true ? {} : options.withWebp,
-          options
-        ),
-        reporter,
-      })
+    const formatConfigs = [
+      {
+        propertyName: `withAvif`,
+        format: `AVIF`,
+      },
+      {
+        propertyName: `withWebp`,
+        format: `WEBP`,
+      },
+    ]
 
-      if (!webpFluidResult) {
+    const enabledFormatConfigs = formatConfigs.filter(
+      ({ propertyName }) => options[propertyName]
+    )
+
+    if (enabledFormatConfigs.length) {
+      const sourcesHtmlPromises = enabledFormatConfigs.map(
+        async ({ format, propertyName }) => {
+          const formatFluidResult = await fluid({
+            file: imageNode,
+            args: _.defaults(
+              { toFormat: format },
+              // override options if it's an object, otherwise just pass through defaults
+              options[propertyName] === true ? {} : options[propertyName],
+              options
+            ),
+            reporter,
+          })
+
+          if (!formatFluidResult) {
+            return null
+          }
+
+          return `
+            <source
+              srcset="${formatFluidResult.srcSet}"
+              sizes="${formatFluidResult.sizes}"
+              type="${formatFluidResult.srcSetType}"
+            />
+          `.trim()
+        }
+      )
+
+      const sourcesHtml = (await Promise.all(sourcesHtmlPromises)).filter(
+        sourceHtml => sourceHtml !== null
+      )
+
+      if (!sourcesHtml.length) {
         return resolve()
       }
 
       imageTag = `
-      <picture>
-        <source
-          srcset="${webpFluidResult.srcSet}"
-          sizes="${webpFluidResult.sizes}"
-          type="${webpFluidResult.srcSetType}"
-        />
-        <source
-          srcset="${srcSet}"
-          sizes="${fluidResult.sizes}"
-          type="${fluidResult.srcSetType}"
-        />
-        <img
-          class="${imageClass}"
-          src="${fallbackSrc}"
-          alt="${alt}"
-          title="${title}"
-          loading="${loading}"
-          style="${imageStyle}"
-        />
-      </picture>
+        <picture>
+          ${sourcesHtml.join(``)}
+          <source
+            srcset="${srcSet}"
+            sizes="${fluidResult.sizes}"
+            type="${fluidResult.srcSetType}"
+          />
+          <img
+            class="${imageClass}"
+            src="${fallbackSrc}"
+            alt="${alt}"
+            title="${title}"
+            loading="${loading}"
+            style="${imageStyle}"
+          />
+        </picture>
       `.trim()
     }
 
@@ -355,14 +385,14 @@ module.exports = (
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
       ({ node, inLink }) =>
-        new Promise(async (resolve, reject) => {
+        new Promise(resolve => {
           const overWrites = {}
           let refNode
           if (
             !node.hasOwnProperty(`url`) &&
             node.hasOwnProperty(`identifier`)
           ) {
-            //consider as imageReference node
+            // consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
             // pass original alt from referencing node
@@ -382,22 +412,23 @@ module.exports = (
             fileType !== `gif` &&
             fileType !== `svg`
           ) {
-            const rawHTML = await generateImagesAndUpdateNode(
+            return generateImagesAndUpdateNode(
               node,
               resolve,
               inLink,
               overWrites
-            )
+            ).then(rawHTML => {
+              if (rawHTML) {
+                // Replace the image or ref node with an inline HTML node.
+                if (refNode) {
+                  node = refNode
+                }
+                node.type = `html`
+                node.value = rawHTML
 
-            if (rawHTML) {
-              // Replace the image or ref node with an inline HTML node.
-              if (refNode) {
-                node = refNode
+                resolve(node)
               }
-              node.type = `html`
-              node.value = rawHTML
-            }
-            return resolve(node)
+            })
           } else {
             // Image isn't relative so there's nothing for us to do.
             return resolve()
@@ -410,6 +441,7 @@ module.exports = (
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         ({ node, inLink }) =>
+          // eslint-disable-next-line no-async-promise-executor
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve()
@@ -421,14 +453,15 @@ module.exports = (
               return resolve()
             }
 
-            let imageRefs = []
+            const imageRefs = []
             $(`img`).each(function () {
+              // eslint-disable-next-line @babel/no-invalid-this
               imageRefs.push($(this))
             })
 
-            for (let thisImg of imageRefs) {
+            for (const thisImg of imageRefs) {
               // Get the details we need.
-              let formattedImgTag = {}
+              const formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)

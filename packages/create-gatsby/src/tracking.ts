@@ -26,6 +26,8 @@ export interface ITrackCliArgs {
   siteHash?: string
 }
 
+const sessionId = uuidv4()
+
 export const trackCli = (eventType: string, args?: ITrackCliArgs): void => {
   fetch(analyticsApi, {
     method: `POST`,
@@ -36,7 +38,7 @@ export const trackCli = (eventType: string, args?: ITrackCliArgs): void => {
     body: JSON.stringify({
       eventType,
       time: new Date(),
-      sessionId: uuidv4(),
+      sessionId,
       machineId: getMachineId(),
       componentId: `create-gatsby`,
       componentVersion: 1,

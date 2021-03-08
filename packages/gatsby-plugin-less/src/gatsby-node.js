@@ -1,17 +1,15 @@
 import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
-  { actions, stage, rules, plugins, loaders },
+  { actions, stage, loaders },
   { cssLoaderOptions = {}, postCssPlugins, loaderOptions, lessOptions }
 ) => {
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
   const { setWebpackConfig } = actions
-  const PRODUCTION = stage !== `develop`
-  const isSSR = stage.includes(`html`)
 
   const lessLoader = {
     loader: resolve(`less-loader`),
     options: {
-      sourceMap: !PRODUCTION,
       lessOptions: {
         ...lessOptions,
       },
@@ -33,27 +31,18 @@ exports.onCreateWebpackConfig = (
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ hmr: false }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
     ].filter(Boolean),
   }
 
-  let configRules = []
-
-  switch (stage) {
-    case `develop`:
-    case `build-javascript`:
-    case `build-html`:
-    case `develop-html`:
-      configRules = configRules.concat([
-        {
-          oneOf: [lessRuleModules, lessRule],
-        },
-      ])
-      break
-  }
+  const configRules = [
+    {
+      oneOf: [lessRuleModules, lessRule],
+    },
+  ]
 
   setWebpackConfig({
     module: {

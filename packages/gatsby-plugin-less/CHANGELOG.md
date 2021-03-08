@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@5.1.0-next.1...gatsby-plugin-less@5.1.0-next.2) (2021-02-26)
+
+### Bug Fixes
+
+- **mini-css-extract:** don't use loader in ssr ([#29801](https://github.com/gatsbyjs/gatsby/issues/29801)) ([b2d6617](https://github.com/gatsbyjs/gatsby/commit/b2d66171081dffbfdd9e5def281d09c011a6a821))
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@5.1.0-next.0...gatsby-plugin-less@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@5.0.0-next.1...gatsby-plugin-less@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@5.0.0-next.0...gatsby-plugin-less@5.0.0-next.1) (2021-02-19)
+
+### Bug Fixes
+
+- make minicss-extract-plugin compatible with plugins ([#29599](https://github.com/gatsbyjs/gatsby/issues/29599)) ([c0ab195](https://github.com/gatsbyjs/gatsby/commit/c0ab19598708750ce98b39448469a39126f55571))
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.8.0-next.0...gatsby-plugin-less@5.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.7.0-next.0...gatsby-plugin-less@4.8.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.6.0-next.0...gatsby-plugin-less@4.7.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.5.0-next.0...gatsby-plugin-less@4.6.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.4.0-next.0...gatsby-plugin-less@4.5.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.3.0-next.0...gatsby-plugin-less@4.4.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-less
+
 # [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-less@4.2.0-next.0...gatsby-plugin-less@4.3.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-plugin-less

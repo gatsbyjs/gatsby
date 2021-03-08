@@ -37,7 +37,7 @@ For the purposes of an accessible document outline, content headings should go i
 
 ## Modifying Markdown files
 
-> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/mdx/markdown-syntax/)!
+> 💡 New to writing Markdown? Check out the Gatsby [guide on Markdown Syntax](/docs/how-to/routing/mdx/markdown-syntax/)!
 
 1. If you want to add/modify any Gatsby documentation, go to the
    [docs folder](https://github.com/gatsbyjs/gatsby/tree/master/docs) or [contributing folder](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) on GitHub and

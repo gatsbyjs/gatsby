@@ -435,8 +435,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       if (docsJson.examples) {
         picked.examples = docsJson.examples.map(example => {
+          // Extract value from <caption/> element
+          const caption =
+            example?.caption?.children[0]?.children[0].value || null
           return {
             ...example,
+            caption,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,

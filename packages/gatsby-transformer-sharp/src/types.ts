@@ -22,6 +22,7 @@ export const ImageFormatType = new GraphQLEnumType({
     JPG: { value: `jpg` },
     PNG: { value: `png` },
     WEBP: { value: `webp` },
+    AVIF: { value: `avif` },
   },
 })
 
@@ -29,7 +30,7 @@ export const ImageLayoutType = new GraphQLEnumType({
   name: `ImageLayout`,
   values: {
     FIXED: { value: `fixed` },
-    FLUID: { value: `fluid` },
+    FULL_WIDTH: { value: `fullWidth` },
     CONSTRAINED: { value: `constrained` },
   },
 })
@@ -123,6 +124,23 @@ export const WebPOptionsType = new GraphQLInputObjectType({
   fields: (): GraphQLInputFieldConfigMap => {
     return {
       quality: {
+        type: GraphQLInt,
+      },
+    }
+  },
+})
+
+export const AVIFOptionsType = new GraphQLInputObjectType({
+  name: `AVIFOptions`,
+  fields: (): GraphQLInputFieldConfigMap => {
+    return {
+      quality: {
+        type: GraphQLInt,
+      },
+      lossless: {
+        type: GraphQLBoolean,
+      },
+      speed: {
         type: GraphQLInt,
       },
     }

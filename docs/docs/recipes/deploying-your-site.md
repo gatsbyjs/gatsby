@@ -10,7 +10,7 @@ Showtime. Once you are happy with your site, you are ready to go live with it!
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -46,7 +46,7 @@ gatsby build && gatsby serve
 
 ### Additional resources
 
-- Walk through building and deploying an example site in [tutorial part one](/tutorial/part-one/#deploying-a-gatsby-site)
+- Walk through building and deploying an example site in [tutorial part one](/docs/tutorial/part-one/#deploying-a-gatsby-site)
 - Learn about [performance optimization](/docs/performance/)
 - Read about [other deployment related topics](/docs/preparing-for-deployment/)
 - Check out the [deployment docs](/docs/deploying-and-hosting/) for specific hosting platforms and how to deploy to them
@@ -59,7 +59,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
 - The [netlify-cli](https://www.npmjs.com/package/netlify-cli) package installed
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -80,7 +80,7 @@ Use [`netlify-cli`](https://www.netlify.com/docs/cli/) to deploy your Gatsby app
 ### Additional resources
 
 - [Hosting on Netlify](/docs/hosting-on-netlify)
-- [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify)
+- [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify)
 
 ## Deploying to Vercel
 
@@ -91,7 +91,7 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 - A [Vercel](https://vercel.com/signup) account
 - A [Gatsby site](/docs/quick-start) with a single component `index.js`
 - [Vercel CLI](https://vercel.com/download) package installed
-- [Gatsby CLI](/docs/gatsby-cli) installed
+- [Gatsby CLI](/docs/reference/gatsby-cli) installed
 
 ### Directions
 
@@ -103,7 +103,7 @@ Use [Vercel CLI](https://vercel.com/download) to deploy your Gatsby application 
 
 ### Additional resources
 
-- [Deploying to Vercel](/docs/deploying-to-vercel/)
+- [Deploying to Vercel](/docs/how-to/previews-deploys-hosting/deploying-to-vercel/)
 
 ## Deploying to Cloudflare Workers
 
@@ -138,7 +138,7 @@ Use `gatsby-plugin-google-analytics` to track site activity and provide insights
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start) with a `gatsby-config.js` file and an `index.js` page
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli) installed
 - A domain from your provider of choice, e.g. [AWS](https://aws.amazon.com/getting-started/tutorials/get-a-domain/)
 
 ### Verify the domain in search.google.com
@@ -185,4 +185,4 @@ module.exports = {
 
 ### Additional resources
 
-- [Adding Analytics](/docs/adding-analytics/)
+- [Adding Analytics](/docs/how-to/adding-common-features/adding-analytics/)

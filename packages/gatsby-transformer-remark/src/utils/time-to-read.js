@@ -44,8 +44,8 @@ export const timeToRead = html => {
   const pureText = sanitizeHTML(html, { allowTags: [] })
   const avgWPM = 265
 
-  let latinChars = []
-  let cjChars = []
+  const latinChars = []
+  const cjChars = []
 
   for (const char of pureText) {
     if (isCjChar(char)) {

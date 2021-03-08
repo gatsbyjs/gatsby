@@ -8,7 +8,7 @@ This recipe helps you set up CI/CD on GitLab and automate your production build!
 
 ## Prerequisites
 
-- Make sure you have the [Gatsby CLI](/docs/gatsby-cli) installed
+- Make sure you have the [Gatsby CLI](/docs/reference/gatsby-cli) installed
 - A [GitLab](https://gitlab.com/) account
 
 ## Directions

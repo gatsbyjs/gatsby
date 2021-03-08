@@ -1,7 +1,7 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
 const {
@@ -19,6 +19,7 @@ function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   return _unstable_shouldOnCreateNode({ node }, options)
 }
 
+// eslint-disable-next-line camelcase
 function _unstable_shouldOnCreateNode({ node }, options) {
   // options check to stop transformation of the node
   if (options.shouldBlockNodeFromTransformation(node)) {
@@ -157,6 +158,8 @@ async function onCreateNodeLessBabel(
   })
 }
 
+const writeCache = new Set()
+
 async function cacheScope({
   cache,
   scopeImports,
@@ -168,6 +171,16 @@ async function cacheScope({
   let scopeFileContent = `${scopeImports.join(`\n`)}
 
 export default { ${scopeIdentifiers.join(`, `)} }`
+
+  // Multiple files sharing the same imports/exports will lead to the same file writes.
+  // Prevent writing the same content to the same file over and over again (reduces io pressure).
+  // This also prevents an expensive babel step whose outcome is based on this same value
+  if (writeCache.has(scopeFileContent)) {
+    return
+  }
+
+  // Make sure other calls see this value being processed during async time
+  writeCache.add(scopeFileContent)
 
   // if parent node is a file, convert relative imports to be
   // relative to new .cache location
@@ -202,16 +215,18 @@ class BabelPluginTransformRelativeImports {
       return {
         visitor: {
           StringLiteral({ node }) {
-            let split = node.value.split(`!`)
+            const split = node.value.split(`!`)
             const nodePath = split.pop()
             const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
             if (nodePath.startsWith(`.`)) {
               const valueAbsPath = path.resolve(parentFilepath, nodePath)
               const replacementPath =
                 loaders +
-                path.relative(
-                  path.join(cache.directory, MDX_SCOPES_LOCATION),
-                  valueAbsPath
+                slash(
+                  path.relative(
+                    path.join(cache.directory, MDX_SCOPES_LOCATION),
+                    valueAbsPath
+                  )
                 )
               node.value = replacementPath
             }

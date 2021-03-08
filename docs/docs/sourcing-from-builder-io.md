@@ -24,7 +24,7 @@ gatsby new my-builder-site https://github.com/BuilderIO/gatsby-starter-builder
 
 ### Existing project:
 
-Use [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/) which will expose Builder.io data and optionally generate pages dynamically from a provided templates.
+Use [@builder.io/gatsby plugin](/plugins/@builder.io/gatsby/) which will expose Builder.io data and optionally generate pages dynamically from a provided templates.
 
 ## Query Builder.io data
 
@@ -64,6 +64,6 @@ query($path: String!) {
 ## Learn more
 
 - [Builder.io GraphQL docs](https://www.builder.io/c/docs/graphql-api)
-- [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/)
+- [@builder.io/gatsby plugin](/plugins/@builder.io/gatsby/)
 - [Design system example](https://github.com/BuilderIO/builder/tree/master/examples/react-design-system)
 - [Official docs](https://www.builder.io/c/docs/getting-started)

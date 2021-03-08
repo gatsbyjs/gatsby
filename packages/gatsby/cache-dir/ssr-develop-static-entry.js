@@ -1,7 +1,7 @@
 import React from "react"
 import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
-import { merge } from "lodash"
+import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
 import { join } from "path"
 import apiRunner from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
@@ -19,6 +19,10 @@ const testRequireError = (moduleName, err) => {
   const firstLine = err.toString().split(`\n`)[0]
   return regex.test(firstLine)
 }
+
+const stats = JSON.parse(
+  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+)
 
 let Html
 try {
@@ -111,7 +115,68 @@ export default (pagePath, isClientOnlyPage, callback) => {
 
     const pageData = getPageData(pagePath)
 
-    const componentChunkName = pageData?.componentChunkName
+    const { componentChunkName, staticQueryHashes = [] } = pageData
+
+    let scriptsAndStyles = flatten(
+      [`commons`].map(chunkKey => {
+        const fetchKey = `assetsByChunkName[${chunkKey}]`
+
+        let chunks = get(stats, fetchKey)
+        const namedChunkGroups = get(stats, `namedChunkGroups`)
+
+        if (!chunks) {
+          return null
+        }
+
+        chunks = chunks.map(chunk => {
+          if (chunk === `/`) {
+            return null
+          }
+          return { rel: `preload`, name: chunk }
+        })
+
+        namedChunkGroups[chunkKey].assets.forEach(asset =>
+          chunks.push({ rel: `preload`, name: asset.name })
+        )
+
+        const childAssets = namedChunkGroups[chunkKey].childAssets
+        for (const rel in childAssets) {
+          if (childAssets.hasownProperty(rel)) {
+            chunks = concat(
+              chunks,
+              childAssets[rel].map(chunk => {
+                return { rel, name: chunk }
+              })
+            )
+          }
+        }
+
+        return chunks
+      })
+    )
+      .filter(s => isObject(s))
+      .sort((s1, s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
+
+    scriptsAndStyles = uniqBy(scriptsAndStyles, item => item.name)
+
+    const styles = scriptsAndStyles.filter(
+      style => style.name && style.name.endsWith(`.css`)
+    )
+
+    styles
+      .slice(0)
+      .reverse()
+      .forEach(style => {
+        headComponents.unshift(
+          <link
+            data-identity={`gatsby-dev-css`}
+            key={style.name}
+            rel="stylesheet"
+            type="text/css"
+            href={`${__PATH_PREFIX__}/${style.name}`}
+          />
+        )
+      })
 
     const createElement = React.createElement
 
@@ -124,16 +189,22 @@ export default (pagePath, isClientOnlyPage, callback) => {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
-          // pathContext was deprecated in v2. Renamed to pageContext
-          pathContext: pageData.result
-            ? pageData.result.pageContext
-            : undefined,
         }
 
-        const pageElement = createElement(
-          syncRequires.components[componentChunkName],
-          props
-        )
+        let pageElement
+        if (
+          syncRequires.ssrComponents[componentChunkName] &&
+          !isClientOnlyPage
+        ) {
+          pageElement = createElement(
+            syncRequires.ssrComponents[componentChunkName],
+            props
+          )
+        } else {
+          // If this is a client-only page or the pageComponent didn't finish
+          // compiling yet, just render an empty component.
+          pageElement = () => null
+        }
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -213,7 +284,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = isClientOnlyPage ? `` : generateBodyHTML()
+  const bodyStr = generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
@@ -226,6 +297,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
+      <script key={`framework`} src="/framework.js" />,
       <script key={`commons`} src="/commons.js" />,
     ]),
   })

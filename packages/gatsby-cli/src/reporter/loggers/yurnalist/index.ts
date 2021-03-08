@@ -93,14 +93,26 @@ export function initializeYurnalistLogger(): void {
           activities[action.payload.id] = activity
         } else if (action.payload.type === ActivityTypes.Progress) {
           const bar = new ProgressBar(
-            ` [:bar] :current/:total :elapsed s :percent ${action.payload.text}`,
+            ` [:bar] :current/:total :elapsed s :rate /s :percent ${action.payload.text}`,
             {
-              total: action.payload.total,
-              curr: action.payload.current,
+              total: Math.max(action.payload.total || 1, 1) || 1, // Not zero. Otherwise you get 0/0 errors.
+              // curr: action.payload.current, // see below
               width: 30,
               clear: true,
             }
           )
+
+          // There is a bug in the `progress` package where the timer doesn't
+          // start until the first tick and setting `curr` will cause the
+          // time/eta to remain zero: https://github.com/visionmedia/node-progress/issues/81
+          // This is a workaround although the eta will initially be wrong
+          // until it settles, if starting at non-zero.
+          if (
+            typeof action.payload.current === `number` &&
+            action.payload.current >= 0
+          ) {
+            bar.tick(action.payload.current)
+          }
 
           activities[action.payload.id] = {
             text: undefined,

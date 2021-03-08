@@ -3,6 +3,7 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const ansiHTML = require(`ansi-html`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
+const { slash } = require(`gatsby-core-utils`)
 
 const getPosition = function (stackObject) {
   let filename
@@ -33,9 +34,9 @@ const getPosition = function (stackObject) {
     row = 0
   }
   return {
-    filename: filename,
-    line: line,
-    row: row,
+    filename,
+    line,
+    row,
   }
 }
 // Colors taken from Gatsby's design tokens
@@ -60,16 +61,23 @@ const parseError = function ({ err, directory, componentPath }) {
   const filename = sysPath.join(
     directory,
     // Don't need to use path.sep as webpack always uses a single forward slash
-    // as a path seperator.
-    ...position.filename.split(`/`).slice(2)
+    // as a path separator.
+    ...position.filename.split(sysPath.sep).slice(2)
   )
 
   const splitMessage = err.message ? err.message.split(`\n`) : [``]
   const message = splitMessage[splitMessage.length - 1]
   const type = err.type ? err.type : err.name
 
+  // We prefer the file path from the stack trace as the error might not be in the
+  // component — but if source-maps fail and we just get public/render-page.js as
+  // the file, we fall back on the component filepath as at least the user
+  // will have that.
+  const trueFileName = filename.includes(`render-page`)
+    ? componentPath
+    : filename
   const data = {
-    filename: sysPath.relative(directory, componentPath),
+    filename: slash(sysPath.relative(directory, trueFileName)),
     message: message,
     type: type,
     stack: stack,
@@ -81,7 +89,7 @@ const parseError = function ({ err, directory, componentPath }) {
     const line = position.line
     const row = position.row
     ansiHTML.setColors({
-      reset: [colors.text, colors.background], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
+      reset: [colors.text, `ffffff`], // [FOREGROUND-COLOR, BACKGROUND-COLOR]
       black: `aaa`, // String
       red: colors.keyword,
       green: colors.green,
@@ -146,7 +154,7 @@ exports.renderHTML = ({
       // Only generate error pages for webpack errors. If it's not a webpack
       // error, it's not a user error so probably a system error so we'll just
       // panic and quit.
-      const regex = /webpack:\/lib\//gm
+      const regex = /webpack:[/\\]/gm
       const moduleBuildFailed = /Module.build.failed/gm
       if (stack.match(moduleBuildFailed)) {
         reject(`500 page`)

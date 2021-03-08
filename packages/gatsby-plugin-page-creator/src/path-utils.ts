@@ -38,7 +38,7 @@ export function extractAllCollectionSegments(
   // This shouldn't happen - but TS requires us to validate
   if (!slugParts) {
     throw new Error(
-      `An error occured building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
+      `An error occurred building the slug parts. This is likely a bug within Gatsby and not your code. Please report it to us if you run into this.`
     )
   }
 
@@ -120,25 +120,4 @@ export function compose(
 ): (filePart: string) => string {
   return (filePart: string): string =>
     functions.reduce((value, fn) => fn(value), filePart)
-}
-
-/**
- * Since String.prototype.matchAll() is only supported by Node v12+ and we still support Node 10, this is how we need to workaround this
- * @param regexPattern - Should include the /g flag!
- * @param sourceString - Input string to match against
- * @returns An array of RegExpExecArray similar to the shape of .matchAll()
- */
-export function matchAllPolyfill(
-  regexPattern,
-  sourceString
-): Array<RegExpExecArray> {
-  const output: Array<RegExpExecArray> = []
-  let match: RegExpExecArray | null
-  while ((match = regexPattern.exec(sourceString))) {
-    // get rid of the string copy
-    delete match.input
-    // store the match data
-    output.push(match)
-  }
-  return output
 }

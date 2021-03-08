@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-schema-snapshot",
-  "version": "1.3.0-next.0",
+  "version": "2.1.0-next.1",
   "main": "index.js",
   "license": "MIT",
   "keywords": [
@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-schema-snapshot#readme",
   "peerDependencies": {
-    "gatsby": "^2.13.55"
+    "gatsby": "^3.0.0-next.0"
   }
 }

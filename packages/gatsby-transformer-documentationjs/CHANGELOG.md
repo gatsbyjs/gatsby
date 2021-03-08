@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@5.1.0-next.0...gatsby-transformer-documentationjs@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@5.0.0-next.0...gatsby-transformer-documentationjs@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.11.0-next.0...gatsby-transformer-documentationjs@5.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [4.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.10.0-next.0...gatsby-transformer-documentationjs@4.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.9.0-next.1...gatsby-transformer-documentationjs@4.10.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [4.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.9.0-next.0...gatsby-transformer-documentationjs@4.9.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-documentationjs ([#28721](https://github.com/gatsbyjs/gatsby/issues/28721)) ([7be1f71](https://github.com/gatsbyjs/gatsby/commit/7be1f71258c9a697eaae2f6264cfc29ca27b0eac))
+
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.8.0-next.0...gatsby-transformer-documentationjs@4.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.7.0-next.0...gatsby-transformer-documentationjs@4.8.0-next.0) (2020-12-10)
+
+### Bug Fixes
+
+- **documentationjs:** fix example caption string ([#27365](https://github.com/gatsbyjs/gatsby/issues/27365)) ([dd3c402](https://github.com/gatsbyjs/gatsby/commit/dd3c402689457a73a66a4de8a3a811dd3856b835))
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.6.0-next.0...gatsby-transformer-documentationjs@4.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-documentationjs
+
 # [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-documentationjs@4.5.0-next.0...gatsby-transformer-documentationjs@4.6.0-next.0) (2020-11-18)
 
 **Note:** Version bump only for package gatsby-transformer-documentationjs

@@ -9,6 +9,7 @@ const FluidPage = () => (
       <StaticImage
         src="../images/citrus-fruits.jpg"
         width={500}
+        layout="fixed"
         alt="Citrus fruits"
       />
     </div>
@@ -16,6 +17,7 @@ const FluidPage = () => (
       <StaticImage
         src="../images/gatsby-icon.png"
         width={500}
+        layout="fixed"
         alt="Gatsby Icon"
       />
     </div>
@@ -23,6 +25,7 @@ const FluidPage = () => (
       <StaticImage
         src="../../content/relative.jpg"
         height={500}
+        layout="fixed"
         alt="Citrus fruits"
       />
     </div>

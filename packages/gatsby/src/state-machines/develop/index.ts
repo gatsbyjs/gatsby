@@ -187,10 +187,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Recompile the JS bundle
     recompiling: {
+      // Important: mark source files as clean when recompiling starts
+      // Doing this `onDone` will wipe all file change events that occur **during** recompilation
+      // See https://github.com/gatsbyjs/gatsby/issues/27609
+      entry: `markSourceFilesClean`,
       invoke: {
         src: `recompile`,
         onDone: {
-          actions: `markSourceFilesClean`,
           target: `waiting`,
         },
         onError: {
@@ -247,8 +250,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         data: ({
           store,
           nodeMutationBatch = [],
+          sourceFilesDirty,
         }: IBuildContext): IWaitingContext => {
-          return { store, nodeMutationBatch, runningBatch: [] }
+          return {
+            store,
+            nodeMutationBatch,
+            sourceFilesDirty,
+            runningBatch: [],
+          }
         },
         // "done" means we need to rebuild
         onDone: {
@@ -276,11 +285,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           webhookBody,
+          webhookSourcePluginName,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
             webhookBody,
+            webhookSourcePluginName,
             refresh: true,
             deferNodeMutation: true,
           }

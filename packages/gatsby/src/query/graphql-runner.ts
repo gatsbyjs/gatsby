@@ -9,8 +9,10 @@ import {
   Source,
   GraphQLError,
   ExecutionResult,
+  NoDeprecatedCustomRule,
 } from "graphql"
 import { debounce } from "lodash"
+import reporter from "gatsby-cli/lib/reporter"
 import { createPageDependency } from "../redux/actions/add-page-dependency"
 
 import withResolverContext from "../schema/context"
@@ -93,15 +95,20 @@ export class GraphQLRunner {
   validate(
     schema: GraphQLSchema,
     document: DocumentNode
-  ): ReadonlyArray<GraphQLError> {
+  ): {
+    errors: ReadonlyArray<GraphQLError>
+    warnings: ReadonlyArray<GraphQLError>
+  } {
+    let errors: ReadonlyArray<GraphQLError> = []
+    let warnings: ReadonlyArray<GraphQLError> = []
     if (!this.validDocuments.has(document)) {
-      const errors = validate(schema, document)
+      errors = validate(schema, document)
+      warnings = validate(schema, document, [NoDeprecatedCustomRule])
       if (!errors.length) {
         this.validDocuments.add(document)
       }
-      return errors as Array<GraphQLError>
     }
-    return []
+    return { errors, warnings }
   }
 
   getStats(): IGraphQLRunnerStatResults | null {
@@ -137,7 +144,12 @@ export class GraphQLRunner {
     {
       parentSpan,
       queryName,
-    }: { parentSpan: Span | undefined; queryName: string }
+      componentPath,
+    }: {
+      parentSpan: Span | undefined
+      queryName: string
+      componentPath?: string | undefined
+    }
   ): Promise<ExecutionResult> {
     const { schema, schemaCustomization } = this.store.getState()
 
@@ -159,12 +171,20 @@ export class GraphQLRunner {
     }
 
     const document = this.parse(query)
-    const errors = this.validate(schema, document)
+    const { errors, warnings } = this.validate(schema, document)
 
     // Queries are usually executed in batch. But after the batch is finished
     // cache just wastes memory without much benefits.
     // TODO: consider a better strategy for cache purging/invalidation
     this.scheduleClearCache()
+
+    if (warnings.length > 0) {
+      // TODO: move those warnings to the caller side, e.g. query-runner.ts
+      warnings.forEach(err => {
+        const message = componentPath ? `\nQueried in ${componentPath}` : ``
+        reporter.warn(err.message + message)
+      })
+    }
 
     if (errors.length > 0) {
       return { errors }
@@ -184,7 +204,7 @@ export class GraphQLRunner {
 
     try {
       // `execute` will return a promise
-      return execute({
+      return await execute({
         schema,
         document,
         rootValue: context,
