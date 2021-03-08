@@ -13,7 +13,7 @@ a bit of a design process and produce a consensus among the Gatsby core team.
 The "RFC" (request for comments) process is intended to provide a consistent
 and controlled path for new features to enter the project.
 
-[Active RFC List](https://github.com/gatsbyjs/gatsby/pulls?q=is%3Aopen+is%3Apr+label%3A%22type%3A+rfc%22)
+[Active RFC List](https://github.com/gatsbyjs/rfcs/tree/master/text)
 
 Gatsby is still **actively developing** this process, and it will still change
 as more features are implemented and the community settles on specific
