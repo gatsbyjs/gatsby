@@ -369,6 +369,30 @@ export default Box
 
 You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
+Migrating all your css could be painful. You can still use commonjs with some extra work. This works for sass, less, stylus & regular css.
+This example covers sass but it's the same ofr the other plugins.
+
+```diff:title=gatsby-config.js
+module.exports = {
+  // some gatsby config
+  plugins: [
+    // some plugin config
+-    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-sass`,
+      options: {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
+    }
+  ]
+}
+```
+
 ### File assets (fonts, pdfs, ...) are imported as ES Modules
 
 Assets are handled as ES Modules. Make sure to switch your require functions into imports.
