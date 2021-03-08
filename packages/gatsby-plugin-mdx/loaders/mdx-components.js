@@ -1,7 +1,7 @@
 const loaderUtils = require(`loader-utils`)
 
 /**
- * loads a generated file that allows us to require all of the mdxPlugins.
+ * loads a generated file that allows us to require all the mdxPlugins.
  * this is useful because otherwise requiring all the plugins in
  * gatsby-ssr/browser results in a webpack require context warning
  *

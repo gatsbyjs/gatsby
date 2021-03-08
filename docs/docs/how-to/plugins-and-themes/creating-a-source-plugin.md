@@ -801,7 +801,7 @@ exports.sourceNodes = async (
 }
 ```
 
-Using Apollo Client, you can create a subscription with almost all of the same fields as your query. Note this string of fields in the GraphQL subscription also includes a `status`. This status is returned by the subscriptions on the backend as a mechanism to allow Gatsby to know what to do with each piece of updated data.
+Using Apollo Client, you can create a subscription with almost all the same fields as your query. Note this string of fields in the GraphQL subscription also includes a `status`. This status is returned by the subscriptions on the backend as a mechanism to allow Gatsby to know what to do with each piece of updated data.
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = async (

@@ -479,7 +479,7 @@ components via context to the internal `MDXTag` component that handles
 rendering of base tags like `p` and `h1`. There are two special tags
 that can be replaced too: `inlineCode` and `wrapper`. `inlineCode` is
 for inline `<code>` and `wrapper` is the special element that wraps
-all of the MDX content.
+all the MDX content.
 
 ```jsx
 import { MDXProvider } from "@mdx-js/react"

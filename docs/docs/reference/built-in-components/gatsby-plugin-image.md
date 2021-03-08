@@ -111,7 +111,7 @@ There are a few differences between how you specify options for `StaticImage` an
 
 **Important:** For dynamic images, these options are for the `gatsbyImageData` resolver on [sharp nodes](https://www.gatsbyjs.com/plugins/gatsby-transformer-sharp). If you are using `gatsbyImageData` from a different plugin, such as a CMS or image host, you should refer to that plugin's documentation for the options, as they will differ from these. Static images use sharp under the hood, so these options apply when using the `StaticImage` component too.
 
-It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all of the options and lets you see the generated image data right inside the browser.
+It is a very good idea to use [the GraphiQL IDE](/docs/how-to/querying-data/running-queries-with-graphiql) when writing your `gatsbyImageData` queries. It includes auto-complete and inline documentation for all the options and lets you see the generated image data right inside the browser.
 
 Both static and dynamic images have the following options available:
 

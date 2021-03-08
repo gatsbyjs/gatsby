@@ -158,7 +158,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     return _.uniqBy(allMatchingThemes, `themeName`)
   }
 
-  // given a theme name, return all of the possible shadow locations
+  // given a theme name, return all the possible shadow locations
   getBaseShadowDirsForThemes(theme) {
     return Array.from(this.themes)
       .reverse()

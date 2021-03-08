@@ -67,8 +67,8 @@ A quick look at the relevant files and directories you'll see in this example:
     ├── gatsby-browser.js
 ```
 
-1.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site. It has pages and components to be used in those pages.
-1.  **`/components`**: This directory will contain all of the code related to what you will see on the front-end of your site. It has pages and components to be used in those pages.
+1.  **`/src`**: This directory will contain all the code related to what you will see on the front-end of your site. It has pages and components to be used in those pages.
+1.  **`/components`**: This directory will contain all the code related to what you will see on the front-end of your site. It has pages and components to be used in those pages.
 
     1.  **`/header.css`**: This ensures that our navigation links have focus rings, which are important visual cues when navigating by keyboard.
     1.  **`/header.js`**: This has the navigation links for your pages.

@@ -198,7 +198,7 @@ To overcome these limitations, Gatsby introduces GraphQL as a data management la
 
 There’s a bit more up-front setup required to get data into GraphQL, but the benefits far outweigh the cost.
 
-Using `data/products.json` as an example, by using GraphQL we’re able to solve all of the limitations from the previous section:
+Using `data/products.json` as an example, by using GraphQL we’re able to solve all the limitations from the previous section:
 
 1. The images can be collocated with the products in `data/images/`.
 2. Image paths in `data/products.json` can be relative to the JSON file.

@@ -309,7 +309,7 @@ powers.
 
 Now you have all the pieces you need to programmatically create pages
 with Gatsby and `gatsby-plugin-mdx`. You can check out our other guides to find out
-more about all of the cool stuff you can do with `gatsby-plugin-mdx`.
+more about all the cool stuff you can do with `gatsby-plugin-mdx`.
 
 ## Bonus: Make a blog index
 

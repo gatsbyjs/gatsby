@@ -133,7 +133,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     return false
   }
 
-  // If all of the above passed, then the user is able to be prompted
+  // If all the above passed, then the user is able to be prompted
   // for feedback
   return true
 }
