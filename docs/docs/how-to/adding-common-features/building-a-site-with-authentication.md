@@ -13,7 +13,7 @@ In order to provide authentication functionality, another service has to be leve
 - A Node.js app using Passport.js
 - A Ruby on Rails API using Devise
 
-Another option are third party technologies like:
+Another option is third party technologies like:
 
 - Firebase
 - Auth0
@@ -59,7 +59,7 @@ More specific code examples for this pattern are outlined in the [Client-only Ro
 
 Global objects that are accessible in the browser like `localStorage` aren't available while a Gatsby site is building, because the build runs in a Node.js environment.
 
-However, some third party services might try and access `localStorage` or the `window` object with internal methods. To keep those snippets from breaking the build, those invocations should be wrapped in checks or `useEffect` hooks to verify that the code is running in the browser and is skipped during the build process:
+However, some third-party services might try and access `localStorage` or the `window` object with internal methods. To keep those snippets from breaking the build, those invocations should be wrapped in checks or `useEffect` hooks to verify that the code is running in the browser and is skipped during the build process:
 
 ```javascript
 import app from "firebase/app"
