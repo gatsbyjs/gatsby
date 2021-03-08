@@ -16,7 +16,7 @@ Gatsby plugin to handle PostCSS.
 plugins: [`gatsby-plugin-postcss`],
 ```
 
-If you need to pass options to PostCSS use the plugins options; see [postcss-loader](https://github.com/postcss/postcss-loader) for all available options.
+If you need to pass options to PostCSS use the plugins options; see [`postcss-loader`](https://github.com/postcss/postcss-loader) for all available options.
 
 ### With CSS Modules
 
@@ -56,7 +56,7 @@ module.exports = () => ({
 
 If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader).
 
-In this example css-loader is configured to output classnames as is, instead of converting them to camel case (previously controlled by the `camelCase` option). Named exports must be disabled for this to work, and so you have to import css using `import css from './file.css` instead of `import * as css from './file.module.css'`
+In this example `css-loader` is configured to output classnames as is, instead of converting them to camel case. Named exports must be disabled for this to work, and so you have to import CSS using `import styles from './file.css` instead of `import * as styles from './file.module.css'`
 
 ```javascript
 // in gatsby-config.js
