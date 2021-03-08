@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@4.0.4...gatsby-source-wordpress@4.0.5) (2021-03-08)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** image fixes ([#29813](https://github.com/gatsbyjs/gatsby/issues/29813)) ([#29881](https://github.com/gatsbyjs/gatsby/issues/29881)) ([c7a6e9f](https://github.com/gatsbyjs/gatsby/commit/c7a6e9f1b18ef5cdc02d783301f3bb14f56880b2))
+
 ## [4.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@4.0.3...gatsby-source-wordpress@4.0.4) (2021-03-01)
 
 ### Bug Fixes

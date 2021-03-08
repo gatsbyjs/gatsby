@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.9...gatsby@2.32.10) (2021-03-08)
+
+### Bug Fixes
+
+- **gatsby:** Fix various small DEV_SSR bugs exposed in development_runtime tests ([#29748](https://github.com/gatsbyjs/gatsby/issues/29748)) ([890d5e5](https://github.com/gatsbyjs/gatsby/commit/890d5e5c8fc98819d32dd23cbf2679c37e0121c5))
+
 ## [2.32.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.8...gatsby@2.32.9) (2021-03-01)
 
 ### Bug Fixes
