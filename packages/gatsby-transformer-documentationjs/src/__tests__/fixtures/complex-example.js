@@ -27,7 +27,7 @@ exports.complex = {
     ready: new Promise(),
     nested: {
       foo: `bar`,
-      callback: message => { 
+      callback: message => {
         return message.split(`,`)
       }
     }
