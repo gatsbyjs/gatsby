@@ -17,7 +17,7 @@ import {
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
-import { getSizer } from "./layout-wrapper"
+import { LayoutWrapper } from "./layout-wrapper"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
@@ -190,8 +190,6 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
     props,
   ])
 
-  const sizer = getSizer(layout, width, height)
-
   return (
     <Type
       {...wrapperProps}
@@ -202,11 +200,9 @@ export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function
       }}
       className={`${wClass}${className ? ` ${className}` : ``}`}
       ref={root}
-      dangerouslySetInnerHTML={{
-        __html: sizer,
-      }}
-      suppressHydrationWarning
-    />
+    >
+      <LayoutWrapper layout={layout} width={width} height={height} />
+    </Type>
   )
 }
 
