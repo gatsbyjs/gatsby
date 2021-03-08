@@ -250,7 +250,7 @@ exports.sourceNodes = async (
         touchNode(node)
         if (node.localFile___NODE) {
           // Prevent GraphQL type inference from crashing on this property
-          touchNode({ ...node, id: node.localFile___NODE })
+          touchNode(getNode(node.localFile___NODE))
         }
       })
 
