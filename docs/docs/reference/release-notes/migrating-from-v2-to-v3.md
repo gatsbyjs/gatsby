@@ -119,6 +119,16 @@ The specific resolutions we recommend at this time are found below:
 }
 ```
 
+### Handling version mismatches
+
+When upgrading an already existing project (that has an existing `node_modules` folder and `package-lock.json` file) you might run into version mismatches for your packages as npm/yarn don't resolve to the latest/correct version. An example would be a version mismatch of `webpack@4` and `webpack@5` that can throw an error like this:
+
+```shell
+Error: NormalModuleFactory.afterResolve (ReactRefreshPlugin) is no longer a waterfall hook, but a bailing hook instead.
+```
+
+An effective way to get around this issue is deleting `node_modules` and `package-lock.json` and then running `npm install` again. Alternatively, you can use `npm dedupe`.
+
 ## Handling Breaking Changes
 
 This section explains breaking changes that were made for Gatsby v3. Most, if not all, of those changes had a deprecation message in v2. In order to successfully update, you'll need to resolve these changes.
@@ -400,7 +410,7 @@ const Layout = ({ children, font }) => (
 export default Layout
 ```
 
-### Webpack 5 node configuration changed (node.fs, node.path, ...)
+### webpack 5 node configuration changed (node.fs, node.path, ...)
 
 Some components need you to patch/disable node APIs in the browser, like `path` or `fs`. webpack removed these automatic polyfills. You now have to manually set them in your configurations:
 
@@ -427,7 +437,7 @@ If it's still not resolved, the error message should guide you on what else you 
 
 #### process is not defined
 
-A common error is `process is not defined`. Webpack 4 polyfilled process automatically in the browser, but with v5 it's not the case anymore.
+A common error is `process is not defined`. webpack 4 polyfilled process automatically in the browser, but with v5 it's not the case anymore.
 
 If you're using `process.browser` in your components, you should switch to a window is not undefined check.
 
