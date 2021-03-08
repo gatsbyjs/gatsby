@@ -127,7 +127,7 @@ When upgrading an already existing project (that has an existing `node_modules` 
 Error: NormalModuleFactory.afterResolve (ReactRefreshPlugin) is no longer a waterfall hook, but a bailing hook instead.
 ```
 
-An effective way to get around this issue is deleting `node_modules` and `package-lock.json` and then running `npm install` again. Alternatively, you can use `npm dedupe`. 
+An effective way to get around this issue is deleting `node_modules` and `package-lock.json` and then running `npm install` again. Alternatively, you can use `npm dedupe`.
 
 ## Handling Breaking Changes
 
