@@ -61,7 +61,7 @@
 Gatsby is a modern web framework for blazing fast websites.
 
 - **Go Beyond Static Websites.** Get all the benefits of static websites with none of the
-  limitations. Gatsby sites are fully functional React apps so you can create high-quality,
+  limitations. Gatsby sites are fully functional React apps, so you can create high-quality,
   dynamic web apps, from blogs to e-commerce sites to user dashboards.
 
 - **Use a Modern Stack for Every Site.** No matter where the data comes from, Gatsby sites are
@@ -76,7 +76,7 @@ Gatsby is a modern web framework for blazing fast websites.
   splitting, image optimization, inlining critical styles, lazy-loading, prefetching resources,
   and more to ensure your site is fast — no manual tuning required.
 
-- **Host at Scale for Pennies.** Gatsby sites don’t require servers so you can host your entire
+- **Host at Scale for Pennies.** Gatsby sites don’t require servers, so you can host your entire
   site on a CDN for a fraction of the cost of a server-rendered site. Many Gatsby sites can be
   hosted entirely free on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) and other similar services.
 
@@ -99,7 +99,6 @@ You can get a new Gatsby site up and running on your local dev environment in 5 
 
    ```shell
    npm install -g gatsby-cli
-
    ```
 
 2. **Create a Gatsby site from a Gatsby starter.**

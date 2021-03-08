@@ -11,7 +11,7 @@ export default async (root: string, cmd: string | undefined): Promise<void> => {
         - What You Don't Need Plugins For (https://www.gatsbyjs.com/docs/what-you-dont-need-plugins-for/)
         - Loading Plugins from Your Local Plugins Folder (https://www.gatsbyjs.com/docs/loading-plugins-from-your-local-plugins-folder/)
         - Plugin Library (https://www.gatsbyjs.com/plugins/)
-  
+
         Creating a plugin:
         - Naming a Plugin (https://www.gatsbyjs.com/docs/naming-a-plugin/)
         - Files Gatsby Looks for in a Plugin (https://www.gatsbyjs.com/docs/files-gatsby-looks-for-in-a-plugin/)

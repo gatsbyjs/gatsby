@@ -4,9 +4,9 @@ const evaluate = require(`eval`)
 const debug = require(`debug`)(`gatsby-plugin-mdx:render-html`)
 const { default: PQueue } = require(`p-queue`)
 
-//const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
+// const StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 const { cloneDeep } = require(`lodash`)
-//const { store: ogStore} = require("gatsby/dist/redux");
+// const { store: ogStore} = require("gatsby/dist/redux");
 const DataLoader = require(`dataloader`)
 
 const queue = new PQueue({
@@ -22,20 +22,20 @@ queue.on(`active`, () => {
   )
 })
 
-var findAsset = function (src, compilation, webpackStatsJson) {
+const findAsset = function (src, compilation, webpackStatsJson) {
   if (!src) {
-    var chunkNames = Object.keys(webpackStatsJson.assetsByChunkName)
+    const chunkNames = Object.keys(webpackStatsJson.assetsByChunkName)
 
     src = chunkNames[0]
   }
 
-  var asset = compilation.assets[src]
+  const asset = compilation.assets[src]
 
   if (asset) {
     return asset
   }
 
-  var chunkValue = webpackStatsJson.assetsByChunkName[src]
+  let chunkValue = webpackStatsJson.assetsByChunkName[src]
 
   if (!chunkValue) {
     return null
@@ -54,7 +54,7 @@ let renderMdxBody = undefined
 class MdxHtmlBuilderWebpackPlugin {
   apply(compiler) {
     const self = this
-    var afterEmit = (compilation, callback) => {
+    const afterEmit = (compilation, callback) => {
       //      var options = compiler.options;
       /* var stats = compilation.getStats().toJson({
        *   hash: true,
@@ -67,18 +67,18 @@ class MdxHtmlBuilderWebpackPlugin {
        *   timings: false
        * }); */
       //      console.log(Object.keys(compilation.assets));
-      var webpackStats = compilation.getStats()
-      var webpackStatsJson = webpackStats.toJson()
+      const webpackStats = compilation.getStats()
+      const webpackStatsJson = webpackStats.toJson()
 
       try {
-        var asset = findAsset(self.entry, compilation, webpackStatsJson)
+        const asset = findAsset(self.entry, compilation, webpackStatsJson)
 
         if (asset == null) {
           throw new Error(`Source file not found: "` + self.entry + `"`)
         }
 
-        var source = asset.source()
-        var render = evaluate(
+        const source = asset.source()
+        let render = evaluate(
           source,
           /* filename: */ self.entry,
           /* scope: */ self.globals,
@@ -103,7 +103,7 @@ class MdxHtmlBuilderWebpackPlugin {
       }
     }
     if (compiler.hooks) {
-      var plugin = { name: `MdxHtmlBuilderWebpackPlugin` }
+      const plugin = { name: `MdxHtmlBuilderWebpackPlugin` }
 
       compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
     } else {

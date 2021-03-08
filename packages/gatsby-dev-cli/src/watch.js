@@ -129,7 +129,7 @@ async function watch(
     ? _.intersection(packages, seenPackages)
     : seenPackages
 
-  let ignoredPackageJSON = new Map()
+  const ignoredPackageJSON = new Map()
   const ignorePackageJSONChanges = (packageName, contentArray) => {
     ignoredPackageJSON.set(packageName, contentArray)
 
@@ -295,7 +295,7 @@ async function watch(
         return
       }
 
-      let localCopies = [copyPath(filePath, newPath, quiet, packageName)]
+      const localCopies = [copyPath(filePath, newPath, quiet, packageName)]
 
       // If this is from "cache-dir" also copy it into the site's .cache
       if (_.includes(filePath, `cache-dir`)) {

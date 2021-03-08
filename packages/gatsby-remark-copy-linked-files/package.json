@@ -11,7 +11,7 @@
     "cheerio": "^1.0.0-rc.3",
     "fs-extra": "^8.1.0",
     "is-relative-url": "^3.0.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "path-is-inside": "^1.0.2",
     "probe-image-size": "^6.0.0",
     "unist-util-visit": "^1.4.1"

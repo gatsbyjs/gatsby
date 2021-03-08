@@ -8,7 +8,7 @@ const viz = new Viz({ Module, render })
 const validLanguages = [`dot`, `circo`]
 
 module.exports = async ({ markdownAST }, pluginOptions = {}) => {
-  let codeNodes = []
+  const codeNodes = []
 
   visit(markdownAST, `code`, node => {
     const chunks = (node.lang || ``).match(/^(\S+)(\s+(.+))?/)

@@ -242,7 +242,7 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 
 ## Helper functions
 
-There are a number of utility functions to help you work with `gatsbyImageData` objects. We stringly recommend that you do not try to access the internals of these objects directly, as the format could change.
+There are a number of utility functions to help you work with `gatsbyImageData` objects. We strongly recommend that you do not try to access the internals of these objects directly, as the format could change.
 
 ### `getImage`
 

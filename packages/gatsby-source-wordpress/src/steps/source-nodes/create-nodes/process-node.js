@@ -805,13 +805,15 @@ const replaceFileLinks = async ({
   return nodeString
 }
 
-// replaces any url which is a front-end WP url with a relative path
-const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
-  const wpLinkRegex = new RegExp(
+export const getWpLinkRegex = wpUrl =>
+  new RegExp(
     `["']${wpUrl}(?!/wp-content|/wp-admin|/wp-includes)(/[^'"]+)["']`,
     `gim`
   )
 
+// replaces any url which is a front-end WP url with a relative path
+const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
+  const wpLinkRegex = getWpLinkRegex(wpUrl)
   const linkMatches = execall(wpLinkRegex, nodeString)
 
   if (linkMatches.length) {

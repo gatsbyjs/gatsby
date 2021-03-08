@@ -41,7 +41,7 @@ const fileExists = fullPath => {
 const create = async ({ root }, { name }) => {
   const fullPath = makePath(root)
 
-  let ignores = await all({ root })
+  const ignores = await all({ root })
 
   const exists = ignores.find(n => n.id === name)
   if (!exists) {
