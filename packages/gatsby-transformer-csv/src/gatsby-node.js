@@ -32,7 +32,7 @@ async function onCreateNode(
   const content = await loadNodeContent(node)
 
   // Parse
-  let parsedContent = await convertToJson(content, options)
+  const parsedContent = await convertToJson(content, options)
 
   // Generate the type
   function getType({ node, object }) {

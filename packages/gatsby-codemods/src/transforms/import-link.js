@@ -8,14 +8,14 @@ function findGatsbyRequire(root, j) {
     },
   })
 
-  let string = requires.find(j.VariableDeclarator, {
+  const string = requires.find(j.VariableDeclarator, {
     init: { arguments: [{ value: MODULE_NAME }] },
   })
 
   if (string.length) return string
   // require(`gatsby`)
   return requires.filter(path => {
-    let template = path.get(`init`, `arguments`, 0, `quasis`, 0).node
+    const template = path.get(`init`, `arguments`, 0, `quasis`, 0).node
     return !!template && template.value.raw === MODULE_NAME
   })
 }
@@ -25,7 +25,7 @@ function getFirstNode(j, root) {
 }
 
 function addEsmImport(j, root) {
-  let existingImport = root.find(j.ImportDeclaration, {
+  const existingImport = root.find(j.ImportDeclaration, {
     source: { value: `gatsby` },
   })
 
@@ -60,7 +60,7 @@ function addEsmImport(j, root) {
   const namespace = existingImport.find(j.ImportNamespaceSpecifier)
 
   if (namespace.length) {
-    let { name } = namespace.get(0).node.local
+    const { name } = namespace.get(0).node.local
     root
       .find(j.JSXIdentifier, { name: IMPORT_NAME })
       .replaceWith(({ node }) => {
@@ -69,7 +69,7 @@ function addEsmImport(j, root) {
       })
     return
   }
-  let { specifiers } = existingImport.get(0).node
+  const { specifiers } = existingImport.get(0).node
   existingImport
     .get(`specifiers`, specifiers.length - 1)
     .insertAfter(j.importSpecifier(j.identifier(IMPORT_NAME)))
@@ -111,7 +111,7 @@ function removeGatsbyLinkRequire(j, root) {
 }
 
 function addRequire(j, root) {
-  let existingImport = findGatsbyRequire(root, j)
+  const existingImport = findGatsbyRequire(root, j)
 
   if (existingImport.find(j.Identifier, { value: IMPORT_NAME }).length) return // already exists
 
@@ -130,7 +130,7 @@ function addRequire(j, root) {
   const pattern = existingImport.find(j.ObjectPattern)
 
   if (!pattern.length) {
-    let { name } = existingImport.get(`id`).node
+    const { name } = existingImport.get(`id`).node
     root
       .find(j.JSXIdentifier, { name: IMPORT_NAME })
       .replaceWith(({ node }) => {
@@ -139,8 +139,8 @@ function addRequire(j, root) {
       })
     return
   }
-  let { properties } = pattern.get(0).node
-  let property = j.objectProperty(
+  const { properties } = pattern.get(0).node
+  const property = j.objectProperty(
     j.identifier(IMPORT_NAME),
     j.identifier(IMPORT_NAME)
   )

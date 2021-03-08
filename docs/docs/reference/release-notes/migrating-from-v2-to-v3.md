@@ -400,7 +400,7 @@ const Layout = ({ children, font }) => (
 export default Layout
 ```
 
-### webpack 5 node configuration changed (node.fs, node.path, ...)
+### Webpack 5 node configuration changed (node.fs, node.path, ...)
 
 Some components need you to patch/disable node APIs in the browser, like `path` or `fs`. webpack removed these automatic polyfills. You now have to manually set them in your configurations:
 
@@ -419,6 +419,51 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 +         fs: false,
 +       }
 +    }
+  })
+}
+```
+
+If it's still not resolved, the error message should guide you on what else you need to add to your webpack config.
+
+#### process is not defined
+
+A common error is `process is not defined`. Webpack 4 polyfilled process automatically in the browser, but with v5 it's not the case anymore.
+
+If you're using `process.browser` in your components, you should switch to a window is not undefined check.
+
+```diff:title=src/components/Box.js
+import React from "react"
+
+const Base64 = ({ text }) => {
+  let base64;
+-  if (process.browser) {
++  if (typeof window !== "undefined") {
+    base64 = btoa(text)
+  } else {
+    base64 = Buffer.from(text).toString('base64')
+  }
+
+  return (
+    <div>
+      {base64}
+    </div>
+  )
+}
+
+export default Base64
+```
+
+If you're using any other process properties, you want to polyfill process.
+
+1. Install `process` library - `npm install process`
+2. Configure webpack to use the process polyfill.
+
+```diff:title=gatby-node.js
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    plugins: [
+      new plugins.provide({ process: 'process/browser' })
+    ]
   })
 }
 ```
@@ -743,7 +788,7 @@ export default Navigation
 
 ### webpack deprecation messages
 
-When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building Javascript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
+When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building JavaScript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
 
 ## Using `fs` in SSR
 

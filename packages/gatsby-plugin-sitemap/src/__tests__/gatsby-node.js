@@ -1,3 +1,4 @@
+/* eslint-disable no-import-assign */
 jest.mock(`fs`)
 
 const fs = require(`fs`)
@@ -86,7 +87,7 @@ describe(`Test plugin sitemap`, () => {
               path
             }
           }
-        } 
+        }
     }`
     const options = {
       output: `custom-sitemap.xml`,

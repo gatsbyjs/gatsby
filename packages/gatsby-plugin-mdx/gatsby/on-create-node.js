@@ -19,6 +19,7 @@ function unstable_shouldOnCreateNode({ node }, pluginOptions) {
   return _unstable_shouldOnCreateNode({ node }, options)
 }
 
+// eslint-disable-next-line camelcase
 function _unstable_shouldOnCreateNode({ node }, options) {
   // options check to stop transformation of the node
   if (options.shouldBlockNodeFromTransformation(node)) {
@@ -214,7 +215,7 @@ class BabelPluginTransformRelativeImports {
       return {
         visitor: {
           StringLiteral({ node }) {
-            let split = node.value.split(`!`)
+            const split = node.value.split(`!`)
             const nodePath = split.pop()
             const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
             if (nodePath.startsWith(`.`)) {

@@ -108,7 +108,7 @@ exports.sourceNodes = async (
 
   fastBuilds = fastBuilds || false
   if (fastBuilds) {
-    let lastFetched =
+    const lastFetched =
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
       0
 
@@ -144,7 +144,7 @@ exports.sourceNodes = async (
         })
 
         // Process sync data from Drupal.
-        let nodesToSync = data.data.entities
+        const nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
             actions.deleteNode(getNode(createNodeId(nodeSyncData.id)))

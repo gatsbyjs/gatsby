@@ -31,8 +31,8 @@ if (process.env.BUILD_STAGE === `develop`) {
           <GoogleFont key={`GoogleFont`} typography={typography} />
         )
         // Parse the tag
-        let doc = new DOMParser().parseFromString(googleFonts, `text/html`)
-        let linkElement = doc.head.firstChild
+        const doc = new DOMParser().parseFromString(googleFonts, `text/html`)
+        const linkElement = doc.head.firstChild
         // Add custom identifier
         linkElement.setAttribute(`data-gatsby-typography`, `true`)
         const head = document.getElementsByTagName(`head`)[0]

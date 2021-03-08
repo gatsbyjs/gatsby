@@ -1,5 +1,5 @@
 import * as React from "react"
-import { LocationContext } from "@reach/router"
+import { LocationContext } from "@gatsbyjs/reach-router"
 import PropTypes from "prop-types"
 import { SessionStorage } from "./session-storage"
 

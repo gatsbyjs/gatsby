@@ -101,19 +101,19 @@ describe(`Process contentful data (by name)`, () => {
 
 describe(`Skip existing nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    let entryList = normalize.buildEntryList({
+    const entryList = normalize.buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
 
-    let resolvable = normalize.buildResolvableSet({
+    const resolvable = normalize.buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
       defaultLocale,
       locales,
     })
 
-    let foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,
@@ -184,19 +184,19 @@ describe(`Skip existing nodes in warm build`, () => {
 
 describe(`Process existing mutated nodes in warm build`, () => {
   it(`creates nodes for each entry`, () => {
-    let entryList = normalize.buildEntryList({
+    const entryList = normalize.buildEntryList({
       mergedSyncData: currentSyncData,
       contentTypeItems,
     })
 
-    let resolvable = normalize.buildResolvableSet({
+    const resolvable = normalize.buildResolvableSet({
       assets: currentSyncData.assets,
       entryList,
       defaultLocale,
       locales,
     })
 
-    let foreignReferenceMap = normalize.buildForeignReferenceMap({
+    const foreignReferenceMap = normalize.buildForeignReferenceMap({
       contentTypeItems,
       entryList,
       resolvable,

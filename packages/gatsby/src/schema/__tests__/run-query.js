@@ -1804,7 +1804,7 @@ describe(`Filter fields`, () => {
 
 describe(`collection fields`, () => {
   it(`orders by given field desc with limit`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter.blue`],
@@ -1833,7 +1833,7 @@ describe(`collection fields`, () => {
     //  - not_num_null
 
     it(`sorts num_null_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_null_not`],
           order: [`asc`],
@@ -1847,7 +1847,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts num_null_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_null_not`],
           order: [`desc`],
@@ -1861,7 +1861,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts num_not_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_not_null`],
           order: [`asc`],
@@ -1875,7 +1875,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts num_not_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`num_not_null`],
           order: [`desc`],
@@ -1889,7 +1889,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_num_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_num_not`],
           order: [`asc`],
@@ -1903,7 +1903,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_num_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_num_not`],
           order: [`desc`],
@@ -1917,7 +1917,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_num asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_num`],
           order: [`asc`],
@@ -1931,7 +1931,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_num desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_num`],
           order: [`desc`],
@@ -1945,7 +1945,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_num asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_num`],
           order: [`asc`],
@@ -1959,7 +1959,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_num desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_num`],
           order: [`desc`],
@@ -1973,7 +1973,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_num_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_num_null`],
           order: [`asc`],
@@ -1987,7 +1987,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_num_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_num_null`],
           order: [`desc`],
@@ -2016,7 +2016,7 @@ describe(`collection fields`, () => {
     //  - not_str_null
 
     it(`sorts str_null_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_null_not`],
           order: [`asc`],
@@ -2030,7 +2030,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts str_null_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_null_not`],
           order: [`desc`],
@@ -2044,7 +2044,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts str_not_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_not_null`],
           order: [`asc`],
@@ -2058,7 +2058,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts str_not_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`str_not_null`],
           order: [`desc`],
@@ -2072,7 +2072,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_str_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_str_not`],
           order: [`asc`],
@@ -2086,7 +2086,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_str_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_str_not`],
           order: [`desc`],
@@ -2100,7 +2100,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_str asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_str`],
           order: [`asc`],
@@ -2114,7 +2114,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_str desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_str`],
           order: [`desc`],
@@ -2128,7 +2128,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_str asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_str`],
           order: [`asc`],
@@ -2142,7 +2142,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_str desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_str`],
           order: [`desc`],
@@ -2156,7 +2156,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_str_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_str_null`],
           order: [`asc`],
@@ -2170,7 +2170,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_str_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_str_null`],
           order: [`desc`],
@@ -2199,7 +2199,7 @@ describe(`collection fields`, () => {
     //  - not_obj_null
 
     it(`sorts obj_null_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_null_not`],
           order: [`asc`],
@@ -2213,7 +2213,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts obj_null_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_null_not`],
           order: [`desc`],
@@ -2227,7 +2227,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts obj_not_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_not_null`],
           order: [`asc`],
@@ -2241,7 +2241,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts obj_not_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`obj_not_null`],
           order: [`desc`],
@@ -2255,7 +2255,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_obj_not asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_obj_not`],
           order: [`asc`],
@@ -2269,7 +2269,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_obj_not desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_obj_not`],
           order: [`desc`],
@@ -2283,7 +2283,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_obj asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_obj`],
           order: [`asc`],
@@ -2297,7 +2297,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts null_not_obj desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`null_not_obj`],
           order: [`desc`],
@@ -2311,7 +2311,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_obj asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_obj`],
           order: [`asc`],
@@ -2325,7 +2325,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_null_obj desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_null_obj`],
           order: [`desc`],
@@ -2339,7 +2339,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_obj_null asc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_obj_null`],
           order: [`asc`],
@@ -2353,7 +2353,7 @@ describe(`collection fields`, () => {
     })
 
     it(`sorts not_obj_null desc`, async () => {
-      let result = await runQuery({
+      const result = await runQuery({
         sort: {
           fields: [`not_obj_null`],
           order: [`desc`],
@@ -2368,7 +2368,7 @@ describe(`collection fields`, () => {
   })
 
   it(`sorts results with desc has null fields first vs obj second`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`waxOnly`],
@@ -2376,7 +2376,7 @@ describe(`collection fields`, () => {
       },
     })
 
-    // 0 doesnt have it, 1 has it as an object, 2 has it as null
+    // 0 doesn't have it, 1 has it as an object, 2 has it as null
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`0`)
@@ -2385,7 +2385,7 @@ describe(`collection fields`, () => {
   })
 
   it(`sorts results with asc has null fields last vs obj first`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`waxOnly`],
@@ -2393,7 +2393,7 @@ describe(`collection fields`, () => {
       },
     })
 
-    // 0 doesnt have it, 1 has it as an object, 2 has it as null
+    // 0 doesn't have it, 1 has it as an object, 2 has it as null
 
     expect(result.length).toEqual(3)
     expect(result[0].id).toEqual(`1`)
@@ -2402,7 +2402,7 @@ describe(`collection fields`, () => {
   })
 
   it(`applies specified sort order, and sorts asc by default`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter.blue`, `id`],
@@ -2417,7 +2417,7 @@ describe(`collection fields`, () => {
   })
 
   it(`applies specified sort order per field`, async () => {
-    let result = await runQuery({
+    const result = await runQuery({
       limit: 10,
       sort: {
         fields: [`frontmatter.blue`, `id`],

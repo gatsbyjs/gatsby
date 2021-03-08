@@ -1,3 +1,4 @@
+/* eslint-disable @babel/no-invalid-this */
 const Promise = require(`bluebird`)
 const PDFParser = require(`pdf2json`)
 
@@ -32,7 +33,7 @@ async function onCreateNode({
 
   const { createNode, createParentChildLink } = actions
 
-  let parsedContent = await convertToJson(node.absolutePath)
+  const parsedContent = await convertToJson(node.absolutePath)
 
   const pdfNode = {
     id: createNodeId(`${node.id} >>> ${node.extension}`),
