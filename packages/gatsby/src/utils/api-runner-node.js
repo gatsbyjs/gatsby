@@ -234,7 +234,7 @@ function extendLocalReporterToCatchPluginErrors({
     panicOnBuild,
     activityTimer: (...args) => {
       // eslint-disable-next-line prefer-spread
-      const activity = reporter.activityTimer(reporter, args)
+      const activity = reporter.activityTimer.apply(reporter, args)
 
       const originalStart = activity.start
       const originalEnd = activity.end
