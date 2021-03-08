@@ -23,7 +23,11 @@ exports.onCreateWebpackConfig = (
       ? [loaders.null()]
       : [
           loaders.miniCssExtract(),
-          loaders.css({ ...cssLoaderOptions, importLoaders: 2 }),
+          loaders.css({
+            importLoaders: 2,
+            ...cssLoaderOptions,
+            modules: false,
+          }),
           loaders.postcss({ plugins: postCssPlugins }),
           lessLoader,
         ],
@@ -31,8 +35,17 @@ exports.onCreateWebpackConfig = (
   const lessRuleModules = {
     test: /\.module\.less$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ modules: true }),
-      loaders.css({ ...cssLoaderOptions, modules: true, importLoaders: 2 }),
+      !isSSR &&
+        loaders.miniCssExtract({
+          modules: {
+            namedExport: cssLoaderOptions.modules?.namedExport ?? true,
+          },
+        }),
+      loaders.css({
+        importLoaders: 2,
+        ...cssLoaderOptions,
+        modules: cssLoaderOptions.modules ?? true,
+      }),
       loaders.postcss({ plugins: postCssPlugins }),
       lessLoader,
     ].filter(Boolean),

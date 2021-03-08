@@ -45,6 +45,14 @@ describe(`gatsby-plugin-sass`, () => {
       "sass rule modules test options": {
         sassRuleModulesTest: /\.global\.s(a|c)ss$/,
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 

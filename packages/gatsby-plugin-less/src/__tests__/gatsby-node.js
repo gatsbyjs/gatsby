@@ -49,6 +49,14 @@ describe(`gatsby-plugin-less`, () => {
           camelCase: false,
         },
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 

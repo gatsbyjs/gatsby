@@ -20,6 +20,14 @@ describe(`gatsby-plugin-postcss`, () => {
       "No options": {},
       "PostCss options": { postCssPlugins: [`autoprefixer`], sourceMap: false },
       "Css options": { cssLoaderOptions: { camelCase: true } },
+      "Cssoptions commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
     configs: {
       "No options": jest.fn().mockReturnValue({
@@ -76,11 +84,34 @@ describe(`gatsby-plugin-postcss`, () => {
           ],
         },
       }),
+      "Cssoptions commonjs": jest.fn().mockReturnValue({
+        module: {
+          rules: [
+            {
+              oneOf: [
+                {
+                  test: /\.css$/,
+                  loaders: [`css-loader`],
+                },
+                {
+                  test: /\.module\.css$/,
+                  loaders: [`css-loader`],
+                },
+              ],
+            },
+            {
+              test: /\.js/,
+              use: [`babel-loader`],
+            },
+          ],
+        },
+      }),
     },
     actions: {
       "No options": actions.setWebpackConfig,
       "PostCss options": actions.replaceWebpackConfig,
       "Css options": actions.replaceWebpackConfig,
+      "Cssoptions commonjs": actions.replaceWebpackConfig,
     },
   }
 
