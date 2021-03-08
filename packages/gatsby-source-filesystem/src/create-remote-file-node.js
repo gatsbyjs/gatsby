@@ -57,6 +57,8 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
+  maxRetries: 3,
+  retryDelay: 1000,
 })
 
 /**
