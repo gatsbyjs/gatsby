@@ -23,7 +23,7 @@ This example shows Node.js version 12, specifically v12.21.0.
 
 ## Upgrading from Node.js version 10
 
-Node.js version 10 reached _End-of-life_ status on April 30, 2021. Many of Gatsby's dependencies are updating to Node.js version 12 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
+Node.js version 10 _End-of-life_ date is April 30, 2021. Many of Gatsby's dependencies are updating to Node.js version 12 and above. Gatsby must also update in order to deliver new features and bug fixes more quickly.
 
 Generally, it's recommended to use [the Node version whose status is _Active LTS_](https://github.com/nodejs/Release#nodejs-release-working-group) (Node 14 at time of writing).
 
@@ -116,4 +116,4 @@ Gatsby takes backwards compatibility seriously and aims to support older version
 
 Gatsby also relies on a huge ecosystem of JavaScript dependencies. As the ecosystem moves away from older, unsupported Node.js versions we have to keep pace to ensure that bugs can be fixed and new features can be released.
 
-In this document, you learned how you upgrade from Node.js version 10 (which has reached _End of Life_ status) to Node.js version 12.
+In this document, you learned how you upgrade from Node.js version 10 to Node.js version 12.
