@@ -161,7 +161,10 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 ### Contributing to Gatsby v2
 
-We are currently only accepting bug fixes for Gatsby v2. No new features will be accepted.
+The maintenance window for Gatsby v2 closes on April 1, 2021.
+
+- During this maintenance window, we will continue to address reported bugs in Gatsby v2.
+- After this maintenance window, we will only accept critical security updates for Gatsby v2, and feature requests will be considered for Gatsby V3
 
 ## 📝 License
 
