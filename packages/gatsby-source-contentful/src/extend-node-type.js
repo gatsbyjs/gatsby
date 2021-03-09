@@ -719,12 +719,18 @@ exports.extendNodeType = ({ type, store }) => {
   const resolveGatsbyImageData = async (image, options) => {
     if (!isImage(image)) return null
 
-    const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
-
+    const { baseUrl, contentType, width, height } = getBasicImageProps(
+      image,
+      options
+    )
+    let [, format] = contentType.split(`/`)
+    if (format === `jpeg`) {
+      format = `jpg`
+    }
     const imageProps = generateImageData({
       ...options,
       pluginName: `gatsby-source-contentful`,
-      sourceMetadata,
+      sourceMetadata: { width, height, format },
       filename: baseUrl,
       generateImageSource,
       fit: fitMap.get(options.resizingBehavior),
