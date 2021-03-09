@@ -12,7 +12,7 @@ The best way to add global styles is with a [shared layout component](/docs/tuto
 
 > **NOTE:** This pattern is implemented by default in [the default starter](https://github.com/gatsbyjs/gatsby-starter-default/blob/063978d59f74103da45d5880a61ebd2e77798e3c/src/components/layout.js#L13).
 
-To create a shared layout with global styles, start by creating a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
+To create a shared layout with global styles, start by creating a new Gatsby site with the [hello world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world):
 
 ```shell
 gatsby new global-styles https://github.com/gatsbyjs/gatsby-starter-hello-world
@@ -62,7 +62,7 @@ export default function Home() {
 }
 ```
 
-Run `npm run develop` and you’ll see the global styles applied.
+Run `npm run develop` and you’ll see the global styles applied:
 
 ![Global styles](../../images/global-styles.png)
 
@@ -130,7 +130,7 @@ This approach can simplify integration of CSS or [Sass](/plugins/gatsby-plugin-s
 
 ### Adding classes to components
 
-Since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead, which will render as the browser-supported `class` attribute in your HTML output.
+Since `class` is a reserved word in JavaScript, you'll have to use the `className` prop instead, which will render as the browser-supported `class` attribute in your HTML output:
 
 ```jsx
 <button className="primary">Click me</button>

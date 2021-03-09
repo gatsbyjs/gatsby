@@ -129,7 +129,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 2. **Configure your image.**
 
-   You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
+   You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs:
 
    ```graphql:title=src/templates/blogpost.js
    query {
@@ -154,7 +154,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 3. **Display the image.**
 
-   You can then use the `GatbsyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
+   You can then use the `GatbsyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component:
 
    ```jsx:title=src/templates/blogpost.js
    import { graphql } from "gatsby"

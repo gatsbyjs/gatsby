@@ -16,7 +16,7 @@ CSS Modules let you write styles in CSS files but consume them as JavaScript obj
 
 ### CSS Module example
 
-The CSS in a CSS module is no different than normal CSS, but the extension of the file is different to mark that the file will be processed.
+The CSS in a CSS module is no different than normal CSS, but the extension of the file is different to mark that the file will be processed:
 
 ```css:title=src/components/container.module.css
 .container {

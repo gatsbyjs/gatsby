@@ -48,7 +48,7 @@ npm install postcss gatsby-plugin-postcss
 plugins: [`gatsby-plugin-postcss`],
 ```
 
-3. Configure PostCSS to use Tailwind
+3. Configure PostCSS to use Tailwind.
 
 Create a `postcss.config.js` in your project's root folder with the following contents.
 
@@ -58,7 +58,7 @@ module.exports = () => ({
 })
 ```
 
-4. Use the Tailwind Directives in your CSS
+4. Use the Tailwind Directives in your CSS.
 
 You can now use the `@tailwind` directives to add Tailwind's utilities, preflight, and components into your CSS. You can also use `@apply` and all of Tailwind's other directives and functions!
 
@@ -68,19 +68,19 @@ To learn more about how to use Tailwind in your CSS, visit the [Tailwind Documen
 
 These steps assume you have a CSS-in-JS library already installed, and the examples are based on Emotion.
 
-1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction)
+1. Install the [Twin Babel Macro](https://github.com/ben-rogerson/twin.macro) and [Emotion](https://emotion.sh/docs/introduction).
 
 ```shell
 npm install -D twin.macro @emotion/react @emotion/styled gatsby-plugin-emotion
 ```
 
-2. Import the Tailwind base styles
+2. Import the Tailwind base styles.
 
 ```javascript:title=gatsby-browser.js
 import "tailwindcss/dist/base.min.css"
 ```
 
-3. Enable the Gatsby emotion plugin
+3. Enable the Gatsby emotion plugin.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -88,7 +88,7 @@ module.exports = {
 }
 ```
 
-4. Use `twin.macro` to create your styled component
+4. Use `twin.macro` to create your styled component.
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -161,7 +161,7 @@ This will be your 'master' CSS file, which you will import all other CSS within.
 
 **Note**: if using SCSS (or another supported language, rename files/folders appropriately).
 
-2. Import any custom CSS files or add any custom CSS you need (optional)
+2. Import any custom CSS files or add any custom CSS you need (optional).
 
 ```css:title=src/css/index.css
 @tailwind base;
@@ -173,7 +173,7 @@ This will be your 'master' CSS file, which you will import all other CSS within.
 }
 ```
 
-3. Apply these additional styles to the browser
+3. Apply these additional styles to the browser.
 
 In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
 
@@ -202,11 +202,11 @@ module.exports = {
 }
 ```
 
-Full documentation on this can now be found on the Tailwind site - [Tailwind PurgeCSS documentation](https://tailwindCSS.com/docs/controlling-file-size/#app)
+Full documentation on this can now be found on the Tailwind site - [Tailwind PurgeCSS documentation](https://tailwindCSS.com/docs/controlling-file-size/#app).
 
 **Older versions**
 
-It is recommended you install the latest version of Tailwind CSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [Purge CSS manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation)
+It is recommended you install the latest version of Tailwind CSS to get all available features. If you need to use an older version, you can follow the instructions on the PurgeCSS website - [Purge CSS manually in older Tailwind versions](https://purgecss.com/plugins/gatsby.html#installation).
 
 ## Other resources
 

@@ -41,7 +41,7 @@ webpack finds all relative module references in CSS (they start with `./`) and r
 
 If you're using SCSS the imports are relative to the entry SCSS file.
 
-Please be advised that this is also a custom feature of webpack.
+Please be advised that this is also a custom feature of webpack:
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-import-a-local-image-into-a-gatsby-component-with-webpack"
