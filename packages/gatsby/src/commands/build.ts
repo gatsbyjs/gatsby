@@ -61,7 +61,10 @@ interface IBuildArgs extends IProgram {
 }
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
-  report.setVerbose(isTruthy(process.env.VERBOSE) || program.verbose)
+  if (isTruthy(process.env.VERBOSE)) {
+    program.verbose = true
+  }
+  report.setVerbose(program.verbose)
 
   if (program.profile) {
     report.warn(
