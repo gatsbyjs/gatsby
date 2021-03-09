@@ -1,6 +1,6 @@
 import minimatch from "minimatch"
 
-export const reporterPrefix = `[gatsby-plugin-sitemap]:`
+export const REPORTER_PREFIX = `[gatsby-plugin-sitemap]:`
 
 /**
  *
@@ -33,7 +33,7 @@ export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
 export function resolveSiteUrl(data) {
   if (!data?.site?.siteMetadata?.siteUrl) {
     throw Error(
-      `\`siteUrl\` does not exist on \`siteMetadata\` in the data returned from the query. 
+      `\`siteUrl\` does not exist on \`siteMetadata\` in the data returned from the query.
       Add this to your custom query or provide a custom \`resolveSiteUrl\` function.
       https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
@@ -55,7 +55,7 @@ export function resolveSiteUrl(data) {
 export function resolvePagePath(page) {
   if (!page?.path) {
     throw Error(
-      `\`path\` does not exist on your page object. 
+      `\`path\` does not exist on your page object.
       Make the page URI available at \`path\` or provide a custom \`resolvePagePath\` function.
       https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
@@ -108,13 +108,15 @@ export function defaultFilterPages(
 ) {
   if (typeof excludedRoute !== `string`) {
     throw new Error(
-      `You've passed something other than string to the exclude array. This is supported, but you'll have to write a custom filter function. 
+      `You've passed something other than string to the exclude array. This is supported, but you'll have to write a custom filter function.
       Ignoring the input for now: ${JSON.stringify(excludedRoute, null, 2)}
       https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
       `
     )
   }
 
+  // Minimatch is always scary without an example
+  // TODO add example
   return minimatch(
     withoutTrailingSlash(resolvePagePath(page)),
     withoutTrailingSlash(excludedRoute)
@@ -157,6 +159,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
     throw new Error(`Invalid options passed to page Filter function`)
   }
 
+  // TODO we should optimize these loops
   const filteredPages = allPages.filter(page => {
     const defaultFilterMatches = defaultExcludes.some((exclude, i, arr) => {
       try {
@@ -167,17 +170,19 @@ export function pageFilter({ allPages, filterPages, excludes }) {
         })
 
         // default excludes can only be found once, so remove them from the arr once excluded
-        if (doesMatch) arr.splice(i, 1)
+        if (doesMatch) {
+          arr.splice(i, 1)
+        }
 
         return doesMatch
       } catch {
-        throw new Error(`${reporterPrefix} Error in default page filter`)
+        throw new Error(`${REPORTER_PREFIX} Error in default page filter`)
       }
     })
 
     if (defaultFilterMatches) {
       messages.push(
-        `${reporterPrefix} Default filter excluded page ${resolvePagePath(
+        `${REPORTER_PREFIX} Default filter excluded page ${resolvePagePath(
           page
         )}`
       )
@@ -197,7 +202,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
         })
       } catch {
         throw new Error(
-          `${reporterPrefix} Error in custom page filter.
+          `${REPORTER_PREFIX} Error in custom page filter.
             If you've customized your excludes you may need to provide a custom "filterPages" function in your config.
             https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/#api-reference
             `
@@ -207,7 +212,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
 
     if (customFilterMatches) {
       messages.push(
-        `${reporterPrefix} Custom filtering excluded page ${resolvePagePath(
+        `${REPORTER_PREFIX} Custom filtering excluded page ${resolvePagePath(
           page
         )}`
       )

@@ -56,12 +56,12 @@ export const pluginOptionsSchema = ({ Joi }) =>
       })
       .description(
         stripIndent`
-        (GraphQL Query) The query for the data you need to generate the sitemap. 
+        (GraphQL Query) The query for the data you need to generate the sitemap.
         It's required to get the site's URL, if you are not fetching it from \`site.siteMetadata.siteUrl\`,
-        you will need to set a custom \`resolveSiteUrl\` function. 
-        If you override the query, you may need to pass in a custom \`resolvePagePath\` or 
-        \`resolvePages\` to keep everything working. 
-        If you fetch pages without using \`allSitePage.nodes\` query structure 
+        you will need to set a custom \`resolveSiteUrl\` function.
+        If you override the query, you may need to pass in a custom \`resolvePagePath\` or
+        \`resolvePages\` to keep everything working.
+        If you fetch pages without using \`allSitePage.nodes\` query structure
         you will definately need to customize the \`resolvePages\` function.`
       ),
     excludes: Joi.array()
@@ -69,9 +69,9 @@ export const pluginOptionsSchema = ({ Joi }) =>
       .default([])
       .description(
         stripIndent`
-        An array of paths to exclude from the sitemap. 
-        While this is usually an array of strings it is possible to 
-        enter other data types into this array for custom filtering. 
+        An array of paths to exclude from the sitemap.
+        While this is usually an array of strings it is possible to
+        enter other data types into this array for custom filtering.
         Doing so will require customization of the \`filterPages\` function.`
       ),
     resolveSiteUrl: Joi.function()
@@ -92,8 +92,8 @@ export const pluginOptionsSchema = ({ Joi }) =>
     filterPages: Joi.function()
       .default(() => defaultFilterPages)
       .description(
-        stripIndent`Takes the current page a string (or other object) 
-        from the \`exclude\` array and expects a boolean to be returned. 
+        stripIndent`Takes the current page a string (or other object)
+        from the \`exclude\` array and expects a boolean to be returned.
         \`true\` excludes the path, \`false\` keeps it.`
       ),
     serialize: Joi.function()

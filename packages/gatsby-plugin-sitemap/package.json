@@ -17,7 +17,7 @@
     "@babel/core": "^7.12.3",
     "babel-preset-gatsby-package": "^1.1.0-next.1",
     "cross-env": "^7.0.3",
-    "joi": "^17.3.0"
+    "gatsby-plugin-utils": "^1.1.0-next.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-sitemap#readme",
   "keywords": [

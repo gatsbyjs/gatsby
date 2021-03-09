@@ -1,7 +1,7 @@
 import path from "path"
 import { simpleSitemapAndIndex } from "sitemap"
 import { pluginOptionsSchema } from "./options-validation"
-import { prefixPath, pageFilter, reporterPrefix } from "./internals"
+import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals"
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
@@ -22,28 +22,34 @@ exports.onPostBuild = async (
   const { data: queryRecords } = await graphql(query)
 
   reporter.verbose(
-    `${reporterPrefix} Query Results:\n${JSON.stringify(queryRecords, null, 2)}`
+    `${REPORTER_PREFIX} Query Results:\n${JSON.stringify(
+      queryRecords,
+      null,
+      2
+    )}`
   )
 
   // resolvePages and resolveSuteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
   const allPages = await Promise.resolve(
     resolvePages(queryRecords)
-  ).catch(err => reporter.panic(`${reporterPrefix} Error resolving Pages`, err))
+  ).catch(err =>
+    reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
+  )
 
   const siteUrl = await Promise.resolve(
     resolveSiteUrl(queryRecords)
   ).catch(err =>
-    reporter.panic(`${reporterPrefix} Error resolving Site URL`, err)
+    reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err)
   )
 
   if (!Array.isArray(allPages)) {
     reporter.panic(
-      `${reporterPrefix} The \`resolvePages\` function did not return an array.`
+      `${REPORTER_PREFIX} The \`resolvePages\` function did not return an array.`
     )
   }
 
   reporter.verbose(
-    `${reporterPrefix} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
+    `${REPORTER_PREFIX} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
   )
 
   const { filteredPages, messages } = pageFilter(
@@ -58,7 +64,7 @@ exports.onPostBuild = async (
   messages.forEach(message => reporter.verbose(message))
 
   reporter.verbose(
-    `${reporterPrefix} ${filteredPages.length} pages remain after filtering`
+    `${REPORTER_PREFIX} ${filteredPages.length} pages remain after filtering`
   )
 
   const serializedPages = []
@@ -73,7 +79,7 @@ exports.onPostBuild = async (
         ...rest,
       })
     } catch (err) {
-      reporter.panic(`${reporterPrefix} Error serializing pages`, err)
+      reporter.panic(`${REPORTER_PREFIX} Error serializing pages`, err)
     }
   }
 

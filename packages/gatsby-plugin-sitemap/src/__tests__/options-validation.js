@@ -1,22 +1,46 @@
 import { pluginOptionsSchema } from "../options-validation"
-import Joi from "joi"
+import { testPluginOptionsSchema, Joi } from "gatsby-plugin-utils"
 
-const schema = pluginOptionsSchema({ Joi })
+describe(`pluginOptionsSchema`, () => {
+  it(`should provide meaningful errors when fields are invalid`, async () => {
+    const expectedErrors = [`"wrong" is not allowed`]
 
-describe(`gatsby-plugin-sitemap: options-validation tests`, () => {
-  describe(`validateOptions`, () => {
-    it(`creates correct defaults`, async () => {
-      const pluginOptions = await schema.validateAsync({})
-
-      expect(pluginOptions).toMatchSnapshot()
+    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
+      wrong: `test`,
     })
 
-    it(`errors on invalid options`, async () => {
-      try {
-        await schema.validateAsync({ wrong: `test` })
-      } catch (error) {
-        expect(error).toMatchSnapshot()
+    expect(errors).toEqual(expectedErrors)
+  })
+
+  it(`creates correct defaults`, async () => {
+    const pluginOptions = await pluginOptionsSchema({ Joi }).validateAsync({})
+
+    expect(pluginOptions).toMatchInlineSnapshot(`
+      Object {
+        "createLinkInHead": true,
+        "entryLimit": 45000,
+        "excludes": Array [],
+        "filterPages": [Function],
+        "output": "/sitemap",
+        "query": "{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }",
+        "resolvePagePath": [Function],
+        "resolvePages": [Function],
+        "resolveSiteUrl": [Function],
+        "serialize": [Function],
       }
-    })
+    `)
+  })
+
+  it.each`
+    options
+    ${undefined}
+    ${{}}
+  `(`should validate the schema: $options`, async ({ options }) => {
+    const { isValid } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      options
+    )
+
+    expect(isValid).toBe(true)
   })
 })

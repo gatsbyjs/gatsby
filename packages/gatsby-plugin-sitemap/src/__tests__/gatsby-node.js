@@ -1,14 +1,14 @@
+import path from "path"
+import sitemap from "sitemap"
+import { onPostBuild } from "../gatsby-node"
+import { Joi } from "gatsby-plugin-utils"
+import { pluginOptionsSchema } from "../options-validation"
+
 jest.mock(`sitemap`, () => {
   return {
     simpleSitemapAndIndex: jest.fn(),
   }
 })
-
-const path = require(`path`)
-const sitemap = require(`sitemap`)
-const { onPostBuild } = require(`../gatsby-node`)
-import { pluginOptionsSchema } from "../options-validation"
-import Joi from "joi"
 
 const schema = pluginOptionsSchema({ Joi })
 
