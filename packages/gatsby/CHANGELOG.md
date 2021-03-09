@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.10...gatsby@2.32.11) (2021-03-09)
+
+### Bug Fixes
+
+- **gatsby:** don't ignore SOURCE_FILE_CHANGED event ([#30127](https://github.com/gatsbyjs/gatsby/issues/30127)) ([#30129](https://github.com/gatsbyjs/gatsby/issues/30129)) ([123e47c](https://github.com/gatsbyjs/gatsby/commit/123e47c1d7a79ccf1d2ff5003ae44dc4326129c8))
+- **gatsby:** set program.verbose when VERBOSE env var is used ([#30123](https://github.com/gatsbyjs/gatsby/issues/30123)) ([#30138](https://github.com/gatsbyjs/gatsby/issues/30138)) ([ff7d46e](https://github.com/gatsbyjs/gatsby/commit/ff7d46e1a5954bffcf9b1f893d1ce097f0dea49f))
+
 ## [2.32.10](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.9...gatsby@2.32.10) (2021-03-08)
 
 ### Bug Fixes
