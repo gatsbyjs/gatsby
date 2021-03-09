@@ -166,7 +166,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
           resolvePagePath,
         })
 
-        //default excludes can only be found once, so remove them from the arr once excluded
+        // default excludes can only be found once, so remove them from the arr once excluded
         if (doesMatch) arr.splice(i, 1)
 
         return doesMatch
@@ -183,7 +183,7 @@ export function pageFilter({ allPages, filterPages, excludes }) {
       )
     }
 
-    //If page is marked to be excluded via defaults there's no need to check page for custom excludes
+    // If page is marked to be excluded via defaults there's no need to check page for custom excludes
     if (defaultFilterMatches) {
       return !defaultFilterMatches
     }
