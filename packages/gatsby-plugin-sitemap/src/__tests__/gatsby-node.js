@@ -88,7 +88,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
               path
             }
           }
-        } 
+        }
     }`
     const options = {
       output: `custom-folder`,

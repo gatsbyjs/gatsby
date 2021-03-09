@@ -11,8 +11,8 @@
     "gatsby-plugin-sharp": "^2.0.20",
     "gatsby-source-filesystem": "^2.3.35",
     "gatsby-transformer-sharp": "^2.5.19",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"
@@ -26,7 +26,7 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --browser chrome",
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
     "cy:update-snapshots": "cypress run --browser chrome --env updateSnapshots=true",
     "cy:clean-snapshots": "rimraf cypress/snapshots/*"
   },

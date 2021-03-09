@@ -5,21 +5,21 @@ const queryString = require(`query-string`)
 const stringifyObjectIds = require(`./stringify-object-ids`)
 
 exports.sourceNodes = (
-  { actions, getNode, createNodeId, hasNodeChanged, createContentDigest },
+  { actions, getNode, createNodeId, createContentDigest },
   pluginOptions
 ) => {
   const { createNode } = actions
 
-  let serverOptions = pluginOptions.server || {
+  const serverOptions = pluginOptions.server || {
     address: `localhost`,
     port: 27017,
   }
-  let dbName = pluginOptions.dbName || `local`,
-    authUrlPart = ``
+  const dbName = pluginOptions.dbName || `local`
+  let authUrlPart = ``
   if (pluginOptions.auth)
     authUrlPart = `${pluginOptions.auth.user}:${pluginOptions.auth.password}@`
 
-  let connectionExtraParams = getConnectionExtraParams(
+  const connectionExtraParams = getConnectionExtraParams(
     pluginOptions.extraParams
   )
   const clientOptions = pluginOptions.clientOptions || {
@@ -82,8 +82,8 @@ function createNodes(
 ) {
   const { preserveObjectIds = false, query = {} } = pluginOptions
   return new Promise((resolve, reject) => {
-    let collection = db.collection(collectionName)
-    let cursor = collection.find(
+    const collection = db.collection(collectionName)
+    const cursor = collection.find(
       query[collectionName] ? query[collectionName] : {}
     )
 
@@ -98,7 +98,7 @@ function createNodes(
 
         // only call recursive function to preserve relations represented by objectids if pluginoption set.
         if (preserveObjectIds) {
-          for (let key in item) {
+          for (const key in item) {
             item[key] = stringifyObjectIds(item[key])
           }
         }

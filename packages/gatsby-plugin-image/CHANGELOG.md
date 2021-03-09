@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.0...gatsby-plugin-image@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.9...gatsby-plugin-image@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.8...gatsby-plugin-image@1.0.0-next.9) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Apply defaults when width and height are set ([#29726](https://github.com/gatsbyjs/gatsby/issues/29726)) ([3be9541](https://github.com/gatsbyjs/gatsby/commit/3be9541ade911ab4041715a37aed0eb65db4c313))
+
+### Features
+
+- **gatsby-plugin-image:** Allow image helpers to take other node types ([#29625](https://github.com/gatsbyjs/gatsby/issues/29625)) ([eaab2df](https://github.com/gatsbyjs/gatsby/commit/eaab2dfa1a7e1c1e64ffb78487f3f6c324f892ce))
+
+# [1.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.7...gatsby-plugin-image@1.0.0-next.8) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.6...gatsby-plugin-image@1.0.0-next.7) (2021-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correct default enum value ([#29607](https://github.com/gatsbyjs/gatsby/issues/29607)) ([7e8b91c](https://github.com/gatsbyjs/gatsby/commit/7e8b91c5a0d7f171a72c7088ace8d5fa3fdc39a8))
+
+# [1.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.5...gatsby-plugin-image@1.0.0-next.6) (2021-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Apply inline styles and img size ([3f7f06c](https://github.com/gatsbyjs/gatsby/commit/3f7f06cb6f0c7be2ddde709283b7d116fa88cd6a))
+- **gatsby-plugin-image:** Apply inline styles and img size ([#29603](https://github.com/gatsbyjs/gatsby/issues/29603)) ([9db36db](https://github.com/gatsbyjs/gatsby/commit/9db36dbe165c35105cef4ad95f4802061ff5fcc5))
+- **gatsby-source-contentful:** Correct supported image formats ([#29562](https://github.com/gatsbyjs/gatsby/issues/29562)) ([3b4d32f](https://github.com/gatsbyjs/gatsby/commit/3b4d32f0b2d6aef3193213252c3eb813cc2cbea9))
+
+### Reverts
+
+- Revert "fix(gatsby-plugin-image): Apply inline styles and img size" (#29602) ([8d0f48f](https://github.com/gatsbyjs/gatsby/commit/8d0f48f02ec0b631320dcb980f69944804f72803)), closes [#29602](https://github.com/gatsbyjs/gatsby/issues/29602)
+
+# [1.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.4...gatsby-plugin-image@1.0.0-next.5) (2021-02-18)
+
+### Features
+
+- **gatsby-plugin-image:** Add getLowResolutionImageURL plugin helper ([#29518](https://github.com/gatsbyjs/gatsby/issues/29518)) ([4b7fe37](https://github.com/gatsbyjs/gatsby/commit/4b7fe37ac39897ab76090ef76cff19d98fa5924b))
+
+# [1.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.3...gatsby-plugin-image@1.0.0-next.4) (2021-02-17)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.2...gatsby-plugin-image@1.0.0-next.3) (2021-02-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Rename hooks ([#29462](https://github.com/gatsbyjs/gatsby/issues/29462)) ([4638cd6](https://github.com/gatsbyjs/gatsby/commit/4638cd678b28f7a515df465be21d9d8bcdd71d9a))
+
+# [1.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.1...gatsby-plugin-image@1.0.0-next.2) (2021-02-11)
+
+### Bug Fixes
+
+- add common-tags to package.jsons ([#29424](https://github.com/gatsbyjs/gatsby/issues/29424)) ([94689ad](https://github.com/gatsbyjs/gatsby/commit/94689addc401f62248928a4df1587922261c96e6))
+
+### Features
+
+- **gatsby-plugin-image:** Add resolver helper and improve custom hook ([#29342](https://github.com/gatsbyjs/gatsby/issues/29342)) ([e567aa8](https://github.com/gatsbyjs/gatsby/commit/e567aa82695cf19a7d9eb4c280be767e562c3976))
+
 # [1.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.0...gatsby-plugin-image@1.0.0-next.1) (2021-02-08)
 
 ### Bug Fixes

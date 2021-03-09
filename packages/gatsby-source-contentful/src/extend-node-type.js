@@ -11,6 +11,8 @@ const {
   GraphQLInt,
   GraphQLFloat,
   GraphQLNonNull,
+  GraphQLJSON,
+  GraphQLList,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
 const { generateImageData } = require(`gatsby-plugin-image`)
@@ -20,7 +22,7 @@ const {
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
-const downloadWithRetry = require(`./download-with-retry`)
+const downloadWithRetry = require(`./download-with-retry`).default
 const {
   ImageFormatType,
   ImageResizingBehavior,
@@ -31,6 +33,8 @@ const {
 // and store the image cache away from the gatsby cache. After all, the gatsby
 // cache is more likely to go stale than the images (which never go stale)
 // Note that the same image might be requested multiple times in the same run
+
+const validImageFormats = new Set([`jpg`, `png`, `webp`])
 
 if (process.env.GATSBY_REMOTE_CACHE) {
   console.warn(
@@ -188,6 +192,24 @@ const generateImageSource = (
   _fit, // We use resizingBehavior instead
   { jpegProgressive, quality, cropFocus, backgroundColor, resizingBehavior }
 ) => {
+  // Ensure we stay within Contentfuls Image API limits
+  if (width > CONTENTFUL_IMAGE_MAX_SIZE) {
+    height = Math.floor((height / width) * CONTENTFUL_IMAGE_MAX_SIZE)
+    width = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (height > CONTENTFUL_IMAGE_MAX_SIZE) {
+    width = Math.floor((width / height) * CONTENTFUL_IMAGE_MAX_SIZE)
+    height = CONTENTFUL_IMAGE_MAX_SIZE
+  }
+
+  if (!validImageFormats.has(toFormat)) {
+    console.warn(
+      `[gatsby-source-contentful] Invalid image format "${toFormat}". Supported types are jpg, png and webp"`
+    )
+    return undefined
+  }
+
   const src = createUrl(filename, {
     width,
     height,
@@ -295,7 +317,8 @@ const resolveFixed = (image, options) => {
     })
     .join(`,\n`)
 
-  let pickedHeight, pickedWidth
+  let pickedHeight
+  let pickedWidth
   if (options.height) {
     pickedHeight = options.height
     pickedWidth = options.height * desiredAspectRatio
@@ -427,8 +450,8 @@ const resolveResize = (image, options) => {
     }
   }
 
-  let pickedHeight = options.height,
-    pickedWidth = options.width
+  let pickedHeight = options.height
+  let pickedWidth = options.width
 
   if (pickedWidth === undefined) {
     pickedWidth = pickedHeight * aspectRatio
@@ -641,9 +664,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-let warnedForBeta = false
-
-exports.extendNodeType = ({ type, store, reporter }) => {
+exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -697,12 +718,20 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   }
 
   const resolveGatsbyImageData = async (image, options) => {
-    const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
+    if (!isImage(image)) return null
 
+    const { baseUrl, contentType, width, height } = getBasicImageProps(
+      image,
+      options
+    )
+    let [, format] = contentType.split(`/`)
+    if (format === `jpeg`) {
+      format = `jpg`
+    }
     const imageProps = generateImageData({
       ...options,
       pluginName: `gatsby-source-contentful`,
-      sourceMetadata,
+      sourceMetadata: { width, height, format },
       filename: baseUrl,
       generateImageSource,
       fit: fitMap.get(options.resizingBehavior),
@@ -738,29 +767,13 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     return imageProps
   }
 
-  // TODO: Remove resolutionsNode and sizesNode for Gatsby v3
   const fixedNode = fixedNodeType({ name: `ContentfulFixed`, getTracedSVG })
-  const resolutionsNode = fixedNodeType({
-    name: `ContentfulResolutions`,
-    getTracedSVG,
-  })
-  resolutionsNode.deprecationReason = `Resolutions was deprecated in Gatsby v2. It's been renamed to "fixed" https://example.com/write-docs-and-fix-this-example-link`
 
   const fluidNode = fluidNodeType({ name: `ContentfulFluid`, getTracedSVG })
-  const sizesNode = fluidNodeType({ name: `ContentfulSizes`, getTracedSVG })
-  sizesNode.deprecationReason = `Sizes was deprecated in Gatsby v2. It's been renamed to "fluid" https://example.com/write-docs-and-fix-this-example-link`
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
-    if (!warnedForBeta) {
-      reporter.warn(
-        stripIndent`
-      Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
-      )
-      warnedForBeta = true
-    }
-
-    return getGatsbyImageFieldConfig(resolveGatsbyImageData, {
+    const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
         defaultValue: true,
@@ -775,17 +788,26 @@ exports.extendNodeType = ({ type, store, reporter }) => {
         type: GraphQLInt,
         defaultValue: 50,
       },
-      backgroundColor: {
-        type: GraphQLString,
+      formats: {
+        type: GraphQLList(ImageFormatType),
+        description: stripIndent`
+            The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, and WEBP.
+            The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
+            not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
+            both PNG and JPG is not supported and will be ignored.
+        `,
+        defaultValue: [``, `webp`],
       },
     })
+
+    fieldConfig.type = GraphQLJSON
+
+    return fieldConfig
   }
 
   return {
     fixed: fixedNode,
-    resolutions: resolutionsNode,
     fluid: fluidNode,
-    sizes: sizesNode,
     gatsbyImageData: getGatsbyImageData(),
     resize: {
       type: new GraphQLObjectType({

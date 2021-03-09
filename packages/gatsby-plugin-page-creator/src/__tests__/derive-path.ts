@@ -1,5 +1,5 @@
 import { derivePath } from "../derive-path"
-import reporter from "gatsby-cli/lib/reporter"
+import reporter from "gatsby/reporter"
 
 describe(`derive-path`, () => {
   it(`has basic support`, () => {

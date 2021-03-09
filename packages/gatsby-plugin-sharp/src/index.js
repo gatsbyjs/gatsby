@@ -66,14 +66,14 @@ const getImageSize = file => {
   }
 }
 
-// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// Actions should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let boundActionCreators
-exports.setBoundActionCreators = actions => {
-  boundActionCreators = actions
+let actions
+exports.setActions = _actions => {
+  actions = _actions
 }
 
 exports.generateImageData = generateImageData
@@ -125,7 +125,7 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
-  if (!boundActionCreators) {
+  if (!actions) {
     reporter.panic(
       `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
     )
@@ -139,10 +139,10 @@ function createJob(job, { reporter }) {
   // entire closure would keep duplicate job in memory until
   // initial job finish.
   let promise = null
-  if (boundActionCreators.createJobV2) {
-    promise = boundActionCreators.createJobV2(job)
+  if (actions.createJobV2) {
+    promise = actions.createJobV2(job)
   } else {
-    promise = scheduleJob(job, boundActionCreators, reporter)
+    promise = scheduleJob(job, actions, reporter)
   }
 
   promise.catch(err => {
@@ -616,6 +616,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
         break
       case `webp`:
         srcSetType = `image/webp`
+        break
+      case `avif`:
+        srcSetType = `image/avif`
         break
       case ``:
       case `no_change`:

@@ -1,11 +1,11 @@
 const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
-const { match } = require(`@reach/router/lib/utils`)
+const { match } = require(`@gatsbyjs/reach-router/lib/utils`)
 
 const now = Date.now()
 
 const generatePagesState = pages => {
-  let state = new Map()
+  const state = new Map()
   pages.forEach(page => {
     state.set(page.path, {
       component: ``,

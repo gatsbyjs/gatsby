@@ -1,35 +1,38 @@
 ---
-title: Using the beta Gatsby Image plugin
+title: Using the Gatsby Image plugin
 ---
+
+_If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
-Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
+Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](/docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
 The new Gatsby Image plugin is currently in beta, but you can try it out now and see what it can do for the performance of your site.
 
 ## Getting started
 
-First you need to install the following packages:
+1. Install the following packages:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-You then need to add the plugins to your `gatsby-config.js`:
+2. Add the plugins to your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
-    `gatsby-source-filesystem`,
     `gatsby-transformer-sharp`,
   ],
 }
 ```
 
 If you already have some of these plugins installed, please check that they're updated to the latest version.
+
+Note that `gatsby-source-filesystem` is not included in this config. If you are sourcing from your local filesystem to use `GatsbyImage` please configure accordingly. Otherwise, downloading the dependency without configuration is sufficient.
 
 <!-- TODO: add exact minimum version when we reach GA -->
 
@@ -199,4 +202,4 @@ If your site uses the old `gatsby-image` component, you can use a codemod to hel
 npx gatsby-codemods gatsby-plugin-image
 ```
 
-This will convert all GraphQL queries and components to use the new plugin. For more information see the full migration guide.
+This will convert all GraphQL queries and components to use the new plugin. For more information see the full [migration guide](/docs/reference/release-notes/image-migration-guide/).

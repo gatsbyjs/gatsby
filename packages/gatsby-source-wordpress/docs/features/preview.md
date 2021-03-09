@@ -10,6 +10,10 @@ When configured properly by a developer, preview should function almost identica
 
 You can find our tutorial on setting up WPGatsby [here](../tutorials/configuring-wp-gatsby.md#setting-up-preview). Part-way down the page there are instructions you can follow on setting up Preview.
 
+## File System Route API
+
+The [File System Route API](https://www.gatsbyjs.com/docs/reference/routing/file-system-route-api/) is not currently supported with WP Previews because it does not call the `onCreatePage` API which this plugin relies on. Follow [this issue](https://github.com/gatsbyjs/gatsby/issues/29361) for updates or [vote for this feature](https://gatsby.canny.io/gatsby-cloud/p/support-filesystem-route-api-alongside-gatsby-source-wordpress).
+
 ## Gutenberg and ACF
 
 Note that if you use these two together, you cannot preview ACF data. This is a core WordPress Gutenberg issue. Follow https://github.com/WordPress/gutenberg/issues/16006 for more information. If you use ACF and would like to preview data changes, use the Classic Editor plugin for now.
@@ -111,6 +115,14 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 ```
+
+### 3. Context stuffing
+
+Some sites circumvent using page queries by querying for all data in `gatsby-node.js` and passing the result as page context data when calling `createPage`. This breaks previews and incremental builds and is discouraged. You should only make GraphQL queries for page data in [page queries](https://www.gatsbyjs.com/docs/recipes/querying-data#querying-data-with-a-page-query).
+
+### 4. Using createPagesStatefully
+
+The correct Node API for creating pages is [`createPages`](https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/#createPages), using `createPagesStatefully` will prevent previews from working.
 
 ## Built in Preview plugin options preset
 

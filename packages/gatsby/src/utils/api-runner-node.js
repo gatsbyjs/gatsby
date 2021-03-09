@@ -27,7 +27,6 @@ const {
   getNodes,
   getNode,
   getNodesByType,
-  hasNodeChanged,
   getNodeAndSavePathDependency,
 } = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -113,7 +112,6 @@ const deferredAction = type => (...args) => {
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
   `deleteNode`,
-  `deleteNodes`,
   `touchNode`,
   `createParentChildLink`,
   `createNodeField`,
@@ -235,6 +233,7 @@ function extendLocalReporterToCatchPluginErrors({
     panic,
     panicOnBuild,
     activityTimer: (...args) => {
+      // eslint-disable-next-line prefer-spread
       const activity = reporter.activityTimer.apply(reporter, args)
 
       const originalStart = activity.start
@@ -254,6 +253,7 @@ function extendLocalReporterToCatchPluginErrors({
     },
 
     createProgress: (...args) => {
+      // eslint-disable-next-line prefer-spread
       const activity = reporter.createProgress.apply(reporter, args)
 
       const originalStart = activity.start
@@ -431,7 +431,6 @@ const runAPI = async (plugin, api, args, activity) => {
         ...args,
         basePath: pathPrefix,
         pathPrefix: publicPath,
-        boundActionCreators: actions,
         actions,
         loadNodeContent,
         store,
@@ -440,7 +439,6 @@ const runAPI = async (plugin, api, args, activity) => {
         getNodes,
         getNode,
         getNodesByType,
-        hasNodeChanged,
         reporter: extendedLocalReporter,
         getNodeAndSavePathDependency,
         cache,

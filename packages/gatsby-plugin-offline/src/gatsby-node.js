@@ -1,4 +1,5 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
+/* eslint-disable prefer-const */
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
@@ -146,7 +147,7 @@ exports.onPostBuild = (
       },
       {
         // Add runtime caching of various other page resources
-        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `StaleWhileRevalidate`,
       },
       {

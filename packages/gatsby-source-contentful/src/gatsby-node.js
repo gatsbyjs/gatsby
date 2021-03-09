@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
-const fetch = require(`node-fetch`)
+const fetch = require(`@vercel/fetch-retry`)(require(`node-fetch`))
 const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
@@ -41,7 +41,7 @@ const validateContentfulAccess = async pluginOptions => {
     .then(res => res.ok)
     .then(ok => {
       if (!ok) {
-        let errorMessage = `Cannot access Contentful space "${maskText(
+        const errorMessage = `Cannot access Contentful space "${maskText(
           pluginOptions.spaceId
         )}" on environment "${
           pluginOptions.environment
@@ -170,7 +170,11 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, deleteNode, touchNode, createTypes } = actions
 
-  let currentSyncData, contentTypeItems, defaultLocale, locales, space
+  let currentSyncData
+  let contentTypeItems
+  let defaultLocale
+  let locales
+  let space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
       `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
@@ -200,12 +204,12 @@ exports.sourceNodes = async (
    * with all data from subsequent syncs. Afterwards the references get
    * resolved via the Contentful JS SDK.
    */
-  let syncToken = await cache.get(CACHE_SYNC_TOKEN)
+  const syncToken = await cache.get(CACHE_SYNC_TOKEN)
   let previousSyncData = {
     assets: [],
     entries: [],
   }
-  let cachedData = await cache.get(CACHE_SYNC_DATA)
+  const cachedData = await cache.get(CACHE_SYNC_DATA)
 
   if (cachedData) {
     previousSyncData = cachedData
@@ -485,7 +489,7 @@ exports.sourceNodes = async (
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
       touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      deleteNode(node)
     })
   }
 
@@ -643,6 +647,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),

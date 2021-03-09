@@ -26,7 +26,12 @@ aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn --frozen-lockfile
+      command: yarn
+
+  check_lockfile: &check_lockfile
+    run:
+      name: Check for dirty lockfile
+      command: ./scripts/check-lockfile.sh || exit 1
 
   persist_cache: &persist_cache
     save_cache:
@@ -177,6 +182,7 @@ jobs:
       - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *check_lockfile
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
@@ -194,7 +200,7 @@ jobs:
       - run:
           name: "remove workspaces from package.json"
           command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:docs
@@ -220,6 +226,12 @@ jobs:
       name: node
       image: "14"
     <<: *test_template
+
+  integration_tests_gatsby_source_wordpress:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/gatsby-source-wordpress
 
   integration_tests_long_term_caching:
     executor: node
@@ -297,6 +309,9 @@ jobs:
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
           working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # force typescript to 4.1.5 to pass test
+          command: sed '$ s/.$/,"resolutions":{"typescript":"4.1.5"}}/' package.json > tmpfile && cat tmpfile > package.json && rm tmpfile
+          working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ../..
           working_directory: ~/project/e2e-tests/gatsby-pnp
@@ -324,14 +339,6 @@ jobs:
 
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
-
-  e2e_tests_development_runtime_fast_refresh:
-    <<: *e2e_tests_development_runtime_alias
-    environment:
-      GATSBY_HOT_LOADER: fast-refresh
-      CYPRESS_HOT_LOADER: fast-refresh
-      CYPRESS_PROJECT_ID: 917bea
-      CYPRESS_RECORD_KEY: 4750fb36-4576-4638-a617-d243a381acef
 
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
@@ -517,17 +524,6 @@ workflows:
     jobs:
       - sync_translation_repo
 
-  weekly-node-14:
-    triggers:
-      - schedule:
-          cron: "0 1 * * 6"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - unit_tests_node14
-
   nightly-react-next:
     triggers:
       - schedule:
@@ -592,6 +588,14 @@ workflows:
             - lint
             - typecheck
             - bootstrap
+      - unit_tests_node14:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - integration_tests_gatsby_source_wordpress:
+          <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_cache_resilience:
@@ -620,8 +624,6 @@ workflows:
       - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
-          <<: *e2e-test-workflow
-      - e2e_tests_development_runtime_fast_refresh:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { isWebUri } from "valid-url"
 import { fluid } from "gatsby-plugin-sharp"
 import Img from "gatsby-image"
@@ -30,7 +31,7 @@ const getNodeEditLink = node => {
 
 const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
   // if the lazyNodes plugin option is set we don't need to find
-  // image node id's because those nodes will be fetched lazily in resolvers
+  // image node id's because those nodes will be fetched lazily in resolvers.
   if (pluginOptions.type.MediaItem.lazyNodes) {
     return []
   }
@@ -327,6 +328,17 @@ const getCheerioElementFromMatch = wpUrl => ({ match, tag = `img` }) => {
   }
 }
 
+const getCheerioElementsFromMatches = ({ imgTagMatches, wpUrl }) =>
+  imgTagMatches
+    .map(getCheerioElementFromMatch(wpUrl))
+    .filter(({ cheerioImg: { attribs } }) => {
+      if (!attribs.src) {
+        return false
+      }
+
+      return isWebUri(encodeURI(attribs.src))
+    })
+
 const getLargestSizeFromSizesAttribute = sizesString => {
   const sizesStringsArray = sizesString.split(`,`)
 
@@ -444,6 +456,28 @@ const cacheCreatedFileNodeBySrc = ({ node, src }) => {
   }
 }
 
+const imgSrcRemoteFileRegex = /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:[^'"])*\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" \.]*|)(?=\\"| |\.)/gim
+
+export const getImgSrcRemoteFileMatchesFromNodeString = nodeString =>
+  execall(imgSrcRemoteFileRegex, nodeString).filter(({ subMatches }) => {
+    // if our match is json encoded, that means it's inside a JSON
+    // encoded string field.
+    const isInJSON = subMatches[0].includes(`\\/\\/`)
+
+    // we shouldn't process encoded JSON, so skip this match if it's JSON
+    return !isInJSON
+  })
+
+export const getImgTagMatchesWithUrl = ({ nodeString, wpUrl }) =>
+  execall(
+    /<img([\w\W]+?)[\/]?>/gim,
+    nodeString
+      // we don't want to match images inside pre
+      .replace(/<pre([\w\W]+?)[\/]?>.*(<\/pre>)/gim, ``)
+      // and code tags, so temporarily remove those tags and everything inside them
+      .replace(/<code([\w\W]+?)[\/]?>.*(<\/code>)/gim, ``)
+  ).filter(filterMatches(wpUrl))
+
 const replaceNodeHtmlImages = async ({
   nodeString,
   node,
@@ -456,38 +490,15 @@ const replaceNodeHtmlImages = async ({
     return nodeString
   }
 
-  const imgSrcRemoteFileRegex = /(?:src=\\")((?:(?:https?|ftp|file):\/\/|www\.|ftp\.|\/)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])\.(?:jpeg|jpg|png|gif|ico|mpg|ogv|svg|bmp|tif|tiff))(\?[^\\" .]*|)(?=\\"| |\.)/gim
+  const imageUrlMatches = getImgSrcRemoteFileMatchesFromNodeString(nodeString)
 
-  const imageUrlMatches = execall(imgSrcRemoteFileRegex, nodeString).filter(
-    ({ subMatches }) => {
-      // if our match is json encoded, that means it's inside a JSON
-      // encoded string field.
-      const isInJSON = subMatches[0].includes(`\\/\\/`)
-
-      // we shouldn't process encoded JSON, so skip this match if it's JSON
-      return !isInJSON
-    }
-  )
-
-  const imgTagMatches = execall(
-    /<img([\w\W]+?)[/]?>/gim,
-    nodeString
-      // we don't want to match images inside pre
-      .replace(/<pre([\w\W]+?)[/]?>.*(<\/pre>)/gim, ``)
-      // and code tags, so temporarily remove those tags and everything inside them
-      .replace(/<code([\w\W]+?)[/]?>.*(<\/code>)/gim, ``)
-  ).filter(filterMatches(wpUrl))
+  const imgTagMatches = getImgTagMatchesWithUrl({ nodeString, wpUrl })
 
   if (imageUrlMatches.length && imgTagMatches.length) {
-    const cheerioImages = imgTagMatches
-      .map(getCheerioElementFromMatch(wpUrl))
-      .filter(({ cheerioImg: { attribs } }) => {
-        if (!attribs.src) {
-          return false
-        }
-
-        return isWebUri(attribs.src)
-      })
+    const cheerioImages = getCheerioElementsFromMatches({
+      imgTagMatches,
+      wpUrl,
+    })
 
     const htmlMatchesToMediaItemNodesMap = await fetchNodeHtmlImageMediaItemNodes(
       {
@@ -700,7 +711,7 @@ const replaceFileLinks = async ({
   }
 
   if (node.__typename === `MediaItem`) {
-    // we dont' want to replace file links on MediaItem nodes because they're processed specially from other node types.
+    // we don't want to replace file links on MediaItem nodes because they're processed specially from other node types.
     // if we replace file links here then we wont be able to properly fetch the localFile node
     return nodeString
   }
@@ -794,13 +805,15 @@ const replaceFileLinks = async ({
   return nodeString
 }
 
-// replaces any url which is a front-end WP url with a relative path
-const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
-  const wpLinkRegex = new RegExp(
+export const getWpLinkRegex = wpUrl =>
+  new RegExp(
     `["']${wpUrl}(?!/wp-content|/wp-admin|/wp-includes)(/[^'"]+)["']`,
     `gim`
   )
 
+// replaces any url which is a front-end WP url with a relative path
+const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
+  const wpLinkRegex = getWpLinkRegex(wpUrl)
   const linkMatches = execall(wpLinkRegex, nodeString)
 
   if (linkMatches.length) {
@@ -816,7 +829,11 @@ const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
           const normalizedPath = path.replace(/\\/g, ``)
 
           // replace normalized match with relative path
-          const thisMatchRegex = new RegExp(normalizedMatch, `g`)
+          const thisMatchRegex = new RegExp(
+            normalizedMatch + `(?!/?wp-content|/?wp-admin|/?wp-includes)`,
+            `g`
+          )
+
           nodeString = nodeString.replace(thisMatchRegex, normalizedPath)
         } catch (e) {
           console.error(e)

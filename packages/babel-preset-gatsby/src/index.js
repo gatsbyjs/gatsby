@@ -30,10 +30,9 @@ export function loadCachedConfig() {
 }
 
 export default function preset(_, options = {}) {
-  let { targets = null } = options
+  let { targets = null, reactImportSource = null } = options
 
-  // TODO(v3): Remove process.env.GATSBY_BUILD_STAGE, needs to be passed as an option
-  const stage = options.stage || process.env.GATSBY_BUILD_STAGE || `test`
+  const stage = options.stage || `test`
   const pluginBabelConfig = loadCachedConfig()
   let isBrowser
   // unused because of cloud builds
@@ -53,6 +52,12 @@ export default function preset(_, options = {}) {
       isBrowser = true
       targets = pluginBabelConfig.browserslist
     }
+  }
+
+  if (reactImportSource && options.reactRuntime !== `automatic`) {
+    throw Error(
+      `\`@babel/preset-react\` requires reactRuntime \`automatic\` in order to use \`importSource\`.`
+    )
   }
 
   return {
@@ -88,6 +93,7 @@ export default function preset(_, options = {}) {
               : `React.createElement`,
           development: stage === `develop`,
           runtime: options.reactRuntime || `classic`,
+          ...(reactImportSource && { importSource: reactImportSource }),
         },
       ],
     ],

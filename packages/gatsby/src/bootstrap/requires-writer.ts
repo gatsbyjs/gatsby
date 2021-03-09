@@ -4,7 +4,7 @@ import fs from "fs-extra"
 import crypto from "crypto"
 import { slash } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
-import { match } from "@reach/router/lib/utils"
+import { match } from "@gatsbyjs/reach-router/lib/utils"
 import { joinPath } from "gatsby-core-utils"
 import { store, emitter } from "../redux/"
 import { IGatsbyState, IGatsbyPage } from "../redux/types"
@@ -208,26 +208,18 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
 
   lastHash = newHash
 
-  // TODO: Remove all "hot" references in this `syncRequires` variable when fast-refresh is the default
-  const hotImport =
-    process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-      ? `const { hot } = require("react-hot-loader/root")`
-      : ``
-  const hotMethod =
-    process.env.GATSBY_HOT_LOADER !== `fast-refresh` ? `hot` : ``
-
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     // Create file with sync requires of visited page components files.
-    let lazySyncRequires = `${hotImport}
+    let lazySyncRequires = `
   // prefer default export if available
   const preferDefault = m => (m && m.default) || m
   \n\n`
     lazySyncRequires += `exports.ssrComponents = {\n${cleanedSSRVisitedPageComponents
       .map(
         (c: IGatsbyPageComponent): string =>
-          `  "${
-            c.componentChunkName
-          }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+          `  "${c.componentChunkName}": preferDefault(require("${joinPath(
+            c.component
+          )}"))`
       )
       .join(`,\n`)}
   }\n\n`
@@ -236,17 +228,16 @@ export const writeAll = async (state: IGatsbyState): Promise<boolean> => {
   }
 
   // Create file with sync requires of components/json files.
-  let syncRequires = `${hotImport}
-
+  let syncRequires = `
 // prefer default export if available
 const preferDefault = m => (m && m.default) || m
 \n\n`
   syncRequires += `exports.components = {\n${components
     .map(
       (c: IGatsbyPageComponent): string =>
-        `  "${
-          c.componentChunkName
-        }": ${hotMethod}(preferDefault(require("${joinPath(c.component)}")))`
+        `  "${c.componentChunkName}": preferDefault(require("${joinPath(
+          c.component
+        )}"))`
     )
     .join(`,\n`)}
 }\n\n`

@@ -22,7 +22,7 @@ We provide a [detailed guide on using Gatsby Image](docs/how-to/images-and-media
 
 ### Avoid hydration lag for React apps
 
-When you're building a website with React you face a bit of a catch-22 for optimizing image loads. If you send over React Javscript files to be evaluated by the browser (client-side rendering), you can't start loading images until the browser evaluates all of the Javascript to figure out what images you want to load. On the other hand, if you evaluate the Javascript on the server and then send over the HTML (server-side rendering), then the initial request will take longer to load while it waits for this server-side evaluation.
+When you're building a website with React you face a bit of a catch-22 for optimizing image loads. If you send over React JavaScript files to be evaluated by the browser (client-side rendering), you can't start loading images until the browser evaluates all of the JavaScript to figure out what images you want to load. On the other hand, if you evaluate the JavaScript on the server and then send over the HTML (server-side rendering), then the initial request will take longer to load while it waits for this server-side evaluation.
 
 Because Gatsby does server rendering during the build process _(rather than when a user is loading the page)_ a Gatsby site will return HTML immediately without waiting for server rendering, and then the client's browser can start loading images as soon as it receives the HTML. Depending on the size of the app, this could save anything from a few hundred milliseconds to a few seconds.
 

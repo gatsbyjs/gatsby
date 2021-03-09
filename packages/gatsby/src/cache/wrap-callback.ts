@@ -1,5 +1,5 @@
 // Initial file from https://github.com/rolandstarke/node-cache-manager-fs-hash @ af52d2d
-/*!
+/* !
 The MIT License (MIT)
 
 Copyright (c) 2017 Roland Starke
@@ -37,6 +37,7 @@ module.exports = function wrapCallback<T>(
       cb = args.pop()
     }
 
+    // eslint-disable-next-line @babel/no-invalid-this
     const promise = fn.apply(this, args)
 
     if (typeof cb === `function`) {

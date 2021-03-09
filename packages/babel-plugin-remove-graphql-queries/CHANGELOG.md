@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@3.1.0-next.0...babel-plugin-remove-graphql-queries@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@3.0.0-next.3...babel-plugin-remove-graphql-queries@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+# [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@3.0.0-next.2...babel-plugin-remove-graphql-queries@3.0.0-next.3) (2021-02-25)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@3.0.0-next.1...babel-plugin-remove-graphql-queries@3.0.0-next.2) (2021-02-22)
+
+**Note:** Version bump only for package babel-plugin-remove-graphql-queries
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@3.0.0-next.0...babel-plugin-remove-graphql-queries@3.0.0-next.1) (2021-02-17)
+
+### Features
+
+- **gatsby:** Remove possibility to use global graphql tag for queries ([#29291](https://github.com/gatsbyjs/gatsby/issues/29291)) ([d933462](https://github.com/gatsbyjs/gatsby/commit/d933462d64f004e1a9db2d3407797d45ff8b4762))
+
 # [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-plugin-remove-graphql-queries@2.17.0-next.0...babel-plugin-remove-graphql-queries@3.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package babel-plugin-remove-graphql-queries

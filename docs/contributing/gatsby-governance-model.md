@@ -56,7 +56,6 @@ Here are some relevant docs and resources for contributors:
 - [How to file an issue](/contributing/how-to-file-an-issue/)
 - [Request-for-comment (RFC) process](/contributing/rfc-process/)
 - [Community Maintainers Meeting](/contributing/community/#community-maintainers-meeting)
-- [Pair programming sessions](/contributing/pair-programming/)
 
 ## Engage with the Gatsby team
 

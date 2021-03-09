@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.1.0-next.0...gatsby-plugin-sharp@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.9...gatsby-plugin-sharp@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.8...gatsby-plugin-sharp@3.0.0-next.9) (2021-02-25)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
+# [3.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.7...gatsby-plugin-sharp@3.0.0-next.8) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.6...gatsby-plugin-sharp@3.0.0-next.7) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.5...gatsby-plugin-sharp@3.0.0-next.6) (2021-02-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Fix defaults handling ([#29564](https://github.com/gatsbyjs/gatsby/issues/29564)) ([107926a](https://github.com/gatsbyjs/gatsby/commit/107926a7d23901fa3e645a966bd6aa793fb0ddd3))
+
+# [3.0.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.4...gatsby-plugin-sharp@3.0.0-next.5) (2021-02-18)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.3...gatsby-plugin-sharp@3.0.0-next.4) (2021-02-17)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.2...gatsby-plugin-sharp@3.0.0-next.3) (2021-02-12)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.1...gatsby-plugin-sharp@3.0.0-next.2) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove boundActionCreators ([#29129](https://github.com/gatsbyjs/gatsby/issues/29129)) ([b1f8663](https://github.com/gatsbyjs/gatsby/commit/b1f866394345117d9eec0cb47270a18a9d2bf485))
+
 # [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.0...gatsby-plugin-sharp@3.0.0-next.1) (2021-02-08)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

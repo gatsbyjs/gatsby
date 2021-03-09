@@ -21,7 +21,7 @@ window.location.search
   .substr(1)
   .split(`&`)
   .forEach(function (entry) {
-    var eq = entry.indexOf(`=`)
+    const eq = entry.indexOf(`=`)
     if (eq >= 0) {
       parameters[decodeURIComponent(entry.slice(0, eq))] = decodeURIComponent(
         entry.slice(eq + 1)
@@ -48,7 +48,7 @@ const graphqlParamNames = {
   explorerIsOpen: true,
 }
 const otherParams = {}
-for (var k in parameters) {
+for (const k in parameters) {
   if (parameters.hasOwnProperty(k) && graphqlParamNames[k] !== true) {
     otherParams[k] = parameters[k]
   }

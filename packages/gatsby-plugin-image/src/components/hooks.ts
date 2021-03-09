@@ -19,6 +19,8 @@ import {
   generateImageData,
   Layout,
   EVERY_BREAKPOINT,
+  IImage,
+  ImageFormat,
 } from "../image-utils"
 const imageCache = new Set<string>()
 
@@ -36,18 +38,41 @@ export function storeImageloaded(cacheKey?: string): void {
 export function hasImageLoaded(cacheKey: string): boolean {
   return imageCache.has(cacheKey)
 }
-
+export type IGatsbyImageDataParent<T = never> = T & {
+  gatsbyImageData: IGatsbyImageData
+}
 export type FileNode = Node & {
-  childImageSharp?: Node & {
-    gatsbyImageData?: IGatsbyImageData
-  }
+  childImageSharp?: IGatsbyImageDataParent<Node>
 }
 
-export const getImage = (file: FileNode): IGatsbyImageData | undefined =>
-  file?.childImageSharp?.gatsbyImageData
+const isGatsbyImageData = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyImageData | any
+): node is IGatsbyImageData =>
+  // 🦆 check for a deep prop to be sure this is a valid gatsbyImageData object
+  Boolean(node?.images?.fallback?.src)
 
-export const getSrc = (file: FileNode): string | undefined =>
-  file?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
+const isGatsbyImageDataParent = <T>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node: IGatsbyImageDataParent<T> | any
+): node is IGatsbyImageDataParent<T> => Boolean(node?.gatsbyImageData)
+
+type ImageDataLike = FileNode | IGatsbyImageDataParent | IGatsbyImageData
+export const getImage = (node: ImageDataLike): IGatsbyImageData | undefined => {
+  if (isGatsbyImageData(node)) {
+    return node
+  }
+  if (isGatsbyImageDataParent(node)) {
+    return node.gatsbyImageData
+  }
+  return node?.childImageSharp?.gatsbyImageData
+}
+
+export const getSrc = (node: ImageDataLike): string | undefined =>
+  getImage(node)?.images?.fallback?.src
+
+export const getSrcSet = (node: ImageDataLike): string | undefined =>
+  getImage(node)?.images?.fallback?.srcSet
 
 export function getWrapperProps(
   width: number,
@@ -59,6 +84,12 @@ export function getWrapperProps(
   const wrapperStyle: CSSProperties = {}
 
   let className = `gatsby-image-wrapper`
+
+  // If the plugin isn't installed we need to apply the styles inline
+  if (!global.GATSBY___IMAGE) {
+    wrapperStyle.position = `relative`
+    wrapperStyle.overflow = `hidden`
+  }
 
   if (layout === `fixed`) {
     wrapperStyle.width = width
@@ -88,24 +119,114 @@ export async function applyPolyfill(
   ;(window as any).objectFitPolyfill(ref.current)
 }
 
-export function useGatsbyImage({
+export interface IUrlBuilderArgs<OptionsType> {
+  width: number
+  height: number
+  baseUrl: string
+  format: ImageFormat
+  options: OptionsType
+}
+export interface IGetImageDataArgs<OptionsType = Record<string, unknown>> {
+  baseUrl: string
+  /**
+   * For constrained and fixed images, the size of the image element
+   */
+  width?: number
+  height?: number
+  /**
+   * If available, pass the source image width and height
+   */
+  sourceWidth?: number
+  sourceHeight?: number
+  /**
+   * If only one dimension is passed, then this will be used to calculate the other.
+   */
+  aspectRatio?: number
+  layout?: Layout
+  /**
+   * Returns a URL based on the passed arguments. Should be a pure function
+   */
+  urlBuilder: (args: IUrlBuilderArgs<OptionsType>) => string
+
+  /**
+   * Should be a data URI
+   */
+  placeholderURL?: string
+  backgroundColor?: string
+  /**
+   * Used in error messages etc
+   */
+  pluginName?: string
+
+  /**
+   * If you do not support auto-format, pass an array of image types here
+   */
+  formats?: Array<ImageFormat>
+
+  breakpoints?: Array<number>
+
+  /**
+   * Passed to the urlBuilder function
+   */
+  options?: OptionsType
+}
+
+/**
+ * Use this hook to generate gatsby-plugin-image data in the browser.
+ */
+export function getImageData<OptionsType>({
+  baseUrl,
+  urlBuilder,
+  sourceWidth,
+  sourceHeight,
   pluginName = `useGatsbyImage`,
+  formats = [`auto`],
   breakpoints = EVERY_BREAKPOINT,
-  ...args
-}: IGatsbyImageHelperArgs): IGatsbyImageData {
-  return generateImageData({ pluginName, breakpoints, ...args })
+  options,
+  ...props
+}: IGetImageDataArgs<OptionsType>): IGatsbyImageData {
+  const generateImageSource = (
+    baseUrl: string,
+    width: number,
+    height?: number,
+    format?: ImageFormat
+  ): IImage => {
+    return {
+      width,
+      height,
+      format,
+      src: urlBuilder({ baseUrl, width, height, options, format }),
+    }
+  }
+
+  const sourceMetadata: IGatsbyImageHelperArgs["sourceMetadata"] = {
+    width: sourceWidth,
+    height: sourceHeight,
+    format: `auto`,
+  }
+
+  const args: IGatsbyImageHelperArgs = {
+    ...props,
+    pluginName,
+    generateImageSource,
+    filename: baseUrl,
+    formats,
+    breakpoints,
+    sourceMetadata,
+  }
+  return generateImageData(args)
 }
 
 export function getMainProps(
   isLoading: boolean,
   isLoaded: boolean,
-  images: any,
+  images: IGatsbyImageData["images"],
   loading?: "eager" | "lazy",
   toggleLoaded?: (loaded: boolean) => void,
   cacheKey?: string,
   ref?: RefObject<HTMLImageElement>,
   style: CSSProperties = {}
-): MainImageProps {
+): Partial<MainImageProps> {
   const onLoad: ReactEventHandler<HTMLImageElement> = function (e) {
     if (isLoaded) {
       return
@@ -301,7 +422,7 @@ export interface IArtDirectedImage {
  * @param artDirected Array of objects which each contains a `media` string which is a media query
  * such as `(min-width: 320px)`, and the image object to use when that query matches.
  */
-export function useArtDirection(
+export function withArtDirection(
   defaultImage: IGatsbyImageData,
   artDirected: Array<IArtDirectedImage>
 ): IGatsbyImageData {

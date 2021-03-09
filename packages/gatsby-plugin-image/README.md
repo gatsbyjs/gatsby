@@ -1,6 +1,4 @@
-# gatsby-plugin-image (beta)
-
-_The new Gatsby Image plugin is currently in beta, but you can try it out now_
+# gatsby-plugin-image
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
@@ -103,7 +101,7 @@ If you are using an image that will be the same each time the component is used,
 
 #### Restrictions on using `StaticImage`
 
-There are a few technical restrictions to the way you can pass props into `StaticImage`. Most importantly, you can't use any of the parent component's props. For more information, refer to the [Gatsby Image plugin reference guide](/docs/reference/built-in-components/gatsby-plugin-image#restrictions-on-using-staticimage). If you find yourself wishing you could use a prop passed from a parent for the image `src` then it's likely that you should be using a dynamic image.
+There are a few technical restrictions to the way you can pass props into `StaticImage`. Most importantly, you can't use any of the parent component's props. For more information, refer to the [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#restrictions-on-using-staticimage). If you find yourself wishing you could use a prop passed from a parent for the image `src` then it's likely that you should be using a dynamic image.
 
 ### Dynamic images
 
@@ -129,7 +127,7 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
 
 2. **Configure your image.**
 
-   For all the configuration options, see the [Gatsby Image plugin reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
+   For all the configuration options, see the [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/).
 
    You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 

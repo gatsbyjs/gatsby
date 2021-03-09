@@ -109,7 +109,7 @@ class Reporter {
   ): IStructuredError | Array<IStructuredError> => {
     let details: {
       error?: Error
-      context: {}
+      context: Record<string, string>
     } = {
       context: {},
     }

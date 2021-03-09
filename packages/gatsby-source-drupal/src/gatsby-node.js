@@ -71,7 +71,7 @@ exports.sourceNodes = async (
         return
       }
       if (action === `delete`) {
-        actions.deleteNode({ node: getNode(createNodeId(id)) })
+        actions.deleteNode(getNode(createNodeId(id)))
         reporter.log(`Deleted node: ${id}`)
         changesActivity.end()
         return
@@ -108,7 +108,7 @@ exports.sourceNodes = async (
 
   fastBuilds = fastBuilds || false
   if (fastBuilds) {
-    let lastFetched =
+    const lastFetched =
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
       0
 
@@ -139,15 +139,15 @@ exports.sourceNodes = async (
         // Touch nodes so they are not garbage collected by Gatsby.
         getNodes().forEach(node => {
           if (node.internal.owner === `gatsby-source-drupal`) {
-            touchNode({ nodeId: node.id })
+            touchNode(node)
           }
         })
 
         // Process sync data from Drupal.
-        let nodesToSync = data.data.entities
+        const nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode({ node: getNode(createNodeId(nodeSyncData.id)) })
+            actions.deleteNode(getNode(createNodeId(nodeSyncData.id)))
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
@@ -385,7 +385,7 @@ exports.onCreateDevServer = (
           )
         }
         if (action === `delete`) {
-          actions.deleteNode({ node: getNode(createNodeId(id)) })
+          actions.deleteNode(getNode(createNodeId(id)))
           return reporter.log(`Deleted node: ${id}`)
         }
         const nodeToUpdate = JSON.parse(JSON.parse(req.body)).data

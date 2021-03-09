@@ -103,7 +103,7 @@ gatsby new my-awesome-site
 gatsby new my-awesome-blog-site https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-See the [Gatsby starters docs](/docs/gatsby-starters/) for more details.
+See the [Gatsby starters docs](/docs/starters/) for more details.
 
 ### `develop`
 
@@ -239,7 +239,7 @@ You can type in a command, such as one of these:
 
 `staticQueries`
 
-When combined with the [GraphQL explorer](/docs/introducing-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
+When combined with the [GraphQL explorer](/docs/how-to/querying-data/running-queries-with-graphiql/), these REPL commands could be very helpful for understanding your Gatsby site's data.
 
 For more information, check out the [Gatsby REPL documentation](/docs/gatsby-repl/).
 

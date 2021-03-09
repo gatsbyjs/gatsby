@@ -31,6 +31,7 @@ const downloadImageAndCreateFileNode = async (
     store,
     cache,
     getCache,
+    getNode,
     reporter,
     downloadImages,
   }
@@ -42,7 +43,7 @@ const downloadImageAndCreateFileNode = async (
 
   if (cacheMediaData) {
     const fileNodeID = cacheMediaData.fileNodeID
-    touchNode({ nodeId: fileNodeID })
+    touchNode(getNode(fileNodeID))
     return fileNodeID
   }
 
@@ -98,7 +99,7 @@ export const CollectionNode = imageArgs =>
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
           id: node.image.id,
-          url: node.image.src && node.image.src.split(`?`)[0],
+          url: node.image.src,
           nodeId: node.id,
         },
         imageArgs
@@ -141,7 +142,7 @@ export const ProductNode = imageArgs =>
         edge.node.localFile___NODE = await downloadImageAndCreateFileNode(
           {
             id: edge.node.id,
-            url: edge.node.originalSrc && edge.node.originalSrc.split(`?`)[0],
+            url: edge.node.originalSrc,
           },
           imageArgs
         )
@@ -171,7 +172,7 @@ export const ProductVariantNode = (imageArgs, productNode) =>
       node.image.localFile___NODE = await downloadImageAndCreateFileNode(
         {
           id: node.image.id,
-          url: node.image.originalSrc && node.image.originalSrc.split(`?`)[0],
+          url: node.image.originalSrc,
         },
         imageArgs
       )

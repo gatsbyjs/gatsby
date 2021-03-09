@@ -13,7 +13,7 @@ import {
 } from "source-map"
 
 export class ErrorWithCodeFrame extends Error {
-  codeFrame = ``
+  codeFrame?: string = ``
 
   constructor(error: Error) {
     super(error.message)

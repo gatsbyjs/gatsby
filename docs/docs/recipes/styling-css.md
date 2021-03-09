@@ -194,7 +194,7 @@ export default function UsersList() {
 import React from "react"
 
 // highlight-start
-import style from "./index.module.css"
+import * as style from "./index.module.css"
 
 export default function Home() {
   return (

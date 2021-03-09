@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { stripIndent } from "common-tags"
+import camelCase from "camelcase"
 import { IGatsbyImageData } from "."
 
 const DEFAULT_PIXEL_DENSITIES = [0.25, 0.5, 1, 2]
@@ -19,7 +20,8 @@ export const EVERY_BREAKPOINT = [
   4096,
 ]
 const DEFAULT_FLUID_WIDTH = 800
-const DEFAULT_FIXED_WIDTH = 400
+const DEFAULT_FIXED_WIDTH = 800
+const DEFAULT_ASPECT_RATIO = 4 / 3
 
 export type Fit = "cover" | "fill" | "inside" | "outside" | "contain"
 
@@ -107,6 +109,8 @@ export interface IGatsbyImageHelperArgs {
   fit?: Fit
   options?: Record<string, unknown>
   breakpoints?: Array<number>
+  backgroundColor?: string
+  aspectRatio?: number
 }
 
 const warn = (message: string): void => console.warn(message)
@@ -150,20 +154,90 @@ export function formatFromFilename(filename: string): ImageFormat | undefined {
   return undefined
 }
 
+export function setDefaultDimensions(
+  args: IGatsbyImageHelperArgs
+): IGatsbyImageHelperArgs {
+  let {
+    layout = `constrained`,
+    width,
+    height,
+    sourceMetadata,
+    breakpoints,
+    aspectRatio,
+    formats = [`auto`, `webp`],
+  } = args
+  formats = formats.map(format => format.toLowerCase() as ImageFormat)
+  layout = camelCase(layout) as Layout
+
+  if (width && height) {
+    return { ...args, formats, layout }
+  }
+  if (sourceMetadata.width && sourceMetadata.height && !aspectRatio) {
+    aspectRatio = sourceMetadata.width / sourceMetadata.height
+  }
+
+  if (layout === `fullWidth`) {
+    width = width || sourceMetadata.width || breakpoints[breakpoints.length - 1]
+    height = height || Math.round(width / (aspectRatio || DEFAULT_ASPECT_RATIO))
+  } else {
+    if (!width) {
+      if (height && aspectRatio) {
+        width = height * aspectRatio
+      } else if (sourceMetadata.width) {
+        width = sourceMetadata.width
+      } else if (height) {
+        width = Math.round(height / DEFAULT_ASPECT_RATIO)
+      } else {
+        width = DEFAULT_FIXED_WIDTH
+      }
+    }
+
+    if (aspectRatio && !height) {
+      height = Math.round(width / aspectRatio)
+    } else if (!aspectRatio) {
+      aspectRatio = width / height
+    }
+  }
+  return { ...args, width, height, aspectRatio, layout, formats }
+}
+
+/**
+ * Use this for getting an image for the blurred placeholder. This ensures the
+ * aspect ratio and crop match the main image
+ */
+export function getLowResolutionImageURL(
+  args: IGatsbyImageHelperArgs,
+  width = 20
+): string {
+  args = setDefaultDimensions(args)
+  const { generateImageSource, filename, aspectRatio } = args
+  return generateImageSource(
+    filename,
+    width,
+    Math.round(width / aspectRatio),
+    args.sourceMetadata.format || `jpg`,
+    args.fit,
+    args.options
+  )?.src
+}
+
 export function generateImageData(
   args: IGatsbyImageHelperArgs
 ): IGatsbyImageData {
+  args = setDefaultDimensions(args)
+
   let {
     pluginName,
     sourceMetadata,
     generateImageSource,
-    layout = `constrained`,
+    layout,
     fit,
     options,
     width,
     height,
     filename,
     reporter = { warn },
+    backgroundColor,
   } = args
 
   if (!pluginName) {
@@ -175,18 +249,19 @@ export function generateImageData(
   if (typeof generateImageSource !== `function`) {
     throw new Error(`generateImageSource must be a function`)
   }
+
   if (!sourceMetadata || (!sourceMetadata.width && !sourceMetadata.height)) {
     // No metadata means we let the CDN handle max size etc, aspect ratio etc
     sourceMetadata = {
       width,
       height,
-      format: formatFromFilename(filename),
+      format: sourceMetadata?.format || formatFromFilename(filename) || `auto`,
     }
   } else if (!sourceMetadata.format) {
     sourceMetadata.format = formatFromFilename(filename)
   }
-  //
-  const formats = new Set<ImageFormat>(args.formats || [`auto`, `webp`])
+
+  const formats = new Set<ImageFormat>(args.formats)
 
   if (formats.size === 0 || formats.has(`auto`) || formats.has(``)) {
     formats.delete(`auto`)
@@ -262,7 +337,11 @@ export function generateImageData(
     }
   })
 
-  const imageProps: Partial<IGatsbyImageData> = { images: result, layout }
+  const imageProps: Partial<IGatsbyImageData> = {
+    images: result,
+    layout,
+    backgroundColor,
+  }
   switch (layout) {
     case `fixed`:
       imageProps.width = imageSizes.presentationWidth
@@ -317,7 +396,7 @@ export function calculateImageSizes(args: IImageSizeArgs): IImageSizes {
     return responsiveImageSizes({ breakpoints, ...args })
   } else {
     reporter.warn(
-      `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained.`
+      `No valid layout was provided for the image at ${filename}. Valid image layouts are fixed, fullWidth, and constrained. Found ${layout}`
     )
     return {
       sizes: [imgDimensions.width],

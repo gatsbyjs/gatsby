@@ -18,7 +18,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - **five general-purpose headless CMSs:** Contentful, DatoCMS, Prismic, Sanity and Strapi
 
-- **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and Wordpress
+- **two general-purpose full-stack CMSs** running in "headless" mode: Drupal and WordPress
 
 - **one specialized CMS**: Shopify
 
@@ -28,7 +28,7 @@ In terms of popularity, you can see [top integrations listed by monthly download
 
 - If you're working on a personal project or prototype, a few of these have a generous free tier (Contentful, DatoCMS, Prismic, Sanity, Strapi).
 
-- If you're looking more at "Team", "Pro", or "Business" price points (eg $29, $99, or \$299 per month), the above CMSs are all good options, plus Drupal and Wordpress.
+- If you're looking more at "Team", "Pro", or "Business" price points (e.g. $29, $99, or \$299 per month), the above CMSs are all good options, plus Drupal and WordPress.
 
 - If you're looking more at an "enterprise" project in the four digits per month and up, your main options are Contentful, Contentstack, Sanity, and Strapi.
 
@@ -45,7 +45,7 @@ Users choosing other CMSs typically have a specific reason for their choice. Som
 - **Drupal** if open-source, configurability, or custom code are important.
 - **Prismic** if they like the content editing UI
 - **Sanity** or **Strapi** for the developer-friendliness or if they need something on-premise. In addition, Sanity tends to have significantly better build times, which can be a key usability consideration, especially for larger sites (we [benchmark build times by CMS here](https://willit.build/)).
-- **Wordpress** when the client or content team is already familiar with the Wordpress UI
+- **WordPress** when the client or content team is already familiar with the WordPress UI
 
 ## Using multiple CMS systems together
 
@@ -65,13 +65,13 @@ Typically, teams that use multiple CMSs use a specialized CMS for part of the we
 
 ### Considerations when using multiple CMSs
 
-One of the key considerations when using content in multiple systems is that - at some point - one content system often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU from Shopify or blog post in Wordpress.
+One of the key considerations when using content in multiple systems is that - at some point - one content system often needs to "know about" another system. For example, a landing page with content in Contentful may need to embed information about a specific product SKU from Shopify or blog post in WordPress.
 
 The easiest way to create relationship references across CMSs is through one CMS storing unique IDs of content living in another CMS.
 
-In this case, you'd store an array of Wordpress blog post IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in `gatsby-node.js.`
+In this case, you'd store an array of WordPress blog post IDs as a field of the relevant model in Contentful, then pull in the correct data via the appropriate queries in `gatsby-node.js.`
 
-To make that a bit more concrete, here's a screenshot of what this looks like currently (January 2020) in the Gatsbyjs.com Contentful setup for the [e-commerce use case page](https://www.gatsbyjs.com/use-cases/e-commerce); the model is called `Use Case Landing Page`, the field is called `Blog Posts`, and the items in the array are unique blog post IDs from Wordpress:
+To make that a bit more concrete, here's a screenshot of what this looks like currently (January 2020) in the Gatsbyjs.com Contentful setup for the [e-commerce use case page](https://www.gatsbyjs.com/use-cases/e-commerce); the model is called `Use Case Landing Page`, the field is called `Blog Posts`, and the items in the array are unique blog post IDs from WordPress:
 
 ![Screenshot of Gatsbyjs.com Contentful setup](../images/use-case-landing-page-screenshot.jpg)
 

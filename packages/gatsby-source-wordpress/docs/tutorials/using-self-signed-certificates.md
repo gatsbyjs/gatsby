@@ -8,9 +8,6 @@ To solve this, you can disable Node.js' rejection of unauthorized certificates b
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 
-Please note that you need to add `dotenv`, as mentioned earlier, to expose environment variables in your gatsby-config.js or gatsby-node.js files.
+Please note that you need to add `dotenv`, as mentioned in [this guide](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/), to expose environment variables in your gatsby-config.js or gatsby-node.js files.
 
-**CAUTION:** This should never be set in production. Always ensure that you disable `NODE_TLS_REJECT_UNAUTHORIZED` in development with `gatsby develop` only.
-
-[dotenv]: https://github.com/motdotla/dotenv
-[envvars]: https://www.gatsbyjs.org/docs/environment-variables
+**CAUTION:** This should never be set in production. Always ensure that you only enable `NODE_TLS_REJECT_UNAUTHORIZED` in development with `gatsby develop`.

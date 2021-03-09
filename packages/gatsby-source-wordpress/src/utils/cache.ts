@@ -228,7 +228,7 @@ export const clearHardCachedNodes = async (): Promise<void> => {
   }
 }
 
-// persistant cache
+// persistent cache
 export const setPersistentCache = async ({
   key,
   value,

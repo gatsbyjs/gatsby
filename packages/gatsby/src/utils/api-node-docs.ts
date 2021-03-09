@@ -150,6 +150,7 @@ export const onCreateNode = true
  * @example
  * exports.unstable_shouldOnCreateNode = ({node}, pluginOptions) => node.internal.type === 'Image'
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const unstable_shouldOnCreateNode = true
 
 /**
@@ -342,13 +343,6 @@ export const createResolvers = true
  * runner can extract out GraphQL queries for running.
  */
 export const preprocessSource = true
-
-/**
- * Tell plugins with expensive "side effects" from queries to start running
- * those now. This is a soon-to-be-replaced API only currently in use by
- * `gatsby-plugin-sharp`.
- */
-export const generateSideEffects = true
 
 /**
  * Let plugins extend/mutate the site's Babel configuration by calling

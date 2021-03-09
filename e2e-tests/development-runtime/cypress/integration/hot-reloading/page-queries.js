@@ -18,6 +18,8 @@ describe(`hot-reloading page queries`, () => {
       `npm run update -- --file src/pages/page-query.js --replacements "# %AUTHOR%:author" --exact`
     )
 
+    cy.waitForHmr()
+
     cy.getTestElement(`hot`).invoke(`text`).should(`contain`, author)
   })
 })

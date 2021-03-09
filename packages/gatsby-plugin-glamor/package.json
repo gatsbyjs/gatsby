@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-glamor",
   "description": "Gatsby plugin to add support for Glamor",
-  "version": "3.0.0-next.0",
+  "version": "3.1.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -12,9 +12,9 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.0.0-next.0",
+    "babel-preset-gatsby-package": "^1.1.0-next.1",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.0.0-next.0"
+    "gatsby-plugin-utils": "^1.1.0-next.1"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-glamor#readme",
   "keywords": [
@@ -26,7 +26,9 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "glamor": "^2.20.29"
+    "glamor": "^2.20.29",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "repository": {
     "type": "git",

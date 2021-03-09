@@ -6,6 +6,9 @@ module.exports = {
       twitter: `kylemathews`,
     },
   },
+  flags: {
+    DEV_SSR: false,
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
@@ -24,6 +27,7 @@ module.exports = {
     },
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
+    `gatsby-source-query-on-demand-data`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {

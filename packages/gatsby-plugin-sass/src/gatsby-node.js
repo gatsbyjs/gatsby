@@ -1,7 +1,7 @@
 import resolve from "./resolve"
 
 exports.onCreateWebpackConfig = (
-  { actions, stage, rules, plugins, loaders },
+  { actions, stage, loaders },
   {
     cssLoaderOptions = {},
     postCssPlugins,
@@ -9,19 +9,18 @@ exports.onCreateWebpackConfig = (
     sassRuleTest,
     sassRuleModulesTest,
     sassOptions = {},
+    // eslint-disable-next-line no-unused-vars
+    plugins,
     ...sassLoaderOptions
   }
 ) => {
   const { setWebpackConfig } = actions
-  const PRODUCTION = stage !== `develop`
-  const isSSR = stage.includes(`html`)
-
-  delete sassLoaderOptions.plugins
+  const isSSR = [`develop-html`, `build-html`].includes(stage)
 
   const sassLoader = {
     loader: resolve(`sass-loader`),
     options: {
-      sourceMap: useResolveUrlLoader ? true : !PRODUCTION,
+      sourceMap: useResolveUrlLoader ? true : undefined,
       sassOptions,
       ...sassLoaderOptions,
     },
@@ -35,43 +34,36 @@ exports.onCreateWebpackConfig = (
           loaders.miniCssExtract(),
           loaders.css({ importLoaders: 2, ...cssLoaderOptions }),
           loaders.postcss({ plugins: postCssPlugins }),
-          sassLoader,
         ],
   }
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
-      !isSSR && loaders.miniCssExtract({ hmr: false }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ importLoaders: 2, ...cssLoaderOptions, modules: true }),
       loaders.postcss({ plugins: postCssPlugins }),
-      sassLoader,
     ].filter(Boolean),
   }
   if (useResolveUrlLoader && !isSSR) {
-    sassRule.use.splice(-1, 0, {
+    sassRule.use.push({
       loader: `resolve-url-loader`,
       options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
     })
-    sassRuleModules.use.splice(-1, 0, {
+    sassRuleModules.use.push({
       loader: `resolve-url-loader`,
       options: useResolveUrlLoader.options ? useResolveUrlLoader.options : {},
     })
   }
 
-  let configRules = []
+  // add sass loaders
+  sassRule.use.push(sassLoader)
+  sassRuleModules.use.push(sassLoader)
 
-  switch (stage) {
-    case `develop`:
-    case `build-javascript`:
-    case `build-html`:
-    case `develop-html`:
-      configRules = configRules.concat([
-        {
-          oneOf: [sassRuleModules, sassRule],
-        },
-      ])
-      break
-  }
+  const configRules = [
+    {
+      oneOf: [sassRuleModules, sassRule],
+    },
+  ]
 
   setWebpackConfig({
     module: {

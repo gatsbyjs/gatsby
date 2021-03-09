@@ -3,7 +3,7 @@ const { resolve, parse } = require(`path`)
 
 const { pathExists, createWriteStream } = require(`fs-extra`)
 
-const downloadWithRetry = require(`./download-with-retry`)
+const downloadWithRetry = require(`./download-with-retry`).default
 
 const inFlightImageCache = new Map()
 
@@ -56,17 +56,20 @@ module.exports = async function cacheImage(store, image, options) {
     await inFlight
   } else if (!alreadyExists) {
     // File doesn't exist and is not being download yet
-    const downloadPromise = new Promise(async (resolve, reject) => {
+    const downloadPromise = new Promise((resolve, reject) => {
       const previewUrl = `http:${url}?${params.join(`&`)}`
 
-      const response = await downloadWithRetry({
+      downloadWithRetry({
         url: previewUrl,
         responseType: `stream`,
       })
-      const file = createWriteStream(absolutePath)
-      response.data.pipe(file)
-      file.on(`finish`, resolve)
-      file.on(`error`, reject)
+        .then(response => {
+          const file = createWriteStream(absolutePath)
+          response.data.pipe(file)
+          file.on(`finish`, resolve)
+          file.on(`error`, reject)
+        })
+        .catch(reject)
     })
     inFlightImageCache.set(absolutePath, downloadPromise)
     await downloadPromise

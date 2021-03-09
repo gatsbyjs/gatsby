@@ -5,6 +5,7 @@ import * as hooks from "../hooks"
 
 type GlobalOverride = NodeJS.Global &
   typeof global.globalThis & {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     GATSBY___IMAGE: boolean
     SERVER: boolean
   }

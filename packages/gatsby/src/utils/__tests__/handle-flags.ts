@@ -10,10 +10,6 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-jest.mock(`terminal-link`, () => (text: string, url: string): string =>
-  `${text} (${url})`
-)
-
 describe(`satisfies semver`, () => {
   it(`returns false if a module doesn't exist`, () => {
     const semverConstraints = {

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-styletron",
   "description": "A Gatsby plugin for styletron with built-in server-side rendering support",
-  "version": "6.0.0-next.0",
+  "version": "6.1.0-next.1",
   "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.0.0-next.0",
+    "babel-preset-gatsby-package": "^1.1.0-next.1",
     "cross-env": "^7.0.3",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7"
@@ -23,7 +23,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "react": "^16.4.2 || ^17.0.0",
+    "react": "^16.9.0 || ^17.0.0",
     "styletron-engine-atomic": "^1.4.6",
     "styletron-react": "^5.2.7"
   },

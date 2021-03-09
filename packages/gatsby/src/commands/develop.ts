@@ -8,7 +8,7 @@ import execa from "execa"
 import chokidar from "chokidar"
 import getRandomPort from "detect-port"
 import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
-import socket from "socket.io"
+import { Server as SocketIO } from "socket.io"
 import fs from "fs-extra"
 import onExit from "signal-exit"
 import {
@@ -71,12 +71,12 @@ const doesConfigChangeRequireRestart = (
 const getDebugPort = (port?: number): number => port ?? 9229
 
 export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
-  if (program.hasOwnProperty(`inspect`)) {
+  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
       break: false,
     }
-  } else if (program.hasOwnProperty(`inspectBrk`)) {
+  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
     return {
       port: getDebugPort(program.inspectBrk),
       break: true,
@@ -96,7 +96,7 @@ class ControllableScript {
     this.debugInfo = debugInfo
   }
   start(): void {
-    const args = []
+    const args: Array<string> = []
     const tmpFileName = tmp.tmpNameSync({
       tmpdir: path.join(process.cwd(), `.cache`),
     })
@@ -344,7 +344,13 @@ module.exports = async (program: IProgram): Promise<void> => {
     : http.createServer()
   statusServer.listen(statusServerPort)
 
-  const io = socket(statusServer)
+  const io = new SocketIO(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
   const handleChildProcessIPC = (msg): void => {
     if (msg.type === `HEARTBEAT`) return

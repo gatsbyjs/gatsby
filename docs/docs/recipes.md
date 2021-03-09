@@ -35,7 +35,7 @@ Looking for information on Gatsby CLI recipes? [Read the press release](/blog/20
 
 ## What are recipes?
 
-Craving a happy medium between [full-length tutorials](/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
+Craving a happy medium between [full-length tutorials](/docs/tutorial/) and crawling the [docs](/docs/)? Here's a cookbook of guiding recipes on how to build things, Gatsby style.
 
 ## [1. Pages and layouts](/docs/recipes/pages-layouts/)
 

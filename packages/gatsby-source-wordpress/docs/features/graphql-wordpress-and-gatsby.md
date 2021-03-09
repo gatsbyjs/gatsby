@@ -117,7 +117,7 @@ But a similar query for a single post by database ID in Gatsby would look like:
 
 ```graphql
 {
-  wpPost(databaseId: { eq: 1747 }) {
+  wpPost(databaseId: { eq: 123 }) {
     id
     title
     content

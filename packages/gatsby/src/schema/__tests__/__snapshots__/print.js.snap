@@ -98,16 +98,6 @@ type SitePage implements Node @dontInfer {
   matchPath: String
 }
 
-type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
-  first: Inline
-  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
-}
-
-interface ITest @nodeInterface {
-  id: ID!
-  date: Date @dateformat(formatString: \\"YYYY\\")
-}
-
 type Inline {
   foo: Nested
 }
@@ -118,6 +108,16 @@ type Nested {
 
 input Baz {
   qux: Boolean
+}
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+}
+
+interface ITest @nodeInterface {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
 }
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
@@ -276,7 +276,20 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
+}
+
 union ThisOrThat = AnotherTest | OneMoreTest
+
+type Inline {
+  foo: Nested
+}
+
+input Baz {
+  qux: Boolean
+}
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {
   bar: String
@@ -428,12 +441,12 @@ type OneMoreTest implements Node @dontInfer {
   bar: Boolean
 }
 
-union ThisOrThat = AnotherTest | OneMoreTest
-
-type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
-  first: Inline
-  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
+interface ITest2 implements Node {
+  id: ID!
+  date: Date @dateformat(formatString: \\"YYYY\\")
 }
+
+union ThisOrThat = AnotherTest | OneMoreTest
 
 type Inline {
   foo: Nested
@@ -441,6 +454,11 @@ type Inline {
 
 input Baz {
   qux: Boolean
+}
+
+type InlineTest implements Node & ITest @childOf(types: [\\"OneMoreTest\\"]) @dontInfer {
+  first: Inline
+  second(bar: Baz): Date @dateformat(formatString: \\"MM/DD/YYYY\\")
 }
 
 type BarChild implements Node @childOf(types: [\\"Test\\"]) @dontInfer {

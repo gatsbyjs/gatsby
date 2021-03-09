@@ -12,8 +12,8 @@
     "gatsby-plugin-sharp": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-transformer-sharp": "next",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [

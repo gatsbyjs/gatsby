@@ -206,7 +206,7 @@ export function transformField({
     return false
   }
 
-  // remove fields that have required args. They'll cause query errors if ommitted
+  // remove fields that have required args. They'll cause query errors if omitted
   //  and we can't determine how to use those args programatically.
   if (
     field.args &&
