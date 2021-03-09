@@ -374,9 +374,7 @@ This example covers sass but it's the same ofr the other plugins.
 
 ```diff:title=gatsby-config.js
 module.exports = {
-  // some gatsby config
   plugins: [
-    // some plugin config
 -    `gatsby-plugin-sass`,
 +    {
 +      resolve: `gatsby-plugin-sass`,
