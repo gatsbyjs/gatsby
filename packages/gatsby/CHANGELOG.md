@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.3...gatsby@3.0.4) (2021-03-09)
+
+### Bug Fixes
+
+- **gatsby:** don't ignore SOURCE_FILE_CHANGED event ([#30127](https://github.com/gatsbyjs/gatsby/issues/30127)) ([#30135](https://github.com/gatsbyjs/gatsby/issues/30135)) ([f8f38f3](https://github.com/gatsbyjs/gatsby/commit/f8f38f3199952c9b42c551e4fc81d07a4af869dc))
+- **gatsby:** freeze the schema only after rebuilding with SitePage ([#30132](https://github.com/gatsbyjs/gatsby/issues/30132)) ([#30137](https://github.com/gatsbyjs/gatsby/issues/30137)) ([31e754f](https://github.com/gatsbyjs/gatsby/commit/31e754fbcd942232717dce785e769650242aa133))
+- **gatsby:** set program.verbose when VERBOSE env var is used ([#30123](https://github.com/gatsbyjs/gatsby/issues/30123)) ([#30136](https://github.com/gatsbyjs/gatsby/issues/30136)) ([bc0eca5](https://github.com/gatsbyjs/gatsby/commit/bc0eca57e51c2dcc23b2b605c28d73e960fd122c))
+
 ## [3.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.2...gatsby@3.0.3) (2021-03-05)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.1...gatsby-source-contentful@5.0.2) (2021-03-09)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Set image source format ([#30103](https://github.com/gatsbyjs/gatsby/issues/30103)) ([#30134](https://github.com/gatsbyjs/gatsby/issues/30134)) ([decca5a](https://github.com/gatsbyjs/gatsby/commit/decca5a9124aacc15f8a04afaeba5f0aefa036ce))
+
 ## [5.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0...gatsby-source-contentful@5.0.1) (2021-03-05)
 
 ### Bug Fixes
