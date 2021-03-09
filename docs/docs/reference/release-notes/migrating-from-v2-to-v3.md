@@ -378,17 +378,17 @@ module.exports = {
   plugins: [
     // some plugin config
 -    `gatsby-plugin-sass`,
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        cssLoaderOptions: {
-          esModule: false,
-          modules: {
-            namedExport: false,
-          },
-        },
-      },
-    }
++    {
++      resolve: `gatsby-plugin-sass`,
++      options: {
++       cssLoaderOptions: {
++         esModule: false,
++         modules: {
++           namedExport: false,
++         },
++       },
++     },
++    }
   ]
 }
 ```
