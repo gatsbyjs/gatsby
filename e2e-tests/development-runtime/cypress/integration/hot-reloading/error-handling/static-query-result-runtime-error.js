@@ -41,11 +41,11 @@ describe(`testing error overlay and ability to automatically recover from runtim
     )
 
     // that's the exact error we throw and we expect to see that
-    cy.getOverlayIframe().contains(`Static query results caused runtime error`)
+    // cy.getOverlayIframe().contains(`Static query results caused runtime error`)
     // contains details
-    cy.getOverlayIframe().contains(
-      `src/pages/error-handling/static-query-result-runtime-error.js`
-    )
+    // cy.getOverlayIframe().contains(
+    //   `src/pages/error-handling/static-query-result-runtime-error.js`
+    // )
   })
 
   it(`can recover without need to refresh manually`, () => {
@@ -60,6 +60,6 @@ describe(`testing error overlay and ability to automatically recover from runtim
     cy.findByTestId(`results`)
       .should(`contain.text`, `"hasError": false`)
 
-    cy.assertNoOverlayIframe()
+    // cy.assertNoOverlayIframe()
   })
 })
