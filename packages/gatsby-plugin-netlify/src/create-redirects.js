@@ -12,8 +12,16 @@ export default async function writeRedirectsFile(
 
   const FILE_PATH = publicFolder(`_redirects`)
 
-  // Map redirect data to the format Netlify expects
   // https://www.netlify.com/docs/redirects/
+  const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = [
+    `query`,
+    `conditions`,
+    `headers`,
+    `signed`,
+    `edge_handler`,
+  ]
+
+  // Map redirect data to the format Netlify expects
   redirects = redirects.map(redirect => {
     const {
       fromPath,
@@ -37,13 +45,17 @@ export default async function writeRedirectsFile(
     for (const key in rest) {
       const value = rest[key]
 
+      console.log(NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST)
+
       if (typeof value === `string` && value.includes(` `)) {
         console.warn(
           `Invalid redirect value "${value}" specified for key "${key}". ` +
             `Values should not contain spaces.`
         )
       } else {
-        pieces.push(`${key}=${value}`)
+        if (NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST.includes(key)) {
+          pieces.push(`${key}=${value}`)
+        }
       }
     }
 
