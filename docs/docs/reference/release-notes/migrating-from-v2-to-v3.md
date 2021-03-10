@@ -469,12 +469,14 @@ If you're using any other process properties, you want to polyfill process.
 2. Configure webpack to use the process polyfill.
 
 ```diff:title=gatby-node.js
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new plugins.provide({ process: 'process/browser' })
-    ]
-  })
+exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
+  if (stage === 'build-javascript' || stage === 'develop') {
+    actions.setWebpackConfig({
+      plugins: [
+        plugins.provide({ process: 'process/browser' })
+      ]
+    })
+  }
 }
 ```
 
