@@ -251,10 +251,10 @@ exports.sourceNodes = async (
         if (node.internal.owner !== `gatsby-source-contentful`) {
           return
         }
-        touchNode({ nodeId: node.id })
+        touchNode(node)
         if (node.localFile___NODE) {
           // Prevent GraphQL type inference from crashing on this property
-          touchNode({ nodeId: node.localFile___NODE })
+          touchNode(getNode(node.localFile___NODE))
         }
       })
 
@@ -329,7 +329,7 @@ exports.sourceNodes = async (
   }
 
   createTypes(`
-  interface ContentfulEntry @nodeInterface {
+  interface ContentfulEntry implements Node {
     contentful_id: String!
     id: ID!
     node_locale: String!
@@ -488,7 +488,7 @@ exports.sourceNodes = async (
 
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
-      touchNode({ nodeId: node.id })
+      touchNode(node)
       deleteNode(node)
     })
   }
@@ -499,7 +499,7 @@ exports.sourceNodes = async (
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
-  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
+  existingNodes.forEach(n => touchNode(n))
 
   const assets = mergedSyncData.assets
 
