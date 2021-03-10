@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.2...gatsby-source-contentful@5.0.3) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 ## [5.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.1...gatsby-source-contentful@5.0.2) (2021-03-09)
 
 ### Bug Fixes

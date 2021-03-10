@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0...gatsby-plugin-image@1.0.1) (2021-03-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Handle placeholder in plugin toolkit ([#30141](https://github.com/gatsbyjs/gatsby/issues/30141)) ([#30170](https://github.com/gatsbyjs/gatsby/issues/30170)) ([4c44125](https://github.com/gatsbyjs/gatsby/commit/4c4412560889414b020db46877b8704e18e10d0e))
+
 # [1.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-v3rc.1...gatsby-plugin-image@1.0.0) (2021-03-02)
 
 **Note:** Version bump only for package gatsby-plugin-image

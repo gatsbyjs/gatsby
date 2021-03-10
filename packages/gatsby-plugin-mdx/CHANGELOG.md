@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.0.0...gatsby-plugin-mdx@2.0.1) (2021-03-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** fix html field resolver to work with webpack@5 ([#30158](https://github.com/gatsbyjs/gatsby/issues/30158)) ([#30172](https://github.com/gatsbyjs/gatsby/issues/30172)) ([b7d82da](https://github.com/gatsbyjs/gatsby/commit/b7d82da030d85b876ce7a10064bf4dfca1763879))
+
 # [2.0.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.0.0-v3rc.0...gatsby-plugin-mdx@2.0.0) (2021-03-02)
 
 **Note:** Version bump only for package gatsby-plugin-mdx
