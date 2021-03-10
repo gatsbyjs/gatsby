@@ -16,7 +16,7 @@ One important part of overall page loading experience is image loading. There ar
 
 We built Gatsby Image to provide these things -- a [higher-level building block](https://www.gatsbyjs.com/docs/conceptual/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks) that has the richness users expect, with the API simplicity developers love (and without maintaining your own image processing pipeline!).
 
-We provide a [detailed guide on using Gatsby Image](docs/how-to/images-and-media/using-gatsby-image/) in the How To section of this documentation. Here, we walk through the question of why these benefits matter, from a user's perspective, and why providing them without Gatsby Image (or something similar) can be difficult.
+We provide a [detailed guide on using Gatsby Image](docs/how-to/images-and-media/using-gatsby-plugin-image/) in the How To section of this documentation. Here, we walk through the question of why these benefits matter, from a user's perspective, and why providing them without Gatsby Image (or something similar) can be difficult.
 
 ## Fetch above-the-fold images immediately
 
