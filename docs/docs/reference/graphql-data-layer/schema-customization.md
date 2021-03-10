@@ -428,7 +428,7 @@ type MarkdownRemark implements Node {
 }
 type Frontmatter {
   author: AuthorJson @link # default foreign-key relation by `id`
-  reviewers: [AuthorJson] @link(by: "email") # foreign-key relation by custom field
+  reviewers: [AuthorJson] @link(from: "email") # foreign-key relation by custom field
 }
 type AuthorJson implements Node {
   posts: [MarkdownRemark] @link(by: "frontmatter.author.email", from: "email") # easy back-ref
