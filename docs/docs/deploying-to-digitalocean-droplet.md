@@ -30,7 +30,7 @@ Follow these instructions for installs on an Ubuntu droplet.
 
    ```shell
    sudo apt-get update
-   sudo apt-get install node
+   sudo apt-get install nodejs
    ```
 
 3. Install npm
