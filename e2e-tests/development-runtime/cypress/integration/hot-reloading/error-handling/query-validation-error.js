@@ -16,7 +16,7 @@ const errorReplacement = `fieldThatDoesNotExistOnSiteMapType`
 describe(`testing error overlay and ability to automatically recover from query extraction validation errors`, () => {
   it(`displays content initially (no errors yet)`, () => {
     cy.visit(`/error-handling/query-validation-error/`).waitForRouteChange()
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Working`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Working`)
   })
 
   it(`displays error with overlay on compilation errors`, () => {
@@ -30,7 +30,6 @@ describe(`testing error overlay and ability to automatically recover from query 
     cy.getOverlayIframe().contains(
       `src/pages/error-handling/query-validation-error.js`
     )
-    cy.screenshot()
   })
 
   it(`can recover without need to refresh manually`, () => {
@@ -38,8 +37,7 @@ describe(`testing error overlay and ability to automatically recover from query 
       `npm run update -- --file src/pages/error-handling/query-validation-error.js --replacements "Working:Updated" --replacements "${errorReplacement}:${errorPlaceholder}" --exact`
     )
 
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Updated`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
     cy.assertNoOverlayIframe()
-    cy.screenshot()
   })
 })

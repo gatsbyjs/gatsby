@@ -16,7 +16,7 @@ const errorReplacement = `a b`
 describe(`testing error overlay and ability to automatically recover from webpack compile errors`, () => {
   it(`displays content initially (no errors yet)`, () => {
     cy.visit(`/error-handling/compile-error/`).waitForRouteChange()
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Working`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Working`)
   })
 
   it(`displays error with overlay on compilation errors`, () => {
@@ -25,8 +25,7 @@ describe(`testing error overlay and ability to automatically recover from webpac
     )
 
     cy.getOverlayIframe().contains(`Failed to compile`)
-    cy.getOverlayIframe().contains(`Parsing error: Unexpected token`)
-    cy.screenshot()
+    cy.getOverlayIframe().contains(`Unexpected token, expected ";"`)
   })
 
   it(`can recover without need to refresh manually`, () => {
@@ -34,8 +33,7 @@ describe(`testing error overlay and ability to automatically recover from webpac
       `npm run update -- --file src/pages/error-handling/compile-error.js --replacements "Working:Updated" --replacements "${errorReplacement}:${errorPlaceholder}" --exact`
     )
 
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Updated`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
     cy.assertNoOverlayIframe()
-    cy.screenshot()
   })
 })

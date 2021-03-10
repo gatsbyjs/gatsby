@@ -22,7 +22,7 @@ const errorReplacement = `window.a.b.c.d.e.f.g()`
 describe(`testing error overlay and ability to automatically recover from runtime errors`, () => {
   it(`displays content initially (no errors yet)`, () => {
     cy.visit(`/error-handling/runtime-error/`).waitForRouteChange()
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Working`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Working`)
   })
 
   it(`displays error with overlay on runtime errors`, () => {
@@ -33,7 +33,6 @@ describe(`testing error overlay and ability to automatically recover from runtim
     cy.getOverlayIframe().contains(`Cannot read property`)
     // contains details
     cy.getOverlayIframe().contains(`src/pages/error-handling/runtime-error.js`)
-    cy.screenshot()
   })
 
   it(`can recover without need to refresh manually`, () => {
@@ -41,8 +40,7 @@ describe(`testing error overlay and ability to automatically recover from runtim
       `npm run update -- --file src/pages/error-handling/runtime-error.js --replacements "Working:Updated" --replacements "${errorReplacement}:${errorPlaceholder}" --exact`
     )
 
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Updated`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
     cy.assertNoOverlayIframe()
-    cy.screenshot()
   })
 })

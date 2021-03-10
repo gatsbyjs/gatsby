@@ -30,10 +30,9 @@ describe(`testing error overlay and ability to automatically recover from runtim
     cy.visit(
       `/error-handling/static-query-result-runtime-error/`
     ).waitForRouteChange()
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Working`)
-    cy.getTestElement(`results`)
-      .invoke(`text`)
-      .should(`contain`, `"hasError": false`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Working`)
+    cy.findByTestId(`results`)
+      .should(`contain.text`, `"hasError": false`)
   })
 
   it(`displays error with overlay on runtime errors`, () => {
@@ -47,7 +46,6 @@ describe(`testing error overlay and ability to automatically recover from runtim
     cy.getOverlayIframe().contains(
       `src/pages/error-handling/static-query-result-runtime-error.js`
     )
-    cy.screenshot()
   })
 
   it(`can recover without need to refresh manually`, () => {
@@ -58,12 +56,10 @@ describe(`testing error overlay and ability to automatically recover from runtim
       `npm run update -- --file src/pages/error-handling/static-query-result-runtime-error.js --replacements "Working:Updated" --exact`
     )
 
-    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, `Updated`)
-    cy.getTestElement(`results`)
-      .invoke(`text`)
-      .should(`contain`, `"hasError": false`)
+    cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
+    cy.findByTestId(`results`)
+      .should(`contain.text`, `"hasError": false`)
 
     cy.assertNoOverlayIframe()
-    cy.screenshot()
   })
 })
