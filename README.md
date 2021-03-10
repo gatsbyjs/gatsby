@@ -164,7 +164,7 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 The maintenance window for Gatsby v2 closes on April 1, 2021.
 
 - During this maintenance window, we will continue to address reported bugs in Gatsby v2.
-- After this maintenance window, we will only accept critical security updates for Gatsby v2, and feature requests will be considered for Gatsby V3
+- After the maintenance window closes, we will only accept critical security updates for Gatsby v2.
 
 ## 📝 License
 
