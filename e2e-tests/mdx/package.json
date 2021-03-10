@@ -6,11 +6,12 @@
     "@mdx-js/mdx": "^1.6.6",
     "@mdx-js/react": "^1.6.6",
     "cypress": "^3.1.0",
-    "gatsby": "^2.0.118",
-    "gatsby-plugin-mdx": "^1.2.19",
-    "gatsby-source-filesystem": "^2.3.14",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "fs-extra": "^8.1.0",
+    "gatsby": "^3.0.0",
+    "gatsby-plugin-mdx": "^2.0.0",
+    "gatsby-source-filesystem": "^3.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "theme-ui": "^0.3.1"
   },
   "keywords": [
@@ -25,7 +26,7 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

@@ -14,6 +14,7 @@ export interface IRedirect {
   toPath: string
   isPermanent?: boolean
   redirectInBrowser?: boolean
+  ignoreCase: boolean
   // Users can add anything to this createRedirect API
   [key: string]: any
 }
@@ -30,8 +31,9 @@ export interface IGatsbyPage {
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
-  context: {}
+  context: Record<string, unknown>
   updatedAt: number
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
@@ -370,6 +372,7 @@ export type ActionsUnion =
   | ISetProgramExtensions
   | IDeletedStalePageDataFiles
   | IRemovedHtml
+  | ITrackedHtmlCleanup
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
@@ -683,11 +686,6 @@ export interface IDeletePageAction {
   payload: IGatsbyPage
 }
 
-export interface IReplaceStaticQueryAction {
-  type: `REPLACE_STATIC_QUERY`
-  payload: IGatsbyStaticQueryComponents
-}
-
 export interface IRemoveStaticQuery {
   type: `REMOVE_STATIC_QUERY`
   payload: IGatsbyStaticQueryComponents["id"]
@@ -830,6 +828,11 @@ interface IDeletedStalePageDataFiles {
 interface IRemovedHtml {
   type: `HTML_REMOVED`
   payload: string
+}
+
+interface ITrackedHtmlCleanup {
+  type: `HTML_TRACKED_PAGES_CLEANUP`
+  payload: Set<string>
 }
 
 interface IGeneratedHtml {

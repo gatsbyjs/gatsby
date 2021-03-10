@@ -1,4 +1,4 @@
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { IPluginOptions } from "./gatsby-api"
 

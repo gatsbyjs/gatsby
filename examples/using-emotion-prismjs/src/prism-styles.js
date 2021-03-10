@@ -1,4 +1,4 @@
-import { injectGlobal } from "emotion"
+import { injectGlobal } from "@emotion/css"
 
 const colors = {
   dark: `#282c34`,

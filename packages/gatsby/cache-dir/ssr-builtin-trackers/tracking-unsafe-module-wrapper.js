@@ -12,7 +12,12 @@ function createProxyHandler(prefix) {
           }
           Error.captureStackTrace(myErrorHolder, wrapper)
 
-          global.unsafeBuiltinUsage.push(myErrorHolder.stack)
+          // loadPageDataSync already is tracked with dedicated warning messages,
+          // so skipping marking it to avoid multiple messages for same usage
+          if (!myErrorHolder.stack.includes(`loadPageDataSync`)) {
+            global.unsafeBuiltinUsage.push(myErrorHolder.stack)
+          }
+
           return value.apply(target, args)
         }
       } else if (typeof value === `object` && value !== null) {

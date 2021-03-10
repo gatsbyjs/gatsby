@@ -351,7 +351,7 @@ const processDefinitions = ({
       continue
     }
 
-    let document = {
+    const document = {
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
         .map(name => definitionsByName.get(name).def)

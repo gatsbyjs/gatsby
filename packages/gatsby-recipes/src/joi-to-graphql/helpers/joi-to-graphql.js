@@ -190,7 +190,7 @@ internals.buildFields = fields => {
     attrs[key] = internals.setType(field.schema)
   }
 
-  cache = Object.create(null) //Empty cache
+  cache = Object.create(null) // Empty cache
 
   return function (recursiveType) {
     if (recursiveType) {

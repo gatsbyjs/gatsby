@@ -117,7 +117,7 @@ _In the playground below the list, there is an example query with a description 
 
 - `eq`: short for **equal**, must match the given data exactly
 - `ne`: short for **not equal**, must be different from the given data
-- `regex`: short for **regular expression**, must match the given pattern. Note that backslashes need to be escaped _twice_, so `/\w+/` needs to be written as `"/\\\\w+/"`.
+- `regex`: short for **regular expression**, must match the given pattern
 - `glob`: short for **global**, allows to use wildcard `*` which acts as a placeholder for any non-empty string
 - `in`: short for **in array**, must be an element of the array
 - `nin`: short for **not in array**, must NOT be an element of the array

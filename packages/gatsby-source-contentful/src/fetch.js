@@ -153,7 +153,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
     )
     syncProgress.start()
     reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
-    let query = syncToken
+    const query = syncToken
       ? { nextSyncToken: syncToken, ...basicSyncConfig }
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
@@ -189,7 +189,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   }
   reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
-  let contentTypeItems = contentTypes.items
+  const contentTypeItems = contentTypes.items
 
   const result = {
     currentSyncData,

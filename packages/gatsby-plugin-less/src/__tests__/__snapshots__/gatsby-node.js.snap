@@ -12,7 +12,6 @@ exports[`gatsby-plugin-less Stage: build-html / Less options #1 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -62,7 +61,6 @@ exports[`gatsby-plugin-less Stage: build-html / Less options #2 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -111,7 +109,6 @@ exports[`gatsby-plugin-less Stage: build-html / Loader options #1 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -157,7 +154,6 @@ exports[`gatsby-plugin-less Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -202,7 +198,6 @@ exports[`gatsby-plugin-less Stage: build-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
@@ -247,7 +242,6 @@ exports[`gatsby-plugin-less Stage: build-html / css-loader options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"camelCase\\":false,\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -968,7 +962,6 @@ exports[`gatsby-plugin-less Stage: develop-html / Less options #1 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -1018,7 +1011,6 @@ exports[`gatsby-plugin-less Stage: develop-html / Less options #2 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -1067,7 +1059,6 @@ exports[`gatsby-plugin-less Stage: develop-html / Loader options #1 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -1113,7 +1104,6 @@ exports[`gatsby-plugin-less Stage: develop-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -1158,7 +1148,6 @@ exports[`gatsby-plugin-less Stage: develop-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
@@ -1203,7 +1192,6 @@ exports[`gatsby-plugin-less Stage: develop-html / css-loader options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.less\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"camelCase\\":false,\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {

@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-feed",
   "description": "Creates an RSS feed for your Gatsby site.",
-  "version": "3.0.0-next.1",
+  "version": "3.1.0-next.2",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,15 +10,15 @@
     "@babel/runtime": "^7.12.5",
     "@hapi/joi": "^15.1.1",
     "common-tags": "^1.8.0",
-    "fs-extra": "^8.1.0",
-    "gatsby-plugin-utils": "^1.0.0-next.0",
+    "fs-extra": "^9.1.0",
+    "gatsby-plugin-utils": "^1.1.0-next.1",
     "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.0.0-next.0",
+    "babel-preset-gatsby-package": "^1.1.0-next.1",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed#readme",
@@ -32,7 +32,9 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^3.0.0-next.0"
+    "gatsby": "^3.0.0-next.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "repository": {
     "type": "git",

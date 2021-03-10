@@ -614,8 +614,7 @@ describe(`actual compiling`, () => {
       },
     })
 
-    expect(errors).toMatchInlineSnapshot(
-      `
+    expect(errors).toMatchInlineSnapshot(`
       Array [
         Object {
           "context": Object {
@@ -628,9 +627,7 @@ describe(`actual compiling`, () => {
          5 |                }
          6 |             }
          7 |           }
-         8 |` +
-        ` ` +
-        `
+         8 |
          9 |           fragment PostsJsonFragment on PostsJson {
         10 |             id
         11 |           }",
@@ -640,8 +637,7 @@ describe(`actual compiling`, () => {
           "id": "85908",
         },
       ]
-    `
-    )
+    `)
     expect(result).toEqual(new Map())
   })
 
@@ -727,7 +723,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
          9 |         fragment PostsJsonFragment on PostsJson {
         10 |           id
         11 |           node
@@ -755,7 +751,7 @@ describe(`actual compiling`, () => {
          5 |              }
          6 |           }
          7 |         }
-         8 | 
+         8 |
       >  9 |         fragment PostsJsonFragment on PostsJson {
            |                  ^^^^^^^^^^^^^^^^^
         10 |           id

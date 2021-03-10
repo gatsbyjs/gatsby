@@ -3,10 +3,11 @@ import WebpackAssetsManifest from "webpack-assets-manifest"
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
 import createRedirects from "./create-redirects"
-import { isSibling } from "./is-sibling"
+import { readJSON } from "fs-extra"
+import { joinPath } from "gatsby-core-utils"
 import { DEFAULT_OPTIONS, BUILD_HTML_STAGE, BUILD_CSS_STAGE } from "./constants"
 
-let assetsManifest = {}
+const assetsManifest = {}
 
 // Inject a webpack plugin to get the file manifests so we can translate all link headers
 exports.onCreateWebpackConfig = ({ actions, stage }) => {
@@ -34,56 +35,58 @@ exports.onPostBuild = async (
   const { redirects } = store.getState()
 
   let rewrites = []
-  let siblingStaticPaths = []
   if (pluginOptions.generateMatchPathRewrites) {
-    const { pages } = store.getState()
-    rewrites = Array.from(pages.values())
-      .filter(page => page.matchPath && page.matchPath !== page.path)
-      .map(page => {
-        const siblings = Array.from(pages.values())
-          .filter(maybeSiblingPage => {
-            if (maybeSiblingPage.matchPath) return false
+    const matchPathsFile = joinPath(
+      pluginData.program.directory,
+      `.cache`,
+      `match-paths.json`
+    )
 
-            return isSibling(page.matchPath, maybeSiblingPage.path)
-          })
-          .map(p => p.path)
+    const matchPaths = await readJSON(matchPathsFile)
 
-        siblingStaticPaths.push(...siblings)
-
-        return {
-          fromPath: page.matchPath,
-          toPath: page.path,
-        }
-      })
+    rewrites = matchPaths.map(({ matchPath, path }) => {
+      return {
+        fromPath: matchPath,
+        toPath: path,
+      }
+    })
   }
 
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
-    createRedirects(pluginData, redirects, rewrites, siblingStaticPaths),
+    createRedirects(pluginData, redirects, rewrites),
   ])
 }
 
-exports.pluginOptionsSchema = ({ Joi }) =>
-  Joi.object({
-    headers: Joi.object()
-      .pattern(/^/, Joi.array().items(Joi.string()))
-      .description(`Option to add headers for a filename`),
+const MATCH_ALL_KEYS = /^/
+const pluginOptionsSchema = function ({ Joi }) {
+  const headersSchema = Joi.object()
+    .pattern(MATCH_ALL_KEYS, Joi.array().items(Joi.string()))
+    .description(`Add more headers to specific pages`)
+
+  return Joi.object({
+    headers: headersSchema,
     allPageHeaders: Joi.array()
       .items(Joi.string())
-      .description(`Option to add headers for all files`),
+      .description(`Add more headers to all the pages`),
     mergeSecurityHeaders: Joi.boolean().description(
-      `Option to include default Gatsby Cloud security headers (true by default)`
+      `When set to false, turns off the default security headers`
     ),
     mergeLinkHeaders: Joi.boolean().description(
-      `Option to include default Gatsby Cloud link headers (true by default)`
+      `When set to false, turns off the default gatsby js headers`
     ),
     mergeCachingHeaders: Joi.boolean().description(
-      `Option to include default Gatsby Cloud caching headers (true by default)`
+      `When set to false, turns off the default caching headers`
     ),
     transformHeaders: Joi.function()
-      .arity(2)
-      .description(`Option to transform headers using a function`),
+      .maxArity(2)
+      .description(
+        `Transform function for manipulating headers under each path (e.g.sorting), etc. This should return an object of type: { key: Array<string> }`
+      ),
     generateMatchPathRewrites: Joi.boolean().description(
-      `Option to include redirect rules for client only paths (set to true by default)`
+      `When set to false, turns off automatic creation of redirect rules for client only paths`
     ),
   })
+}
+
+exports.pluginOptionsSchema = pluginOptionsSchema

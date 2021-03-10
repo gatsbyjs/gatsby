@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@1.1.0-next.0...gatsby-plugin-benchmark-reporting@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@1.0.0-next.0...gatsby-plugin-benchmark-reporting@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-benchmark-reporting
+
 # [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-benchmark-reporting@0.10.0-next.0...gatsby-plugin-benchmark-reporting@1.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-plugin-benchmark-reporting

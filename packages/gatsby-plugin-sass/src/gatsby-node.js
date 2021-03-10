@@ -39,10 +39,10 @@ exports.onCreateWebpackConfig = (
   const sassRuleModules = {
     test: sassRuleModulesTest || /\.module\.s(a|c)ss$/,
     use: [
-      loaders.miniCssExtract({ modules: true }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ importLoaders: 2, ...cssLoaderOptions, modules: true }),
       loaders.postcss({ plugins: postCssPlugins }),
-    ],
+    ].filter(Boolean),
   }
   if (useResolveUrlLoader && !isSSR) {
     sassRule.use.push({

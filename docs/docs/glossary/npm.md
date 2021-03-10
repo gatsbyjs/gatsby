@@ -13,7 +13,7 @@ update libraries and frameworks (dependencies) for Node-based projects, and
 interact with the npm Registry. You'll use npm to install and upgrade Gatsby and
 its plugins.
 
-npm is a [command line](/docs/glossary#command-line) tool. You'll need Terminal (Mac, Linux) or Command Prompt (Windows) in order to run its commands. To use one of npm's features, type `npm <command>` . For example, `npm help` displays a list of available features, including `install`, `uninstall`, `update`, and `search`.
+npm is a [command line](/docs/glossary#command-line) tool. You'll need Terminal (Mac, Linux) or Command Prompt (Windows) in order to run its commands. To use one of npm's features, type `npm <command>`. For example, `npm help` displays a list of available features, including `install`, `uninstall`, `update`, and `search`.
 
 npm is installed alongside Node during the default [installation process](/docs/tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system). You don't need to take any additional steps to add it to your environment.
 

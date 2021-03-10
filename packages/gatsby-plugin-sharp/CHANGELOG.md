@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.1.0-next.1...gatsby-plugin-sharp@3.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.1.0-next.0...gatsby-plugin-sharp@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.9...gatsby-plugin-sharp@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.8...gatsby-plugin-sharp@3.0.0-next.9) (2021-02-25)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
 # [3.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.0.0-next.7...gatsby-plugin-sharp@3.0.0-next.8) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-plugin-sharp

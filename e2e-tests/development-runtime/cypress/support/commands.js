@@ -91,7 +91,7 @@ Cypress.Commands.overwrite("visit", (orig, url, options = {}) => {
     ...options,
     onBeforeLoad: win => {
       if (options.onBeforeLoad) {
-        optiosn.onBeforeLoad(win)
+        options.onBeforeLoad(win)
       }
 
       cy.spy(win.console, "log").as(`hmrConsoleLog`)

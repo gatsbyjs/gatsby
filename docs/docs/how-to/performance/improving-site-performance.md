@@ -26,7 +26,7 @@ There are two options for this:
 
 - Gatsby Cloud has Lighthouse performance reports built into its CI/CD. Every time someone opens a pull request or merges into master, a Lighthouse report will be run and the performance score displayed.
 
-- Use a third-party service that offers performance monitoring. Different services offer different options -- schedule runs on a daily basis or CI/CD integration through Github (or your source control service).
+- Use a third-party service that offers performance monitoring. Different services offer different options -- schedule runs on a daily basis or CI/CD integration through GitHub (or your source control service).
 
 For additional precision, run Lighthouse multiple times and take the median result.
 
@@ -48,7 +48,7 @@ Performance work can be surprisingly nonlinear in impact.
 When you run a test in your testing tool of choice, it will give you a number of recommendations. While this can feel like a laundry list of issues, it can be helpful to understand the five core categories that these issues are bucketed into.
 
 - Blocking calls & third-party scripts.
-- Javascript bundle size.
+- JavaScript bundle size.
 - Stylesheets and font files.
 - Images and other media.
 - Resource requests & CDN caching configuration.
@@ -79,9 +79,9 @@ Other options include:
 
 - if you are using [html.js](https://www.gatsbyjs.org/docs/custom-html/) instead, you can modify that fileto include your snippet.
 
-### Reduce your Javascript bundle cost
+### Reduce your JavaScript bundle cost
 
-Among all assets, Javascript can be uniquely costly to your performance. This is due to three main reasons:
+Among all assets, JavaScript can be uniquely costly to your performance. This is due to three main reasons:
 
 - Like other assets, it needs to be loaded into your browser.
 
@@ -139,7 +139,7 @@ We recommend you use the [gatsby plugin to install `loadable-components`](https:
 
 #### Step 6: Consider using the Preact plugin
 
-[Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [Gatsby-plugin-preact](https://www.gatsbyjs.com/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of Javascript from your bundle.
+[Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [Gatsby-plugin-preact](https://www.gatsbyjs.com/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of JavaScript from your bundle.
 
 This step can make sense if the `framework.js` bundle is a large part of your overall bundle size, and want to further optimize.
 

@@ -21,6 +21,7 @@ export default function makePluginData(store, assetsManifest, pathPrefix) {
   return {
     pages,
     manifest,
+    program,
     pathPrefix,
     publicFolder,
   }

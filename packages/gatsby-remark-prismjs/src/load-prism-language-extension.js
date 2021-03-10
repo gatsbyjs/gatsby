@@ -3,7 +3,7 @@ const loadPrismLanguage = require(`./load-prism-language`)
 const replaceStringWithRegex = require(`./replace-string-with-regexp`)
 
 module.exports = languageExtensions => {
-  //Create array of languageExtensions (if input is object)
+  // Create array of languageExtensions (if input is object)
   languageExtensions = [].concat(languageExtensions)
 
   languageExtensions.forEach(l => {
@@ -11,7 +11,7 @@ module.exports = languageExtensions => {
   })
 }
 
-let loadLanguageExtension = languageExtension => {
+const loadLanguageExtension = languageExtension => {
   if (!isObjectAndNotArray(languageExtension)) {
     throw new Error(
       `A languageExtension needs to be defined as an object. Given config is not valid: ${JSON.stringify(
@@ -44,7 +44,7 @@ let loadLanguageExtension = languageExtension => {
   if (!languageExtension.extend) {
     Prism.languages[languageExtension.language] = languageExtension.definition
   } else {
-    //Loads language if not already loaded.
+    // Loads language if not already loaded.
     loadPrismLanguage(languageExtension.extend)
 
     Prism.languages[languageExtension.language] = Prism.languages.extend(
@@ -66,7 +66,7 @@ let loadLanguageExtension = languageExtension => {
 }
 
 const isObjectAndNotArray = extension =>
-  //Array is an Object in javascript
+  // Array is an Object in javascript
   !Array.isArray(extension) && typeof extension === `object`
 
 const containsMandatoryProperties = languageExtension => {

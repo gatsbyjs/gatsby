@@ -1,0 +1,5999 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[gatsby-source-wordpress] Run tests on develop build Gatsby image processing transforms inline-html images properly 1`] = `
+"<p>Wysiwyh Editor Field test content.</p>
+<p>&nbsp;</p>
+<h1>H1</h1>
+<p><span class=\\"alignnone size-medium wp-image-7756 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:300px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:66.66666666666667%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAQBAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAABAP/aAAwDAQACEAMQAAAB1akIFoSC/8QAGxABAAEFAQAAAAAAAAAAAAAAAgABAxAREhT/2gAIAQEAAQUC6Ed4E+k4VZuf/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAEDAQE/AYiI/8QAFhEAAwAAAAAAAAAAAAAAAAAAAAER/9oACAECAQE/Aays/8QAGBAAAgMAAAAAAAAAAAAAAAAAAAEgMTL/2gAIAQEABj8CsZlw/8QAGhABAQACAwAAAAAAAAAAAAAAAQARYSExUf/aAAgBAQABPyHTmwcodW0iwB4xwL//2gAMAwEAAgADAAAAEIjv/8QAFREBAQAAAAAAAAAAAAAAAAAAAGH/2gAIAQMBAT8QUn//xAAWEQEBAQAAAAAAAAAAAAAAAAAAEWH/2gAIAQIBAT8Qg0f/xAAcEAEAAgMAAwAAAAAAAAAAAAABABEhQYFRkeH/2gAIAQEAAT8QqPvMgTBCD2VhWIW2GYwdvY4ANh5j7vc//9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\"/><img sizes=\\"(max-width: 300px) 100vw, 300px\\" srcSet=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 300px) 100vw, 300px\\" srcset=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/ab49a/1001-5616%C3%973744.jpg 75w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/4934c/1001-5616%C3%973744.jpg 150w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg 300w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/12ba2/1001-5616%C3%973744.jpg 450w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/2a8be/1001-5616%C3%973744.jpg 600w,
+/static/72f3bac64c682555d9ad2ecceaffe51e/bb9a8/1001-5616%C3%973744.jpg 2560w\\" src=\\"/static/72f3bac64c682555d9ad2ecceaffe51e/37e03/1001-5616%C3%973744.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span> <span class=\\"alignnone size-medium wp-image-7752 inline-gatsby-image-wrapper gatsby-image-wrapper\\" style=\\"position:relative;overflow:hidden;max-width:100%;width:200px\\" data-reactroot=\\"\\"><span aria-hidden=\\"true\\" style=\\"width:100%;padding-bottom:150%\\"></span><img aria-hidden=\\"true\\" src=\\"data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAeABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAEEAwL/xAAXAQEBAQEAAAAAAAAAAAAAAAACAAED/9oADAMBAAIQAxAAAAGmabjkkYDOmzcpCgs//8QAGxAAAgIDAQAAAAAAAAAAAAAAAQIAEQMQEiH/2gAIAQEAAQUCOaZHsWYX9LXoBrdZyZZhbX//xAAWEQADAAAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8BcP/EABURAQEAAAAAAAAAAAAAAAAAABEg/9oACAECAQE/ASP/xAAYEAACAwAAAAAAAAAAAAAAAAAAIQEgMf/aAAgBAQAGPwIUCphKyv8A/8QAHBAAAwEAAgMAAAAAAAAAAAAAAAERITFRQWFx/9oACAEBAAE/IYJIkOHb7HbWGLESQqYkrpP4UcvfI9bETNOT/9oADAMBAAIAAwAAABD43Q3/xAAXEQADAQAAAAAAAAAAAAAAAAAAAREQ/9oACAEDAQE/EMiIP//EABcRAQEBAQAAAAAAAAAAAAAAAAARAUH/2gAIAQIBAT8QzXUVX//EAB8QAQADAAEEAwAAAAAAAAAAAAEAESFBMWFxoVGBkf/aAAgBAQABPxBAroK1PiIW4oHq8Swv8quOpdXF9peDkwGLLfUFQidYrNwov6qJO/lHYvNRmFNb+qm7HtvM/9k=\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition-delay:500ms\\"/><picture><source srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\"/><img sizes=\\"(max-width: 200px) 100vw, 200px\\" srcSet=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg\\" alt=\\"\\" loading=\\"eager\\" style=\\"position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition:opacity 500ms\\"/></picture><noscript><picture><source srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" /><img loading=\\"eager\\" sizes=\\"(max-width: 200px) 100vw, 200px\\" srcset=\\"/static/512103aa3c375068e3cb8426fe74d180/76112/1003-1181%C3%971772.jpg 50w,
+/static/512103aa3c375068e3cb8426fe74d180/d634c/1003-1181%C3%971772.jpg 100w,
+/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg 200w,
+/static/512103aa3c375068e3cb8426fe74d180/37e03/1003-1181%C3%971772.jpg 300w,
+/static/512103aa3c375068e3cb8426fe74d180/27ec1/1003-1181%C3%971772.jpg 400w,
+/static/512103aa3c375068e3cb8426fe74d180/345c8/1003-1181%C3%971772.jpg 1181w\\" src=\\"/static/512103aa3c375068e3cb8426fe74d180/16d62/1003-1181%C3%971772.jpg\\" alt=\\"\\" style=\\"position:absolute;top:0;left:0;opacity:1;width:100%;height:100%;object-fit:cover;object-position:center\\"/></picture></noscript></span></p>
+"
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves correct number of nodes 1`] = `
+Array [
+  Object {
+    "id": "cG9zdDo3NzQ4",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1002-4312x2868-1-scaled.jpg",
+  },
+  Object {
+    "id": "cG9zdDo3NzQw",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/file-sample_1MB.doc",
+  },
+  Object {
+    "id": "cG9zdDo3NzU2",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1001-5616x3744-1-scaled.jpg",
+  },
+  Object {
+    "id": "cG9zdDo3NzUy",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1003-1181x1772-1.jpg",
+  },
+  Object {
+    "id": "cG9zdDoxMDQ0NQ==",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.doc",
+  },
+  Object {
+    "id": "cG9zdDoxMDQzOQ==",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.pdf",
+  },
+  Object {
+    "id": "cG9zdDozNjI=",
+    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+  },
+]
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves menus 1`] = `
+Object {
+  "data": Object {
+    "allWpMenu": Object {
+      "nodes": Array [
+        Object {
+          "count": 4,
+          "databaseId": 17,
+          "id": "dGVybToxNw==",
+          "menuItems": Object {
+            "nodes": Array [
+              Object {
+                "childItems": Object {
+                  "nodes": Array [],
+                },
+                "databaseId": 564,
+                "id": "cG9zdDo1NjQ=",
+                "label": "Activity",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "/activity/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [
+                    Object {
+                      "childItems": Object {
+                        "nodes": Array [
+                          Object {
+                            "label": "test custom link",
+                            "url": "https://google.com",
+                          },
+                        ],
+                      },
+                      "connectedNode": Object {
+                        "node": Object {
+                          "featuredImage": Object {
+                            "node": Object {
+                              "title": "84-1000×1000",
+                            },
+                          },
+                          "title": "Hello world!",
+                          "uri": "/2020/02/25/hello-world/",
+                        },
+                      },
+                      "databaseId": 566,
+                      "id": "cG9zdDo1NjY=",
+                      "label": "Hello world!",
+                    },
+                  ],
+                },
+                "databaseId": 565,
+                "id": "cG9zdDo1NjU=",
+                "label": "Sample Page",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "/sample-page/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [
+                    Object {
+                      "childItems": Object {
+                        "nodes": Array [],
+                      },
+                      "connectedNode": null,
+                      "databaseId": 567,
+                      "id": "cG9zdDo1Njc=",
+                      "label": "test custom link",
+                    },
+                  ],
+                },
+                "databaseId": 566,
+                "id": "cG9zdDo1NjY=",
+                "label": "Hello world!",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "/2020/02/25/hello-world/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [],
+                },
+                "databaseId": 567,
+                "id": "cG9zdDo1Njc=",
+                "label": "test custom link",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "https://google.com",
+              },
+            ],
+          },
+          "name": "main menu",
+        },
+      ],
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves pages 1`] = `
+Object {
+  "data": Object {
+    "allWpPage": Object {
+      "nodes": Array [
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "Tyler",
+            },
+          },
+          "title": "ACF Field Test",
+          "uri": "/acf-field-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+      ],
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves posts 1`] = `
+Object {
+  "data": Object {
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": Object {
+            "node": Object {
+              "altText": "",
+              "sourceUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+            },
+          },
+          "title": "Hello world!",
+        },
+      ],
+    },
+    "testPost": Object {
+      "title": "Hello world!",
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves root fields 1`] = `
+Object {
+  "data": Object {
+    "wp": Object {
+      "allSettings": Object {
+        "discussionSettingsDefaultCommentStatus": "open",
+        "discussionSettingsDefaultPingStatus": "open",
+        "generalSettingsDateFormat": "F j, Y",
+        "generalSettingsDescription": "Just another WordPress site",
+        "generalSettingsLanguage": "en_US",
+        "generalSettingsStartOfWeek": 1,
+        "generalSettingsTimeFormat": "g:i a",
+        "generalSettingsTimezone": "",
+        "generalSettingsTitle": "Automated testing for Gatsby source WordPress V4",
+        "generalSettingsUrl": "https://gatsbyinttests.wpengine.com",
+        "readingSettingsPostsPerPage": 10,
+        "writingSettingsDefaultCategory": 23,
+        "writingSettingsDefaultPostFormat": "",
+        "writingSettingsUseSmilies": true,
+      },
+      "nodeType": null,
+      "writingSettings": Object {
+        "defaultCategory": 23,
+        "defaultPostFormat": "0",
+        "useSmilies": true,
+      },
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves users 1`] = `
+Object {
+  "data": Object {
+    "allWpUser": Object {
+      "nodes": Array [
+        Object {
+          "databaseId": 1,
+          "name": "Tyler",
+          "pages": Object {
+            "nodes": Array [
+              Object {
+                "title": "ACF Field Test",
+              },
+            ],
+          },
+          "posts": Object {
+            "nodes": Array [
+              Object {
+                "title": "Hello world!",
+              },
+            ],
+          },
+        },
+      ],
+    },
+    "testUser": Object {
+      "firstName": "Tyler",
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build filtered type definitions Date field resolver is working 1`] = `
+Object {
+  "data": Object {
+    "wpPage": null,
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build schema integrity hasn't altered the local Gatsby schema 1`] = `
+Array [
+  Object {
+    "fields": Array [
+      "allSettings",
+      "discussionSettings",
+      "generalSettings",
+      "readingSettings",
+      "schemaMd5",
+      "viewer",
+      "wpGatsby",
+      "writingSettings",
+      "nodeType",
+      "id",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "Wp",
+  },
+  Object {
+    "fields": Array [
+      "city",
+      "country",
+      "countryShort",
+      "latitude",
+      "longitude",
+      "placeId",
+      "postCode",
+      "state",
+      "stateShort",
+      "streetAddress",
+      "streetName",
+      "streetNumber",
+      "zoom",
+    ],
+    "name": "WpACF_GoogleMap",
+  },
+  Object {
+    "fields": null,
+    "name": "WpACF_GoogleMapFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "target",
+      "title",
+      "url",
+    ],
+    "name": "WpACF_Link",
+  },
+  Object {
+    "fields": null,
+    "name": "WpACF_LinkFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "default",
+      "extraAttr",
+      "forceDefault",
+      "foundAvatar",
+      "height",
+      "rating",
+      "scheme",
+      "size",
+      "url",
+      "width",
+    ],
+    "name": "WpAvatar",
+  },
+  Object {
+    "fields": null,
+    "name": "WpAvatarFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "ancestors",
+      "wpChildren",
+      "contentNodes",
+      "count",
+      "databaseId",
+      "description",
+      "id",
+      "link",
+      "name",
+      "wpParent",
+      "parentDatabaseId",
+      "parentId",
+      "posts",
+      "slug",
+      "taxonomy",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpCategory",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpCategoryConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpCategoryEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpCategoryGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategorySortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCategoryToAncestorsCategoryConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToAncestorsCategoryConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCategoryToCategoryConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToCategoryConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCategoryToContentNodeConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpCategoryToParentCategoryConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToParentCategoryConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCategoryToPostConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpCategoryToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCategoryToTaxonomyConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "agent",
+      "approved",
+      "author",
+      "authorIp",
+      "commentedOn",
+      "content",
+      "date",
+      "dateGmt",
+      "id",
+      "karma",
+      "wpParent",
+      "parentDatabaseId",
+      "parentId",
+      "replies",
+      "type",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpComment",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpCommentEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpCommentGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpCommentToCommentConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpCommentToCommenterConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToCommenterConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpCommentToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToContentNodeConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpCommentToParentCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentToParentCommentConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "databaseId",
+      "id",
+      "name",
+      "url",
+    ],
+    "name": "WpCommenter",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommenterFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpConnection",
+  },
+  Object {
+    "fields": Array [
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "guid",
+      "id",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "slug",
+      "status",
+      "template",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpContentNode",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpContentNodeEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpContentNodeGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeSortInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpContentNodeToContentTypeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeToContentTypeConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpContentNodeToEditLastConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentNodeToEditLastConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "lockTimestamp",
+      "node",
+    ],
+    "name": "WpContentNodeToEditLockConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "WpContentTemplate",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTemplateFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "archivePath",
+      "canExport",
+      "connectedTaxonomies",
+      "contentNodes",
+      "deleteWithUser",
+      "description",
+      "excludeFromSearch",
+      "graphqlPluralName",
+      "graphqlSingleName",
+      "hasArchive",
+      "hierarchical",
+      "id",
+      "isFrontPage",
+      "isPostsPage",
+      "label",
+      "labels",
+      "menuIcon",
+      "menuPosition",
+      "name",
+      "public",
+      "publiclyQueryable",
+      "restBase",
+      "restControllerClass",
+      "showInAdminBar",
+      "showInGraphql",
+      "showInMenu",
+      "showInNavMenus",
+      "showInRest",
+      "showUi",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpContentType",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpContentTypeConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpContentTypeEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpContentTypeGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpContentTypeToContentNodeConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpContentTypeToTaxonomyConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpContentTypeToTaxonomyConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "WpCoverTemplate",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "WpDefaultTemplate",
+  },
+  Object {
+    "fields": Array [
+      "defaultCommentStatus",
+      "defaultPingStatus",
+    ],
+    "name": "WpDiscussionSettings",
+  },
+  Object {
+    "fields": null,
+    "name": "WpDiscussionSettingsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "WpFullWidthTemplate",
+  },
+  Object {
+    "fields": Array [
+      "dateFormat",
+      "description",
+      "email",
+      "language",
+      "startOfWeek",
+      "timeFormat",
+      "timezone",
+      "title",
+      "url",
+    ],
+    "name": "WpGeneralSettings",
+  },
+  Object {
+    "fields": null,
+    "name": "WpGeneralSettingsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpGroupConnection",
+  },
+  Object {
+    "fields": Array [
+      "ancestors",
+      "wpChildren",
+      "wpParent",
+      "parentDatabaseId",
+      "parentId",
+    ],
+    "name": "WpHierarchicalContentNode",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeAncestorsConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToContentNodeChildrenConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpHierarchicalContentNodeToParentContentNodeConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "parentDatabaseId",
+      "parentId",
+    ],
+    "name": "WpHierarchicalTermNode",
+  },
+  Object {
+    "fields": Array [
+      "file",
+      "height",
+      "meta",
+      "sizes",
+      "width",
+    ],
+    "name": "WpMediaDetails",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaDetailsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "altText",
+      "ancestors",
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "caption",
+      "wpChildren",
+      "commentCount",
+      "commentStatus",
+      "comments",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "description",
+      "desiredSlug",
+      "enclosure",
+      "fileSize",
+      "guid",
+      "id",
+      "lastEditedBy",
+      "link",
+      "mediaDetails",
+      "mediaItemUrl",
+      "mediaType",
+      "mimeType",
+      "modified",
+      "modifiedGmt",
+      "wpParent",
+      "parentDatabaseId",
+      "parentId",
+      "sizes",
+      "slug",
+      "sourceUrl",
+      "srcSet",
+      "status",
+      "template",
+      "title",
+      "uri",
+      "nodeType",
+      "localFile",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpMediaItem",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpMediaItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpMediaItemEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpMediaItemGroupConnection",
+  },
+  Object {
+    "fields": Array [
+      "aperture",
+      "camera",
+      "caption",
+      "copyright",
+      "createdTimestamp",
+      "credit",
+      "focalLength",
+      "iso",
+      "keywords",
+      "orientation",
+      "shutterSpeed",
+      "title",
+    ],
+    "name": "WpMediaItemMeta",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemMetaFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpMediaItemToCommentConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaItemToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "file",
+      "fileSize",
+      "height",
+      "mimeType",
+      "name",
+      "sourceUrl",
+      "width",
+    ],
+    "name": "WpMediaSize",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaSizeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMediaSizeFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "count",
+      "databaseId",
+      "id",
+      "locations",
+      "menuItems",
+      "name",
+      "slug",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpMenu",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpMenuConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpMenuEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpMenuGroupConnection",
+  },
+  Object {
+    "fields": Array [
+      "childItems",
+      "connectedNode",
+      "cssClasses",
+      "databaseId",
+      "description",
+      "id",
+      "label",
+      "linkRelationship",
+      "locations",
+      "menu",
+      "order",
+      "parentDatabaseId",
+      "parentId",
+      "path",
+      "target",
+      "title",
+      "url",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpMenuItem",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpMenuItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpMenuItemEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpMenuItemGroupConnection",
+  },
+  Object {
+    "fields": Array [
+      "databaseId",
+      "id",
+      "uri",
+    ],
+    "name": "WpMenuItemLinkable",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemLinkableFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemSortInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpMenuItemToMenuConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemToMenuConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpMenuItemToMenuItemConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemToMenuItemConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuItemToMenuItemLinkableConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuLocationEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuLocationEnumQueryOperatorInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpMenuToMenuItemConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpMenuToMenuItemConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "id",
+    ],
+    "name": "WpNode",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+    ],
+    "name": "WpNodeWithAuthor",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpNodeWithAuthorToUserConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithAuthorToUserConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "commentCount",
+      "commentStatus",
+    ],
+    "name": "WpNodeWithComments",
+  },
+  Object {
+    "fields": Array [
+      "content",
+    ],
+    "name": "WpNodeWithContentEditor",
+  },
+  Object {
+    "fields": Array [
+      "excerpt",
+    ],
+    "name": "WpNodeWithExcerpt",
+  },
+  Object {
+    "fields": Array [
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+    ],
+    "name": "WpNodeWithFeaturedImage",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpNodeWithFeaturedImageToMediaItemConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "menuOrder",
+    ],
+    "name": "WpNodeWithPageAttributes",
+  },
+  Object {
+    "fields": Array [
+      "isRevision",
+    ],
+    "name": "WpNodeWithRevisions",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpNodeWithRevisionsToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "template",
+    ],
+    "name": "WpNodeWithTemplate",
+  },
+  Object {
+    "fields": Array [
+      "title",
+    ],
+    "name": "WpNodeWithTitle",
+  },
+  Object {
+    "fields": Array [
+      "pingStatus",
+      "pinged",
+      "toPing",
+    ],
+    "name": "WpNodeWithTrackbacks",
+  },
+  Object {
+    "fields": Array [
+      "acfPageFields",
+      "ancestors",
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "wpChildren",
+      "commentCount",
+      "commentStatus",
+      "comments",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isFrontPage",
+      "isPostsPage",
+      "isRevision",
+      "lastEditedBy",
+      "link",
+      "menuOrder",
+      "modified",
+      "modifiedGmt",
+      "wpParent",
+      "parentDatabaseId",
+      "parentId",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpPage",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpPageConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpPageEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPageFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPageFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPageFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpPageGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPageSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPageToCommentConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPageToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "buttonGroupField",
+      "checkboxField",
+      "colorPickerField",
+      "datePickerField",
+      "dateTimePickerField",
+      "doc",
+      "fieldGroupName",
+      "fileField",
+      "flexibleContentField",
+      "galleryField",
+      "googleMapField",
+      "groupField",
+      "imageField",
+      "linkField",
+      "mov",
+      "mp4",
+      "oembedField",
+      "pageLinkField",
+      "pdf",
+      "postObjectField",
+      "radioButtonField",
+      "rangeField",
+      "relationshipField",
+      "repeaterField",
+      "selectField",
+      "taxonomyField",
+      "textAreaField",
+      "textField",
+      "timePicker",
+      "trueFalseField",
+      "userField",
+      "wysiwygEditorField",
+    ],
+    "name": "WpPage_Acfpagefields",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_AcfpagefieldsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_FlexibleContentField",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "flexImage",
+      "flexRelationship",
+      "flexRepeater",
+      "flexTitle",
+    ],
+    "name": "WpPage_Acfpagefields_FlexibleContentField_FlexLayout1",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "flexRepeaterRelationship",
+      "flexRepeaterTitle",
+    ],
+    "name": "WpPage_Acfpagefields_FlexibleContentField_FlexLayout1_flexRepeater",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+    ],
+    "name": "WpPage_Acfpagefields_GroupField",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_GroupFieldFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "repeaterFlex",
+    ],
+    "name": "WpPage_Acfpagefields_repeaterField",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_repeaterFieldFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_repeaterFieldFilterListInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPage_Acfpagefields_repeaterField_RepeaterFlex",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "repeaterFlexRelationship",
+    ],
+    "name": "WpPage_Acfpagefields_repeaterField_RepeaterFlex_RepeaterFlexRelationshipLayout",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "repeaterFlexTitle",
+    ],
+    "name": "WpPage_Acfpagefields_repeaterField_RepeaterFlex_RepeaterFlexTitleLayout",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "categories",
+      "commentCount",
+      "commentStatus",
+      "comments",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "enclosure",
+      "excerpt",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isRevision",
+      "isSticky",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "pingStatus",
+      "pinged",
+      "postFormats",
+      "slug",
+      "status",
+      "tags",
+      "template",
+      "terms",
+      "title",
+      "toPing",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpPost",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpPostConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpPostEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "contentNodes",
+      "count",
+      "databaseId",
+      "description",
+      "id",
+      "link",
+      "name",
+      "posts",
+      "slug",
+      "taxonomy",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpPostFormat",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpPostFormatConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpPostFormatEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpPostFormatGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostFormatToContentNodeConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostFormatToPostConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpPostFormatToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostFormatToTaxonomyConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpPostGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostObjectUnion",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostToCategoryConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToCategoryConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostToCommentConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostToPostFormatConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToPostFormatConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostToTagConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToTagConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpPostToTermNodeConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostToTermNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "addNew",
+      "addNewItem",
+      "allItems",
+      "archives",
+      "attributes",
+      "editItem",
+      "featuredImage",
+      "filterItemsList",
+      "insertIntoItem",
+      "itemsList",
+      "itemsListNavigation",
+      "menuName",
+      "name",
+      "newItem",
+      "notFound",
+      "notFoundInTrash",
+      "parentItemColon",
+      "removeFeaturedImage",
+      "searchItems",
+      "setFeaturedImage",
+      "singularName",
+      "uploadedToThisItem",
+      "useFeaturedImage",
+      "viewItem",
+      "viewItems",
+    ],
+    "name": "WpPostTypeLabelDetails",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostTypeLabelDetailsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "postsPerPage",
+    ],
+    "name": "WpReadingSettings",
+  },
+  Object {
+    "fields": null,
+    "name": "WpReadingSettingsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "discussionSettingsDefaultCommentStatus",
+      "discussionSettingsDefaultPingStatus",
+      "generalSettingsDateFormat",
+      "generalSettingsDescription",
+      "generalSettingsEmail",
+      "generalSettingsLanguage",
+      "generalSettingsStartOfWeek",
+      "generalSettingsTimeFormat",
+      "generalSettingsTimezone",
+      "generalSettingsTitle",
+      "generalSettingsUrl",
+      "readingSettingsPostsPerPage",
+      "writingSettingsDefaultCategory",
+      "writingSettingsDefaultPostFormat",
+      "writingSettingsUseSmilies",
+    ],
+    "name": "WpSettings",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSettingsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSortInput",
+  },
+  Object {
+    "fields": Array [
+      "contentNodes",
+      "count",
+      "databaseId",
+      "description",
+      "id",
+      "link",
+      "name",
+      "posts",
+      "slug",
+      "taxonomy",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpTag",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpTagConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpTagEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpTagGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTagToContentNodeConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagToContentNodeConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTagToPostConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "WpTagToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTagToTaxonomyConnectionEdgeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "archivePath",
+      "connectedContentTypes",
+      "description",
+      "graphqlPluralName",
+      "graphqlSingleName",
+      "hierarchical",
+      "id",
+      "label",
+      "name",
+      "public",
+      "restBase",
+      "restControllerClass",
+      "showCloud",
+      "showInAdminColumn",
+      "showInGraphql",
+      "showInMenu",
+      "showInNavMenus",
+      "showInQuickEdit",
+      "showInRest",
+      "showUi",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpTaxonomy",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpTaxonomyConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpTaxonomyEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomyFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomyFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomyFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpTaxonomyGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomySortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpTaxonomyToContentTypeConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomyToContentTypeConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "count",
+      "databaseId",
+      "description",
+      "id",
+      "link",
+      "name",
+      "slug",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpTermNode",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpTermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpTermNodeEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTermNodeFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTermNodeFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTermNodeFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpTermNodeGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTermNodeSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTermObjectUnion",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "enclosure",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpTranslationFilterTest",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpTranslationFilterTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpTranslationFilterTestEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTranslationFilterTestFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTranslationFilterTestFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTranslationFilterTestFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpTranslationFilterTestGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTranslationFilterTestSortInput",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "enclosure",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpTypeLimit0Test",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpTypeLimit0TestConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpTypeLimit0TestEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimit0TestFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimit0TestFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimit0TestFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpTypeLimit0TestGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimit0TestSortInput",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "enclosure",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpTypeLimitTest",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpTypeLimitTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpTypeLimitTestEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimitTestFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimitTestFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimitTestFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpTypeLimitTestGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTypeLimitTestSortInput",
+  },
+  Object {
+    "fields": Array [
+      "id",
+      "uri",
+    ],
+    "name": "WpUniformResourceIdentifiable",
+  },
+  Object {
+    "fields": Array [
+      "avatar",
+      "capabilities",
+      "comments",
+      "databaseId",
+      "description",
+      "firstName",
+      "id",
+      "lastName",
+      "locale",
+      "name",
+      "nicename",
+      "nickname",
+      "pages",
+      "posts",
+      "roles",
+      "slug",
+      "translationFilterTests",
+      "typeLimit0Tests",
+      "typeLimitTests",
+      "uri",
+      "url",
+      "username",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpUser",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpUserConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpUserEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpUserGroupConnection",
+  },
+  Object {
+    "fields": Array [
+      "capabilities",
+      "displayName",
+      "id",
+      "name",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpUserRole",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpUserRoleConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpUserRoleEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserRoleFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserRoleFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserRoleFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpUserRoleGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserRoleSortInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserSortInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToCommentConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToCommentConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToPageConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToPageConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToPostConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToPostConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToTranslationFilterTestConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToTranslationFilterTestConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToTypeLimit0TestConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToTypeLimit0TestConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToTypeLimitTestConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToTypeLimitTestConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "nodes",
+    ],
+    "name": "WpUserToUserRoleConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpUserToUserRoleConnectionFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "arePrettyPermalinksEnabled",
+      "isPreviewFrontendOnline",
+    ],
+    "name": "WpWPGatsby",
+  },
+  Object {
+    "fields": null,
+    "name": "WpWPGatsbyFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "defaultCategory",
+      "defaultPostFormat",
+      "useSmilies",
+    ],
+    "name": "WpWritingSettings",
+  },
+  Object {
+    "fields": null,
+    "name": "WpWritingSettingsFilterInput",
+  },
+]
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build schema integrity hasn't altered the remote WPGraphQL schema 1`] = `
+Array [
+  Object {
+    "fields": Array [
+      "city",
+      "country",
+      "countryShort",
+      "latitude",
+      "longitude",
+      "placeId",
+      "postCode",
+      "state",
+      "stateShort",
+      "streetAddress",
+      "streetName",
+      "streetNumber",
+      "zoom",
+    ],
+    "name": "ACF_GoogleMap",
+  },
+  Object {
+    "fields": Array [
+      "target",
+      "title",
+      "url",
+    ],
+    "name": "ACF_Link",
+  },
+  Object {
+    "fields": Array [
+      "actionType",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "preview",
+      "previewData",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "referencedNodeGlobalRelayID",
+      "referencedNodeID",
+      "referencedNodePluralName",
+      "referencedNodeSingularName",
+      "referencedNodeStatus",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+    ],
+    "name": "ActionMonitorAction",
+  },
+  Object {
+    "fields": null,
+    "name": "ActionMonitorActionIdType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "ActionMonitorActionToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "default",
+      "extraAttr",
+      "forceDefault",
+      "foundAvatar",
+      "height",
+      "isRestricted",
+      "rating",
+      "scheme",
+      "size",
+      "url",
+      "width",
+    ],
+    "name": "Avatar",
+  },
+  Object {
+    "fields": null,
+    "name": "AvatarRatingEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "Boolean",
+  },
+  Object {
+    "fields": Array [
+      "ancestors",
+      "children",
+      "contentNodes",
+      "count",
+      "databaseId",
+      "description",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "id",
+      "isRestricted",
+      "link",
+      "name",
+      "parent",
+      "parentDatabaseId",
+      "parentId",
+      "posts",
+      "slug",
+      "taxonomy",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+    ],
+    "name": "Category",
+  },
+  Object {
+    "fields": null,
+    "name": "CategoryIdType",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "CategoryToAncestorsCategoryConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CategoryToAncestorsCategoryConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "CategoryToCategoryConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CategoryToCategoryConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "CategoryToCategoryConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "CategoryToContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CategoryToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "CategoryToContentNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "CategoryToParentCategoryConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "CategoryToPostConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CategoryToPostConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "CategoryToPostConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "CategoryToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "agent",
+      "approved",
+      "author",
+      "authorIp",
+      "commentedOn",
+      "content",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "id",
+      "isRestricted",
+      "karma",
+      "parent",
+      "parentDatabaseId",
+      "parentId",
+      "replies",
+      "type",
+    ],
+    "name": "Comment",
+  },
+  Object {
+    "fields": Array [
+      "databaseId",
+      "email",
+      "id",
+      "isRestricted",
+      "name",
+      "url",
+    ],
+    "name": "CommentAuthor",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "CommentToCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "CommentToCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "CommentToCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "CommentToCommenterConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "CommentToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "CommentToParentCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "CommentToParentCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "databaseId",
+      "email",
+      "id",
+      "isRestricted",
+      "name",
+      "url",
+    ],
+    "name": "Commenter",
+  },
+  Object {
+    "fields": null,
+    "name": "CommentsConnectionOrderbyEnum",
+  },
+  Object {
+    "fields": Array [
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "slug",
+      "status",
+      "template",
+      "uri",
+    ],
+    "name": "ContentNode",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentNodeIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "ContentNodeToContentTypeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "ContentNodeToEditLastConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "lockTimestamp",
+      "node",
+    ],
+    "name": "ContentNodeToEditLockConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "ContentNodeToEnqueuedScriptConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ContentNodeToEnqueuedScriptConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "ContentNodeToEnqueuedStylesheetConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ContentNodeToEnqueuedStylesheetConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentRevisionUnion",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "ContentTemplate",
+  },
+  Object {
+    "fields": Array [
+      "archivePath",
+      "canExport",
+      "connectedTaxonomies",
+      "contentNodes",
+      "deleteWithUser",
+      "description",
+      "excludeFromSearch",
+      "graphqlPluralName",
+      "graphqlSingleName",
+      "hasArchive",
+      "hierarchical",
+      "id",
+      "isFrontPage",
+      "isPostsPage",
+      "isRestricted",
+      "label",
+      "labels",
+      "menuIcon",
+      "menuPosition",
+      "name",
+      "public",
+      "publiclyQueryable",
+      "restBase",
+      "restControllerClass",
+      "showInAdminBar",
+      "showInGraphql",
+      "showInMenu",
+      "showInNavMenus",
+      "showInRest",
+      "showUi",
+      "uri",
+    ],
+    "name": "ContentType",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentTypeEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentTypeIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "ContentTypeToContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ContentTypeToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "ContentTypeToContentNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "ContentTypeToTaxonomyConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ContentTypeToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "CoverTemplate",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateActionMonitorActionInput",
+  },
+  Object {
+    "fields": Array [
+      "actionMonitorAction",
+      "clientMutationId",
+    ],
+    "name": "CreateActionMonitorActionPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateCategoryInput",
+  },
+  Object {
+    "fields": Array [
+      "category",
+      "clientMutationId",
+    ],
+    "name": "CreateCategoryPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateCommentInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "comment",
+      "success",
+    ],
+    "name": "CreateCommentPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateMediaItemInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "mediaItem",
+    ],
+    "name": "CreateMediaItemPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreatePageInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "page",
+    ],
+    "name": "CreatePagePayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreatePostFormatInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "postFormat",
+    ],
+    "name": "CreatePostFormatPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreatePostInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "post",
+    ],
+    "name": "CreatePostPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateTagInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "tag",
+    ],
+    "name": "CreateTagPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateTranslationFilterTestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "translationFilterTest",
+    ],
+    "name": "CreateTranslationFilterTestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateTypeLimit0TestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "typeLimit0Test",
+    ],
+    "name": "CreateTypeLimit0TestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateTypeLimitTestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "typeLimitTest",
+    ],
+    "name": "CreateTypeLimitTestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "CreateUserInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "user",
+    ],
+    "name": "CreateUserPayload",
+  },
+  Object {
+    "fields": Array [
+      "databaseId",
+    ],
+    "name": "DatabaseIdentifier",
+  },
+  Object {
+    "fields": null,
+    "name": "DateInput",
+  },
+  Object {
+    "fields": null,
+    "name": "DateQueryInput",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "DefaultTemplate",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteActionMonitorActionInput",
+  },
+  Object {
+    "fields": Array [
+      "actionMonitorAction",
+      "clientMutationId",
+      "deletedId",
+    ],
+    "name": "DeleteActionMonitorActionPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteCategoryInput",
+  },
+  Object {
+    "fields": Array [
+      "category",
+      "clientMutationId",
+      "deletedId",
+    ],
+    "name": "DeleteCategoryPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteCommentInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "comment",
+      "deletedId",
+    ],
+    "name": "DeleteCommentPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteMediaItemInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "mediaItem",
+    ],
+    "name": "DeleteMediaItemPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeletePageInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "page",
+    ],
+    "name": "DeletePagePayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeletePostFormatInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "postFormat",
+    ],
+    "name": "DeletePostFormatPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeletePostInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "post",
+    ],
+    "name": "DeletePostPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteTagInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "tag",
+    ],
+    "name": "DeleteTagPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteTranslationFilterTestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "translationFilterTest",
+    ],
+    "name": "DeleteTranslationFilterTestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteTypeLimit0TestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "typeLimit0Test",
+    ],
+    "name": "DeleteTypeLimit0TestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteTypeLimitTestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "typeLimitTest",
+    ],
+    "name": "DeleteTypeLimitTestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "DeleteUserInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "deletedId",
+      "user",
+    ],
+    "name": "DeleteUserPayload",
+  },
+  Object {
+    "fields": Array [
+      "defaultCommentStatus",
+      "defaultPingStatus",
+    ],
+    "name": "DiscussionSettings",
+  },
+  Object {
+    "fields": Array [
+      "args",
+      "dependencies",
+      "extra",
+      "handle",
+      "id",
+      "src",
+      "version",
+    ],
+    "name": "EnqueuedAsset",
+  },
+  Object {
+    "fields": Array [
+      "args",
+      "dependencies",
+      "extra",
+      "handle",
+      "id",
+      "src",
+      "version",
+    ],
+    "name": "EnqueuedScript",
+  },
+  Object {
+    "fields": Array [
+      "args",
+      "dependencies",
+      "extra",
+      "handle",
+      "id",
+      "src",
+      "version",
+    ],
+    "name": "EnqueuedStylesheet",
+  },
+  Object {
+    "fields": null,
+    "name": "Float",
+  },
+  Object {
+    "fields": Array [
+      "templateName",
+    ],
+    "name": "FullWidthTemplate",
+  },
+  Object {
+    "fields": Array [
+      "id",
+      "isDraft",
+      "modified",
+      "parentDatabaseId",
+      "previewDatabaseId",
+      "remoteUrl",
+      "singleName",
+      "userDatabaseId",
+    ],
+    "name": "GatsbyPreviewData",
+  },
+  Object {
+    "fields": Array [
+      "dateFormat",
+      "description",
+      "email",
+      "language",
+      "startOfWeek",
+      "timeFormat",
+      "timezone",
+      "title",
+      "url",
+    ],
+    "name": "GeneralSettings",
+  },
+  Object {
+    "fields": Array [
+      "ancestors",
+      "children",
+      "parent",
+      "parentDatabaseId",
+      "parentId",
+    ],
+    "name": "HierarchicalContentNode",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "HierarchicalContentNodeToContentNodeAncestorsConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "HierarchicalContentNodeToContentNodeAncestorsConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "HierarchicalContentNodeToContentNodeChildrenConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "HierarchicalContentNodeToContentNodeChildrenConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "HierarchicalContentNodeToParentContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "parentDatabaseId",
+      "parentId",
+    ],
+    "name": "HierarchicalTermNode",
+  },
+  Object {
+    "fields": null,
+    "name": "ID",
+  },
+  Object {
+    "fields": null,
+    "name": "Int",
+  },
+  Object {
+    "fields": Array [
+      "file",
+      "height",
+      "meta",
+      "sizes",
+      "width",
+    ],
+    "name": "MediaDetails",
+  },
+  Object {
+    "fields": Array [
+      "altText",
+      "ancestors",
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "caption",
+      "children",
+      "commentCount",
+      "commentStatus",
+      "comments",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "description",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "fileSize",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "lastEditedBy",
+      "link",
+      "mediaDetails",
+      "mediaItemUrl",
+      "mediaType",
+      "mimeType",
+      "modified",
+      "modifiedGmt",
+      "parent",
+      "parentDatabaseId",
+      "parentId",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "sizes",
+      "slug",
+      "sourceUrl",
+      "srcSet",
+      "status",
+      "template",
+      "title",
+      "uri",
+    ],
+    "name": "MediaItem",
+  },
+  Object {
+    "fields": null,
+    "name": "MediaItemIdType",
+  },
+  Object {
+    "fields": Array [
+      "aperture",
+      "camera",
+      "caption",
+      "copyright",
+      "createdTimestamp",
+      "credit",
+      "focalLength",
+      "iso",
+      "keywords",
+      "orientation",
+      "shutterSpeed",
+      "title",
+    ],
+    "name": "MediaItemMeta",
+  },
+  Object {
+    "fields": null,
+    "name": "MediaItemSizeEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "MediaItemStatusEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "MediaItemToCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MediaItemToCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "MediaItemToCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "file",
+      "fileSize",
+      "height",
+      "mimeType",
+      "name",
+      "sourceUrl",
+      "width",
+    ],
+    "name": "MediaSize",
+  },
+  Object {
+    "fields": Array [
+      "count",
+      "databaseId",
+      "id",
+      "isRestricted",
+      "locations",
+      "menuItems",
+      "name",
+      "slug",
+    ],
+    "name": "Menu",
+  },
+  Object {
+    "fields": Array [
+      "childItems",
+      "connectedNode",
+      "cssClasses",
+      "databaseId",
+      "description",
+      "id",
+      "isRestricted",
+      "label",
+      "linkRelationship",
+      "locations",
+      "menu",
+      "order",
+      "parentDatabaseId",
+      "parentId",
+      "path",
+      "target",
+      "title",
+      "url",
+    ],
+    "name": "MenuItem",
+  },
+  Object {
+    "fields": Array [
+      "databaseId",
+      "id",
+      "uri",
+    ],
+    "name": "MenuItemLinkable",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuItemNodeIdTypeEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuItemObjectUnion",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "MenuItemToMenuConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "MenuItemToMenuItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MenuItemToMenuItemConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuItemToMenuItemConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "MenuItemToMenuItemLinkableConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuItemsWhereArgs",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuLocationEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuNodeIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "MenuToMenuItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "MenuToMenuItemConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "MenuToMenuItemConnectionWhereArgs",
+  },
+  Object {
+    "fields": null,
+    "name": "MimeTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "id",
+    ],
+    "name": "Node",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+    ],
+    "name": "NodeWithAuthor",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "NodeWithAuthorToUserConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "commentCount",
+      "commentStatus",
+    ],
+    "name": "NodeWithComments",
+  },
+  Object {
+    "fields": Array [
+      "content",
+    ],
+    "name": "NodeWithContentEditor",
+  },
+  Object {
+    "fields": Array [
+      "excerpt",
+    ],
+    "name": "NodeWithExcerpt",
+  },
+  Object {
+    "fields": Array [
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+    ],
+    "name": "NodeWithFeaturedImage",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "NodeWithFeaturedImageToMediaItemConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "menuOrder",
+    ],
+    "name": "NodeWithPageAttributes",
+  },
+  Object {
+    "fields": Array [
+      "isRevision",
+      "revisionOf",
+    ],
+    "name": "NodeWithRevisions",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "NodeWithRevisionsToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "template",
+    ],
+    "name": "NodeWithTemplate",
+  },
+  Object {
+    "fields": Array [
+      "title",
+    ],
+    "name": "NodeWithTitle",
+  },
+  Object {
+    "fields": Array [
+      "pingStatus",
+      "pinged",
+      "toPing",
+    ],
+    "name": "NodeWithTrackbacks",
+  },
+  Object {
+    "fields": null,
+    "name": "OrderEnum",
+  },
+  Object {
+    "fields": Array [
+      "acfPageFields",
+      "ancestors",
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "children",
+      "commentCount",
+      "commentStatus",
+      "comments",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isFrontPage",
+      "isPostsPage",
+      "isPreview",
+      "isRestricted",
+      "isRevision",
+      "lastEditedBy",
+      "link",
+      "menuOrder",
+      "modified",
+      "modifiedGmt",
+      "parent",
+      "parentDatabaseId",
+      "parentId",
+      "preview",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "revisionOf",
+      "revisions",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+    ],
+    "name": "Page",
+  },
+  Object {
+    "fields": null,
+    "name": "PageIdType",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PageToCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PageToCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PageToCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "PageToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PageToRevisionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PageToRevisionConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PageToRevisionConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "buttonGroupField",
+      "checkboxField",
+      "colorPickerField",
+      "datePickerField",
+      "dateTimePickerField",
+      "doc",
+      "fieldGroupName",
+      "fileField",
+      "flexibleContentField",
+      "galleryField",
+      "googleMapField",
+      "groupField",
+      "imageField",
+      "linkField",
+      "mov",
+      "mp4",
+      "oembedField",
+      "pageLinkField",
+      "pdf",
+      "postObjectField",
+      "radioButtonField",
+      "rangeField",
+      "relationshipField",
+      "repeaterField",
+      "selectField",
+      "taxonomyField",
+      "textAreaField",
+      "textField",
+      "timePicker",
+      "trueFalseField",
+      "userField",
+      "wysiwygEditorField",
+    ],
+    "name": "Page_Acfpagefields",
+  },
+  Object {
+    "fields": null,
+    "name": "Page_Acfpagefields_FlexibleContentField",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "flexImage",
+      "flexRelationship",
+      "flexRepeater",
+      "flexTitle",
+    ],
+    "name": "Page_Acfpagefields_FlexibleContentField_FlexLayout1",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "flexRepeaterRelationship",
+      "flexRepeaterTitle",
+    ],
+    "name": "Page_Acfpagefields_FlexibleContentField_FlexLayout1_flexRepeater",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+    ],
+    "name": "Page_Acfpagefields_GroupField",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "repeaterFlex",
+    ],
+    "name": "Page_Acfpagefields_repeaterField",
+  },
+  Object {
+    "fields": null,
+    "name": "Page_Acfpagefields_repeaterField_RepeaterFlex",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "repeaterFlexRelationship",
+    ],
+    "name": "Page_Acfpagefields_repeaterField_RepeaterFlex_RepeaterFlexRelationshipLayout",
+  },
+  Object {
+    "fields": Array [
+      "fieldGroupName",
+      "repeaterFlexTitle",
+    ],
+    "name": "Page_Acfpagefields_repeaterField_RepeaterFlex_RepeaterFlexTitleLayout",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorUri",
+      "description",
+      "id",
+      "isRestricted",
+      "name",
+      "path",
+      "pluginUri",
+      "version",
+    ],
+    "name": "Plugin",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "categories",
+      "commentCount",
+      "commentStatus",
+      "comments",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "excerpt",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "isRevision",
+      "isSticky",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "pingStatus",
+      "pinged",
+      "postFormats",
+      "preview",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "revisionOf",
+      "revisions",
+      "slug",
+      "status",
+      "tags",
+      "template",
+      "terms",
+      "title",
+      "toPing",
+      "uri",
+    ],
+    "name": "Post",
+  },
+  Object {
+    "fields": null,
+    "name": "PostCategoriesInput",
+  },
+  Object {
+    "fields": null,
+    "name": "PostCategoriesNodeInput",
+  },
+  Object {
+    "fields": Array [
+      "contentNodes",
+      "count",
+      "databaseId",
+      "description",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "id",
+      "isRestricted",
+      "link",
+      "name",
+      "posts",
+      "slug",
+      "taxonomy",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+    ],
+    "name": "PostFormat",
+  },
+  Object {
+    "fields": null,
+    "name": "PostFormatIdType",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostFormatToContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostFormatToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostFormatToContentNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostFormatToPostConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostFormatToPostConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostFormatToPostConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "PostFormatToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostIdType",
+  },
+  Object {
+    "fields": null,
+    "name": "PostObjectFieldFormatEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "PostObjectUnion",
+  },
+  Object {
+    "fields": null,
+    "name": "PostObjectsConnectionDateColumnEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "PostObjectsConnectionOrderbyEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "PostObjectsConnectionOrderbyInput",
+  },
+  Object {
+    "fields": null,
+    "name": "PostPostFormatsInput",
+  },
+  Object {
+    "fields": null,
+    "name": "PostPostFormatsNodeInput",
+  },
+  Object {
+    "fields": null,
+    "name": "PostStatusEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "PostTagsInput",
+  },
+  Object {
+    "fields": null,
+    "name": "PostTagsNodeInput",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostToCategoryConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostToCategoryConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostToCategoryConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostToCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostToCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostToCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostToPostFormatConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostToPostFormatConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostToPostFormatConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "PostToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostToRevisionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostToRevisionConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostToRevisionConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostToTagConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostToTagConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostToTagConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "PostToTermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "PostToTermNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "PostToTermNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "addNew",
+      "addNewItem",
+      "allItems",
+      "archives",
+      "attributes",
+      "editItem",
+      "featuredImage",
+      "filterItemsList",
+      "insertIntoItem",
+      "itemsList",
+      "itemsListNavigation",
+      "menuName",
+      "name",
+      "newItem",
+      "notFound",
+      "notFoundInTrash",
+      "parentItemColon",
+      "removeFeaturedImage",
+      "searchItems",
+      "setFeaturedImage",
+      "singularName",
+      "uploadedToThisItem",
+      "useFeaturedImage",
+      "viewItem",
+      "viewItems",
+    ],
+    "name": "PostTypeLabelDetails",
+  },
+  Object {
+    "fields": Array [
+      "postsPerPage",
+    ],
+    "name": "ReadingSettings",
+  },
+  Object {
+    "fields": null,
+    "name": "RegisterUserInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "user",
+    ],
+    "name": "RegisterUserPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "RelationEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "ResetUserPasswordInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "user",
+    ],
+    "name": "ResetUserPasswordPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "RestoreCommentInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "comment",
+      "restoredId",
+    ],
+    "name": "RestoreCommentPayload",
+  },
+  Object {
+    "fields": Array [
+      "updateCategory",
+      "updatePostFormat",
+      "updateTag",
+      "createActionMonitorAction",
+      "createCategory",
+      "createComment",
+      "createMediaItem",
+      "createPage",
+      "createPost",
+      "createPostFormat",
+      "createTag",
+      "createTranslationFilterTest",
+      "createTypeLimit0Test",
+      "createTypeLimitTest",
+      "createUser",
+      "deleteActionMonitorAction",
+      "deleteCategory",
+      "deleteComment",
+      "deleteMediaItem",
+      "deletePage",
+      "deletePost",
+      "deletePostFormat",
+      "deleteTag",
+      "deleteTranslationFilterTest",
+      "deleteTypeLimit0Test",
+      "deleteTypeLimitTest",
+      "deleteUser",
+      "increaseCount",
+      "registerUser",
+      "resetUserPassword",
+      "restoreComment",
+      "sendPasswordResetEmail",
+      "updateActionMonitorAction",
+      "updateComment",
+      "updateMediaItem",
+      "updatePage",
+      "updatePost",
+      "updateSettings",
+      "updateTranslationFilterTest",
+      "updateTypeLimit0Test",
+      "updateTypeLimitTest",
+      "updateUser",
+      "wpGatsbyRemotePreviewStatus",
+    ],
+    "name": "RootMutation",
+  },
+  Object {
+    "fields": Array [
+      "actionMonitorAction",
+      "actionMonitorActions",
+      "allSettings",
+      "categories",
+      "category",
+      "comment",
+      "comments",
+      "contentNode",
+      "contentNodes",
+      "contentType",
+      "contentTypes",
+      "discussionSettings",
+      "generalSettings",
+      "isWpGatsby",
+      "mediaItem",
+      "mediaItems",
+      "menu",
+      "menuItem",
+      "menuItems",
+      "menus",
+      "node",
+      "nodeByUri",
+      "page",
+      "pages",
+      "plugin",
+      "plugins",
+      "post",
+      "postFormat",
+      "postFormats",
+      "posts",
+      "readingSettings",
+      "registeredScripts",
+      "registeredStylesheets",
+      "revisions",
+      "schemaMd5",
+      "tag",
+      "tags",
+      "taxonomies",
+      "taxonomy",
+      "termNode",
+      "terms",
+      "theme",
+      "themes",
+      "translationFilterTest",
+      "translationFilterTests",
+      "typeLimit0Test",
+      "typeLimit0Tests",
+      "typeLimitTest",
+      "typeLimitTests",
+      "user",
+      "userRole",
+      "userRoles",
+      "users",
+      "viewer",
+      "wpGatsby",
+      "wpGatsbyCompatibility",
+      "writingSettings",
+    ],
+    "name": "RootQuery",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToActionMonitorActionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToActionMonitorActionConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToActionMonitorActionConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToCategoryConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToCategoryConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToCategoryConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToContentNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToContentRevisionUnionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToContentRevisionUnionConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToContentRevisionUnionConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToContentTypeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToContentTypeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToEnqueuedScriptConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToEnqueuedScriptConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToEnqueuedStylesheetConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToEnqueuedStylesheetConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToMediaItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToMediaItemConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToMediaItemConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToMenuConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToMenuConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToMenuConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToMenuItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToMenuItemConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToMenuItemConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToPageConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToPageConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToPageConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToPluginConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToPluginConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToPostConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToPostConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToPostConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToPostFormatConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToPostFormatConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToPostFormatConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToTagConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToTagConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToTagConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToTaxonomyConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToTermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToTermNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToTermNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToThemeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToThemeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToTranslationFilterTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToTranslationFilterTestConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToTranslationFilterTestConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToTypeLimit0TestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToTypeLimit0TestConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToTypeLimit0TestConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToTypeLimitTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToTypeLimitTestConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToTypeLimitTestConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToUserConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToUserConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "RootQueryToUserConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "RootQueryToUserRoleConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "RootQueryToUserRoleConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "SendPasswordResetEmailInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "user",
+    ],
+    "name": "SendPasswordResetEmailPayload",
+  },
+  Object {
+    "fields": Array [
+      "discussionSettingsDefaultCommentStatus",
+      "discussionSettingsDefaultPingStatus",
+      "generalSettingsDateFormat",
+      "generalSettingsDescription",
+      "generalSettingsEmail",
+      "generalSettingsLanguage",
+      "generalSettingsStartOfWeek",
+      "generalSettingsTimeFormat",
+      "generalSettingsTimezone",
+      "generalSettingsTitle",
+      "generalSettingsUrl",
+      "readingSettingsPostsPerPage",
+      "writingSettingsDefaultCategory",
+      "writingSettingsDefaultPostFormat",
+      "writingSettingsUseSmilies",
+    ],
+    "name": "Settings",
+  },
+  Object {
+    "fields": null,
+    "name": "String",
+  },
+  Object {
+    "fields": Array [
+      "contentNodes",
+      "count",
+      "databaseId",
+      "description",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "id",
+      "isRestricted",
+      "link",
+      "name",
+      "posts",
+      "slug",
+      "taxonomy",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+    ],
+    "name": "Tag",
+  },
+  Object {
+    "fields": null,
+    "name": "TagIdType",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "TagToContentNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TagToContentNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "TagToContentNodeConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "TagToPostConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TagToPostConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "TagToPostConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "TagToTaxonomyConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "archivePath",
+      "connectedContentTypes",
+      "description",
+      "graphqlPluralName",
+      "graphqlSingleName",
+      "hierarchical",
+      "id",
+      "isRestricted",
+      "label",
+      "name",
+      "public",
+      "restBase",
+      "restControllerClass",
+      "showCloud",
+      "showInAdminColumn",
+      "showInGraphql",
+      "showInMenu",
+      "showInNavMenus",
+      "showInQuickEdit",
+      "showInRest",
+      "showUi",
+    ],
+    "name": "Taxonomy",
+  },
+  Object {
+    "fields": null,
+    "name": "TaxonomyEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "TaxonomyIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "TaxonomyToContentTypeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TaxonomyToContentTypeConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "count",
+      "databaseId",
+      "description",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "id",
+      "isRestricted",
+      "link",
+      "name",
+      "slug",
+      "termGroupId",
+      "termTaxonomyId",
+      "uri",
+    ],
+    "name": "TermNode",
+  },
+  Object {
+    "fields": null,
+    "name": "TermNodeIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "TermNodeToEnqueuedScriptConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TermNodeToEnqueuedScriptConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "TermNodeToEnqueuedStylesheetConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "TermNodeToEnqueuedStylesheetConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "TermObjectUnion",
+  },
+  Object {
+    "fields": null,
+    "name": "TermObjectsConnectionOrderbyEnum",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorUri",
+      "description",
+      "id",
+      "isRestricted",
+      "name",
+      "screenshot",
+      "slug",
+      "tags",
+      "themeUri",
+      "version",
+    ],
+    "name": "Theme",
+  },
+  Object {
+    "fields": null,
+    "name": "TimezoneEnum",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "preview",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+    ],
+    "name": "TranslationFilterTest",
+  },
+  Object {
+    "fields": null,
+    "name": "TranslationFilterTestIdType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "TranslationFilterTestToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "preview",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+    ],
+    "name": "TypeLimit0Test",
+  },
+  Object {
+    "fields": null,
+    "name": "TypeLimit0TestIdType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "TypeLimit0TestToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "author",
+      "authorDatabaseId",
+      "authorId",
+      "content",
+      "contentType",
+      "databaseId",
+      "date",
+      "dateGmt",
+      "desiredSlug",
+      "editingLockedBy",
+      "enclosure",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "featuredImage",
+      "featuredImageDatabaseId",
+      "featuredImageId",
+      "guid",
+      "id",
+      "isPreview",
+      "isRestricted",
+      "lastEditedBy",
+      "link",
+      "modified",
+      "modifiedGmt",
+      "preview",
+      "previewRevisionDatabaseId",
+      "previewRevisionId",
+      "slug",
+      "status",
+      "template",
+      "title",
+      "uri",
+    ],
+    "name": "TypeLimitTest",
+  },
+  Object {
+    "fields": null,
+    "name": "TypeLimitTestIdType",
+  },
+  Object {
+    "fields": Array [
+      "node",
+    ],
+    "name": "TypeLimitTestToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "id",
+      "uri",
+    ],
+    "name": "UniformResourceIdentifiable",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateActionMonitorActionInput",
+  },
+  Object {
+    "fields": Array [
+      "actionMonitorAction",
+      "clientMutationId",
+    ],
+    "name": "UpdateActionMonitorActionPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateCategoryInput",
+  },
+  Object {
+    "fields": Array [
+      "category",
+      "clientMutationId",
+    ],
+    "name": "UpdateCategoryPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateCommentInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "comment",
+      "success",
+    ],
+    "name": "UpdateCommentPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateMediaItemInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "mediaItem",
+    ],
+    "name": "UpdateMediaItemPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdatePageInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "page",
+    ],
+    "name": "UpdatePagePayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdatePostFormatInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "postFormat",
+    ],
+    "name": "UpdatePostFormatPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdatePostInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "post",
+    ],
+    "name": "UpdatePostPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateSettingsInput",
+  },
+  Object {
+    "fields": Array [
+      "allSettings",
+      "clientMutationId",
+      "discussionSettings",
+      "generalSettings",
+      "readingSettings",
+      "writingSettings",
+    ],
+    "name": "UpdateSettingsPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateTagInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "tag",
+    ],
+    "name": "UpdateTagPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateTranslationFilterTestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "translationFilterTest",
+    ],
+    "name": "UpdateTranslationFilterTestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateTypeLimit0TestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "typeLimit0Test",
+    ],
+    "name": "UpdateTypeLimit0TestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateTypeLimitTestInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "typeLimitTest",
+    ],
+    "name": "UpdateTypeLimitTestPayload",
+  },
+  Object {
+    "fields": null,
+    "name": "UpdateUserInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "user",
+    ],
+    "name": "UpdateUserPayload",
+  },
+  Object {
+    "fields": Array [
+      "avatar",
+      "capKey",
+      "capabilities",
+      "comments",
+      "databaseId",
+      "description",
+      "email",
+      "enqueuedScripts",
+      "enqueuedStylesheets",
+      "extraCapabilities",
+      "firstName",
+      "id",
+      "isRestricted",
+      "lastName",
+      "locale",
+      "mediaItems",
+      "name",
+      "nicename",
+      "nickname",
+      "pages",
+      "posts",
+      "registeredDate",
+      "revisions",
+      "roles",
+      "slug",
+      "translationFilterTests",
+      "typeLimit0Tests",
+      "typeLimitTests",
+      "uri",
+      "url",
+      "username",
+    ],
+    "name": "User",
+  },
+  Object {
+    "fields": null,
+    "name": "UserNodeIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "capabilities",
+      "displayName",
+      "id",
+      "isRestricted",
+      "name",
+    ],
+    "name": "UserRole",
+  },
+  Object {
+    "fields": null,
+    "name": "UserRoleEnum",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToCommentConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToCommentConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToCommentConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToContentRevisionUnionConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToContentRevisionUnionConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToContentRevisionUnionConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToEnqueuedScriptConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToEnqueuedScriptConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToEnqueuedStylesheetConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToEnqueuedStylesheetConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToMediaItemConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToMediaItemConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToMediaItemConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToPageConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToPageConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToPageConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToPostConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToPostConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToPostConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToTranslationFilterTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToTranslationFilterTestConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToTranslationFilterTestConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToTypeLimit0TestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToTypeLimit0TestConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToTypeLimit0TestConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToTypeLimitTestConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToTypeLimitTestConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UserToTypeLimitTestConnectionWhereArgs",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "UserToUserRoleConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "UserToUserRoleConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "UsersConnectionOrderbyEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "UsersConnectionOrderbyInput",
+  },
+  Object {
+    "fields": null,
+    "name": "UsersConnectionSearchColumnEnum",
+  },
+  Object {
+    "fields": Array [
+      "arePrettyPermalinksEnabled",
+      "gatsbyPreviewStatus",
+      "isPreviewFrontendOnline",
+    ],
+    "name": "WPGatsby",
+  },
+  Object {
+    "fields": Array [
+      "satisfies",
+    ],
+    "name": "WPGatsbyCompatibility",
+  },
+  Object {
+    "fields": Array [
+      "path",
+    ],
+    "name": "WPGatsbyPageNode",
+  },
+  Object {
+    "fields": Array [
+      "modifiedLocal",
+      "modifiedRemote",
+      "pageNode",
+      "remoteStatus",
+      "statusContext",
+      "statusType",
+    ],
+    "name": "WPGatsbyPreviewStatus",
+  },
+  Object {
+    "fields": null,
+    "name": "WPGatsbyRemotePreviewStatusEnum",
+  },
+  Object {
+    "fields": Array [
+      "wpGQL",
+      "wpGatsby",
+    ],
+    "name": "WPGatsbySatisfies",
+  },
+  Object {
+    "fields": null,
+    "name": "WPGatsbyWPPreviewedNodeStatus",
+  },
+  Object {
+    "fields": Array [
+      "endCursor",
+      "hasNextPage",
+      "hasPreviousPage",
+      "startCursor",
+    ],
+    "name": "WPPageInfo",
+  },
+  Object {
+    "fields": null,
+    "name": "WpGatsbyRemotePreviewStatusInput",
+  },
+  Object {
+    "fields": Array [
+      "clientMutationId",
+      "success",
+    ],
+    "name": "WpGatsbyRemotePreviewStatusPayload",
+  },
+  Object {
+    "fields": Array [
+      "defaultCategory",
+      "defaultPostFormat",
+      "useSmilies",
+    ],
+    "name": "WritingSettings",
+  },
+  Object {
+    "fields": Array [
+      "name",
+      "description",
+      "args",
+      "isRepeatable",
+      "locations",
+    ],
+    "name": "__Directive",
+  },
+  Object {
+    "fields": null,
+    "name": "__DirectiveLocation",
+  },
+  Object {
+    "fields": Array [
+      "name",
+      "description",
+      "isDeprecated",
+      "deprecationReason",
+    ],
+    "name": "__EnumValue",
+  },
+  Object {
+    "fields": Array [
+      "name",
+      "description",
+      "args",
+      "type",
+      "isDeprecated",
+      "deprecationReason",
+    ],
+    "name": "__Field",
+  },
+  Object {
+    "fields": Array [
+      "name",
+      "description",
+      "type",
+      "defaultValue",
+    ],
+    "name": "__InputValue",
+  },
+  Object {
+    "fields": Array [
+      "types",
+      "queryType",
+      "mutationType",
+      "subscriptionType",
+      "directives",
+    ],
+    "name": "__Schema",
+  },
+  Object {
+    "fields": Array [
+      "kind",
+      "name",
+      "description",
+      "fields",
+      "interfaces",
+      "possibleTypes",
+      "enumValues",
+      "inputFields",
+      "ofType",
+    ],
+    "name": "__Type",
+  },
+  Object {
+    "fields": null,
+    "name": "__TypeKind",
+  },
+]
+`;
