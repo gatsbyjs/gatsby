@@ -19,6 +19,8 @@ export default async function writeRedirectsFile(
     `headers`,
     `signed`,
     `edge_handler`,
+    `Language`,
+    `Country`,
   ]
 
   // Map redirect data to the format Netlify expects
