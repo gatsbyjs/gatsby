@@ -45,8 +45,6 @@ export default async function writeRedirectsFile(
     for (const key in rest) {
       const value = rest[key]
 
-      console.log(NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST)
-
       if (typeof value === `string` && value.includes(` `)) {
         console.warn(
           `Invalid redirect value "${value}" specified for key "${key}". ` +
