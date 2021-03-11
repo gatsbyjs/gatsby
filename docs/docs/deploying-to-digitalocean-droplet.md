@@ -30,7 +30,7 @@ Follow these instructions for installs on an Ubuntu droplet.
 
    ```shell
    sudo apt-get update
-   sudo apt-get install node
+   sudo apt-get install nodejs
    ```
 
 3. Install npm
@@ -42,7 +42,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    To view the version of Node.js and npm installed, run,
 
    ```shell
-   node -v
+   nodejs -v
    npm -v
    ```
 
@@ -57,7 +57,7 @@ Follow these instructions for installs on an Ubuntu droplet.
    > You can either exit and restart your terminal or refresh the cache by running the following commands:
 
    ```shell
-   hash node
+   hash nodejs
    hash npm
    ```
 
