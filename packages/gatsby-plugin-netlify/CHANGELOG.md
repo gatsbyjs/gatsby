@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.1.0-next.2...gatsby-plugin-netlify@3.2.0-next.0) (2021-03-11)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** Add an allow list for redirect options ([#30155](https://github.com/gatsbyjs/gatsby/issues/30155)) ([962c4a1](https://github.com/gatsbyjs/gatsby/commit/962c4a1d3d8a5c952ec88957bdc20352bbeb151c))
+
 # [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.1.0-next.1...gatsby-plugin-netlify@3.1.0-next.2) (2021-03-10)
 
 ### Bug Fixes
