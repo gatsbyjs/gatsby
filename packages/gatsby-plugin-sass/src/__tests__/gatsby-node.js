@@ -58,11 +58,13 @@ describe(`gatsby-plugin-sass`, () => {
 
   tests.stages.forEach(stage => {
     for (const label in tests.options) {
-      const options = tests.options[label]
-      it(`Stage: ${stage} / ${label}`, () => {
-        onCreateWebpackConfig({ actions, loaders, stage }, options)
-        expect(actions.setWebpackConfig).toMatchSnapshot()
-      })
+      if (tests.options[label]) {
+        const options = tests.options[label]
+        it(`Stage: ${stage} / ${label}`, () => {
+          onCreateWebpackConfig({ actions, loaders, stage }, options)
+          expect(actions.setWebpackConfig).toMatchSnapshot()
+        })
+      }
     }
   })
 })
