@@ -41,6 +41,6 @@ describe(`testing error overlay and ability to automatically recover from runtim
     )
 
     cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
-    // cy.assertNoOverlayIframe()
+    cy.assertNoFastRefreshOverlay()
   })
 })

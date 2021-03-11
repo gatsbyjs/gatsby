@@ -38,6 +38,6 @@ describe(`testing error overlay and ability to automatically recover from query 
     )
 
     cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
-    // cy.assertNoOverlayIframe()
+    cy.assertNoFastRefreshOverlay()
   })
 })

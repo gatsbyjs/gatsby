@@ -60,6 +60,6 @@ describe(`testing error overlay and ability to automatically recover from runtim
     cy.findByTestId(`results`)
       .should(`contain.text`, `"hasError": false`)
 
-    // cy.assertNoOverlayIframe()
+    cy.assertNoFastRefreshOverlay()
   })
 })

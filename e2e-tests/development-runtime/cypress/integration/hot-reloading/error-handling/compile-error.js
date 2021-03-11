@@ -24,8 +24,8 @@ describe(`testing error overlay and ability to automatically recover from webpac
       `npm run update -- --file src/pages/error-handling/compile-error.js --replacements "${errorPlaceholder}:${errorReplacement}" --exact`
     )
 
-    // cy.getOverlayIframe().contains(`Failed to compile`)
-    // cy.getOverlayIframe().contains(`Unexpected token, expected ";"`)
+    cy.getFastRefreshOverlay().find('#gatsby-overlay-labelledby').should('contain.text', 'Failed to compile')
+    cy.getFastRefreshOverlay().find('[data-gatsby-overlay="header__cause-file"] span').should('contain.text', './src/pages/error-handling/compile-error.js')
   })
 
   it(`can recover without need to refresh manually`, () => {
@@ -34,6 +34,6 @@ describe(`testing error overlay and ability to automatically recover from webpac
     )
 
     cy.findByTestId(`hot`).should(`contain.text`, `Updated`)
-    // cy.assertNoOverlayIframe()
+    cy.assertNoFastRefreshOverlay()
   })
 })
