@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.3...gatsby-admin@0.11.0-next.4) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
 # [0.11.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.2...gatsby-admin@0.11.0-next.3) (2021-02-28)
 
 **Note:** Version bump only for package gatsby-admin

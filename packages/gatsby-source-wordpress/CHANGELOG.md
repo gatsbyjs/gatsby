@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.2...gatsby-source-wordpress@5.1.0-next.3) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+- **gatsby-source-wordpress:** image fixes ([#29813](https://github.com/gatsbyjs/gatsby/issues/29813)) ([28124dd](https://github.com/gatsbyjs/gatsby/commit/28124dd74b87902f9fa8cf3895ff8b4d54bc0fd6))
+
+### Features
+
+- **gatsby-source-wordpress:** Improve 50\* error messages ([#29972](https://github.com/gatsbyjs/gatsby/issues/29972)) ([a7b1062](https://github.com/gatsbyjs/gatsby/commit/a7b106275ca8c0766cdf99a022179a0508c97129))
+- **gatsby-source-wordpress:** Log when nodes are duplicates ([#29941](https://github.com/gatsbyjs/gatsby/issues/29941)) ([7ee63ea](https://github.com/gatsbyjs/gatsby/commit/7ee63ea623b007c8642341b0bbc020d5674051dc))
+
 # [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.1...gatsby-source-wordpress@5.1.0-next.2) (2021-02-28)
 
 ### Bug Fixes

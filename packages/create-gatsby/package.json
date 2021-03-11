@@ -1,6 +1,6 @@
 {
   "name": "create-gatsby",
-  "version": "1.1.0-next.2",
+  "version": "1.1.0-next.3",
   "main": "lib/index.js",
   "bin": "cli.js",
   "license": "MIT",

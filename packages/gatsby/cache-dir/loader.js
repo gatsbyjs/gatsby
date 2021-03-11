@@ -348,12 +348,22 @@ export class BaseLoader {
     return inFlightPromise
   }
 
-  // returns undefined if loading page ran into errors
-  loadPageSync(rawPath) {
+  // returns undefined if the page does not exists in cache
+  loadPageSync(rawPath, options = {}) {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
-      const pageData = this.pageDb.get(pagePath).payload
-      return pageData
+      const pageData = this.pageDb.get(pagePath)
+
+      if (pageData.payload) {
+        return pageData.payload
+      }
+
+      if (options?.withErrorDetails) {
+        return {
+          error: pageData.error,
+          status: pageData.status,
+        }
+      }
     }
     return undefined
   }
@@ -546,7 +556,9 @@ export const publicLoader = {
   getResourceURLsForPathname: rawPath =>
     instance.getResourceURLsForPathname(rawPath),
   loadPage: rawPath => instance.loadPage(rawPath),
-  loadPageSync: rawPath => instance.loadPageSync(rawPath),
+  // TODO add deprecation to v4 so people use withErrorDetails and then we can remove in v5 and change default behaviour
+  loadPageSync: (rawPath, options = {}) =>
+    instance.loadPageSync(rawPath, options),
   prefetch: rawPath => instance.prefetch(rawPath),
   isPageNotFound: rawPath => instance.isPageNotFound(rawPath),
   hovering: rawPath => instance.hovering(rawPath),

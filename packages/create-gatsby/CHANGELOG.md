@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.1.0-next.2...create-gatsby@1.1.0-next.3) (2021-03-10)
+
+### Bug Fixes
+
+- **create-gatsby:** Use legacy peer deps ([#29856](https://github.com/gatsbyjs/gatsby/issues/29856)) ([a92b276](https://github.com/gatsbyjs/gatsby/commit/a92b27683e53941bb41eff0a9747961f842c210e))
+
 # [1.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/create-gatsby@1.1.0-next.1...create-gatsby@1.1.0-next.2) (2021-02-28)
 
 ### Features

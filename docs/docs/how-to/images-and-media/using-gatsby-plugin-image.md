@@ -203,3 +203,76 @@ npx gatsby-codemods gatsby-plugin-image
 ```
 
 This will convert all GraphQL queries and components to use the new plugin. For more information see the full [migration guide](/docs/reference/release-notes/image-migration-guide/).
+
+## Troubleshooting
+
+If you're running into issues getting everything to work together we recommend following these steps.
+
+1. Are your dependencies installed?
+
+Check your package.json file for the following entries:
+
+- `gatsby-plugin-image`
+- `gatsby-plugin-sharp`
+- `gatsby-transformer-sharp` (If you're querying for dynamic images)
+- `gatsby-source-filesystem` (If you're using the StaticImage component)
+
+If not, install them.
+
+2. Have you added the necessary information to your `gatsby-config.js` file?
+
+All of these plugins should be in your plugins array. Reminder that the `gatsby-image` package did not get included, so this is a change.
+
+- `gatsby-plugin-image`
+- `gatsby-plugin-sharp`
+- `gatsby-transformer-sharp` (If you're querying for dynamic images)
+
+If not, add them.
+
+3. Do your queries in GraphiQL return the data you expect?
+
+There are two paths here.
+
+If you're using StaticImage:
+
+Try running
+
+```graphql
+query MyQuery {
+  allFile {
+    nodes {
+      relativePath
+    }
+  }
+}
+```
+
+Do you see results with `.cache/caches/gatsby-plugin-image` in the path?
+
+If not, check steps 1 and 2 above.
+
+If you're using GatsbyImage:
+
+Run the query you're using in your site. Does it return a gatsbyImageData object?
+
+If not, check steps 1 and 2 above.
+
+4. Do the images render when you run your site?
+
+Do you see errors in your `gatsby develop` logs? Do you see errors in your browser console?
+
+For StaticImage:
+
+Inspect the element on your page. Does it include a `div` with `gatsby-image-wrapper`? How about an internal `source` element?
+
+If not, double check the component usage. Did you use `src`? Is the relative path correct?
+
+For GatsbyImage:
+
+Trying using `console.log` to check the the object you're passing as the `image` prop. Is it there?
+
+If not, make sure you're using the same object you saw return from your query.
+
+5. Are the images working yet?
+
+If you still see problems and think it's a bug, please [file an issue](https://github.com/gatsbyjs/gatsby/issues) and let us know how far in these steps you progressed.
