@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../global.d.ts" />
 
-import React, { Fragment, FunctionComponent, ReactElement } from "react"
+import React, { Fragment, FunctionComponent } from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
 
@@ -46,30 +46,28 @@ export function getSizer(
 ): string {
   let sizer: string | null = null
   if (layout === `fullWidth`) {
-    sizer = `<div aria-hidden="true" style="padding-top: ${
+    sizer = `<div data-gatsby-image-sizer aria-hidden="true" style="padding-top: ${
       (height / width) * 100
     }%;"></div>`
   }
   if (layout === `constrained`) {
-    sizer = `<div style="max-width: ${width}px; display: block;"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E" style="max-width: 100%; display: block; position: static;"></div>`
+    sizer = `<div data-gatsby-image-sizer style="max-width: ${width}px; display: block;"><img alt="" role="presentation" aria-hidden="true" src="data:image/svg+xml;charset=utf-8,%3Csvg height='${height}' width='${width}' xmlns='http://www.w3.org/2000/svg' version='1.1'%3E%3C/svg%3E" style="max-width: 100%; display: block; position: static;"></div>`
   }
   return sizer
 }
 
-export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
+const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
   layout,
   width,
   height,
-  children,
 }) {
-  let sizer: ReactElement | null = null
   if (layout === `fullWidth`) {
-    sizer = (
+    return (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
   }
   if (layout === `constrained`) {
-    sizer = (
+    return (
       <div style={{ maxWidth: width, display: `block` }}>
         <img
           alt=""
@@ -85,9 +83,17 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
       </div>
     )
   }
+
+  return null
+}
+
+export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
+  children,
+  ...props
+}) {
   return (
     <Fragment>
-      {sizer}
+      <Sizer {...props} />
       {children}
 
       {
