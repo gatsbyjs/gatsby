@@ -367,7 +367,7 @@ const Box = ({ children }) => (
 export default Box
 ```
 
-You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
+You can also still import all styles using the `import * as styles` syntax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
 ### File assets (fonts, pdfs, ...) are imported as ES Modules
 
