@@ -33,7 +33,7 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=y gatsby develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "start": "npm run develop",
