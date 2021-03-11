@@ -49,10 +49,7 @@ export function writeModule(filePath: string, fileContents: string): void {
 
   // workaround webpack marking virtual modules as deleted because those files don't really exist
   // so we create those files just so watchpack doesn't mark them as initially missing
-  fs.outputFileSync(
-    adjustedFilePath
-    fileContents
-  )
+  fs.outputFileSync(adjustedFilePath, fileContents)
 
   fileContentLookup[adjustedFilePath] = fileContents
 
