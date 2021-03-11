@@ -54,6 +54,9 @@ export class WebsocketManager {
         origin: true,
       },
       cookie: true,
+      // gatsby-cloud needs to support both socket.io v2 and v3, so this needs to
+      // continue supporting older clients to connect.
+      allowEIO3: true,
     })
     this.websocket = websocket
 
