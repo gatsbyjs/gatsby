@@ -369,8 +369,8 @@ export default Box
 
 You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
-Migrating all your css could be painful. You can still use commonjs with some extra work. This works for sass, less, stylus & regular css.
-This example covers sass but it's the same ofr the other plugins.
+Migrating all your CSS could be painful or you're relying on third-party packages that require you to use CommonJS. You can workaround this issue for Sass, Less, Stylus & regular CSS modules.
+This example covers Sass but it's the same for the other plugins.
 
 ```diff:title=gatsby-config.js
 module.exports = {
