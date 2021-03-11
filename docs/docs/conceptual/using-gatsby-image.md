@@ -14,9 +14,9 @@ One important part of overall page loading experience is image loading. There ar
 
 - **Minimize image file size to reduce request roundtrip time.** There are a number of ways, from cropping overly large images, to using newer file types, to reduce image file size.
 
-We built Gatsby Image to provide these things -- a [higher-level building block](https://www.gatsbyjs.com/docs/conceptual/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks) that has the richness users expect, with the API simplicity developers love (and without maintaining your own image processing pipeline!).
+We built Gatsby Image to provide these things -- a [higher-level building block](/docs/conceptual/gatsby-core-philosophy/#construct-new-higher-level-web-building-blocks) that has the richness users expect, with the API simplicity developers love (and without maintaining your own image processing pipeline!).
 
-We provide a [detailed guide on using Gatsby Image](docs/how-to/images-and-media/using-gatsby-plugin-image/) in the How To section of this documentation. Here, we walk through the question of why these benefits matter, from a user's perspective, and why providing them without Gatsby Image (or something similar) can be difficult.
+We provide a [detailed guide on using Gatsby Image](/docs/how-to/images-and-media/using-gatsby-plugin-image/) in the How To section of this documentation. Here, we walk through the question of why these benefits matter, from a user's perspective, and why providing them without Gatsby Image (or something similar) can be difficult.
 
 ## Fetch above-the-fold images immediately
 
@@ -50,7 +50,7 @@ When a browser doesn't know how big an image is going to be, either because the 
 
 ### Gradual color transition
 
-In addition, when an image appears, it goes from blank background to fully there from one frame to another. This can also be visually jarring. Like css has a `transition` prop to help position shifts feel gradual, images feel more aesthetically pleasing when they have placeholders.
+In addition, when an image appears, it goes from blank background to fully there from one frame to another. This can also be visually jarring. Like CSS has a `transition` prop to help position shifts feel gradual, images feel more aesthetically pleasing when they have placeholders.
 
 Gatsby Image's will hold the spot for your image automatically when you specify `width` prop, and depending on your preference, will provide a background -- blurred, a background color, or traced SVG, while the image loads.
 
@@ -66,7 +66,7 @@ A common problem in larger projects is that images are uploaded into a CMS by co
 
 For example, a support staff member may take a 1600x2000 pixel screenshot, save it as a PNG, and upload it alongside a helpdesk article. While this is a quite reasonable action, it may degrade page performance significantly. If the article has a 800px maximum width, a 640 x 800 pixel JPG would have displayed at the same quality but a tenth of the size; the extra weight may delay page load by a second or two.
 
-You can solve this on your own via creating and maintaining a custom image processing pipeline, perhaps during CI/CD, to resize. However, that requires writing, and then maintaining, custom code. Gatsby Image solves this out of the box; if you use the `width` or `maxWidth` prop, Gatsby Image will automatically resize larger underlying assets.
+You can solve this on your own via creating and maintaining a custom image processing pipeline, perhaps during CI/CD, to resize. However, that requires writing, and then maintaining, custom code. Gatsby Image solves this out of the box; if you use the `width` prop, Gatsby Image will automatically resize larger underlying assets.
 
 ### Generating "responsive images" for different device sizes
 
@@ -80,6 +80,6 @@ In order to support responsive images, you need to do the image processing befor
 
 ### Better compression
 
-The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. It's possible to support this standard, but you also need to fall back for older browsers that don't support this, which without framework support adds additional complexity.
+The new [WebP image](https://developers.google.com/speed/webp) standard reduces image size by 25-35% for modern browsers. Additionally, [AVIF Images](https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4) are also supported. AVIF is a brand new image format, which offers considerably better filesizes and quality than JPG and even WebP. It's possible to support these standards, but you also need to fall back for older browsers that don't support this, which without framework support adds additional complexity.
 
-Gatsby supports WebP out of the box as a setting on Gatsby Image.
+Gatsby supports WebP & AVIF out of the box as a setting on Gatsby Image.
