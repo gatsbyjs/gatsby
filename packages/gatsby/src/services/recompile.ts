@@ -21,7 +21,10 @@ export async function recompile({
     }
     emitter.on(`COMPILATION_DONE`, finish)
 
-    // Wild fix to prevent watcher from pausing in webpack:
+    // Wild fix to prevent watcher from pausing in webpack
+    // (which causes changes that occur _during_ recompilation to be ignored by webpack)
+    // @ts-ignore
+    webpackWatching.pausedWatchher = webpackWatching.watcher
     // @ts-ignore
     webpackWatching.watcher = null
 
