@@ -367,10 +367,11 @@ const Box = ({ children }) => (
 export default Box
 ```
 
-You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
+You can also import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
-Migrating all your CSS could be painful or you're relying on third-party packages that require you to use CommonJS. You can workaround this issue for Sass, Less, Stylus & regular CSS modules.
-This example covers Sass but it's the same for the other plugins.
+Migrating all your CSS could be painful or you're relying on third-party packages that require you to use CommonJS. You can work around this issue for Sass, Less, Stylus & regular CSS modules using respective plugins. If you're using regular CSS modules, please install [gatsby-plugin-postcss](https://www.gatsbyjs.com/plugins/gatsby-plugin-postcss/) to override the defaults.
+
+This example covers Sass. The other plugins share the same `cssLoaderOptions` property.
 
 ```diff:title=gatsby-config.js
 module.exports = {
