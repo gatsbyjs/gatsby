@@ -20,6 +20,12 @@ export async function recompile({
       resolve(stats)
     }
     emitter.on(`COMPILATION_DONE`, finish)
+
+    // Wild fix to prevent watcher from pausing in webpack:
+    // @ts-ignore
+    webpackWatching.watcher = null
+
+    // Run re-compilation of aggregated changes
     webpackWatching.resume()
     // Suspending is just a flag, so it's safe to re-suspend right away
     webpackWatching.suspend()
