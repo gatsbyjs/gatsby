@@ -107,6 +107,26 @@ describe(`gatsby config`, () => {
       `[Error: assetPrefix must be an absolute URI when used with pathPrefix]`
     )
   })
+
+  it(`returns true for trailingSlash when not set`, () => {
+    const config = {}
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.value).toEqual(
+      expect.objectContaining({
+        trailingSlash: true,
+      })
+    )
+  })
+
+  it(`throws when trailingSlash is set to non boolean value`, () => {
+    const config = {
+      trailingSlash: `true`,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toMatchInlineSnapshot(`undefined`)
+  })
 })
 
 describe(`node schema`, () => {

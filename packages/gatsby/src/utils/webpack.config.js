@@ -208,6 +208,8 @@ module.exports = async (
         __ASSET_PREFIX__: JSON.stringify(
           program.prefixPaths ? assetPrefix : ``
         ),
+        // TODO pull this from the gatsby-config somehow
+        __TRAILING_SLASHES__: JSON.stringify(true),
       }),
 
       plugins.virtualModules(),
