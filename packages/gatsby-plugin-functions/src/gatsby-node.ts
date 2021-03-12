@@ -133,13 +133,13 @@ export async function onCreateDevServer(
   )
   // console.log(app, functionsDirectoryPath)
 
-  app.use((req, res, next) => {
-    const functionName = urlResolve(...req.path.split(`/`).splice(2))
+  app.use(`/api/:functionName`, (req, res, next) => {
+    const { functionName } = req.params
 
     if (knownFunctions.has(functionName)) {
       const fn = require(path.join(
         functionsDirectory,
-        knownFunctions.get(functionName)
+        knownFunctions.get(functionName) as string
       ))
 
       fn(req, res)
@@ -147,21 +147,4 @@ export async function onCreateDevServer(
       next()
     }
   })
-  // const activity = reporter.activityTimer(`building functions`)
-  // activity.start()
-  // const functionsDirectory = path.resolve(
-  //   process.cwd(),
-  //   functionsDirectoryPath as string
-  // )
-  // const functionsGlob = `**/*.{js,ts}`
-  // // Get initial list of files
-  // const files = await glob(functionsGlob, { cwd: functionsDirectory })
-  // // console.log({ files })
-  // const knownFunctions = new Set(files)
-  // // console.log({ knownFunctions })
-  // // if (![`develop`, `build-javascript`].includes(stage)) {
-  // //   return Promise.resolve()
-  // // }
-  // await fs.ensureDir(path.join(process.cwd(), `.cache`, `functions`))
-  // await fs.emptyDir(path.join(process.cwd(), `.cache`, `functions`))
 }
