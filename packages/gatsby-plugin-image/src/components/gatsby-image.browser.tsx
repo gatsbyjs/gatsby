@@ -25,7 +25,6 @@ import { getSizer } from "./layout-wrapper"
 import { propTypes } from "./gatsby-image.server"
 import { Unobserver } from "./intersection-observer"
 import { render } from "react-dom"
-import { BackgroundColor } from "chalk"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
