@@ -303,7 +303,8 @@ class GatsbyImageHydrator extends Component<
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage(
   props
 ) {
-  return <GatsbyImageHydrator {...props} />
+  const hydratorRef = useRef()
+  return <GatsbyImageHydrator ref={hydratorRef} {...props} />
 }
 
 GatsbyImage.propTypes = propTypes
