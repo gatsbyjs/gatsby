@@ -38,6 +38,12 @@ const getGlobalBasePrefix = () =>
       ? __BASE_PATH__
       : undefined
     : __BASE_PATH__
+const getGlobalTrailingSlash = () =>
+  process.env.NODE_ENV !== `production`
+    ? typeof __TRAILING_SLASHES__ !== `undefined`
+      ? __TRAILING_SLASHES__
+      : undefined
+    : __TRAILING_SLASHES__
 
 const isLocalLink = path =>
   path &&
@@ -64,7 +70,16 @@ const rewriteLinkPath = (path, relativeTo) => {
   if (!isLocalLink(path)) {
     return path
   }
-  return isAbsolutePath(path) ? withPrefix(path) : absolutify(path, relativeTo)
+  // see if the option to set trailing slashes is set and insert before navigating
+  const { pathname, search, hash } = parsePath(path)
+  const TRAILING_SLASHES = getGlobalTrailingSlash()
+  let shouldAddTrailingSlash = !pathname.endsWith(`/`)
+  const adjustedPath = `${pathname}${
+    TRAILING_SLASHES && shouldAddTrailingSlash ? `/` : ``
+  }${search}${hash}`
+  return isAbsolutePath(adjustedPath)
+    ? withPrefix(adjustedPath)
+    : absolutify(adjustedPath, relativeTo)
 }
 
 const NavLinkPropTypes = {
