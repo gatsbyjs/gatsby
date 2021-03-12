@@ -5,7 +5,7 @@ import { waitingServices } from "./services"
 
 const NODE_MUTATION_BATCH_SIZE = 100
 const NODE_MUTATION_BATCH_TIMEOUT = 500
-const FILE_CHANGE_AGGREGATION_TIMEOUT = 200
+// const FILE_CHANGE_AGGREGATION_TIMEOUT = 200
 
 export type WaitingResult = Pick<IWaitingContext, "nodeMutationBatch">
 
