@@ -77,6 +77,18 @@ class GatsbyImageHydrator extends Component<
       isLoading: hasNativeLazyLoadSupport(),
       isLoaded: false,
     }
+
+    if (!this.props.image) {
+      if (process.env.NODE_ENV === `development`) {
+        console.warn(`[gatsby-plugin-image] Missing image prop`)
+      }
+    }
+
+    if (!global.GATSBY___IMAGE) {
+      console.warn(
+        `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
+      )
+    }
   }
 
   _lazyHydrate(props, state): Promise<void> {
@@ -138,12 +150,12 @@ class GatsbyImageHydrator extends Component<
 
   shouldComponentUpdate(nextProps, nextState): boolean {
     // if the image prop changes we'll have to do some manual work
-    if (this.props.image !== nextProps.image) {
-      const { width, height, layout } = nextProps.image
-      // this.root.current.innerHTML = getSizer(layout, width, height)
+    // if (this.props.image !== nextProps.image) {
+    //   const { width, height, layout } = nextProps.image
+    // this.root.current.innerHTML = getSizer(layout, width, height)
 
-      // console.log(frag.childNodes)
-    }
+    // console.log(frag.childNodes)
+    // }
     // const { width, height, layout } = nextProps.image
     let hasChanged = false
     // if (
