@@ -303,7 +303,8 @@ class GatsbyImageHydrator extends Component<
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage(
   props
 ) {
-  return <GatsbyImageHydrator key={`image`} {...props} />
+  const cacheKey = JSON.stringify(this.props.image.images)
+  return <GatsbyImageHydrator key={cacheKey} {...props} />
 }
 
 GatsbyImage.propTypes = propTypes
