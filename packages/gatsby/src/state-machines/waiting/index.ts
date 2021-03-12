@@ -29,13 +29,13 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
           cond: (ctx): boolean => !!ctx.nodeMutationBatch.length,
           target: `batchingNodeMutations`,
         },
-        {
-          // If source files are dirty upon entering this state,
-          // move immediately to aggregatingFileChanges to force re-compilation
-          // See https://github.com/gatsbyjs/gatsby/issues/27609
-          target: `aggregatingFileChanges`,
-          cond: ({ sourceFilesDirty }): boolean => Boolean(sourceFilesDirty),
-        },
+        // {
+        //   // If source files are dirty upon entering this state,
+        //   // move immediately to aggregatingFileChanges to force re-compilation
+        //   // See https://github.com/gatsbyjs/gatsby/issues/27609
+        //   target: `aggregatingFileChanges`,
+        //   cond: ({ sourceFilesDirty }): boolean => Boolean(sourceFilesDirty),
+        // },
       ],
       on: {
         ADD_NODE_MUTATION: {
@@ -45,33 +45,34 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
         // We only listen for this when idling because if we receive it at any
         // other point we're already going to create pages etc
         SOURCE_FILE_CHANGED: {
-          target: `aggregatingFileChanges`,
-        },
-      },
-    },
-    aggregatingFileChanges: {
-      // Sigh. This is because webpack doesn't expose the Watchpack
-      // aggregated file invalidation events. If we compile immediately,
-      // we won't pick up the changed files
-      after: {
-        // The aggregation timeout
-        [FILE_CHANGE_AGGREGATION_TIMEOUT]: {
           actions: `extractQueries`,
           target: `idle`,
         },
       },
-      on: {
-        ADD_NODE_MUTATION: {
-          actions: `addNodeMutation`,
-          target: `batchingNodeMutations`,
-        },
-        SOURCE_FILE_CHANGED: {
-          target: undefined,
-          // External self-transition reset the timer
-          internal: false,
-        },
-      },
     },
+    // aggregatingFileChanges: {
+    //   // Sigh. This is because webpack doesn't expose the Watchpack
+    //   // aggregated file invalidation events. If we compile immediately,
+    //   // we won't pick up the changed files
+    //   after: {
+    //     // The aggregation timeout
+    //     [FILE_CHANGE_AGGREGATION_TIMEOUT]: {
+    //       actions: `extractQueries`,
+    //       target: `idle`,
+    //     },
+    //   },
+    //   on: {
+    //     ADD_NODE_MUTATION: {
+    //       actions: `addNodeMutation`,
+    //       target: `batchingNodeMutations`,
+    //     },
+    //     SOURCE_FILE_CHANGED: {
+    //       target: undefined,
+    //       // External self-transition reset the timer
+    //       internal: false,
+    //     },
+    //   },
+    // },
     batchingNodeMutations: {
       // Check if the batch is already full on entry
       always: {

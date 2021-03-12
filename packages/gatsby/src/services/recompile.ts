@@ -17,22 +17,13 @@ export async function recompile({
   return new Promise(resolve => {
     function finish(stats: Stats): void {
       emitter.off(`COMPILATION_DONE`, finish)
-      if (webpackWatching) {
-        // Suspend only when compilation is done
-        webpackWatching.suspend()
-      }
+
       resolve(stats)
     }
     emitter.on(`COMPILATION_DONE`, finish)
 
-    // Wild fix to prevent watcher from pausing in webpack
-    // (which causes changes that occur _during_ recompilation to be ignored by webpack)
-    // @ts-ignore
-    webpackWatching.pausedWatchher = webpackWatching.watcher
-    // @ts-ignore
-    webpackWatching.watcher = null
-
     // Run re-compilation of aggregated changes
     webpackWatching.resume()
+    webpackWatching.suspend()
   })
 }
