@@ -25,6 +25,7 @@ import { getSizer } from "./layout-wrapper"
 import { propTypes } from "./gatsby-image.server"
 import { Unobserver } from "./intersection-observer"
 import { render } from "react-dom"
+import { BackgroundColor } from "chalk"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
@@ -303,8 +304,17 @@ class GatsbyImageHydrator extends Component<
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage(
   props
 ) {
-  const cacheKey = JSON.stringify(this.props.image.images)
-  return <GatsbyImageHydrator key={cacheKey} {...props} />
+  const { className, class: classSafe, backgroundColor, image } = props
+  const { width, height, layout } = image
+  const propsKey = JSON.stringify([
+    width,
+    height,
+    layout,
+    className,
+    classSafe,
+    backgroundColor,
+  ])
+  return <GatsbyImageHydrator key={propsKey} {...props} />
 }
 
 GatsbyImage.propTypes = propTypes
