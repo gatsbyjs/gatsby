@@ -22,6 +22,8 @@ const restrictedNodeFields = [
   `id`,
   `internal`,
   `parent`,
+  `Entity`,
+  `Reference`,
 ]
 
 exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeType
