@@ -11,7 +11,7 @@ const processImages = async (jobId, job, actions) => {
   } catch (err) {
     throw err
   } finally {
-    actions.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
+    actions.endJob({ id: jobId }, { name: `gatsby-plugin-sharp-ggat` })
   }
 }
 
@@ -79,7 +79,7 @@ const scheduleJob = async (job, actions, reporter) => {
       description: `processing image ${job.inputPaths[0]}`,
       imagesCount: job.args.operations.length,
     },
-    { name: `gatsby-plugin-sharp` }
+    { name: `gatsby-plugin-sharp-ggat` }
   )
 
   const promise = new Promise((resolve, reject) => {

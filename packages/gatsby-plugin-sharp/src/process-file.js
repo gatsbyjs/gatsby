@@ -1,7 +1,7 @@
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
-const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp`)
+const debug = require(`debug`)(`gatsby:gatsby-plugin-sharp-ggat`)
 const duotone = require(`./duotone`)
 const imagemin = require(`imagemin`)
 const imageminMozjpeg = require(`imagemin-mozjpeg`)
@@ -83,6 +83,24 @@ exports.processFile = (file, transforms, options = {}) => {
       )
 
       let clonedPipeline = transforms.length > 1 ? pipeline.clone() : pipeline
+
+      if (
+        transformArgs.extractLeft !== undefined &&
+        transformArgs.extractLeft !== undefined &&
+        transformArgs.extractWidth !== undefined &&
+        transformArgs.extractHeight !== undefined
+      ) {
+        clonedPipeline = sharp(
+          await clonedPipeline
+            .extract({
+              left: transformArgs.extractLeft,
+              top: transformArgs.extractTop,
+              width: transformArgs.extractWidth,
+              height: transformArgs.extractHeight,
+            })
+            .toBuffer()
+        )
+      }
 
       if (transformArgs.trim) {
         clonedPipeline = clonedPipeline.trim(transformArgs.trim)

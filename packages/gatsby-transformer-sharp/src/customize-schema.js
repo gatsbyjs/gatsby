@@ -16,7 +16,7 @@ const {
   fixed,
   traceSVG,
   generateImageData,
-} = require(`gatsby-plugin-sharp`)
+} = require(`gatsby-plugin-sharp-ggat`)
 
 const sharp = require(`./safe-sharp`)
 const fs = require(`fs-extra`)
@@ -210,6 +210,18 @@ const fixedNodeType = ({
         type: GraphQLFloat,
         defaultValue: false,
       },
+      extractLeft: {
+        type: GraphQLInt,
+      },
+      extractTop: {
+        type: GraphQLInt,
+      },
+      extractWidth: {
+        type: GraphQLInt,
+      },
+      extractHeight: {
+        type: GraphQLInt,
+      },
     },
     resolve: (image, fieldArgs, context) => {
       warnForDeprecation()
@@ -376,6 +388,18 @@ const fluidNodeType = ({
         type: GraphQLList(GraphQLInt),
         defaultValue: [],
         description: `A list of image widths to be generated. Example: [ 200, 340, 520, 890 ]`,
+      },
+      extractLeft: {
+        type: GraphQLInt,
+      },
+      extractTop: {
+        type: GraphQLInt,
+      },
+      extractWidth: {
+        type: GraphQLInt,
+      },
+      extractHeight: {
+        type: GraphQLInt,
       },
     },
     resolve: (image, fieldArgs, context) => {

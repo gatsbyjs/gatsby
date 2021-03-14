@@ -65,6 +65,10 @@ exports.createTransformObject = args => {
     duotone: args.duotone ? args.duotone : null,
     fit: args.fit,
     background: args.background,
+    extractLeft: args.extractLeft,
+    extractTop: args.extractTop,
+    extractWidth: args.extractWidth,
+    extractHeight: args.extractHeight,
   }
 
   // get all non falsey values
@@ -177,6 +181,10 @@ exports.removeDefaultValues = (args, pluginOptions) => {
     duotone: args.duotone || undefined,
     fit: args.fit,
     background: args.background,
+    extractLeft: args.extractLeft,
+    extractTop: args.extractTop,
+    extractWidth: args.extractWidth,
+    extractHeight: args.extractHeight,
   }
 
   return _.omitBy(options, _.isNil)

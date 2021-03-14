@@ -222,7 +222,18 @@ export const getSrcSet = images =>
 
 export function getDimensionsAndAspectRatio(dimensions, options) {
   // Calculate the eventual width/height of the image.
-  const imageAspectRatio = dimensions.width / dimensions.height
+  let imageAspectRatio
+
+  if (
+    options.extractLeft !== undefined &&
+    options.extractLeft !== undefined &&
+    options.extractWidth !== undefined &&
+    options.extractHeight !== undefined
+  ) {
+    imageAspectRatio = options.extractWidth / options.extractHeight
+  } else {
+    imageAspectRatio = dimensions.width / dimensions.height
+  }
 
   let width = options.width
   let height = options.height

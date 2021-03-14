@@ -125,7 +125,7 @@ exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
     const imageCountInJobsMap = new Map()
 
     emitter.on(`CREATE_JOB_V2`, action => {
-      if (action.plugin.name === `gatsby-plugin-sharp`) {
+      if (action.plugin.name === `gatsby-plugin-sharp-ggat`) {
         if (action.payload.job.args.isLazy) {
           // we have to remove some internal pieces
           const job = {
@@ -160,7 +160,7 @@ exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
     })
 
     emitter.on(`END_JOB_V2`, action => {
-      if (action.plugin.name === `gatsby-plugin-sharp`) {
+      if (action.plugin.name === `gatsby-plugin-sharp-ggat`) {
         const jobContentDigest = action.payload.jobContentDigest
 
         // when it's lazy we didn't set it
