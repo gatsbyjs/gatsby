@@ -99,7 +99,7 @@ We also added two new ESLint rules inside the default configuration that will wa
 - No anonymous default exports
 - Page templates must only export one default export (the page) and `query` as a named export
 
-Visit the [Fast Refresh conceptual guide](/docs/conceptual/fast-refresh/) to learn more.
+Visit the [Fast Refresh reference guide](/docs/reference/fast-refresh/) to learn more.
 
 ## Node 12
 
