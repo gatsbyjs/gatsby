@@ -20,7 +20,7 @@ describe(`gatsby-plugin-postcss`, () => {
       "No options": {},
       "PostCss options": { postCssPlugins: [`autoprefixer`], sourceMap: false },
       "Css options": { cssLoaderOptions: { camelCase: true } },
-      "Cssoptions commonjs": {
+      "Css options commonjs": {
         cssLoaderOptions: {
           esModule: false,
           modules: {
