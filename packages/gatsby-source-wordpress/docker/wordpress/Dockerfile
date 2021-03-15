@@ -1,4 +1,4 @@
-FROM wordpress:5.6
+FROM wordpress:5.7
 
 ARG WP_CONTENT_DIR=/usr/src/wordpress/wp-content
 ARG PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
