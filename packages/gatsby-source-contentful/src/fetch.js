@@ -4,6 +4,50 @@ const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
 
+const createContentfulErrorMessage = e => {
+  if (typeof e === `string`) {
+    return e
+  }
+
+  // If we get a response, use this as basis to create the error message
+  // Contentful JS SDK tends to give errors with different structures:
+  // https://github.com/contentful/contentful.js/blob/b67b77ac8c919c4ec39203f8cac2043854ab0014/lib/create-contentful-api.js#L89-L99
+  if (e.response) {
+    e = { ...e, ...e.response, ...(e.response?.data || {}) }
+  }
+
+  let errorMessage = [
+    // Generic error responses
+    e.code && `${e.code}`,
+    e.status && `${e.status}`,
+    e.statusText,
+    // Contentful API error Responses
+    e?.sys?.id,
+  ]
+    .filter(Boolean)
+    .join(` `)
+
+  if (e.message) {
+    errorMessage += `\n\n${e.message}`
+  }
+
+  const requestId =
+    (e.headers &&
+      typeof e.headers === `object` &&
+      e.headers[`x-contentful-request-id`]) ||
+    e.requestId
+
+  if (requestId) {
+    errorMessage += `\n\nRequest ID: ${requestId}`
+  }
+
+  if (e.attempts) {
+    errorMessage += `\n\nThe request was sent with ${e.attempts} attempts`
+  }
+
+  return errorMessage
+}
+
 module.exports = async function contentfulFetch({
   syncToken,
   pluginConfig,
@@ -21,8 +65,8 @@ module.exports = async function contentfulFetch({
     integration: `gatsby-source-contentful`,
     responseLogger: response => {
       function createMetadataLog(response) {
-        if (process.env.gatsby_log_level === `verbose`) {
-          return ``
+        if (!response.headers) {
+          return null
         }
         return [
           response?.headers[`content-length`] &&
@@ -36,31 +80,12 @@ module.exports = async function contentfulFetch({
           .join(` `)
       }
 
-      // Log error and throw it in an extended shape
-      if (response.isAxiosError) {
-        reporter.verbose(
-          `${response.config.method} /${response.config.url}: ${
-            response.response.status
-          } ${response.response.statusText} (${createMetadataLog(
-            response.response
-          )})`
-        )
-        let errorMessage = `${response.response.status} ${response.response.statusText}`
-        if (response.response?.data?.message) {
-          errorMessage += `\n\n${response.response.data.message}`
-        }
-        const contentfulApiError = new Error(errorMessage)
-        // Special response naming to ensure the error object is not touched by
-        // https://github.com/contentful/contentful.js/commit/41039afa0c1462762514c61458556e6868beba61
-        contentfulApiError.responseData = response.response
-        contentfulApiError.request = response.request
-        contentfulApiError.config = response.config
-
-        throw contentfulApiError
-      }
-
       // Sync progress
-      if (response.config.url === `sync`) {
+      if (
+        response.config.url === `sync` &&
+        !response.isAxiosError &&
+        response?.data.items
+      ) {
         syncProgress.tick(response.data.items.length)
       }
 
@@ -137,7 +162,10 @@ module.exports = async function contentfulFetch({
 
     reporter.panic({
       context: {
-        sourceMessage: `Accessing your Contentful space failed: ${e.message}
+        sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
+          e
+        )}
+
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
@@ -168,7 +196,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       {
         id: CODES.SyncError,
         context: {
-          sourceMessage: `Fetching contentful data failed: ${e.message}`,
+          sourceMessage: `Fetching contentful data failed: ${createContentfulErrorMessage(
+            e
+          )}`,
         },
       },
       e
@@ -187,7 +217,9 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       {
         id: CODES.FetchContentTypes,
         context: {
-          sourceMessage: `Error fetching content types: ${e.message}`,
+          sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
+            e
+          )}`,
         },
       },
       e
