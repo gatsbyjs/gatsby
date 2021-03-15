@@ -67,10 +67,17 @@ module.exports = async function contentfulFetch({
         syncProgress.tick(response.data.items.length)
       }
 
+      const metadataLog = createMetadataLog(response)
+
       reporter.verbose(
-        `${response.config.method} /${response.config.url}: ${
-          response.status
-        } ${response.statusText} (${createMetadataLog(response)})`
+        [
+          `${response.config.method} /${response.config.url}:`,
+          response.status,
+          response.statusText,
+          metadataLog && `(${metadataLog})`,
+        ]
+          .filter(Boolean)
+          .join(` `)
       )
     },
   }
