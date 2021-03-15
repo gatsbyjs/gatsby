@@ -127,7 +127,7 @@ Nginx is web-server. It provides the infrastructure code for handling client req
    sudo ufw allow 'Nginx HTTP'
    sudo ufw allow 'Nginx HTTPS'
    ```
-   
+
    > Note: You may have to allow access to port 443 explicitly using `sudo ufw allow 443/tcp`.
 
 3. To check the access,
@@ -135,7 +135,7 @@ Nginx is web-server. It provides the infrastructure code for handling client req
    ```shell
    sudo ufw app list
    ```
-   
+
 4. If `ufw` status is disabled/inactive, you can enable it with the following command:
 
    ```shell
