@@ -17,6 +17,8 @@ When working on the Gatsby.js documentation, you can choose between two major st
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
 - Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
 
+// TODO: Update the instructions for how to run the site locally. Currently there's no way for community members to do this. We're working on it!
+
 > **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
 ## Fixing image and link paths
