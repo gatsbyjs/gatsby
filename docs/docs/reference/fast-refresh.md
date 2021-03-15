@@ -2,7 +2,7 @@
 title: Fast Refresh
 ---
 
-Fast Refresh is a feature that allows you to get direct feedback for changes in your React components. Fast Refresh is enabled by default in Gatsby's development server and should show your changes within a second, without losing component state.
+Fast Refresh is an implementation of Hot Reloading with full support from React and it replaces purely userland solutions like [`react-hot-loader`](https://github.com/gaearon/react-hot-loader). It is a feature that allows you to get direct feedback for changes in your React components: A change in your editor immediately updates the browser view and if you have errors in your code the browser view displays an error overlay. Fast Refresh is enabled by default in Gatsby's development server and should show your changes within a second, without losing component state which results in an overall better development experience (DX).
 
 ## How It Works
 
@@ -44,7 +44,7 @@ Fast Refresh tries to preserve local React state in the component you're editing
 
 - Sometimes you want to force the state to be reset and a component to be remounted. For example, this can be handy if you're tweaking an animation that only happens on mount. To do this, you can add `// @refresh reset` anywhere in the file you're editing. This directive is local to the file, and instructs Fast Refresh to remount components defined in that file on every edit.
 
-## Fast Refresh & Hooks
+### React Hooks
 
 When possible, Fast Refresh attempts to preserve the state of your component between edits. In particular, [`useState`](https://reactjs.org/docs/hooks-reference.html#usestate) and [`useRef`](https://reactjs.org/docs/hooks-reference.html#useref) preserve their previous values as long as you don't change their arguments or the order of the Hook calls.
 
