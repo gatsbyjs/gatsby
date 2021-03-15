@@ -365,7 +365,7 @@ Gatsby is a _modern site generator_, which means there are no servers to set up 
 
 [Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, a global edge network and integrations with dozens of other tools. It's the best place to build and host sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
 
-To deploy your site to Gatsby Cloud, first create an account on [GitHub](https://github.com) (or [Gitlab](https://gitlab.com)) if you don't have one. These platforms allow you to host and collaborate on code projects using Git for version control.
+To deploy your site to Gatsby Cloud, first create an account on [GitHub](https://github.com) (or [GitLab](https://gitlab.com)) if you don't have one. These platforms allow you to host and collaborate on code projects using Git for version control.
 
 Create a new repository on GitHub. Since you're importing your existing project, you'll want a completely empty one, so don't initialize it with `README` or `.gitignore` files.
 
@@ -381,7 +381,7 @@ When you created a new Gatsby project with a starter, it automatically made an i
 git push -u origin master
 ```
 
-Now you're ready to link this GitHub repository right to Gatsby Cloud! Sign-in to Gatsby Cloud using the login option (GitHub or Gitlab). If this is your first time logging into Gatsby Cloud, you will create a workspace where you can add multiple sites.
+Now you're ready to link this GitHub repository right to Gatsby Cloud! Sign-in to Gatsby Cloud using the login option (GitHub or GitLab). If this is your first time logging into Gatsby Cloud, you will create a workspace where you can add multiple sites.
 
 Now, click "Add a Site" and select "Import from a Git repository." Select the Github repo that you just created, and update the Site Name if you'd like to use something different than the repo name. For now, you can skip the integrations step and when you get to the final step, click "Create Site." You'll have a Gatsby site live on a Gatsby-provided url in minutes!
 
