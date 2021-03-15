@@ -54,7 +54,7 @@
     "jest-environment-jsdom-fourteen": "^0.1.0",
     "jest-junit": "^10.0.0",
     "jest-serializer-path": "^0.1.15",
-    "jest-silent-reporter": "^0.4.0",
+    "jest-silent-reporter": "^0.5.0",
     "joi": "^14.3.1",
     "js-yaml": "^3.14.1",
     "lerna": "^3.22.1",
