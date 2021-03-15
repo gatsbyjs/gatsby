@@ -63,7 +63,7 @@ class GatsbyImageHydrator extends Component<
   hydrated: MutableRefObject<boolean> = { current: false }
   lazyHydrator: () => void | null = null
   ref = createRef<HTMLImageElement>()
-  unobserveRef: (element: RefObject<HTMLElement | undefined>) => Unobserver
+  unobserveRef: Unobserver
 
   constructor(props) {
     super(props)
@@ -125,7 +125,6 @@ class GatsbyImageHydrator extends Component<
       })
 
       if (this.root.current) {
-        // @ts-ignore - hello
         this.unobserveRef = intersectionObserver(this.root)
       }
     })
@@ -139,7 +138,7 @@ class GatsbyImageHydrator extends Component<
       // reset state, we'll rely on intersection observer to reload
       if (this.unobserveRef) {
         // unregister intersectionObserver
-        this.unobserveRef(this.root)
+        this.unobserveRef()
 
         // // on unmount, make sure we cleanup
         if (this.hydrated.current && this.lazyHydrator) {
@@ -169,25 +168,25 @@ class GatsbyImageHydrator extends Component<
 
   componentDidMount(): void {
     if (this.root.current) {
-      const hasSSRHtml = this.root.current.querySelector(
+      const ssrElement = this.root.current.querySelector(
         `[data-gatsby-image-ssr]`
       ) as HTMLImageElement
       const cacheKey = JSON.stringify(this.props.image.images)
 
       // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport() && hasSSRHtml && global.GATSBY___IMAGE) {
+      if (hasNativeLazyLoadSupport() && ssrElement && global.GATSBY___IMAGE) {
         this.props.onStartLoad?.({ wasCached: false })
 
         // When the image is already loaded before we have hydrated, we trigger onLoad and cache the item
-        if (hasSSRHtml.complete) {
+        if (ssrElement.complete) {
           this.props.onLoad?.()
           storeImageloaded(cacheKey)
         } else {
           // eslint-disable-next-line @typescript-eslint/no-this-alias
           const _this = this
           // add an onLoad to the image
-          hasSSRHtml.addEventListener(`load`, function onLoad() {
-            hasSSRHtml.removeEventListener(`load`, onLoad)
+          ssrElement.addEventListener(`load`, function onLoad() {
+            ssrElement.removeEventListener(`load`, onLoad)
 
             _this.props.onLoad?.()
             storeImageloaded(cacheKey)
@@ -206,7 +205,7 @@ class GatsbyImageHydrator extends Component<
     // Cleanup when onmount happens
     if (this.unobserveRef) {
       // unregister intersectionObserver
-      this.unobserveRef(this.root)
+      this.unobserveRef()
 
       // on unmount, make sure we cleanup
       if (this.hydrated.current && this.lazyHydrator) {
