@@ -2,13 +2,10 @@
 import React, {
   Component,
   ElementType,
-  useEffect,
-  useRef,
   createRef,
   MutableRefObject,
   FunctionComponent,
   ImgHTMLAttributes,
-  useState,
   RefObject,
   CSSProperties,
 } from "react"
@@ -56,8 +53,6 @@ export interface IGatsbyImageData {
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
 }
 
-const hasShownWarning = false
-
 class GatsbyImageHydrator extends Component<
   GatsbyImageProps,
   { isLoading: boolean; isLoaded: boolean }
@@ -76,18 +71,6 @@ class GatsbyImageHydrator extends Component<
     this.state = {
       isLoading: hasNativeLazyLoadSupport(),
       isLoaded: false,
-    }
-
-    if (!this.props.image) {
-      if (process.env.NODE_ENV === `development`) {
-        console.warn(`[gatsby-plugin-image] Missing image prop`)
-      }
-    }
-
-    if (!global.GATSBY___IMAGE) {
-      console.warn(
-        `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
-      )
     }
   }
 
@@ -149,48 +132,7 @@ class GatsbyImageHydrator extends Component<
   }
 
   shouldComponentUpdate(nextProps, nextState): boolean {
-    // if the image prop changes we'll have to do some manual work
-    // if (this.props.image !== nextProps.image) {
-    //   const { width, height, layout } = nextProps.image
-    // this.root.current.innerHTML = getSizer(layout, width, height)
-
-    // console.log(frag.childNodes)
-    // }
-    // const { width, height, layout } = nextProps.image
     let hasChanged = false
-    // if (
-    //   this.props.image.width !== width ||
-    //   this.props.image.height !== height ||
-    //   this.props.image.layout !== layout
-    // ) {
-    //   const {
-    //     style: wStyle,
-    //     className: wClass,
-    //     ...wrapperProps
-    //   } = getWrapperProps(width, height, layout)
-
-    //   console.log({
-    //     ...wStyle,
-    //     ...this.props.style,
-    //     backgroundColor: this.props.backgroundColor,
-    //   })
-
-    //   hasChanged = true
-    // }
-    // if (
-    //   this.props.image.width !== nextProps.image.width ||
-    //   this.props.image.height !== nextProps.image.height ||
-    //   this.props.image.layout !== nextProps.image.layout ||
-    //   this.props.style !== nextProps.style ||
-    //   // preact class prop
-    //   this.props.class !== nextProps.class ||
-    //   this.props.className !== nextProps.className ||
-    //   this.props.backgroundColor !== nextProps.backgroundColor
-    // ) {
-    //   // let this.props.className
-
-    //   return false
-    // }
 
     // this check mostly means people do not have the correct ref checks in place, we want to reset some state to suppport loading effects
     if (this.props.image.images !== nextProps.image.images) {
@@ -315,6 +257,18 @@ class GatsbyImageHydrator extends Component<
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage(
   props
 ) {
+  if (!props.image) {
+    if (process.env.NODE_ENV === `development`) {
+      console.warn(`[gatsby-plugin-image] Missing image prop`)
+    }
+    return null
+  }
+
+  if (!global.GATSBY___IMAGE) {
+    console.warn(
+      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
+    )
+  }
   const { className, class: classSafe, backgroundColor, image } = props
   const { width, height, layout } = image
   const propsKey = JSON.stringify([
