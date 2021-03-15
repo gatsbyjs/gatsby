@@ -11,7 +11,6 @@ module.exports = async function contentfulFetch({
 }) {
   // Fetch articles.
   let syncProgress
-  let syncItemCount = 0
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
@@ -62,8 +61,6 @@ module.exports = async function contentfulFetch({
 
       // Sync progress
       if (response.config.url === `sync`) {
-        syncItemCount += response.data.items.length
-        syncProgress.total = syncItemCount
         syncProgress.tick(response.data.items.length)
       }
 
