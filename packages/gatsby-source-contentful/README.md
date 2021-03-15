@@ -145,8 +145,6 @@ The environment to pull the content from, for more info on environments check ou
 
 Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to query a `ContentfulAsset`'s `localFile` field, which is not linked to Contentful's CDN. Useful for reducing data usage.
 
-You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
-
 **`localeFilter`** [function][optional] [default: `() => true`]
 
 Possibility to limit how many locales/nodes are created in GraphQL. This can limit the memory usage by reducing the amount of nodes created. Useful if you have a large space in Contentful and only want to get the data from one selected locale.
@@ -180,6 +178,12 @@ Number of entries to retrieve from Contentful at a time. Due to some technical l
 **`assetDownloadWorkers`** [number][optional] [default: `50`]
 
 Number of workers to use when downloading Contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
+
+**`contentfulClientConfig`** [object][optional] [default: `{}`]
+
+Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
+
+Use this with caution, you might override values this plugin sets for you to connect to Contentful.
 
 ## Notes on Contentful Content Models
 

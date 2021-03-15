@@ -77,6 +77,8 @@ module.exports = async function contentfulFetch({
           .join(` `)
       )
     },
+    // Allow passing of custom configuration to the Contentful SDK like headers
+    ...(pluginConfig.get(`contentfulClientConfig`) || {}),
   }
 
   const client = contentful.createClient(contentfulClientOptions)
