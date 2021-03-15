@@ -84,7 +84,7 @@ describe(`gatsby-plugin-postcss`, () => {
           ],
         },
       }),
-      "Cssoptions commonjs": jest.fn().mockReturnValue({
+      "Css options commonjs": jest.fn().mockReturnValue({
         module: {
           rules: [
             {
