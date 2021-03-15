@@ -33,7 +33,7 @@ Click on next.
 
 ### 3. Add your Gatsby site
 
-Click on the create an application button and select your Github or Gitlab repository where your Strapi app is located.
+Click on the create an application button and select your Github or Gitlab repository where your Gatsby site is located.
 
 Click on next.
 
