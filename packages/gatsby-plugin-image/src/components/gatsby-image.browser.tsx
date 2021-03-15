@@ -161,7 +161,6 @@ class GatsbyImageHydrator extends Component<
     }
 
     if (this.root.current && !hasChanged) {
-      console.log(nextState)
       this._lazyHydrate(nextProps, nextState)
     }
 
