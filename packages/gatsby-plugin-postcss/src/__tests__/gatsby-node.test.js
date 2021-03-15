@@ -111,7 +111,7 @@ describe(`gatsby-plugin-postcss`, () => {
       "No options": actions.setWebpackConfig,
       "PostCss options": actions.replaceWebpackConfig,
       "Css options": actions.replaceWebpackConfig,
-      "Cssoptions commonjs": actions.replaceWebpackConfig,
+      "Css options commonjs": actions.replaceWebpackConfig,
     },
   }
 
