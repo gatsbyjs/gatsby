@@ -367,7 +367,7 @@ const Box = ({ children }) => (
 export default Box
 ```
 
-You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
+You can also still import all styles using the `import * as styles` syntax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
 ### File assets (fonts, pdfs, ...) are imported as ES Modules
 
@@ -469,12 +469,14 @@ If you're using any other process properties, you want to polyfill process.
 2. Configure webpack to use the process polyfill.
 
 ```diff:title=gatby-node.js
-exports.onCreateWebpackConfig = ({ actions }) => {
-  actions.setWebpackConfig({
-    plugins: [
-      new plugins.provide({ process: 'process/browser' })
-    ]
-  })
+exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
+  if (stage === 'build-javascript' || stage === 'develop') {
+    actions.setWebpackConfig({
+      plugins: [
+        plugins.provide({ process: 'process/browser' })
+      ]
+    })
+  }
 }
 ```
 

@@ -98,9 +98,7 @@ export interface IGatsbyImageHelperArgs {
   layout?: Layout
   formats?: Array<ImageFormat>
   filename: string
-  placeholderURL?:
-    | ((args: IGatsbyImageHelperArgs) => string | undefined)
-    | string
+  placeholderURL?: string
   width?: number
   height?: number
   sizes?: string
@@ -238,6 +236,7 @@ export function generateImageData(
     filename,
     reporter = { warn },
     backgroundColor,
+    placeholderURL,
   } = args
 
   if (!pluginName) {
@@ -342,6 +341,11 @@ export function generateImageData(
     layout,
     backgroundColor,
   }
+
+  if (placeholderURL) {
+    imageProps.placeholder = { fallback: placeholderURL }
+  }
+
   switch (layout) {
     case `fixed`:
       imageProps.width = imageSizes.presentationWidth

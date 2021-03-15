@@ -276,8 +276,6 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         ADD_NODE_MUTATION: {
           actions: `callApi`,
         },
-        // Ignore, because we're about to extract them anyway
-        SOURCE_FILE_CHANGED: undefined,
       },
       invoke: {
         src: `reloadData`,
