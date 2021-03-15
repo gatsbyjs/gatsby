@@ -363,53 +363,9 @@ The Gatsby `<Link />` component is for linking between pages within your site. F
 
 Gatsby is a _modern site generator_, which means there are no servers to set up or complicated databases to deploy. Instead, the Gatsby `build` command produces a directory of static HTML and JavaScript files which you can deploy to a static site hosting service.
 
-Try using [Surge](https://surge.sh/) for deploying your first Gatsby website. Surge is one of many "static site hosts" which makes it possible to deploy Gatsby sites.
+[Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, a global edge network and integrations with dozens of other tools. It's the best place to build and host sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
 
-> Gatsby Cloud is another deployment option, built by the team behind Gatsby. In the next section, you'll find instructions for [deploying to Gatsby Cloud](/docs/tutorial/part-one/#alternative-deploying-to-gatsby-cloud).
-
-If you haven't previously installed & set up Surge, open a new terminal window and install their command-line tool:
-
-```shell
-npm install --global surge
-
-# Then create a (free) account with them
-surge login
-```
-
-Next, build your site by running the following command in the terminal at the root of your site (tip: make sure you're running this command at the root of your site, in this case in the hello-world folder, which you can do by opening a new tab in the same window you used to run `gatsby develop`):
-
-```shell
-gatsby build
-```
-
-The build should take 15-30 seconds. Once the build is finished, it's interesting to take a look at the files that the `gatsby build` command just prepared to deploy.
-
-Take a look at a list of the generated files by typing in the following terminal command into the root of your site, which will let you look at the `public` directory:
-
-```shell
-ls public
-```
-
-Then finally deploy your site by publishing the generated files to surge.sh. For newly-created surge account, you need to verify your email with surge before publishing your site (check your inbox first and verify your email).
-
-```shell
-surge public/
-```
-
-> Note that you will have to press the `enter` key after you see the `domain: some-name.surge.sh` information on your command-line interface.
-
-Once this finishes running, you should see in your terminal something like:
-
-![Screenshot of publishing Gatsby site with Surge](surge-deployment.png)
-
-Open the web address listed on the bottom line (`lowly-pain.surge.sh` in this
-case) and you'll see your newly published site! Great work!
-
-### Alternative: Deploying to Gatsby Cloud
-
-[Gatsby Cloud](https://gatsbyjs.com) is a platform built specifically for Gatsby sites, with features like real-time previews, fast builds, and integrations with dozens of other tools. It's the best place to build and deploy sites built with Gatsby, and you can use Gatsby Cloud free for personal projects.
-
-To deploy your site to Gatsby Cloud, create an account on [GitHub](https://github.com) if you don't have one. GitHub allows you to host and collaborate on code projects using Git for version control.
+To deploy your site to Gatsby Cloud, first create an account on [GitHub](https://github.com) (or [Gitlab](https://gitlab.com)) if you don't have one. These platforms allow you to host and collaborate on code projects using Git for version control.
 
 Create a new repository on GitHub. Since you're importing your existing project, you'll want a completely empty one, so don't initialize it with `README` or `.gitignore` files.
 
@@ -425,7 +381,11 @@ When you created a new Gatsby project with a starter, it automatically made an i
 git push -u origin master
 ```
 
-Now you're ready to link this GitHub repository right to Gatsby Cloud! Check out the reference guide on [Deploying to Gatsby Cloud](/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
+Now you're ready to link this GitHub repository right to Gatsby Cloud! Sign-in to Gatsby Cloud using the Github login option. If this is your first time logging into Gatsby Cloud, you will create a workspace where you can add multiple sites.
+
+Now, click "Add a Site" and select "Import from a Git repository." Select the Github repo that you just created, and update the Site Name if you'd like to use something different than the repo name. For now, you can skip the integrations step and when you get to the final step, click "Create Site." You'll have a Gatsby site live on a Gatsby-provided url in minutes!
+
+Check out the reference guide on [Deploying to Gatsby Cloud](/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
 
 ## ➡️ What's Next?
 
