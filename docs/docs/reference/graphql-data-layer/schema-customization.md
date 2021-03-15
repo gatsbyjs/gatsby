@@ -452,12 +452,12 @@ And your author JSON looks like this:
   {
     "name": "Doe",
     "firstName": "Jane",
-    "email": "jane@example.com",
+    "email": "jane@example.com"
   },
   {
     "name": "Doe",
     "firstName": "Zoe",
-    "email": "zoe@example.com",
+    "email": "zoe@example.com"
   }
 ]
 ```
