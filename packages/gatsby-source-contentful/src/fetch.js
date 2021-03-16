@@ -142,15 +142,12 @@ module.exports = async function contentfulFetch({
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      reporter.panic(
-        {
-          id: CODES.SelfSignedCertificate,
-          context: {
-            sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-          },
+      reporter.panic({
+        id: CODES.SelfSignedCertificate,
+        context: {
+          sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
         },
-        e
-      )
+      })
     } else if (e.responseData) {
       if (e.responseData.status === 404) {
         // host and space used to generate url
@@ -205,17 +202,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    reporter.panic(
-      {
-        id: CODES.SyncError,
-        context: {
-          sourceMessage: `Fetching contentful data failed: ${createContentfulErrorMessage(
-            e
-          )}`,
-        },
+    reporter.panic({
+      id: CODES.SyncError,
+      context: {
+        sourceMessage: `Fetching contentful data failed: ${createContentfulErrorMessage(
+          e
+        )}`,
       },
-      e
-    )
+    })
   } finally {
     syncProgress.done()
   }
@@ -226,17 +220,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(
-      {
-        id: CODES.FetchContentTypes,
-        context: {
-          sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
-            e
-          )}`,
-        },
+    reporter.panic({
+      id: CODES.FetchContentTypes,
+      context: {
+        sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
+          e
+        )}`,
       },
-      e
-    )
+    })
   }
   reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
