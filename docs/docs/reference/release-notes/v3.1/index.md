@@ -30,9 +30,9 @@ Gatsby's Fast Refresh modal now respects the [`prefers-color-scheme` setting](ht
 
 ## Improved Error Messages
 
-We've seen many complaints about the unspecific error `"Error page resources for <path> not found. Not rendering React"`. There are many reasons why this could happen. We've improved error logging to see the original error in the devtools console and your favorite error tracker. These error messages should help debug the reason why this happens.
+We've seen many complaints about the unspecific error `"Error page resources for <path> not found. Not rendering React"`. There are many reasons why this could happen so we improved our error logging to output the original error. As usual you'll see the error in DevTools console or your error tracker.
 
-Consider the following example, it nows shows the actual error.
+Consider the following example, it now shows the actual error.
 
 ```js
 if (typeof window === "undefined") {
@@ -42,15 +42,15 @@ if (typeof window === "undefined") {
 export default function MyPage() {}
 ```
 
-![Browser console showing the error](https://user-images.githubusercontent.com/1120926/109872417-afa3ec80-7c6c-11eb-83dc-1d061fd4cd97.png)
+![Browser console showing the actual error](https://user-images.githubusercontent.com/1120926/109872417-afa3ec80-7c6c-11eb-83dc-1d061fd4cd97.png)
 
-In develop we've also pumped up our errors a litlle bit by showing the original error when they occur in `gatsby-browser.js` or outside of react components.
+In development mode we also now show the original error when it occurs in `gatsby-browser.js` or outside of React components.
 
 ![Fast Refresh overlay showing an error that happened outside of React](https://user-images.githubusercontent.com/1120926/110111666-fe5a9f00-7db0-11eb-8d2a-d9a7f2709f24.png)
 
 ## Contentful `gatsbyImageData` is stable
 
-Contentful nows supports `gatsby-plugin-image` out of the box without any warnings. Now get those lighthouse scores up to a 100!
+Contentful now fully supports `gatsby-plugin-image` out of the box. TODO: What does that mean?
 
 You can find more information on how to switch to [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/#dynamic-images) by going to our [`gatsby-image` to `gatsby-plugin-image` migration guide](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/)
 
