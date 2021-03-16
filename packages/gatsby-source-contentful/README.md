@@ -145,6 +145,8 @@ The environment to pull the content from, for more info on environments check ou
 
 Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to query a `ContentfulAsset`'s `localFile` field, which is not linked to Contentful's CDN. Useful for reducing data usage.
 
+**USE WITH CAUTION:** When your Space contains a lot of assets, you will download every single file. This might bloat your hard drive, slow down builds and drastically increase the amount of data stored in the internal Gatsby DB.
+
 You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
 
 **`localeFilter`** [function][optional] [default: `() => true`]
