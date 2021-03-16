@@ -83,18 +83,18 @@ You can find more information on how to switch to [`gatsby-plugin-image`](https:
 
 - [visualfanatic](https://github.com/visualfanatic): docs(gatsby-plugin-subfont): correct property name [PR #29803](https://github.com/gatsbyjs/gatsby/pull/29803)
 - [mottox2](https://github.com/mottox2)
+
   - fix(example): import styles as ESModules [PR #29818](https://github.com/gatsbyjs/gatsby/pull/29818)
   - fix(example): import styles as ESModules in simple-auth [PR #29823](https://github.com/gatsbyjs/gatsby/pull/29823)
   - fix(docs): update library link in docs [PR #29819](https://github.com/gatsbyjs/gatsby/pull/29819)
 
-
 - [chrsep](https://github.com/chrsep): fix: query on demand loading indicator always active on preact. [PR #29829](https://github.com/gatsbyjs/gatsby/pull/29829)
 - [jbampton](https://github.com/jbampton)
+
   - chore: fix spelling, remove whitespace and fix link [PR #29846](https://github.com/gatsbyjs/gatsby/pull/29846)
   - chore: fix spelling, remove whitespace and fix links [PR #30012](https://github.com/gatsbyjs/gatsby/pull/30012)
   - chore: fix spelling, grammar, links, whitespace and end of files [PR #30063](https://github.com/gatsbyjs/gatsby/pull/30063)
   - chore: make ./starters/upgrade-starters.sh executable [PR #30102](https://github.com/gatsbyjs/gatsby/pull/30102)
-
 
 - [imshubhamsingh](https://github.com/imshubhamsingh): chore(docs): updated doc for payment using square [PR #27272](https://github.com/gatsbyjs/gatsby/pull/27272)
 - [ahmetcanaydemir](https://github.com/ahmetcanaydemir): fix(gatsby-react-router-scroll): debounce function for scollListener [PR #26933](https://github.com/gatsbyjs/gatsby/pull/26933)
