@@ -95,24 +95,32 @@ const paginatedWpNodeFetch = async ({
     nodes.forEach(node => {
       const existingId = idSet.has(node.id)
 
-      if (existingId) {
+      if (
+        existingId &&
+        // when the since variable is present
+        // we're fetching lists of node updates from WPGQL
+        // in that case we don't need to worry about logging duplicates
+        !(`since` in variables)
+      ) {
         const existingNode = allContentNodes.find(
           innerNode => innerNode.id === node.id
         )
 
-        if (!hasLoggedDuplicateMessage) {
-          hasLoggedDuplicateMessage = true
-          helpers.reporter.warn(
+        if (existingNode) {
+          if (!hasLoggedDuplicateMessage) {
+            hasLoggedDuplicateMessage = true
+            helpers.reporter.warn(
+              formatLogMessage(
+                `Found a duplicate ID in WordPress - this means you will have fewer nodes in Gatsby than in WordPress. This will need to be resolved in WP by identifying and fixing the underlying bug with your WP plugins or custom code.`
+              )
+            )
+          }
+          helpers.reporter.info(
             formatLogMessage(
-              `Found a duplicate ID in WordPress - this means you will have fewer nodes in Gatsby than in WordPress. This will need to be resolved in WP by identifying and fixing the underlying bug with your WP plugins or custom code.`
+              `#${node.databaseId} (${node?.uri}) is a duplicate of ${existingNode.databaseId} (${existingNode?.uri})`
             )
           )
         }
-        helpers.reporter.info(
-          formatLogMessage(
-            `#${node.databaseId} (${node?.uri}) is a duplicate of ${existingNode.databaseId} (${existingNode?.uri})`
-          )
-        )
       } else {
         idSet.add(node.id)
       }
