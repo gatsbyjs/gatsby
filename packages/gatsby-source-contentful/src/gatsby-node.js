@@ -45,7 +45,7 @@ const validateContentfulAccess = async pluginOptions => {
           pluginOptions.spaceId
         )}" on environment "${
           pluginOptions.environment
-        } with access token "${maskText(
+        }" with access token "${maskText(
           pluginOptions.accessToken
         )}". Make sure to double check them!`
 
