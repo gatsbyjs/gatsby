@@ -2,7 +2,7 @@
 title: Deploying to Qovery
 ---
 
-[Qovery](https://qovery) is a fully-managed cloud platform that runs on your AWS account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
+[Qovery](https://qovery.com) is a fully-managed cloud platform that runs on your AWS account where you can host static sites, backend APIs, databases, cron jobs, and all your other apps in one place.
 
 Static sites are **completely free** on Qovery and include the following features:
 
@@ -11,7 +11,6 @@ Static sites are **completely free** on Qovery and include the following feature
 - Free managed PostgreSQL.
 - Unlimited collaborators.
 - Unlimited [custom domains](https://docs.qovery.com/guides/getting-started/setting-custom-domain/).
-- Automatic HTTP → HTTPS redirects.
 
 ## Prerequisites
 
