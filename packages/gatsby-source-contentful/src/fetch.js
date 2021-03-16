@@ -4,46 +4,56 @@ const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
 
+/**
+ * Generate a user friendly error message.
+ *
+ * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
+ *
+ * Additionally the SDK strips the error object, sometimes:
+ * https://github.com/contentful/contentful.js/blob/b67b77ac8c919c4ec39203f8cac2043854ab0014/lib/create-contentful-api.js#L89-L99
+ *
+ * This code tries to work around this.
+ */
 const createContentfulErrorMessage = e => {
-  if (typeof e === `string`) {
-    return e
-  }
-
-  // If we get a response, use this as basis to create the error message
-  // Contentful JS SDK tends to give errors with different structures:
-  // https://github.com/contentful/contentful.js/blob/b67b77ac8c919c4ec39203f8cac2043854ab0014/lib/create-contentful-api.js#L89-L99
+  // If we got a response, it is very likely that it is a Contentful API error.
   if (e.response) {
-    e = { ...e, ...e.response }
+    let parsedContentfulErrorData = {}
 
+    // Parse JSON response data, and add it to the object.
     if (typeof e.response.data === `string`) {
       try {
-        const data = JSON.parse(e.response.data)
-        if (data && typeof data === `object`) {
-          e = { ...e, ...data }
+        parsedContentfulErrorData = JSON.parse(e.response.data)
+        if (typeof parsedContentfulErrorData !== `object`) {
+          throw new Error()
         }
       } catch (err) {
         e.message = `Unable to extract API error data from:\n${e.response.data}`
       }
+      // If response data was parsed alredy, just add it.
     } else if (typeof e.response.data === `object`) {
-      e = { ...e, ...e.response.data }
+      parsedContentfulErrorData = e.response.data
     }
+
+    e = { ...e, ...e.response, ...parsedContentfulErrorData }
   }
 
   let errorMessage = [
-    // Generic error responses
+    // Generic error values
     e.code && `${e.code}`,
     e.status && `${e.status}`,
     e.statusText,
-    // Contentful API error Responses
+    // Contentful API error response values
     e?.sys?.id,
   ]
     .filter(Boolean)
     .join(` `)
 
+  // Add message if it exists. Usually error default or Contentful's error message
   if (e.message) {
     errorMessage += `\n\n${e.message}`
   }
 
+  // Get request ID from headers or Contentful's error data
   const requestId =
     (e.headers &&
       typeof e.headers === `object` &&
@@ -54,6 +64,7 @@ const createContentfulErrorMessage = e => {
     errorMessage += `\n\nRequest ID: ${requestId}`
   }
 
+  // Tell the user about how many request attempts Contentful SDK made
   if (e.attempts) {
     errorMessage += `\n\nThe request was sent with ${e.attempts} attempts`
   }
