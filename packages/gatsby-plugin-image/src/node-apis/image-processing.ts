@@ -88,7 +88,7 @@ export async function writeImages({
       let file: FileSystemNode | undefined
       let fullPath
       if (!src) {
-        reporter.warn(`Missing StaticImage "src" in ${filename}`)
+        reporter.warn(`Missing StaticImage "src" in ${filename}.`)
         return
       }
       if (isRemoteURL(src)) {
@@ -129,7 +129,7 @@ export async function writeImages({
 
         if (!fs.existsSync(fullPath)) {
           reporter.warn(
-            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}`
+            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}.`
           )
           return
         }
