@@ -13,7 +13,20 @@ const createContentfulErrorMessage = e => {
   // Contentful JS SDK tends to give errors with different structures:
   // https://github.com/contentful/contentful.js/blob/b67b77ac8c919c4ec39203f8cac2043854ab0014/lib/create-contentful-api.js#L89-L99
   if (e.response) {
-    e = { ...e, ...e.response, ...(e.response?.data || {}) }
+    e = { ...e, ...e.response }
+
+    if (typeof e.response.data === `string`) {
+      try {
+        const data = JSON.parse(e.response.data)
+        if (data && typeof data === `object`) {
+          e = { ...e, ...data }
+        }
+      } catch (err) {
+        e.message = `Unable to extract API error data from:\n${e.response.data}`
+      }
+    } else if (typeof e.response.data === `object`) {
+      e = { ...e, ...e.response.data }
+    }
   }
 
   let errorMessage = [
