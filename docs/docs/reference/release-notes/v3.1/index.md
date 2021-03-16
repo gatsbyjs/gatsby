@@ -44,7 +44,7 @@ export default function MyPage() {}
 
 ![](https://user-images.githubusercontent.com/1120926/109872417-afa3ec80-7c6c-11eb-83dc-1d061fd4cd97.png)
 
-Gatsby now shows the original error when errors occur in `gatsby-browser.js` or outside of react components.
+In develop we've also pumped up our errors a litlle bit by showing the original error when they occur in `gatsby-browser.js` or outside of react components.
 
 ![New error outside of react](https://user-images.githubusercontent.com/1120926/110111666-fe5a9f00-7db0-11eb-8d2a-d9a7f2709f24.png)
 
