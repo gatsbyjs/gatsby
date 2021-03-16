@@ -68,3 +68,38 @@ You can find more information on how to switch to [`gatsby-plugin-image`](https:
 - gatsby-source-contentful: fix deprecation warnings, via [PR #29675](https://github.com/gatsbyjs/gatsby/pull/29675)
 
 ## Contributors
+
+- [visualfanatic](https://github.com/visualfanatic): docs(gatsby-plugin-subfont): correct property name [PR #29803](https://github.com/gatsbyjs/gatsby/pull/29803)
+- [mottox2](https://github.com/mottox2)
+  - fix(example): import styles as ESModules [PR #29818](https://github.com/gatsbyjs/gatsby/pull/29818)
+  - fix(example): import styles as ESModules in simple-auth [PR #29823](https://github.com/gatsbyjs/gatsby/pull/29823)
+  - fix(docs): update library link in docs [PR #29819](https://github.com/gatsbyjs/gatsby/pull/29819)
+
+
+- [chrsep](https://github.com/chrsep): fix: query on demand loading indicator always active on preact. [PR #29829](https://github.com/gatsbyjs/gatsby/pull/29829)
+- [jbampton](https://github.com/jbampton)
+  - chore: fix spelling, remove whitespace and fix link [PR #29846](https://github.com/gatsbyjs/gatsby/pull/29846)
+  - chore: fix spelling, remove whitespace and fix links [PR #30012](https://github.com/gatsbyjs/gatsby/pull/30012)
+  - chore: fix spelling, grammar, links, whitespace and end of files [PR #30063](https://github.com/gatsbyjs/gatsby/pull/30063)
+  - chore: make ./starters/upgrade-starters.sh executable [PR #30102](https://github.com/gatsbyjs/gatsby/pull/30102)
+
+
+- [imshubhamsingh](https://github.com/imshubhamsingh): chore(docs): updated doc for payment using square [PR #27272](https://github.com/gatsbyjs/gatsby/pull/27272)
+- [ahmetcanaydemir](https://github.com/ahmetcanaydemir): fix(gatsby-react-router-scroll): debounce function for scollListener [PR #26933](https://github.com/gatsbyjs/gatsby/pull/26933)
+- [talohana](https://github.com/talohana): chore(docs): add paths to unit-testing using typescript [PR #28029](https://github.com/gatsbyjs/gatsby/pull/28029)
+- [hashimwarren](https://github.com/hashimwarren): chore(docs): Update headless WordPress article [PR #29402](https://github.com/gatsbyjs/gatsby/pull/29402)
+- [lorensr](https://github.com/lorensr): chore(docs): Add twitter links to tutorial [PR #29696](https://github.com/gatsbyjs/gatsby/pull/29696)
+- [herecydev](https://github.com/herecydev): fix(gatsby): Add dir=ltr to Fast Refresh overlay [PR #29900](https://github.com/gatsbyjs/gatsby/pull/29900)
+- [dan2k3k4](https://github.com/dan2k3k4): chore(docs): Fix link to /docs/conceptual/using-gatsby-image [PR #29930](https://github.com/gatsbyjs/gatsby/pull/29930)
+- [lourd](https://github.com/lourd): refactor(gatsby-transformer-remark): Refactors out Bluebird usage in transformer-remark [PR #29638](https://github.com/gatsbyjs/gatsby/pull/29638)
+- [ahollenbach](https://github.com/ahollenbach): docs: clarify env variable prefix in gatsby-source-filesystem docs [PR #30013](https://github.com/gatsbyjs/gatsby/pull/30013)
+- [Swarleys](https://github.com/Swarleys): docs(gatsby-plugin-image): fixing a typo. [PR #29994](https://github.com/gatsbyjs/gatsby/pull/29994)
+- [samlogan](https://github.com/samlogan): fix(gatsby-plugin-image): broken documentation links [PR #30065](https://github.com/gatsbyjs/gatsby/pull/30065)
+- [KarlBaumann](https://github.com/KarlBaumann): chore(gatsby-source-wordpress): Remove version from README [PR #30056](https://github.com/gatsbyjs/gatsby/pull/30056)
+- [Vazerthon](https://github.com/Vazerthon): chore(docs): Add link to art direction docs [PR #30041](https://github.com/gatsbyjs/gatsby/pull/30041)
+- [magnusdahlstrand](https://github.com/magnusdahlstrand): chore(gatsby-plugin-postcss): Update README to show correct usage [PR #30035](https://github.com/gatsbyjs/gatsby/pull/30035)
+- [feedm3](https://github.com/feedm3): chore(docs): set process polyfill correctly [PR #30160](https://github.com/gatsbyjs/gatsby/pull/30160)
+- [axe312ger](https://github.com/axe312ger): contentful <3 gatsby v3 [PR #29675](https://github.com/gatsbyjs/gatsby/pull/29675)
+- [machadoluiz](https://github.com/machadoluiz): fix(docs): update conceptual gatsby image doc [PR #30175](https://github.com/gatsbyjs/gatsby/pull/30175)
+- [dhrumilp15](https://github.com/dhrumilp15): chore(docs): Update deploying-to-digitalocean-droplet [PR #30161](https://github.com/gatsbyjs/gatsby/pull/30161)
+- [nop33](https://github.com/nop33): chore(docs): Fix typo in migration guide [PR #30197](https://github.com/gatsbyjs/gatsby/pull/30197)
