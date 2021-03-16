@@ -6,6 +6,8 @@ Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in 
 
 > _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
 
+When writing (or reviewing) learning materials that show Gatsby users how to complete tasks, you are expected to **test out any code examples or steps to ensure they work**. This can also help with writing in your own words, rather than copying from other sources. If you have a demo project or code example that strengthens docs and you don't know where to put it, mention it to the Gatsby Documentation team in a PR.
+
 ## Top priorities
 
 Check the GitHub repo for issues labeled with ["type: documentation" and "good first issue"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22good+first+issue%22) for your first time contributing to Gatsby, or [type: documentation" and "help wanted"](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22type%3A+documentation%22+label%3A%22help+wanted%22) to see all documentation issues that are ready for community help. Once you start a Pull Request to address one of these issues, you can remove the "help wanted" label. As well, examine the list of articles that haven't been fully fleshed out at the [Stub List](/contributing/stub-list).
@@ -15,11 +17,7 @@ Check the GitHub repo for issues labeled with ["type: documentation" and "good f
 When working on the Gatsby.js documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
-
-// TODO: Update the instructions for how to run the site locally. Currently there's no way for community members to do this. We're working on it!
-
-> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
+- Clone the Gatsby.js repo and make changes to the Markdown files using your favorite text editor. Currently (as of March 2021), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.
 
 ## Fixing image and link paths
 
@@ -50,43 +48,9 @@ For the purposes of an accessible document outline, content headings should go i
      > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-### Converting a document from a stub
-
-If you wrote a new document that was [previously a stub](/contributing/how-to-write-a-stub/), there are two things you need to update.
-
-1. Remove the frontmatter that links to the issue
-
-```diff:title=docs/docs/example-doc.md
-  ...
-    title: Example Document
-- - issue: https://github.com/gatsbyjs/gatsby/issues/00000
-+ -
-  ...
-```
-
-2. Edit `www/src/data/sidebars/doc-links.yaml` by removing the asterisk behind the document's title:
-
-```diff:title=www/src/data/sidebars/doc-links.yaml
-  ...
-- - title: Example Document*
-+ - title: Example Document
-    link: /docs/example-document/
-  ...
-```
-
-3. (Optional) if the name of the title seems long, consider adding a `breadcrumbTitle` to the entry in the `doc-links.yaml` file that is a shorter version of the title, and will show up in the breadcrumb on the docs page instead.
-
-```diff:title=www/src/data/sidebars/doc-links.yaml
-  ...
-  - title: Really, Really Long Example Document or Guide Title
-    link: /docs/example-document/
-+   breadcrumbTitle: Shorter Title to Display
-  ...
-```
-
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
 > **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
 
