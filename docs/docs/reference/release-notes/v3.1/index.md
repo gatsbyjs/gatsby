@@ -30,7 +30,7 @@ Gatsby's Fast Refresh modal now respects the [`prefers-color-scheme` setting](ht
 
 ## Improved Error Messages
 
-We've seen many complaints about the unspecific error `"Error page resources for <path> not found. Not rendering React"`. There are many reasons why this could happen so we improved our error logging to output the original error. As usual you'll see the error in DevTools console or your error tracker.
+We've seen many complaints about the unspecific error `"Error page resources for <path> not found. Not rendering React"`. There are many reasons why this could happen so we improved our error logging to output the original error. As usual you'll see the error in DevTools console or in your error tracker.
 
 Consider the following example, it now shows the actual error.
 
