@@ -15,9 +15,7 @@ const deleteMenuNodeChildMenuItems = node => {
   )
 
   for (const menuItemNode of allMenuItemsNodesWithThisMenuIdAsAParent) {
-    actions.deleteNode({
-      node: menuItemNode,
-    })
+    actions.deleteNode(menuItemNode)
   }
 }
 
