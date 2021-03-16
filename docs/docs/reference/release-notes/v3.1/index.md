@@ -50,7 +50,19 @@ In development mode we also now show the original error when it occurs in `gatsb
 
 ## Contentful `gatsbyImageData` is stable
 
-Contentful now fully supports `gatsby-plugin-image` out of the box. TODO: What does that mean?
+Contentful now fully supports `gatsby-plugin-image` out of the box. You can find the official docs for gatsby-plugin-image in gatsby-source-contentful [the official contentful plugin docs](https://www.gatsbyjs.com/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
+
+```graphql
+{
+  allContentfulBlogPost {
+    nodes {
+      heroImage {
+        gatsbyImageData(layout: FULL_WIDTH)
+      }
+    }
+  }
+}
+```
 
 You can find more information on how to switch to [`gatsby-plugin-image`](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/#dynamic-images) by going to our [`gatsby-image` to `gatsby-plugin-image` migration guide](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/)
 
