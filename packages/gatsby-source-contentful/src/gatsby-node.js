@@ -140,7 +140,8 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
 
           Use this with caution, you might override values this plugin does set for you to connect to Contentful.`
         )
-        .default(true),
+        .unknown(true)
+        .default({}),
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
