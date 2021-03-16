@@ -183,7 +183,7 @@ Number of workers to use when downloading Contentful assets. Due to technical li
 
 Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
 
-Use this with caution, you might override values this plugin sets for you to connect to Contentful.
+Use this with caution, you might override values this plugin does set for you to connect to Contentful.
 
 ## Notes on Contentful Content Models
 

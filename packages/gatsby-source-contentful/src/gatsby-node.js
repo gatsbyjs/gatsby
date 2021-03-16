@@ -134,6 +134,13 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     If you are confident your Content Types will have natural-language IDs (e.g. \`blogPost\`), then you should set this option to \`false\`. If you are unable to ensure this, then you should leave this option set to \`true\` (the default).`
         )
         .default(true),
+      contentfulClientConfig: Joi.object()
+        .description(
+          `Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
+
+          Use this with caution, you might override values this plugin does set for you to connect to Contentful.`
+        )
+        .default(true),
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
