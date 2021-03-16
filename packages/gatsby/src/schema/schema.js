@@ -76,9 +76,6 @@ const buildSchema = async ({
   // const { printSchema } = require(`graphql`)
   const schema = schemaComposer.buildSchema()
 
-  // Freeze all type composers except SitePage (as we will rebuild it at a later stage)
-  freezeTypeComposers(schemaComposer, new Set([`SitePage`]))
-
   // console.log(printSchema(schema))
   return schema
 }
@@ -117,7 +114,11 @@ const rebuildSchemaWithSitePage = async ({
     fieldExtensions,
     parentSpan,
   })
-  return schemaComposer.buildSchema()
+  const schema = schemaComposer.buildSchema()
+
+  freezeTypeComposers(schemaComposer)
+
+  return schema
 }
 
 module.exports = {
@@ -127,7 +128,7 @@ module.exports = {
 
 // Workaround for https://github.com/graphql-compose/graphql-compose/issues/319
 //  FIXME: remove this when fixed in graphql-compose
-const freezeTypeComposers = (schemaComposer, excluded) => {
+const freezeTypeComposers = (schemaComposer, excluded = new Set()) => {
   Array.from(schemaComposer.values()).forEach(tc => {
     const isCompositeTC =
       tc instanceof ObjectTypeComposer || tc instanceof InterfaceTypeComposer
