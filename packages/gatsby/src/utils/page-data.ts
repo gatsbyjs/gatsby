@@ -98,17 +98,25 @@ export async function writePageData(
   // transform asset size to kB (from bytes) to fit 64 bit to numbers
   const pageDataSize = Buffer.byteLength(bodyStr) / 1000
 
+  const pageDataHash = createContentDigest(bodyStr)
+  const previousPageDataHash = store
+    .getState()
+    .html.trackedHtmlFiles.get(pagePath)?.pageDataHash
+
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
       pagePath,
       filePath: outputFilePath,
       size: pageDataSize,
-      pageDataHash: createContentDigest(bodyStr),
+      pageDataHash,
     },
   })
 
-  await fs.outputFile(outputFilePath, bodyStr)
+  if (pageDataHash !== previousPageDataHash) {
+    await fs.outputFile(outputFilePath, bodyStr)
+  }
+
   return body
 }
 
