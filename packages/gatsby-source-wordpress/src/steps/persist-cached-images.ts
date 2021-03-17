@@ -13,9 +13,7 @@ const persistPreviouslyCachedImages: Step = async (): Promise<void> => {
 
   // and touch them so they aren't garbage collected.
   // we will remove them as needed when receiving DELETE events from WP
-  mediaItemNodes.forEach(({ id }) =>
-    helpers.actions.touchNode(helpers.getNode(id))
-  )
+  mediaItemNodes.forEach(node => helpers.actions.touchNode(node))
 
   const imageNodeMetaByUrl = await getPersistentCache({
     key: `image-node-meta-by-url`,
