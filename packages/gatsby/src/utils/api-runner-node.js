@@ -139,21 +139,6 @@ function getLocalReporter({ activity, reporter }) {
   return reporter
 }
 
-function extendErrorIdWithPluginName(pluginName, errorMeta) {
-  const id = errorMeta?.id
-  if (id) {
-    const isPrefixed = id.includes(`${pluginName}_`)
-    if (!isPrefixed) {
-      return {
-        ...errorMeta,
-        id: `${pluginName}_${id}`,
-      }
-    }
-  }
-
-  return errorMeta
-}
-
 function getErrorMapWithPluginName(pluginName, errorMap) {
   const entries = Object.entries(errorMap)
 
@@ -175,54 +160,20 @@ function extendLocalReporterToCatchPluginErrors({
   let panic = reporter.panic
   let panicOnBuild = reporter.panicOnBuild
 
-  const addPluginNameToErrorMeta = (errorMeta, pluginName) =>
-    typeof errorMeta === `string`
-      ? {
-          context: {
-            sourceMessage: errorMeta,
-          },
-          pluginName,
-        }
-      : {
-          ...errorMeta,
-          pluginName,
-        }
-
   if (pluginName && reporter?.setErrorMap) {
     setErrorMap = errorMap =>
       reporter.setErrorMap(getErrorMapWithPluginName(pluginName, errorMap))
 
     error = (errorMeta, error) => {
-      const errorMetaWithPluginName = addPluginNameToErrorMeta(
-        errorMeta,
-        pluginName
-      )
-      reporter.error(
-        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
-        error
-      )
+      reporter.error(errorMeta, error, pluginName)
     }
 
     panic = (errorMeta, error) => {
-      const errorMetaWithPluginName = addPluginNameToErrorMeta(
-        errorMeta,
-        pluginName
-      )
-      reporter.panic(
-        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
-        error
-      )
+      reporter.panic(errorMeta, error, pluginName)
     }
 
     panicOnBuild = (errorMeta, error) => {
-      const errorMetaWithPluginName = addPluginNameToErrorMeta(
-        errorMeta,
-        pluginName
-      )
-      reporter.panicOnBuild(
-        extendErrorIdWithPluginName(pluginName, errorMetaWithPluginName),
-        error
-      )
+      reporter.panicOnBuild(errorMeta, error, pluginName)
     }
   }
 

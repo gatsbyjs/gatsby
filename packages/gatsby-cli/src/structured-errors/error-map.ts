@@ -20,7 +20,7 @@ const errors = {
       const sourceMessage =
         context && context.sourceMessage
           ? context.sourceMessage
-          : `There was an error`
+          : `There was an unhandled error and we could not retrieve more information. Please run the command with the --verbose flag again.`
       return sourceMessage
     },
     level: Level.ERROR,
