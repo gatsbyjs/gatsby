@@ -103,7 +103,7 @@ If you are using an image that will be the same each time the component is used,
 
 ### Dynamic images
 
-If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
 
 1. **Add the image to your page query.**
 
@@ -191,6 +191,30 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
      }
    `
    ```
+
+## Using images from a CMS
+
+Many CMS source plugins have native support for `gatsby-plugin-image`. The images are served directly from a content delivery network. This means that builds are faster, because there is no need download images and process them locally at build time. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support.
+
+### Source plugins
+
+These source plugins support using `gatsby-plugin-image` with images served from their CDN.
+
+- [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
+- [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
+- [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
+- [AgilityCMS](https://github.com/agility/gatbsy-image-agilitycms)
+- [Sanity](https://www.gatsbyjs.com/plugins/gatsby-source-sanity/#using-images)
+
+### Image CDNs
+
+A dedicated image CDN can be used with sources that don't have their own CDN, or where you need more transforms or formats than the CDN offers.
+
+- [imgix](https://www.gatsbyjs.com/plugins/@imgix/gatsby/)
+
+### Plugin authors
+
+If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatbsy Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
 
 ## Migrating
 
