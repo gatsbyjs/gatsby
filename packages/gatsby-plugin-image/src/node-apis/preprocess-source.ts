@@ -2,8 +2,11 @@ import { PreprocessSourceArgs } from "gatsby"
 import { babelParseToAst } from "./parser"
 import path from "path"
 import { extractStaticImageProps } from "./parser"
+import { codeFrameColumns } from "@babel/code-frame"
+
 import { writeImages } from "./image-processing"
 import { getCacheDir } from "./node-utils"
+import { stripIndents } from "common-tags"
 const extensions: Array<string> = [`.js`, `.jsx`, `.tsx`]
 
 export async function preprocessSource({
@@ -28,8 +31,38 @@ export async function preprocessSource({
   const cacheDir = getCacheDir(root)
 
   const ast = babelParseToAst(contents, filename)
+  reporter.setErrorMap({
+    "95314": {
+      text: (context): string =>
+        stripIndents`
+          Error extracting property "${context.prop}" from StaticImage component.
+          There are restrictions on how props can be passed to the StaticImage component. Learn more at https://gatsby.dev/static-image-props
 
-  const images = extractStaticImageProps(ast)
+          ${context.codeFrame}
+        `,
+      docsUrl: `https://gatsby.dev/static-image-props`,
+      level: `ERROR`,
+      category: `USER`,
+    },
+  })
+
+  const images = extractStaticImageProps(ast, (prop, nodePath) => {
+    const { start, end } = nodePath.node.loc
+    const location = { start, end }
+    reporter.error({
+      id: `95314`,
+      filePath: filename,
+      location,
+      context: {
+        prop,
+        codeFrame: codeFrameColumns(contents, nodePath.node.loc, {
+          linesAbove: 6,
+          linesBelow: 6,
+          highlightCode: true,
+        }),
+      },
+    })
+  })
 
   const sourceDir = path.dirname(filename)
   await writeImages({
@@ -42,6 +75,7 @@ export async function preprocessSource({
     createNodeId,
     createNode,
     store,
+    filename,
   })
 
   return

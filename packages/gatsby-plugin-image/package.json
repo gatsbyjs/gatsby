@@ -71,9 +71,10 @@
     "react-dom": "^16.9.0 || ^17.0.0"
   },
   "dependencies": {
+    "@babel/code-frame": "^7.12.13",
     "@babel/parser": "^7.12.5",
     "@babel/traverse": "^7.12.5",
-    "babel-jsx-utils": "^1.0.1",
+    "babel-jsx-utils": "^1.1.0",
     "babel-plugin-remove-graphql-queries": "^3.1.0",
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.1",
