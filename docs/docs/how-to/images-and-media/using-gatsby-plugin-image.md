@@ -8,8 +8,6 @@ Adding responsive images to your site while maintaining high performance scores 
 
 Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](/docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
-The new Gatsby Image plugin is currently in beta, but you can try it out now and see what it can do for the performance of your site.
-
 ## Getting started
 
 1. Install the following packages:
