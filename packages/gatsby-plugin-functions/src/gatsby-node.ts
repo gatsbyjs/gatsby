@@ -11,9 +11,13 @@ import {
   CreateDevServerArgs,
 } from "gatsby"
 
+const DEFAULT_FUNCTIONS_DIRECTORY_PATH = path.join(process.cwd(), `src/api`)
+
 export async function onPreBootstrap(
   { reporter }: ParentSpanPluginArgs,
-  { path: functionsDirectoryPath }: PluginOptions
+  {
+    path: functionsDirectoryPath = DEFAULT_FUNCTIONS_DIRECTORY_PATH,
+  }: PluginOptions
 ): Promise<void> {
   const activity = reporter.activityTimer(`building functions`)
   activity.start()
@@ -114,7 +118,9 @@ export async function onPreBootstrap(
 
 export async function onCreateDevServer(
   { reporter, app }: CreateDevServerArgs,
-  { path: functionsDirectoryPath }: PluginOptions
+  {
+    path: functionsDirectoryPath = DEFAULT_FUNCTIONS_DIRECTORY_PATH,
+  }: PluginOptions
 ): Promise<void> {
   const functionsGlob = `**/*.{js,ts}`
   const functionsDirectory = path.resolve(
