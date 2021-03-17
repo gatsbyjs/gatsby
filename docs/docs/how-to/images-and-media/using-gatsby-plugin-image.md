@@ -212,6 +212,8 @@ A dedicated image CDN can be used with sources that don't have their own CDN, or
 
 - [imgix](https://www.gatsbyjs.com/plugins/@imgix/gatsby/)
 
+### Plugin authors
+
 If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatbsy Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
 
 ## Migrating
