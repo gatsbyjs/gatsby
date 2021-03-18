@@ -1,5 +1,12 @@
 import { Node } from "gatsby"
-import { getSrc, getSrcSet, getImage, IGatsbyImageData } from "../../"
+import {
+  getSrc,
+  getSrcSet,
+  getImage,
+  IGatsbyImageData,
+  IGetImageDataArgs,
+} from "../../"
+import { getImageData } from "../hooks"
 
 const imageData: IGatsbyImageData = {
   images: {
@@ -34,7 +41,114 @@ const fileNode = {
   childImageSharp: dataParent,
 }
 
+const getImageDataArgs: IGetImageDataArgs = {
+  baseUrl: `https://example.com/img/1234.jpg`,
+  urlBuilder: ({ baseUrl, width, height, format }): string =>
+    `${baseUrl}/${width}x${height}.${format}`,
+  sourceWidth: 1600,
+  sourceHeight: 1200,
+}
+
 describe(`The image helper functions`, () => {
+  describe(`getImageData`, () => {
+    it(`generates default data`, () => {
+      const data = getImageData(getImageDataArgs)
+      expect(data).toMatchInlineSnapshot(`
+        Object {
+          "backgroundColor": undefined,
+          "height": 1200,
+          "images": Object {
+            "fallback": Object {
+              "sizes": "(min-width: 1600px) 1600px, 100vw",
+              "src": "https://example.com/img/1234.jpg/1600x1200.auto",
+              "srcSet": "https://example.com/img/1234.jpg/400x300.auto 400w,
+        https://example.com/img/1234.jpg/800x600.auto 800w,
+        https://example.com/img/1234.jpg/1600x1200.auto 1600w",
+            },
+            "sources": Array [],
+          },
+          "layout": "constrained",
+          "width": 1600,
+        }
+      `)
+    })
+    it(`generates data with explicit dimensions`, () => {
+      const data = getImageData({ ...getImageDataArgs, width: 600 })
+      expect(data.images.fallback.srcSet).toMatchInlineSnapshot(`
+        "https://example.com/img/1234.jpg/150x113.auto 150w,
+        https://example.com/img/1234.jpg/300x225.auto 300w,
+        https://example.com/img/1234.jpg/600x450.auto 600w,
+        https://example.com/img/1234.jpg/1200x900.auto 1200w"
+      `)
+      expect(data.images.fallback.sizes).toEqual(
+        `(min-width: 600px) 600px, 100vw`
+      )
+    })
+
+    it(`generates full width data with all breakpoints`, () => {
+      const data = getImageData({
+        ...getImageDataArgs,
+        layout: `fullWidth`,
+      })
+      expect(data.images.fallback.srcSet).toMatchInlineSnapshot(`
+        "https://example.com/img/1234.jpg/320x240.auto 320w,
+        https://example.com/img/1234.jpg/654x491.auto 654w,
+        https://example.com/img/1234.jpg/768x576.auto 768w,
+        https://example.com/img/1234.jpg/1024x768.auto 1024w,
+        https://example.com/img/1234.jpg/1366x1025.auto 1366w,
+        https://example.com/img/1234.jpg/1600x1200.auto 1600w"
+      `)
+    })
+
+    it(`generates full width data with explicit breakpoints`, () => {
+      const data = getImageData({
+        ...getImageDataArgs,
+        layout: `fullWidth`,
+        breakpoints: [100, 200, 300, 1024, 2048],
+      })
+      expect(data.images.fallback.srcSet).toMatchInlineSnapshot(`
+        "https://example.com/img/1234.jpg/100x75.auto 100w,
+        https://example.com/img/1234.jpg/200x150.auto 200w,
+        https://example.com/img/1234.jpg/300x225.auto 300w,
+        https://example.com/img/1234.jpg/1024x768.auto 1024w,
+        https://example.com/img/1234.jpg/1600x1200.auto 1600w"
+      `)
+    })
+
+    it(`generates data with explicit formats`, () => {
+      const data = getImageData({
+        ...getImageDataArgs,
+        formats: [`jpg`, `webp`, `avif`],
+      })
+      expect(data.images).toMatchInlineSnapshot(`
+        Object {
+          "fallback": Object {
+            "sizes": "(min-width: 1600px) 1600px, 100vw",
+            "src": "https://example.com/img/1234.jpg/1600x1200.jpg",
+            "srcSet": "https://example.com/img/1234.jpg/400x300.jpg 400w,
+        https://example.com/img/1234.jpg/800x600.jpg 800w,
+        https://example.com/img/1234.jpg/1600x1200.jpg 1600w",
+          },
+          "sources": Array [
+            Object {
+              "sizes": "(min-width: 1600px) 1600px, 100vw",
+              "srcSet": "https://example.com/img/1234.jpg/400x300.webp 400w,
+        https://example.com/img/1234.jpg/800x600.webp 800w,
+        https://example.com/img/1234.jpg/1600x1200.webp 1600w",
+              "type": "image/webp",
+            },
+            Object {
+              "sizes": "(min-width: 1600px) 1600px, 100vw",
+              "srcSet": "https://example.com/img/1234.jpg/400x300.avif 400w,
+        https://example.com/img/1234.jpg/800x600.avif 800w,
+        https://example.com/img/1234.jpg/1600x1200.avif 1600w",
+              "type": "image/avif",
+            },
+          ],
+        }
+      `)
+    })
+  })
   describe(`getImage`, () => {
     it(`returns the same data if passed gatsbyImageData`, () => {
       expect(getImage(imageData)).toEqual(imageData)
