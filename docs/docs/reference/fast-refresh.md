@@ -2,7 +2,11 @@
 title: Fast Refresh
 ---
 
-Fast Refresh is an implementation of Hot Reloading with full support from React and it replaces purely userland solutions like [`react-hot-loader`](https://github.com/gaearon/react-hot-loader). It is a feature that allows you to get direct feedback for changes in your React components: A change in your editor immediately updates the browser view and if you have errors in your code the browser view displays an error overlay. Fast Refresh is enabled by default in Gatsby's development server and should show your changes within a second, without losing component state which results in an overall better development experience (DX).
+[Fast Refresh](https://www.npmjs.com/package/react-refresh) is an implementation of Hot Reloading with full support from React. It replaces unofficial solutions like [`react-hot-loader`](https://github.com/gaearon/react-hot-loader).
+
+With Fast Refresh, changes to the code for your React components immediately update in the browser, without losing component state. If you have errors in your code, the browser view displays an error overlay with more details about what went wrong. This direct feedback on your changes results in a better overall development experience (DX).
+
+Fast Refresh is enabled by default in Gatsby's development server and should show your changes within a second.
 
 ## How It Works
 
@@ -22,7 +26,7 @@ Compile errors originate from webpack and can't be dismissed. Those errors are b
 
 ### GraphQL Errors
 
-GraphQL errors can occur due to a number of reasons, most often due to an error inside your page query or static query. You'll be given an error ID (e.g. `#85923`) that you can use to scan the documentation and internet in addition to an error message.
+GraphQL errors can occur due to a number of reasons, most often due to an error inside your page query or static query. In addition to an error message, you'll be given an error ID (e.g. `#85923`) that you can use to scan the documentation and internet for more information.
 
 ### Runtime Errors
 
