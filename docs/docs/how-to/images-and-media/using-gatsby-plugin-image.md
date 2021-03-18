@@ -103,7 +103,7 @@ If you are using an image that will be the same each time the component is used,
 
 ### Dynamic images
 
-If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
 
 1. **Add the image to your page query.**
 
@@ -192,19 +192,19 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    `
    ```
 
-## Using images from a CMS
+## Using images from a CMS or CDN
 
-Many CMS source plugins have native support for `gatsby-plugin-image`. The images are served directly from a content delivery network. This means that builds are faster, because there is no need download images and process them locally at build time. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support.
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
 
 ### Source plugins
 
 These source plugins support using `gatsby-plugin-image` with images served from their CDN.
 
+- [AgilityCMS](https://github.com/agility/gatsby-image-agilitycms)
 - [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
 - [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
-- [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
-- [AgilityCMS](https://github.com/agility/gatbsy-image-agilitycms)
 - [Sanity](https://www.gatsbyjs.com/plugins/gatsby-source-sanity/#using-images)
+- [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
 
 ### Image CDNs
 
