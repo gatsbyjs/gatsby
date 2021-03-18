@@ -19,7 +19,7 @@ export async function onPreBootstrap(
     path: functionsDirectoryPath = DEFAULT_FUNCTIONS_DIRECTORY_PATH,
   }: PluginOptions
 ): Promise<void> {
-  const activity = reporter.activityTimer(`building functions`)
+  const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
   activity.start()
 
   const functionsDirectory = path.resolve(
@@ -67,51 +67,55 @@ export async function onPreBootstrap(
     }
   )
 
-  await Promise.all(
-    files.map(file => {
-      const config = {
-        entry: path.join(functionsDirectory, file),
-        output: {
-          path: path.join(process.cwd(), `.cache`, `functions`),
-          filename: file.replace(`.ts`, `.js`),
-          libraryTarget: `commonjs2`,
-        },
-        target: `node`,
-        // library: "yourLibName",
+  try {
+    await Promise.all(
+      files.map(file => {
+        const config = {
+          entry: path.join(functionsDirectory, file),
+          output: {
+            path: path.join(process.cwd(), `.cache`, `functions`),
+            filename: file.replace(`.ts`, `.js`),
+            libraryTarget: `commonjs2`,
+          },
+          target: `node`,
+          // library: "yourLibName",
 
-        mode: `production`,
-        module: {
-          rules: [
-            {
-              test: [/.js$/, /.ts$/],
-              exclude: /node_modules/,
-              loader: `babel-loader`,
-            },
-          ],
-        },
-        plugins: [new webpack.DefinePlugin(varObject)],
-        // devtool: `source-map`,
-      }
+          mode: `production`,
+          module: {
+            rules: [
+              {
+                test: [/.js$/, /.ts$/],
+                exclude: /node_modules/,
+                loader: `babel-loader`,
+              },
+            ],
+          },
+          plugins: [new webpack.DefinePlugin(varObject)],
+          // devtool: `source-map`,
+        }
 
-      return new Promise((resolve, reject) =>
-        // if (stage === `develop`) {
-        //   webpack(config).watch({}, () => {})
+        return new Promise((resolve, reject) =>
+          // if (stage === `develop`) {
+          //   webpack(config).watch({}, () => {})
 
-        //   return resolve()
-        // }
+          //   return resolve()
+          // }
 
-        webpack(config).run((err, stats) => {
-          console.log({
-            warnings: stats.compilation.warnings,
+          webpack(config).run((err, stats) => {
+            console.log({
+              warnings: stats.compilation.warnings,
+            })
+            if (err) return reject(err)
+            const errors = stats.compilation.errors || []
+            if (errors.length > 0) return reject(stats.compilation.errors)
+            return resolve()
           })
-          if (err) return reject(err)
-          const errors = stats.compilation.errors || []
-          if (errors.length > 0) return reject(stats.compilation.errors)
-          return resolve()
-        })
-      )
-    })
-  )
+        )
+      })
+    )
+  } catch (e) {
+    reporter.panicOnBuild(e.message)
+  }
 
   activity.end()
 }
