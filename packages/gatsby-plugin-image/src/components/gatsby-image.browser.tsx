@@ -182,9 +182,9 @@ class GatsbyImageHydrator extends Component<
           this.props.onLoad?.()
           storeImageloaded(cacheKey)
         } else {
-          // eslint-disable-next-line @typescript-eslint/no-this-alias
           // We need the current class context (this) inside our named onLoad function
           // The named function is necessary to easily remove the listener afterward.
+          // eslint-disable-next-line @typescript-eslint/no-this-alias
           const _this = this
           // add an onLoad to the image
           ssrElement.addEventListener(`load`, function onLoad() {
