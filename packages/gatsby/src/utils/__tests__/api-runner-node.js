@@ -232,6 +232,56 @@ it(`Doesn't initialize cache in onPreInit API`, async () => {
   expect(getCache).toHaveBeenCalled()
 })
 
+it(`Correctly handle error args`, async () => {
+  jest.doMock(
+    `test-plugin/gatsby-node`,
+    () => {
+      return {
+        onPreInit: ({ reporter }) => {
+          reporter.panicOnBuild(`Konohagakure`)
+          reporter.panicOnBuild(new Error(`Rasengan`))
+          reporter.panicOnBuild(`Jiraiya`, new Error(`Tsunade`))
+        },
+      }
+    },
+    { virtual: true }
+  )
+  store.getState.mockImplementation(() => {
+    return {
+      program: {},
+      config: {},
+      flattenedPlugins: [
+        {
+          name: `test-plugin`,
+          resolve: `test-plugin`,
+          nodeAPIs: [`onPreInit`],
+        },
+      ],
+    }
+  })
+  await apiRunnerNode(`onPreInit`)
+  expect(reporter.panicOnBuild).toBeCalledTimes(3)
+  expect(reporter.panicOnBuild.mock.calls).toMatchInlineSnapshot(`
+    Array [
+      Array [
+        "Konohagakure",
+        undefined,
+        "test-plugin",
+      ],
+      Array [
+        [Error: Rasengan],
+        undefined,
+        "test-plugin",
+      ],
+      Array [
+        "Jiraiya",
+        [Error: Tsunade],
+        "test-plugin",
+      ],
+    ]
+  `)
+})
+
 it(`Correctly uses setErrorMap with pluginName prefixes`, async () => {
   jest.doMock(
     `test-plugin/gatsby-node`,
