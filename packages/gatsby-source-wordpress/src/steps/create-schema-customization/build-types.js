@@ -7,6 +7,7 @@ import {
   getTypeSettingsByType,
   filterTypeDefinition,
 } from "./helpers"
+import { getPluginOptions } from "../../utils/get-gatsby-api"
 
 const unionType = typeBuilderApi => {
   const { schema, type, pluginOptions } = typeBuilderApi
@@ -29,12 +30,14 @@ const unionType = typeBuilderApi => {
     name: buildTypeName(type.name),
     types,
     resolveType: node => {
-      if (node.type) {
-        return buildTypeName(node.type)
-      }
-
       if (node.__typename) {
-        return buildTypeName(node.__typename)
+        const {
+          schema: { typePrefix: prefix },
+        } = getPluginOptions()
+
+        return node.__typename.startsWith(prefix)
+          ? node.__typename
+          : buildTypeName(node.__typename)
       }
 
       return null
