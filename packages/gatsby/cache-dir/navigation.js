@@ -242,9 +242,9 @@ class RouteUpdates extends React.Component {
     onRouteUpdate(this.props.location, null)
   }
 
-  shouldComponentUpdate(prevProps) {
-    if (compareLocationProps(prevProps.location, this.props.location)) {
-      onPreRouteUpdate(this.props.location, prevProps.location)
+  shouldComponentUpdate(nextProps) {
+    if (compareLocationProps(this.props.location, nextProps.location)) {
+      onPreRouteUpdate(nextProps.location, this.props.location)
       return true
     }
     return false
