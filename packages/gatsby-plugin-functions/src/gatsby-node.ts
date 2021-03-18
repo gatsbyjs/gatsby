@@ -93,7 +93,7 @@ export async function onPreBootstrap(
           // }
 
           webpack(config).run((err, stats) => {
-            if (stats?.compilation?.warnings) {
+            if (stats?.compilation?.warnings?.length > 0) {
               reporter.warn(stats.compilation.warnings)
             }
 
@@ -106,7 +106,8 @@ export async function onPreBootstrap(
       })
     )
   } catch (e) {
-    reporter.panicOnBuild(e.message)
+    reporter.error(`Failed to compile Gatsby Functions.`)
+    reporter.panicOnBuild(e)
   }
 
   activity.end()
@@ -152,14 +153,14 @@ export async function onCreateDevServer(
         `js`
       )
 
-      const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
-
-      const fnToExecute = (fn && fn.default) || fn
-
       try {
+        const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
+
+        const fnToExecute = (fn && fn.default) || fn
+
         fnToExecute(req, res)
       } catch (e) {
-        reporter.error(e.message)
+        reporter.error(e)
       }
       activity.end()
     } else {
