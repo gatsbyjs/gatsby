@@ -104,7 +104,7 @@ const interfaceType = typeBuilderApi => {
   } else {
     // otherwise this is a regular interface type so we need to resolve the type name
     typeDef.resolveType = node =>
-      node && node.__typename ? buildTypeName(node.__typename) : null
+      node?.__typename ? buildTypeName(node.__typename) : null
   }
 
   // @todo add this as a plugin option
