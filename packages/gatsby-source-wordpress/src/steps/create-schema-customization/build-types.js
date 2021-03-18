@@ -96,9 +96,7 @@ const interfaceType = typeBuilderApi => {
     // so we can add them to node interfaces as well in order to filter
     // by a couple different content types
     typeDef.fields[`nodeType`] = `String`
-
-    typeDef.interfaces = typeDef.interfaces || []
-    typeDef.interfaces.push(`Node`)
+    typeDef.interfaces = [`Node`]
   } else {
     // otherwise this is a regular interface type so we need to resolve the type name
     typeDef.resolveType = node =>
