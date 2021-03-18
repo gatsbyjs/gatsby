@@ -34,7 +34,7 @@ const TracedSVG = ({ data, location }) => (
     <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
       image={getImage(data.fullWidthImage.localFile)}
-      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+      alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )

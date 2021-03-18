@@ -19,19 +19,23 @@ const PreferWebp = ({ data, location }) => (
     <p>
       WebP is a modern image format that provides both lossless and lossy
       compression for images on the web. This format can reduce the filesize
-      considerably compared to JPG and PNG files, and using it is pretty easy
-      with <strong>gatsby-image</strong> and{` `}
+      considerably compared to JPG and PNG files. WebP images are generated
+      automatically when you use <strong>gatsby-plugin-image</strong> with
+      {` `}
       <strong>gatsby-plugin-sharp</strong>.
     </p>
     <p>
-      The <strong>WebP</strong> technique is similar to other gatsby-image
-      techniques in that it can be applied in image queries with GraphQL. To
-      specify that an image should be loaded in the WebP format in supporting
-      browsers, use a fragment with <code>withWebp</code> at the end.
+      The use of <strong>WebP</strong> is controlled by the{" "}
+      <strong>formats</strong> array and can be configured via your{" "}
+      <strong>gatsby-config.js</strong> file if you want to apply it to all
+      images in your site. Alternatively, it can be part of your GraphQL query
+      or passed via props when using StaticImage. <strong>AVIF</strong> is also
+      supported. By default, the original image format will be used as fallback
+      for browsers that don't have <strong>WebP</strong> support.
     </p>
     <GatsbyImage
       image={getImage(data.fullWidthImage.localFile)}
-      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+      alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
     <p />
   </Layout>

@@ -17,38 +17,28 @@ const DominantColor = ({ data, location }) => (
       alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
-      The default Blur Up technique uses progressive loading to make a fast,
-      visually pleasing experience without waiting for a full-resolution image
-      with a blank screen.
+      The default Dominant color technique uses progressive loading to make a
+      fast, visually pleasing experience without waiting for a full-resolution
+      image with a blank screen.
     </p>
     <h2>Progressive Loading with Minimal Effort</h2>
     <p>
-      The magic of Gatsby Image's Blur Up technique means that you can load an
-      image at moderate resolution and not have to bother with creating a small
-      thumbnail yourself. Gatsby Image will automatically create a tiny image
-      from your source image and load it first for quick display while the
-      larger image file is downloaded and displayed. Users first see a blurry
-      lower-resolution image to help with perceived performance, while the
-      larger image downloads and everything works automatically.
+      The magic of Gatsby Image's Dominant color technique means that you can
+      load an image at moderate resolution and not have to bother with creating
+      a small thumbnail yourself. Gatsby Image will automatically create a
+      properly sized div with a background color generated based on your
+      specific image. When the page loads, the div will load first for quick
+      display while the larger image file is downloaded and displayed.
     </p>
     <p>
       This technique is the default behavior when querying for an image with
       GraphQL or using StaticImage.
     </p>
-    {/* <p>
-      Uses the dominant color of the image as the background. This value is
-      extracted ferom the image by sharp.
-    </p>
-    <p>
-      To make use of this technique, pass{" "}
-      <code>placeholder: DOMINANT_COLOR</code> to the resolver, or{" "}
-      <code>placeholder="dominantColor"</code> with the StaticImage component.
-    </p> */}
     <h2>Unsplash Dominant Color Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
       image={getImage(data.fullWidthImage.localFile)}
-      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+      alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )

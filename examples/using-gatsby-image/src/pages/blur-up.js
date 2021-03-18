@@ -17,9 +17,9 @@ const BlurUp = ({ data, location }) => (
       alt={`“${data.floatingImage.title}” by ${data.floatingImage.credit} (via unsplash.com)`}
     />
     <p>
-      The default Blur Up technique uses progressive loading to make a fast,
-      visually pleasing experience without waiting for a full-resolution image
-      with a blank screen.
+      The Blur Up technique uses progressive loading to make a fast, visually
+      pleasing experience without waiting for a full-resolution image with a
+      blank screen.
     </p>
     <h2>Progressive Loading with Minimal Effort</h2>
     <p>
@@ -31,15 +31,11 @@ const BlurUp = ({ data, location }) => (
       lower-resolution image to help with perceived performance, while the
       larger image downloads and everything works automatically.
     </p>
-    <p>
-      This technique is the default behavior when querying for an image with
-      GraphQL or using StaticImage.
-    </p>
     <h2>Unsplash Blurred Gallery</h2>
     <ImageGallery images={data.galleryImagesCropped.edges} />
     <GatsbyImage
       image={getImage(data.fullWidthImage.localFile)}
-      title={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
+      alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
     />
   </Layout>
 )

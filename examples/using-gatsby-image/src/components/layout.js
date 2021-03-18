@@ -104,27 +104,20 @@ const Layout = ({ children, image, imageTitle, imageBackgroundColor }) => (
         <li>
           See the
           {` `}
-          <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
-            <code>gatsby-image</code> project README
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-image/?=gatsby-plugin-image">
+            <code>gatsby-plugin-image</code> project README
           </a>
           {` `} for documentation on using the plugin
         </li>
         <li>
           Read the docs:
           <br />
-          <a href="https://www.gatsbyjs.com/docs/using-gatsby-image/">
-            Using gatsby-image to prevent image bloat
+          <a href="https://www.gatsbyjs.com/docs/how-to/images-and-media/using-gatsby-plugin-image/">
+            Using the Gatsby Image plugin
           </a>
           <br />
-          <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp/">
-            Using fragments in gatsby-plugin-sharp
-          </a>
-        </li>
-        <li>
-          View the <code>gatsby-transformer-sharp</code> example at
-          {` `}
-          <a href="https://image-processing.gatsbyjs.org/">
-            <code>image-processing.gatsbyjs.org</code>
+          <a href="https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/">
+            Gatsby Image plugin reference guide
           </a>
         </li>
       </ul>

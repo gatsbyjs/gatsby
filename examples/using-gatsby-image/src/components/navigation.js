@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from "gatsby"
-import { css } from "@emotion/css"
+import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import { MdLink } from "react-icons/md"
 import { scale, rhythm, options } from "../utils/typography"
@@ -182,13 +182,15 @@ const Navigation = () => (
     </SiteTitle>
     <Nav aria-label="Primary Navigation">
       <NavList>
-        <NavItem to="/blur-up/" title="Blur Up" />
         <NavItem to="/dominant-color/" title="Dominant Color" />
+        <NavItem to="/blur-up/" title="Blur Up" />
         <NavItem to="/traced-svg/" title="Traced SVG" />
         <NavItem to="/prefer-webp/" title="WebP" />
+        <NavItem to="/static-images/" title="StaticImage" />
+        <NavItem to="/art-direction/" title="Art Direction" />
         <NavListItem>
           <a
-            href="https://www.gatsbyjs.com/plugins/gatsby-image/"
+            href="https://www.gatsbyjs.com/plugins/gatsby-plugin-image/"
             css={css`
               ${linkStyle};
             `}

@@ -8,7 +8,7 @@ import Layout from "../components/layout"
 
 import "./art-direction.css"
 
-const PreferWebp = ({ data, location }) => {
+const ArtDirection = ({ data, location }) => {
   const images = withArtDirection(getImage(data.floatingImage.localFile), [
     {
       media: "(max-width: 1024px)",
@@ -22,31 +22,29 @@ const PreferWebp = ({ data, location }) => {
       image={getImage(data.coverImage.localFile)}
       imageTitle={`“${data.coverImage.title}” by ${data.coverImage.credit} (via unsplash.com)`}
     >
-      <PageTitle>Prefer WebP</PageTitle>
+      <PageTitle>Art Direction</PageTitle>
       <GatsbyImage
         className="art-directed"
         image={images}
         alt={`“${data.fullWidthImage.title}” by ${data.fullWidthImage.credit} (via unsplash.com)`}
       />
       <p>
-        WebP is a modern image format that provides both lossless and lossy
-        compression for images on the web. This format can reduce the filesize
-        considerably compared to JPG and PNG files, and using it is pretty easy
-        with <strong>gatsby-image</strong> and{` `}
-        <strong>gatsby-plugin-sharp</strong>.
+        Art Direction is the ability to provide different images depending on
+        the width of the device screen. While{" "}
+        <strong>gatsby-plugin-image</strong> provides discrete sizes for these
+        screens, they are the same images. Art Direction is supported using a
+        function exported from <strong>gatsby-plugin-image</strong>.
       </p>
       <p>
-        The <strong>WebP</strong> technique is similar to other gatsby-image
-        techniques in that it can be applied in image queries with GraphQL. To
-        specify that an image should be loaded in the WebP format in supporting
-        browsers, use a fragment with <code>withWebp</code> at the end.
+        Resize this page, or view it on separate devices, to see art direction
+        in action.
       </p>
       <p />
     </Layout>
   )
 }
 
-export default PreferWebp
+export default ArtDirection
 
 export const query = graphql`
   {
