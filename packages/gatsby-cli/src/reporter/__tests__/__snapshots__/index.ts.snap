@@ -119,7 +119,7 @@ Object {
   "docsUrl": "https://www.gatsbyjs.org/docs/gatsby-cli/#new",
   "level": "ERROR",
   "stack": Array [],
-  "text": "Error text is test123 ",
+  "text": "Error text is test123",
 }
 `;
 
@@ -133,6 +133,6 @@ Object {
   "level": "ERROR",
   "pluginName": "gatsby-plugin-foo-bar",
   "stack": Array [],
-  "text": "Error text is test123 ",
+  "text": "Error text is test123",
 }
 `;

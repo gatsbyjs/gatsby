@@ -109,7 +109,7 @@ describe(`report.error`, () => {
   it(`sets an error map if setErrorMap is called`, () => {
     reporter.setErrorMap({
       "1337": {
-        text: (context): string => `Error text is ${context.someProp} `,
+        text: (context): string => `Error text is ${context.someProp}`,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
       },
@@ -121,7 +121,7 @@ describe(`report.error`, () => {
   it(`uses custom error from errorMap`, () => {
     reporter.setErrorMap({
       "1337": {
-        text: (context): string => `Error text is ${context.someProp} `,
+        text: (context): string => `Error text is ${context.someProp}`,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
       },
@@ -144,7 +144,7 @@ describe(`report.error`, () => {
   it(`uses custom error from errorMap with pluginName`, () => {
     reporter.setErrorMap({
       "gatsby-plugin-foo-bar_1337": {
-        text: (context): string => `Error text is ${context.someProp} `,
+        text: (context): string => `Error text is ${context.someProp}`,
         level: Level.ERROR,
         docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
       },

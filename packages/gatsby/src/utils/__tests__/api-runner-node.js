@@ -32,6 +32,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     activityTimer: jest.fn(() => mockActivity),
     createProgress: jest.fn(() => mockActivity),
     panicOnBuild: jest.fn(),
+    setErrorMap: jest.fn(),
   }
 })
 
@@ -229,4 +230,59 @@ it(`Doesn't initialize cache in onPreInit API`, async () => {
   // Make sure getCache is called on other APIs:
   await apiRunnerNode(`otherTestApi`)
   expect(getCache).toHaveBeenCalled()
+})
+
+it(`Correctly uses setErrorMap with pluginName prefixes`, async () => {
+  jest.doMock(
+    `test-plugin/gatsby-node`,
+    () => {
+      return {
+        onPreInit: ({ reporter }) => {
+          reporter.setErrorMap({
+            1337: {
+              text: context => `Error text is ${context.someProp}`,
+              level: `ERROR`,
+              docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+            },
+          })
+
+          reporter.panicOnBuild({ id: `1337`, context: { someProp: `Naruto` } })
+        },
+      }
+    },
+    { virtual: true }
+  )
+  store.getState.mockImplementation(() => {
+    return {
+      program: {},
+      config: {},
+      flattenedPlugins: [
+        {
+          name: `test-plugin`,
+          resolve: `test-plugin`,
+          nodeAPIs: [`onPreInit`],
+        },
+      ],
+    }
+  })
+  await apiRunnerNode(`onPreInit`)
+  expect(reporter.panicOnBuild).toBeCalledTimes(1)
+  expect(reporter.setErrorMap).toBeCalledTimes(1)
+  expect(reporter.panicOnBuild.mock.calls[0]).toEqual([
+    {
+      id: `1337`,
+      context: {
+        someProp: `Naruto`,
+      },
+    },
+    undefined,
+    `test-plugin`,
+  ])
+  expect(reporter.setErrorMap.mock.calls[0][0]).toMatchObject({
+    "test-plugin_1337": {
+      text: {},
+      level: `ERROR`,
+      docsUrl: `https://www.gatsbyjs.org/docs/gatsby-cli/#new`,
+    },
+  })
 })
