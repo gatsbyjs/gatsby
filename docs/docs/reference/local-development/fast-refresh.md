@@ -18,7 +18,7 @@ Fast Refresh is enabled by default in Gatsby's development server and should sho
 
 The Fast Refresh integration is good at catching errors instead of silently failing. Gatsby takes this opportunity to present you with a custom overlay that further explains the error and how to resolve it. Once it's resolved Fast Refresh will recover from that state. The overlay will indicate whether it's a compile error, [GraphQL](/docs/glossary#graphql) error, or runtime error.
 
-![Three error overlays from left to right: Compile error, GraphQL errors, and runtime errors](../reference/release-notes/v3.0/compile-graphql-runtime-errors.jpg)
+![Three error overlays from left to right: Compile error, GraphQL errors, and runtime errors](../../reference/release-notes/v3.0/compile-graphql-runtime-errors.jpg)
 
 ### Compile Errors
 
