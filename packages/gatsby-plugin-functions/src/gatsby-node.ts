@@ -32,23 +32,14 @@ export async function onPreBootstrap(
   // Get initial list of files
   const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
-  // console.log({ files })
-
-  const knownFunctions = new Set(files)
-
-  // console.log({ knownFunctions })
-
-  // if (![`develop`, `build-javascript`].includes(stage)) {
-  //   return Promise.resolve()
-  // }
+  if (files?.length === 0) {
+    reporter.warn(`No functions found in directory: ${functionsDirectory}.`)
+    return
+  }
 
   await fs.ensureDir(path.join(process.cwd(), `.cache`, `functions`))
 
   await fs.emptyDir(path.join(process.cwd(), `.cache`, `functions`))
-
-  // console.log({
-  //   path: path.join(functionsDirectory, `month.js`),
-  // })
 
   const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
     if (key.match(/^GATSBY_/)) {
@@ -102,9 +93,10 @@ export async function onPreBootstrap(
           // }
 
           webpack(config).run((err, stats) => {
-            console.log({
-              warnings: stats.compilation.warnings,
-            })
+            if (stats?.compilation?.warnings) {
+              reporter.warn(stats.compilation.warnings)
+            }
+
             if (err) return reject(err)
             const errors = stats.compilation.errors || []
             if (errors.length > 0) return reject(stats.compilation.errors)
@@ -133,7 +125,7 @@ export async function onCreateDevServer(
   )
   const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
-  // console.log({ files })
+  reporter.info(`Attaching Functions to development server.`)
 
   const knownFunctions = new Map(
     files.map(file => [
@@ -141,27 +133,35 @@ export async function onCreateDevServer(
       file,
     ])
   )
-  // console.log(app, functionsDirectoryPath)
 
   app.use(`/api/:functionName`, (req, res, next) => {
     const { functionName } = req.params
 
     if (knownFunctions.has(functionName)) {
+      const activity = reporter.activityTimer(
+        `Executing function ${functionName}`
+      )
+      activity.start()
       const compiledFunctionsDir = path.join(
         process.cwd(),
         `.cache`,
         `functions`
       )
       const funcNameToJs = (knownFunctions.get(functionName) as string).replace(
-        `js`,
-        `ts`
+        `ts`,
+        `js`
       )
 
       const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
 
       const fnToExecute = (fn && fn.default) || fn
 
-      fnToExecute(req, res)
+      try {
+        fnToExecute(req, res)
+      } catch (e) {
+        reporter.error(e.message)
+      }
+      activity.end()
     } else {
       next()
     }
