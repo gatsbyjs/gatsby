@@ -5,6 +5,8 @@ import { fieldOfTypeWasFetched } from "./helpers"
 import buildType from "./build-types"
 import { getGatsbyNodeTypeNames } from "../source-nodes/fetch-nodes/fetch-nodes"
 import { typeIsExcluded } from "~/steps/ingest-remote-schema/is-excluded"
+import { formatLogMessage } from "../../utils/format-log-message"
+import { CODES } from "../../utils/report"
 
 /**
  * createSchemaCustomization
@@ -96,7 +98,12 @@ const createSchemaCustomization = async api => {
   try {
     await customizeSchema(api)
   } catch (e) {
-    api.reporter.panic(e)
+    api.reporter.panic({
+      id: CODES.SourcePluginCodeError,
+      context: {
+        sourceMessage: formatLogMessage(e.stack),
+      },
+    })
   }
 }
 
