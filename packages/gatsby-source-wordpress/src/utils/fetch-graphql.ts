@@ -13,13 +13,16 @@ import { CODES } from "./report"
 
 let http = null
 
-const getHttp = (limit = 50): RateLimitedAxiosInstance => {
-  if (!http) {
-    http = rateLimit(axios.create(), {
-      maxRPS: limit,
-    })
-  }
-  return http
+// this is an object so that we can override getHttp in our tests
+export const moduleHelpers = {
+  getHttp: (limit = 50): RateLimitedAxiosInstance => {
+    if (!http) {
+      http = rateLimit(axios.create(), {
+        maxRPS: limit,
+      })
+    }
+    return http
+  },
 }
 
 interface IHandleErrorOptionsInput {
@@ -133,8 +136,8 @@ const handleGraphQLErrors = async ({
 }: IHandleGraphQLErrorsInput): Promise<void> => {
   const pluginOptions = getPluginOptions()
 
-  const json = response.data
-  const { errors } = json
+  const json = response?.data
+  const { errors } = json || {}
 
   if (!errors) {
     return
@@ -241,13 +244,38 @@ const handleGraphQLErrors = async ({
 
 const ensureStatementsAreTrue = `${bold(
   `Please ensure the following statements are true`
-)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed in your WordPress backend`
+)} \n  - your WordPress URL is correct in gatsby-config.js\n  - your server is responding to requests \n  - WPGraphQL and WPGatsby are installed and active in your WordPress backend\n  - Your WordPress debug.log does not contain critical errors`
 
 // @todo add a link to docs page for debugging
 const genericError = ({ url }: { url: string }): string =>
   `GraphQL request to ${bold(url)} failed.\n\n${ensureStatementsAreTrue}`
 
 const slackChannelSupportMessage = `If you're still having issues, please visit https://www.wpgraphql.com/community-and-support/\nand follow the link to join the WPGraphQL Slack.\nThere are a lot of folks there in the #gatsby channel who are happy to help with debugging.`
+
+const getLowerRequestConcurrencyOptionMessage = (): string => {
+  const {
+    requestConcurrency,
+    previewRequestConcurrency,
+    perPage,
+  } = store.getState().gatsbyApi.pluginOptions.schema
+
+  return `Try reducing the ${bold(
+    `requestConcurrency`
+  )} for content updates or the ${bold(
+    `previewRequestConcurrency`
+  )} for previews, and/or reducing the schema.perPage option:
+
+{
+  resolve: 'gatsby-source-wordpress',
+  options: {
+    schema: {
+      perPage: 20, // currently set to ${perPage}
+      requestConcurrency: 5, // currently set to ${requestConcurrency}
+      previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
+    }
+  },
+}`
+}
 
 interface IHandleFetchErrors {
   e: Error
@@ -301,42 +329,52 @@ const handleFetchErrors = async ({
         ),
       },
     })
+    return
   }
-  if (e.message.includes(`Request failed with status code 50`)) {
-    const {
-      requestConcurrency,
-      previewRequestConcurrency,
-    } = store.getState().gatsbyApi.pluginOptions.schema
 
-    console.error(e)
+  if (
+    e.message.includes(`Request failed with status code 50`) &&
+    (e.message.includes(`502`) ||
+      e.message.includes(`503`) ||
+      e.message.includes(`504`))
+  ) {
+    if (`message` in e) {
+      console.error(formatLogMessage(new Error(e.message).stack))
+    }
+
     reporter.panic({
       id: CODES.WordPress500ishError,
       context: {
         sourceMessage: formatLogMessage(
-          [
-            `Your wordpress server at ${bold(url)} appears to be overloaded.`,
-            `\nTry reducing the ${bold(
-              `requestConcurrency`
-            )} for content updates or the ${bold(
-              `previewRequestConcurrency`
-            )} for previews:`,
-            `\n{
-  resolve: 'gatsby-source-wordpress',
-  options: {
-    schema: {
-      requestConcurrency: 5, // currently set to ${requestConcurrency}
-      previewRequestConcurrency: 2, // currently set to ${previewRequestConcurrency}
-    }
-  },
-}`,
-            `\nThe ${bold(
-              `GATSBY_CONCURRENT_REQUEST`
-            )} environment variable is no longer used to control concurrency.\nIf you were previously using that, you'll need to use the settings above instead.`,
-          ].join(`\n`),
+          `Your WordPress server at ${bold(url)} appears to be overloaded.
+
+${getLowerRequestConcurrencyOptionMessage()}`,
           { useVerboseStyle: true }
         ),
       },
     })
+
+    return
+  } else if (e.message.includes(`Request failed with status code 500`)) {
+    reporter.panic({
+      id: CODES.WordPress500ishError,
+      context: {
+        sourceMessage: formatLogMessage(
+          `${e.message}
+
+Your WordPress server is either overloaded or encountered a PHP error.
+${errorContext ? `\n${errorContext}\n` : ``}
+Enable WP_DEBUG, WP_DEBUG_LOG, and WPGRAPHQL_DEBUG, run another build and then check your WordPress instance's debug.log file.
+
+If you don't see any errors in debug.log:
+
+${getLowerRequestConcurrencyOptionMessage()}`,
+          { useVerboseStyle: true }
+        ),
+      },
+    })
+
+    return
   }
 
   const unauthorized = e.message.includes(`Request failed with status code 401`)
@@ -357,6 +395,8 @@ const handleFetchErrors = async ({
         ),
       },
     })
+
+    return
   } else if (unauthorized) {
     reporter.panic({
       id: CODES.Authentication,
@@ -380,6 +420,8 @@ const handleFetchErrors = async ({
         ),
       },
     })
+
+    return
   }
 
   const forbidden = e.message.includes(`Request failed with status code 403`)
@@ -393,6 +435,8 @@ const handleFetchErrors = async ({
         ),
       },
     })
+
+    return
   }
 
   const redirected = e.message.includes(`GraphQL request was redirected`)
@@ -412,6 +456,8 @@ ${slackChannelSupportMessage}`
         ),
       },
     })
+
+    return
   }
 
   const responseReturnedHtml = !!response?.headers[`content-type`].includes(
@@ -428,14 +474,17 @@ ${slackChannelSupportMessage}`
     if (!missingCredentials) {
       requestOptions.auth = htaccessCredentials
     }
+
     try {
       const urlWithoutTrailingSlash = url.replace(/\/$/, ``)
 
-      const response: AxiosResponse = await getHttp(limit).post(
-        [urlWithoutTrailingSlash, `/graphql`].join(``),
-        { query, variables },
-        requestOptions
-      )
+      const response: AxiosResponse = await moduleHelpers
+        .getHttp(limit)
+        .post(
+          `${urlWithoutTrailingSlash}/graphql`,
+          { query, variables },
+          requestOptions
+        )
 
       const contentType = response?.headers[`content-type`]
 
@@ -459,6 +508,8 @@ ${slackChannelSupportMessage}`
             ),
           },
         })
+
+        return
       }
     } catch (err) {
       // elsewise, continue to handle HTML response as normal
@@ -487,7 +538,7 @@ ${slackChannelSupportMessage}`
         sourceMessage: formatLogMessage(
           `${errorContext || ``}\n\n${
             e.message
-          } \n\nReceived HTML as a response. Are you sure ${url} is the correct URL?\n\nIf that URL redirects to the correct URL via WordPress in the browser,\nor you've entered the wrong URL in settings,\nyou might receive this error.\nVisit that URL in your browser, and if it looks good, copy/paste it from your URL bar to your config.\n\n${ensureStatementsAreTrue}${
+          } \n\nReceived HTML as a response. Are you sure ${url} is the correct URL and WPGraphQL is active?\n\nIf you're sure WPGraphQL is active, visit that URL in a browser - if it redirects to the correct URL,\nor you've entered the wrong URL in settings,\nyou might receive this error.\nVisit that URL in your browser and if it looks good copy/paste it from your URL bar to your gatsby-config.js.\n\n${ensureStatementsAreTrue}${
             copyHtmlResponseOnError
               ? `\n\nCopied HTML response to your clipboard.`
               : `\n\n${bold(
@@ -511,19 +562,23 @@ ${slackChannelSupportMessage}`
         ),
       },
     })
+
+    return
   } else if (responseReturnedHtml && !isFirstRequest) {
     reporter.panic({
       id: CODES.WordPressFilters,
       context: {
         sourceMessage: formatLogMessage(
-          `${errorContext}\n\n${e.message}\n\nThere are some WordPress PHP filters in your site which are adding additional output to the GraphQL response.\nThese may have been added via custom code or via a plugin.\n\nYou will need to debug this and remove these filters during GraphQL requests using something like the following:
+          `${errorContext}\n\n${e.message}\n\nEither WPGraphQL is not active or there are some WordPress PHP filters in your site which are adding additional output to the GraphQL response.\nThese may have been added via custom code or via a plugin.\n\nYou will need to debug this and remove these filters during GraphQL requests using something like the following:
 
 if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
-  return exampleReturnEarlyInFilter( $data );
-}\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object\n\n${slackChannelSupportMessage}`
+  return;
+}\n\nYou can use the gatsby-source-wordpress debug options to determine which GraphQL request is causing this error.\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debuggraphql-object`
         ),
       },
     })
+
+    return
   }
 
   const sharedEmptyStringReponseError = `\n\nAn empty string was returned instead of a response when making a GraphQL request.\nThis may indicate that you have a WordPress filter running which is causing WPGraphQL\nto return an empty string instead of a response.\nPlease open an issue with a reproduction at\nhttps://github.com/gatsbyjs/gatsby/issues/new\nfor more help\n\n${errorContext}\n`
@@ -542,16 +597,32 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
           sourceMessage: formatLogMessage(sharedEmptyStringReponseError),
         },
       })
+
+      return
     }
 
     return
   }
 
+  if (e.message.includes(`self signed certificate`)) {
+    reporter.panic({
+      id: CODES.SelfSignedCert,
+      context: {
+        sourceMessage: formatLogMessage(
+          `${e.message}\n\nSee the docs for more information:\nhttps://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/using-self-signed-certificates.md`
+        ),
+      },
+    })
+
+    return
+  }
+
+  // generic error if none of the above exit the process
   reporter.panic({
     id: CODES.BadResponse,
     context: {
       sourceMessage: formatLogMessage(
-        `${e.message} ${
+        `${e.stack} ${
           errorContext ? `\n\n` + errorContext : ``
         }\n\n${genericError({ url })}`,
         {
@@ -560,6 +631,8 @@ if ( defined( 'GRAPHQL_REQUEST' ) && true === GRAPHQL_REQUEST ) {
       ),
     },
   })
+
+  return
 }
 
 export interface IJSON {
@@ -650,11 +723,9 @@ const fetchGraphql = async ({
       requestOptions.auth = htaccessCredentials
     }
 
-    response = await getHttp(limit).post(
-      url,
-      { query, variables },
-      requestOptions
-    )
+    response = await moduleHelpers
+      .getHttp(limit)
+      .post(url, { query, variables }, requestOptions)
 
     if (response.data === ``) {
       throw new Error(`GraphQL request returned an empty string.`)
@@ -713,7 +784,7 @@ const fetchGraphql = async ({
     })
   }
 
-  return response.data
+  return response?.data
 }
 
 export default fetchGraphql

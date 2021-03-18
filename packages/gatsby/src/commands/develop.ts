@@ -71,12 +71,12 @@ const doesConfigChangeRequireRestart = (
 const getDebugPort = (port?: number): number => port ?? 9229
 
 export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
-  if (program.hasOwnProperty(`inspect`)) {
+  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
       break: false,
     }
-  } else if (program.hasOwnProperty(`inspectBrk`)) {
+  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
     return {
       port: getDebugPort(program.inspectBrk),
       break: true,

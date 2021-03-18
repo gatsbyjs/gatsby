@@ -33,6 +33,7 @@ export interface IGatsbyPage {
   isCreatedByStatefulCreatePages: boolean
   context: Record<string, unknown>
   updatedAt: number
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
@@ -371,6 +372,7 @@ export type ActionsUnion =
   | ISetProgramExtensions
   | IDeletedStalePageDataFiles
   | IRemovedHtml
+  | ITrackedHtmlCleanup
   | IGeneratedHtml
   | IMarkHtmlDirty
   | ISSRUsedUnsafeBuiltin
@@ -826,6 +828,11 @@ interface IDeletedStalePageDataFiles {
 interface IRemovedHtml {
   type: `HTML_REMOVED`
   payload: string
+}
+
+interface ITrackedHtmlCleanup {
+  type: `HTML_TRACKED_PAGES_CLEANUP`
+  payload: Set<string>
 }
 
 interface IGeneratedHtml {

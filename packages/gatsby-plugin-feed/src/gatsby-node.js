@@ -22,7 +22,7 @@ exports.onPostBuild = async ({ graphql, reporter }, pluginOptions) => {
 
   const baseQuery = await runQuery(graphql, options.query)
 
-  for (let { ...feed } of options.feeds) {
+  for (const { ...feed } of options.feeds) {
     if (feed.query) {
       feed.query = await runQuery(graphql, feed.query).then(result =>
         merge({}, baseQuery, result)

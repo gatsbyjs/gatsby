@@ -1,19 +1,13 @@
 import React from "react"
-import { Router, Location, BaseContext } from "@reach/router"
+import { Router, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
-import {
-  shouldUpdateScroll,
-  init as navigationInit,
-  RouteUpdates,
-} from "./navigation"
+import { shouldUpdateScroll, RouteUpdates } from "./navigation"
 import { apiRunner } from "./api-runner-browser"
 import loader from "./loader"
 import { PageQueryStore, StaticQueryStore } from "./query-result-store"
 import EnsureResources from "./ensure-resources"
 import FastRefreshOverlay from "./fast-refresh-overlay"
-
-navigationInit()
 
 // In gatsby v2 if Router is used in page using matchPaths
 // paths need to contain full path.
@@ -103,7 +97,7 @@ const Root = () => (
 )
 
 // Let site, plugins wrap the site e.g. for Redux.
-const WrappedRoot = apiRunner(
+const rootWrappedWithWrapRootElement = apiRunner(
   `wrapRootElement`,
   { element: <Root /> },
   <Root />,
@@ -112,8 +106,12 @@ const WrappedRoot = apiRunner(
   }
 ).pop()
 
-export default () => (
-  <FastRefreshOverlay>
-    <StaticQueryStore>{WrappedRoot}</StaticQueryStore>
-  </FastRefreshOverlay>
-)
+function RootWrappedWithOverlayAndProvider() {
+  return (
+    <FastRefreshOverlay>
+      <StaticQueryStore>{rootWrappedWithWrapRootElement}</StaticQueryStore>
+    </FastRefreshOverlay>
+  )
+}
+
+export default RootWrappedWithOverlayAndProvider

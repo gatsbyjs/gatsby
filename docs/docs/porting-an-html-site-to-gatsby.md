@@ -560,7 +560,7 @@ website-domain
 
 ## Next steps
 
-Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/reference/built-in-components/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
 The [building with components doc](/docs/conceptual/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 

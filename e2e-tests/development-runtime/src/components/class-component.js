@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 
 class ClassComponent extends Component {
-  // eslint-disable-next-line no-undef
   state = {
     custom: true,
   }

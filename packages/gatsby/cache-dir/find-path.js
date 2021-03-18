@@ -1,4 +1,4 @@
-import { pick } from "@reach/router/lib/utils"
+import { pick } from "@gatsbyjs/reach-router/lib/utils"
 import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
 

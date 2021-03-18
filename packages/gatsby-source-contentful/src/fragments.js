@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { graphql } from "gatsby"
 
 /**

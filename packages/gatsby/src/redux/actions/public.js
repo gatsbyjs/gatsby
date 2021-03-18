@@ -1,5 +1,4 @@
 // @flow
-const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -68,6 +67,15 @@ const findChildren = initialChildren => {
     }
   }
   return children
+}
+
+const displayedWarnings = new Set()
+const warnOnce = (message, key) => {
+  const messageId = key ?? message
+  if (!displayedWarnings.has(messageId)) {
+    displayedWarnings.add(messageId)
+    report.warn(message)
+  }
 }
 
 import type { Plugin } from "./types"
@@ -638,7 +646,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, nodeSchema)
+  const result = nodeSchema.validate(node)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
@@ -1122,6 +1130,8 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
@@ -1130,10 +1140,18 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1209,15 +1227,25 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
 actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `SET_JOB`,
     plugin,
@@ -1226,15 +1254,25 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * endJob({ id: `write file id: 123` })
  */
 actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `END_JOB`,
     plugin,

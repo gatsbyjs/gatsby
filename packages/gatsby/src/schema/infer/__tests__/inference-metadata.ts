@@ -675,6 +675,7 @@ describe(`Get example value for type inference`, () => {
     })
   })
 
+  /* eslint-disable @typescript-eslint/naming-convention */
   describe(`Handles ___NODE foreign-key convenience relations`, () => {
     it(`infers single related node id as a simple string`, () => {
       const example = getExampleValueWithoutConflicts({
@@ -719,6 +720,7 @@ describe(`Get example value for type inference`, () => {
       expect(example.related___NODE).toEqual(INVALID_VALUE)
     })
   })
+  /* eslint-enable @typescript-eslint/naming-convention */
 
   describe(`Incremental example value building`, () => {
     const _nodes = [
@@ -907,6 +909,7 @@ describe(`Type conflicts`, () => {
   })
 
   it(`reports on mixed ___NODE fields`, () => {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const nodes = [{ related___NODE: `foo` }, { related___NODE: [`bar`] }]
 
     const conflicts = getExampleValueConflicts({
@@ -1045,7 +1048,9 @@ describe(`Type change detection`, () => {
     { object: { foo: `foo`, bar: `bar` } },
     { list: [`item`], bar: `bar` },
     { listOfObjects: [{ foo: `foo`, bar: `bar` }] },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     { relatedNode___NODE: `foo` },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     { relatedNodeList___NODE: [`foo`] },
   ]
 
@@ -1142,6 +1147,7 @@ describe(`Type change detection`, () => {
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
 
+  /* eslint-disable @typescript-eslint/naming-convention */
   it(`detects on any change of the relatedNode field`, () => {
     // We do not know a type of the node being added hence consider and
     // add/delete to such fields as mutations
@@ -1179,6 +1185,7 @@ describe(`Type change detection`, () => {
     expect(metadata.dirty).toEqual(false)
     expect(haveEqualFields(metadata, initialMetadata)).toEqual(true)
   })
+  /* eslint-enable @typescript-eslint/naming-convention */
 
   it(`does not detect on symmetric add/delete`, () => {
     let metadata

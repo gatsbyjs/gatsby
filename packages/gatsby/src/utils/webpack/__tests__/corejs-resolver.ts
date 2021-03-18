@@ -32,6 +32,7 @@ describe(`CoreJSResolver`, () => {
   it(`should convert core-js@2 file to core-js@3`, async () => {
     const resolver = new CoreJSResolver()
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const doResolve = jest.fn((_, request, __, ___, callback) =>
       callback(null, slash(request.request))
     )
@@ -48,6 +49,7 @@ describe(`CoreJSResolver`, () => {
   it(`should convert es6.regexp.replace to it's corejs@3 equivalent`, async () => {
     const resolver = new CoreJSResolver()
 
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const doResolve = jest.fn((_, request, __, ___, callback) =>
       callback(null, slash(request.request))
     )

@@ -8,7 +8,6 @@ const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
 const readChunk = require(`read-chunk`)
 const fileType = require(`file-type`)
-const { createProgress } = require(`gatsby-source-filesystem/utils`)
 
 const { createFileNode } = require(`gatsby-source-filesystem/create-file-node`)
 const {
@@ -22,7 +21,7 @@ let bar
 // Keep track of the total number of jobs we push in the queue
 let totalJobs = 0
 
-/** ******************
+/********************
  * Type Definitions *
  ********************/
 
@@ -62,7 +61,7 @@ const STALL_TIMEOUT = 30000
 const CONNECTION_RETRY_LIMIT = 5
 const CONNECTION_TIMEOUT = 30000
 
-/** ******************
+/********************
  * Queue Management *
  ********************/
 
@@ -135,7 +134,7 @@ async function pushToQueue(task, cb) {
   }
 }
 
-/** ****************
+/******************
  * Core Functions *
  ******************/
 
@@ -351,7 +350,7 @@ const pushTask = task =>
       })
   })
 
-/** *************
+/***************
  * Entry Point *
  ***************/
 
@@ -431,7 +430,7 @@ module.exports = ({
   }
 
   if (totalJobs === 0) {
-    bar = createProgress(`Downloading remote files`, reporter)
+    bar = reporter.createProgress(`Downloading remote files`)
     bar.start()
   }
 

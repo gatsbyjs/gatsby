@@ -5,8 +5,8 @@ import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { navigate as reachNavigate } from "@reach/router"
-import { globalHistory } from "@reach/router/lib/history"
+import { navigate as reachNavigate } from "@gatsbyjs/reach-router"
+import { globalHistory } from "@gatsbyjs/reach-router/lib/history"
 import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
@@ -149,6 +149,8 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     routerProps: { location },
     getSavedScrollPosition: args => [
       0,
+      // FIXME this is actually a big code smell, we should fix this
+      // eslint-disable-next-line @babel/no-invalid-this
       this._stateStorage.read(args, args.key),
     ],
   })

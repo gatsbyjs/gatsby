@@ -51,11 +51,11 @@ exports.onCreateWebpackConfig = (
   const stylusRuleModules = {
     test: /\.module\.styl$/,
     use: [
-      loaders.miniCssExtract({ modules: true }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ modules: true, importLoaders: 2 }),
       loaders.postcss({ plugins: postCssPlugins }),
       stylusLoader,
-    ],
+    ].filter(Boolean),
   }
 
   const configRules = [

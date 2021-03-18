@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.4...gatsby@3.2.0-next.0) (2021-03-11)
+
+### Bug Fixes
+
+- **gatsby:** workaround some webpack issues causing first save after running gatsby develop to not have any effect ([#30193](https://github.com/gatsbyjs/gatsby/issues/30193)) ([a9d65f6](https://github.com/gatsbyjs/gatsby/commit/a9d65f640891ebcaa8da9ccc9c8ef0f40e4905cd))
+- **gatsyby:** improve error messages for errors outside of react" ([#30031](https://github.com/gatsbyjs/gatsby/issues/30031)) ([8183012](https://github.com/gatsbyjs/gatsby/commit/818301227f6f8946e2130a43b75f3d685bc32b70))
+
+# [3.1.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.3...gatsby@3.1.0-next.4) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+- **gatsby:** Add dir=ltr to Fast Refresh overlay ([#29900](https://github.com/gatsbyjs/gatsby/issues/29900)) ([89d3150](https://github.com/gatsbyjs/gatsby/commit/89d3150a33441b3690d56ce5a99afd19452f6f03))
+- **gatsby:** always pass `stage` option to `babel-preset-gatsby` ([#30047](https://github.com/gatsbyjs/gatsby/issues/30047)) ([8cedc8d](https://github.com/gatsbyjs/gatsby/commit/8cedc8dd15e0fd3cb5bc62e8276a4a1f96e7c6f4))
+- **gatsby:** change browserlist to web/es5 ([#29954](https://github.com/gatsbyjs/gatsby/issues/29954)) ([ba8a498](https://github.com/gatsbyjs/gatsby/commit/ba8a498c268694999bfa7961d41018b09b523779))
+- **gatsby:** don't ignore SOURCE_FILE_CHANGED event ([#30127](https://github.com/gatsbyjs/gatsby/issues/30127)) ([f6d1c09](https://github.com/gatsbyjs/gatsby/commit/f6d1c093d2f5cf73e8bfdbfeefac18115a145463))
+- **gatsby:** Fix broken reporter call ([#30092](https://github.com/gatsbyjs/gatsby/issues/30092)) ([9429b3b](https://github.com/gatsbyjs/gatsby/commit/9429b3bfc5ab00ae02efddc20188a3bb95629e6d))
+- **gatsby:** fix routing for paths with characters like `@` etc ([#29935](https://github.com/gatsbyjs/gatsby/issues/29935)) ([157ae16](https://github.com/gatsbyjs/gatsby/commit/157ae165a4d1baa55a272b43f21c7acc89b4294b))
+- **gatsby:** fix some css HMR edge cases ([#29839](https://github.com/gatsbyjs/gatsby/issues/29839)) ([52facaf](https://github.com/gatsbyjs/gatsby/commit/52facaf7c5bf377cbec42d9d9f18832751a429a1))
+- **gatsby:** Fix various small DEV_SSR bugs exposed in development_runtime tests ([#29720](https://github.com/gatsbyjs/gatsby/issues/29720)) ([114e006](https://github.com/gatsbyjs/gatsby/commit/114e006c5866c15c8448904746d968e4ef904f83))
+- **gatsby:** freeze the schema only after rebuilding with SitePage ([#30132](https://github.com/gatsbyjs/gatsby/issues/30132)) ([4fc4248](https://github.com/gatsbyjs/gatsby/commit/4fc424868fa72b04a8152b2e8f0dceeb4955b15f))
+- **gatsby:** handle case of removing trailing slash in inc builds ([#29953](https://github.com/gatsbyjs/gatsby/issues/29953)) ([7462030](https://github.com/gatsbyjs/gatsby/commit/7462030b9f3c6ad028a2469b850e3477b4f0b954))
+- **gatsby:** Improve Fast Refresh overlay styles ([#29855](https://github.com/gatsbyjs/gatsby/issues/29855)) ([c8bf060](https://github.com/gatsbyjs/gatsby/commit/c8bf0605ada2f4f20c518d51ef8629fb2ea48de7))
+- **gatsby:** Remove `react-hot-loader` deps & other unused deps ([#29864](https://github.com/gatsbyjs/gatsby/issues/29864)) ([39721fd](https://github.com/gatsbyjs/gatsby/commit/39721fd2f3f4a997c6a954c60ae81bb93712c0b1))
+- **gatsby:** set program.verbose when VERBOSE env var is used ([#30123](https://github.com/gatsbyjs/gatsby/issues/30123)) ([632f915](https://github.com/gatsbyjs/gatsby/commit/632f9151ceb2d5621dc720adca3ee8049e6179d6))
+- **gatsby:** with some custom babel configs array spreading with Set is not safe ([#29885](https://github.com/gatsbyjs/gatsby/issues/29885)) ([5d312fe](https://github.com/gatsbyjs/gatsby/commit/5d312fe5433dbafb9a6b7eeba6abb563dba27ef2))
+- **gatsby-plugin-preact:** fix fast-refresh ([#29831](https://github.com/gatsbyjs/gatsby/issues/29831)) ([81a3776](https://github.com/gatsbyjs/gatsby/commit/81a377650e267b930482abf647053b1a0b6bc384))
+
+### Features
+
+- **gatsby:** Add darkmode support to Fast Refresh overlay ([#30025](https://github.com/gatsbyjs/gatsby/issues/30025)) ([b7fb616](https://github.com/gatsbyjs/gatsby/commit/b7fb616ab79f10dd8f1faf6ea23fea0fa4424f26))
+- **gatsby:** improve error messages at runtime ([#29970](https://github.com/gatsbyjs/gatsby/issues/29970)) ([d37f275](https://github.com/gatsbyjs/gatsby/commit/d37f2757b6b6e46335f3ba4fcaabf3a85251f045))
+
+# [3.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.2...gatsby@3.1.0-next.3) (2021-02-28)
+
+### Bug Fixes
+
+- query on demand loading indicator always active on preact. ([#29829](https://github.com/gatsbyjs/gatsby/issues/29829)) ([fa1e2d6](https://github.com/gatsbyjs/gatsby/commit/fa1e2d66b806c92a04d63f023f77bb5770981808))
+- **gatsby:** eslint linting ([#29796](https://github.com/gatsbyjs/gatsby/issues/29796)) ([2d52a55](https://github.com/gatsbyjs/gatsby/commit/2d52a5567018b5ebb185cd08bc41500a0d657136))
+- **gatsby:** workaround graphql-compose issue ([#29822](https://github.com/gatsbyjs/gatsby/issues/29822)) ([7f9bcf1](https://github.com/gatsbyjs/gatsby/commit/7f9bcf10797f0e1ba1583c6f1a6417ffe91f1b5e))
+- **hmr:** accept hot updates for modules above page templates ([#29752](https://github.com/gatsbyjs/gatsby/issues/29752)) ([55778eb](https://github.com/gatsbyjs/gatsby/commit/55778eb11e816ceaf29ad20d6ff05192cdf68f4c))
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.1...gatsby@3.1.0-next.2) (2021-02-26)
+
+### Bug Fixes
+
+- **gatsby:** Update styles & overlay for Fast Refresh ([#29797](https://github.com/gatsbyjs/gatsby/issues/29797)) ([22da802](https://github.com/gatsbyjs/gatsby/commit/22da8028395d61fb2bef0b66418ae2c83fe29e6e))
+- **gatsby:** Use vendored @reach/router ([#29772](https://github.com/gatsbyjs/gatsby/issues/29772)) ([8754e0c](https://github.com/gatsbyjs/gatsby/commit/8754e0c6eb1b8f88422e60f31a1dca37925e8b2e))
+- **mini-css-extract:** don't use loader in ssr ([#29801](https://github.com/gatsbyjs/gatsby/issues/29801)) ([b2d6617](https://github.com/gatsbyjs/gatsby/commit/b2d66171081dffbfdd9e5def281d09c011a6a821))
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.0...gatsby@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.9...gatsby@3.1.0-next.0) (2021-02-26)
+
+### Bug Fixes
+
+- **gatsby:** temporarily pin mini-css-extract-plugin version ([#29773](https://github.com/gatsbyjs/gatsby/issues/29773)) ([8967b88](https://github.com/gatsbyjs/gatsby/commit/8967b888b71ce2621b3f2957dae42f78b394ba20))
+
+### Features
+
+- **gatsby:** Add ignoreCase option for createRedirect and support it in client sid… ([#29714](https://github.com/gatsbyjs/gatsby/issues/29714)) ([09f58de](https://github.com/gatsbyjs/gatsby/commit/09f58defb6c3b4b26a3efbc8151fbf129e5cb7fd))
+- **gatsby:** Set up Fast Refresh ([#29588](https://github.com/gatsbyjs/gatsby/issues/29588)) ([e0bd955](https://github.com/gatsbyjs/gatsby/commit/e0bd955677dd23c26491e794d9a339eb343e632b))
+
 # [3.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.0.0-next.8...gatsby@3.0.0-next.9) (2021-02-25)
 
 ### Bug Fixes

@@ -200,7 +200,7 @@ jobs:
       - run:
           name: "remove workspaces from package.json"
           command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:docs
@@ -308,6 +308,9 @@ jobs:
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # force typescript to 4.1.5 to pass test
+          command: sed '$ s/.$/,"resolutions":{"typescript":"4.1.5"}}/' package.json > tmpfile && cat tmpfile > package.json && rm tmpfile
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ../..

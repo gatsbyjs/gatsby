@@ -1,35 +1,36 @@
 ---
-title: Using the beta Gatsby Image plugin
+title: Using the Gatsby Image plugin
 ---
+
+_If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._
 
 Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
 
-Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
-
-The new Gatsby Image plugin is currently in beta, but you can try it out now and see what it can do for the performance of your site.
+Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](/docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
 ## Getting started
 
-First you need to install the following packages:
+1. Install the following packages:
 
 ```shell
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-You then need to add the plugins to your `gatsby-config.js`:
+2. Add the plugins to your `gatsby-config.js`:
 
 ```js:title=gatsby-config.js
 module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
-    `gatsby-source-filesystem`,
     `gatsby-transformer-sharp`,
   ],
 }
 ```
 
 If you already have some of these plugins installed, please check that they're updated to the latest version.
+
+Note that `gatsby-source-filesystem` is not included in this config. If you are sourcing from your local filesystem to use `GatsbyImage` please configure accordingly. Otherwise, downloading the dependency without configuration is sufficient.
 
 <!-- TODO: add exact minimum version when we reach GA -->
 
@@ -102,7 +103,7 @@ If you are using an image that will be the same each time the component is used,
 
 ### Dynamic images
 
-If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
 
 1. **Add the image to your page query.**
 
@@ -191,6 +192,30 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    `
    ```
 
+## Using images from a CMS or CDN
+
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
+
+### Source plugins
+
+These source plugins support using `gatsby-plugin-image` with images served from their CDN.
+
+- [AgilityCMS](https://github.com/agility/gatsby-image-agilitycms)
+- [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
+- [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
+- [Sanity](https://www.gatsbyjs.com/plugins/gatsby-source-sanity/#using-images)
+- [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
+
+### Image CDNs
+
+A dedicated image CDN can be used with sources that don't have their own CDN, or where you need more transforms or formats than the CDN offers.
+
+- [imgix](https://www.gatsbyjs.com/plugins/@imgix/gatsby/)
+
+### Plugin authors
+
+If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatbsy Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
+
 ## Migrating
 
 If your site uses the old `gatsby-image` component, you can use a codemod to help you migrate to the new Gatsby Image components. This can update the code for most sites. To use the codemod, run this command in the root of your site:
@@ -199,4 +224,77 @@ If your site uses the old `gatsby-image` component, you can use a codemod to hel
 npx gatsby-codemods gatsby-plugin-image
 ```
 
-This will convert all GraphQL queries and components to use the new plugin. For more information see the full migration guide.
+This will convert all GraphQL queries and components to use the new plugin. For more information see the full [migration guide](/docs/reference/release-notes/image-migration-guide/).
+
+## Troubleshooting
+
+If you're running into issues getting everything to work together we recommend following these steps.
+
+1. Are your dependencies installed?
+
+Check your package.json file for the following entries:
+
+- `gatsby-plugin-image`
+- `gatsby-plugin-sharp`
+- `gatsby-transformer-sharp` (If you're querying for dynamic images)
+- `gatsby-source-filesystem` (If you're using the StaticImage component)
+
+If not, install them.
+
+2. Have you added the necessary information to your `gatsby-config.js` file?
+
+All of these plugins should be in your plugins array. Reminder that the `gatsby-image` package did not get included, so this is a change.
+
+- `gatsby-plugin-image`
+- `gatsby-plugin-sharp`
+- `gatsby-transformer-sharp` (If you're querying for dynamic images)
+
+If not, add them.
+
+3. Do your queries in GraphiQL return the data you expect?
+
+There are two paths here.
+
+If you're using StaticImage:
+
+Try running
+
+```graphql
+query MyQuery {
+  allFile {
+    nodes {
+      relativePath
+    }
+  }
+}
+```
+
+Do you see results with `.cache/caches/gatsby-plugin-image` in the path?
+
+If not, check steps 1 and 2 above.
+
+If you're using GatsbyImage:
+
+Run the query you're using in your site. Does it return a gatsbyImageData object?
+
+If not, check steps 1 and 2 above.
+
+4. Do the images render when you run your site?
+
+Do you see errors in your `gatsby develop` logs? Do you see errors in your browser console?
+
+For StaticImage:
+
+Inspect the element on your page. Does it include a `div` with `gatsby-image-wrapper`? How about an internal `source` element?
+
+If not, double check the component usage. Did you use `src`? Is the relative path correct?
+
+For GatsbyImage:
+
+Trying using `console.log` to check the the object you're passing as the `image` prop. Is it there?
+
+If not, make sure you're using the same object you saw return from your query.
+
+5. Are the images working yet?
+
+If you still see problems and think it's a bug, please [file an issue](https://github.com/gatsbyjs/gatsby/issues) and let us know how far in these steps you progressed.

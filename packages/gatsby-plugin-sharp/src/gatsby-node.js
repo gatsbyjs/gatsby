@@ -97,7 +97,7 @@ exports.onPostBootstrap = async ({ reporter, cache, store }) => {
       const job = await cache.get(contentDigest)
 
       if (job) {
-        // we dont have to await, gatsby does this for us
+        // we don't have to await, gatsby does this for us
         _unstable_createJob(job, { reporter })
       }
     }

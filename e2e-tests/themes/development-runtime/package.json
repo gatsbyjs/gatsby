@@ -6,8 +6,8 @@
   "dependencies": {
     "gatsby": "^2.13.14",
     "gatsby-theme-about": "*",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "license": "MIT",
   "scripts": {

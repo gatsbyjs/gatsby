@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-/** */
+/***/
 const GatsbyReporter = {
   /**
    * @callback GatsbyReporterFn
@@ -60,7 +60,7 @@ const GatsbyReporter = {
   verbose: true,
 };
 
-/** */
+/***/
 const GatsbyCache = {
   /**
    * Retrieve cached value
@@ -82,7 +82,7 @@ const GatsbyCache = {
   set: true,
 };
 
-/** */
+/***/
 const GatsbyTracing = {
   /**
    * Global tracer instance. Check

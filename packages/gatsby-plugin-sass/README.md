@@ -48,8 +48,8 @@ plugins: [
 ]
 ```
 
-If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader/tree/version-1):
-**Note:** Gatsby is using `css-loader@1.0.1`.
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader):
+**Note:** Gatsby is using `css-loader@^5.0.0`.
 
 ```javascript:title=gatsby-config.js
 plugins: [

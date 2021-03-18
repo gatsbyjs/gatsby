@@ -394,7 +394,7 @@ In this part of the tutorial, you've learned the foundations of building with Ga
 
 Now that you've built a Gatsby site, where do you go next?
 
-- Share your Gatsby site on Twitter and see what other people have created by searching for #gatsbytutorial! Make sure to mention @gatsbyjs in your Tweet and include the hashtag #gatsbytutorial :)
+- Share your Gatsby site on Twitter and see what other people have created by searching for [#gatsbytutorial](https://twitter.com/search?q=%23gatsbytutorial)! Make sure to mention [@GatsbyJS](https://twitter.com/gatsbyjs) in your tweet and include the hashtag `#gatsbytutorial` :)
 - You could take a look at some [example sites](https://github.com/gatsbyjs/gatsby/tree/master/examples#gatsby-example-websites)
 - Explore more [plugins](/docs/plugins/)
 - See what [other people are building with Gatsby](/showcase/)

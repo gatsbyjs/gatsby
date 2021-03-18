@@ -118,7 +118,7 @@ Due to the changes to `gatsby-plugin-image`, there is some functionality that is
 
 1. `GatsbyImage` is no longer a class component and therefore cannot be extended. You can use [composition](https://reactjs.org/docs/composition-vs-inheritance.html) instead.
 2. `fluid` images no longer exist, and the `fullWidth` replacement does not take `maxWidth` or `maxHeight`.
-3. Art direction is no longer supported.
+3. The art direction API has changed, see the [`gatsby-plugin-image` reference guide](/docs/reference/built-in-components/gatsby-plugin-image#withartdirection) for specifics.
 4. The component no longer takes a decomposed object, and the following code is not valid. You should avoid accessing or changing the contents of the `gatsbyImageData` object, as it is not considered to be a public API, so can be changed without notice.
 
    ```javascript

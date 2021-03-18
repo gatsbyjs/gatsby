@@ -47,10 +47,10 @@ exports.onCreateWebpackConfig = (
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
-      loaders.miniCssExtract({ modules: true }),
+      !isSSR && loaders.miniCssExtract({ modules: true }),
       loaders.css({ ...cssLoaderOptions, importLoaders: 1, modules: true }),
       postcssLoader,
-    ],
+    ].filter(Boolean),
   }
 
   const postcssRules = { oneOf: [postcssRuleModules, postcssRule] }

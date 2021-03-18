@@ -141,12 +141,14 @@ export default (pagePath, isClientOnlyPage, callback) => {
 
         const childAssets = namedChunkGroups[chunkKey].childAssets
         for (const rel in childAssets) {
-          chunks = concat(
-            chunks,
-            childAssets[rel].map(chunk => {
-              return { rel, name: chunk }
-            })
-          )
+          if (childAssets.hasownProperty(rel)) {
+            chunks = concat(
+              chunks,
+              childAssets[rel].map(chunk => {
+                return { rel, name: chunk }
+              })
+            )
+          }
         }
 
         return chunks
