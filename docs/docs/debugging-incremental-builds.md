@@ -72,4 +72,16 @@ If your `gatsby-ssr` (either site itself or plugin) make use of `fs` reads, head
 
 ### Avoid calling date stuff
 
-TODO
+Using [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) inside your `gatsby-node.js` or `gatsby-config.js` files could be the reason for a rebuild of all pages as the date changes between builds.
+
+This is also true for querying the `buildTime`:
+
+```graphql
+{
+  site {
+    buildTime
+  }
+}
+```
+
+Querying that information in e.g. a static query inside a layout component that is used across all pages will result in a rebuild of all pages.
