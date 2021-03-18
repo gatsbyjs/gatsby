@@ -46,7 +46,7 @@ export function getSizer(
 ): string {
   let sizer: string | null = null
   if (layout === `fullWidth`) {
-    sizer = `<div data-gatsby-image-sizer aria-hidden="true" style="padding-top: ${
+    sizer = `<div aria-hidden="true" style="padding-top: ${
       (height / width) * 100
     }%;"></div>`
   }
