@@ -24,8 +24,8 @@ const DominantColor = ({ data, location }) => (
     <h2>Progressive Loading with Minimal Effort</h2>
     <p>
       The magic of Gatsby Image's Dominant color technique means that you can
-      load an image at moderate resolution and not have to bother with creating
-      a small thumbnail yourself. Gatsby Image will automatically create a
+      load a unique image placeholder and not have to bother with creating a
+      small thumbnail yourself. Gatsby Image will automatically create a
       properly sized div with a background color generated based on your
       specific image. When the page loads, the div will load first for quick
       display while the larger image file is downloaded and displayed.
