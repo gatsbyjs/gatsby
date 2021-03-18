@@ -218,9 +218,9 @@ If you maintain a source plugin or image CDN, there is a toolkit to help you add
 
 ## Background images
 
-CSS has more limited support for responsive image handling than the `<picture>` element. Most importantly, it does not handle fallback for next-gen image formats such as AVIF and WebP. You can get the benefits of `gatsby-plugin-image` for background images without any extra components.
+Using CSS to display background images has more limited support for responsive image handling than the `<picture>` element. Most importantly, it does not handle fallback for next-gen image formats such as AVIF and WebP. You can get the benefits of `gatsby-plugin-image` for background images without any extra components.
 
-This is an example of creating a hero image component, with text overlaying an image background. It uses CSS grid to stack the elements on top of each other.
+This is an example of a hero image component with text overlaying an image background. It uses CSS grid to stack the elements on top of each other.
 
 ```jsx
 import * as React from "react"
