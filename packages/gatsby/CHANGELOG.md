@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0...gatsby@3.1.1) (2021-03-18)
+
+### Bug Fixes
+
+- **gatsby:** be less aggressive when marking builtin methods as unsafe ([#30216](https://github.com/gatsbyjs/gatsby/issues/30216)) ([#30287](https://github.com/gatsbyjs/gatsby/issues/30287)) ([32d7adf](https://github.com/gatsbyjs/gatsby/commit/32d7adf16e6b8142ba2a30d5216b9bf34234f412))
+
 # [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.4...gatsby@3.1.0) (2021-03-16)
 
 ### Bug Fixes
