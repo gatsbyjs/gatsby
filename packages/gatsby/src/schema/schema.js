@@ -861,11 +861,9 @@ const processThirdPartyTypeFields = ({
   type,
   schemaQueryType,
 }) => {
-  resetOverriddenThirdPartyTypeFields({ typeComposer })
-
   // Fix for types that refer to Query. Thanks Relay Classic!
   const fields = type.getFields()
-  typeComposer.getFieldNames().forEach(fieldName => {
+  Object.keys(fields).forEach(fieldName => {
     // Remove customization that we could have added via `createResolvers`
     // to make it work with schema rebuilding
     const fieldType = String(fields[fieldName].type)
@@ -875,6 +873,7 @@ const processThirdPartyTypeFields = ({
       })
     }
   })
+  resetOverriddenThirdPartyTypeFields({ typeComposer })
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
