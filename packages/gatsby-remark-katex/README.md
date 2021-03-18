@@ -7,6 +7,7 @@
 
 `npm install gatsby-transformer-remark gatsby-remark-katex katex`
 
+
 ## How to use
 
 ```javascript

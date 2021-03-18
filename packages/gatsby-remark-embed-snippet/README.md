@@ -59,6 +59,7 @@ module.exports = {
 },
 ```
 
+
 ### Example 2: Specify that code snippet files are under a directory called `snippets`
 
 ```js

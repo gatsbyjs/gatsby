@@ -100,4 +100,5 @@ a.anchor {
 }
 ```
 
+
 Note: There are a variety of approaches to styling your Gatsby site, see [styling documentation](https://www.gatsbyjs.com/docs/styling/) for more detail.

@@ -216,6 +216,7 @@ plugins: [
 - img - `![Image](my-img.png)`
 - link - `[Link](myFile.txt)`
 
+
 ### Supported HTML tags
 
 - `<img />`

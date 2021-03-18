@@ -28,6 +28,7 @@ plugins: [
 ],
 ```
 
+
 Then, add `dot` code blocks to your markdown. E.g
 
     ```dot
