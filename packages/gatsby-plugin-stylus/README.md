@@ -20,8 +20,8 @@ plugins: [`gatsby-plugin-stylus`]
 
 ### With CSS Modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.styl` -> `App.module.styl`.
-Any file with the `module` extension will use CSS modules.
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `app.styl` -> `app.module.styl`.
+Any file with the `module` extension will use CSS modules. CSS modules are imported as ES Modules to support treeshaking. You'll need to import styles as: `import { yourClassName, anotherClassName } from './app.module.styl'`
 
 ### With Stylus plugins
 
