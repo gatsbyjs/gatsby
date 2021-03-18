@@ -216,6 +216,7 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{Model.fields__name}.js`)
       )
     ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       fields__name: `foo`,
     })
     expect(
@@ -224,6 +225,7 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{_model.fields__name}.js`)
       )
     ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       fields__name: `foo`,
     })
   })
@@ -236,6 +238,7 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{Model.parent__(File)__relativePath}.js`)
       )
     ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       parent__relativePath: `foo`,
     })
     expect(
@@ -245,6 +248,7 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{model123.parent__(File)__relativePath}.js`)
       )
     ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       parent__relativePath: `foo`,
     })
   })

@@ -225,6 +225,16 @@ https://example.com/afile.jpg/1920/1440/image.webp 1920w`)
     expect(data.images?.fallback).toBeUndefined()
   })
 
+  it(`includes a placeholder image if a URL is provided`, () => {
+    const data = generateImageData({
+      ...args,
+      placeholderURL: `data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD`,
+    })
+    expect(data.placeholder?.fallback).toEqual(
+      `data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD`
+    )
+  })
+
   it(`generates the same output as the input format if output is auto`, () => {
     const sourceMetadata = {
       width: 800,

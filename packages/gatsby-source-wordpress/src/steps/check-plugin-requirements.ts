@@ -87,6 +87,7 @@ const areRemotePluginVersionsSatisfied = async ({
       },
       panicOnError: false,
       throwGqlErrors: true,
+      isFirstRequest: true,
     })
 
     wpgqlIsSatisfied = data.wpGatsbyCompatibility.satisfies.wpGQL
@@ -262,6 +263,7 @@ const prettyPermalinksAreEnabled = async ({
         }
       `,
       throwGqlErrors: true,
+      isFirstRequest: true,
     })
 
     if (!data.wpGatsby.arePrettyPermalinksEnabled) {

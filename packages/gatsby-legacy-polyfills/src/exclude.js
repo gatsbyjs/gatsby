@@ -88,5 +88,9 @@ module.exports = {
     `es.promise`,
     `es.symbol.description`,
     `web.*`,
+
+    // core-js@3.7.0 added extra polyfill for reduce & reduce-right because of bug - we don't care about that bug, we're already on chrome 87
+    `es.array.reduce`,
+    `es.array.reduce-right`,
   ],
 }

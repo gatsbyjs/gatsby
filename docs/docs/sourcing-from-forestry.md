@@ -22,7 +22,7 @@ First, clone the Gatsby default starter repository.
 git clone https://github.com/gatsbyjs/gatsby-starter-default.git gatsby-forestry-example
 ```
 
-Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure Devops as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
+Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure DevOps as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
 
 ```shell
 git remote set-url origin <your-github-repo-link>

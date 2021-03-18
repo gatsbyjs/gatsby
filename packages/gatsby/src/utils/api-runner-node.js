@@ -233,6 +233,7 @@ function extendLocalReporterToCatchPluginErrors({
     panic,
     panicOnBuild,
     activityTimer: (...args) => {
+      // eslint-disable-next-line prefer-spread
       const activity = reporter.activityTimer.apply(reporter, args)
 
       const originalStart = activity.start
@@ -252,6 +253,7 @@ function extendLocalReporterToCatchPluginErrors({
     },
 
     createProgress: (...args) => {
+      // eslint-disable-next-line prefer-spread
       const activity = reporter.createProgress.apply(reporter, args)
 
       const originalStart = activity.start

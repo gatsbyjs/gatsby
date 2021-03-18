@@ -15,8 +15,8 @@
     "gatsby-plugin-sitemap": "^2.0.12",
     "gatsby-source-filesystem": "^2.8.1",
     "gatsby-transformer-sharp": "^2.9.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
@@ -35,7 +35,7 @@
     "serve:site": "gatsby serve --prefix-paths",
     "serve:assets": "node scripts/serve.js",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
     "cpy-cli": "^2.0.0",

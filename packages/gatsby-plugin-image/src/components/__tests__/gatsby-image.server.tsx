@@ -7,6 +7,7 @@ import { SourceProps } from "../picture"
 type GlobalOverride = NodeJS.Global &
   typeof global.globalThis & {
     SERVER: boolean | undefined
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     GATSBY___IMAGE: boolean | undefined
   }
 

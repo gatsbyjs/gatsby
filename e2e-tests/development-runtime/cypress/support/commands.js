@@ -91,7 +91,7 @@ Cypress.Commands.overwrite("visit", (orig, url, options = {}) => {
     ...options,
     onBeforeLoad: win => {
       if (options.onBeforeLoad) {
-        optiosn.onBeforeLoad(win)
+        options.onBeforeLoad(win)
       }
 
       cy.spy(win.console, "log").as(`hmrConsoleLog`)
@@ -105,3 +105,11 @@ Cypress.Commands.add(`waitForHmr`, (message = `App is up to date`) => {
   cy.get(`@hmrConsoleLog`).should(`be.calledWithMatch`, message)
   cy.wait(1000)
 })
+
+Cypress.Commands.add(`getFastRefreshOverlay`, () => (
+  cy.get('gatsby-fast-refresh').shadow()
+))
+
+Cypress.Commands.add(`assertNoFastRefreshOverlay`, () => (
+  cy.get('gatsby-fast-refresh').should('not.exist')
+))

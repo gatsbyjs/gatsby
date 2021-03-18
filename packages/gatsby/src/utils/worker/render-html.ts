@@ -135,38 +135,29 @@ async function getScriptsAndStylesForTemplate(
       handleAsset(asset, `preload`)
     }
 
-    const namedChunkGroup = webpackStats.namedChunkGroups[chunkName]
-    if (!namedChunkGroup) {
-      continue
-    }
-
-    for (const asset of namedChunkGroup.assets) {
-      handleAsset(asset.name, `preload`)
-    }
-
-    // TODO: figure out childAssets for webpack@5 - there is no longer `childAssets` in webpack.stats.json
     // Handling for webpack magic comments, for example:
     // import(/* webpackChunkName: "<chunk_name>", webpackPrefetch: true */ `<path_to_module>`)
-    // will produce
+    // Shape of webpackStats.childAssetsByChunkName:
     // {
-    //   namedChunkGroups: {
+    //   childAssetsByChunkName: {
     //     <name_of_top_level_chunk>: {
-    //       // [...] some fields we don't care about,
-    //       childAssets: {
-    //         prefetch: [
-    //           "<chunk_name>-<chunk_hash>.js",
-    //           "<chunk_name>-<chunk_hash>.js.map",
-    //         ]
-    //       }
+    //       prefetch: [
+    //         "<chunk_name>-<chunk_hash>.js",
+    //       ]
     //     }
     //   }
     // }
-    // for (const [rel, assets] of Object.entries(namedChunkGroup.childAssets)) {
-    //   // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
-    //   for (const asset of assets) {
-    //     handleAsset(asset, rel)
-    //   }
-    // }
+    const childAssets = webpackStats.childAssetsByChunkName[chunkName]
+    if (!childAssets) {
+      continue
+    }
+
+    for (const [rel, assets] of Object.entries(childAssets)) {
+      // @ts-ignore TS doesn't like that assets is not typed and especially that it doesn't know that it's Iterable
+      for (const asset of assets) {
+        handleAsset(asset, rel)
+      }
+    }
   }
 
   // create scripts array, making sure "preload" scripts have priority

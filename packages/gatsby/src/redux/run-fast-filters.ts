@@ -417,10 +417,7 @@ function convertAndApplyFastFilters(
     stats.totalSiftHits++
   }
 
-  if (firstOnly) {
-    return []
-  }
-  return null
+  return []
 }
 
 function filterToStats(

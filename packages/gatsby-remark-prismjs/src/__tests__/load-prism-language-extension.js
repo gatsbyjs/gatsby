@@ -12,12 +12,12 @@ describe(`extend/add prism language`, () => {
     expect(() => loadLanguageExtension(request)).toThrow()
   })
   it(`should not throw an error if the request is an array`, () => {
-    let request = []
+    const request = []
 
     expect(() => loadLanguageExtension(request)).not.toThrow()
   })
   it(`should not throw an error if the request is a valid object (containing 'language' and 'definition')`, () => {
-    let request = {
+    const request = {
       language: `aTypicalLanguage`,
       definition: /aRegexp/,
     }
@@ -25,12 +25,12 @@ describe(`extend/add prism language`, () => {
     expect(() => loadLanguageExtension(request)).not.toThrow()
   })
   it(`should throw an error if the request is not a valid object (containing 'language' and 'definition')`, () => {
-    let request = {}
+    const request = {}
 
     expect(() => loadLanguageExtension(request)).toThrow()
   })
   it(`should throw an error if the request is an array containing an invalid object (not containing 'language' and 'definition')`, () => {
-    let request = [
+    const request = [
       {
         language: `aTypicalLanguage`,
         definition: /aRegexp/,
@@ -86,7 +86,7 @@ describe(`extend/add prism language`, () => {
 
     loadLanguageExtension(request)
 
-    let languagesAfterLoaded = Object.keys(Prism.languages)
+    const languagesAfterLoaded = Object.keys(Prism.languages)
     expect(Prism.languages).toHaveProperty(request.language)
     expect(languagesAfterLoaded.length).toBe(languagesBeforeLoaded.length + 1)
     expect(Prism.languages[request.language][`flexc_keyword`]).toEqual(
@@ -95,7 +95,7 @@ describe(`extend/add prism language`, () => {
   })
   it(`should add new language`, () => {
     const request = {
-      language: `flexc2`, //Check if it is possible to reset scope somehow, instead of giving a new name.
+      language: `flexc2`, // Check if it is possible to reset scope somehow, instead of giving a new name.
       definition: {
         flexc_keyword: `(__cm|__circ|_lpp_indirect|__accum|__size_t|__ptrdiff_t|__wchar_t|__fixed|__abscall|__extcall|__stkcall|__sat|__i64_t|__i32_t|__i16_t|__r32_t|__r16_t|__u64_t|__u32_t|__u16_t|__a40_t|__a24_t)`,
       },
@@ -106,7 +106,7 @@ describe(`extend/add prism language`, () => {
 
     loadLanguageExtension(request)
 
-    let languagesAfterLoaded = Object.keys(Prism.languages)
+    const languagesAfterLoaded = Object.keys(Prism.languages)
     expect(Prism.languages).toHaveProperty(request.language)
     expect(languagesAfterLoaded.length).toBe(languagesBeforeLoaded.length + 1)
     expect(Prism.languages[request.language][`flexc_keyword`]).toEqual(
@@ -116,7 +116,7 @@ describe(`extend/add prism language`, () => {
   it(`should work to make two requests by sending an array`, () => {
     const request = [
       {
-        language: `flexc3`, //Check if it is possible to reset scope somehow, instead of giving a new name.
+        language: `flexc3`, // Check if it is possible to reset scope somehow, instead of giving a new name.
         definition: {
           flexc_keyword: `(__cm|__circ|_lpp_indirect|__accum|__size_t|__ptrdiff_t|__wchar_t|__fixed|__abscall|__extcall|__stkcall|__sat|__i64_t|__i32_t|__i16_t|__r32_t|__r16_t|__u64_t|__u32_t|__u16_t|__a40_t|__a24_t)`,
         },
@@ -135,7 +135,7 @@ describe(`extend/add prism language`, () => {
 
     loadLanguageExtension(request)
 
-    let languagesAfterLoaded = Object.keys(Prism.languages)
+    const languagesAfterLoaded = Object.keys(Prism.languages)
     expect(Prism.languages).toHaveProperty(`flexc3`)
     expect(languagesAfterLoaded.length).toBe(languagesBeforeLoaded.length + 1)
     expect(Prism.languages[`c`]).toHaveProperty(`new_token`)

@@ -291,7 +291,7 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
-      details => details.type === `object.allowUnknown`
+      details => details.type === `object.unknown`
     )
 
     if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {

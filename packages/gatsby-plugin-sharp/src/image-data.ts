@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { Reporter } from "gatsby/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"

@@ -35,7 +35,6 @@ export interface IBuildArgs extends IProgram {
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
 let needToRecompileSSRBundle = true
-
 export const getDevSSRWebpack = (): {
   devssrWebpackWatcher: IWebpackWatchingPauseResume
   devssrWebpackCompiler: webpack.Compiler
@@ -103,7 +102,7 @@ const runWebpack = (
             return resolve(stats)
           }
         }
-      )
+      ) as IWebpackWatchingPauseResume
     }
   })
 
@@ -320,9 +319,16 @@ export async function buildHTMLPagesAndDeleteStaleArtifacts({
 }> {
   buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
 
-  const { toRegenerate, toDelete } = buildUtils.calcDirtyHtmlFiles(
-    store.getState()
-  )
+  const {
+    toRegenerate,
+    toDelete,
+    toCleanupFromTrackedState,
+  } = buildUtils.calcDirtyHtmlFiles(store.getState())
+
+  store.dispatch({
+    type: `HTML_TRACKED_PAGES_CLEANUP`,
+    payload: toCleanupFromTrackedState,
+  })
 
   if (toRegenerate.length > 0) {
     const buildHTMLActivityProgress = reporter.createProgress(

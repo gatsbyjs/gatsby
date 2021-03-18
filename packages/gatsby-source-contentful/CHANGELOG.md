@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.1.0-next.2...gatsby-source-contentful@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.1.0-next.1...gatsby-source-contentful@5.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+- **gatsby-source-contentful:** Remove image beta warning ([#29980](https://github.com/gatsbyjs/gatsby/issues/29980)) ([2f59995](https://github.com/gatsbyjs/gatsby/commit/2f599952142b9f2350ef268187839dcbe01ccd74))
+- **gatsby-source-contentful:** Set image source format ([#30103](https://github.com/gatsbyjs/gatsby/issues/30103)) ([759ed72](https://github.com/gatsbyjs/gatsby/commit/759ed722c3fd69216e7d8c7b0212ea2a9335a16e))
+- **gatsby-source-contentful:** use reporter progressbar instead of own ([#29853](https://github.com/gatsbyjs/gatsby/issues/29853)) ([6c8e277](https://github.com/gatsbyjs/gatsby/commit/6c8e277a535d104b0f545d90dd0dd7d3f688839c))
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.1.0-next.0...gatsby-source-contentful@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.10...gatsby-source-contentful@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.0.0-next.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.9...gatsby-source-contentful@5.0.0-next.10) (2021-02-25)
+
+### Bug Fixes
+
+- **contentful:** retry on network errors when checking credentials ([#29664](https://github.com/gatsbyjs/gatsby/issues/29664)) ([b95a199](https://github.com/gatsbyjs/gatsby/commit/b95a199817ec100d7723868c0d25faf868c327f0))
+
 # [5.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.0.0-next.8...gatsby-source-contentful@5.0.0-next.9) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-source-contentful

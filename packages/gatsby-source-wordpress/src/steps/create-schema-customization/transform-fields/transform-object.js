@@ -3,6 +3,7 @@ import { fetchAndCreateSingleNode } from "~/steps/source-nodes/update-nodes/wp-a
 import { getQueryInfoByTypeName } from "~/steps/source-nodes/helpers"
 import { getGatsbyApi } from "~/utils/get-gatsby-api"
 import { inPreviewMode } from "~/steps/preview/index"
+import { getPluginOptions } from "../../../utils/get-gatsby-api"
 
 export const transformListOfGatsbyNodes = ({ field, fieldName }) => {
   const typeName = buildTypeName(field.type.ofType.name)
@@ -48,6 +49,14 @@ export const buildGatsbyNodeObjectResolver = ({ field, fieldName }) => async (
     id: nodeField.id,
     type: typeName,
   })
+
+  const {
+    schema: { typePrefix: prefix },
+  } = getPluginOptions()
+
+  if (existingNode?.__typename && !existingNode.__typename.startsWith(prefix)) {
+    existingNode.__typename = buildTypeName(existingNode.__typename)
+  }
 
   if (existingNode) {
     return existingNode

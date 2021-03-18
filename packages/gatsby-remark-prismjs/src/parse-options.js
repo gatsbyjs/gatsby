@@ -5,18 +5,18 @@ module.exports = language => {
     return ``
   }
   if (language.split(`{`).length > 1) {
-    let [splitLanguage, ...options] = language.split(`{`)
-    let highlightLines = [],
-      outputLines = [],
-      showLineNumbersLocal = false,
-      numberLinesStartAt,
-      promptUserLocal,
-      promptHostLocal
+    const [splitLanguage, ...options] = language.split(`{`)
+    let highlightLines = []
+    let outputLines = []
+    let showLineNumbersLocal = false
+    let numberLinesStartAt
+    let promptUserLocal
+    let promptHostLocal
     // Options can be given in any order and are optional
 
     options.forEach(option => {
       option = option.slice(0, -1)
-      let splitOption = option.replace(/ /g, ``).split(`:`)
+      const splitOption = option.replace(/ /g, ``).split(`:`)
 
       // Test if the option is for line highlighting
       if (splitOption.length === 1 && rangeParser(option).length > 0) {

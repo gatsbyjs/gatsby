@@ -465,7 +465,6 @@ const imageNodeType = ({
         not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
         both PNG and JPG is not supported and will be ignored.
         `,
-        defaultValue: [``, `webp`],
       },
       outputPixelDensities: {
         type: GraphQLList(GraphQLFloat),

@@ -18,6 +18,7 @@ import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
 import { StaticQueryMapper } from "./webpack/static-query-mapper"
+import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { getBrowsersList } from "./browserslist"
 import { builtinModules } from "module"
 
@@ -213,10 +214,11 @@ module.exports = async (
     ]
 
     switch (stage) {
-      case `develop`:
+      case `develop`: {
         configPlugins = configPlugins
           .concat([
-            plugins.fastRefresh(),
+            plugins.fastRefresh({ modulesThatUseGatsby }),
+            new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
             plugins.eslintGraphqlSchemaReload(),
@@ -234,7 +236,23 @@ module.exports = async (
         if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
           configPlugins.push(plugins.extractStats())
         }
+
+        const isCustomEslint = hasLocalEslint(program.directory)
+        // get schema to pass to eslint config and program for directory
+        const { schema } = store.getState()
+
+        // if no local eslint config, then add gatsby config
+        if (!isCustomEslint) {
+          configPlugins.push(plugins.eslint(schema))
+        }
+
+        // Enforce fast-refresh rules even with local eslint config
+        if (isCustomEslint) {
+          configPlugins.push(plugins.eslintRequired())
+        }
+
         break
+      }
       case `build-javascript`: {
         configPlugins = configPlugins.concat([
           plugins.extractText({
@@ -325,7 +343,7 @@ module.exports = async (
       // Gatsby main router changes it, to keep v2 behaviour.
       // We will need to most likely remove this for v3.
       {
-        test: require.resolve(`@reach/router/es/index`),
+        test: require.resolve(`@gatsbyjs/reach-router/es/index`),
         type: `javascript/auto`,
         use: [{
           loader: require.resolve(`./reach-router-add-basecontext-export-loader`),
@@ -345,21 +363,6 @@ module.exports = async (
 
     switch (stage) {
       case `develop`: {
-        // get schema to pass to eslint config and program for directory
-        const { schema, program } = store.getState()
-
-        const isCustomEslint = hasLocalEslint(program.directory)
-
-        // if no local eslint config, then add gatsby config
-        if (!isCustomEslint) {
-          configRules = configRules.concat([rules.eslint(schema)])
-        }
-
-        // Enforce fast-refresh rules even with local eslint config
-        if (isCustomEslint) {
-          configRules = configRules.concat([rules.eslintRequired()])
-        }
-
         configRules = configRules.concat([
           {
             oneOf: [rules.cssModules(), rules.css()],
@@ -423,6 +426,7 @@ module.exports = async (
         // relative path imports are used sometimes
         // See https://stackoverflow.com/a/49455609/6420957 for more details
         "@babel/runtime": getPackageRoot(`@babel/runtime`),
+        "@reach/router": getPackageRoot(`@gatsbyjs/reach-router`),
         "react-lifecycles-compat": directoryPath(
           `.cache/react-lifecycles-compat.js`
         ),
@@ -430,6 +434,9 @@ module.exports = async (
           `@pmmmwh/react-refresh-webpack-plugin`
         ),
         "socket.io-client": getPackageRoot(`socket.io-client`),
+        "webpack-hot-middleware": getPackageRoot(
+          `@gatsbyjs/webpack-hot-middleware`
+        ),
         $virtual: getAbsolutePathForVirtualModule(`$virtual`),
 
         // SSR can have many react versions as some packages use their own version. React works best with 1 version.
@@ -444,7 +451,7 @@ module.exports = async (
       stage === `build-html` || stage === `develop-html` ? `node` : `web`
     if (target === `web`) {
       resolve.alias[`@reach/router`] = path.join(
-        path.dirname(require.resolve(`@reach/router/package.json`)),
+        getPackageRoot(`@gatsbyjs/reach-router`),
         `es`
       )
     }
@@ -499,9 +506,7 @@ module.exports = async (
     const [major, minor] = process.version.replace(`v`, ``).split(`.`)
     config.target = `node12.13`
   } else {
-    config.target = `browserslist:${getBrowsersList(program.directory).join(
-      `,`
-    )}`
+    config.target = [`web`, `es5`]
   }
 
   const isCssModule = module => module.type === `css/mini-extract`
@@ -692,20 +697,8 @@ module.exports = async (
         // User modules that do not need to be part of the bundle
         if (userExternalList.some(item => checkItem(item, request))) {
           // TODO figure out to make preact work with this too
-          let modifiedRequest = request
-          if (
-            stage === `develop-html` &&
-            isCI() &&
-            process.env.GATSBY_EXPERIMENTAL_DEV_SSR
-          ) {
-            if (request === `react`) {
-              modifiedRequest = `react/cjs/react.production.min.js`
-            } else if (request === `react-dom/server`) {
-              modifiedRequest = `react-dom/cjs/react-dom-server.node.production.min.js`
-            }
-          }
 
-          resolver(context, modifiedRequest, (err, newRequest) => {
+          resolver(context, request, (err, newRequest) => {
             if (err) {
               callback(err)
               return

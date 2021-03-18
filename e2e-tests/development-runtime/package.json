@@ -7,10 +7,13 @@
     "gatsby": "^3.0.0-next.6",
     "gatsby-image": "^3.0.0-next.0",
     "gatsby-plugin-image": "^1.0.0-next.5",
+    "gatsby-plugin-less": "^5.1.0-next.2",
     "gatsby-plugin-manifest": "^3.0.0-next.0",
     "gatsby-plugin-offline": "^4.0.0-next.1",
     "gatsby-plugin-react-helmet": "^4.0.0-next.0",
+    "gatsby-plugin-sass": "^4.1.0-next.2",
     "gatsby-plugin-sharp": "^3.0.0-next.5",
+    "gatsby-plugin-stylus": "^3.1.0-next.2",
     "gatsby-seo": "^0.1.0",
     "gatsby-source-filesystem": "^3.0.0-next.2",
     "gatsby-transformer-json": "^3.0.0-next.0",
@@ -20,7 +23,8 @@
     "prop-types": "^15.6.2",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "sass": "^1.32.8"
   },
   "keywords": [
     "gatsby",
@@ -29,8 +33,9 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=y gatsby develop",
     "serve": "gatsby serve",
+    "clean": "gatsby clean",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "npm run start-server-and-test || (npm run reset && exit 1)",
@@ -44,7 +49,7 @@
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
     "start-server-and-debug": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
     "@testing-library/cypress": "^7.0.0",

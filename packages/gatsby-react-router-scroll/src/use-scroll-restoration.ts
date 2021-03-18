@@ -1,9 +1,9 @@
 import { ScrollContext } from "./scroll-handler"
-import { useRef, useContext, useLayoutEffect } from "react"
-import { useLocation } from "@reach/router"
+import { useRef, useContext, useLayoutEffect, MutableRefObject } from "react"
+import { useLocation } from "@gatsbyjs/reach-router"
 
 interface IScrollRestorationProps {
-  ref: React.MutableRefObject<HTMLElement | undefined>
+  ref: MutableRefObject<HTMLElement | undefined>
   onScroll(): void
 }
 
