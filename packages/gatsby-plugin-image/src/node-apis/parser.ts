@@ -73,7 +73,8 @@ export function babelParseToAst(
  * Extracts and returns the props from any that are found
  */
 export const extractStaticImageProps = (
-  ast: babel.types.File
+  ast: babel.types.File,
+  onError?: (prop: string, nodePath: NodePath) => void
 ): Map<string, IStaticImageProps> => {
   const images: Map<string, IStaticImageProps> = new Map()
 
@@ -89,7 +90,8 @@ export const extractStaticImageProps = (
       }
       const image = (evaluateImageAttributes(
         // There's a conflict between the definition of NodePath in @babel/core and @babel/traverse
-        (nodePath as unknown) as NodePath<JSXOpeningElement>
+        (nodePath as unknown) as NodePath<JSXOpeningElement>,
+        onError
       ) as unknown) as IStaticImageProps
       images.set(hashOptions(image), image)
     },
