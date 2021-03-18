@@ -51,6 +51,51 @@ Object {
 }
 `;
 
+exports[`report.error handles "String, Error, pluginName" signature correctly 1`] = `
+Object {
+  "context": Object {
+    "sourceMessage": "Error string passed to reporter Message from new Error",
+  },
+  "docsUrl": "https://gatsby.dev/issue-how-to",
+  "error": [Error: Message from new Error],
+  "level": "ERROR",
+  "pluginName": "gatsby-plugin-foo-bar",
+  "stack": Array [
+    Object {
+      "columnNumber": 7,
+      "fileName": "<PROJECT_ROOT>/packages/gatsby-cli/src/reporter/__tests__/index.ts",
+      "functionName": null,
+      "lineNumber": 100,
+    },
+    Object {
+      "columnNumber": 37,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js",
+      "functionName": "Object.asyncJestTest",
+      "lineNumber": 102,
+    },
+    Object {
+      "columnNumber": 12,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-jasmine2/build/queueRunner.js",
+      "functionName": null,
+      "lineNumber": 43,
+    },
+    Object {
+      "columnNumber": 19,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-jasmine2/build/queueRunner.js",
+      "functionName": "mapper",
+      "lineNumber": 26,
+    },
+    Object {
+      "columnNumber": 41,
+      "fileName": "<PROJECT_ROOT>/node_modules/jest-jasmine2/build/queueRunner.js",
+      "functionName": null,
+      "lineNumber": 73,
+    },
+  ],
+  "text": "Error string passed to reporter Message from new Error",
+}
+`;
+
 exports[`report.error handles "structuredError" signature correctly 1`] = `
 Object {
   "category": "USER",
@@ -62,5 +107,32 @@ Object {
   "level": "ERROR",
   "stack": Array [],
   "text": "\\"navigator\\" is not available during server side rendering.",
+}
+`;
+
+exports[`report.error uses custom error from errorMap 1`] = `
+Object {
+  "code": "1337",
+  "context": Object {
+    "someProp": "test123",
+  },
+  "docsUrl": "https://www.gatsbyjs.org/docs/gatsby-cli/#new",
+  "level": "ERROR",
+  "stack": Array [],
+  "text": "Error text is test123 ",
+}
+`;
+
+exports[`report.error uses custom error from errorMap with pluginName 1`] = `
+Object {
+  "code": "gatsby-plugin-foo-bar_1337",
+  "context": Object {
+    "someProp": "test123",
+  },
+  "docsUrl": "https://www.gatsbyjs.org/docs/gatsby-cli/#new",
+  "level": "ERROR",
+  "pluginName": "gatsby-plugin-foo-bar",
+  "stack": Array [],
+  "text": "Error text is test123 ",
 }
 `;
