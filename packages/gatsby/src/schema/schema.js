@@ -789,7 +789,7 @@ const addThirdPartySchemas = ({
         type.name !== `Date` &&
         type.name !== `JSON`
       ) {
-        const isCompositeType =
+        const typeHasFields =
           type instanceof GraphQLObjectType ||
           type instanceof GraphQLInterfaceType
 
@@ -805,13 +805,13 @@ const addThirdPartySchemas = ({
         //   This unexpected `Query` composer messes up with our own Query type composer and produces duplicate types.
         //   The workaround is to make sure fields of the GitHub type are lazy and are evaluated only when
         //   this Query type is already replaced with our own root `Query` type (see processThirdPartyTypeFields):
-        if (isCompositeType && typeof type._fields === `object`) {
+        if (typeHasFields && typeof type._fields === `object`) {
           const fields = type._fields
           type._fields = () => fields
         }
         // ^^^ workaround done
         const typeComposer = schemaComposer.createTC(type)
-        if (isCompositeType) {
+        if (typeHasFields) {
           processThirdPartyTypeFields({
             typeComposer,
             type,
