@@ -143,12 +143,21 @@ export async function onCreateDevServer(
     const { functionName } = req.params
 
     if (knownFunctions.has(functionName)) {
-      const fn = require(path.join(
-        functionsDirectory,
-        knownFunctions.get(functionName) as string
-      ))
+      const compiledFunctionsDir = path.join(
+        process.cwd(),
+        `.cache`,
+        `functions`
+      )
+      const funcNameToJs = (knownFunctions.get(functionName) as string).replace(
+        `js`,
+        `ts`
+      )
 
-      fn(req, res)
+      const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
+
+      const fnToExecute = (fn && fn.default) || fn
+
+      fnToExecute(req, res)
     } else {
       next()
     }
