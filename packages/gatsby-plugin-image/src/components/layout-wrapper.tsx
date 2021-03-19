@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../global.d.ts" />
 
-import React, { Fragment, FunctionComponent, ReactElement } from "react"
+import React, { Fragment, FunctionComponent } from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
 
@@ -56,20 +56,18 @@ export function getSizer(
   return sizer
 }
 
-export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
+const Sizer: FunctionComponent<ILayoutWrapperProps> = function Sizer({
   layout,
   width,
   height,
-  children,
 }) {
-  let sizer: ReactElement | null = null
   if (layout === `fullWidth`) {
-    sizer = (
+    return (
       <div aria-hidden style={{ paddingTop: `${(height / width) * 100}%` }} />
     )
   }
   if (layout === `constrained`) {
-    sizer = (
+    return (
       <div style={{ maxWidth: width, display: `block` }}>
         <img
           alt=""
@@ -85,9 +83,17 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
       </div>
     )
   }
+
+  return null
+}
+
+export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function LayoutWrapper({
+  children,
+  ...props
+}) {
   return (
     <Fragment>
-      {sizer}
+      <Sizer {...props} />
       {children}
 
       {
