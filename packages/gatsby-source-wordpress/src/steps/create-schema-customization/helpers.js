@@ -24,6 +24,10 @@ export const buildTypeName = name => {
     name = `FilterType`
   }
 
+  if (name.startsWith(prefix)) {
+    return name
+  }
+
   return prefix + name
 }
 
