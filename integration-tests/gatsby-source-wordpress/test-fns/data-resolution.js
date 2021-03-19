@@ -29,12 +29,10 @@ describe(`data resolution`, () => {
     expect(data[`allWpPage`].totalCount).toBe(1)
     expect(data[`allWpPost`].totalCount).toBe(1)
     expect(data[`allWpComment`].totalCount).toBe(1)
-    // expect(data[`allWpProject`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
     expect(data[`allWpCategory`].totalCount).toBe(9)
     expect(data[`allWpMenu`].totalCount).toBe(1)
     expect(data[`allWpMenuItem`].totalCount).toBe(4)
-    // expect(data[`allWpTeamMember`].totalCount).toBe(1)
     expect(data[`allWpPostFormat`].totalCount).toBe(0)
     expect(data[`allWpContentType`].totalCount).toBe(6)
   })
@@ -51,6 +49,33 @@ describe(`data resolution`, () => {
       gatsby: `wpPage`,
       wpgql: `page`,
     },
+  })
+
+  it(`resolves node interfaces without errors`, async () => {
+    const query = /* GraphQL */ `
+      query {
+        allWpTermNode {
+          nodes {
+            id
+          }
+        }
+
+        allWpContentNode {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+
+    // this will throw if there are gql errors
+    const gatsbyResult = await fetchGraphQL({
+      url,
+      query,
+    })
+
+    expect(gatsbyResult.data.allWpTermNode.length).toBe(14)
+    expect(gatsbyResult.data.allWpContentNode.length).toBe(17)
   })
 
   it(`resolves hierarchichal categories`, async () => {
