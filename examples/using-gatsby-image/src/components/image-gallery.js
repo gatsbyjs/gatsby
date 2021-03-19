@@ -99,7 +99,7 @@ const ImageGallery = edges => (
           <GridItem key={fallbackString}>
             <GridItemImage
               image={img}
-              title={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
+              alt={`“${image.node.title}” by ${image.node.credit} (via unsplash.com)`}
             />
 
             {byteLength > 1000 ? (

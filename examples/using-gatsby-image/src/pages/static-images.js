@@ -1,6 +1,5 @@
 import React from "react"
 import { StaticImage } from "gatsby-plugin-image"
-
 import PageTitle from "../components/page-title"
 
 import Layout from "../components/layout"
@@ -9,7 +8,7 @@ const StaticImages = ({ location }) => (
   <Layout location={location}>
     <PageTitle>Static Image</PageTitle>
     <StaticImage
-      src="https://images.unsplash.com/photo-1597305877032-0668b3c6413a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1300&q=80"
+      src="https://images.unsplash.com/photo-1597305877032-0668b3c6413a?w=1300"
       alt={`“Studio shot of the monstera plant leaf” by Severin Candrian (via unsplash.com)`}
       height={300}
     />
@@ -22,7 +21,7 @@ const StaticImages = ({ location }) => (
       <strong>StaticImage</strong>.
     </p>
     <StaticImage
-      src="https://images.unsplash.com/photo-1517423738875-5ce310acd3da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1305&q=80"
+      src="https://images.unsplash.com/photo-1517423738875-5ce310acd3da?w=1305"
       alt={`"Toshi dressed as Totoro" by Charles Deluvio (via unsplash.com)`}
     />
   </Layout>

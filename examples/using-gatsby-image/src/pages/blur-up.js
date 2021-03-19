@@ -49,7 +49,12 @@ export const query = graphql`
       title
       localFile {
         childImageSharp {
-          gatsbyImageData(width: 720, layout: CONSTRAINED, placeholder: BLURRED)
+          gatsbyImageData(
+            width: 720
+            aspectRatio: 0.5
+            layout: CONSTRAINED
+            placeholder: BLURRED
+          )
         }
       }
     }

@@ -51,7 +51,9 @@ export const query = graphql`
           gatsbyImageData(
             width: 720
             tracedSVGOptions: { background: "#fff", color: "#663399" }
+            transformOptions: { cropFocus: CENTER }
             placeholder: TRACED_SVG
+            aspectRatio: 0.5
             layout: CONSTRAINED
           )
         }
