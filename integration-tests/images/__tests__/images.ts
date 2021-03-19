@@ -52,7 +52,7 @@ function getImages(testId: string, dom: HTMLDivElement) {
 
   sources?.forEach(source => {
     const format = source.getAttribute("type")
-    const srcset = source.getAttribute("data-srcset")
+    const srcset = source.dataset.srcset
     if (format && srcset) {
       srcsets.push({ format, srcset: parseSrcSet(srcset) })
     }
