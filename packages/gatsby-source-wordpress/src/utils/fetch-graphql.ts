@@ -364,7 +364,13 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
 
 Your WordPress server is either overloaded or encountered a PHP error.
 ${errorContext ? `\n${errorContext}\n` : ``}
-Enable WP_DEBUG, WP_DEBUG_LOG, and WPGRAPHQL_DEBUG, run another build and then check your WordPress instance's debug.log file.
+Enable WordPress debugging by adding the following to your wp-config.php file:
+
+define("WP_DEBUG", true);
+define("WP_DEBUG_LOG", true);
+define("GRAPHQL_DEBUG", true);
+
+Then run another build before checking your WordPress instance's debug.log file for errors.
 
 If you don't see any errors in debug.log:
 
