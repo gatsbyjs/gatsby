@@ -112,7 +112,7 @@ export function Dino() {
 You should instead use the `css` prop provided by these libraries:
 
 ```jsx
-// 👩‍🎤 Emotion
+// Emotion
 
 export function Dino() {
   return (
@@ -127,7 +127,7 @@ export function Dino() {
 ```
 
 ```jsx
-// 💅 styled-components
+// styled-components
 
 export function Dino() {
   return (
