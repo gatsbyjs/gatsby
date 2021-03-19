@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyReporter } from "./gatsby-types"
 import prettier from "prettier"
