@@ -24,9 +24,11 @@ if (hasNativeLazyLoadSupport) {
       mainImage.setAttribute('src', mainImage.dataset.src)
       mainImage.removeAttribute('data-src')
     }
-    if (mainImage.dataset.srcset) {
-      mainImage.setAttribute('srcset', mainImage.dataset.srcset)
-      mainImage.removeAttribute('data-srcset')
+
+    const sources = mainImage.parentNode.querySelectorAll('source[data-srcset]');
+    for (let source of sources) {
+      source.setAttribute('srcset', source.dataset.srcset)
+      source.removeAttribute('data-srcset')
     }
 
     if (mainImage.complete) {
