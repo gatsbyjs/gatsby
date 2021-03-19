@@ -370,6 +370,8 @@ define("WP_DEBUG", true);
 define("WP_DEBUG_LOG", true);
 define("GRAPHQL_DEBUG", true);
 
+(See https://wordpress.org/support/article/debugging-in-wordpress/ for more info)
+
 Then run another build before checking your WordPress instance's debug.log file for errors.
 
 If you don't see any errors in debug.log:
