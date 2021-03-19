@@ -366,9 +366,9 @@ Your WordPress server is either overloaded or encountered a PHP error.
 ${errorContext ? `\n${errorContext}\n` : ``}
 Enable WordPress debugging by adding the following to your wp-config.php file:
 
-define("WP_DEBUG", true);
-define("WP_DEBUG_LOG", true);
-define("GRAPHQL_DEBUG", true);
+define("WP\_DEBUG", true);
+define("WP\_DEBUG\_LOG", true);
+define("GRAPHQL\_DEBUG", true);
 
 (See https://wordpress.org/support/article/debugging-in-wordpress/ for more info)
 
