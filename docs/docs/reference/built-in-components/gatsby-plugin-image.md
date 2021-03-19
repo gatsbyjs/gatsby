@@ -240,6 +240,41 @@ The Gatsby Image plugin uses [sharp](https://sharp.pixelplumbing.org) for image 
 | `webpOptions`                           | None                                                                 | Options to pass to sharp when generating WebP images.                                                                                                                                                                                                                                                                                                                                                         |
 | `avifOptions`                           | None                                                                 | Options to pass to sharp when generating AVIF images.                                                                                                                                                                                                                                                                                                                                                         |
 
+## Customizing the default options
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript
+// In gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`
+          quality: 50
+          breakpoints: [750, 1080, 1366, 1920]
+          backgroundColor: `transparent`
+          tracedSVGOptions: {}
+          blurredOptions: {}
+          jpgOptions: {}
+          pngOptions: {}
+          webpOptions: {}
+          avifOptions: {}
+        }
+      }
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
+
 ## Helper functions
 
 There are a number of utility functions to help you work with `gatsbyImageData` objects. We strongly recommend that you do not try to access the internals of these objects directly, as the format could change.

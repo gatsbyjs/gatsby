@@ -10,6 +10,7 @@ For full documentation on all configuration options, see [the Gatsby Image Plugi
 - [Using the Gatsby Image components](#using-the-gatsby-image-components)
   - [Static images](#static-images)
   - [Dynamic images](#dynamic-images)
+- [Customizing the default options](#customizing-the-default-options)
 - [Migrating to gatsby-plugin-image](#migrating)
 
 ## Installation
@@ -190,6 +191,41 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    ```
 
 For full APIs, see [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
+
+## Customizing the default options
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript
+// In gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`
+          quality: 50
+          breakpoints: [750, 1080, 1366, 1920]
+          backgroundColor: `transparent`
+          tracedSVGOptions: {}
+          blurredOptions: {}
+          jpgOptions: {}
+          pngOptions: {}
+          webpOptions: {}
+          avifOptions: {}
+        }
+      }
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
 
 ## Migrating
 
