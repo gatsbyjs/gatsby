@@ -91,6 +91,11 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
       }
       const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
 
+      const sources = target.parentNode.querySelectorAll('source[data-srcset]');
+      for (const source of sources) {
+        source.setAttribute('src', source.dataset.src)
+        source.removeAttribute('data-src')
+      }
 
       const img = new Image();
       img.src = target.currentSrc;
