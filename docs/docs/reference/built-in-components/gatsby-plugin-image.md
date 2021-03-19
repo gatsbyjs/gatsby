@@ -95,7 +95,7 @@ If you find yourself wishing you could use a prop for the image `src` then it's 
 
 #### Using `StaticImage` with CSS-in-JS libraries
 
-The `StaticImage` component does not support higher-order components which includes the `styled` function from libraries such as Emotion and styled-components.
+The `StaticImage` component does not support higher-order components, which includes the `styled` function from libraries such as Emotion and styled-components. The parser relies on being able to identify `StaticImage` components in the source, and passing them to a function means this is not possible.
 
 ```js
 // ⚠️ Doesn't work
@@ -105,6 +105,7 @@ const AwesomeImage = styled(StaticImage)`
 `
 
 export function Dino() {
+  // Parser doesn't know that this is a StaticImage
   return <AwesomeImage src="trex.png" />
 }
 ```
