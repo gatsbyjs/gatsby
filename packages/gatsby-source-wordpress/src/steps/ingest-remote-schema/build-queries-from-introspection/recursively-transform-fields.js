@@ -306,7 +306,7 @@ export function transformField({
     // or this type has a possible type which is a gatsby node type
     typeMap
       .get(typeName)
-      ?.possibleTypes?.find(possibleType =>
+      ?.possibleTypes?.every(possibleType =>
         gatsbyNodesInfo.typeNames.includes(possibleType.name)
       )
 
