@@ -78,6 +78,34 @@ describe(`data resolution`, () => {
     expect(gatsbyResult.data.allWpContentNode.length).toBe(17)
   })
 
+  it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
+    const query = /* GraphQL */ `
+      query {
+        wpPost(id: { eq: "cG9zdDox" }) {
+          id
+          comments {
+            nodes {
+              author {
+                # this is an interface of WpUser (Gatsby node type) and WpCommentAuthor (no node for this so needs to be fetched on the comment)
+                node {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+
+    // this will throw an error if there are gql errors
+    const gatsbyResult = await fetchGraphQL({
+      url,
+      query,
+    })
+
+    expect(gatsbyResult.data.wpPost.comments.length).toBe(1)
+  })
+
   it(`resolves hierarchichal categories`, async () => {
     const gatsbyResult = await fetchGraphql({
       url,
