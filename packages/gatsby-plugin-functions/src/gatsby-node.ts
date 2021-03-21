@@ -2,6 +2,8 @@ import fs from "fs-extra"
 import glob from "globby"
 import path from "path"
 import webpack from "webpack"
+import multer from "multer"
+import * as express from "express"
 
 import { urlResolve } from "gatsby-core-utils"
 
@@ -139,18 +141,26 @@ export async function onCreateDevServer(
   )
   // console.log(app, functionsDirectoryPath)
 
-  app.use(`/api/:functionName`, (req, res, next) => {
-    const { functionName } = req.params
+  app.use(
+    `/api/:functionName`,
+    multer().none(),
+    express.urlencoded({ extended: true }),
+    express.text(),
+    express.json(),
+    express.raw(),
+    (req, res, next) => {
+      const { functionName } = req.params
 
-    if (knownFunctions.has(functionName)) {
-      const fn = require(path.join(
-        functionsDirectory,
-        knownFunctions.get(functionName) as string
-      ))
+      if (knownFunctions.has(functionName)) {
+        const fn = require(path.join(
+          functionsDirectory,
+          knownFunctions.get(functionName) as string
+        ))
 
-      fn(req, res)
-    } else {
-      next()
+        fn(req, res)
+      } else {
+        next()
+      }
     }
-  })
+  )
 }
