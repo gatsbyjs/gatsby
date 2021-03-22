@@ -29,6 +29,12 @@ if (hasNativeLazyLoadSupport) {
       mainImage.removeAttribute('data-srcset')
     }
 
+    const sources = mainImage.parentNode.querySelectorAll('source[data-srcset]');
+    for (let source of sources) {
+      source.setAttribute('srcset', source.dataset.srcset)
+      source.removeAttribute('data-srcset')
+    }
+
     if (mainImage.complete) {
       mainImage.style.opacity = 1;
     }
