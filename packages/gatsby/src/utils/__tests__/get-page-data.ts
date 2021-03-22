@@ -81,6 +81,8 @@ describe(`get-page-data-util`, () => {
   beforeEach(() => {
     store.dispatch({
       type: `DELETE_CACHE`,
+      // we delete pageData files, so we need to let html reducer know that
+      cacheIsCorrupt: true,
     })
     deletePageDataFilesFromFs()
   })
