@@ -56,7 +56,7 @@ diff -u -r public-first-build public > build-diff.diff
 
 Open the `build-diff.diff` file in the root of your site to see the difference between both builds.
 
-> **Note:** To exclude all `.html` files in the diff you can run the command `diff -u -r --exclude="*.html" public-first-build public > build-diff.diff`
+> **Note:** To exclude all `.html` files in the diff you can run this command at the end instead: `diff -u -r --exclude="*.html" public-first-build public > build-diff.diff`
 
 ### Understanding the `diff`
 
