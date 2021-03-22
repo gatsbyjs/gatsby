@@ -40,7 +40,7 @@ const createContentfulErrorMessage = e => {
     e.status && String(e.status),
     e.statusText,
     // Contentful API error response values
-    e?.sys?.id,
+    e.sys?.id,
   ]
     .filter(Boolean)
     .join(` `)

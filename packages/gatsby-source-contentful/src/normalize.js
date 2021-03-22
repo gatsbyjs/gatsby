@@ -151,7 +151,7 @@ exports.buildForeignReferenceMap = ({
               })
             }
           } else if (
-            entryItemFieldValue?.sys?.type &&
+            entryItemFieldValue.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
             const key = `${entryItemFieldValue.sys.id}___${
