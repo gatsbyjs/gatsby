@@ -38,6 +38,15 @@ const resolveTheme = async (
         themeDir = resolve
       } catch (localErr) {
         // catch shouldn't be empty :shrug:
+        reporter.panic({
+        id: `10226`,
+        context: {
+          themeName,
+          configFilePath: configFileThatDeclaredTheme,
+          pathToLocalTheme,
+          nodeResolutionPaths,
+        },
+      })
       }
     }
 
