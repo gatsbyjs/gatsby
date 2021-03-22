@@ -23,6 +23,7 @@ Object {
       },
     },
     "trackedStaticQueryResults": Map {},
+    "unsafeBuiltinWasUsedInSSR": false,
   },
   "jobsV2": Object {
     "complete": Map {},

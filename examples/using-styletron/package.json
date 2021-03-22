@@ -7,8 +7,8 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-plugin-styletron": "next",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 import React, {
+  Component,
   ElementType,
-  useEffect,
-  useRef,
+  createRef,
+  MutableRefObject,
   FunctionComponent,
   ImgHTMLAttributes,
-  useState,
   RefObject,
   CSSProperties,
 } from "react"
@@ -13,13 +13,17 @@ import {
   getWrapperProps,
   hasNativeLazyLoadSupport,
   storeImageloaded,
+  hasImageLoaded,
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
 import { Layout } from "../image-utils"
 import { getSizer } from "./layout-wrapper"
+import { propTypes } from "./gatsby-image.server"
+import { Unobserver } from "./intersection-observer"
+import { render } from "react-dom"
 
-// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyImageProps
   extends Omit<
     ImgHTMLAttributes<HTMLImageElement>,
@@ -49,170 +53,235 @@ export interface IGatsbyImageData {
   placeholder?: Pick<PlaceholderProps, "sources" | "fallback">
 }
 
-let hasShownWarning = false
+class GatsbyImageHydrator extends Component<
+  GatsbyImageProps,
+  { isLoading: boolean; isLoaded: boolean }
+> {
+  root: RefObject<HTMLImageElement | undefined> = createRef<
+    HTMLImageElement | undefined
+  >()
+  hydrated: MutableRefObject<boolean> = { current: false }
+  lazyHydrator: () => void | null = null
+  ref = createRef<HTMLImageElement>()
+  unobserveRef: Unobserver
 
-export const GatsbyImageHydrator: FunctionComponent<GatsbyImageProps> = function GatsbyImageHydrator({
-  as: Type = `div`,
-  style,
-  className,
-  class: preactClass,
-  onStartLoad,
-  image,
-  onLoad: customOnLoad,
-  backgroundColor,
-  loading = `lazy`,
-  ...props
-}) {
-  if (!image) {
-    if (process.env.NODE_ENV === `development`) {
-      console.warn(`[gatsby-plugin-image] Missing image prop`)
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isLoading: hasNativeLazyLoadSupport(),
+      isLoaded: false,
     }
-    return null
   }
-  if (preactClass) {
-    className = preactClass
-  }
-  const { width, height, layout, images } = image
 
-  const root = useRef<HTMLElement>()
-  const hydrated = useRef(false)
-  const unobserveRef = useRef<
-    ((element: RefObject<HTMLElement | undefined>) => void) | null
-  >(null)
-  const lazyHydrator = useRef<(() => void) | null>(null)
-  const ref = useRef<HTMLImageElement | undefined>()
-  const [isLoading, toggleIsLoading] = useState(hasNativeLazyLoadSupport())
-  const [isLoaded, toggleIsLoaded] = useState(false)
-
-  if (!global.GATSBY___IMAGE && !hasShownWarning) {
-    hasShownWarning = true
-    console.warn(
-      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
+  _lazyHydrate(props, state): Promise<void> {
+    const hasSSRHtml = this.root.current.querySelector(
+      `[data-gatsby-image-ssr]`
     )
+    // On first server hydration do nothing
+    if (hasNativeLazyLoadSupport() && hasSSRHtml && !this.hydrated.current) {
+      this.hydrated.current = true
+      return Promise.resolve()
+    }
+
+    return import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
+      this.lazyHydrator = lazyHydrate(
+        {
+          image: props.image.images,
+          isLoading: state.isLoading,
+          isLoaded: state.isLoaded,
+          toggleIsLoaded: () => {
+            props.onLoad?.()
+
+            this.setState({
+              isLoaded: true,
+            })
+          },
+          ref: this.ref,
+          ...props,
+        },
+        this.root,
+        this.hydrated
+      )
+    })
   }
 
-  const { style: wStyle, className: wClass, ...wrapperProps } = getWrapperProps(
-    width,
-    height,
-    layout
-  )
-
-  useEffect((): (() => void) | undefined => {
-    if (root.current) {
-      const hasSSRHtml = root.current.querySelector(
-        `[data-gatsby-image-ssr]`
-      ) as HTMLImageElement
-
-      // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport() && hasSSRHtml && global.GATSBY___IMAGE) {
-        onStartLoad?.({ wasCached: false })
-
-        if (hasSSRHtml.complete) {
-          customOnLoad?.()
-          storeImageloaded(JSON.stringify(images))
-        } else {
-          hasSSRHtml.addEventListener(`load`, function onLoad() {
-            hasSSRHtml.removeEventListener(`load`, onLoad)
-
-            customOnLoad?.()
-            storeImageloaded(JSON.stringify(images))
+  /**
+   * Choose if setupIntersectionObserver should use the image cache or not.
+   */
+  _setupIntersectionObserver(useCache = true): void {
+    import(`./intersection-observer`).then(({ createIntersectionObserver }) => {
+      const intersectionObserver = createIntersectionObserver(() => {
+        if (this.root.current) {
+          const cacheKey = JSON.stringify(this.props.image.images)
+          this.props.onStartLoad?.({
+            wasCached: useCache && hasImageLoaded(cacheKey),
+          })
+          this.setState({
+            isLoading: true,
+            isLoaded: useCache && hasImageLoaded(cacheKey),
           })
         }
-        return undefined
+      })
+
+      if (this.root.current) {
+        this.unobserveRef = intersectionObserver(this.root)
+      }
+    })
+  }
+
+  shouldComponentUpdate(nextProps, nextState): boolean {
+    let hasChanged = false
+
+    // this check mostly means people do not have the correct ref checks in place, we want to reset some state to suppport loading effects
+    if (this.props.image.images !== nextProps.image.images) {
+      // reset state, we'll rely on intersection observer to reload
+      if (this.unobserveRef) {
+        // unregister intersectionObserver
+        this.unobserveRef()
+
+        // // on unmount, make sure we cleanup
+        if (this.hydrated.current && this.lazyHydrator) {
+          render(null, this.root.current)
+        }
       }
 
-      // Fallback to custom lazy loading (intersection observer)
-      import(`./intersection-observer`).then(
-        ({ createIntersectionObserver }) => {
-          const intersectionObserver = createIntersectionObserver(() => {
-            if (root.current) {
-              onStartLoad?.({ wasCached: false })
-              toggleIsLoading(true)
-            }
-          })
-
-          if (root.current) {
-            unobserveRef.current = intersectionObserver(root)
-          }
+      this.setState(
+        {
+          isLoading: false,
+          isLoaded: false,
+        },
+        () => {
+          this._setupIntersectionObserver(false)
         }
       )
+
+      hasChanged = true
     }
 
-    return (): void => {
-      if (unobserveRef.current) {
-        unobserveRef.current(root)
+    if (this.root.current && !hasChanged) {
+      this._lazyHydrate(nextProps, nextState)
+    }
 
-        // on unmount, make sure we cleanup
-        if (hydrated.current && lazyHydrator.current) {
-          lazyHydrator.current()
+    return false
+  }
+
+  componentDidMount(): void {
+    if (this.root.current) {
+      const ssrElement = this.root.current.querySelector(
+        `[data-gatsby-image-ssr]`
+      ) as HTMLImageElement
+      const cacheKey = JSON.stringify(this.props.image.images)
+
+      // when SSR and native lazyload is supported we'll do nothing ;)
+      if (hasNativeLazyLoadSupport() && ssrElement && global.GATSBY___IMAGE) {
+        this.props.onStartLoad?.({ wasCached: false })
+
+        // When the image is already loaded before we have hydrated, we trigger onLoad and cache the item
+        if (ssrElement.complete) {
+          this.props.onLoad?.()
+          storeImageloaded(cacheKey)
+        } else {
+          // We need the current class context (this) inside our named onLoad function
+          // The named function is necessary to easily remove the listener afterward.
+          // eslint-disable-next-line @typescript-eslint/no-this-alias
+          const _this = this
+          // add an onLoad to the image
+          ssrElement.addEventListener(`load`, function onLoad() {
+            ssrElement.removeEventListener(`load`, onLoad)
+
+            _this.props.onLoad?.()
+            storeImageloaded(cacheKey)
+          })
         }
-      }
-    }
-  }, [])
 
-  useEffect(() => {
-    if (root.current) {
-      const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
-      // On first server hydration do nothing
-      if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
-        hydrated.current = true
         return
       }
 
-      import(`./lazy-hydrate`).then(({ lazyHydrate }) => {
-        lazyHydrator.current = lazyHydrate(
-          {
-            image,
-            isLoading,
-            isLoaded,
-            toggleIsLoaded: () => {
-              customOnLoad?.()
-              toggleIsLoaded(true)
-            },
-            ref,
-            loading,
-            ...props,
-          },
-          root,
-          hydrated
-        )
-      })
+      // Fallback to custom lazy loading (intersection observer)
+      this._setupIntersectionObserver(true)
     }
-  }, [
-    width,
-    height,
-    layout,
-    images,
-    isLoading,
-    isLoaded,
-    toggleIsLoaded,
-    ref,
-    props,
-  ])
+  }
 
-  const sizer = getSizer(layout, width, height)
+  componentWillUnmount(): void {
+    // Cleanup when onmount happens
+    if (this.unobserveRef) {
+      // unregister intersectionObserver
+      this.unobserveRef()
 
-  return (
-    <Type
-      {...wrapperProps}
-      style={{
-        ...wStyle,
-        ...style,
-        backgroundColor,
-      }}
-      className={`${wClass}${className ? ` ${className}` : ``}`}
-      ref={root}
-      dangerouslySetInnerHTML={{
-        __html: sizer,
-      }}
-      suppressHydrationWarning
-    />
-  )
+      // on unmount, make sure we cleanup
+      if (this.hydrated.current && this.lazyHydrator) {
+        this.lazyHydrator()
+      }
+    }
+
+    return
+  }
+
+  render(): JSX.Element {
+    const Type = this.props.as || `div`
+    const { width, height, layout } = this.props.image
+    const {
+      style: wStyle,
+      className: wClass,
+      ...wrapperProps
+    } = getWrapperProps(width, height, layout)
+
+    let className = this.props.className
+    // preact class
+    if (this.props.class) {
+      className = this.props.class
+    }
+
+    const sizer = getSizer(layout, width, height)
+
+    return (
+      <Type
+        {...wrapperProps}
+        style={{
+          ...wStyle,
+          ...this.props.style,
+          backgroundColor: this.props.backgroundColor,
+        }}
+        className={`${wClass}${className ? ` ${className}` : ``}`}
+        ref={this.root}
+        dangerouslySetInnerHTML={{
+          __html: sizer,
+        }}
+        suppressHydrationWarning
+      />
+    )
+  }
 }
 
 export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyImage(
   props
 ) {
-  return <GatsbyImageHydrator {...props} />
+  if (!props.image) {
+    if (process.env.NODE_ENV === `development`) {
+      console.warn(`[gatsby-plugin-image] Missing image prop`)
+    }
+    return null
+  }
+
+  if (!global.GATSBY___IMAGE) {
+    console.warn(
+      `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
+    )
+  }
+  const { className, class: classSafe, backgroundColor, image } = props
+  const { width, height, layout } = image
+  const propsKey = JSON.stringify([
+    width,
+    height,
+    layout,
+    className,
+    classSafe,
+    backgroundColor,
+  ])
+  return <GatsbyImageHydrator key={propsKey} {...props} />
 }
+
+GatsbyImage.propTypes = propTypes
+
 GatsbyImage.displayName = `GatsbyImage`

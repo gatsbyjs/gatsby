@@ -30,7 +30,6 @@ import {
   showFeedbackRequest,
   showSevenDayFeedbackRequest,
 } from "../utils/feedback"
-import * as buildUtils from "./build-utils"
 import { actions } from "../redux/actions"
 import { waitUntilAllJobsComplete } from "../utils/wait-until-jobs-complete"
 import { Stage } from "./types"
@@ -44,9 +43,12 @@ import {
   markWebpackStatusAsPending,
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
-import { updateSiteMetadata } from "gatsby-core-utils"
+import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
+  if (isTruthy(process.env.VERBOSE)) {
+    program.verbose = true
+  }
   report.setVerbose(program.verbose)
 
   if (program.profile) {
@@ -240,7 +242,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   workerPool.end()
   buildActivity.end()
 
-  if (process.argv.includes(`--log-pages`)) {
+  if (program.logPages) {
     if (toRegenerate.length) {
       report.info(
         `Built pages:\n${toRegenerate
@@ -258,7 +260,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     }
   }
 
-  if (process.argv.includes(`--write-to-file`)) {
+  if (program.writeToFile) {
     const createdFilesPath = path.resolve(
       `${program.directory}/.cache`,
       `newPages.txt`

@@ -1,14 +1,10 @@
 const React = require(`react`)
 const path = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
-const {
-  merge,
-
-  flattenDeep,
-  replace,
-} = require(`lodash`)
+const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
+const { merge, flattenDeep, replace } = require(`lodash`)
 const { StaticQueryContext } = require(`gatsby`)
+const fs = require(`fs`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
@@ -62,10 +58,6 @@ const getStaticQueryUrl = hash =>
 const getAppDataUrl = () =>
   `${__PATH_PREFIX__}/${join(`page-data`, `app-data.json`)}`
 
-function loadPageDataSync() {
-  throw new Error(`"loadPageDataSync" is no longer available`)
-}
-
 const createElement = React.createElement
 
 export const sanitizeComponents = components => {
@@ -103,315 +95,348 @@ export default ({
   reversedStyles,
   reversedScripts,
 }) => {
-  let bodyHtml = ``
-  let headComponents = [
-    <meta
-      name="generator"
-      content={`Gatsby ${gatsbyVersion}`}
-      key={`generator-${gatsbyVersion}`}
-    />,
-  ]
-  let htmlAttributes = {}
-  let bodyAttributes = {}
-  let preBodyComponents = []
-  let postBodyComponents = []
-  let bodyProps = {}
+  // for this to work we need this function to be sync or at least ensure there is single execution of it at a time
+  global.unsafeBuiltinUsage = []
 
-  const replaceBodyHTMLString = body => {
-    bodyHtml = body
-  }
+  try {
+    let bodyHtml = ``
+    let headComponents = [
+      <meta
+        name="generator"
+        content={`Gatsby ${gatsbyVersion}`}
+        key={`generator-${gatsbyVersion}`}
+      />,
+    ]
+    let htmlAttributes = {}
+    let bodyAttributes = {}
+    let preBodyComponents = []
+    let postBodyComponents = []
+    let bodyProps = {}
 
-  const setHeadComponents = components => {
-    headComponents = headComponents.concat(sanitizeComponents(components))
-  }
-
-  const setHtmlAttributes = attributes => {
-    htmlAttributes = merge(htmlAttributes, attributes)
-  }
-
-  const setBodyAttributes = attributes => {
-    bodyAttributes = merge(bodyAttributes, attributes)
-  }
-
-  const setPreBodyComponents = components => {
-    preBodyComponents = preBodyComponents.concat(sanitizeComponents(components))
-  }
-
-  const setPostBodyComponents = components => {
-    postBodyComponents = postBodyComponents.concat(
-      sanitizeComponents(components)
-    )
-  }
-
-  const setBodyProps = props => {
-    bodyProps = merge({}, bodyProps, props)
-  }
-
-  const getHeadComponents = () => headComponents
-
-  const replaceHeadComponents = components => {
-    headComponents = sanitizeComponents(components)
-  }
-
-  const getPreBodyComponents = () => preBodyComponents
-
-  const replacePreBodyComponents = components => {
-    preBodyComponents = sanitizeComponents(components)
-  }
-
-  const getPostBodyComponents = () => postBodyComponents
-
-  const replacePostBodyComponents = components => {
-    postBodyComponents = sanitizeComponents(components)
-  }
-
-  const pageDataUrl = getPageDataUrl(pagePath)
-
-  const { componentChunkName, staticQueryHashes = [] } = pageData
-
-  const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
-
-  class RouteHandler extends React.Component {
-    render() {
-      const props = {
-        ...this.props,
-        ...pageData.result,
-        params: {
-          ...grabMatchParams(this.props.location.pathname),
-          ...(pageData.result?.pageContext?.__params || {}),
-        },
+    function loadPageDataSync(_pagePath) {
+      if (_pagePath === pagePath) {
+        // no need to use fs if we are asking for pageData of current page
+        return pageData
       }
 
-      const pageElement = createElement(
-        syncRequires.components[componentChunkName],
-        props
+      const pageDataPath = getPageDataPath(_pagePath)
+      const pageDataFile = join(process.cwd(), `public`, pageDataPath)
+      try {
+        // deprecation notice
+        const myErrorHolder = {
+          name: `Usage of loadPageDataSync for page other than currently generated page disables incremental html generation in future builds`,
+        }
+        Error.captureStackTrace(myErrorHolder, loadPageDataSync)
+        global.unsafeBuiltinUsage.push(myErrorHolder.stack)
+        const pageDataJson = fs.readFileSync(pageDataFile)
+        return JSON.parse(pageDataJson)
+      } catch (error) {
+        // not an error if file is not found. There's just no page data
+        return null
+      }
+    }
+
+    const replaceBodyHTMLString = body => {
+      bodyHtml = body
+    }
+
+    const setHeadComponents = components => {
+      headComponents = headComponents.concat(sanitizeComponents(components))
+    }
+
+    const setHtmlAttributes = attributes => {
+      htmlAttributes = merge(htmlAttributes, attributes)
+    }
+
+    const setBodyAttributes = attributes => {
+      bodyAttributes = merge(bodyAttributes, attributes)
+    }
+
+    const setPreBodyComponents = components => {
+      preBodyComponents = preBodyComponents.concat(
+        sanitizeComponents(components)
       )
-
-      const wrappedPage = apiRunner(
-        `wrapPageElement`,
-        { element: pageElement, props },
-        pageElement,
-        ({ result }) => {
-          return { element: result, props }
-        }
-      ).pop()
-
-      return wrappedPage
     }
-  }
 
-  const routerElement = (
-    <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
-      <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
-        <RouteHandler path="/*" />
-      </Router>
-      <div {...RouteAnnouncerProps} />
-    </ServerLocation>
-  )
-
-  const bodyComponent = (
-    <StaticQueryContext.Provider value={staticQueryContext}>
-      {apiRunner(
-        `wrapRootElement`,
-        { element: routerElement, pathname: pagePath },
-        routerElement,
-        ({ result }) => {
-          return { element: result, pathname: pagePath }
-        }
-      ).pop()}
-    </StaticQueryContext.Provider>
-  )
-
-  // Let the site or plugin render the page component.
-  apiRunner(`replaceRenderer`, {
-    bodyComponent,
-    replaceBodyHTMLString,
-    setHeadComponents,
-    setHtmlAttributes,
-    setBodyAttributes,
-    setPreBodyComponents,
-    setPostBodyComponents,
-    setBodyProps,
-    pathname: pagePath,
-    pathPrefix: __PATH_PREFIX__,
-  })
-
-  // If no one stepped up, we'll handle it.
-  if (!bodyHtml) {
-    try {
-      bodyHtml = renderToString(bodyComponent)
-    } catch (e) {
-      // ignore @reach/router redirect errors
-      if (!isRedirect(e)) throw e
+    const setPostBodyComponents = components => {
+      postBodyComponents = postBodyComponents.concat(
+        sanitizeComponents(components)
+      )
     }
-  }
 
-  apiRunner(`onRenderBody`, {
-    setHeadComponents,
-    setHtmlAttributes,
-    setBodyAttributes,
-    setPreBodyComponents,
-    setPostBodyComponents,
-    setBodyProps,
-    pathname: pagePath,
-    loadPageDataSync,
-    bodyHtml,
-    scripts,
-    styles,
-    pathPrefix: __PATH_PREFIX__,
-  })
+    const setBodyProps = props => {
+      bodyProps = merge({}, bodyProps, props)
+    }
 
-  reversedScripts.forEach(script => {
-    // Add preload/prefetch <link>s for scripts.
-    headComponents.push(
-      <link
-        as="script"
-        rel={script.rel}
-        key={script.name}
-        href={`${__PATH_PREFIX__}/${script.name}`}
-      />
+    const getHeadComponents = () => headComponents
+
+    const replaceHeadComponents = components => {
+      headComponents = sanitizeComponents(components)
+    }
+
+    const getPreBodyComponents = () => preBodyComponents
+
+    const replacePreBodyComponents = components => {
+      preBodyComponents = sanitizeComponents(components)
+    }
+
+    const getPostBodyComponents = () => postBodyComponents
+
+    const replacePostBodyComponents = components => {
+      postBodyComponents = sanitizeComponents(components)
+    }
+
+    const pageDataUrl = getPageDataUrl(pagePath)
+
+    const { componentChunkName, staticQueryHashes = [] } = pageData
+
+    const staticQueryUrls = staticQueryHashes.map(getStaticQueryUrl)
+
+    class RouteHandler extends React.Component {
+      render() {
+        const props = {
+          ...this.props,
+          ...pageData.result,
+          params: {
+            ...grabMatchParams(this.props.location.pathname),
+            ...(pageData.result?.pageContext?.__params || {}),
+          },
+        }
+
+        const pageElement = createElement(
+          syncRequires.components[componentChunkName],
+          props
+        )
+
+        const wrappedPage = apiRunner(
+          `wrapPageElement`,
+          { element: pageElement, props },
+          pageElement,
+          ({ result }) => {
+            return { element: result, props }
+          }
+        ).pop()
+
+        return wrappedPage
+      }
+    }
+
+    const routerElement = (
+      <ServerLocation url={`${__BASE_PATH__}${pagePath}`}>
+        <Router id="gatsby-focus-wrapper" baseuri={__BASE_PATH__}>
+          <RouteHandler path="/*" />
+        </Router>
+        <div {...RouteAnnouncerProps} />
+      </ServerLocation>
     )
-  })
 
-  if (pageData) {
-    headComponents.push(
-      <link
-        as="fetch"
-        rel="preload"
-        key={pageDataUrl}
-        href={pageDataUrl}
-        crossOrigin="anonymous"
-      />
+    const bodyComponent = (
+      <StaticQueryContext.Provider value={staticQueryContext}>
+        {apiRunner(
+          `wrapRootElement`,
+          { element: routerElement, pathname: pagePath },
+          routerElement,
+          ({ result }) => {
+            return { element: result, pathname: pagePath }
+          }
+        ).pop()}
+      </StaticQueryContext.Provider>
     )
-  }
-  staticQueryUrls.forEach(staticQueryUrl =>
-    headComponents.push(
-      <link
-        as="fetch"
-        rel="preload"
-        key={staticQueryUrl}
-        href={staticQueryUrl}
-        crossOrigin="anonymous"
-      />
-    )
-  )
 
-  const appDataUrl = getAppDataUrl()
-  if (appDataUrl) {
-    headComponents.push(
-      <link
-        as="fetch"
-        rel="preload"
-        key={appDataUrl}
-        href={appDataUrl}
-        crossOrigin="anonymous"
-      />
-    )
-  }
+    // Let the site or plugin render the page component.
+    apiRunner(`replaceRenderer`, {
+      bodyComponent,
+      replaceBodyHTMLString,
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      setPreBodyComponents,
+      setPostBodyComponents,
+      setBodyProps,
+      pathname: pagePath,
+      pathPrefix: __PATH_PREFIX__,
+    })
 
-  reversedStyles.forEach(style => {
-    // Add <link>s for styles that should be prefetched
-    // otherwise, inline as a <style> tag
+    // If no one stepped up, we'll handle it.
+    if (!bodyHtml) {
+      try {
+        bodyHtml = renderToString(bodyComponent)
+      } catch (e) {
+        // ignore @reach/router redirect errors
+        if (!isRedirect(e)) throw e
+      }
+    }
 
-    if (style.rel === `prefetch`) {
+    apiRunner(`onRenderBody`, {
+      setHeadComponents,
+      setHtmlAttributes,
+      setBodyAttributes,
+      setPreBodyComponents,
+      setPostBodyComponents,
+      setBodyProps,
+      pathname: pagePath,
+      loadPageDataSync,
+      bodyHtml,
+      scripts,
+      styles,
+      pathPrefix: __PATH_PREFIX__,
+    })
+
+    reversedScripts.forEach(script => {
+      // Add preload/prefetch <link>s for scripts.
       headComponents.push(
         <link
-          as="style"
-          rel={style.rel}
-          key={style.name}
-          href={`${__PATH_PREFIX__}/${style.name}`}
+          as="script"
+          rel={script.rel}
+          key={script.name}
+          href={`${__PATH_PREFIX__}/${script.name}`}
         />
       )
-    } else {
-      headComponents.unshift(
-        <style
-          data-href={`${__PATH_PREFIX__}/${style.name}`}
-          id={`gatsby-global-css`}
-          dangerouslySetInnerHTML={{
-            __html: style.content,
-          }}
+    })
+
+    if (pageData) {
+      headComponents.push(
+        <link
+          as="fetch"
+          rel="preload"
+          key={pageDataUrl}
+          href={pageDataUrl}
+          crossOrigin="anonymous"
         />
       )
     }
-  })
-
-  // Add page metadata for the current page
-  const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";/*]]>*/`
-
-  postBodyComponents.push(
-    <script
-      key={`script-loader`}
-      id={`gatsby-script-loader`}
-      dangerouslySetInnerHTML={{
-        __html: windowPageData,
-      }}
-    />
-  )
-
-  // Add chunk mapping metadata
-  const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
-    chunkMapping
-  )};/*]]>*/`
-
-  postBodyComponents.push(
-    <script
-      key={`chunk-mapping`}
-      id={`gatsby-chunk-mapping`}
-      dangerouslySetInnerHTML={{
-        __html: scriptChunkMapping,
-      }}
-    />
-  )
-
-  let bodyScripts = []
-  if (chunkMapping[`polyfill`]) {
-    chunkMapping[`polyfill`].forEach(script => {
-      const scriptPath = `${__PATH_PREFIX__}${script}`
-      bodyScripts.push(
-        <script key={scriptPath} src={scriptPath} noModule={true} />
+    staticQueryUrls.forEach(staticQueryUrl =>
+      headComponents.push(
+        <link
+          as="fetch"
+          rel="preload"
+          key={staticQueryUrl}
+          href={staticQueryUrl}
+          crossOrigin="anonymous"
+        />
       )
+    )
+
+    const appDataUrl = getAppDataUrl()
+    if (appDataUrl) {
+      headComponents.push(
+        <link
+          as="fetch"
+          rel="preload"
+          key={appDataUrl}
+          href={appDataUrl}
+          crossOrigin="anonymous"
+        />
+      )
+    }
+
+    reversedStyles.forEach(style => {
+      // Add <link>s for styles that should be prefetched
+      // otherwise, inline as a <style> tag
+
+      if (style.rel === `prefetch`) {
+        headComponents.push(
+          <link
+            as="style"
+            rel={style.rel}
+            key={style.name}
+            href={`${__PATH_PREFIX__}/${style.name}`}
+          />
+        )
+      } else {
+        headComponents.unshift(
+          <style
+            data-href={`${__PATH_PREFIX__}/${style.name}`}
+            id={`gatsby-global-css`}
+            dangerouslySetInnerHTML={{
+              __html: style.content,
+            }}
+          />
+        )
+      }
     })
-  }
 
-  // Filter out prefetched bundles as adding them as a script tag
-  // would force high priority fetching.
-  bodyScripts = bodyScripts.concat(
-    scripts
-      .filter(s => s.rel !== `prefetch`)
-      .map(s => {
-        const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
-          1,
-          -1
-        )}`
-        return <script key={scriptPath} src={scriptPath} async />
+    // Add page metadata for the current page
+    const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";/*]]>*/`
+
+    postBodyComponents.push(
+      <script
+        key={`script-loader`}
+        id={`gatsby-script-loader`}
+        dangerouslySetInnerHTML={{
+          __html: windowPageData,
+        }}
+      />
+    )
+
+    // Add chunk mapping metadata
+    const scriptChunkMapping = `/*<![CDATA[*/window.___chunkMapping=${JSON.stringify(
+      chunkMapping
+    )};/*]]>*/`
+
+    postBodyComponents.push(
+      <script
+        key={`chunk-mapping`}
+        id={`gatsby-chunk-mapping`}
+        dangerouslySetInnerHTML={{
+          __html: scriptChunkMapping,
+        }}
+      />
+    )
+
+    let bodyScripts = []
+    if (chunkMapping[`polyfill`]) {
+      chunkMapping[`polyfill`].forEach(script => {
+        const scriptPath = `${__PATH_PREFIX__}${script}`
+        bodyScripts.push(
+          <script key={scriptPath} src={scriptPath} noModule={true} />
+        )
       })
-  )
+    }
 
-  postBodyComponents.push(...bodyScripts)
+    // Filter out prefetched bundles as adding them as a script tag
+    // would force high priority fetching.
+    bodyScripts = bodyScripts.concat(
+      scripts
+        .filter(s => s.rel !== `prefetch`)
+        .map(s => {
+          const scriptPath = `${__PATH_PREFIX__}/${JSON.stringify(s.name).slice(
+            1,
+            -1
+          )}`
+          return <script key={scriptPath} src={scriptPath} async />
+        })
+    )
 
-  apiRunner(`onPreRenderHTML`, {
-    getHeadComponents,
-    replaceHeadComponents,
-    getPreBodyComponents,
-    replacePreBodyComponents,
-    getPostBodyComponents,
-    replacePostBodyComponents,
-    pathname: pagePath,
-    pathPrefix: __PATH_PREFIX__,
-  })
+    postBodyComponents.push(...bodyScripts)
 
-  const html = `<!DOCTYPE html>${renderToStaticMarkup(
-    <Html
-      {...bodyProps}
-      headComponents={headComponents}
-      htmlAttributes={htmlAttributes}
-      bodyAttributes={bodyAttributes}
-      preBodyComponents={preBodyComponents}
-      postBodyComponents={postBodyComponents}
-      body={bodyHtml}
-      path={pagePath}
-    />
-  )}`
+    apiRunner(`onPreRenderHTML`, {
+      getHeadComponents,
+      replaceHeadComponents,
+      getPreBodyComponents,
+      replacePreBodyComponents,
+      getPostBodyComponents,
+      replacePostBodyComponents,
+      pathname: pagePath,
+      pathPrefix: __PATH_PREFIX__,
+    })
 
-  return html
+    const html = `<!DOCTYPE html>${renderToStaticMarkup(
+      <Html
+        {...bodyProps}
+        headComponents={headComponents}
+        htmlAttributes={htmlAttributes}
+        bodyAttributes={bodyAttributes}
+        preBodyComponents={preBodyComponents}
+        postBodyComponents={postBodyComponents}
+        body={bodyHtml}
+        path={pagePath}
+      />
+    )}`
+
+    return { html, unsafeBuiltinsUsage: global.unsafeBuiltinUsage }
+  } catch (e) {
+    e.unsafeBuiltinsUsage = global.unsafeBuiltinUsage
+    throw e
+  }
 }

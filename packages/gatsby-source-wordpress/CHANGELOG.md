@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0-next.0...gatsby-source-wordpress@5.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** upgrade webpack-assets-manifest for compatibility with webpack@5 ([#30217](https://github.com/gatsbyjs/gatsby/issues/30217)) ([ca44a9e](https://github.com/gatsbyjs/gatsby/commit/ca44a9eb04878919ee52874a5e879a1a29ee0463))
+
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.3...gatsby-source-wordpress@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.2...gatsby-source-wordpress@5.1.0-next.3) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+- **gatsby-source-wordpress:** image fixes ([#29813](https://github.com/gatsbyjs/gatsby/issues/29813)) ([28124dd](https://github.com/gatsbyjs/gatsby/commit/28124dd74b87902f9fa8cf3895ff8b4d54bc0fd6))
+
+### Features
+
+- **gatsby-source-wordpress:** Improve 50\* error messages ([#29972](https://github.com/gatsbyjs/gatsby/issues/29972)) ([a7b1062](https://github.com/gatsbyjs/gatsby/commit/a7b106275ca8c0766cdf99a022179a0508c97129))
+- **gatsby-source-wordpress:** Log when nodes are duplicates ([#29941](https://github.com/gatsbyjs/gatsby/issues/29941)) ([7ee63ea](https://github.com/gatsbyjs/gatsby/commit/7ee63ea623b007c8642341b0bbc020d5674051dc))
+
+# [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.1...gatsby-source-wordpress@5.1.0-next.2) (2021-02-28)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** auto-rename types named "Filter" ([#29718](https://github.com/gatsbyjs/gatsby/issues/29718)) ([fb225be](https://github.com/gatsbyjs/gatsby/commit/fb225bee7669b55039fc2525a3149091e8ede8e8))
+- **gatsby-source-wordpress:** HTML image regex's ([#29778](https://github.com/gatsbyjs/gatsby/issues/29778)) ([f6edccf](https://github.com/gatsbyjs/gatsby/commit/f6edccf8440acc29002ea2c89a815fe863c94670))
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.0...gatsby-source-wordpress@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.9...gatsby-source-wordpress@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.8...gatsby-source-wordpress@5.0.0-next.9) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** remove hard tabs from Markdown ([#29627](https://github.com/gatsbyjs/gatsby/issues/29627)) ([0038683](https://github.com/gatsbyjs/gatsby/commit/0038683e7a6bcf8340265a3a46714bc87b32dd96))
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+- **gatsby-source-wordpress:** Add missing tests ([#29406](https://github.com/gatsbyjs/gatsby/issues/29406)) ([06e9337](https://github.com/gatsbyjs/gatsby/commit/06e933758b176505ca46f532a13db5dc5b1681e9))
+
+# [5.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.7...gatsby-source-wordpress@5.0.0-next.8) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 # [5.0.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.0.0-next.6...gatsby-source-wordpress@5.0.0-next.7) (2021-02-19)
 
 **Note:** Version bump only for package gatsby-source-wordpress

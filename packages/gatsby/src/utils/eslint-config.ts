@@ -1,24 +1,30 @@
 import { printSchema, GraphQLSchema } from "graphql"
-import { CLIEngine } from "eslint"
+import { ESLint } from "eslint"
 import path from "path"
 
 const eslintRulePaths = path.resolve(`${__dirname}/eslint-rules`)
 const eslintRequirePreset = require.resolve(`./eslint/required`)
 
-export const eslintRequiredConfig: CLIEngine.Options = {
+export const eslintRequiredConfig: ESLint.Options = {
   rulePaths: [eslintRulePaths],
   useEslintrc: false,
   allowInlineConfig: false,
   // @ts-ignore
   emitWarning: true,
   baseConfig: {
-    parser: require.resolve(`babel-eslint`),
+    parser: require.resolve(`@babel/eslint-parser`),
     parserOptions: {
       ecmaVersion: 2020,
       sourceType: `module`,
       ecmaFeatures: {
         jsx: true,
       },
+      // TODO proper check for custom babel & plugins config
+      // Currently when a babelrc is added to the project, it will override our babelOptions
+      babelOptions: {
+        presets: [`babel-preset-gatsby`],
+      },
+      requireConfigFile: false,
     },
     globals: {
       graphql: true,
@@ -32,7 +38,7 @@ export const eslintRequiredConfig: CLIEngine.Options = {
 export const eslintConfig = (
   schema: GraphQLSchema,
   usingJsxRuntime: boolean
-): CLIEngine.Options => {
+): ESLint.Options => {
   return {
     useEslintrc: false,
     resolvePluginsRelativeTo: __dirname,
@@ -47,6 +53,20 @@ export const eslintConfig = (
         require.resolve(`eslint-config-react-app`),
         eslintRequirePreset,
       ],
+      parser: require.resolve(`@babel/eslint-parser`),
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: `module`,
+        ecmaFeatures: {
+          jsx: true,
+        },
+        // TODO proper check for custom babel & plugins config
+        // Currently when a babelrc is added to the project, it will override our babelOptions
+        babelOptions: {
+          presets: [`babel-preset-gatsby`],
+        },
+        requireConfigFile: false,
+      },
       plugins: [`graphql`],
       rules: {
         // New versions of react use a special jsx runtime that remove the requirement
@@ -75,13 +95,12 @@ export const eslintConfig = (
         "jsx-a11y/aria-proptypes": `warn`,
         "jsx-a11y/aria-role": `warn`,
         "jsx-a11y/aria-unsupported-elements": `warn`,
-        // TODO: It looks like the `autocomplete-valid` rule hasn't been published yet
-        // "jsx-a11y/autocomplete-valid": [
-        //   "warn",
-        //   {
-        //     inputComponents: [],
-        //   },
-        // ],
+        "jsx-a11y/autocomplete-valid": [
+          `warn`,
+          {
+            inputComponents: [],
+          },
+        ],
         "jsx-a11y/click-events-have-key-events": `warn`,
         "jsx-a11y/control-has-associated-label": [
           `warn`,

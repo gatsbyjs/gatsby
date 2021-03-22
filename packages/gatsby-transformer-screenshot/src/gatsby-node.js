@@ -142,7 +142,8 @@ const createScreenshotNode = async ({
   reporter,
 }) => {
   try {
-    let fileNode, expires
+    let fileNode
+    let expires
     if (USE_PLACEHOLDER_IMAGE) {
       const getPlaceholderFileNode = require(`./placeholder-file-node`)
       fileNode = await getPlaceholderFileNode({

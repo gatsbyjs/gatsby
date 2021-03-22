@@ -1,5 +1,4 @@
 // @flow
-const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -50,8 +49,6 @@ const ensureWindowsDriveIsUppercase = filePath => {
     : filePath
 }
 
-const deprecationWarnings = new Set()
-
 const findChildren = initialChildren => {
   const children = [...initialChildren]
   const queue = [...initialChildren]
@@ -70,6 +67,15 @@ const findChildren = initialChildren => {
     }
   }
   return children
+}
+
+const displayedWarnings = new Set()
+const warnOnce = (message, key) => {
+  const messageId = key ?? message
+  if (!displayedWarnings.has(messageId)) {
+    displayedWarnings.add(messageId)
+    report.warn(message)
+  }
 }
 
 import type { Plugin } from "./types"
@@ -425,6 +431,8 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 }
 
+const deleteNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * Delete a node
  * @param {object} node A node object. See the "createNode" action for more information about the node object details.
@@ -443,7 +451,10 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
     if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
-    report.warn(msg)
+    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
     id = node.node.id
   } else {
@@ -635,7 +646,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, nodeSchema)
+  const result = nodeSchema.validate(node)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
@@ -800,6 +811,8 @@ actions.createNode = (...args) => dispatch => {
   })
 }
 
+const touchNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
@@ -821,7 +834,10 @@ actions.touchNode = (node: any, plugin?: Plugin) => {
       msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    report.warn(msg)
+    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      touchNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
     node = getNode(node.nodeId)
   }
@@ -953,22 +969,16 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
-  if (config.module?.rules) {
-    config.module.rules.forEach(rule => {
-      if (!rule.resolve) {
-        // TODO move message to gatsbyjs.com/docs - change to structured
-        const key = `${plugin.name}-setWebpackConfig`
-        if (!deprecationWarnings.has(key)) {
-          report.warn(
-            `[deprecation] ${plugin.name} added a new module rule to the webpack config without specyfing the resolve property. This option will become mandatory in the next release. For more information go to https://webpack.js.org/configuration/module/#ruleresolve`
-          )
-        }
-        deprecationWarnings.add(key)
-        rule.resolve = {
-          fullySpecified: false,
-        }
-      }
-    })
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
   }
 
   return {
@@ -988,22 +998,16 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
-  if (config.module?.rules && plugin) {
-    config.module.rules.forEach(rule => {
-      if (!rule.resolve) {
-        // TODO move message to gatsbyjs.com/docs - change to structured
-        const key = `${plugin.name}-setWebpackConfig`
-        if (!deprecationWarnings.has(key)) {
-          report.warn(
-            `[deprecation] ${plugin.name} added a new module rule to the webpack config without specyfing the resolve property. This option will become mandatory in the next release. For more information go to https://webpack.js.org/configuration/module/#ruleresolve`
-          )
-        }
-        deprecationWarnings.add(key)
-        rule.resolve = {
-          fullySpecified: false,
-        }
-      }
-    })
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
   }
 
   return {
@@ -1126,6 +1130,8 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
@@ -1134,10 +1140,18 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1213,15 +1227,25 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
 actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `SET_JOB`,
     plugin,
@@ -1230,15 +1254,25 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * endJob({ id: `write file id: 123` })
  */
 actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `END_JOB`,
     plugin,
@@ -1290,6 +1324,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
  * @example
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
@@ -1305,6 +1340,7 @@ actions.createRedirect = ({
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
+  ignoreCase = true,
   ...rest
 }) => {
   let pathPrefix = ``
@@ -1317,6 +1353,7 @@ actions.createRedirect = ({
     payload: {
       fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
+      ignoreCase,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
@@ -1352,20 +1389,6 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
-  }
-}
-
-/**
- * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
- */
-actions.setPageData = (pageData: PageData) => {
-  return {
-    type: `SET_PAGE_DATA`,
-    payload: pageData,
   }
 }
 

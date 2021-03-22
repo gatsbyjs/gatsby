@@ -2,7 +2,6 @@ import path from "path"
 import { mapValues, isPlainObject, trim } from "lodash"
 import webpack from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
-import HtmlWebpackExcludeAssetsPlugin from "html-webpack-exclude-assets-plugin"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 // TODO: swap back when https://github.com/geowarin/friendly-errors-webpack-plugin/pull/86 lands
 import FriendlyErrorsPlugin from "@pieh/friendly-errors-webpack-plugin"
@@ -30,10 +29,6 @@ function deepMap(obj, fn) {
 }
 
 const cssTests = []
-
-function isCssRule({ test }) {
-  return test instanceof RegExp && cssTests.includes(test.toString())
-}
 
 function replaceRule(value, stage) {
   // If `value` does not have a `test` property, it isn't a rule object.
@@ -214,8 +209,9 @@ exports.onCreateWebpackConfig = (
 
       // Exclude CSS from index.html, as any imported styles are assumed to be
       // targeting the editor preview pane. Uses `excludeAssets` option from
-      // `HtmlWebpackPlugin` config.
-      new HtmlWebpackExcludeAssetsPlugin(),
+      // `HtmlWebpackPlugin` config
+      // not compatible with webpack 5
+      // new HtmlWebpackExcludeAssetsPlugin(),
 
       // Pass in needed Gatsby config values.
       new webpack.DefinePlugin({
@@ -223,10 +219,9 @@ exports.onCreateWebpackConfig = (
         CMS_PUBLIC_PATH: JSON.stringify(publicPath),
       }),
 
-      new CopyPlugin(
-        [].concat.apply(
-          [],
-          externals.map(({ name, assetName, sourceMap, assetDir }) =>
+      new CopyPlugin({
+        patterns: externals.flatMap(
+          ({ name, assetName, sourceMap, assetDir }) =>
             [
               {
                 from: require.resolve(path.join(name, assetDir, assetName)),
@@ -236,10 +231,9 @@ exports.onCreateWebpackConfig = (
                 from: require.resolve(path.join(name, assetDir, sourceMap)),
                 to: sourceMap,
               },
-            ].filter(item => item)
-          )
-        )
-      ),
+            ].filter(Boolean)
+        ),
+      }),
 
       new HtmlWebpackTagsPlugin({
         tags: externals.map(({ assetName }) => assetName),

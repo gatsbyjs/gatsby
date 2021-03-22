@@ -317,7 +317,8 @@ const resolveFixed = (image, options) => {
     })
     .join(`,\n`)
 
-  let pickedHeight, pickedWidth
+  let pickedHeight
+  let pickedWidth
   if (options.height) {
     pickedHeight = options.height
     pickedWidth = options.height * desiredAspectRatio
@@ -449,8 +450,8 @@ const resolveResize = (image, options) => {
     }
   }
 
-  let pickedHeight = options.height,
-    pickedWidth = options.width
+  let pickedHeight = options.height
+  let pickedWidth = options.width
 
   if (pickedWidth === undefined) {
     pickedWidth = pickedHeight * aspectRatio
@@ -663,9 +664,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
   }
 }
 
-let warnedForBeta = false
-
-exports.extendNodeType = ({ type, store, reporter }) => {
+exports.extendNodeType = ({ type, store }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -721,12 +720,18 @@ exports.extendNodeType = ({ type, store, reporter }) => {
   const resolveGatsbyImageData = async (image, options) => {
     if (!isImage(image)) return null
 
-    const { baseUrl, ...sourceMetadata } = getBasicImageProps(image, options)
-
+    const { baseUrl, contentType, width, height } = getBasicImageProps(
+      image,
+      options
+    )
+    let [, format] = contentType.split(`/`)
+    if (format === `jpeg`) {
+      format = `jpg`
+    }
     const imageProps = generateImageData({
       ...options,
       pluginName: `gatsby-source-contentful`,
-      sourceMetadata,
+      sourceMetadata: { width, height, format },
       filename: baseUrl,
       generateImageSource,
       fit: fitMap.get(options.resizingBehavior),
@@ -768,14 +773,6 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
-    if (!warnedForBeta) {
-      reporter.warn(
-        stripIndent`
-      Thank you for trying the beta version of the \`gatsbyImageData\` API. Please provide feedback and report any issues at: https://github.com/gatsbyjs/gatsby/discussions/27950`
-      )
-      warnedForBeta = true
-    }
-
     const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
@@ -797,7 +794,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
             The image formats to generate. Valid values are AUTO (meaning the same format as the source image), JPG, PNG, and WEBP.
             The default value is [AUTO, WEBP], and you should rarely need to change this. Take care if you specify JPG or PNG when you do
             not know the formats of the source images, as this could lead to unwanted results such as converting JPEGs to PNGs. Specifying
-            both PNG and JPG is not supported and will be ignored. 
+            both PNG and JPG is not supported and will be ignored.
         `,
         defaultValue: [``, `webp`],
       },

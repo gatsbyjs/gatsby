@@ -17,7 +17,7 @@ import { formatLogMessage } from "~/utils/format-log-message"
 import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates"
 
 import { IPluginOptions } from "~/models/gatsby-api"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 
 export const inPreviewMode = (): boolean =>
   !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT &&
@@ -307,8 +307,11 @@ export const sourcePreviews = async (
   pluginOptions: IPluginOptions
 ): Promise<void> => {
   const {
-    debug: { preview: inPreviewDebugMode },
+    debug: { preview: inPreviewDebugModeOption },
   } = getPluginOptions()
+
+  const inPreviewDebugMode =
+    inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG
 
   if (inPreviewDebugMode) {
     reporter.info(`Sourcing previews for the following webhook:`)

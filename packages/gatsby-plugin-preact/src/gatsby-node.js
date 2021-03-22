@@ -25,7 +25,7 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   }
 
   // add preact to the framework bundle
-  if (stage === `build-javascript`) {
+  if (stage === `build-javascript` || stage === `develop`) {
     const webpackConfig = getConfig()
     if (
       webpackConfig?.optimization?.splitChunks?.cacheGroups?.framework?.test

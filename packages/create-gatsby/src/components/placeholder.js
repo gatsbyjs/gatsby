@@ -22,11 +22,11 @@ export default (prompt, options = {}) => {
   prompt.cursorHide()
 
   let { input = ``, initial = ``, pos, showCursor = true, color } = options
-  let style = color || prompt.styles.placeholder
-  let inverse = prompt.styles.primary.inverse
+  const style = color || prompt.styles.placeholder
+  const inverse = prompt.styles.primary.inverse
   let blinker = str => inverse(str)
   let output = input
-  let char = ` `
+  const char = ` `
   let reverse = blinker(char)
 
   if (prompt.blink && prompt.blink.off === true) {
@@ -45,7 +45,7 @@ export default (prompt, options = {}) => {
   initial = isPrimitive(initial) ? `${initial}` : ``
   input = isPrimitive(input) ? `${input}` : ``
 
-  let placeholder = initial && initial.startsWith(input) && initial !== input
+  const placeholder = initial && initial.startsWith(input) && initial !== input
   let cursor = placeholder ? blinker(initial[input.length]) : reverse
 
   if (pos !== input.length && showCursor === true) {
@@ -58,7 +58,7 @@ export default (prompt, options = {}) => {
   }
 
   if (placeholder) {
-    let raw = prompt.styles.unstyle(output + cursor)
+    const raw = prompt.styles.unstyle(output + cursor)
     return output + cursor + style(initial.slice(raw.length))
   }
 

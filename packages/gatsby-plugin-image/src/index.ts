@@ -9,6 +9,7 @@ export { StaticImage } from "./components/static-image.server"
 export {
   getImage,
   getSrc,
+  getSrcSet,
   getImageData,
   withArtDirection,
   IArtDirectedImage,

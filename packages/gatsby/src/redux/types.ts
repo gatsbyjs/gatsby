@@ -14,6 +14,7 @@ export interface IRedirect {
   toPath: string
   isPermanent?: boolean
   redirectInBrowser?: boolean
+  ignoreCase: boolean
   // Users can add anything to this createRedirect API
   [key: string]: any
 }
@@ -30,8 +31,9 @@ export interface IGatsbyPage {
   component: SystemPath
   componentChunkName: string
   isCreatedByStatefulCreatePages: boolean
-  context: {}
+  context: Record<string, unknown>
   updatedAt: number
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
@@ -291,6 +293,7 @@ export interface IGatsbyState {
     browserCompilationHash: string
     ssrCompilationHash: string
     trackedStaticQueryResults: Map<string, IStaticQueryResultState>
+    unsafeBuiltinWasUsedInSSR: boolean
   }
 }
 
@@ -344,7 +347,6 @@ export type ActionsUnion =
   | ISetWebpackConfigAction
   | ITouchNodeAction
   | IUpdatePluginsHashAction
-  | ISetPageDataAction
   | ICreateJobV2Action
   | IEndJobV2Action
   | IRemoveStaleJobV2Action
@@ -370,8 +372,10 @@ export type ActionsUnion =
   | ISetProgramExtensions
   | IDeletedStalePageDataFiles
   | IRemovedHtml
+  | ITrackedHtmlCleanup
   | IGeneratedHtml
   | IMarkHtmlDirty
+  | ISSRUsedUnsafeBuiltin
 
 export interface IApiFinishedAction {
   type: `API_FINISHED`
@@ -640,14 +644,6 @@ export interface IDeleteCacheAction {
   cacheIsCorrupt?: boolean
 }
 
-export interface ISetPageDataAction {
-  type: `SET_PAGE_DATA`
-  payload: {
-    id: Identifier
-    resultHash: string
-  }
-}
-
 export interface IRemoveTemplateComponentAction {
   type: `REMOVE_STATIC_QUERIES_BY_TEMPLATE`
   payload: {
@@ -688,11 +684,6 @@ export interface IClearPendingPageDataWriteAction {
 export interface IDeletePageAction {
   type: `DELETE_PAGE`
   payload: IGatsbyPage
-}
-
-export interface IReplaceStaticQueryAction {
-  type: `REPLACE_STATIC_QUERY`
-  payload: IGatsbyStaticQueryComponents
 }
 
 export interface IRemoveStaticQuery {
@@ -839,6 +830,11 @@ interface IRemovedHtml {
   payload: string
 }
 
+interface ITrackedHtmlCleanup {
+  type: `HTML_TRACKED_PAGES_CLEANUP`
+  payload: Set<string>
+}
+
 interface IGeneratedHtml {
   type: `HTML_GENERATED`
   payload: Array<string>
@@ -850,4 +846,8 @@ interface IMarkHtmlDirty {
     pages: Set<string>
     staticQueryHashes: Set<string>
   }
+}
+
+interface ISSRUsedUnsafeBuiltin {
+  type: `SSR_USED_UNSAFE_BUILTIN`
 }

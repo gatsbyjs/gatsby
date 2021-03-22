@@ -39,7 +39,7 @@ Take that query and make the query directly to your WP instance GraphQL API like
 {
   pages {
     nodes {
-    	id
+      id
       title
     }
   }
@@ -54,10 +54,10 @@ Take that query and make the query directly to your WP instance GraphQL API like
    ```js
    {
      resolve: `gatsby-source-wordpress`,
-   	options: {
-   		debug: {
+     options: {
+       debug: {
          graphql: {
-         	writeQueriesToDisk: true,
+           writeQueriesToDisk: true,
          },
        },
      },
@@ -103,10 +103,10 @@ If your build is erroring on a GraphQL error returned in the response from a Gra
 ```js
 {
   resolve: `gatsby-source-wordpress`,
-	options: {
-		debug: {
+  options: {
+    debug: {
       graphql: {
-      	writeQueriesToDisk: true,
+        writeQueriesToDisk: true,
       },
     },
   },
@@ -136,8 +136,8 @@ To determine how many concurrent GraphQL requests your server can handle, enable
 ```js
 {
   resolve: `gatsby-source-wordpress`,
-	options: {
-		verbose: true,
+  options: {
+    verbose: true,
   },
 },
 ```
@@ -176,7 +176,7 @@ If post revisions are enabled on your site and previews are still not working, p
 
 ## Preview debug mode
 
-You can enable Preview debug mode to help you debug issues with the Gatsby Preview build process. Visit the [plugin options page](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debugpreview-boolean) to see how to enable this debug option. This option will log addition info to the terminal output including the contents of the webhook body that was sent to the Gatsby process, a list of the Preview change events Gatsby receives, as well as the node Preview data that was sourced during the Preview.
+You can enable Preview debug mode to help you debug issues with the Gatsby Preview build process. Visit the [plugin options page](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debugpreview-boolean) to see how to enable this debug option or enable this option by setting the env variable `WP_GATSBY_PREVIEW_DEBUG`. This option will log addition info to the terminal output including the contents of the webhook body that was sent to the Gatsby process, a list of the Preview change events Gatsby receives, as well as the node Preview data that was sourced during the Preview.
 
 # Up Next :point_right:
 

@@ -1,26 +1,25 @@
 {
   "name": "gatsby-plugin-netlify-cms",
   "description": "A Gatsby plugin which generates the Netlify CMS single page app",
-  "version": "5.0.0-next.1",
+  "version": "5.2.0-next.0",
   "author": "Shawn Erquhart <shawn@erquh.art>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
-    "copy-webpack-plugin": "^5.1.2",
-    "html-webpack-exclude-assets-plugin": "^0.0.7",
-    "html-webpack-plugin": "^3.2.0",
-    "html-webpack-tags-plugin": "^2.0.17",
-    "lodash": "^4.17.20",
-    "mini-css-extract-plugin": "^0.12.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "html-webpack-plugin": "^5.2.0",
+    "html-webpack-tags-plugin": "^3.0.0",
+    "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "1.3.9",
     "netlify-identity-widget": "^1.9.1",
-    "webpack": "^4.46.0"
+    "webpack": "^5.23.00"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.0.0-next.0",
+    "@babel/cli": "^7.12.17",
+    "@babel/core": "^7.12.17",
+    "babel-preset-gatsby-package": "^1.2.0-next.0",
     "cross-env": "^7.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
@@ -38,8 +37,8 @@
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
     "netlify-cms-app": "^2.9.0",
-    "react": "^16.8.4 || ^17.0.0",
-    "react-dom": "^16.8.4 || ^17.0.0"
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "repository": {
     "type": "git",

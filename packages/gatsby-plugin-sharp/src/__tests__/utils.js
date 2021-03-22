@@ -1,8 +1,7 @@
-jest.mock(`gatsby-cli/lib/reporter`)
+jest.mock(`gatsby/reporter`)
 jest.mock(`progress`)
 const { calculateImageSizes } = require(`../utils`)
-const reporter = require(`gatsby-cli/lib/reporter`)
-const progress = require(`progress`)
+const reporter = require(`gatsby/reporter`)
 const sharp = require(`sharp`)
 
 const file = {

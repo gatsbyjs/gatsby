@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.1.0-next.1...gatsby-plugin-preact@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.1.0-next.0...gatsby-plugin-preact@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.0.0-next.2...gatsby-plugin-preact@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
+# [5.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.0.0-next.1...gatsby-plugin-preact@5.0.0-next.2) (2021-02-25)
+
+### Features
+
+- **gatsby:** move sync-requires to async-requires in develop ([#29391](https://github.com/gatsbyjs/gatsby/issues/29391)) ([82b7c03](https://github.com/gatsbyjs/gatsby/commit/82b7c03476370d1ec76491ff192c29c05c0f878f))
+
 # [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.0.0-next.0...gatsby-plugin-preact@5.0.0-next.1) (2021-02-19)
 
 ### Features

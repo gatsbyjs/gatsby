@@ -31,6 +31,7 @@ exports.onPreInit = ({ emitter }) => {
 }
 
 let previouslyCreatedNodes = new Map()
+let didRemoveTrailingSlashForTestedPage = false
 
 exports.sourceNodes = ({
   actions,
@@ -145,6 +146,12 @@ exports.createPages = async ({ actions, graphql }) => {
     createPageHelper(`only-not-in-first`)
   }
 
+  createPageHelper(
+    `sometimes-i-have-trailing-slash-sometimes-i-dont${
+      runNumber % 2 === 0 ? `/` : ``
+    }`
+  )
+
   const { data } = await graphql(`
     {
       allDepPageQuery {
@@ -181,6 +188,13 @@ exports.onPreBuild = () => {
 let counter = 1
 exports.onPostBuild = async ({ graphql }) => {
   console.log(`[test] onPostBuild`)
+
+  if (!didRemoveTrailingSlashForTestedPage) {
+    throw new Error(
+      `Test setup failed - didn't remove trailing slash for /pages-that-will-have-trailing-slash-removed/ page`
+    )
+  }
+
   const { data } = await graphql(`
     {
       allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {
@@ -205,4 +219,16 @@ exports.onPostBuild = async ({ graphql }) => {
       removed: deletedPages,
     }
   )
+}
+
+// simulating "gatsby-plugin-remove-trailing-slashes" scenario
+exports.onCreatePage = ({ page, actions }) => {
+  if (page.path === `/page-that-will-have-trailing-slash-removed/`) {
+    actions.deletePage(page)
+    actions.createPage({
+      ...page,
+      path: `/page-that-will-have-trailing-slash-removed`,
+    })
+    didRemoveTrailingSlashForTestedPage = true
+  }
 }
