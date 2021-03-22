@@ -15,6 +15,9 @@ const { CODES } = require(`./report`)
  * This code tries to work around this.
  */
 const createContentfulErrorMessage = e => {
+  if (typeof e === `string`) {
+    return e
+  }
   // If we got a response, it is very likely that it is a Contentful API error.
   if (e.response) {
     let parsedContentfulErrorData = null
@@ -24,9 +27,9 @@ const createContentfulErrorMessage = e => {
       try {
         parsedContentfulErrorData = JSON.parse(e.response.data)
       } catch (err) {
-        e.message = `Unable to extract API error data from:\n${e.response.data}`
+        e.message = e.response.data
       }
-      // If response data was parsed alredy, just add it.
+      // If response data was parsed already, just add it.
     } else if (typeof e.response.data === `object`) {
       parsedContentfulErrorData = e.response.data
     }
