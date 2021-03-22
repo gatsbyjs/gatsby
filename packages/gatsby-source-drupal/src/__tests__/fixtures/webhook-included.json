@@ -1,0 +1,44 @@
+{
+  "data": {
+    "type": "node--article",
+    "id": "article-3",
+    "attributes": {
+      "id": 23,
+      "uuid": "article-3",
+      "title": "Article #3",
+      "body": "Aliquam non varius libero, sit amet consequat ex. Aenean porta turpis quis vulputate blandit. Suspendisse in porta erat. Sed sit amet scelerisque turpis, at rutrum mauris. Sed tempor eleifend lobortis. Proin maximus, massa sed dignissim sollicitudin, quam risus mattis justo, sit amet aliquam odio ligula quis urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut mollis leo nisi, at interdum urna fermentum ut. Fusce id suscipit neque, eu fermentum lacus. Donec egestas laoreet felis ac luctus. Vestibulum molestie mattis ante, a vulputate nunc ullamcorper at. Ut hendrerit ipsum eget gravida ultricies."
+    },
+    "relationships": {
+      "field_main_image": {
+        "data": {
+          "type": "file--file",
+          "id": "file-added"
+        }
+      },
+      "field_tags": {
+        "data": [
+          {
+            "type": "taxonomy_term--tags",
+            "id": "tag-1"
+          }
+        ]
+      }
+    }
+  },
+  "included": [
+    {
+      "type": "file--file",
+      "id": "file-added",
+      "attributes": {
+        "id": 2,
+        "uuid": "file-added",
+        "filename": "added-image.png",
+        "uri": {
+          "url" : "http://mysite/sites/default/files/added-image.png",
+          "value" : "private://added-image.png"
+        }
+      }
+    }
+  ],
+  "links": {}
+}
