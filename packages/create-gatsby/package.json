@@ -32,7 +32,7 @@
     "microbundle": "^0.13.0",
     "node-fetch": "^2.6.1",
     "prettier": "^2.1.2",
-    "string-length": "^4.0.1",
+    "string-length": "^4.0.2",
     "terminal-link": "^2.1.1",
     "tiny-spin": "^1.0.2",
     "typescript": "^4.1.5",
