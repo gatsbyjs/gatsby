@@ -4340,7 +4340,7 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash@*", "@types/lodash@^4.14.165", "@types/lodash@^4.14.167", "@types/lodash@^4.14.92":
+"@types/lodash@*", "@types/lodash@^4.14.165", "@types/lodash@^4.14.168", "@types/lodash@^4.14.92":
   version "4.14.168"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.168.tgz#fe24632e79b7ade3f132891afff86caa5e5ce008"
   integrity sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==

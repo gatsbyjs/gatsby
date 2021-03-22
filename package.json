@@ -18,7 +18,7 @@
     "@types/jaeger-client": "^3.15.4",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
-    "@types/lodash": "^4.14.167",
+    "@types/lodash": "^4.14.168",
     "@types/node": "^12.20.6",
     "@types/node-fetch": "^2.5.7",
     "@types/normalize-path": "^3.0.0",
