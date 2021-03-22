@@ -274,7 +274,7 @@ export default () => {
     // The second param is a "hint", see: https://jestjs.io/docs/en/expect#tomatchsnapshotpropertymatchers-hint
     expect(results).toMatchSnapshot({}, `results`)
     expect(reporter.warn).toMatchSnapshot({}, `warn`)
-    expect(reporter.panic).toMatchSnapshot({}, `panic`)
+    expect(reporter.panicOnBuild).toMatchSnapshot({}, `panicOnBuild`)
     expect(errors.length).toEqual(1)
   })
 
