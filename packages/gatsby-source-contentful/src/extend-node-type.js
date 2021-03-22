@@ -14,10 +14,11 @@ const {
   GraphQLJSON,
   GraphQLList,
 } = require(`gatsby/graphql`)
-const qs = require(`qs`)
-const { stripIndent } = require(`common-tags`)
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
 
-const cacheImage = require(`./cache-image`)
+const { stripIndent } = require(`common-tags`)
+const qs = require(`qs`)
+
 const downloadWithRetry = require(`./download-with-retry`).default
 const {
   ImageFormatType,
@@ -666,7 +667,7 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
   }
 }
 
-exports.extendNodeType = ({ type, store, reporter }) => {
+exports.extendNodeType = ({ type, cache, reporter }) => {
   if (type.name !== `ContentfulAsset`) {
     return {}
   }
@@ -676,15 +677,21 @@ exports.extendNodeType = ({ type, store, reporter }) => {
 
     const { image, options } = args
     const {
-      file: { contentType },
+      file: { contentType, url: imgUrl, fileName: name },
     } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
     }
 
-    const absolutePath = await cacheImage(store, image, options, reporter)
-    const extension = path.extname(absolutePath)
+    const url = createUrl(imgUrl, options)
+    const extension = path.extname(imgUrl)
+    const absolutePath = await fetchRemoteFile({
+      url,
+      name,
+      cache,
+      ext: extension,
+    })
 
     return traceSVG({
       file: {
@@ -712,7 +719,23 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     }
 
     try {
-      const absolutePath = await cacheImage(store, image, options, reporter)
+      const {
+        file: { contentType, url: imgUrl, fileName: name },
+      } = image
+
+      if (contentType.indexOf(`image/`) !== 0) {
+        return null
+      }
+
+      const url = createUrl(imgUrl, options)
+      const extension = path.extname(imgUrl)
+
+      const absolutePath = await fetchRemoteFile({
+        url,
+        name,
+        cache,
+        ext: extension,
+      })
 
       if (!(`getDominantColor` in pluginSharp)) {
         console.error(
