@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.1.0-next.1...gatsby-remark-code-repls@4.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.1.0-next.0...gatsby-remark-code-repls@4.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.0.0-next.0...gatsby-remark-code-repls@4.1.0-next.0) (2021-02-26)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
 # [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.10.0-next.0...gatsby-remark-code-repls@4.0.0-next.0) (2021-02-05)
 
 **Note:** Version bump only for package gatsby-remark-code-repls

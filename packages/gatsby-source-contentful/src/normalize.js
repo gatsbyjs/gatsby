@@ -58,7 +58,7 @@ exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   )
   // Now fill the buckets. Ignore entries for which there exists no bucket. (Not sure if that ever happens)
   mergedSyncData.entries.map(entry => {
-    let arr = map.get(entry.sys.contentType.sys.id)
+    const arr = map.get(entry.sys.contentType.sys.id)
     if (arr) {
       arr.push(entry)
     }
@@ -121,7 +121,7 @@ exports.buildForeignReferenceMap = ({
       const entryItemFields = entryItem.fields
       Object.keys(entryItemFields).forEach(entryItemFieldKey => {
         if (entryItemFields[entryItemFieldKey]) {
-          let entryItemFieldValue =
+          const entryItemFieldValue =
             entryItemFields[entryItemFieldKey][defaultLocale]
           // If this is an array of single reference object
           // add to the reference map, otherwise ignore.
@@ -488,7 +488,7 @@ exports.createNodesForContentType = ({
 
             // Locate all Contentful Links within the rich text data
             const traverse = obj => {
-              for (let k in obj) {
+              for (const k in obj) {
                 const v = obj[k]
                 if (v && v.sys && v.sys.type === `Link`) {
                   rawReferences.push(v)

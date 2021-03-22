@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.2.0-next.0...gatsby-transformer-sqip@3.2.0-next.1) (2021-03-19)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.1.0-next.2...gatsby-transformer-sqip@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.1.0-next.1...gatsby-transformer-sqip@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.1.0-next.0...gatsby-transformer-sqip@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.0.0-next.9...gatsby-transformer-sqip@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
+# [3.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.0.0-next.8...gatsby-transformer-sqip@3.0.0-next.9) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-transformer-sqip
+
 # [3.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sqip@3.0.0-next.7...gatsby-transformer-sqip@3.0.0-next.8) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-transformer-sqip

@@ -1,14 +1,10 @@
 const React = require(`react`)
 const path = require(`path`)
 const { renderToString, renderToStaticMarkup } = require(`react-dom/server`)
-const { ServerLocation, Router, isRedirect } = require(`@reach/router`)
-const {
-  merge,
-
-  flattenDeep,
-  replace,
-} = require(`lodash`)
+const { ServerLocation, Router, isRedirect } = require(`@gatsbyjs/reach-router`)
+const { merge, flattenDeep, replace } = require(`lodash`)
 const { StaticQueryContext } = require(`gatsby`)
+const fs = require(`fs`)
 
 const { RouteAnnouncerProps } = require(`./route-announcer-props`)
 const apiRunner = require(`./api-runner-ssr`)
@@ -61,10 +57,6 @@ const getStaticQueryUrl = hash =>
 
 const getAppDataUrl = () =>
   `${__PATH_PREFIX__}/${join(`page-data`, `app-data.json`)}`
-
-function loadPageDataSync() {
-  throw new Error(`"loadPageDataSync" is no longer available`)
-}
 
 const createElement = React.createElement
 
@@ -120,6 +112,29 @@ export default ({
     let preBodyComponents = []
     let postBodyComponents = []
     let bodyProps = {}
+
+    function loadPageDataSync(_pagePath) {
+      if (_pagePath === pagePath) {
+        // no need to use fs if we are asking for pageData of current page
+        return pageData
+      }
+
+      const pageDataPath = getPageDataPath(_pagePath)
+      const pageDataFile = join(process.cwd(), `public`, pageDataPath)
+      try {
+        // deprecation notice
+        const myErrorHolder = {
+          name: `Usage of loadPageDataSync for page other than currently generated page disables incremental html generation in future builds`,
+        }
+        Error.captureStackTrace(myErrorHolder, loadPageDataSync)
+        global.unsafeBuiltinUsage.push(myErrorHolder.stack)
+        const pageDataJson = fs.readFileSync(pageDataFile)
+        return JSON.parse(pageDataJson)
+      } catch (error) {
+        // not an error if file is not found. There's just no page data
+        return null
+      }
+    }
 
     const replaceBodyHTMLString = body => {
       bodyHtml = body

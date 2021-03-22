@@ -46,7 +46,7 @@ sharp.concurrency(1)
  * @property {import('sharp').FitEnum} fit
  */
 
-/**+
+/** +
  * @typedef {Object} Transform
  * @property {string} outputPath
  * @property {TransformArgs} args

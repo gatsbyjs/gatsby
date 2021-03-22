@@ -27,7 +27,7 @@ jest.mock(`../create-file-node`, () => {
     createFileNode: jest.fn(),
   }
 })
-const reporter = require(`gatsby-cli/lib/reporter`)
+const reporter = require(`gatsby/reporter`)
 
 const got = require(`got`)
 const createRemoteFileNode = require(`../create-remote-file-node`)

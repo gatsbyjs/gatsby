@@ -12,7 +12,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -24,13 +23,7 @@ exports[`gatsby-plugin-stylus Stage: build-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {},
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -61,7 +54,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
@@ -73,13 +65,7 @@ exports[`gatsby-plugin-stylus Stage: build-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({\\"plugins\\":[\\"test1\\"]})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {},
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -110,7 +96,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #1 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -126,17 +111,7 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #1 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {
-                        "use": Array [
-                          "foo",
-                        ],
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -167,7 +142,6 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #2 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -187,21 +161,7 @@ exports[`gatsby-plugin-stylus Stage: build-html / Stylus options #2 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {
-                        "import": Array [
-                          "file.js",
-                          "file2.js",
-                        ],
-                        "use": Array [
-                          "foo",
-                        ],
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -672,7 +632,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -684,13 +643,7 @@ exports[`gatsby-plugin-stylus Stage: develop-html / No options 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {},
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -721,7 +674,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({\\"plugins\\":[\\"test1\\"]})",
                     Object {
@@ -733,13 +685,7 @@ exports[`gatsby-plugin-stylus Stage: develop-html / PostCss plugins 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({\\"plugins\\":[\\"test1\\"]})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {},
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -770,7 +716,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #1 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -786,17 +731,7 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #1 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {
-                        "use": Array [
-                          "foo",
-                        ],
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],
@@ -827,7 +762,6 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #2 1`] = `
                 Object {
                   "test": /\\\\\\.module\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
                     "css({\\"modules\\":true,\\"importLoaders\\":2})",
                     "postcss({})",
                     Object {
@@ -847,21 +781,7 @@ exports[`gatsby-plugin-stylus Stage: develop-html / Stylus options #2 1`] = `
                 Object {
                   "test": /\\\\\\.styl\\$/,
                   "use": Array [
-                    "miniCssExtract",
-                    "css({\\"importLoaders\\":2})",
-                    "postcss({})",
-                    Object {
-                      "loader": "/resolved/path/stylus-loader",
-                      "options": Object {
-                        "import": Array [
-                          "file.js",
-                          "file2.js",
-                        ],
-                        "use": Array [
-                          "foo",
-                        ],
-                      },
-                    },
+                    "null",
                   ],
                 },
               ],

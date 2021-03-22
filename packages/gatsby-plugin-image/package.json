@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-image",
-  "version": "1.0.0-next.8",
+  "version": "1.2.0-next.1",
   "scripts": {
     "build": "npm-run-all -s clean -p build:*",
     "build:gatsby-node": "tsc --jsx react --downlevelIteration true --skipLibCheck true --esModuleInterop true --outDir dist/ src/gatsby-node.ts src/babel-plugin-parse-static-images.ts src/resolver-utils.ts src/types.d.ts -d --declarationDir dist/src",
@@ -57,30 +57,30 @@
     "cssnano": "^4.1.10",
     "del-cli": "^3.0.1",
     "do-sync": "^2.2.0",
-    "microbundle": "^0.12.4",
+    "microbundle": "^0.13.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.2.4",
     "terser": "^5.3.8",
-    "typescript": "^3.9.7"
+    "typescript": "^4.1.5"
   },
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "gatsby-image": "*",
-    "gatsby-plugin-sharp": "*",
-    "gatsby-source-filesystem": "*",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "gatsby-plugin-sharp": "^3.0.0-next.0",
+    "gatsby-source-filesystem": "^3.0.0-next.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "dependencies": {
+    "@babel/code-frame": "^7.12.13",
     "@babel/parser": "^7.12.5",
     "@babel/traverse": "^7.12.5",
-    "babel-jsx-utils": "^1.0.1",
-    "babel-plugin-remove-graphql-queries": "^3.0.0-next.2",
+    "babel-jsx-utils": "^1.1.0",
+    "babel-plugin-remove-graphql-queries": "^3.2.0-next.0",
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.1",
     "common-tags": "^1.8.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^2.0.0-next.1",
+    "gatsby-core-utils": "^2.2.0-next.0",
     "objectFitPolyfill": "^2.3.0",
     "prop-types": "^15.7.2"
   },

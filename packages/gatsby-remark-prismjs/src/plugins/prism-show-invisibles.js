@@ -29,7 +29,7 @@ module.exports = (language = `javascript`) => {
     return
   }
 
-  var invisibles = {
+  const invisibles = {
     tab: /\t/,
     crlf: /\r\n/,
     lf: /\n/,
@@ -44,30 +44,32 @@ module.exports = (language = `javascript`) => {
    * @param {string|number} name The name or index of the token in `tokens`.
    */
   function handleToken(tokens, name) {
-    var value = tokens[name]
+    const value = tokens[name]
 
-    var type = Prism.util.type(value)
+    const type = Prism.util.type(value)
     switch (type) {
-      case `RegExp`:
-        var inside = {}
+      case `RegExp`: {
+        const inside = {}
         tokens[name] = {
           pattern: value,
           inside: inside,
         }
         addInvisibles(inside)
         break
-
-      case `Array`:
-        for (var i = 0, l = value.length; i < l; i++) {
+      }
+      case `Array`: {
+        for (let i = 0, l = value.length; i < l; i++) {
           handleToken(value, i)
         }
         break
+      }
 
-      default:
+      default: {
         // 'Object'
-        var inside = value.inside || (value.inside = {}) // eslint-disable-line no-redeclare
+        const inside = value.inside || (value.inside = {}) // eslint-disable-line no-redeclare
         addInvisibles(inside)
         break
+      }
     }
   }
 
@@ -82,14 +84,14 @@ module.exports = (language = `javascript`) => {
     }
 
     // assign invisibles here to "mark" the grammar in case of self references
-    for (var name in invisibles) {
+    for (const name in invisibles) {
       if (invisibles.hasOwnProperty(name)) {
         grammar[name] = invisibles[name]
       }
     }
 
     /* eslint-disable no-redeclare */
-    for (var name in grammar) {
+    for (const name in grammar) {
       /* eslint-enable no-redeclare */
       if (grammar.hasOwnProperty(name) && !invisibles[name]) {
         if (name === `rest`) {

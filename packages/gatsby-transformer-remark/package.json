@@ -1,19 +1,18 @@
 {
   "name": "gatsby-transformer-remark",
   "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
-  "version": "3.0.0-next.2",
+  "version": "3.2.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "bluebird": "^3.7.2",
-    "gatsby-core-utils": "^2.0.0-next.1",
+    "gatsby-core-utils": "^2.2.0-next.0",
     "gray-matter": "^4.0.2",
     "hast-util-raw": "^4.0.0",
     "hast-util-to-html": "^4.0.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mdast-util-to-hast": "^3.0.4",
     "mdast-util-to-string": "^1.1.0",
     "mdast-util-toc": "^5.0",
@@ -32,9 +31,9 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.0.0-next.0",
+    "babel-preset-gatsby-package": "^1.2.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.0.0-next.0"
+    "gatsby-plugin-utils": "^1.2.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-remark#readme",
   "keywords": [

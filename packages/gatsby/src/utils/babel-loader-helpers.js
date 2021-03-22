@@ -104,6 +104,29 @@ const prepareOptions = (babel, options = {}, resolve = require.resolve) => {
   ]
 }
 
+const addRequiredPresetOptions = (
+  babel,
+  presets,
+  options = {},
+  resolve = require.resolve
+) => {
+  // Always pass `stage` option to babel-preset-gatsby
+  //  (even if defined in custom babelrc)
+  const gatsbyPresetResolved = resolve(`babel-preset-gatsby`)
+  const index = presets.findIndex(p => p.file.resolved === gatsbyPresetResolved)
+
+  if (index !== -1) {
+    presets[index] = babel.createConfigItem(
+      [
+        gatsbyPresetResolved,
+        { ...presets[index].options, stage: options.stage },
+      ],
+      { type: `preset` }
+    )
+  }
+  return presets
+}
+
 const mergeConfigItemOptions = ({ items, itemToMerge, type, babel }) => {
   const index = _.findIndex(
     items,
@@ -133,3 +156,4 @@ exports.getCustomOptions = getCustomOptions
 // Export helper functions for testing
 exports.prepareOptions = prepareOptions
 exports.mergeConfigItemOptions = mergeConfigItemOptions
+exports.addRequiredPresetOptions = addRequiredPresetOptions

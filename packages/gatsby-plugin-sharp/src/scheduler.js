@@ -8,8 +8,6 @@ const worker = require(`./gatsby-worker`)
 const processImages = async (jobId, job, actions) => {
   try {
     await worker.IMAGE_PROCESSING(job)
-  } catch (err) {
-    throw err
   } finally {
     actions.endJob({ id: jobId }, { name: `gatsby-plugin-sharp` })
   }

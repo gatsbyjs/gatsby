@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.2.0-next.0...gatsby-plugin-image@1.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better StaticImage errors ([#30271](https://github.com/gatsbyjs/gatsby/issues/30271)) ([8a0a4e8](https://github.com/gatsbyjs/gatsby/commit/8a0a4e82e3c782393621608a294b4b23b1e6753d))
+- **gatsby-plugin-image:** image partial rendering ([#30221](https://github.com/gatsbyjs/gatsby/issues/30221)) ([d97a086](https://github.com/gatsbyjs/gatsby/commit/d97a0868acdbde2361175b4b1491d3adb6ac68bc))
+
+# [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.2...gatsby-plugin-image@1.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.1...gatsby-plugin-image@1.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** broken documentation links ([#30065](https://github.com/gatsbyjs/gatsby/issues/30065)) ([28956fe](https://github.com/gatsbyjs/gatsby/commit/28956fe50848d571d96350df4047bdb0d44b9b50))
+- **gatsby-plugin-image:** Handle placeholder in plugin toolkit ([#30141](https://github.com/gatsbyjs/gatsby/issues/30141)) ([f851312](https://github.com/gatsbyjs/gatsby/commit/f85131212b8271aa0e7fe93fbd30fafdce7ba01f))
+- **gatsby-plugin-image:** Update peerdeps ([#29880](https://github.com/gatsbyjs/gatsby/issues/29880)) ([d14cdc5](https://github.com/gatsbyjs/gatsby/commit/d14cdc5b7bd9e4b52815ecae15dfaf50674967d5))
+- **gatsby-plugin-image:** Use template from core package ([#29957](https://github.com/gatsbyjs/gatsby/issues/29957)) ([c4ca930](https://github.com/gatsbyjs/gatsby/commit/c4ca9301f56b1ac15bf5219dbb33c661b13bbfcd))
+
+### Features
+
+- **gatsby-plugin-image:** Better error message for missing alt ([#29981](https://github.com/gatsbyjs/gatsby/issues/29981)) ([fe4b329](https://github.com/gatsbyjs/gatsby/commit/fe4b329a68ce6a8f93dbee56073da950861a2723))
+
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.0...gatsby-plugin-image@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.9...gatsby-plugin-image@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.0.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.8...gatsby-plugin-image@1.0.0-next.9) (2021-02-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Apply defaults when width and height are set ([#29726](https://github.com/gatsbyjs/gatsby/issues/29726)) ([3be9541](https://github.com/gatsbyjs/gatsby/commit/3be9541ade911ab4041715a37aed0eb65db4c313))
+
+### Features
+
+- **gatsby-plugin-image:** Allow image helpers to take other node types ([#29625](https://github.com/gatsbyjs/gatsby/issues/29625)) ([eaab2df](https://github.com/gatsbyjs/gatsby/commit/eaab2dfa1a7e1c1e64ffb78487f3f6c324f892ce))
+
 # [1.0.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.0.0-next.7...gatsby-plugin-image@1.0.0-next.8) (2021-02-22)
 
 **Note:** Version bump only for package gatsby-plugin-image

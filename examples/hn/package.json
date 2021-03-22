@@ -11,8 +11,8 @@
     "gatsby-plugin-manifest": "next",
     "gatsby-source-hacker-news": "next",
     "lodash": "^4.17.20",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "slash": "^2.0.0"
   },
   "keywords": [

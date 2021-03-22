@@ -72,9 +72,10 @@ const hasDefaultExport = (str, options) => {
     isExport(value) || isImport(value) ? -1 : 1
 
   function esSyntax() {
-    var Parser = this.Parser
-    var tokenizers = Parser.prototype.blockTokenizers
-    var methods = Parser.prototype.blockMethods
+    // eslint-disable-next-line @babel/no-invalid-this
+    const Parser = this.Parser
+    const tokenizers = Parser.prototype.blockTokenizers
+    const methods = Parser.prototype.blockMethods
 
     tokenizers.esSyntax = tokenizeEsSyntax
 
@@ -181,12 +182,12 @@ ${contentWithoutFrontmatter}`
   /**
    * Support gatsby-remark parser plugins
    */
-  for (let plugin of options.gatsbyRemarkPlugins) {
+  for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
     const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
-      for (let parserPlugin of requiredPlugin.setParserPlugins(
+      for (const parserPlugin of requiredPlugin.setParserPlugins(
         plugin.options || {}
       )) {
         if (_.isArray(parserPlugin)) {

@@ -107,7 +107,7 @@ describe(`setStatus action creator`, () => {
 
     jest.runOnlyPendingTimers()
 
-    //we are still in progress, so we shouldn't emit anything other than initial IN_PROGRESS
+    // we are still in progress, so we shouldn't emit anything other than initial IN_PROGRESS
     expect(dispatch).toHaveBeenCalledTimes(1)
   })
 })

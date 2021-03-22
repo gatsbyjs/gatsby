@@ -242,6 +242,36 @@ const babelOptions = {
 
 Once this is changed, you can write your tests in TypeScript using the `.ts` or `.tsx` extensions.
 
+### Using tsconfig paths
+
+If you are using [tsconfig paths](https://www.typescriptlang.org/tsconfig#paths) there is a single change to your config.
+
+1. Add [ts-jest](https://github.com/kulshekhar/ts-jest)
+
+```shell
+npm install --save-dev ts-jest
+```
+
+2. Update `jest.config.js` to import and map `tsconfig.json` paths
+
+```js:title=jest.config.js
+const { compilerOptions } = require("./tsconfig.json")
+const { pathsToModuleNameMapper } = require("ts-jest/utils")
+const paths = pathsToModuleNameMapper(compilerOptions.paths, {
+  prefix: "<rootDir>/",
+})
+```
+
+3. Add paths to `jest.config.js` moduleNameMapper
+
+```js:title=jest.config.js
+  moduleNameMapper: {
+    '.+\\.(css|styl|less|sass|scss)$': `identity-obj-proxy`,
+    '.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': `<rootDir>/tests/file-mock.js`,
+    ...paths,
+  },
+```
+
 ## Other resources
 
 If you need to make changes to your Babel config, you can edit the config in

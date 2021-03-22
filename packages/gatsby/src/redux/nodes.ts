@@ -743,7 +743,7 @@ export const getNodesFromCacheByValue = (
     })
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to re-sort
+    //       subtraction in such a way that we don't have to re-sort
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
@@ -753,7 +753,7 @@ export const getNodesFromCacheByValue = (
     removeBucketFromSet(filterValue, filterCache, set)
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to resort here
+    //       subtraction in such a way that we don't have to resort here
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 

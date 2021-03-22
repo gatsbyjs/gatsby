@@ -617,6 +617,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
       case `webp`:
         srcSetType = `image/webp`
         break
+      case `avif`:
+        srcSetType = `image/avif`
+        break
       case ``:
       case `no_change`:
       default:

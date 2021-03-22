@@ -187,7 +187,7 @@ describe(`fast filter tests`, () => {
 
       // `id-1` node is not of queried type, so results should be empty
       expect(resultSingular).toEqual([])
-      expect(resultMany).toEqual(null)
+      expect(resultMany).toEqual([])
     })
 
     it(`non-eq operator`, async () => {
@@ -353,7 +353,7 @@ describe(`fast filter tests`, () => {
         filtersCache: new Map(),
       })
 
-      expect(resultMany).toBe(null)
+      expect(resultMany).toEqual([])
     })
 
     it(`elemMatch on array of objects`, async () => {

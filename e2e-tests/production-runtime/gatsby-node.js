@@ -36,9 +36,14 @@ exports.sourceNodes = ({ actions, createNodeId }) => {
   })
 }
 
-exports.createPages = ({ actions: { createPage } }) => {
+exports.createPages = ({ actions: { createPage, createRedirect } }) => {
   createPage({
     path: `/안녕`,
+    component: path.resolve(`src/pages/page-2.js`),
+  })
+
+  createPage({
+    path: `/foo/@something/bar`,
     component: path.resolve(`src/pages/page-2.js`),
   })
 
@@ -123,6 +128,22 @@ exports.createPages = ({ actions: { createPage } }) => {
   createPage({
     path: `/page-from-cache/`,
     component: path.resolve(`./.cache/static-page-from-cache.js`),
+  })
+
+  createRedirect({
+    fromPath: "/pagina-larga",
+    toPath: "/long-page",
+    isPermanent: true,
+    redirectInBrowser: true,
+    ignoreCase: false,
+  })
+
+  createRedirect({
+    fromPath: "/Longue-Page",
+    toPath: "/long-page",
+    isPermanent: true,
+    redirectInBrowser: true,
+    ignoreCase: true,
   })
 }
 

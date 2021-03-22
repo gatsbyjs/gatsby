@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme",
-  "version": "0.10.0-next.0",
+  "version": "0.12.0-next.0",
   "main": "index.js",
   "bin": {
     "gatsby-theme": "./cli.js"
@@ -22,7 +22,7 @@
     "glob": "^7.1.6",
     "globby": "^10.0.2",
     "inquirer": "^6.5.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mkdirp": "^0.5.1",
     "npm-keyword": "^6.1.0"
   },
