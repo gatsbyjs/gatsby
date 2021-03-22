@@ -4,12 +4,7 @@ import { GatsbyImageProps } from "./gatsby-image.browser"
 import { LayoutWrapper } from "./layout-wrapper"
 import { Placeholder } from "./placeholder"
 import { MainImageProps, MainImage } from "./main-image"
-import {
-  getMainProps,
-  getPlaceholderProps,
-  hasNativeLazyLoadSupport,
-  hasImageLoaded,
-} from "./hooks"
+import { getMainProps, getPlaceholderProps } from "./hooks"
 import { ReactElement } from "react"
 
 type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
@@ -48,18 +43,7 @@ export function lazyHydrate(
     backgroundColor: wrapperBackgroundColor,
   } = image
 
-  if (!root.current) {
-    return null
-  }
-
-  const hasSSRHtml = root.current.querySelector(`[data-gatsby-image-ssr]`)
-  // On first server hydration do nothing
-  if (hasNativeLazyLoadSupport() && hasSSRHtml && !hydrated.current) {
-    return null
-  }
-
   const cacheKey = JSON.stringify(images)
-  const hasLoaded = hasImageLoaded(cacheKey)
 
   imgStyle = {
     objectFit,
@@ -70,18 +54,17 @@ export function lazyHydrate(
 
   const component = (
     <LayoutWrapper layout={layout} width={width} height={height}>
-      {!hasLoaded && (
-        <Placeholder
-          {...getPlaceholderProps(
-            placeholder,
-            isLoaded,
-            layout,
-            width,
-            height,
-            wrapperBackgroundColor
-          )}
-        />
-      )}
+      <Placeholder
+        {...getPlaceholderProps(
+          placeholder,
+          isLoaded,
+          layout,
+          width,
+          height,
+          wrapperBackgroundColor
+        )}
+      />
+
       <MainImage
         {...(props as Omit<MainImageProps, "images" | "fallback">)}
         width={width}
@@ -89,7 +72,7 @@ export function lazyHydrate(
         className={imgClassName}
         {...getMainProps(
           isLoading,
-          hasLoaded || isLoaded,
+          isLoaded,
           images,
           loading,
           toggleIsLoaded,

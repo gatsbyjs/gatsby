@@ -4,6 +4,9 @@ import { render, getNodeText, cleanup } from "@testing-library/react"
 
 jest.mock(`../loader`, () => {
   return {
+    PageResourceStatus: {
+      Error: `error`,
+    },
     loadPageSync(path: string): { loadPageSync: boolean; path: string } {
       return { loadPageSync: true, path }
     },

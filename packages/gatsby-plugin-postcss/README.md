@@ -20,8 +20,8 @@ If you need to pass options to PostCSS use the plugins options; see [`postcss-lo
 
 ### With CSS Modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.css` -> `App.module.css`.
-Any file with the `module` extension will use CSS modules.
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `app.css` -> `app.module.css`.
+Any file with the `module` extension will use CSS modules. CSS modules are imported as ES Modules to support treeshaking. You'll need to import styles as: `import { yourClassName, anotherClassName } from './app.module.css'`
 
 ### PostCSS plugins
 
