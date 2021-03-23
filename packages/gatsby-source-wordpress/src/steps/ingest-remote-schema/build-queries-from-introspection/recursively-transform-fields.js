@@ -303,7 +303,7 @@ export function transformField({
   const isAGatsbyNode =
     // if this is a gatsby node type
     gatsbyNodesInfo.typeNames.includes(typeName) ||
-    // or this type has a possible type which is a gatsby node type
+    // or all possible types on this type are Gatsby node types
     typeMap
       .get(typeName)
       ?.possibleTypes?.every(possibleType =>
