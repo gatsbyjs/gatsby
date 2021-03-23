@@ -1,5 +1,5 @@
 {
-  "name": "local-plugin",
+  "name": "local-plugin-with-path",
   "private": true,
   "version": "0.1.0",
   "main": "index.js"
