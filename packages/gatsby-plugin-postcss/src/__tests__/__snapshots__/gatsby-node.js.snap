@@ -131,7 +131,7 @@ exports[`gatsby-plugin-postcss Stage: build-html / Css options 1`] = `
 }
 `;
 
-exports[`gatsby-plugin-postcss Stage: build-html / Cssoptions commonjs 1`] = `
+exports[`gatsby-plugin-postcss Stage: build-html / Css options commonjs 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -561,7 +561,7 @@ exports[`gatsby-plugin-postcss Stage: build-javascript / Css options 1`] = `
 }
 `;
 
-exports[`gatsby-plugin-postcss Stage: build-javascript / Cssoptions commonjs 1`] = `
+exports[`gatsby-plugin-postcss Stage: build-javascript / Css options commonjs 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -891,7 +891,7 @@ exports[`gatsby-plugin-postcss Stage: develop / Css options 1`] = `
 }
 `;
 
-exports[`gatsby-plugin-postcss Stage: develop / Cssoptions commonjs 1`] = `
+exports[`gatsby-plugin-postcss Stage: develop / Css options commonjs 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
@@ -1203,7 +1203,7 @@ exports[`gatsby-plugin-postcss Stage: develop-html / Css options 1`] = `
 }
 `;
 
-exports[`gatsby-plugin-postcss Stage: develop-html / Cssoptions commonjs 1`] = `
+exports[`gatsby-plugin-postcss Stage: develop-html / Css options commonjs 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
