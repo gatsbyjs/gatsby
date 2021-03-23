@@ -31,13 +31,7 @@ const unionType = typeBuilderApi => {
     types,
     resolveType: node => {
       if (node.__typename) {
-        const {
-          schema: { typePrefix: prefix },
-        } = getPluginOptions()
-
-        return node.__typename.startsWith(prefix)
-          ? node.__typename
-          : buildTypeName(node.__typename)
+        return buildTypeName(node.__typename)
       }
 
       return null
