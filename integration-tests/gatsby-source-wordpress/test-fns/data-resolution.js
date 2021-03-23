@@ -74,8 +74,8 @@ describe(`data resolution`, () => {
       query,
     })
 
-    expect(gatsbyResult.data.allWpTermNode.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.length).toBe(17)
+    expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(12)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -103,7 +103,7 @@ describe(`data resolution`, () => {
       query,
     })
 
-    expect(gatsbyResult.data.wpPost.comments.length).toBe(1)
+    expect(gatsbyResult.data.wpPost.comments.nodes.length).toBe(1)
   })
 
   it(`resolves hierarchichal categories`, async () => {
