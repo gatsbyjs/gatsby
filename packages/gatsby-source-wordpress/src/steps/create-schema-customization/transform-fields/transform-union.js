@@ -16,12 +16,10 @@ export const transformUnion = ({ field, fieldName }) => {
 
         if (gatsbyNode) {
           return gatsbyNode
-        } else {
-          return null
         }
       }
 
-      return resolvedField
+      return resolvedField ?? null
     },
   }
 }
