@@ -196,22 +196,53 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   }
 
   let currentSyncData
-  const basicSyncConfig = {
-    limit: pageLimit,
-    resolveLinks: false,
-  }
+  let currentPageLimit = pageLimit
+  let lastCurrentPageLimit
+  let syncSuccess = false
   try {
     syncProgress = reporter.createProgress(
       `Contentful: ${syncToken ? `Sync changed items` : `Sync all items`}`,
-      pageLimit,
+      currentPageLimit,
       0
     )
     syncProgress.start()
-    reporter.verbose(`Contentful: Sync ${pageLimit} items per page.`)
-    const query = syncToken
-      ? { nextSyncToken: syncToken, ...basicSyncConfig }
-      : { initial: true, ...basicSyncConfig }
-    currentSyncData = await client.sync(query)
+    reporter.verbose(`Contentful: Sync ${currentPageLimit} items per page.`)
+
+    while (!syncSuccess) {
+      try {
+        const basicSyncConfig = {
+          limit: currentPageLimit,
+          resolveLinks: false,
+        }
+        const query = syncToken
+          ? { nextSyncToken: syncToken, ...basicSyncConfig }
+          : { initial: true, ...basicSyncConfig }
+        currentSyncData = await client.sync(query)
+        syncSuccess = true
+      } catch (e) {
+        // Back off page limit if responses content length exceeds Contentfuls limits.
+        if (
+          e.responseData.data.message.indexOf(`Response size too big`) !== -1 &&
+          currentPageLimit > 1
+        ) {
+          lastCurrentPageLimit = currentPageLimit
+          currentPageLimit = Math.floor((currentPageLimit / 3) * 2) || 1
+          reporter.warn(
+            [
+              `The sync with Contentful failed using pageLimit ${lastCurrentPageLimit} as the reponse size limit of the API is exceeded.`,
+              `Retrying sync with pageLimit of ${currentPageLimit}`,
+            ].join(`\n\n`)
+          )
+          continue
+        }
+        throw e
+      }
+      if (currentPageLimit !== pageLimit) {
+        reporter.warn(
+          `We recommend you to set your pageLimit in gatsby-config.js to ${currentPageLimit} to avoid failed synchronizations.`
+        )
+      }
+    }
   } catch (e) {
     reporter.panic({
       id: CODES.SyncError,
