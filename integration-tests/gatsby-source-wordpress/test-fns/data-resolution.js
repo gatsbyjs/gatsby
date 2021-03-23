@@ -69,7 +69,7 @@ describe(`data resolution`, () => {
     `
 
     // this will throw if there are gql errors
-    const gatsbyResult = await fetchGraphQL({
+    const gatsbyResult = await fetchGraphql({
       url,
       query,
     })
@@ -98,7 +98,7 @@ describe(`data resolution`, () => {
     `
 
     // this will throw an error if there are gql errors
-    const gatsbyResult = await fetchGraphQL({
+    const gatsbyResult = await fetchGraphql({
       url,
       query,
     })
