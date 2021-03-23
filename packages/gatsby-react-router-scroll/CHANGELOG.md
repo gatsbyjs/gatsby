@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.3...gatsby-react-router-scroll@4.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-react-router-scroll
+
+# [4.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.2...gatsby-react-router-scroll@4.1.0-next.3) (2021-03-10)
+
+### Bug Fixes
+
+- **gatsby-react-router-scroll:** debounce function for scollListener ([#26933](https://github.com/gatsbyjs/gatsby/issues/26933)) ([2f40b0a](https://github.com/gatsbyjs/gatsby/commit/2f40b0a8536316b01b941f4889eb99211cb43160))
+
 # [4.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@4.1.0-next.1...gatsby-react-router-scroll@4.1.0-next.2) (2021-02-26)
 
 ### Bug Fixes

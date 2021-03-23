@@ -22,19 +22,19 @@ The fastest way to get started using Google Fonts is by choosing a font from [Fo
 
 This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-1. Run `npm install fontsource-open-sans` to download the necessary package files.
+1. Run `npm install @fontsource/open-sans` to download the necessary package files.
 
 2. Then within your app entry file or site component, import the font package. It is recommended you import it via the layout template (`layout.js`). However, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
-import "fontsource-open-sans" // Defaults to weight 400 with all styles included.
+import "@fontsource/open-sans" // Defaults to weight 400 with all styles included.
 ```
 
 If you wish to select a particular weight or style, you may specify it by changing the import path.
 
 ```jsx:title=src/components/layout.js
-import "fontsource-open-sans/500.css" // Weight 500 with all styles included.
-import "fontsource-open-sans/900-normal.css" // Select either normal or italic.
+import "@fontsource/open-sans/500.css" // Weight 500 with all styles included.
+import "@fontsource/open-sans/900-normal.css" // Select either normal or italic.
 ```
 
 **Note**: The range of supported weights and styles a font may support is shown in each package's README file.

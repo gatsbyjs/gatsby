@@ -7,7 +7,8 @@
     "lib": ["ESNext", "DOM"],
     "target": "ES6",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
