@@ -54,12 +54,17 @@
     "directory": "packages/gatsby-source-contentful"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__",
+    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__fixtures__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__"
+    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --ignore **/__fixtures__"
   },
   "engines": {
     "node": ">=12.13.0"
   },
-  "types": "index.d.ts"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "types/"
+  ]
 }
