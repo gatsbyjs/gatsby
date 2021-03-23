@@ -62,7 +62,10 @@ Open the `build-diff.diff` file in the root of your site to see the difference b
 
 Generating the `diff` between two builds is only the first step, understanding and interpreting the `diff` is the second step. You can use tools like [diffchecker.com](https://www.diffchecker.com/) to see the differences more easily (or your code editor might have a feature/plugin for that).
 
-TODO
+Possible avenues to look into:
+
+- **Check if the JS bundle changed**. If you see `chunk-map.json`, `webpack.stats.json`, and contents of `app-data.json` changed you'll see lines like `Only in public: component---src-path-to-file-[hash].js`. This tells you that the component itself changed between builds. Compare both `.js` files to see what exactly changed.
+- **Check if anything in `/page-data` changed**. This means that a static query and/or page query changed and thus the page(s) rebuilt. A static query change is recognizable by a change of `page-data/sq/d/[hash].json`, a page query by a change of `page-data/[page-title]/page-data.json`. You can look at the files to figure out what exact query is the culprit.
 
 ## Tips
 
