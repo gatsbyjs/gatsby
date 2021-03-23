@@ -119,6 +119,7 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 | `-p`, `--port`  | Set port. Defaults to env.PORT or 8000          |
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
+|   `--inspect`   | Opens a port for debugging                      |
 
 Follow the [Local HTTPS guide](/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.

@@ -8,8 +8,6 @@ Adding responsive images to your site while maintaining high performance scores 
 
 Want to learn more about image optimization challenges? Read the Conceptual Guide: [Why Gatsby's Automatic Image Optimizations Matter](/docs/conceptual/using-gatsby-image/). For full documentation on all configuration options, see [the reference guide](/docs/reference/built-in-components/gatsby-plugin-image).
 
-The new Gatsby Image plugin is currently in beta, but you can try it out now and see what it can do for the performance of your site.
-
 ## Getting started
 
 1. Install the following packages:
@@ -105,7 +103,7 @@ If you are using an image that will be the same each time the component is used,
 
 ### Dynamic images
 
-If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component. Many CMSs support `gatsby-plugin-image` without needing to download and process images locally. For these, you should see the individual plugin documentation for details on query syntax. See the [CMS images](#using-images-from-a-cms-or-cdn) section for a list of supported CMSs. For other data sources, images are downloaded and processed locally at build time. This section shows how to use [gatsby-transformer-sharp](/plugins/gatsby-transformer-sharp/) to query for these images.
 
 1. **Add the image to your page query.**
 
@@ -193,6 +191,80 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
      }
    `
    ```
+
+## Using images from a CMS or CDN
+
+Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).
+
+### Source plugins
+
+These source plugins support using `gatsby-plugin-image` with images served from their CDN.
+
+- [AgilityCMS](https://github.com/agility/gatsby-image-agilitycms)
+- [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
+- [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
+- [GraphCMS](/plugins/gatsby-source-graphcms/#usage-with-gatsby-plugin-image)
+- [Sanity](/plugins/gatsby-source-sanity/#using-images)
+- [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
+
+### Image CDNs
+
+A dedicated image CDN can be used with sources that don't have their own CDN, or where you need more transforms or formats than the CDN offers.
+
+- [imgix](/plugins/@imgix/gatsby/)
+
+### Plugin authors
+
+If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatsby Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
+
+## Background images
+
+Using CSS to display background images has more limited support for responsive image handling than the `<picture>` element. Most importantly, it does not handle fallback for next-gen image formats such as AVIF and WebP. You can get the benefits of `gatsby-plugin-image` for background images without any extra components.
+
+This is an example of a hero image component with text overlaying an image background. It uses CSS grid to stack the elements on top of each other.
+
+```jsx
+import * as React from "react"
+import { StaticImage } from "gatsby-plugin-image"
+
+export function Hero() {
+  return (
+    <div style={{ display: "grid" }}>
+      {/* You can use a GatsbyImage component if the image is dynamic */}
+      <StaticImage
+        style={{
+          gridArea: "1/1",
+          // You can set a maximum height for the image, if you wish.
+          // maxHeight: 600,
+        }}
+        layout="fullWidth"
+        // You can optionally force an aspect ratio for the generated image
+        aspectRatio={3 / 1}
+        // This is a presentational image, so the alt should be an empty string
+        alt=""
+        // Assisi, Perúgia, Itália by Bernardo Ferrari, via Unsplash
+        src={
+          "https://images.unsplash.com/photo-1604975999044-188783d54fb3?w=2589"
+        }
+        formats={["auto", "webp", "avif"]}
+      />
+      <div
+        style={{
+          // By using the same grid area for both, they are stacked on top of each other
+          gridArea: "1/1",
+          position: "relative",
+          // This centers the other elements inside the hero component
+          placeItems: "center",
+          display: "grid",
+        }}
+      >
+        {/* Any content here will be centered in the component */}
+        <h1>Hero text</h1>
+      </div>
+    </div>
+  )
+}
+```
 
 ## Migrating
 
