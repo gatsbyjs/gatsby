@@ -63,7 +63,7 @@ const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
 const isImage = image =>
   [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
-    image.file?.contentType
+    image?.file?.contentType
   )
 
 // Note: this may return a Promise<body>, body (sync), or null
@@ -494,7 +494,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image.file?.contentType === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -511,7 +511,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image.file?.contentType === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -587,7 +587,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image.file?.contentType === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -604,7 +604,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image.file?.contentType === `image/webp` ||
+              image?.file?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
