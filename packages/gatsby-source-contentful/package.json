@@ -1,7 +1,7 @@
 {
   "name": "gatsby-source-contentful",
   "description": "Gatsby source plugin for building websites using the Contentful CMS as a data source",
-  "version": "5.2.0-next.1",
+  "version": "5.2.0-next.0",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -18,7 +18,7 @@
     "contentful": "^8.1.7",
     "fs-extra": "^9.1.0",
     "gatsby-core-utils": "^2.2.0-next.0",
-    "gatsby-plugin-image": "^1.2.0-next.1",
+    "gatsby-plugin-image": "^1.2.0-next.0",
     "gatsby-plugin-utils": "^1.2.0-next.0",
     "gatsby-source-filesystem": "^3.2.0-next.0",
     "is-online": "^8.5.1",
@@ -54,18 +54,12 @@
     "directory": "packages/gatsby-source-contentful"
   },
   "scripts": {
-    "build": "babel src --out-dir dist/ --ignore **/__tests__ --ignore **/__fixtures__",
+    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir dist/ --ignore **/__tests__ --ignore **/__fixtures__"
+    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/__fixtures__"
   },
   "engines": {
     "node": ">=12.13.0"
   },
-  "main": "index.js",
-  "types": "index.d.ts",
-  "files": [
-    "dist/",
-    "./*.d.ts",
-    "./index.js"
-  ]
+  "types": "index.d.ts"
 }
