@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@4.1.0...gatsby-remark-images@4.1.1) (2021-03-23)
+
+### Bug Fixes
+
+- **gatsby-remark-images:** fix unresolved promise ([#30418](https://github.com/gatsbyjs/gatsby/issues/30418)) ([#30425](https://github.com/gatsbyjs/gatsby/issues/30425)) ([e7691ec](https://github.com/gatsbyjs/gatsby/commit/e7691ec21d1fc70783ae375a9feba3b1ef536be7))
+
 # [4.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-images@4.1.0-next.2...gatsby-remark-images@4.1.0) (2021-03-16)
 
 **Note:** Version bump only for package gatsby-remark-images
