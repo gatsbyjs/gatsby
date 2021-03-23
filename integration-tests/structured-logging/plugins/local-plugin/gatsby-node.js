@@ -4,5 +4,3 @@ exports.pluginOptionsSchema = ({ Joi }) => {
     optionalString: Joi.string(),
   })
 }
-
-exports.onPreInit = ({ reporter }) => reporter.info("Initialized local-plugin")
