@@ -61,10 +61,11 @@
   "engines": {
     "node": ">=12.13.0"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "files": [
     "dist/",
-    "types/"
+    "./*.d.ts",
+    "./index.js"
   ]
 }

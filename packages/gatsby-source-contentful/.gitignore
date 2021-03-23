@@ -2,3 +2,4 @@
 /yarn.lock
 /*.js
 !index.js
+dist
