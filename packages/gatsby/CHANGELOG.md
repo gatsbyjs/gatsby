@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.2.0-next.0...gatsby@3.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby:** be less aggressive when marking builtin methods as unsafe ([#30216](https://github.com/gatsbyjs/gatsby/issues/30216)) ([331d76e](https://github.com/gatsbyjs/gatsby/commit/331d76e41533db65d896df2c08c55b929219d124))
+- **gatsby:** do not fail on 3rd-party schemas with relay-classic support ([#30318](https://github.com/gatsbyjs/gatsby/issues/30318)) ([3c2888c](https://github.com/gatsbyjs/gatsby/commit/3c2888c011d24153422a48ca20f37200f002ee67))
+
 # [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.4...gatsby@3.2.0-next.0) (2021-03-11)
 
 ### Bug Fixes
