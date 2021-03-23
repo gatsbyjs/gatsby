@@ -12,6 +12,7 @@ describe(`Component Shadowing`, () => {
         themeDir: `/some/place/a-theme`,
         themeName: `a-theme`,
       },
+      `/components/a-component`,
     ],
     [
       // request to a shadowed component in theme b
@@ -21,27 +22,35 @@ describe(`Component Shadowing`, () => {
         themeDir: `/some/place/theme-b`,
         themeName: `theme-b`,
       },
+      `/a-theme/components/a-component`,
     ],
-  ])(`gets matching themes`, (componentFullPath, { themeDir, themeName }) => {
-    const plugin = new ShadowingPlugin({
-      themes: [`a-theme`, `theme-b`, `gatsby-theme-c`, `@orgname/theme-d`].map(
-        name => {
+  ])(
+    `gets matching themes`,
+    (componentFullPath, { themeDir, themeName }, component) => {
+      const plugin = new ShadowingPlugin({
+        themes: [
+          `a-theme`,
+          `theme-b`,
+          `gatsby-theme-c`,
+          `@orgname/theme-d`,
+        ].map(name => {
           return {
             themeName: name,
             themeDir: xplatPath(`/some/place/${name}`),
           }
-        }
-      ),
-    })
-    expect(
-      plugin.getMatchingThemesForPath(xplatPath(componentFullPath))
-    ).toEqual([
-      {
-        themeDir: xplatPath(themeDir),
-        themeName,
-      },
-    ])
-  })
+        }),
+      })
+      expect(plugin.getThemeAndComponent(xplatPath(componentFullPath))).toEqual(
+        [
+          {
+            themeDir: xplatPath(themeDir),
+            themeName,
+          },
+          xplatPath(component),
+        ]
+      )
+    }
+  )
 
   it.each([
     [
@@ -101,12 +110,14 @@ describe(`Component Shadowing`, () => {
           }
         }),
       })
+      const [theme, component] = plugin.getThemeAndComponent(requestPath)
       expect(
         plugin.requestPathIsIssuerShadowPath({
           // issuer is in `theme-b`
           issuerPath: xplatPath(issuerPath),
           // require'ing a file it is a "shadow child" of in a-theme
-          requestPath: xplatPath(requestPath),
+          theme,
+          component,
           userSiteDir: xplatPath(userSiteDir),
         })
       ).toEqual(result)

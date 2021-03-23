@@ -1,12 +1,5 @@
-const path = require(`path`)
-
 const GatsbyThemeComponentShadowingResolverPlugin = require(`.`)
 const { store } = require(`../../redux`)
-
-const pathWithoutExtension = fullPath => {
-  const parsed = path.parse(fullPath)
-  return path.join(parsed.dir, parsed.name)
-}
 
 module.exports = function (pageComponent) {
   const shadowingPlugin = new GatsbyThemeComponentShadowingResolverPlugin({
@@ -19,25 +12,11 @@ module.exports = function (pageComponent) {
     }),
     projectRoot: store.getState().program.directory,
   })
-  const matchingThemes = shadowingPlugin.getMatchingThemesForPath(pageComponent)
-  if (matchingThemes.length > 1) {
-    throw new Error(
-      `Gatsby can't differentiate between themes ${matchingThemes
-        .map(theme => theme.themeName)
-        .join(` and `)} for path ${pageComponent}`
-    )
-  }
+  const [theme, component] = shadowingPlugin.getThemeAndComponent(pageComponent)
 
-  if (matchingThemes.length == 1) {
-    const [theme] = matchingThemes
-
-    const pageComponentWithoutExtension = pathWithoutExtension(pageComponent)
-    const [, component] = pageComponentWithoutExtension.split(
-      path.join(theme.themeDir, `src`)
-    )
+  if (theme) {
     const componentPath = shadowingPlugin.resolveComponentPath({
-      matchingTheme: theme.themeName,
-      themes: shadowingPlugin.themes,
+      theme,
       component,
     })
     if (componentPath) {

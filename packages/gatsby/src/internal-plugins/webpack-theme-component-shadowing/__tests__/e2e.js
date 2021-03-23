@@ -130,6 +130,53 @@ test.each([
     ],
   ],
   [
+    `shadows in a yarn-style workspace`,
+    {
+      mode: `development`,
+      entry: `./index.js`,
+      resolve: {
+        extensions: [`.ts`, `.tsx`, `.js`],
+        plugins: [
+          new ShadowRealm({
+            extensions: [`.ts`, `.tsx`, `.js`],
+            themes: [
+              {
+                themeName: `theme-a`,
+                themeDir: path.join(
+                  __dirname,
+                  `./fixtures/test-sites/workspace-shadowing/packages/theme-a`
+                ),
+              },
+            ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/workspace-shadowing/packages/site`
+            ),
+          }),
+        ],
+      },
+      module: {
+        rules: [{ test: /\.tsx?$/, use: `gatsby-raw-loader` }],
+      },
+      resolveLoader: {
+        modules: [`../../fake-loaders`],
+      },
+    },
+    {
+      context: path.resolve(
+        __dirname,
+        `fixtures/test-sites/workspace-shadowing/packages/site`
+      ),
+    },
+    [
+      `./src/theme-a/file-a.tsx`, // index.js => theme-a/file-a ==shadow=> src/theme-a/file-a.tsx
+      `./src/theme-a/file-b.js`, // index.js => theme-a/file-b ==shadow=> src/theme-a/file-b.js
+      `./src/theme-a/file-c.js`, // index.js => theme-a/file-c ==shadow=> src/theme-a/file-c.js
+      `../theme-a/src/file-c.ts`, // src/theme-a/file-c.js => theme-a/src/file-c.js (no shadow)
+      `../theme-a/src/file-d.ts`, // src/theme-a/file-c.js => theme-a/src/file-d.js
+    ],
+  ],
+  [
     `edge case; extra extensions in filename`,
     {
       mode: `development`,
