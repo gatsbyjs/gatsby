@@ -100,8 +100,9 @@ const createSchemaCustomization = async api => {
   } catch (e) {
     api.reporter.panic({
       id: CODES.SourcePluginCodeError,
+      error: e,
       context: {
-        sourceMessage: formatLogMessage(e.stack),
+        sourceMessage: formatLogMessage(e.message),
       },
     })
   }
