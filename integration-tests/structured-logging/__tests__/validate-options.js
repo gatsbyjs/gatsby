@@ -11,14 +11,14 @@ const gatsbyBin = path.join(
   `gatsby.js`
 )
 
-describe(`Plugin Validation Options`, () => {
+describe(`Validate Plugin Options`, () => {
   let gatsbyProcess
   let events = []
 
   beforeEach(async () => {
     gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
       // inherit lets us see logs in console
-      //   stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+      // stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       env: {
         ...process.env,
@@ -38,7 +38,104 @@ describe(`Plugin Validation Options`, () => {
     })
   })
 
-  it(`test`, () => {
-    console.log({ events })
+  it(`Errors on local plugins`, () => {
+    expect(events).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: `LOG_ACTION`,
+          action: expect.objectContaining({
+            type: `SET_STATUS`,
+            payload: `FAILED`,
+          }),
+        }),
+      ])
+    )
+
+    expect(events).toEqual(
+      expect.arrayContaining([
+        // Local plugin with require.resolve
+        expect.objectContaining({
+          type: `LOG_ACTION`,
+          action: expect.objectContaining({
+            type: `LOG`,
+            payload: expect.objectContaining({
+              level: `ERROR`,
+              category: `USER`,
+              context: expect.objectContaining({
+                pluginName: expect.stringContaining("gatsby/integration-tests/structured-logging/local-plugin-with-path/index.js"),
+                validationErrors: expect.arrayContaining([
+                  {
+                    context: {
+                      key: "required",
+                      label: "required"
+                    },
+                    message: "\"required\" is required",
+                    path: [
+                      "required"
+                    ],
+                    type: "any.required"
+                  },
+                  {
+                    context: {
+                      key: "optionalString",
+                      label: "optionalString",
+                      value: 1234
+                    },
+                    message: "\"optionalString\" must be a string",
+                    path: [
+                      "optionalString"
+                    ],
+                    type: "string.base"
+                  }
+                ])
+              }),
+              code: `11331`,
+              type: `PLUGIN`,
+            })
+          })
+        }),
+        // Local plugin with name in gatsby-config
+        expect.objectContaining({
+          type: `LOG_ACTION`,
+          action: expect.objectContaining({
+            type: `LOG`,
+            payload: expect.objectContaining({
+              level: `ERROR`,
+              category: `USER`,
+              context: expect.objectContaining({
+                pluginName: "local-plugin",
+                validationErrors: expect.arrayContaining([
+                  {
+                    context: {
+                      key: "required",
+                      label: "required"
+                    },
+                    message: "\"required\" is required",
+                    path: [
+                      "required"
+                    ],
+                    type: "any.required"
+                  },
+                  {
+                    context: {
+                      key: "optionalString",
+                      label: "optionalString",
+                      value: 1234
+                    },
+                    message: "\"optionalString\" must be a string",
+                    path: [
+                      "optionalString"
+                    ],
+                    type: "string.base"
+                  }
+                ])
+              }),
+              code: `11331`,
+              type: `PLUGIN`,
+            })
+          })
+        })
+      ])
+    )
   })
 })
