@@ -7,7 +7,6 @@ import {
   getTypeSettingsByType,
   filterTypeDefinition,
 } from "./helpers"
-import { getPluginOptions } from "../../utils/get-gatsby-api"
 
 const unionType = typeBuilderApi => {
   const { schema, type, pluginOptions } = typeBuilderApi
