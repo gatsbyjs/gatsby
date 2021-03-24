@@ -119,6 +119,16 @@ The specific resolutions we recommend at this time are found below:
 }
 ```
 
+### Handling version mismatches
+
+When upgrading an already existing project (that has an existing `node_modules` folder and `package-lock.json` file) you might run into version mismatches for your packages as npm/yarn don't resolve to the latest/correct version. An example would be a version mismatch of `webpack@4` and `webpack@5` that can throw an error like this:
+
+```shell
+Error: NormalModuleFactory.afterResolve (ReactRefreshPlugin) is no longer a waterfall hook, but a bailing hook instead.
+```
+
+An effective way to get around this issue is deleting `node_modules` and `package-lock.json` and then running `npm install` again. Alternatively, you can use `npm dedupe`.
+
 ## Handling Breaking Changes
 
 This section explains breaking changes that were made for Gatsby v3. Most, if not all, of those changes had a deprecation message in v2. In order to successfully update, you'll need to resolve these changes.
@@ -357,7 +367,7 @@ const Box = ({ children }) => (
 export default Box
 ```
 
-You can also still import all styles using the `import * as styles` sytax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
+You can also still import all styles using the `import * as styles` syntax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
 
 ### File assets (fonts, pdfs, ...) are imported as ES Modules
 
@@ -420,6 +430,53 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 +       }
 +    }
   })
+}
+```
+
+If it's still not resolved, the error message should guide you on what else you need to add to your webpack config.
+
+#### process is not defined
+
+A common error is `process is not defined`. webpack 4 polyfilled process automatically in the browser, but with v5 it's not the case anymore.
+
+If you're using `process.browser` in your components, you should switch to a window is not undefined check.
+
+```diff:title=src/components/Box.js
+import React from "react"
+
+const Base64 = ({ text }) => {
+  let base64;
+-  if (process.browser) {
++  if (typeof window !== "undefined") {
+    base64 = btoa(text)
+  } else {
+    base64 = Buffer.from(text).toString('base64')
+  }
+
+  return (
+    <div>
+      {base64}
+    </div>
+  )
+}
+
+export default Base64
+```
+
+If you're using any other process properties, you want to polyfill process.
+
+1. Install `process` library - `npm install process`
+2. Configure webpack to use the process polyfill.
+
+```diff:title=gatby-node.js
+exports.onCreateWebpackConfig = ({ actions, stage, plugins }) => {
+  if (stage === 'build-javascript' || stage === 'develop') {
+    actions.setWebpackConfig({
+      plugins: [
+        plugins.provide({ process: 'process/browser' })
+      ]
+    })
+  }
 }
 ```
 
@@ -743,7 +800,7 @@ export default Navigation
 
 ### webpack deprecation messages
 
-When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building Javascript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
+When running community Gatsby plugins, you might see `[DEP_WEBPACK]` messages popup during the "Building JavaScript" or the "Building SSR bundle" phase. These often mean that the plugin is not compatible with webpack 5 yet. Contact the Gatsby plugin author or the webpack plugin author to flag this issue. Most of the time Gatsby will build fine, however there are cases that it won't and the reasons why could be cryptic.
 
 ## Using `fs` in SSR
 

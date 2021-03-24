@@ -27,6 +27,6 @@ Headless WordPress enables content writers to use a familiar interface while giv
 
 ## Learn More
 
-- [Gatsby's WordPress intergation](/plugins/gatsby-source-wordpress/) for headless WordPress projects
+- [Gatsby's WordPress integration](/plugins/gatsby-source-wordpress/) for headless WordPress projects
 - [GraphQL for WordPress](https://www.wpgraphql.com/) open-source plugin
 - [Why Gatsby chose WordPress](/blog/gatsby-blog-wordpress/) - a case study

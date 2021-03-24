@@ -341,6 +341,6 @@ module.exports = createMySqlNodes
 
 In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
 
-- `STALL_RETRY_LIMIT`, default: `3`
-- `STALL_TIMEOUT`, default: `30000`
-- `CONNECTION_TIMEOUT`, default: `30000`
+- `GATSBY_STALL_RETRY_LIMIT`, default: `3`
+- `GATSBY_STALL_TIMEOUT`, default: `30000`
+- `GATSBY_CONNECTION_TIMEOUT`, default: `30000`

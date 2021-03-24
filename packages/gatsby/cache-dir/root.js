@@ -1,5 +1,5 @@
 import React from "react"
-import { Router, Location, BaseContext } from "@reach/router"
+import { Router, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 
 import { shouldUpdateScroll, RouteUpdates } from "./navigation"

@@ -17,7 +17,7 @@ const filterAssets = (assetsForPath, filter) => {
   return assetsForPath.filter(asset => {
     if (filter === `all`) {
       return true
-    } else if (filter === `page-data`) {
+    } else if (filter === `page-data` || filter === "static-query-data") {
       return false
     }
 
@@ -53,6 +53,10 @@ function getAssetsForPage({ pagePath, filter }) {
 
   if (filter === `all` || filter === `page-data`) {
     assets.push(`/${pageDataUrl}`)
+  }
+
+  if (filter === `all` || filter === `static-query-data`) {
+    assets.push(`/page-data/sq/d/${pageData.staticQueryHashes[0]}.json`)
   }
 
   return assets

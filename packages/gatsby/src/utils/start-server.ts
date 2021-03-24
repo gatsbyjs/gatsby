@@ -78,6 +78,11 @@ export async function startServer(
   })
   webpackActivity.start()
 
+  // loading indicator
+  // write virtual module always to not fail webpack compilation, but only add express route handlers when
+  // query on demand is enabled and loading indicator is not disabled
+  writeVirtualLoadingIndicatorModule()
+
   const THIRTY_SECONDS = 30 * 1000
   let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
@@ -486,10 +491,6 @@ module.exports = {
     route({ app, program, store })
   }
 
-  // loading indicator
-  // write virtual module always to not fail webpack compilation, but only add express route handlers when
-  // query on demand is enabled and loading indicator is not disabled
-  writeVirtualLoadingIndicatorModule()
   if (
     process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`

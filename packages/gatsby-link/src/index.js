@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link, Location } from "@reach/router"
+import { Link, Location } from "@gatsbyjs/reach-router"
 import { resolve } from "@gatsbyjs/reach-router/lib/utils"
 
 import { parsePath } from "./parse-path"

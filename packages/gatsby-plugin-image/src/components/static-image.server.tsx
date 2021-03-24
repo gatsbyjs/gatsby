@@ -1,5 +1,8 @@
 import React, { FunctionComponent, ReactElement } from "react"
-import { GatsbyImage as GatsbyImageServer } from "./gatsby-image.server"
+import {
+  altValidator,
+  GatsbyImage as GatsbyImageServer,
+} from "./gatsby-image.server"
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 import PropTypes from "prop-types"
 import { ISharpGatsbyImageArgs } from "../image-utils"
@@ -83,7 +86,7 @@ const validLayouts = new Set([`fixed`, `fullWidth`, `constrained`])
 
 export const propTypes = {
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  alt: altValidator,
   width: checkDimensionProps,
   height: checkDimensionProps,
   sizes: PropTypes.string,

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`File parser extracts query AST correctly from files: panic 1`] = `
+exports[`File parser extracts query AST correctly from files: panicOnBuild 1`] = `
 [MockFunction] {
   "calls": Array [
     Array [
