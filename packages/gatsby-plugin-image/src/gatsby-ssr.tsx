@@ -91,7 +91,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
       }
       const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
 
-
       const img = new Image();
       img.src = target.currentSrc;
       // We decode the img through javascript so we're sure the blur-up effect works

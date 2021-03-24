@@ -139,7 +139,7 @@ async function parseToAst(filePath, fileStr, { parentSpan, addError } = {}) {
 }
 
 const panicOnGlobalTag = file =>
-  report.panic(
+  report.panicOnBuild(
     `Using the global \`graphql\` tag for Gatsby's queries isn't supported as of v3.\n` +
       `Import it instead like:  import { graphql } from 'gatsby' in file:\n` +
       file
