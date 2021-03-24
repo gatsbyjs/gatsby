@@ -1,6 +1,7 @@
-module.exports = {
-  plugins: [
-    "structured-plugin-errors",
+const dynamicPlugins = []
+
+if (process.env.VALIDATE_PLUGIN_OPTIONS) {
+  dynamicPlugins.push(
     {
       resolve: "local-plugin",
       options: {
@@ -13,5 +14,12 @@ module.exports = {
         optionalString: 1234,
       },
     },
+  )
+}
+
+module.exports = {
+  plugins: [
+    "structured-plugin-errors",
+    ...dynamicPlugins
   ],
 }

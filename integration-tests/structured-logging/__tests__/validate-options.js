@@ -24,6 +24,7 @@ describe(`Validate Plugin Options`, () => {
         ...process.env,
         NODE_ENV: `production`,
         ENABLE_GATSBY_REFRESH_ENDPOINT: true,
+        VALIDATE_PLUGIN_OPTIONS: true,
       },
     })
 
