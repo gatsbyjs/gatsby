@@ -49,8 +49,8 @@
     "pkg-dir": "^4.2.0",
     "prettier": "^2.0.5",
     "prop-types": "^15.6.1",
-    "remark-mdx": "^2.0.0-next.4",
-    "remark-mdxjs": "^2.0.0-next.4",
+    "remark-mdx": "2.0.0-next.8",
+    "remark-mdxjs": "2.0.0-next.8",
     "remark-parse": "^6.0.3",
     "remark-stringify": "^8.1.0",
     "resolve-from": "^5.0.0",
@@ -69,9 +69,9 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.1",
-    "@mdx-js/mdx": "^2.0.0-next.4",
-    "@mdx-js/react": "^2.0.0-next.4",
-    "@mdx-js/runtime": "^2.0.0-next.4",
+    "@mdx-js/mdx": "2.0.0-next.8",
+    "@mdx-js/react": "2.0.0-next.8",
+    "@mdx-js/runtime": "2.0.0-next.8",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
@@ -94,17 +94,10 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {
-    "testPathIgnorePatterns": [
-      "/.cache/",
-      "dist"
-    ],
+    "testPathIgnorePatterns": ["/.cache/", "dist"],
     "testEnvironment": "node"
   },
-  "keywords": [
-    "gatsby",
-    "gatsby-recipes",
-    "mdx"
-  ],
+  "keywords": ["gatsby", "gatsby-recipes", "mdx"],
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
@@ -113,13 +106,13 @@
     "directory": "packages/gatsby-recipes"
   },
   "resolutions": {
-    "@mdx-js/mdx": "^2.0.0-next.4",
-    "@mdx-js/react": "^2.0.0-next.4",
-    "@mdx-js/runtime": "^2.0.0-next.4",
+    "@mdx-js/mdx": "2.0.0-next.8",
+    "@mdx-js/react": "2.0.0-next.8",
+    "@mdx-js/runtime": "2.0.0-next.8",
     "graphql": "^15.4.0",
     "property-information": "5.5.0",
-    "remark-mdx": "^2.0.0-next.4",
-    "remark-mdxjs": "^2.0.0-next.4"
+    "remark-mdx": "2.0.0-next.8",
+    "remark-mdxjs": "2.0.0-next.8"
   },
   "scripts": {
     "build": "rollup -c",
