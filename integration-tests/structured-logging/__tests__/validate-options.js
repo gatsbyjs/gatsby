@@ -63,7 +63,7 @@ describe(`Validate Plugin Options`, () => {
               level: `ERROR`,
               category: `USER`,
               context: expect.objectContaining({
-                pluginName: expect.stringContaining("gatsby/integration-tests/structured-logging/local-plugin-with-path/index.js"),
+                pluginName: expect.stringContaining("integration-tests/structured-logging/local-plugin-with-path/index.js"),
                 validationErrors: expect.arrayContaining([
                   {
                     context: {
