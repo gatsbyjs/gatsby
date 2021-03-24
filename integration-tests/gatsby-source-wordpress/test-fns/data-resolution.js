@@ -29,12 +29,10 @@ describe(`data resolution`, () => {
     expect(data[`allWpPage`].totalCount).toBe(1)
     expect(data[`allWpPost`].totalCount).toBe(1)
     expect(data[`allWpComment`].totalCount).toBe(1)
-    // expect(data[`allWpProject`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
     expect(data[`allWpCategory`].totalCount).toBe(9)
     expect(data[`allWpMenu`].totalCount).toBe(1)
     expect(data[`allWpMenuItem`].totalCount).toBe(4)
-    // expect(data[`allWpTeamMember`].totalCount).toBe(1)
     expect(data[`allWpPostFormat`].totalCount).toBe(0)
     expect(data[`allWpContentType`].totalCount).toBe(6)
   })
@@ -51,6 +49,61 @@ describe(`data resolution`, () => {
       gatsby: `wpPage`,
       wpgql: `page`,
     },
+  })
+
+  it(`resolves node interfaces without errors`, async () => {
+    const query = /* GraphQL */ `
+      query {
+        allWpTermNode {
+          nodes {
+            id
+          }
+        }
+
+        allWpContentNode {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+
+    // this will throw if there are gql errors
+    const gatsbyResult = await fetchGraphql({
+      url,
+      query,
+    })
+
+    expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(12)
+  })
+
+  it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
+    const query = /* GraphQL */ `
+      query {
+        wpPost(id: { eq: "cG9zdDox" }) {
+          id
+          comments {
+            nodes {
+              author {
+                # this is an interface of WpUser (Gatsby node type) and WpCommentAuthor (no node for this so needs to be fetched on the comment)
+                node {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    `
+
+    // this will throw an error if there are gql errors
+    const gatsbyResult = await fetchGraphql({
+      url,
+      query,
+    })
+
+    expect(gatsbyResult.data.wpPost.comments.nodes.length).toBe(1)
   })
 
   it(`resolves hierarchichal categories`, async () => {
