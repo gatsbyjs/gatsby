@@ -114,14 +114,23 @@ export const distinct: GatsbyResolver<
 > = function distinctResolver(source, args): Array<string> {
   const { field } = args
   const { edges } = source
-  const values = edges.reduce((acc, { node }) => {
+
+  const values = new Set<string>()
+  edges.forEach(({ node }) => {
     const value =
       getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
-    return value != null
-      ? acc.concat(value instanceof Date ? value.toISOString() : value)
-      : acc
-  }, [])
-  return Array.from(new Set(values)).sort()
+    if (value === null || value === undefined) {
+      return
+    }
+    if (Array.isArray(value)) {
+      value.forEach(subValue => values.add(subValue))
+    } else if (value instanceof Date) {
+      values.add(value.toISOString())
+    } else {
+      values.add(value)
+    }
+  })
+  return Array.from(values).sort()
 }
 
 type IGatsbyGroupReturnValue<NodeType> = Array<
