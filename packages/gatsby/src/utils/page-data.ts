@@ -134,6 +134,7 @@ export async function flush(): Promise<void> {
     queries,
   } = store.getState()
 
+  const publicFolder = path.join(program.directory, `public`)
   const { pagePaths } = pendingPageDataWrites
 
   const pagesToWrite = pagePaths.values()
@@ -173,18 +174,20 @@ export async function flush(): Promise<void> {
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 
-      const result = await writePageData(
-        path.join(program.directory, `public`),
-        {
+      if (process.env.gatsby_executing_command === `develop`) {
+        const result = await writePageData(publicFolder, {
           ...page,
           staticQueryHashes,
-        }
-      )
+        })
 
-      if (process.env.gatsby_executing_command === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
           result,
+        })
+      } else {
+        await writePageData(publicFolder, {
+          ...page,
+          staticQueryHashes,
         })
       }
     }
@@ -208,10 +211,6 @@ export async function flush(): Promise<void> {
       flushQueue.drain = resolve
     })
   }
-
-  await new Promise<void>(resolve => {
-    process.nextTick(() => resolve())
-  })
 
   isFlushing = false
   return
