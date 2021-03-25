@@ -174,6 +174,7 @@ export async function flush(): Promise<void> {
       const staticQueryHashes =
         staticQueriesByTemplate.get(page.componentPath) || []
 
+      // Do not save result to a variable to keep memory pressure down
       if (process.env.gatsby_executing_command === `develop`) {
         const result = await writePageData(publicFolder, {
           ...page,
