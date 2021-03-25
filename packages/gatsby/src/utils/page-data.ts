@@ -149,7 +149,7 @@ export async function flush(): Promise<void> {
     // This is why we need this check
     if (page) {
       if (
-        program?._?.[0] === `develop` &&
+        process.env.gatsby_executing_command === `develop` &&
         process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
       ) {
         // check if already did run query for this page
@@ -181,7 +181,7 @@ export async function flush(): Promise<void> {
         }
       )
 
-      if (program?._?.[0] === `develop`) {
+      if (process.env.gatsby_executing_command === `develop`) {
         websocketManager.emitPageData({
           id: pagePath,
           result,
@@ -204,10 +204,14 @@ export async function flush(): Promise<void> {
   }
 
   if (!flushQueue.idle()) {
-    await new Promise(resolve => {
-      flushQueue.drain = resolve as () => unknown
+    await new Promise<void>(resolve => {
+      flushQueue.drain = resolve
     })
   }
+
+  await new Promise<void>(resolve => {
+    process.nextTick(() => resolve())
+  })
 
   isFlushing = false
   return
