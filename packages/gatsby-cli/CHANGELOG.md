@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.2.0-next.1...gatsby-cli@3.3.0-next.0) (2021-03-25)
+
+### Bug Fixes
+
+- **gatsby,gatsby-cli:** Correct behavior for reporter.error with pluginName ([#30331](https://github.com/gatsbyjs/gatsby/issues/30331)) ([eb1e2d8](https://github.com/gatsbyjs/gatsby/commit/eb1e2d8a3fa78027613b530f667b22fe99b4bfcd))
+
 # [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.2.0-next.0...gatsby-cli@3.2.0-next.1) (2021-03-19)
 
 **Note:** Version bump only for package gatsby-cli
