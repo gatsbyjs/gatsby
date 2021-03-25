@@ -44,6 +44,11 @@ exports.onCreateWebpackConfig = (
           postcssLoader,
         ],
   }
+
+  if (!isSSR) {
+    postcssRule.sideEffects = true
+  }
+
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [

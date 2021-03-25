@@ -590,10 +590,16 @@ export const createWebpackUtils = (
         loaders.postcss({ browsers }),
       ].filter(Boolean)
 
-      return {
+      const cssRule: RuleSetRule = {
         use,
         test: /\.css$/,
       }
+
+      if (!isSSR) {
+        cssRule.sideEffects = true
+      }
+
+      return cssRule
     }
 
     /**
@@ -605,6 +611,7 @@ export const createWebpackUtils = (
     const cssModules: IRuleUtils["cssModules"] = (options): RuleSetRule => {
       const rule = css({ ...options, modules: true })
       delete rule.exclude
+      delete rule.sideEffects
       rule.test = /\.module\.css$/
       return rule
     }
