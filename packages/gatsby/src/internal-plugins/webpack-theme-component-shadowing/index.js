@@ -23,8 +23,6 @@ const DEFAULT_ADDITIONNAL_SHADOW_EXTENSIONS = {
 //      see memoized `shadowCreatePagePath` function used in `createPage` action creator.
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
-  cache = {}
-
   constructor({ projectRoot, themes, additionnalShadowExtensions }) {
     debug(
       `themes list`,
@@ -109,7 +107,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       )
   }
 
-  // check the cache, the user's project, and finally the theme files
+  // check the user's project and the theme files
   resolveComponentPath({ theme, component }) {
     // don't include matching theme in possible shadowing paths
     const themes = this.themes.filter(
