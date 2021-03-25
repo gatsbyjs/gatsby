@@ -127,7 +127,7 @@ export async function onCreateDevServer(
   )
   const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
-  reporter.info(`Attaching Functions to development server.`)
+  reporter.verbose(`Attaching functions to development server`)
 
   const knownFunctions = new Map(
     files.map(file => [
@@ -156,9 +156,7 @@ export async function onCreateDevServer(
           `.cache`,
           `functions`
         )
-        const funcNameToJs = (knownFunctions.get(
-          functionName
-        ) as string).replace(`ts`, `js`)
+        const funcNameToJs = knownFunctions.get(functionName) as string
 
         try {
           const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
