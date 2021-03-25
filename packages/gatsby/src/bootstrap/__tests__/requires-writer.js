@@ -20,6 +20,7 @@ const generatePagesState = pages => {
 jest.mock(`fs-extra`, () => {
   return {
     writeFile: () => Promise.resolve(),
+    outputFileSync: () => {},
     move: () => {},
   }
 })

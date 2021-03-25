@@ -5,6 +5,7 @@ export interface IConstructError {
     id?: ErrorId
     context?: Record<string, string>
     error?: Error
+    pluginName?: string
     [key: string]: unknown
   }
 }
@@ -36,6 +37,7 @@ export interface IStructuredError {
   level: IErrorMapEntry["level"]
   type?: IErrorMapEntry["type"]
   docsUrl?: string
+  pluginName?: string
 }
 
 export interface IOptionalGraphQLInfoContext {

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0-next.0...gatsby-source-wordpress@5.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** upgrade webpack-assets-manifest for compatibility with webpack@5 ([#30217](https://github.com/gatsbyjs/gatsby/issues/30217)) ([ca44a9e](https://github.com/gatsbyjs/gatsby/commit/ca44a9eb04878919ee52874a5e879a1a29ee0463))
+
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.3...gatsby-source-wordpress@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
 # [5.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.2...gatsby-source-wordpress@5.1.0-next.3) (2021-03-10)
 
 ### Bug Fixes

@@ -127,8 +127,8 @@ plugins: [
 
 ### With CSS Modules
 
-Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.scss` -> `App.module.scss`.
-Any file with the `module` extension will use CSS Modules.
+Using CSS Modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `app.scss` -> `app.module.scss`.
+Any file with the `module` extension will use CSS Modules. CSS modules are imported as ES Modules to support treeshaking. You'll need to import styles as: `import { yourClassName, anotherClassName } from './app.module.scss'`
 
 ## Sass & CSS Modules file Regexes
 

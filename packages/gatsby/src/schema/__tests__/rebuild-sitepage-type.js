@@ -171,6 +171,24 @@ describe(`build and update schema for SitePage`, () => {
     await testNestedFields()
   })
 
+  it(`updates nested input types on rebuild`, async () => {
+    // sanity-check
+    const inputFields = Object.keys(
+      schema.getType(`SitePageFieldsFilterInput`).getFields()
+    )
+    expect(inputFields.length).toBe(1)
+    expect(inputFields).toEqual([`oldKey`])
+
+    // Rebuild
+    const page = firstPage()
+    page.fields = {}
+    store.dispatch({ type: `CREATE_NODE`, payload: page })
+    await rebuildWithSitePage({})
+    schema = store.getState().schema
+
+    expect(schema.getType(`SitePageFieldsFilterInput`)).toBeUndefined()
+  })
+
   it(`respects @dontInfer on SitePage`, async () => {
     const typeDefs = `
       type SitePage implements Node @dontInfer {

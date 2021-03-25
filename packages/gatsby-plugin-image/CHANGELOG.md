@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.2.0-next.0...gatsby-plugin-image@1.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better StaticImage errors ([#30271](https://github.com/gatsbyjs/gatsby/issues/30271)) ([8a0a4e8](https://github.com/gatsbyjs/gatsby/commit/8a0a4e82e3c782393621608a294b4b23b1e6753d))
+- **gatsby-plugin-image:** image partial rendering ([#30221](https://github.com/gatsbyjs/gatsby/issues/30221)) ([d97a086](https://github.com/gatsbyjs/gatsby/commit/d97a0868acdbde2361175b4b1491d3adb6ac68bc))
+
+# [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.2...gatsby-plugin-image@1.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
 # [1.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.1...gatsby-plugin-image@1.1.0-next.2) (2021-03-10)
 
 ### Bug Fixes

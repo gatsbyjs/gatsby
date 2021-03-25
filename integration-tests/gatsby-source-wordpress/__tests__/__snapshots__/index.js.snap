@@ -553,6 +553,62 @@ Array [
   },
   Object {
     "fields": Array [
+      "databaseId",
+      "email",
+      "id",
+      "name",
+      "url",
+      "nodeType",
+      "parent",
+      "children",
+      "internal",
+    ],
+    "name": "WpCommentAuthor",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "distinct",
+      "group",
+    ],
+    "name": "WpCommentAuthorConnection",
+  },
+  Object {
+    "fields": Array [
+      "next",
+      "node",
+      "previous",
+    ],
+    "name": "WpCommentAuthorEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentAuthorFieldsEnum",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentAuthorFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "totalCount",
+      "edges",
+      "nodes",
+      "pageInfo",
+      "field",
+      "fieldValue",
+    ],
+    "name": "WpCommentAuthorGroupConnection",
+  },
+  Object {
+    "fields": null,
+    "name": "WpCommentAuthorSortInput",
+  },
+  Object {
+    "fields": Array [
       "totalCount",
       "edges",
       "nodes",
