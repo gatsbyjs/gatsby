@@ -35,7 +35,12 @@ export async function onPreBootstrap(
   const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
   if (files?.length === 0) {
-    reporter.warn(`No functions found in directory: ${functionsDirectory}.`)
+    reporter.warn(
+      `No functions found in directory: ${path.relative(
+        process.cwd(),
+        functionsDirectory
+      )}`
+    )
     return
   }
 
