@@ -146,7 +146,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         existsDir.includes(shadowFile)
       )
       if (matchingShadowFile) {
-        return `${possibleComponentPath}/${matchingShadowFile}`
+        return path.join(possibleComponentPath, matchingShadowFile)
       }
     }
     return null

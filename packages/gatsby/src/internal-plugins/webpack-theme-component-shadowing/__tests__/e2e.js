@@ -1,5 +1,6 @@
 const webpack = require(`webpack`)
 const path = require(`path`)
+const fs = require(`fs`)
 const ShadowRealm = require(`gatsby/dist/internal-plugins/webpack-theme-component-shadowing`)
 
 test.each([
@@ -165,8 +166,32 @@ test.each([
     {
       context: path.resolve(
         __dirname,
-        `fixtures/test-sites/workspace-shadowing/packages/site`
+        `fixtures/test-sites/workspace-shadowing`
       ),
+      setup: () => {
+        // Yarn/Lerna workspaces are implemented by creating symlinks from node_modules/<modulename>
+        // to the actual location of the package (for example packages/<modulename>). In this test,
+        // we need a fixture that complies with such structure. However, restoration of symlinks in
+        // git repositories is unreliable on Windows. We therefore programmatically create the
+        // expeced structure here.
+
+        if (fs.existsSync(`node_modules`)) {
+          fs.rmdirSync(`node_modules`, { recursive: true })
+        }
+        fs.mkdirSync(`node_modules`)
+        process.chdir(`node_modules`)
+
+        fs.symlinkSync(`../packages/site`, `site`, `dir`)
+        fs.symlinkSync(`../packages/theme-a`, `theme-a`, `dir`)
+        process.chdir(`../`)
+
+        //
+        process.chdir(`packages/site`)
+      },
+      cleanup: () => {
+        process.chdir(`../..`)
+        fs.rmdirSync(`node_modules`, { recursive: true })
+      },
     },
     [
       `./src/theme-a/file-a.tsx`, // index.js => theme-a/file-a ==shadow=> src/theme-a/file-a.tsx
@@ -212,46 +237,55 @@ test.each([
     { context: path.resolve(__dirname, `fixtures/test-sites/dot-shadowing`) },
     `./src/theme-a/Some.Component.js`,
   ],
-])(`Shadowing e2e: %s`, (testName, config, { context }, shadowPath, done) => {
-  // shadowing wants process.cwd() to be the root of the site.
-  // so change it from this dir to each of the example projects
-  // when running them
-  const oldCwd = process.cwd()
-  const newCwd = context
-  process.chdir(newCwd)
+])(
+  `Shadowing e2e: %s`,
+  (testName, config, { context, setup, cleanup }, shadowPath, done) => {
+    // shadowing wants process.cwd() to be the root of the site.
+    // so change it from this dir to each of the example projects
+    // when running them
+    const oldCwd = process.cwd()
+    const newCwd = context
+    process.chdir(newCwd)
 
-  webpack(config, (err, stats) => {
-    // start error handling
-    if (err) {
-      done(err.stack || err)
-      return
-    }
+    if (typeof setup === `function`) setup()
 
-    const info = stats.toJson()
+    webpack(config, (err, stats) => {
+      try {
+        // start error handling
+        if (err) {
+          done(err.stack || err)
+          return
+        }
 
-    if (stats.hasErrors()) {
-      done(info.errors)
-    }
+        const info = stats.toJson()
 
-    if (stats.hasWarnings()) {
-      done(info.warnings)
-    }
-    // end error handling
+        if (stats.hasErrors()) {
+          done(info.errors)
+        }
 
-    const statsJSON = stats.toJson({
-      assets: false,
-      hash: true,
+        if (stats.hasWarnings()) {
+          done(info.warnings)
+        }
+        // end error handling
+
+        const statsJSON = stats.toJson({
+          assets: false,
+          hash: true,
+        })
+        const moduleNames = statsJSON.modules.map(({ name }) => name)
+
+        if (Array.isArray(shadowPath)) {
+          shadowPath.forEach(aShadowPath => {
+            expect(moduleNames.includes(aShadowPath)).toBe(true)
+          })
+        } else {
+          expect(moduleNames.includes(shadowPath)).toBe(true)
+        }
+        done()
+      } finally {
+        if (typeof cleanup === `function`) cleanup()
+        process.chdir(oldCwd)
+      }
     })
-    const moduleNames = statsJSON.modules.map(({ name }) => name)
-
-    if (Array.isArray(shadowPath)) {
-      shadowPath.forEach(aShadowPath => {
-        expect(moduleNames.includes(aShadowPath)).toBe(true)
-      })
-    } else {
-      expect(moduleNames.includes(shadowPath)).toBe(true)
-    }
-    process.chdir(oldCwd)
-    done()
-  })
-})
+  }
+)

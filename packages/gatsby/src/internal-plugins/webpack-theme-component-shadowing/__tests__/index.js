@@ -110,7 +110,9 @@ describe(`Component Shadowing`, () => {
           }
         }),
       })
-      const [theme, component] = plugin.getThemeAndComponent(requestPath)
+      const [theme, component] = plugin.getThemeAndComponent(
+        xplatPath(requestPath)
+      )
       expect(
         plugin.requestPathIsIssuerShadowPath({
           // issuer is in `theme-b`
