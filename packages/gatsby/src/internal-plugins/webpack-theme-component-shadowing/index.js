@@ -10,9 +10,10 @@ const _ = require(`lodash`)
 // order to allow less common use cases (ie. allow css files being shadowed by
 // a scss file, or jpg files being shadowed by png...)
 const DEFAULT_ADDITIONNAL_SHADOW_EXTENSIONS = {
-  js: [`js`, `ts`, `tsx`],
-  ts: [`js`, `ts`, `tsx`],
-  tsx: [`js`, `ts`, `tsx`],
+  js: [`js`, `jsx`, `ts`, `tsx`],
+  jsx: [`js`, `jsx`, `ts`, `tsx`],
+  ts: [`js`, `jsx`, `ts`, `tsx`],
+  tsx: [`js`, `jsx`, `ts`, `tsx`],
 }
 
 // TO-DO:
