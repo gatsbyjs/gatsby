@@ -2,6 +2,8 @@ import fs from "fs-extra"
 import glob from "globby"
 import path from "path"
 import webpack from "webpack"
+import multer from "multer"
+import * as express from "express"
 
 import { urlResolve } from "gatsby-core-utils"
 
@@ -135,36 +137,43 @@ export async function onCreateDevServer(
     ])
   )
 
-  app.use(`/api/:functionName`, (req, res, next) => {
-    const { functionName } = req.params
+  app.use(
+    `/api/:functionName`,
+    multer().none(),
+    express.urlencoded({ extended: true }),
+    express.text(),
+    express.json(),
+    express.raw(),
+    (req, res, next) => {
+      const { functionName } = req.params
 
-    if (knownFunctions.has(functionName)) {
-      const activity = reporter.activityTimer(
-        `Executing function ${functionName}`
-      )
-      activity.start()
-      const compiledFunctionsDir = path.join(
-        process.cwd(),
-        `.cache`,
-        `functions`
-      )
-      const funcNameToJs = (knownFunctions.get(functionName) as string).replace(
-        `ts`,
-        `js`
-      )
+      if (knownFunctions.has(functionName)) {
+        const activity = reporter.activityTimer(
+          `Executing function ${functionName}`
+        )
+        activity.start()
+        const compiledFunctionsDir = path.join(
+          process.cwd(),
+          `.cache`,
+          `functions`
+        )
+        const funcNameToJs = (knownFunctions.get(
+          functionName
+        ) as string).replace(`ts`, `js`)
 
-      try {
-        const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
+        try {
+          const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
 
-        const fnToExecute = (fn && fn.default) || fn
+          const fnToExecute = (fn && fn.default) || fn
 
-        fnToExecute(req, res)
-      } catch (e) {
-        reporter.error(e)
+          fnToExecute(req, res)
+        } catch (e) {
+          reporter.error(e)
+        }
+        activity.end()
+      } else {
+        next()
       }
-      activity.end()
-    } else {
-      next()
     }
-  })
+  )
 }
