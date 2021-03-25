@@ -1,6 +1,6 @@
 # gatsby-plugin-stylus
 
-Provides drop-in support for Stylus with or without CSS Modules
+Provides drop-in support for Stylus
 
 ## Install
 
@@ -11,11 +11,24 @@ Provides drop-in support for Stylus with or without CSS Modules
 1.  Include the plugin in your `gatsby-config.js` file.
 2.  Write your stylesheets in Stylus (`.styl` files) and require/import them
 
-### Without CSS Modules
-
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [`gatsby-plugin-stylus`]
+```
+
+If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader).
+**Note:** Gatsby is using `css-loader@^5.0.0`.
+
+```javascript:title=gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-plugin-stylus`,
+    options: {
+      cssLoaderOptions: {
+        camelCase: false,
+      },
+    },
+  },
+]
 ```
 
 ### With CSS Modules
@@ -29,14 +42,13 @@ This plugin has the same API as
 [stylus-loader](https://github.com/shama/stylus-loader#stylus-plugins), which
 means you can add stylus plugins with `use`:
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 const rupture = require("rupture")
 
 module.exports = {
   plugins: [
     {
-      resolve: "gatsby-plugin-stylus",
+      resolve: `gatsby-plugin-stylus`,
       options: {
         use: [rupture()],
       },
@@ -52,8 +64,7 @@ and common cross-browser flexbox bugs. Normally you don't need to think about it
 you'd prefer to add additional postprocessing to your Stylus output you can specify plugins
 in the plugin options
 
-```javascript
-// in gatsby-config.js
+```javascript:title=gatsby-config.js
 plugins: [
   {
     resolve: `gatsby-plugin-stylus`,
