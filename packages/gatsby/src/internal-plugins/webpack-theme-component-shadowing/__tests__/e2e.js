@@ -181,8 +181,8 @@ test.each([
         fs.mkdirSync(`node_modules`)
         process.chdir(`node_modules`)
 
-        fs.symlinkSync(`../packages/site`, `site`, `dir`)
-        fs.symlinkSync(`../packages/theme-a`, `theme-a`, `dir`)
+        fs.symlinkSync(`../packages/site`, `site`, `junction`)
+        fs.symlinkSync(`../packages/theme-a`, `theme-a`, `junction`)
         process.chdir(`../`)
 
         //
