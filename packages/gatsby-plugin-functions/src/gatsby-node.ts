@@ -108,8 +108,7 @@ export async function onPreBootstrap(
       })
     )
   } catch (e) {
-    reporter.error(`Failed to compile Gatsby Functions.`)
-    reporter.panicOnBuild(e)
+    activity.panic(`Failed to compile Gatsby Functions.`, e)
   }
 
   activity.end()
