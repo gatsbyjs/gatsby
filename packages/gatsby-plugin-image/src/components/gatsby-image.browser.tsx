@@ -61,6 +61,9 @@ class GatsbyImageHydrator extends Component<
     HTMLImageElement | undefined
   >()
   hydrated: MutableRefObject<boolean> = { current: false }
+  forceRender: MutableRefObject<boolean> = {
+    current: process.env.NODE_ENV === `development`,
+  }
   lazyHydrator: () => void | null = null
   ref = createRef<HTMLImageElement>()
   unobserveRef: Unobserver
@@ -101,7 +104,8 @@ class GatsbyImageHydrator extends Component<
           ...props,
         },
         this.root,
-        this.hydrated
+        this.hydrated,
+        this.forceRender
       )
     })
   }
@@ -132,7 +136,9 @@ class GatsbyImageHydrator extends Component<
 
   shouldComponentUpdate(nextProps, nextState): boolean {
     let hasChanged = false
-
+    if (!this.state.isLoading && nextState.isLoading && !nextState.isLoaded) {
+      this.forceRender.current = true
+    }
     // this check mostly means people do not have the correct ref checks in place, we want to reset some state to suppport loading effects
     if (this.props.image.images !== nextProps.image.images) {
       // reset state, we'll rely on intersection observer to reload
