@@ -1,4 +1,4 @@
-const faker = require(`faker`)
+const { faker } = require(`@faker-js/faker`)
 
 exports.sourceNodes = (
   { actions, createNodeId, createContentDigest },
@@ -18,7 +18,7 @@ exports.sourceNodes = (
     })
 
     const nodeBase = {
-      id: createNodeId(JSON.stringify(faker.random.number())),
+      id: createNodeId(JSON.stringify(faker.datatype.number())),
       parent: null,
       children: [],
       internal: {

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "faker": "^4.1.0"
+    "@faker-js/faker": "^7.6.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
