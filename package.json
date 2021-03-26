@@ -9,7 +9,6 @@
     "@babel/runtime": "^7.20.13",
     "@lerna/prompt": "3.18.5",
     "@types/bluebird": "^3.5.38",
-    "@types/cache-manager": "^2.10.3",
     "@types/common-tags": "^1.8.1",
     "@types/fs-extra": "^9.0.13",
     "@types/jaeger-client": "^3.18.4",

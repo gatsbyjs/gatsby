@@ -20,7 +20,7 @@
     "@babel/types": "^7.20.7",
     "@jridgewell/trace-mapping": "^0.3.17",
     "@types/common-tags": "^1.8.1",
-    "better-opn": "^2.1.1",
+    "better-opn": "^3.0.2",
     "boxen": "^5.1.2",
     "chalk": "^4.1.2",
     "clipboardy": "^2.3.0",
