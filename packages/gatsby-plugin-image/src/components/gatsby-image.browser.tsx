@@ -62,6 +62,7 @@ class GatsbyImageHydrator extends Component<
   >()
   hydrated: MutableRefObject<boolean> = { current: false }
   forceRender: MutableRefObject<boolean> = {
+    // In dev we use render not hydrate, to avoid hydration warnings
     current: process.env.NODE_ENV === `development`,
   }
   lazyHydrator: () => void | null = null
@@ -137,6 +138,7 @@ class GatsbyImageHydrator extends Component<
   shouldComponentUpdate(nextProps, nextState): boolean {
     let hasChanged = false
     if (!this.state.isLoading && nextState.isLoading && !nextState.isLoaded) {
+      // Props have changed between SSR and hydration, so we need to force render instead of hydrate
       this.forceRender.current = true
     }
     // this check mostly means people do not have the correct ref checks in place, we want to reset some state to suppport loading effects
