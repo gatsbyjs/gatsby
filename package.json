@@ -45,7 +45,7 @@
     "eslint-plugin-react": "^7.24.0",
     "fs-extra": "^10.0.0",
     "glob": "^7.1.7",
-    "husky": "3.1.0",
+    "husky": "^6.0.0",
     "ignore": "^5.1.8",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
@@ -97,11 +97,6 @@
     "interfaces",
     "**/__tests__/fixtures/"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged || node scripts/on-lint-error.js"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --ext .js,.jsx,.ts,.tsx --fix",
     "*.{md,css,scss,yaml,yml}": "prettier --write",
@@ -120,8 +115,6 @@
     "format:code": "npm run lint:code -- --fix",
     "format:other": "npm run prettier -- --write",
     "format:svg": "node scripts/format-svg.js",
-    "hooks:install": "node node_modules/husky/husky.js install",
-    "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
     "jest": "jest",
     "jest:inspect": "node --inspect node_modules/.bin/jest --runInBand",
     "jest:inspect-brk": "node --inspect-brk node_modules/.bin/jest --runInBand",
@@ -136,6 +129,7 @@
     "plop": "plop",
     "postmarkdown": "prettier --write \"starters/**/*.md\"",
     "prebootstrap": "yarn",
+    "prepare": "husky install",
     "prepublishOnly": "node scripts/check-publish-access",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
     "publish": "echo \"Use 'yarn publish-next' or 'yarn publish-release' instead of 'yarn run publish'\"",
