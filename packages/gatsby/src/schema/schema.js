@@ -16,7 +16,6 @@ const {
   InputTypeComposer,
   ScalarTypeComposer,
   EnumTypeComposer,
-  defineFieldMapToConfig,
 } = require(`graphql-compose`)
 const { getNode, getNodesByType } = require(`../redux/nodes`)
 
@@ -397,22 +396,14 @@ const mergeTypes = ({
     }
   }
 
-  if (type instanceof ObjectTypeComposer) {
+  if (
+    type instanceof ObjectTypeComposer ||
+    type instanceof InterfaceTypeComposer ||
+    type instanceof GraphQLObjectType ||
+    type instanceof GraphQLInterfaceType
+  ) {
     mergeFields({ typeComposer, fields: type.getFields() })
     type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
-  } else if (type instanceof InterfaceTypeComposer) {
-    mergeFields({ typeComposer, fields: type.getFields() })
-  } else if (type instanceof GraphQLObjectType) {
-    mergeFields({
-      typeComposer,
-      fields: defineFieldMapToConfig(type.getFields()),
-    })
-    type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
-  } else if (type instanceof GraphQLInterfaceType) {
-    mergeFields({
-      typeComposer,
-      fields: defineFieldMapToConfig(type.getFields()),
-    })
   }
 
   if (isNamedTypeComposer(type)) {
