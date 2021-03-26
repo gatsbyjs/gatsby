@@ -1,20 +1,16 @@
 // Convenience script to bump all @babel dependencies of all packages to the latest version
-const fs = require(`fs`)
-const execa = require(`execa`)
+const { readdirSync, readFile, writeFileSync } = require(`node:fs`)
+const { sync: execaSync } = require(`execa`)
 
-const packages = fs.readdirSync(`./packages`)
+const packages = readdirSync(`./packages`)
 const versions = {}
 
-function getLatestMinor(pkg) {
+function getLatest(pkg) {
   let version
   if (!versions[pkg]) {
-    version = execa.sync(`npm`, [`show`, pkg, `version`]).stdout
-    // e.g. 7.14.5 -> 7.14.0
-    const parts = version.split(`.`)
-    parts[parts.length - 1] = 0
-    version = parts.join(`.`)
+    version = execaSync(`npm`, [`show`, pkg, `version`]).stdout
     versions[pkg] = version
-    console.log(`latest ${pkg} minor: `, version)
+    console.log(`latest ${pkg}: `, version)
   } else {
     version = versions[pkg]
   }
@@ -23,13 +19,13 @@ function getLatestMinor(pkg) {
 
 function replace(deps, library) {
   if (deps && deps[library]) {
-    deps[library] = `^` + getLatestMinor(library)
+    deps[library] = `^` + getLatest(library)
   }
 }
 
 packages.forEach(packageName => {
   const path = `${process.cwd()}/packages/${packageName}/package.json`
-  fs.readFile(path, (err, json) => {
+  readFile(path, (err, json) => {
     if (err) return
     const pkg = JSON.parse(json)
 
@@ -46,6 +42,6 @@ packages.forEach(packageName => {
 
     console.log(`updating ${path}`)
 
-    fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + `\n`)
+    writeFileSync(path, JSON.stringify(pkg, null, 2) + `\n`)
   })
 })
