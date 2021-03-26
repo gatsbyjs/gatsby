@@ -41,10 +41,26 @@ Please see the [migration guide](/docs/reference/release-notes/migrating-from-v2
 
 ---
 
-## Notable bugfixes
+## Notable bugfixes & improvements
 
-- TODO
+- Be less aggressive about the [`fs` in SSR usage](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-ssr) warnings, now excluding `http(s).Agent` and `node-gyp-build` [PR #30216](https://github.com/gatsbyjs/gatsby/pull/30216)
+- Fixing rendering issues in `gatsby-plugin-image` with the placeholder and component itself [PR #30221](https://github.com/gatsbyjs/gatsby/pull/30221)
+- Documentation about [Debugging Incremental Builds](/docs/debugging-incremental-builds/) [PR #30329](https://github.com/gatsbyjs/gatsby/pull/30329)
+- Validate plugin options schema also for local plugins [PR #29787](https://github.com/gatsbyjs/gatsby/pull/29787)
 
 ## Contributors
 
-TODO
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.2.0-next.0...gatsby@3.2.0) to this release 💜
+
+- [misfist](https://github.com/misfist): chore(starters): Update WordPress blog README [PR #30209](https://github.com/gatsbyjs/gatsby/pull/30209)
+- [TngSam](https://github.com/TngSam): chore(docs): Update using-web-fonts [PR #30243](https://github.com/gatsbyjs/gatsby/pull/30243)
+- [andrewrota](https://github.com/andrewrota): chore(docs): Fix link to markdown-syntax [PR #30239](https://github.com/gatsbyjs/gatsby/pull/30239)
+- [dhrumilp15](https://github.com/dhrumilp15)
+  - chore(dosc): Update deploying-to-digitalocean-droplet [PR #30205](https://github.com/gatsbyjs/gatsby/pull/30205)
+  - chore(docs): Update deploying-to-digitalocean-droplet [PR #30266](https://github.com/gatsbyjs/gatsby/pull/30266)
+- [pedrolamas](https://github.com/pedrolamas): fix(gatsby-plugin-netlify): upgrade webpack-assets-manifest for compatibility with webpack@5 [PR #30217](https://github.com/gatsbyjs/gatsby/pull/30217)
+- [Elendev](https://github.com/Elendev): chore(docs): Fix typo in createPages doc [PR #30343](https://github.com/gatsbyjs/gatsby/pull/30343)
+- [blenderskool](https://github.com/blenderskool): fix(gatsby): Add reporter.panic in empty catch in load-themes [PR #29640](https://github.com/gatsbyjs/gatsby/pull/29640)
+- [UgRoss](https://github.com/UgRoss): fix(gatsby): Fix wrong resolve id for CommentJson type [PR #30389](https://github.com/gatsbyjs/gatsby/pull/30389)
+- [larowlan](https://github.com/larowlan): fix(drupal): Support forward revisions for Drupal paragraphs [PR #29289](https://github.com/gatsbyjs/gatsby/pull/29289)
+- [kamranayub](https://github.com/kamranayub): fix(gatsby): validate local plugin options schema [PR #29787](https://github.com/gatsbyjs/gatsby/pull/29787)
