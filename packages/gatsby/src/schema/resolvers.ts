@@ -123,7 +123,9 @@ export const distinct: GatsbyResolver<
       return
     }
     if (Array.isArray(value)) {
-      value.forEach(subValue => values.add(subValue))
+      value.forEach(subValue =>
+        values.add(subValue instanceof Date ? subValue.toISOString() : subValue)
+      )
     } else if (value instanceof Date) {
       values.add(value.toISOString())
     } else {

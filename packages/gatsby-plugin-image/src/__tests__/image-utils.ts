@@ -311,6 +311,11 @@ describe(`the helper utils`, () => {
     expect(url).toEqual(`https://example.com/afile.jpg/20/15/image.jpg`)
   })
 
+  it(`gets a low-resolution image URL when width and height are set`, () => {
+    const url = getLowResolutionImageURL({ ...args, width: 200, height: 200 })
+    expect(url).toEqual(`https://example.com/afile.jpg/20/20/image.jpg`)
+  })
+
   it(`gets a low-resolution image URL with correct aspect ratio`, () => {
     const url = getLowResolutionImageURL({
       ...fullWidthArgs,
