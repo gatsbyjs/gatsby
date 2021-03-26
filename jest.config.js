@@ -31,6 +31,7 @@ const esModules = [
   `character-reference-invalid`,
   `comma-separated-tokens`,
   `decode-named-character-reference`,
+  `escape-string-regexp`,
   `estree-util-attach-comments`,
   `estree-util-build-jsx`,
   `estree-util-is-identifier-name`,

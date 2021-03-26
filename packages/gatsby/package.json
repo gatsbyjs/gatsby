@@ -69,7 +69,7 @@
     "deepmerge": "^4.3.0",
     "detect-port": "^1.5.1",
     "devcert": "^1.2.2",
-    "dotenv": "^8.6.0",
+    "dotenv": "^16.0.3",
     "enhanced-resolve": "^5.12.0",
     "error-stack-parser": "^2.1.4",
     "eslint": "^7.32.0",
