@@ -10,7 +10,6 @@
     "@lerna/prompt": "3.18.5",
     "@types/bluebird": "^3.5.38",
     "@types/common-tags": "^1.8.1",
-    "@types/fs-extra": "^9.0.13",
     "@types/jaeger-client": "^3.18.4",
     "@types/jest": "^29.4.0",
     "@types/joi": "^14.3.4",
@@ -24,7 +23,7 @@
     "@types/stack-trace": "^0.0.30",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
-    "babel-jest": "^29.4.1",
+    "babel-jest": "^29.4.2",
     "chalk": "^4.1.2",
     "cross-env": "^7.0.3",
     "danger": "^11.2.3",
@@ -38,12 +37,11 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
-    "fs-extra": "^11.1.0",
     "glob": "^7.2.3",
-    "husky": "3.1.0",
+    "husky": "^8.0.3",
     "ignore": "^5.2.4",
-    "jest": "^29.4.1",
-    "jest-environment-jsdom": "^29.4.1",
+    "jest": "^29.4.2",
+    "jest-environment-jsdom": "^29.4.2",
     "jest-extended": "^3.2.3",
     "jest-junit": "^15.0.0",
     "jest-serializer-path": "^0.1.15",
@@ -74,11 +72,6 @@
     "interfaces",
     "**/__tests__/fixtures/"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged || node scripts/on-lint-error.js"
-    }
-  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --ext .js,.jsx,.ts,.tsx --fix",
     "*.{md,css,scss,yaml,yml}": "prettier --write"
@@ -91,12 +84,8 @@
     "format": "npm run format:code && npm run format:other",
     "format:code": "npm run lint:code -- --fix",
     "format:other": "npm run prettier -- --write",
-    "hooks:install": "node node_modules/husky/husky.js install",
-    "hooks:uninstall": "node node_modules/husky/husky.js uninstall",
-    "jest": "jest",
     "jest:inspect": "node --inspect node_modules/.bin/jest --runInBand",
     "jest:inspect-brk": "node --inspect-brk node_modules/.bin/jest --runInBand",
-    "lerna": "lerna",
     "lerna-prepare": "lerna run prepare",
     "lint": "npm-run-all --continue-on-error -p lint:code lint:other",
     "lint:code": "eslint --ext .js,.jsx,.ts,.tsx --quiet .",
@@ -104,6 +93,7 @@
     "markdown": "md-magic --path \"starters/**/README.md\"",
     "postmarkdown": "prettier --write \"starters/**/README.md\"",
     "prebootstrap": "yarn",
+    "prepare": "husky install",
     "prettier": "prettier \"**/*.{md,css,scss,yaml,yml}\"",
     "publish": "echo \"Use 'yarn publish-next' or 'yarn publish-release' instead of 'yarn run publish'\"",
     "publish-canary": "node scripts/check-publish-access && lerna publish --canary --yes",

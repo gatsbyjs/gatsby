@@ -19,7 +19,7 @@
     "@ascorbic/worker-threads-shim": "^1.0.0",
     "@lukeed/uuid": "^2.0.0",
     "@types/configstore": "^4.0.0",
-    "@types/fs-extra": "^9.0.13",
+    "@types/fs-extra": "^11.0.1",
     "@types/node": "^14.18.36",
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.2",

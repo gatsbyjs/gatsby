@@ -1,5 +1,5 @@
-import * as path from "path"
-import * as fs from "fs-extra"
+import { join } from "node:path"
+import { emptyDir } from "fs-extra"
 import {
   savePageQueryResult,
   readPageQueryResult,
@@ -10,8 +10,8 @@ import {
 
 describe(`savePageQueryResults / readPageQueryResults`, () => {
   it(`can save and read data`, async () => {
-    const fileDir = path.join(process.cwd(), `.cache`, `json`)
-    await fs.emptyDir(fileDir)
+    const fileDir = join(process.cwd(), `.cache`, `json`)
+    await emptyDir(fileDir)
 
     const pagePath = `/foo/`
     const inputResult = {

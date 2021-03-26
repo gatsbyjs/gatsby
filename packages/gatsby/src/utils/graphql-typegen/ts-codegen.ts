@@ -1,4 +1,4 @@
-import * as fs from "fs-extra"
+import { outputFile } from "fs-extra"
 import { join } from "path"
 import { codegen } from "@graphql-codegen/core"
 import { GraphQLSchema, Kind } from "graphql"
@@ -160,5 +160,5 @@ export async function writeTypeScriptTypes(
     ...codegenOptions,
   })
 
-  await fs.outputFile(filename, result)
+  await outputFile(filename, result)
 }

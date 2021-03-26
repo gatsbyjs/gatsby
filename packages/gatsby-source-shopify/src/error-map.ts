@@ -1,9 +1,10 @@
+import { IErrorMapEntry } from "gatsby-cli/lib/structured-errors/error-map"
 import { shiftLeft } from "shift-left"
 import { pluginErrorCodes as errorCodes } from "./errors"
 
 const getErrorText = (context: IErrorContext): string => context.sourceMessage
 
-export const ERROR_MAP: IErrorMap = {
+export const ERROR_MAP: Record<string, IErrorMapEntry> = {
   [errorCodes.bulkOperationFailed]: {
     text: getErrorText,
     level: `ERROR`,

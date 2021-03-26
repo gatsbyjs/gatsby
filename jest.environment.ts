@@ -1,11 +1,12 @@
-const NodeEnvironment = require(`jest-environment-node`).TestEnvironment
+const { TestEnvironment: NodeEnvironment } = require(`jest-environment-node`)
 const fsExtra = require(`fs-extra`)
 
 const isWindows = process.platform === `win32`
 
 class CustomEnvironment extends NodeEnvironment {
-  constructor(config, context) {
-    super(config, context)
+  constructor({ globalConfig, projectConfig }, context) {
+    super({ globalConfig, projectConfig }, context)
+    const config = projectConfig
   }
 
   async teardown(): Promise<void> {

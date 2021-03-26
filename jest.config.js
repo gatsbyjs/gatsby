@@ -1,34 +1,41 @@
-const path = require(`path`)
-const glob = require(`glob`)
-const fs = require(`fs`)
+const { join } = require(`node:path`)
+const { sync: globSync } = require(`glob`)
+const { existsSync } = require(`node:fs`)
 
-const pkgs = glob.sync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
+const pkgs = globSync(`./packages/*`).map(p => p.replace(/^\./, `<rootDir>`))
 
 const reGatsby = /gatsby$/
 const gatsbyDir = pkgs.find(p => reGatsby.exec(p))
-const gatsbyBuildDirs = [`dist`].map(dir => path.join(gatsbyDir, dir))
+const gatsbyBuildDirs = [`dist`].map(dir => join(gatsbyDir, dir))
 const builtTestsDirs = pkgs
-  .filter(p => fs.existsSync(path.join(p, `src`)))
-  .map(p => path.join(p, `__tests__`))
-const distDirs = pkgs.map(p => path.join(p, `dist`))
+  .filter(p => existsSync(join(p, `src`)))
+  .map(p => join(p, `__tests__`))
+const distDirs = pkgs.map(p => join(p, `dist`))
 const ignoreDirs = [`<rootDir>/packages/gatsby-dev-cli/verdaccio`].concat(
   gatsbyBuildDirs,
   builtTestsDirs,
   distDirs
 )
 
-const coverageDirs = pkgs.map(p => path.join(p, `src/**/*.js`))
+const coverageDirs = pkgs.map(p => join(p, `src/**/*.js`))
 const useJestUnit = !!process.env.GENERATE_JEST_REPORT
 
 // list to add ESM to ignore
 const esModules = [
   `@mdx-js/mdx`,
+  `@mdx-js/react`,
+  `@sindresorhus/is`,
+  `@szmarczak/http-timer`,
+  `aggregate-error`,
   `bail`,
+  `cacheable-lookup`,
+  `cacheable-request`,
   `ccount`,
   `character-entities-html4`,
   `character-entities-legacy`,
   `character-entities`,
   `character-reference-invalid`,
+  `clean-stack`,
   `comma-separated-tokens`,
   `decode-named-character-reference`,
   `escape-string-regexp`,
@@ -38,6 +45,8 @@ const esModules = [
   `estree-util-to-js`,
   `estree-util-visit`,
   `estree-walker`,
+  `form-data-encoder`,
+  `got`,
   `hast-util-from-parse5`,
   `hast-util-is-element`,
   `hast-util-parse-selector`,
@@ -46,13 +55,16 @@ const esModules = [
   `hast-util-whitespace`,
   `hastscript`,
   `html-void-elements`,
+  `indent-string`,
   `is-alphabetical`,
   `is-alphanumerical`,
   `is-decimal`,
   `is-hexadecimal`,
+  `is-online`,
   `is-plain-obj`,
   `is-reference`,
   `longest-streak`,
+  `lowercase-keys`,
   `mdast-util-definitions`,
   `mdast-util-from-markdown`,
   `mdast-util-mdx`,
@@ -82,15 +94,23 @@ const esModules = [
   `micromark-util-resolve-all`,
   `micromark-util-subtokenize`,
   `micromark`,
+  `mimic-response`,
+  `normalize-url`,
+  `p-any`,
+  `p-cancelable`,
+  `p-some`,
+  `p-timeout`,
   `parse-entities`,
   `periscopic`,
   `property-information`,
+  `public-ip`,
   `rehype`,
   `remark-mdx`,
   `remark-parse`,
   `remark-parse`,
   `remark-rehype`,
   `remark-stringify`,
+  `responselike`,
   `space-separated-tokens`,
   `stringify-entities`,
   `trim-lines`,
@@ -152,7 +172,7 @@ const config = {
     : [`default`].concat(useJestUnit ? `jest-junit` : []),
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
   setupFiles: [`<rootDir>/.jestSetup.js`],
-  setupFilesAfterEnv: [`jest-extended/all`],
+  setupFilesAfterEnv: [`<rootDir>/jest-extended.js`],
   testEnvironment: `<rootDir>/jest.environment.ts`,
 }
 
