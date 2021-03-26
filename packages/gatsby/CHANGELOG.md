@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.2.0-next.1...gatsby@3.3.0-next.0) (2021-03-25)
+
+### Bug Fixes
+
+- **gatsby:** Add allowNamespace option to ESLint config ([#30023](https://github.com/gatsbyjs/gatsby/issues/30023)) ([98001eb](https://github.com/gatsbyjs/gatsby/commit/98001ebd36b4eaace6c9b35ecc3a96f96e6f7010))
+- **gatsby:** Add reporter.panic in empty catch in load-themes ([#29640](https://github.com/gatsbyjs/gatsby/issues/29640)) ([3a8789b](https://github.com/gatsbyjs/gatsby/commit/3a8789b4875444c0ce33d313bc82290d2c38261e))
+- **gatsby:** update nested input types when rebuilding SitePage ([#30426](https://github.com/gatsbyjs/gatsby/issues/30426)) ([54d4721](https://github.com/gatsbyjs/gatsby/commit/54d4721462b9303fed723fdcb15ac5d72e103778))
+- **gatsby:** validate local plugin options schema ([#29787](https://github.com/gatsbyjs/gatsby/issues/29787)) ([096eb38](https://github.com/gatsbyjs/gatsby/commit/096eb38464d9ad7da79f3acb45ade6aee8765b75))
+- **gatsby,gatsby-cli:** Correct behavior for reporter.error with pluginName ([#30331](https://github.com/gatsbyjs/gatsby/issues/30331)) ([eb1e2d8](https://github.com/gatsbyjs/gatsby/commit/eb1e2d8a3fa78027613b530f667b22fe99b4bfcd))
+
+### Performance Improvements
+
+- **gatsby:** Optimise `distinct` queries ([#30457](https://github.com/gatsbyjs/gatsby/issues/30457)) ([f462e23](https://github.com/gatsbyjs/gatsby/commit/f462e23c26459ccdc30d7abdce1abc375f6ee4eb))
+
+# [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.2.0-next.0...gatsby@3.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby:** be less aggressive when marking builtin methods as unsafe ([#30216](https://github.com/gatsbyjs/gatsby/issues/30216)) ([331d76e](https://github.com/gatsbyjs/gatsby/commit/331d76e41533db65d896df2c08c55b929219d124))
+- **gatsby:** do not fail on 3rd-party schemas with relay-classic support ([#30318](https://github.com/gatsbyjs/gatsby/issues/30318)) ([3c2888c](https://github.com/gatsbyjs/gatsby/commit/3c2888c011d24153422a48ca20f37200f002ee67))
+
 # [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.0-next.4...gatsby@3.2.0-next.0) (2021-03-11)
 
 ### Bug Fixes

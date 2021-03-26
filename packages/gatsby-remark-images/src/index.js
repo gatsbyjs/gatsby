@@ -427,9 +427,9 @@ module.exports = (
                 }
                 node.type = `html`
                 node.value = rawHTML
-
-                resolve(node)
               }
+
+              return resolve(node)
             })
           } else {
             // Image isn't relative so there's nothing for us to do.

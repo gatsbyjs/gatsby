@@ -48,6 +48,9 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
             `registeredDate`,
           ],
         },
+        Commenter: {
+          excludeFieldNames: [`databaseId`],
+        },
         Post: {
           limit:
             process.env.NODE_ENV === `development`

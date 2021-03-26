@@ -84,7 +84,12 @@ export const eslintConfig = (
             tagName: `graphql`,
           },
         ],
-        "react/jsx-pascal-case": `warn`,
+        "react/jsx-pascal-case": [
+          `warn`,
+          {
+            allowNamespace: true,
+          },
+        ],
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
         "jsx-a11y/alt-text": `warn`,

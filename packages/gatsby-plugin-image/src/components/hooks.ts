@@ -179,12 +179,18 @@ export function getImageData<OptionsType>({
   urlBuilder,
   sourceWidth,
   sourceHeight,
-  pluginName = `useGatsbyImage`,
+  pluginName = `getImageData`,
   formats = [`auto`],
-  breakpoints = EVERY_BREAKPOINT,
+  breakpoints,
   options,
   ...props
 }: IGetImageDataArgs<OptionsType>): IGatsbyImageData {
+  if (
+    !breakpoints?.length &&
+    (props.layout === `fullWidth` || (props.layout as string) === `FULL_WIDTH`)
+  ) {
+    breakpoints = EVERY_BREAKPOINT
+  }
   const generateImageSource = (
     baseUrl: string,
     width: number,
