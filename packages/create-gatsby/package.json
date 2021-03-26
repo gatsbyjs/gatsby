@@ -26,7 +26,7 @@
     "enquirer": "^2.3.6",
     "eslint": "^7.27.0",
     "execa": "^4.1.0",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-plugin-utils": "^1.8.0-next.1",
     "joi": "^17.4.0",
     "microbundle": "^0.13.1",

@@ -46,7 +46,7 @@
     "@testing-library/react": "^11.2.6",
     "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.11.1",
-    "@types/fs-extra": "^8.1.1",
+    "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.10.2",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.56",
@@ -80,7 +80,7 @@
     "camelcase": "^5.3.1",
     "chokidar": "^3.5.1",
     "common-tags": "^1.8.0",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "gatsby-core-utils": "^2.8.0-next.1",
     "objectFitPolyfill": "^2.3.0",
     "prop-types": "^15.7.2"
