@@ -44,7 +44,7 @@ exports.createGraphQLNode = createGraphQLNode
  */
 function recursiveAddFields(ent, newEnt) {
   for (const k of Object.keys(ent)) {
-    if (!newEnt.hasOwnProperty(k)) {
+    if (!Object.hasOwn(newEnt, k)) {
       const key = getValidKey(k)
       newEnt[key] = ent[k]
       // Nested Objects & Arrays of Objects

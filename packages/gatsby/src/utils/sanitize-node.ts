@@ -72,7 +72,7 @@ export const sanitizeNode: sanitizeNode = (
 
     // _.each is a "Collection" method and thus objects with "length" property are iterated as arrays
     const hasLengthProperty = isPlainObject
-      ? Object.prototype.hasOwnProperty.call(data, `length`)
+      ? Object.hasOwn(data, `length`)
       : false
     let lengthProperty
     if (hasLengthProperty) {

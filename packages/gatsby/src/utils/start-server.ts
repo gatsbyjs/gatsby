@@ -646,7 +646,7 @@ export async function startServer(
         const { html: renderResponse, serverData } = await renderDevHTML({
           path: pathObj.path,
           page: pathObj,
-          skipSsr: Object.prototype.hasOwnProperty.call(req.query, `skip-ssr`),
+          skipSsr: Object.hasOwn(req.query, `skip-ssr`),
           store,
           allowTimedFallback,
           htmlComponentRendererPath: PAGE_RENDERER_PATH,

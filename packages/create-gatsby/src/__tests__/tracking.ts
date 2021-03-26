@@ -22,7 +22,7 @@ describe(`isTrackingEnabled`, () => {
 
   it(`is enabled by default`, () => {
     const enabled = isTrackingEnabled()
-    expect(enabled).toBeTrue()
+    expect(enabled).toBe(true)
   })
 
   it(`respects the setting of the config store`, () => {
@@ -35,10 +35,10 @@ describe(`isTrackingEnabled`, () => {
     })
 
     const enabled = isTrackingEnabled()
-    expect(enabled).toBeFalse()
+    expect(enabled).toBe(false)
 
     const cachedEnabled = isTrackingEnabled()
-    expect(cachedEnabled).toBeFalse()
+    expect(cachedEnabled).toBe(false)
   })
 
   describe(`process.env.GATSBY_TELEMETRY_DISABLED`, () => {
@@ -48,10 +48,10 @@ describe(`isTrackingEnabled`, () => {
 
     it(`respects the setting of the environment variable`, () => {
       const enabled = isTrackingEnabled()
-      expect(enabled).toBeFalse()
+      expect(enabled).toBe(false)
 
       const cachedEnabled = isTrackingEnabled()
-      expect(cachedEnabled).toBeFalse()
+      expect(cachedEnabled).toBe(false)
     })
 
     afterAll(() => {

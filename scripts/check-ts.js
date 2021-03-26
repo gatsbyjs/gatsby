@@ -117,7 +117,7 @@ if (!filterPackage) {
   )
 
   console.log(
-    `  - Total TS Files: ${totalJsFiles}`,
+    `  - Total TS Files: ${totalTsFiles}`,
     `\n  - Total JS Files: ${totalJsFiles}`,
     `\n  - Percent Converted: ${percentConverted}%`
   )

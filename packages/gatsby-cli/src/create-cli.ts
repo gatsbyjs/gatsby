@@ -209,10 +209,10 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       getCommandHandler(
         `develop`,
         (args: yargs.Arguments, cmd: (args: yargs.Arguments) => unknown) => {
-          if (Object.prototype.hasOwnProperty.call(args, `inspect`)) {
+          if (Object.hasOwn(args, `inspect`)) {
             args.inspect = args.inspect || 9229
           }
-          if (Object.prototype.hasOwnProperty.call(args, `inspect-brk`)) {
+          if (Object.hasOwn(args, `inspect-brk`)) {
             args.inspectBrk = args[`inspect-brk`] || 9229
           }
 

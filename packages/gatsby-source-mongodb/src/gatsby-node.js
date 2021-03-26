@@ -68,7 +68,7 @@ exports.sourceNodes = (
 }
 
 function idToString(id) {
-  return id.hasOwnProperty(`toHexString`) ? id.toHexString() : String(id)
+  return Object.hasOwn(id, `toHexString`) ? id.toHexString() : String(id)
 }
 
 function createNodes(

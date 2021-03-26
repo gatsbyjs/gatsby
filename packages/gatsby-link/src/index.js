@@ -97,10 +97,7 @@ class GatsbyLink extends React.Component {
   }
 
   handleRef(ref) {
-    if (
-      this.props.innerRef &&
-      Object.prototype.hasOwnProperty.call(this.props.innerRef, `current`)
-    ) {
+    if (this.props.innerRef && Object.hasOwn(this.props.innerRef, `current`)) {
       this.props.innerRef.current = ref
     } else if (this.props.innerRef) {
       this.props.innerRef(ref)

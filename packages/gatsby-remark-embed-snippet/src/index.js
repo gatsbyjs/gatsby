@@ -30,7 +30,7 @@ const getLanguage = file => {
 
   const extension = file.split(`.`).pop()
 
-  return FILE_EXTENSION_TO_LANGUAGE_MAP.hasOwnProperty(extension)
+  return Object.hasOwn(FILE_EXTENSION_TO_LANGUAGE_MAP, extension)
     ? FILE_EXTENSION_TO_LANGUAGE_MAP[extension]
     : extension.toLowerCase()
 }

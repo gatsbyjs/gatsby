@@ -53,7 +53,7 @@ const loadLanguageExtension = languageExtension => {
     )
   }
 
-  if (languageExtension.hasOwnProperty(`insertBefore`)) {
+  if (Object.hasOwn(languageExtension, `insertBefore`)) {
     // To allow RegEx as 'string' in the config, we replace all strings with a regex object.
     languageExtension.insertBefore = replaceStringWithRegex(
       languageExtension.insertBefore

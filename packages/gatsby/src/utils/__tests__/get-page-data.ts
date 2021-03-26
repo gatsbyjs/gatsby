@@ -403,7 +403,7 @@ function finishQuery(
   const payload: IPageQueryRunAction["payload"] = {
     path: page.path!,
     componentPath: page.componentPath!,
-    isPage: true,
+    queryType: `page`,
     resultHash: `resultHash`,
     queryHash: `queryHash`,
   }

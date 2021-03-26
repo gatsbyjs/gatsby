@@ -37,9 +37,7 @@ export const jobsV2Reducer = (
 
       const isOutdatedJobsState =
         cleanStateKeys.length !== Object.keys(state).length ||
-        cleanStateKeys.some(
-          key => !Object.prototype.hasOwnProperty.call(state, key)
-        )
+        cleanStateKeys.some(key => !Object.hasOwn(state, key))
 
       return action.cacheIsCorrupt || isOutdatedJobsState ? cleanState : state
     }

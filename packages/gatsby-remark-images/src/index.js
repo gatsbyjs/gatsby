@@ -429,8 +429,8 @@ module.exports = (
           const overWrites = {}
           let refNode
           if (
-            !node.hasOwnProperty(`url`) &&
-            node.hasOwnProperty(`identifier`)
+            !Object.hasOwn(node, `url`) &&
+            Object.hasOwn(node, `identifier`)
           ) {
             // consider as imageReference node
             refNode = node

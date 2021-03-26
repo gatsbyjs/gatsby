@@ -1,7 +1,7 @@
 import React from "react";
 import Img from "gatsby-image";
 import { useStaticQuery, graphql } from "gatsby";
-export const Hero: React.SFC = ({ children }) => {
+export const Hero: React.FC = ({ children }) => {
     const data = useStaticQuery(graphql`
         {
             file(relativePath: { eq: "banner.jpg" }) {

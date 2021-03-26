@@ -521,7 +521,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
             // can be any valid JSON API filter query string.
             // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
             if (typeof filters === `object`) {
-              if (filters.hasOwnProperty(type)) {
+              if (Object.hasOwn(filters, type)) {
                 url = new URL(url)
                 const filterParams = new URLSearchParams(filters[type])
                 const filterKeys = Array.from(filterParams.keys())

@@ -290,7 +290,7 @@ export class WorkerPool<
             error.stack = msg[4]
 
             for (const key in extra) {
-              if (Object.prototype.hasOwnProperty.call(extra, key)) {
+              if (Object.hasOwn(extra, key)) {
                 error[key] = extra[key]
               }
             }

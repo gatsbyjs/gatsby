@@ -94,7 +94,7 @@ exports.onPostBootstrap = async (
         /* localization requires unique filenames for output files if a different src Icon is defined.
            otherwise one language would override anothers icons in automatic mode.
         */
-        if (locale.hasOwnProperty(`icon`) && !locale.hasOwnProperty(`icons`)) {
+        if (Object.hasOwn(locale, `icon`) && !Object.hasOwn(locale, `icons`)) {
           // console.debug(`OVERRIDING CACHE BUSTING`, locale)
           cacheModeOverride = { cache_busting_mode: `name` }
         }

@@ -32,12 +32,12 @@ const requireUncached = (file: string): any => {
 const getDebugPort = (port?: number): number => port ?? 9229
 
 export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
-  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
+  if (Object.hasOwn(program, `inspect`)) {
     return {
       port: getDebugPort(program.inspect),
       break: false,
     }
-  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
+  } else if (Object.hasOwn(program, `inspectBrk`)) {
     return {
       port: getDebugPort(program.inspectBrk),
       break: true,

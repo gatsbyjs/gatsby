@@ -57,13 +57,7 @@ export function getErrorFormatter(): PrettyError {
   const baseRender = prettyError.render
 
   prettyError.skipNodeFiles()
-  prettyError.skipPackage(
-    `regenerator-runtime`,
-    `graphql`,
-    `core-js`
-    // `static-site-generator-webpack-plugin`,
-    // `tapable`, // webpack
-  )
+  prettyError.skipPackage(`regenerator-runtime`, `graphql`, `core-js`)
 
   // @ts-ignore the type defs in prettyError are wrong
   prettyError.skip((traceLine: any) => {

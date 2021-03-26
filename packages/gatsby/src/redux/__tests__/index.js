@@ -59,7 +59,7 @@ jest.mock(`fs-extra`, () => {
         `some`,
         `tmp` + suffix + Math.random()
       )
-      mockWrittenContent.set(dir, Buffer(`empty dir`))
+      mockWrittenContent.set(dir, Buffer.from(`empty dir`))
       return dir
     }),
     removeSync: jest.fn(file => mockWrittenContent.delete(file)),

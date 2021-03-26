@@ -53,7 +53,7 @@ describe(`webpack utils`, () => {
       const { options } = rule.use({
         issuer: `/Users/sidharthachatterjee/Code/gatsby-seo-test/.cache/_this_is_virtual_fs_path_/async-requires.js`,
       })[0]
-      expect(options.isPageTemplate).toBeTrue()
+      expect(options.isPageTemplate).toBe(true)
     })
     describe(`include function`, () => {
       let js

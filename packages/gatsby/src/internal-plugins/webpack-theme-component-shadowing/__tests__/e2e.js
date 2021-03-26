@@ -176,7 +176,7 @@ test.each([
         // expeced structure here.
 
         if (fs.existsSync(`node_modules`)) {
-          fs.rmdirSync(`node_modules`, { recursive: true })
+          fs.rmSync(`node_modules`, { recursive: true })
         }
         fs.mkdirSync(`node_modules`)
         process.chdir(`node_modules`)
@@ -190,7 +190,7 @@ test.each([
       },
       cleanup: () => {
         process.chdir(`../..`)
-        fs.rmdirSync(`node_modules`, { recursive: true })
+        fs.rmSync(`node_modules`, { recursive: true })
       },
     },
     [
