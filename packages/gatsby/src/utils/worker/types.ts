@@ -1,4 +1,4 @@
-import type Worker from "jest-worker"
+import type { Worker } from "jest-worker"
 
 type WrapReturnOfAFunctionInAPromise<
   FunctionThatDoesNotReturnAPromise extends (...args: Array<any>) => any
