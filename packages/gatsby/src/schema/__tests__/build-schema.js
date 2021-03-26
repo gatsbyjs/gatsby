@@ -890,6 +890,95 @@ describe(`Build schema`, () => {
       expect(report.warn).not.toHaveBeenCalled()
     })
 
+    it(`merges interfaces extending other interfaces`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          `interface Bar { bar: String }`,
+          `interface Baz implements Foo { foo: String }`,
+          `interface Baz implements Bar & Node { bar: String, id: ID! }`,
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Baz = schema.getType(`Baz`)
+      const interfaces = Baz.getInterfaces().map(iface => iface.name)
+      expect(interfaces).toEqual([`Foo`, `Bar`, `Node`])
+    })
+
+    it(`merges interfaces extending other interfaces (Type Builder)`, async () => {
+      createTypes(
+        [
+          `interface Foo { foo: String }`,
+          buildInterfaceType({
+            name: `Bar`,
+            fields: {
+              bar: `String`,
+            },
+          }),
+          buildInterfaceType({
+            name: `Baz`,
+            fields: {
+              foo: `String`,
+            },
+            interfaces: [`Foo`],
+          }),
+          buildInterfaceType({
+            name: `Baz`,
+            fields: {
+              id: `ID!`,
+              bar: `String`,
+            },
+            interfaces: [`Bar`, `Node`],
+          }),
+        ],
+        {
+          name: `default-site-plugin`,
+        }
+      )
+      const schema = await buildSchema()
+      const Baz = schema.getType(`Baz`)
+      const interfaces = Baz.getInterfaces().map(iface => iface.name)
+      expect(interfaces).toEqual([`Foo`, `Bar`, `Node`])
+    })
+
+    it(`merges interfaces extending other interfaces (graphql-js)`, async () => {
+      const Foo = new GraphQLInterfaceType({
+        name: `Foo`,
+        fields: {
+          foo: { type: GraphQLString },
+        },
+      })
+      const Bar = new GraphQLInterfaceType({
+        name: `Bar`,
+        fields: {
+          bar: { type: GraphQLString },
+        },
+      })
+      const Baz1 = new GraphQLInterfaceType({
+        name: `Baz`,
+        fields: {
+          foo: { type: GraphQLString },
+        },
+        interfaces: [Foo],
+      })
+      const Baz2 = new GraphQLInterfaceType({
+        name: `Baz`,
+        fields: {
+          bar: { type: GraphQLString },
+        },
+        interfaces: [Bar],
+      })
+
+      createTypes([Foo, Bar, Baz1, Baz2], { name: `default-site-plugin` })
+      const schema = await buildSchema()
+      const Baz = schema.getType(`Baz`)
+      const interfaces = Baz.getInterfaces().map(iface => iface.name)
+      expect(interfaces).toEqual([`Foo`, `Bar`])
+    })
+
     it(`merges plugin-defined type (Type Builder) with overridable built-in type without warning`, async () => {
       createTypes(
         [
