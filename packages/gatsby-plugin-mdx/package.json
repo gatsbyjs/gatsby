@@ -28,7 +28,7 @@
     "@babel/preset-react": "^7.14.0",
     "@babel/types": "^7.14.0",
     "camelcase-css": "^2.0.1",
-    "change-case": "^3.1.0",
+    "camel-case": "^4.1.2",
     "core-js": "^3.6.5",
     "dataloader": "^1.4.0",
     "debug": "^4.3.1",
