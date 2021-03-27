@@ -80,17 +80,25 @@ In order to display this component within a Markdown file, you'll need to add a 
 2.  Import `rehype-react` and whichever components you wish to use
 
     ```js
+    import { createElement } from "react"
     import rehypeReact from "rehype-react"
+    import unified from "unified"
     import Counter from "../components/Counter"
     ```
 
 3.  Create a render function with references to your custom components
 
     ```js
-    const renderAst = new rehypeReact({
-      createElement: React.createElement,
-      components: { "interactive-counter": Counter },
-    }).Compiler
+    const processor = unified().use(rehypeReact, {
+      createElement,
+      components: {
+        "interactive-counter": Counter,
+      },
+    })
+
+    export const renderAst = (ast: any): JSX.Element => {
+      return (processor.stringify(ast) as unknown) as JSX.Element
+    }
     ```
 
     I prefer to use hyphenated names to make it clear that it's a custom component.
