@@ -1,5 +1,5 @@
 ---
-title: Accessibility Statement
+Title: Accessibility Statement
 ---
 
 We want everyone who uses Gatsby to feel welcome and find the experience rewarding: this includes developers with disabilities and users with disabilities for Gatsby sites, docs, and resources.
@@ -22,7 +22,7 @@ Alternatively, we welcome you to reach out to us via email at Gatsby: [accessibi
 
 ## Building with Gatsby
 
-To learn how to build an accessible website with Gatsby, visit our guide [Making Your Site Accessible](/docs/conceptual/making-your-site-accessible/). Contributions are very welcome as this page evolves.
+To learn how to build an accessible website with Gatsby, visit our guide [Making Your Site Accessible](https://www.gatsbyjs.com/docs/conceptual/making-your-site-accessible/). Contributions are very welcome as this page evolves.
 
 ## Third-party platforms, products and services
 
