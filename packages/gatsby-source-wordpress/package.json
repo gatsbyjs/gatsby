@@ -58,8 +58,7 @@
     "identity-obj-proxy": "^3.0.0",
     "react-test-renderer": "^16.12.0",
     "rimraf": "^3.0.2",
-    "tree-kill": "^1.2.2",
-    "wait-on": "^4.0.0"
+    "tree-kill": "^1.2.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
   "keywords": [

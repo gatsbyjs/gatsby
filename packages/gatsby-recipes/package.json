@@ -89,8 +89,8 @@
     "rollup-plugin-internal": "^1.0.4",
     "subscriptions-transport-ws": "^0.9.19",
     "terminal-link": "^2.0.0",
-    "tmp-promise": "^2.1.0",
-    "urql": "^1.9.7"
+    "tmp-promise": "^3.0.2",
+    "urql": "^2.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-recipes#readme",
   "jest": {

@@ -44,7 +44,7 @@
     "subscriptions-transport-ws": "^0.9.19",
     "theme-ui": "^0.4.0-rc.14",
     "typescript": "^4.1.5",
-    "urql": "^1.11.6",
+    "urql": "^2.0.3",
     "yup": "^0.32.9"
   },
   "scripts": {
