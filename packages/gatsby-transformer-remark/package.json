@@ -23,7 +23,7 @@
     "remark-retext": "^4.0.0",
     "remark-stringify": "^9.0.1",
     "retext-english": "^3.0.4",
-    "sanitize-html": "^1.27.5",
+    "sanitize-html": "^2.4.0",
     "underscore.string": "^3.3.5",
     "unified": "^9.2.1",
     "unist-util-remove-position": "^3.0.0",
