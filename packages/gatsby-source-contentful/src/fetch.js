@@ -4,6 +4,74 @@ const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
 
+/**
+ * Generate a user friendly error message.
+ *
+ * Contentful's API has its own error message structure, which might change depending of internal server or authentification errors.
+ *
+ * Additionally the SDK strips the error object, sometimes:
+ * https://github.com/contentful/contentful.js/blob/b67b77ac8c919c4ec39203f8cac2043854ab0014/lib/create-contentful-api.js#L89-L99
+ *
+ * This code tries to work around this.
+ */
+const createContentfulErrorMessage = e => {
+  if (typeof e === `string`) {
+    return e
+  }
+  // If we got a response, it is very likely that it is a Contentful API error.
+  if (e.response) {
+    let parsedContentfulErrorData = null
+
+    // Parse JSON response data, and add it to the object.
+    if (typeof e.response.data === `string`) {
+      try {
+        parsedContentfulErrorData = JSON.parse(e.response.data)
+      } catch (err) {
+        e.message = e.response.data
+      }
+      // If response data was parsed already, just add it.
+    } else if (typeof e.response.data === `object`) {
+      parsedContentfulErrorData = e.response.data
+    }
+
+    e = { ...e, ...e.response, ...parsedContentfulErrorData }
+  }
+
+  let errorMessage = [
+    // Generic error values
+    e.code && String(e.code),
+    e.status && String(e.status),
+    e.statusText,
+    // Contentful API error response values
+    e.sys?.id,
+  ]
+    .filter(Boolean)
+    .join(` `)
+
+  // Add message if it exists. Usually error default or Contentful's error message
+  if (e.message) {
+    errorMessage += `\n\n${e.message}`
+  }
+
+  // Get request ID from headers or Contentful's error data
+  const requestId =
+    (e.headers &&
+      typeof e.headers === `object` &&
+      e.headers[`x-contentful-request-id`]) ||
+    e.requestId
+
+  if (requestId) {
+    errorMessage += `\n\nRequest ID: ${requestId}`
+  }
+
+  // Tell the user about how many request attempts Contentful SDK made
+  if (e.attempts) {
+    errorMessage += `\n\nThe request was sent with ${e.attempts} attempts`
+  }
+
+  return errorMessage
+}
+
 module.exports = async function contentfulFetch({
   syncToken,
   pluginConfig,
@@ -11,7 +79,6 @@ module.exports = async function contentfulFetch({
 }) {
   // Fetch articles.
   let syncProgress
-  let syncItemCount = 0
   const pageLimit = pluginConfig.get(`pageLimit`)
   const contentfulClientOptions = {
     space: pluginConfig.get(`spaceId`),
@@ -22,8 +89,8 @@ module.exports = async function contentfulFetch({
     integration: `gatsby-source-contentful`,
     responseLogger: response => {
       function createMetadataLog(response) {
-        if (process.env.gatsby_log_level === `verbose`) {
-          return ``
+        if (!response.headers) {
+          return null
         }
         return [
           response?.headers[`content-length`] &&
@@ -37,42 +104,30 @@ module.exports = async function contentfulFetch({
           .join(` `)
       }
 
-      // Log error and throw it in an extended shape
-      if (response.isAxiosError) {
-        reporter.verbose(
-          `${response.config.method} /${response.config.url}: ${
-            response.response.status
-          } ${response.response.statusText} (${createMetadataLog(
-            response.response
-          )})`
-        )
-        let errorMessage = `${response.response.status} ${response.response.statusText}`
-        if (response.response?.data?.message) {
-          errorMessage += `\n\n${response.response.data.message}`
-        }
-        const contentfulApiError = new Error(errorMessage)
-        // Special response naming to ensure the error object is not touched by
-        // https://github.com/contentful/contentful.js/commit/41039afa0c1462762514c61458556e6868beba61
-        contentfulApiError.responseData = response.response
-        contentfulApiError.request = response.request
-        contentfulApiError.config = response.config
-
-        throw contentfulApiError
-      }
-
       // Sync progress
-      if (response.config.url === `sync`) {
-        syncItemCount += response.data.items.length
-        syncProgress.total = syncItemCount
+      if (
+        response.config.url === `sync` &&
+        !response.isAxiosError &&
+        response?.data.items
+      ) {
         syncProgress.tick(response.data.items.length)
       }
 
+      const metadataLog = createMetadataLog(response)
+
       reporter.verbose(
-        `${response.config.method} /${response.config.url}: ${
-          response.status
-        } ${response.statusText} (${createMetadataLog(response)})`
+        [
+          `${response.config.method} /${response.config.url}:`,
+          response.status,
+          response.statusText,
+          metadataLog && `(${metadataLog})`,
+        ]
+          .filter(Boolean)
+          .join(` `)
       )
     },
+    // Allow passing of custom configuration to the Contentful SDK like headers
+    ...(pluginConfig.get(`contentfulClientConfig`) || {}),
   }
 
   const client = contentful.createClient(contentfulClientOptions)
@@ -98,15 +153,12 @@ module.exports = async function contentfulFetch({
     if (e.code === `ENOTFOUND`) {
       details = `You seem to be offline`
     } else if (e.code === `SELF_SIGNED_CERT_IN_CHAIN`) {
-      reporter.panic(
-        {
-          id: CODES.SelfSignedCertificate,
-          context: {
-            sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
-          },
+      reporter.panic({
+        id: CODES.SelfSignedCertificate,
+        context: {
+          sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
         },
-        e
-      )
+      })
     } else if (e.responseData) {
       if (e.responseData.status === 404) {
         // host and space used to generate url
@@ -131,7 +183,10 @@ module.exports = async function contentfulFetch({
 
     reporter.panic({
       context: {
-        sourceMessage: `Accessing your Contentful space failed: ${e.message}
+        sourceMessage: `Accessing your Contentful space failed: ${createContentfulErrorMessage(
+          e
+        )}
+
 Try setting GATSBY_CONTENTFUL_OFFLINE=true to see if we can serve from cache.
 ${details ? `\n${details}\n` : ``}
 Used options:
@@ -158,15 +213,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       : { initial: true, ...basicSyncConfig }
     currentSyncData = await client.sync(query)
   } catch (e) {
-    reporter.panic(
-      {
-        id: CODES.SyncError,
-        context: {
-          sourceMessage: `Fetching contentful data failed: ${e.message}`,
-        },
+    reporter.panic({
+      id: CODES.SyncError,
+      context: {
+        sourceMessage: `Fetching contentful data failed: ${createContentfulErrorMessage(
+          e
+        )}`,
       },
-      e
-    )
+    })
   } finally {
     syncProgress.done()
   }
@@ -177,15 +231,14 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
   try {
     contentTypes = await pagedGet(client, `getContentTypes`, pageLimit)
   } catch (e) {
-    reporter.panic(
-      {
-        id: CODES.FetchContentTypes,
-        context: {
-          sourceMessage: `Error fetching content types: ${e.message}`,
-        },
+    reporter.panic({
+      id: CODES.FetchContentTypes,
+      context: {
+        sourceMessage: `Error fetching content types: ${createContentfulErrorMessage(
+          e
+        )}`,
       },
-      e
-    )
+    })
   }
   reporter.verbose(`Content types fetched ${contentTypes.items.length}`)
 
