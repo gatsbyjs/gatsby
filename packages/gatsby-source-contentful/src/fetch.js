@@ -159,8 +159,8 @@ module.exports = async function contentfulFetch({
           sourceMessage: `We couldn't make a secure connection to your contentful space. Please check if you have any self-signed SSL certificates installed.`,
         },
       })
-    } else if (e.responseData) {
-      if (e.responseData.status === 404) {
+    } else if (e.status) {
+      if (e.status === 404) {
         // host and space used to generate url
         details = `Endpoint not found. Check if ${chalk.yellow(
           `host`
@@ -169,7 +169,7 @@ module.exports = async function contentfulFetch({
           host: `Check if setting is correct`,
           spaceId: `Check if setting is correct`,
         }
-      } else if (e.responseData.status === 401) {
+      } else if (e.status === 401) {
         // authorization error
         details = `Authorization error. Check if ${chalk.yellow(
           `accessToken`
@@ -222,7 +222,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
         if (
-          e.responseData.data.message.includes(`Response size too big`) &&
+          e.response?.data?.message.includes(`Response size too big`) &&
           currentPageLimit > 1
         ) {
           lastCurrentPageLimit = currentPageLimit

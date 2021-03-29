@@ -255,7 +255,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API 404 response handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
-      err.responseData = { status: 404 }
+      err.status = 404
       throw err
     })
 
@@ -295,7 +295,7 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API authorization error handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
-      err.responseData = { status: 401 }
+      err.status = 401
       throw err
     })
 
