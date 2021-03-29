@@ -11,7 +11,7 @@
     "gatsby-core-utils": "^2.3.0-next.0",
     "gatsby-plugin-utils": "^1.3.0-next.0",
     "semver": "^7.3.2",
-    "sharp": "^0.27.0"
+    "sharp": "^0.28.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",

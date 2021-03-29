@@ -14,7 +14,7 @@
     "potrace": "^2.1.8",
     "probe-image-size": "^6.0.0",
     "semver": "^7.3.4",
-    "sharp": "^0.27.0"
+    "sharp": "^0.28.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
