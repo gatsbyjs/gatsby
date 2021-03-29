@@ -7,12 +7,14 @@
   Gatsby v3
 </h1>
 
-<h3 align="center">
+<p align="center">
   ⚛️ 📄 🚀
-</h3>
-<h3 align="center">
-  Fast in every way that matters
-</h3>
+</p>
+<p align="center">
+  <strong>
+    Fast in every way that matters
+  </strong>
+</p>
 <p align="center">
   Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
@@ -40,7 +42,7 @@
   </a>
 </p>
 
-<h3 align="center">
+<h2 align="center">
   <a href="https://www.gatsbyjs.com/docs/">Quickstart</a>
   <span> · </span>
   <a href="https://www.gatsbyjs.com/tutorial/">Tutorial</a>
@@ -56,7 +58,7 @@
   Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
-</h3>
+</h2>
 
 Gatsby is a modern web framework for blazing fast websites.
 
