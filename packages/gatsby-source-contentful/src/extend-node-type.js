@@ -802,6 +802,9 @@ exports.extendNodeType = ({ type, store }) => {
 
     fieldConfig.type = GraphQLJSON
 
+    fieldConfig.args.placeholder.defaultValue = `dominantColor`
+    fieldConfig.args.layout.defaultValue = `constrained`
+
     return fieldConfig
   }
 
