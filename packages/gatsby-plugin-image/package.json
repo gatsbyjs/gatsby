@@ -47,6 +47,7 @@
     "@types/babel__code-frame": "^7.0.3",
     "@types/babel__core": "^7.20.0",
     "@types/babel__traverse": "^7.18.3",
+    "@types/common-tags": "^1.8.1",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^14.18.36",
     "@types/prop-types": "^15.7.5",
@@ -57,13 +58,13 @@
     "cross-env": "^7.0.3",
     "cssnano": "^5.1.14",
     "del-cli": "^5.0.0",
-    "do-sync": "^3.1.1",
+    "do-sync": "^5.30.19",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "prepend-directive": "^1.1.0",
-    "terser": "^5.16.1",
-    "typescript": "^4.9.4"
+    "terser": "^5.16.3",
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "@babel/core": "^7.12.3",

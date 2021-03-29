@@ -39,7 +39,7 @@ export type GatsbyGraphQLType<TSource, TContext> =
     }
   | {
       kind: GatsbyGraphQLTypeKind.SCALAR
-      config: ComposeScalarTypeConfig<any, any>
+      config: ComposeScalarTypeConfig<TSource, TContext>
     }
 
 function buildObjectType<TSource, TContext>(
@@ -88,7 +88,7 @@ function buildEnumType<TSource, TContext>(
 }
 
 function buildScalarType<TSource, TContext>(
-  config: ComposeScalarTypeConfig<any, any>
+  config: ComposeScalarTypeConfig<TSource, TContext>
 ): GatsbyGraphQLType<TSource, TContext> {
   return {
     kind: GatsbyGraphQLTypeKind.SCALAR,

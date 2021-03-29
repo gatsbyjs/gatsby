@@ -18,6 +18,7 @@
   "devDependencies": {
     "@ascorbic/worker-threads-shim": "^1.0.0",
     "@lukeed/uuid": "^2.0.0",
+    "@types/common-tags": "^1.8.1",
     "@types/configstore": "^4.0.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^14.18.36",
@@ -29,7 +30,7 @@
     "gatsby-plugin-utils": "^4.7.0-next.0",
     "joi": "^17.7.0",
     "microbundle": "^0.15.1",
-    "node-fetch": "^2.6.8",
+    "node-fetch": "^2.6.9",
     "string-length": "^4.0.2",
     "terminal-link": "^2.1.1",
     "tiny-spin": "^1.0.2"

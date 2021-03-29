@@ -10,7 +10,7 @@ export const Hero: React.FC = ({ children }) => {
   }
 }`);
     return (
-        <GatsbyImage
+        (<GatsbyImage
             image={data.file.childImageSharp.gatsbyImageData}
             alt="A panorama of Skara Brae, Orkney"
             style={{
@@ -19,7 +19,7 @@ export const Hero: React.FC = ({ children }) => {
                 top: 0,
                 left: 0,
                 zIndex: -1
-            }} />
+            }} />)
     );
 };
 export default Hero;

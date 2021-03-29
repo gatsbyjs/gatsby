@@ -1,4 +1,4 @@
-import { RootDatabase, open, ArrayLikeIterable } from "lmdb"
+import { RootDatabase, open, RangeIterable } from "lmdb"
 // import { performance } from "perf_hooks"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
@@ -104,7 +104,6 @@ function getDatabases(): ILmdbDatabases {
         name: `nodes`,
         // FIXME: sharedStructuresKey breaks tests - probably need some cleanup for it on DELETE_CACHE
         // sharedStructuresKey: Symbol.for(`structures`),
-        // @ts-ignore
         cache: {
           // expirer: false disables LRU part and only take care of WeakRefs
           // this way we don't retain nodes strongly, but will continue to
@@ -166,7 +165,7 @@ function iterateNodes(): GatsbyIterable<IGatsbyNode> {
     nodesDb
       .getKeys({ snapshot: false })
       .map(nodeId => (typeof nodeId === `string` ? getNode(nodeId) : undefined))
-      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
+      .filter(Boolean) as RangeIterable<IGatsbyNode>
   )
 }
 
@@ -176,7 +175,7 @@ function iterateNodesByType(type: string): GatsbyIterable<IGatsbyNode> {
     nodesByType
       .getValues(type)
       .map(nodeId => getNode(nodeId))
-      .filter(Boolean) as ArrayLikeIterable<IGatsbyNode>
+      .filter(Boolean) as RangeIterable<IGatsbyNode>
   )
 }
 

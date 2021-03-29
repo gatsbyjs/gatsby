@@ -27,7 +27,7 @@
     "gatsby-core-utils": "^4.7.0-next.0",
     "gatsby-plugin-utils": "^4.7.0-next.0",
     "gatsby-source-filesystem": "^5.7.0-next.0",
-    "node-fetch": "^2.6.8",
+    "node-fetch": "^2.6.9",
     "sharp": "^0.31.3",
     "shift-left": "^0.1.5"
   },
@@ -37,9 +37,9 @@
     "@types/sharp": "^0.31.1",
     "cross-env": "^7.0.3",
     "gatsby-plugin-image": "^3.7.0-next.0",
-    "msw": "^0.49.3",
-    "tsc-watch": "^4.6.2",
-    "typescript": "^4.9.4"
+    "msw": "^1.0.0",
+    "tsc-watch": "^6.0.0",
+    "typescript": "^4.9.5"
   },
   "peerDependencies": {
     "gatsby-plugin-image": "^3.0.0-next"

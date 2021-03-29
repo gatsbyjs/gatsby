@@ -61,8 +61,7 @@ Array [
         "children": Array [],
         "content": "blue,funny
 TRUE,yup
-FALSE,nope
-",
+FALSE,nope",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -91,8 +90,7 @@ FALSE,nope
         "children": Array [],
         "content": "blue,funny
 TRUE,yup
-FALSE,nope
-",
+FALSE,nope",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -119,8 +117,7 @@ FALSE,nope
         "children": Array [],
         "content": "blue,funny
 TRUE,yup
-FALSE,nope
-",
+FALSE,nope",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -196,8 +193,7 @@ Array [
         "children": Array [],
         "content": "red,veryfunny
 TRUE,certainly
-FALSE,nada
-",
+FALSE,nada",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -226,8 +222,7 @@ FALSE,nada
         "children": Array [],
         "content": "red,veryfunny
 TRUE,certainly
-FALSE,nada
-",
+FALSE,nada",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -254,8 +249,7 @@ FALSE,nada
         "children": Array [],
         "content": "red,veryfunny
 TRUE,certainly
-FALSE,nada
-",
+FALSE,nada",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -331,8 +325,7 @@ Array [
         "children": Array [],
         "content": "red,veryfunny
 TRUE,certainly
-FALSE,nada
-",
+FALSE,nada",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -361,8 +354,7 @@ FALSE,nada
         "children": Array [],
         "content": "red,veryfunny
 TRUE,certainly
-FALSE,nada
-",
+FALSE,nada",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
@@ -389,8 +381,7 @@ FALSE,nada
         "children": Array [],
         "content": "red,veryfunny
 TRUE,certainly
-FALSE,nada
-",
+FALSE,nada",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {

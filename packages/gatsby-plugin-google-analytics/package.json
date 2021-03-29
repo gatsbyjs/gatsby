@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.20.13",
     "minimatch": "^6.1.6",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^3.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

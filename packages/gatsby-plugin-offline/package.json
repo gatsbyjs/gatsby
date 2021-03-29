@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "cheerio": "^1.0.0-rc.10",
+    "cheerio": "^1.0.0-rc.12",
     "gatsby-core-utils": "^4.7.0-next.0",
-    "glob": "^7.2.3",
+    "glob": "^8.1.0",
     "idb-keyval": "^3.2.0",
     "lodash": "^4.17.21",
     "workbox-build": "^4.3.1"

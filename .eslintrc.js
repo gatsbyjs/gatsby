@@ -193,6 +193,11 @@ module.exports = {
             format: null,
           },
           {
+            selector: [`objectLiteralProperty`, `typeProperty`],
+            format: null,
+            modifiers: [`requiresQuotes`],
+          },
+          {
             selector: `enum`,
             format: [`PascalCase`, `UPPER_CASE`],
           },
