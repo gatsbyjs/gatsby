@@ -19,12 +19,13 @@ function hasNoPlaceholder(el) {
 }
 
 function hasColorPlaceholder(el) {
-  el.should("have.css", "background-color").should("not.be.empty")
+  el.children(`div[data-placeholder-image]`)
+    .should("have.css", "background-color")
+    .should("not.be.empty")
 }
 
 function testGatsbyPluginImage(type, testPlaceholder) {
   if (testPlaceholder) {
-    cy.log("challo")
     cy.get(`[data-cy="${type}"]`)
       .find(".gatsby-image-wrapper")
       .each($el => {
@@ -33,7 +34,7 @@ function testGatsbyPluginImage(type, testPlaceholder) {
       })
   }
 
-  cy.get(`[data-cy="${type}"]`).scrollIntoView()
+  cy.get(`[data-cy="${type}"]`).scrollIntoView({ duration: 500 })
 
   // Wait for load
   cy.wait(1000)
@@ -55,7 +56,7 @@ describe(`gatsby-plugin-image`, () => {
   })
 
   it(`constrained`, () =>
-    testGatsbyPluginImage(`constrained`, hasSVGPlaceholder))
+    testGatsbyPluginImage(`constrained`, hasColorPlaceholder))
   it(`full-width`, () => testGatsbyPluginImage(`full-width`, hasNoPlaceholder))
   it(`fixed`, () => testGatsbyPluginImage(`fixed`, hasNoPlaceholder))
   it(`dominant-color`, () =>
