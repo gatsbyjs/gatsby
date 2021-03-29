@@ -226,6 +226,8 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
           currentPageLimit > 1
         ) {
           lastCurrentPageLimit = currentPageLimit
+          // Reduce page limit by a arbitrary 1/3 of the current limit to ensure
+          // the new and bigger entries are synced without exceeding the reponse size limit
           currentPageLimit = Math.floor((currentPageLimit / 3) * 2) || 1
           reporter.warn(
             [
