@@ -222,7 +222,7 @@ ${formatPluginOptionsForCLI(pluginConfig.getOriginalPluginOptions(), errors)}`,
       } catch (e) {
         // Back off page limit if responses content length exceeds Contentfuls limits.
         if (
-          e.responseData.data.message.indexOf(`Response size too big`) !== -1 &&
+          e.responseData.data.message.includes(`Response size too big`) &&
           currentPageLimit > 1
         ) {
           lastCurrentPageLimit = currentPageLimit
