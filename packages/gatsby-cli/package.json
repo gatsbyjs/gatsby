@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
     "@types/common-tags": "^1.8.0",
-    "better-opn": "^2.0.0",
+    "better-opn": "^3.0.0",
     "chalk": "^4.1.0",
     "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
@@ -61,7 +61,7 @@
     "babel-preset-gatsby-package": "^1.8.0-next.1",
     "cross-env": "^7.0.3",
     "ink": "^3.0.8",
-    "ink-spinner": "^4.0.1",
+    "ink-spinner": "^4.0.2",
     "npm-run-all": "4.1.5",
     "react": "^16.9.0",
     "rimraf": "^3.0.2",
