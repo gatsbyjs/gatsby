@@ -13,5 +13,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-sqip`,
+    `gatsby-plugin-image`,
   ],
 }
