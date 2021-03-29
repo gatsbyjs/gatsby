@@ -77,10 +77,7 @@ const GatsbyPluginImagePage = ({ data }) => {
             </p>
             {node.description && <p>{node.description}</p>}
             {node.dominantColor ? (
-              <GatsbyImage
-                image={node.dominantColor}
-                backgroundColor={node.dominantColor.backgroundColor}
-              />
+              <GatsbyImage image={node.dominantColor} />
             ) : (
               <SvgImage src={node.file.url} />
             )}
@@ -178,7 +175,7 @@ export const pageQuery = graphql`
           fileName
           url
         }
-        constrained: gatsbyImageData(width: 420, layout: CONSTRAINED)
+        constrained: gatsbyImageData(width: 420)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)
         fixed: gatsbyImageData(width: 200, layout: FIXED)
         dominantColor: gatsbyImageData(
