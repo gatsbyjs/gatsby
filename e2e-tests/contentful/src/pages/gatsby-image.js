@@ -4,6 +4,7 @@ import * as React from "react"
 
 import Layout from "../components/layout"
 import Grid from "../components/grid"
+import SvgImage from "../components/svg-image"
 
 const GatsbyImagePage = ({ data }) => {
   return (
@@ -19,7 +20,11 @@ const GatsbyImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage fluid={node.fluid}></GatsbyImage>
+            {node.fluid ? (
+              <GatsbyImage fluid={node.fluid} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -34,7 +39,11 @@ const GatsbyImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage fixed={node.fixed}></GatsbyImage>
+            {node.fixed ? (
+              <GatsbyImage fixed={node.fixed} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -49,7 +58,11 @@ const GatsbyImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage fixed={node.webp}></GatsbyImage>
+            {node.webp ? (
+              <GatsbyImage fixed={node.webp} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -64,7 +77,11 @@ const GatsbyImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage fixed={node.traced} />
+            {node.traced ? (
+              <GatsbyImage fixed={node.traced} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -79,12 +96,16 @@ const GatsbyImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage
-              fixed={{
-                ...node.fixed,
-                base64: node?.sqip?.dataURI,
-              }}
-            />
+            {node?.sqip?.dataURI && node.fixed ? (
+              <GatsbyImage
+                fixed={{
+                  ...node.fixed,
+                  base64: node?.sqip?.dataURI,
+                }}
+              />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -99,7 +120,11 @@ export const pageQuery = graphql`
     allContentfulAsset(
       filter: {
         contentful_id: {
-          in: ["3ljGfnpegOnBTFGhV07iC1", "3BSI9CgDdAn1JchXmY5IJi"]
+          in: [
+            "3ljGfnpegOnBTFGhV07iC1"
+            "3BSI9CgDdAn1JchXmY5IJi"
+            "65syuRuRVeKi03HvRsOkkb"
+          ]
         }
       }
       sort: { fields: contentful_id }
@@ -109,6 +134,7 @@ export const pageQuery = graphql`
         description
         file {
           fileName
+          url
         }
         fluid(maxWidth: 420) {
           ...GatsbyContentfulFluid

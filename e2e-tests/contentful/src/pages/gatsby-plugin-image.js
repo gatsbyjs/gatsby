@@ -4,6 +4,7 @@ import * as React from "react"
 
 import Layout from "../components/layout"
 import Grid from "../components/grid"
+import SvgImage from "../components/svg-image"
 
 const GatsbyPluginImagePage = ({ data }) => {
   return (
@@ -19,7 +20,11 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage image={node.constrained}></GatsbyImage>
+            {node.constrained ? (
+              <GatsbyImage image={node.constrained} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -33,7 +38,11 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage image={node.fullWidth}></GatsbyImage>
+            {node.fullWidth ? (
+              <GatsbyImage image={node.fullWidth} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -48,7 +57,11 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage image={node.fixed}></GatsbyImage>
+            {node.fixed ? (
+              <GatsbyImage image={node.fixed} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -63,10 +76,14 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage
-              image={node.dominantColor}
-              backgroundColor={node.dominantColor.backgroundColor}
-            />
+            {node.dominantColor ? (
+              <GatsbyImage
+                image={node.dominantColor}
+                backgroundColor={node.dominantColor.backgroundColor}
+              />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -81,7 +98,11 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage image={node.traced} />
+            {node.traced ? (
+              <GatsbyImage image={node.traced} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -96,7 +117,11 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage image={node.blurred} />
+            {node.blurred ? (
+              <GatsbyImage image={node.blurred} />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -111,14 +136,18 @@ const GatsbyPluginImagePage = ({ data }) => {
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
-            <GatsbyImage
-              image={{
-                ...node.fixed,
-                placeholder: node?.sqip?.dataURI
-                  ? { fallback: node.sqip.dataURI }
-                  : null,
-              }}
-            />
+            {node.fixed && node?.sqip?.dataURI ? (
+              <GatsbyImage
+                image={{
+                  ...node.fixed,
+                  placeholder: node?.sqip?.dataURI
+                    ? { fallback: node.sqip.dataURI }
+                    : null,
+                }}
+              />
+            ) : (
+              <SvgImage src={node.file.url} />
+            )}
           </div>
         ))}
       </Grid>
@@ -133,7 +162,11 @@ export const pageQuery = graphql`
     allContentfulAsset(
       filter: {
         contentful_id: {
-          in: ["3ljGfnpegOnBTFGhV07iC1", "3BSI9CgDdAn1JchXmY5IJi"]
+          in: [
+            "3ljGfnpegOnBTFGhV07iC1"
+            "3BSI9CgDdAn1JchXmY5IJi"
+            "65syuRuRVeKi03HvRsOkkb"
+          ]
         }
       }
       sort: { fields: contentful_id }
@@ -143,6 +176,7 @@ export const pageQuery = graphql`
         description
         file {
           fileName
+          url
         }
         constrained: gatsbyImageData(width: 420, layout: CONSTRAINED)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)
