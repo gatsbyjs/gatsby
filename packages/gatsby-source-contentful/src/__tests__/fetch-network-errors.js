@@ -57,17 +57,17 @@ describe(`fetch-retry`, () => {
       .reply(200, { items: [{ code: `en`, default: true }] })
       // Sync
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=100`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .times(1)
       .replyWithError({ code: `ETIMEDOUT` })
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=100`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .reply(200, { items: [] })
       // Content types
       .get(
-        `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=100&order=sys.createdAt`
+        `/spaces/${options.spaceId}/environments/master/content_types?skip=0&limit=1000&order=sys.createdAt`
       )
       .reply(200, { items: [] })
 
@@ -90,7 +90,7 @@ describe(`fetch-retry`, () => {
       .reply(200, { items: [{ code: `en`, default: true }] })
       // Sync
       .get(
-        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=100`
+        `/spaces/${options.spaceId}/environments/master/sync?initial=true&limit=1000`
       )
       .times(3)
       .reply(

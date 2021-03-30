@@ -157,7 +157,7 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
 
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
-    limit: 100,
+    limit: 1000,
     order: `sys.createdAt`,
     skip: 0,
   })
