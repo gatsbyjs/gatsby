@@ -14,5 +14,6 @@ module.exports = {
     },
     `gatsby-transformer-sqip`,
     `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
   ],
 }
