@@ -160,7 +160,24 @@ module.exports = async function contentfulFetch({
         },
       })
     } else if (e.responseData) {
-      if (e.responseData.status === 404) {
+      if (
+        e.responseData.status === 404 &&
+        contentfulClientOptions.environment &&
+        contentfulClientOptions.environment !== `master`
+      ) {
+        // environments need to have access to master
+        details = `Unable to access your space. Check if ${chalk.yellow(
+          `environment`
+        )} is correct and your ${chalk.yellow(
+          `accessToken`
+        )} has access to the ${chalk.yellow(
+          contentfulClientOptions.environment
+        )} and the ${chalk.yellow(`master`)} environments.`
+        errors = {
+          accessToken: `Check if setting is correct`,
+          environment: `Check if setting is correct`,
+        }
+      } else if (e.responseData.status === 404) {
         // host and space used to generate url
         details = `Endpoint not found. Check if ${chalk.yellow(
           `host`
