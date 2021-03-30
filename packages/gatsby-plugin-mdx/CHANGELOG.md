@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.2.0-next.0...gatsby-plugin-mdx@2.2.0) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** timeToRead returns NaN when word count is 0 ([#30489](https://github.com/gatsbyjs/gatsby/issues/30489)) ([#30563](https://github.com/gatsbyjs/gatsby/issues/30563)) ([21804e3](https://github.com/gatsbyjs/gatsby/commit/21804e3987c7b82fc4e1a8d0599d357fe6dbf624))
+
 # [2.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.1.0-next.2...gatsby-plugin-mdx@2.2.0-next.0) (2021-03-11)
 
 ### Bug Fixes

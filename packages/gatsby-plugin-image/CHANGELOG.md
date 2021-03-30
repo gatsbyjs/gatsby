@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.2.0-next.1...gatsby-plugin-image@1.2.0) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Force render if props have changed ([#30491](https://github.com/gatsbyjs/gatsby/issues/30491)) ([#30565](https://github.com/gatsbyjs/gatsby/issues/30565)) ([9b8196b](https://github.com/gatsbyjs/gatsby/commit/9b8196b17586348e195a26e51798732e0f97ab99))
+- **gatsby-plugin-image:** Only use default breakpoints for fullwidth ([#30328](https://github.com/gatsbyjs/gatsby/issues/30328)) ([2393f3c](https://github.com/gatsbyjs/gatsby/commit/2393f3c9f6d3a11312ddd707632c0ab6e4885686))
+
+### Features
+
+- **gatsby-plugin-image:** data-srcset should be used to prevent overly eager loading on chrome ([#30348](https://github.com/gatsbyjs/gatsby/issues/30348)) ([9163f2f](https://github.com/gatsbyjs/gatsby/commit/9163f2f8284b10ef8792cf664065f70b352cd1c3))
+
 # [1.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.2.0-next.0...gatsby-plugin-image@1.2.0-next.1) (2021-03-19)
 
 ### Bug Fixes

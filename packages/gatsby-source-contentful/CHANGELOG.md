@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.2.0-next.1...gatsby-source-contentful@5.2.0) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** Contentful page limit backoff ([#30549](https://github.com/gatsbyjs/gatsby/issues/30549)) ([#30569](https://github.com/gatsbyjs/gatsby/issues/30569)) ([8302274](https://github.com/gatsbyjs/gatsby/commit/8302274720a6b27b41c467aa14c09f4630932631))
+- **gatsby-source-contentful:** Improve network error handling ([#30257](https://github.com/gatsbyjs/gatsby/issues/30257)) ([#30568](https://github.com/gatsbyjs/gatsby/issues/30568)) ([cf975d0](https://github.com/gatsbyjs/gatsby/commit/cf975d0631e1f9f61791fa657b64c632036e4539))
+
+### Features
+
+- **gatsby-source-contentful:** Increase Contentful sync by up to 10x ([#30422](https://github.com/gatsbyjs/gatsby/issues/30422)) ([#30571](https://github.com/gatsbyjs/gatsby/issues/30571)) ([b3861fd](https://github.com/gatsbyjs/gatsby/commit/b3861fdc40fc48d71289d4e62a89d36a889efa50))
+
 # [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.2.0-next.0...gatsby-source-contentful@5.2.0-next.1) (2021-03-19)
 
 **Note:** Version bump only for package gatsby-source-contentful
