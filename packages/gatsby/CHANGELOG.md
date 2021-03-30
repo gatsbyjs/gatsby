@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.2...gatsby@3.1.3) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby:** update nested input types when rebuilding SitePage ([#30426](https://github.com/gatsbyjs/gatsby/issues/30426)) ([#30432](https://github.com/gatsbyjs/gatsby/issues/30432)) ([a742927](https://github.com/gatsbyjs/gatsby/commit/a742927a6b7ac5fc4f5b0306ca8290093c88eb22))
+
 ## [3.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.1.1...gatsby@3.1.2) (2021-03-23)
 
 ### Bug Fixes

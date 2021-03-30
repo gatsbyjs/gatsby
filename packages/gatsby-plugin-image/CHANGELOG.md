@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.2...gatsby-plugin-image@1.1.3) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correctly calculate aspect ratio when width and height are both set ([#30466](https://github.com/gatsbyjs/gatsby/issues/30466)) ([#30529](https://github.com/gatsbyjs/gatsby/issues/30529)) ([95cf933](https://github.com/gatsbyjs/gatsby/commit/95cf933fddca127bf055e906fc2c42149090d3ea))
+
 ## [1.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.1...gatsby-plugin-image@1.1.2) (2021-03-23)
 
 ### Bug Fixes
