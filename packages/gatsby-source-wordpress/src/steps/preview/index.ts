@@ -25,7 +25,8 @@ const inDevelopPreview =
 
 const inPreviewRunner =
   process.env.RUNNER_TYPE === `PREVIEW` ||
-  process.env.RUNNER_TYPE === `INCREMENTAL_PREVIEWS`
+  process.env.RUNNER_TYPE === `INCREMENTAL_PREVIEWS` ||
+  !!process.env.IS_GATSBY_PREVIEW
 
 // this is a function simply because many places in the code expect it to be.
 // it used to call store.getState() and check for some state to determine preview mode
