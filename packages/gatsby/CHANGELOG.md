@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.0...gatsby@3.3.0-next.1) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby:** Handle arrays of dates in distinct ([#30460](https://github.com/gatsbyjs/gatsby/issues/30460)) ([2f87f89](https://github.com/gatsbyjs/gatsby/commit/2f87f8934c4bf5a14d6ac5297d8f0ce37f55e223))
+- **gatsby:** merge inherited interfaces when merging types ([#30501](https://github.com/gatsbyjs/gatsby/issues/30501)) ([e1f1656](https://github.com/gatsbyjs/gatsby/commit/e1f1656b36e4912c1712cada0124fc38f4b4e07e))
+
 # [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.2.0-next.1...gatsby@3.3.0-next.0) (2021-03-25)
 
 ### Bug Fixes

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.0...gatsby-source-contentful@5.3.0-next.1) (2021-03-30)
+
+### Bug Fixes
+
+- **contentful:** ensure fragments are properly distributed ([#30555](https://github.com/gatsbyjs/gatsby/issues/30555)) ([079d7f8](https://github.com/gatsbyjs/gatsby/commit/079d7f80e42b1f6bf46620eb2eec124a229888c8))
+- **contentful:** set proper defaults for gatsby-plugin-image ([#30536](https://github.com/gatsbyjs/gatsby/issues/30536)) ([418c3bc](https://github.com/gatsbyjs/gatsby/commit/418c3bca3fc8eceefd51c4e66d3956722b2358f0))
+- **gatsby-source-contentful:** Contentful page limit backoff ([#30549](https://github.com/gatsbyjs/gatsby/issues/30549)) ([9d883c6](https://github.com/gatsbyjs/gatsby/commit/9d883c66093fee4c49c87377e7eb65ab2d83e482))
+- **gatsby-source-contentful:** Improve network error handling ([#30257](https://github.com/gatsbyjs/gatsby/issues/30257)) ([c1ac5e4](https://github.com/gatsbyjs/gatsby/commit/c1ac5e43309bc1e6201b948ab715bafc337feaf5))
+
+### Features
+
+- **gatsby-source-contentful:** Increase Contentful sync by up to 10x ([#30422](https://github.com/gatsbyjs/gatsby/issues/30422)) ([b9791fe](https://github.com/gatsbyjs/gatsby/commit/b9791feaba554fe19910ca9ab25f3cb660d3bf05))
+- **gatsby-source-contentful:** update docs and improve errors ([#30538](https://github.com/gatsbyjs/gatsby/issues/30538)) ([2cc90df](https://github.com/gatsbyjs/gatsby/commit/2cc90df8b43cd213bb8dd8d8bd0ddbc6087e81c4)), closes [#26909](https://github.com/gatsbyjs/gatsby/issues/26909)
+
 # [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.2.0-next.1...gatsby-source-contentful@5.3.0-next.0) (2021-03-25)
 
 **Note:** Version bump only for package gatsby-source-contentful
