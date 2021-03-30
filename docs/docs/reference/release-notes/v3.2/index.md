@@ -59,6 +59,17 @@ Fixes:
 - Improved help when connection credentials are wrong
 - Improved the docs and added more details about the `downloadLocal` config option
 
+---
+
+## Notable bugfixes & improvements
+
+- Be less aggressive about the [`fs` in SSR usage](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-ssr) warnings, now excluding `http(s).Agent` and `node-gyp-build` [PR #30216](https://github.com/gatsbyjs/gatsby/pull/30216)
+- Fixing rendering issues in `gatsby-plugin-image` with the placeholder and component itself [PR #30221](https://github.com/gatsbyjs/gatsby/pull/30221)
+- Documentation about [Debugging Incremental Builds](/docs/debugging-incremental-builds/) [PR #30329](https://github.com/gatsbyjs/gatsby/pull/30329)
+- Validate plugin options schema also for local plugins [PR #29787](https://github.com/gatsbyjs/gatsby/pull/29787)
+
+---
+
 ## Next version: major bump of all remark plugins
 
 Remark has had a significant [major upgrade](https://github.com/remarkjs/remark/releases/tag/13.0.0) recently and changed the underlying parser. The ecosystem seems to have almost [caught up](https://github.com/remarkjs/remark/blob/main/doc/plugins.md#list-of-plugins) since then, so we are going to release a new major version for all remark-related plugins soon.
@@ -84,15 +95,6 @@ gatsby-transformer-remark@alpha-remark13
 ```
 
 [Umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/30385)
-
----
-
-## Notable bugfixes & improvements
-
-- Be less aggressive about the [`fs` in SSR usage](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/#using-fs-in-ssr) warnings, now excluding `http(s).Agent` and `node-gyp-build` [PR #30216](https://github.com/gatsbyjs/gatsby/pull/30216)
-- Fixing rendering issues in `gatsby-plugin-image` with the placeholder and component itself [PR #30221](https://github.com/gatsbyjs/gatsby/pull/30221)
-- Documentation about [Debugging Incremental Builds](/docs/debugging-incremental-builds/) [PR #30329](https://github.com/gatsbyjs/gatsby/pull/30329)
-- Validate plugin options schema also for local plugins [PR #29787](https://github.com/gatsbyjs/gatsby/pull/29787)
 
 ## Contributors
 
