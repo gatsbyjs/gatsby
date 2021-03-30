@@ -3,7 +3,7 @@ import { cpuCoreCount } from "gatsby-core-utils"
 
 export const create = (): Worker =>
   new Worker(require.resolve(`./child`), {
-    numWorkers: cpuCoreCount(),
+    numWorkers: cpuCoreCount() - 1,
     forkOptions: {
       silent: false,
     },

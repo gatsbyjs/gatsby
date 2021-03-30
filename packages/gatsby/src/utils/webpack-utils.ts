@@ -1,7 +1,6 @@
 import * as path from "path"
 import { Loader, RuleSetRule, Plugin } from "webpack"
 import { GraphQLSchema } from "graphql"
-import postcss from "postcss"
 import autoprefixer from "autoprefixer"
 import flexbugs from "postcss-flexbugs-fixes"
 import TerserPlugin from "terser-webpack-plugin"
@@ -10,7 +9,7 @@ import CssMinimizerPlugin from "css-minimizer-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { getBrowsersList } from "./browserslist"
 import ESLintPlugin from "eslint-webpack-plugin"
-
+import { cpuCoreCount } from "gatsby-core-utils"
 import { GatsbyWebpackStatsExtractor } from "./gatsby-webpack-stats-extractor"
 import { GatsbyWebpackEslintGraphqlSchemaReload } from "./gatsby-webpack-eslint-graphql-schema-reload-plugin"
 import {
@@ -661,6 +660,7 @@ export const createWebpackUtils = (
         },
         ...terserOptions,
       },
+      parallel: cpuCoreCount() - 1,
       ...options,
     })
 
@@ -729,7 +729,11 @@ export const createWebpackUtils = (
         ],
       },
     }
-  ): CssMinimizerPlugin => new CssMinimizerPlugin(options)
+  ): CssMinimizerPlugin =>
+    new CssMinimizerPlugin({
+      parallel: cpuCoreCount() - 1,
+      ...options,
+    })
 
   plugins.fastRefresh = ({ modulesThatUseGatsby }): Plugin => {
     const regExpToHack = /node_modules/
