@@ -20,9 +20,18 @@ const testRequireError = (moduleName, err) => {
   return regex.test(firstLine)
 }
 
-const stats = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
-)
+let cachedStats
+const getStats = publicDir => {
+  if (cachedStats) {
+    return cachedStats
+  } else {
+    cachedStats = JSON.parse(
+      fs.readFileSync(join(publicDir, `webpack.stats.json`), `utf-8`)
+    )
+
+    return cachedStats
+  }
+}
 
 let Html
 try {
@@ -38,7 +47,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, callback) => {
+export default (pagePath, isClientOnlyPage, publicDir, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -103,7 +112,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
 
     const getPageData = pagePath => {
       const pageDataPath = getPageDataPath(pagePath)
-      const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
+      const absolutePageDataPath = join(publicDir, pageDataPath)
       const pageDataJson = fs.readFileSync(absolutePageDataPath, `utf8`)
 
       try {
@@ -121,6 +130,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
       [`commons`].map(chunkKey => {
         const fetchKey = `assetsByChunkName[${chunkKey}]`
 
+        const stats = getStats(publicDir)
         let chunks = get(stats, fetchKey)
         const namedChunkGroups = get(stats, `namedChunkGroups`)
 

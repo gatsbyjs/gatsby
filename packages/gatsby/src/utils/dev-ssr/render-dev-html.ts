@@ -215,12 +215,15 @@ export const renderDevHTML = ({
       isClientOnlyPage = true
     }
 
+    const publicDir = joinPath(directory, `public`)
+
     try {
       const htmlString = await worker.renderHTML({
         path,
         componentPath: pageObj.component,
         htmlComponentRendererPath,
         directory,
+        publicDir,
         isClientOnlyPage,
       })
       return resolve(htmlString)
