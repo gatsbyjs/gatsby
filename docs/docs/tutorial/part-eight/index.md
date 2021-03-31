@@ -26,7 +26,7 @@ Lighthouse is included in Chrome DevTools. Running its audit -- and then address
 
 Try it out!
 
-First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast; But the site that it generates, while closely resembling a production version of the site, isn't as optimized.
+First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast, but the site that it generates -- while closely resembling a production version of the site -- isn't as optimized.
 
 ### ✋ Create a production build
 
@@ -327,4 +327,4 @@ This is just the beginning. Keep going!
 
 Check out the ["how to contribute"](/contributing/how-to-contribute/) docs for even more ideas.
 
-We can't wait to see what you do 😄.
+We can't wait to see what you do! 😄
