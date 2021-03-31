@@ -3,6 +3,7 @@ import { ActionsUnion, IGatsbyState } from "../types"
 
 const defaultState: IGatsbyState["status"] = {
   PLUGINS_HASH: ``,
+  LAST_NODE_COUNTER: 0,
   plugins: {},
 }
 
@@ -41,6 +42,11 @@ export const statusReducer = (
             action.payload
           ),
         },
+      }
+    case `CREATE_NODE`:
+      return {
+        ...state,
+        LAST_NODE_COUNTER: action.payload.internal.counter,
       }
     default:
       return state

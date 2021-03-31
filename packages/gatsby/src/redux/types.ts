@@ -228,6 +228,7 @@ export interface IGatsbyState {
   status: {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
+    LAST_NODE_COUNTER: number
   }
   queries: {
     byNode: Map<Identifier, Set<Identifier>>

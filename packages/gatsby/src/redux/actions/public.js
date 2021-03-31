@@ -512,9 +512,17 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
   }
 }
 
-// We add a counter to internal to make sure we maintain insertion order for
-// backends that don't do that out of the box
-let NODE_COUNTER = 0
+// We add a counter to node.internal for fast comparisons/intersections
+// of various node slices. The counter must increase even across builds.
+function getNextNodeCounter() {
+  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
+  if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
+    throw new Error(
+      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
+    )
+  }
+  return lastNodeCounter + 1
+}
 
 const typeOwners = {}
 
@@ -614,8 +622,7 @@ const createNode = (
     node.internal = {}
   }
 
-  NODE_COUNTER++
-  node.internal.counter = NODE_COUNTER
+  node.internal.counter = getNextNodeCounter()
 
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
