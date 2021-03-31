@@ -459,3 +459,56 @@ describe(`applyFastFilters`, () => {
     expect(result.length).toBe(2)
   })
 })
+
+describe(`edge cases (yay)`, () => {
+  beforeAll(() => {
+    store.dispatch({ type: `DELETE_CACHE` })
+    mockNodes().forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
+  })
+
+  it(`throws when node counters are messed up`, () => {
+    const filter = {
+      slog: { $eq: `def` },
+      deep: { flat: { search: { chain: { $eq: 500 } } } },
+    }
+
+    const result = applyFastFilters(
+      createDbQueriesFromObject(filter),
+      [typeName],
+      new Map()
+    )
+
+    // Sanity-check
+    expect(result.length).toEqual(1)
+    expect(result[0].id).toEqual(`id_2`)
+
+    // Simulating first node creation after process restart.
+    //   It will get counter === 0 that will mess up fast filter results intersection
+    const badNode = {
+      id: `bad-node`,
+      deep: { flat: { search: { chain: 500 } } },
+      internal: {
+        type: typeName,
+        contentDigest: `bad-node`,
+        counter: 0,
+      },
+    }
+    store.dispatch({
+      type: `CREATE_NODE`,
+      payload: badNode,
+    })
+
+    const result2 = applyFastFilters(
+      createDbQueriesFromObject(filter),
+      [typeName],
+      new Map()
+    )
+
+    // Sanity-check
+    expect(result2).toEqual([])
+    expect(result2.length).toEqual(1)
+    expect(result2[0].id).toEqual(`id_2`)
+  })
+})
