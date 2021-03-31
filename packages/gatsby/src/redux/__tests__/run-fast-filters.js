@@ -503,12 +503,11 @@ describe(`edge cases (yay)`, () => {
       payload: badNode,
     })
 
-    const result2 = applyFastFilters(
-      createDbQueriesFromObject(filter),
-      [typeName],
-      new Map()
+    const run = () =>
+      applyFastFilters(createDbQueriesFromObject(filter), [typeName], new Map())
+
+    expect(run).toThrow(
+      `Invariant violation: inconsistent node counters detected`
     )
-    expect(result2.length).toEqual(1)
-    expect(result2[0].id).toEqual(`id_2`)
   })
 })
