@@ -66,8 +66,8 @@ You should now have a structure like this:
 ```text
 ├── package.json
 ├── src
-│   └── pages
-│       └── index.js
+│   ├── pages
+│   │   └── index.js
 │   └── styles
 │       └── global.css
 ```
@@ -96,8 +96,8 @@ Your project's file structure should now look like this:
 ```text
 ├── package.json
 ├── src
-│   └── pages
-│       └── index.js
+│   ├── pages
+│   │   └── index.js
 │   └── styles
 │       └── global.css
 ├── gatsby-browser.js
