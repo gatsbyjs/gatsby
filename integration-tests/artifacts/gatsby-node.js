@@ -38,6 +38,7 @@ exports.sourceNodes = ({
   createContentDigest,
   webhookBody,
   reporter,
+  getNode,
 }) => {
   if (webhookBody && webhookBody.runNumber) {
     runNumber = webhookBody.runNumber
@@ -115,6 +116,17 @@ exports.sourceNodes = ({
     label: `This is${isFirstRun ? `` : ` not`} a first run`, // this will be queried - we want to invalidate html here
   })
 
+  for (let prevRun = 1; prevRun < runNumber; prevRun++) {
+    const node = getNode(`node-created-in-run-${prevRun}`)
+    if (node) {
+      actions.touchNode(node)
+    }
+  }
+  createNodeHelper(`NodeCounterTest`, {
+    id: `node-created-in-run-${runNumber}`,
+    label: `Node created in run ${runNumber}`,
+  })
+
   for (const prevNode of previouslyCreatedNodes.values()) {
     if (!currentlyCreatedNodes.has(prevNode.id)) {
       actions.deleteNode({ node: prevNode })
@@ -186,7 +198,7 @@ exports.onPreBuild = () => {
 }
 
 let counter = 1
-exports.onPostBuild = async ({ graphql }) => {
+exports.onPostBuild = async ({ graphql, getNodes }) => {
   console.log(`[test] onPostBuild`)
 
   if (!didRemoveTrailingSlashForTestedPage) {
@@ -212,6 +224,7 @@ exports.onPostBuild = async ({ graphql }) => {
       `build-manifest-for-test-${counter++}.json`
     ),
     {
+      allNodeCounters: getNodes().map(node => [node.id, node.internal.counter]),
       allPages: data.allSitePage.nodes.map(node => node.path),
       changedBrowserCompilationHash,
       changedSsrCompilationHash,

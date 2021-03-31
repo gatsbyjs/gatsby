@@ -232,6 +232,24 @@ function assertHTMLCorrectness(runNumber) {
   })
 }
 
+function assertNodeCorrectness(runNumber) {
+  describe(`node correctness`, () => {
+    it(`nodes do not have repeating counters`, () => {
+      const seenCounters = new Map()
+      const duplicates = {}
+      // Just a convenience step to display node ids with duplicate counters
+      manifest[runNumber].allNodeCounters.forEach(([id, counter]) => {
+        if (seenCounters.has(counter)) {
+          duplicates.push({ counter, nodeIds: [id, seenCounters.get(counter)] })
+        }
+        seenCounters.set(counter, id)
+      })
+      expect(manifest[runNumber].allNodeCounters.length).toBeGreaterThan(0)
+      expect(duplicates).toEqual([])
+    })
+  })
+}
+
 beforeAll(done => {
   fs.removeSync(path.join(__dirname, `__debug__`))
 
@@ -454,6 +472,8 @@ describe(`First run (baseline)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Second run (different pages created, data changed)`, () => {
@@ -541,6 +561,8 @@ describe(`Second run (different pages created, data changed)`, () => {
   assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Third run (js change, all pages are recreated)`, () => {
@@ -632,6 +654,8 @@ describe(`Third run (js change, all pages are recreated)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
@@ -718,6 +742,8 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Fifth run (.cache is deleted but public isn't)`, () => {
@@ -792,6 +818,8 @@ describe(`Fifth run (.cache is deleted but public isn't)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () => {
@@ -882,6 +910,8 @@ describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () =
   assertWebpackBundleChanges({ browser: false, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Seventh run (no change in any file that is bundled, we change untracked file, but previous build used unsafe method so all should rebuild)`, () => {
@@ -970,4 +1000,6 @@ describe(`Seventh run (no change in any file that is bundled, we change untracke
   assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
