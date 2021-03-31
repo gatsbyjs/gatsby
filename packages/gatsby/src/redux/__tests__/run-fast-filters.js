@@ -3,6 +3,7 @@ const {
   applyFastFilters,
 } = require(`../run-fast-filters`)
 const { store } = require(`../index`)
+const { getNode } = require(`../nodes`)
 const { createDbQueriesFromObject } = require(`../../db/common/query`)
 const { actions } = require(`../actions`)
 const {
@@ -494,7 +495,7 @@ describe(`edge cases (yay)`, () => {
       internal: {
         type: typeName,
         contentDigest: `bad-node`,
-        counter: 4,
+        counter: getNode(`id_4`).internal.counter,
       },
     }
     store.dispatch({
