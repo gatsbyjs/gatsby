@@ -35,7 +35,7 @@ class Dev404Page extends React.Component {
 
   componentDidMount() {
     this.setState({
-      hasMounted: true
+      hasMounted: true,
     })
   }
 
