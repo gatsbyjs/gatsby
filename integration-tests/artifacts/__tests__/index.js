@@ -236,7 +236,7 @@ function assertNodeCorrectness(runNumber) {
   describe(`node correctness`, () => {
     it(`nodes do not have repeating counters`, () => {
       const seenCounters = new Map()
-      const duplicates = {}
+      const duplicates = []
       // Just a convenience step to display node ids with duplicate counters
       manifest[runNumber].allNodeCounters.forEach(([id, counter]) => {
         if (seenCounters.has(counter)) {
