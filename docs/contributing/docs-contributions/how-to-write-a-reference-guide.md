@@ -4,25 +4,26 @@ title: How to Write a Reference Guide
 
 ## What are reference guide articles?
 
-Reference guide articles cover discrete topics as documentation with links to other resources. A reference guide explains a Gatsby concept or technique without the step-by-step context provided by a tutorial or recipe.
+Reference Guides are technical descriptions of how Gatsby works. The goal of a Reference Guide is to **describe** a Gatsby concept or tool and when to use it. Reference Guides might cover topics like API references, configuration options, or built-in React components.
 
-Reference guide sections provide canonical information on how and why to build things with Gatsby for a variety of scenarios. Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
+Key features of a Reference Guide:
 
-## What are reference guide overview pages?
+- Goal: Describing
+- Most useful when: in working mode
+- Theoretical knowledge
+- A Reference Guide isn't meant to be read from start to finish. Instead, it's meant to be used by developers who are actively working on a project and need to look up some details about how a particular Gatsby feature works.
+- It doesn't provide the step-by-step context you might expect from a [How-To Guide](/contributing/docs-contributions/how-to-write-a-how-to-guide) or [Tutorial](/contributing/docs-contributions/how-to-write-a-tutorial).
 
-**Reference guide overview pages** act as parent pages for groups of reference guide articles, offering an original summary of what can be found in the section. They almost always include a `<Guidelist />` component to automatically list the subpage links in that section of the sidebar. See the [Docs and Blog Components](/contributing/docs-and-blog-components/#guide-list) page to learn more about the Guidelist component.
+You can think of a Reference Guide as an encyclopedia page. It describes what the feature is and when it might be useful, but it won't walk you through the whole process of setting it up for yourself.
 
-### Other types of guide articles
+## Near-perfect example of a Reference Guide
 
-The Gatsby docs include multiple types of guides. They mostly follow the same format, but some docs will have a slightly different purpose and/or audience.
+[Reference Guide: Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/)
 
-- [Reference Guides](/docs/guides/): explanations of Gatsby site development techniques and common workflows. These should be written for all skill-levels.
-- [API Reference](/docs/api-reference/): technical docs on API methods and options, common files, and links to additional resources and explanations.
-- [Releases & Migration](/docs/releases-and-migration/): release notes and guides on how to upgrade Gatsby and third-party packages.
-- [Conceptual Guides](/docs/conceptual-guide/): high-level docs to explain important Gatsby concepts and philosophies.
-  - As an example, "Plugins, Themes, and Starters" would be an overarching concept article, with individual reference guide sections for Plugin, Theme, and Starter docs.
-- [Gatsby Internals](/docs/gatsby-internals/): previously titled Behind the Scenes, these docs go in depth into how Gatsby works under the hood.
-- [Using Gatsby Professionally](/docs/using-gatsby-professionally/using-gatsby-professionally/): articles on winning over stakeholders, working in larger organizations, and building a career as a Gatsby developer.
+## Tips for writing a Reference Guide
+
+- Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
+- include examples (esp showing how to import!)
 
 ## What should a reference guide be about?
 

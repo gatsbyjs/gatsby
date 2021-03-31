@@ -12,7 +12,7 @@ A How-To Guide should:
   - This should include code snippets to show exactly what readers should type.
 -
 
-- For more information on how-to guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
+> For more information on how-to guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
 
 - When to write a How-To Guide?
   - How-To Guides work well for procedures that readers need to follow. For example
