@@ -470,8 +470,8 @@ describe(`edge cases (yay)`, () => {
 
   it(`throws when node counters are messed up`, () => {
     const filter = {
-      slog: { $eq: `def` },
-      deep: { flat: { search: { chain: { $eq: 500 } } } },
+      slog: { $eq: `def` }, // matches id_2 and id_4
+      deep: { flat: { search: { chain: { $eq: 500 } } } }, // matches id_2
     }
 
     const result = applyFastFilters(
@@ -484,15 +484,17 @@ describe(`edge cases (yay)`, () => {
     expect(result.length).toEqual(1)
     expect(result[0].id).toEqual(`id_2`)
 
-    // Simulating first node creation after process restart.
-    //   It will get counter === 0 that will mess up fast filter results intersection
+    // After process restart node.internal.counter is reset and conflicts with counters from the previous run
+    //  in some situations this leads to incorrect intersection of filtered results.
+    //  Below we set node.internal.counter to 4 which conflicts with existing node id_4 and leads
+    //  to bad intersection of filtered results
     const badNode = {
       id: `bad-node`,
       deep: { flat: { search: { chain: 500 } } },
       internal: {
         type: typeName,
         contentDigest: `bad-node`,
-        counter: 0,
+        counter: 4,
       },
     }
     store.dispatch({
@@ -505,9 +507,6 @@ describe(`edge cases (yay)`, () => {
       [typeName],
       new Map()
     )
-
-    // Sanity-check
-    expect(result2).toEqual([])
     expect(result2.length).toEqual(1)
     expect(result2[0].id).toEqual(`id_2`)
   })
