@@ -165,7 +165,7 @@ const fakeComponentsPluginFactory = type => {
 }
 const publicDir = joinPath(process.cwd(), `public`)
 const SSR_DEV_MOCK_FILE_INFO = {
-  [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
+  [joinPath(publicDir, `webpack.stats.json`)]: `{}`,
   [joinPath(
     process.cwd(),
     `/public/page-data/about/page-data.json`
