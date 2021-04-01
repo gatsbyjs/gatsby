@@ -29,7 +29,9 @@ exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     )
 
     // add webpack-hot-middleware/client to the commons entry
-    webpackConfig.entry.commons.unshift(`webpack-hot-middleware/client`)
+    webpackConfig.entry.commons.unshift(
+      `@gatsbyjs/webpack-hot-middleware/client`
+    )
     actions.replaceWebpackConfig(webpackConfig)
   }
 
