@@ -18,13 +18,15 @@ Follow the prompts to choose your preferred CMS, styling tools and additional fe
 
 It will look like this, but use your project's directory.
 
-```shell
 Start by going to the directory with
 
+```shell
 cd my-gatsby-site
+```
 
 Start the local development server with
 
+```shell
 npm run develop
 ```
 
