@@ -1104,6 +1104,11 @@ export function intersectNodesByCounter(
     } else if (counterA > counterB) {
       pointerB++
     } else {
+      if (nodeA !== nodeB) {
+        throw new Error(
+          `Invariant violation: inconsistent node counters detected`
+        )
+      }
       // nodeA===nodeB. Make sure we didn't just add this node already.
       // Since input arrays are sorted, the same node should be grouped
       // back to back, so even if both input arrays contained the same node
