@@ -1,3 +1,9 @@
+import { loadPlugins } from "../index"
+import { slash } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
+import { IFlattenedPlugin } from "../types"
+import { silent as resolveFrom } from "resolve-from"
+
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     error: jest.fn(),
@@ -8,16 +14,15 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
     info: jest.fn(),
   }
 })
+
+jest.mock(`resolve-from`)
 const mockProcessExit = jest.spyOn(process, `exit`).mockImplementation(() => {})
-import { loadPlugins } from "../index"
-import { slash } from "gatsby-core-utils"
-import reporter from "gatsby-cli/lib/reporter"
-import { IFlattenedPlugin } from "../types"
 
 afterEach(() => {
   Object.keys(reporter).forEach(method => {
     reporter[method].mockClear()
   })
+  resolveFrom.mockClear()
   mockProcessExit.mockClear()
 })
 
@@ -194,6 +199,105 @@ describe(`Load plugins`, () => {
       // TODO: I think we should probably be de-duping, so this should be 1.
       // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
       expect(tsplugins.length).toEqual(2)
+    })
+  })
+
+  describe(`Gatsby-plugin-gatsby-cloud support`, () => {
+    it(`doesn't gatsby-plugin-gatsby-cloud if not installed`, async () => {
+      resolveFrom.mockImplementation(() => undefined)
+      const config = {
+        plugins: [],
+      }
+
+      let plugins = await loadPlugins(config, process.cwd())
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.not.objectContaining({
+            name: `gatsby-plugin-gatsby-cloud`,
+          }),
+        ])
+      )
+    })
+
+    it(`loads gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
+      resolveFrom.mockImplementation(
+        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
+      )
+      const config = {
+        plugins: [],
+      }
+
+      let plugins = await loadPlugins(config, process.cwd())
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            name: `gatsby-plugin-gatsby-cloud`,
+          }),
+        ])
+      )
+    })
+
+    it(`uses the user provided plugin-gatsby-cloud if provided`, async () => {
+      resolveFrom.mockImplementation(
+        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
+      )
+      const config = {
+        plugins: [
+          {
+            resolve: `gatsby-plugin-gatsby-cloud`,
+            options: {
+              generateMatchPathRewrites: false,
+            },
+          },
+        ],
+      }
+
+      let plugins = await loadPlugins(config, process.cwd())
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            name: `gatsby-plugin-gatsby-cloud`,
+            pluginOptions: {
+              generateMatchPathRewrites: false,
+              plugins: [],
+            },
+          }),
+        ])
+      )
+    })
+
+    it(`does not add gatsby-plugin-gatsby-cloud if it exists in config.plugins`, async () => {
+      resolveFrom.mockImplementation(
+        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
+      )
+      const config = {
+        plugins: [
+          `gatsby-plugin-gatsby-cloud`,
+          { resolve: `gatsby-plugin-gatsby-cloud` },
+        ],
+      }
+
+      let plugins = await loadPlugins(config, process.cwd())
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      const cloudPlugins = plugins.filter(
+        (plugin: { name: string }) =>
+          plugin.name === `gatsby-plugin-gatsby-cloud`
+      )
+
+      // TODO: I think we should probably be de-duping, so this should be 1.
+      // But this test is mostly here to ensure we don't add an _additional_ gatsby-plugin-typescript
+      expect(cloudPlugins.length).toEqual(2)
     })
   })
 
