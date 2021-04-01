@@ -19,6 +19,7 @@ The Gatsby documentation includes four different types of materials. Each one is
 - [The **Tutorial**](/contributing/docs-contributions/how-to-write-a-tutorial) is a self-contained introduction that guides readers step-by-step through creating their first Gatsby site. This is most useful when readers are first getting started with Gatsby.
 
 ![](./documentation-system.png)
+// ^ TODO: Update this image to use Conceptual Guides instead of Explanation
 
 This documentation structure is based on the [Divio documentation system](documentation.divio.com/) created by Daniele Procida.
 
