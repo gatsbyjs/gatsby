@@ -487,7 +487,7 @@ describe(`edge cases (yay)`, () => {
 
     // After process restart node.internal.counter is reset and conflicts with counters from the previous run
     //  in some situations this leads to incorrect intersection of filtered results.
-    //  Below we set node.internal.counter to 4 which conflicts with existing node id_4 and leads
+    //  Below we set node.internal.counter to same value that existing node id_4 has and leads
     //  to bad intersection of filtered results
     const badNode = {
       id: `bad-node`,
