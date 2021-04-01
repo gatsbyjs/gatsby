@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0...gatsby-source-wordpress@5.2.1) (2021-04-01)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Enable preview mode in PINC builds ([#30601](https://github.com/gatsbyjs/gatsby/issues/30601)) ([#30627](https://github.com/gatsbyjs/gatsby/issues/30627)) ([63d3716](https://github.com/gatsbyjs/gatsby/commit/63d37163684a64ac92ad5ca64bf6cb9b0cdba49d))
+
 # [5.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0-next.1...gatsby-source-wordpress@5.2.0) (2021-03-30)
 
 ### Bug Fixes
