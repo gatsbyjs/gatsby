@@ -18,7 +18,7 @@ You must select which branch will be deployed from your repository settings in G
 
 2. Under the repository name, click Settings.
 
-3. In the GitHub Pages section, use the Source drop-down to select master (for publishing to the root subdomain) or gh-pages (for publishing to a path like `/docs`) as your GitHub Pages publishing source.
+3. In the GitHub Pages section, use the Source drop-down to select main (for publishing to the root subdomain) or gh-pages (for publishing to a path like `/docs`) as your GitHub Pages publishing source.
 
 4. Click Save.
 
@@ -56,24 +56,24 @@ Then add a `deploy` script to `package.json` in your repository's codebase:
 
 When you run `npm run deploy` all contents of the `public` folder will be moved to your repository's `gh-pages` branch. Make sure that your repository's settings has the `gh-pages` branch set as the source to deploy from.
 
-**Note**: to select master or gh-pages as your publishing source, you must have the branch present in your repository. If you don't have a master or gh-pages branch, you can create them and then return to source settings to change your publishing source.
+**Note**: to select main or gh-pages as your publishing source, you must have the branch present in your repository. If you don't have a main or gh-pages branch, you can create them and then return to source settings to change your publishing source.
 
 ### Deploying to a GitHub Pages subdomain at github.io
 
-For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `master` branch.
+For a repository named like `username.github.io`, you don't need to specify `pathPrefix` and your website needs to be pushed to the `main` branch.
 
-> ⚠️ Keep in mind that GitHub Pages forces deployment of user/organization pages to the `master` branch. So if you use `master` for development you need to do one of these:
+> ⚠️ Keep in mind that GitHub Pages forces deployment of user/organization pages to the `main` branch. So if you use `main` for development you need to do one of these:
 >
-> - Change the default branch from `master` to something else, and use `master` as a site deployment directory only:
+> - Change the default branch from `main` to something else, and use `main` as a site deployment directory only:
 >   1. To create a new branch called `source` run this command:
->      `git checkout -b source master`
->   2. Change the default branch in your repository settings ("Branches" menu item) from `master` to `source`
+>      `git checkout -b source main`
+>   2. Change the default branch in your repository settings ("Branches" menu item) from `main` to `source`
 > - Have a separate repository for your source code (so `username.github.io` is used only for deployment and not really for tracking your source code)
 
 ```json:title=package.json
 {
   "scripts": {
-    "deploy": "gatsby build && gh-pages -d public -b master"
+    "deploy": "gatsby build && gh-pages -d public -b main"
   }
 }
 ```
@@ -131,12 +131,12 @@ deploy:
   script: cd docs/ && yarn install && yarn run deploy
   skip_cleanup: true
   on:
-    branch: master
+    branch: main
 ```
 
 To break-down the important bits here for deploying the Gatsby website from Travis to GitHub Pages:
 
 1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
-2. `deploy` will only fire when the build runs on the master branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
+2. `deploy` will only fire when the build runs on the main branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
 
 Committing and pushing both the `.travis.yml` and `package.json` files to your base branch will be the final step in the process.
