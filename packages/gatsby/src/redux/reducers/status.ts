@@ -44,10 +44,8 @@ export const statusReducer = (
         },
       }
     case `CREATE_NODE`:
-      return {
-        ...state,
-        LAST_NODE_COUNTER: action.payload.internal.counter,
-      }
+      state.LAST_NODE_COUNTER = action.payload.internal.counter
+      return state
     default:
       return state
   }
