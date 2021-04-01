@@ -3,13 +3,38 @@ const path = require(`path`)
 const { murmurhash } = require(`babel-plugin-remove-graphql-queries`)
 const { readPageData } = require(`gatsby/dist/utils/page-data`)
 const { stripIgnoredCharacters } = require(`gatsby/graphql`)
-const fs = require(`fs`)
+const fs = require(`fs-extra`)
 
 jest.setTimeout(100000)
 
 const publicDir = path.join(process.cwd(), `public`)
 
 const gatsbyBin = path.join(`node_modules`, `.bin`, `gatsby`)
+
+const manifest = {}
+
+function runGatsbyWithRunTestSetup(runNumber = 1) {
+  return function beforeAllImpl() {
+    return new Promise(resolve => {
+      const gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+        env: {
+          ...process.env,
+          NODE_ENV: `production`,
+          ARTIFACTS_RUN_SETUP: runNumber.toString(),
+        },
+      })
+
+      gatsbyProcess.on(`exit`, () => {
+        manifest[runNumber] = fs.readJSONSync(
+          path.join(process.cwd(), `.cache`, `build-manifest-for-test-1.json`)
+        )
+
+        resolve()
+      })
+    })
+  }
+}
 
 const titleQuery = `
   {
@@ -90,6 +115,24 @@ function assertFileExistenceForPagePaths({ pagePaths, type, shouldExist }) {
   )
 }
 
+function assertNodeCorrectness(runNumber) {
+  describe(`node correctness`, () => {
+    it(`nodes do not have repeating counters`, () => {
+      const seenCounters = new Map()
+      const duplicates = []
+      // Just a convenience step to display node ids with duplicate counters
+      manifest[runNumber].allNodeCounters.forEach(([id, counter]) => {
+        if (seenCounters.has(counter)) {
+          duplicates.push({ counter, nodeIds: [id, seenCounters.get(counter)] })
+        }
+        seenCounters.set(counter, id)
+      })
+      expect(manifest[runNumber].allNodeCounters.length).toBeGreaterThan(0)
+      expect(duplicates).toEqual([])
+    })
+  })
+}
+
 beforeAll(async done => {
   const gatsbyCleanProcess = spawn(gatsbyBin, [`clean`], {
     stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
@@ -105,20 +148,9 @@ beforeAll(async done => {
 })
 
 describe(`First run`, () => {
-  beforeAll(async done => {
-    const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-      env: {
-        ...process.env,
-        NODE_ENV: `production`,
-        RUN_FOR_STALE_PAGE_ARTIFICATS: `1`,
-      },
-    })
+  const runNumber = 1
 
-    gatsbyProcess.on(`exit`, exitCode => {
-      done()
-    })
-  })
+  beforeAll(runGatsbyWithRunTestSetup(runNumber))
 
   describe(`Static Queries`, () => {
     test(`are written correctly when inline`, async () => {
@@ -272,26 +304,17 @@ describe(`First run`, () => {
       })
     })
   })
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Second run`, () => {
+  const runNumber = 2
+
   const expectedPages = [`stale-pages/stable`, `stale-pages/only-in-second`]
   const unexpectedPages = [`stale-pages/only-in-first`]
 
-  beforeAll(async done => {
-    const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
-      env: {
-        ...process.env,
-        NODE_ENV: `production`,
-        RUN_FOR_STALE_PAGE_ARTIFICATS: `2`,
-      },
-    })
-
-    gatsbyProcess.on(`exit`, exitCode => {
-      done()
-    })
-  })
+  beforeAll(runGatsbyWithRunTestSetup(runNumber))
 
   describe(`html files`, () => {
     const type = `html`
@@ -332,4 +355,6 @@ describe(`Second run`, () => {
       })
     })
   })
+
+  assertNodeCorrectness(runNumber)
 })
