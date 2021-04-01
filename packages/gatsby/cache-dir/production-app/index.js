@@ -23,31 +23,36 @@
  * React 17's Concurrent Mode
  */
 
-import { nextTick } from "../next-tick"
+import { setZeroTimeout } from "../zero-timeout"
 
-const nextTickAsync = cb =>
-  new Promise(resolve => nextTick(() => resolve(cb())))
+const scheduleTask = cb =>
+  new Promise(resolve => setZeroTimeout(() => resolve(cb())))
 
-nextTickAsync(() => {
-  // evaluate all heavy dependencies
+scheduleTask(() => {
+  // evaluate React in a single task
   require(`react-dom`)
-  require(`@reach/router`)
-  require(`@mikaelkristiansson/domready`)
-  require(`gatsby-react-router-scroll`)
 })
   .then(() =>
-    nextTickAsync(() => {
+    scheduleTask(() => {
+      // evaluate Gatsby dependencies
+      require(`@mikaelkristiansson/domready`)
+      require(`@gatsbyjs/reach-router`)
+      require(`gatsby-react-router-scroll`)
+    })
+  )
+  .then(() =>
+    scheduleTask(() => {
       // evaluate Gatsby framework
       require(`gatsby`)
     })
   )
   .then(() =>
-    nextTickAsync(() => {
+    scheduleTask(() => {
       const plugins = require(`../api-runner-browser-plugins`)
 
       // Evaluate each plugin on its own task
-      return Promise.all(plugins.map(plugin => nextTickAsync(plugin.plugin)))
+      return Promise.all(plugins.map(plugin => scheduleTask(plugin.plugin)))
     })
   )
   // finally evaluate and run the app
-  .then(() => nextTickAsync(() => require(`./app`)))
+  .then(() => scheduleTask(() => require(`./app`)))

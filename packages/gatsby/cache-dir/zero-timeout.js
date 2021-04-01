@@ -33,14 +33,14 @@ window.addEventListener(
 )
 
 // Now define the external functions to set or cancel a timeout
-export const nextTick = (func, ...args) => {
+export const setZeroTimeout = (func, ...args) => {
   taskId += 1
   timeouts.push({ id: taskId, func, args })
   window.postMessage(messageKey, targetOrigin)
   return taskId
 }
 
-export const cancelNextTick = id => {
+export const cancelZeroTimeout = id => {
   const task = timeouts.find(timeout => timeout.id === id)
   if (task) task.canceled = true
 }
