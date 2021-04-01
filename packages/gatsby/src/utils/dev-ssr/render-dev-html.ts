@@ -94,6 +94,7 @@ const ensurePathComponentInSSRBundle = async (
 
   // Now check if it's written to public/render-page.js
   const htmlComponentRendererPath = joinPath(directory, `public/render-page.js`)
+
   // This search takes 1-10ms
   // We do it as there can be a race conditions where two pages
   // are requested at the same time which means that both are told render-page.js
@@ -216,7 +217,6 @@ export const renderDevHTML = ({
     }
 
     const publicDir = joinPath(directory, `public`)
-    console.log(`1`, { publicDir })
 
     try {
       const htmlString = await worker.renderHTML({
