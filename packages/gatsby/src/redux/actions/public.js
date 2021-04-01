@@ -790,7 +790,7 @@ const createNode = (
   }
 }
 
-actions.createNode = (...args) => dispatch => {
+actions.createNode = async (...args) => dispatch => {
   const actions = createNode(...args)
 
   dispatch(actions)
