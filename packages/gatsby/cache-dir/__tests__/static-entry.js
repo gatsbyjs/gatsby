@@ -1,6 +1,6 @@
 import React from "react"
 import fs from "fs"
-const { join } = require(`path`)
+import { joinPath } from "gatsby-core-utils"
 
 import developStaticEntry from "../develop-static-entry"
 
@@ -65,11 +65,11 @@ const pageDataMock = {
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
-  [join(
+  [joinPath(
     process.cwd(),
     `/public/page-data/about/page-data.json`
   )]: JSON.stringify(pageDataMock),
-  [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
+  [joinPath(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
 }
@@ -163,10 +163,10 @@ const fakeComponentsPluginFactory = type => {
     },
   }
 }
-const publicDir = join(process.cwd(), `public`)
+const publicDir = joinPath(process.cwd(), `public`)
 const SSR_DEV_MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
-  [join(
+  [joinPath(
     process.cwd(),
     `/public/page-data/about/page-data.json`
   )]: JSON.stringify({
@@ -175,7 +175,7 @@ const SSR_DEV_MOCK_FILE_INFO = {
     webpackCompilationHash: `1234567890abcdef1234`,
     staticQueryHashes: [],
   }),
-  [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
+  [joinPath(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
 }
