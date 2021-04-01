@@ -51,7 +51,7 @@ describe(`Load plugins`, () => {
     })
 
   it(`Load plugins for a site`, async () => {
-    let plugins = await loadPlugins({ plugins: [] })
+    let plugins = await loadPlugins({ plugins: [] }, process.cwd())
 
     plugins = replaceFieldsThatCanVary(plugins)
 
@@ -67,7 +67,7 @@ describe(`Load plugins`, () => {
       ],
     }
 
-    let plugins = await loadPlugins(config)
+    let plugins = await loadPlugins(config, process.cwd())
 
     plugins = replaceFieldsThatCanVary(plugins)
 
@@ -88,7 +88,7 @@ describe(`Load plugins`, () => {
     }
 
     try {
-      await loadPlugins(config)
+      await loadPlugins(config, process.cwd())
     } catch (err) {
       expect(err.message).toMatchSnapshot()
     }
@@ -107,7 +107,7 @@ describe(`Load plugins`, () => {
       ],
     }
 
-    let plugins = await loadPlugins(config)
+    let plugins = await loadPlugins(config, process.cwd())
 
     plugins = replaceFieldsThatCanVary(plugins)
 
@@ -120,7 +120,7 @@ describe(`Load plugins`, () => {
         plugins: [],
       }
 
-      let plugins = await loadPlugins(config)
+      let plugins = await loadPlugins(config, process.cwd())
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -145,7 +145,7 @@ describe(`Load plugins`, () => {
         ],
       }
 
-      let plugins = await loadPlugins(config)
+      let plugins = await loadPlugins(config, process.cwd())
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -183,7 +183,7 @@ describe(`Load plugins`, () => {
         ],
       }
 
-      let plugins = await loadPlugins(config)
+      let plugins = await loadPlugins(config, process.cwd())
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -214,9 +214,12 @@ describe(`Load plugins`, () => {
           },
         },
       ]
-      await loadPlugins({
-        plugins: invalidPlugins,
-      })
+      await loadPlugins(
+        {
+          plugins: invalidPlugins,
+        },
+        process.cwd()
+      )
 
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(
         invalidPlugins.length
@@ -309,9 +312,12 @@ describe(`Load plugins`, () => {
           },
         },
       ]
-      await loadPlugins({
-        plugins,
-      })
+      await loadPlugins(
+        {
+          plugins,
+        },
+        process.cwd()
+      )
 
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(0)
       expect(reporter.warn as jest.Mock).toHaveBeenCalledTimes(1)
@@ -325,16 +331,19 @@ describe(`Load plugins`, () => {
     })
 
     it(`defaults plugin options to the ones defined in the schema`, async () => {
-      let plugins = await loadPlugins({
-        plugins: [
-          {
-            resolve: `gatsby-plugin-google-analytics`,
-            options: {
-              trackingId: `fake`,
+      let plugins = await loadPlugins(
+        {
+          plugins: [
+            {
+              resolve: `gatsby-plugin-google-analytics`,
+              options: {
+                trackingId: `fake`,
+              },
             },
-          },
-        ],
-      })
+          ],
+        },
+        process.cwd()
+      )
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -354,23 +363,26 @@ describe(`Load plugins`, () => {
     })
 
     it(`validates subplugin schemas`, async () => {
-      await loadPlugins({
-        plugins: [
-          {
-            resolve: `gatsby-transformer-remark`,
-            options: {
-              plugins: [
-                {
-                  resolve: `gatsby-remark-autolink-headers`,
-                  options: {
-                    maintainCase: `should be boolean`,
+      await loadPlugins(
+        {
+          plugins: [
+            {
+              resolve: `gatsby-transformer-remark`,
+              options: {
+                plugins: [
+                  {
+                    resolve: `gatsby-remark-autolink-headers`,
+                    options: {
+                      maintainCase: `should be boolean`,
+                    },
                   },
-                },
-              ],
+                ],
+              },
             },
-          },
-        ],
-      })
+          ],
+        },
+        process.cwd()
+      )
 
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
       expect((reporter.error as jest.Mock).mock.calls[0])
@@ -403,16 +415,19 @@ describe(`Load plugins`, () => {
     })
 
     it(`validates local plugin schemas using require.resolve`, async () => {
-      await loadPlugins({
-        plugins: [
-          {
-            resolve: require.resolve(`./fixtures/local-plugin`),
-            options: {
-              optionalString: 1234,
+      await loadPlugins(
+        {
+          plugins: [
+            {
+              resolve: require.resolve(`./fixtures/local-plugin`),
+              options: {
+                optionalString: 1234,
+              },
             },
-          },
-        ],
-      })
+          ],
+        },
+        process.cwd()
+      )
 
       expect(reporter.error as jest.Mock).toHaveBeenCalledTimes(1)
       expect((reporter.error as jest.Mock).mock.calls[0])
