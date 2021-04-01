@@ -9,7 +9,7 @@
   "dependencies": {
     "@prefresh/babel-plugin": "^0.4.1",
     "@prefresh/webpack": "^3.2.1",
-    "@gatsbyjs/webpack-hot-middleware": "^2.25.0"
+    "@gatsbyjs/webpack-hot-middleware": "^2.25.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
