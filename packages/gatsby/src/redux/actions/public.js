@@ -622,8 +622,6 @@ const createNode = (
     node.internal = {}
   }
 
-  node.internal.counter = getNextNodeCounter()
-
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -780,6 +778,8 @@ const createNode = (
         .map(getNode)
         .map(createDeleteAction)
     }
+
+    node.internal.counter = getNextNodeCounter()
 
     updateNodeAction = {
       ...actionOptions,
