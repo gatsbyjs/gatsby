@@ -135,6 +135,7 @@ exports.renderHTML = ({
 }) =>
   new Promise((resolve, reject) => {
     try {
+      console.log(`2`, { publicDir })
       const htmlComponentRenderer = require(htmlComponentRendererPath)
       if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
         htmlComponentRenderer.default(

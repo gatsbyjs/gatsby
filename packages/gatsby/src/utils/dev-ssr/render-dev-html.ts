@@ -216,6 +216,7 @@ export const renderDevHTML = ({
     }
 
     const publicDir = joinPath(directory, `public`)
+    console.log(`1`, { publicDir })
 
     try {
       const htmlString = await worker.renderHTML({

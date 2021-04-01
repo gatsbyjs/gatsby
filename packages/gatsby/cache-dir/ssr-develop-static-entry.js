@@ -48,6 +48,7 @@ try {
 Html = Html && Html.__esModule ? Html.default : Html
 
 export default (pagePath, isClientOnlyPage, publicDir, callback) => {
+  console.log(`3`, { publicDir })
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
