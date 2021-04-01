@@ -285,7 +285,7 @@ export function loadPlugins(
   if (!configuredPluginNames.has(TYPESCRIPT_PLUGIN_NAME)) {
     plugins.push(
       processPlugin({
-        resolve: require.resolve(`gatsby-plugin-typescript`),
+        resolve: require.resolve(TYPESCRIPT_PLUGIN_NAME),
         options: {
           // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
           // pluginOptionsSchema of gatsby-plugin-typescript
