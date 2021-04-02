@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="../global.d.ts" />
-
 import React, { Fragment, FunctionComponent } from "react"
 import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
@@ -104,7 +101,7 @@ export const LayoutWrapper: FunctionComponent<ILayoutWrapperProps> = function La
 
       {
         // eslint-disable-next-line no-undef
-        SERVER && <NativeScriptLoading />
+        window.SERVER && <NativeScriptLoading />
       }
     </Fragment>
   )

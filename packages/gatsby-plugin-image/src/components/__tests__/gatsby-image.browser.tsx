@@ -3,13 +3,6 @@ import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    GATSBY___IMAGE: boolean
-    SERVER: boolean
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
@@ -19,8 +12,8 @@ describe(`GatsbyImage browser`, () => {
 
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    window.SERVER = true
+    window.GATSBY_IMAGE = true
   })
 
   beforeEach(() => {
@@ -73,12 +66,12 @@ describe(`GatsbyImage browser`, () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = undefined
-    ;(global as GlobalOverride).GATSBY___IMAGE = undefined
+    window.SERVER = undefined
+    window.GATSBY_IMAGE = undefined
   })
 
   it(`shows a suggestion to switch to the new gatsby-image API when available`, async () => {
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    window.GATSBY_IMAGE = false
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />

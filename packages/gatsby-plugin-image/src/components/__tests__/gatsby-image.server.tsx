@@ -4,27 +4,20 @@ import { GatsbyImage } from "../gatsby-image.server"
 import { IGatsbyImageData } from "../gatsby-image.browser"
 import { SourceProps } from "../picture"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    SERVER: boolean | undefined
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    GATSBY___IMAGE: boolean | undefined
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
 describe(`GatsbyImage server`, () => {
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    window.SERVER = true
+    window.GATSBY_IMAGE = true
   })
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = false
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    window.SERVER = false
+    window.GATSBY_IMAGE = false
   })
 
   it(`shows nothing when the image props is not passed`, () => {
