@@ -13,6 +13,10 @@ import {
   CreateDevServerArgs,
 } from "gatsby"
 
+// const FUNCTION_INVOCATION_TIMEOUT = 30 * 1000
+
+// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 export async function onPreBootstrap(
   { reporter, store }: ParentSpanPluginArgs,
   { path: functionsDirectoryPath }: PluginOptions
@@ -177,6 +181,7 @@ export async function onCreateDevServer(
 
           const fnToExecute = (fn && fn.default) || fn
 
+          // Promise.race()
           fnToExecute(req, res)
         } catch (e) {
           reporter.error(e)
