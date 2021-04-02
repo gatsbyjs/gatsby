@@ -6,9 +6,11 @@
 export const resolvableExtensions = true
 
 /**
- * Tell plugins to add pages. This extension point is called only after the initial
+ * Create pages dynamically. This extension point is called only after the initial
  * sourcing and transformation of nodes plus creation of the GraphQL schema are
  * complete so you can query your data in order to create pages.
+ *
+ * You can also fetch data from remote or local sources to create pages.
  *
  * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
  *
@@ -54,7 +56,7 @@ export const resolvableExtensions = true
  *         component: blogPostTemplate,
  *         context: {
  *           // Add optional context data to be inserted
- *           // as props into the page component..
+ *           // as props into the page component.
  *           //
  *           // The context data can also be used as
  *           // arguments to the page GraphQL query.
@@ -94,6 +96,10 @@ export const createPagesStatefully = true
  * will be called exactly once after all of your source plugins have finished
  * creating nodes.
  *
+ * The [Creating a Source
+ * Plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) tutorial
+ * demonstrates a way a plugin or site might use this API.
+ *
  * See also the documentation for [`createNode`](/docs/actions/#createNode).
  * @example
  * exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -132,6 +138,11 @@ export const sourceNodes = true
  *
  * See also the documentation for [`createNode`](/docs/actions/#createNode)
  * and [`createNodeField`](/docs/actions/#createNodeField)
+ *
+ * The [Creating a Source
+ * Plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) tutorial
+ * demonstrates a way a plugin or site might use this API.
+ *
  * @example
  * exports.onCreateNode = ({ node, actions }) => {
  *   const { createNode, createNodeField } = actions
