@@ -6631,13 +6631,13 @@ babel-plugin-apply-mdx-type-prop@^2.0.0-next.7:
     "@babel/helper-plugin-utils" "7.10.4"
     "@mdx-js/util" "^2.0.0-next.7"
 
-babel-plugin-codegen@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-codegen/-/babel-plugin-codegen-4.0.1.tgz#bf234c5fb31d8477bc1484f00d920bae163fa268"
-  integrity sha512-cehTkKAGgENw+ftEngX/zVfFqMxFFItsatwmLHfxVLJCnkJvREQhsCb5/WNrNdP7L3tbwGgd5JQt9dFth+p24g==
+babel-plugin-codegen@^4.1.0:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-codegen/-/babel-plugin-codegen-4.1.4.tgz#e00ff59aef90dbfd41f2dec74138c46416f524d2"
+  integrity sha512-WWqjrCgi/+bOA9Vnx0k6tbuyDVzJaMFcBlzBpw02r9yrW8W4qWu+ObZE8lbM1g57IX+tHHS4WbO0zW40sDLGPA==
   dependencies:
-    "@babel/runtime" "^7.9.2"
-    babel-plugin-macros "^2.8.0"
+    "@babel/runtime" "^7.12.5"
+    babel-plugin-macros "^3.0.1"
     require-from-string "^2.0.2"
 
 babel-plugin-dev-expression@^0.2.2:
@@ -8305,12 +8305,12 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-codegen.macro@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/codegen.macro/-/codegen.macro-4.0.0.tgz#7f57a5c2d2c72e9c1c3dda71daba0e64c65a44ae"
-  integrity sha512-7K7BXVLmsO4shE/+2KhzCjP7uPbqwbkY4o5EJaJouncVY7IkZozpnbUex8xjWB9AzEV9aWpnXe0+oLbEuPj9Ew==
+codegen.macro@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/codegen.macro/-/codegen.macro-4.1.0.tgz#8d822e8f8294692d32ecb29f04240f1e6cd36018"
+  integrity sha512-T0A8vdX9SkhT00cd7nWQwlg8CT2qQwp1o2+ZD7Wqx38ABK0kJvhk/IJTjNgnE1W35dE98+OzLr1zluVREz5bPg==
   dependencies:
-    babel-plugin-codegen "^4.0.0"
+    babel-plugin-codegen "^4.1.0"
 
 codemirror-graphql@^0.15.2:
   version "0.15.2"
@@ -9017,12 +9017,12 @@ copyfiles@^2.3.0:
     through2 "^2.0.1"
     yargs "^15.3.1"
 
-core-js-compat@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.9.0.tgz#29da39385f16b71e1915565aa0385c4e0963ad56"
-  integrity sha512-YK6fwFjCOKWwGnjFUR3c544YsnA/7DoLL0ysncuOJ4pwbriAtOpvM2bygdlcXbvQCQZ7bBU9CL4t7tGl7ETRpQ==
+core-js-compat@3.13.1:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.13.1.tgz#05444caa8f153be0c67db03cf8adb8ec0964e58e"
+  integrity sha512-mdrcxc0WznfRd8ZicEZh1qVeJ2mu6bwQFh8YVUK48friy/FOwFV5EJj9/dlh+nMQ74YusdVfBFDuomKgUspxWQ==
   dependencies:
-    browserslist "^4.16.3"
+    browserslist "^4.16.6"
     semver "7.0.0"
 
 core-js-compat@^3.14.0, core-js-compat@^3.9.1:
@@ -9038,10 +9038,10 @@ core-js-pure@^3.0.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.4.tgz#4bf1ba866e25814f149d4e9aaa08c36173506e3a"
   integrity sha512-epIhRLkXdgv32xIUFaaAry2wdxZYBi6bgM7cB136dzzXXa+dFyRLTZeLUJxnd8ShrmyVXBub63n2NHo2JAt8Cw==
 
-core-js@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.9.0.tgz#790b1bb11553a2272b36e2625c7179db345492f8"
-  integrity sha512-PyFBJaLq93FlyYdsndE5VaueA9K5cNB7CGzeCj191YYLhkQM0gdZR2SKihM70oF0wdqKSKClv/tEBOpoRmdOVQ==
+core-js@3.13.1:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.13.1.tgz#30303fabd53638892062d8b4e802cac7599e9fb7"
+  integrity sha512-JqveUc4igkqwStL2RTRn/EPFGBOfEZHxJl/8ej1mXJR75V3go2mFF4bmUYkEIT1rveHKnkUlcJX/c+f1TyIovQ==
 
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.6.5:
   version "2.6.11"
@@ -11608,10 +11608,10 @@ event-emitter@^0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-event-source-polyfill@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/event-source-polyfill/-/event-source-polyfill-1.0.15.tgz#a28e116281be677af4b055b67d95517e35c92435"
-  integrity sha512-IVmd8jWwX6ag5rXIdVCPBjBChiHBceLb1/7aKPIK7CUeJ5Br7alx029+ZpQlK4jW4Hk2qncy3ClJP97S8ltvmg==
+event-source-polyfill@^1.0.24:
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/event-source-polyfill/-/event-source-polyfill-1.0.24.tgz#46045e9af2190fd51234de0075d71c909907f937"
+  integrity sha512-aEtMhrH5ww3X6RgbsNcwu0whw8zjOoeRnwPqRKqKuxWS5KlAZhCY+rTm6wMlHOXbxmLGn8lW6Xox7rfpBExzGA==
 
 event-stream@=3.3.4:
   version "3.3.4"
@@ -18771,10 +18771,10 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-microbundle@^0.13.0, microbundle@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.13.1.tgz#c65307026f2862147bd4dcea267eb2f3eaa9e79d"
-  integrity sha512-dwwSJp5WjQ3eRievTItnZtqa2blufQJgeExUWCwvKFYKB3L4xOAZ6bPdRVgzq1rKmi8RybNo6eukJU3Zcx+1JA==
+microbundle@^0.13.3:
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/microbundle/-/microbundle-0.13.3.tgz#cfc5055b50cf7a0bcc5eec441604f4520ccd07ec"
+  integrity sha512-nlP20UmyqGGeh6jhk8VaVFEoRlF+JAvnwixPLQUwHEcAF59ROJCyh34eylJzUAVNvF3yrCaHxIBv8lYcphDM1g==
   dependencies:
     "@babel/core" "^7.12.10"
     "@babel/plugin-proposal-class-properties" "7.12.1"
@@ -18812,6 +18812,7 @@ microbundle@^0.13.0, microbundle@^0.13.1:
     rollup-plugin-terser "^7.0.2"
     rollup-plugin-typescript2 "^0.29.0"
     sade "^1.7.4"
+    terser "^5.7.0"
     tiny-glob "^0.2.8"
     tslib "^2.0.3"
     typescript "^4.1.3"
@@ -26778,10 +26779,10 @@ terser@^4.0.0, terser@^4.1.2, terser@^4.6.3:
     source-map "~0.6.1"
     source-map-support "~0.5.12"
 
-terser@^5.0.0, terser@^5.3.8, terser@^5.5.1:
-  version "5.6.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.6.0.tgz#138cdf21c5e3100b1b3ddfddf720962f88badcd2"
-  integrity sha512-vyqLMoqadC1uR0vywqOZzriDYzgEkNJFK4q9GeyOBHIbiECHiWLKcWfbQWAUaPfxkjDhapSlZB9f7fkMrvkVjA==
+terser@^5.0.0, terser@^5.3.8, terser@^5.5.1, terser@^5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.7.0.tgz#a761eeec206bc87b605ab13029876ead938ae693"
+  integrity sha512-HP5/9hp2UaZt5fYkuhNBR8YyRcT8juw8+uFbAme53iN9hblvKnLUTKkmwJG6ocWpIKf8UK4DoeWG4ty0J6S6/g==
   dependencies:
     commander "^2.20.0"
     source-map "~0.7.2"
@@ -28892,10 +28893,10 @@ whatwg-fetch@2.0.4:
   version "2.0.4"
   resolved "http://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
-whatwg-fetch@^3.4.1, whatwg-fetch@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.5.0.tgz#605a2cd0a7146e5db141e29d1c62ab84c0c4c868"
-  integrity sha512-jXkLtsR42xhXg7akoDKvKWE40eJeI+2KZqcp2h3NsOrRnDvtWX36KcKl30dy+hxECivdk2BVUHVNrPtoMBUx6A==
+whatwg-fetch@^3.6.2:
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c"
+  integrity sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0, whatwg-mimetype@^2.3.0:
   version "2.3.0"
