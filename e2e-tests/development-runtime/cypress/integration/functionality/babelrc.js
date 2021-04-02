@@ -87,5 +87,30 @@ describe(`babelrc`, () => {
         .invoke(`text`)
         .should(`eq`, `babel-rc-added`)
     })
+
+    it(`removing .babelrc`, () => {
+      cy.visit(`/babelrc/remove/`).waitForRouteChange()
+
+      cy.getTestElement(TEST_ELEMENT)
+        .invoke(`text`)
+        .should(`eq`, `babel-rc-will-be-deleted`)
+
+      cy.exec(
+        `npm run update -- --file src/pages/babelrc/remove/.babelrc --delete`
+      )
+
+      // babel-loader doesn't actually hot reloads itself when .babelrc file is deleted
+      // so to test hot-reloading here we actually have to invalidate js file, which would recompile it and discover
+      // new babelrc file
+      cy.exec(
+        `npm run update -- --file src/pages/babelrc/remove/index.js --replacements "foo-bar:foo-bar" --exact`
+      )
+
+      cy.waitForHmr()
+
+      cy.getTestElement(TEST_ELEMENT)
+        .invoke(`text`)
+        .should(`eq`, `babel-rc-test`)
+    })
   })
 })

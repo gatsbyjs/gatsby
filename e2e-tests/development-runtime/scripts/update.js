@@ -17,6 +17,10 @@ const args = yargs
     default: false,
     type: `boolean`,
   })
+  .option(`delete`, {
+    default: false,
+    type: `boolean`,
+  })
   .option(`fileContent`, {
     default: JSON.stringify(
       `
@@ -72,15 +76,21 @@ async function update() {
     history.set(filePath, exists ? file : false)
   }
 
-  const contents = replacements.reduce((replaced, pair) => {
-    const [key, value] = pair.split(`:`)
-    return replaced.replace(
-      args.exact ? key : new RegExp(`%${key}%`, `g`),
-      value
-    )
-  }, file)
+  if (args.delete) {
+    if (exists) {
+      await fs.remove(filePath)
+    }
+  } else {
+    const contents = replacements.reduce((replaced, pair) => {
+      const [key, value] = pair.split(`:`)
+      return replaced.replace(
+        args.exact ? key : new RegExp(`%${key}%`, `g`),
+        value
+      )
+    }, file)
 
-  await fs.writeFile(filePath, contents, `utf8`)
+    await fs.writeFile(filePath, contents, `utf8`)
+  }
 
   await writeHistory(history)
 }
