@@ -6,11 +6,11 @@ title: How to Write a How-To Guide
 
 A How-To Guide is a practical step-by-step guide that helps readers achieve a specific goal. How-To Guides are most useful when readers want to get something done.
 
-How-To Guides work well for explaining procedures that readers need to follow. You can think of a How-To Guide as a recipe used in cooking. It walks you through the steps to complete a task, from start to finish. It should only include as much context as is needed to help users achieve their goal.
+How-To Guides work well for outlining procedures that readers need to follow. You can think of a How-To Guide as a recipe used in cooking. It walks you through the steps to complete a task, from start to finish. It should only include as much context as is needed to help users achieve their goal.
 
 A How-To Guide can include _some_ details to help users understand the steps they're following. For example, you should add a quick sentence before showing a code snippet, to explain what the code does (at a high level) and which pieces to pay special attention to. If you find yourself wanting to provide deeper explanations of how something works, consider creating a separate [Reference Guide](/contributing/docs-contributions/how-to-write-a-reference-guide) or [Conceptual Guide](/contributing/docs-contributions/how-to-write-a-conceptual-guide) and then linking to it in the How-To Guide.
 
-> For more information on How-To guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
+> For more information on How-To Guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
 
 ## A Near-Perfect Example of a How-To Guide
 
