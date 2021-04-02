@@ -1,6 +1,6 @@
 const TEST_ELEMENT = `test-element`
 
-after(() => {
+before(() => {
   cy.exec(`npm run reset`)
 })
 
@@ -43,33 +43,8 @@ describe(`babelrc`, () => {
         .invoke(`text`)
         .should(`eq`, `babel-rc-test`)
 
-      const FILE_CONTENT = `
-{
-  "plugins": [
-    [
-      "babel-plugin-search-and-replace",
-      {
-        "rules": [
-          {
-            "search": "babel-rc-test",
-            "replace": "babel-rc-added",
-            "searchTemplateStrings": true
-          }
-          
-        ]
-      }
-    ]
-  ],
-  "presets": [
-    "babel-preset-gatsby"
-  ]
-}
-      `
-
       cy.exec(
-        `npm run update -- --file src/pages/babelrc/add/.babelrc --file-content '${JSON.stringify(
-          FILE_CONTENT
-        )}'`
+        `npm run update -- --file src/pages/babelrc/add/.babelrc --file-source src/pages/babelrc/add/.babelrc-fixture`
       )
 
       // babel-loader doesn't actually hot reloads itself when new .babelrc file is added

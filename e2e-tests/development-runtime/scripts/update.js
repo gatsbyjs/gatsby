@@ -39,6 +39,9 @@ const args = yargs
     ).trim(),
     type: `string`,
   })
+  .option(`fileSource`, {
+    type: `string`,
+  })
   .option(`restore`, {
     default: false,
     type: `boolean`,
@@ -64,11 +67,13 @@ async function update() {
   let exists = true
   if (!fs.existsSync(filePath)) {
     exists = false
-    await fs.writeFile(
-      filePath,
-      JSON.parse(args.fileContent).replace(/\+n/g, `\n`),
-      `utf8`
-    )
+    let fileContent
+    if (args.fileSource) {
+      fileContent = await fs.readFile(args.fileSource, `utf8`)
+    } else if (args.fileContent) {
+      fileContent = JSON.parse(args.fileContent).replace(/\+n/g, `\n`)
+    }
+    await fs.writeFile(filePath, fileContent, `utf8`)
   }
   const file = await fs.readFile(filePath, `utf8`)
 
