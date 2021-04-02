@@ -181,6 +181,12 @@ Number of entries to retrieve from Contentful at a time. Due to some technical l
 
 Number of workers to use when downloading Contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
 
+**`contentfulClientConfig`** [object][optional] [default: `{}`]
+
+Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
+
+Use this with caution, you might override values this plugin does set for you to connect to Contentful.
+
 ## Notes on Contentful Content Models
 
 There are currently some things to keep in mind when building your content models at Contentful.
