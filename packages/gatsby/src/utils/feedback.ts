@@ -139,6 +139,10 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
 }
 
 function isFeedbackDisabled(): boolean {
+  if (isCI()) {
+    return true
+  }
+
   // Heuristic 2
   if (getConfigStore().get(feedbackKey) === true) {
     return true
@@ -146,10 +150,6 @@ function isFeedbackDisabled(): boolean {
 
   // Heuristic 3
   if (process.env.GATSBY_FEEDBACK_DISABLED === `1`) {
-    return true
-  }
-
-  if (isCI()) {
     return true
   }
 
