@@ -4,7 +4,9 @@ title: Add a Plugin to Your Site
 
 ## Introduction
 
-Gatsby [plugins](/docs/conceptual/gatsby-jargon/#plugins) are Node.js packages that let you quickly add new features to your Gatsby site. In this guide, you'll learn how to install and configure a plugin.
+Gatsby [plugins](/docs/conceptual/gatsby-jargon/#plugins) are Node.js packages that you can add to your site. Plugins let you quickly add new features to your Gatsby site without needing to build them from scratch.
+
+In this guide, you'll learn how to install and configure a plugin.
 
 ## Prerequisites
 

@@ -36,7 +36,7 @@ A How-To Guide should include the following sections:
 
 ```markdown
 ---
-title: How to Do a Thing
+title: Do Some Task
 ---
 
 ## Introduction
