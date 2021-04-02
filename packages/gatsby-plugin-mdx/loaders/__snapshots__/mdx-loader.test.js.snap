@@ -4,6 +4,8 @@ exports[`mdx-loader snapshot with body 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {};
@@ -33,6 +35,8 @@ exports[`mdx-loader snapshot with frontmatter 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {
@@ -75,6 +79,8 @@ exports[`mdx-loader snapshot with frontmatter-isDevelopStage 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -110,6 +116,8 @@ exports[`mdx-loader snapshot with frontmatter-isDevelopStage-lessBabel 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -136,6 +144,8 @@ exports[`mdx-loader snapshot with frontmatter-layout 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {
@@ -180,6 +190,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-isDevelopStage 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -217,6 +229,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-isDevelopStage-lessBabel 2`
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -245,6 +259,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {
@@ -280,6 +296,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-namedExports 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -328,6 +346,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-namedExports-isDevelopStage
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -370,6 +390,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-namedExports-isDevelopStage
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -403,6 +425,8 @@ exports[`mdx-loader snapshot with frontmatter-layout-namedExports-lessBabel 1`] 
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -442,6 +466,8 @@ exports[`mdx-loader snapshot with frontmatter-lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {
@@ -475,6 +501,8 @@ exports[`mdx-loader snapshot with frontmatter-namedExports 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -521,6 +549,8 @@ exports[`mdx-loader snapshot with frontmatter-namedExports-isDevelopStage 2`] = 
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -561,6 +591,8 @@ exports[`mdx-loader snapshot with frontmatter-namedExports-isDevelopStage-lessBa
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -592,6 +624,8 @@ exports[`mdx-loader snapshot with frontmatter-namedExports-lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -638,6 +672,8 @@ exports[`mdx-loader snapshot with isDevelopStage 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -673,6 +709,8 @@ exports[`mdx-loader snapshot with isDevelopStage-lessBabel 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -699,6 +737,8 @@ exports[`mdx-loader snapshot with layout 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {};
@@ -739,6 +779,8 @@ exports[`mdx-loader snapshot with layout-isDevelopStage 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -776,6 +818,8 @@ exports[`mdx-loader snapshot with layout-isDevelopStage-lessBabel 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 const layoutProps = {};
@@ -804,6 +848,8 @@ exports[`mdx-loader snapshot with layout-lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {};
@@ -835,6 +881,8 @@ exports[`mdx-loader snapshot with layout-namedExports 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -879,6 +927,8 @@ exports[`mdx-loader snapshot with layout-namedExports-isDevelopStage 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -921,6 +971,8 @@ exports[`mdx-loader snapshot with layout-namedExports-isDevelopStage-lessBabel 2
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -954,6 +1006,8 @@ exports[`mdx-loader snapshot with layout-namedExports-lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -989,6 +1043,8 @@ exports[`mdx-loader snapshot with lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const _frontmatter = {};
@@ -1018,6 +1074,8 @@ exports[`mdx-loader snapshot with namedExports 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -1060,6 +1118,8 @@ exports[`mdx-loader snapshot with namedExports-isDevelopStage 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -1100,6 +1160,8 @@ exports[`mdx-loader snapshot with namedExports-isDevelopStage-lessBabel 2`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
@@ -1131,6 +1193,8 @@ exports[`mdx-loader snapshot with namedExports-lessBabel 1`] = `
 import * as React from "react";
 /* @jsx mdx */
 import { mdx } from "@mdx-js/react";
+/* @jsxRuntime classic */
+
 /* @jsx mdx */
 
 export const meta = {
