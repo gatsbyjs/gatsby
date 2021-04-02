@@ -164,10 +164,7 @@ export async function onCreateDevServer(
       const { functionName } = req.params
 
       if (knownFunctions.has(functionName)) {
-        const activity = reporter.activityTimer(
-          `Executing function ${functionName}`
-        )
-        activity.start()
+        reporter.verbose(`Running ${functionName}`)
         const compiledFunctionsDir = path.join(
           process.cwd(),
           `.cache`,
@@ -184,7 +181,6 @@ export async function onCreateDevServer(
         } catch (e) {
           reporter.error(e)
         }
-        activity.end()
       } else {
         next()
       }
