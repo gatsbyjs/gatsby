@@ -105,7 +105,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .description(
           `Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.`
         )
-        .default(100),
+        .default(1000),
       assetDownloadWorkers: Joi.number()
         .integer()
         .description(
