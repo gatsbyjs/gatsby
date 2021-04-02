@@ -35,5 +35,57 @@ describe(`babelrc`, () => {
         .invoke(`text`)
         .should(`eq`, `babel-rc-edited`)
     })
+
+    it(`adding .babelrc`, () => {
+      cy.visit(`/babelrc/add/`).waitForRouteChange()
+
+      cy.getTestElement(TEST_ELEMENT)
+        .invoke(`text`)
+        .should(`eq`, `babel-rc-test`)
+
+      const FILE_CONTENT = `
+{
+  "plugins": [
+    [
+      "babel-plugin-search-and-replace",
+      {
+        "rules": [
+          {
+            "search": "babel-rc-test",
+            "replace": "babel-rc-added",
+            "searchTemplateStrings": true
+          }
+          
+        ]
+      }
+    ]
+  ],
+  "presets": [
+    "babel-preset-gatsby"
+  ]
+}
+      `
+
+      cy.exec(
+        `npm run update -- --file src/pages/babelrc/add/.babelrc --file-content '${JSON.stringify(
+          FILE_CONTENT
+        )}'`
+      )
+
+      // babel-loader doesn't actually hot reloads itself when new .babelrc file is added
+      // this is because it registers dependency only if file already exists
+      // ( https://github.com/babel/babel-loader/blob/1669ac07ee1eed28a8e6fcacbf1c07ceb06fe053/src/index.js#L214-L216 )
+      // so to test hot-reloading here we actually have to invalidate js file, which would recompile it and discover
+      // new babelrc file
+      cy.exec(
+        `npm run update -- --file src/pages/babelrc/add/index.js --replacements "foo-bar:foo-bar" --exact`
+      )
+
+      cy.waitForHmr()
+
+      cy.getTestElement(TEST_ELEMENT)
+        .invoke(`text`)
+        .should(`eq`, `babel-rc-added`)
+    })
   })
 })
