@@ -16,8 +16,6 @@
     "@feedback-fish/react": "^1.2.1",
     "@types/react-instantsearch-dom": "^5.2.6",
     "@types/socket.io-client": "^1.4.35",
-    "@typescript-eslint/eslint-plugin": "^4.14.2",
-    "@typescript-eslint/parser": "^4.14.2",
     "csstype": "^2.6.14",
     "formik": "^2.2.6",
     "gatsby": "^3.3.0-next.1",
