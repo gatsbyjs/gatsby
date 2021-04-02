@@ -13,19 +13,23 @@ import {
   CreateDevServerArgs,
 } from "gatsby"
 
-const DEFAULT_FUNCTIONS_DIRECTORY_PATH = path.join(process.cwd(), `src/api`)
-
 export async function onPreBootstrap(
-  { reporter }: ParentSpanPluginArgs,
-  {
-    path: functionsDirectoryPath = DEFAULT_FUNCTIONS_DIRECTORY_PATH,
-  }: PluginOptions
+  { reporter, store }: ParentSpanPluginArgs,
+  { path: functionsDirectoryPath }: PluginOptions
 ): Promise<void> {
   const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
   activity.start()
 
+  const {
+    program: { directory: siteDirectoryPath },
+  } = store.getState()
+
+  if (!functionsDirectoryPath) {
+    functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
+  }
+
   const functionsDirectory = path.resolve(
-    process.cwd(),
+    siteDirectoryPath,
     functionsDirectoryPath as string
   )
 
@@ -44,9 +48,9 @@ export async function onPreBootstrap(
     return
   }
 
-  await fs.ensureDir(path.join(process.cwd(), `.cache`, `functions`))
+  await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
-  await fs.emptyDir(path.join(process.cwd(), `.cache`, `functions`))
+  await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
     if (key.match(/^GATSBY_/)) {
@@ -71,7 +75,7 @@ export async function onPreBootstrap(
         const config = {
           entry: path.join(functionsDirectory, file),
           output: {
-            path: path.join(process.cwd(), `.cache`, `functions`),
+            path: path.join(siteDirectoryPath, `.cache`, `functions`),
             filename: file.replace(`.ts`, `.js`),
             libraryTarget: `commonjs2`,
           },
@@ -120,16 +124,24 @@ export async function onPreBootstrap(
 }
 
 export async function onCreateDevServer(
-  { reporter, app }: CreateDevServerArgs,
-  {
-    path: functionsDirectoryPath = DEFAULT_FUNCTIONS_DIRECTORY_PATH,
-  }: PluginOptions
+  { reporter, app, store }: CreateDevServerArgs,
+  { path: functionsDirectoryPath }: PluginOptions
 ): Promise<void> {
   const functionsGlob = `**/*.{js,ts}`
+
+  const {
+    program: { directory: siteDirectoryPath },
+  } = store.getState()
+
+  if (!functionsDirectoryPath) {
+    functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
+  }
+
   const functionsDirectory = path.resolve(
-    process.cwd(),
+    siteDirectoryPath,
     functionsDirectoryPath as string
   )
+
   const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
   reporter.verbose(`Attaching functions to development server`)
