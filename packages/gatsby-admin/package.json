@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.3.0",
     "@feedback-fish/react": "^1.2.1",
     "@types/react-instantsearch-dom": "^5.2.6",
-    "@types/socket.io-client": "^1.4.35",
+    "@types/socket.io-client": "^1.4.36",
     "csstype": "^2.6.14",
     "formik": "^2.2.9",
     "gatsby": "^3.8.0-next.1",

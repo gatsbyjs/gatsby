@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.14.0",
-    "@types/common-tags": "^1.8.0",
     "better-opn": "^3.0.0",
     "chalk": "^4.1.0",
     "clipboardy": "^2.3.0",
@@ -56,8 +55,9 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-replace": "^2.4.2",
+    "@types/common-tags": "^1.8.0",
     "@types/hosted-git-info": "^3.0.1",
-    "@types/yargs": "^15.0.8",
+    "@types/yargs": "^15.0.13",
     "babel-preset-gatsby-package": "^1.8.0-next.1",
     "cross-env": "^7.0.3",
     "ink": "^3.0.8",
