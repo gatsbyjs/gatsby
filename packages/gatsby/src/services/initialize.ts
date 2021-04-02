@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { slash, isCI } from "gatsby-core-utils"
+import { slash, isCI, urlResolve } from "gatsby-core-utils"
 import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
@@ -15,6 +15,7 @@ import { preferDefault } from "../bootstrap/prefer-default"
 import * as WorkerPool from "../utils/worker/pool"
 import JestWorker from "jest-worker"
 import { startPluginRunner } from "../redux/plugin-runner"
+import glob from "globby"
 import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
@@ -23,7 +24,7 @@ import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
 import { internalActions } from "../redux/actions"
-import { IGatsbyState } from "../redux/types"
+import { IGatsbyState, IGatsbyFunction } from "../redux/types"
 import { IBuildContext } from "./types"
 import availableFlags from "../utils/flags"
 
@@ -227,6 +228,49 @@ export async function initialize({
   store.dispatch(internalActions.setSiteConfig(config))
 
   activity.end()
+
+  if (true) {
+    const functionsGlob = `**/*.{js,ts}`
+
+    const {
+      program: { directory: siteDirectoryPath },
+    } = store.getState()
+
+    // if (!functionsDirectoryPath) {
+    const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
+    // }
+
+    const functionsDirectory = path.resolve(
+      siteDirectoryPath,
+      functionsDirectoryPath as string
+    )
+
+    const files = await glob(functionsGlob, { cwd: functionsDirectory })
+
+    if (files?.length === 0) {
+      reporter.warn(
+        `No functions found in directory: ${path.relative(
+          program.directory,
+          functionsDirectory
+        )}`
+      )
+    }
+
+    reporter.verbose(`Attaching functions to development server`)
+
+    const knownFunctions = new Map(
+      files.map(file => [
+        urlResolve(path.parse(file).dir, path.parse(file).name),
+        file,
+      ])
+    )
+
+    store.dispatch(internalActions.setFunctions(knownFunctions))
+
+    await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+
+    await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+  }
 
   if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
     if (process.env.gatsby_executing_command !== `develop`) {

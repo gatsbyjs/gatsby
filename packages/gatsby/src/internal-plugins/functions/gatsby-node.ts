@@ -5,7 +5,9 @@ import webpack from "webpack"
 import multer from "multer"
 import * as express from "express"
 
-import { urlResolve } from "gatsby-core-utils"
+// import { urlResolve } from "gatsby-core-utils"
+
+// const { emitter, store } = require(`../../redux`)
 
 import {
   ParentSpanPluginArgs,
@@ -26,35 +28,36 @@ export async function onPreBootstrap(
 
   const {
     program: { directory: siteDirectoryPath },
+    functions,
   } = store.getState()
 
-  if (!functionsDirectoryPath) {
-    functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
-  }
+  // if (!functionsDirectoryPath) {
+  functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
+  // }
 
   const functionsDirectory = path.resolve(
     siteDirectoryPath,
     functionsDirectoryPath as string
   )
 
-  const functionsGlob = `**/*.{js,ts}`
+  // const functionsGlob = `**/*.{js,ts}`
 
   // Get initial list of files
-  const files = await glob(functionsGlob, { cwd: functionsDirectory })
+  // const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
-  if (files?.length === 0) {
-    reporter.warn(
-      `No functions found in directory: ${path.relative(
-        process.cwd(),
-        functionsDirectory
-      )}`
-    )
-    return
-  }
+  // if (files?.length === 0) {
+  //   reporter.warn(
+  //     `No functions found in directory: ${path.relative(
+  //       process.cwd(),
+  //       functionsDirectory
+  //     )}`
+  //   )
+  //   return
+  // }
 
-  await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+  // await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
-  await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+  // await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
     if (key.match(/^GATSBY_/)) {
@@ -73,9 +76,17 @@ export async function onPreBootstrap(
     }
   )
 
+  console.log({
+    functions,
+  })
+
   try {
     await Promise.all(
-      files.map(file => {
+      Array.from(functions).map(([name, file]) => {
+        console.log({
+          file,
+        })
+
         const config = {
           entry: path.join(functionsDirectory, file),
           output: {
@@ -127,35 +138,38 @@ export async function onPreBootstrap(
   activity.end()
 }
 
-export async function onCreateDevServer(
-  { reporter, app, store }: CreateDevServerArgs,
-  { path: functionsDirectoryPath }: PluginOptions
-): Promise<void> {
-  const functionsGlob = `**/*.{js,ts}`
+export async function onCreateDevServer({
+  reporter,
+  app,
+  store,
+}: CreateDevServerArgs): // { path: functionsDirectoryPath }: PluginOptions
+Promise<void> {
+  // const functionsGlob = `**/*.{js,ts}`
 
   const {
-    program: { directory: siteDirectoryPath },
+    //   program: { directory: siteDirectoryPath },
+    functions,
   } = store.getState()
 
-  if (!functionsDirectoryPath) {
-    functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
-  }
+  // if (!functionsDirectoryPath) {
+  //   functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
+  // }
 
-  const functionsDirectory = path.resolve(
-    siteDirectoryPath,
-    functionsDirectoryPath as string
-  )
+  // const functionsDirectory = path.resolve(
+  //   siteDirectoryPath,
+  //   functionsDirectoryPath as string
+  // )
 
-  const files = await glob(functionsGlob, { cwd: functionsDirectory })
+  // const files = await glob(functionsGlob, { cwd: functionsDirectory })
 
   reporter.verbose(`Attaching functions to development server`)
 
-  const knownFunctions = new Map(
-    files.map(file => [
-      urlResolve(path.parse(file).dir, path.parse(file).name),
-      file,
-    ])
-  )
+  // const knownFunctions = new Map(
+  //   files.map(file => [
+  //     urlResolve(path.parse(file).dir, path.parse(file).name),
+  //     file,
+  //   ])
+  // )
 
   app.use(
     `/api/:functionName`,
@@ -167,17 +181,21 @@ export async function onCreateDevServer(
     (req, res, next) => {
       const { functionName } = req.params
 
-      if (knownFunctions.has(functionName)) {
+      if (functions.has(functionName)) {
         reporter.verbose(`Running ${functionName}`)
         const compiledFunctionsDir = path.join(
           process.cwd(),
           `.cache`,
           `functions`
         )
-        const funcNameToJs = knownFunctions.get(functionName) as string
+        const funcNameToJs = functions.get(functionName) as string
 
         try {
           const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
+
+          console.log({
+            functions,
+          })
 
           const fnToExecute = (fn && fn.default) || fn
 
