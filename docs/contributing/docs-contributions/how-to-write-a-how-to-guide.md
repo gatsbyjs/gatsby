@@ -12,6 +12,10 @@ A How-To Guide can include _some_ details to help users understand the steps the
 
 > For more information on How-To guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
 
+## A Near-Perfect Example of a How-To Guide
+
+Want to see what a good How-To Guide looks like? Check out the [How-To Guide: Add a Plugin to Your Site](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site).
+
 ## Creating a How-To Guide
 
 1. Find an issue.
@@ -29,8 +33,6 @@ A How-To Guide should include the following sections:
 - **Prerequisites:** Any additional information or setup readers will have to do before they can make use of this How-To Guide.
 - **Directions:**
 - **Additional Resources:** Links to other docs or content that might be useful next steps for readers. Also, any resources that helped you write the How-To Guide.
-
-// TODO: Update one of the existing How-To Guides to match this new template. List it as an exemplar. Ideally, do at least 2-3, for a variety of examples.
 
 ```markdown
 ---

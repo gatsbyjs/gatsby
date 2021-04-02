@@ -1,5 +1,5 @@
 ---
-title: Using a Plugin in Your Site
+title: Add a Plugin to Your Site
 ---
 
 ## Introduction
