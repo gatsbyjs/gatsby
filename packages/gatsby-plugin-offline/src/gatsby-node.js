@@ -1,22 +1,31 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
 /* eslint-disable prefer-const */
-let fs = require(`fs`)
+let {
+  appendFileSync,
+  copyFileSync,
+  createReadStream,
+  createWriteStream,
+  existsSync,
+  lstatSync,
+  readFileSync,
+  writeFileSync,
+} = require(`node:fs`)
 let workboxBuild = require(`workbox-build`)
-const path = require(`path`)
+const { join } = require(`node:path`)
 const { slash } = require(`gatsby-core-utils`)
-const glob = require(`glob`)
-const _ = require(`lodash`)
+const { sync: globSync } = require(`glob`)
+const merge = require(`lodash/merge`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
 exports.onPreBootstrap = ({ cache }) => {
-  const appShellSourcePath = path.join(__dirname, `app-shell.js`)
-  const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
-  fs.copyFileSync(appShellSourcePath, appShellTargetPath)
+  const appShellSourcePath = join(__dirname, `app-shell.js`)
+  const appShellTargetPath = join(cache.directory, `app-shell.js`)
+  copyFileSync(appShellSourcePath, appShellTargetPath)
 }
 
 exports.createPages = ({ actions, cache }) => {
-  const appShellPath = path.join(cache.directory, `app-shell.js`)
+  const appShellPath = join(cache.directory, `app-shell.js`)
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
     createPage({
@@ -32,29 +41,29 @@ const readStats = () => {
     return s
   } else {
     s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+      readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
     )
     return s
   }
 }
 
 function getAssetsForChunks(chunks) {
-  const files = _.flatten(
-    chunks.map(chunk => readStats().assetsByChunkName[chunk])
-  )
-  return _.compact(files)
+  return chunks
+    .map(chunk => readStats().assetsByChunkName[chunk])
+    .flat()
+    .filter(Boolean)
 }
 
 function getPrecachePages(globs, base) {
   const precachePages = []
 
   globs.forEach(page => {
-    const matches = glob.sync(base + page)
+    const matches = globSync(base + page)
     matches.forEach(path => {
-      const isDirectory = fs.lstatSync(path).isDirectory()
+      const isDirectory = lstatSync(path).isDirectory()
       let precachePath
 
-      if (isDirectory && fs.existsSync(`${path}/index.html`)) {
+      if (isDirectory && existsSync(`${path}/index.html`)) {
         precachePath = `${path}/index.html`
       } else if (path.endsWith(`.html`)) {
         precachePath = path
@@ -91,10 +100,6 @@ exports.onPostBuild = (
   ])
   const appFile = files.find(file => file.startsWith(`app-`))
 
-  function flat(arr) {
-    return Array.prototype.flat ? arr.flat() : [].concat(...arr)
-  }
-
   const offlineShellPath = `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
   const precachePages = [
     offlineShellPath,
@@ -104,8 +109,10 @@ exports.onPostBuild = (
     ).filter(page => page !== offlineShellPath),
   ]
 
-  const criticalFilePaths = _.uniq(
-    flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix)))
+  const criticalFilePaths = Array.from(
+    new Set(
+      precachePages.map(page => getResourcesFromHTML(page, pathPrefix)).flat()
+    )
   )
 
   const globPatterns = files.concat([
@@ -116,7 +123,7 @@ exports.onPostBuild = (
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
   manifests.forEach(file => {
-    if (fs.existsSync(`${rootDir}/${file}`)) globPatterns.push(file)
+    if (existsSync(`${rootDir}/${file}`)) globPatterns.push(file)
   })
 
   const options = {
@@ -168,14 +175,14 @@ exports.onPostBuild = (
     clientsClaim: true,
   }
 
-  const combinedOptions = _.merge(options, workboxConfig)
+  const combinedOptions = merge(options, workboxConfig)
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
   const idbKeyvalPackageJson = require(`idb-keyval/package.json`)
   const idbKeyValVersioned = `idb-keyval-${idbKeyvalPackageJson.version}-iife.min.js`
   const idbKeyvalDest = `public/${idbKeyValVersioned}`
-  fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
+  createReadStream(idbKeyvalSource).pipe(createWriteStream(idbKeyvalDest))
 
   const swDest = `public/sw.js`
   return workboxBuild
@@ -184,31 +191,28 @@ exports.onPostBuild = (
       if (warnings) warnings.forEach(warning => console.warn(warning))
 
       if (debug !== undefined) {
-        const swText = fs
-          .readFileSync(swDest, `utf8`)
-          .replace(
-            /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
-            `$1, debug: ${JSON.stringify(debug)}});`
-          )
-        fs.writeFileSync(swDest, swText)
+        const swText = readFileSync(swDest, `utf8`).replace(
+          /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
+          `$1, debug: ${JSON.stringify(debug)}});`
+        )
+        writeFileSync(swDest, swText)
       }
 
-      const swAppend = fs
-        .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
+      const swAppend = readFileSync(`${__dirname}/sw-append.js`, `utf8`)
         .replace(/%idbKeyValVersioned%/g, idbKeyValVersioned)
         .replace(/%pathPrefix%/g, pathPrefix)
         .replace(/%appFile%/g, appFile)
 
-      fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
+      appendFileSync(`public/sw.js`, `\n` + swAppend)
 
       if (appendScript !== null) {
         let userAppend
         try {
-          userAppend = fs.readFileSync(appendScript, `utf8`)
+          userAppend = readFileSync(appendScript, `utf8`)
         } catch (e) {
           throw new Error(`Couldn't find the specified offline inject script`)
         }
-        fs.appendFileSync(`public/sw.js`, `\n` + userAppend)
+        appendFileSync(`public/sw.js`, `\n` + userAppend)
       }
 
       reporter.info(

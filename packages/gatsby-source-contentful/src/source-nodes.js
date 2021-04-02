@@ -1,6 +1,6 @@
 // @ts-check
 import isOnline from "is-online"
-import _ from "lodash"
+import cloneDeep from "lodash/cloneDeep"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
@@ -407,7 +407,7 @@ export async function sourceNodes(
         // We should not mutate original node as Gatsby will still
         // compare against what's in in-memory weak cache, so we
         // clone original node to ensure reference identity is not possible
-        const nodeToUpdate = _.cloneDeep(nodeToUpdateOriginal)
+        const nodeToUpdate = cloneDeep(nodeToUpdateOriginal)
         // We need to remove properties from existing fields
         // that are reserved and managed by Gatsby (`.internal.owner`, `.fields`).
         // Gatsby automatically will set `.owner` it back

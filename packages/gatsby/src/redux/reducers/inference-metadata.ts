@@ -1,6 +1,7 @@
 // Tracking structure of nodes to utilize this metadata for schema inference
 // Type descriptors stay relevant at any point in time making incremental inference trivial
-import { omit } from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/omit
+import omit from "lodash/omit"
 import {
   addNode,
   addNodes,

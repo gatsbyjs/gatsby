@@ -1,11 +1,14 @@
 /* eslint-disable @babel/no-invalid-this */
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
-const fsExtra = require(`fs-extra`)
-const path = require(`path`)
-const _ = require(`lodash`)
-const cheerio = require(`cheerio`)
-const imageSize = require(`probe-image-size`)
+const { readFileSync, existsSync, ensureDir, copy } = require(`fs-extra`)
+const {
+  posix: { join },
+  relative,
+  dirname,
+} = require(`node:path`)
+const { load } = require(`cheerio`)
+const { sync: imageSizeSync } = require(`probe-image-size`)
 
 const DEPLOY_DIR = `public`
 
@@ -13,7 +16,7 @@ const invalidDestinationDirMessage = dir =>
   `[gatsby-remark-copy-linked-files You have supplied an invalid destination directory. The destination directory must be a child but was: ${dir}`
 
 // dest must be a child
-const destinationIsValid = dest => !path.relative(`./`, dest).startsWith(`..`)
+const destinationIsValid = dest => !relative(`./`, dest).startsWith(`..`)
 
 const validateDestinationDir = dir => {
   if (typeof dir === `undefined`) {
@@ -21,7 +24,7 @@ const validateDestinationDir = dir => {
   } else if (typeof dir === `string`) {
     // need to pass dummy data for validation to work
     return destinationIsValid(`${dir}/n/h/a`)
-  } else if (_.isFunction(dir)) {
+  } else if (typeof dir === `function`) {
     // need to pass dummy data for validation to work
     return destinationIsValid(
       `${dir({ name: `n`, hash: `h`, absolutePath: `a` })}`
@@ -35,13 +38,13 @@ const defaultDestination = linkNode =>
   `${linkNode.internal.contentDigest}/${linkNode.name}.${linkNode.extension}`
 
 const getDestination = (linkNode, dir) => {
-  if (_.isFunction(dir)) {
+  if (typeof dir === `function`) {
     return `${dir({
       name: linkNode.name,
       hash: linkNode.internal.contentDigest,
       absolutePath: linkNode.absolutePath,
     })}.${linkNode.extension}`
-  } else if (_.isString(dir)) {
+  } else if (dir && typeof dir.valueOf() === `string`) {
     return `${dir}/${defaultDestination(linkNode)}`
   } else {
     return defaultDestination(linkNode)
@@ -52,7 +55,7 @@ const newPath = (linkNode, options) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
   const paths = [process.cwd(), DEPLOY_DIR, destination]
-  return path.posix.join(...paths)
+  return join(...paths)
 }
 
 const newLinkURL = (linkNode, options, pathPrefix) => {
@@ -85,18 +88,15 @@ module.exports = (
   if (!validateDestinationDir(destinationDir))
     return Promise.reject(invalidDestinationDirMessage(destinationDir))
 
-  const options = _.defaults({}, pluginOptions, defaults)
+  const options = Object.assign({}, defaults, pluginOptions)
 
   const filesToCopy = new Map()
   // Copy linked files to the destination directory and modify the AST to point
   // to new location of the files.
   const visitor = link => {
     if (isRelativeUrl(link.url) && getNode(markdownNode.parent).dir) {
-      const linkPath = path.posix.join(
-        getNode(markdownNode.parent).dir,
-        link.url
-      )
-      const linkNode = _.find(files, file => {
+      const linkPath = join(getNode(markdownNode.parent).dir, link.url)
+      const linkNode = files.find(file => {
         if (file && file.absolutePath) {
           return file.absolutePath === linkPath
         }
@@ -118,11 +118,8 @@ module.exports = (
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
   const generateImagesAndUpdateNode = function (image, node) {
-    const imagePath = path.posix.join(
-      getNode(markdownNode.parent).dir,
-      image.attr(`src`)
-    )
-    const imageNode = _.find(files, file => {
+    const imagePath = join(getNode(markdownNode.parent).dir, image.attr(`src`))
+    const imageNode = files.find(file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
       }
@@ -145,9 +142,7 @@ module.exports = (
     let dimensions
 
     if (!image.attr(`width`) || !image.attr(`height`)) {
-      dimensions = imageSize.sync(
-        toArray(fsExtra.readFileSync(imageNode.absolutePath))
-      )
+      dimensions = imageSizeSync(toArray(readFileSync(imageNode.absolutePath)))
     }
 
     // Generate default alt tag
@@ -197,11 +192,8 @@ module.exports = (
       return
     }
 
-    const imagePath = path.posix.join(
-      getNode(markdownNode.parent).dir,
-      image.url
-    )
-    const imageNode = _.find(files, file => {
+    const imagePath = join(getNode(markdownNode.parent).dir, image.url)
+    const imageNode = files.find(file => {
       if (file && file.absolutePath) {
         return file.absolutePath === imagePath
       }
@@ -215,7 +207,7 @@ module.exports = (
 
   // For each HTML Node
   visit(markdownAST, [`html`, `jsx`], node => {
-    const $ = cheerio.load(node.value)
+    const $ = load(node.value)
 
     function processUrl({ url, isRequired }) {
       try {
@@ -298,10 +290,10 @@ module.exports = (
   return Promise.all(
     Array.from(filesToCopy, async ([linkPath, newFilePath]) => {
       // Don't copy anything if the file already exists at the location.
-      if (!fsExtra.existsSync(newFilePath)) {
+      if (!existsSync(newFilePath)) {
         try {
-          await fsExtra.ensureDir(path.dirname(newFilePath))
-          await fsExtra.copy(linkPath, newFilePath)
+          await ensureDir(dirname(newFilePath))
+          await copy(linkPath, newFilePath)
         } catch (err) {
           console.error(`error copying file`, err)
         }

@@ -1,6 +1,6 @@
-const jsYaml = require(`js-yaml`)
-const _ = require(`lodash`)
-const path = require(`path`)
+const { load: loadYaml } = require(`js-yaml`)
+const { upperFirst, camelCase, isPlainObject } = require(`lodash`)
+const { basename } = require(`node:path`)
 
 function shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `text/yaml`
@@ -11,16 +11,20 @@ async function onCreateNode(
   pluginOptions
 ) {
   function getType({ node, object, isArray }) {
-    if (pluginOptions && _.isFunction(pluginOptions.typeName)) {
+    if (pluginOptions && typeof pluginOptions.typeName === `function`) {
       return pluginOptions.typeName({ node, object, isArray })
-    } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
+    } else if (
+      pluginOptions &&
+      pluginOptions.typeName &&
+      typeof pluginOptions.typeName.valueOf() === `string`
+    ) {
       return pluginOptions.typeName
     } else if (node.internal.type !== `File`) {
-      return _.upperFirst(_.camelCase(`${node.internal.type} Yaml`))
+      return upperFirst(camelCase(`${node.internal.type} Yaml`))
     } else if (isArray) {
-      return _.upperFirst(_.camelCase(`${node.name} Yaml`))
+      return upperFirst(camelCase(`${node.name} Yaml`))
     } else {
-      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Yaml`))
+      return upperFirst(camelCase(`${basename(node.dir)} Yaml`))
     }
   }
 
@@ -45,9 +49,9 @@ async function onCreateNode(
   const { createNode, createParentChildLink } = actions
 
   const content = await loadNodeContent(node)
-  const parsedContent = jsYaml.load(content)
+  const parsedContent = loadYaml(content)
 
-  if (_.isArray(parsedContent)) {
+  if (Array.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
@@ -55,7 +59,7 @@ async function onCreateNode(
         getType({ node, object: obj, isArray: true })
       )
     })
-  } else if (_.isPlainObject(parsedContent)) {
+  } else if (isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       createNodeId(`${node.id} >>> YAML`),

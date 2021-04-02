@@ -1,4 +1,4 @@
-const _ = require(`lodash`)
+const { isEmpty, cloneDeep, difference } = require(`lodash`)
 
 const {
   nodeFromData,
@@ -36,13 +36,13 @@ async function handleReferences(
   const backReferencedNodes = []
   if (node.drupal_relationships) {
     const referencedNodes = []
-    _.each(node.drupal_relationships, (v, k) => {
+    Object.keys(node.drupal_relationships).forEach((v, k) => {
       if (!v.data) return
 
       const nodeFieldName = `${k}___NODE`
-      if (_.isArray(v.data)) {
-        relationships[nodeFieldName] = _.compact(
-          v.data.map(data => {
+      if (Array.isArray(v.data)) {
+        relationships[nodeFieldName] = v.data
+          .map(data => {
             const referencedNodeId = createNodeId(
               createNodeIdWithVersion(
                 data.id,
@@ -59,15 +59,15 @@ async function handleReferences(
             referencedNodes.push(referencedNodeId)
             return referencedNodeId
           })
-        )
+          .filter(Boolean)
 
-        const meta = _.compact(
-          v.data.map(data => (!_.isEmpty(data.meta) ? data.meta : null))
-        )
+        const meta = v.data
+          .map(data => (!isEmpty(data.meta) ? data.meta : null))
+          .filter(Boolean)
         // If there's meta on the field and it's not an existing/internal one
         // create a new node's field with that meta. It can't exist on both
         // @see https://jsonapi.org/format/#document-resource-object-fields
-        if (!_.isEmpty(meta) && !(k in node)) {
+        if (!isEmpty(meta) && !(k in node)) {
           node[k] = meta
         }
       } else {
@@ -88,7 +88,7 @@ async function handleReferences(
         // If there's meta on the field and it's not an existing/internal one
         // create a new node's field with that meta. It can't exist on both
         // @see https://jsonapi.org/format/#document-resource-object-fields
-        if (!_.isEmpty(v.data.meta) && !(k in node)) {
+        if (!isEmpty(v.data.meta) && !(k in node)) {
           node[k] = v.data.meta
         }
       }
@@ -103,7 +103,7 @@ async function handleReferences(
         if (mutateNode) {
           referencedNode = getNode(nodeId)
         } else {
-          referencedNode = _.cloneDeep(getNode(nodeId))
+          referencedNode = cloneDeep(getNode(nodeId))
         }
         if (!referencedNode.relationships[nodeFieldName]) {
           referencedNode.relationships[nodeFieldName] = []
@@ -163,7 +163,7 @@ const handleDeletedNode = async ({
   }
 
   // Clone node so we're not mutating the original node.
-  deletedNode = _.cloneDeep(deletedNode)
+  deletedNode = cloneDeep(deletedNode)
 
   await cache.del(makeBackRefsKey(deletedNode.id))
   await cache.del(makeRefNodesKey(deletedNode.id))
@@ -178,20 +178,24 @@ const handleDeletedNode = async ({
       // The referenced node might have already been deleted.
       if (node) {
         // Clone node so we're not mutating the original node.
-        node = _.cloneDeep(node)
+        node = cloneDeep(node)
         let referencedNodes = await cache.get(makeRefNodesKey(node.id))
 
         if (referencedNodes?.includes(deletedNode.id)) {
           // Loop over relationships and cleanup references.
           Object.entries(node.relationships).forEach(([key, value]) => {
             // If a string ref matches, delete it.
-            if (_.isString(value) && value === deletedNode.id) {
+            if (
+              value &&
+              typeof value.valueOf() === `string` &&
+              value === deletedNode.id
+            ) {
               delete node.relationships[key]
             }
 
             // If it's an array, filter, then check if the array is empty and then delete
             // if so
-            if (_.isArray(value)) {
+            if (Array.isArray(value)) {
               value = value.filter(v => v !== deletedNode.id)
 
               if (value.length === 0) {
@@ -340,7 +344,7 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
   let oldNode = getNode(newNode.id)
   if (oldNode) {
     // Clone node so we're not mutating the original node.
-    oldNode = _.cloneDeep(oldNode)
+    oldNode = cloneDeep(oldNode)
     // copy over back references from old node
     const backRefsNames = await cache.get(makeBackRefsKey(oldNode.id))
     if (backRefsNames) {
@@ -353,14 +357,14 @@ ${JSON.stringify(nodeToUpdate, null, 4)}
 
     const newNodeReferencedNodes = await cache.get(makeRefNodesKey(newNode.id))
     // see what nodes are no longer referenced and remove backRefs from them
-    let removedReferencedNodes = _.difference(
+    let removedReferencedNodes = difference(
       oldNodeReferencedNodes,
       newNodeReferencedNodes
     ).map(id => getNode(id))
 
     removedReferencedNodes = removedReferencedNodes.map(node => {
       if (node) {
-        return _.cloneDeep(node)
+        return cloneDeep(node)
       } else {
         return node
       }

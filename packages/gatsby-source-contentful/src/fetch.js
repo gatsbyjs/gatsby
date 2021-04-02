@@ -1,7 +1,8 @@
 // @ts-check
 import chalk from "chalk"
 import { createClient } from "contentful"
-import _ from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/find
+import find from "lodash/find"
 import { formatPluginOptionsForCLI } from "./plugin-options"
 import { CODES } from "./report"
 
@@ -250,7 +251,7 @@ export async function fetchContent({ syncToken, pluginConfig, reporter }) {
     reporter.verbose(`Fetching default locale`)
     space = await client.getSpace()
     locales = await client.getLocales().then(response => response.items)
-    defaultLocale = _.find(locales, { default: true }).code
+    defaultLocale = find(locales, { default: true }).code
     reporter.verbose(
       `Default locale is: ${defaultLocale}. There are ${locales.length} locales in total.`
     )

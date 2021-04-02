@@ -1,5 +1,4 @@
 import camelCase from "lodash/camelCase"
-import isEqual from "lodash/isEqual"
 
 import { GraphQLSchema, GraphQLOutputType } from "graphql"
 import { ActionCreator } from "redux"
@@ -506,10 +505,9 @@ export const actions = {
       const componentPath = normalizePath(payload.component)
 
       const oldSlice = slices.get(payload.id)
-      const contextModified =
-        !!oldSlice && !isEqual(oldSlice.context, payload.context)
+      const contextModified = !!oldSlice && oldSlice.context !== payload.context
       const componentModified =
-        !!oldSlice && !isEqual(oldSlice.componentPath, componentPath)
+        !!oldSlice && oldSlice.componentPath !== componentPath
 
       return {
         type: `CREATE_SLICE`,

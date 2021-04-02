@@ -1,5 +1,9 @@
-const XLSX = require(`xlsx`)
-const _ = require(`lodash`)
+const {
+  readFile,
+  read,
+  utils: { sheet_to_json },
+} = require(`xlsx`)
+const { upperFirst, camelCase } = require(`lodash`)
 
 const extensions = [
   `xls`,
@@ -41,10 +45,16 @@ async function onCreateNode(
   // accept *all* options to pass to the sheet_to_json function
   const xlsxOptions = options
   // alias legacy `rawOutput` to correct `raw` attribute if raw isn't already defined
-  if (!_.has(xlsxOptions, `raw`) && _.has(xlsxOptions, `rawOutput`)) {
+  if (
+    !Object.hasOwn(xlsxOptions, `raw`) &&
+    Object.hasOwn(xlsxOptions, `rawOutput`)
+  ) {
     xlsxOptions.raw = xlsxOptions.rawOutput
   }
-  if (!_.has(xlsxOptions, `defval`) && _.has(xlsxOptions, `defaultValue`)) {
+  if (
+    !Object.hasOwn(xlsxOptions, `defval`) &&
+    Object.hasOwn(xlsxOptions, `defaultValue`)
+  ) {
     xlsxOptions.defval = xlsxOptions.defaultValue
   }
   delete xlsxOptions.rawOutput
@@ -54,13 +64,13 @@ async function onCreateNode(
   // Parse
   const readOptions = { cellDates: true }
   const wb = node.absolutePath
-    ? XLSX.readFile(node.absolutePath, readOptions)
-    : XLSX.read(await loadNodeContent(node), { type: `binary`, ...readOptions })
+    ? readFile(node.absolutePath, readOptions)
+    : read(await loadNodeContent(node), { type: `binary`, ...readOptions })
   wb.SheetNames.forEach((n, idx) => {
     const ws = wb.Sheets[n]
-    const parsedContent = XLSX.utils.sheet_to_json(ws, xlsxOptions)
+    const parsedContent = sheet_to_json(ws, xlsxOptions)
 
-    if (_.isArray(parsedContent)) {
+    if (Array.isArray(parsedContent)) {
       const csvArray = parsedContent.map((obj, i) => {
         const contentDigest = createContentDigest(obj)
         return {
@@ -73,14 +83,14 @@ async function onCreateNode(
           internal: {
             contentDigest,
             type:
-              _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)) +
+              upperFirst(camelCase(`${node.name} ${node.extension}`)) +
               `__` +
-              _.upperFirst(_.camelCase(`${n}`)),
+              upperFirst(camelCase(`${n}`)),
           },
         }
       })
 
-      _.each(csvArray, y => {
+      csvArray.forEach(y => {
         createNode(y)
         createParentChildLink({ parent: node, child: y })
       })
@@ -93,7 +103,7 @@ async function onCreateNode(
         parent: node.id,
         internal: {
           contentDigest,
-          type: _.upperFirst(_.camelCase(`${node.name} ${node.extension}`)),
+          type: upperFirst(camelCase(`${node.name} ${node.extension}`)),
         },
       }
       createNode(z)

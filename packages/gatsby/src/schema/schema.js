@@ -1,4 +1,4 @@
-const _ = require(`lodash`)
+const { camelCase, isEmpty } = require(`lodash`)
 const invariant = require(`invariant`)
 const {
   isSpecifiedScalarType,
@@ -252,10 +252,10 @@ const processTypeComposer = async ({
 }
 
 const fieldNames = {
-  query: typeName => _.camelCase(typeName),
-  queryAll: typeName => _.camelCase(`all ${typeName}`),
-  convenienceChild: typeName => _.camelCase(`child ${typeName}`),
-  convenienceChildren: typeName => _.camelCase(`children ${typeName}`),
+  query: typeName => camelCase(typeName),
+  queryAll: typeName => camelCase(`all ${typeName}`),
+  convenienceChild: typeName => camelCase(`child ${typeName}`),
+  convenienceChildren: typeName => camelCase(`children ${typeName}`),
 }
 
 const addTypes = ({ schemaComposer, types, parentSpan }) => {
@@ -1003,7 +1003,7 @@ const determineSearchableFields = ({ schemaComposer, typeComposer }) => {
           sortable: SORTABLE_ENUM.SORTABLE,
           needsResolve: extensions.proxy ? true : false,
         })
-      } else if (!_.isEmpty(field.args)) {
+      } else if (!isEmpty(field.args)) {
         typeComposer.extendFieldExtensions(fieldName, {
           searchable: SEARCHABLE_ENUM.DEPRECATED_SEARCHABLE,
           sortable: SORTABLE_ENUM.DEPRECATED_SORTABLE,

@@ -5,9 +5,17 @@ module.exports = {
     `eslint:recommended`,
     `plugin:flowtype/recommended`,
     `plugin:react/recommended`,
+    `plugin:you-dont-need-lodash-underscore/compatible`,
     `prettier`,
   ],
-  plugins: [`flowtype`, `prettier`, `react`, `filenames`, `@babel`],
+  plugins: [
+    `flowtype`,
+    `prettier`,
+    `react`,
+    `filenames`,
+    `@babel`,
+    `you-dont-need-lodash-underscore`,
+  ],
   parserOptions: {
     ecmaVersion: 2016,
     sourceType: `module`,

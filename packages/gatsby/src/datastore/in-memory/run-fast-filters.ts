@@ -1,4 +1,4 @@
-import _ from "lodash"
+import orderBy from "lodash/orderBy"
 import {
   DbQuery,
   IDbQueryQuery,
@@ -457,5 +457,5 @@ function sortNodes(
     })
   }
 
-  return _.orderBy(nodes, sortFns, sortOrder)
+  return orderBy(nodes, sortFns, sortOrder)
 }

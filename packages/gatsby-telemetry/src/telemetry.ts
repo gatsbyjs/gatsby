@@ -1,5 +1,5 @@
-import * as fs from "fs-extra"
-import os from "os"
+import { readFileSync, statSync } from "fs-extra"
+import os from "node:os"
 import {
   isCI,
   getCIName,
@@ -18,7 +18,7 @@ import { cleanPaths } from "./error-helpers"
 import { getDependencies } from "./get-dependencies"
 
 import isDocker from "is-docker"
-import lodash from "lodash"
+import merge from "lodash/merge"
 
 const typedUUIDv4 = uuid.v4 as () => string
 
@@ -219,7 +219,7 @@ export class AnalyticsTracker {
   getGatsbyVersion(): SemVer {
     try {
       const packageJson = require.resolve(`gatsby/package.json`)
-      const { version } = JSON.parse(fs.readFileSync(packageJson, `utf-8`))
+      const { version } = JSON.parse(readFileSync(packageJson, `utf-8`))
       return version
     } catch (e) {
       // ignore
@@ -230,7 +230,7 @@ export class AnalyticsTracker {
   getGatsbyCliVersion(): SemVer {
     try {
       const jsonfile = require.resolve(`gatsby-cli/package.json`)
-      const { version } = JSON.parse(fs.readFileSync(jsonfile, `utf-8`))
+      const { version } = JSON.parse(readFileSync(jsonfile, `utf-8`))
       return version
     } catch (e) {
       // ignore
@@ -281,7 +281,7 @@ export class AnalyticsTracker {
     }
 
     delete this.metadataCache[type]
-    this.buildAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.buildAndStoreEvent(eventType, merge({}, tags, decoration))
   }
 
   isFinalEvent(event: string): boolean {
@@ -297,7 +297,7 @@ export class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `CLI_ERROR_${type}`
 
-    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.formatErrorAndStoreEvent(eventType, merge({}, tags, decoration))
   }
 
   captureBuildError(type: string, tags: ITelemetryTagsPayload = {}): void {
@@ -308,7 +308,7 @@ export class AnalyticsTracker {
     delete this.metadataCache[type]
     const eventType = `BUILD_ERROR_${type}`
 
-    this.formatErrorAndStoreEvent(eventType, lodash.merge({}, tags, decoration))
+    this.formatErrorAndStoreEvent(eventType, merge({}, tags, decoration))
   }
 
   formatErrorAndStoreEvent(
@@ -349,7 +349,7 @@ export class AnalyticsTracker {
     const event = {
       installedGatsbyVersion: this.installedGatsbyVersion,
       gatsbyCliVersion: this.gatsbyCliVersion,
-      ...lodash.merge({}, this.defaultTags, tags), // The schema must include these
+      ...merge({}, this.defaultTags, tags), // The schema must include these
       eventType,
       sessionId: this.sessionId,
       time: new Date(),
@@ -377,10 +377,10 @@ export class AnalyticsTracker {
       return {}
     }
     try {
-      const stat = fs.statSync(path)
+      const stat = statSync(path)
       if (this.lastEnvTagsFromFileTime < stat.mtimeMs) {
         this.lastEnvTagsFromFileTime = stat.mtimeMs
-        const data = fs.readFileSync(path, `utf8`)
+        const data = readFileSync(path, `utf8`)
         this.lastEnvTagsFromFileValue = JSON.parse(data)
       }
     } catch (e) {

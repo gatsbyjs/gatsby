@@ -1,6 +1,5 @@
-const Promise = require(`bluebird`)
-const os = require(`os`)
-const HJSON = require(`hjson`)
+const { tmpdir } = require(`node:os`)
+const { stringify } = require(`hjson`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
@@ -25,7 +24,7 @@ describe(`Process HJSON nodes correctly`, () => {
       { id: `foo`, blue: true, funny: `yup` },
       { blue: false, funny: `nope` },
     ]
-    node.content = HJSON.stringify(data)
+    node.content = stringify(data)
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()
@@ -50,8 +49,8 @@ describe(`Process HJSON nodes correctly`, () => {
 
   it(`correctly creates a node from HJSON which is a single object`, async () => {
     const data = { id: `foo`, blue: true, funny: `yup` }
-    node.content = HJSON.stringify(data)
-    node.dir = `${os.tmpdir()}/foo/`
+    node.content = stringify(data)
+    node.dir = `${tmpdir()}/foo/`
 
     const createNode = jest.fn()
     const createParentChildLink = jest.fn()

@@ -1,13 +1,11 @@
 import memoize from "memoizee"
-import { kebabCase as _kebabCase } from "lodash"
+import _kebabCase from "lodash/kebabCase"
 import { murmurhash as _murmurhash } from "gatsby-core-utils/murmurhash"
-import path from "path"
+import { relative, sep } from "node:path"
 import { store } from "../redux"
 
 const kebabCase: (string?: string) => string = memoize(_kebabCase)
-const pathRelative: (from: string, to: string) => string = memoize(
-  path.relative
-)
+const pathRelative: (from: string, to: string) => string = memoize(relative)
 const murmurhash: (str: string, seed: number) => number = memoize(_murmurhash)
 
 // unified routes adds support for files with [] and {},
@@ -27,7 +25,7 @@ function replaceUnifiedRoutesKeys(
 ): string {
   let newString = kebabedName
 
-  filePath.split(path.sep).forEach(part => {
+  filePath.split(sep).forEach(part => {
     if (part[0] === `[` || part[0] === `{`) {
       const match = /(\[(.*)\]|\{(.*)\})/.exec(part)
       newString = newString.replace(

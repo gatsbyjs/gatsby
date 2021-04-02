@@ -1,7 +1,7 @@
 const moment = require(`moment`)
-const chokidar = require(`chokidar`)
-const systemPath = require(`path`)
-const _ = require(`lodash`)
+const { watch } = require(`chokidar`)
+const { join } = require(`node:path`)
+const pick = require(`lodash/pick`)
 
 const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
@@ -11,15 +11,18 @@ const {
 } = require(`../../utils/parcel/compile-gatsby-files`)
 
 function transformPackageJson(json) {
-  const transformDeps = deps =>
-    _.entries(deps).map(([name, version]) => {
-      return {
-        name,
-        version,
-      }
-    })
+  const transformDeps = deps => {
+    if (deps) {
+      Object.entries(deps).map(([name, version]) => {
+        return {
+          name,
+          version,
+        }
+      })
+    }
+  }
 
-  json = _.pick(json, [
+  json = pick(json, [
     `name`,
     `description`,
     `version`,
@@ -121,7 +124,7 @@ exports.sourceNodes = ({
       program.directory,
       `default-site-plugin`,
       `gatsby-config`
-    ) ?? systemPath.join(program.directory, `gatsby-config.js`)
+    ) ?? join(program.directory, `gatsby-config.js`)
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
 
   // Create nodes for functions
@@ -162,7 +165,7 @@ exports.sourceNodes = ({
 }
 
 function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
-  chokidar.watch(pathToGatsbyConfig).on(`change`, () => {
+  watch(pathToGatsbyConfig).on(`change`, () => {
     const oldCache = require.cache[require.resolve(pathToGatsbyConfig)]
     try {
       // Delete require cache so we can reload the module.

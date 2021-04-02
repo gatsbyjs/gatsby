@@ -1,5 +1,6 @@
 import type { ISharpGatsbyImageArgs, Fit } from "gatsby-plugin-image"
-import { pickBy, defaults, mergeWith, omitBy, isNil, identity } from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/is-nil
+import { pickBy, mergeWith, omitBy, isNil, identity } from "lodash"
 import type { FailOnOptions, SharpOptions } from "sharp"
 
 export type PluginOptionsDefaults = Pick<
@@ -169,7 +170,7 @@ export const healOptions = (
 ): Partial<IGeneralArgs> & {
   quality: number
 } & ITransformArgs => {
-  const options = defaults({}, args, { quality }, defaultArgs, generalArgs)
+  const options = Object.assign({}, defaultArgs, args, { quality }, generalArgs)
   // @ts-ignore - parseInt as safeguard, expects string tho
   options.quality = parseInt(options.quality, 10)
   // @ts-ignore - parseInt as safeguard, expects string tho

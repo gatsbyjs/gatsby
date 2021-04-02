@@ -1,5 +1,5 @@
 const grayMatter = require(`gray-matter`)
-const _ = require(`lodash`)
+const mapValues = require(`lodash/mapValues`)
 
 function shouldOnCreateNode({ node }) {
   return (
@@ -27,8 +27,8 @@ module.exports.onCreateNode = async function onCreateNode(
     const data = grayMatter(content, pluginOptions)
 
     if (data.data) {
-      data.data = _.mapValues(data.data, value => {
-        if (_.isDate(value)) {
+      data.data = mapValues(data.data, value => {
+        if (Object.prototype.toString.call(value) === `[object Date]`) {
           return value.toJSON()
         }
         return value

@@ -1,4 +1,3 @@
-const _ = require(`lodash`)
 const { onCreateNode } = require(`../on-node-create`)
 const { graphql } = require(`gatsby/graphql`)
 
@@ -43,7 +42,8 @@ Where oh where is my little pony?
       }).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
-          _.isString(actions.createNode.mock.calls[0][0].frontmatter.date)
+          typeof actions.createNode.mock.calls[0][0].frontmatter.date.valueOf() ===
+            `string`
         ).toBeTruthy()
         expect(actions.createParentChildLink.mock.calls).toMatchSnapshot()
         expect(actions.createNode).toHaveBeenCalledTimes(1)
@@ -83,7 +83,8 @@ Sed bibendum sem iaculis, pellentesque leo sed, imperdiet ante. Sed consequat ma
       ).then(() => {
         expect(actions.createNode.mock.calls).toMatchSnapshot()
         expect(
-          _.isString(actions.createNode.mock.calls[0][0].excerpt)
+          typeof actions.createNode.mock.calls[0][0].excerpt.valueOf() ===
+            `string`
         ).toBeTruthy()
         expect(actions.createNode.mock.calls[0][0].excerpt).not.toEqual(0)
         expect(actions.createParentChildLink.mock.calls).toMatchSnapshot()

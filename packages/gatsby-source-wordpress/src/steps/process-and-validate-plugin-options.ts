@@ -1,10 +1,9 @@
-import path from "path"
+import { isAbsolute, join } from "node:path"
 import { formatLogMessage } from "~/utils/format-log-message"
-import isInteger from "lodash/isInteger"
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
-import { cloneDeep } from "lodash"
+import cloneDeep from "lodash/cloneDeep"
 
 interface IProcessorOptions {
   userPluginOptions: IPluginOptions
@@ -59,7 +58,7 @@ const optionsProcessors: Array<IOptionsProcessor> = [
     name: `queryDepth-is-not-a-positive-int`,
     test: ({ userPluginOptions }: IProcessorOptions): boolean =>
       typeof userPluginOptions?.schema?.queryDepth !== `undefined` &&
-      (!isInteger(userPluginOptions?.schema?.queryDepth) ||
+      (!Number.isInteger(userPluginOptions?.schema?.queryDepth) ||
         userPluginOptions?.schema?.queryDepth <= 0),
     processor: ({
       helpers,
@@ -106,12 +105,12 @@ const optionsProcessors: Array<IOptionsProcessor> = [
         }
 
         try {
-          const absoluteRequirePath: string | undefined = path.isAbsolute(
+          const absoluteRequirePath: string | undefined = isAbsolute(
             beforeChangeNodePath
           )
             ? beforeChangeNodePath
             : require.resolve(
-                path.join(gatsbyStore.program.directory, beforeChangeNodePath)
+                join(gatsbyStore.program.directory, beforeChangeNodePath)
               )
 
           const beforeChangeNodeFn = require(absoluteRequirePath)

@@ -1,9 +1,9 @@
 /* global BROWSER_ESM_ONLY */
 import React from "react"
-import fs from "fs-extra"
+import { readFileSync } from "fs-extra"
 import { renderToStaticMarkup, renderToPipeableStream } from "react-dom/server"
-import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
-import nodePath from "path"
+import { merge, isObject, uniqBy } from "lodash"
+import { join } from "node:path"
 import { apiRunner, apiRunnerAsync } from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
@@ -35,7 +35,7 @@ const getStats = publicDir => {
     return cachedStats
   } else {
     cachedStats = JSON.parse(
-      fs.readFileSync(nodePath.join(publicDir, `webpack.stats.json`), `utf-8`)
+      readFileSync(join(publicDir, `webpack.stats.json`), `utf-8`)
     )
 
     return cachedStats
@@ -148,13 +148,13 @@ export default async function staticPage({
 
     const getPageDataPath = path => {
       const fixedPagePath = path === `/` ? `index` : path
-      return nodePath.join(`page-data`, fixedPagePath, `page-data.json`)
+      return join(`page-data`, fixedPagePath, `page-data.json`)
     }
 
     const getPageData = pagePath => {
       const pageDataPath = getPageDataPath(pagePath)
-      const absolutePageDataPath = nodePath.join(publicDir, pageDataPath)
-      const pageDataJson = fs.readFileSync(absolutePageDataPath, `utf8`)
+      const absolutePageDataPath = join(publicDir, pageDataPath)
+      const pageDataJson = readFileSync(absolutePageDataPath, `utf8`)
 
       try {
         return JSON.parse(pageDataJson)
@@ -169,13 +169,13 @@ export default async function staticPage({
 
     const pageComponent = await syncRequires.ssrComponents[componentChunkName]
 
-    let scriptsAndStyles = flatten(
-      [`commons`].map(chunkKey => {
+    let scriptsAndStyles = [`commons`]
+      .map(chunkKey => {
         const fetchKey = `assetsByChunkName[${chunkKey}]`
 
         const stats = getStats(publicDir)
-        let chunks = get(stats, fetchKey)
-        const namedChunkGroups = get(stats, `namedChunkGroups`)
+        let chunks = stats[fetchKey]
+        const { namedChunkGroups } = stats
 
         if (!chunks) {
           return null
@@ -195,8 +195,7 @@ export default async function staticPage({
         const childAssets = namedChunkGroups[chunkKey].childAssets
         for (const rel in childAssets) {
           if (childAssets.hasownProperty(rel)) {
-            chunks = concat(
-              chunks,
+            chunks.concat(
               childAssets[rel].map(chunk => {
                 return { rel, name: chunk }
               })
@@ -206,7 +205,7 @@ export default async function staticPage({
 
         return chunks
       })
-    )
+      .flat()
       .filter(s => isObject(s))
       .sort((s1, _s2) => (s1.rel == `preload` ? -1 : 1)) // given priority to preload
 
@@ -281,13 +280,9 @@ export default async function staticPage({
 
     if (process.env.GATSBY_SLICES) {
       const readSliceData = sliceName => {
-        const filePath = nodePath.join(
-          publicDir,
-          `slice-data`,
-          `${sliceName}.json`
-        )
+        const filePath = join(publicDir, `slice-data`, `${sliceName}.json`)
 
-        const rawSliceData = fs.readFileSync(filePath, `utf-8`)
+        const rawSliceData = readFileSync(filePath, `utf-8`)
         return JSON.parse(rawSliceData)
       }
 

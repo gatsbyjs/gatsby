@@ -1,6 +1,6 @@
 // @flow
 
-const _ = require(`lodash`)
+const { each, isEmpty, isPlainObject, merge, pickBy } = require(`lodash`)
 const {
   isAbstractType,
   GraphQLOutputType,
@@ -434,8 +434,8 @@ class LocalNodeModel {
         { queryFields: nextQueryFields, fieldsToResolve: nextFieldsToResolve }
       ) => {
         return {
-          queryFields: _.merge(queryFields, nextQueryFields),
-          fieldsToResolve: _.merge(fieldsToResolve, nextFieldsToResolve),
+          queryFields: merge(queryFields, nextQueryFields),
+          fieldsToResolve: merge(fieldsToResolve, nextFieldsToResolve),
         }
       },
       {
@@ -449,7 +449,7 @@ class LocalNodeModel {
       this._preparedNodesCache.get(typeName) || {}
     )
 
-    if (!_.isEmpty(actualFieldsToResolve)) {
+    if (!isEmpty(actualFieldsToResolve)) {
       const {
         schemaCustomization: { context: customContext },
       } = store.getState()
@@ -474,7 +474,7 @@ class LocalNodeModel {
       }
       this._preparedNodesCache.set(
         typeName,
-        _.merge(
+        merge(
           {},
           this._preparedNodesCache.get(typeName) || {},
           actualFieldsToResolve
@@ -734,7 +734,7 @@ const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
     sum = []
   }
 
-  return _.merge(
+  return merge(
     filterFields,
     ...sortFields.map(pathToObject),
     ...group.map(pathToObject),
@@ -759,7 +759,7 @@ const dropQueryOperators = filter =>
     const value = filter[key]
     const k = Object.keys(value)[0]
     const v = value[k]
-    if (_.isPlainObject(value) && _.isPlainObject(v)) {
+    if (isPlainObject(value) && isPlainObject(v)) {
       acc[key] =
         k === `elemMatch` ? dropQueryOperators(v) : dropQueryOperators(value)
     } else {
@@ -816,12 +816,12 @@ async function resolveRecursive(
           innerValue,
           gqlFieldType,
           queryField,
-          _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+          fieldToResolve instanceof Object ? fieldToResolve : queryField,
           customContext
         )
       } else if (
         isCompositeType(gqlFieldType) &&
-        (_.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
+        (Array.isArray(innerValue) || innerValue instanceof GatsbyIterable) &&
         gqlNonNullType instanceof GraphQLList
       ) {
         innerValue = await Promise.all(
@@ -835,7 +835,9 @@ async function resolveRecursive(
                   item,
                   gqlFieldType,
                   queryField,
-                  _.isObject(fieldToResolve) ? fieldToResolve : queryField,
+                  fieldToResolve instanceof Object
+                    ? fieldToResolve
+                    : queryField,
                   customContext
                 )
           )
@@ -863,7 +865,7 @@ async function resolveRecursive(
     }
   }
 
-  return _.pickBy(resolvedFields, (value, key) => queryFields[key])
+  return pickBy(resolvedFields, (value, key) => queryFields[key])
 }
 let withResolverContext
 function resolveField(
@@ -928,7 +930,7 @@ const determineResolvableFields = (
       fieldName,
     })
 
-    if (_.isObject(field) && gqlField) {
+    if (field instanceof Object && gqlField) {
       const innerResolved = determineResolvableFields(
         schemaComposer,
         schema,
@@ -936,7 +938,7 @@ const determineResolvableFields = (
         field,
         isNestedAndParentNeedsResolve || needsResolve
       )
-      if (!_.isEmpty(innerResolved)) {
+      if (!isEmpty(innerResolved)) {
         fieldsToResolve[fieldName] = innerResolved
       }
     }
@@ -960,13 +962,11 @@ const addRootNodeToInlineObject = (
   isNode /* : boolean */,
   path /* : Set<mixed> */
 ) /* : void */ => {
-  const isPlainObject = _.isPlainObject(data)
-
-  if (isPlainObject || _.isArray(data)) {
+  if (isPlainObject(data) || Array.isArray(data)) {
     if (path.has(data)) return
     path.add(data)
 
-    _.each(data, (o, key) => {
+    each(data, (o, key) => {
       if (!isNode || key !== `internal`) {
         addRootNodeToInlineObject(rootNodeMap, o, nodeId, false, path)
       }
@@ -1000,9 +1000,9 @@ const deepObjectDifference = (from, to) => {
   Object.keys(from).forEach(key => {
     const toValue = to[key]
     if (toValue) {
-      if (_.isPlainObject(toValue)) {
+      if (isPlainObject(toValue)) {
         const deepResult = deepObjectDifference(from[key], toValue)
-        if (!_.isEmpty(deepResult)) {
+        if (!isEmpty(deepResult)) {
           result[key] = deepResult
         }
       }

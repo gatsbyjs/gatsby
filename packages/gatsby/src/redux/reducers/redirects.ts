@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { IGatsbyState, IRedirect, ICreateRedirectAction } from "../types"
 
 const redirects = new Map<string, Array<IRedirect>>()
@@ -8,7 +7,7 @@ function exists(newRedirect: IRedirect): boolean {
 
   if (!fromPathRedirects) return false
 
-  return fromPathRedirects.some(redirect => _.isEqual(redirect, newRedirect))
+  return fromPathRedirects.some(redirect => redirect === newRedirect)
 }
 
 function add(redirect: IRedirect): void {

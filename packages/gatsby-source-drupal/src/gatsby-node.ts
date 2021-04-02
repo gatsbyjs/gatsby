@@ -1,10 +1,10 @@
 const got = require(`got`)
-const _ = require(`lodash`)
+const { range, isEmpty, map } = require(`lodash`)
 const urlJoin = require(`url-join`)
 import HttpAgent from "agentkeepalive"
 
 // const http2wrapper = require(`http2-wrapper`)
-const opentracing = require(`opentracing`)
+const { globalTracer } = require(`opentracing`)
 const { SemanticAttributes } = require(`@opentelemetry/semantic-conventions`)
 
 const {
@@ -45,7 +45,7 @@ let apiRequestCount = 0
 let initialSourcing = true
 let globalReporter
 async function worker([url, options]) {
-  const tracer = opentracing.globalTracer()
+  const tracer = globalTracer()
   const httpSpan = tracer.startSpan(`http.get`, {
     childOf: options.parentSpan,
   })
@@ -152,7 +152,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  const tracer = opentracing.globalTracer()
+  const tracer = globalTracer()
 
   globalReporter = reporter
   const {
@@ -501,7 +501,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
       },
     ])
     allData = await Promise.all(
-      _.map(res.body.links, async (url, type) => {
+      map(res.body.links, async (url, type) => {
         const dataArray = []
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
@@ -610,7 +610,7 @@ ${JSON.stringify(webhookBody, null, 4)}`
 
               const newUrl = new URL(d.body.links.next.href)
               await Promise.all(
-                _.range(requestsCount).map((pageOffset: number) => {
+                range(requestsCount).map((pageOffset: number) => {
                   // We're starting 1 ahead.
                   pageOffset += 1
                   // Construct URL with new pageOffset.
@@ -809,7 +809,7 @@ exports.onCreateDevServer = (
       console.warn(
         `The ___updatePreview callback is now deprecated and will be removed in the future. Please use the __refresh callback instead.`
       )
-      if (!_.isEmpty(req.body)) {
+      if (!isEmpty(req.body)) {
         const requestBody = JSON.parse(JSON.parse(req.body))
         const { secret, action, id } = requestBody
         if (pluginOptions.secret && pluginOptions.secret !== secret) {

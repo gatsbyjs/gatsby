@@ -1,5 +1,6 @@
-const Promise = require(`bluebird`)
-const XLSX = require(`xlsx`)
+const {
+  utils: { sheet_to_csv, aoa_to_sheet },
+} = require(`xlsx`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
@@ -25,7 +26,7 @@ describe(`Process nodes correctly`, () => {
       [true, `yup`],
       [false, `nope`],
     ]
-    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.aoa_to_sheet(data))
+    const csv = sheet_to_csv(aoa_to_sheet(data))
     node.content = csv
 
     const createNode = jest.fn()
@@ -56,7 +57,7 @@ describe(`Process nodes correctly`, () => {
       [true, `certainly`],
       [false, `nada`],
     ]
-    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.aoa_to_sheet(data))
+    const csv = sheet_to_csv(aoa_to_sheet(data))
     node.content = csv
 
     const createNode = jest.fn()
@@ -90,7 +91,7 @@ describe(`Process nodes correctly`, () => {
       [true, `certainly`],
       [false, `nada`],
     ]
-    const csv = XLSX.utils.sheet_to_csv(XLSX.utils.aoa_to_sheet(data))
+    const csv = sheet_to_csv(aoa_to_sheet(data))
     node.content = csv
 
     const createNode = jest.fn()

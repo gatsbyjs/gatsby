@@ -1,4 +1,3 @@
-const Promise = require(`bluebird`)
 const {
   GraphQLObjectType,
   GraphQLList,
@@ -19,9 +18,9 @@ const {
 const { hasFeature } = require(`gatsby-plugin-utils`)
 
 const sharp = require(`./safe-sharp`)
-const fs = require(`fs-extra`)
-const imageSize = require(`probe-image-size`)
-const path = require(`path`)
+const { readFileSync, existsSync, copy } = require(`fs-extra`)
+const { sync: imageSizeSync } = require(`probe-image-size`)
+const { join } = require(`node:path`)
 
 const DEFAULT_PNG_COMPRESSION_SPEED = 4
 
@@ -593,41 +592,31 @@ const createFields = ({
       args: {},
       async resolve(image, fieldArgs, context) {
         const details = getNodeAndSavePathDependency(image.parent, context.path)
-        const dimensions = imageSize.sync(
-          toArray(fs.readFileSync(details.absolutePath))
+        const dimensions = imageSizeSync(
+          toArray(readFileSync(details.absolutePath))
         )
         const imageName = `${details.name}-${image.internal.contentDigest}${details.ext}`
-        const publicPath = path.join(
-          process.cwd(),
-          `public`,
-          `static`,
-          imageName
-        )
+        const publicPath = join(process.cwd(), `public`, `static`, imageName)
 
-        if (!fs.existsSync(publicPath) && !inProgressCopy.has(publicPath)) {
+        if (!existsSync(publicPath) && !inProgressCopy.has(publicPath)) {
           // keep track of in progress copy, we should rely on `existsSync` but
           // a race condition exists between the exists check and the copy
           inProgressCopy.add(publicPath)
-          fs.copy(
-            details.absolutePath,
-            publicPath,
-            { dereference: true },
-            err => {
-              // this is no longer in progress
-              inProgressCopy.delete(publicPath)
-              if (err) {
-                reporter.panic(
-                  {
-                    id: prefixId(CODES.MissingResource),
-                    context: {
-                      sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
-                    },
+          copy(details.absolutePath, publicPath, { dereference: true }, err => {
+            // this is no longer in progress
+            inProgressCopy.delete(publicPath)
+            if (err) {
+              reporter.panic(
+                {
+                  id: prefixId(CODES.MissingResource),
+                  context: {
+                    sourceMessage: `error copying file from ${details.absolutePath} to ${publicPath}`,
                   },
-                  err
-                )
-              }
+                },
+                err
+              )
             }
-          )
+          })
         }
 
         return {

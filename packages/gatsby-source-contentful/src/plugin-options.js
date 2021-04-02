@@ -1,6 +1,5 @@
 // @ts-check
 import chalk from "chalk"
-import _ from "lodash"
 
 const DEFAULT_PAGE_LIMIT = 1000
 
@@ -35,7 +34,7 @@ const formatPluginOptionsForCLI = (pluginOptions, errors = {}) => {
 
   const getDisplayValue = key => {
     const formatValue = value => {
-      if (_.isFunction(value)) {
+      if (typeof value === `function`) {
         return `[Function]`
       } else if (maskedFields.includes(key) && typeof value === `string`) {
         return JSON.stringify(maskText(value))

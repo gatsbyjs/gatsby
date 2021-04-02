@@ -1,4 +1,4 @@
-import * as _ from "lodash"
+import isPlainObject from "lodash/isPlainObject"
 import { prepareRegex } from "../../utils/prepare-regex"
 import { makeRe } from "micromatch"
 
@@ -87,7 +87,7 @@ function createDbQueriesFromObjectNested(
   path: Array<string> = []
 ): Array<DbQuery> {
   const keys = Object.getOwnPropertyNames(filter)
-  return _.flatMap(keys, (key: string): Array<DbQuery> => {
+  return keys.flatMap((key: string): Array<DbQuery> => {
     if (key === `$elemMatch`) {
       const queries = createDbQueriesFromObjectNested(filter[key])
       return queries.map(query => {
@@ -179,7 +179,7 @@ export function prepareQueryArgs(
   const filters = {}
   Object.keys(filterFields).forEach(key => {
     const value = filterFields[key]
-    if (_.isPlainObject(value)) {
+    if (isPlainObject(value)) {
       filters[key === `elemMatch` ? `$elemMatch` : key] = prepareQueryArgs(
         value as IInputQuery
       )
@@ -244,7 +244,7 @@ export function objectToDottedField(
   let result = {}
   Object.keys(obj).forEach(key => {
     const value = obj[key]
-    if (_.isPlainObject(value)) {
+    if (isPlainObject(value)) {
       const pathResult = objectToDottedField(
         value as Record<string, unknown>,
         path.concat(key)

@@ -1,5 +1,5 @@
 // @ts-check
-import _ from "lodash"
+import { upperFirst, camelCase } from "lodash"
 import { fetchContentTypes } from "./fetch"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
@@ -175,8 +175,8 @@ export async function createSchemaCustomization(
   contentTypeItems.forEach(contentTypeItem =>
     contentfulTypes.push(
       schema.buildObjectType({
-        name: _.upperFirst(
-          _.camelCase(
+        name: upperFirst(
+          camelCase(
             `Contentful ${
               pluginConfig.get(`useNameForId`)
                 ? contentTypeItem.name

@@ -1,14 +1,13 @@
-const cheerio = require(`cheerio`)
-const path = require(`path`)
-const fs = require(`fs`)
-const _ = require(`lodash`)
+const { load } = require(`cheerio`)
+const { resolve } = require(`node:path`)
+const { readFileSync } = require(`node:fs`)
 
 module.exports = (htmlPath, pathPrefix) => {
   // load index.html to pull scripts/links necessary for proper offline reload
   let html
   try {
     // load index.html to pull scripts/links necessary for proper offline reload
-    html = fs.readFileSync(path.resolve(htmlPath))
+    html = readFileSync(resolve(htmlPath))
   } catch (err) {
     // ENOENT means the file doesn't exist, which is to be expected when trying
     // to open 404.html if the user hasn't created a custom 404 page -- return
@@ -21,7 +20,7 @@ module.exports = (htmlPath, pathPrefix) => {
   }
 
   // party like it's 2006
-  const $ = cheerio.load(html)
+  const $ = load(html)
 
   // holds any paths for scripts and links
   const criticalFilePaths = []
@@ -51,5 +50,7 @@ module.exports = (htmlPath, pathPrefix) => {
   // Remove the custom prefix (if any) so Workbox can find the files.
   // This is added back at runtime (see modifyUrlPrefix in gatsby-node.js) in
   // order to serve from the correct location.
-  return _.uniq(criticalFilePaths).map(url => url.slice(pathPrefix.length))
+  return Array.from(new Set(criticalFilePaths)).map(url =>
+    url.slice(pathPrefix.length)
+  )
 }

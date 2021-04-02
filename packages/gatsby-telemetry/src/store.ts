@@ -1,12 +1,12 @@
-import path from "path"
+import { join } from "node:path"
 import {
   appendFileSync,
+  existsSync,
+  readdirSync,
   readFileSync,
   renameSync,
-  readdirSync,
-  existsSync,
   unlinkSync,
-} from "fs"
+} from "node:fs"
 
 export class Store {
   bufferFilePath: string
@@ -14,11 +14,11 @@ export class Store {
   eventsJsonFileName = `events.json`
 
   constructor(baseDir: string) {
-    this.bufferFilePath = path.join(baseDir, this.eventsJsonFileName)
+    this.bufferFilePath = join(baseDir, this.eventsJsonFileName)
     this.baseDir = baseDir
   }
 
-  appendToBuffer(event: unknown): void {
+  appendToBuffer(event: string): void {
     try {
       appendFileSync(this.bufferFilePath, event, `utf8`)
     } catch (e) {
@@ -65,7 +65,7 @@ export class Store {
       const files = readdirSync(this.baseDir)
       const filtered = files.filter(p => p.startsWith(`events.json`))
       for (const file of filtered) {
-        await this.flushFile(path.join(this.baseDir, file), flushOperation)
+        await this.flushFile(join(this.baseDir, file), flushOperation)
       }
       return true
     } catch (e) {

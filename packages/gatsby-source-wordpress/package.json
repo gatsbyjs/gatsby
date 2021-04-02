@@ -51,6 +51,7 @@
     "@hapi/joi": "^15.1.1",
     "@types/cache-manager": "^4.0.2",
     "@types/fs-extra": "^11.0.1",
+    "@types/lodash": "^4.14.191",
     "@types/node-fetch": "^2.6.2",
     "@types/semver": "^7.3.13",
     "babel-plugin-import-globals": "^2.0.0",

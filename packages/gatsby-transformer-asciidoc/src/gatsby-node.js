@@ -1,5 +1,5 @@
 const asciidoc = require(`asciidoctor`)()
-const _ = require(`lodash`)
+const { memoize, cloneDeep } = require(`lodash`)
 
 function shouldOnCreateNode({ node }, pluginOptions = {}) {
   const extensionsConfig = pluginOptions.fileExtensions
@@ -107,11 +107,11 @@ async function onCreateNode(
   }
 }
 
-const processPluginOptions = _.memoize((pluginOptions, pathPrefix) => {
+const processPluginOptions = memoize((pluginOptions, pathPrefix) => {
   const defaultImagesDir = `/images@`
   const currentPathPrefix = pathPrefix || ``
 
-  const clonedPluginOptions = _.cloneDeep(pluginOptions)
+  const clonedPluginOptions = cloneDeep(pluginOptions)
 
   if (clonedPluginOptions.attributes === undefined) {
     clonedPluginOptions.attributes = {}

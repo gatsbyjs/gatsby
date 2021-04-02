@@ -1,11 +1,9 @@
-const axios = require(`axios`)
-const url = require(`url`)
-const _ = require(`lodash`)
+const { get } = require(`axios`)
+const { parse } = require(`node:url`)
+const omit = require(`lodash/omit`)
 
-const get = query =>
-  axios.get(
-    `https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`
-  )
+const getQuery = query =>
+  get(`https://www.graphqlhub.com/graphql?query=${encodeURIComponent(query)}`)
 
 exports.createSchemaCustomization = async ({ actions }) => {
   const typeDefs = `
@@ -44,7 +42,7 @@ exports.sourceNodes = async ({
   console.log(
     `starting to fetch data from the Hacker News GraphQL API. Warning, this can take a long time e.g. 10-20 seconds`
   )
-  const result = await get(
+  const result = await getQuery(
     `
 {
   hn {
@@ -106,7 +104,7 @@ fragment commentsFragment on HackerNewsItem {
     // For those that do, HN displays just the bare domain.
     let domain
     if (story.url) {
-      const parsedUrl = url.parse(story.url)
+      const parsedUrl = parse(story.url)
       const splitHost = parsedUrl.host.split(`.`)
       if (splitHost.length > 2) {
         domain = splitHost.slice(1).join(`.`)
@@ -115,16 +113,15 @@ fragment commentsFragment on HackerNewsItem {
       }
     }
 
-    const kids = _.pick(story, `kids`)
+    const { kids, ...storyWithoutKids } = story
     if (!kids.kids) {
       kids.kids = []
     }
-    const kidLessStory = _.omit(story, `kids`)
     const childIds = kids.kids.filter(Boolean).map(k => createNodeId(k.id))
 
     const storyNode = {
-      ...kidLessStory,
-      id: createNodeId(kidLessStory.id),
+      ...storyWithoutKids,
+      id: createNodeId(storyWithoutKids.id),
       children: childIds,
       parent: null,
       content: storyStr,
@@ -154,7 +151,7 @@ fragment commentsFragment on HackerNewsItem {
         }
         const commentChildIds = comment.kids.map(k => createNodeId(k.id))
         const commentNode = {
-          ..._.omit(comment, `kids`),
+          ...omit(comment, `kids`),
           id: createNodeId(comment.id),
           children: commentChildIds,
           parent,

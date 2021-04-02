@@ -1,4 +1,5 @@
-import path from "path"
+import { join, dirname } from "node:path"
+// eslint-disable-next-line you-dont-need-lodash-underscore/trim
 import { mapValues, isPlainObject, trim } from "lodash"
 import webpack from "gatsby/webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
@@ -67,7 +68,7 @@ exports.onCreateDevServer = ({ app, store }, { publicPath = `admin` }) => {
   const publicPathClean = trim(publicPath, `/`)
   app.get(`/${publicPathClean}`, function (req, res) {
     res.sendFile(
-      path.join(program.directory, `public`, publicPathClean, `index.html`),
+      join(program.directory, `public`, publicPathClean, `index.html`),
       err => {
         if (err) {
           res.status(500).end(err.message)
@@ -134,14 +135,14 @@ exports.onCreateWebpackConfig = (
     ...gatsbyConfig,
     entry: {
       cms: [
-        path.join(__dirname, `cms.js`),
-        enableIdentityWidget && path.join(__dirname, `cms-identity.js`),
+        join(__dirname, `cms.js`),
+        enableIdentityWidget && join(__dirname, `cms-identity.js`),
       ]
         .concat(modulePath)
         .filter(p => p),
     },
     output: {
-      path: path.join(program.directory, `public`, publicPathClean),
+      path: join(program.directory, `public`, publicPathClean),
     },
     module: {
       rules: deepMap(gatsbyConfig.module.rules, value =>
@@ -213,20 +214,16 @@ exports.onCreateWebpackConfig = (
           ({ name, assetName, sourceMap, assetDir }) =>
             [
               {
-                from: path.join(
-                  path.dirname(
-                    require.resolve(path.join(name, `package.json`))
-                  ),
+                from: join(
+                  dirname(require.resolve(join(name, `package.json`))),
                   assetDir,
                   assetName
                 ),
                 to: assetName,
               },
               sourceMap && {
-                from: path.join(
-                  path.dirname(
-                    require.resolve(path.join(name, `package.json`))
-                  ),
+                from: join(
+                  dirname(require.resolve(join(name, `package.json`))),
                   assetDir,
                   sourceMap
                 ),

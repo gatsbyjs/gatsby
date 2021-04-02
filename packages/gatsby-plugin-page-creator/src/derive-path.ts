@@ -1,4 +1,5 @@
-import _ from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/get
+import get from "lodash/get"
 import slugify, { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import type { Reporter } from "gatsby/reporter"
 import {
@@ -39,11 +40,11 @@ export async function derivePath(
     const key = switchToPeriodDelimiters(cleanedField)
 
     // 3.b We do node.nodes here because we support the special group graphql field, which then moves nodes in another depth
-    const groupNodes = _.get(node.nodes, `[0]${key}`)
+    const groupNodes = get(node.nodes, `[0]${key}`)
     // In case not all nodes are materialized yet (e.g. in setFieldsOnGraphQLNodeType or createResolvers) it's not enough to just _.get the node value, but to call the helper function nodeModel.getFieldValue. nodeModel is not always accessible (not passed, not available, etc.) so the argument is optional and falls back to _.get.
     const singleNode = getFieldValue
       ? await getFieldValue(node, key)
-      : _.get(node, key)
+      : get(node, key)
     const nodeValue = groupNodes || singleNode
 
     // 3.c log error if the key does not exist on node
@@ -51,7 +52,7 @@ export async function derivePath(
       if (process.env.gatsby_log_level === `verbose`) {
         reporter.verbose(
           `Could not find value in the following node for key ${slugPart} (transformed to ${key}) for node:
-    
+
             ${JSON.stringify(node, null, 2)}`
         )
       }

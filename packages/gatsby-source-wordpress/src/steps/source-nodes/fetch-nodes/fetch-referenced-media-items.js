@@ -8,9 +8,8 @@ import { paginatedWpNodeFetch, normalizeNode } from "./fetch-nodes-paginated"
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 import fetchGraphql from "~/utils/fetch-graphql"
 import { getFileNodeMetaBySourceUrl } from "~/steps/source-nodes/create-nodes/create-local-file-node"
-import uniq from "lodash/uniq"
-import urlUtil from "url"
-import path from "path"
+import { parse } from "node:url"
+import { basename, extname } from "node:path"
 import { getPluginOptions } from "~/utils/get-gatsby-api"
 import { formatLogMessage } from "~/utils/format-log-message"
 import { getPlaceholderUrlFromMediaItemNode } from "../create-nodes/process-node"
@@ -117,8 +116,7 @@ export const addImageCDNFieldsToNode = (node, pluginOptions) => {
   const url = node.sourceUrl || node.mediaItemUrl
 
   const filename =
-    node?.mediaDetails?.file?.split(`/`)?.pop() ||
-    path.basename(urlUtil.parse(url).pathname)
+    node?.mediaDetails?.file?.split(`/`)?.pop() || basename(parse(url).pathname)
 
   return {
     ...node,
@@ -236,9 +234,9 @@ export const createMediaItemNode = async ({
 }
 
 const urlToFileExtension = url => {
-  const { pathname } = urlUtil.parse(url)
+  const { pathname } = parse(url)
 
-  const fileExtension = path.extname(pathname)
+  const fileExtension = extname(pathname)
 
   return fileExtension
 }
@@ -290,25 +288,27 @@ const createScaledImageUrl = url => {
 // size url would have 500x1000 in it, and removing it would make it so we can never
 // fetch this image node.
 const processAndDedupeImageUrls = urls =>
-  uniq(
-    urls.reduce((accumulator, url) => {
-      const scaledUrl = createScaledImageUrl(url)
-      accumulator.push(scaledUrl)
+  Array.from(
+    new Set(
+      urls.reduce((accumulator, url) => {
+        const scaledUrl = createScaledImageUrl(url)
+        accumulator.push(scaledUrl)
 
-      const strippedUrl = stripImageSizesFromUrl(url)
+        const strippedUrl = stripImageSizesFromUrl(url)
 
-      // if the url had no image sizes, don't do anything special
-      if (strippedUrl === url) {
+        // if the url had no image sizes, don't do anything special
+        if (strippedUrl === url) {
+          return accumulator
+        }
+
+        accumulator.push(strippedUrl)
+
+        const scaledStrippedUrl = createScaledImageUrl(strippedUrl)
+        accumulator.push(scaledStrippedUrl)
+
         return accumulator
-      }
-
-      accumulator.push(strippedUrl)
-
-      const scaledStrippedUrl = createScaledImageUrl(strippedUrl)
-      accumulator.push(scaledStrippedUrl)
-
-      return accumulator
-    }, urls)
+      }, urls)
+    )
   )
 
 export const fetchMediaItemsBySourceUrl = async ({

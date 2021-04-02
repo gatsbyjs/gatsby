@@ -1,5 +1,4 @@
 /* eslint-disable @babel/no-invalid-this */
-const Promise = require(`bluebird`)
 const PDFParser = require(`pdf2json`)
 
 function shouldOnCreateNode({ node }) {

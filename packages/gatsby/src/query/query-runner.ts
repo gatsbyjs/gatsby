@@ -1,11 +1,10 @@
 import { Span } from "opentracing"
-import _ from "lodash"
-import fs from "fs-extra"
+import { outputFile } from "fs-extra"
 import report from "gatsby-cli/lib/reporter"
 import { ExecutionResult, GraphQLError } from "graphql"
 import { sha1 } from "gatsby-core-utils/hash"
 
-import path from "path"
+import { join } from "node:path"
 import { store } from "../redux"
 import { actions } from "../redux/actions"
 import { getCodeFrame } from "./graphql-errors-codeframe"
@@ -188,7 +187,7 @@ export async function queryRunner(
   if (
     resultHash !== (await resultHashCache.get(resultHashCacheKey)) ||
     (queryJob.queryType === `page` &&
-      !pageDataExists(path.join(program.directory, `public`), queryJob.id))
+      !pageDataExists(join(program.directory, `public`), queryJob.id))
   ) {
     await resultHashCache.set(resultHashCacheKey, resultHash)
 
@@ -212,7 +211,7 @@ export async function queryRunner(
         })
       }
     } else if (queryJob.queryType === `static`) {
-      const resultPath = path.join(
+      const resultPath = join(
         program.directory,
         `public`,
         `page-data`,
@@ -220,7 +219,7 @@ export async function queryRunner(
         `d`,
         `${queryJob.hash}.json`
       )
-      await fs.outputFile(resultPath, resultJSON)
+      await outputFile(resultPath, resultJSON)
     }
   }
 

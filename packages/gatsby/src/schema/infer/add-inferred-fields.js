@@ -1,4 +1,4 @@
-const _ = require(`lodash`)
+const { groupBy, sortBy, get, upperFirst } = require(`lodash`)
 const { ObjectTypeComposer } = require(`graphql-compose`)
 const { GraphQLList } = require(`graphql`)
 const invariant = require(`invariant`)
@@ -67,7 +67,7 @@ const addInferredFieldsImpl = ({
     })
   })
 
-  const fieldsByKey = _.groupBy(fields, field => field.key)
+  const fieldsByKey = groupBy(fields, field => field.key)
 
   Object.keys(fieldsByKey).forEach(key => {
     const possibleFields = fieldsByKey[key]
@@ -199,7 +199,7 @@ const resolveMultipleFields = possibleFields => {
     return canonicalField
   }
 
-  return _.sortBy(possibleFields, field => field.unsanitizedKey)[0]
+  return sortBy(possibleFields, field => field.unsanitizedKey)[0]
 }
 
 // XXX(freiksenet): removing this as it's a breaking change
@@ -235,7 +235,7 @@ const getFieldConfigFromFieldNameConvention = ({
     getDataStore()
       .iterateNodes()
       .forEach(node => {
-        const value = _.get(node, foreignKey)
+        const value = get(node, foreignKey)
         if (linkedValues.has(value)) {
           linkedTypesSet.add(node.internal.type)
         }
@@ -384,7 +384,7 @@ const getSimpleFieldConfig = ({
 
 const createTypeName = selector => {
   const keys = selector.split(`.`)
-  const suffix = keys.slice(1).map(_.upperFirst).join(``)
+  const suffix = keys.slice(1).map(upperFirst).join(``)
   return `${keys[0]}${suffix}`
 }
 

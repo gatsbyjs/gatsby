@@ -1,7 +1,8 @@
 import { IPluginInfo, PluginRef } from "./types"
 import { createPluginId } from "./utils/create-id"
 import { resolvePlugin } from "./resolve-plugin"
-import { isString, isEmpty, set, merge } from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/is-string
+import { isString, isEmpty, merge } from "lodash"
 
 export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
   // Respect the directory that the plugin was sourced from initially
@@ -55,7 +56,7 @@ export function processPlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
         processed.push(result)
       }
 
-      set(plugin.options, pathToSwap, processed)
+      plugin.options.pathToSwap = processed
     }
   }
 

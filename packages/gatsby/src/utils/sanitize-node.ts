@@ -1,4 +1,5 @@
-import _ from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/each
+import { isPlainObject, pickBy, each } from "lodash"
 
 import type { IGatsbyNode } from "../redux/types"
 import type { GatsbyIterable } from "../datastore/common/iterable"
@@ -12,9 +13,8 @@ type OmitUndefined = (data: Data) => Partial<Data>
  * @returns {Object|Array} data without undefined values
  */
 const omitUndefined: OmitUndefined = data => {
-  const isPlainObject = _.isPlainObject(data)
-  if (isPlainObject) {
-    return _.pickBy(data, p => p !== undefined)
+  if (isPlainObject(data)) {
+    return pickBy(data, p => p !== undefined)
   }
 
   return (data as GatsbyIterable<IGatsbyNode>).filter(p => p !== undefined)
@@ -58,20 +58,17 @@ export const sanitizeNode: sanitizeNode = (
   isNode = true,
   path = new Set()
 ) => {
-  const isPlainObject = _.isPlainObject(data)
-  const isArray = _.isArray(data)
-
-  if (isPlainObject || isArray) {
+  if (isPlainObject(data) || Array.isArray(data)) {
     if (path.has(data)) return data
     path.add(data)
 
-    const returnData = isPlainObject
+    const returnData = isPlainObject(data)
       ? ({} as IGatsbyNode)
       : ([] as Array<IGatsbyNode>)
     let anyFieldChanged = false
 
     // _.each is a "Collection" method and thus objects with "length" property are iterated as arrays
-    const hasLengthProperty = isPlainObject
+    const hasLengthProperty = isPlainObject(data)
       ? Object.hasOwn(data, `length`)
       : false
     let lengthProperty
@@ -80,7 +77,7 @@ export const sanitizeNode: sanitizeNode = (
       delete (data as IGatsbyNode).length
     }
 
-    _.each(data, (value, key) => {
+    each(data, (value, key) => {
       if (isNode && key === `internal`) {
         returnData[key] = value
         return

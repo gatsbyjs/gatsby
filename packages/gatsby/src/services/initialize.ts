@@ -1,10 +1,18 @@
-import _ from "lodash"
 import { slash, isCI } from "gatsby-core-utils"
-import * as fs from "fs-extra"
+import {
+  copy,
+  emptyDir,
+  ensureDir,
+  existsSync,
+  readdir,
+  readFileSync,
+  remove,
+  writeFileSync,
+} from "fs-extra"
 import { releaseAllMutexes } from "gatsby-core-utils/mutex"
 import { md5, md5File } from "gatsby-core-utils"
-import path from "path"
-import telemetry from "gatsby-telemetry"
+import { join, relative } from "node:path"
+import { trackFeatureIsUsed, decorateEvent } from "gatsby-telemetry"
 import glob from "globby"
 
 import apiRunnerNode from "../utils/api-runner-node"
@@ -58,7 +66,7 @@ Please give feedback on their respective umbrella issues!
 - https://gatsby.dev/cache-clearing-feedback
   `)
 
-  telemetry.trackFeatureIsUsed(`FastDev`)
+  trackFeatureIsUsed(`FastDev`)
 }
 
 // Show stack trace on unhandled promises.
@@ -86,7 +94,7 @@ export async function initialize({
     reporter.info(
       `GATSBY_DISABLE_CACHE_PERSISTENCE is enabled. Cache won't be persisted. Next builds will not be able to reuse any work done by current session.`
     )
-    telemetry.trackFeatureIsUsed(`DisableCachePersistence`)
+    trackFeatureIsUsed(`DisableCachePersistence`)
   }
   if (!args) {
     reporter.panic(`Missing program args`)
@@ -230,12 +238,14 @@ export async function initialize({
 
   // Multiple occurrences of the same name-version-pair can occur,
   // so we report an array of unique pairs
-  const pluginsStr = _.uniq(flattenedPlugins.map(p => `${p.name}@${p.version}`))
-  telemetry.decorateEvent(`BUILD_END`, {
+  const pluginsStr = Array.from(
+    new Set(flattenedPlugins.map(p => `${p.name}@${p.version}`))
+  ).join()
+  decorateEvent(`BUILD_END`, {
     plugins: pluginsStr,
   })
 
-  telemetry.decorateEvent(`DEVELOP_STOP`, {
+  decorateEvent(`DEVELOP_STOP`, {
     plugins: pluginsStr,
   })
 
@@ -258,9 +268,9 @@ export async function initialize({
   const workerCacheDirectory = `${program.directory}/.cache/worker`
   const lmdbCacheDirectory = `${program.directory}/.cache/${lmdbCacheDirectoryName}`
 
-  const publicDirExists = fs.existsSync(publicDirectory)
-  const workerCacheDirExists = fs.existsSync(workerCacheDirectory)
-  const lmdbCacheDirExists = fs.existsSync(lmdbCacheDirectory)
+  const publicDirExists = existsSync(publicDirectory)
+  const workerCacheDirExists = existsSync(workerCacheDirectory)
+  const lmdbCacheDirExists = existsSync(lmdbCacheDirectory)
 
   // check the cache file that is used by the current configuration
   const cacheDirExists = lmdbCacheDirExists
@@ -290,7 +300,7 @@ export async function initialize({
         cwd: program.directory,
       }
     )
-    await Promise.all(files.map(file => fs.remove(file)))
+    await Promise.all(files.map(file => remove(file)))
     activity.end()
   }
 
@@ -304,9 +314,9 @@ export async function initialize({
       }
     )
     activity.start()
-    await fs
-      .remove(workerCacheDirectory)
-      .catch(() => fs.emptyDir(workerCacheDirectory))
+    await remove(workerCacheDirectory).catch(() =>
+      emptyDir(workerCacheDirectory)
+    )
     activity.end()
   }
 
@@ -446,7 +456,7 @@ export async function initialize({
         cwd: program.directory,
       })
 
-      await Promise.all(files.map(file => fs.remove(file)))
+      await Promise.all(files.map(file => remove(file)))
     } catch (e) {
       reporter.error(`Failed to remove .cache files.`, e)
     }
@@ -462,10 +472,10 @@ export async function initialize({
 
     // in future this should show which plugin's caches are purged
     // possibly should also have which plugins had caches
-    telemetry.decorateEvent(`BUILD_END`, {
+    decorateEvent(`BUILD_END`, {
       pluginCachesPurged: [`*`],
     })
-    telemetry.decorateEvent(`DEVELOP_STOP`, {
+    decorateEvent(`DEVELOP_STOP`, {
       pluginCachesPurged: [`*`],
     })
   }
@@ -478,10 +488,10 @@ export async function initialize({
 
   // Now that we know the .cache directory is safe, initialize the cache
   // directory.
-  await fs.ensureDir(cacheDirectory)
+  await ensureDir(cacheDirectory)
 
   // Ensure the public/static directory
-  await fs.ensureDir(`${publicDirectory}/static`)
+  await ensureDir(`${publicDirectory}/static`)
 
   // Init plugins once cache is initialized
   await apiRunnerNode(`onPluginInit`, {
@@ -500,15 +510,15 @@ export async function initialize({
   const siteDir = cacheDirectory
 
   try {
-    await fs.copy(srcDir, siteDir, {
+    await copy(srcDir, siteDir, {
       overwrite: true,
     })
-    await fs.ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
+    await ensureDir(`${cacheDirectory}/${lmdbCacheDirectoryName}`)
 
     // Ensure .cache/fragments exists and is empty. We want fragments to be
     // added on every run in response to data as fragments can only be added if
     // the data used to create the schema they're dependent on is available.
-    await fs.emptyDir(`${cacheDirectory}/fragments`)
+    await emptyDir(`${cacheDirectory}/fragments`)
   } catch (err) {
     reporter.panic(`Unable to copy site files to .cache`, err)
   }
@@ -526,7 +536,7 @@ export async function initialize({
     // a handy place to include global styles and other global imports.
     try {
       if (env === `browser`) {
-        const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+        const modulePath = join(plugin.resolve, `gatsby-${env}`)
         return slash(resolveModule(modulePath) as string)
       }
     } catch (e) {
@@ -534,7 +544,7 @@ export async function initialize({
     }
 
     if (envAPIs && Array.isArray(envAPIs) && envAPIs.length > 0) {
-      const modulePath = path.join(plugin.resolve, `gatsby-${env}`)
+      const modulePath = join(plugin.resolve, `gatsby-${env}`)
       return slash(resolveModule(modulePath) as string)
     }
     return undefined
@@ -566,7 +576,7 @@ export async function initialize({
   const browserPluginsRequires = browserPlugins
     .map(plugin => {
       // we need a relative import path to keep contenthash the same if directory changes
-      const relativePluginPath = path.relative(siteDir, plugin.resolve)
+      const relativePluginPath = relative(siteDir, plugin.resolve)
       return `{
       plugin: require('${slash(relativePluginPath)}'),
       options: ${JSON.stringify(plugin.options)},
@@ -579,7 +589,7 @@ export async function initialize({
   let sSRAPIRunner = ``
 
   try {
-    sSRAPIRunner = fs.readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
+    sSRAPIRunner = readFileSync(`${siteDir}/api-runner-ssr.js`, `utf-8`)
   } catch (err) {
     reporter.panic(`Failed to read ${siteDir}/api-runner-ssr.js`, err)
   }
@@ -596,12 +606,12 @@ export async function initialize({
     .join(`,`)
   sSRAPIRunner = `var plugins = [${ssrPluginsRequires}]\n${sSRAPIRunner}`
 
-  fs.writeFileSync(
+  writeFileSync(
     `${siteDir}/api-runner-browser-plugins.js`,
     browserAPIRunner,
     `utf-8`
   )
-  fs.writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
+  writeFileSync(`${siteDir}/api-runner-ssr.js`, sSRAPIRunner, `utf-8`)
 
   activity.end()
   /**
@@ -619,7 +629,7 @@ export async function initialize({
   activity.end()
 
   // Track trailing slash option used in config
-  telemetry.trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
+  trackFeatureIsUsed(`trailingSlash:${state.config.trailingSlash}`)
 
   // Collect resolvable extensions and attach to program.
   const extensions = [`.mjs`, `.js`, `.jsx`, `.wasm`, `.json`]
@@ -632,23 +642,23 @@ export async function initialize({
 
   store.dispatch({
     type: `SET_PROGRAM_EXTENSIONS`,
-    payload: _.flattenDeep([extensions, apiResults]),
+    payload: [extensions, apiResults].flat(Infinity),
   })
 
   const workerPool = WorkerPool.create()
 
-  const siteDirectoryFiles = await fs.readdir(siteDirectory)
+  const siteDirectoryFiles = await readdir(siteDirectory)
 
   const gatsbyFilesIsInESM = siteDirectoryFiles.some(file =>
     file.match(/gatsby-(node|config)\.mjs/)
   )
 
   if (gatsbyFilesIsInESM) {
-    telemetry.trackFeatureIsUsed(`ESMInGatsbyFiles`)
+    trackFeatureIsUsed(`ESMInGatsbyFiles`)
   }
 
   if (state.config.graphqlTypegen) {
-    telemetry.trackFeatureIsUsed(`GraphQLTypegen`)
+    trackFeatureIsUsed(`GraphQLTypegen`)
     // This is only run during `gatsby develop`
     if (process.env.gatsby_executing_command === `develop`) {
       writeGraphQLConfig(program)

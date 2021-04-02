@@ -1,6 +1,5 @@
 const Remark = require(`remark`)
 const find = require(`unist-util-find`)
-const _ = require(`lodash`)
 
 const plugin = require(`../`)
 
@@ -11,11 +10,7 @@ const remark = new Remark().data(`settings`, {
 })
 
 const extractObjectTag = mdast =>
-  _.reduce(
-    mdast.children[0].children,
-    (result, child) => result + child.value,
-    ``
-  )
+  mdast.children[0].children.reduce((result, child) => result + child.value, ``)
 
 const extractIframeTag = mdast => mdast.children[0].value
 
@@ -96,7 +91,7 @@ describe(`gatsby-remark-responsive-iframe`, () => {
     [`100`, `invalid`],
   ]
 
-  _.map(shouldntTransform, ([width, height]) => {
+  shouldntTransform.map(([width, height]) => {
     ;[`iframe`, `object`].forEach(tag => {
       it(`doesn't transform an ${tag} with dimensions: '${width}' '${height}'`, async () => {
         const markdownAST = remark.parse(`

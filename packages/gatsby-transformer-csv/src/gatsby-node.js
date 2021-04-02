@@ -1,5 +1,5 @@
 const csv = require(`csvtojson`)
-const _ = require(`lodash`)
+const { upperFirst, camelCase } = require(`lodash`)
 
 const { typeNameFromFile } = require(`./index`)
 
@@ -32,10 +32,14 @@ async function onCreateNode(
 
   // Generate the type
   function getType({ node, object }) {
-    if (pluginOptions && _.isFunction(typeName)) {
+    if (pluginOptions && typeof typeName === `function`) {
       return pluginOptions.typeName({ node, object })
-    } else if (pluginOptions && _.isString(typeName)) {
-      return _.upperFirst(_.camelCase(typeName))
+    } else if (
+      pluginOptions &&
+      typeName &&
+      typeof typeName.valueOf() === `string`
+    ) {
+      return upperFirst(camelCase(typeName))
     } else {
       return typeNameFromFile({ node })
     }
@@ -63,9 +67,9 @@ async function onCreateNode(
     createParentChildLink({ parent: node, child: csvNode })
   }
 
-  if (_.isArray(parsedContent)) {
+  if (Array.isArray(parsedContent)) {
     if (pluginOptions && nodePerFile) {
-      if (pluginOptions && _.isString(nodePerFile)) {
+      if (pluginOptions && typeof nodePerFile.valueOf() === `string`) {
         await transformObject({ [nodePerFile]: parsedContent }, 0)
       } else {
         await transformObject({ items: parsedContent }, 0)

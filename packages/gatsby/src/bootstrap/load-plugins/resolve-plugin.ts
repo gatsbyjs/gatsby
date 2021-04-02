@@ -1,5 +1,5 @@
-import path from "path"
-import fs from "fs"
+import { dirname, isAbsolute } from "node:path"
+import { readFileSync } from "node:fs"
 import { slash, createRequireFromPath } from "gatsby-core-utils"
 import { warnOnIncompatiblePeerDependency } from "./validate"
 import { PackageJson } from "../../.."
@@ -7,7 +7,8 @@ import { IPluginInfo, PluginRef } from "./types"
 import { createPluginId } from "./utils/create-id"
 import { createFileContentHash } from "./utils/create-hash"
 import reporter from "gatsby-cli/lib/reporter"
-import { isString } from "lodash"
+// eslint-disable-next-line you-dont-need-lodash-underscore/is-string
+import isString from "lodash/isString"
 import { checkLocalPlugin } from "./utils/check-local-plugin"
 import { getResolvedFieldsForPlugin } from "../../utils/parcel/compile-gatsby-files"
 
@@ -33,7 +34,7 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
 
   if (validLocalPlugin && localPluginPath) {
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${localPluginPath}/package.json`, `utf-8`)
+      readFileSync(`${localPluginPath}/package.json`, `utf-8`)
     ) as PackageJson
     const name = packageJSON.name || pluginName
     warnOnIncompatiblePeerDependency(name, packageJSON)
@@ -61,17 +62,15 @@ export function resolvePlugin(plugin: PluginRef, rootDir: string): IPluginInfo {
     // If the path is absolute, resolve the directory of the internal plugin,
     // otherwise resolve the directory containing the package.json
     const resolvedPath = slash(
-      path.dirname(
+      dirname(
         requireSource.resolve(
-          path.isAbsolute(pluginName)
-            ? pluginName
-            : `${pluginName}/package.json`
+          isAbsolute(pluginName) ? pluginName : `${pluginName}/package.json`
         )
       )
     )
 
     const packageJSON = JSON.parse(
-      fs.readFileSync(`${resolvedPath}/package.json`, `utf-8`)
+      readFileSync(`${resolvedPath}/package.json`, `utf-8`)
     )
     warnOnIncompatiblePeerDependency(packageJSON.name, packageJSON)
 

@@ -1,5 +1,4 @@
-const Promise = require(`bluebird`)
-const os = require(`os`)
+const { tmpdir } = require(`node:os`)
 const { onCreateNode } = require(`../gatsby-node`)
 
 const createNodeId = jest.fn().mockReturnValue(`uuid-from-gatsby`)
@@ -57,7 +56,7 @@ const expectCreatedNodeTypeName = nodeTypeName => {
 describe(`Processing YAML nodes with internal type 'File'`, () => {
   beforeEach(() => {
     node.internal.type = `File`
-    node.dir = `${os.tmpdir()}/top/foo bar/`
+    node.dir = `${tmpdir()}/top/foo bar/`
     node.name = `My File`
   })
 

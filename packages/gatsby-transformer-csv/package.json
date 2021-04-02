@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "csvtojson": "^2.0.10"
+    "csvtojson": "^2.0.10",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

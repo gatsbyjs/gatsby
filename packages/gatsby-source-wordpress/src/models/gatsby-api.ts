@@ -1,8 +1,7 @@
 import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
-import merge from "lodash/merge"
+import { merge, cloneDeep } from "lodash"
 import { createLocalFileNode } from "~/steps/source-nodes/create-nodes/create-local-file-node"
 import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
-import { cloneDeep } from "lodash"
 import { inPreviewMode } from "~/steps/preview"
 import { usingGatsbyV4OrGreater } from "~/utils/gatsby-version"
 

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import identity from "lodash/identity"
 
 // Gatsby values
 export const BUILD_HTML_STAGE = `build-html`
@@ -16,7 +16,7 @@ export const DEFAULT_OPTIONS = {
   mergeSecurityHeaders: true,
   mergeLinkHeaders: true,
   mergeCachingHeaders: true,
-  transformHeaders: _.identity, // optional transform for manipulating headers for sorting, etc
+  transformHeaders: identity, // optional transform for manipulating headers for sorting, etc
   generateMatchPathRewrites: true, // generate rewrites for client only paths
 }
 

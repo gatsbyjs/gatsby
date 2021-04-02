@@ -1,12 +1,12 @@
 import PrettyError from "pretty-error"
-import stackTrace from "stack-trace"
+import { StackFrame } from "stack-trace"
 import { prepareStackTrace, ErrorWithCodeFrame } from "./prepare-stack-trace"
 import { isNodeInternalModulePath } from "gatsby-core-utils"
 import { IStructuredStackFrame } from "../structured-errors/types"
 import { readFileSync } from "fs-extra"
 import { codeFrameColumns } from "@babel/code-frame"
 
-const packagesToSkip = [`core-js`, `bluebird`, `regenerator-runtime`, `graphql`]
+const packagesToSkip = [`core-js`, `regenerator-runtime`, `graphql`]
 
 const packagesToSkipTest = new RegExp(
   `node_modules[\\/](${packagesToSkip.join(`|`)})`
@@ -15,7 +15,7 @@ const packagesToSkipTest = new RegExp(
 // TO-DO: move this this out of this file (and probably delete this file completely)
 // it's here because it re-implements similar thing as `pretty-error` already does
 export const sanitizeStructuredStackTrace = (
-  stack: Array<stackTrace.StackFrame>
+  stack: Array<StackFrame>
 ): Array<IStructuredStackFrame> => {
   // first filter out not useful call sites
   stack = stack.filter(callSite => {

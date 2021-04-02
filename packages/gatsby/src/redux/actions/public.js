@@ -1,13 +1,14 @@
 // @flow
-const reporter = require(`gatsby-cli/lib/reporter`)
 const chalk = require(`chalk`)
-const _ = require(`lodash`)
+const memoize = require(`lodash/memoize`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
-const { platform } = require(`os`)
-const path = require(`path`)
+const { platform } = require(`node:os`)
+const {
+  win32: { relative },
+} = require(`node:path`)
 const { trueCasePathSync } = require(`true-case-path`)
-const url = require(`url`)
+const { parse } = require(`node:url`)
 const { slash } = require(`gatsby-core-utils/path`)
 const {
   createContentDigest,
@@ -43,7 +44,7 @@ const isTestEnv = process.env.NODE_ENV === `test`
 // Ideally, we should invalidate memoized values if there are any FS operations
 // on files that are in shadowing chain, but webpack currently doesn't handle
 // shadowing changes during develop session, so no invalidation is not a deal breaker.
-const shadowCreatePagePath = _.memoize(
+const shadowCreatePagePath = memoize(
   require(`../../internal-plugins/webpack-theme-component-shadowing/create-page`)
 )
 const { createInternalJob } = require(`../../utils/jobs/manager`)
@@ -70,7 +71,7 @@ const findChildren = initialChildren => {
     }
     traversedNodes.add(currentChild.id)
     const newChildren = currentChild.children
-    if (_.isArray(newChildren) && newChildren.length > 0) {
+    if (Array.isArray(newChildren) && newChildren.length > 0) {
       children.push(...newChildren)
       queue.push(...newChildren)
     }
@@ -338,9 +339,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         const commonDir = getCommonDir(directory, page.component)
 
         // using `path.win32` to force case insensitive relative path
-        const relativePath = slash(
-          path.win32.relative(commonDir, page.component)
-        )
+        const relativePath = slash(relative(commonDir, page.component))
 
         trueComponentPath = slash(trueCasePathSync(relativePath, commonDir))
       }
@@ -448,11 +447,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   const oldPage: Page = store.getState().pages.get(internalPage.path)
   const contextModified =
-    !!oldPage && !_.isEqual(oldPage.context, internalPage.context)
+    !!oldPage && !(oldPage.context === internalPage.context)
   const componentModified =
-    !!oldPage && !_.isEqual(oldPage.component, internalPage.component)
-  const slicesModified =
-    !!oldPage && !_.isEqual(oldPage.slices, internalPage.slices)
+    !!oldPage && !(oldPage.component === internalPage.component)
+  const slicesModified = !!oldPage && !(oldPage.slices === internalPage.slices)
 
   const alternateSlashPath = page.path.endsWith(`/`)
     ? page.path.slice(0, -1)
@@ -698,7 +696,7 @@ const createNode = (
   plugin?: Plugin,
   actionOptions?: ActionOptions = {}
 ) => {
-  if (!_.isObject(node)) {
+  if (!(node instanceof Object)) {
     return console.log(
       chalk.bold.red(
         `The node passed to the "createNode" action creator must be an object`
@@ -712,7 +710,7 @@ const createNode = (
   }
 
   // Ensure the new node has a children array.
-  if (!node.array && !_.isArray(node.children)) {
+  if (!node.array && !Array.isArray(node.children)) {
     node.children = []
   }
 
@@ -991,9 +989,7 @@ actions.createNodeField = (
   }
 
   // Normalized name of the field that will be used in schema
-  const schemaFieldName = _.includes(name, `___NODE`)
-    ? name.split(`___`)[0]
-    : name
+  const schemaFieldName = name.includes(`___NODE`) ? name.split(`___`)[0] : name
 
   // Check that this field isn't owned by another plugin.
   const fieldOwner = node.internal.fieldOwners[schemaFieldName]
@@ -1126,7 +1122,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (plugin.name === `default-site-plugin`) {
     name = `Your site's "gatsby-node.js"`
   }
-  if (!_.isObject(options)) {
+  if (!(options instanceof Object)) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
     if (isNotTestEnv) {
@@ -1134,7 +1130,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
     }
   }
 
-  if (!_.isObject(options.options)) {
+  if (!(options?.options instanceof Object)) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
     if (isNotTestEnv) {
@@ -1360,7 +1356,7 @@ actions.setPluginStatus = (
 
 // Check if path is absolute and add pathPrefix in front if it's not
 const maybeAddPathPrefix = (path, pathPrefix) => {
-  const parsed = url.parse(path)
+  const parsed = parse(path)
   const isRelativeProtocol = path.startsWith(`//`)
   return `${
     parsed.protocol != null || isRelativeProtocol ? `` : pathPrefix
@@ -1528,26 +1524,26 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
   const noDomain = typeof domain !== `string`
 
   if (noHeaders) {
-    reporter.warn(
+    report.warn(
       `Plugin ${plugin.name} called actions.setRequestHeaders with a headers property that isn't an object.`
     )
   }
 
   if (noDomain) {
-    reporter.warn(
+    report.warn(
       `Plugin ${plugin.name} called actions.setRequestHeaders with a domain property that isn't a string.`
     )
   }
 
   if (noDomain || noHeaders) {
-    reporter.panic(
+    report.panic(
       `Plugin ${plugin.name} attempted to set request headers with invalid arguments. See above warnings for more info.`
     )
 
     return null
   }
 
-  const baseDomain = url.parse(domain)?.hostname
+  const baseDomain = parse(domain)?.hostname
 
   if (baseDomain) {
     return {
@@ -1558,7 +1554,7 @@ actions.setRequestHeaders = ({ domain, headers }, plugin: Plugin) => {
       },
     }
   } else {
-    reporter.panic(
+    report.panic(
       `Plugin ${plugin.name} attempted to set request headers for a domain that is not a valid URL. (${domain})`
     )
 

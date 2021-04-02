@@ -1,19 +1,18 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const _ = require(`lodash`)
+const { readdirSync, statSync, readFileSync } = require(`fs-extra`)
+const { join, basename, dirname } = require(`node:path`)
+const makeTemplate = require(`lodash/template`)
 
 module.exports = {
   transforms: {
     LIST_STARTERS() {
-      const base = path.join(process.cwd(), `starters`)
-      const starters = fs
-        .readdirSync(base)
-        .filter(dir => fs.statSync(path.join(base, dir)).isDirectory())
+      const base = join(process.cwd(), `starters`)
+      const starters = readdirSync(base)
+        .filter(dir => statSync(join(base, dir)).isDirectory())
         // theme starters have their own README so skip those
         .filter(dir => !dir.includes(`theme`))
         .reduce((merged, dir) => {
           merged[dir] = JSON.parse(
-            fs.readFileSync(path.join(base, dir, `package.json`), `utf8`)
+            readFileSync(join(base, dir, `package.json`), `utf8`)
           )
           return merged
         }, {})
@@ -32,12 +31,12 @@ module.exports = {
       `.replace(/^[^|]+/gm, ``)
     },
     STARTER(content, options, { originalPath }) {
-      const starter = path.basename(path.dirname(originalPath))
-      const template = fs.readFileSync(
-        path.join(process.cwd(), `starters`, `README-template.md`),
+      const starter = basename(dirname(originalPath))
+      const template = readFileSync(
+        join(process.cwd(), `starters`, `README-template.md`),
         `utf8`
       )
-      return _.template(template)({
+      return makeTemplate(template)({
         name: starter,
       })
     },

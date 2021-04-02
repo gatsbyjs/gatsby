@@ -1,4 +1,4 @@
-import _ from "lodash"
+import groupBy from "lodash/groupBy"
 import fastq from "fastq"
 import { IProgressReporter } from "gatsby-cli/lib/reporter/reporter-progress"
 import { store } from "../redux"
@@ -58,7 +58,7 @@ export { calcDirtyQueryIds as calcInitialDirtyQueryIds }
  * Groups queryIds by whether they are static or page queries.
  */
 export function groupQueryIds(queryIds: Array<string>): IGroupedQueryIds {
-  const grouped = _.groupBy(queryIds, p => {
+  const grouped = groupBy(queryIds, p => {
     if (p.startsWith(`sq--`)) {
       return `static`
     } else if (p.startsWith(`slice--`)) {

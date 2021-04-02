@@ -1,5 +1,4 @@
-import _ from "lodash"
-import semver from "semver"
+import { satisfies } from "semver"
 
 // Does this experiment run for only builds
 type executingCommand = "build" | "develop" | "all"
@@ -9,7 +8,7 @@ export const satisfiesSemvers = (
 ): boolean => {
   // Check each semver check for the flag.
   // If any are false, then the flag doesn't pass
-  const result = _.toPairs(semverConstraints).every(
+  const result = Object.entries(semverConstraints).every(
     ([packageName, semverConstraint]) => {
       let packageVersion: string
       try {
@@ -19,7 +18,7 @@ export const satisfiesSemvers = (
       }
 
       // We care if the semver check doesn't pass.
-      return semver.satisfies(packageVersion, semverConstraint, {
+      return satisfies(packageVersion, semverConstraint, {
         includePrerelease: true,
       })
     }

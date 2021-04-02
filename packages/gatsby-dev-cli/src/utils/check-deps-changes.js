@@ -1,5 +1,5 @@
-const fs = require(`fs-extra`)
-const _ = require(`lodash`)
+const { readFileSync } = require(`fs-extra`)
+const transform = require(`lodash/transform`)
 const {
   getMonorepoPackageJsonPath,
 } = require(`./get-monorepo-package-json-path`)
@@ -7,10 +7,10 @@ const got = require(`got`)
 
 function difference(object, base) {
   function changes(object, base) {
-    return _.transform(object, function (result, value, key) {
-      if (!_.isEqual(value, base[key])) {
+    return transform(object, function (result, value, key) {
+      if (!value === base[key]) {
         result[key] =
-          _.isObject(value) && _.isObject(base[key])
+          value instanceof Object && base?.[key] instanceof Object
             ? changes(value, base[key])
             : value
       }
@@ -38,7 +38,7 @@ exports.checkDepsChanges = async ({
   let localPKGjson
   let packageNotInstalled = false
   try {
-    localPKGjson = JSON.parse(fs.readFileSync(newPath, `utf-8`))
+    localPKGjson = JSON.parse(readFileSync(newPath, `utf-8`))
   } catch {
     packageNotInstalled = true
     // there is no local package - so we still need to install deps
@@ -82,10 +82,7 @@ exports.checkDepsChanges = async ({
     packageName,
     packageNameToPath,
   })
-  const monorepoPKGjsonString = fs.readFileSync(
-    monoRepoPackageJsonPath,
-    `utf-8`
-  )
+  const monorepoPKGjsonString = readFileSync(monoRepoPackageJsonPath, `utf-8`)
   const monorepoPKGjson = JSON.parse(monorepoPKGjsonString)
   if (ignoredPackageJSON.has(packageName)) {
     if (ignoredPackageJSON.get(packageName).includes(monorepoPKGjsonString)) {
@@ -101,10 +98,8 @@ exports.checkDepsChanges = async ({
   if (!monorepoPKGjson.dependencies) monorepoPKGjson.dependencies = {}
   if (!localPKGjson.dependencies) localPKGjson.dependencies = {}
 
-  const areDepsEqual = _.isEqual(
-    monorepoPKGjson.dependencies,
-    localPKGjson.dependencies
-  )
+  const areDepsEqual =
+    monorepoPKGjson.dependencies === localPKGjson.dependencies
 
   if (!areDepsEqual) {
     const diff = difference(
@@ -119,7 +114,7 @@ exports.checkDepsChanges = async ({
 
     let needPublishing = false
     let isPublishing = false
-    const depChangeLog = _.uniq(Object.keys({ ...diff, ...diff2 }))
+    const depChangeLog = Array.from(new Set(Object.keys({ ...diff, ...diff2 })))
       .reduce((acc, key) => {
         if (monorepoPKGjson.dependencies[key] === `gatsby-dev`) {
           // if we are in middle of publishing to local repository - ignore
@@ -184,9 +179,7 @@ exports.checkDepsChanges = async ({
 }
 
 function getPackageVersion(packageName) {
-  const projectPackageJson = JSON.parse(
-    fs.readFileSync(`./package.json`, `utf-8`)
-  )
+  const projectPackageJson = JSON.parse(readFileSync(`./package.json`, `utf-8`))
   const { dependencies = {}, devDependencies = {} } = projectPackageJson
   const version = dependencies[packageName] || devDependencies[packageName]
   return version || `latest`

@@ -1,5 +1,5 @@
-const _ = require(`lodash`)
-const path = require(`path`)
+const cloneDeep = require(`lodash/cloneDeep`)
+const path = require(`node:path`)
 const v8 = require(`v8`)
 const telemetry = require(`gatsby-telemetry`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -109,7 +109,7 @@ function getFakeNodes() {
 }
 
 describe(`redux db`, () => {
-  const initialComponentsState = _.cloneDeep(store.getState().components)
+  const initialComponentsState = cloneDeep(store.getState().components)
 
   function createPages(pages) {
     // mock Date.now so Date.now() doesn't change in between tests

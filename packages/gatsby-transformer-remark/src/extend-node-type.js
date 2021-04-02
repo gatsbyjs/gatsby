@@ -1,6 +1,6 @@
 const Remark = require(`remark`)
 const { selectAll } = require(`unist-util-select`)
-const _ = require(`lodash`)
+const { clone, truncate: truncateString } = require(`lodash`)
 const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
@@ -118,7 +118,7 @@ module.exports = function remarkExtendNodeType(
     const tocOptions = tableOfContents
     const remarkOptions = {}
 
-    if (_.isArray(blocks)) {
+    if (Array.isArray(blocks)) {
       remarkOptions.blocks = blocks
     }
 
@@ -136,11 +136,11 @@ module.exports = function remarkExtendNodeType(
 
     for (const plugin of pluginOptions.plugins) {
       const requiredPlugin = plugin.module
-      if (_.isFunction(requiredPlugin.setParserPlugins)) {
+      if (typeof requiredPlugin.setParserPlugins === `function`) {
         for (const parserPlugin of requiredPlugin.setParserPlugins(
           plugin.pluginOptions
         )) {
-          if (_.isArray(parserPlugin)) {
+          if (Array.isArray(parserPlugin)) {
             const [parser, options] = parserPlugin
             remark = remark.use(parser, options)
           } else {
@@ -296,11 +296,12 @@ module.exports = function remarkExtendNodeType(
         const requiredPlugin = plugin.module
 
         // Allow both exports = function(), and exports.default = function()
-        const defaultFunction = _.isFunction(requiredPlugin)
-          ? requiredPlugin
-          : _.isFunction(requiredPlugin.default)
-          ? requiredPlugin.default
-          : undefined
+        const defaultFunction =
+          typeof requiredPlugin === `function`
+            ? requiredPlugin
+            : typeof requiredPlugin.default === `function`
+            ? requiredPlugin.default
+            : undefined
 
         if (defaultFunction) {
           await defaultFunction(
@@ -443,10 +444,7 @@ module.exports = function remarkExtendNodeType(
       let toc = ``
       if (tocAst.map) {
         if (appliedTocOptions.absolute) {
-          const slugField = _.get(
-            markdownNode,
-            appliedTocOptions.pathToSlugField
-          )
+          const slugField = markdownNode?.appliedTocOptions?.pathToSlugField
 
           tocAst.map = addSlugToUrl(
             markdownNode,
@@ -558,7 +556,7 @@ module.exports = function remarkExtendNodeType(
           `…`
         )
       } else {
-        lastTextNode.value = _.truncate(lastTextNode.value, {
+        lastTextNode.value = truncateString(lastTextNode.value, {
           length: pruneLength,
           omission: `…`,
         })
@@ -645,7 +643,7 @@ module.exports = function remarkExtendNodeType(
         return prune(excerptText, pruneLength, `…`)
       }
 
-      return _.truncate(excerptText, {
+      return truncateString(excerptText, {
         length: pruneLength,
         omission: `…`,
       })
@@ -696,7 +694,7 @@ module.exports = function remarkExtendNodeType(
         type: `JSON`,
         async resolve(markdownNode, opt, context) {
           const ast = await getHTMLAst(markdownNode, context)
-          const strippedAst = stripPosition(_.clone(ast), true)
+          const strippedAst = stripPosition(clone(ast), true)
           return hastReparseRaw(strippedAst)
         },
       },
@@ -748,7 +746,7 @@ module.exports = function remarkExtendNodeType(
             truncate,
             excerptSeparator: pluginOptions.excerpt_separator,
           })
-          const strippedAst = stripPosition(_.clone(ast), true)
+          const strippedAst = stripPosition(clone(ast), true)
           return hastReparseRaw(strippedAst)
         },
       },

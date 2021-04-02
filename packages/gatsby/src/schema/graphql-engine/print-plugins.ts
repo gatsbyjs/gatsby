@@ -1,7 +1,6 @@
-/* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-import * as fs from "fs-extra"
-import * as path from "path"
-import * as _ from "lodash"
+import { remove, writeFile } from "fs-extra"
+import { relative, dirname } from "node:path"
+import cloneDeepWith from "lodash/cloneDeepWith"
 import { slash } from "gatsby-core-utils"
 import { store } from "../../redux"
 import { IGatsbyState } from "../../redux/types"
@@ -22,12 +21,12 @@ const schemaCustomizationPluginsPath =
 
 export async function printQueryEnginePlugins(): Promise<void> {
   try {
-    await fs.remove(schemaCustomizationPluginsPath)
+    await remove(schemaCustomizationPluginsPath)
   } catch (e) {
     // no-op
   }
   const queryEnginePlugins = await renderQueryEnginePlugins()
-  return await fs.writeFile(schemaCustomizationPluginsPath, queryEnginePlugins)
+  return await writeFile(schemaCustomizationPluginsPath, queryEnginePlugins)
 }
 
 async function renderQueryEnginePlugins(): Promise<string> {
@@ -44,9 +43,7 @@ async function renderQueryEnginePlugins(): Promise<string> {
 }
 
 function relativePluginPath(resolve: string): string {
-  return slash(
-    path.relative(path.dirname(schemaCustomizationPluginsPath), resolve)
-  )
+  return slash(relative(dirname(schemaCustomizationPluginsPath), resolve))
 }
 
 async function render(
@@ -118,7 +115,7 @@ export const flattenedPlugins =
     sanitizedUsedPlugins.map(plugin => {
       return {
         ...plugin,
-        pluginOptions: _.cloneDeepWith(
+        pluginOptions: cloneDeepWith(
           plugin.pluginOptions,
           (value: any): any => {
             if (

@@ -1,5 +1,5 @@
-const toml = require(`toml`)
-const _ = require(`lodash`)
+const { parse } = require(`toml`)
+const { upperFirst, camelCase } = require(`lodash`)
 
 function shouldOnCreateNode({ node }) {
   // Filter out non-toml content
@@ -20,7 +20,7 @@ async function onCreateNode({
   // Load TOML contents
   const content = await loadNodeContent(node)
   // Parse
-  const parsedContent = toml.parse(content)
+  const parsedContent = parse(content)
 
   // This version suffers from:
   // 1) More TOML files -> more types
@@ -38,7 +38,7 @@ async function onCreateNode({
       contentDigest,
 
       // Use the relative filepath as "type"
-      type: _.upperFirst(_.camelCase(node.relativePath)),
+      type: upperFirst(camelCase(node.relativePath)),
     },
   }
 

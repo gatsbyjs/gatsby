@@ -1,6 +1,6 @@
-import * as fs from "fs-extra"
+import { writeFile } from "fs-extra"
 import execa from "execa"
-import _ from "lodash"
+import { groupBy, debounce } from "lodash"
 import {
   readConfigFile,
   lock,
@@ -83,7 +83,7 @@ export const GatsbyPluginCreate = async ({
     options,
     key,
   })
-  await fs.writeFile(getConfigPath(root), code)
+  await writeFile(getConfigPath(root), code)
   release()
 }
 
@@ -131,7 +131,7 @@ let installs: Array<{
 }> = []
 const executeInstalls = async (root: string): Promise<void> => {
   // @ts-ignore - fix me
-  const types = _.groupBy(installs, c => c.resource.dependencyType)
+  const types = groupBy(installs, c => c.resource.dependencyType)
 
   // Grab the key of the first install & delete off installs these packages
   // then run intall
@@ -184,7 +184,7 @@ const executeInstalls = async (root: string): Promise<void> => {
   return undefined
 }
 
-const debouncedExecute = _.debounce(executeInstalls, 25)
+const debouncedExecute = debounce(executeInstalls, 25)
 
 interface IPackageCreateInput {
   root: string

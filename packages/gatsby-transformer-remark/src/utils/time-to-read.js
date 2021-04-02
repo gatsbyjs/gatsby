@@ -1,5 +1,5 @@
 const sanitizeHTML = require(`sanitize-html`)
-const _ = require(`lodash`)
+const words = require(`lodash/words`)
 
 // Unicode ranges for Han (Chinese) and Hiragana/Katakana (Japanese) characters
 const cjRanges = [
@@ -57,7 +57,7 @@ export const timeToRead = html => {
 
   // Multiply non-latin character string length by 0.56, because
   // on average one word consists of 2 characters in both Chinese and Japanese
-  const wordCount = _.words(latinChars.join(``)).length + cjChars.length * 0.56
+  const wordCount = words(latinChars.join(``)).length + cjChars.length * 0.56
 
   timeToRead = Math.round(wordCount / avgWPM)
   if (timeToRead === 0) {

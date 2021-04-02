@@ -1,7 +1,5 @@
 const startVerdaccio = require(`verdaccio`).default
-
-const fs = require(`fs-extra`)
-const _ = require(`lodash`)
+const { removeSync } = require(`fs-extra`)
 
 let VerdaccioInitPromise = null
 
@@ -17,7 +15,7 @@ const startServer = () => {
   console.log(`Starting local verdaccio server`)
 
   // clear storage
-  fs.removeSync(verdaccioConfig.storage)
+  removeSync(verdaccioConfig.storage)
 
   VerdaccioInitPromise = new Promise(resolve => {
     startVerdaccio(
@@ -68,7 +66,9 @@ exports.publishPackagesLocallyAndInstall = async ({
     })
   }
 
-  const packagesToInstall = _.intersection(packagesToPublish, localPackages)
+  const packagesToInstall = [packagesToPublish, localPackages].reduce((a, b) =>
+    a.filter(c => b.includes(c))
+  )
 
   await installPackages({
     packagesToInstall,

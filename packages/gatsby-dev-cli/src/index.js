@@ -2,9 +2,10 @@
 
 const Configstore = require(`configstore`)
 const pkg = require(`../package.json`)
-const _ = require(`lodash`)
-const path = require(`path`)
-const os = require(`os`)
+const { merge, isEmpty } = require(`lodash`)
+const { join, resolve } = require(`node:path`)
+const { homedir } = require(`node:os`)
+const { existsSync, readdirSync, readFileSync } = require(`fs-extra`)
 const watch = require(`./watch`)
 const { getVersionInfo } = require(`./utils/version`)
 const argv = require(`yargs`)
@@ -53,19 +54,17 @@ if (argv.version) {
 
 const conf = new Configstore(pkg.name)
 
-const fs = require(`fs-extra`)
-
 let pathToRepo = argv.setPathToRepo
 
 if (pathToRepo) {
   if (pathToRepo.includes(`~`)) {
-    pathToRepo = path.join(os.homedir(), pathToRepo.split(`~`).pop())
+    pathToRepo = join(homedir(), pathToRepo.split(`~`).pop())
   }
-  conf.set(`gatsby-location`, path.resolve(pathToRepo))
+  conf.set(`gatsby-location`, resolve(pathToRepo))
   process.exit()
 }
 
-const havePackageJsonFile = fs.existsSync(`package.json`)
+const havePackageJsonFile = existsSync(`package.json`)
 
 if (!havePackageJsonFile) {
   console.error(`Current folder must have a package.json file!`)
@@ -88,20 +87,17 @@ gatsby-dev --set-path-to-repo /path/to/my/cloned/version/gatsby
 
 // get list of packages from monorepo
 const packageNameToPath = new Map()
-const monoRepoPackages = fs
-  .readdirSync(path.join(gatsbyLocation, `packages`))
-  .map(dirName => {
+const monoRepoPackages = readdirSync(join(gatsbyLocation, `packages`)).map(
+  dirName => {
     try {
       const localPkg = JSON.parse(
-        fs.readFileSync(
-          path.join(gatsbyLocation, `packages`, dirName, `package.json`)
-        )
+        readFileSync(join(gatsbyLocation, `packages`, dirName, `package.json`))
       )
 
       if (localPkg?.name) {
         packageNameToPath.set(
           localPkg.name,
-          path.join(gatsbyLocation, `packages`, dirName)
+          join(gatsbyLocation, `packages`, dirName)
         )
         return localPkg.name
       }
@@ -109,21 +105,19 @@ const monoRepoPackages = fs
       // fallback to generic one
     }
 
-    packageNameToPath.set(
-      dirName,
-      path.join(gatsbyLocation, `packages`, dirName)
-    )
+    packageNameToPath.set(dirName, join(gatsbyLocation, `packages`, dirName))
     return dirName
-  })
-
-const localPkg = JSON.parse(fs.readFileSync(`package.json`))
-// intersect dependencies with monoRepoPackages to get list of packages that are used
-const localPackages = _.intersection(
-  monoRepoPackages,
-  Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))
+  }
 )
 
-if (!argv.packages && _.isEmpty(localPackages)) {
+const localPkg = JSON.parse(readFileSync(`package.json`))
+// intersect dependencies with monoRepoPackages to get list of packages that are used
+const localPackages = [
+  monoRepoPackages,
+  Object.keys(merge({}, localPkg.dependencies, localPkg.devDependencies)),
+].reduce((a, b) => a.filter(c => b.includes(c)))
+
+if (!argv.packages && isEmpty(localPackages)) {
   console.error(
     `
 You haven't got any gatsby dependencies into your current package.json

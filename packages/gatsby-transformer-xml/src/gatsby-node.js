@@ -1,5 +1,5 @@
 const parseXml = require(`xml-parser`)
-const _ = require(`lodash`)
+const { upperFirst, camelCase } = require(`lodash`)
 
 function shouldOnCreateNode({ node }) {
   // We only care about XML content.
@@ -31,12 +31,12 @@ async function onCreateNode({
       children: [],
       internal: {
         contentDigest: createContentDigest(obj),
-        type: _.upperFirst(_.camelCase(`${node.name} xml`)),
+        type: upperFirst(camelCase(`${node.name} xml`)),
       },
     }
   })
 
-  _.each(nodeArray, j => {
+  nodeArray.forEach(j => {
     createNode(j)
     createParentChildLink({ parent: node, child: j })
   })

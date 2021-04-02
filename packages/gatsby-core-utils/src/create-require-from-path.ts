@@ -1,5 +1,5 @@
-import Module from "module"
-import path from "path"
+import Module from "node:module"
+import { dirname } from "node:path"
 
 /**
  * We need to use private Module methods in this polyfill
@@ -15,12 +15,10 @@ const fallback = (filename: string): NodeRequire => {
   mod.filename = filename
   mod.paths = (
     Module as typeof Module & IModulePrivateMethods
-  )._nodeModulePaths(path.dirname(filename))
+  )._nodeModulePaths(dirname(filename))
   mod._compile(`module.exports = require;`, filename)
 
   return mod.exports
 }
 
-// Polyfill Node's `Module.createRequireFromPath` if not present (added in Node v10.12.0)
-export const createRequireFromPath =
-  Module.createRequire || Module.createRequireFromPath || fallback
+export const createRequireFromPath = Module.createRequire || fallback

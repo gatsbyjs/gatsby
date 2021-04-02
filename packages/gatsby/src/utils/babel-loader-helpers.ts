@@ -1,5 +1,5 @@
-import path from "path"
-import _ from "lodash"
+import { join } from "node:path"
+import merge from "lodash/merge"
 import Babel, {
   ConfigItem,
   PluginItem,
@@ -22,10 +22,7 @@ const loadCachedConfig = (): ILoadCachedConfigReturnType => {
     },
   }
   if (process.env.NODE_ENV !== `test`) {
-    pluginBabelConfig = require(path.join(
-      process.cwd(),
-      `./.cache/babelState.json`
-    ))
+    pluginBabelConfig = require(join(process.cwd(), `./.cache/babelState.json`))
   }
   return pluginBabelConfig
 }
@@ -231,8 +228,7 @@ export const mergeConfigItemOptions = ({
   type: CreateConfigItemOptions["type"]
   babel: typeof Babel
 }): Array<ConfigItem> => {
-  const index = _.findIndex(
-    items,
+  const index = items.findIndex(
     i => i.file?.resolved === itemToMerge.file?.resolved
   )
 
@@ -241,7 +237,7 @@ export const mergeConfigItemOptions = ({
     items[index] = babel.createConfigItem(
       [
         itemToMerge.file?.resolved,
-        _.merge({}, items[index].options, itemToMerge.options),
+        merge({}, items[index].options, itemToMerge.options),
       ],
       {
         type,

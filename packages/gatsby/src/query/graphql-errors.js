@@ -1,10 +1,10 @@
 // @flow
 
-const fs = require(`fs-extra`)
+const { readFileSync } = require(`fs-extra`)
 import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
 const { distance: levenshtein } = require(`fastest-levenshtein`)
-import _ from "lodash"
+import { camelCase, upperFirst } from "lodash"
 import report from "gatsby-cli/lib/reporter"
 const { locInGraphQlToLocInFile } = require(`./error-parser`)
 import { getCodeFrame } from "./graphql-errors-codeframe"
@@ -118,9 +118,7 @@ export function multipleRootQueriesError(
   const otherName = otherDef.name.value
   const field = def.selectionSet.selections[0].name.value
   const otherField = otherDef.selectionSet.selections[0].name.value
-  const unifiedName = `${_.camelCase(name)}And${_.upperFirst(
-    _.camelCase(otherName)
-  )}`
+  const unifiedName = `${camelCase(name)}And${upperFirst(camelCase(otherName))}`
 
   // colors are problematic for tests as we can different
   // results depending on platform, so we don't
@@ -231,7 +229,7 @@ export function unknownFragmentError({
 
   let text
   try {
-    text = fs.readFileSync(filePath, { encoding: `utf-8` })
+    text = readFileSync(filePath, { encoding: `utf-8` })
   } catch {
     text = definition.text
   }

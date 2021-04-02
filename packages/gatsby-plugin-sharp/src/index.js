@@ -3,9 +3,9 @@ const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
 const { isCI } = require(`gatsby-core-utils/ci`)
 
-const _ = require(`lodash`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
+const { memoize, sortBy, maxBy, minBy } = require(`lodash`)
+const { createReadStream, ensureDirSync, readFileSync } = require(`fs-extra`)
+const { join } = require(`node:path`)
 
 const { createArgsDigest } = require(`./process-file`)
 const { reportError } = require(`./report-error`)
@@ -29,7 +29,7 @@ const getImageSizeAsync = async file => {
   ) {
     return imageSizeCache.get(file.internal.contentDigest)
   }
-  const input = fs.createReadStream(file.absolutePath)
+  const input = createReadStream(file.absolutePath)
   const dimensions = await imageSize(input)
 
   if (!dimensions) {
@@ -50,7 +50,7 @@ const getImageSize = file => {
   ) {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
-    const dimensions = imageSize.sync(fs.readFileSync(file.absolutePath))
+    const dimensions = imageSize.sync(readFileSync(file.absolutePath))
 
     if (!dimensions) {
       reportError(
@@ -88,16 +88,16 @@ function prepareQueue({ file, args }) {
   const digestArgs = Object.assign(rest, duotone)
   const argsDigestShort = createArgsDigest(digestArgs)
   const imgSrc = `/${file.name}.${args.toFormat}`
-  const outputDir = path.join(
+  const outputDir = join(
     process.cwd(),
     `public`,
     `static`,
     file.internal.contentDigest
   )
-  const outputFilePath = path.join(argsDigestShort, imgSrc)
+  const outputFilePath = join(argsDigestShort, imgSrc)
 
   // make sure outputDir is created
-  fs.ensureDirSync(outputDir)
+  ensureDirSync(outputDir)
 
   const { width, height, aspectRatio } = calculateImageDimensionsAndAspectRatio(
     file,
@@ -184,7 +184,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
 
   return {
     src,
-    absolutePath: path.join(outputDir, relativePath),
+    absolutePath: join(outputDir, relativePath),
     width,
     height,
     aspectRatio,
@@ -217,7 +217,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     // create output results
     images.push({
       src,
-      absolutePath: path.join(outputDir, relativePath),
+      absolutePath: join(outputDir, relativePath),
       width,
       height,
       aspectRatio,
@@ -230,7 +230,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
     {
       name: IMAGE_PROCESSING_JOB_NAME,
       inputPaths: [file.absolutePath],
-      outputDir: path.join(
+      outputDir: join(
         process.cwd(),
         `public`,
         `static`,
@@ -266,7 +266,7 @@ async function generateBase64({ file, args = {}, reporter }) {
     if (!options.rotate) {
       pipeline.rotate()
     }
-    fs.createReadStream(file.absolutePath).pipe(pipeline)
+    createReadStream(file.absolutePath).pipe(pipeline)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err, reporter)
     return null
@@ -356,7 +356,7 @@ It is probably corrupt, so please try replacing it.  If it still fails, please o
 const generateCacheKey = ({ file, args }) =>
   `${file.internal.contentDigest}${JSON.stringify(args)}`
 
-const memoizedBase64 = _.memoize(generateBase64, generateCacheKey)
+const memoizedBase64 = memoize(generateBase64, generateCacheKey)
 
 const cachifiedProcess = async ({ cache, ...arg }, genKey, processFn) => {
   const cachedKey = genKey(arg)
@@ -399,7 +399,7 @@ async function stats({ file, reporter }) {
   let imgStats
   try {
     const pipeline = sharp({ failOn: pluginOptions.failOn })
-    fs.createReadStream(file.absolutePath).pipe(pipeline)
+    createReadStream(file.absolutePath).pipe(pipeline)
 
     imgStats = await pipeline.stats()
   } catch (err) {
@@ -424,7 +424,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   let metadata
   try {
     const pipeline = sharp({ failOn: pluginOptions.failOn })
-    fs.createReadStream(file.absolutePath).pipe(pipeline)
+    createReadStream(file.absolutePath).pipe(pipeline)
 
     metadata = await pipeline.metadata()
   } catch (err) {
@@ -493,7 +493,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
   // is available for small images. Also so we can link to
   // the original image.
   filteredSizes.push(fixedDimension === `maxWidth` ? width : height)
-  filteredSizes = _.sortBy(filteredSizes)
+  filteredSizes = sortBy(filteredSizes)
 
   // Queue sizes for processing.
   const dimensionAttr = fixedDimension === `maxWidth` ? `width` : `height`
@@ -569,8 +569,8 @@ async function fluid({ file, args = {}, reporter, cache }) {
   }
 
   // Construct src and srcSet strings.
-  const originalImg = _.maxBy(images, image => image.width).src
-  const fallbackSrc = _.minBy(images, image =>
+  const originalImg = maxBy(images, image => image.width).src
+  const fallbackSrc = minBy(images, image =>
     Math.abs(options[fixedDimension] - image[dimensionAttr])
   ).src
 
@@ -665,7 +665,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 
   // Sort images for prettiness.
-  const transforms = _.sortBy(filteredSizes).map(size => {
+  const transforms = sortBy(filteredSizes).map(size => {
     const arrrgs = createTransformObject(options)
     arrrgs[fixedDimension] = Math.round(size)
 

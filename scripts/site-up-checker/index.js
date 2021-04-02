@@ -1,7 +1,6 @@
 const request = require(`request-promise`)
 const Webhook = require(`webhook-discord`)
 const Discord = require(`discord.js`)
-const _ = require(`lodash`)
 
 const client = new Discord.Client()
 
@@ -12,7 +11,7 @@ const usersDMChannels = []
 client.on(`ready`, () => {
   console.log(`client ready`)
   client.users
-    .filter(u => _.includes(usersToAlert, u.id))
+    .filter(u => usersToAlert.includes(u.id))
     .forEach(userObject => {
       console.log(userObject)
       userObject.createDM().then(dmChannel => usersDMChannels.push(dmChannel))

@@ -1,5 +1,5 @@
 import slugify from "slugify"
-import _ from "lodash"
+import camelCase from "lodash/camelCase"
 import { lexicographicSortSchema } from "graphql"
 import type { GraphQLSchema } from "graphql"
 import { IDefinitionMeta } from "../../redux/types"
@@ -36,7 +36,7 @@ function guessIfUnnnamedQuery({
     replacement: ` `,
     lower: false,
   })
-  const pattern = _.camelCase(`${queryType}-${generatedQueryName}`)
+  const pattern = camelCase(`${queryType}-${generatedQueryName}`)
   return name.startsWith(pattern)
 }
 

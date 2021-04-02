@@ -1,5 +1,3 @@
-import _ from "lodash"
-
 import sampleSiteForExperiment from "../sample-site-for-experiment"
 import handleFlags from "../handle-flags"
 import { IFlag, satisfiesSemvers, fitnessEnum } from "../flags"

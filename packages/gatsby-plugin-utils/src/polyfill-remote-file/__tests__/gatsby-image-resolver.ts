@@ -1,5 +1,5 @@
-import path from "path"
-import url from "url"
+import { join } from "node:path"
+import { parse } from "node:url"
 import { ensureDir, remove } from "fs-extra"
 import importFrom from "import-from"
 import { fetchRemoteFile } from "gatsby-core-utils/fetch-remote-file"
@@ -46,7 +46,7 @@ const store = {
 } as unknown as Store
 
 describe(`gatsbyImageData`, () => {
-  const cacheDir = path.join(__dirname, `.cache`)
+  const cacheDir = join(__dirname, `.cache`)
 
   beforeAll(async () => {
     await ensureDir(cacheDir)
@@ -680,7 +680,7 @@ describe(`gatsbyImageData`, () => {
 
   it(`should generate dominant color placeholder by default`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
-      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+      join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
     const fixedResult = await gatsbyImageResolver(
       portraitSource,
@@ -698,7 +698,7 @@ describe(`gatsbyImageData`, () => {
 
   it(`should generate base64 placeholder`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
-      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+      join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
     const fixedResult = await gatsbyImageResolver(
       portraitSource,
@@ -726,7 +726,7 @@ describe(`gatsbyImageData`, () => {
 
   it(`should generate tracedSVG placeholder (fallback to dominant_color)`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
-      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+      join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
     const fixedResult = await gatsbyImageResolver(
       portraitSource,
@@ -779,11 +779,11 @@ describe(`gatsbyImageData`, () => {
       if (!input.httpHeaders || input.httpHeaders.Authorization !== authToken) {
         throw Error(`No headers found for url ${input.url}`)
       } else {
-        return path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+        return join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
       }
     })
 
-    const baseDomain = url.parse(portraitSource.url)?.hostname
+    const baseDomain = parse(portraitSource.url)?.hostname
 
     const store = {
       getState: (): { requestHeaders: Map<string, Record<string, string>> } => {
@@ -815,7 +815,7 @@ describe(`gatsbyImageData`, () => {
 
   it(`should call add image source urls to the redux store`, async () => {
     fetchRemoteFile.mockResolvedValueOnce(
-      path.join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
+      join(__dirname, `__fixtures__`, `dog-portrait.jpg`)
     )
     const actions = {
       addGatsbyImageSourceUrl: jest.fn(),

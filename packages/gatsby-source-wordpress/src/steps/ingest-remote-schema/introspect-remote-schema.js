@@ -1,6 +1,6 @@
 import chalk from "chalk"
-import * as diff from "diff"
-import { uniqBy } from "lodash"
+import { diffJson } from "diff"
+import uniqBy from "lodash/uniqBy"
 import store from "~/store"
 import { setPersistentCache, getPersistentCache } from "~/utils/cache"
 import fetchGraphql from "~/utils/fetch-graphql"
@@ -98,7 +98,7 @@ const introspectAndStoreRemoteSchema = async () => {
       }
 
       const typeDiff =
-        type && newType ? uniqBy(diff.diffJson(type, newType), `value`) : null
+        type && newType ? uniqBy(diffJson(type, newType), `value`) : null
 
       if (typeDiff?.length) {
         console.log(`\nFound changes to the ${type.name} type\n`)

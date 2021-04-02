@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { union, mergeWith, mapValues, flow } from "lodash"
 import { createWriteStream, existsSync } from "fs-extra"
 import { IMMUTABLE_CACHING_HEADER } from "./constants"
 
@@ -21,14 +21,14 @@ function headersPath(pathPrefix, path) {
 
 function defaultMerge(...headers) {
   function unionMerge(objValue, srcValue) {
-    if (_.isArray(objValue)) {
-      return _.union(objValue, srcValue)
+    if (Array.isArray(objValue)) {
+      return union(objValue, srcValue)
     } else {
       return undefined // opt into default merge behavior
     }
   }
 
-  return _.mergeWith({}, ...headers, unionMerge)
+  return mergeWith({}, ...headers, unionMerge)
 }
 
 function headersMerge(userHeaders, defaultHeaders) {
@@ -79,8 +79,8 @@ function transformLink(manifest, publicFolder, pathPrefix) {
 const mapUserLinkHeaders =
   ({ manifest, pathPrefix, publicFolder }) =>
   headers =>
-    _.mapValues(headers, headerList =>
-      _.map(headerList, transformLink(manifest, publicFolder, pathPrefix))
+    mapValues(headers, headerList =>
+      headerList.map(transformLink(manifest, publicFolder, pathPrefix))
     )
 
 const mapUserLinkAllPageHeaders =
@@ -92,8 +92,7 @@ const mapUserLinkAllPageHeaders =
 
     const { pages, manifest, publicFolder, pathPrefix } = pluginData
 
-    const headersList = _.map(
-      allPageHeaders,
+    const headersList = allPageHeaders.map(
       transformLink(manifest, publicFolder, pathPrefix)
     )
 
@@ -158,7 +157,7 @@ const applyCachingHeaders =
 const applyTransfromHeaders =
   ({ transformHeaders }) =>
   headers =>
-    _.mapValues(headers, transformHeaders)
+    mapValues(headers, transformHeaders)
 
 const sendHeadersViaIPC = async headers => {
   /**
@@ -206,7 +205,7 @@ const saveHeaders =
     ])
 
 export default function buildHeadersProgram(pluginData, pluginOptions) {
-  return _.flow(
+  return flow(
     mapUserLinkHeaders(pluginData),
     applySecurityHeaders(pluginOptions),
     applyCachingHeaders(pluginData, pluginOptions),

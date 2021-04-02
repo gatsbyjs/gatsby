@@ -7,8 +7,8 @@ import {
   ReducersMapObject,
   Store,
 } from "redux"
-import _ from "lodash"
-import telemetry from "gatsby-telemetry"
+import pick from "lodash/pick"
+import { trackCli } from "gatsby-telemetry"
 
 import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware, ThunkAction, ThunkDispatch } from "redux-thunk"
@@ -42,13 +42,13 @@ export const readState = (): IGatsbyState => {
     // runs gatsby the first time after upgrading.
     delete state[`jsonDataPaths`]
 
-    telemetry.trackCli(`CACHE_STATUS`, {
+    trackCli(`CACHE_STATUS`, {
       cacheStatus: `WARM`,
     })
 
     return state
   } catch (e) {
-    telemetry.trackCli(`CACHE_STATUS`, {
+    trackCli(`CACHE_STATUS`, {
       cacheStatus: `COLD`,
     })
 
@@ -132,7 +132,7 @@ export const savePartialStateToDisk = (
   transformState?: <T extends DeepPartial<IGatsbyState>>(state: T) => T
 ): void => {
   const state = store.getState()
-  const contents = _.pick(state, slices)
+  const contents = pick(state, slices)
   const savedContents = transformState ? transformState(contents) : contents
 
   return writeToCache(savedContents, slices, optionalPrefix)

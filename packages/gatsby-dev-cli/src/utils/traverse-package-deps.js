@@ -1,5 +1,4 @@
-const _ = require(`lodash`)
-const path = require(`path`)
+const { join } = require(`node:path`)
 
 /**
  * @typedef {Object} TraversePackagesDepsReturn
@@ -45,7 +44,7 @@ const traversePackagesDeps = ({
     try {
       const packageRoot = packageNameToPath.get(p)
       if (packageRoot) {
-        pkgJson = require(path.join(packageRoot, `package.json`))
+        pkgJson = require(join(packageRoot, `package.json`))
       } else {
         console.error(`"${p}" package doesn't exist in monorepo.`)
         // remove from seenPackages
@@ -59,17 +58,19 @@ const traversePackagesDeps = ({
       return
     }
 
-    const fromMonoRepo = _.intersection(
+    const fromMonoRepo = [
       Object.keys({ ...pkgJson.dependencies }),
-      monoRepoPackages
-    )
+      monoRepoPackages,
+    ].reduce((a, b) => a.filter(c => b.includes(c)))
 
     fromMonoRepo.forEach(pkgName => {
       depTree[pkgName] = (depTree[pkgName] || new Set()).add(p)
     })
 
     // only traverse not yet seen packages to avoid infinite loops
-    const newPackages = _.difference(fromMonoRepo, seenPackages)
+    const newPackages = [fromMonoRepo, seenPackages].reduce((a, b) =>
+      a.filter(c => !b.includes(c))
+    )
 
     if (newPackages.length) {
       newPackages.forEach(depFromMonorepo => {

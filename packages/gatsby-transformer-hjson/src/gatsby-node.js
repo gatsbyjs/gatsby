@@ -1,6 +1,6 @@
-const _ = require(`lodash`)
-const path = require(`path`)
-const HJSON = require(`hjson`)
+const { upperFirst, camelCase, isPlainObject } = require(`lodash`)
+const { basename } = require(`node:path`)
+const { parse } = require(`hjson`)
 
 function shouldOnCreateNode({ node }) {
   // We only care about HJSON content.
@@ -38,23 +38,23 @@ async function onCreateNode({
   }
 
   const content = await loadNodeContent(node)
-  const parsedContent = HJSON.parse(content)
+  const parsedContent = parse(content)
 
-  if (_.isArray(parsedContent)) {
+  if (Array.isArray(parsedContent)) {
     parsedContent.forEach((obj, i) => {
       transformObject(
         obj,
         obj.id ? obj.id : createNodeId(`${node.id} [${i}] >>> HJSON`),
-        _.upperFirst(_.camelCase(`${node.name} HJson`))
+        upperFirst(camelCase(`${node.name} HJson`))
       )
     })
-  } else if (_.isPlainObject(parsedContent)) {
+  } else if (isPlainObject(parsedContent)) {
     transformObject(
       parsedContent,
       parsedContent.id
         ? parsedContent.id
         : createNodeId(`${node.id} >>> HJSON`),
-      _.upperFirst(_.camelCase(`${path.basename(node.dir)} HJson`))
+      upperFirst(camelCase(`${basename(node.dir)} HJson`))
     )
   }
 }

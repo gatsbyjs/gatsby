@@ -1,5 +1,5 @@
-import _ from "lodash"
-import fs from "fs-extra"
+import debounce from "lodash/debounce"
+import { writeFile } from "fs-extra"
 import { joinPath, md5 } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { store, emitter } from "../redux"
@@ -60,13 +60,13 @@ export const writeRedirects = async (): Promise<void> => {
 
   lastHash = newHash
 
-  await fs.writeFile(
+  await writeFile(
     joinPath(program.directory, `.cache/redirects.json`),
     JSON.stringify(browserRedirects, null, 2)
   )
 }
 
-const debouncedWriteRedirects = _.debounce(() => {
+const debouncedWriteRedirects = debounce(() => {
   // Don't write redirects again until bootstrap has finished.
   if (bootstrapFinished) {
     writeRedirects()

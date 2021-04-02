@@ -1,4 +1,4 @@
-import _ from "lodash"
+import merge from "lodash/merge"
 
 import { IGatsbyState, ActionsUnion, IPlugin } from "../types"
 
@@ -48,8 +48,7 @@ export const babelrcReducer = (
           return
         }
 
-        const index = _.findIndex(
-          state.stages[stage].plugins,
+        const index = state.stages[stage].plugins.findIndex(
           (plugin: IPlugin) => plugin.name === action.payload.name
         )
         // If the plugin already exists, merge the options.
@@ -58,7 +57,7 @@ export const babelrcReducer = (
           const plugin = state.stages[stage].plugins[index]
           state.stages[stage].plugins[index] = {
             name: plugin.name,
-            options: _.merge(plugin.options, action.payload.options),
+            options: merge(plugin.options, action.payload.options),
           }
         } else {
           state.stages[stage].plugins = [
@@ -76,8 +75,7 @@ export const babelrcReducer = (
           return
         }
 
-        const index = _.findIndex(
-          state.stages[stage].presets,
+        const index = state.stages[stage].presets.findIndex(
           (plugin: IPlugin) => plugin.name === action.payload.name
         )
         // If the plugin already exists, merge the options.
@@ -86,7 +84,7 @@ export const babelrcReducer = (
           const plugin = state.stages[stage].presets[index]
           state.stages[stage].presets[index] = {
             name: plugin.name,
-            options: _.merge(plugin.options, action.payload.options),
+            options: merge(plugin.options, action.payload.options),
           }
         } else {
           state.stages[stage].presets = [

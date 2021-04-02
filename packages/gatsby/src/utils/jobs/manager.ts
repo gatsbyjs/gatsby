@@ -1,8 +1,8 @@
-import path from "path"
-import hasha from "hasha"
-import fs from "fs-extra"
+import { isAbsolute } from "node:path"
+import { fromFileSync as hashaFromFileSync } from "hasha"
+import { ensureDir, existsSync } from "fs-extra"
 import pDefer from "p-defer"
-import _ from "lodash"
+import isPlainObject from "lodash/isPlainObject"
 import { createContentDigest, slash, uuid } from "gatsby-core-utils"
 import reporter from "gatsby-cli/lib/reporter"
 import { IPhantomReporter } from "gatsby-cli"
@@ -43,7 +43,7 @@ const externalJobsMap: Map<
  * We want to use absolute paths to make sure they are on the filesystem
  */
 function convertPathsToAbsolute(filePath: string): string {
-  if (!path.isAbsolute(filePath)) {
+  if (!isAbsolute(filePath)) {
     throw new Error(`${filePath} should be an absolute path.`)
   }
 
@@ -53,7 +53,7 @@ function convertPathsToAbsolute(filePath: string): string {
  * Get contenthash of a file
  */
 function createFileHash(path: string): string {
-  return hasha.fromFileSync(path, { algorithm: `sha1` })
+  return hashaFromFileSync(path, { algorithm: `sha1` })
 }
 
 let hasActiveJobs: pDefer.DeferredPromise<void> | null = null
@@ -72,7 +72,7 @@ async function runLocalWorker<T>(
   workerFn: { ({ inputPaths, outputDir, args }: InternalJob): T },
   job: InternalJob
 ): Promise<T> {
-  await fs.ensureDir(job.outputDir)
+  await ensureDir(job.outputDir)
 
   return new Promise((resolve, reject) => {
     // execute worker nextTick
@@ -302,7 +302,7 @@ export async function enqueueJob(
   try {
     const result = await runJob(job)
     // this check is to keep our worker results consistent for cloud
-    if (result != null && !_.isPlainObject(result)) {
+    if (result != null && !isPlainObject(result)) {
       throw new Error(
         `Result of a worker should be an object, type of "${typeof result}" was given`
       )
@@ -370,7 +370,7 @@ export function isJobStale(
 ): boolean {
   const areInputPathsStale = job.inputPaths.some(inputPath => {
     // does the inputPath still exists?
-    if (!fs.existsSync(inputPath.path)) {
+    if (!existsSync(inputPath.path)) {
       return true
     }
 

@@ -1,6 +1,6 @@
-import _ from "lodash"
+import camelCase from "lodash/camelCase"
 import glob from "globby"
-import systemPath from "path"
+import { join, relative, resolve } from "node:path"
 import { sync as existsSync } from "fs-exists-cached"
 import {
   CreatePagesArgs,
@@ -97,7 +97,7 @@ Please pick a path to an existing directory.`,
       })
     }
 
-    const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
+    const pagesDirectory = resolve(process.cwd(), pagesPath)
     const pagesGlob = `**/*.{${exts}}`
 
     // Get initial list of files.
@@ -155,7 +155,7 @@ Please pick a path to an existing directory.`,
         node,
         absolutePath,
       }: ICreateAPageFromNodeArgs): Promise<string> {
-        const filePath = systemPath.relative(pluginOptions.path, absolutePath)
+        const filePath = relative(pluginOptions.path, absolutePath)
 
         // URL path for the component and node
         const { derivedPath } = await derivePath(
@@ -177,7 +177,7 @@ Please pick a path to an existing directory.`,
     }: ICreateAPageFromNodeArgs): Promise<
       undefined | { errors: number; path: string }
     > {
-      const filePath = systemPath.relative(pluginOptions.path, absolutePath)
+      const filePath = relative(pluginOptions.path, absolutePath)
 
       const contentFilePath = node.internal?.contentFilePath
       // URL path for the component and node
@@ -281,7 +281,7 @@ Please pick a path to an existing directory.`,
       removedPath => {
         // Delete the page for the now deleted component.
         try {
-          const componentPath = systemPath.join(pagesDirectory, removedPath)
+          const componentPath = join(pagesDirectory, removedPath)
           store.getState().pages.forEach(page => {
             if (page.component === componentPath) {
               deletePage({
@@ -352,7 +352,7 @@ export function setFieldsOnGraphQLNodeType(
   try {
     const extensions = store.getState().program.extensions
     const { trailingSlash = `always` } = store.getState().config
-    const collectionQuery = _.camelCase(`all ${type.name}`)
+    const collectionQuery = camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
         gatsbyPath: {
@@ -431,9 +431,7 @@ export async function onPluginInit(
 
     await Promise.all(
       files.map(async relativePath => {
-        const absolutePath = require.resolve(
-          systemPath.join(pagesPath, relativePath)
-        )
+        const absolutePath = require.resolve(join(pagesPath, relativePath))
         const queryString = await collectionExtractQueryString(
           absolutePath,
           reporter

@@ -1,7 +1,6 @@
 const visit = require(`unist-util-visit`)
-const cheerio = require(`cheerio`)
+const { load } = require(`cheerio`)
 const { oneLine } = require(`common-tags`)
-const _ = require(`lodash`)
 
 const needsSemicolon = str => !str.endsWith(`;`)
 
@@ -20,15 +19,15 @@ const convert = n =>
  * @param  {...number} args dimension to check
  * @returns {boolean}
  */
-const isValidDimensions = (...args) => args.every(n => _.isFinite(n))
+const isValidDimensions = (...args) => args.every(n => Number.isFinite(n))
 
 module.exports = async ({ markdownAST }, pluginOptions = {}) => {
   const defaults = {
     wrapperStyle: ``,
   }
-  const options = _.defaults({}, pluginOptions, defaults)
+  const options = Object.assign({}, defaults, pluginOptions)
   visit(markdownAST, [`html`, `jsx`], node => {
-    const $ = cheerio.load(node.value)
+    const $ = load(node.value)
     const iframe = $(`iframe, object`)
     if (iframe.length === 0) {
       return

@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { isCI } from "gatsby-core-utils"
 import { IFlag } from "./flags"
 import chalk from "chalk"
@@ -156,7 +155,7 @@ const handleFlags = (
     addIncluded(flag)
   })
 
-  enabledConfigFlags = _.uniq(enabledConfigFlags)
+  enabledConfigFlags = Array.from(new Set(enabledConfigFlags))
 
   // TODO remove flags that longer exist.
   //  w/ message of thanks

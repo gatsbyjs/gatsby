@@ -1,5 +1,5 @@
-const path = require(`path`)
-const _ = require(`lodash`)
+const { resolve, join } = require(`node:path`)
+const cloneDeep = require(`lodash/cloneDeep`)
 const { slash } = require(`gatsby-core-utils`)
 const worker = require(`./fixtures/node_modules/gatsby-plugin-test/gatsby-worker`)
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -7,7 +7,6 @@ const hasha = require(`hasha`)
 const fs = require(`fs-extra`)
 const pDefer = require(`p-defer`)
 const { uuid } = require(`gatsby-core-utils`)
-const timers = require(`timers`)
 const { MESSAGE_TYPES } = require(`../types`)
 
 let WorkerError
@@ -43,7 +42,7 @@ jest.mock(`hasha`, () => jest.requireActual(`hasha`))
 fs.ensureDir = jest.fn().mockResolvedValue(true)
 
 const nodeModulesPluginPath = slash(
-  path.resolve(__dirname, `fixtures`, `node_modules`, `gatsby-plugin-test`)
+  resolve(__dirname, `fixtures`, `node_modules`, `gatsby-plugin-test`)
 )
 
 const plugin = {
@@ -56,10 +55,10 @@ const createMockJob = (overrides = {}) => {
   return {
     name: `TEST_JOB`,
     inputPaths: [
-      path.resolve(__dirname, `fixtures/input1.jpg`),
-      path.resolve(__dirname, `fixtures/input2.jpg`),
+      resolve(__dirname, `fixtures/input1.jpg`),
+      resolve(__dirname, `fixtures/input2.jpg`),
     ],
-    outputDir: path.resolve(__dirname, `public/outputDir`),
+    outputDir: resolve(__dirname, `public/outputDir`),
     args: {
       param1: `param1`,
       param2: `param2`,
@@ -192,7 +191,7 @@ describe(`Jobs manager`, () => {
     it(`should only enqueue a job once`, async () => {
       const { enqueueJob } = jobManager
       const jobArgs = createInternalMockJob()
-      const jobArgs2 = _.cloneDeep(jobArgs)
+      const jobArgs2 = cloneDeep(jobArgs)
       const jobArgs3 = createInternalMockJob({
         args: {
           param2: `param2`,
@@ -353,7 +352,7 @@ describe(`Jobs manager`, () => {
       const { isJobStale } = jobManager
       const inputPaths = [
         {
-          path: path.resolve(__dirname, `fixtures/input1.jpg`),
+          path: resolve(__dirname, `fixtures/input1.jpg`),
           contentDigest: `1234`,
         },
       ]
@@ -367,7 +366,7 @@ describe(`Jobs manager`, () => {
       const { isJobStale } = jobManager
       const inputPaths = [
         {
-          path: path.resolve(__dirname, `fixtures/input1.jpg`),
+          path: resolve(__dirname, `fixtures/input1.jpg`),
           contentDigest: `1234`,
         },
       ]
@@ -509,7 +508,7 @@ describe(`Jobs manager`, () => {
       // Make sure that all the promises get resolved
       await new Promise(resolve => {
         // If this gets flaky, maybe a waitFor?
-        timers.setTimeout(resolve, 500)
+        setTimeout(resolve, 500)
       })
       jest.runOnlyPendingTimers()
 
@@ -520,9 +519,9 @@ describe(`Jobs manager`, () => {
     it(`should run the worker locally when it's a local plugin`, async () => {
       jest.useRealTimers()
       const localPluginPath = slash(
-        path.resolve(__dirname, `fixtures`, `gatsby-plugin-local`)
+        resolve(__dirname, `fixtures`, `gatsby-plugin-local`)
       )
-      const localPluginWorkerPath = path.join(localPluginPath, `gatsby-worker`)
+      const localPluginWorkerPath = join(localPluginPath, `gatsby-worker`)
       const worker = require(localPluginWorkerPath)
       const { enqueueJob, createInternalJob } = jobManager
       const jobArgs = createInternalJob(createMockJob(), {

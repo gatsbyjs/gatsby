@@ -1,6 +1,5 @@
-const _ = require(`lodash`)
-const babylon = require(`@babel/parser`)
-const traverse = require(`@babel/traverse`).default
+const { parse } = require(`@babel/parser`)
+const { default: traverse } = require(`@babel/traverse`)
 
 function shouldOnCreateNode({ node }) {
   // This only processes JavaScript files.
@@ -54,7 +53,7 @@ async function onCreateNode({
   let exportsData
   let data
   try {
-    const ast = babylon.parse(code, options)
+    const ast = parse(code, options)
 
     const parseData = function parseData(node) {
       let value
@@ -92,8 +91,7 @@ async function onCreateNode({
       ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
         const { declaration } = astPath.node
         if (declaration && declaration.type === `VariableDeclaration`) {
-          const dataVariableDeclarator = _.find(
-            declaration.declarations,
+          const dataVariableDeclarator = declaration.declarations.find(
             d => d.id.name === `data`
           )
 

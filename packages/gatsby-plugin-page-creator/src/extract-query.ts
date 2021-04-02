@@ -1,6 +1,7 @@
 import { hasFeature } from "gatsby-plugin-utils"
-import _ from "lodash"
-import path from "path"
+// eslint-disable-next-line you-dont-need-lodash-underscore/get
+import { get, camelCase } from "lodash"
+import { sep } from "node:path"
 import {
   convertUnionSyntaxToGraphql,
   extractField,
@@ -19,7 +20,7 @@ export function generateQueryFromString(
   const fields = extractUrlParamsForQuery(fileAbsolutePath)
 
   // In case queryOrModel is not capitalized
-  const connectionQuery = _.camelCase(`all ${queryOrModel}`)
+  const connectionQuery = camelCase(`all ${queryOrModel}`)
 
   const connectionArgs = nodeIds
     ? `(filter: { id: { in: ${JSON.stringify(nodeIds)} } })`
@@ -40,13 +41,13 @@ export function reverseLookupParams(
     id: (queryResults.nodes ? queryResults.nodes[0] : queryResults).id,
   }
 
-  absolutePath.split(path.sep).forEach(part => {
+  absolutePath.split(sep).forEach(part => {
     const extracted = extractFieldWithoutUnion(part)
 
     extracted.forEach(extract => {
       if (extract === ``) return
 
-      const results = _.get(
+      const results = get(
         queryResults.nodes ? queryResults.nodes[0] : queryResults,
         // replace __ with accessors '.'
         switchToPeriodDelimiters(extract)
@@ -61,7 +62,7 @@ export function reverseLookupParams(
 // Changes something like `/Users/site/src/pages/foo/{Model.id}/{Model.baz}` to `id,baz,internal{contentFilePath}`.
 // Also supports prefixes/postfixes, e.g. `/foo/prefix-{Model.id}` to `id`
 function extractUrlParamsForQuery(createdPath: string): string {
-  const parts = createdPath.split(path.sep)
+  const parts = createdPath.split(sep)
 
   // always add `id` to queries
   if (parts.some(s => s.includes(`.id}`)) === false) {

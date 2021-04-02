@@ -5,11 +5,11 @@
  * have global scope and can be used in any other query or fragment.
  */
 
-const _ = require(`lodash`)
+const kebabCase = require(`lodash/kebabCase`)
 
-const path = require(`path`)
+const { join, relative } = require(`node:path`)
 const normalize = require(`normalize-path`)
-const glob = require(`glob`)
+const { sync: globSync } = require(`glob`)
 
 const {
   validate,
@@ -122,13 +122,13 @@ export const parseQueries = async ({
   const modulesThatUseGatsby = await getGatsbyDependents()
 
   let files = [
-    path.join(base, `src`),
-    path.join(base, `.cache`, `fragments`),
-    ...additional.map(additional => path.join(additional, `src`)),
+    join(base, `src`),
+    join(base, `.cache`, `fragments`),
+    ...additional.map(additional => join(additional, `src`)),
     ...modulesThatUseGatsby.map(module => module.path),
   ].reduce((merged, folderPath) => {
     merged.push(
-      ...glob.sync(path.join(folderPath, pathRegex), {
+      ...globSync(join(folderPath, pathRegex), {
         nodir: true,
       })
     )
@@ -154,7 +154,7 @@ export const parseQueries = async ({
     Array.from(store.getState().components.keys(), c => normalize(c))
   )
 
-  files = _.uniq(files)
+  files = Array.from(new Set(files))
 
   const parser = new FileParser({ parentSpan: parentSpan })
 
@@ -450,9 +450,7 @@ const processDefinitions = ({
     if (query.isStaticQuery) {
       query.id =
         `sq--` +
-        _.kebabCase(
-          `${path.relative(store.getState().program.directory, filePath)}`
-        )
+        kebabCase(`${relative(store.getState().program.directory, filePath)}`)
     }
 
     if (

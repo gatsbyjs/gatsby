@@ -5,22 +5,22 @@ jest.mock(`glob`, () => {
   }
 })
 
-const _ = require(`lodash`)
+const orderBy = require(`lodash/orderBy`)
 const { parse, buildSchema } = require(`graphql`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const glob = require(`glob`)
+const { readFile } = require(`fs-extra`)
+const { resolve, join, sep } = require(`node:path`)
+const { sync: globSync } = require(`glob`)
 const {
   resolveThemes,
   parseQueries,
   processQueries,
 } = require(`../query-compiler`)
 
-const base = path.resolve(``)
+const base = resolve(``)
 
 describe(`Runner`, () => {
   beforeEach(() => {
-    glob.sync.mockClear()
+    globSync.mockClear()
   })
 
   describe(`expected directories`, () => {
@@ -36,8 +36,8 @@ describe(`Runner`, () => {
 
       expect(errors).toEqual([])
 
-      expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining(path.join(base, `src`)),
+      expect(globSync).toHaveBeenCalledWith(
+        expect.stringContaining(join(base, `src`)),
         expect.any(Object)
       )
     })
@@ -54,8 +54,8 @@ describe(`Runner`, () => {
 
       expect(errors).toEqual([])
 
-      expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining(path.join(base, `src`)),
+      expect(globSync).toHaveBeenCalledWith(
+        expect.stringContaining(join(base, `src`)),
         expect.any(Object)
       )
     })
@@ -65,7 +65,7 @@ describe(`Runner`, () => {
       const errors = []
       await parseQueries({
         base,
-        additional: [path.join(base, `node_modules`, theme)],
+        additional: [join(base, `node_modules`, theme)],
         addError: e => {
           errors.push(e)
         },
@@ -73,8 +73,8 @@ describe(`Runner`, () => {
 
       expect(errors).toEqual([])
 
-      expect(glob.sync).toHaveBeenCalledWith(
-        expect.stringContaining(path.join(base, `node_modules`, theme)),
+      expect(globSync).toHaveBeenCalledWith(
+        expect.stringContaining(join(base, `node_modules`, theme)),
         expect.any(Object)
       )
     })
@@ -94,7 +94,7 @@ describe(`resolveThemes`, () => {
       resolveThemes([
         {
           name: theme,
-          themeDir: path.join(base, `gatsby-theme-example`),
+          themeDir: join(base, `gatsby-theme-example`),
         },
       ])
     ).toEqual([expect.stringContaining(theme)])
@@ -107,18 +107,18 @@ describe(`resolveThemes`, () => {
       resolveThemes([
         {
           name: theme,
-          themeDir: path.join(base, theme),
+          themeDir: join(base, theme),
         },
       ])
-    ).toEqual([expect.stringContaining(theme.split(`/`).join(path.sep))])
+    ).toEqual([expect.stringContaining(theme.split(`/`).join(sep))])
   })
 })
 
 describe(`actual compiling`, () => {
   let schema
   beforeAll(async () => {
-    const ast = await fs.readFile(
-      path.join(__dirname, `./fixtures/query-compiler-schema.graphql`),
+    const ast = await readFile(
+      join(__dirname, `./fixtures/query-compiler-schema.graphql`),
       { encoding: `utf-8` }
     )
     schema = buildSchema(ast)
@@ -835,7 +835,7 @@ describe(`actual compiling`, () => {
         errors.push(e)
       },
     })
-    expect(_.orderBy(errors, e => e.id)).toMatchInlineSnapshot(`
+    expect(orderBy(errors, e => e.id)).toMatchInlineSnapshot(`
       Array [
         Object {
           "context": Object {

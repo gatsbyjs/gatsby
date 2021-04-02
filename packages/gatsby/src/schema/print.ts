@@ -1,4 +1,4 @@
-import * as fs from "fs-extra"
+import { existsSync, writeFile } from "fs-extra"
 import {
   EnumTypeComposer,
   InputTypeComposer,
@@ -26,7 +26,6 @@ import {
 } from "graphql"
 import { printBlockString } from "graphql/language/blockString"
 import { internalExtensionNames } from "./extensions"
-import _ from "lodash"
 import { internalTypeNames } from "./types/built-in-types"
 
 export interface ISchemaPrintConfig {
@@ -60,7 +59,7 @@ const descriptionLines = (
   maxLen: number
 ): Array<string> => {
   const rawLines = description.split(`\n`)
-  return _.flatMap(rawLines, line => {
+  return rawLines.flatMap(line => {
     if (line.length < maxLen + 5) {
       return line
     }
@@ -237,7 +236,8 @@ const printObjectType = (tc: ObjectTypeComposer<unknown>): string => {
   let fields = tc.getFields()
   if (tc.hasInterface(`Node`)) {
     extensions.dontInfer = null
-    fields = _.omit(fields, [`id`, `parent`, `children`, `internal`])
+    const { id, parent, children, internal, ...remainingFields } = fields
+    fields = remainingFields as ObjectTypeComposerFieldConfigMap<unknown, any>
   }
   const directives = tc.schemaComposer.getDirectives()
   const printedDirectives = printDirectives(extensions, directives)
@@ -335,7 +335,7 @@ export const printTypeDefinitions = ({
     return Promise.resolve()
   }
 
-  if (!rewrite && fs.existsSync(path)) {
+  if (!rewrite && existsSync(path)) {
     report.error(
       `Printing type definitions aborted. The file \`${path}\` already exists.`
     )
@@ -458,7 +458,7 @@ export const printTypeDefinitions = ({
   try {
     typeDefs.forEach(tc => printedTypeDefs.push(printType(tc)))
     report.info(`Writing GraphQL type definitions to ${path}`)
-    return fs.writeFile(path, printedTypeDefs.join(`\n\n`))
+    return writeFile(path, printedTypeDefs.join(`\n\n`))
   } catch (error) {
     report.error(`Failed writing type definitions to \`${path}\`.`, error)
     return Promise.resolve()

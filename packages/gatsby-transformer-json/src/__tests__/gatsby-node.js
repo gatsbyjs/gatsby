@@ -1,5 +1,4 @@
-const Promise = require(`bluebird`)
-const os = require(`os`)
+const { tmpdir } = require(`node:os`)
 
 const { onCreateNode } = require(`../gatsby-node`)
 
@@ -45,7 +44,7 @@ describe(`Process JSON nodes correctly`, () => {
   const baseFileNode = {
     ...baseNode,
     name: `nodeName`,
-    dir: `${os.tmpdir()}/foo/`,
+    dir: `${tmpdir()}/foo/`,
     internal: {
       ...baseNode.internal,
       type: `File`,

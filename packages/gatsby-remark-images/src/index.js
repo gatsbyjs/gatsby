@@ -7,13 +7,12 @@ const {
 } = require(`./constants`)
 const visitWithParents = require(`unist-util-visit-parents`)
 const getDefinitions = require(`mdast-util-definitions`)
-const path = require(`path`)
-const queryString = require(`query-string`)
+const { extname, join } = require(`node:path`)
+const { parseUrl } = require(`query-string`)
 const isRelativeUrl = require(`is-relative-url`)
-const _ = require(`lodash`)
+const { defaults, escape } = require(`lodash`)
 const { fluid, stats, traceSVG } = require(`gatsby-plugin-sharp`)
-const Promise = require(`bluebird`)
-const cheerio = require(`cheerio`)
+const { load } = require(`cheerio`)
 const { slash } = require(`gatsby-core-utils`)
 const chalk = require(`chalk`)
 
@@ -48,7 +47,7 @@ module.exports = (
   },
   pluginOptions
 ) => {
-  const options = _.defaults({}, pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
+  const options = defaults({}, pluginOptions, { pathPrefix }, DEFAULT_OPTIONS)
 
   const findParentLinks = ({ children }) =>
     children.some(
@@ -83,9 +82,9 @@ module.exports = (
   )
 
   const getImageInfo = uri => {
-    const { url, query } = queryString.parseUrl(uri)
+    const { url, query } = parseUrl(uri)
     return {
-      ext: path.extname(url).split(`.`).pop(),
+      ext: extname(url).split(`.`).pop(),
       url,
       query,
     }
@@ -128,7 +127,7 @@ module.exports = (
     const captionString = getCaptionString()
 
     if (!options.markdownCaptions || !compiler) {
-      return _.escape(captionString)
+      return escape(captionString)
     }
 
     return compiler.generateHTML(await compiler.parseString(captionString))
@@ -171,7 +170,7 @@ module.exports = (
     }
     let imagePath
     if (parentNode && parentNode.dir) {
-      imagePath = slash(path.join(parentNode.dir, getImageInfo(node.url).url))
+      imagePath = slash(join(parentNode.dir, getImageInfo(node.url).url))
     } else {
       return null
     }
@@ -185,7 +184,7 @@ module.exports = (
       })
     } else {
       // Legacy: no context, slower version of image query
-      imageNode = _.find(files, file => {
+      imageNode = files.find(file => {
         if (file && file.absolutePath) {
           return file.absolutePath === imagePath
         }
@@ -222,11 +221,11 @@ module.exports = (
 
     const alt = isEmptyAlt
       ? ``
-      : _.escape(
+      : escape(
           overWrites.alt ? overWrites.alt : node.alt ? node.alt : defaultAlt
         )
 
-    const title = node.title ? _.escape(node.title) : ``
+    const title = node.title ? escape(node.title) : ``
 
     const loading = options.loading
 
@@ -296,7 +295,7 @@ module.exports = (
         async ({ format, propertyName }) => {
           const formatFluidResult = await fluid({
             file: imageNode,
-            args: _.defaults(
+            args: defaults(
               { toFormat: format },
               // override options if it's an object, otherwise just pass through defaults
               options[propertyName] === true ? {} : options[propertyName],
@@ -482,7 +481,7 @@ module.exports = (
               return resolve()
             }
 
-            const $ = cheerio.load(node.value)
+            const $ = load(node.value)
             if ($(`img`).length === 0) {
               // No img tags
               return resolve()

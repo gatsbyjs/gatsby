@@ -1,4 +1,4 @@
-import * as path from "path"
+import { join, relative } from "node:path"
 import { RuleSetRule, WebpackPluginInstance } from "webpack"
 import { GraphQLSchema } from "graphql"
 import { Plugin as PostCSSPlugin } from "postcss"
@@ -216,10 +216,7 @@ export const createWebpackUtils = (
     // build-html and develop-html outputs to `.cache/page-ssr/routes/` (ROUTES_DIRECTORY)
     // so this config is setting it to output assets to `public` (outputPath)
     // while preserving "url" (publicPath)
-    fileLoaderCommonOptions.outputPath = path.relative(
-      ROUTES_DIRECTORY,
-      `public`
-    )
+    fileLoaderCommonOptions.outputPath = relative(ROUTES_DIRECTORY, `public`)
     fileLoaderCommonOptions.publicPath = publicPath || `/`
   }
 
@@ -396,12 +393,7 @@ export const createWebpackUtils = (
           stage,
           reactRuntime: config.jsxRuntime,
           reactImportSource: config.jsxImportSource,
-          cacheDirectory: path.join(
-            program.directory,
-            `.cache`,
-            `webpack`,
-            `babel`
-          ),
+          cacheDirectory: join(program.directory, `.cache`, `webpack`, `babel`),
           ...options,
           rootDir: program.directory,
         },
@@ -412,12 +404,7 @@ export const createWebpackUtils = (
     dependencies: options => {
       return {
         options: {
-          cacheDirectory: path.join(
-            program.directory,
-            `.cache`,
-            `webpack`,
-            `babel`
-          ),
+          cacheDirectory: join(program.directory, `.cache`, `webpack`, `babel`),
           ...options,
         },
         loader: require.resolve(`babel-loader`),
@@ -790,7 +777,7 @@ export const createWebpackUtils = (
     return new ReactRefreshWebpackPlugin({
       overlay: {
         sockIntegration: `whm`,
-        module: path.join(__dirname, `fast-refresh-module`),
+        module: join(__dirname, `fast-refresh-module`),
       },
       // this is a bit hacky - exclude expect string or regexp or array of those
       // so this is tricking ReactRefreshWebpackPlugin with providing regexp with

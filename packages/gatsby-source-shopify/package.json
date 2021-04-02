@@ -32,7 +32,6 @@
     "shift-left": "^0.1.5"
   },
   "devDependencies": {
-    "@types/node": "^14.18.36",
     "@types/node-fetch": "^2.6.2",
     "@types/sharp": "^0.31.1",
     "cross-env": "^7.0.3",

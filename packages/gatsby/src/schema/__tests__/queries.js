@@ -8,7 +8,7 @@ const { tranformDocument } = require(`../../query/transform-document`)
 jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
-const mockActualOrderBy = jest.requireActual(`lodash`).orderBy
+const mockActualOrderBy = jest.requireActual(`lodash/orderBy`)
 jest.mock(`lodash/orderBy`, () => jest.fn(mockActualOrderBy))
 const orderBySpy = require(`lodash/orderBy`)
 

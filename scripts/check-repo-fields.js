@@ -78,7 +78,7 @@ async function main() {
           )
         })
       } else {
-        if (pkg.toJSON() !== pkgJson) {
+        if (pkg.toJSON().value !== pkgJson.value) {
           warned = true
           console.error(
             `[${pkg.name}]` +

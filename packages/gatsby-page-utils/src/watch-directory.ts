@@ -1,5 +1,4 @@
-const Promise = require(`bluebird`)
-import * as chokidar from "chokidar"
+import { watch } from "chokidar"
 const { slash } = require(`gatsby-core-utils`)
 
 export async function watchDirectory(
@@ -9,8 +8,7 @@ export async function watchDirectory(
   onRemovedFile: (path: string) => void
 ): Promise<void> {
   return new Promise(resolve => {
-    chokidar
-      .watch(glob, { cwd: path })
+    watch(glob, { cwd: path })
       .on(`add`, path => {
         path = slash(path)
         onNewFile(path)
