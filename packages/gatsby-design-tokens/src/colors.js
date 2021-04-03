@@ -114,6 +114,18 @@ export const colors = preval`
       10: '#f5f5f5',
       5: '#fbfbfb',
     },
+    lime: {
+      90: '#3c4e09',
+      80: '#5c770d',
+      70: '#759711',
+      60: '#8eb814',
+      50: '#a7d818',
+      40: '#bce939',
+      30: '#ccee68',
+      20: '#dbf396',
+      10: '#ebf8c3',
+      5: '#fafdf1',
+    },
     white: '#ffffff',
     black: '#000000',
   }
