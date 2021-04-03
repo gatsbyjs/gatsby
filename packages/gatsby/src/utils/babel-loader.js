@@ -26,6 +26,7 @@ const { getBrowsersList } = require(`./browserslist`)
 
 const customOptionsCache = new Map()
 const configCache = new Map()
+const babelrcFileToCacheKey = new Map()
 
 module.exports = babelLoader.custom(babel => {
   return {
@@ -70,6 +71,18 @@ module.exports = babelLoader.custom(babel => {
         // partialConfig.files is a Set that accumulates used config files (absolute paths)
         partialConfig.files.forEach(configFilePath => {
           configCacheKey += `_${configFilePath}`
+        })
+
+        // after generating configCacheKey add link between babelrc files and cache keys that rely on it
+        // so we can invalidate memoized configs when used babelrc file changes
+        partialConfig.files.forEach(configFilePath => {
+          let cacheKeysToInvalidate = babelrcFileToCacheKey.get(configFilePath)
+          if (!cacheKeysToInvalidate) {
+            cacheKeysToInvalidate = new Set()
+            babelrcFileToCacheKey.set(configFilePath, cacheKeysToInvalidate)
+          }
+
+          cacheKeysToInvalidate.add(configCacheKey)
         })
       }
 
@@ -138,3 +151,22 @@ module.exports = babelLoader.custom(babel => {
     },
   }
 })
+
+module.exports.BabelConfigItemsCacheInvalidatorPlugin = class BabelConfigItemsCacheInvalidatorPlugin {
+  constructor() {
+    this.name = `BabelConfigItemsCacheInvalidatorPlugin`
+  }
+
+  apply(compiler) {
+    compiler.hooks.invalid.tap(this.name, function (file) {
+      const cacheKeysToInvalidate = babelrcFileToCacheKey.get(file)
+
+      if (cacheKeysToInvalidate) {
+        for (const cacheKey of cacheKeysToInvalidate) {
+          configCache.delete(cacheKey)
+        }
+        babelrcFileToCacheKey.delete(file)
+      }
+    })
+  }
+}
