@@ -2259,7 +2259,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-admin",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es"],
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "theme-ui"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2270,6 +2270,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-admin",
       excludePackageNames: ["cross-env"],
+      packageNames: ["theme-ui"],
     },
   ],
 }
