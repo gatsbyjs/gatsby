@@ -2237,7 +2237,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "express-graphql", "lodash", "lodash-es"],
+      excludePackageNames: ["cross-env", "express-graphql", "lodash", "lodash-es", "webpack-virtual-modules"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2248,7 +2248,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby",
       excludePackageNames: ["cross-env"],
-      packageNames: ["express-graphql"],
+      packageNames: ["express-graphql", "webpack-virtual-modules"],
     },
     {
       groupName: "minor and patch for gatsby-admin",
