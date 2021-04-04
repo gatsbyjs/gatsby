@@ -2016,7 +2016,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-source-filesystem",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es"],
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "msw"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2027,6 +2027,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-source-filesystem",
       excludePackageNames: ["cross-env"],
+      packageNames: ["msw"],
     },
     {
       groupName: "minor and patch for gatsby-telemetry",
