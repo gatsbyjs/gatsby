@@ -28,7 +28,7 @@ function onCreateWebpackConfig({ actions, loaders }) {
       rules: [
         {
           test: /\.tsx?$/,
-          use: jsLoader,
+          use: [jsLoader],
         },
       ],
     },
