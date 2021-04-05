@@ -8,7 +8,10 @@ let matchPaths = []
 const trimPathname = rawPathname => {
   const pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  const trimmedPathname = stripPrefix(pathname, decodeURIComponent(__BASE_PATH__))
+  const trimmedPathname = stripPrefix(
+    pathname,
+    decodeURIComponent(__BASE_PATH__)
+  )
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query
