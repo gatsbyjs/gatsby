@@ -52,7 +52,6 @@ function testGatsbyPluginImage(type, testPlaceholder) {
 describe(`gatsby-plugin-image`, () => {
   beforeEach(() => {
     cy.visit("/gatsby-plugin-image")
-    cy.viewport(1024, 768)
   })
 
   it(`constrained`, () =>

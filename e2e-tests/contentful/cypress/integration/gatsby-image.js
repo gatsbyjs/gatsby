@@ -40,7 +40,6 @@ function testGatsbyImage(type, testPlaceholder) {
 describe(`gatsby-image`, () => {
   beforeEach(() => {
     cy.visit("/gatsby-image")
-    cy.viewport(1024, 768)
   })
   it(`fluid`, () => testGatsbyImage(`fluid`, hasJPEGPlaceholder))
   it(`fixed`, () => testGatsbyImage(`fixed`, hasJPEGPlaceholder))
