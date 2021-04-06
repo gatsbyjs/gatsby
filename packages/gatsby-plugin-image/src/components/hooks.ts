@@ -86,7 +86,7 @@ export function getWrapperProps(
   let className = `gatsby-image-wrapper`
 
   // If the plugin isn't installed we need to apply the styles inline
-  if (!global.GATSBY___IMAGE) {
+  if (!GATSBY___IMAGE) {
     wrapperStyle.position = `relative`
     wrapperStyle.overflow = `hidden`
   }
@@ -95,7 +95,7 @@ export function getWrapperProps(
     wrapperStyle.width = width
     wrapperStyle.height = height
   } else if (layout === `constrained`) {
-    if (!global.GATSBY___IMAGE) {
+    if (!GATSBY___IMAGE) {
       wrapperStyle.display = `inline-block`
     }
     className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
@@ -267,7 +267,7 @@ export function getMainProps(
   }
 
   // fallback when it's not configured in gatsby-config.
-  if (!global.GATSBY___IMAGE) {
+  if (!GATSBY___IMAGE) {
     style = {
       height: `100%`,
       left: 0,
@@ -347,7 +347,7 @@ export function getPlaceholderProps(
   }
 
   // fallback when it's not configured in gatsby-config.
-  if (!global.GATSBY___IMAGE) {
+  if (!GATSBY___IMAGE) {
     result.style = {
       height: `100%`,
       left: 0,
