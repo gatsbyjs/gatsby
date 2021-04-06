@@ -92,13 +92,13 @@ In order to display this component within a Markdown file, you'll need to add a 
       },
     })
 
-    export const renderAst = (ast) => {
+    export const renderAst = ast => {
       return processor.stringify(ast)
     }
     ```
-    
+
     If you use TypeScript:
-    
+
     ```ts
     const processor = unified().use(rehypeReact, {
       createElement,
