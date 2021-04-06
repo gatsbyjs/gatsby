@@ -14,28 +14,9 @@ A Reference Guide isn't meant to be read from start to finish. Rather, it's mean
 
 > For more information on Reference Guides, check out the [Divio documentation system](https://documentation.divio.com/reference-guides/), which the Gatsby docs are based on.
 
-## Near-perfect example of a Reference Guide
+## A near-perfect example of a Reference Guide
 
-[Reference Guide: Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/)
-
-## Tips for writing a Reference Guide
-
-- Reference material should list text headings for each section of a guide, rather than "steps 1-5" like a tutorial.
-- include examples (esp showing how to import!)
-
-## What if I want to include multiple tasks and concepts in a reference guide?
-
-If you find yourself wanting to include multiple related topics in one article, consider splitting each into its own individual guide and referencing the other topics under sections called “Prerequisites” and/or "Other Resources" sections in the related guide articles.
-
-It’s more ideal to have many articles that cover a broad range of technical topics rather than smashing too many topics into one article.
-
-If you find yourself wanting to teach the reader how to accomplish a series of related tasks, you might want to write a tutorial. For short and super common how-to instructions for a single task, a recipe may work best.
-
-### Length of a reference guide
-
-Ideally, a guide's table of contents would fit above the fold on a desktop computer screen. This means the outline is easily consumable, so the person can quickly determine if that section of the docs contains the information they need to complete a task.
-
-The content of a reference guide should provide just enough information to be actionable. Linking out to other materials and guides outside of Gatsby's core concepts is recommended to limit the scope to critical and unique parts of Gatsby development.
+Want to see what a good Reference Guide looks like? Check out the [Reference Guide: Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/).
 
 ## Reference Guide template
 
@@ -43,6 +24,8 @@ The structure of each Reference Guide will be slightly different, but they shoul
 
 - **Introduction:** The first section. Provide some quick background information to help readers understand 1) what this feature is (at a high level) and 2) why it's useful.
 - **Additional Resources:** The last section. Links to other docs or content that might be useful next steps for readers. Also, any resources that helped you write the Reference Guide.
+
+The sections in between the Introduction and Additional Resources should be broken down in a way that best fits the feature you're describing.
 
 You can copy and paste the markdown text below and fill it in with your own information. See the docs contributions guide for information about [structuring accessible headings](/contributing/docs-contributions#headings).
 
@@ -53,48 +36,37 @@ title: Feature Name
 
 ## Introduction
 
-The introductory paragraph should be a 1-2 sentence explanation of the main
-topic and answer the following question:
-
-What is the purpose of this guide?
+In 2-3 sentences, give a high-level description of what this feature does,
+why it's important, and when it might be helpful for users.
 
 ## Feature Name
 
-- Code examples
-  - Include all necessary imports!
-  - Introduce the example with a sentence describing what the code does and which parts the reader should pay particular attention to.
-- List of parameter options, including:
-  - Description of what it does
-  - Data type
-  - Default value
+Break up this section into multiple headings, as needed.
 
-## The facts
+Here are some general tips for helpful things to include:
 
-What are the facts you know about the topic of this guide?
+- Diagrams or other visuals, to show key processes or architectures.
+- Code examples, to show how to use the feature in practice.
+  - Be sure to include all the necessary imports!
+  - Introduce the code snippet with a sentence describing what the code does
+    and which parts the reader should pay particular attention to.
+  - Code snippets should be as close to real-world examples as possible.
+    Avoid using "foobar" examples.
+- Lists of parameters, including:
+  - A description of what it does
+  - The expected data type
+  - The default value
+- Tips for troubleshooting.
+  - Are there any edge cases that readers should be aware of?
+  - What common error messages might readers encounter? How can they
+    resolve the problem?
 
-Keep paragraphs short (around 1-4 sentences). People are more likely to read
-several short paragraphs instead of a huge block of text.
+## Additional Resources
 
-## Example
-
-Readers will likely use doc articles as a quick reference to look up syntax.
-Articles should have a basic, real-world example that shows common use cases of its syntax.
-
-Provide at least one example of how the task gets accomplished. A code snippet is ideal, in this format:
-
-    code snippet
-
-//See this [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code) on how to format code examples
-
-## Gatsby advantages
-
-Does Gatsby address this topic uniquely in some way? If so, state the unique advantages Gatsby provides to the user.
-
-If there are disadvantages Gatsby has, state those here as well and any known bugs or issues the Gatsby community is working on.
-
-## Other resources
-
-If there are other resources you think readers would benefit from or next steps they might want to take after reading your article, add them at the bottom in an "Other Resources" section. You can also mention here any resources that helped you write the article (blog posts, outside tutorials, etc.).
+Include other resources you think readers would benefit from or next steps
+they might want to take after reading your Reference Guide. You can also
+mention any resources that helped you write the article (blog posts, outside
+tutorials, etc.).
 
 - Link to a blog post
 - Link to a YouTube tutorial
