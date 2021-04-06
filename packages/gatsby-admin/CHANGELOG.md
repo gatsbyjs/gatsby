@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.13.0-next.0...gatsby-admin@0.13.0-next.1) (2021-03-30)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.12.0-next.1...gatsby-admin@0.13.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.12.0-next.0...gatsby-admin@0.12.0-next.1) (2021-03-19)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.4...gatsby-admin@0.12.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.11.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.3...gatsby-admin@0.11.0-next.4) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+# [0.11.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.2...gatsby-admin@0.11.0-next.3) (2021-02-28)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.1...gatsby-admin@0.11.0-next.2) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.11.0-next.0...gatsby-admin@0.11.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.9...gatsby-admin@0.11.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.8...gatsby-admin@0.10.0-next.9) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.7...gatsby-admin@0.10.0-next.8) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.6...gatsby-admin@0.10.0-next.7) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.5...gatsby-admin@0.10.0-next.6) (2021-02-18)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.4...gatsby-admin@0.10.0-next.5) (2021-02-17)
+
+### Features
+
+- **gatsby:** upgrade webpack to version 5 ([#29145](https://github.com/gatsbyjs/gatsby/issues/29145)) ([a7a3991](https://github.com/gatsbyjs/gatsby/commit/a7a3991ca2ad450abaacdc168e9900dad995b584))
+
+# [0.10.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.3...gatsby-admin@0.10.0-next.4) (2021-02-15)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.2...gatsby-admin@0.10.0-next.3) (2021-02-12)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.1...gatsby-admin@0.10.0-next.2) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.10.0-next.0...gatsby-admin@0.10.0-next.1) (2021-02-08)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.9.0-next.1...gatsby-admin@0.10.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.9.0-next.0...gatsby-admin@0.9.0-next.1) (2021-02-04)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.8.0-next.1...gatsby-admin@0.9.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-admin
+
+# [0.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.8.0-next.0...gatsby-admin@0.8.0-next.1) (2021-01-26)
+
+**Note:** Version bump only for package gatsby-admin
+
 # [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-admin@0.7.0-next.1...gatsby-admin@0.8.0-next.0) (2021-01-18)
 
 ### Bug Fixes

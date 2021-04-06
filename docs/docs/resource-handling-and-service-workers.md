@@ -42,7 +42,7 @@ Another current problem is that we may start fetching the resources for a page b
 
 ### Resource loader (`loader.js`)
 
-There are two functions which perform a similar but distinct role in this file: `enqueue` and `getResourcesForPathname`. The former of these, `enqueue`, is designed to speed up navigation by prefetching resources for a page, before we need to display the page, and hence it doesn't return anything. On the other hand, `getResourcesForPathname` is used when we need the resources right now, usually in order to display the page, and therefore it fetches with higher priority than `enqueue` as well as returning them. Another difference between the two is that `getResourcesForPathname` returns the resources for the 404 page if the specified page doesn't exist.
+There are two functions which perform a similar but distinct role in this file: `enqueue` and `loadPage`. The former of these, `enqueue`, is designed to speed up navigation by prefetching resources for a page, before we need to display the page, and hence it doesn't return anything. On the other hand, `loadPage` is used when we need the resources right now, usually in order to display the page, and therefore it fetches with higher priority than `enqueue` as well as returning them. Another difference between the two is that `loadPage` returns the resources for the 404 page if the specified page doesn't exist.
 
 In the future, we could refactor these into a single function which takes parameters for whether or not to return the 404 page if the specified page is missing, and for whether to fetch with high or low priority.
 
@@ -67,7 +67,7 @@ Here is how the `EnsureResources` component handles each of these scenarios:
 The following are some invalid reasons why we might not have resources, i.e. things which we should never have to worry about:
 
 1. 404s from external links, without a custom 404 page - the page will load from the server in the first place, so Gatsby won't even kick in at this point
-2. 404s, with a custom 404 page - `getResourcesForPathname` will automatically return the resources for the custom 404 page
+2. 404s, with a custom 404 page - `loadPage` will automatically return the resources for the custom 404 page
 3. Visiting a previously-visited page via an external link, when the site's resources have since updated - previously-visited pages are cached, so they'll work even if the site has updated since. Unvisited pages will always load from the server and get the latest resources.
 
 ### Service worker update handling

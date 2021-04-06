@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.2.0-next.0...gatsby-source-filesystem@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.1.0-next.2...gatsby-source-filesystem@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.1.0-next.1...gatsby-source-filesystem@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.1.0-next.0...gatsby-source-filesystem@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.4...gatsby-source-filesystem@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.3...gatsby-source-filesystem@3.0.0-next.4) (2021-02-25)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
+# [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.2...gatsby-source-filesystem@3.0.0-next.3) (2021-02-22)
+
+### Features
+
+- **gatsby-core-utils:** Add file download functions ([#29531](https://github.com/gatsbyjs/gatsby/issues/29531)) ([1a9469d](https://github.com/gatsbyjs/gatsby/commit/1a9469d67a19007faebebfb8ce876970c5e0ffaf))
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.1...gatsby-source-filesystem@3.0.0-next.2) (2021-02-15)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@3.0.0-next.0...gatsby-source-filesystem@3.0.0-next.1) (2021-02-11)
+
+### Features
+
+- **gatsby:** Remove deleteNode with ID arg ([#29205](https://github.com/gatsbyjs/gatsby/issues/29205)) ([01b6123](https://github.com/gatsbyjs/gatsby/commit/01b6123d7b1fca922a4fe450651d39e6de4b96a1))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.12.0-next.0...gatsby-source-filesystem@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.11.0-next.0...gatsby-source-filesystem@2.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-source-filesystem
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-filesystem@2.10.0-next.1...gatsby-source-filesystem@2.11.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-source-filesystem

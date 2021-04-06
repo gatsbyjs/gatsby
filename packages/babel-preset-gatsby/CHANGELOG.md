@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.3.0-next.0...babel-preset-gatsby@1.3.0-next.1) (2021-03-30)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.2.0-next.0...babel-preset-gatsby@1.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.1.0-next.2...babel-preset-gatsby@1.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.1.0-next.1...babel-preset-gatsby@1.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.1.0-next.0...babel-preset-gatsby@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.4...babel-preset-gatsby@1.1.0-next.0) (2021-02-26)
+
+### Features
+
+- **babel-preset-gatsby:** allow setting importSource on preset-react ([#29260](https://github.com/gatsbyjs/gatsby/issues/29260)) ([f72ff77](https://github.com/gatsbyjs/gatsby/commit/f72ff7747afb1a71d53ba9258bd9a8838c0b062f))
+
+# [1.0.0-next.4](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.3...babel-preset-gatsby@1.0.0-next.4) (2021-02-25)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.2...babel-preset-gatsby@1.0.0-next.3) (2021-02-22)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.1...babel-preset-gatsby@1.0.0-next.2) (2021-02-11)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [1.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@1.0.0-next.0...babel-preset-gatsby@1.0.0-next.1) (2021-02-08)
+
+### Bug Fixes
+
+- **babel-preset-gatsby:** remove spread operator from node builds ([#29346](https://github.com/gatsbyjs/gatsby/issues/29346)) ([d163691](https://github.com/gatsbyjs/gatsby/commit/d16369170b0e56bbc33f680de2bf9ed0650d3702))
+
+# [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.13.0-next.0...babel-preset-gatsby@1.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
+# [0.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.12.0-next.0...babel-preset-gatsby@0.13.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package babel-preset-gatsby
+
 # [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/babel-preset-gatsby@0.11.0-next.0...babel-preset-gatsby@0.12.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package babel-preset-gatsby

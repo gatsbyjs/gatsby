@@ -39,8 +39,8 @@ describe(`gatsby-node`, () => {
   }
   const createNodeId = jest.fn(value => value)
   let currentNodeMap
-  let getNodes = () => Array.from(currentNodeMap.values())
-  let getNode = id => currentNodeMap.get(id)
+  const getNodes = () => Array.from(currentNodeMap.values())
+  const getNode = id => currentNodeMap.get(id)
 
   const getFieldValue = (value, locale, defaultLocale) =>
     value[locale] ?? value[defaultLocale]
@@ -256,7 +256,7 @@ describe(`gatsby-node`, () => {
       // don't allow mutations (this isn't traversing so only top level is frozen)
       currentNodeMap.set(node.id, Object.freeze(node))
     })
-    actions.deleteNode = ({ node }) => {
+    actions.deleteNode = node => {
       currentNodeMap.delete(node.id)
     }
     actions.touchNode = jest.fn()
@@ -545,7 +545,7 @@ describe(`gatsby-node`, () => {
       pluginOptions
     )
 
-    let authorIds = []
+    const authorIds = []
     // check if blog post exists
     removedBlogEntryIds.forEach(entryId => {
       const blogEntry = getNode(entryId)
@@ -693,7 +693,7 @@ describe(`gatsby-node`, () => {
     const initNodes = getNodes()
 
     const homeNodes = initNodes.filter(
-      ({ contentful_id }) => contentful_id === `6KpLS2NZyB3KAvDzWf4Ukh`
+      ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
     homeNodes.forEach(homeNode => {
       expect(homeNode.content.references___NODE).toStrictEqual([

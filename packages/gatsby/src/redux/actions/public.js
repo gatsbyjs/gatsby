@@ -1,5 +1,4 @@
 // @flow
-const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
@@ -68,6 +67,15 @@ const findChildren = initialChildren => {
     }
   }
   return children
+}
+
+const displayedWarnings = new Set()
+const warnOnce = (message, key) => {
+  const messageId = key ?? message
+  if (!displayedWarnings.has(messageId)) {
+    displayedWarnings.add(messageId)
+    report.warn(message)
+  }
 }
 
 import type { Plugin } from "./types"
@@ -423,51 +431,57 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 }
 
+const deleteNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
+ * @param {object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * deleteNode({node: node})
+ * deleteNode(node)
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (node: any, plugin?: Plugin) => {
   let id
 
-  // Check if using old method signature. Warn about incorrect usage but get
-  // node from nodeID anyway.
-  if (typeof options === `string`) {
+  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
+  if (node && node.node) {
     let msg =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }).`
-    if (args && args.name) {
-      // `plugin` used to be the third argument
-      plugin = args
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node)`
+
+    if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
-    report.warn(msg)
+    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
-    id = options
+    id = node.node.id
   } else {
-    id = options && options.node && options.node.id
+    id = node && node.id
   }
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const node = getNode(id)
+  const internalNode = getNode(id)
   if (plugin) {
     const pluginName = plugin.name
 
-    if (node && typeOwners[node.internal.type] !== pluginName)
+    if (
+      internalNode &&
+      typeOwners[internalNode.internal.type] &&
+      typeOwners[internalNode.internal.type] !== pluginName
+    )
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
-          The node type "${node.internal.type}" is owned by "${
-        typeOwners[node.internal.type]
+          The node type "${internalNode.internal.type}" is owned by "${
+        typeOwners[internalNode.internal.type]
       }".
 
           The node object passed to "deleteNode":
 
-          ${JSON.stringify(node, null, 4)}
+          ${JSON.stringify(internalNode, null, 4)}
 
           The plugin deleting the node:
 
@@ -483,12 +497,13 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
   }
 
-  const deleteAction = createDeleteAction(node)
+  const deleteAction = createDeleteAction(internalNode)
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node && findChildren(node.children).map(getNode).map(createDeleteAction)
+    internalNode &&
+    findChildren(internalNode.children).map(getNode).map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
@@ -497,43 +512,17 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was suppressed in documentation pages.
-/**
- * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
- */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  let msg =
-    `The "deleteNodes" action is now deprecated and will be removed in ` +
-    `Gatsby v3. Please use "deleteNode" instead.`
-  if (plugin && plugin.name) {
-    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
+// We add a counter to node.internal for fast comparisons/intersections
+// of various node slices. The counter must increase even across builds.
+function getNextNodeCounter() {
+  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
+  if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
+    throw new Error(
+      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
+    )
   }
-  report.warn(msg)
-
-  // Also delete any nodes transformed from these.
-  const descendantNodes = _.flatten(
-    nodes.map(n => findChildren(getNode(n).children))
-  )
-
-  const nodeIds = [...nodes, ...descendantNodes]
-
-  const deleteNodesAction = {
-    type: `DELETE_NODES`,
-    plugin,
-    // Payload contains node IDs but inference-metadata requires full node instances
-    payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
-  }
-  return deleteNodesAction
+  return lastNodeCounter + 1
 }
-
-// We add a counter to internal to make sure we maintain insertion order for
-// backends that don't do that out of the box
-let NODE_COUNTER = 0
 
 const typeOwners = {}
 
@@ -633,9 +622,6 @@ const createNode = (
     node.internal = {}
   }
 
-  NODE_COUNTER++
-  node.internal.counter = NODE_COUNTER
-
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -665,7 +651,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, nodeSchema)
+  const result = nodeSchema.validate(node)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
@@ -793,6 +779,8 @@ const createNode = (
         .map(createDeleteAction)
     }
 
+    node.internal.counter = getNextNodeCounter()
+
     updateNodeAction = {
       ...actionOptions,
       type: `CREATE_NODE`,
@@ -830,36 +818,46 @@ actions.createNode = (...args) => dispatch => {
   })
 }
 
+const touchNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
+ * @param {Object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * touchNode({ nodeId: `a-node-id` })
+ * touchNode(node)
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
-  let nodeId = _.get(options, `nodeId`)
-
-  // Check if using old method signature. Warn about incorrect usage
-  if (typeof options === `string`) {
-    console.warn(
-      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
-    )
+actions.touchNode = (node: any, plugin?: Plugin) => {
+  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
+  if (node && node.nodeId) {
+    let msg =
+      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
+      `the node directly to the function: touchNode(node)`
 
     if (plugin && plugin.name) {
-      console.log(`"touchNode" was called by ${plugin.name}`)
+      msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    nodeId = options
+    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      touchNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
+
+    node = getNode(node.nodeId)
   }
 
-  const node = getNode(nodeId)
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
+  }
+
+  const nodeId = node?.id
+
+  if (!nodeId) {
+    // if we don't have a node id, we don't want to dispatch this action
+    return []
   }
 
   return {
@@ -871,8 +869,6 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
 
 type CreateNodeInput = {
   node: Object,
-  fieldName?: string,
-  fieldValue?: string,
   name?: string,
   value: any,
 }
@@ -885,8 +881,6 @@ type CreateNodeInput = {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
  * @param {any} $0.value the value for the field
  * @example
@@ -899,26 +893,10 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  { node, name, value }: CreateNodeInput,
   plugin: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  if (fieldName) {
-    console.warn(
-      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
-    )
-    if (!name) {
-      name = fieldName
-    }
-  }
-  if (fieldValue) {
-    console.warn(
-      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
-    )
-    if (!value) {
-      value = fieldValue
-    }
-  }
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -998,6 +976,18 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -1015,6 +1005,18 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -1135,6 +1137,8 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Create a "job". This is a long-running process that is generally
  * started as a side-effect to a GraphQL query.
  * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
@@ -1143,10 +1147,18 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1222,15 +1234,25 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
 actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `SET_JOB`,
     plugin,
@@ -1239,15 +1261,25 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * endJob({ id: `write file id: 123` })
  */
 actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `END_JOB`,
     plugin,
@@ -1299,6 +1331,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
  * @example
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
@@ -1314,6 +1347,7 @@ actions.createRedirect = ({
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
+  ignoreCase = true,
   ...rest
 }) => {
   let pathPrefix = ``
@@ -1326,6 +1360,7 @@ actions.createRedirect = ({
     payload: {
       fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
+      ignoreCase,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
@@ -1361,33 +1396,6 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
-  }
-}
-
-/**
- * Set page data in the store, saving the pages content data and context.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- * @param {string} $0.resultHash pages content hash.
- */
-actions.setPageData = (pageData: PageData) => {
-  return {
-    type: `SET_PAGE_DATA`,
-    payload: pageData,
-  }
-}
-
-/**
- * Remove page data from the store.
- *
- * @param {Object} $0
- * @param {string} $0.id the path to the page.
- */
-actions.removePageData = (id: PageDataRemove) => {
-  return {
-    type: `REMOVE_PAGE_DATA`,
-    payload: id,
   }
 }
 

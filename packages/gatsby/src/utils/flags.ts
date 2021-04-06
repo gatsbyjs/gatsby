@@ -157,16 +157,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `FAST_REFRESH`,
-    env: `GATSBY_FAST_REFRESH`,
-    command: `develop`,
-    telemetryId: `FastRefresh`,
-    experimental: false,
-    description: `Use React Fast Refresh instead of the legacy react-hot-loader for instantaneous feedback in your development server. Recommended for versions of React >= 17.0.`,
-    umbrellaIssue: `https://gatsby.dev/fast-refresh-feedback`,
-    testFitness: (): fitnessEnum => true,
-  },
-  {
     name: `PARALLEL_SOURCING`,
     env: `GATSBY_EXPERIMENTAL_PARALLEL_SOURCING`,
     command: `all`,

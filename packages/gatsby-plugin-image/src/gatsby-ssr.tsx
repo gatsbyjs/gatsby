@@ -17,6 +17,10 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     <style
       key="gatsby-image-style"
       dangerouslySetInnerHTML={generateHtml(cssNanoMacro`
+  .gatsby-image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
   .gatsby-image-wrapper img {
     all: inherit;
     bottom: 0;
@@ -36,6 +40,9 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
     transform: translateZ(0px);
     transition: opacity 250ms linear;
     will-change: opacity;
+  }
+  .gatsby-image-wrapper-constrained {
+    display: inline-block;
   }
     `)}
     />,
@@ -83,7 +90,6 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
         parentElement = parentElement.parentNode;
       }
       const placeholder = imageWrapper.querySelector("[data-placeholder-image]");
-
 
       const img = new Image();
       img.src = target.currentSrc;

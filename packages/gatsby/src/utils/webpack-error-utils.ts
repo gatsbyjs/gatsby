@@ -1,7 +1,7 @@
-import reporter from "gatsby-cli/lib/reporter"
-import { Stats } from "webpack"
-import { IMatch } from "../types"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { WebpackError, Module, NormalModule } from "webpack"
 import { Stage as StageEnum } from "../commands/types"
+import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 
 const stageCodeToReadableLabel: Record<StageEnum, string> = {
   [StageEnum.BuildJavascript]: `Generating JavaScript bundles`,
@@ -10,11 +10,35 @@ const stageCodeToReadableLabel: Record<StageEnum, string> = {
   [StageEnum.Develop]: `Generating development JavaScript bundle`,
 }
 
+interface IFileLocation {
+  line: number
+  column: number
+}
+
+interface IWebpackError {
+  name: string
+  message: string
+  file?: string
+  error?: {
+    message: string
+    loc?: {
+      start: IFileLocation
+      end: IFileLocation
+    }
+  }
+  module: Module
+  loc?: {
+    start: IFileLocation
+    end: IFileLocation
+  }
+}
+
 interface ITransformedWebpackError {
   id: string
-  filePath?: string
+  filePath: string
   location?: {
-    start: string
+    start: IFileLocation
+    end: IFileLocation
   }
   context: {
     stage: StageEnum
@@ -26,38 +50,80 @@ interface ITransformedWebpackError {
 
 const transformWebpackError = (
   stage: StageEnum,
-  webpackError: any
+  webpackError: WebpackError
 ): ITransformedWebpackError => {
-  const handlers = [
-    {
-      regex: /Can't resolve '(.*?)' in '(.*?)'/m,
-      cb: (match): IMatch => {
-        return {
-          id: `98124`,
-          context: {
-            sourceMessage: match[0],
-            packageName: match[1],
-          },
-        }
-      },
-    },
-  ]
+  const castedWebpackError = (webpackError as unknown) as IWebpackError
 
-  const webpackMessage = webpackError?.error?.message || webpackError?.message
+  let location
+  if (castedWebpackError.loc && castedWebpackError.loc.start) {
+    location = {
+      start: castedWebpackError.loc.start,
+      end: castedWebpackError.loc.end,
+    }
+  }
 
-  const shared = {
-    filePath: webpackError?.module?.resource,
-    location:
-      webpackError?.module?.resource && webpackError?.error?.loc
-        ? {
-            start: webpackError.error.loc,
-          }
-        : undefined,
-    context: {
-      stage,
-      stageLabel: stageCodeToReadableLabel[stage],
-      sourceMessage: webpackMessage,
-    },
+  if (!location && castedWebpackError.error?.loc) {
+    if (castedWebpackError.error.loc.start) {
+      location = castedWebpackError.error.loc
+    } else {
+      location = {
+        start: castedWebpackError.error.loc,
+      }
+    }
+  }
+
+  // try to get location out of stacktrace
+  if (!location) {
+    const matches = castedWebpackError.message.match(/\((\d+):(\d+)\)/)
+    if (matches && matches[1] && matches[2]) {
+      location = {
+        start: {
+          line: Number(matches[1]),
+          column: Number(matches[2]),
+        },
+      }
+    }
+  }
+
+  let id = `98123`
+  const context: ITransformedWebpackError["context"] = {
+    stage,
+    stageLabel: stageCodeToReadableLabel[stage],
+    // TODO use formatWebpackMessages like in warnings
+    sourceMessage:
+      castedWebpackError.error?.message ?? castedWebpackError.message,
+  }
+
+  // When a module cannot be found we can short circuit
+  if (castedWebpackError.name === `ModuleNotFoundError`) {
+    const matches =
+      castedWebpackError.error?.message.match(
+        /Can't resolve '(.*?)' in '(.*?)'/m
+      ) ?? []
+
+    id = `98124`
+    context.packageName = matches?.[1]
+    context.sourceMessage = matches?.[0]
+
+    // get Breaking change message out of error
+    // it shows extra information for things that changed with webpack
+    const BreakingChangeRegex = /BREAKING CHANGE[\D\n\d]+$/
+    if (BreakingChangeRegex.test(castedWebpackError.message)) {
+      const breakingMatch = castedWebpackError.message.match(
+        BreakingChangeRegex
+      )
+
+      context.deprecationReason = breakingMatch?.[0]
+    }
+  }
+
+  return {
+    id,
+    filePath:
+      (castedWebpackError?.module as NormalModule)?.resource ??
+      castedWebpackError.file,
+    location,
+    context,
     // We use original error to display stack trace for the most part.
     // In case of webpack error stack will include internals of webpack
     // or one of loaders (for example babel-loader) and doesn't provide
@@ -65,42 +131,11 @@ const transformWebpackError = (
 
     // error: webpackError?.error || webpackError,
   }
-
-  let structured: ITransformedWebpackError | undefined
-
-  for (const { regex, cb } of handlers) {
-    const matched = webpackMessage?.match(regex)
-    if (matched) {
-      const match = cb(matched)
-
-      structured = {
-        id: match.id,
-        ...shared,
-        context: {
-          ...shared.context,
-          packageName: match.context.packageName,
-          sourceMessage: match.context.sourceMessage,
-        },
-      }
-
-      break
-    }
-  }
-
-  // If we haven't found any known error
-  if (!structured) {
-    return {
-      id: `98123`,
-      ...shared,
-    }
-  }
-
-  return structured
 }
 
 export const structureWebpackErrors = (
   stage: StageEnum,
-  webpackError: any
+  webpackError: WebpackError | Array<WebpackError>
 ): Array<ITransformedWebpackError> | ITransformedWebpackError => {
   if (Array.isArray(webpackError)) {
     return webpackError.map(e => transformWebpackError(stage, e))
@@ -109,13 +144,14 @@ export const structureWebpackErrors = (
   return transformWebpackError(stage, webpackError)
 }
 
-export const reportWebpackWarnings = (stats: Stats): void => {
-  stats.compilation.warnings.forEach(webpackWarning => {
-    if (webpackWarning.warning) {
-      // grab inner Exception if it exists
-      reporter.warn(webpackWarning.warning.toString())
-    } else {
-      reporter.warn(webpackWarning.message)
-    }
-  })
+export const reportWebpackWarnings = (
+  warnings: Array<WebpackError>,
+  reporter: Reporter
+): void => {
+  const warningMessages = warnings.map(warning => warning.message)
+
+  formatWebpackMessages({
+    errors: [],
+    warnings: warningMessages,
+  }).warnings.forEach(warning => reporter.warn(warning))
 }

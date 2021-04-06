@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 import { IGatsbyImageData, ISharpGatsbyImageArgs } from "gatsby-plugin-image"
 import { GatsbyCache, Node } from "gatsby"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { Reporter } from "gatsby/reporter"
 import { rgbToHex, calculateImageSizes, getSrcSet, getSizes } from "./utils"
 import { traceSVG, getImageSizeAsync, base64, batchQueueImageResizing } from "."
 import sharp from "./safe-sharp"
-import { createTransformObject } from "./plugin-options"
+import { createTransformObject, mergeDefaults } from "./plugin-options"
 import { reportError } from "./report-error"
 
 const DEFAULT_BLURRED_IMAGE_WIDTH = 20
@@ -13,6 +13,7 @@ const DEFAULT_BLURRED_IMAGE_WIDTH = 20
 const DEFAULT_BREAKPOINTS = [750, 1080, 1366, 1920]
 
 type ImageFormat = "jpg" | "png" | "webp" | "avif" | "" | "auto"
+
 export type FileNode = Node & {
   absolutePath?: string
   extension: string
@@ -31,7 +32,7 @@ const metadataCache = new Map<string, IImageMetadata>()
 export async function getImageMetadata(
   file: FileNode,
   getDominantColor?: boolean
-): Promise<IImageMetadata | undefined> {
+): Promise<IImageMetadata> {
   if (!getDominantColor) {
     // If we don't need the dominant color we can use the cheaper size function
     const { width, height, type } = await getImageSizeAsync(file)
@@ -57,6 +58,7 @@ export async function getImageMetadata(
     metadataCache.set(file.internal.contentDigest, metadata)
   } catch (err) {
     reportError(`Failed to process image ${file.absolutePath}`, err)
+    return {}
   }
 
   return metadata
@@ -91,12 +93,15 @@ export async function generateImageData({
   reporter,
   cache,
 }: IImageDataArgs): Promise<IGatsbyImageData | undefined> {
+  args = mergeDefaults(args)
+
   const {
     layout = `constrained`,
     placeholder = `dominantColor`,
     tracedSVGOptions = {},
     transformOptions = {},
     quality,
+    backgroundColor,
   } = args
 
   args.formats = args.formats || [`auto`, `webp`]
@@ -110,7 +115,14 @@ export async function generateImageData({
   const {
     fit = `cover`,
     cropFocus = sharp.strategy.attention,
+    duotone,
   } = transformOptions
+
+  if (duotone && (!duotone.highlight || !duotone.shadow)) {
+    reporter.warn(
+      `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+    )
+  }
 
   const metadata = await getImageMetadata(file, placeholder === `dominantColor`)
 
@@ -118,7 +130,7 @@ export async function generateImageData({
     reporter.warn(
       `Specifying fullWidth images will ignore the width and height arguments, you may want a constrained image instead. Otherwise, use the breakpoints argument.`
     )
-    args.width = metadata.width
+    args.width = metadata?.width
     args.height = undefined
   }
 
@@ -187,15 +199,19 @@ export async function generateImageData({
     reporter,
   })
 
+  const sharedOptions = {
+    quality,
+    ...transformOptions,
+    fit,
+    cropFocus,
+    background: backgroundColor,
+  }
+
   const transforms = imageSizes.sizes.map(outputWidth => {
     const width = Math.round(outputWidth)
     const transform = createTransformObject({
-      quality,
-      ...transformOptions,
-      fit,
-      cropFocus,
+      ...sharedOptions,
       ...options,
-      tracedSVGOptions,
       width,
       height: Math.round(width / imageSizes.aspectRatio),
       toFormat: primaryFormat,
@@ -237,6 +253,7 @@ export async function generateImageData({
   const imageProps: IGatsbyImageData = {
     layout,
     placeholder: undefined,
+    backgroundColor,
     images: {
       fallback: {
         src: primaryImage.src,
@@ -251,10 +268,7 @@ export async function generateImageData({
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        quality,
-        ...transformOptions,
-        fit,
-        cropFocus,
+        ...sharedOptions,
         ...args.avifOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
@@ -283,10 +297,7 @@ export async function generateImageData({
     const transforms = imageSizes.sizes.map(outputWidth => {
       const width = Math.round(outputWidth)
       const transform = createTransformObject({
-        quality,
-        ...transformOptions,
-        fit,
-        cropFocus,
+        ...sharedOptions,
         ...args.webpOptions,
         width,
         height: Math.round(width / imageSizes.aspectRatio),
@@ -317,10 +328,8 @@ export async function generateImageData({
     const { src: fallback } = await base64({
       file,
       args: {
+        ...sharedOptions,
         ...options,
-        ...transformOptions,
-        fit,
-        cropFocus,
         toFormatBase64: args.blurredOptions?.toFormat,
         width: placeholderWidth,
         height: Math.round(placeholderWidth / imageSizes.aspectRatio),

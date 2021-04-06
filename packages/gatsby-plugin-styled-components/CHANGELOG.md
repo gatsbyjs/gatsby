@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@4.2.0-next.0...gatsby-plugin-styled-components@4.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@4.1.0-next.1...gatsby-plugin-styled-components@4.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@4.1.0-next.0...gatsby-plugin-styled-components@4.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@4.0.0-next.2...gatsby-plugin-styled-components@4.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [4.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@4.0.0-next.1...gatsby-plugin-styled-components@4.0.0-next.2) (2021-02-17)
+
+### Bug Fixes
+
+- **gatsby-plugin-styled-components:** Support `topLevelImportPaths` option ([#29544](https://github.com/gatsbyjs/gatsby/issues/29544)) ([a6be92e](https://github.com/gatsbyjs/gatsby/commit/a6be92eb80bb98c308310a0fb3c340dab8e104aa))
+
+# [4.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@4.0.0-next.0...gatsby-plugin-styled-components@4.0.0-next.1) (2021-02-15)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@3.11.0-next.0...gatsby-plugin-styled-components@4.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@3.10.0-next.1...gatsby-plugin-styled-components@3.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-styled-components
+
+# [3.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@3.10.0-next.0...gatsby-plugin-styled-components@3.10.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-styled-components:** add `namespace` option ([#29095](https://github.com/gatsbyjs/gatsby/issues/29095)) ([1a09302](https://github.com/gatsbyjs/gatsby/commit/1a09302d65817ce0d6b62819a5e1fcdddafc3ea3))
+
 # [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-styled-components@3.9.0-next.0...gatsby-plugin-styled-components@3.10.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-plugin-styled-components

@@ -90,6 +90,20 @@ export function queriesReducer(
       state.deletedQueries.add(action.payload.path)
       return state
     }
+    case `DELETED_STALE_PAGE_DATA_FILES`: {
+      // this action is a hack/hot fix
+      // it should be removed/reverted when we start persisting pages state
+      for (const queryId of action.payload.pagePathsToClear) {
+        for (const component of state.trackedComponents.values()) {
+          component.pages.delete(queryId)
+        }
+        state = clearNodeDependencies(state, queryId)
+        state = clearConnectionDependencies(state, queryId)
+        state.trackedQueries.delete(queryId)
+      }
+
+      return state
+    }
     case `API_FINISHED`: {
       if (action.payload.apiName !== `createPages`) {
         return state

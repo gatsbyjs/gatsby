@@ -9,19 +9,23 @@ import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import { setLoader, publicLoader } from "./loader"
 import { Indicator } from "./loading-indicator/indicator"
 import DevLoader from "./dev-loader"
-import syncRequires from "$virtual/sync-requires"
+import asyncRequires from "$virtual/async-requires"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
+import { LoadingIndicatorEventHandler } from "./loading-indicator"
+import Root from "./root"
+import { init as navigationInit } from "./navigation"
+// ensure in develop we have at least some .css (even if it's empty).
+// this is so there is no warning about not matching content-type when site doesn't include any regular css (for example when css-in-js is used)
+// this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
+import "./blank.css"
 
-if (process.env.GATSBY_HOT_LOADER === `fast-refresh` && module.hot) {
-  module.hot.accept(`$virtual/sync-requires`, () => {
-    // Manually reload
-  })
-}
+// Enable fast-refresh for virtual sync-requires and gatsby-browser
+module.hot.accept([`$virtual/async-requires`, `./api-runner-browser`])
 
 window.___emitter = emitter
 
-const loader = new DevLoader(syncRequires, matchPaths)
+const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
@@ -116,14 +120,13 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   const rootElement = document.getElementById(`___gatsby`)
 
+  const focusEl = document.getElementById(`gatsby-focus-wrapper`)
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
     // Client only pages have any empty body so we just do a normal
     // render to avoid React complaining about hydration mis-matches.
-    document.getElementById(`___gatsby`).children.length === 0
-      ? ReactDOM.render
-      : ReactDOM.hydrate
+    focusEl && focusEl.children.length > 0 ? ReactDOM.hydrate : ReactDOM.render
   )[0]
 
   let dismissLoadingIndicator
@@ -155,8 +158,8 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     loader.loadPage(`/404.html`),
     loader.loadPage(window.location.pathname),
   ]).then(() => {
-    const preferDefault = m => (m && m.default) || m
-    const Root = preferDefault(require(`./root`))
+    navigationInit()
+
     domReady(() => {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
@@ -164,6 +167,23 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
       renderer(<Root />, rootElement, () => {
         apiRunner(`onInitialClientRender`)
+
+        // Render query on demand overlay
+        if (
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
+          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+        ) {
+          const indicatorMountElement = document.createElement(`div`)
+          indicatorMountElement.setAttribute(
+            `id`,
+            `query-on-demand-indicator-element`
+          )
+          document.body.append(indicatorMountElement)
+          ReactDOM.render(
+            <LoadingIndicatorEventHandler />,
+            indicatorMountElement
+          )
+        }
       })
     })
   })

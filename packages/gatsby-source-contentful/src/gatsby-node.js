@@ -4,7 +4,7 @@ const _ = require(`lodash`)
 const fs = require(`fs-extra`)
 const { createClient } = require(`contentful`)
 const v8 = require(`v8`)
-const fetch = require(`node-fetch`)
+const fetch = require(`@vercel/fetch-retry`)(require(`node-fetch`))
 const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
@@ -29,22 +29,28 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`).extendNodeTyp
 const validateContentfulAccess = async pluginOptions => {
   if (process.env.NODE_ENV === `test`) return undefined
 
-  await fetch(`https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}`, {
-    headers: {
-      Authorization: `Bearer ${pluginOptions.accessToken}`,
-      "Content-Type": `application/json`,
-    },
-  })
+  await fetch(
+    `https://${pluginOptions.host}/spaces/${pluginOptions.spaceId}/environments/${pluginOptions.environment}/content_types`,
+    {
+      headers: {
+        Authorization: `Bearer ${pluginOptions.accessToken}`,
+        "Content-Type": `application/json`,
+      },
+    }
+  )
     .then(res => res.ok)
     .then(ok => {
-      if (!ok)
-        throw new Error(
-          `Cannot access Contentful space "${maskText(
-            pluginOptions.spaceId
-          )}" with access token "${maskText(
-            pluginOptions.accessToken
-          )}". Make sure to double check them!`
-        )
+      if (!ok) {
+        const errorMessage = `Cannot access Contentful space "${maskText(
+          pluginOptions.spaceId
+        )}" on environment "${
+          pluginOptions.environment
+        }" with access token "${maskText(
+          pluginOptions.accessToken
+        )}". Make sure to double check them!`
+
+        throw new Error(errorMessage)
+      }
     })
 
   return undefined
@@ -99,7 +105,7 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
         .description(
           `Number of entries to retrieve from Contentful at a time. Due to some technical limitations, the response payload should not be greater than 7MB when pulling content from Contentful. If you encounter this issue you can set this param to a lower number than 100, e.g 50.`
         )
-        .default(100),
+        .default(1000),
       assetDownloadWorkers: Joi.number()
         .integer()
         .description(
@@ -128,6 +134,14 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     If you are confident your Content Types will have natural-language IDs (e.g. \`blogPost\`), then you should set this option to \`false\`. If you are unable to ensure this, then you should leave this option set to \`true\` (the default).`
         )
         .default(true),
+      contentfulClientConfig: Joi.object()
+        .description(
+          `Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
+
+          Use this with caution, you might override values this plugin does set for you to connect to Contentful.`
+        )
+        .unknown(true)
+        .default({}),
       // default plugins passed by gatsby
       plugins: Joi.array(),
     })
@@ -164,7 +178,11 @@ exports.sourceNodes = async (
 ) => {
   const { createNode, deleteNode, touchNode, createTypes } = actions
 
-  let currentSyncData, contentTypeItems, defaultLocale, locales, space
+  let currentSyncData
+  let contentTypeItems
+  let defaultLocale
+  let locales
+  let space
   if (process.env.GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE) {
     reporter.info(
       `GATSBY_CONTENTFUL_EXPERIMENTAL_FORCE_CACHE: Storing/loading remote data through \`` +
@@ -194,12 +212,12 @@ exports.sourceNodes = async (
    * with all data from subsequent syncs. Afterwards the references get
    * resolved via the Contentful JS SDK.
    */
-  let syncToken = await cache.get(CACHE_SYNC_TOKEN)
+  const syncToken = await cache.get(CACHE_SYNC_TOKEN)
   let previousSyncData = {
     assets: [],
     entries: [],
   }
-  let cachedData = await cache.get(CACHE_SYNC_DATA)
+  const cachedData = await cache.get(CACHE_SYNC_DATA)
 
   if (cachedData) {
     previousSyncData = cachedData
@@ -241,10 +259,10 @@ exports.sourceNodes = async (
         if (node.internal.owner !== `gatsby-source-contentful`) {
           return
         }
-        touchNode({ nodeId: node.id })
+        touchNode(node)
         if (node.localFile___NODE) {
           // Prevent GraphQL type inference from crashing on this property
-          touchNode({ nodeId: node.localFile___NODE })
+          touchNode(getNode(node.localFile___NODE))
         }
       })
 
@@ -319,7 +337,7 @@ exports.sourceNodes = async (
   }
 
   createTypes(`
-  interface ContentfulEntry @nodeInterface {
+  interface ContentfulEntry implements Node {
     contentful_id: String!
     id: ID!
     node_locale: String!
@@ -478,8 +496,8 @@ exports.sourceNodes = async (
 
     localizedNodes.forEach(node => {
       // touchNode first, to populate typeOwners & avoid erroring
-      touchNode({ nodeId: node.id })
-      deleteNode({ node })
+      touchNode(node)
+      deleteNode(node)
     })
   }
 
@@ -489,7 +507,7 @@ exports.sourceNodes = async (
   const existingNodes = getNodes().filter(
     n => n.internal.owner === `gatsby-source-contentful`
   )
-  existingNodes.forEach(n => touchNode({ nodeId: n.id }))
+  existingNodes.forEach(n => touchNode(n))
 
   const assets = mergedSyncData.assets
 
@@ -637,6 +655,7 @@ exports.sourceNodes = async (
       store,
       cache,
       getCache,
+      getNode,
       getNodesByType,
       reporter,
       assetDownloadWorkers: pluginConfig.get(`assetDownloadWorkers`),

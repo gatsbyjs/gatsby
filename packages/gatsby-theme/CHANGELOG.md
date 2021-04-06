@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.12.0-next.0...gatsby-theme@0.13.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.11.0-next.2...gatsby-theme@0.12.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.11.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.11.0-next.1...gatsby-theme@0.11.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+# [0.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.11.0-next.0...gatsby-theme@0.11.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.10.0-next.0...gatsby-theme@0.11.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.9.0-next.0...gatsby-theme@0.10.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-theme
+
+# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.8.0-next.0...gatsby-theme@0.9.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-theme
+
 # [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-theme@0.7.0-next.0...gatsby-theme@0.8.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-theme

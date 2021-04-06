@@ -17,6 +17,22 @@ const specialChars = `ж-ä-!@#$%^&*()_-=+:;'"?,~\``
 describe(`File parser`, () => {
   const MOCK_FILE_INFO = {
     "no-query.js": `import React from "react"`,
+    "other-graphql-tag.js": `import { graphql } from 'relay'
+    export const query = graphql\`
+query PageQueryName {
+  foo
+}
+\``,
+    "global-query.js": `export const query = graphql\`
+query pageQueryName {
+  foo
+}
+\``,
+    "global-static-query-hooks.js": `import { useStaticQuery } from 'gatsby'
+export default () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
     "page-query.js": `import { graphql } from 'gatsby'
     export const query = graphql\`
 query PageQueryName {
@@ -242,8 +258,23 @@ export default () => {
       Object.keys(MOCK_FILE_INFO),
       addError
     )
-    expect(results).toMatchSnapshot()
-    expect(reporter.warn).toMatchSnapshot()
+
+    // Check that invalid entries are not in the results and thus haven't been extracted
+    expect(results).toEqual(
+      expect.arrayContaining([
+        expect.not.objectContaining({ filePath: `no-query.js` }),
+        expect.not.objectContaining({ filePath: `other-graphql-tag.js` }),
+        expect.not.objectContaining({ filePath: `global-query.js` }),
+        expect.not.objectContaining({
+          filePath: `global-static-query-hooks.js`,
+        }),
+      ])
+    )
+
+    // The second param is a "hint", see: https://jestjs.io/docs/en/expect#tomatchsnapshotpropertymatchers-hint
+    expect(results).toMatchSnapshot({}, `results`)
+    expect(reporter.warn).toMatchSnapshot({}, `warn`)
+    expect(reporter.panicOnBuild).toMatchSnapshot({}, `panicOnBuild`)
     expect(errors.length).toEqual(1)
   })
 

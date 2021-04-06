@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Allow alternative import of useStaticQuery 1`] = `
+exports[`babel-plugin-remove-graphql-queries Allow alternative import of useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 import * as Gatsby from 'gatsby';
@@ -11,7 +11,32 @@ export default (() => {
 });"
 `;
 
-exports[`Doesn't add data import for non static queries 1`] = `
+exports[`babel-plugin-remove-graphql-queries Allow alternative import of useStaticQuery 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var Gatsby = _interopRequireWildcard(require(\\"gatsby\\"));
+
+var _default = () => {
+  const query = \\"426988268\\";
+  const siteTitle = _.default.data;
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Doesn't add data import for non static queries 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 import { StaticQuery } from \\"gatsby\\";
@@ -26,7 +51,34 @@ export default Test;
 const fragment = \\"4176178832\\";"
 `;
 
-exports[`Handles closing StaticQuery tag 1`] = `
+exports[`babel-plugin-remove-graphql-queries Doesn't add data import for non static queries 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _gatsby = require(\\"gatsby\\");
+
+const Test = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
+  query: \\"426988268\\",
+  render: data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title),
+  data: _.default
+});
+
+var _default = Test;
+exports.default = _default;
+const fragment = \\"4176178832\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Handles closing StaticQuery tag 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
@@ -36,7 +88,31 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 }, data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title)));"
 `;
 
-exports[`Leaves other graphql tags alone 1`] = `
+exports[`babel-plugin-remove-graphql-queries Handles closing StaticQuery tag 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _gatsby = require(\\"gatsby\\");
+
+var _default = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
+  query: \\"426988268\\",
+  data: _.default
+}, data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title));
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Leaves other graphql tags alone 1`] = `
 "import * as React from 'react';
 import { graphql } from 'relay';
 export default (() => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title));
@@ -47,7 +123,30 @@ export const query = graphql\`
   \`;"
 `;
 
-exports[`Only runs transforms if useStaticQuery is imported from gatsby 1`] = `
+exports[`babel-plugin-remove-graphql-queries Leaves other graphql tags alone 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+exports.__esModule = true;
+exports.query = exports.default = void 0;
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _relay = require(\\"relay\\");
+
+var _default = () => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title);
+
+exports.default = _default;
+const query = (0, _relay.graphql)\`
+     {
+       site { siteMetadata { title }}
+     }
+  \`;
+exports.query = query;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Only runs transforms if useStaticQuery is imported from gatsby 1`] = `
 "import * as React from 'react';
 export default (() => {
   const query = \\"426988268\\";
@@ -56,13 +155,45 @@ export default (() => {
 });"
 `;
 
-exports[`Removes all gatsby queries 1`] = `
+exports[`babel-plugin-remove-graphql-queries Only runs transforms if useStaticQuery is imported from gatsby 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _default = () => {
+  const query = \\"426988268\\";
+  const siteTitle = useStaticQuery(query);
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Removes all gatsby queries 1`] = `
 "export default (() => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title));
 const siteMetaQuery = \\"504726680\\";
 const query = \\"3211238532\\";"
 `;
 
-exports[`Transformation does not break custom hooks 1`] = `
+exports[`babel-plugin-remove-graphql-queries Removes all gatsby queries 2`] = `
+"\\"use strict\\";
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _default = () => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title);
+
+exports.default = _default;
+const siteMetaQuery = \\"504726680\\";
+const query = \\"3211238532\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transformation does not break custom hooks 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import React from \\"react\\";
 
@@ -77,7 +208,32 @@ export default (() => {
 });"
 `;
 
-exports[`Transforms exported queries in useStaticQuery 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transformation does not break custom hooks 2`] = `
+"\\"use strict\\";
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+const useSiteMetadata = () => {
+  const data = _.default.data;
+  return data.site.siteMetadata;
+};
+
+var _default = () => {
+  const siteMetadata = useSiteMetadata();
+  return /*#__PURE__*/_react.default.createElement(\\"h1\\", null, site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms exported queries in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 export default (() => {
@@ -87,7 +243,31 @@ export default (() => {
 export const query = \\"426988268\\";"
 `;
 
-exports[`Transforms only the call expression in useStaticQuery 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transforms exported queries in useStaticQuery 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.query = exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _default = () => {
+  const data = _.default.data;
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, data.site.siteMetadata.title), /*#__PURE__*/React.createElement(\\"p\\", null, data.site.siteMetadata.description));
+};
+
+exports.default = _default;
+const query = \\"426988268\\";
+exports.query = query;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms only the call expression in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import React from \\"react\\";
 
@@ -101,7 +281,31 @@ export default (() => {
 });"
 `;
 
-exports[`Transforms queries and preserves destructuring in useStaticQuery 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transforms only the call expression in useStaticQuery 2`] = `
+"\\"use strict\\";
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+const useSiteMetadata = () => {
+  return _.default.data.site.siteMetadata;
+};
+
+var _default = () => {
+  const siteMetadata = useSiteMetadata();
+  return /*#__PURE__*/_react.default.createElement(\\"h1\\", null, siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries and preserves destructuring in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 export default (() => {
@@ -113,7 +317,32 @@ export default (() => {
 });"
 `;
 
-exports[`Transforms queries and preserves variable type in useStaticQuery 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transforms queries and preserves destructuring in useStaticQuery 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _default = () => {
+  const query = \\"426988268\\";
+  const {
+    site
+  } = _.default.data;
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries and preserves variable type in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 export default (() => {
@@ -125,7 +354,32 @@ export default (() => {
 });"
 `;
 
-exports[`Transforms queries defined in own variable in <StaticQuery> 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transforms queries and preserves variable type in useStaticQuery 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _default = () => {
+  const query = \\"426988268\\";
+  let {
+    site
+  } = _.default.data;
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries defined in own variable in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
@@ -137,7 +391,34 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 }));"
 `;
 
-exports[`Transforms queries defined in own variable in useStaticQuery 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transforms queries defined in own variable in <StaticQuery> 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _gatsby = require(\\"gatsby\\");
+
+const query = \\"426988268\\";
+
+var _default = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
+  query: query,
+  render: data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title),
+  data: _.default
+});
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries defined in own variable in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 export default (() => {
@@ -147,7 +428,30 @@ export default (() => {
 });"
 `;
 
-exports[`Transforms queries in <StaticQuery> 1`] = `
+exports[`babel-plugin-remove-graphql-queries Transforms queries defined in own variable in useStaticQuery 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _default = () => {
+  const query = \\"426988268\\";
+  const siteTitle = _.default.data;
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
@@ -158,9 +462,40 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
 }));"
 `;
 
-exports[`Transforms queries in page components 1`] = `"const query = \\"426988268\\";"`;
+exports[`babel-plugin-remove-graphql-queries Transforms queries in <StaticQuery> 2`] = `
+"\\"use strict\\";
 
-exports[`Transforms queries in useStaticQuery 1`] = `
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _gatsby = require(\\"gatsby\\");
+
+var _default = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
+  query: \\"426988268\\",
+  render: data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title),
+  data: _.default
+});
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in page components 1`] = `"const query = \\"426988268\\";"`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in page components 2`] = `
+"\\"use strict\\";
+
+const query = \\"426988268\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 export default (() => {
@@ -169,9 +504,37 @@ export default (() => {
 });"
 `;
 
-exports[`allows the global tag 1`] = `"const query = \\"426988268\\";"`;
+exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery 2`] = `
+"\\"use strict\\";
 
-exports[`distinguishes between the right tags 1`] = `
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _default = () => {
+  const siteTitle = _.default.data;
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};
+
+exports.default = _default;"
+`;
+
+exports[`babel-plugin-remove-graphql-queries allows the global tag 1`] = `"const query = \\"426988268\\";"`;
+
+exports[`babel-plugin-remove-graphql-queries allows the global tag 2`] = `
+"\\"use strict\\";
+
+const query = \\"426988268\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries distinguishes between the right tags 1`] = `
 "const foo = styled('div')\`
      {
        \${foo}
@@ -198,15 +561,68 @@ const pulse = keyframes\`
 const query = \\"426988268\\";"
 `;
 
-exports[`handles import aliasing 1`] = `"const query = \\"426988268\\";"`;
+exports[`babel-plugin-remove-graphql-queries distinguishes between the right tags 2`] = `
+"\\"use strict\\";
 
-exports[`handles require 1`] = `"const query = \\"426988268\\";"`;
+const foo = styled('div')\`
+     {
+       \${foo}
+     }
+  \`;
+const pulse = keyframes\`
+    0% {
+      transform: scale(1);
+      animation-timing-function: ease-in;
+    }
+    25% {
+      animation-timing-function: ease-out;
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(1.12);
+      animation-timing-function: ease-in;
+    }
+    to {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+  \`;
+const query = \\"426988268\\";"
+`;
 
-exports[`handles require alias 1`] = `"const query = \\"426988268\\";"`;
+exports[`babel-plugin-remove-graphql-queries handles import aliasing 1`] = `"const query = \\"426988268\\";"`;
 
-exports[`handles require namespace 1`] = `"const query = \\"426988268\\";"`;
+exports[`babel-plugin-remove-graphql-queries handles import aliasing 2`] = `
+"\\"use strict\\";
 
-exports[`transforms exported variable queries in <StaticQuery> 1`] = `
+const query = \\"426988268\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries handles require 1`] = `"const query = \\"426988268\\";"`;
+
+exports[`babel-plugin-remove-graphql-queries handles require 2`] = `
+"\\"use strict\\";
+
+const query = \\"426988268\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries handles require alias 1`] = `"const query = \\"426988268\\";"`;
+
+exports[`babel-plugin-remove-graphql-queries handles require alias 2`] = `
+"\\"use strict\\";
+
+const query = \\"426988268\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries handles require namespace 1`] = `"const query = \\"426988268\\";"`;
+
+exports[`babel-plugin-remove-graphql-queries handles require namespace 2`] = `
+"\\"use strict\\";
+
+const query = \\"426988268\\";"
+`;
+
+exports[`babel-plugin-remove-graphql-queries transforms exported variable queries in <StaticQuery> 1`] = `
 "import staticQueryData from \\"public/static/d/426988268.json\\";
 import * as React from 'react';
 import { StaticQuery } from 'gatsby';
@@ -216,4 +632,32 @@ export default (() => /*#__PURE__*/React.createElement(StaticQuery, {
   render: data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title),
   data: staticQueryData
 }));"
+`;
+
+exports[`babel-plugin-remove-graphql-queries transforms exported variable queries in <StaticQuery> 2`] = `
+"\\"use strict\\";
+
+var _interopRequireWildcard = require(\\"@babel/runtime/helpers/interopRequireWildcard\\");
+
+var _interopRequireDefault = require(\\"@babel/runtime/helpers/interopRequireDefault\\");
+
+exports.__esModule = true;
+exports.default = exports.query = void 0;
+
+var _ = _interopRequireDefault(require(\\"../../public/static/d/426988268.json\\"));
+
+var React = _interopRequireWildcard(require(\\"react\\"));
+
+var _gatsby = require(\\"gatsby\\");
+
+const query = \\"426988268\\";
+exports.query = query;
+
+var _default = () => /*#__PURE__*/React.createElement(_gatsby.StaticQuery, {
+  query: query,
+  render: data => /*#__PURE__*/React.createElement(\\"div\\", null, data.site.siteMetadata.title),
+  data: _.default
+});
+
+exports.default = _default;"
 `;

@@ -304,7 +304,7 @@ Page queries that were queued up earlier from query extraction are run so the da
 
 With everything ready for the HTML pages in place, HTML is compiled and written out to files so it can be served up statically. Since HTML is being produced in a Node.js server context, [references to browser APIs like `window` can break the build](/docs/debugging-html-builds/) and must be conditionally applied.
 
-By default, Gatsby rebuilds static HTML for all pages on each build. There is an experimental feature flag `GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES` which enables [conditional page builds](/docs/conditional-page-builds/).
+Gatsby will smartly rebuild only needed HTML files. This can result in no HTML files being generated if nothing used for HTML files changed. The opposite can also be true and lead to a full site rebuild when data is used on all pages or when a code change happens.
 
 ## What do you get from a successful build?
 

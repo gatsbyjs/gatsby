@@ -1,86 +1,4 @@
-import ProgressBar from "progress"
 import sharp from "./safe-sharp"
-// TODO remove in V3
-export function createGatsbyProgressOrFallbackToExternalProgressBar(
-  message,
-  reporter
-) {
-  if (reporter && reporter.createProgress) {
-    return reporter.createProgress(message)
-  }
-
-  const bar = new ProgressBar(
-    ` [:bar] :current/:total :elapsed s :percent ${message}`,
-    {
-      total: 0,
-      width: 30,
-      clear: true,
-    }
-  )
-
-  return {
-    start() {},
-    tick(increment = 1) {
-      bar.tick(increment)
-    },
-    done() {},
-    set total(value) {
-      bar.total = value
-    },
-  }
-}
-
-let progressBar
-let pendingImagesCounter = 0
-let firstPass = true
-export const createOrGetProgressBar = reporter => {
-  if (!progressBar) {
-    progressBar = createGatsbyProgressOrFallbackToExternalProgressBar(
-      `Generating image thumbnails`,
-      reporter
-    )
-
-    const originalDoneFn = progressBar.done
-
-    // TODO this logic should be moved to the reporter.
-    // when done is called we remove the progressbar instance and reset all the things
-    // this will be called onPostBuild or when devserver is created
-    progressBar.done = () => {
-      originalDoneFn.call(progressBar)
-      progressBar = null
-      pendingImagesCounter = 0
-    }
-
-    progressBar.addImageToProcess = imageCount => {
-      if (pendingImagesCounter === 0) {
-        progressBar.start()
-      }
-      pendingImagesCounter += imageCount
-      progressBar.total = pendingImagesCounter
-    }
-
-    // when we create a progressBar for the second time so when .done() has been called before
-    // we create a modified tick function that automatically stops the progressbar when total is reached
-    // this is used for development as we're watching for changes
-    if (!firstPass) {
-      let progressBarCurrentValue = 0
-      const originalTickFn = progressBar.tick
-      progressBar.tick = (ticks = 1) => {
-        originalTickFn.call(progressBar, ticks)
-        progressBarCurrentValue += ticks
-
-        if (progressBarCurrentValue === pendingImagesCounter) {
-          progressBar.done()
-        }
-      }
-    }
-    firstPass = false
-  }
-
-  return progressBar
-}
-
-export const getProgressBar = () => progressBar
 
 export function rgbToHex(red, green, blue) {
   return `#${(blue | (green << 8) | (red << 16) | (1 << 24))
@@ -360,4 +278,25 @@ export function getDimensionsAndAspectRatio(dimensions, options) {
     height,
     aspectRatio: width / height,
   }
+}
+
+const dominantColorCache = new Map()
+
+export const getDominantColor = async absolutePath => {
+  let dominantColor = dominantColorCache.get(absolutePath)
+  if (dominantColor) {
+    return dominantColor
+  }
+
+  const pipeline = sharp(absolutePath)
+  const { dominant } = await pipeline.stats()
+
+  // Fallback in case sharp doesn't support dominant
+  dominantColor = dominant
+    ? rgbToHex(dominant.r, dominant.g, dominant.b)
+    : `rgba(0,0,0,0.5)`
+
+  dominantColorCache.set(absolutePath, dominantColor)
+
+  return dominantColor
 }

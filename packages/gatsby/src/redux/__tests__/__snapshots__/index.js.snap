@@ -12,6 +12,19 @@ Object {
       "query": "",
     },
   },
+  "html": Object {
+    "browserCompilationHash": "",
+    "ssrCompilationHash": "",
+    "trackedHtmlFiles": Map {
+      "/my-sweet-new-page/" => Object {
+        "dirty": 2,
+        "isDeleted": false,
+        "pageDataHash": "",
+      },
+    },
+    "trackedStaticQueryResults": Map {},
+    "unsafeBuiltinWasUsedInSSR": false,
+  },
   "jobsV2": Object {
     "complete": Map {},
     "incomplete": Map {},
@@ -48,7 +61,6 @@ Object {
       },
     },
   },
-  "pageData": Map {},
   "pageDataStats": Map {},
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
@@ -79,6 +91,7 @@ Object {
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
   },

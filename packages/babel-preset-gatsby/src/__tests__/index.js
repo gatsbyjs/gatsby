@@ -5,7 +5,17 @@ import * as pathSerializer from "../utils/path-serializer"
 expect.addSnapshotSerializer(pathSerializer)
 
 describe(`babel-preset-gatsby`, () => {
-  it.each([`build-stage`, `develop`, `build-javascript`, `build-html`])(
+  let currentEnv
+  beforeEach(() => {
+    currentEnv = process.env.BABEL_ENV
+    process.env.BABEL_ENV = `production`
+  })
+
+  afterEach(() => {
+    process.env.BABEL_ENV = currentEnv
+  })
+
+  it.each([`develop-html`, `develop`, `build-javascript`, `build-html`])(
     `should specify proper presets and plugins when stage is %s`,
     stage => {
       expect(preset(null, { stage })).toMatchSnapshot()
@@ -39,5 +49,25 @@ describe(`babel-preset-gatsby`, () => {
         runtime: `automatic`,
       }),
     ])
+  })
+
+  it(`Allows to configure react importSource`, () => {
+    const { presets } = preset(null, {
+      reactImportSource: `@emotion/react`,
+      reactRuntime: `automatic`,
+    })
+
+    expect(presets[1]).toEqual([
+      expect.stringContaining(path.join(`@babel`, `preset-react`)),
+      expect.objectContaining({
+        importSource: `@emotion/react`,
+      }),
+    ])
+  })
+
+  it(`Fails to configure react importSource if source is classic`, () => {
+    expect(() => preset(null, { reactImportSource: `@emotion/react` })).toThrow(
+      `@babel/preset-react\` requires reactRuntime \`automatic\` in order to use \`importSource\`.`
+    )
   })
 })

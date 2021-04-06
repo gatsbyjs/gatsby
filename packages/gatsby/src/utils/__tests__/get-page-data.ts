@@ -365,7 +365,10 @@ function startPageQuery(page: Partial<IGatsbyPage>): void {
   )
 }
 
-function finishQuery(page: Partial<IGatsbyPage>, jsonObject: object): void {
+function finishQuery(
+  page: Partial<IGatsbyPage>,
+  jsonObject: Record<string, unknown>
+): void {
   const payload: IQueryStartAction["payload"] = {
     path: page.path!,
     componentPath: page.componentPath!,
@@ -399,7 +402,7 @@ function deletePageDataFilesFromFs(): void {
 
 function writePageDataFileToFs(
   page: Partial<IGatsbyPage>,
-  jsonObject: object
+  jsonObject: Record<string, unknown>
 ): void {
   MOCK_FILE_INFO[
     pathJoin(

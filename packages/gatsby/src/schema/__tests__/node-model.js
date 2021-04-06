@@ -11,6 +11,17 @@ describe(`NodeModel`, () => {
   let schema
   const createPageDependency = jest.fn()
 
+  const allNodeTypes = [
+    `File`,
+    `Directory`,
+    `Site`,
+    `SitePage`,
+    `Author`,
+    `Contributor`,
+    `RemoteFile`,
+    `Post`,
+  ]
+
   describe(`normal node tests`, () => {
     beforeEach(async () => {
       store.dispatch({ type: `DELETE_CACHE` })
@@ -239,9 +250,15 @@ describe(`NodeModel`, () => {
         expect(result.length).toBe(3)
       })
 
-      it(`creates page dependencies`, () => {
+      it(`creates page dependencies with all connection types`, () => {
         nodeModel.getAllNodes({}, { path: `/` })
-        expect(createPageDependency).toHaveBeenCalledTimes(9)
+        allNodeTypes.forEach(typeName => {
+          expect(createPageDependency).toHaveBeenCalledWith({
+            path: `/`,
+            connection: typeName,
+          })
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
       })
 
       it(`creates page dependencies when called with context and connection type`, () => {
@@ -249,11 +266,31 @@ describe(`NodeModel`, () => {
           .withContext({ path: `/` })
           .getAllNodes({ type: `Post` }, { connectionType: `Post` })
         expect(createPageDependency).toHaveBeenCalledTimes(1)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          connection: `Post`,
+        })
       })
 
-      it(`does not create page dependencies when called with context without connection type`, () => {
+      it(`creates page dependencies with all connection types when called with context without connection type`, () => {
         nodeModel.withContext({ path: `/` }).getAllNodes()
-        expect(createPageDependency).toHaveBeenCalledTimes(0)
+        allNodeTypes.forEach(typeName => {
+          expect(createPageDependency).toHaveBeenCalledWith({
+            path: `/`,
+            connection: typeName,
+          })
+        })
+        expect(createPageDependency).toHaveBeenCalledTimes(allNodeTypes.length)
+      })
+
+      it(`allows to opt-out of automatic dependency tracking`, () => {
+        nodeModel.getAllNodes({}, { path: `/`, track: false })
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of automatic dependency tracking with context`, () => {
+        nodeModel.withContext({ path: `/` }).getAllNodes({}, { track: false })
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`returns empty array when no nodes of type found`, () => {
@@ -331,14 +368,10 @@ describe(`NodeModel`, () => {
           },
           { path: `/` }
         )
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -354,14 +387,10 @@ describe(`NodeModel`, () => {
           firstOnly,
           type,
         })
-        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledTimes(1)
         expect(createPageDependency).toHaveBeenCalledWith({
           path: `/`,
-          nodeId: `post1`,
-        })
-        expect(createPageDependency).toHaveBeenCalledWith({
-          path: `/`,
-          nodeId: `post3`,
+          connection: `Post`,
         })
       })
 
@@ -385,6 +414,68 @@ describe(`NodeModel`, () => {
           path: `/`,
           connection: `Post`,
         })
+      })
+
+      it(`creates page dependencies with individual nodes when connectionType is null`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { path: `/`, connectionType: null }
+        )
+        expect(createPageDependency).toHaveBeenCalledTimes(2)
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post1`,
+        })
+        expect(createPageDependency).toHaveBeenCalledWith({
+          path: `/`,
+          nodeId: `post3`,
+        })
+      })
+
+      it(`allows to opt-out of dependency tracking`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { path: `/`, track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
+      })
+
+      it(`allows to opt-out of dependency tracking with context`, async () => {
+        const type = `Post`
+        const query = {
+          filter: { frontmatter: { published: { eq: false } } },
+        }
+        const firstOnly = false
+        nodeModel.replaceFiltersCache()
+        await nodeModel.withContext({ path: `/` }).runQuery(
+          {
+            query,
+            firstOnly,
+            type,
+          },
+          { track: false }
+        )
+        expect(createPageDependency).not.toHaveBeenCalled()
       })
 
       it(`doesn't allow querying union types`, () => {

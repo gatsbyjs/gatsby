@@ -329,7 +329,7 @@ function processArguments(queryArguments, fragment, layout, state) {
     }
     queryArguments.push(placeholderArgument)
   }
-  let transformOptionsToNest = []
+  const transformOptionsToNest = []
   let newLayout = layout
   queryArguments.forEach((argument, index) => {
     if (argument.name.value === `maxWidth`) {

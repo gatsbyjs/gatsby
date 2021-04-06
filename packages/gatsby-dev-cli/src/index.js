@@ -86,7 +86,7 @@ const monoRepoPackages = fs.readdirSync(path.join(gatsbyLocation, `packages`))
 
 const localPkg = JSON.parse(fs.readFileSync(`package.json`))
 // intersect dependencies with monoRepoPackages to get list of packages that are used
-let localPackages = _.intersection(
+const localPackages = _.intersection(
   monoRepoPackages,
   Object.keys(_.merge({}, localPkg.dependencies, localPkg.devDependencies))
 )

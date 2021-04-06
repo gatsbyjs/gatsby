@@ -3,6 +3,7 @@ import {
   generateImageData,
   IGatsbyImageHelperArgs,
   IImage,
+  getLowResolutionImageURL,
 } from "../image-utils"
 
 const generateImageSource = (
@@ -35,7 +36,7 @@ const args: IGatsbyImageHelperArgs = {
   },
 }
 
-const fluidArgs: IGatsbyImageHelperArgs = {
+const fullWidthArgs: IGatsbyImageHelperArgs = {
   ...args,
   sourceMetadata: {
     width: 2000,
@@ -159,7 +160,7 @@ describe(`the image data helper`, () => {
   })
 
   it(`calculates sizes for fullWidth`, () => {
-    const data = generateImageData(fluidArgs)
+    const data = generateImageData(fullWidthArgs)
     expect(data.images.fallback?.sizes).toEqual(`100vw`)
   })
 
@@ -182,7 +183,7 @@ describe(`the image data helper`, () => {
   })
 
   it(`returns URLs for fullWidth`, () => {
-    const data = generateImageData(fluidArgs)
+    const data = generateImageData(fullWidthArgs)
     expect(data?.images?.fallback?.src).toEqual(
       `https://example.com/afile.jpg/750/563/image.jpg`
     )
@@ -222,6 +223,16 @@ https://example.com/afile.jpg/1920/1440/image.webp 1920w`)
     const data = generateImageData({ ...args, formats: [`avif`] })
     expect(data.images?.sources?.length).toBe(1)
     expect(data.images?.fallback).toBeUndefined()
+  })
+
+  it(`includes a placeholder image if a URL is provided`, () => {
+    const data = generateImageData({
+      ...args,
+      placeholderURL: `data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD`,
+    })
+    expect(data.placeholder?.fallback).toEqual(
+      `data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD`
+    )
   })
 
   it(`generates the same output as the input format if output is auto`, () => {
@@ -293,5 +304,23 @@ describe(`the helper utils`, () => {
       const ext = formatFromFilename(names[idx])
       expect(ext).toBe(expected[idx])
     }
+  })
+
+  it(`gets a low-resolution image URL`, () => {
+    const url = getLowResolutionImageURL(args)
+    expect(url).toEqual(`https://example.com/afile.jpg/20/15/image.jpg`)
+  })
+
+  it(`gets a low-resolution image URL when width and height are set`, () => {
+    const url = getLowResolutionImageURL({ ...args, width: 200, height: 200 })
+    expect(url).toEqual(`https://example.com/afile.jpg/20/20/image.jpg`)
+  })
+
+  it(`gets a low-resolution image URL with correct aspect ratio`, () => {
+    const url = getLowResolutionImageURL({
+      ...fullWidthArgs,
+      aspectRatio: 2 / 1,
+    })
+    expect(url).toEqual(`https://example.com/afile.jpg/20/10/image.jpg`)
   })
 })
