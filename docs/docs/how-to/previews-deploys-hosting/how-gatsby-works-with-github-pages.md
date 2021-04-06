@@ -18,7 +18,7 @@ You must select which branch will be deployed from your repository settings in G
 
 2. Under the repository name, click Settings.
 
-3. In the GitHub Pages section, use the Source drop-down to select main (for publishing to the root subdomain) or gh-pages (for publishing to a path like `/docs`) as your GitHub Pages publishing source.
+3. In the GitHub Pages section, use the Source drop-down to select `main` (for publishing to the root subdomain) or `gh-pages` (for publishing to a path like `/docs`) as your GitHub Pages publishing source.
 
 4. Click Save.
 
@@ -56,7 +56,7 @@ Then add a `deploy` script to `package.json` in your repository's codebase:
 
 When you run `npm run deploy` all contents of the `public` folder will be moved to your repository's `gh-pages` branch. Make sure that your repository's settings has the `gh-pages` branch set as the source to deploy from.
 
-**Note**: to select main or gh-pages as your publishing source, you must have the branch present in your repository. If you don't have a main or gh-pages branch, you can create them and then return to source settings to change your publishing source.
+**Note**: To select `main` or `gh-pages` as your publishing source, you must have the branch present in your repository. If you don't have a `main` or `gh-pages` branch, you can create them and then return to source settings to change your publishing source.
 
 ### Deploying to a GitHub Pages subdomain at github.io
 
@@ -96,7 +96,7 @@ You can use the [gh-pages npm module](https://www.npmjs.com/package/gh-pages) to
 
 To push changes from the CI system to GitHub, you'll need to authenticate. It's recommended to use [GitHub developer tokens](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line).
 
-In GitHub go to your account settings -> Developer settings -> Personal access tokens, and create a new token that provides the `repo` access permissions.
+In GitHub go to your Account settings -> Developer settings -> Personal access tokens, and create a new token that provides the `repo` access permissions.
 
 In [Travis's settings for the repository](https://docs.travis-ci.com/user/environment-variables/#defining-variables-in-repository-settings), add a new secret environment variable of the name `GH_TOKEN` with the value of the token copied from GitHub. Make sure you **DO NOT toggle the "display in build logs" setting to on** as the token should remain secret. Otherwise, strangers would be able to push to your repository (a big security issue).
 
@@ -137,6 +137,6 @@ deploy:
 To break-down the important bits here for deploying the Gatsby website from Travis to GitHub Pages:
 
 1. `before_script` is used to install the Gatsby CLI so it can be used in the project's run script to build the Gatsby website
-2. `deploy` will only fire when the build runs on the main branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
+2. `deploy` will only fire when the build runs on the `main` branch, in which case it will fire off the deploy script. In the above example, the Gatsby site is located in a `docs/` directory. The script changes into that directory, installs all the website dependencies, and runs the deploy script as was set in the previous step.
 
 Committing and pushing both the `.travis.yml` and `package.json` files to your base branch will be the final step in the process.
