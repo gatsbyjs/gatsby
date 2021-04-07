@@ -10,7 +10,7 @@ Looking for the [v2 docs](https://v2.gatsbyjs.com)?
 
 This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. Since the last major release was in September 2018, Gatsby v3 includes a couple of breaking changes. If you're curious what's new, head over to the [v3.0 release notes](/docs/reference/release-notes/v3.0).
 
-> If you want to start fresh, run `npm init gatsby` or `yarn create gatsby` in your terminal.
+> If you want to start a new Gatsby v3 site, run `npm init gatsby` or `yarn create gatsby` in your terminal.
 
 ## Table of Contents
 
@@ -79,7 +79,7 @@ npm install gatsby-plugin-sharp@latest
 yarn upgrade-interactive --latest
 ```
 
-You'll be given an overview of packages where you can select to upgrade them to `latest`.
+You'll be given an overview of packages which to select to upgrade them to `latest`.
 
 #### Updating community plugins
 
@@ -95,11 +95,9 @@ If you are using npm 7, the warning may instead be an error:
 npm ERR! ERESOLVE unable to resolve dependency tree
 ```
 
-This is because the plugin needs to set its `peerDependencies` to the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
+This is because the plugin needs to update its `peerDependencies` to include the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
 #### Handling dependencies for plugins that are not yet updated
-
-If you run into the scenarios listed below, you will need to use yarn resolutions until the plugin authors upgrade the plugins they maintain.
 
 Gatsby has an _amazing_ ecosystem of plugins that make it easier to get up and running, and to incorporate various data sources and functionality into your Gatsby project. Part of that huge ecosystem includes dependency trees!
 
@@ -367,7 +365,30 @@ const Box = ({ children }) => (
 export default Box
 ```
 
-You can also still import all styles using the `import * as styles` syntax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
+You can also import all styles using the `import * as styles` syntax e.g. `import * as styles from './mystyles.module.css'`. However, this won't allow webpack to treeshake your styles so we discourage you from using this syntax.
+
+Migrating all your CSS could be painful or you're relying on third-party packages that require you to use CommonJS. You can work around this issue for Sass, Less, Stylus & regular CSS modules using respective plugins. If you're using regular CSS modules, please install [gatsby-plugin-postcss](https://www.gatsbyjs.com/plugins/gatsby-plugin-postcss/) to override the defaults.
+
+This example covers Sass. The other plugins share the same `cssLoaderOptions` property.
+
+```diff:title=gatsby-config.js
+module.exports = {
+  plugins: [
+-    `gatsby-plugin-sass`,
++    {
++      resolve: `gatsby-plugin-sass`,
++      options: {
++       cssLoaderOptions: {
++         esModule: false,
++         modules: {
++           namedExport: false,
++         },
++       },
++     },
++    }
+  ]
+}
+```
 
 ### File assets (fonts, pdfs, ...) are imported as ES Modules
 

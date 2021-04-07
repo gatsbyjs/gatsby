@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.3.0-next.0...gatsby-plugin-image@1.3.0-next.1) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Correctly calculate aspect ratio when width and height are both set ([#30466](https://github.com/gatsbyjs/gatsby/issues/30466)) ([35c90f8](https://github.com/gatsbyjs/gatsby/commit/35c90f8554c59f59b75e6ad040213c717e5883a5))
+- **gatsby-plugin-image:** Force render if props have changed ([#30491](https://github.com/gatsbyjs/gatsby/issues/30491)) ([e584b8a](https://github.com/gatsbyjs/gatsby/commit/e584b8a33f079ba5a07419173b57bb5dabb824d7))
+
+# [1.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.2.0-next.1...gatsby-plugin-image@1.3.0-next.0) (2021-03-25)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Only use default breakpoints for fullwidth ([#30328](https://github.com/gatsbyjs/gatsby/issues/30328)) ([2393f3c](https://github.com/gatsbyjs/gatsby/commit/2393f3c9f6d3a11312ddd707632c0ab6e4885686))
+
+### Features
+
+- **gatsby-plugin-image:** data-srcset should be used to prevent overly eager loading on chrome ([#30348](https://github.com/gatsbyjs/gatsby/issues/30348)) ([9163f2f](https://github.com/gatsbyjs/gatsby/commit/9163f2f8284b10ef8792cf664065f70b352cd1c3))
+
+# [1.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.2.0-next.0...gatsby-plugin-image@1.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Better StaticImage errors ([#30271](https://github.com/gatsbyjs/gatsby/issues/30271)) ([8a0a4e8](https://github.com/gatsbyjs/gatsby/commit/8a0a4e82e3c782393621608a294b4b23b1e6753d))
+- **gatsby-plugin-image:** image partial rendering ([#30221](https://github.com/gatsbyjs/gatsby/issues/30221)) ([d97a086](https://github.com/gatsbyjs/gatsby/commit/d97a0868acdbde2361175b4b1491d3adb6ac68bc))
+
 # [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.1.0-next.2...gatsby-plugin-image@1.2.0-next.0) (2021-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-image

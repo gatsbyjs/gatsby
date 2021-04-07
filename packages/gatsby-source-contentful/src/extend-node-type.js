@@ -15,10 +15,6 @@ const {
   GraphQLList,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
-const { generateImageData } = require(`gatsby-plugin-image`)
-const {
-  getGatsbyImageFieldConfig,
-} = require(`gatsby-plugin-image/graphql-utils`)
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
@@ -720,6 +716,8 @@ exports.extendNodeType = ({ type, store }) => {
   const resolveGatsbyImageData = async (image, options) => {
     if (!isImage(image)) return null
 
+    const { generateImageData } = require(`gatsby-plugin-image`)
+
     const { baseUrl, contentType, width, height } = getBasicImageProps(
       image,
       options
@@ -773,6 +771,10 @@ exports.extendNodeType = ({ type, store }) => {
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
+    const {
+      getGatsbyImageFieldConfig,
+    } = require(`gatsby-plugin-image/graphql-utils`)
+
     const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
@@ -801,6 +803,9 @@ exports.extendNodeType = ({ type, store }) => {
     })
 
     fieldConfig.type = GraphQLJSON
+
+    fieldConfig.args.placeholder.defaultValue = `dominantColor`
+    fieldConfig.args.layout.defaultValue = `constrained`
 
     return fieldConfig
   }

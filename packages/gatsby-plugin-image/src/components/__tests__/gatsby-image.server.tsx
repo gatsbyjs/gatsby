@@ -4,27 +4,20 @@ import { GatsbyImage } from "../gatsby-image.server"
 import { IGatsbyImageData } from "../gatsby-image.browser"
 import { SourceProps } from "../picture"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    SERVER: boolean | undefined
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    GATSBY___IMAGE: boolean | undefined
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
 describe(`GatsbyImage server`, () => {
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    global.SERVER = true
+    global.GATSBY___IMAGE = true
   })
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = false
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    global.SERVER = false
+    global.GATSBY___IMAGE = false
   })
 
   it(`shows nothing when the image props is not passed`, () => {
@@ -297,9 +290,9 @@ icon.svg`,
       expect(picture).toMatchInlineSnapshot(`
         <picture>
           <source
+            data-srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
             media="some-media"
             sizes="192x192"
-            srcset="icon32px.png 32w,icon64px.png 64w,icon-retina.png 2x,icon-ultra.png 3x,icon.svg"
           />
           <img
             alt="A fake image for testing purpose"

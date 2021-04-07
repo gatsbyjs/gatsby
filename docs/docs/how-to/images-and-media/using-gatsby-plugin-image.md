@@ -203,18 +203,19 @@ These source plugins support using `gatsby-plugin-image` with images served from
 - [AgilityCMS](https://github.com/agility/gatsby-image-agilitycms)
 - [Contentful](/plugins/gatsby-source-contentful/#using-the-new-gatsby-image-plugin)
 - [DatoCMS](/plugins/gatsby-source-datocms/#integration-with-gatsby-image)
-- [Sanity](https://www.gatsbyjs.com/plugins/gatsby-source-sanity/#using-images)
+- [GraphCMS](/plugins/gatsby-source-graphcms/#usage-with-gatsby-plugin-image)
+- [Sanity](/plugins/gatsby-source-sanity/#using-images)
 - [Shopify](https://github.com/gatsbyjs/gatsby-source-shopify-experimental#images)
 
 ### Image CDNs
 
 A dedicated image CDN can be used with sources that don't have their own CDN, or where you need more transforms or formats than the CDN offers.
 
-- [imgix](https://www.gatsbyjs.com/plugins/@imgix/gatsby/)
+- [imgix](/plugins/@imgix/gatsby/)
 
 ### Plugin authors
 
-If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatbsy Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
+If you maintain a source plugin or image CDN, there is a toolkit to help you add support for `gatsby-plugin-image`. See [Adding Gatsby Image support to your plugin](/docs/how-to/plugins-and-themes/adding-gatsby-image-support/) for more details. You can then open a PR to add your plugin to this list.
 
 ## Background images
 

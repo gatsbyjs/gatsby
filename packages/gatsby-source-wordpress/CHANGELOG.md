@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.0...gatsby-source-wordpress@5.3.0-next.1) (2021-03-30)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0-next.1...gatsby-source-wordpress@5.3.0-next.0) (2021-03-25)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** improve error message for folks who've never used WP_DEBUG ([#30356](https://github.com/gatsbyjs/gatsby/issues/30356)) ([7cd9cd3](https://github.com/gatsbyjs/gatsby/commit/7cd9cd3e6eed7c430b367d41171f4592161ba09e))
+- **gatsby-source-wordpress:** requestConcurrency ([#30349](https://github.com/gatsbyjs/gatsby/issues/30349)) ([c11be56](https://github.com/gatsbyjs/gatsby/commit/c11be56b28156b4b92da6ae1090e71fdff916cdf))
+- **gatsby-source-wordpress:** schema customization errors ([#30358](https://github.com/gatsbyjs/gatsby/issues/30358)) ([5c9b744](https://github.com/gatsbyjs/gatsby/commit/5c9b7444aa3fcab5299d6c8a2912e2bea164bfa9))
+
+# [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0-next.0...gatsby-source-wordpress@5.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** upgrade webpack-assets-manifest for compatibility with webpack@5 ([#30217](https://github.com/gatsbyjs/gatsby/issues/30217)) ([ca44a9e](https://github.com/gatsbyjs/gatsby/commit/ca44a9eb04878919ee52874a5e879a1a29ee0463))
+
 # [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.1.0-next.3...gatsby-source-wordpress@5.2.0-next.0) (2021-03-11)
 
 **Note:** Version bump only for package gatsby-source-wordpress
