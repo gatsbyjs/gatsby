@@ -84,8 +84,11 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
       return fallbackImage
     }
 
+    // Default is true, so only attach the prop if the value is explicitly set to `false`
+    const pictureProps = props.draggable === false ? { draggable: false } : {}
+
     return (
-      <picture>
+      <picture {...pictureProps}>
         {sources.map(({ media, srcSet, type }) => (
           <source
             key={`${media}-${type}-${srcSet}`}
