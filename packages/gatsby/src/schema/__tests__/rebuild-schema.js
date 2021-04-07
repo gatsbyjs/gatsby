@@ -6,10 +6,11 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
+  assertValidSchema,
 } = require(`graphql`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-const { build, rebuild } = require(`..`)
+const { build, rebuild, rebuildWithSitePage } = require(`..`)
 import { buildObjectType } from "../types/type-builders"
 
 jest.mock(`../../utils/api-runner-node`)
@@ -59,6 +60,7 @@ const addNodeField = ({ node, name, value }) => {
 
 const rebuildTestSchema = async () => {
   await rebuild({})
+  await rebuildWithSitePage({})
   return store.getState().schema
 }
 
@@ -77,24 +79,36 @@ const deleteNodeAndRebuild = async node => {
 const createExternalSchema = () => {
   const query = new GraphQLObjectType({
     name: `Query`,
-    fields: {
-      external: {
-        type: new GraphQLObjectType({
-          name: `ExternalType`,
-          fields: {
-            externalFoo: {
-              type: GraphQLString,
-              resolve: parentValue =>
-                `${parentValue}.ExternalType.externalFoo.defaultResolver`,
+    fields: () => {
+      return {
+        external: {
+          type: new GraphQLObjectType({
+            name: `ExternalType`,
+            fields: {
+              externalFoo: {
+                type: GraphQLString,
+                resolve: parentValue =>
+                  `${parentValue}.ExternalType.externalFoo.defaultResolver`,
+              },
             },
-          },
-        }),
-        resolve: () => `Query.external`,
-      },
-      external2: {
-        type: GraphQLString,
-        resolve: () => `Query.external2`,
-      },
+          }),
+          resolve: () => `Query.external`,
+        },
+        external2: {
+          type: GraphQLString,
+          resolve: () => `Query.external2`,
+        },
+        external3: {
+          type: new GraphQLObjectType({
+            name: `ExternalType3`,
+            fields: {
+              recurse: {
+                type: query,
+              },
+            },
+          }),
+        },
+      }
     },
   })
   return new GraphQLSchema({ query })
@@ -1156,6 +1170,9 @@ describe(`Compatibility with addThirdPartySchema`, () => {
     })
     createNodes().forEach(addNode)
     await build({})
+    await rebuildWithSitePage({})
+    const schema = store.getState().schema
+    assertValidSchema(schema)
   })
 
   it(`rebuilds after third party schema is extended with createResolvers`, async () => {

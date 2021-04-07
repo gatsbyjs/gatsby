@@ -40,15 +40,28 @@ exports.onCreateWebpackConfig = (
       ? [loaders.null()]
       : [
           loaders.miniCssExtract(),
-          loaders.css({ ...cssLoaderOptions, importLoaders: 1 }),
+          loaders.css({
+            ...cssLoaderOptions,
+            importLoaders: 1,
+            modules: false,
+          }),
           postcssLoader,
         ],
   }
   const postcssRuleModules = {
     test: MODULE_CSS_PATTERN,
     use: [
-      !isSSR && loaders.miniCssExtract({ modules: true }),
-      loaders.css({ ...cssLoaderOptions, importLoaders: 1, modules: true }),
+      !isSSR &&
+        loaders.miniCssExtract({
+          modules: {
+            namedExport: cssLoaderOptions.modules?.namedExport ?? true,
+          },
+        }),
+      loaders.css({
+        ...cssLoaderOptions,
+        importLoaders: 1,
+        modules: cssLoaderOptions.modules ?? true,
+      }),
       postcssLoader,
     ].filter(Boolean),
   }

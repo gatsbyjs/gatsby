@@ -1,7 +1,12 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
-const { nodeFromData, downloadFile, isFileNode } = require(`./normalize`)
+const {
+  nodeFromData,
+  downloadFile,
+  isFileNode,
+  createNodeIdWithVersion,
+} = require(`./normalize`)
 const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 
 const asyncPool = require(`tiny-async-pool`)
@@ -49,6 +54,7 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
+    entityReferenceRevisions = [],
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -147,7 +153,18 @@ exports.sourceNodes = async (
         const nodesToSync = data.data.entities
         for (const nodeSyncData of nodesToSync) {
           if (nodeSyncData.action === `delete`) {
-            actions.deleteNode(getNode(createNodeId(nodeSyncData.id)))
+            actions.deleteNode(
+              getNode(
+                createNodeId(
+                  createNodeIdWithVersion(
+                    nodeSyncData.id,
+                    nodeSyncData.type,
+                    nodeSyncData.attributes?.drupal_internal__revision_id,
+                    entityReferenceRevisions
+                  )
+                )
+              )
+            )
           } else {
             // The data could be a single Drupal entity or an array of Drupal
             // entities to update.
@@ -294,7 +311,7 @@ exports.sourceNodes = async (
     if (!contentType) return
     _.each(contentType.data, datum => {
       if (!datum) return
-      const node = nodeFromData(datum, createNodeId)
+      const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
       nodes.set(node.id, node)
     })
   })
@@ -304,6 +321,7 @@ exports.sourceNodes = async (
     handleReferences(node, {
       getNode: nodes.get.bind(nodes),
       createNodeId,
+      entityReferenceRevisions,
     })
   })
 

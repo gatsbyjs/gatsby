@@ -1,3 +1,4 @@
+import { inPreviewMode } from "~/steps/preview"
 export interface IDevelopState {
   refreshPollingIsPaused: boolean
 }
@@ -19,20 +20,14 @@ const developStore: IPreviewStore = {
 
   reducers: {
     pauseRefreshPolling(state) {
-      if (
-        process.env.NODE_ENV === `development` &&
-        !process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-      ) {
+      if (!inPreviewMode()) {
         state.refreshPollingIsPaused = true
       }
 
       return state
     },
     resumeRefreshPolling(state) {
-      if (
-        process.env.NODE_ENV === `development` &&
-        !process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-      ) {
+      if (!inPreviewMode()) {
         state.refreshPollingIsPaused = false
       }
 

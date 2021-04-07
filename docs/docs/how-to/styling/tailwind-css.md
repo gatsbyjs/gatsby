@@ -21,7 +21,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 ### 1. Install Tailwind
 
 ```shell
-npm install tailwindcss --save-dev
+npm install tailwindcss autoprefixer --save-dev
 ```
 
 ### 2. Generate Tailwind config file (optional)
