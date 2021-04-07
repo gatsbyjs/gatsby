@@ -17,7 +17,6 @@ In the processing, it makes images responsive by:
 
 `npm install gatsby-remark-images-contentful`
 
-
 ## How to use
 
 ```javascript

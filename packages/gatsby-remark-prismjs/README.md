@@ -7,7 +7,6 @@ Adds syntax highlighting to code blocks in markdown files using
 
 `npm install gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
-
 ## How to use
 
 ```javascript

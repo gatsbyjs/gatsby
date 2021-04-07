@@ -6,7 +6,6 @@ Parses Markdown files using [Remark](http://remark.js.org/).
 
 `npm install gatsby-transformer-remark`
 
-
 ## How to use
 
 ```javascript

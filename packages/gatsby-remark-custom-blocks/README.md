@@ -90,7 +90,6 @@ Here is an example configuration for using details:
   },
 ```
 
-
 And here is the html output considering the same markdown as before:
 
 ```html

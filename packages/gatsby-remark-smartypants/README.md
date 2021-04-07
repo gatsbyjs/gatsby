@@ -7,7 +7,6 @@ Replaces “dumb” punctuation marks with “smart” punctuation marks using t
 
 `npm install gatsby-remark-smartypants`
 
-
 ## How to use
 
 ```javascript
