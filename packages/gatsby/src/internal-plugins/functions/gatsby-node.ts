@@ -11,6 +11,8 @@ import { internalActions } from "../../redux/actions"
 
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
 
+import TerserPlugin from "terser-webpack-plugin"
+
 export async function onPreBootstrap({
   reporter,
   store,
@@ -99,6 +101,14 @@ export async function onPreBootstrap({
                 exclude: /node_modules/,
                 loader: `babel-loader`,
               },
+            ],
+          },
+          optimization: {
+            minimize: true,
+            minimizer: [
+              new TerserPlugin({
+                extractComments: false,
+              }),
             ],
           },
           plugins: [new webpack.DefinePlugin(varObject)],
