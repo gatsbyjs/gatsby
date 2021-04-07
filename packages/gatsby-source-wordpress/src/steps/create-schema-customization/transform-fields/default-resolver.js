@@ -1,6 +1,7 @@
 import { findTypeName } from "~/steps/create-schema-customization/helpers"
 
 import { buildGatsbyNodeObjectResolver } from "~/steps/create-schema-customization/transform-fields/transform-object"
+import { buildTypeName } from "../helpers"
 
 export const buildDefaultResolver = transformerApi => (source, _, context) => {
   const { fieldName, field, gatsbyNodeTypes } = transformerApi
@@ -43,6 +44,12 @@ export const buildDefaultResolver = transformerApi => (source, _, context) => {
     typeof aliasedField2 !== `undefined`
   ) {
     finalFieldValue = aliasedField2
+  }
+
+  if (finalFieldValue?.__typename) {
+    // in Gatsby V3 this property is used to determine the type of an interface field
+    // instead of the resolveType fn. This means we need to prefix it so that gql doesn't throw errors about missing types.
+    finalFieldValue.__typename = buildTypeName(finalFieldValue.__typename)
   }
 
   const isANodeConnection =

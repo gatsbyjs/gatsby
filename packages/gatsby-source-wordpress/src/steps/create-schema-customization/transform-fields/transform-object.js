@@ -55,6 +55,12 @@ export const buildGatsbyNodeObjectResolver = ({ field, fieldName }) => async (
 
   const queryInfo = getQueryInfoByTypeName(field.type.name)
 
+  if (!queryInfo) {
+    // if we don't have query info for a type
+    // it probably means this type is excluded in plugin options
+    return null
+  }
+
   const isLazyMediaItem =
     queryInfo.typeInfo.nodesTypeName === `MediaItem` &&
     queryInfo.settings.lazyNodes
