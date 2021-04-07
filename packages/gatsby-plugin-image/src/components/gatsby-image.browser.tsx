@@ -14,6 +14,7 @@ import {
   hasNativeLazyLoadSupport,
   storeImageloaded,
   hasImageLoaded,
+  gatsbyImageIsInstalled,
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
@@ -182,7 +183,11 @@ class GatsbyImageHydrator extends Component<
       const cacheKey = JSON.stringify(this.props.image.images)
 
       // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport() && ssrElement && global.GATSBY___IMAGE) {
+      if (
+        hasNativeLazyLoadSupport() &&
+        ssrElement &&
+        gatsbyImageIsInstalled()
+      ) {
         this.props.onStartLoad?.({ wasCached: false })
 
         // When the image is already loaded before we have hydrated, we trigger onLoad and cache the item
@@ -272,8 +277,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     return null
   }
 
-  if (!global.GATSBY___IMAGE) {
-    console.warn(
+  if (!gatsbyImageIsInstalled()) {
+    console.error(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   }
