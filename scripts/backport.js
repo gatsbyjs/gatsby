@@ -72,9 +72,12 @@ async function run() {
     stdio: `inherit`,
   })
 
-  childProcess.execSync(`git branch -D "${backportReleaseBranchName}"`, {
-    stdio: `inherit`,
-  })
+  try {
+    childProcess.execSync(`git branch -D "${backportReleaseBranchName}"`, {
+      stdio: `inherit`,
+    })
+    // eslint-disable-next-line no-empty
+  } catch {}
 
   childProcess.execSync(
     `git checkout -b "${backportReleaseBranchName}" "origin/${releaseBranchName}" --no-track`,
