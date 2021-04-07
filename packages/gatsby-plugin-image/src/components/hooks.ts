@@ -29,6 +29,10 @@ export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
+export function gatsbyImageIsInstalled(): boolean {
+  return typeof GATSBY___IMAGE !== `undefined` && GATSBY___IMAGE
+}
+
 export function storeImageloaded(cacheKey?: string): void {
   if (cacheKey) {
     imageCache.add(cacheKey)
@@ -86,7 +90,7 @@ export function getWrapperProps(
   let className = `gatsby-image-wrapper`
 
   // If the plugin isn't installed we need to apply the styles inline
-  if (!GATSBY___IMAGE) {
+  if (!gatsbyImageIsInstalled()) {
     wrapperStyle.position = `relative`
     wrapperStyle.overflow = `hidden`
   }
@@ -95,7 +99,7 @@ export function getWrapperProps(
     wrapperStyle.width = width
     wrapperStyle.height = height
   } else if (layout === `constrained`) {
-    if (!GATSBY___IMAGE) {
+    if (!gatsbyImageIsInstalled()) {
       wrapperStyle.display = `inline-block`
     }
     className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
@@ -267,7 +271,7 @@ export function getMainProps(
   }
 
   // fallback when it's not configured in gatsby-config.
-  if (!GATSBY___IMAGE) {
+  if (!gatsbyImageIsInstalled()) {
     style = {
       height: `100%`,
       left: 0,
@@ -347,7 +351,7 @@ export function getPlaceholderProps(
   }
 
   // fallback when it's not configured in gatsby-config.
-  if (!GATSBY___IMAGE) {
+  if (!gatsbyImageIsInstalled()) {
     result.style = {
       height: `100%`,
       left: 0,

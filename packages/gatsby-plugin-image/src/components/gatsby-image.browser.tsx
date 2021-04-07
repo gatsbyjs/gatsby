@@ -14,6 +14,7 @@ import {
   hasNativeLazyLoadSupport,
   storeImageloaded,
   hasImageLoaded,
+  gatsbyImageIsInstalled,
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
@@ -272,8 +273,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     return null
   }
 
-  if (!GATSBY___IMAGE) {
-    console.warn(
+  if (!gatsbyImageIsInstalled()) {
+    console.error(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   }
