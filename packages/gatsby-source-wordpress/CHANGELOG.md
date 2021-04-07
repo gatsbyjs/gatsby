@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.1...gatsby-source-wordpress@5.2.2) (2021-04-07)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** pass missing property helpers to gql fetch util ([#30727](https://github.com/gatsbyjs/gatsby/issues/30727)) ([#30731](https://github.com/gatsbyjs/gatsby/issues/30731)) ([29fe049](https://github.com/gatsbyjs/gatsby/commit/29fe04995f7cf856bdb58d544a89991e25c0c67b))
+
 ## [5.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.0...gatsby-source-wordpress@5.2.1) (2021-04-01)
 
 ### Bug Fixes
