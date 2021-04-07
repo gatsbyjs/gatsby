@@ -5,16 +5,16 @@ import webpack from "webpack"
 import multer from "multer"
 import * as express from "express"
 
-import {
-  ParentSpanPluginArgs,
-  PluginOptions,
-  CreateDevServerArgs,
-} from "gatsby"
+import { urlResolve } from "gatsby-core-utils"
 
-export async function onPreBootstrap(
-  { reporter, store }: ParentSpanPluginArgs,
-  { path: functionsDirectoryPath }: PluginOptions
-): Promise<void> {
+import { internalActions } from "../../redux/actions"
+
+import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
+
+export async function onPreBootstrap({
+  reporter,
+  store,
+}: ParentSpanPluginArgs): Promise<void> {
   const activity = reporter.activityTimer(`Compiling Gatsby Functions`)
   activity.start()
 
@@ -23,12 +23,40 @@ export async function onPreBootstrap(
     functions,
   } = store.getState()
 
-  functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
+  const functionsGlob = `**/*.{js,ts}`
+
+  const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
 
   const functionsDirectory = path.resolve(
     siteDirectoryPath,
     functionsDirectoryPath as string
   )
+
+  const files = await glob(functionsGlob, { cwd: functionsDirectory })
+
+  if (files?.length === 0) {
+    reporter.warn(
+      `No functions found in directory: ${path.relative(
+        siteDirectoryPath,
+        functionsDirectory
+      )}`
+    )
+  }
+
+  reporter.verbose(`Attaching functions to development server`)
+
+  const knownFunctions = new Map(
+    files.map(file => [
+      urlResolve(path.parse(file).dir, path.parse(file).name),
+      file,
+    ])
+  )
+
+  store.dispatch(internalActions.setFunctions(knownFunctions))
+
+  await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+
+  await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
     if (key.match(/^GATSBY_/)) {
