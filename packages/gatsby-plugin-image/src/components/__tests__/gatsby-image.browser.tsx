@@ -3,13 +3,6 @@ import { GatsbyImage, IGatsbyImageData } from "../gatsby-image.browser"
 import { render, waitFor } from "@testing-library/react"
 import * as hooks from "../hooks"
 
-type GlobalOverride = NodeJS.Global &
-  typeof global.globalThis & {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    GATSBY___IMAGE: boolean
-    SERVER: boolean
-  }
-
 // Prevents terser for bailing because we're not in a babel plugin
 jest.mock(`../../../macros/terser.macro`, () => (strs): string => strs.join(``))
 
@@ -165,7 +158,7 @@ describe(`GatsbyImage browser`, () => {
       container.querySelector(`[data-main-image=""]`)
     )
 
-    img.dispatchEvent(new Event(`load`))
+    img?.dispatchEvent(new Event(`load`))
 
     expect(onStartLoadSpy).toBeCalledWith({ wasCached: false })
     expect(onLoadSpy).toBeCalled()
