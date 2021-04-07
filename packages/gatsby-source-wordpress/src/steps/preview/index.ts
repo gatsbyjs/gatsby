@@ -310,9 +310,10 @@ export const sourcePreview = async (
  * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
 export const sourcePreviews = async (
-  { webhookBody, reporter }: GatsbyHelpers,
+  helpers: GatsbyHelpers,
   pluginOptions: IPluginOptions
 ): Promise<void> => {
+  const { webhookBody, reporter } = helpers
   const {
     debug: { preview: inPreviewDebugModeOption },
   } = getPluginOptions()
@@ -341,6 +342,7 @@ export const sourcePreviews = async (
       WPGatsbyPreview: webhookBody.token,
       WPGatsbyPreviewUser: webhookBody.userDatabaseId,
     },
+    helpers,
     query: /* GraphQL */ `
       query PREVIEW_ACTIONS($after: String) {
         actionMonitorActions(
