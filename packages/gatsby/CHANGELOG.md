@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.1...gatsby@3.3.0-next.2) (2021-04-07)
+
+### Bug Fixes
+
+- **docs:** edits to Gatsby Node APIs doc ([#30656](https://github.com/gatsbyjs/gatsby/issues/30656)) ([9699e31](https://github.com/gatsbyjs/gatsby/commit/9699e31e354fd484b3834bea2ac4a2e50d6179b4))
+- **gatsby:** fix incorrect intersection of filtered results ([#30594](https://github.com/gatsbyjs/gatsby/issues/30594)) ([e432c23](https://github.com/gatsbyjs/gatsby/commit/e432c231eb65e66208ab29605aa670e6c873303f))
+
 # [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.0...gatsby@3.3.0-next.1) (2021-03-30)
 
 ### Bug Fixes
