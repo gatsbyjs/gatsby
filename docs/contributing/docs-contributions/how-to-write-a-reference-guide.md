@@ -46,6 +46,9 @@ Break up this section into multiple headings, as needed.
 Here are some general tips for helpful things to include:
 
 - Diagrams or other visuals, to show key processes or architectures.
+  - Make sure to include alt text for accessibility! For
+    help writing great alt text, refer to the W3C alt decision
+    tree: https://www.w3.org/WAI/tutorials/images/decision-tree/
 - Code examples, to show how to use the feature in practice.
   - Be sure to include all the necessary imports!
   - Introduce the code snippet with a sentence describing what the code does

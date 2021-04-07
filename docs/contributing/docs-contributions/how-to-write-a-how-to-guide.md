@@ -24,7 +24,7 @@ A How-To Guide should include the following sections:
 
 - **Introduction:** Provide some quick background information to help readers understand 1) what this How-To Guide will help them achieve and 2) why that's useful.
 - **Prerequisites:** Any additional information or setup readers will have to do before they can make use of this How-To Guide.
-- **Directions:**
+- **Directions:** List out the steps that readers to follow to complete the task. Use code blocks to show exactly what readers should type in their own projects.
 - **Additional Resources:** Links to other docs or content that might be useful next steps for readers. Also, any resources that helped you write the How-To Guide.
 
 ```markdown
@@ -58,6 +58,11 @@ can achieve the goal.
 
 1. Do the first thing.
 2. Do the next thing.
+
+Use code blocks to show exactly what readers should type. The
+Gatsby Style Guide includes tips for best practices when using code
+blocks:
+https://www.gatsbyjs.com/contributing/gatsby-style-guide/#format-code-blocks-inline-code-and-images
 
 If it's a particularly long list of directions, you can split the steps into
 sections. Use subheadings to label each chunk. For example:

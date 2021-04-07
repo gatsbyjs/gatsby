@@ -12,7 +12,7 @@ You can think of a Conceptual Guide as a discussion. It compares the benefits an
 
 > For more information on Conceptual Guides, check out the [Divio documentation system](https://documentation.divio.com/explanation/), which the Gatsby docs are based on.
 >
-> **Note:** In the Divio system, these types of docs are called "Explanations" instead of "Conceptual Guides."
+> **Note:** In the Divio system, these types of docs are called "Explanations" instead of "Conceptual Guides".
 
 ## A near-perfect example of a Conceptual Guide
 

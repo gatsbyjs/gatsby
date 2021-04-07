@@ -17,7 +17,7 @@ The [Gatsby documentation site](/docs) includes four different types of material
 
 ![Each of the four types of docs has a different intended audience. The Tutorial is for learning-oriented readers, who want practical steps to help when they're studying. How-To Guides are for problem-oriented readers, who want practical steps to help when they're working. Reference Guides are for information-oriented readers, who want theoretical knowledge to help when they're working. Conceptual Guides are for understanding-oriented readers, who want theoretical knowledge to help when they're studying.](./doc-type-quadrants.svg)
 
-> This documentation structure is based on the [Divio documentation system](documentation.divio.com/) created by Daniele Procida.
+> This documentation structure is based on the [Divio documentation system](https://documentation.divio.com) created by Daniele Procida.
 
 ### Choosing what type of doc to write
 
@@ -32,8 +32,8 @@ The guides above provide more details about each type of documentation. They als
 
 Sometimes, a single concept will require some combination of these documentation types. For example, the `gatsby-plugin-image` documentation includes the following pieces:
 
-- A Reference Guide to explain the plugin API and all its options.
-- A How-To Guide to show practical examples of how to use the plugin.
+- [Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/): A Reference Guide to explain the plugin API and all its options.
+- [Using the Gatsby Image plugin](/docs/how-to/images-and-media/using-gatsby-plugin-image/): A How-To Guide to show practical examples of how to use the plugin.
 
 ### Other types of documentation
 
