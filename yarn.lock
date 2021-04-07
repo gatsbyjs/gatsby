@@ -152,23 +152,6 @@
   resolved "https://registry.yarnpkg.com/@ascorbic/worker-threads-shim/-/worker-threads-shim-1.0.0.tgz#d003ac1f9aacc9d95d8a0e453bce256d7fa99923"
   integrity sha512-CEvYpC2w2t7tDWgloPA8ETra79cZzi2IdeM0bluTTkvWcnEdLWYStM12ymq2VRE3OMR8OtmKD4l026dUel1d+w==
 
-"@babel/cli@^7.11.6":
-  version "7.12.8"
-  resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.12.8.tgz#3b24ed2fd5da353ee6f19e8935ff8c93b5fe8430"
-  integrity sha512-/6nQj11oaGhLmZiuRUfxsujiPDc9BBReemiXgIbxc+M5W+MIiFKYwvNDJvBfnGKNsJTKbUfEheKc9cwoPHAVQA==
-  dependencies:
-    commander "^4.0.1"
-    convert-source-map "^1.1.0"
-    fs-readdir-recursive "^1.1.0"
-    glob "^7.0.0"
-    lodash "^4.17.19"
-    make-dir "^2.1.0"
-    slash "^2.0.0"
-    source-map "^0.5.0"
-  optionalDependencies:
-    "@nicolo-ribaudo/chokidar-2" "2.1.8-no-fsevents"
-    chokidar "^3.4.0"
-
 "@babel/cli@^7.12.1":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.12.1.tgz#e08a0b1cb6fcd4b9eb6a606ba5602c5c0fe24a0c"
@@ -6775,22 +6758,6 @@ babel-plugin-transform-strict-mode@^6.24.1:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
 
-babel-preset-gatsby-package@^0.7.0-next.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-gatsby-package/-/babel-preset-gatsby-package-0.7.0.tgz#e6bfbfccf74b211221d2397e5fcbf03d2d8aa56d"
-  integrity sha512-I89O5eBkYzmVqxwAnfLiGSUAI5/JKUrknL/y7noHPuFBudXYMDnZtTSIs9/g5IwbpFQRTU7vLU9h15hmPSiNQw==
-  dependencies:
-    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.12.1"
-    "@babel/plugin-proposal-optional-chaining" "^7.12.1"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-transform-runtime" "^7.12.1"
-    "@babel/plugin-transform-typescript" "^7.12.1"
-    "@babel/preset-env" "^7.12.1"
-    "@babel/preset-flow" "^7.12.1"
-    "@babel/preset-react" "^7.12.5"
-    babel-plugin-dynamic-import-node "^2.3.3"
-    core-js "^3.7.0"
-
 babel-preset-jest@^22.4.3:
   version "22.4.4"
   resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-22.4.4.tgz#ec9fbd8bcd7dfd24b8b5320e0e688013235b7c39"
@@ -8926,7 +8893,7 @@ core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.6.5:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
 
-core-js@^3.0.0, core-js@^3.10.0, core-js@^3.2.1, core-js@^3.6.5, core-js@^3.7.0, core-js@^3.8.1, core-js@^3.9.0:
+core-js@^3.0.0, core-js@^3.10.0, core-js@^3.2.1, core-js@^3.6.5, core-js@^3.8.1, core-js@^3.9.0:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.10.0.tgz#9a020547c8b6879f929306949e31496bbe2ae9b3"
   integrity sha512-MQx/7TLgmmDVamSyfE+O+5BHvG1aUGj/gHhLn1wVtm2B5u1eVIPvh7vkfjwWKNCjrTJB8+He99IntSQ1qP+vYQ==
@@ -9091,7 +9058,7 @@ createerror@1.3.0, createerror@^1.2.0, createerror@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/createerror/-/createerror-1.3.0.tgz#c666bd4cd6b94e35415396569d4649dd0cdb3313"
 
-cross-env@^7.0.2, cross-env@^7.0.3:
+cross-env@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
   integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
@@ -12522,6 +12489,24 @@ gatsby-page-utils@^0.4.0-next.0:
     glob "^7.1.6"
     lodash "^4.17.20"
     micromatch "^4.0.2"
+
+gatsby-plugin-functions@^0.1.0-0:
+  version "0.1.0-7"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-functions/-/gatsby-plugin-functions-0.1.0-7.tgz#227f66f0855cefde4c952520b59099eeb9c6a110"
+  integrity sha512-muOmyYDrEZEPpzMMHAv9v1PDtl/PyOcs2typySvzqrgcoe3mqnd8/dc2tvjjEvdaspCdmzm+51Xg6D8qAAtJbw==
+  dependencies:
+    "@babel/core" "^7.12.8"
+    "@babel/preset-env" "^7.12.7"
+    "@sindresorhus/slugify" "^1.1.0"
+    babel-loader "^8.2.1"
+    chokidar "^3.4.2"
+    fs-exists-cached "^1.0.0"
+    gatsby-core-utils "^1.5.0"
+    gatsby-page-utils "^0.4.0-next.0"
+    globby "^11.0.1"
+    lodash "^4.17.20"
+    multer "^1.4.2"
+    webpack "^5.4.0"
 
 gatsby-plugin-webfonts@^1.1.4:
   version "1.1.4"
