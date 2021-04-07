@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.7.0...gatsby-legacy-polyfills@0.7.1) (2021-04-07)
+
+### Bug Fixes
+
+- **gatsby-legacy-polyfills:** add dom collections to polyfills ([#30483](https://github.com/gatsbyjs/gatsby/issues/30483)) ([#30616](https://github.com/gatsbyjs/gatsby/issues/30616)) ([fa95904](https://github.com/gatsbyjs/gatsby/commit/fa95904793b01141cb4f08992abf81e6dc61eb22))
+
 # [0.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-legacy-polyfills@0.7.0-next.0...gatsby-legacy-polyfills@0.7.0) (2021-02-02)
 
 **Note:** Version bump only for package gatsby-legacy-polyfills

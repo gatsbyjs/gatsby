@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.32.12](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.11...gatsby@2.32.12) (2021-04-07)
+
+### Bug Fixes
+
+- **gatsby:** fix incorrect intersection of filtered results ([#30594](https://github.com/gatsbyjs/gatsby/issues/30594)) ([#30619](https://github.com/gatsbyjs/gatsby/issues/30619)) ([0eac672](https://github.com/gatsbyjs/gatsby/commit/0eac672696997784c4e565447b719d6bf9fca7c6))
+
 ## [2.32.11](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.32.10...gatsby@2.32.11) (2021-03-09)
 
 ### Bug Fixes
