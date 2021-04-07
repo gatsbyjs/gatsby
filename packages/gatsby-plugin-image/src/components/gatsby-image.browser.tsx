@@ -183,7 +183,11 @@ class GatsbyImageHydrator extends Component<
       const cacheKey = JSON.stringify(this.props.image.images)
 
       // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport() && ssrElement && GATSBY___IMAGE) {
+      if (
+        hasNativeLazyLoadSupport() &&
+        ssrElement &&
+        gatsbyImageIsInstalled()
+      ) {
         this.props.onStartLoad?.({ wasCached: false })
 
         // When the image is already loaded before we have hydrated, we trigger onLoad and cache the item
