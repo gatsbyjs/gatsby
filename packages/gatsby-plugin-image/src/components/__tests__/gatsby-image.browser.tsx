@@ -19,8 +19,9 @@ describe(`GatsbyImage browser`, () => {
 
   beforeEach(() => {
     console.warn = jest.fn()
-    ;(global as GlobalOverride).SERVER = true
-    ;(global as GlobalOverride).GATSBY___IMAGE = true
+    console.error = jest.fn()
+    global.SERVER = true
+    global.GATSBY___IMAGE = true
   })
 
   beforeEach(() => {
@@ -73,12 +74,12 @@ describe(`GatsbyImage browser`, () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    ;(global as GlobalOverride).SERVER = undefined
-    ;(global as GlobalOverride).GATSBY___IMAGE = undefined
+    global.SERVER = undefined
+    global.GATSBY___IMAGE = undefined
   })
 
   it(`shows a suggestion to switch to the new gatsby-image API when available`, async () => {
-    ;(global as GlobalOverride).GATSBY___IMAGE = false
+    global.GATSBY___IMAGE = undefined
 
     const { container } = render(
       <GatsbyImage image={image} alt="Alt content" />
@@ -86,7 +87,7 @@ describe(`GatsbyImage browser`, () => {
 
     await waitFor(() => container.querySelector(`[data-placeholder-image=""]`))
 
-    expect(console.warn).toBeCalledWith(
+    expect(console.error).toBeCalledWith(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   })
