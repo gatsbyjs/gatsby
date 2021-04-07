@@ -32,7 +32,7 @@ examples:
 - [Plugin README](/plugins/gatsby-source-filesystem/)
 - [Starter README](https://github.com/gatsbyjs/gatsby-starter-default)
 
-Please see the [Docs templates](/contributing/docs-templates/) for guidelines on how to format the above kinds of documents, as well as tips for different types of guide articles.
+Please see the [Docs Structure](/contributing/docs-contributions/docs-structure/) for guidelines on how to format the above kinds of documents, as well as tips for different types of guide articles.
 
 ## Writing process
 

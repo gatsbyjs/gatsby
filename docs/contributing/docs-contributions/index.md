@@ -4,7 +4,7 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of June 2020, over 2,100 people have contributed. It's people like you that make this community great!
 
-> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
+> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs structure](/contributing/docs-contributions/docs-structure/) page._
 
 When writing (or reviewing) learning materials that show Gatsby users how to complete tasks, you are expected to **test out any code examples or steps to ensure they work**. This can also help with writing in your own words, rather than copying from other sources. If you have a demo project or code example that strengthens docs and you don't know where to put it, mention it to the Gatsby Documentation team in a PR.
 
@@ -50,21 +50,9 @@ For the purposes of an accessible document outline, content headings should go i
 
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+The content of the docs site mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
-> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
-
-- Prerequisites: install Node.js and Yarn. See [development setup instructions](/contributing/setting-up-your-local-dev-environment/).
-- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
-- For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
-- Change directories into the docs site folder: `cd www`
-- Install dependencies with Yarn: `yarn install`
-- Add the following env variable to an `.env.development` file inside the `www` directory to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
-- Make sure you have the Gatsby CLI installed with `gatsby -v`, if not run `yarn global add gatsby-cli`
-- Start a build of `www` with `gatsby develop`.
-- Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
-- View the changes in your browser at `http://localhost:8000`.
-- Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
+There is currently not a way for community members to build the docs site locally. We know this is not ideal and we're working internally on a fix.
 
 ## Changing headers
 
@@ -167,11 +155,3 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 ## Claim your swag
 
 After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
-
-## Want more?
-
-Check out our additional pages on docs contributions:
-
-- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Docs Templates](/contributing/docs-templates/)
-- [How to Write a Stub](/contributing/how-to-write-a-stub/)

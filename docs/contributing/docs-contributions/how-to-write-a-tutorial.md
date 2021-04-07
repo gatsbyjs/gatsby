@@ -2,29 +2,7 @@
 title: How to Write a Tutorial
 ---
 
-In contrast to recipes and reference guides, tutorials are step-by-step instructions for a series of related Gatsby tasks. Tutorials are grouped into Gatsby Fundamentals and Intermediate Tutorials ("The Gatsby Tutorial"), as well as Advanced Tutorials which can be explored individually as needed.
-
-## Near perfect example of a tutorial
-
-[Main Gatsby tutorial](https://www.gatsbyjs.com/tutorial/)
-
-## What should a tutorial be about?
-
-We need tutorials to guide users of all skill levels through performing a series of related tasks with Gatsby.
-
-## How to choose a tutorial topic?
-
-Topics should be chosen based on these priorities:
-
-1. Tutorials related to improving [key learning workflows](https://github.com/gatsbyjs/gatsby/issues/13708)
-2. Tutorials with the [help wanted and type:documentation](https://github.com/gatsbyjs/gatsby/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+label%3A%22type%3A+documentation%22) labels on GitHub
-3. Tutorials that you or other community members would like to see
-
-## Length of a tutorial
-
-If a tutorial is longer than 3 8.5x11” pages or has more than about 5 headers and you’re finding yourself creating a Table of Contents at the top, it will probably be easier to read and easier for readers to complete if you turn it into a multi-page tutorial, like the [main Gatsby tutorial](https://www.gatsbyjs.com/tutorial/).
-
-If you have a tutorial that falls into this category, it is likely a big enough project that you’ll benefit from the feedback process provided by creating an [RFC (Request for Comments) document](https://github.com/gatsbyjs/rfcs).
+The Gatsby Tutorial is a self-contained introduction that guides readers step-by-step through creating their first Gatsby site. The Tutorial is most useful when readers are first getting started with Gatsby.
 
 ## Tutorial template
 
