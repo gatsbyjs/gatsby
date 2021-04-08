@@ -8,7 +8,6 @@ if (!process.env.GITHUB_ACCESS_TOKEN) {
   throw new Error(`GITHUB_ACCESS_TOKEN env var not set`)
 }
 
-// Tip: Use the token from GatsbyBot (inside 1Password)
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_ACCESS_TOKEN}`,
 })
