@@ -50,6 +50,10 @@ async function run() {
   }
 
   const commitsha = result.data.merge_commit_sha
+  
+  if (!commitsha) {
+    throw new Error(`Can't get merge commit sha`)
+  }
 
   const commitMeta = await octokit.git.getCommit({
     owner,
@@ -59,10 +63,6 @@ async function run() {
 
   // get first line
   const commitMessage = commitMeta.data.message.split(`\n`)[0]
-
-  if (!commitsha) {
-    throw new Error(`Can't get merge commit sha`)
-  }
 
   const releaseBranchName = `release/${argv.release}`
   const backportReleaseBranchName = `backport-${argv.release}-${argv.pr}`
