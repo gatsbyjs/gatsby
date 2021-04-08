@@ -12,6 +12,14 @@ A How-To Guide can include _some_ details to help users understand the steps the
 
 > For more information on How-To Guides, check out the [Divio documentation system](https://documentation.divio.com/how-to-guides/), which the Gatsby docs are based on.
 
+## How-To Guides audience
+
+How-To Guides are for anyone looking to complete a common Gatsby task, however they may appeal to intermediate to advanced learners due to their brevity and focus on Gatsby-specific details without going through every setup step.
+
+## How-To Guides tone and style
+
+How-To Guides are shorter and more concise than the Tutorial but more hands-on than Reference Guides. They should be friendly but information-dense. This is accomplished by focusing on only what is relevant and actionable to the given task, anticipating any new or difficult concepts with links to additional materials to continue learning.
+
 ## A near-perfect example of a How-To Guide
 
 Want to see what a good How-To Guide looks like? Check out the [How-To Guide: Add a Plugin to Your Site](/docs/how-to/plugins-and-themes/using-a-plugin-in-your-site).
