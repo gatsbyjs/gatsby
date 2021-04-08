@@ -94,6 +94,7 @@ tutorials, etc.).
 
 Best-case scenario, these should be high-quality, evergreen
 (not quickly outdated) resources.
+
 - Link to a blog post
 - Link to a YouTube tutorial
 - Link to an example site
