@@ -192,7 +192,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
 # With *Bold* {#custom-withbold}
 
-# Italic {#this_is_italic}
+# Not italic {#not_italic_here}
 
 # No custom ID
 
@@ -222,8 +222,8 @@ describe(`gatsby-remark-autolink-headers`, () => {
         text: `With Bold`,
       },
       {
-        id: `this_is_italic`,
-        text: `Italic`,
+        id: `not_italic_here`,
+        text: `Not italic`,
       },
       {
         id: `no-custom-id`,
