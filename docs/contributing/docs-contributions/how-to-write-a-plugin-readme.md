@@ -1,6 +1,5 @@
 ---
 title: How to Write a Plugin README
-issue: https://github.com/gatsbyjs/gatsby/issues/21599
 ---
 
 A plugin README is like a Reference Guide for a specific plugin. It should describe what the plugin does, how to install and configure it, and how to use it in your site.
