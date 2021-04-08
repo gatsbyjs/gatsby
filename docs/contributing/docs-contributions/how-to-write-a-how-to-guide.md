@@ -92,6 +92,8 @@ they might want to take after reading your How-To Guide. You can also
 mention any resources that helped you write the article (blog posts, outside
 tutorials, etc.).
 
+Best-case scenario, these should be high-quality, evergreen
+(not quickly outdated) resources.
 - Link to a blog post
 - Link to a YouTube tutorial
 - Link to an example site
