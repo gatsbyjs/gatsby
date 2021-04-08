@@ -1,5 +1,5 @@
 const Remark = require(`remark`)
-const select = require(`unist-util-select`)
+const { selectAll } = require(`unist-util-select`)
 const _ = require(`lodash`)
 const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -175,7 +175,7 @@ module.exports = function remarkExtendNodeType(
         parseString: string => parseString(string, markdownNode),
         generateHTML: ast =>
           hastToHTML(markdownASTToHTMLAst(ast), {
-            allowDangerousHTML: true,
+            allowDangerousHtml: true,
           }),
       }
 
@@ -268,7 +268,7 @@ module.exports = function remarkExtendNodeType(
       }
 
       const ast = await getAST(markdownNode)
-      const headings = select(ast, `heading`).map(heading => {
+      const headings = selectAll(`heading`, ast).map(heading => {
         return {
           id: getHeadingID(heading),
           value: mdastToString(heading),
@@ -338,8 +338,8 @@ module.exports = function remarkExtendNodeType(
 
         // addSlugToUrl may clear the map
         if (tocAst.map) {
-          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-            allowDangerousHTML: true,
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHtml: true }), {
+            allowDangerousHtml: true,
           })
         }
       }
@@ -350,7 +350,7 @@ module.exports = function remarkExtendNodeType(
 
     function markdownASTToHTMLAst(ast) {
       return toHAST(ast, {
-        allowDangerousHTML: true,
+        allowDangerousHtml: true,
         handlers: { code: codeHandler },
       })
     }
@@ -378,7 +378,7 @@ module.exports = function remarkExtendNodeType(
         const ast = await getHTMLAst(markdownNode)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
-          allowDangerousHTML: true,
+          allowDangerousHtml: true,
         })
 
         // Save new HTML to cache
@@ -452,7 +452,7 @@ module.exports = function remarkExtendNodeType(
       })
 
       return hastToHTML(excerptAST, {
-        allowDangerousHTML: true,
+        allowDangerousHtml: true,
       })
     }
 

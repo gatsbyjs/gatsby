@@ -24,10 +24,10 @@
     "retext-english": "^3.0.4",
     "sanitize-html": "^1.27.5",
     "underscore.string": "^3.3.5",
-    "unified": "^6.2.0",
-    "unist-util-remove-position": "^1.1.4",
-    "unist-util-select": "^1.5.0",
-    "unist-util-visit": "^1.4.1"
+    "unified": "^9.2.1",
+    "unist-util-remove-position": "^3.0.0",
+    "unist-util-select": "^3.0.4",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
