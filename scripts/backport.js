@@ -50,7 +50,7 @@ async function run() {
   }
 
   const commitsha = result.data.merge_commit_sha
-  
+
   if (!commitsha) {
     throw new Error(`Can't get merge commit sha`)
   }
