@@ -168,29 +168,105 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
   }
+
+  if (process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+    resolvers.Query = {
+      // TODO add JSON field for page context.
+      sitePage: {
+        type: `SitePage`,
+        resolve(source, args, context, info) {
+          const { pages } = store.getState()
+          let pagePath = ``
+          if (args.path?.eq && pages.get(args.path.eq)) {
+            pagePath = args.path.eq
+          } else {
+            pagePath = pages.keys().next().value
+          }
+          const page = pages.get(pagePath)
+          page.id = pagePath
+          return page
+        },
+      },
+      allSitePage: {
+        type: `SitePageConnection`,
+        resolve(source, args, context, info) {
+          console.log({ source, args: JSON.stringify(args), context })
+          const { pages } = store.getState()
+          let mappedPages = [...pages.values()].map(page => {
+            page.id = page.path
+            return page
+          })
+
+          // Sort
+          // Filter
+          if (args.filter) {
+            // Support a few common ones.
+            mappedPages = mappedPages.filter(node => {
+              if (args.filter.path?.ne) {
+                if (node.path === args.filter.path.ne) {
+                  return false
+                } else {
+                  return true
+                }
+              }
+              if (args.filter.path?.eq) {
+                if (node.path === args.filter.path.eq) {
+                  return true
+                } else {
+                  return false
+                }
+              }
+            })
+          }
+          // Limit
+          if (args.limit) {
+            mappedPages = mappedPages.slice(0, args.limit)
+          }
+
+          const edges = mappedPages.map(node => {
+            return {
+              node,
+            }
+          })
+
+          return {
+            totalCount: pages.length,
+            edges,
+            nodes: mappedPages,
+            pagesInfo: {
+              totalCount: pages.length,
+            },
+          }
+        },
+      },
+    }
+  }
+
   createResolvers(resolvers)
 }
 
 exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  const { createNode } = actions
-  // eslint-disable-next-line
-  const { updatedAt, ...pageWithoutUpdated } = page
+  if (!process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+    const { createNode } = actions
+    // eslint-disable-next-line
+    const { updatedAt, ...pageWithoutUpdated } = page
 
-  // Add page.
-  createNode({
-    ...pageWithoutUpdated,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(pageWithoutUpdated),
-      description:
-        page.pluginCreatorId === `Plugin default-site-plugin`
-          ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId,
-    },
-  })
+    // Add page.
+    createNode({
+      ...pageWithoutUpdated,
+      id: createPageId(page.path),
+      parent: null,
+      children: [],
+      internal: {
+        type: `SitePage`,
+        contentDigest: createContentDigest(pageWithoutUpdated),
+        description:
+          page.pluginCreatorId === `Plugin default-site-plugin`
+            ? `Your site's "gatsby-node.js"`
+            : page.pluginCreatorId,
+      },
+    })
+  }
 }
 
 // Listen for DELETE_PAGE and delete page nodes.

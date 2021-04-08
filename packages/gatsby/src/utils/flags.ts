@@ -166,6 +166,17 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/parallel-sourcing-feedback`,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `NO_PAGE_NODES`,
+    env: `GATSBY_EXPERIMENTAL_NO_PAGE_NODES`,
+    command: `all`,
+    experimental: false,
+    telemetryId: `NoPageNodes`,
+    description: `Don't create page nodes. Saves time when creating pages for larger sites. Will be the new default behavior in v3.`,
+    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
+    // testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
+  },
 ]
 
 export default activeFlags
