@@ -216,6 +216,8 @@ exports.createResolvers = ({ createResolvers }) => {
                   return false
                 }
               }
+
+              return true
             })
           }
           // Limit
