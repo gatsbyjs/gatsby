@@ -43,8 +43,10 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 ## 🚀 Quick start (Gatsby Cloud)
 
 1.  **Create a Gatsby site.**
-  Use the deploy now feature in Gatsby cloud to host your application:
-  [ <img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-wordpress-blog)
+
+    Use the deploy now feature in Gatsby cloud to host your application:
+
+    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-wordpress-blog)
 
 ## 🧐 What's inside?
 
