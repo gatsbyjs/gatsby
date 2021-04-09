@@ -2,7 +2,7 @@
   "name": "gatsby-source-wordpress",
   "description": "Source data from WordPress in an efficient and scalable way.",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "5.3.0-next.2",
+  "version": "5.3.0-next.3",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },

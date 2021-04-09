@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.3.0-next.2...gatsby-plugin-image@1.3.0-next.3) (2021-04-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Don't inherit all img styles ([#30754](https://github.com/gatsbyjs/gatsby/issues/30754)) ([1a9b830](https://github.com/gatsbyjs/gatsby/commit/1a9b830062a654ff7595da0813f21087e0937bd3))
+
 # [1.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.3.0-next.1...gatsby-plugin-image@1.3.0-next.2) (2021-04-07)
 
 ### Bug Fixes
