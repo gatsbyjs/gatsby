@@ -20,6 +20,8 @@ module.exports = runApisInSteps({
     steps.setImageNodeIdCache,
   ],
 
+  resolveNodeId: ({ objectData: { id } }) => id,
+
   onPreExtractQueries: [
     steps.onPreExtractQueriesInvokeLeftoverPreviewCallbacks,
   ],
