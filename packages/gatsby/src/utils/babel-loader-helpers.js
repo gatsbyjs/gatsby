@@ -1,15 +1,13 @@
 const path = require(`path`)
 const _ = require(`lodash`)
 
-const isNotTestEnv = process.env.NODE_ENV !== `test`
-
 const loadCachedConfig = () => {
   let pluginBabelConfig = {
     stages: {
       test: { plugins: [], presets: [] },
     },
   }
-  if (isNotTestEnv) {
+  if (process.env.NODE_ENV !== `test`) {
     pluginBabelConfig = require(path.join(
       process.cwd(),
       `./.cache/babelState.json`
