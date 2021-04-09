@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.2...gatsby-source-wordpress@5.2.3) (2021-04-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** only log out duplicate nodes if we have all the data we want to log ([#30751](https://github.com/gatsbyjs/gatsby/issues/30751)) ([#30759](https://github.com/gatsbyjs/gatsby/issues/30759)) ([01098dc](https://github.com/gatsbyjs/gatsby/commit/01098dccb33c89f7bb63ca45d3e6359060fcbf4f))
+
 ## [5.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.2.1...gatsby-source-wordpress@5.2.2) (2021-04-07)
 
 ### Bug Fixes
