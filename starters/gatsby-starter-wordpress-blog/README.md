@@ -40,6 +40,12 @@ _Have another more specific idea? You may want to check out our vibrant collecti
 
     Open the `my-blog-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
+## 🚀 Quick start (Gatsby Cloud)
+
+1.  **Create a Gatsby site.**
+  Use the deploy now feature in Gatsby cloud to host your application:
+  [ <img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-wordpress-blog)
+
 ## 🧐 What's inside?
 
 A quick look at the top-level files and directories you'll see in a Gatsby project.
