@@ -23,7 +23,7 @@ Add this component to `src/pages/index.js` to create a home page for your site.
 ```jsx:title=src/pages/index.js
 import * as React from "react"
 
-export default function Index () {
+export default function Index() {
   return <div>Hello world</div>
 }
 ```
