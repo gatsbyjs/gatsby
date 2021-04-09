@@ -21,7 +21,7 @@ This guide assumes that you have a Gatsby project set up. If you need to set up 
 ### 1. Install Tailwind
 
 ```shell
-npm install tailwindcss autoprefixer --save-dev
+npm install tailwindcss autoprefixer
 ```
 
 ### 2. Generate Tailwind config file (optional)
@@ -143,7 +143,7 @@ plugins: [
 **Note:** Optionally you can add a corresponding configuration file (by default it will be `tailwind.config.js`).
 If you are adding a custom configuration, you will need to load it after `tailwindcss`.
 
-### 3. Add custom CSS/SCSS files
+### 3. Add base CSS/SCSS files
 
 **Note**: This approach is not needed if you chose CSS-in-JS above, as you can already nest styles and `@apply` rules directly from your `.js` files.
 
@@ -173,9 +173,11 @@ This will be your 'master' CSS file, which you will import all other CSS within.
 }
 ```
 
-3. Apply these additional styles to the browser
+Tailwind will swap these directives out at build-time with all of the styles it generates based on your configured design system.
 
-In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS so that they are accounted for in build.
+3. Import this file into your `gatsby-browser.js`
+
+In `gatsby-browser.js` add an import rule for your Tailwind directives and custom CSS to pull them into your site.
 
 ```js:title=gatsby-browser.js
 import "./src/css/index.css"
@@ -195,7 +197,7 @@ In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to 
 
 ```js:title=tailwind.config.js
 module.exports = {
-  purge: ["./src/**/*.js", "./src/**/*.jsx", "./src/**/*.ts", "./src/**/*.tsx"],
+  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {},
   variants: {},
   plugins: [],
