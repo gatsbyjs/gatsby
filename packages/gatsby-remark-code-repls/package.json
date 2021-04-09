@@ -10,9 +10,9 @@
     "@babel/runtime": "^7.12.5",
     "lz-string": "^1.4.4",
     "normalize-path": "^3.0.0",
-    "npm-package-arg": "^6.1.1",
+    "npm-package-arg": "^8.1.1",
     "recursive-readdir": "^2.2.2",
-    "unist-util-map": "^1.0.5",
+    "unist-util-map": "^2.0.1",
     "urijs": "^1.19.2"
   },
   "devDependencies": {
