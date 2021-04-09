@@ -197,7 +197,7 @@ In 1.4.0 you can purge your CSS directly from your Tailwind config. You need to 
 
 ```js:title=tailwind.config.js
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
+  purge: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {},
   variants: {},
   plugins: [],
