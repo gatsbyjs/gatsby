@@ -19,7 +19,6 @@ import db from "../db"
 import { store } from "../redux"
 import * as appDataUtil from "../utils/app-data"
 import { flush as flushPendingPageDataWrites } from "../utils/page-data"
-import * as WorkerPool from "../utils/worker/pool"
 import {
   structureWebpackErrors,
   reportWebpackWarnings,
@@ -79,7 +78,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   const buildSpan = buildActivity.span
   buildSpan.setTag(`directory`, program.directory)
 
-  const { gatsbyNodeGraphQLFunction } = await bootstrap({
+  const { gatsbyNodeGraphQLFunction, workerPool } = await bootstrap({
     program,
     parentSpan: buildSpan,
   })
@@ -136,8 +135,6 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   } finally {
     buildActivityTimer.end()
   }
-
-  const workerPool = WorkerPool.create()
 
   const webpackCompilationHash = stats.hash
   if (
