@@ -2,7 +2,7 @@
 title: Debugging HTML Builds
 ---
 
-Errors while building static HTML files (The build-time React SSR process) generally happen for one of the following reasons:
+Errors while building static HTML files (the build-time React SSR process) generally happen for one of the following reasons:
 
 1. Some of your code references "browser globals" like `window` or `document`
    that aren't available in Node.js. If this is your problem you should see an
