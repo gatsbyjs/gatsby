@@ -7,6 +7,8 @@ const { emitter, store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 const { getNode } = require(`../../redux/nodes`)
 
+const apiRunnerNode = require(`../../utils/api-runner-node`)
+
 function transformPackageJson(json) {
   const transformDeps = deps =>
     _.entries(deps).map(([name, version]) => {
@@ -164,6 +166,38 @@ exports.createResolvers = ({ createResolvers }) => {
             context,
             info
           )
+        },
+      },
+      resolvedPagePath: {
+        type: `String`,
+        args: {
+          previewArgs: `String`,
+        },
+        resolve: async function (source, args, context, info) {
+          console.time(`resolveNodeId`)
+          // Check if there's a plugin by this name & if it has the right exported API
+          // invoke the API
+          // if get response w/ an node id — get its page & return redirect
+          const apiResults = await apiRunnerNode(`resolveNodeId`, {
+            objectData: JSON.parse(args.previewArgs),
+          })
+
+          console.log({ apiResults })
+          const nodeId = apiResults[0]
+          console.log(`nodeId`, nodeId)
+          const pagesBynode = store.getState().queries.byNode
+          console.log(pagesBynode)
+
+          const pagePathSet = pagesBynode.get(nodeId)
+          console.log({ pagePathSet })
+          const pagePath = pagePathSet?.values()?.next()?.value
+          console.log({ pagePath })
+          if (pagePath && typeof pagePath === `string`) {
+            return pagePath
+          } else {
+            console.timeEnd(`resolveNodeId`)
+            return null
+          }
         },
       },
     },
