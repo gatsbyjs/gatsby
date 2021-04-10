@@ -43,9 +43,13 @@ Note: The `ssr` option will be ignored. Gatsby will apply it automatically when 
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
 
+#### v4.0.0
+
+Released to support upgrade to Gatsby v3.
+
 #### v3.0.0
 
-support Gatsby v2 only
+Supports Gatsby v2 only.
 
 #### v2.0.1
 
