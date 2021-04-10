@@ -13,33 +13,41 @@ describe(`gatsby-node.js`, () => {
       `"generateMatchPathRewrites" must be a boolean`,
     ]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      headers: `this should be an object`,
-      allPageHeaders: `this should be an array`,
-      mergeSecurityHeaders: `this should be a boolean`,
-      mergeLinkHeaders: `this should be a boolean`,
-      mergeCachingHeaders: `this should be a boolean`,
-      transformHeaders: (too, many, args) => ``,
-      generateMatchPathRewrites: `this should be a boolean`,
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        headers: `this should be an object`,
+        allPageHeaders: `this should be an array`,
+        mergeSecurityHeaders: `this should be a boolean`,
+        mergeLinkHeaders: `this should be a boolean`,
+        mergeCachingHeaders: `this should be a boolean`,
+        transformHeaders: (too, many, args) => ``,
+        generateMatchPathRewrites: `this should be a boolean`,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      headers: {
-        "/some-page": [`Bearer: Some-Magic-Token`],
-        "/some-other-page": [`some`, `great`, `headers`],
-      },
-      allPageHeaders: [`First header`, `Second header`],
-      mergeSecurityHeaders: true,
-      mergeLinkHeaders: false,
-      mergeCachingHeaders: true,
-      transformHeaders: () => null,
-      generateMatchPathRewrites: false,
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        headers: {
+          "/some-page": [`Bearer: Some-Magic-Token`],
+          "/some-other-page": [`some`, `great`, `headers`],
+        },
+        allPageHeaders: [`First header`, `Second header`],
+        mergeSecurityHeaders: true,
+        mergeLinkHeaders: false,
+        mergeCachingHeaders: true,
+        transformHeaders: () => null,
+        generateMatchPathRewrites: false,
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

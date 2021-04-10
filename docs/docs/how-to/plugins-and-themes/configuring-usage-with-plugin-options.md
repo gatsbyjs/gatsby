@@ -246,17 +246,19 @@ describe(`pluginOptionsSchema`, () => {
       message: 123, // Should be a string
       optionB: `not a boolean`, // Should be a boolean
     }
+    const expectedErrors = [
+      `"optionA" is required`,
+      `"message" must be a string`,
+      `"optionB" must be a boolean`,
+    ]
+
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
       options
     )
 
     expect(isValid).toBe(false)
-    expect(errors).toEqual([
-      `"optionA" is required`,
-      `"message" must be a string`,
-      `"optionB" must be a boolean`,
-    ])
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate correct options`, async () => {

@@ -35,6 +35,17 @@ describe(`pluginOptionsSchema`, () => {
   })
 
   it(`should invalidate an invalid config`, async () => {
+    const expectedErrors = [
+      `"offsetY" must be a number`,
+      `"icon" must be one of [string, boolean]`,
+      `"className" must be a string`,
+      `"maintainCase" must be a boolean`,
+      `"removeAccents" must be a boolean`,
+      `"isIconAfterHeader" must be a boolean`,
+      `"elements[0]" must be a string`,
+      `"elements[1]" must be a string`,
+    ]
+
     // Only the "toVerify" key of the schema will be verified in this test
     const { isValid, errors } = await testPluginOptionsSchema(
       pluginOptionsSchema,
@@ -50,17 +61,6 @@ describe(`pluginOptionsSchema`, () => {
     )
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"offsetY\\" must be a number",
-        "\\"icon\\" must be one of [string, boolean]",
-        "\\"className\\" must be a string",
-        "\\"maintainCase\\" must be a boolean",
-        "\\"removeAccents\\" must be a boolean",
-        "\\"isIconAfterHeader\\" must be a boolean",
-        "\\"elements[0]\\" must be a string",
-        "\\"elements[1]\\" must be a string",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 })

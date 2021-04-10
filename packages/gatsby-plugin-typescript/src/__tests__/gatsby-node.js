@@ -81,36 +81,50 @@ describe(`gatsby-plugin-typescript`, () => {
         `"allExtensions" must be a boolean`,
       ]
 
-      const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: `this should be a boolean`,
-        jsxPragma: 123,
-        allExtensions: `this should be a boolean`,
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          isTSX: `this should be a boolean`,
+          jsxPragma: 123,
+          allExtensions: `this should be a boolean`,
+        }
+      )
 
+      expect(isValid).toBe(false)
       expect(errors).toEqual(expectedErrors)
     })
 
     it(`should validate the schema`, async () => {
-      const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: false,
-        jsxPragma: `ReactFunction`,
-        allExtensions: false,
-        allowNamespaces: false,
-        allowDeclareFields: false,
-        onlyRemoveTypeImports: false,
-      })
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          isTSX: false,
+          jsxPragma: `ReactFunction`,
+          allExtensions: false,
+          allowNamespaces: false,
+          allowDeclareFields: false,
+          onlyRemoveTypeImports: false,
+        }
+      )
 
       expect(isValid).toBe(true)
+      expect(errors).toEqual([])
     })
 
     it(`should break when isTSX doesn't match allExtensions`, async () => {
-      const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-        isTSX: true,
-        jsxPragma: `ReactFunction`,
-        allExtensions: false,
-      })
+      const expectedErrors = [`"allExtensions" must be [true]`]
 
-      expect(errors).toEqual([`"allExtensions" must be [true]`])
+      const { isValid, errors } = await testPluginOptionsSchema(
+        pluginOptionsSchema,
+        {
+          isTSX: true,
+          jsxPragma: `ReactFunction`,
+          allExtensions: false,
+        }
+      )
+
+      expect(isValid).toBe(false)
+      expect(errors).toEqual(expectedErrors)
     })
   })
 })
