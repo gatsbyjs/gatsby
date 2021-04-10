@@ -58,24 +58,6 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
-/**
- * Setup pluginOption defaults
- * TODO: Remove once pluginOptionsSchema is stable
- */
-exports.onPreInit = (_, pluginOptions) => {
-  pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
-  pluginOptions.include_favicon = pluginOptions.include_favicon ?? true
-  pluginOptions.legacy = pluginOptions.legacy ?? true
-  pluginOptions.theme_color_in_head = pluginOptions.theme_color_in_head ?? true
-  pluginOptions.cacheDigest = null
-
-  if (pluginOptions.cache_busting_mode !== `none` && pluginOptions.icon) {
-    pluginOptions.cacheDigest = createContentDigest(
-      fs.readFileSync(pluginOptions.icon)
-    )
-  }
-}
-
 exports.onPostBootstrap = async (
   { reporter, parentSpan, basePath },
   { localize, ...manifest }

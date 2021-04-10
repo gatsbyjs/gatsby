@@ -5,13 +5,7 @@ jest.mock(`fs`, () => {
   }
 })
 
-const { onPreInit } = require(`../gatsby-node`)
-const { onRenderBody: ssrOnRenderBody } = require(`../gatsby-ssr`)
-
-const onRenderBody = (args, pluginOptions) => {
-  onPreInit({}, pluginOptions)
-  return ssrOnRenderBody(args, pluginOptions)
-}
+const { onRenderBody } = require(`../gatsby-ssr`)
 
 let headComponents
 const setHeadComponents = args => (headComponents = headComponents.concat(args))
