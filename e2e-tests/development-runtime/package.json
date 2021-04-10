@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
+    "babel-plugin-search-and-replace": "^1.1.0",
     "gatsby": "^3.0.0-next.6",
     "gatsby-image": "^3.0.0-next.0",
     "gatsby-plugin-image": "^1.0.0-next.5",

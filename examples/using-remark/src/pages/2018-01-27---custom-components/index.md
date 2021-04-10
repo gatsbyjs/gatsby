@@ -67,30 +67,49 @@ export default class Counter extends React.Component {
 
 In order to display this component within a Markdown file, you'll need to add a reference to the component in the template that renders your Markdown content. There are five parts to this:
 
-1.  Install `rehype-react` as a dependency
+1.  Install `rehype-react` and `unified` as a dependency
 
     ```shell
-    # If you use Yarn
-    yarn add rehype-react
-
-    # If you use npm
-    npm install rehype-react
+    npm install rehype-react unified
     ```
 
-2.  Import `rehype-react` and whichever components you wish to use
+2.  Import `rehype-react` & `unified` and whichever components you wish to use
 
     ```js
+    import { createElement } from "react"
     import rehypeReact from "rehype-react"
+    import unified from "unified"
     import Counter from "../components/Counter"
     ```
 
 3.  Create a render function with references to your custom components
 
     ```js
-    const renderAst = new rehypeReact({
-      createElement: React.createElement,
-      components: { "interactive-counter": Counter },
-    }).Compiler
+    const processor = unified().use(rehypeReact, {
+      createElement,
+      components: {
+        "interactive-counter": Counter,
+      },
+    })
+
+    export const renderAst = ast => {
+      return processor.stringify(ast)
+    }
+    ```
+
+    If you use TypeScript:
+
+    ```ts
+    const processor = unified().use(rehypeReact, {
+      createElement,
+      components: {
+        "interactive-counter": Counter,
+      },
+    })
+
+    export const renderAst = (ast: any): JSX.Element => {
+      return (processor.stringify(ast) as unknown) as JSX.Element
+    }
     ```
 
     I prefer to use hyphenated names to make it clear that it's a custom component.
