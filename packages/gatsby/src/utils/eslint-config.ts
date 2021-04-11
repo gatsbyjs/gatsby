@@ -22,7 +22,7 @@ export const eslintRequiredConfig: ESLint.Options = {
       // TODO proper check for custom babel & plugins config
       // Currently when a babelrc is added to the project, it will override our babelOptions
       babelOptions: {
-        presets: [`babel-preset-gatsby`],
+        presets: [require.resolve(`babel-preset-gatsby`)],
       },
       requireConfigFile: false,
     },
@@ -63,7 +63,7 @@ export const eslintConfig = (
         // TODO proper check for custom babel & plugins config
         // Currently when a babelrc is added to the project, it will override our babelOptions
         babelOptions: {
-          presets: [`babel-preset-gatsby`],
+          presets: [require.resolve(`babel-preset-gatsby`)],
         },
         requireConfigFile: false,
       },
