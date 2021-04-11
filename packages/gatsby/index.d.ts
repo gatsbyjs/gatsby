@@ -1083,7 +1083,7 @@ export interface Actions {
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
   createNode<TNode = Record<string, unknown>>(
-    node: NodeInput<TNode>,
+    node: NodeInput & TNode,
     plugin?: ActionPlugin,
     options?: ActionOptions
   ): void
@@ -1437,7 +1437,7 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
   serviceWorker: ServiceWorkerRegistration
 }
 
-export type NodeInput<NodeType = Record<string, unknown>> = {
+export interface NodeInput {
   id: string
   parent?: string | null
   children?: string[]
@@ -1448,15 +1448,16 @@ export type NodeInput<NodeType = Record<string, unknown>> = {
     contentDigest: string
     description?: string
   }
-} & NodeType
+  [key: string]: unknown
+}
 
-export interface Node<NodeType = Record<string, unknown>>
-  extends NodeInput<NodeType> {
+export interface Node extends NodeInput {
   parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
     owner: string
   }
+  [key: string]: unknown
 }
 
 export interface Page<TContext = Record<string, unknown>> {
