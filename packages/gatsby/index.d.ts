@@ -739,9 +739,10 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
   app: any
 }
 
-export interface CreateNodeArgs<TNode extends object = {}>
-  extends ParentSpanPluginArgs {
-  node: Node & TNode
+export interface CreateNodeArgs<
+  TNode extends Record<string, unknown> = Record<string, unknown>
+> extends ParentSpanPluginArgs {
+  node: Node<TNode>
   traceId: string
   traceTags: {
     nodeId: string
@@ -1081,8 +1082,8 @@ export interface Actions {
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
-  createNode(
-    node: NodeInput,
+  createNode<TNode = Record<string, unknown>>(
+    node: NodeInput<TNode>,
     plugin?: ActionPlugin,
     options?: ActionOptions
   ): void
@@ -1436,7 +1437,7 @@ export interface ServiceWorkerArgs extends BrowserPluginArgs {
   serviceWorker: ServiceWorkerRegistration
 }
 
-export interface NodeInput {
+export type NodeInput<NodeType = Record<string, unknown>> = {
   id: string
   parent?: string | null
   children?: string[]
@@ -1447,16 +1448,15 @@ export interface NodeInput {
     contentDigest: string
     description?: string
   }
-  [key: string]: unknown
-}
+} & NodeType
 
-export interface Node extends NodeInput {
+export interface Node<NodeType = Record<string, unknown>>
+  extends NodeInput<NodeType> {
   parent: string | null
   children: string[]
   internal: NodeInput["internal"] & {
     owner: string
   }
-  [key: string]: unknown
 }
 
 export interface Page<TContext = Record<string, unknown>> {
