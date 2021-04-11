@@ -510,7 +510,8 @@ export interface GatsbyNode<
  */
 export interface GatsbyBrowser<
   DataType = Record<string, unknown>,
-  PageContext = Record<string, unknown>
+  PageContext = Record<string, unknown>,
+  LocationState = WindowLocation["state"]
 > {
   disableCorePrefetching?(
     args: BrowserPluginArgs,
@@ -559,7 +560,7 @@ export interface GatsbyBrowser<
     options: PluginOptions
   ): boolean | [number, number] | string
   wrapPageElement?(
-    args: WrapPageElementBrowserArgs<DataType, PageContext>,
+    args: WrapPageElementBrowserArgs<DataType, PageContext, LocationState>,
     options: PluginOptions
   ): React.ReactElement
   wrapRootElement?(
