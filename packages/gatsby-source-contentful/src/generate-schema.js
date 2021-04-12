@@ -1,4 +1,5 @@
 const fs = require(`fs`)
+const { cloneDeep } = require(`lodash`)
 
 import { makeTypeName } from "./normalize"
 
@@ -217,6 +218,8 @@ export function generateSchemas({
     if (typeof id === `string`) {
       return [id, field.required && `!`].filter(Boolean).join(``)
     }
+
+    id = cloneDeep(id)
 
     if (field.required) {
       id.type = `${id.type}!`
