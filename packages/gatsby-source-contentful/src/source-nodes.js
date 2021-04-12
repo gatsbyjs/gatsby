@@ -53,6 +53,7 @@ export async function sourceNodes(
     reporter,
     parentSpan,
     schema,
+    createContentDigest,
   },
   pluginOptions
 ) {
@@ -478,6 +479,7 @@ export async function sourceNodes(
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
         unstable_createNodeManifest,
+        createContentDigest,
       })
     )
   }
