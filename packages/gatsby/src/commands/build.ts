@@ -129,7 +129,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     stats = await buildProductionBundle(program, buildActivityTimer.span)
 
     if (stats.hasWarnings()) {
-      reportWebpackWarnings(stats.compilation.warnings, report)
+      const rawMessages = stats.toJson({ moduleTrace: false })
+      reportWebpackWarnings(rawMessages.warnings, report)
     }
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildJavascript, err))
