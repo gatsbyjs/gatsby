@@ -5,7 +5,8 @@ import { getGatsbyVersion } from "gatsby-core-utils"
 import { lt, prerelease } from "semver"
 
 const typePrefix = `Contentful`
-const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+export const makeTypeName = type =>
+  _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const GATSBY_VERSION_MANIFEST_V2 = `4.3.0`
 const gatsbyVersion =
@@ -189,7 +190,7 @@ function prepareTextNode(id, node, key, text) {
     children: [],
     [key]: str,
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} TextNode`),
+      type: `ContentfulTextNode`,
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
@@ -213,7 +214,7 @@ function prepareJSONNode(id, node, key, content) {
     parent: node.id,
     children: [],
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
+      type: `ContentfulJSONNode`,
       mediaType: `application/json`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
