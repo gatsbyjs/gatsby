@@ -104,7 +104,7 @@ export function generateSchemas({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulRichTextNode`,
+      name: `ContentfulNodeTypeRichText`,
       fields: {
         raw: { type: `String!` },
         references: { type: `ContentfulReference` },
@@ -158,7 +158,15 @@ export function generateSchemas({
     [`Object`, `JSON`],
     [`Boolean`, `Boolean`],
     [`Location`, `ContentfulLocationNode`],
-    [`RichText`, `ContentfulRichTextNode`],
+    [
+      `RichText`,
+      {
+        type: `ContentfulNodeTypeRichText`,
+        extensions: {
+          link: { by: `id` },
+        },
+      },
+    ],
   ])
   const getLinkFieldType = linkType => `Contentful${linkType}`
 
@@ -186,6 +194,10 @@ export function generateSchemas({
 
     if (field.required) {
       id.type = `${id.type}!`
+    }
+
+    if (id.extensions.link) {
+      id.extensions.link.from = `${field.id}___NODE`
     }
 
     return id
