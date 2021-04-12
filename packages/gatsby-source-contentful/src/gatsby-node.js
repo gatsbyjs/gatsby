@@ -9,6 +9,7 @@ const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
+const { generateSchemas } = require(`./generate-schema`)
 const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
@@ -362,54 +363,6 @@ exports.sourceNodes = async (
     })
   }
 
-  createTypes(`
-  interface ContentfulEntry implements Node {
-    contentful_id: String!
-    id: ID!
-    node_locale: String!
-  }
-`)
-
-  createTypes(`
-  interface ContentfulReference {
-    contentful_id: String!
-    id: ID!
-  }
-`)
-
-  createTypes(
-    schema.buildObjectType({
-      name: `ContentfulAsset`,
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-      },
-      interfaces: [`ContentfulReference`, `Node`],
-    })
-  )
-
-  const gqlTypes = contentTypeItems.map(contentTypeItem =>
-    schema.buildObjectType({
-      name: _.upperFirst(
-        _.camelCase(
-          `Contentful ${
-            pluginConfig.get(`useNameForId`)
-              ? contentTypeItem.name
-              : contentTypeItem.sys.id
-          }`
-        )
-      ),
-      fields: {
-        contentful_id: { type: `String!` },
-        id: { type: `ID!` },
-        node_locale: { type: `String!` },
-      },
-      interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
-    })
-  )
-
-  createTypes(gqlTypes)
-
   fetchActivity.end()
 
   const processingActivity = reporter.activityTimer(
@@ -419,6 +372,9 @@ exports.sourceNodes = async (
     }
   )
   processingActivity.start()
+
+  // Generate schemas based on Contentful content model
+  generateSchemas({ createTypes, schema, pluginConfig, contentTypeItems })
 
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deleted) {
