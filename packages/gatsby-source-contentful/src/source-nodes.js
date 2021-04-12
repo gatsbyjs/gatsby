@@ -4,6 +4,7 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
+import { generateSchemas } from "./generate-schema"
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -51,11 +52,17 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
+    schema,
   },
   pluginOptions
 ) {
-  const { createNode, touchNode, deleteNode, unstable_createNodeManifest } =
-    actions
+  const {
+    createNode,
+    touchNode,
+    deleteNode,
+    unstable_createNodeManifest,
+    createTypes,
+  } = actions
   const online = await isOnline()
 
   getNodes().forEach(node => {
@@ -179,6 +186,9 @@ export async function sourceNodes(
   )
   processingActivity.start()
 
+  // Generate schemas based on Contentful content model
+  generateSchemas({ createTypes, schema, pluginConfig, contentTypeItems })
+
   // Array of all existing Contentful nodes
   const existingNodes = getNodes().filter(
     n =>
@@ -222,7 +232,10 @@ export async function sourceNodes(
 
   reporter.verbose(`Building Contentful reference map`)
 
-  const entryList = buildEntryList({ contentTypeItems, currentSyncData })
+  const entryList = buildEntryList({
+    currentSyncData,
+    contentTypeItems,
+  })
   const { assets } = currentSyncData
 
   // Create map of resolvable ids so we can check links against them while creating
