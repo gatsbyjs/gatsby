@@ -860,6 +860,17 @@ In most cases, you won't have to do anything to be v3 compatible. But one thing 
 }
 ```
 
+If your plugin supports both versions:
+
+```diff:title=package.json
+{
+  "peerDependencies": {
+-   "gatsby": "^2.32.0",
++   "gatsby": "^2.32.0 || ^3.0.0",
+  }
+}
+```
+
 ## Known Issues
 
 This section is a work in progress and will be expanded when necessary. It's a list of known issues you might run into while upgrading Gatsby to v3 and how to solve them.
