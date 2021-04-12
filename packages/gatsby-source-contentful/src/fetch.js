@@ -3,7 +3,7 @@ const _ = require(`lodash`)
 const chalk = require(`chalk`)
 const { formatPluginOptionsForCLI } = require(`./plugin-options`)
 const { CODES } = require(`./report`)
-
+const fs = require(`fs-extra`)
 /**
  * Generate a user friendly error message.
  *
