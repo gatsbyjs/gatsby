@@ -196,9 +196,6 @@ function prepareTextNode(id, node, key, text) {
       // entryItem.sys.updatedAt is source of truth from contentful
       contentDigest: node.updatedAt,
     },
-    sys: {
-      type: node.sys.type,
-    },
   }
 
   node.children = node.children.concat([id])
@@ -219,9 +216,6 @@ function prepareJSONNode(id, node, key, content) {
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
       contentDigest: node.updatedAt,
-    },
-    sys: {
-      type: node.sys.type,
     },
   }
 
@@ -485,6 +479,32 @@ export const createNodesForContentType = ({
           })
         }
 
+        // Create sys node
+        const sysId = createNodeId(`${entryNodeId}.sys`)
+
+        const sys = {
+          id: sysId,
+          // parent___NODE: entryNodeId,
+          type: entryItem.sys.type,
+          internal: {
+            type: `ContentfulSys`,
+            contentDigest: entryItem.sys.updatedAt,
+          },
+        }
+
+        // Revision applies to entries, assets, and content types
+        if (entryItem.sys.revision) {
+          sys.revision = entryItem.sys.revision
+        }
+
+        // Content type applies to entries only
+        if (entryItem.sys.contentType) {
+          sys.contentType___NODE = createNodeId(contentTypeItemId)
+        }
+
+        childrenNodes.push(sys)
+
+        // Create actual entry node
         let entryNode = {
           id: entryNodeId,
           spaceId: space.sys.id,
@@ -496,9 +516,7 @@ export const createNodesForContentType = ({
           internal: {
             type: `${makeTypeName(contentTypeItemId)}`,
           },
-          sys: {
-            type: entryItem.sys.type,
-          },
+          sys___NODE: sysId,
         }
 
         contentfulCreateNodeManifest({
@@ -685,16 +703,11 @@ export const createNodesForContentType = ({
     // Create a node for each content type
     const contentTypeNode = {
       id: createNodeId(contentTypeItemId),
-      parent: null,
-      children: [],
       name: contentTypeItem.name,
       displayField: contentTypeItem.displayField,
       description: contentTypeItem.description,
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
-      },
-      sys: {
-        type: contentTypeItem.sys.type,
       },
     }
 
