@@ -149,8 +149,10 @@ export function generateSchemas({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulTextNode`,
-      fields: {},
+      name: `ContentfulNodeTypeText`,
+      fields: {
+        raw: `String!`,
+      },
       interfaces: [`Node`],
     })
   )
@@ -158,7 +160,15 @@ export function generateSchemas({
   // Contentful content type schemas
   const ContentfulDataTypes = new Map([
     [`Symbol`, `String`],
-    [`Text`, `String`],
+    [
+      `Text`,
+      {
+        type: `ContentfulNodeTypeText`,
+        extensions: {
+          link: { by: `id` },
+        },
+      },
+    ],
     [`Integer`, `Int`],
     [`Number`, `Float`],
     [
