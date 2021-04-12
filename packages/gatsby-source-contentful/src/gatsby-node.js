@@ -6,8 +6,8 @@ import fetchRetry from "@vercel/fetch-retry"
 import { maskText } from "./plugin-options"
 
 export { createSchemaCustomization } from "./create-schema-customization"
-export { sourceNodes } from "./source-nodes"
 export { setFieldsOnGraphQLNodeType } from "./extend-node-type"
+export { sourceNodes } from "./source-nodes"
 
 const fetch = fetchRetry(origFetch)
 
