@@ -19,6 +19,11 @@ describe(`find-path`, () => {
       expect(cleanPath(`/blog/mypath`)).toBe(`/mypath`)
     })
 
+    it(`strip out a complex basePrefix`, () => {
+      global.__BASE_PATH__ = `/test/blog`
+      expect(cleanPath(`/test/blog/new`)).toBe(`/new`)
+    })
+
     it(`strip out an encoded basePrefix`, () => {
       global.__BASE_PATH__ = encodeURIComponent(`/тест`)
       expect(cleanPath(`/тест/mypath`)).toBe(`/mypath`)
