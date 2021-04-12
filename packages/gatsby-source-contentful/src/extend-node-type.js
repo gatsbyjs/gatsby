@@ -24,6 +24,7 @@ const {
   ImageResizingBehavior,
   ImageCropFocusType,
   ImageLayoutType,
+  ImagePlaceholderType,
 } = require(`./schemes`)
 
 // By default store the images in `.cache` but allow the user to override
@@ -800,6 +801,15 @@ exports.extendNodeType = ({ type, store }) => {
             FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
             Pass a value to "sizes" if the container is not the full width of the screen.
         `,
+      },
+      placeholder: {
+        type: ImagePlaceholderType,
+        description: stripIndent`
+            Format of generated placeholder image, displayed while the main image loads.
+            BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+            DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
+            TRACED_SVG: a low-resolution traced SVG of the image.
+            NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       formats: {
         type: GraphQLList(ImageFormatType),

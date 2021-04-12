@@ -20,6 +20,16 @@ const ImageLayoutType = new GraphQLEnumType({
   },
 })
 
+const ImagePlaceholderType = new GraphQLEnumType({
+  name: `ContentfulImagePlaceholder`,
+  values: {
+    DOMINANT_COLOR: { value: `dominantColor` },
+    TRACED_SVG: { value: `tracedSVG` },
+    BLURRED: { value: `blurred` },
+    NONE: { value: `none` },
+  },
+})
+
 const ImageResizingBehavior = new GraphQLEnumType({
   name: `ImageResizingBehavior`,
   values: {
@@ -69,6 +79,7 @@ const ImageCropFocusType = new GraphQLEnumType({
 
 module.exports = {
   ImageLayoutType,
+  ImagePlaceholderType,
   ImageFormatType,
   ImageResizingBehavior,
   ImageCropFocusType,
