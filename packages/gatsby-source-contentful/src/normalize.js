@@ -72,8 +72,6 @@ exports.buildResolvableSet = ({
   entryList,
   existingNodes = [],
   assets = [],
-  locales,
-  defaultLocale,
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
@@ -102,7 +100,6 @@ exports.buildForeignReferenceMap = ({
   entryList,
   resolvable,
   defaultLocale,
-  locales,
   space,
   useNameForId,
 }) => {
@@ -195,9 +192,6 @@ function prepareTextNode(id, node, key, text) {
       // entryItem.sys.updatedAt is source of truth from contentful
       contentDigest: node.updatedAt,
     },
-    sys: {
-      type: node.sys.type,
-    },
   }
 
   node.children = node.children.concat([id])
@@ -219,9 +213,6 @@ function prepareJSONNode(id, node, key, content) {
       // entryItem.sys.updatedAt is source of truth from contentful
       contentDigest: node.updatedAt,
     },
-    sys: {
-      type: node.sys.type,
-    },
   }
 
   node.children = node.children.concat([id])
@@ -231,7 +222,6 @@ function prepareJSONNode(id, node, key, content) {
 
 exports.createNodesForContentType = ({
   contentTypeItem,
-  contentTypeItems,
   restrictedNodeFields,
   conflictFieldPrefix,
   entries,
@@ -413,6 +403,32 @@ exports.createNodesForContentType = ({
           })
         }
 
+        // Create sys node
+        const sysId = createNodeId(`${entryNodeId}.sys`)
+
+        const sys = {
+          id: sysId,
+          // parent___NODE: entryNodeId,
+          type: entryItem.sys.type,
+          internal: {
+            type: `ContentfulSys`,
+            contentDigest: entryItem.sys.updatedAt,
+          },
+        }
+
+        // Revision applies to entries, assets, and content types
+        if (entryItem.sys.revision) {
+          sys.revision = entryItem.sys.revision
+        }
+
+        // Content type applies to entries only
+        if (entryItem.sys.contentType) {
+          sys.contentType___NODE = createNodeId(contentTypeItemId)
+        }
+
+        childrenNodes.push(sys)
+
+        // Create actual entry node
         let entryNode = {
           id: entryNodeId,
           spaceId: space.sys.id,
@@ -424,19 +440,7 @@ exports.createNodesForContentType = ({
           internal: {
             type: `${makeTypeName(contentTypeItemId)}`,
           },
-          sys: {
-            type: entryItem.sys.type,
-          },
-        }
-
-        // Revision applies to entries, assets, and content types
-        if (entryItem.sys.revision) {
-          entryNode.sys.revision = entryItem.sys.revision
-        }
-
-        // Content type applies to entries only
-        if (entryItem.sys.contentType) {
-          entryNode.sys.contentType = entryItem.sys.contentType
+          sys___NODE: sysId,
         }
 
         // Replace text fields with text nodes so we can process their markdown
@@ -599,16 +603,11 @@ exports.createNodesForContentType = ({
     // Create a node for each content type
     const contentTypeNode = {
       id: createNodeId(contentTypeItemId),
-      parent: null,
-      children: [],
       name: contentTypeItem.name,
       displayField: contentTypeItem.displayField,
       description: contentTypeItem.description,
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
-      },
-      sys: {
-        type: contentTypeItem.sys.type,
       },
     }
 
