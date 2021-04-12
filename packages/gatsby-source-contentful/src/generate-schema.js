@@ -7,7 +7,7 @@ const types = []
 
 function generateAssetSchemas({ createTypes }) {
   createTypes(`
-    type ContentfulAsset implements ContentfulReference & Node {
+    type ContentfulAsset implements ContentfulInternalReference & Node {
       file: ContentfulAssetFile
       title: String
       description: String
@@ -66,7 +66,7 @@ export function generateSchemas({
   }
 
   createTypes(`
-    interface ContentfulReference implements Node {
+    interface ContentfulInternalReference implements Node {
       contentful_id: String!
       id: ID!
     }
@@ -82,7 +82,7 @@ export function generateSchemas({
   `)
 
   createTypes(`
-    type ContentfulSys implements Node {
+    type ContentfulInternalSys implements Node {
       id: ID!
       type: String
       revision: Int
@@ -95,7 +95,7 @@ export function generateSchemas({
       contentful_id: String!
       id: ID!
       spaceId: String!
-      sys: ContentfulSys @link(by: "id", from: "sys___NODE")
+      sys: ContentfulInternalSys @link(by: "id", from: "sys___NODE")
     }
   `)
 
@@ -108,7 +108,7 @@ export function generateSchemas({
       name: `ContentfulNodeTypeRichText`,
       fields: {
         raw: { type: `String!` },
-        references: { type: `ContentfulReference` },
+        references: { type: `ContentfulInternalReference` },
       },
       interfaces: [`Node`],
     })
@@ -260,7 +260,11 @@ export function generateSchemas({
             updatedAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
             ...fields,
           },
-          interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
+          interfaces: [
+            `ContentfulInternalReference`,
+            `ContentfulEntry`,
+            `Node`,
+          ],
         })
       )
     } catch (err) {
