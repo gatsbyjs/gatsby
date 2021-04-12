@@ -130,7 +130,7 @@ export function generateSchemas({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulLocationNode`,
+      name: `ContentfulNodeTypeLocation`,
       fields: {
         lat: { type: `Float!` },
         lon: { type: `Float!` },
@@ -172,7 +172,15 @@ export function generateSchemas({
     ],
     [`Object`, `JSON`],
     [`Boolean`, `Boolean`],
-    [`Location`, `ContentfulLocationNode`],
+    [
+      `Location`,
+      {
+        type: `ContentfulNodeTypeLocation`,
+        extensions: {
+          link: { by: `id` },
+        },
+      },
+    ],
     [
       `RichText`,
       {
