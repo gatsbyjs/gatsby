@@ -7,10 +7,6 @@ const types = []
 function generateAssetSchemas({ createTypes }) {
   createTypes(`
     type ContentfulAsset implements ContentfulReference & Node @derivedTypes @dontInfer {
-      contentful_id: String!
-      spaceId: String
-      createdAt: Date @dateformat
-      updatedAt: Date @dateformat
       file: ContentfulAssetFile
       title: String
       description: String
@@ -75,6 +71,9 @@ export function generateSchemas({
     interface ContentfulReference {
       contentful_id: String!
       id: ID!
+      spaceId: String!,
+      createdAt: Date @dateform,
+      updatedAt: Date @dateform,
     }
   `)
 
