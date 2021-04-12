@@ -2,7 +2,8 @@ const _ = require(`lodash`)
 const stringify = require(`json-stringify-safe`)
 
 const typePrefix = `Contentful`
-const makeTypeName = type => _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
+export const makeTypeName = type =>
+  _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
 const getLocalizedField = ({ field, locale, localesFallback }) => {
   if (!_.isUndefined(field[locale.code])) {
@@ -188,7 +189,7 @@ function prepareTextNode(id, node, key, text) {
     children: [],
     [key]: str,
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} TextNode`),
+      type: `ContentfulTextNode`,
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
@@ -212,7 +213,7 @@ function prepareJSONNode(id, node, key, content) {
     parent: node.id,
     children: [],
     internal: {
-      type: _.camelCase(`${node.internal.type} ${key} JSONNode`),
+      type: `ContentfulJSONNode`,
       mediaType: `application/json`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
