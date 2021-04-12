@@ -224,7 +224,7 @@ function prepareJSONNode(id, node, key, content) {
     parent: node.id,
     children: [],
     internal: {
-      type: `ContentfulJSONNode`,
+      type: `ContentfulNodeTypeJSON`,
       mediaType: `application/json`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful

@@ -126,7 +126,7 @@ export function generateSchemas({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulJSONNode`,
+      name: `ContentfulNodeTypeJSON`,
       fields: {},
       interfaces: [`Node`],
     })
@@ -155,7 +155,15 @@ export function generateSchemas({
         },
       },
     ],
-    [`Object`, `JSON`],
+    [
+      `Object`,
+      {
+        type: `ContentfulNodeTypeJSON`,
+        extensions: {
+          link: { by: `id` },
+        },
+      },
+    ],
     [`Boolean`, `Boolean`],
     [
       `Location`,
