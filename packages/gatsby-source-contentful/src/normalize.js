@@ -199,6 +199,23 @@ function prepareTextNode(id, node, key, text) {
   return textNode
 }
 
+function prepareLocationNode(id, node, key, data) {
+  const { lat, lon } = data
+  const LocationNode = {
+    id,
+    parent: node.id,
+    lat,
+    lon,
+    internal: {
+      type: `ContentfulNodeTypeLocation`,
+      // entryItem.sys.updatedAt is source of truth from contentful
+      contentDigest: node.updatedAt,
+    },
+  }
+
+  return LocationNode
+}
+
 function prepareJSONNode(id, node, key, content) {
   const str = JSON.stringify(content)
   const JSONNode = {
@@ -597,6 +614,31 @@ exports.createNodesForContentType = ({
               entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNodeId)
             })
 
+            delete entryItemFields[entryItemFieldKey]
+          } else if (fieldType === `Location`) {
+            const locationNodeId = createNodeId(
+              `${entryNodeId}${entryItemFieldKey}Location`
+            )
+
+            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
+            // of an entry did not change, then we can trust that none of its children were changed either.
+            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
+            const existingNode = getNode(locationNodeId)
+            if (
+              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
+            ) {
+              const textNode = prepareLocationNode(
+                locationNodeId,
+                entryNode,
+                entryItemFieldKey,
+                entryItemFields[entryItemFieldKey],
+                createNodeId
+              )
+
+              childrenNodes.push(textNode)
+            }
+
+            entryItemFields[`${entryItemFieldKey}___NODE`] = locationNodeId
             delete entryItemFields[entryItemFieldKey]
           }
         })
