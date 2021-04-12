@@ -6,12 +6,17 @@ const types = []
 
 function generateAssetSchemas({ createTypes }) {
   createTypes(`
-    type ContentfulAsset implements ContentfulReference & Node @derivedTypes @dontInfer {
+    type ContentfulAsset implements ContentfulReference & Node {
       file: ContentfulAssetFile
       title: String
       description: String
       node_locale: String
       sys: ContentfulAssetSys
+      contentful_id: String!
+      id: ID!
+      spaceId: String!
+      createdAt: String! # Date @dateform,
+      updatedAt: String! # Date @dateform,
     }
   `)
 
@@ -60,20 +65,36 @@ export function generateSchemas({
   }
 
   createTypes(`
-    interface ContentfulEntry implements Node {
+    interface ContentfulReference implements Node {
       contentful_id: String!
       id: ID!
-      node_locale: String!
     }
   `)
 
   createTypes(`
-    interface ContentfulReference {
+    type ContentfulContentType implements Node {
+      id: ID!
+      name: String!
+      displayField: String!
+      description: String!
+    }
+  `)
+
+  createTypes(`
+    type ContentfulSys implements Node {
+      id: ID!
+      type: String
+      revision: Int
+      contentType: ContentfulContentType @link(by: "id", from: "contentType___NODE")
+    }
+  `)
+
+  createTypes(`
+    interface ContentfulEntry implements Node {
       contentful_id: String!
       id: ID!
-      spaceId: String!,
-      createdAt: Date @dateform,
-      updatedAt: Date @dateform,
+      spaceId: String!
+      sys: ContentfulSys @link(by: "id", from: "sys___NODE")
     }
   `)
 
@@ -181,8 +202,6 @@ export function generateSchemas({
         fields[field.id] = typeof type === `string` ? { type } : type
       })
 
-      // console.log(contentTypeItem.sys.id, { fields })
-
       const type = pluginConfig.get(`useNameForId`)
         ? contentTypeItem.name
         : contentTypeItem.sys.id
@@ -194,6 +213,10 @@ export function generateSchemas({
             contentful_id: { type: `String!` },
             id: { type: `ID!` },
             node_locale: { type: `String!` },
+            spaceId: { type: `String!` },
+            // @todo these should be real dates and in sys
+            createdAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
+            updatedAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
             ...fields,
           },
           interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
