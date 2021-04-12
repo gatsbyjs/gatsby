@@ -195,7 +195,15 @@ export function generateSchemas({
       },
     ],
   ])
-  const getLinkFieldType = linkType => `Contentful${linkType}`
+
+  const getLinkFieldType = linkType => {
+    return {
+      type: `Contentful${linkType}`,
+      extensions: {
+        link: { by: `id` },
+      },
+    }
+  }
 
   const translateFieldType = field => {
     let id
