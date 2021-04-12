@@ -13,7 +13,7 @@ Quickly get started using the Gatsby blog theme! This starter creates a new Gats
 
 1.  **Create a Gatsby site.**
 
-    Use the Gatsby CLI to create a new site, specifying the blog theme starter.
+    Use the Gatsby CLI to create a new site, specifying the blog theme stßarter.
 
     ```shell
     # create a new Gatsby site using the blog theme starter
@@ -34,6 +34,14 @@ Quickly get started using the Gatsby blog theme! This starter creates a new Gats
     Your site is now running at `http://localhost:8000`!
 
     To get started, check out the guide to [using the Gatsby blog theme starter](https://gatsbyjs.com/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](https://gatsbyjs.com/tutorial/using-a-theme).
+
+## 🚀 Quick start (Gatsby Cloud)
+
+1.  **Create a Gatsby site.**
+
+    Use the deploy now feature in Gatsby cloud to host your application:
+
+    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog-theme)
 
 ## 🧐 What's inside?
 

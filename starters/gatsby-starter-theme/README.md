@@ -35,6 +35,14 @@ Quickly get started using the Gatsby blog theme, and notes theme, together! This
 
     To get started, check out the guide to [getting started with using multiple themes](https://gatsbyjs.com/docs/themes/using-a-gatsby-theme), or the [general themes docs](https://gatsbyjs.com/docs/themes).
 
+## 🚀 Quick start (Gatsby Cloud)
+
+1.  **Create a Gatsby site.**
+
+    Use the deploy now feature in Gatsby cloud to host your application:
+
+    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-theme)
+
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using this theme starter.

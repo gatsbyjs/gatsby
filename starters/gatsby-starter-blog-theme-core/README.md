@@ -35,6 +35,14 @@ Quickly get started using the Gatsby blog core theme! This starter creates a new
 
     To get started, check out the guide to [using the Gatsby blog theme starter](https://gatsbyjs.com/docs/themes/using-a-gatsby-theme), or the longer, [more detailed tutorial](https://gatsbyjs.com/tutorial/using-a-theme).
 
+## 🚀 Quick start (Gatsby Cloud)
+
+1.  **Create a Gatsby site.**
+
+    Use the deploy now feature in Gatsby cloud to host your application:
+
+    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-blog-theme-core)
+
 ## 🧐 What's inside?
 
 Here are the top-level files and directories you'll see in a site created using the blog theme starter:

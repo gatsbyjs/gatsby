@@ -62,3 +62,11 @@ You can run the example with:
 ```shell
 yarn workspace example develop
 ```
+
+## 🚀 Quick start (Gatsby Cloud)
+
+1.  **Create a Gatsby site.**
+
+    Use the deploy now feature in Gatsby cloud to host your application:
+
+    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-theme-workspace)
