@@ -126,7 +126,15 @@ export function generateSchemas({
     [`Text`, `String`],
     [`Integer`, `Int`],
     [`Number`, `Float`],
-    [`Date`, `Date`],
+    [
+      `Date`,
+      {
+        type: `Date`,
+        extensions: {
+          dateformat: {},
+        },
+      },
+    ],
     [`Object`, `JSON`],
     [`Boolean`, `Boolean`],
     [`Location`, `ContentfulLocationNode`],
@@ -137,18 +145,30 @@ export function generateSchemas({
   const translateFieldType = field => {
     let id
     if (field.type === `Array`) {
-      id = `[${
+      const fieldData =
         field.items.type === `Link`
           ? getLinkFieldType(field.items.linkType)
           : translateFieldType(field.items)
-      }]`
+
+      id =
+        typeof fieldData === `string`
+          ? `[${fieldData}]`
+          : { ...fieldData, type: `[${fieldData.type}]` }
     } else if (field.type === `Link`) {
       id = getLinkFieldType(field.linkType)
     } else {
       id = ContentfulDataTypes.get(field.type)
     }
 
-    return [id, field.required && `!`].filter(Boolean).join(``)
+    if (typeof id === `string`) {
+      return [id, field.required && `!`].filter(Boolean).join(``)
+    }
+
+    if (field.required) {
+      id.type = `${id.type}!`
+    }
+
+    return id
   }
 
   contentTypeItems.forEach(contentTypeItem => {
@@ -159,7 +179,7 @@ export function generateSchemas({
           return
         }
         const type = translateFieldType(field)
-        fields[field.id] = { type }
+        fields[field.id] = typeof type === `string` ? { type } : type
       })
 
       // console.log(contentTypeItem.sys.id, { fields })
