@@ -23,6 +23,7 @@ const {
   ImageFormatType,
   ImageResizingBehavior,
   ImageCropFocusType,
+  ImageLayoutType,
 } = require(`./schemes`)
 
 // By default store the images in `.cache` but allow the user to override
@@ -789,6 +790,16 @@ exports.extendNodeType = ({ type, store }) => {
       quality: {
         type: GraphQLInt,
         defaultValue: 50,
+      },
+      layout: {
+        type: ImageLayoutType,
+        description: stripIndent`
+            The layout for the image.
+            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size. 
+            FIXED: A static image size, that does not resize according to the screen width
+            FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
+            Pass a value to "sizes" if the container is not the full width of the screen.
+        `,
       },
       formats: {
         type: GraphQLList(ImageFormatType),

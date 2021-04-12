@@ -11,6 +11,15 @@ const ImageFormatType = new GraphQLEnumType({
   },
 })
 
+const ImageLayoutType = new GraphQLEnumType({
+  name: `ContentfulImageLayout`,
+  values: {
+    FIXED: { value: `fixed` },
+    FULL_WIDTH: { value: `fullWidth` },
+    CONSTRAINED: { value: `constrained` },
+  },
+})
+
 const ImageResizingBehavior = new GraphQLEnumType({
   name: `ImageResizingBehavior`,
   values: {
@@ -59,6 +68,7 @@ const ImageCropFocusType = new GraphQLEnumType({
 })
 
 module.exports = {
+  ImageLayoutType,
   ImageFormatType,
   ImageResizingBehavior,
   ImageCropFocusType,
