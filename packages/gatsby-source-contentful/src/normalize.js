@@ -190,10 +190,9 @@ function prepareTextNode(id, node, key, text) {
   const textNode = {
     id,
     parent: node.id,
-    children: [],
-    [key]: str,
+    raw: str,
     internal: {
-      type: `ContentfulTextNode`,
+      type: `ContentfulNodeTypeText`,
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
@@ -203,8 +202,6 @@ function prepareTextNode(id, node, key, text) {
       type: `TextNode`,
     },
   }
-
-  node.children = node.children.concat([id])
 
   return textNode
 }
