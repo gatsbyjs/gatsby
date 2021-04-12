@@ -855,7 +855,7 @@ In most cases, you won't have to do anything to be v3 compatible. But one thing 
 {
   "peerDependencies": {
 -   "gatsby": "^2.32.0",
-+   "gatsby": "^3.0.0", // Or if it supports both versions — "^2.32.0 || ^3.0.0"
++   "gatsby": "^3.0.0",
   }
 }
 ```
