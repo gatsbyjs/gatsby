@@ -51,7 +51,8 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
-    schema
+    schema,
+    createContentDigest,
   },
   pluginOptions
 ) {
@@ -438,6 +439,7 @@ export async function sourceNodes(
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
         unstable_createNodeManifest,
+        createContentDigest,
       })
     )
   }
