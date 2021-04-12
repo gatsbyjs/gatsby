@@ -11,6 +11,7 @@
     "gatsby-plugin-image": "^1.1.1",
     "gatsby-plugin-sharp": "^3.1.2",
     "gatsby-source-contentful": "^5.1.1",
+    "gatsby-transformer-remark": "^3.2.0",
     "gatsby-transformer-sqip": "3.1.1",
     "modern-normalize": "^1.0.0",
     "react": "^17.0.1",

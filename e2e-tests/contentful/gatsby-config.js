@@ -12,6 +12,7 @@ module.exports = {
         accessToken: `hO_7N0bLaCJFbu5nL3QVekwNeB_TNtg6tOCB_9qzKUw`,
       },
     },
+    `gatsby-transformer-remark`,
     `gatsby-transformer-sqip`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
