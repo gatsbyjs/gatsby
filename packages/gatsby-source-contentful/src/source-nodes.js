@@ -52,7 +52,8 @@ export async function sourceNodes(
     getCache,
     reporter,
     parentSpan,
-    schema
+    schema,
+    createContentDigest,
   },
   pluginOptions
 ) {
@@ -440,6 +441,7 @@ export async function sourceNodes(
         pluginConfig,
         syncToken,
         unstable_createNodeManifest,
+        createContentDigest,
       })
     )
   }
