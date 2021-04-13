@@ -530,6 +530,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/static-query-result-tracking/stable/`,
     `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
     `/page-that-will-have-trailing-slash-removed`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   const expectedPages = [
@@ -614,6 +615,7 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     `/stale-pages/only-in-first/`,
     `/page-query-dynamic-1/`,
     `/page-query-dynamic-2/`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   let changedFileOriginalContent
@@ -699,6 +701,7 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   const expectedPages = [
     `/stale-pages/only-not-in-first`,
     `/page-query-dynamic-4/`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   const unexpectedPages = [
