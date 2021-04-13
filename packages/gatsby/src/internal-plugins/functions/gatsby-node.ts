@@ -9,6 +9,8 @@ import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
 import TerserPlugin from "terser-webpack-plugin"
 import { internalActions } from "../../redux/actions"
 
+const isProductionEnv = process.env.gatsby_executing_command !== `develop`
+
 export async function onPreBootstrap({
   reporter,
   store,
@@ -82,52 +84,63 @@ export async function onPreBootstrap({
   )
 
   try {
-    await Promise.all(
-      Array.from(knownFunctions).map(([_, file]) => {
-        const config = {
-          entry: path.join(functionsDirectory, file),
-          output: {
-            path: path.join(siteDirectoryPath, `.cache`, `functions`),
-            filename: file.replace(`.ts`, `.js`),
-            libraryTarget: `commonjs2`,
-          },
-          target: `node`,
+    await new Promise((resolve, reject) => {
+      const entries = {}
+      Array.from(knownFunctions).forEach(([, file]) => {
+        const filePath = path.join(functionsDirectory, file)
+        const name = path.parse(file).name
+        entries[name] = filePath
+      })
 
-          mode: `production`,
-          module: {
-            rules: [
-              {
-                test: [/.js$/, /.ts$/],
-                exclude: /node_modules/,
-                loader: `babel-loader`,
-              },
-            ],
-          },
-          // optimization: {
-          // minimize: true,
-          // minimizer: [
-          // new TerserPlugin({
-          // extractComments: false,
-          // }),
-          // ],
-          // },
-          plugins: [new webpack.DefinePlugin(varObject)],
+      const config = {
+        entry: entries,
+        output: {
+          path: path.join(siteDirectoryPath, `.cache`, `functions`),
+          filename: `[name].js`,
+          libraryTarget: `commonjs2`,
+        },
+        target: `node`,
+
+        mode: isProductionEnv ? `production` : `development`,
+        watch: !isProductionEnv,
+        module: {
+          rules: [
+            {
+              test: [/.js$/, /.ts$/],
+              exclude: /node_modules/,
+              loader: `babel-loader`,
+            },
+          ],
+        },
+        // optimization: {
+        // minimize: true,
+        // minimizer: [
+        // new TerserPlugin({
+        // extractComments: false,
+        // }),
+        // ],
+        // },
+        plugins: [new webpack.DefinePlugin(varObject)],
+      }
+
+      function callback(err, stats): any {
+        if (stats?.compilation?.warnings?.length > 0) {
+          reporter.warn(stats.compilation.warnings)
         }
 
-        return new Promise((resolve, reject) =>
-          webpack(config).run((err, stats) => {
-            if (stats?.compilation?.warnings?.length > 0) {
-              reporter.warn(stats.compilation.warnings)
-            }
+        if (err) return reject(err)
+        const errors = stats.compilation.errors || []
+        if (errors.length > 0) return reject(stats.compilation.errors)
+        return resolve()
+      }
 
-            if (err) return reject(err)
-            const errors = stats.compilation.errors || []
-            if (errors.length > 0) return reject(stats.compilation.errors)
-            return resolve()
-          })
-        )
-      })
-    )
+      if (isProductionEnv) {
+        webpack(config).run(callback)
+      } else {
+        // When in watch mode, you call things differently
+        webpack(config, callback)
+      }
+    })
   } catch (e) {
     activity.panic(`Failed to compile Gatsby Functions.`, e)
   }
@@ -167,7 +180,9 @@ export async function onCreateDevServer({
         const funcNameToJs = functions.get(functionName) as string
 
         try {
-          const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
+          const pathToFunction = path.join(compiledFunctionsDir, funcNameToJs)
+          delete require.cache[require.resolve(pathToFunction)]
+          const fn = require(pathToFunction)
 
           const fnToExecute = (fn && fn.default) || fn
 
