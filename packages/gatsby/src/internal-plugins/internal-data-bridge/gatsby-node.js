@@ -126,6 +126,32 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+
+  // Create nodes for functions
+  const { functions } = store.getState()
+  const createFunctionNode = ({ file, url }) => {
+    createNode({
+      id: `gatsby-function-${file}`,
+      file,
+      url,
+      parent: null,
+      children: [],
+      internal: {
+        contentDigest: createContentDigest({ file, url }),
+        type: `SiteFunction`,
+      },
+    })
+  }
+  Array.from(functions).forEach(([url, file]) => {
+    createFunctionNode({ url, file })
+  })
+
+  // Listen for updates to functions to update the nodes.
+  emitter.on(`SET_SITE_FUNCTIONS`, action => {
+    Array.from(action.payload).forEach(([url, file]) => {
+      createFunctionNode({ url, file })
+    })
+  })
 }
 
 function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
