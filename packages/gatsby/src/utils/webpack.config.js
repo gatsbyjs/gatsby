@@ -763,6 +763,38 @@ module.exports = async (
     }
   }
 
+  if (stage === `build-javascript` || stage === `build-html`) {
+    const cacheLocation = path.join(
+      program.directory,
+      `.cache`,
+      `webpack`,
+      `stage-` + stage
+    )
+
+    fs.ensureDirSync(cacheLocation)
+
+    const cacheConfig = {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation,
+      buildDependencies: {
+        config: [
+          __filename,
+          ...store
+            .getState()
+            .flattenedPlugins.filter(plugin =>
+              plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
+            )
+            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+        ],
+      },
+    }
+
+    console.log(cacheConfig)
+
+    config.cache = cacheConfig
+  }
+
   store.dispatch(actions.replaceWebpackConfig(config))
   const getConfig = () => store.getState().webpack
 
