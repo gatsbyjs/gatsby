@@ -233,8 +233,8 @@ describe(`redux db`, () => {
     ]
 
     const scenarios = []
-    for (let nodeShardsParams of nodeShardsScenarios) {
-      for (let pageShardsParams of pageShardsScenarios) {
+    for (const nodeShardsParams of nodeShardsScenarios) {
+      for (const pageShardsParams of pageShardsScenarios) {
         scenarios.push([
           nodeShardsParams.numberOfNodes,
           nodeShardsParams.simulatedNodeObjectSize,
@@ -359,7 +359,7 @@ describe(`redux db`, () => {
           page: 0,
         }
 
-        for (let fileWritten of mockWrittenContent.keys()) {
+        for (const fileWritten of mockWrittenContent.keys()) {
           const basename = path.basename(fileWritten)
           if (basename.startsWith(`redux.rest`)) {
             shardsWritten.rest++
