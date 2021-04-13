@@ -70,7 +70,7 @@ Object {
       "context": Object {
         "id": "123456",
       },
-      "internalComponentName": "ComponentMySweetNewPage",
+      "internalComponentName": "Component/my-sweet-new-page/",
       "isCreatedByStatefulCreatePages": false,
       "matchPath": undefined,
       "path": "/my-sweet-new-page/",
