@@ -219,6 +219,7 @@ export async function onCreateDevServer({
 
       if (functions.has(functionName)) {
         reporter.verbose(`Running ${functionName}`)
+        const start = Date.now()
         const compiledFunctionsDir = path.join(
           siteDirectoryPath,
           `.cache`,
@@ -238,6 +239,11 @@ export async function onCreateDevServer({
           reporter.error(e)
           res.sendStatus(500)
         }
+
+        const end = Date.now()
+        reporter.log(
+          `Executed function "/api/${functionName}" in ${end - start}ms`
+        )
       } else {
         next()
       }
