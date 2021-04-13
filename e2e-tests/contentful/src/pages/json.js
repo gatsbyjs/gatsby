@@ -62,27 +62,10 @@ export default JSONPage
 export const pageQuery = graphql`
   query JSONQuery {
     simple: contentfulJson(contentful_id: { eq: "2r6tNjP8brkyy5yLR39hhh" }) {
-      json {
-        name
-        city
-        age
-      }
+      json
     }
     complex: contentfulJson(contentful_id: { eq: "2y71nV0cpW9vzTmJybq571" }) {
-      json {
-        Actors {
-          name
-          photo
-          Birthdate
-          Born_At
-          weight
-          age
-          wife
-          children
-          hasChildren
-          hasGreyHair
-        }
-      }
+      json
     }
     english: contentfulJson(
       node_locale: { eq: "en-US" }
