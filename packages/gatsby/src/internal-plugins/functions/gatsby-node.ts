@@ -1,5 +1,5 @@
 import fs from "fs-extra"
-import glob from "globby"
+import glob from "glob"
 import path from "path"
 import webpack from "webpack"
 import multer from "multer"
@@ -30,7 +30,15 @@ export async function onPreBootstrap({
     functionsDirectoryPath as string
   )
 
-  const files = await glob(functionsGlob, { cwd: functionsDirectory })
+  const files = await new Promise((resolve, reject) => {
+    glob(functionsGlob, { cwd: functionsDirectory }, (err, files) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(files)
+      }
+    })
+  })
 
   if (files?.length === 0) {
     reporter.warn(
