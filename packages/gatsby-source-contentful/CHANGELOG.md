@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.2...gatsby-source-contentful@5.3.0) (2021-04-13)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** De-dupe type names ([#30834](https://github.com/gatsbyjs/gatsby/issues/30834)) ([#30850](https://github.com/gatsbyjs/gatsby/issues/30850)) ([164f9a1](https://github.com/gatsbyjs/gatsby/commit/164f9a1d9fa339c110ee6cf769f2856cac1ce484))
+
 # [5.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.1...gatsby-source-contentful@5.3.0-next.2) (2021-04-07)
 
 ### Bug Fixes

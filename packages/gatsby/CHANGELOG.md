@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.3...gatsby@3.3.0) (2021-04-13)
+
+### Bug Fixes
+
+- **gatsby:** lower memory pressure in SSR ([#30793](https://github.com/gatsbyjs/gatsby/issues/30793)) ([#30851](https://github.com/gatsbyjs/gatsby/issues/30851)) ([f561724](https://github.com/gatsbyjs/gatsby/commit/f5617243a454e9655717e0adca50066bdcf643e4))
+- **gatsby:** webpack warnings are no longer in object format by default ([#30801](https://github.com/gatsbyjs/gatsby/issues/30801)) ([#30853](https://github.com/gatsbyjs/gatsby/issues/30853)) ([0b99d00](https://github.com/gatsbyjs/gatsby/commit/0b99d00d24f390b4a671c2b810cb8726867e97ac))
+
 # [3.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.2...gatsby@3.3.0-next.3) (2021-04-09)
 
 ### Performance Improvements

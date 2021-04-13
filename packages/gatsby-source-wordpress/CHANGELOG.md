@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.3...gatsby-source-wordpress@5.3.0) (2021-04-13)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** change `console.warning` to `console.warn` ([#30764](https://github.com/gatsbyjs/gatsby/issues/30764)) ([#30852](https://github.com/gatsbyjs/gatsby/issues/30852)) ([96805d5](https://github.com/gatsbyjs/gatsby/commit/96805d5eae6183f48af5ff409b68597c19e50285))
+
 # [5.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.2...gatsby-source-wordpress@5.3.0-next.3) (2021-04-09)
 
 ### Bug Fixes

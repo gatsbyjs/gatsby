@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.3.0-next.1...gatsby-plugin-preact@5.3.0) (2021-04-13)
+
+**Note:** Version bump only for package gatsby-plugin-preact
+
 # [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.3.0-next.0...gatsby-plugin-preact@5.3.0-next.1) (2021-04-07)
 
 **Note:** Version bump only for package gatsby-plugin-preact
