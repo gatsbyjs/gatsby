@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { slash, isCI, urlResolve } from "gatsby-core-utils"
+import { slash, isCI } from "gatsby-core-utils"
 import fs from "fs-extra"
 import md5File from "md5-file"
 import crypto from "crypto"
