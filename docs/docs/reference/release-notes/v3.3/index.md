@@ -52,18 +52,18 @@ since then, so we've decided to release new major versions of all our `remark` p
 
 The following plugins are now fully compatible with `remark@13`:
 
-- **gatsby-transformer-remark@4.0.0**
-- gatsby-remark-autolink-headers@4.0.0
-- gatsby-remark-code-repls@5.0.0
-- gatsby-remark-copy-linked-files@4.0.0
-- gatsby-remark-embed-snippet@6.0.0
-- gatsby-remark-graphviz@3.0.0
-- gatsby-remark-images-contentful@4.0.0
-- gatsby-remark-images@5.0.0
-- gatsby-remark-katex@5.0.0
-- gatsby-remark-prismjs@5.0.0
-- gatsby-remark-responsive-iframe@4.0.0
-- gatsby-remark-smartypants@4.0.0
+- `gatsby-transformer-remark@4.0.0`
+- `gatsby-remark-autolink-headers@4.0.0`
+- `gatsby-remark-code-repls@5.0.0`
+- `gatsby-remark-copy-linked-files@4.0.0`
+- `gatsby-remark-embed-snippet@6.0.0`
+- `gatsby-remark-graphviz@3.0.0`
+- `gatsby-remark-images-contentful@4.0.0`
+- `gatsby-remark-images@5.0.0`
+- `gatsby-remark-katex@5.0.0`
+- `gatsby-remark-prismjs@5.0.0`
+- `gatsby-remark-responsive-iframe@4.0.0`
+- `gatsby-remark-smartypants@4.0.0`
 
 We've tried to make the migration effortless and non-breaking (just update the dependencies)
 but there are subtle differences in HTML output caused by the new remark parser.
