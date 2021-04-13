@@ -194,6 +194,12 @@ export async function onPreBootstrap({
           })
           reporter.error(formated.errors)
         }
+
+        // Log success in dev
+        if (!isProductionEnv) {
+          reporter.success(`Re-building functions`)
+        }
+
         return resolve()
       }
 
@@ -214,6 +220,10 @@ export async function onPreBootstrap({
             if (event === `change` && path.includes(`/src/api/`)) {
               return
             }
+
+            reporter.log(
+              `Restarting function watcher due to change to "${path}"`
+            )
 
             // Otherwise, restart the watcher
             compiler.close(async () => {
