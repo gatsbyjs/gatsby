@@ -8,6 +8,8 @@ import { urlResolve } from "gatsby-core-utils"
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
 import TerserPlugin from "terser-webpack-plugin"
 import { internalActions } from "../../redux/actions"
+import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
+import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
@@ -157,13 +159,25 @@ export async function onPreBootstrap({
       }
 
       function callback(err, stats): any {
-        if (stats?.compilation?.warnings?.length > 0) {
-          reporter.warn(stats.compilation.warnings)
+        const rawMessages = stats.toJson({ moduleTrace: false })
+        if (rawMessages.warnings.length > 0) {
+          reporter.warn(reportWebpackWarnings(rawMessages.warnings))
         }
 
         if (err) return reject(err)
         const errors = stats.compilation.errors || []
-        if (errors.length > 0) return reject(stats.compilation.errors)
+
+        // If there's errors, reject in production and print to the console
+        // in development.
+        if (isProductionEnv) {
+          if (errors.length > 0) return reject(stats.compilation.errors)
+        } else {
+          const formated = formatWebpackMessages({
+            errors: rawMessages.errors.map(e => e.message),
+            warnings: [],
+          })
+          reporter.error(formated.errors)
+        }
         return resolve()
       }
 
