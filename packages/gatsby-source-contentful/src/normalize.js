@@ -196,44 +196,6 @@ function prepareTextNode(id, node, key, text) {
   return textNode
 }
 
-function prepareLocationNode(id, node, key, data) {
-  const { lat, lon } = data
-  const LocationNode = {
-    id,
-    parent: node.id,
-    lat,
-    lon,
-    internal: {
-      type: `ContentfulNodeTypeLocation`,
-      // entryItem.sys.updatedAt is source of truth from contentful
-      contentDigest: node.updatedAt,
-    },
-  }
-
-  return LocationNode
-}
-
-function prepareJSONNode(id, node, key, content) {
-  const str = JSON.stringify(content)
-  const JSONNode = {
-    ...(_.isPlainObject(content) ? { ...content } : { content: content }),
-    id,
-    parent: node.id,
-    children: [],
-    internal: {
-      type: `ContentfulNodeTypeJSON`,
-      mediaType: `application/json`,
-      content: str,
-      // entryItem.sys.updatedAt is source of truth from contentful
-      contentDigest: node.updatedAt,
-    },
-  }
-
-  node.children = node.children.concat([id])
-
-  return JSONNode
-}
-
 exports.createNodesForContentType = ({
   contentTypeItem,
   restrictedNodeFields,
@@ -241,7 +203,6 @@ exports.createNodesForContentType = ({
   entries,
   createNode,
   createNodeId,
-  createContentDigest,
   getNode,
   resolvable,
   foreignReferenceMap,
@@ -418,17 +379,8 @@ exports.createNodesForContentType = ({
           })
         }
 
-        // Create sys node
-        const sysId = createNodeId(`${entryNodeId}.sys`)
-
         const sys = {
-          id: sysId,
-          // parent___NODE: entryNodeId,
           type: entryItem.sys.type,
-          internal: {
-            type: `ContentfulInternalSys`,
-            contentDigest: entryItem.sys.updatedAt,
-          },
         }
 
         // Revision applies to entries, assets, and content types
@@ -441,8 +393,6 @@ exports.createNodesForContentType = ({
           sys.contentType___NODE = createNodeId(contentTypeItemId)
         }
 
-        childrenNodes.push(sys)
-
         // Create actual entry node
         let entryNode = {
           id: entryNodeId,
@@ -454,8 +404,10 @@ exports.createNodesForContentType = ({
           children: [],
           internal: {
             type: `${makeTypeName(contentTypeItemId)}`,
+            // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
+            contentDigest: entryItem.sys.updatedAt,
           },
-          sys___NODE: sysId,
+          sys,
         }
 
         // Replace text fields with text nodes so we can process their markdown
@@ -498,145 +450,6 @@ exports.createNodesForContentType = ({
 
             entryItemFields[`${entryItemFieldKey}___NODE`] = textNodeId
             delete entryItemFields[entryItemFieldKey]
-          } else if (
-            fieldType === `RichText` &&
-            _.isPlainObject(entryItemFields[entryItemFieldKey])
-          ) {
-            const fieldValue = entryItemFields[entryItemFieldKey]
-
-            const rawReferences = []
-
-            // Locate all Contentful Links within the rich text data
-            const traverse = obj => {
-              for (const k in obj) {
-                const v = obj[k]
-                if (v && v.sys && v.sys.type === `Link`) {
-                  rawReferences.push(v)
-                } else if (v && typeof v === `object`) {
-                  traverse(v)
-                }
-              }
-            }
-
-            traverse(fieldValue)
-
-            // Build up resolvable reference list
-            const resolvableReferenceIds = new Set()
-            rawReferences
-              .filter(function (v) {
-                return resolvable.has(
-                  `${v.sys.id}___${v.sys.linkType || v.sys.type}`
-                )
-              })
-              .forEach(function (v) {
-                resolvableReferenceIds.add(
-                  mId(space.sys.id, v.sys.id, v.sys.linkType || v.sys.type)
-                )
-              })
-
-            const richTextNodeId = createNodeId(
-              `${entryNodeId}.${entryItemFieldKey}.richText`
-            )
-
-            const raw = stringify(fieldValue)
-            const richTextNode = {
-              id: richTextNodeId,
-              raw,
-              references___NODE: [...resolvableReferenceIds],
-              internal: {
-                type: `ContentfulNodeTypeRichText`,
-                contentDigest: createContentDigest(raw),
-              },
-            }
-            childrenNodes.push(richTextNode)
-            delete entryItemFields[entryItemFieldKey]
-            entryItemFields[`${entryItemFieldKey}___NODE`] = richTextNodeId
-          } else if (
-            fieldType === `Object` &&
-            _.isPlainObject(entryItemFields[entryItemFieldKey])
-          ) {
-            const jsonNodeId = createNodeId(
-              `${entryNodeId}${entryItemFieldKey}JSONNode`
-            )
-
-            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-            // of an entry did not change, then we can trust that none of its children were changed either.
-            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-            const existingNode = getNode(jsonNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
-              const jsonNode = prepareJSONNode(
-                jsonNodeId,
-                entryNode,
-                entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
-              )
-              childrenNodes.push(jsonNode)
-            }
-
-            entryItemFields[`${entryItemFieldKey}___NODE`] = jsonNodeId
-            delete entryItemFields[entryItemFieldKey]
-          } else if (
-            fieldType === `Object` &&
-            _.isArray(entryItemFields[entryItemFieldKey])
-          ) {
-            entryItemFields[`${entryItemFieldKey}___NODE`] = []
-
-            entryItemFields[entryItemFieldKey].forEach((obj, i) => {
-              const jsonNodeId = createNodeId(
-                `${entryNodeId}${entryItemFieldKey}${i}JSONNode`
-              )
-
-              // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-              // of an entry did not change, then we can trust that none of its children were changed either.
-              // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-              const existingNode = getNode(jsonNodeId)
-              if (
-                existingNode?.internal?.contentDigest !==
-                entryItem.sys.updatedAt
-              ) {
-                const jsonNode = prepareJSONNode(
-                  jsonNodeId,
-                  entryNode,
-                  entryItemFieldKey,
-                  obj,
-                  createNodeId,
-                  i
-                )
-                childrenNodes.push(jsonNode)
-              }
-
-              entryItemFields[`${entryItemFieldKey}___NODE`].push(jsonNodeId)
-            })
-
-            delete entryItemFields[entryItemFieldKey]
-          } else if (fieldType === `Location`) {
-            const locationNodeId = createNodeId(
-              `${entryNodeId}${entryItemFieldKey}Location`
-            )
-
-            // The Contentful model has `.sys.updatedAt` leading for an entry. If the updatedAt value
-            // of an entry did not change, then we can trust that none of its children were changed either.
-            // (That's why child nodes use the updatedAt of the parent node as their digest, too)
-            const existingNode = getNode(locationNodeId)
-            if (
-              existingNode?.internal?.contentDigest !== entryItem.sys.updatedAt
-            ) {
-              const textNode = prepareLocationNode(
-                locationNodeId,
-                entryNode,
-                entryItemFieldKey,
-                entryItemFields[entryItemFieldKey],
-                createNodeId
-              )
-
-              childrenNodes.push(textNode)
-            }
-
-            entryItemFields[`${entryItemFieldKey}___NODE`] = locationNodeId
-            delete entryItemFields[entryItemFieldKey]
           }
         })
 
@@ -645,9 +458,6 @@ exports.createNodesForContentType = ({
           ...entryNode,
           node_locale: locale.code,
         }
-
-        // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-        entryNode.internal.contentDigest = entryItem.sys.updatedAt
 
         return entryNode
       })
@@ -716,7 +526,10 @@ exports.createAssetNodes = ({
       node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
+        // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
+        contentDigest: assetItem.sys.updatedAt,
       },
+      // @todo we can probably remove this now
       sys: {
         type: assetItem.sys.type,
       },
@@ -727,10 +540,7 @@ exports.createAssetNodes = ({
       assetNode.sys.revision = assetItem.sys.revision
     }
 
-    // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
-    assetNode.internal.contentDigest = assetItem.sys.updatedAt
-
-    createNodePromises.push(createNode(assetNode))
+    assetNode.internal.createNodePromises.push(createNode(assetNode))
   })
 
   return createNodePromises

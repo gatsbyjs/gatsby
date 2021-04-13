@@ -5,7 +5,7 @@ import { makeTypeName } from "./normalize"
 
 const types = []
 
-function generateAssetSchemas({ createTypes }) {
+function generateAssetTypes({ createTypes }) {
   createTypes(`
     type ContentfulAsset implements ContentfulInternalReference & Node {
       file: ContentfulAssetFile
@@ -52,7 +52,7 @@ function generateAssetSchemas({ createTypes }) {
   `)
 }
 
-export function generateSchemas({
+export function generateSchema({
   createTypes,
   schema,
   pluginConfig,
@@ -82,8 +82,7 @@ export function generateSchemas({
   `)
 
   createTypes(`
-    type ContentfulInternalSys implements Node {
-      id: ID!
+    type ContentfulInternalSys @dontInfer {
       type: String
       revision: Int
       contentType: ContentfulContentType @link(by: "id", from: "contentType___NODE")
@@ -91,26 +90,67 @@ export function generateSchemas({
   `)
 
   createTypes(`
-    interface ContentfulEntry implements Node {
+    interface ContentfulEntry implements Node @dontInfer {
       contentful_id: String!
       id: ID!
       spaceId: String!
-      sys: ContentfulInternalSys @link(by: "id", from: "sys___NODE")
+      sys: ContentfulInternalSys
     }
   `)
 
-  generateAssetSchemas({ createTypes })
+  generateAssetTypes({ createTypes })
 
   // Contentful specific types
-
   createTypes(
     schema.buildObjectType({
       name: `ContentfulNodeTypeRichText`,
       fields: {
-        raw: { type: `String!` },
-        references: { type: `ContentfulInternalReference` },
+        raw: {
+          type: `JSON`,
+          resolve(source) {
+            return source
+          },
+        },
+        references: {
+          type: `[ContentfulInternalReference]`,
+          resolve(source, args, context) {
+            const referencedEntries = new Set()
+            const referencedAssets = new Set()
+
+            // Locate all Contentful Links within the rich text data
+            // Traverse logic based on https://github.com/contentful/contentful-resolve-response
+            const traverse = obj => {
+              // eslint-disable-next-line guard-for-in
+              for (const k in obj) {
+                const v = obj[k]
+                if (v && v.sys && v.sys.type === `Link`) {
+                  if (v.sys.linkType === `Asset`) {
+                    console.log(`adding asset`, v)
+                    referencedAssets.add(v.sys.id)
+                  }
+                  if (v.sys.linkType === `Entry`) {
+                    console.log(`adding entry`, v)
+                    referencedEntries.add(v.sys.id)
+                  }
+                } else if (v && typeof v === `object`) {
+                  traverse(v)
+                }
+              }
+            }
+            traverse(source)
+
+            return context.nodeModel
+              .getAllNodes()
+              .filter(node =>
+                node.internal.owner === `gatsby-source-contentful` &&
+                node.internal.type === `ContentfulAsset`
+                  ? referencedAssets.has(node.contentful_id)
+                  : referencedEntries.has(node.contentful_id)
+              )
+          },
+        },
       },
-      interfaces: [`Node`],
+      extensions: { dontInfer: {} },
     })
   )
 
@@ -121,18 +161,13 @@ export function generateSchemas({
         lat: { type: `Float!` },
         lon: { type: `Float!` },
       },
-      interfaces: [`Node`],
+      extensions: {
+        dontInfer: {},
+      },
     })
   )
 
-  createTypes(
-    schema.buildObjectType({
-      name: `ContentfulNodeTypeJSON`,
-      fields: {},
-      interfaces: [`Node`],
-    })
-  )
-
+  // Is there a way to have this as string and let transformer-remark replace it with an object?
   createTypes(
     schema.buildObjectType({
       name: `ContentfulNodeTypeText`,
@@ -140,6 +175,9 @@ export function generateSchemas({
         raw: `String!`,
       },
       interfaces: [`Node`],
+      extensions: {
+        dontInfer: {},
+      },
     })
   )
 
@@ -166,34 +204,10 @@ export function generateSchemas({
         },
       },
     ],
-    [
-      `Object`,
-      {
-        type: `ContentfulNodeTypeJSON`,
-        extensions: {
-          link: { by: `id` },
-        },
-      },
-    ],
+    [`Object`, `JSON`],
     [`Boolean`, `Boolean`],
-    [
-      `Location`,
-      {
-        type: `ContentfulNodeTypeLocation`,
-        extensions: {
-          link: { by: `id` },
-        },
-      },
-    ],
-    [
-      `RichText`,
-      {
-        type: `ContentfulNodeTypeRichText`,
-        extensions: {
-          link: { by: `id` },
-        },
-      },
-    ],
+    [`Location`, `ContentfulNodeTypeLocation`],
+    [`RichText`, `ContentfulNodeTypeRichText`],
   ])
 
   const getLinkFieldType = linkType => {
@@ -233,14 +247,14 @@ export function generateSchemas({
       id.type = `${id.type}!`
     }
 
-    if (id.extensions.link) {
+    if (id?.extensions?.link) {
       id.extensions.link.from = `${field.id}___NODE`
     }
 
     return id
   }
 
-  contentTypeItems.forEach(contentTypeItem => {
+  for (const contentTypeItem of contentTypeItems) {
     try {
       const fields = {}
       contentTypeItem.fields.forEach(field => {
@@ -261,11 +275,14 @@ export function generateSchemas({
           fields: {
             contentful_id: { type: `String!` },
             id: { type: `ID!` },
+            // @todo reconsider the node per locale workflow
             node_locale: { type: `String!` },
-            spaceId: { type: `String!` },
             // @todo these should be real dates and in sys
+            spaceId: { type: `String!` },
             createdAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
             updatedAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
+            // @todo add metadata
+            sys: { type: `ContentfulInternalSys` },
             ...fields,
           },
           interfaces: [
@@ -281,7 +298,7 @@ export function generateSchemas({
       }:\n${err.message}`
       throw err
     }
-  })
+  }
 
   fs.writeFileSync(
     process.cwd() + `/generated-types.json`,
