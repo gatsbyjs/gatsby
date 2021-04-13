@@ -11,8 +11,102 @@ import { internalActions } from "../../redux/actions"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
+import chokidar from "chokidar"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
+
+const createWebpackConfig = ({
+  knownFunctions,
+  siteDirectoryPath,
+  functionsDirectory,
+}) => {
+  // Load environment variables from process.env.GATSBY_* and .env.* files.
+  // Logic is shared with webpack.config.js
+
+  // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
+  const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+  // config env is dependent on the env that it's run, this can be anything from staging-production
+  // this allows you to set use different .env environments or conditions in gatsby files
+  const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
+  const envFile = path.join(siteDirectoryPath, `./.env.${configEnv}`)
+  let parsed = {}
+  try {
+    parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
+  } catch (err) {
+    if (err.code !== `ENOENT`) {
+      report.error(
+        `There was a problem processing the .env file (${envFile})`,
+        err
+      )
+    }
+  }
+
+  const envObject = Object.keys(parsed).reduce((acc, key) => {
+    acc[key] = JSON.stringify(parsed[key])
+    return acc
+  }, {})
+
+  const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
+    acc[key] = JSON.stringify(process.env[key])
+    return acc
+  }, {})
+
+  // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
+  envObject.NODE_ENV = JSON.stringify(nodeEnv)
+  envObject.PUBLIC_DIR = JSON.stringify(`${siteDirectoryPath}/public`)
+
+  const mergedEnvVars = Object.assign(envObject, varsFromProcessEnv)
+
+  const processEnvVars = Object.keys(mergedEnvVars).reduce(
+    (acc, key) => {
+      acc[`process.env.${key}`] = mergedEnvVars[key]
+      return acc
+    },
+    {
+      "process.env": `({})`,
+    }
+  )
+
+  const entries = {}
+  Array.from(knownFunctions).forEach(([, file]) => {
+    const filePath = path.join(functionsDirectory, file)
+    const name = path.parse(file).name
+    entries[name] = filePath
+  })
+
+  const config = {
+    entry: entries,
+    output: {
+      path: path.join(siteDirectoryPath, `.cache`, `functions`),
+      filename: `[name].js`,
+      libraryTarget: `commonjs2`,
+    },
+    target: `node`,
+
+    mode: isProductionEnv ? `production` : `development`,
+    watch: !isProductionEnv,
+    module: {
+      rules: [
+        {
+          test: [/.js$/, /.ts$/],
+          exclude: /node_modules/,
+          loader: `babel-loader`,
+        },
+      ],
+    },
+    // optimization: {
+    // minimize: true,
+    // minimizer: [
+    // new TerserPlugin({
+    // extractComments: false,
+    // }),
+    // ],
+    // },
+    plugins: [new webpack.DefinePlugin(processEnvVars)],
+  }
+
+  return config
+}
 
 export async function onPreBootstrap({
   reporter,
@@ -69,94 +163,13 @@ export async function onPreBootstrap({
 
   await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
-  // Load environment variables from process.env.GATSBY_* and .env.* files.
-  // Logic is shared with webpack.config.js
-
-  // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
-  const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
-  // config env is dependent on the env that it's run, this can be anything from staging-production
-  // this allows you to set use different .env environments or conditions in gatsby files
-  const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
-  const envFile = path.join(siteDirectoryPath, `./.env.${configEnv}`)
-  let parsed = {}
-  try {
-    parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
-  } catch (err) {
-    if (err.code !== `ENOENT`) {
-      report.error(
-        `There was a problem processing the .env file (${envFile})`,
-        err
-      )
-    }
-  }
-
-  const envObject = Object.keys(parsed).reduce((acc, key) => {
-    acc[key] = JSON.stringify(parsed[key])
-    return acc
-  }, {})
-
-  const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-    if (/^GATSBY_/.test(key)) {
-      acc[key] = JSON.stringify(process.env[key])
-    }
-    return acc
-  }, {})
-
-  // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-  envObject.NODE_ENV = JSON.stringify(nodeEnv)
-  envObject.PUBLIC_DIR = JSON.stringify(`${siteDirectoryPath}/public`)
-
-  const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
-
-  const processEnvVars = Object.keys(mergedEnvVars).reduce(
-    (acc, key) => {
-      acc[`process.env.${key}`] = mergedEnvVars[key]
-      return acc
-    },
-    {
-      "process.env": `({})`,
-    }
-  )
-
   try {
     await new Promise((resolve, reject) => {
-      const entries = {}
-      Array.from(knownFunctions).forEach(([, file]) => {
-        const filePath = path.join(functionsDirectory, file)
-        const name = path.parse(file).name
-        entries[name] = filePath
+      const config = createWebpackConfig({
+        knownFunctions,
+        siteDirectoryPath,
+        functionsDirectory,
       })
-
-      const config = {
-        entry: entries,
-        output: {
-          path: path.join(siteDirectoryPath, `.cache`, `functions`),
-          filename: `[name].js`,
-          libraryTarget: `commonjs2`,
-        },
-        target: `node`,
-
-        mode: isProductionEnv ? `production` : `development`,
-        watch: !isProductionEnv,
-        module: {
-          rules: [
-            {
-              test: [/.js$/, /.ts$/],
-              exclude: /node_modules/,
-              loader: `babel-loader`,
-            },
-          ],
-        },
-        // optimization: {
-        // minimize: true,
-        // minimizer: [
-        // new TerserPlugin({
-        // extractComments: false,
-        // }),
-        // ],
-        // },
-        plugins: [new webpack.DefinePlugin(processEnvVars)],
-      }
 
       function callback(err, stats): any {
         const rawMessages = stats.toJson({ moduleTrace: false })
@@ -185,7 +198,21 @@ export async function onPreBootstrap({
         webpack(config).run(callback)
       } else {
         // When in watch mode, you call things differently
-        webpack(config, callback)
+        let compiler = webpack(config, callback)
+
+        // Watch for env files to change and restart the webpack watcher.
+        chokidar
+          .watch(`.env*`, { ignoreInitial: true })
+          .on(`all`, (event, path) => {
+            compiler.close(() => {
+              const config = createWebpackConfig({
+                knownFunctions,
+                siteDirectoryPath,
+                functionsDirectory,
+              })
+              compiler = webpack(config, callback)
+            })
+          })
       }
     })
   } catch (e) {
