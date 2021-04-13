@@ -200,7 +200,7 @@ export async function onCreateDevServer({
     express.text(),
     express.json(),
     express.raw(),
-    (req, res, next) => {
+    async (req, res, next) => {
       const { functionName } = req.params
 
       if (functions.has(functionName)) {
@@ -219,7 +219,7 @@ export async function onCreateDevServer({
 
           const fnToExecute = (fn && fn.default) || fn
 
-          fnToExecute(req, res)
+          await Promise.resolve(fnToExecute(req, res))
         } catch (e) {
           reporter.error(e)
           res.sendStatus(500)
