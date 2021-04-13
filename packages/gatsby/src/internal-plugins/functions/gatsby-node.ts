@@ -76,10 +76,6 @@ export async function onPreBootstrap({
   try {
     await Promise.all(
       Array.from(functions).map(([, file]) => {
-        console.log({
-          file,
-        })
-
         const config = {
           entry: path.join(functionsDirectory, file),
           output: {
@@ -161,10 +157,6 @@ export async function onCreateDevServer({
 
         try {
           const fn = require(path.join(compiledFunctionsDir, funcNameToJs))
-
-          console.log({
-            functions,
-          })
 
           const fnToExecute = (fn && fn.default) || fn
 
