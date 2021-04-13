@@ -1,9 +1,106 @@
-const fs = require(`fs`)
-const { cloneDeep } = require(`lodash`)
-
 import { makeTypeName } from "./normalize"
 
-const types = []
+// Contentful content type schemas
+const ContentfulDataTypes = new Map([
+  [
+    `Symbol`,
+    () => {
+      return { type: `String` }
+    },
+  ],
+  [
+    `Text`,
+    field => {
+      return {
+        type: `ContentfulNodeTypeText`,
+        extensions: {
+          link: { by: `id`, from: `${field.id}___NODE` },
+        },
+      }
+    },
+  ],
+  [
+    `Integer`,
+    () => {
+      return { type: `Int` }
+    },
+  ],
+  [
+    `Number`,
+    () => {
+      return { type: `Float` }
+    },
+  ],
+  [
+    `Date`,
+    () => {
+      return {
+        type: `Date`,
+        extensions: {
+          dateformat: {},
+        },
+      }
+    },
+  ],
+  [
+    `Object`,
+    () => {
+      return { type: `JSON` }
+    },
+  ],
+  [
+    `Boolean`,
+    () => {
+      return { type: `Boolean` }
+    },
+  ],
+  [
+    `Location`,
+    () => {
+      return { type: `ContentfulNodeTypeLocation` }
+    },
+  ],
+  [
+    `RichText`,
+    () => {
+      return { type: `ContentfulNodeTypeRichText` }
+    },
+  ],
+])
+
+const getLinkFieldType = (linkType, field) => {
+  return {
+    type: `Contentful${linkType}`,
+    extensions: {
+      link: { by: `id`, from: `${field.id}___NODE` },
+    },
+  }
+}
+
+const translateFieldType = field => {
+  let fieldType
+  if (field.type === `Array`) {
+    // Arrays of Contentful Links or primitive types
+    const fieldData =
+      field.items.type === `Link`
+        ? getLinkFieldType(field.items.linkType, field)
+        : translateFieldType(field.items)
+
+    fieldType = { ...fieldData, type: `[${fieldData.type}]` }
+  } else if (field.type === `Link`) {
+    // Contentful Link (reference) field types
+    fieldType = getLinkFieldType(field.linkType, field)
+  } else {
+    // Primitive field types
+    fieldType = ContentfulDataTypes.get(field.type)(field)
+  }
+
+  if (field.required) {
+    fieldType.type = `${fieldType.type}!`
+  }
+
+  return fieldType
+}
 
 function generateAssetTypes({ createTypes }) {
   createTypes(`
@@ -16,8 +113,8 @@ function generateAssetTypes({ createTypes }) {
       contentful_id: String!
       id: ID!
       spaceId: String!
-      createdAt: String! # Date @dateform,
-      updatedAt: String! # Date @dateform,
+      createdAt: Date @dateformat
+      updatedAt: Date @dateformat
     }
   `)
 
@@ -58,13 +155,6 @@ export function generateSchema({
   pluginConfig,
   contentTypeItems,
 }) {
-  // logger @todo remove it
-  const origTypes = createTypes
-  createTypes = (...all) => {
-    types.push(all)
-    origTypes(...all)
-  }
-
   createTypes(`
     interface ContentfulInternalReference implements Node {
       contentful_id: String!
@@ -125,11 +215,9 @@ export function generateSchema({
                 const v = obj[k]
                 if (v && v.sys && v.sys.type === `Link`) {
                   if (v.sys.linkType === `Asset`) {
-                    console.log(`adding asset`, v)
                     referencedAssets.add(v.sys.id)
                   }
                   if (v.sys.linkType === `Entry`) {
-                    console.log(`adding entry`, v)
                     referencedEntries.add(v.sys.id)
                   }
                 } else if (v && typeof v === `object`) {
@@ -167,7 +255,7 @@ export function generateSchema({
     })
   )
 
-  // Is there a way to have this as string and let transformer-remark replace it with an object?
+  // @todo Is there a way to have this as string and let transformer-remark replace it with an object?
   createTypes(
     schema.buildObjectType({
       name: `ContentfulNodeTypeText`,
@@ -181,79 +269,6 @@ export function generateSchema({
     })
   )
 
-  // Contentful content type schemas
-  const ContentfulDataTypes = new Map([
-    [`Symbol`, `String`],
-    [
-      `Text`,
-      {
-        type: `ContentfulNodeTypeText`,
-        extensions: {
-          link: { by: `id` },
-        },
-      },
-    ],
-    [`Integer`, `Int`],
-    [`Number`, `Float`],
-    [
-      `Date`,
-      {
-        type: `Date`,
-        extensions: {
-          dateformat: {},
-        },
-      },
-    ],
-    [`Object`, `JSON`],
-    [`Boolean`, `Boolean`],
-    [`Location`, `ContentfulNodeTypeLocation`],
-    [`RichText`, `ContentfulNodeTypeRichText`],
-  ])
-
-  const getLinkFieldType = linkType => {
-    return {
-      type: `Contentful${linkType}`,
-      extensions: {
-        link: { by: `id` },
-      },
-    }
-  }
-
-  const translateFieldType = field => {
-    let id
-    if (field.type === `Array`) {
-      const fieldData =
-        field.items.type === `Link`
-          ? getLinkFieldType(field.items.linkType)
-          : translateFieldType(field.items)
-
-      id =
-        typeof fieldData === `string`
-          ? `[${fieldData}]`
-          : { ...fieldData, type: `[${fieldData.type}]` }
-    } else if (field.type === `Link`) {
-      id = getLinkFieldType(field.linkType)
-    } else {
-      id = ContentfulDataTypes.get(field.type)
-    }
-
-    if (typeof id === `string`) {
-      return [id, field.required && `!`].filter(Boolean).join(``)
-    }
-
-    id = cloneDeep(id)
-
-    if (field.required) {
-      id.type = `${id.type}!`
-    }
-
-    if (id?.extensions?.link) {
-      id.extensions.link.from = `${field.id}___NODE`
-    }
-
-    return id
-  }
-
   for (const contentTypeItem of contentTypeItems) {
     try {
       const fields = {}
@@ -261,8 +276,7 @@ export function generateSchema({
         if (field.disabled || field.omitted) {
           return
         }
-        const type = translateFieldType(field)
-        fields[field.id] = typeof type === `string` ? { type } : type
+        fields[field.id] = translateFieldType(field)
       })
 
       const type = pluginConfig.get(`useNameForId`)
@@ -279,8 +293,8 @@ export function generateSchema({
             node_locale: { type: `String!` },
             // @todo these should be real dates and in sys
             spaceId: { type: `String!` },
-            createdAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
-            updatedAt: { type: `String!` }, // { type: `Date`, extensions: { dateform: {} } },
+            createdAt: { type: `Date`, extensions: { dateformat: {} } },
+            updatedAt: { type: `Date`, extensions: { dateformat: {} } },
             // @todo add metadata
             sys: { type: `ContentfulInternalSys` },
             ...fields,
@@ -290,19 +304,15 @@ export function generateSchema({
             `ContentfulEntry`,
             `Node`,
           ],
+          extensions: { dontInfer: {} },
         })
       )
     } catch (err) {
       err.message = `Unable to create schema for Contentful Content Type ${
         contentTypeItem.name || contentTypeItem.sys.id
       }:\n${err.message}`
+      console.log(err.stack)
       throw err
     }
   }
-
-  fs.writeFileSync(
-    process.cwd() + `/generated-types.json`,
-    JSON.stringify(types, null, 2)
-  )
-  createTypes = origTypes
 }

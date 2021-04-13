@@ -104,13 +104,12 @@ export const pageQuery = graphql`
         contentful_id
         one {
           __typename
+          contentful_id
           ... on ContentfulText {
-            contentful_id
             title
             short
           }
           ... on ContentfulContentReference {
-            contentful_id
             title
             one {
               ... on ContentfulText {
@@ -138,18 +137,16 @@ export const pageQuery = graphql`
         }
         many {
           __typename
+          contentful_id
           ... on ContentfulText {
-            contentful_id
             title
             short
           }
           ... on ContentfulNumber {
-            contentful_id
             title
             integer
           }
           ... on ContentfulContentReference {
-            contentful_id
             title
             one {
               ... on ContentfulText {
