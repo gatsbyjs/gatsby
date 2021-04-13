@@ -18,7 +18,7 @@ Also check out [notable bugfixes](#notable-bugfixes--improvements).
 **Bleeding Edge:** Want to try new features as soon as possible? Install `gatsby@next` and let us know
 if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
-[Previous release notes](/docs/reference/release-notes/v3.1)
+[Previous release notes](/docs/reference/release-notes/v3.2)
 
 [Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0...gatsby@3.3.0)
 
