@@ -5,7 +5,7 @@ import _ from "lodash"
 
 import { downloadContentfulAssets } from "./download-contentful-assets"
 import { fetchContent } from "./fetch"
-import { generateSchemas } from "./generate-schema"
+import { generateSchema } from "./generate-schema"
 import {
   buildEntryList,
   buildForeignReferenceMap,
@@ -240,7 +240,7 @@ export async function sourceNodes(
   processingActivity.start()
 
   // Generate schemas based on Contentful content model
-  generateSchemas({ createTypes, schema, pluginConfig, contentTypeItems })
+  generateSchema({ createTypes, schema, pluginConfig, contentTypeItems })
 
   // Store a raw and unresolved copy of the data for caching
   const mergedSyncDataRaw = _.cloneDeep(mergedSyncData)
