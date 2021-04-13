@@ -75,7 +75,7 @@ export async function onPreBootstrap({
 
   try {
     await Promise.all(
-      Array.from(functions).map(([, file]) => {
+      Array.from(knownFunctions).map(([_, file]) => {
         const config = {
           entry: path.join(functionsDirectory, file),
           output: {
@@ -95,14 +95,14 @@ export async function onPreBootstrap({
               },
             ],
           },
-          optimization: {
-            minimize: true,
-            minimizer: [
-              new TerserPlugin({
-                extractComments: false,
-              }),
-            ],
-          },
+          // optimization: {
+          // minimize: true,
+          // minimizer: [
+          // new TerserPlugin({
+          // extractComments: false,
+          // }),
+          // ],
+          // },
           plugins: [new webpack.DefinePlugin(varObject)],
         }
 
@@ -132,7 +132,10 @@ export async function onCreateDevServer({
   app,
   store,
 }: CreateDevServerArgs): Promise<void> {
-  const { functions } = store.getState()
+  const {
+    program: { directory: siteDirectoryPath },
+    functions,
+  } = store.getState()
 
   reporter.verbose(`Attaching functions to development server`)
 
@@ -149,7 +152,7 @@ export async function onCreateDevServer({
       if (functions.has(functionName)) {
         reporter.verbose(`Running ${functionName}`)
         const compiledFunctionsDir = path.join(
-          process.cwd(),
+          siteDirectoryPath,
           `.cache`,
           `functions`
         )
