@@ -70,7 +70,11 @@ const createWebpackConfig = ({
   const entries = {}
   Array.from(knownFunctions).forEach(([, file]) => {
     const filePath = path.join(functionsDirectory, file)
-    const name = path.parse(file).name
+
+    // Get path without the extension (as it could be ts or js)
+    const parsed = path.parse(file)
+    const name = path.join(parsed.dir, parsed.name)
+
     entries[name] = filePath
   })
 
@@ -235,14 +239,14 @@ export async function onCreateDevServer({
   reporter.verbose(`Attaching functions to development server`)
 
   app.use(
-    `/api/:functionName`,
+    `/api/*`,
     multer().none(),
     express.urlencoded({ extended: true }),
     express.text(),
     express.json(),
     express.raw(),
     async (req, res, next) => {
-      const { functionName } = req.params
+      const { "0": functionName } = req.params
 
       if (functions.has(functionName)) {
         reporter.verbose(`Running ${functionName}`)
