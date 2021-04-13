@@ -33,7 +33,7 @@ const TextPage = ({ data }) => {
       </div>
       <h2>Long (Plain):</h2>
       <div data-cy-id="long-plain">
-        <p data-cy-value>{longPlain.longPlain.longPlain}</p>
+        <p data-cy-value>{longPlain.longPlain.raw}</p>
       </div>
       <h2>Markdown (Simple):</h2>
       <div
@@ -94,7 +94,7 @@ export const pageQuery = graphql`
       contentful_id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" }
     ) {
       longPlain {
-        longPlain
+        raw
       }
     }
     longMarkdownSimple: contentfulText(
