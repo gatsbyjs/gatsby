@@ -312,34 +312,38 @@ export const renderHTMLProd = async ({
     }
   }
 
-  await Bluebird.map(paths, async pagePath => {
-    try {
-      const pageData = await readPageData(publicDir, pagePath)
-      const resourcesForTemplate = await getResourcesForTemplate(pageData)
+  await Bluebird.map(
+    paths,
+    async pagePath => {
+      try {
+        const pageData = await readPageData(publicDir, pagePath)
+        const resourcesForTemplate = await getResourcesForTemplate(pageData)
 
-      const { html, unsafeBuiltinsUsage } = htmlComponentRenderer.default({
-        pagePath,
-        pageData,
-        ...resourcesForTemplate,
-      })
+        const { html, unsafeBuiltinsUsage } = htmlComponentRenderer.default({
+          pagePath,
+          pageData,
+          ...resourcesForTemplate,
+        })
 
-      if (unsafeBuiltinsUsage.length > 0) {
-        unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
-      }
+        if (unsafeBuiltinsUsage.length > 0) {
+          unsafeBuiltinsUsageByPagePath[pagePath] = unsafeBuiltinsUsage
+        }
 
-      return fs.outputFile(getPageHtmlFilePath(publicDir, pagePath), html)
-    } catch (e) {
-      if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
-        unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
+        return fs.outputFile(getPageHtmlFilePath(publicDir, pagePath), html)
+      } catch (e) {
+        if (e.unsafeBuiltinsUsage && e.unsafeBuiltinsUsage.length > 0) {
+          unsafeBuiltinsUsageByPagePath[pagePath] = e.unsafeBuiltinsUsage
+        }
+        // add some context to error so we can display more helpful message
+        e.context = {
+          path: pagePath,
+          unsafeBuiltinsUsageByPagePath,
+        }
+        throw e
       }
-      // add some context to error so we can display more helpful message
-      e.context = {
-        path: pagePath,
-        unsafeBuiltinsUsageByPagePath,
-      }
-      throw e
-    }
-  })
+    },
+    { concurrency: 2 }
+  )
 
   return { unsafeBuiltinsUsageByPagePath }
 }
@@ -372,18 +376,25 @@ export const renderHTMLDev = async ({
     lastSessionId = sessionId
   }
 
-  return Bluebird.map(paths, async pagePath => {
-    try {
-      const htmlString = htmlComponentRenderer.default({
-        pagePath,
-      })
-      return fs.outputFile(getPageHtmlFilePath(outputDir, pagePath), htmlString)
-    } catch (e) {
-      // add some context to error so we can display more helpful message
-      e.context = {
-        path: pagePath,
+  return Bluebird.map(
+    paths,
+    async pagePath => {
+      try {
+        const htmlString = htmlComponentRenderer.default({
+          pagePath,
+        })
+        return fs.outputFile(
+          getPageHtmlFilePath(outputDir, pagePath),
+          htmlString
+        )
+      } catch (e) {
+        // add some context to error so we can display more helpful message
+        e.context = {
+          path: pagePath,
+        }
+        throw e
       }
-      throw e
-    }
-  })
+    },
+    { concurrency: 2 }
+  )
 }

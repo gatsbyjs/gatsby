@@ -4,7 +4,9 @@ title: Docs Contributions
 
 Gatsby, unsurprisingly, uses Gatsby for its documentation website. Thank you in advance and cheers for contributing to Gatsby documentation! As of June 2020, over 2,100 people have contributed. It's people like you that make this community great!
 
-> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs templates](/contributing/docs-templates/) page._
+> _When deciding where to contribute to Gatsby (docs or [blog](/contributing/blog-contributions/)?), check out the [docs structure](/contributing/docs-contributions/docs-structure/) page._
+
+When writing (or reviewing) learning materials that show Gatsby users how to complete tasks, you are expected to **test out any code examples or steps to ensure they work**. This can also help with writing in your own words, rather than copying from other sources. If you have a demo project or code example that strengthens docs and you don't know where to put it, mention it to the Gatsby Documentation team in a PR.
 
 ## Top priorities
 
@@ -15,9 +17,7 @@ Check the GitHub repo for issues labeled with ["type: documentation" and "good f
 When working on the Gatsby.js documentation, you can choose between two major styles of working:
 
 - [Work directly in the GitHub UI](#modifying-markdown-files), using the "Edit this File" and commit capabilities without having to clone the repository. This is useful for quick documentation updates, typo fixes, and lightweight Markdown changes.
-- Clone the Gatsby.js repo and get the `www` site up and running locally. This is necessary for more thorough documentation content. Learn how to get set up in the [Gatsby docs setup instructions](#docs-site-setup-instructions).
-
-> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
+- Clone the Gatsby.js repo and make changes to the Markdown files using your favorite text editor. Currently (as of March 2021), there is no way for community members to build the docs site locally. We are working internally to figure out a fix for this.
 
 ## Fixing image and link paths
 
@@ -48,57 +48,11 @@ For the purposes of an accessible document outline, content headings should go i
      > Note: If your issue and/or PR doesn't meet the above contribution criteria, it may receive a comment reminding you to do so. If, after two weeks, these updates haven't been made, your issue and/or PR may be closed, which helps us triage issues and PRs efficiently. You can request that it be reopened if and when you are ready to make the updates required.
 3. GitHub then allows you to commit the change and raise a PR right in the UI. This is the _easiest_ way you can contribute to the project!
 
-### Converting a document from a stub
-
-If you wrote a new document that was [previously a stub](/contributing/how-to-write-a-stub/), there are two things you need to update.
-
-1. Remove the frontmatter that links to the issue
-
-```diff:title=docs/docs/example-doc.md
-  ...
-    title: Example Document
-- - issue: https://github.com/gatsbyjs/gatsby/issues/00000
-+ -
-  ...
-```
-
-2. Edit `www/src/data/sidebars/doc-links.yaml` by removing the asterisk behind the document's title:
-
-```diff:title=www/src/data/sidebars/doc-links.yaml
-  ...
-- - title: Example Document*
-+ - title: Example Document
-    link: /docs/example-document/
-  ...
-```
-
-3. (Optional) if the name of the title seems long, consider adding a `breadcrumbTitle` to the entry in the `doc-links.yaml` file that is a shorter version of the title, and will show up in the breadcrumb on the docs page instead.
-
-```diff:title=www/src/data/sidebars/doc-links.yaml
-  ...
-  - title: Really, Really Long Example Document or Guide Title
-    link: /docs/example-document/
-+   breadcrumbTitle: Shorter Title to Display
-  ...
-```
-
 ## Docs site setup instructions
 
-After going through the [development setup instructions](/contributing/setting-up-your-local-dev-environment/), there are a few additional things that are helpful to know when setting up a version of the [docs site](/docs/), which mostly lives in the [www](https://github.com/gatsbyjs/gatsby/tree/master/www) and [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directories. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
+The content of the docs site mostly lives in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) directory. There are also some [examples](https://github.com/gatsbyjs/gatsby/tree/master/examples) in the repo that are referenced in docs.
 
-> **Note:** The version of the site that you can run locally is separate and visually distinct from the live site. You will be able to change the _content_ of the documentation but the _structure_ of the docs site is developed by Gatsby internally.
-
-- Prerequisites: install Node.js and Yarn. See [development setup instructions](/contributing/setting-up-your-local-dev-environment/).
-- [Fork and clone the Gatsby repo](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions).
-- For docs-only changes, consider using `git checkout -b docs/some-change` or `git checkout -b docs-some-change`, as this will short circuit the CI process and only run linting tasks.
-- Change directories into the docs site folder: `cd www`
-- Install dependencies with Yarn: `yarn install`
-- Add the following env variable to an `.env.development` file inside the `www` directory to [enable image placeholders](https://github.com/gatsbyjs/gatsby/tree/master/www#running-slow-build-screenshots-placeholder): `GATSBY_SCREENSHOT_PLACEHOLDER=true`. This will speed up building the docs site significantly!
-- Make sure you have the Gatsby CLI installed with `gatsby -v`, if not run `yarn global add gatsby-cli`
-- Start a build of `www` with `gatsby develop`.
-- Edit Markdown files in the [docs](https://github.com/gatsbyjs/gatsby/tree/master/docs) and [contributing](https://github.com/gatsbyjs/gatsby/tree/master/docs/contributing) folders, as well as the [YAML sidebar files](https://github.com/gatsbyjs/gatsby/tree/master/www/src/data/sidebars).
-- View the changes in your browser at `http://localhost:8000`.
-- Commit your changes and [submit a pull request](/contributing/how-to-open-a-pull-request/)!
+There is currently not a way for community members to build the docs site locally. We know this is not ideal and we're working internally on a fix.
 
 ## Changing headers
 
@@ -201,11 +155,3 @@ Sometimes it makes sense to move or rename a file as part of docs restructuring 
 ## Claim your swag
 
 After your first code contribution to the Gatsby repo (including documentation) you become eligible for a free shirt or pair of socks. See the [swag page](/contributing/contributor-swag/) for more details!
-
-## Want more?
-
-Check out our additional pages on docs contributions:
-
-- [Gatsby Style Guide](/contributing/gatsby-style-guide/)
-- [Docs Templates](/contributing/docs-templates/)
-- [How to Write a Stub](/contributing/how-to-write-a-stub/)

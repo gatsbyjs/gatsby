@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.3...gatsby-source-wordpress@5.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.2...gatsby-source-wordpress@5.3.0-next.3) (2021-04-09)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** only log out duplicate node if we have all the data we want to log ([#30751](https://github.com/gatsbyjs/gatsby/issues/30751)) ([2bdd5a5](https://github.com/gatsbyjs/gatsby/commit/2bdd5a5865b696e0d31dd8ff3c0dde6fdd7cb181))
+
+# [5.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.1...gatsby-source-wordpress@5.3.0-next.2) (2021-04-07)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Enable preview mode in PINC builds ([#30601](https://github.com/gatsbyjs/gatsby/issues/30601)) ([d97b009](https://github.com/gatsbyjs/gatsby/commit/d97b009daf9b26ab9a9418be8c1ca2fe71d19eac))
+- **gatsby-source-wordpress:** pass missing property helpers to gql fetch util ([#30727](https://github.com/gatsbyjs/gatsby/issues/30727)) ([6b2fd94](https://github.com/gatsbyjs/gatsby/commit/6b2fd94d649836c9c4fc49b49a0861f00c2db801))
+
 # [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.0...gatsby-source-wordpress@5.3.0-next.1) (2021-03-30)
 
 **Note:** Version bump only for package gatsby-source-wordpress

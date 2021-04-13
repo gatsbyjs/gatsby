@@ -29,6 +29,10 @@ This plugin has several limitations, please be aware of these:
 
 4. Using the preview functionallity might result in broken content over time, as syncing data on preview is not officially supported by Contentful. Make sure to regulary clean your cache when using Contentfuls preview API.
 
+5. The following content type names are not allowed: `entity`, `reference`
+
+6. The following field names are restricted and will be prefixed: `children`, `contentful_id`, `fields`, `id`, `internal`, `parent`,
+
 ### Using Delivery API
 
 ```javascript

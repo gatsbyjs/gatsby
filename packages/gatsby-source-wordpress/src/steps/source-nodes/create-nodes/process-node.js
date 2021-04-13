@@ -837,7 +837,7 @@ const replaceNodeHtmlLinks = ({ wpUrl, nodeString, node }) => {
           nodeString = nodeString.replace(thisMatchRegex, normalizedPath)
         } catch (e) {
           console.error(e)
-          console.warning(
+          console.warn(
             formatLogMessage(
               `Failed to process inline html links in ${node.__typename} ${node.id}`
             )
