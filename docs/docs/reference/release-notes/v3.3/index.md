@@ -12,6 +12,7 @@ Key highlights of this release:
 - [Performance optimizations](#performance-optimizations) - faster JS bundling, lower peak memory usage
 - [Upgrade to the latest `sharp`](#upgrade-to-the-latest-sharp) - built-in image optimizations; and now works on M1 Macs
 - [Upgrade to the latest `remark`](#upgrade-to-the-latest-remark) - more consistency in Markdown rendering
+- [Bugfixes in `gatsby-plugin-image`](#bugfixes-in-gatsby-plugin-image130)
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -103,6 +104,14 @@ The most important highlights of the new release:
 - Includes buil-in image optimization (unlocks future perf improvements in Gatsby)
 
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/30541)
+
+## Bugfixes in `gatsby-plugin-image@1.3.0`
+
+- Fix a bug that caused errors in third party packages that access the `global` object
+- Fix a bug that prevented `draggable="false"` being set on the `GatsbyImage` component
+- Fix a bug that caused blurred previews to be generated at the wrong aspect ratio
+- Fix a bug that prevented lazy-loaded images displaying in Safari
+- Fix a bug that caused duplicate type errors when using Contentful images with other plugins that implement images
 
 ## Notable bugfixes & improvements
 
