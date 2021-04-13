@@ -79,17 +79,17 @@ class Dev404Page extends React.Component {
 
   render() {
     const { pathname } = this.props.location
+    const isAPI = false
     let newFilePath
     let newAPIPath
     if (pathname === `/`) {
       newFilePath = `src/pages/index.js`
-      newAPIPath = `src/api/index.js`
+    } else if (pathname.slice(0, 4) === `/api`) {
+      newAPIPath = `src${pathname}.js`
     } else if (pathname.slice(-1) === `/`) {
       newFilePath = `src/pages${pathname.slice(0, -1)}.js`
-      newAPIPath = `src${pathname.slice(0, -1)}.js`
     } else {
       newFilePath = `src/pages${pathname}.js`
-      newAPIPath = `src${pathname}.js`
     }
 
     return this.state.showCustom404 ? (
@@ -113,19 +113,49 @@ class Dev404Page extends React.Component {
             <code>src/pages/404.js</code>.
           </p>
         )}
-        <h2>Create a page at this url</h2>
-        <p>
-          Create a React.js component in your site directory at
-          {` `}"<code>{newFilePath}</code>"{` `}
-          and this page will automatically refresh to show the new page
-          component you created.
-        </p>
-        <h2>Create an API function at this url</h2>
-        <p>
-          Create a javascript file in your site directory at
-          {` `}"<code>{newAPIPath}</code>"{` `}
-          and refresh to execute the new API function you created.
-        </p>
+        {newFilePath && (
+          <div>
+            <h2>Create a page at this url</h2>
+            <p>
+              Create a React.js component like the following in your site
+              directory at
+              {` `}"<code>{newFilePath}</code>"{` `}
+              and this page will automatically refresh to show the new page
+              component you created.
+            </p>
+            <pre>
+              <code
+                dangerouslySetInnerHTML={{
+                  __html: `
+export default function Component () {
+  return "Hello world"
+}`,
+                }}
+              />
+            </pre>
+          </div>
+        )}
+        {newAPIPath && (
+          <div>
+            <h2>Create an API function at this url</h2>
+            <p>
+              Create a javascript file like the following in your site directory
+              at
+              {` `}"<code>{newAPIPath}</code>"{` `}
+              and refresh to execute the new API function you created.
+            </p>
+            <pre>
+              <code
+                dangerouslySetInnerHTML={{
+                  __html: `
+export default function API (req, res) {
+  res.json({ hello: "world" })
+}`,
+                }}
+              />
+            </pre>
+          </div>
+        )}
         {this.state.initPagePaths.length > 0 && (
           <div>
             <hr />
