@@ -9,7 +9,7 @@ const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
-const { generateSchemas } = require(`./generate-schema`)
+const { generateSchema } = require(`./generate-schema`)
 const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
@@ -375,7 +375,7 @@ exports.sourceNodes = async (
   processingActivity.start()
 
   // Generate schemas based on Contentful content model
-  generateSchemas({ createTypes, schema, pluginConfig, contentTypeItems })
+  generateSchema({ createTypes, schema, pluginConfig, contentTypeItems })
 
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deleted) {
