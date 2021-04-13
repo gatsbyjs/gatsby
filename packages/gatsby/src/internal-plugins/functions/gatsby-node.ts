@@ -174,6 +174,7 @@ export async function onCreateDevServer({
           fnToExecute(req, res)
         } catch (e) {
           reporter.error(e)
+          res.sendStatus(500)
         }
       } else {
         next()
