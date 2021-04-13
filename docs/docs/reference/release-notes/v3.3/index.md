@@ -21,7 +21,7 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 [Previous release notes](/docs/reference/release-notes/v3.2)
 
-[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0...gatsby@3.3.0)
+[Full changelog](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.0...gatsby@3.3.0)
 
 ---
 
@@ -121,4 +121,30 @@ The most important highlights of the new release:
 
 ## Contributors
 
-TODO after backporting all fixes
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.0...gatsby@3.3.0) to this release 💜
+
+- [JobenM](https://github.com/JobenM): fix(gatsby-plugin-mdx): timeToRead returns NaN when word count is 0 [PR #30489](https://github.com/gatsbyjs/gatsby/pull/30489)
+- [axe312ger](https://github.com/axe312ger)
+
+  - fix(gatsby-source-contentful): Improve network error handling [PR #30257](https://github.com/gatsbyjs/gatsby/pull/30257)
+  - chore(contentful): create compiled files in dist instead of . [PR #30414](https://github.com/gatsbyjs/gatsby/pull/30414)
+  - fix(examples): Update using-contentful to use gatsby-plugin-image [PR #29526](https://github.com/gatsbyjs/gatsby/pull/29526)
+  - build(using-contentful): add missing sharp dependency [PR #30546](https://github.com/gatsbyjs/gatsby/pull/30546)
+  - feat(gatsby-source-contentful): Increase Contentful sync by up to 10x [PR #30422](https://github.com/gatsbyjs/gatsby/pull/30422)
+  - fix(contentful): set proper defaults for gatsby-plugin-image [PR #30536](https://github.com/gatsbyjs/gatsby/pull/30536)
+  - feat(gatsby-source-contentful): update docs and improve errors [PR #30538](https://github.com/gatsbyjs/gatsby/pull/30538)
+  - fix(gatsby-source-contentful): Contentful page limit backoff [PR #30549](https://github.com/gatsbyjs/gatsby/pull/30549)
+  - fix(contentful): ensure fragments are properly distributed [PR #30555](https://github.com/gatsbyjs/gatsby/pull/30555)
+  - fix(using-contentful): clean up dependencies [PR #30556](https://github.com/gatsbyjs/gatsby/pull/30556)
+  - fix(contentful): make gatsby-plugin-image a peer dependency [PR #30709](https://github.com/gatsbyjs/gatsby/pull/30709)
+
+- [ridem](https://github.com/ridem): fix(gatsby-plugin-netlify-cms): Don't use StaticQueryMapper [PR #30599](https://github.com/gatsbyjs/gatsby/pull/30599)
+- [Nurou](https://github.com/Nurou): chore(gatsby-source-wordpress): Link to source WP plugin [PR #30645](https://github.com/gatsbyjs/gatsby/pull/30645)
+- [baker-jr-john](https://github.com/baker-jr-john): chore(docs): Update how-gatsby-works-with-github-pages [PR #30630](https://github.com/gatsbyjs/gatsby/pull/30630)
+- [cametumbling](https://github.com/cametumbling)
+
+  - chore(docs): Add link to part 8 tutorial [PR #30604](https://github.com/gatsbyjs/gatsby/pull/30604)
+  - chore(docs): Update wording of tutorial part 8 [PR #30606](https://github.com/gatsbyjs/gatsby/pull/30606)
+
+- [nategiraudeau](https://github.com/nategiraudeau): fix(gatsby-example-using-remark) fix broken example for typescript users [PR #30505](https://github.com/gatsbyjs/gatsby/pull/30505)
+- [AntonNiklasson](https://github.com/AntonNiklasson): chore(docs): include autoprefixer in tailwind install command [PR #30718](https://github.com/gatsbyjs/gatsby/pull/30718)
