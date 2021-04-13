@@ -164,6 +164,14 @@ exports.createPages = async ({ actions, graphql }) => {
     }`
   )
 
+  actions.createPage({
+    path: `/changing-context/`,
+    component: require.resolve(`./src/templates/dummy`),
+    context: {
+      dummyId: `runNumber: ${runNumber}`,
+    },
+  })
+
   const { data } = await graphql(`
     {
       allDepPageQuery {

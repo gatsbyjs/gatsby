@@ -230,6 +230,40 @@ function assertHTMLCorrectness(runNumber) {
       })
     })
   })
+
+  describe(`/changing-context/`, () => {
+    let pageDataContent
+    let htmlContent
+    beforeAll(() => {
+      pageDataContent = fs.readJsonSync(
+        path.join(
+          process.cwd(),
+          `public`,
+          `page-data`,
+          `changing-context`,
+          `page-data.json`
+        )
+      )
+
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `changing-context`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html is correctly generated using fresh page context`, () => {
+      // remove <!-- --> from html content string as that's impl details of react ssr
+      expect(htmlContent.replace(/<!-- -->/g, ``)).toContain(
+        `Dummy page for runNumber: ${runNumber}`
+      )
+    })
+
+    it(`page-data is correctly generated using fresh page context`, () => {
+      expect(pageDataContent.result.pageContext).toEqual({
+        dummyId: `runNumber: ${runNumber}`,
+      })
+    })
+  })
 }
 
 function assertNodeCorrectness(runNumber) {
@@ -486,6 +520,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/static-query-result-tracking/should-invalidate/`,
     `/page-query-template-change/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
+    `/changing-context/`,
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
