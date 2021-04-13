@@ -540,7 +540,7 @@ exports.createAssetNodes = ({
       assetNode.sys.revision = assetItem.sys.revision
     }
 
-    assetNode.internal.createNodePromises.push(createNode(assetNode))
+    createNodePromises.push(createNode(assetNode))
   })
 
   return createNodePromises
