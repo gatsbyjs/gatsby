@@ -118,34 +118,46 @@ export const pageQuery = graphql`
               contentful_id
               title
               one {
-                ... on ContentfulContentReference {
-                  contentful_id
+                __typename
+                contentful_id
+                ... on ContentfulText {
                   title
-                  content_reference {
+                  short
+                }
+                ... on ContentfulContentReference {
+                  title
+                  one {
                     ... on ContentfulContentReference {
-                      contentful_id
+                      title
+                    }
+                  }
+                  many {
+                    ... on ContentfulContentReference {
                       title
                     }
                   }
                 }
               }
               many {
+                __typename
+                contentful_id
                 ... on ContentfulText {
-                  contentful_id
                   title
                   short
                 }
                 ... on ContentfulNumber {
-                  contentful_id
                   title
                   integer
                 }
                 ... on ContentfulContentReference {
-                  contentful_id
                   title
-                  content_reference {
+                  one {
                     ... on ContentfulContentReference {
-                      id
+                      title
+                    }
+                  }
+                  many {
+                    ... on ContentfulContentReference {
                       title
                     }
                   }
