@@ -15,11 +15,40 @@ import chokidar from "chokidar"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
-const createWebpackConfig = ({
-  knownFunctions,
+const createWebpackConfig = async ({
   siteDirectoryPath,
   functionsDirectory,
+  store,
 }) => {
+  const files = await new Promise((resolve, reject) => {
+    const functionsGlob = `**/*.{js,ts}`
+    glob(functionsGlob, { cwd: functionsDirectory }, (err, files) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(files)
+      }
+    })
+  })
+
+  if (files?.length === 0) {
+    reporter.warn(
+      `No functions found in directory: ${path.relative(
+        siteDirectoryPath,
+        functionsDirectory
+      )}`
+    )
+  }
+
+  const knownFunctions = new Map(
+    files.map(file => [
+      urlResolve(path.parse(file).dir, path.parse(file).name),
+      file,
+    ])
+  )
+
+  store.dispatch(internalActions.setFunctions(knownFunctions))
+
   // Load environment variables from process.env.GATSBY_* and .env.* files.
   // Logic is shared with webpack.config.js
 
@@ -124,8 +153,6 @@ export async function onPreBootstrap({
     functions,
   } = store.getState()
 
-  const functionsGlob = `**/*.{js,ts}`
-
   const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
 
   const functionsDirectory = path.resolve(
@@ -133,46 +160,18 @@ export async function onPreBootstrap({
     functionsDirectoryPath as string
   )
 
-  const files = await new Promise((resolve, reject) => {
-    glob(functionsGlob, { cwd: functionsDirectory }, (err, files) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(files)
-      }
-    })
-  })
-
-  if (files?.length === 0) {
-    reporter.warn(
-      `No functions found in directory: ${path.relative(
-        siteDirectoryPath,
-        functionsDirectory
-      )}`
-    )
-  }
-
   reporter.verbose(`Attaching functions to development server`)
-
-  const knownFunctions = new Map(
-    files.map(file => [
-      urlResolve(path.parse(file).dir, path.parse(file).name),
-      file,
-    ])
-  )
-
-  store.dispatch(internalActions.setFunctions(knownFunctions))
 
   await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   try {
-    await new Promise((resolve, reject) => {
-      const config = createWebpackConfig({
-        knownFunctions,
+    await new Promise(async (resolve, reject) => {
+      const config = await createWebpackConfig({
         siteDirectoryPath,
         functionsDirectory,
+        store,
       })
 
       function callback(err, stats): any {
@@ -206,13 +205,22 @@ export async function onPreBootstrap({
 
         // Watch for env files to change and restart the webpack watcher.
         chokidar
-          .watch(`.env*`, { ignoreInitial: true })
+          .watch(
+            [`${siteDirectoryPath}/.env*`, `${siteDirectoryPath}/src/api/**/*`],
+            { ignoreInitial: true }
+          )
           .on(`all`, (event, path) => {
-            compiler.close(() => {
-              const config = createWebpackConfig({
-                knownFunctions,
+            // Ignore change events from the API directory
+            if (event === `change` && path.includes(`/src/api/`)) {
+              return
+            }
+
+            // Otherwise, restart the watcher
+            compiler.close(async () => {
+              const config = await createWebpackConfig({
                 siteDirectoryPath,
                 functionsDirectory,
+                store,
               })
               compiler = webpack(config, callback)
             })
@@ -233,7 +241,6 @@ export async function onCreateDevServer({
 }: CreateDevServerArgs): Promise<void> {
   const {
     program: { directory: siteDirectoryPath },
-    functions,
   } = store.getState()
 
   reporter.verbose(`Attaching functions to development server`)
@@ -247,6 +254,8 @@ export async function onCreateDevServer({
     express.raw(),
     async (req, res, next) => {
       const { "0": functionName } = req.params
+
+      const { functions } = store.getState()
 
       if (functions.has(functionName)) {
         reporter.verbose(`Running ${functionName}`)
