@@ -4,14 +4,10 @@ import path from "path"
 import webpack from "webpack"
 import multer from "multer"
 import * as express from "express"
-
 import { urlResolve } from "gatsby-core-utils"
-
-import { internalActions } from "../../redux/actions"
-
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
-
 import TerserPlugin from "terser-webpack-plugin"
+import { internalActions } from "../../redux/actions"
 
 export async function onPreBootstrap({
   reporter,
