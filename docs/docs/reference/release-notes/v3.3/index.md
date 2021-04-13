@@ -39,8 +39,7 @@ you will likely see modest improvements.
 ### Lower peak memory usage
 
 This release restricts concurrency of html-file generation which can greatly reduce memory and disk pressure
-and decrease spikes in memory usage — especially for sites with many 100s+ pages and large page-data.json files. With our example site we saw a decrease in peak memory usage from
-~3.5 GB to ~1.7 GB (without negative effects to build time).
+and decrease spikes in memory usage — especially for sites with many 100s+ pages and large page-data.json files. With our example site we saw a decrease in peak memory usage from ~3.5 GB to ~1.7 GB (without negative effects to build time).
 
 [Original PR](https://github.com/gatsbyjs/gatsby/pull/30793)
 
