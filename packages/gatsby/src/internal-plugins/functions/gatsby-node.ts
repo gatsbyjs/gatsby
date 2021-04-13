@@ -8,6 +8,7 @@ import { urlResolve } from "gatsby-core-utils"
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
 import TerserPlugin from "terser-webpack-plugin"
 import { internalActions } from "../../redux/actions"
+import dotenv from "dotenv"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -66,6 +67,32 @@ export async function onPreBootstrap({
 
   await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
+  // Load environment variables from process.env.GATSBY_* and .env.* files.
+  // Logic is shared with webpack.config.js
+
+  // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
+  const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+  // config env is dependent on the env that it's run, this can be anything from staging-production
+  // this allows you to set use different .env environments or conditions in gatsby files
+  const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
+  const envFile = path.join(siteDirectoryPath, `./.env.${configEnv}`)
+  let parsed = {}
+  try {
+    parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
+  } catch (err) {
+    if (err.code !== `ENOENT`) {
+      report.error(
+        `There was a problem processing the .env file (${envFile})`,
+        err
+      )
+    }
+  }
+
+  const envObject = Object.keys(parsed).reduce((acc, key) => {
+    acc[key] = JSON.stringify(parsed[key])
+    return acc
+  }, {})
+
   const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
     if (/^GATSBY_/.test(key)) {
       acc[key] = JSON.stringify(process.env[key])
@@ -73,9 +100,15 @@ export async function onPreBootstrap({
     return acc
   }, {})
 
-  const varObject = Object.keys(gatsbyVarObject).reduce(
+  // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
+  envObject.NODE_ENV = JSON.stringify(nodeEnv)
+  envObject.PUBLIC_DIR = JSON.stringify(`${siteDirectoryPath}/public`)
+
+  const mergedEnvVars = Object.assign(envObject, gatsbyVarObject)
+
+  const processEnvVars = Object.keys(mergedEnvVars).reduce(
     (acc, key) => {
-      acc[`process.env.${key}`] = gatsbyVarObject[key]
+      acc[`process.env.${key}`] = mergedEnvVars[key]
       return acc
     },
     {
@@ -120,7 +153,7 @@ export async function onPreBootstrap({
         // }),
         // ],
         // },
-        plugins: [new webpack.DefinePlugin(varObject)],
+        plugins: [new webpack.DefinePlugin(processEnvVars)],
       }
 
       function callback(err, stats): any {
