@@ -57,7 +57,7 @@ export async function onPreBootstrap({
   await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   const gatsbyVarObject = Object.keys(process.env).reduce((acc, key) => {
-    if (key.match(/^GATSBY_/)) {
+    if (/^GATSBY_/.test(key)) {
       acc[key] = JSON.stringify(process.env[key])
     }
     return acc
