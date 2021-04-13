@@ -84,8 +84,7 @@ though, and as soon as it is finished we will publish the new major version for 
 In the meantime if you use this plugin you can just wait when it's ready or modify your markdown
 and switch to another syntax. Remark authors [suggest](https://github.com/remarkjs/remark/blob/main/doc/plugins.md#list-of-plugins)
 using [`remark-directive`](https://github.com/remarkjs/remark-directive) as an alternative.
-Unfortunately there is no Gatsby plugin for it yet. But if you decide to build one - please let us
-know in the [umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/30385) and we'll link it here.
+Use [`to-gatsby-remark-plugin`](https://www.npmjs.com/package/to-gatsby-remark-plugin) package to convert it to Gatsby remark plugin.
 
 - [Umbrella discussion](https://github.com/gatsbyjs/gatsby/discussions/30385)
 - [Original PR](https://github.com/gatsbyjs/gatsby/pull/29678)
