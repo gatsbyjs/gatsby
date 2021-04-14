@@ -143,7 +143,7 @@ function isFeedbackDisabled(): boolean {
   // Reasoning for this order: Checking for CI fixes issues like
   // https://github.com/gatsbyjs/gatsby/issues/30647
   // TODO: Additionally prevent getConfigStore from erroring
-  
+
   // Heuristic 2
   if (isCI()) {
     return true
