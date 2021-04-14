@@ -29,7 +29,7 @@ module.exports = {
 
 ### Make a basic index page
 
-Created an home page (`src/pages/index.js`) like so:
+Create an home page (`src/pages/index.js`) like so:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
