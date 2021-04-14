@@ -91,7 +91,8 @@ export const Picture = forwardRef<HTMLImageElement, PictureProps>(
             key={`${media}-${type}-${srcSet}`}
             type={type}
             media={media}
-            srcSet={srcSet}
+            srcSet={shouldLoad ? srcSet : undefined}
+            data-srcset={!shouldLoad ? srcSet : undefined}
             sizes={sizes}
           />
         ))}

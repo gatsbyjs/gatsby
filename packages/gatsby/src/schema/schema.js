@@ -16,7 +16,6 @@ const {
   InputTypeComposer,
   ScalarTypeComposer,
   EnumTypeComposer,
-  defineFieldMapToConfig,
 } = require(`graphql-compose`)
 const { getNode, getNodesByType } = require(`../redux/nodes`)
 
@@ -76,9 +75,6 @@ const buildSchema = async ({
   // const { printSchema } = require(`graphql`)
   const schema = schemaComposer.buildSchema()
 
-  // Freeze all type composers except SitePage (as we will rebuild it at a later stage)
-  freezeTypeComposers(schemaComposer, new Set([`SitePage`]))
-
   // console.log(printSchema(schema))
   return schema
 }
@@ -117,7 +113,11 @@ const rebuildSchemaWithSitePage = async ({
     fieldExtensions,
     parentSpan,
   })
-  return schemaComposer.buildSchema()
+  const schema = schemaComposer.buildSchema()
+
+  freezeTypeComposers(schemaComposer)
+
+  return schema
 }
 
 module.exports = {
@@ -127,7 +127,7 @@ module.exports = {
 
 // Workaround for https://github.com/graphql-compose/graphql-compose/issues/319
 //  FIXME: remove this when fixed in graphql-compose
-const freezeTypeComposers = (schemaComposer, excluded) => {
+const freezeTypeComposers = (schemaComposer, excluded = new Set()) => {
   Array.from(schemaComposer.values()).forEach(tc => {
     const isCompositeTC =
       tc instanceof ObjectTypeComposer || tc instanceof InterfaceTypeComposer
@@ -396,22 +396,14 @@ const mergeTypes = ({
     }
   }
 
-  if (type instanceof ObjectTypeComposer) {
+  if (
+    type instanceof ObjectTypeComposer ||
+    type instanceof InterfaceTypeComposer ||
+    type instanceof GraphQLObjectType ||
+    type instanceof GraphQLInterfaceType
+  ) {
     mergeFields({ typeComposer, fields: type.getFields() })
     type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
-  } else if (type instanceof InterfaceTypeComposer) {
-    mergeFields({ typeComposer, fields: type.getFields() })
-  } else if (type instanceof GraphQLObjectType) {
-    mergeFields({
-      typeComposer,
-      fields: defineFieldMapToConfig(type.getFields()),
-    })
-    type.getInterfaces().forEach(iface => typeComposer.addInterface(iface))
-  } else if (type instanceof GraphQLInterfaceType) {
-    mergeFields({
-      typeComposer,
-      fields: defineFieldMapToConfig(type.getFields()),
-    })
   }
 
   if (isNamedTypeComposer(type)) {
@@ -769,7 +761,11 @@ const addThirdPartySchemas = ({
   thirdPartySchemas.forEach(schema => {
     const schemaQueryType = schema.getQueryType()
     const queryTC = schemaComposer.createTempTC(schemaQueryType)
-    processThirdPartyTypeFields({ typeComposer: queryTC, schemaQueryType })
+    processThirdPartyTypeFields({
+      typeComposer: queryTC,
+      type: schemaQueryType,
+      schemaQueryType,
+    })
     schemaComposer.Query.addFields(queryTC.getFields())
 
     // Explicitly add the third-party schema's types, so they can be targeted
@@ -784,12 +780,34 @@ const addThirdPartySchemas = ({
         type.name !== `Date` &&
         type.name !== `JSON`
       ) {
+        const typeHasFields =
+          type instanceof GraphQLObjectType ||
+          type instanceof GraphQLInterfaceType
+
+        // Workaround for an edge case typical for Relay Classic-compatible schemas.
+        // For example, GitHub API contains this piece:
+        //   type Query { relay: Query }
+        // And gatsby-source-graphql transforms it to:
+        //   type Query { github: GitHub }
+        //   type GitHub { relay: Query }
+        // The problem:
+        //   schemaComposer.createTC(type) for type `GitHub` will eagerly create type composers
+        //   for all fields (including `relay` and it's type: `Query` of the third-party schema)
+        //   This unexpected `Query` composer messes up with our own Query type composer and produces duplicate types.
+        //   The workaround is to make sure fields of the GitHub type are lazy and are evaluated only when
+        //   this Query type is already replaced with our own root `Query` type (see processThirdPartyTypeFields):
+        if (typeHasFields && typeof type._fields === `object`) {
+          const fields = type._fields
+          type._fields = () => fields
+        }
+        // ^^^ workaround done
         const typeComposer = schemaComposer.createTC(type)
-        if (
-          typeComposer instanceof ObjectTypeComposer ||
-          typeComposer instanceof InterfaceTypeComposer
-        ) {
-          processThirdPartyTypeFields({ typeComposer, schemaQueryType })
+        if (typeHasFields) {
+          processThirdPartyTypeFields({
+            typeComposer,
+            type,
+            schemaQueryType,
+          })
         }
         typeComposer.setExtension(`createdFrom`, `thirdPartySchema`)
         schemaComposer.addSchemaMustHaveType(typeComposer)
@@ -829,21 +847,24 @@ const resetOverriddenThirdPartyTypeFields = ({ typeComposer }) => {
   })
 }
 
-const processThirdPartyTypeFields = ({ typeComposer, schemaQueryType }) => {
-  resetOverriddenThirdPartyTypeFields({ typeComposer })
-
+const processThirdPartyTypeFields = ({
+  typeComposer,
+  type,
+  schemaQueryType,
+}) => {
   // Fix for types that refer to Query. Thanks Relay Classic!
-  typeComposer.getFieldNames().forEach(fieldName => {
+  const fields = type.getFields()
+  Object.keys(fields).forEach(fieldName => {
     // Remove customization that we could have added via `createResolvers`
     // to make it work with schema rebuilding
-    const field = typeComposer.getField(fieldName)
-    const fieldType = field.type.getTypeName()
+    const fieldType = String(fields[fieldName].type)
     if (fieldType.replace(/[[\]!]/g, ``) === schemaQueryType.name) {
       typeComposer.extendField(fieldName, {
         type: fieldType.replace(schemaQueryType.name, `Query`),
       })
     }
   })
+  resetOverriddenThirdPartyTypeFields({ typeComposer })
 }
 
 const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {

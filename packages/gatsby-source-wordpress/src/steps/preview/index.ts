@@ -19,9 +19,18 @@ import { touchValidNodes } from "../source-nodes/update-nodes/fetch-node-updates
 import { IPluginOptions } from "~/models/gatsby-api"
 import { Reporter } from "gatsby/reporter"
 
-export const inPreviewMode = (): boolean =>
-  !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT &&
-  !!store.getState().previewStore.inPreviewMode
+const inDevelopPreview =
+  process.env.NODE_ENV === `development` &&
+  !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
+
+const inPreviewRunner =
+  process.env.RUNNER_TYPE === `PREVIEW` ||
+  process.env.RUNNER_TYPE === `INCREMENTAL_PREVIEWS` ||
+  !!process.env.IS_GATSBY_PREVIEW
+
+// this is a function simply because many places in the code expect it to be.
+// it used to call store.getState() and check for some state to determine preview mode
+export const inPreviewMode = (): boolean => inDevelopPreview || inPreviewRunner
 
 export type PreviewStatusUnion =
   | `PREVIEW_SUCCESS`
@@ -279,8 +288,6 @@ export const sourcePreview = async (
     return
   }
 
-  store.dispatch.previewStore.setInPreviewMode(true)
-
   // this callback will be invoked when the page is created/updated for this node
   // then it'll send a mutation to WPGraphQL so that WP knows the preview is ready
   store.dispatch.previewStore.subscribeToPagesCreatedFromNodeById({
@@ -303,12 +310,16 @@ export const sourcePreview = async (
  * It first sources all pending preview actions, then calls sourcePreview() for each of them.
  */
 export const sourcePreviews = async (
-  { webhookBody, reporter }: GatsbyHelpers,
+  helpers: GatsbyHelpers,
   pluginOptions: IPluginOptions
 ): Promise<void> => {
+  const { webhookBody, reporter } = helpers
   const {
-    debug: { preview: inPreviewDebugMode },
+    debug: { preview: inPreviewDebugModeOption },
   } = getPluginOptions()
+
+  const inPreviewDebugMode =
+    inPreviewDebugModeOption || process.env.WP_GATSBY_PREVIEW_DEBUG
 
   if (inPreviewDebugMode) {
     reporter.info(`Sourcing previews for the following webhook:`)
@@ -331,6 +342,7 @@ export const sourcePreviews = async (
       WPGatsbyPreview: webhookBody.token,
       WPGatsbyPreviewUser: webhookBody.userDatabaseId,
     },
+    helpers,
     query: /* GraphQL */ `
       query PREVIEW_ACTIONS($after: String) {
         actionMonitorActions(

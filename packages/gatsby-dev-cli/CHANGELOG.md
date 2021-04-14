@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.3.0-next.1...gatsby-dev-cli@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.3.0-next.0...gatsby-dev-cli@3.3.0-next.1) (2021-04-07)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-dev-cli ([#29174](https://github.com/gatsbyjs/gatsby/issues/29174)) ([4f8ae3c](https://github.com/gatsbyjs/gatsby/commit/4f8ae3c1087f36619a8c6fecc0e2cc0187b02930))
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.2.0-next.0...gatsby-dev-cli@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.2...gatsby-dev-cli@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-dev-cli
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.1...gatsby-dev-cli@3.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
 # [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-dev-cli@3.1.0-next.0...gatsby-dev-cli@3.1.0-next.1) (2021-02-26)
 
 **Note:** Version bump only for package gatsby-dev-cli

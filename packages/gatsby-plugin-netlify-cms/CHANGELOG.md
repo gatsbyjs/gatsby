@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.3.0-next.1...gatsby-plugin-netlify-cms@5.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.3.0-next.0...gatsby-plugin-netlify-cms@5.3.0-next.1) (2021-04-07)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** Don't use StaticQueryMapper ([#30599](https://github.com/gatsbyjs/gatsby/issues/30599)) ([66d548e](https://github.com/gatsbyjs/gatsby/commit/66d548ed34e18c7f20492600289709a158ac8046)), closes [#29951](https://github.com/gatsbyjs/gatsby/issues/29951)
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.2.0-next.0...gatsby-plugin-netlify-cms@5.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.1.0-next.3...gatsby-plugin-netlify-cms@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
+# [5.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.1.0-next.2...gatsby-plugin-netlify-cms@5.1.0-next.3) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 # [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.1.0-next.1...gatsby-plugin-netlify-cms@5.1.0-next.2) (2021-02-26)
 
 ### Bug Fixes

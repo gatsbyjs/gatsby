@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 import { IPluginOptions } from "~/models/gatsby-api"
 import { GatsbyReporter } from "./gatsby-types"
 import prettier from "prettier"
@@ -364,7 +366,15 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
 
 Your WordPress server is either overloaded or encountered a PHP error.
 ${errorContext ? `\n${errorContext}\n` : ``}
-Enable WP_DEBUG, WP_DEBUG_LOG, and WPGRAPHQL_DEBUG, run another build and then check your WordPress instance's debug.log file.
+Enable WordPress debugging by adding the following to your wp-config.php file:
+
+define("WP\_DEBUG", true);
+define("WP\_DEBUG\_LOG", true);
+define("GRAPHQL\_DEBUG", true);
+
+(See https://wordpress.org/support/article/debugging-in-wordpress/ for more info)
+
+Then run another build before checking your WordPress instance's debug.log file for errors.
 
 If you don't see any errors in debug.log:
 
@@ -431,7 +441,7 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
       id: CODES.RequestDenied,
       context: {
         sourceMessage: formatLogMessage(
-          `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to whitelist your IP address or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`
+          `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to add your IP address to the allow list or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`
         ),
       },
     })

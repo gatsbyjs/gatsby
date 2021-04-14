@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-embed-snippet",
   "description": "Gatsby plugin to embed formatted code snippets within markdown",
-  "version": "5.1.0-next.1",
+  "version": "6.1.0-next.0",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,13 +9,13 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "normalize-path": "^3.0.0",
-    "parse-numeric-range": "^0.0.2",
-    "unist-util-map": "^1.0.5"
+    "parse-numeric-range": "^1.2.0",
+    "unist-util-map": "^2.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.1.0-next.1",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet#readme",

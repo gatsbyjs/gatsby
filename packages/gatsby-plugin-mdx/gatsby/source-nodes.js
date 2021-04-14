@@ -44,9 +44,9 @@ async function getCounts({ mdast }) {
   }
 
   return {
-    paragraphs: counts.ParagraphNode,
-    sentences: counts.SentenceNode,
-    words: counts.WordNode,
+    paragraphs: counts.ParagraphNode || 0,
+    sentences: counts.SentenceNode || 0,
+    words: counts.WordNode || 0,
   }
 }
 

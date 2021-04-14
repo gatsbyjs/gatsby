@@ -70,6 +70,7 @@ export async function writeImages({
   createNodeId,
   createNode,
   store,
+  filename,
 }: {
   images: Map<string, IStaticImageProps>
   pathPrefix: string
@@ -80,11 +81,16 @@ export async function writeImages({
   createNodeId: ParentSpanPluginArgs["createNodeId"]
   createNode: Actions["createNode"]
   store: Store
+  filename: string
 }): Promise<void> {
   const promises = [...images.entries()].map(
     async ([hash, { src, ...args }]) => {
       let file: FileSystemNode | undefined
       let fullPath
+      if (!src) {
+        reporter.warn(`Missing StaticImage "src" in ${filename}.`)
+        return
+      }
       if (isRemoteURL(src)) {
         let createRemoteFileNode
         try {
@@ -122,7 +128,9 @@ export async function writeImages({
         fullPath = path.resolve(sourceDir, src)
 
         if (!fs.existsSync(fullPath)) {
-          reporter.warn(`Could not find image "${src}". Looked for ${fullPath}`)
+          reporter.warn(
+            `Could not find image "${src}" in "${filename}". Looked for ${fullPath}.`
+          )
           return
         }
 
