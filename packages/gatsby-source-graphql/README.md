@@ -317,7 +317,7 @@ module.exports = {
       options: {
         typeName: "SWAPI",
         fieldName: "swapi",
-        url: "https://api.graphcms.com/simple/v1/swapi",
+        uri: "https://api.graphcms.com/simple/v1/swapi",
         batch: true,
       },
     },
@@ -339,7 +339,7 @@ module.exports = {
       options: {
         typeName: "SWAPI",
         fieldName: "swapi",
-        url: "https://api.graphcms.com/simple/v1/swapi",
+        uri: "https://api.graphcms.com/simple/v1/swapi",
         batch: true,
         // See https://github.com/graphql/dataloader#new-dataloaderbatchloadfn--options
         // for a full list of DataLoader options
