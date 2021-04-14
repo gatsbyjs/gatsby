@@ -46,13 +46,13 @@ Themes solve the problems that traditional starters experience:
 
 ## What's next?
 
-- [Using a Gatsby Theme](/docs/themes/using-a-gatsby-theme)
+- [Using a Gatsby Theme](/docs/how-to/plugins-and-themes/using-a-gatsby-theme)
 - [Using Multiple Gatsby Themes](/docs/themes/using-multiple-gatsby-themes)
-- [Shadowing](/docs/themes/shadowing/)
-- [Building Themes](/docs/themes/building-themes)
-- [Converting a Starter](/docs/themes/converting-a-starter/)
-- [Theme Composition](/docs/themes/theme-composition/)
-- [Conventions](/docs/themes/conventions/)
+- [Shadowing](/docs/how-to/plugins-and-themes/shadowing/)
+- [Building Themes](/docs/how-to/plugins-and-themes/building-themes)
+- [Converting a Starter](/docs/how-to/plugins-and-themes/converting-a-starter/)
+- [Theme Composition](/docs/how-to/plugins-and-themes/theme-composition/)
+- [Conventions](/docs/how-to/plugins-and-themes/theme-conventions/)
 
 ## Related blog posts
 

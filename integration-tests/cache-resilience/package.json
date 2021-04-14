@@ -1,0 +1,30 @@
+{
+  "name": "cache-resilience-tests",
+  "description": "cache resilience tests",
+  "license": "MIT",
+  "scripts": {
+    "predevelop": "node utils/prebuild.js",
+    "develop": "gatsby develop",
+    "prebuild": "node utils/prebuild.js",
+    "build": "gatsby build",
+    "test": "jest --verbose",
+    "serve": "gatsby serve",
+    "use-setup": "node utils/select-configuration",
+    "inspect-state": "node utils/inspect-state"
+  },
+  "dependencies": {
+    "gatsby": "^3.0.0-next.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "gatsby-core-utils": "^1.0.21",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
+    "lodash": "^4.17.20",
+    "slash": "^3.0.0",
+    "snapshot-diff": "^0.6.1"
+  }
+}

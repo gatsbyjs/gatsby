@@ -4,7 +4,7 @@ title: Building a Contact Form
 
 This guide covers how to create a contact form in a Gatsby site, along with an overview of some strategies for handling form data that has been submitted.
 
-Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to gatsby can be found in the [Adding Forms](/docs/adding-forms/) section.
+Gatsby is built on top of React. So anything that is possible with a React form is possible in Gatsby. Additional details about how to add forms to your Gatsby site can be found in the [Adding Forms](/docs/how-to/adding-common-features/adding-forms/) section.
 
 ## Creating an Accessible Form
 
@@ -68,7 +68,7 @@ Getform is a form backend platform which offers a free-plan for handling form su
 
 Once you've made the code changes to your form, you can head over to the contact page on your site and start submitting data to the form. The submissions will then be visible on the Getform dashboard. You can add multiple email addresses to receive email notifications for the forms created, as well as manipulate the data you see on Getform using Zapier and Webhooks options that are offered.
 
-You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [Codepen](https://codepen.io/getform).
+You can find more info on the registration process and form setup on the [Getform website](https://getform.io/) and find code examples (AJAX, reCAPTCHA etc) on their [CodePen](https://codepen.io/getform).
 
 ### Netlify
 
@@ -78,8 +78,9 @@ Setting this up only involves adding a few form attributes:
 
 ```diff:title=src/pages/contact.js
 - <form method="post" action="#">
-+ <form method="post" netlify-honeypot="bot-field" data-netlify="true">
++ <form method="post" netlify-honeypot="bot-field" data-netlify="true" name="contact">
 +   <input type="hidden" name="bot-field" />
++   <input type="hidden" name="form-name" value="contact" />
   ...
 ```
 
@@ -91,7 +92,7 @@ More information on Netlify Forms can be found [on their website](https://www.ne
 
 Formspree offers a generous free-tier service for handling form submissions on static sites. This makes it a great tool for having form submissions sent directly to an email address of your choosing, with very little setup required.
 
-In order to begin leveraging Formspree's features, you must add a form action directing the http POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
+In order to begin leveraging Formspree's features, you must add a form action directing the HTTP POST method to the Formspree API (substituting your chosen email), as well as changing the `name` attribute of the email input to `name="_replyto"`.
 
 ```jsx:title=src/pages/contact.js
 <form method="post" action="https://formspree.io/email@domain.tld">
@@ -138,7 +139,7 @@ const mailer = nodemailer.createTransport({
   },
 })
 
-app.post("/contact", function(req, res) {
+app.post("/contact", function (req, res) {
   mailer.sendMail(
     {
       from: req.body.from,
@@ -146,7 +147,7 @@ app.post("/contact", function(req, res) {
       subject: req.body.subject || "[No subject]",
       html: req.body.message || "[No message]",
     },
-    function(err, info) {
+    function (err, info) {
       if (err) return res.status(500).send(err)
       res.json({ success: true })
     }
@@ -156,12 +157,12 @@ app.post("/contact", function(req, res) {
 app.listen(3000)
 ```
 
-This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Now](https://zeit.co/now).
+This initial implementation listens for POST requests to `/contact`, and sends you an email with the submitted form data. You can deploy this server with services such as [Vercel](https://vercel.com/home).
 
-Once deployed, note the url of the deployment (something like `my-project-abcd123.now.sh`), and use it as your form action:
+Once deployed, note the url of the deployment (something like `my-project-abcd123.vercel.app`), and use it as your form action:
 
 ```jsx:title=src/pages/contact.js
-<form method="post" action="my-project-abcd123.now.sh/contact">
+<form method="post" action="my-project-abcd123.vercel.app/contact">
   ...
 </form>
 ```

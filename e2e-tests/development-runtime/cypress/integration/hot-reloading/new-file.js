@@ -14,21 +14,19 @@ describe(`hot reloading new page component`, () => {
   it(`can navigate to new page`, () => {
     cy.visit(`/sample`).waitForRouteChange()
 
-    cy.getTestElement(`message`)
-      .invoke(`text`)
-      .should(`contain`, `Hello`)
+    cy.getTestElement(`message`).invoke(`text`).should(`contain`, `Hello`)
   })
 
   it(`can hot reload a new page file`, () => {
+    cy.visit(`/sample`).waitForRouteChange()
+
     const text = `World`
     cy.exec(
       `npm run update -- --file src/pages/sample.js --replacements "REPLACEMENT:${text}"`
     )
 
-    cy.visit(`/sample`).waitForRouteChange()
+    cy.waitForHmr()
 
-    cy.getTestElement(`message`)
-      .invoke(`text`)
-      .should(`eq`, `Hello ${text}`)
+    cy.getTestElement(`message`).invoke(`text`).should(`eq`, `Hello ${text}`)
   })
 })

@@ -1,0 +1,39 @@
+# Add React Helmet
+
+React Helmet is a reusable React component that manages all of your changes to the document head.
+
+Helmet takes plain HTML tags and outputs plain HTML tags.
+
+[gatsby-plugin-helmet](https://www.gatsbyjs.org/packages/gatsby-plugin-react-helmet/?=react%20helmet) makes it easy to use React Helmet inside Gatsby projects as it automatically adds title and meta tags to the HTML during SSR.
+
+This recipe:
+
+---
+
+Installs necessary NPM packages.
+
+<NPMPackage name="gatsby-plugin-react-helmet" />
+<NPMPackage name="react-helmet" />
+
+---
+
+Installs the React Helmet plugin in `gatsby-config.js`.
+
+<GatsbyPlugin name="gatsby-plugin-react-helmet" />
+
+---
+
+Writes out an `<SEO>` component which helps ensure pages have the necessary title and meta tags.
+
+<File
+  path="src/components/seo.js"
+  content="https://gist.githubusercontent.com/devrchancay/72e6958a16cffb5dd549b831f903955a/raw/6abf03138eb342d532ebbeafb8493cc0b9482b1b/Seo.js"
+/>
+
+---
+
+Read more about Gatsby React Helmet here:
+https://www.gatsbyjs.org/packages/gatsby-plugin-react-helmet
+
+You can also read about the "SEO" component here:
+https://www.gatsbyjs.org/docs/add-seo-component/

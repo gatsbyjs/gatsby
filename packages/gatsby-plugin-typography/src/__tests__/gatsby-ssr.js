@@ -1,7 +1,7 @@
 import { onPreRenderHTML, onRenderBody } from "../gatsby-ssr"
 
 jest.mock(
-  `../.cache/typography`,
+  `typography-plugin-cache-endpoint`,
   () => {
     return {}
   },
@@ -31,12 +31,6 @@ describe(`onRenderBody`, () => {
       expect.objectContaining({ key: `TypographyStyle` }),
       expect.objectContaining({ key: `GoogleFont` }),
     ])
-  })
-
-  it(`only invokes setHeadComponents if BUILD_STAGE is build-html`, () => {
-    const api = setup({}, `develop`)
-
-    expect(api.setHeadComponents).not.toHaveBeenCalled()
   })
 
   it(`does not add google font if omitGoogleFont is passed`, () => {

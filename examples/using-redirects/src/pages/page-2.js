@@ -14,7 +14,7 @@ const SecondPage = () => (
           </a>
         </code>
         &nbsp;
-        <a href="https://www.gatsbyjs.org/docs/bound-action-creators/">
+        <a href="https://www.gatsbyjs.com/docs/bound-action-creators/">
           bound action creator
         </a>
         &nbsp;example.
@@ -50,13 +50,13 @@ const SecondPage = () => (
         {` `}
         <code>/gatsby-node.js</code>. Gatsby serves
         {` `}
-        <a href="https://www.gatsbyjs.org/docs/building-with-components/">
+        <a href="https://www.gatsbyjs.com/docs/building-with-components/">
           page components
         </a>
         &nbsp;at either version by default, but we need to explicitly redirect
         both versions independently (More on
         {` `}
-        <a href="https://www.gatsbyjs.org/docs/creating-and-modifying-pages/#removing-trailing-slashes">
+        <a href="https://www.gatsbyjs.com/docs/creating-and-modifying-pages/#removing-trailing-slashes">
           handling trailing&nbsp;slashes
         </a>
         ).

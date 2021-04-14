@@ -29,7 +29,7 @@ class choroplethAltBase extends React.Component {
     d3.queue()
       .defer(d3.json, stateDataURL)
       .defer(d3.csv, statisticsDataURL)
-      .awaitAll(function(error, results) {
+      .awaitAll(function (error, results) {
         let states = results[0].states
         let stats = results[1]
         let mergedData = mergeData(states, `abbrev`, stats, `Abbreviation`)
@@ -110,10 +110,10 @@ average: tooltip, path fill
     ])
 
   color.domain([
-    d3.min(data, function(d) {
+    d3.min(data, function (d) {
       return d.low
     }),
-    d3.max(data, function(d) {
+    d3.max(data, function (d) {
       return d.high
     }),
   ])
@@ -162,16 +162,13 @@ let mouseOver = d => {
 }
 
 let mouseOut = () => {
-  d3.select(`#tooltip`)
-    .transition()
-    .duration(500)
-    .style(`opacity`, 0)
+  d3.select(`#tooltip`).transition().duration(500).style(`opacity`, 0)
 }
 
 // eslint-disable-next-line no-unused-vars
 function scale(scaleFactor, width, height) {
   return d3.geoTransform({
-    point: function(x, y) {
+    point: function (x, y) {
       this.stream.point(
         (x - width / 2) * scaleFactor + width / 2,
         (y - height / 2) * scaleFactor + height / 2

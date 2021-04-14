@@ -1,18 +1,21 @@
-const supportedExtensions = {
-  jpeg: true,
-  jpg: true,
-  png: true,
-  webp: true,
-  tif: true,
-  tiff: true,
+const { supportedExtensions } = require(`./supported-extensions`)
+
+function unstable_shouldOnCreateNode({ node }) {
+  return node.internal.type === `File` && !!supportedExtensions[node.extension]
 }
 
-module.exports = async function onCreateNode({ node, actions, createNodeId }) {
-  const { createNode, createParentChildLink } = actions
+module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
 
-  if (!supportedExtensions[node.extension]) {
+module.exports.onCreateNode = async function onCreateNode({
+  node,
+  actions,
+  createNodeId,
+}) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return
   }
+
+  const { createNode, createParentChildLink } = actions
 
   const imageNode = {
     id: createNodeId(`${node.id} >> ImageSharp`),

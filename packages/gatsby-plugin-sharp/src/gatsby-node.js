@@ -1,70 +1,111 @@
 const {
-  setBoundActionCreators,
+  setActions,
   // queue: jobQueue,
   // reportError,
+  _unstable_createJob,
+  _lazyJobsEnabled,
 } = require(`./index`)
-const { getProgressBar, createOrGetProgressBar } = require(`./utils`)
+const { pathExists } = require(`fs-extra`)
+const { slash } = require(`gatsby-core-utils`)
 
 const { setPluginOptions } = require(`./plugin-options`)
+const path = require(`path`)
 
-// const { scheduleJob } = require(`./scheduler`)
-// let normalizedOptions = {}
+exports.onCreateDevServer = async ({ app, cache, reporter }) => {
+  if (!_lazyJobsEnabled()) {
+    return
+  }
 
-// const getQueueFromCache = store => {
-//   const pluginStatus = store.getState().status.plugins[`gatsby-plugin-sharp`]
+  app.use(async (req, res, next) => {
+    const decodedURI = decodeURIComponent(req.path)
+    const pathOnDisk = path.resolve(path.join(`./public/`, decodedURI))
 
-//   if (!pluginStatus || !pluginStatus.queue) {
-//     return new Map()
-//   }
+    if (await pathExists(pathOnDisk)) {
+      return res.sendFile(pathOnDisk)
+    }
 
-//   return new Map(pluginStatus.queue)
-// }
+    const jobContentDigest = await cache.get(decodedURI)
+    const cacheResult = jobContentDigest
+      ? await cache.get(jobContentDigest)
+      : null
 
-// const saveQueueToCache = async (store, setPluginStatus, queue) => {
-//   const cachedQueue = getQueueFromCache(store)
+    if (!cacheResult) {
+      return next()
+    }
 
-//   // merge both queues
-//   for (const [key, job] of cachedQueue) {
-//     if (!queue.has(key)) {
-//       queue.set(key, job)
-//     }
-//   }
+    // We are going to run a job for a single operation only
+    // and postpone all other operations
+    // This speeds up the loading of lazy images in the browser and
+    // also helps to free up the browser connection queue earlier.
+    const {
+      matchingJob,
+      jobWithRemainingOperations,
+    } = splitOperationsByRequestedFile(cacheResult, pathOnDisk)
 
-//   // JSON.stringify doesn't work on an Map so we need to convert it to an array
-//   setPluginStatus({ queue: Array.from(queue) })
-// }
+    await _unstable_createJob(matchingJob, { reporter })
+    await cache.cache.del(decodedURI)
 
-// const processQueue = (store, boundActionCreators, options) => {
-//   const cachedQueue = getQueueFromCache(store)
+    if (jobWithRemainingOperations.args.operations.length > 0) {
+      // There are still some operations pending for this job - replace the cached job
+      await cache.cache.set(jobContentDigest, jobWithRemainingOperations)
+    } else {
+      // No operations left to process - purge the cache
+      await cache.cache.del(jobContentDigest)
+    }
 
-//   const promises = []
-//   for (const [, job] of cachedQueue) {
-//     promises.push(scheduleJob(job, boundActionCreators, options))
-//   }
+    return res.sendFile(pathOnDisk)
+  })
+}
 
-//   return promises
-// }
+// Split the job into two jobs:
+//  - first job with a single operation matching requestedPathOnDisk
+//  - second job with all other operations
+// so the two resulting jobs are only different by their operations
+function splitOperationsByRequestedFile(job, requestedPathOnDisk) {
+  const matchingJob = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
+  const jobWithRemainingOperations = {
+    ...job,
+    args: { ...job.args, operations: [] },
+  }
 
-// const cleanupQueueAfterProcess = (imageJobs, setPluginStatus, reporter) =>
-//   Promise.all(imageJobs)
-//     .then(() => setPluginStatus({ queue: [] }))
-//     .catch(({ err, message }) => {
-//       reportError(message || err.message, err, reporter)
-//     })
+  job.args.operations.forEach(op => {
+    const operationPath = path.resolve(path.join(job.outputDir, op.outputPath))
+    if (operationPath === requestedPathOnDisk) {
+      matchingJob.args.operations.push(op)
+    } else {
+      jobWithRemainingOperations.args.operations.push(op)
+    }
+  })
+  if (matchingJob.args.operations.length === 0) {
+    throw new Error(
+      `Could not find matching operation for ${requestedPathOnDisk}`
+    )
+  }
+  return { matchingJob, jobWithRemainingOperations }
+}
 
-// create the progressbar once and it will be killed in another lifecycle
-const finishProgressBar = () => {
-  const progressBar = getProgressBar()
-  if (progressBar) {
-    progressBar.done()
+// So something is wrong with the reporter, when I do this in preBootstrap,
+// the progressbar gets not updated
+exports.onPostBootstrap = async ({ reporter, cache, store }) => {
+  if (process.env.gatsby_executing_command !== `develop`) {
+    // recreate jobs that haven't been triggered by develop yet
+    // removing stale jobs has already kicked in so we know these still need to process
+    for (const [contentDigest] of store.getState().jobsV2.complete) {
+      const job = await cache.get(contentDigest)
+
+      if (job) {
+        // we don't have to await, gatsby does this for us
+        _unstable_createJob(job, { reporter })
+      }
+    }
   }
 }
 
-exports.onPostBuild = () => finishProgressBar()
-exports.onCreateDevServer = () => finishProgressBar()
-
-exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
-  setBoundActionCreators(actions)
+exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
+  setActions(actions)
   setPluginOptions(pluginOptions)
 
   // below is a hack / hot fix for confusing progress bar behaviour
@@ -85,20 +126,48 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
 
     emitter.on(`CREATE_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
+        if (action.payload.job.args.isLazy) {
+          // we have to remove some internal pieces
+          const job = {
+            name: action.payload.job.name,
+            inputPaths: action.payload.job.inputPaths.map(input => input.path),
+            outputDir: action.payload.job.outputDir,
+            args: {
+              ...action.payload.job.args,
+              isLazy: false,
+            },
+          }
+          cache.set(action.payload.job.contentDigest, job)
+
+          action.payload.job.args.operations.forEach(op => {
+            const cacheKey = slash(
+              path.relative(
+                path.join(process.cwd(), `public`),
+                path.join(action.payload.job.outputDir, op.outputPath)
+              )
+            )
+
+            cache.set(`/${cacheKey}`, action.payload.job.contentDigest)
+          })
+
+          return
+        }
+
         const job = action.payload.job
         const imageCount = job.args.operations.length
         imageCountInJobsMap.set(job.contentDigest, imageCount)
-        const progress = createOrGetProgressBar(reporter)
-        progress.addImageToProcess(imageCount)
       }
     })
 
     emitter.on(`END_JOB_V2`, action => {
       if (action.plugin.name === `gatsby-plugin-sharp`) {
         const jobContentDigest = action.payload.jobContentDigest
-        const imageCount = imageCountInJobsMap.get(jobContentDigest)
-        const progress = createOrGetProgressBar(reporter)
-        progress.tick(imageCount)
+
+        // when it's lazy we didn't set it
+        if (!imageCountInJobsMap.has(jobContentDigest)) {
+          return
+        }
+
         imageCountInJobsMap.delete(jobContentDigest)
       }
     })
@@ -107,91 +176,43 @@ exports.onPreBootstrap = ({ actions, emitter, reporter }, pluginOptions) => {
   // normalizedOptions = setPluginOptions(pluginOptions)
 }
 
-// /**
-//  * save queue to the cache or process queue
-//  */
-// exports.onPostBootstrap = ({
-//   // store,
-//   boundActionCreators,
-//   // actions: { setPluginStatus },
-//   // reporter,
-// }) => {
-//   const promises = []
-//   for (const [, job] of jobQueue) {
-//     promises.push(scheduleJob(job, boundActionCreators, normalizedOptions))
-//   }
-
-//   return promises
-//   // // Save queue
-//   // saveQueueToCache(store, setPluginStatus, jobQueue)
-
-//   // if (normalizedOptions.lazyImageGeneration) {
-//   //   return
-//   // }
-
-//   // const imageJobs = processQueue(store, boundActionCreators, normalizedOptions)
-
-//   // cleanupQueueAfterProcess(imageJobs, setPluginStatus, reporter)
-
-//   // return
-// }
-
-/**
- * Execute all unprocessed images on gatsby build
- */
-// let promises = []
-// exports.onPreBuild = ({ store, boundActionCreators }) => {
-//   promises = processQueue(store, boundActionCreators, normalizedOptions)
-// }
-
-/**
- * wait for all images to be processed
-//  */
-// exports.onPostBuild = ({ actions: { setPluginStatus }, reporter }) =>
-//   cleanupQueueAfterProcess(promises, setPluginStatus, reporter)
-
-/**
- * Build images on the fly when they are requested by the browser
- */
-// exports.onCreateDevServer = async ({
-//   app,
-//   emitter,
-//   boundActionCreators,
-//   actions: { setPluginStatus },
-//   store,
-// }) => {
-//   // no need to do set things up when people opt out
-//   if (!normalizedOptions.lazyImageGeneration) {
-//     return
-//   }
-
-//   emitter.on(`QUERY_QUEUE_DRAINED`, () =>
-//     saveQueueToCache(store, setPluginStatus, jobQueue)
-//   )
-
-//   app.use(async (req, res, next) => {
-//     const queue = getQueueFromCache(store)
-//     if (!queue.has(req.originalUrl)) {
-//       return next()
-//     }
-
-//     const job = queue.get(req.originalUrl)
-
-//     // wait until the file has been processed and saved to disk
-//     await scheduleJob(job, boundActionCreators, normalizedOptions, false)
-//     // remove job from queue because it has been processed
-//     queue.delete(req.originalUrl)
-
-//     saveQueueToCache(store, setPluginStatus, queue)
-
-//     return res.sendFile(job.outputPath)
-//   })
-// }
-
-// TODO
-// exports.formatJobMessage = jobs => {
-// return {
-// progress: 40,
-// message: `3/4`,
-// }
-// }
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    base64Width: Joi.number()
+      .default(20)
+      .description(`The width of the generated base64 preview image`),
+    forceBase64Format: Joi.any()
+      .valid(`png`, `jpg`, `webp`)
+      .description(
+        `Force a different format for the generated base64 image. Defaults to the same format as the input image`
+      ),
+    useMozJpeg: Joi.boolean().description(
+      `The the mozJpeg library for encoding. Defaults to false, unless \`process.env.GATSBY_JPEG_ENCODER\` === \`MOZJPEG\``
+    ),
+    stripMetadata: Joi.boolean().default(true),
+    defaultQuality: Joi.number().default(50),
+    failOnError: Joi.boolean().default(true),
+    defaults: Joi.object({
+      formats: Joi.array().items(
+        Joi.string().valid(`auto`, `png`, `jpg`, `webp`, `avif`)
+      ),
+      placeholder: Joi.string().valid(
+        `tracedSVG`,
+        `dominantColor`,
+        `blurred`,
+        `none`
+      ),
+      quality: Joi.number(),
+      breakpoints: Joi.array().items(Joi.number()),
+      backgroundColor: Joi.string(),
+      transformOptions: Joi.object(),
+      tracedSVGOptions: Joi.object(),
+      blurredOptions: Joi.object(),
+      jpgOptions: Joi.object(),
+      pngOptions: Joi.object(),
+      webpOptions: Joi.object(),
+      avifOptions: Joi.object(),
+    }).description(
+      `Default options used by gatsby-plugin-image. \nSee https://gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/`
+    ),
+  })

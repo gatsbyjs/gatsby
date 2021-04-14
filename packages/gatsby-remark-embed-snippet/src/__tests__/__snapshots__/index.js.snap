@@ -7,13 +7,12 @@ Object {
       "children": Array [
         Object {
           "lang": "css",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 24,
               "line": 1,
               "offset": 23,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -24,13 +23,12 @@ Object {
           "value": "html { height: 100%; }",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 24,
           "line": 1,
           "offset": 23,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -63,13 +61,12 @@ Object {
       "children": Array [
         Object {
           "lang": "html",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 25,
               "line": 1,
               "offset": 24,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -80,13 +77,12 @@ Object {
           "value": "<html></html>",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 25,
           "line": 1,
           "offset": 24,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -119,13 +115,12 @@ Object {
       "children": Array [
         Object {
           "lang": "jsx",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 23,
               "line": 1,
               "offset": 22,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -136,13 +131,12 @@ Object {
           "value": "const foo = \\"bar\\";",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 23,
           "line": 1,
           "offset": 22,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -175,13 +169,12 @@ Object {
       "children": Array [
         Object {
           "lang": "markup",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 23,
               "line": 1,
               "offset": 22,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -192,13 +185,66 @@ Object {
           "value": "# Hi",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 23,
           "line": 1,
           "offset": 22,
         },
-        "indent": Array [],
+        "start": Object {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "paragraph",
+    },
+  ],
+  "position": Object {
+    "end": Object {
+      "column": 23,
+      "line": 1,
+      "offset": 22,
+    },
+    "start": Object {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
+
+exports[`gatsby-remark-embed-snippet Language detection should set the correct Prism language for Rust files 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "lang": "rust",
+          "position": Object {
+            "end": Object {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+            "start": Object {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "code",
+          "value": "extern crate lazy_static;",
+        },
+      ],
+      "position": Object {
+        "end": Object {
+          "column": 23,
+          "line": 1,
+          "offset": 22,
+        },
         "start": Object {
           "column": 1,
           "line": 1,
@@ -231,13 +277,12 @@ Object {
       "children": Array [
         Object {
           "lang": "yaml",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 25,
               "line": 1,
               "offset": 24,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -248,13 +293,12 @@ Object {
           "value": "name: Brian Vaughn",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 25,
           "line": 1,
           "offset": 24,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -287,13 +331,12 @@ Object {
       "children": Array [
         Object {
           "lang": "bash",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 23,
               "line": 1,
               "offset": 22,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -304,13 +347,12 @@ Object {
           "value": "pwd",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 23,
           "line": 1,
           "offset": 22,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -343,13 +385,12 @@ Object {
       "children": Array [
         Object {
           "lang": "none",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 20,
               "line": 1,
               "offset": 19,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -360,13 +401,12 @@ Object {
           "value": "const foo = \\"bar\\";",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -399,13 +439,12 @@ Object {
       "children": Array [
         Object {
           "lang": "jsx",
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 23,
               "line": 1,
               "offset": 22,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -416,13 +455,12 @@ Object {
           "value": "const foo = \\"bar\\";",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 23,
           "line": 1,
           "offset": 22,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,
@@ -456,13 +494,12 @@ Object {
     Object {
       "children": Array [
         Object {
-          "position": Position {
+          "position": Object {
             "end": Object {
               "column": 20,
               "line": 1,
               "offset": 19,
             },
-            "indent": Array [],
             "start": Object {
               "column": 1,
               "line": 1,
@@ -473,13 +510,12 @@ Object {
           "value": "console.log(\\"hi\\")",
         },
       ],
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 20,
           "line": 1,
           "offset": 19,
         },
-        "indent": Array [],
         "start": Object {
           "column": 1,
           "line": 1,

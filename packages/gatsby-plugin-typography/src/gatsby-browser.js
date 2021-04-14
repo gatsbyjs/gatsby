@@ -10,7 +10,7 @@ if (process.env.BUILD_STAGE === `develop`) {
   React = require(`react`)
   GoogleFont = require(`react-typography`).GoogleFont
   // typography links to the file set in "pathToConfigModule"
-  const typographyConfig = require(`./.cache/typography`)
+  const typographyConfig = require(`typography-plugin-cache-endpoint`)
   typography = typographyConfig.default || typographyConfig
 
   exports.onClientEntry = (a, pluginOptions) => {
@@ -31,8 +31,8 @@ if (process.env.BUILD_STAGE === `develop`) {
           <GoogleFont key={`GoogleFont`} typography={typography} />
         )
         // Parse the tag
-        let doc = new DOMParser().parseFromString(googleFonts, `text/html`)
-        let linkElement = doc.head.firstChild
+        const doc = new DOMParser().parseFromString(googleFonts, `text/html`)
+        const linkElement = doc.head.firstChild
         // Add custom identifier
         linkElement.setAttribute(`data-gatsby-typography`, `true`)
         const head = document.getElementsByTagName(`head`)[0]

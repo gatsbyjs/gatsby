@@ -5,7 +5,7 @@ Adds syntax highlighting to code blocks in markdown files using
 
 ## Install
 
-`npm install --save gatsby-transformer-remark gatsby-remark-prismjs prismjs`
+`npm install gatsby-transformer-remark gatsby-remark-prismjs prismjs`
 
 ## How to use
 
@@ -373,21 +373,29 @@ plugins: [
 
 ### Shell prompt
 
-To show fancy prompts next to shell commands (only triggers on `bash`), either set `prompt.global` to `true` in `gatsby-config.js`,
+To show fancy prompts next to shell commands (only triggers on `bash` and `shell`), either set `prompt.global` to `true` in `gatsby-config.js`,
 or pass at least one of `{outputLines: <range>}`, `{promptUser: <user>}`, or `{promptHost: <host>}` to a snippet
 
 By default, every line gets a prompt appended to the start, this behaviour can be changed by specifying `{outputLines: <range>}`
 to the language.
 
 ````
-```bash{outputLines: 2-10,12}
+```shell{outputLines: 2-10,12}
 ````
 
 The user and host used in the appended prompt is pulled from the `prompt.user` and `prompt.host` values,
 unless explicitly overridden by the `promptUser` and `promptHost` options in the snippet, e.g.:
 
 ````
-```bash{promptUser: alice}{promptHost: dev.localhost}
+```shell{promptUser: alice}{promptHost: dev.localhost}
+````
+
+### Diff code blocks
+
+You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs:
+
+````
+```diff-javascript
 ````
 
 ### Line hiding
@@ -525,7 +533,7 @@ See the [client-side PrismJS implementation][8] for reference.
 [1]: https://github.com/PrismJS/prism/tree/8eb0ab6f76484ca47fa7acbf77657fab17b03ca7/plugins/line-highlight
 [2]: https://github.com/facebook/react/blob/00ba97a354e841701b4b83983c3a3904895e7b87/docs/_config.yml#L10
 [3]: http://prismjs.com/#plugins
-[4]: https://facebook.github.io/react/tutorial/tutorial.html
+[4]: https://reactjs.org/tutorial/tutorial.html
 [5]: https://github.com/PrismJS/prism/tree/1d5047df37aacc900f8270b1c6215028f6988eb1/themes
 [6]: http://prismjs.com/
 [7]: https://prismjs.com/plugins/line-numbers/

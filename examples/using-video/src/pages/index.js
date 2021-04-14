@@ -9,6 +9,6 @@ export default () => (
     <source src={DogVideo} type="video/mp4" />
     <track kind="transcript" srcLang="en" src={Transcript} />
     <track kind="captions" srcLang="en" src={Captions} />
-    <track kind="descriptions" srcLang="en" src={Description} />
+    <track kind="description" srcLang="en" src={Description} />
   </video>
 )

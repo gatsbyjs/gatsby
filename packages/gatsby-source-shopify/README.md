@@ -12,10 +12,12 @@ stores via the [Shopify Storefront API][shopify-storefront-api].
 ## Install
 
 ```shell
-npm install --save gatsby-source-shopify
+npm install gatsby-source-shopify
 ```
 
 ## How to use
+
+[See the Shopify tutorial on gatsbyjs.com for a full getting started guide](https://www.gatsbyjs.com/docs/building-an-ecommerce-site-with-shopify/)
 
 Ensure you have an access token for the [Shopify Storefront API][shopify-storefront-api]. The token should have the following permissions:
 
@@ -70,6 +72,34 @@ plugins: [
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
       includeCollections: ["shop", "content"],
+      // Download Images Locally
+      // set to false if you plan on using shopify's CDN
+      downloadImages: true,
+
+      // Allow overriding the default queries
+      // This allows you to include/exclude extra fields when sourcing nodes
+      // Available keys are: articles, blogs, collections, products, shopPolicies, and pages
+      // Queries need to accept arguments for first and after
+      // You will need to include all the fields you want available for a
+      // specific key. View the `shopifyQueries Defaults` section below for a
+      // full list of keys and fields.
+      shopifyQueries: {
+        products: `
+          query GetProducts($first: Int!, $after: String) {
+            products(first: $first, after: $after) {
+              pageInfo {
+                hasNextPage
+              }
+              edges {
+                cursor
+                node {
+                  availableForSale
+                }
+              }
+            }
+          }
+        `,
+      },
     },
   },
 ]
@@ -123,6 +153,7 @@ The following data types are available:
 | **ProductOption**  | Custom product property names.                                                                                        |
 | **ProductVariant** | Represents a different version of a product, such as differing sizes or differing colors.                             |
 | **ShopPolicy**     | Policy that a merchant has configured for their store, such as their refund or privacy policy.                        |
+| **ShopDetails**    | Name, description and money format that a merchant has configured for their store.                                    |
 
 For each data type listed above, `shopify${typeName}` and
 `allShopify${typeName}` is made available. Nodes that are closely related, such
@@ -364,6 +395,20 @@ Shopify merchants can create pages to hold static HTML content.
 }
 ```
 
+### Query shop details
+
+Shopify merchants can give their shop a name, description and a money format.
+
+```graphql
+{
+  shopifyShop {
+    name
+    description
+    moneyFormat
+  }
+}
+```
+
 ### Image processing
 
 To use image processing you need `gatsby-transformer-sharp`,
@@ -427,8 +472,8 @@ To learn more about image processing, check the documentation of
 ```js
 const path = require("path")
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
   const pages = await graphql(`
     {
@@ -455,6 +500,287 @@ exports.createPages = async ({ graphql, boundActionCreators }) => {
 }
 ```
 
+## shopifyQueries Defaults
+
+The following can be used in gatsby-config.js to override the default queries.
+
+```js
+shopifyQueries: {
+  articles: `
+    query GetArticles($first: Int!, $after: String) {
+      articles(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            author {
+              bio
+              email
+              firstName
+              lastName
+              name
+            }
+            blog {
+              id
+            }
+            comments(first: 250) {
+              edges {
+                node {
+                  author {
+                    email
+                    name
+                  }
+                  content
+                  contentHtml
+                  id
+                }
+              }
+            }
+            content
+            contentHtml
+            excerpt
+            excerptHtml
+            id
+            handle
+            image {
+              altText
+              id
+              src
+            }
+            publishedAt
+            tags
+            title
+            url
+            seo {
+              title
+              description
+            }
+          }
+        }
+      }
+    }
+  `,
+  blogs: `
+    query GetBlogs($first: Int!, $after: String) {
+      blogs(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            handle
+            title
+            url
+          }
+        }
+      }
+    }
+  `,
+  collections: `
+    query GetCollections($first: Int!, $after: String) {
+      collections(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            description
+            descriptionHtml
+            handle
+            id
+            image {
+              altText
+              id
+              src
+            }
+            products(first: 250) {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+            title
+            updatedAt
+          }
+        }
+      }
+    }
+  `,
+  products: `
+    query GetProducts($first: Int!, $after: String) {
+      products(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            availableForSale
+            createdAt
+            description
+            descriptionHtml
+            handle
+            id
+            images(first: 250) {
+              edges {
+                node {
+                  id
+                  altText
+                  originalSrc
+                }
+              }
+            }
+            metafields(first: 250) {
+              edges {
+                node {
+                  description
+                  id
+                  key
+                  namespace
+                  value
+                  valueType
+                }
+              }
+            }
+            onlineStoreUrl
+            options {
+              id
+              name
+              values
+            }
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+              maxVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            productType
+            publishedAt
+            tags
+            title
+            updatedAt
+            variants(first: 250) {
+              edges {
+                node {
+                  availableForSale
+                  compareAtPrice
+                  compareAtPriceV2 {
+                    amount
+                    currencyCode
+                  }
+                  id
+                  image {
+                    altText
+                    id
+                    originalSrc
+                  }
+                  metafields(first: 250) {
+                    edges {
+                      node {
+                        description
+                        id
+                        key
+                        namespace
+                        value
+                        valueType
+                      }
+                    }
+                  }
+                  price
+                  priceV2 {
+                    amount
+                    currencyCode
+                  }
+                  requiresShipping
+                  selectedOptions {
+                    name
+                    value
+                  }
+                  sku
+                  title
+                  weight
+                  weightUnit
+                  presentmentPrices(first: 250) {
+                    edges {
+                      node {
+                        price {
+                          amount
+                          currencyCode
+                        }
+                        compareAtPrice {
+                          amount
+                          currencyCode
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            vendor
+          }
+        }
+      }
+    }
+  `,
+  shopPolicies: `
+    query GetPolicies {
+      shop {
+        privacyPolicy {
+          body
+          id
+          title
+          url
+        }
+        refundPolicy {
+          body
+          id
+          title
+          url
+        }
+        termsOfService {
+          body
+          id
+          title
+          url
+        }
+      }
+    }
+  `,
+  pages: `
+    query GetPages($first: Int!, $after: String) {
+      pages(first: $first, after: $after) {
+        pageInfo {
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            handle
+            title
+            body
+            bodySummary
+            updatedAt
+            url
+          }
+        }
+      }
+    }
+  `,
+},
+```
+
 ## A note on customer information
 
 Not all Shopify nodes have been implemented as they are not necessary for the
@@ -470,6 +796,6 @@ available.
 [gatsby]: https://www.gatsbyjs.org/
 [shopify]: https://www.shopify.com/
 [shopify-storefront-api]: https://help.shopify.com/api/custom-storefronts/storefront-api
-[graphql-inline-fragments]: http://graphql.org/learn/queries/#inline-fragments
+[graphql-inline-fragments]: https://graphql.org/learn/queries/#inline-fragments
 [gatsby-plugin-sharp]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-sharp
 [gatsby-image-fragments]: https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image#gatsby-transformer-sharp

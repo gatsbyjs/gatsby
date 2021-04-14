@@ -1,8 +1,8 @@
-import React from 'react'
+import * as React from "react"
 
-import Layout from '../components/layout'
-import * as StaticQuery from '../components/static-query'
-import * as UseStaticQuery from '../components/static-query/use-static-query'
+import Layout from "../components/layout"
+import * as StaticQuery from "../components/static-query"
+import * as UseStaticQuery from "../components/static-query/use-static-query"
 
 const StaticQueryPage = () => (
   <Layout>

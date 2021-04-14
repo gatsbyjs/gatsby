@@ -15,20 +15,6 @@ Object {
 }
 `;
 
-exports[`contentful extend node type resolveFixed generates responsive resolution data for images 1`] = `
-Object {
-  "aspectRatio": 0.75,
-  "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
-  "height": 533,
-  "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=400",
-  "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=400&h=533 1x,
-//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=600&h=800 1.5x,
-//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=800&h=1067 2x,
-//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=1200&h=1600 3x",
-  "width": 400,
-}
-`;
-
 exports[`contentful extend node type resolveFixed generates responsive resolution data for images using all options 1`] = `
 Object {
   "aspectRatio": 1.1278195488721805,
@@ -40,6 +26,34 @@ Object {
 //images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=900&h=798&q=50&fit=fill&bg=rgb%3A000000 2x,
 //images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=1350&h=1197&q=50&fit=fill&bg=rgb%3A000000 3x",
   "width": 450,
+}
+`;
+
+exports[`contentful extend node type resolveFixed generates responsive resolution data for images using height option 1`] = `
+Object {
+  "aspectRatio": 0.75,
+  "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
+  "height": 400,
+  "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=300&h=400&fit=fill",
+  "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=300&h=400&fit=fill 1x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=450&h=600&fit=fill 1.5x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=600&h=800&fit=fill 2x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=900&h=1200&fit=fill 3x",
+  "width": 300,
+}
+`;
+
+exports[`contentful extend node type resolveFixed generates responsive resolution data for images using width option 1`] = `
+Object {
+  "aspectRatio": 0.75,
+  "baseUrl": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg",
+  "height": 533,
+  "src": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=400",
+  "srcSet": "//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=400&h=533 1x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=600&h=800 1.5x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=800&h=1067 2x,
+//images.contentful.com/ubriaw6jfhm1/10TkaLheGeQG6qQGqWYqUI/5421d3108cbb699561acabd594fa2cb0/ryugj83mqwa1asojwtwb.jpg?w=1200&h=1600 3x",
+  "width": 400,
 }
 `;
 

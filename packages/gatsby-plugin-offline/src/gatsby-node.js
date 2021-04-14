@@ -1,4 +1,5 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
+/* eslint-disable prefer-const */
 let fs = require(`fs`)
 let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
@@ -8,12 +9,19 @@ const _ = require(`lodash`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
-exports.createPages = ({ actions }) => {
+exports.onPreBootstrap = ({ cache }) => {
+  const appShellSourcePath = path.join(__dirname, `app-shell.js`)
+  const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
+  fs.copyFileSync(appShellSourcePath, appShellTargetPath)
+}
+
+exports.createPages = ({ actions, cache }) => {
+  const appShellPath = path.join(cache.directory, `app-shell.js`)
   if (process.env.NODE_ENV === `production`) {
     const { createPage } = actions
     createPage({
       path: `/offline-plugin-app-shell-fallback/`,
-      component: slash(path.resolve(`${__dirname}/app-shell.js`)),
+      component: slash(appShellPath),
     })
   }
 }
@@ -132,13 +140,14 @@ exports.onPostBuild = (
         handler: `CacheFirst`,
       },
       {
-        // page-data.json files are not content hashed
-        urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+        // page-data.json files, static query results and app-data.json
+        // are not content hashed
+        urlPattern: /^https?:.*\/page-data\/.*\.json/,
         handler: `StaleWhileRevalidate`,
       },
       {
         // Add runtime caching of various other page resources
-        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
         handler: `StaleWhileRevalidate`,
       },
       {
@@ -155,7 +164,9 @@ exports.onPostBuild = (
 
   const idbKeyvalFile = `idb-keyval-iife.min.js`
   const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
-  const idbKeyvalDest = `public/${idbKeyvalFile}`
+  const idbKeyvalPackageJson = require(`idb-keyval/package.json`)
+  const idbKeyValVersioned = `idb-keyval-${idbKeyvalPackageJson.version}-iife.min.js`
+  const idbKeyvalDest = `public/${idbKeyValVersioned}`
   fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
 
   const swDest = `public/sw.js`
@@ -176,6 +187,7 @@ exports.onPostBuild = (
 
       const swAppend = fs
         .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
+        .replace(/%idbKeyValVersioned%/g, idbKeyValVersioned)
         .replace(/%pathPrefix%/g, pathPrefix)
         .replace(/%appFile%/g, appFile)
 
@@ -199,4 +211,50 @@ exports.onPostBuild = (
             .join(`\n`)
       )
     })
+}
+
+const MATCH_ALL_KEYS = /^/
+exports.pluginOptionsSchema = function ({ Joi }) {
+  // These are the options of the v3: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#available-options
+  return Joi.object({
+    precachePages: Joi.array()
+      .items(Joi.string())
+      .description(
+        `An array of pages whose resources should be precached by the service worker, using an array of globs`
+      ),
+    appendScript: Joi.string().description(
+      `A file (path) to be appended at the end of the generated service worker`
+    ),
+    debug: Joi.boolean().description(
+      `Specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on localhost only`
+    ),
+    workboxConfig: Joi.object({
+      importWorkboxFrom: Joi.string(),
+      globDirectory: Joi.string(),
+      globPatterns: Joi.array().items(Joi.string()),
+      modifyURLPrefix: Joi.object().pattern(MATCH_ALL_KEYS, Joi.string()),
+      cacheId: Joi.string(),
+      dontCacheBustURLsMatching: Joi.object().instance(RegExp),
+      maximumFileSizeToCacheInBytes: Joi.number(),
+      runtimeCaching: Joi.array().items(
+        Joi.object({
+          urlPattern: Joi.object().instance(RegExp),
+          handler: Joi.string().valid(
+            `StaleWhileRevalidate`,
+            `CacheFirst`,
+            `NetworkFirst`,
+            `NetworkOnly`,
+            `CacheOnly`
+          ),
+          options: Joi.object({
+            networkTimeoutSeconds: Joi.number(),
+          }),
+        })
+      ),
+      skipWaiting: Joi.boolean(),
+      clientsClaim: Joi.boolean(),
+    })
+      .description(`Overrides workbox configuration. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#overriding-workbox-configuration
+      `),
+  })
 }

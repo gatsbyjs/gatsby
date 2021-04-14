@@ -4,6 +4,7 @@ const os = require(`os`)
 const verdaccioConfig = {
   storage: path.join(os.tmpdir(), `verdaccio`, `storage`),
   port: 4873, // default
+  max_body_size: `1000mb`,
   web: {
     enable: true,
     title: `gatsby-dev`,
@@ -19,6 +20,8 @@ const verdaccioConfig = {
   uplinks: {
     npmjs: {
       url: `https://registry.npmjs.org/`,
+      // default is 2 max_fails - on flaky networks that cause a lot of failed installations
+      max_fails: 10,
     },
   },
 }

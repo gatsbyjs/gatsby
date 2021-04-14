@@ -6,9 +6,7 @@ title: Sourcing from Ghost
 
 It comes with all the benefits of modern, centralized Headless CMS platforms, with the added benefit of being released completely for free under an MIT license, so you have total ownership and control of it without needing to depend on a third party backend.
 
-This guide will walk you through using [Gatsby](/) with the [Ghost Content API](https://docs.ghost.org/api/content/).
-
-&nbsp;
+This guide will walk you through using Gatsby with the [Ghost Content API](https://docs.ghost.org/api/content/).
 
 ---
 
@@ -21,8 +19,6 @@ The fastest way to get started is with the official **Gatsby Starter Ghost** rep
 
 [![Gatsby Starter Ghost](./images/gatsby-starter-ghost.jpg)](https://gatsby.ghost.org)
 
-&nbsp;
-
 ---
 
 ## Install and setup
@@ -30,7 +26,7 @@ The fastest way to get started is with the official **Gatsby Starter Ghost** rep
 If you prefer to start from scratch or integrate the Ghost Content API into an existing site, you can set up the **Gatsby Source Ghost** plugin.
 
 ```shell
-npm install --save gatsby-source-ghost
+npm install gatsby-source-ghost
 ```
 
 ### Configuration
@@ -51,13 +47,11 @@ module.exports = {
 }
 ```
 
-&nbsp;
-
 ---
 
 ## Generating pages
 
-Once the source plugin is set up, you can use the [`createPages` API](/docs/node-apis/#createPages) in `gatsby-node.js` to run queries against your Ghost data with GraphQL. In this example, Gatsby iterates over each post returned by the Ghost API and generates a new page with that data, using the `post.js` template file.
+Once the source plugin is set up, you can use the [`createPages` API](/docs/reference/config-files/gatsby-node/#createPages) in `gatsby-node.js` to run queries against your Ghost data with GraphQL. In this example, Gatsby iterates over each post returned by the Ghost API and generates a new page with that data, using the `post.js` template file.
 
 There are several ways to structure queries depending on how you prefer to work, but here's a very minimal example:
 
@@ -106,15 +100,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 ```
 
-&nbsp;
-
 ---
 
 ## Outputting data
 
 The code above will create pages in the root of the site at `/`, with the path being the slug of the post.
 
-Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so a simple example looks something like this:
+Then, within the `post.js` template, you can determine exactly how and where you want to output data on each page. Again, you'll use GraphQL to query individual fields, so an example looks something like this:
 
 ```jsx:title=templates/post.js
 import React from "react"
@@ -149,8 +141,6 @@ export const postQuery = graphql`
 `
 ```
 
-&nbsp;
-
 ---
 
 ## Wrapping up
@@ -164,5 +154,5 @@ Here are some further resources and reading material to help you get started wit
 - [Gatsby + Ghost announcement post](/blog/2019-01-14-modern-publications-with-gatsby-ghost/)
 - [More info about Ghost as a Headless CMS](https://blog.ghost.org/jamstack/)
 - [Official Gatsby Starter for Ghost](https://github.com/tryghost/gatsby-starter-ghost)
-- [Official Gatsby Source Plugin for Ghost](/packages/gatsby-source-ghost/)
+- [Official Gatsby Source Plugin for Ghost](/plugins/gatsby-source-ghost/)
 - [Official Ghost developer docs](https://docs.ghost.org/api/)

@@ -1,4 +1,3 @@
-import "@babel/polyfill"
 import React from "react"
 import { render, cleanup } from "@testing-library/react"
 import {
@@ -6,7 +5,7 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, { navigate, withPrefix, withAssetPrefix } from "../"
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -25,16 +24,6 @@ const getNavigate = () => {
   return navigate
 }
 
-const getPush = () => {
-  global.___push = jest.fn()
-  return push
-}
-
-const getReplace = () => {
-  global.___replace = jest.fn()
-  return replace
-}
-
 const getWithPrefix = (pathPrefix = ``) => {
   global.__BASE_PATH__ = pathPrefix
   return withPrefix
@@ -45,7 +34,30 @@ const getWithAssetPrefix = (prefix = ``) => {
   return withAssetPrefix
 }
 
-const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
+const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
+  const intersectionInstances = new WeakMap()
+  // mock intersectionObserver
+  global.IntersectionObserver = jest.fn(cb => {
+    const instance = {
+      observe: ref => {
+        intersectionInstances.set(ref, instance)
+      },
+      unobserve: ref => {
+        intersectionInstances.delete(ref)
+      },
+      disconnect: () => {},
+      trigger: ref => {
+        cb([
+          {
+            target: ref,
+            isIntersecting: true,
+          },
+        ])
+      },
+    }
+
+    return instance
+  })
   global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
@@ -67,22 +79,31 @@ const setup = ({ sourcePath = `/active`, linkProps, pathPrefix = `` } = {}) => {
 
   return Object.assign({}, utils, {
     link: utils.getByText(`link`),
+    triggerInViewport: ref => {
+      intersectionInstances.get(ref).trigger(ref)
+    },
   })
 }
 
 describe(`<Link />`, () => {
   it(`matches basic snapshot`, () => {
-    const { container } = setup()
+    const { container } = setup({
+      linkProps: { to: `/active` },
+    })
     expect(container).toMatchSnapshot()
   })
 
   it(`matches active snapshot`, () => {
-    const { container } = setup({ linkProps: { to: `/active` } })
+    const { container } = setup({
+      sourcePath: `/active`,
+      linkProps: { to: `/active` },
+    })
     expect(container).toMatchSnapshot()
   })
 
   it(`matches partially active snapshot`, () => {
     const { container } = setup({
+      sourcePath: `/active`,
       linkProps: { to: `/active/nested`, partiallyActive: true },
     })
     expect(container).toMatchSnapshot()
@@ -95,8 +116,8 @@ describe(`<Link />`, () => {
   })
 
   it(`does not fail with missing __BASE_PATH__`, () => {
-    global.__PATH_PREFIX__ = ``
-    global.__BASE_PATH__ = undefined
+    delete global.__PATH_PREFIX__
+    delete global.__BASE_PATH__
 
     const source = createMemorySource(`/active`)
 
@@ -135,9 +156,71 @@ describe(`<Link />`, () => {
       expect(link.getAttribute(`href`)).toEqual(`${pathPrefix}${location}`)
     })
 
+    it(`correctly handles pathPrefix with trailing slash`, () => {
+      const pathPrefix = `/prefixed/`
+      const location = `/courses?sort=name`
+      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      expect(link.getAttribute(`href`)).toEqual(`/prefixed${location}`)
+    })
+
+    it(`ignores pathPrefix for external links`, () => {
+      const pathPrefix = `/prefixed/`
+      const location = `https://example.com`
+      const { link } = setup({ linkProps: { to: location }, pathPrefix })
+      expect(link.getAttribute(`href`)).toEqual(location)
+    })
+
+    it(`handles relative link with "./"`, () => {
+      const location = `./courses?sort=name`
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
+      expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
+    })
+
+    it(`handles relative link with "../"`, () => {
+      const location = `../courses?sort=name`
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
+      expect(link.getAttribute(`href`)).toEqual(`/courses?sort=name`)
+    })
+
+    it(`handles bare relative link`, () => {
+      const location = `courses?sort=name`
+      const { link } = setup({
+        sourcePath: `/active`,
+        linkProps: { to: location },
+      })
+      expect(link.getAttribute(`href`)).toEqual(`/active/courses?sort=name`)
+    })
+
+    it(`handles relative link with pathPrefix`, () => {
+      const pathPrefix = `/prefixed`
+      const sourcePath = `/prefixed/active/`
+      const location = `./courses?sort=name`
+      const { link } = setup({
+        linkProps: { to: location },
+        pathPrefix,
+        sourcePath,
+      })
+      expect(link.getAttribute(`href`)).toEqual(
+        `${pathPrefix}/active/courses?sort=name`
+      )
+    })
+
     it(`does not warn when internal`, () => {
       jest.spyOn(global.console, `warn`)
       const to = `/courses?sort=name`
+      setup({ linkProps: { to } })
+      expect(console.warn).not.toBeCalled()
+    })
+
+    it(`does not warn when relative`, () => {
+      jest.spyOn(global.console, `warn`)
+      const to = `./courses?sort=name`
       setup({ linkProps: { to } })
       expect(console.warn).not.toBeCalled()
     })
@@ -150,14 +233,51 @@ describe(`<Link />`, () => {
     })
   })
 
-  it(`push is called with correct args`, () => {
-    getPush()(`/some-path`)
-    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
-  })
+  describe(`uses push or replace adequately`, () => {
+    it(`respects force disabling replace`, () => {
+      const to = `/`
+      getNavigate()
+      const { link } = setup({ linkProps: { to, replace: false } })
+      link.click()
 
-  it(`replace is called with correct args`, () => {
-    getReplace()(`/some-path`)
-    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
+      expect(
+        global.___navigate
+      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: false })
+    })
+
+    it(`respects force enabling replace`, () => {
+      const to = `/courses`
+      getNavigate()
+      const { link } = setup({ linkProps: { to, replace: true } })
+      link.click()
+
+      expect(
+        global.___navigate
+      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+    })
+
+    it(`does not replace history when navigating away`, () => {
+      const to = `/courses`
+      getNavigate()
+      const { link } = setup({ linkProps: { to } })
+      link.click()
+
+      expect(global.___navigate).toHaveBeenCalledWith(
+        `${global.__BASE_PATH__}${to}`,
+        {}
+      )
+    })
+
+    it(`does replace history when navigating on the same page`, () => {
+      const to = `/`
+      getNavigate()
+      const { link } = setup({ linkProps: { to } })
+      link.click()
+
+      expect(
+        global.___navigate
+      ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { replace: true })
+    })
   })
 })
 
@@ -275,8 +395,49 @@ describe(`state`, () => {
     const { link } = setup({ linkProps: { state } })
     link.click()
 
-    expect(
-      global.___navigate
-    ).toHaveBeenCalledWith(`${global.__BASE_PATH__}${to}`, { state })
+    expect(global.___navigate).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`,
+      {
+        replace: true,
+        state,
+      }
+    )
+  })
+})
+
+describe(`prefetch`, () => {
+  beforeEach(() => {
+    global.___loader = {
+      enqueue: jest.fn(),
+    }
+  })
+
+  it(`it prefetches when in viewport`, () => {
+    const to = `/active`
+
+    const { link, triggerInViewport } = setup({
+      linkProps: { to },
+    })
+
+    triggerInViewport(link)
+
+    expect(global.___loader.enqueue).toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`
+    )
+  })
+
+  it(`it does not prefetch if link is current page`, () => {
+    const to = `/active`
+
+    const { link, triggerInViewport } = setup({
+      sourcePath: `/active`,
+      linkProps: { to },
+    })
+
+    triggerInViewport(link)
+
+    expect(global.___loader.enqueue).not.toHaveBeenCalledWith(
+      `${global.__BASE_PATH__}${to}`
+    )
   })
 })

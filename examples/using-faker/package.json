@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "core-js": "^2.5.5",
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "gatsby-source-faker": "^2.0.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-helmet": "^5.2.0"
+    "core-js": "^2.6.11",
+    "gatsby": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-faker": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1"
   },
   "keywords": [
     "gatsby"

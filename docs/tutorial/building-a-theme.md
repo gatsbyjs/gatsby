@@ -107,8 +107,8 @@ You should now see the following dependencies in your `site/package.json`:
   "dependencies": {
     "gatsby": "^2.9.11",
     "gatsby-theme-events": "*",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   }
 }
 ```
@@ -155,14 +155,14 @@ The `gatsby-theme-events/package.json` file should now include the following:
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
 ```
@@ -332,7 +332,7 @@ exports.sourceNodes = ({ actions }) => {
 1. You'll use the `createTypes` to create the new `Event` type
 2. The `Event` type will implement the typical Gatsby `Node` interface.
 3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
-4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
+4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/reference/config-files/actions/#createTypes)_.
 5. You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
 
 ### Define resolvers for any custom fields (slug)
@@ -598,7 +598,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 - You'll loop over all the events that were returned, and use `createPage` to create a page for each event.
   - _Note the "wishful programming" again -- `"./src/templates/event.js"` doesn't exist yet._
 
-### Create the "events" and "event" template components.
+### Create the "events" and "event" template components
 
 The last step to make sure that these pages build is to create the page template components.
 
@@ -1047,6 +1047,8 @@ exports.createPages = async ({ actions, graphql, reporter }, options) => {
 }
 ```
 
+Note that the example above sets default values for `options`. This behavior was also included in the prior `gatsby-config.js` example. You only need to set default values once, but both mechanisms for doing so are valid.
+
 > 💡 Up till now, you've mostly worked in the `gatsby-theme-events` space. Because you've converted the theme to use a function export, you can no longer run the theme on its own. The function export in `gatsby-config.js` is only supported for themes. From now on you'll be running `site` -- the Gatsby site consuming `gatsby-theme-events`, instead. Gatsby sites still require the object export in `gatsby-config.js`.
 
 Test out this new options-setting by making some adjustments to `site`.
@@ -1096,7 +1098,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/core @emotion/styled @mdx-js/react
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/react @emotion/styled @mdx-js/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1146,14 +1148,8 @@ export const theme = {
     default: "90vw",
     max: "540px",
   },
-  styles: {
-    Layout: {
-      color: "gray.2",
-      fontFamily: "body",
-      fontSize: 1,
-      lineHeight: "body",
-    },
-    Header: {
+  text: {
+    heading: {
       backgroundColor: "primary",
       color: "background",
       fontWeight: "bold",
@@ -1165,14 +1161,20 @@ export const theme = {
         color: "inherit",
       },
     },
-    Main: {
+  },
+  layout: {
+    container: {
       margin: "0 auto",
       maxWidth: "max",
       width: "default",
-    },
-    Container: {
       padding: 3,
+      color: "gray.2",
+      fontFamily: "body",
+      fontSize: 1,
+      lineHeight: "body",
     },
+  },
+  styles: {
     h1: {
       color: "gray.3",
       fontSize: 5,
@@ -1220,12 +1222,12 @@ export default theme
 
 Now, refactor the `layout.js` component in `gatsby-theme-events` to actually use Theme UI.
 
-First, import the `Layout`, `Header`, `Main`, and `Container` [components from Theme UI](https://theme-ui.com/layout).
+First, import the `Header`, and `Container` [components from Theme UI](https://theme-ui.com/components).
 
 ```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
 // highlight-next-line
-import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+import { Heading, Container } from "theme-ui"
 
 const Layout = ({ children }) => (
   <div>
@@ -1241,17 +1243,15 @@ Next, refactor the `layout.js` component to use the Theme UI components:
 
 ```jsx:title=gatsby-theme-events/src/components/layout.js
 import React from "react"
-import { Layout as ThemeLayout, Header, Main, Container } from "theme-ui"
+import { Heading, Container } from "theme-ui"
 
 // highlight-start
 const Layout = ({ children }) => {
   return (
-    <ThemeLayout>
-      <Header>Gatsby Events Theme</Header>
-      <Main>
-        <Container>{children}</Container>
-      </Main>
-    </ThemeLayout>
+    <div>
+      <Heading>Gatsby Events Theme</Heading>
+      <Container>{children}</Container>
+    </div>
   )
 }
 // highlight-end
@@ -1267,7 +1267,7 @@ yarn workspace site develop
 
 ![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)
 
-To continue applying theme styles, you can use the `Style` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
+To continue applying theme styles, you can use the `Styled` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
 
 ```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
@@ -1335,17 +1335,17 @@ It's important to namespace your theme. It helps differentiate between published
   },
   "peerDependencies": {
     "gatsby": "^2.13.19",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
     "gatsby": "^2.13.19",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.14",
-    "@emotion/styled": "^10.0.14",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "@mdx-js/react": "^1.0.27",
     "gatsby-plugin-theme-ui": "^0.2.6",
     "gatsby-source-filesystem": "^2.1.5",
@@ -1530,7 +1530,9 @@ For example, create a new file to override the layout component: `theme-test/src
 ```jsx:title=theme-test/src/@jlengstorf/gatsby-theme-events/components/layout.js
 import React from "react"
 
-export default ({ children }) => <>{children}</>
+export default function Layout({ children }) {
+  return <>{children}</>
+}
 ```
 
 If you restart the development server, you'll see all of the styles and structure from the theme have been stripped away, because the component has been completely overridden:

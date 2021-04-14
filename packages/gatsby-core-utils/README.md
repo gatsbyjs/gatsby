@@ -5,7 +5,7 @@ A list of utilities used in multiple gatsby packages.
 ## Usage
 
 ```shell
-npm install --save gatsby-core-utils
+npm install gatsby-core-utils
 ```
 
 ### createContentDigest
@@ -66,7 +66,7 @@ const url = joinPath(BASEPATH, pathname)
 
 ### isCI
 
-A utility that enhances `isCI` from 'ci-info` with support for ZEIT's Now and Heroku detection
+A utility that enhances `isCI` from 'ci-info` with support for Vercel and Heroku detection
 
 ```js
 const { isCI } = require("gatsby-core-utils")
@@ -87,7 +87,7 @@ const { getCIName } = require("gatsby-core-utils")
 const CI_NAME = getCIName()
 console.log({ CI_NAME })
 // {CI_NAME: null}, or
-// {CI_NAME: "ZEIT Now"}
+// {CI_NAME: "Vercel"}
 // ...
 ```
 

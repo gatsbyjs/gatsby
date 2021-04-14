@@ -1,373 +1,196 @@
-import url from "url"
-import fs from "fs"
-import openurl from "better-opn"
-import chokidar from "chokidar"
-
-import webpackHotMiddleware from "webpack-hot-middleware"
-import webpackDevMiddleware from "webpack-dev-middleware"
-import glob from "glob"
-import express from "express"
-import got from "got"
-import webpack from "webpack"
-import graphqlHTTP from "express-graphql"
-import graphqlPlayground from "graphql-playground-middleware-express"
-import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError } from "graphql"
-
-import webpackConfig from "../utils/webpack.config"
-import bootstrap from "../bootstrap"
-import { store, emitter } from "../redux"
-import { syncStaticDir } from "../utils/get-static-dir"
-import { buildHTML } from "./build-html"
-import { withBasePath } from "../utils/path"
-import report from "gatsby-cli/lib/reporter"
-import launchEditor from "react-dev-utils/launchEditor"
-import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
-import chalk from "chalk"
-import address from "address"
-import cors from "cors"
-import telemetry from "gatsby-telemetry"
-import WorkerPool from "../utils/worker/pool"
+// NOTE(@mxstbr): Do not use the reporter in this file, as that has side-effects on import which break structured logging
+import path from "path"
 import http from "http"
 import https from "https"
-
-import bootstrapSchemaHotReloader from "../bootstrap/schema-hot-reloader"
-import bootstrapPageHotReloader from "../bootstrap/page-hot-reloader"
-import developStatic from "./develop-static"
-import withResolverContext from "../schema/context"
-import sourceNodes from "../utils/source-nodes"
-import createSchemaCustomization from "../utils/create-schema-customization"
-import websocketManager from "../utils/websocket-manager"
-import getSslCert from "../utils/get-ssl-cert"
-import { slash } from "gatsby-core-utils"
-import { initTracer } from "../utils/tracer"
-import apiRunnerNode from "../utils/api-runner-node"
-import db from "../db"
-import detectPortInUseAndPrompt from "../utils/detect-port-in-use-and-prompt"
+import tmp from "tmp"
+import { ChildProcess } from "child_process"
+import execa from "execa"
+import chokidar from "chokidar"
+import getRandomPort from "detect-port"
+import { detectPortInUseAndPrompt } from "../utils/detect-port-in-use-and-prompt"
+import { Server as SocketIO } from "socket.io"
+import fs from "fs-extra"
 import onExit from "signal-exit"
-import queryUtil from "../query"
-import queryWatcher from "../query/query-watcher"
-import requiresWriter from "../bootstrap/requires-writer"
 import {
-  reportWebpackWarnings,
-  structureWebpackErrors,
-} from "../utils/webpack-error-utils"
+  isCI,
+  slash,
+  createServiceLock,
+  getService,
+  updateSiteMetadata,
+  UnlockFn,
+} from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
+import { getSslCert } from "../utils/get-ssl-cert"
+import { startDevelopProxy } from "../utils/develop-proxy"
+import { IProgram, IDebugInfo } from "./types"
 
-import { BuildHTMLStage, IProgram } from "./types"
-import { waitUntilAllJobsComplete as waitUntilAllJobsV2Complete } from "../utils/jobs-manager"
-
-const waitUntilAllJobsComplete = (): Promise<void> => {
-  const jobsV1Promise = new Promise(resolve => {
-    const onEndJob = (): void => {
-      if (store.getState().jobs.active.length === 0) {
-        resolve()
-        emitter.off(`END_JOB`, onEndJob)
-      }
-    }
-    emitter.on(`END_JOB`, onEndJob)
-    onEndJob()
-  })
-
-  return Promise.all([
-    jobsV1Promise,
-    waitUntilAllJobsV2Complete(),
-  ]).then(() => {})
-}
-
-// const isInteractive = process.stdout.isTTY
-
-// Watch the static directory and copy files to public as they're added or
-// changed. Wait 10 seconds so copying doesn't interfere with the regular
-// bootstrap.
-setTimeout(() => {
-  syncStaticDir()
-}, 10000)
-
-onExit(() => {
-  telemetry.trackCli(`DEVELOP_STOP`)
-})
-
-type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
-
-interface IServer {
-  compiler: webpack.Compiler
-  listener: http.Server | https.Server
-  webpackActivity: ActivityTracker
-}
-
-async function startServer(program: IProgram): Promise<IServer> {
-  const indexHTMLActivity = report.phantomActivity(`building index.html`, {})
-  indexHTMLActivity.start()
-  const directory = program.directory
-  const directoryPath = withBasePath(directory)
-  const workerPool = WorkerPool.create()
-  const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
-    try {
-      await buildHTML({
-        program,
-        stage: BuildHTMLStage.DevelopHTML,
-        pagePaths: [`/`],
-        workerPool,
-        activity,
-      })
-    } catch (err) {
-      if (err.name !== `WebpackError`) {
-        report.panic(err)
-        return
-      }
-      report.panic(
-        report.stripIndent`
-          There was an error compiling the html.js component for the development server.
-
-          See our docs page on debugging HTML builds for help https://gatsby.dev/debug-html
-        `,
-        err
-      )
-    }
-  }
-
-  await createIndexHtml(indexHTMLActivity)
-
-  indexHTMLActivity.end()
-
-  // report.stateUpdate(`webpack`, `IN_PROGRESS`)
-
-  const webpackActivity = report.activityTimer(`Building development bundle`, {
-    id: `webpack-develop`,
-  })
-  webpackActivity.start()
-
-  const devConfig = await webpackConfig(
-    program,
-    directory,
-    `develop`,
-    program.port,
-    { parentSpan: webpackActivity.span }
-  )
-
-  const compiler = webpack(devConfig)
-
-  /**
-   * Set up the express app.
-   **/
-  const app = express()
-  app.use(telemetry.expressMiddleware(`DEVELOP`))
-  app.use(
-    webpackHotMiddleware(compiler, {
-      log: false,
-      path: `/__webpack_hmr`,
-      heartbeat: 10 * 1000,
-    })
-  )
-
-  app.use(cors())
-
-  /**
-   * Pattern matching all endpoints with graphql or graphiql with 1 or more leading underscores
-   */
-  const graphqlEndpoint = `/_+graphi?ql`
-
-  if (process.env.GATSBY_GRAPHQL_IDE === `playground`) {
-    app.get(
-      graphqlEndpoint,
-      graphqlPlayground({
-        endpoint: `/___graphql`,
-      }),
-      () => {}
-    )
-  } else {
-    graphiqlExplorer(app, {
-      graphqlEndpoint,
-    })
-  }
-
-  app.use(
-    graphqlEndpoint,
-    graphqlHTTP(
-      (): graphqlHTTP.OptionsData => {
-        const { schema, schemaCustomization } = store.getState()
-
-        return {
-          schema,
-          graphiql: false,
-          context: withResolverContext({
-            schema,
-            schemaComposer: schemaCustomization.composer,
-            context: {},
-            customContext: schemaCustomization.context,
-          }),
-          customFormatErrorFn(err): unknown {
-            return {
-              ...formatError(err),
-              stack: err.stack ? err.stack.split(`\n`) : [],
-            }
-          },
-        }
-      }
-    )
-  )
-
-  /**
-   * Refresh external data sources.
-   * This behavior is disabled by default, but the ENABLE_REFRESH_ENDPOINT env var enables it
-   * If no GATSBY_REFRESH_TOKEN env var is available, then no Authorization header is required
-   **/
-  const REFRESH_ENDPOINT = `/__refresh`
-  const refresh = async (req: express.Request): Promise<void> => {
-    let activity = report.activityTimer(`createSchemaCustomization`, {})
-    activity.start()
-    await createSchemaCustomization({
-      refresh: true,
-    })
-    activity.end()
-    activity = report.activityTimer(`Refreshing source data`, {})
-    activity.start()
-    await sourceNodes({
-      webhookBody: req.body,
-    })
-    activity.end()
-  }
-  app.use(REFRESH_ENDPOINT, express.json())
-  app.post(REFRESH_ENDPOINT, (req, res) => {
-    const enableRefresh = process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-    const refreshToken = process.env.GATSBY_REFRESH_TOKEN
-    const authorizedRefresh =
-      !refreshToken || req.headers.authorization === refreshToken
-
-    if (enableRefresh && authorizedRefresh) {
-      refresh(req)
-    }
-    res.end()
-  })
-
-  app.get(`/__open-stack-frame-in-editor`, (req, res) => {
-    launchEditor(req.query.fileName, req.query.lineNumber)
-    res.end()
-  })
-
-  // Disable directory indexing i.e. serving index.html from a directory.
-  // This can lead to serving stale html files during development.
-  //
-  // We serve by default an empty index.html that sets up the dev environment.
-  app.use(developStatic(`public`, { index: false }))
-
-  app.use(
-    webpackDevMiddleware(compiler, {
-      logLevel: `silent`,
-      publicPath: devConfig.output.publicPath,
-      watchOptions: devConfig.devServer
-        ? devConfig.devServer.watchOptions
-        : null,
-      stats: `errors-only`,
-    })
-  )
-
-  // Expose access to app for advanced use cases
-  const { developMiddleware } = store.getState().config
-
-  if (developMiddleware) {
-    developMiddleware(app, program)
-  }
-
-  // Set up API proxy.
-  const { proxy } = store.getState().config
-  if (proxy) {
-    proxy.forEach(({ prefix, url }) => {
-      app.use(`${prefix}/*`, (req, res) => {
-        const proxiedUrl = url + req.originalUrl
-        const {
-          // remove `host` from copied headers
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          headers: { host, ...headers },
-          method,
-        } = req
-        req
-          .pipe(
-            got
-              .stream(proxiedUrl, { headers, method, decompress: false })
-              .on(`response`, response =>
-                res.writeHead(response.statusCode || 200, response.headers)
-              )
-              .on(`error`, (err, _, response) => {
-                if (response) {
-                  res.writeHead(response.statusCode || 400, response.headers)
-                } else {
-                  const message = `Error when trying to proxy request "${req.originalUrl}" to "${proxiedUrl}"`
-
-                  report.error(message, err)
-                  res.sendStatus(500)
-                }
-              })
-          )
-          .pipe(res)
-      })
-    })
-  }
-
-  await apiRunnerNode(`onCreateDevServer`, { app })
-
-  // In case nothing before handled hot-update - send 404.
-  // This fixes "Unexpected token < in JSON at position 0" runtime
-  // errors after restarting development server and
-  // cause automatic hard refresh in the browser.
-  app.use(/.*\.hot-update\.json$/i, (_, res) => {
-    res.status(404).end()
-  })
-
-  // Render an HTML page and serve it.
-  app.use((_, res) => {
-    res.sendFile(directoryPath(`public/index.html`), err => {
-      if (err) {
-        res.status(500).end()
-      }
-    })
-  })
-
-  /**
-   * Set up the HTTP server and socket.io.
-   * If a SSL cert exists in program, use it with `createServer`.
-   **/
-  const server = program.ssl
-    ? https.createServer(program.ssl, app)
-    : new http.Server(app)
-
-  websocketManager.init({ server, directory: program.directory })
-  const socket = websocketManager.getSocket()
-
-  const listener = server.listen(program.port, program.host)
-
-  // Register watcher that rebuilds index.html every time html.js changes.
-  const watchGlobs = [`src/html.js`, `plugins/**/gatsby-ssr.js`].map(path =>
-    slash(directoryPath(path))
-  )
-
-  chokidar.watch(watchGlobs).on(`change`, async () => {
-    await createIndexHtml(indexHTMLActivity)
-    socket.to(`clients`).emit(`reload`)
-  })
-
-  return { compiler, listener, webpackActivity }
-}
-
-module.exports = async (program: IProgram): Promise<void> => {
-  initTracer(program.openTracingConfigFile)
-  report.pendingActivity({ id: `webpack-develop` })
-  telemetry.trackCli(`DEVELOP_START`)
-  telemetry.startBackgroundUpdate()
-
-  const port =
-    typeof program.port === `string` ? parseInt(program.port, 10) : program.port
-
-  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
-  // used together
-  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
-    report.panic(
-      `for custom ssl --https, --cert-file, and --key-file must be used together`
-    )
+// Adapted from https://stackoverflow.com/a/16060619
+const requireUncached = (file: string): any => {
+  try {
+    delete require.cache[require.resolve(file)]
+  } catch (e) {
+    return null
   }
 
   try {
-    program.port = await detectPortInUseAndPrompt(port)
+    return require(file)
+  } catch (e) {
+    return null
+  }
+}
+
+// Heuristics for gatsby-config.js, as not all changes to it require a full restart to take effect
+const doesConfigChangeRequireRestart = (
+  lastConfig: Record<string, any>,
+  newConfig: Record<string, any>
+): boolean => {
+  // Ignore changes to siteMetadata
+  const replacer = (_, v): string | void => {
+    if (typeof v === `function` || v instanceof RegExp) {
+      return v.toString()
+    } else {
+      return v
+    }
+  }
+
+  const oldConfigString = JSON.stringify(
+    { ...lastConfig, siteMetadata: null },
+    replacer
+  )
+  const newConfigString = JSON.stringify(
+    { ...newConfig, siteMetadata: null },
+    replacer
+  )
+
+  if (oldConfigString === newConfigString) return false
+
+  return true
+}
+
+// Return a user-supplied port otherwise the default Node.js debugging port
+const getDebugPort = (port?: number): number => port ?? 9229
+
+export const getDebugInfo = (program: IProgram): IDebugInfo | null => {
+  if (Object.prototype.hasOwnProperty.call(program, `inspect`)) {
+    return {
+      port: getDebugPort(program.inspect),
+      break: false,
+    }
+  } else if (Object.prototype.hasOwnProperty.call(program, `inspectBrk`)) {
+    return {
+      port: getDebugPort(program.inspectBrk),
+      break: true,
+    }
+  } else {
+    return null
+  }
+}
+
+class ControllableScript {
+  private process?: ChildProcess
+  private script
+  private debugInfo: IDebugInfo | null
+  public isRunning
+  constructor(script, debugInfo: IDebugInfo | null) {
+    this.script = script
+    this.debugInfo = debugInfo
+  }
+  start(): void {
+    const args: Array<string> = []
+    const tmpFileName = tmp.tmpNameSync({
+      tmpdir: path.join(process.cwd(), `.cache`),
+    })
+    fs.outputFileSync(tmpFileName, this.script)
+    this.isRunning = true
+    // Passing --inspect isn't necessary for the child process to launch a port but it allows some editors to automatically attach
+    if (this.debugInfo) {
+      if (this.debugInfo.break) {
+        args.push(`--inspect-brk=${this.debugInfo.port}`)
+      } else {
+        args.push(`--inspect=${this.debugInfo.port}`)
+      }
+    }
+
+    this.process = execa.node(tmpFileName, args, {
+      env: process.env,
+      stdio: [`inherit`, `inherit`, `inherit`, `ipc`],
+    })
+  }
+  async stop(
+    signal: NodeJS.Signals | null = null,
+    code?: number
+  ): Promise<void> {
+    if (!this.process) {
+      throw new Error(`Trying to stop the process before starting it`)
+    }
+
+    this.isRunning = false
+    if (signal) {
+      this.process.kill(signal)
+    } else {
+      this.process.send({
+        type: `COMMAND`,
+        action: {
+          type: `EXIT`,
+          payload: code,
+        },
+      })
+    }
+
+    return new Promise(resolve => {
+      if (!this.process) {
+        throw new Error(`Trying to stop the process before starting it`)
+      }
+
+      this.process.on(`exit`, () => {
+        if (this.process) {
+          this.process.removeAllListeners()
+        }
+        this.process = undefined
+        resolve()
+      })
+    })
+  }
+  onMessage(callback: (msg: any) => void): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach message handler before process started`)
+    }
+    this.process.on(`message`, callback)
+  }
+  onExit(
+    callback: (code: number | null, signal: NodeJS.Signals | null) => void
+  ): void {
+    if (!this.process) {
+      throw new Error(`Trying to attach exit handler before process started`)
+    }
+    this.process.on(`exit`, callback)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send(msg: any): void {
+    if (!this.process) {
+      throw new Error(`Trying to send a message before process started`)
+    }
+
+    this.process.send(msg)
+  }
+}
+
+let isRestarting
+
+// checks if a string is a valid ip
+const REGEX_IP = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$/
+
+module.exports = async (program: IProgram): Promise<void> => {
+  // In some cases, port can actually be a string. But our codebase is expecting it to be a number.
+  // So we want to early just force it to a number to ensure we always act on a correct type.
+  program.port = parseInt(program.port + ``, 10)
+  const developProcessPath = slash(require.resolve(`./develop-process`))
+  const telemetryServerPath = slash(
+    require.resolve(`../utils/telemetry-server`)
+  )
+
+  try {
+    program.port = await detectPortInUseAndPrompt(program.port)
   } catch (e) {
     if (e.message === `USER_REJECTED`) {
       process.exit(0)
@@ -376,282 +199,329 @@ module.exports = async (program: IProgram): Promise<void> => {
     throw e
   }
 
-  // Check if https is enabled, then create or get SSL cert.
-  // Certs are named after `name` inside the project's package.json.
-  // Scoped names are converted from @npm/package-name to npm--package-name.
-  // If the name is unavailable, generate one using the current working dir.
-  if (program.https) {
-    const name = program.sitePackageJson.name
-      ? program.sitePackageJson.name.replace(`@`, ``).replace(`/`, `--`)
-      : process.cwd().replace(/[^A-Za-z0-9]/g, `-`)
+  // Run the actual develop server on a random port, and the proxy on the program port
+  // which users will access
+  const proxyPort = program.port
+  const debugInfo = getDebugInfo(program)
 
-    program.ssl = await getSslCert({
-      name,
+  const rootFile = (file: string): string => path.join(program.directory, file)
+
+  // Require gatsby-config.js before accessing process.env, to enable the user to change
+  // environment variables from the config file.
+  let lastConfig = requireUncached(rootFile(`gatsby-config.js`))
+
+  // INTERNAL_STATUS_PORT allows for setting the websocket port used for monitoring
+  // when the browser should prompt the user to restart the develop process.
+  // This port is randomized by default and in most cases should never be required to configure.
+  // It is exposed for environments where port access needs to be explicit, such as with Docker.
+  // As the port is meant for internal usage only, any attempt to interface with features
+  // it exposes via third-party software is not supported.
+  const [
+    statusServerPort,
+    developPort,
+    telemetryServerPort,
+  ] = await Promise.all([
+    getRandomPort(process.env.INTERNAL_STATUS_PORT),
+    getRandomPort(),
+    getRandomPort(),
+  ])
+
+  // In order to enable custom ssl, --cert-file --key-file and -https flags must all be
+  // used together
+  if ((program[`cert-file`] || program[`key-file`]) && !program.https) {
+    reporter.panic(
+      `for custom ssl --https, --cert-file, and --key-file must be used together`
+    )
+  }
+
+  // Check if https is enabled, then create or get SSL cert.
+  // Certs are named 'devcert' and issued to the host.
+  // NOTE(@mxstbr): We mutate program.ssl _after_ passing it
+  // to the develop process controllable script above because
+  // that would mean we double SSL browser => proxy => server
+  if (program.https) {
+    const sslHost =
+      program.host === `0.0.0.0` || program.host === `::`
+        ? `localhost`
+        : program.host
+
+    if (REGEX_IP.test(sslHost)) {
+      reporter.panic(
+        `You're trying to generate a ssl certificate for an IP (${sslHost}). Please use a hostname instead.`
+      )
+    }
+
+    const ssl = await getSslCert({
+      name: sslHost,
+      caFile: program[`ca-file`],
       certFile: program[`cert-file`],
       keyFile: program[`key-file`],
       directory: program.directory,
     })
+
+    if (ssl) {
+      program.ssl = ssl
+    }
   }
 
-  // Start bootstrap process.
-  const { graphqlRunner } = await bootstrap(program)
+  // NOTE(@mxstbr): We need to start the develop proxy before the develop process to ensure
+  // codesandbox detects the right port to expose by default
+  const proxy = startDevelopProxy({
+    proxyPort: proxyPort,
+    targetPort: developPort,
+    program,
+  })
 
-  // Start the createPages hot reloader.
-  bootstrapPageHotReloader(graphqlRunner)
-
-  // Start the schema hot reloader.
-  bootstrapSchemaHotReloader()
-
-  await queryUtil.initialProcessQueries()
-
-  require(`../redux/actions`).boundActionCreators.setProgramStatus(
-    `BOOTSTRAP_QUERY_RUNNING_FINISHED`
+  const developProcess = new ControllableScript(
+    `
+    const cmd = require(${JSON.stringify(developProcessPath)});
+    const args = ${JSON.stringify({
+      ...program,
+      port: developPort,
+      proxyPort,
+      // Don't pass SSL options down to the develop process, it should always use HTTP
+      ssl: null,
+      debugInfo,
+    })};
+    cmd(args);
+  `,
+    debugInfo
   )
 
-  await db.saveState()
+  const telemetryServerProcess = new ControllableScript(
+    `require(${JSON.stringify(telemetryServerPath)}).default(${JSON.stringify(
+      telemetryServerPort
+    )})`,
+    null
+  )
 
-  await waitUntilAllJobsComplete()
-  requiresWriter.startListener()
-  db.startAutosave()
-  queryUtil.startListeningToDevelopQueue()
-  queryWatcher.startWatchDeletePage()
+  let unlocks: Array<UnlockFn> = []
+  if (!isCI()) {
+    const statusUnlock = await createServiceLock(
+      program.directory,
+      `developstatusserver`,
+      {
+        port: statusServerPort,
+      }
+    )
+    const developUnlock = await createServiceLock(
+      program.directory,
+      `developproxy`,
+      {
+        port: proxyPort,
+      }
+    )
+    const telemetryUnlock = await createServiceLock(
+      program.directory,
+      `telemetryserver`,
+      {
+        port: telemetryServerPort,
+      }
+    )
+    await updateSiteMetadata({
+      name: program.sitePackageJson.name,
+      sitePath: program.directory,
+      pid: process.pid,
+      lastRun: Date.now(),
+    })
 
-  let { compiler, webpackActivity } = await startServer(program)
+    if (!statusUnlock || !developUnlock) {
+      const data = await getService(program.directory, `developproxy`)
+      const port = data?.port || 8000
+      console.error(
+        `Looks like develop for this site is already running, can you visit ${
+          program.ssl ? `https:` : `http:`
+        }//localhost:${port} ? If it is not, try again in five seconds!`
+      )
+      process.exit(1)
+    }
 
-  interface IPreparedUrls {
-    lanUrlForConfig: string
-    lanUrlForTerminal: string
-    localUrlForTerminal: string
-    localUrlForBrowser: string
+    unlocks = unlocks.concat([statusUnlock, developUnlock, telemetryUnlock])
   }
 
-  function prepareUrls(
-    protocol: `http` | `https`,
-    host: string,
-    port: number
-  ): IPreparedUrls {
-    const formatUrl = (hostname: string): string =>
-      url.format({
-        protocol,
-        hostname,
-        port,
-        pathname: `/`,
-      })
-    const prettyPrintUrl = (hostname: string): string =>
-      url.format({
-        protocol,
-        hostname,
-        port: chalk.bold(String(port)),
-        pathname: `/`,
-      })
+  const statusServer = program.ssl
+    ? https.createServer(program.ssl)
+    : http.createServer()
+  statusServer.listen(statusServerPort)
 
-    const isUnspecifiedHost = host === `0.0.0.0` || host === `::`
-    let prettyHost = host
-    let lanUrlForConfig
-    let lanUrlForTerminal
-    if (isUnspecifiedHost) {
-      prettyHost = `localhost`
+  const io = new SocketIO(statusServer, {
+    // whitelist all (https://github.com/expressjs/cors#configuration-options)
+    cors: {
+      origin: true,
+    },
+    cookie: true,
+  })
 
-      try {
-        // This can only return an IPv4 address
-        lanUrlForConfig = address.ip()
-        if (lanUrlForConfig) {
-          // Check if the address is a private ip
-          // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
-          if (
-            /^10[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-              lanUrlForConfig
-            )
-          ) {
-            // Address is private, format it for later use
-            lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig)
-          } else {
-            // Address is not private, so we will discard it
-            lanUrlForConfig = undefined
-          }
+  const handleChildProcessIPC = (msg): void => {
+    if (msg.type === `HEARTBEAT`) return
+    if (process.send) {
+      // Forward IPC
+      process.send(msg)
+    }
+
+    io.emit(`structured-log`, msg)
+
+    if (
+      msg.type === `LOG_ACTION` &&
+      msg.action.type === `SET_STATUS` &&
+      msg.action.payload === `SUCCESS`
+    ) {
+      proxy.serveSite()
+    }
+  }
+
+  io.on(`connection`, socket => {
+    socket.on(`develop:restart`, async respond => {
+      isRestarting = true
+      proxy.serveRestartingScreen()
+      // respond() responds to the client, which in our case prompts it to reload the page to show the restarting screen
+      if (respond) respond(`develop:is-starting`)
+      await developProcess.stop()
+      developProcess.start()
+      developProcess.onMessage(handleChildProcessIPC)
+      isRestarting = false
+    })
+  })
+
+  developProcess.start()
+  developProcess.onMessage(handleChildProcessIPC)
+
+  telemetryServerProcess.start()
+
+  // Plugins can call `process.exit` which would be sent to `develop-process` (child process)
+  // This needs to be propagated back to the parent process
+  developProcess.onExit(
+    (code: number | null, signal: NodeJS.Signals | null) => {
+      if (isRestarting) return
+      if (signal !== null) {
+        process.kill(process.pid, signal)
+        return
+      }
+      if (code !== null) {
+        process.exit(code)
+      }
+
+      // This should not happen:
+      // https://nodejs.org/api/child_process.html#child_process_event_exit
+      // The 'exit' event is emitted after the child process ends. If the process
+      // exited, code is the final exit code of the process, otherwise null.
+      // If the process terminated due to receipt of a signal, signal is the
+      // string name of the signal, otherwise null. One of the two will always be
+      // non - null.
+      //
+      // but just in case let do non-zero exit, because we are in situation
+      // we don't expect to be possible
+      process.exit(1)
+    }
+  )
+
+  const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
+  let watcher: chokidar.FSWatcher = null
+
+  if (!isCI()) {
+    watcher = chokidar.watch(files).on(`change`, filePath => {
+      const file = path.basename(filePath)
+
+      if (file === `gatsby-config.js`) {
+        const newConfig = requireUncached(rootFile(`gatsby-config.js`))
+
+        if (!doesConfigChangeRequireRestart(lastConfig, newConfig)) {
+          lastConfig = newConfig
+          return
         }
-      } catch (_e) {
-        // ignored
+
+        lastConfig = newConfig
       }
-    }
-    // TODO collect errors (GraphQL + Webpack) in Redux so we
-    // can clear terminal and print them out on every compile.
-    // Borrow pretty printing code from webpack plugin.
-    const localUrlForTerminal = prettyPrintUrl(prettyHost)
-    const localUrlForBrowser = formatUrl(prettyHost)
-    return {
-      lanUrlForConfig,
-      lanUrlForTerminal,
-      localUrlForTerminal,
-      localUrlForBrowser,
-    }
-  }
 
-  function printInstructions(appName: string, urls: IPreparedUrls): void {
-    console.log()
-    console.log(`You can now view ${chalk.bold(appName)} in the browser.`)
-    console.log()
-
-    if (urls.lanUrlForTerminal) {
-      console.log(
-        `  ${chalk.bold(`Local:`)}            ${urls.localUrlForTerminal}`
+      console.warn(
+        `develop process needs to be restarted to apply the changes to ${file}`
       )
-      console.log(
-        `  ${chalk.bold(`On Your Network:`)}  ${urls.lanUrlForTerminal}`
-      )
-    } else {
-      console.log(`  ${urls.localUrlForTerminal}`)
-    }
-
-    console.log()
-    console.log(
-      `View ${
-        process.env.GATSBY_GRAPHQL_IDE === `playground`
-          ? `the GraphQL Playground`
-          : `GraphiQL`
-      }, an in-browser IDE, to explore your site's data and schema`
-    )
-    console.log()
-
-    if (urls.lanUrlForTerminal) {
-      console.log(
-        `  ${chalk.bold(`Local:`)}            ${
-          urls.localUrlForTerminal
-        }___graphql`
-      )
-      console.log(
-        `  ${chalk.bold(`On Your Network:`)}  ${
-          urls.lanUrlForTerminal
-        }___graphql`
-      )
-    } else {
-      console.log(`  ${urls.localUrlForTerminal}___graphql`)
-    }
-
-    console.log()
-    console.log(`Note that the development build is not optimized.`)
-    console.log(
-      `To create a production build, use ` + `${chalk.cyan(`gatsby build`)}`
-    )
-    console.log()
-  }
-
-  function printDeprecationWarnings(): void {
-    type DeprecatedAPIList = ["boundActionCreators", "pathContext"] // eslint-disable-line
-    const deprecatedApis: DeprecatedAPIList = [
-      `boundActionCreators`,
-      `pathContext`,
-    ]
-    const fixMap = {
-      boundActionCreators: {
-        newName: `actions`,
-        docsLink: `https://gatsby.dev/boundActionCreators`,
-      },
-      pathContext: {
-        newName: `pageContext`,
-        docsLink: `https://gatsby.dev/pathContext`,
-      },
-    }
-    const deprecatedLocations = {
-      boundActionCreators: [] as string[],
-      pathContext: [] as string[],
-    }
-
-    glob
-      .sync(`{,!(node_modules|public)/**/}*.js`, { nodir: true })
-      .forEach(file => {
-        const fileText = fs.readFileSync(file)
-        const matchingApis = deprecatedApis.filter(api =>
-          fileText.includes(api)
-        )
-        matchingApis.forEach(api => deprecatedLocations[api].push(file))
+      io.emit(`structured-log`, {
+        type: `LOG_ACTION`,
+        action: {
+          type: `DEVELOP`,
+          payload: `RESTART_REQUIRED`,
+          dirtyFile: file,
+        },
       })
-
-    deprecatedApis.forEach(api => {
-      if (deprecatedLocations[api].length) {
-        console.log(
-          `%s %s %s %s`,
-          chalk.cyan(api),
-          chalk.yellow(`is deprecated. Please use`),
-          chalk.cyan(fixMap[api].newName),
-          chalk.yellow(
-            `instead. For migration instructions, see ${fixMap[api].docsLink}\nCheck the following files:`
-          )
-        )
-        console.log()
-        deprecatedLocations[api].forEach(file => console.log(file))
-        console.log()
-      }
     })
   }
 
-  // compiler.hooks.invalid.tap(`log compiling`, function(...args) {
-  //   console.log(`set invalid`, args, this)
-  // })
-
-  compiler.hooks.watchRun.tapAsync(`log compiling`, function(_, done) {
-    if (webpackActivity) {
-      webpackActivity.end()
-    }
-    webpackActivity = report.activityTimer(`Re-building development bundle`, {
-      id: `webpack-develop`,
-    })
-    webpackActivity.start()
-
-    done()
+  // route ipc messaging to the original develop process
+  process.on(`message`, msg => {
+    developProcess.send(msg)
   })
 
-  let isFirstCompile = true
-  // "done" event fires when Webpack has finished recompiling the bundle.
-  // Whether or not you have warnings or errors, you will get this event.
-  compiler.hooks.done.tapAsync(`print gatsby instructions`, function(
-    stats,
-    done
-  ) {
-    // We have switched off the default Webpack output in WebpackDevServer
-    // options so we are going to "massage" the warnings and errors and present
-    // them in a readable focused way.
-    const messages = formatWebpackMessages(stats.toJson({}, true))
-    const urls = prepareUrls(
-      program.ssl ? `https` : `http`,
-      program.host,
-      program.port
+  process.on(`SIGINT`, async () => {
+    await shutdownServices(
+      {
+        developProcess,
+        telemetryServerProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGINT`
     )
-    const isSuccessful = !messages.errors.length
 
-    if (isSuccessful && isFirstCompile) {
-      printInstructions(
-        program.sitePackageJson.name || `(Unnamed package)`,
-        urls
-      )
-      printDeprecationWarnings()
-      if (program.open) {
-        Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
-          console.log(
-            `${chalk.yellow(
-              `warn`
-            )} Browser not opened because no browser was found`
-          )
-        )
-      }
-    }
-
-    isFirstCompile = false
-
-    if (webpackActivity) {
-      reportWebpackWarnings(stats)
-
-      if (!isSuccessful) {
-        const errors = structureWebpackErrors(
-          `develop`,
-          stats.compilation.errors
-        )
-        webpackActivity.panicOnBuild(errors)
-      }
-      webpackActivity.end()
-      webpackActivity = null
-    }
-
-    done()
+    process.exit(0)
   })
+
+  process.on(`SIGTERM`, async () => {
+    await shutdownServices(
+      {
+        developProcess,
+        telemetryServerProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      `SIGTERM`
+    )
+
+    process.exit(0)
+  })
+
+  onExit((_code, signal) => {
+    shutdownServices(
+      {
+        developProcess,
+        telemetryServerProcess,
+        unlocks,
+        statusServer,
+        proxy,
+        watcher,
+      },
+      signal as NodeJS.Signals
+    )
+  })
+}
+function shutdownServices(
+  {
+    statusServer,
+    developProcess,
+    proxy,
+    unlocks,
+    watcher,
+    telemetryServerProcess,
+  },
+  signal: NodeJS.Signals
+): Promise<void> {
+  const services = [
+    developProcess.stop(signal),
+    telemetryServerProcess.stop(),
+    watcher?.close(),
+    new Promise(resolve => statusServer.close(resolve)),
+    new Promise(resolve => proxy.server.close(resolve)),
+  ]
+
+  unlocks.forEach(unlock => {
+    services.push(unlock())
+  })
+
+  return Promise.all(services)
+    .catch(() => {})
+    .then(() => {})
 }

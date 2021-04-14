@@ -1,10 +1,11 @@
+const { createRequireFromPath } = require(`gatsby-core-utils`)
 const path = require(`path`)
-const mergeGatsbyConfig = require(`../../utils/merge-gatsby-config`)
+import { mergeGatsbyConfig } from "../../utils/merge-gatsby-config"
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const debug = require(`debug`)(`gatsby:load-themes`)
-const preferDefault = require(`../prefer-default`)
-const getConfigFile = require(`../get-config-file`)
+import { preferDefault } from "../prefer-default"
+import { getConfigFile } from "../get-config-file"
 const { resolvePlugin } = require(`../load-plugins/load`)
 const reporter = require(`gatsby-cli/lib/reporter`)
 
@@ -18,8 +19,9 @@ const resolveTheme = async (
   const themeName = themeSpec.resolve || themeSpec
   let themeDir
   try {
+    const scopedRequire = createRequireFromPath(`${rootDir}/:internal:`)
     // theme is an node-resolvable module
-    themeDir = path.dirname(require.resolve(themeName))
+    themeDir = path.dirname(scopedRequire.resolve(themeName))
   } catch (e) {
     let pathToLocalTheme
 
@@ -35,7 +37,7 @@ const resolveTheme = async (
         const { resolve } = resolvePlugin(themeName, rootDir)
         themeDir = resolve
       } catch (localErr) {
-        // catch shouldn't be empty :shrug:
+        reporter.panic(`Failed to resolve ${themeName}`, localErr)
       }
     }
 
@@ -57,14 +59,21 @@ const resolveTheme = async (
     themeDir,
     `gatsby-config`
   )
-  let theme = preferDefault(configModule)
+  const theme = preferDefault(configModule)
 
   // if theme is a function, call it with the themeConfig
   let themeConfig = theme
   if (_.isFunction(theme)) {
     themeConfig = theme(themeSpec.options || {})
   }
-  return { themeName, themeConfig, themeSpec, themeDir, configFilePath }
+  return {
+    themeName,
+    themeConfig,
+    themeSpec,
+    themeDir,
+    parentDir: rootDir,
+    configFilePath,
+  }
 }
 
 // single iteration of a recursive function that resolve parent themes
@@ -76,11 +85,9 @@ const resolveTheme = async (
 // off track and creating their own set of themes
 const processTheme = (
   { themeName, themeConfig, themeSpec, themeDir, configFilePath },
-  { useLegacyThemes, rootDir }
+  { rootDir }
 ) => {
-  const themesList = useLegacyThemes
-    ? themeConfig && themeConfig.__experimentalThemes
-    : themeConfig && themeConfig.plugins
+  const themesList = themeConfig && themeConfig.plugins
   // Gatsby themes don't have to specify a gatsby-config.js (they might only use gatsby-node, etc)
   // in this case they're technically plugins, but we should support it anyway
   // because we can't guarantee which files theme creators create first
@@ -88,23 +95,22 @@ const processTheme = (
     // for every parent theme a theme defines, resolve the parent's
     // gatsby config and return it in order [parentA, parentB, child]
     return Promise.mapSeries(themesList, async spec => {
-      const themeObj = await resolveTheme(spec, configFilePath, false, rootDir)
-      return processTheme(themeObj, { useLegacyThemes, rootDir })
+      const themeObj = await resolveTheme(spec, configFilePath, false, themeDir)
+      return processTheme(themeObj, { rootDir: themeDir })
     }).then(arr =>
-      arr.concat([{ themeName, themeConfig, themeSpec, themeDir }])
+      arr.concat([
+        { themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir },
+      ])
     )
   } else {
     // if a theme doesn't define additional themes, return the original theme
-    return [{ themeName, themeConfig, themeSpec, themeDir }]
+    return [{ themeName, themeConfig, themeSpec, themeDir, parentDir: rootDir }]
   }
 }
 
-module.exports = async (
-  config,
-  { useLegacyThemes = false, configFilePath, rootDir }
-) => {
+module.exports = async (config, { configFilePath, rootDir }) => {
   const themesA = await Promise.mapSeries(
-    useLegacyThemes ? config.__experimentalThemes || [] : config.plugins || [],
+    config.plugins || [],
     async themeSpec => {
       const themeObj = await resolveTheme(
         themeSpec,
@@ -112,7 +118,7 @@ module.exports = async (
         true,
         rootDir
       )
-      return processTheme(themeObj, { useLegacyThemes, rootDir })
+      return processTheme(themeObj, { rootDir })
     }
   ).then(arr => _.flattenDeep(arr))
 
@@ -123,16 +129,25 @@ module.exports = async (
   // list in the config for the theme. This enables the usage of
   // gatsby-node, etc in themes.
   return (
-    Promise.mapSeries(themesA, ({ themeName, themeConfig = {}, themeSpec }) => {
-      return {
-        ...themeConfig,
-        plugins: [
-          ...(themeConfig.plugins || []),
-          // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
-          { resolve: themeName, options: themeSpec.options || {} },
-        ],
+    Promise.mapSeries(
+      themesA,
+      ({ themeName, themeConfig = {}, themeSpec, themeDir, parentDir }) => {
+        return {
+          ...themeConfig,
+          plugins: [
+            ...(themeConfig.plugins || []).map(plugin => {
+              return {
+                resolve: typeof plugin === `string` ? plugin : plugin.resolve,
+                options: plugin.options || {},
+                parentDir: themeDir,
+              }
+            }),
+            // theme plugin is last so it's gatsby-node, etc can override it's declared plugins, like a normal site.
+            { resolve: themeName, options: themeSpec.options || {}, parentDir },
+          ],
+        }
       }
-    })
+    )
       /**
        * themes resolve to a gatsby-config, so here we merge all of the configs
        * into a single config, making sure to maintain the order in which

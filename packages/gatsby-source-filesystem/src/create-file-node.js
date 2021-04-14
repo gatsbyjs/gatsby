@@ -3,7 +3,7 @@ const fs = require(`fs-extra`)
 const mime = require(`mime`)
 const prettyBytes = require(`pretty-bytes`)
 
-const md5File = require(`bluebird`).promisify(require(`md5-file`))
+const md5File = require(`md5-file`)
 const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 exports.createFileNode = async (
@@ -45,33 +45,48 @@ exports.createFileNode = async (
     }
   }
 
-  // Stringify date objects.
-  return JSON.parse(
-    JSON.stringify({
-      // Don't actually make the File id the absolute path as otherwise
-      // people will use the id for that and ids shouldn't be treated as
-      // useful information.
-      id: createNodeId(pathToFile),
-      children: [],
-      parent: null,
-      internal,
-      sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
-      absolutePath: slashedFile.absolutePath,
-      relativePath: slash(
-        path.relative(
-          pluginOptions.path || process.cwd(),
-          slashedFile.absolutePath
-        )
-      ),
-      extension: slashedFile.ext.slice(1).toLowerCase(),
-      size: stats.size,
-      prettySize: prettyBytes(stats.size),
-      modifiedTime: stats.mtime,
-      accessTime: stats.atime,
-      changeTime: stats.ctime,
-      birthTime: stats.birthtime,
-      ...slashedFile,
-      ...stats,
-    })
-  )
+  return {
+    // Don't actually make the File id the absolute path as otherwise
+    // people will use the id for that and ids shouldn't be treated as
+    // useful information.
+    id: createNodeId(pathToFile),
+    children: [],
+    parent: null,
+    internal,
+    sourceInstanceName: pluginOptions.name || `__PROGRAMMATIC__`,
+    relativePath: slash(
+      path.relative(
+        pluginOptions.path || process.cwd(),
+        slashedFile.absolutePath
+      )
+    ),
+    extension: slashedFile.ext.slice(1).toLowerCase(),
+    prettySize: prettyBytes(stats.size),
+    modifiedTime: stats.mtime.toJSON(),
+    accessTime: stats.atime.toJSON(),
+    changeTime: stats.ctime.toJSON(),
+    birthTime: stats.birthtime.toJSON(),
+    // Note: deprecate splatting the slashedFile object
+    // Note: the object may contain different properties depending on File or Dir
+    ...slashedFile,
+    // TODO: deprecate copying the entire object
+    // Note: not splatting for perf reasons (make sure Date objects are serialized)
+    dev: stats.dev,
+    mode: stats.mode,
+    nlink: stats.nlink,
+    uid: stats.uid,
+    rdev: stats.rdev,
+    blksize: stats.blksize,
+    ino: stats.ino,
+    size: stats.size,
+    blocks: stats.blocks,
+    atimeMs: stats.atimeMs,
+    mtimeMs: stats.mtimeMs,
+    ctimeMs: stats.ctimeMs,
+    birthtimeMs: stats.birthtimeMs,
+    atime: stats.atime.toJSON(),
+    mtime: stats.mtime.toJSON(),
+    ctime: stats.ctime.toJSON(),
+    birthtime: stats.birthtime.toJSON(),
+  }
 }

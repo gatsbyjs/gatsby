@@ -3,6 +3,116 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.3.0-next.0...gatsby-design-tokens@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.2.0-next.0...gatsby-design-tokens@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.2...gatsby-design-tokens@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.1...gatsby-design-tokens@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.1.0-next.0...gatsby-design-tokens@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.0.0-next.1...gatsby-design-tokens@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@3.0.0-next.0...gatsby-design-tokens@3.0.0-next.1) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.8.0-next.0...gatsby-design-tokens@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.7.0-next.0...gatsby-design-tokens@2.8.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.6.0-next.1...gatsby-design-tokens@2.7.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.6.0-next.0...gatsby-design-tokens@2.6.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.5.0-next.0...gatsby-design-tokens@2.6.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.4.0-next.0...gatsby-design-tokens@2.5.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.3.0-next.0...gatsby-design-tokens@2.4.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+# [2.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.2.0-next.0...gatsby-design-tokens@2.3.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.12...gatsby-design-tokens@2.0.13) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.11...gatsby-design-tokens@2.0.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.10...gatsby-design-tokens@2.0.11) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.9...gatsby-design-tokens@2.0.10) (2020-07-03)
+
+### Bug Fixes
+
+- **gatsby-design-tokens:** Add border definitions to theme ([#25486](https://github.com/gatsbyjs/gatsby/issues/25486)) ([7efdbd3](https://github.com/gatsbyjs/gatsby/commit/7efdbd3))
+
+## [2.0.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.8...gatsby-design-tokens@2.0.9) (2020-06-29)
+
+### Bug Fixes
+
+- **gatsby-design-tokens:** yarn run watch broken ([#25369](https://github.com/gatsbyjs/gatsby/issues/25369)) ([e563a2e](https://github.com/gatsbyjs/gatsby/commit/e563a2e))
+
+## [2.0.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.7...gatsby-design-tokens@2.0.8) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.6...gatsby-design-tokens@2.0.7) (2020-06-22)
+
+### Bug Fixes
+
+- **docs:** change bash to shell in code language blocks ([#22899](https://github.com/gatsbyjs/gatsby/issues/22899)) ([6b6b2f2](https://github.com/gatsbyjs/gatsby/commit/6b6b2f2))
+
+## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.5...gatsby-design-tokens@2.0.6) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.4...gatsby-design-tokens@2.0.5) (2020-04-18)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.3...gatsby-design-tokens@2.0.4) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
+## [2.0.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.2...gatsby-design-tokens@2.0.3) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-design-tokens
+
 ## [2.0.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-design-tokens@2.0.1...gatsby-design-tokens@2.0.2) (2020-02-20)
 
 ### Features
@@ -30,7 +140,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 #### Tokens
 
-This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).  
+This update moves the rudimentary tokens even closer to our current sole target, CSS. This e.g. means that instead of exporting an array of integers for `fontSizes` or `space`, we now provide `rem` values instead (while still making the v1 variants available — but we do have "soft" preferences regarding default units for CSS, which are emphasized by these breaking changes).
+
 We currently only consume these tokens in the context of CSS, so let's make things a bit easier there:
 
 - `fontsSizes` exports `rem` values now; old values available at `fontSizesRaw`

@@ -1,11 +1,11 @@
 {
   "name": "gatsby-plugin-subfont",
-  "version": "1.1.21",
+  "version": "3.4.0-next.0",
   "description": "Runs the font delivery optimizing CLI tool subfont on the homepage of your site during the Gatsby build",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build"
   },
   "keywords": [
@@ -24,17 +24,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "shell-escape": "^0.2.0",
-    "subfont": "^3.7.1"
+    "subfont": "^5.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3"
+  },
+  "peerDependencies": {
+    "gatsby": "^3.0.0-next.0"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

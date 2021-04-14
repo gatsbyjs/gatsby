@@ -32,6 +32,7 @@ dist
 # built files
 apis.json
 cache-dir/commonjs/
+gatsby-admin-public/
 
 # cached files
 /latest-apis.json

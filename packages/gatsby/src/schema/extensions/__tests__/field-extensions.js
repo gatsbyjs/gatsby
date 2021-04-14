@@ -1,12 +1,11 @@
 const { GraphQLString, graphql } = require(`graphql`)
 const { build } = require(`../..`)
 const withResolverContext = require(`../../context`)
-const { buildObjectType } = require(`../../types/type-builders`)
+import { buildObjectType } from "../../types/type-builders"
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
 const { dispatch } = store
 const { createFieldExtension, createTypes } = actions
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 const report = require(`gatsby-cli/lib/reporter`)
 report.error = jest.fn()

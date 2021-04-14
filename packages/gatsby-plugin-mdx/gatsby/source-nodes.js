@@ -1,4 +1,5 @@
 const _ = require(`lodash`)
+const { GraphQLBoolean } = require(`gatsby/graphql`)
 const remark = require(`remark`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
@@ -8,15 +9,18 @@ const remove = require(`unist-util-remove`)
 const toString = require(`mdast-util-to-string`)
 const generateTOC = require(`mdast-util-toc`)
 const prune = require(`underscore.string/prune`)
+const slugify = require(`slugify`)
+const path = require(`path`)
 
 const debug = require(`debug`)(`gatsby-plugin-mdx:extend-node-type`)
 const getTableOfContents = require(`../utils/get-table-of-content`)
 const defaultOptions = require(`../utils/default-options`)
 const genMDX = require(`../utils/gen-mdx`)
 const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
+const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
-  let counts = {}
+  const counts = {}
 
   // convert the mdxast to back to mdast
   remove(mdast, `import`)
@@ -26,12 +30,7 @@ async function getCounts({ mdast }) {
   })
 
   await remark()
-    .use(
-      remark2retext,
-      unified()
-        .use(english)
-        .use(count)
-    )
+    .use(remark2retext, unified().use(english).use(count))
     .run(mdast)
 
   function count() {
@@ -45,9 +44,9 @@ async function getCounts({ mdast }) {
   }
 
   return {
-    paragraphs: counts.ParagraphNode,
-    sentences: counts.SentenceNode,
-    words: counts.WordNode,
+    paragraphs: counts.ParagraphNode || 0,
+    sentences: counts.SentenceNode || 0,
+    words: counts.WordNode || 0,
   }
 }
 
@@ -94,12 +93,12 @@ module.exports = (
   /**
    * Support gatsby-remark parser plugins
    */
-  for (let plugin of options.gatsbyRemarkPlugins) {
+  for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
-    const requiredPlugin = require(plugin.resolve)
+    const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
-      for (let parserPlugin of requiredPlugin.setParserPlugins(
+      for (const parserPlugin of requiredPlugin.setParserPlugins(
         plugin.options || {}
       )) {
         if (_.isArray(parserPlugin)) {
@@ -136,6 +135,32 @@ module.exports = (
       rawBody: { type: `String!` },
       fileAbsolutePath: { type: `String!` },
       frontmatter: { type: `MdxFrontmatter` },
+      slug: {
+        type: `String`,
+        async resolve(mdxNode, args, context) {
+          const nodeWithContext = context.nodeModel.findRootNodeAncestor(
+            mdxNode,
+            node => node.internal && node.internal.type === `File`
+          )
+
+          if (!nodeWithContext) {
+            return null
+          }
+          const fileRelativePath = nodeWithContext.relativePath
+
+          const parsedPath = path.parse(fileRelativePath)
+
+          let relevantPath
+          if (parsedPath.name === `index`) {
+            relevantPath = fileRelativePath.replace(parsedPath.base, ``)
+          } else {
+            relevantPath = fileRelativePath.replace(parsedPath.ext, ``)
+          }
+          return slugify(relevantPath, {
+            remove: /[^\w\s$*_+~.()'"!\-:@/]/g, // this is the set of allowable characters
+          })
+        },
+      },
       body: {
         type: `String!`,
         async resolve(mdxNode) {
@@ -150,8 +175,12 @@ module.exports = (
             type: `Int`,
             defaultValue: 140,
           },
+          truncate: {
+            type: GraphQLBoolean,
+            defaultValue: false,
+          },
         },
-        async resolve(mdxNode, { pruneLength }) {
+        async resolve(mdxNode, { pruneLength, truncate }) {
           if (mdxNode.excerpt) {
             return Promise.resolve(mdxNode.excerpt)
           }
@@ -165,7 +194,14 @@ module.exports = (
             return
           })
 
-          return prune(excerptNodes.join(` `), pruneLength, `…`)
+          if (!truncate) {
+            return prune(excerptNodes.join(` `), pruneLength, `…`)
+          }
+
+          return _.truncate(excerptNodes.join(` `), {
+            length: pruneLength,
+            omission: `…`,
+          })
         },
       },
       headings: {
@@ -261,6 +297,11 @@ ${e}`
       },
     },
     interfaces: [`Node`],
+    extensions: {
+      childOf: {
+        mimeTypes: options.mediaTypes,
+      },
+    },
   })
   createTypes(MdxType)
 }

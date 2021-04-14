@@ -3,11 +3,11 @@ const _ = require(`lodash`)
 const {
   getMonorepoPackageJsonPath,
 } = require(`./get-monorepo-package-json-path`)
-const request = require(`request`)
+const got = require(`got`)
 
 function difference(object, base) {
   function changes(object, base) {
-    return _.transform(object, function(result, value, key) {
+    return _.transform(object, function (result, value, key) {
       if (!_.isEqual(value, base[key])) {
         result[key] =
           _.isObject(value) && _.isObject(base[key])
@@ -60,18 +60,13 @@ exports.checkDepsChanges = async ({
     // this allow us to not publish to local repository
     // and save some time/work
     try {
-      localPKGjson = await new Promise((resolve, reject) => {
-        request(
-          `https://unpkg.com/${packageName}/package.json`,
-          (error, response, body) => {
-            if (response && response.statusCode === 200) {
-              return resolve(JSON.parse(body))
-            }
-
-            return reject(error)
-          }
-        )
-      })
+      const response = await got(
+        `https://unpkg.com/${packageName}/package.json`
+      )
+      if (response?.statusCode !== 200) {
+        throw new Error(`No response or non 200 code`)
+      }
+      localPKGjson = JSON.parse(response.body)
     } catch {
       console.log(
         `'${packageName}' doesn't seem to be installed and is not published on NPM.`

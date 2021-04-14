@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`query-error-parser real error 1`] = `
+Object {
+  "context": Object {
+    "sourceMessage": "this error should show a trace",
+  },
+  "error": [Error: this error should show a trace],
+  "filePath": "test.js",
+  "id": "85901",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
+exports[`query-error-parser specific one 1`] = `
+Object {
+  "context": Object {
+    "sourceMessage": "Variable \\"Foo\\" of required type \\"Bar\\" was not provided.",
+    "variableName": "Foo",
+    "variableType": "Bar",
+  },
+  "filePath": "test.js",
+  "id": "85920",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;
+
+exports[`query-error-parser totally vague one 1`] = `
+Object {
+  "context": Object {
+    "sourceMessage": "foo bar",
+  },
+  "filePath": "test.js",
+  "id": "85901",
+  "location": Object {
+    "start": Object {
+      "column": 10,
+      "line": 5,
+    },
+  },
+}
+`;

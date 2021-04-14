@@ -22,37 +22,32 @@ jest.mock(`got`, () => {
   }
 })
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
-  return {
-    createProgress: jest.fn(),
-  }
-})
 jest.mock(`../create-file-node`, () => {
   return {
     createFileNode: jest.fn(),
   }
 })
-const reporter = require(`gatsby-cli/lib/reporter`)
-const progressBar = {
-  start: jest.fn(),
-  total: 0,
-  tick: jest.fn(),
-}
-reporter.createProgress.mockImplementation(() => progressBar)
+const reporter = require(`gatsby/reporter`)
 
 const got = require(`got`)
 const createRemoteFileNode = require(`../create-remote-file-node`)
 const { createFileNode } = require(`../create-file-node`)
 
-beforeEach(() => {
-  progressBar.tick.mockClear()
-})
+const createMockCache = () => {
+  return {
+    get: jest.fn(),
+    set: jest.fn(),
+    directory: __dirname,
+  }
+}
 
 describe(`create-remote-file-node`, () => {
+  const cache = createMockCache()
+
   const defaultArgs = {
     url: ``,
     store: {},
-    cache: {},
+    getCache: () => cache,
     createNode: jest.fn(),
     createNodeId: jest.fn(),
     reporter,
@@ -66,7 +61,9 @@ describe(`create-remote-file-node`, () => {
           url: ``,
         })
 
-        expect(value).rejects.toMatch(`wrong url: `)
+        expect(value).rejects.toMatch(
+          `url passed to createRemoteFileNode is either missing or not a proper web uri: `
+        )
       })
 
       it(`does not increment progress bar total`, () => {
@@ -75,10 +72,9 @@ describe(`create-remote-file-node`, () => {
           url: ``,
         })
 
-        expect(value).rejects.toMatch(`wrong url: `)
-
-        expect(progressBar.total).toBe(0)
-        expect(progressBar.tick).not.toHaveBeenCalled()
+        expect(value).rejects.toMatch(
+          `url passed to createRemoteFileNode is either missing or not a proper web uri: `
+        )
       })
     })
   })
@@ -86,11 +82,7 @@ describe(`create-remote-file-node`, () => {
   describe(`valid url`, () => {
     let uuid = 0
 
-    const setup = (
-      args = {},
-      type = `response`,
-      response = { statusCode: 200 }
-    ) => {
+    const setup = (args = {}, response = { statusCode: 200 }) => {
       const url = `https://images.whatever.com/real-image-trust-me-${uuid}.png`
 
       const gotMock = {
@@ -107,13 +99,20 @@ describe(`create-remote-file-node`, () => {
       got.stream.mockReturnValueOnce({
         pipe: jest.fn(() => gotMock),
         on: jest.fn((mockType, mockCallback) => {
-          if (mockType === type) {
+          if (mockType === `response`) {
             // got throws on 404/500 so we mimic this behaviour
             if (response.statusCode === 404) {
               throw new Error(`Response code 404 (Not Found)`)
             }
 
             mockCallback(response)
+          }
+          if (mockType === `downloadProgress`) {
+            mockCallback({
+              progress: 1,
+              transferred: 1,
+              total: 1,
+            })
           }
 
           return gotMock
@@ -124,10 +123,6 @@ describe(`create-remote-file-node`, () => {
 
       return createRemoteFileNode({
         ...defaultArgs,
-        cache: {
-          get: jest.fn(),
-          set: jest.fn(),
-        },
         store: {
           getState: jest.fn(() => {
             return {
@@ -144,9 +139,6 @@ describe(`create-remote-file-node`, () => {
 
     it(`invokes ProgressBar tick`, async () => {
       await setup()
-
-      expect(progressBar.total).toBe(1)
-      expect(progressBar.tick).toHaveBeenCalledTimes(1)
     })
 
     describe(`requesting remote image`, () => {
@@ -276,26 +268,34 @@ describe(`create-remote-file-node`, () => {
       )
     })
 
-    it(`throws on invalid inputs: cache`, () => {
+    it(`throws on invalid inputs: cache and getCache undefined`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
           cache: undefined,
+          getCache: undefined,
         })
       }).toThrowErrorMatchingInlineSnapshot(
-        `"cache must be the Gatsby cache, was undefined"`
+        `"Neither \\"cache\\" or \\"getCache\\" was passed. getCache must be function that return Gatsby cache, \\"cache\\" must be the Gatsby cache, was undefined"`
       )
     })
 
-    it(`throws on invalid inputs: store`, () => {
+    it(`doesn't throw when getCache is defined`, () => {
       expect(() => {
         createRemoteFileNode({
           ...defaultArgs,
-          store: undefined,
+          getCache: () => createMockCache(),
         })
-      }).toThrowErrorMatchingInlineSnapshot(
-        `"store must be the redux store, was undefined"`
-      )
+      }).not.toThrow()
+    })
+
+    it(`doesn't throw when cache is defined`, () => {
+      expect(() => {
+        createRemoteFileNode({
+          ...defaultArgs,
+          cache: createMockCache(),
+        })
+      }).not.toThrow()
     })
   })
 })

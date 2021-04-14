@@ -5,7 +5,7 @@ describe(`gatsby-plugin-facebook-analytics`, () => {
     describe(`in development mode`, () => {
       it(`does not log page views`, () => {
         const logPageView = jest.fn()
-        window.FB = function() {}
+        window.FB = function () {}
         window.FB.AppEvents = { logPageView }
 
         onRouteUpdate()
@@ -28,7 +28,7 @@ describe(`gatsby-plugin-facebook-analytics`, () => {
 
       it(`logs page views`, () => {
         const logPageView = jest.fn()
-        window.FB = function() {}
+        window.FB = function () {}
         window.FB.AppEvents = { logPageView }
 
         onRouteUpdate()

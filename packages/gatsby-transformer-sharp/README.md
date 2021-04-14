@@ -10,7 +10,7 @@ including resizing, cropping, and creating responsive images.
 
 ## Install
 
-`npm install --save gatsby-transformer-sharp gatsby-plugin-sharp`
+`npm install gatsby-transformer-sharp gatsby-plugin-sharp`
 
 ## How to use
 
@@ -21,9 +21,9 @@ module.exports = {
 }
 ```
 
-Please note that you must have a source plugin (which brings in images) installed in your project. Otherwise, no `ImageSharp` nodes can be created for your files. Examples would be [`gatsby-source-filesystem`](/packages/gatsby-source-filesystem) or source plugins for (headless) CMSs like [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress).
+Please note that you must have a source plugin (which brings in images) installed in your project. Otherwise, no `ImageSharp` nodes can be created for your files. Examples would be [`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem) or source plugins for (headless) CMSs like [`gatsby-source-wordpress`](/plugins/gatsby-source-wordpress).
 
-**Note**: An exception to this is when using [`gatsby-source-contentful`](/packages/gatsby-source-contentful/), as the source plugin and the assets are not [downloaded to the local filesystem](https://www.gatsbyjs.org/packages/gatsby-source-contentful/#download-assets-for-static-distribution). By default, the `gatsby-source-contentful` plugin creates a `ContentfulAsset` node for every image with links to Contentful’s CDN, therefore it is not necessary to use `gatsby-transformer-sharp` together with `gatsby-source-contentful`.
+**Note**: An exception to this is when using [`gatsby-source-contentful`](/plugins/gatsby-source-contentful/), as the source plugin and the assets are not [downloaded to the local filesystem](https://www.gatsbyjs.org/packages/gatsby-source-contentful/#download-assets-for-static-distribution). By default, the `gatsby-source-contentful` plugin creates a `ContentfulAsset` node for every image with links to Contentful’s CDN, therefore it is not necessary to use `gatsby-transformer-sharp` together with `gatsby-source-contentful`.
 
 ## Parsing algorithm
 
@@ -37,6 +37,28 @@ It recognizes files with the following extensions as images.
 - tiff
 
 Each image file is parsed into a node of type `ImageSharp`.
+
+## Configuration options
+
+`checkSupportedExtensions` [boolean][optional]
+
+Sharp only supports certain image formats (see the Parsing algorithm section above) and hence throws a warning when you e.g. use a .gif in an `ImageSharp` query. You'll need to use `publicURL` instead. With this option you can disable the warning behavior.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // The option defaults to true
+        checkSupportedExtensions: false,
+      },
+    },
+  ],
+}
+```
 
 ## Troubleshooting
 

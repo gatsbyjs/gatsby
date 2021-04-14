@@ -4,7 +4,7 @@ const path = require(`path`)
 
 require(`dotenv`).config()
 
-let logger = log4js.getLogger(`update-source`)
+const logger = log4js.getLogger(`update-source`)
 logger.level = `info`
 
 const protocol = `https://`
@@ -88,7 +88,13 @@ async function updateSourceRepo() {
   logger.info(`Committing changes`)
   shell.exec(`git add .`)
 
-  if (shell.exec(`git commit -m '${commitMessage}' > /dev/null`).code !== 0) {
+  // need to "escape" single quotes in commit message
+  // http://blog.stvjam.es/2016/11/using-quotes-in-git-command-line-commit-messages/#Using-Single-Quotes
+  if (
+    shell.exec(
+      `git commit -m '${commitMessage.replace(/'/g, `'\\''`)}' > /dev/null`
+    ).code !== 0
+  ) {
     logger.error(`Failed to commit to ${sourceRepo}`)
     process.exit(1)
   }

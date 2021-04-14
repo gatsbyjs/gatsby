@@ -8,6 +8,8 @@ const fs = require(`fs`)
 
 const bootstrapTime = performance.now()
 
+const CI_NAME = process.env.CI_NAME
+
 const BENCHMARK_REPORTING_URL =
   process.env.BENCHMARK_REPORTING_URL === `cli`
     ? undefined
@@ -15,6 +17,11 @@ const BENCHMARK_REPORTING_URL =
 
 // Track the last received `api` because not all events in this plugin will receive one
 let lastApi
+// Current benchmark state, if any. If none then create one on next lifecycle.
+let benchMeta
+
+let nextBuildType = process.env.BENCHMARK_BUILD_TYPE ?? `initial`
+
 function reportInfo(...args) {
   ;(lastApi ? lastApi.reporter : console).info(...args)
 }
@@ -55,6 +62,50 @@ class BenchMeta {
     this.started = false
   }
 
+  getMetadata() {
+    let siteId = ``
+    try {
+      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
+      siteId =
+        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
+    } catch (e) {
+      siteId = `error`
+      reportInfo(
+        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
+      )
+    }
+
+    /**
+     * If we are running in netlify, environment variables can be attached using the INCOMING_HOOK_BODY
+     * extract the configuration from there
+     */
+
+    let buildType = nextBuildType
+    nextBuildType = process.env.BENCHMARK_BUILD_TYPE_NEXT ?? `DATA_UPDATE`
+    const incomingHookBodyEnv = process.env.INCOMING_HOOK_BODY
+
+    if (CI_NAME === `netlify` && incomingHookBodyEnv) {
+      try {
+        const incomingHookBody = JSON.parse(incomingHookBodyEnv)
+        buildType = incomingHookBody && incomingHookBody.buildType
+      } catch (e) {
+        reportInfo(
+          `Suppressed an error trying to JSON.parse(INCOMING_HOOK_BODY): ${e}`
+        )
+      }
+    }
+
+    return {
+      buildId: process.env.BENCHMARK_BUILD_ID,
+      branch: process.env.BENCHMARK_BRANCH,
+      siteId,
+      contentSource: process.env.BENCHMARK_CONTENT_SOURCE,
+      siteType: process.env.BENCHMARK_SITE_TYPE,
+      repoName: process.env.BENCHMARK_REPO_NAME,
+      buildType: buildType,
+    }
+  }
+
   getData() {
     // Get memory usage snapshot first (just in case)
     const { rss, heapTotal, heapUsed, external } = process.memoryUsage()
@@ -79,7 +130,9 @@ class BenchMeta {
 
     const nodejsVersion = process.version
 
-    const gatsbyCliVersion = execToStr(`gatsby --version`)
+    // This assumes the benchmark is started explicitly from `node_modules/.bin/gatsby`, and not a global install
+    // (This is what `gatsby --version` does too, ultimately)
+    const gatsbyCliVersion = execToStr(`node_modules/.bin/gatsby --version`)
 
     const gatsbyVersion = require(`gatsby/package.json`).version
 
@@ -87,7 +140,7 @@ class BenchMeta {
       ? require(`sharp/package.json`).version
       : `none`
 
-    const webpackVersion = execToStr(`node_modules/.bin/webpack --version`)
+    const webpackVersion = require(`webpack/package.json`).version
 
     const publicJsSize = glob(`public/*.js`).reduce(
       (t, file) => t + fs.statSync(file).size,
@@ -110,33 +163,17 @@ class BenchMeta {
       `find public .cache  -type f -iname "*.bmp" -or -iname "*.tif" -or -iname "*.webp" -or -iname "*.svg" | wc -l`
     )
 
-    const pageCount = glob(`**/**.json`, {
-      cwd: `./public/page-data`,
-      nocase: true,
-    }).length
-
-    let siteId = ``
-    try {
-      // The tags ought to be a json string, but we try/catch it just in case it's not, or not a valid json string
-      siteId =
-        JSON.parse(process.env?.GATSBY_TELEMETRY_TAGS ?? `{}`)?.siteId ?? `` // Set by server
-    } catch (e) {
-      siteId = `error`
-      reportInfo(
-        `Suppressed an error trying to JSON.parse(GATSBY_TELEMETRY_TAGS): ${e}`
-      )
-    }
+    const benchmarkMetadata = this.getMetadata()
 
     return {
       time: this.localTime,
       sessionId: process.gatsbyTelemetrySessionId || uuidv4(),
-      siteId,
       cwd: process.cwd() ?? ``,
       timestamps: this.timestamps,
       gitHash,
       commitTime,
       ci: process.env.CI || false,
-      ciName: process.env.CI_NAME || `local`,
+      ciName: CI_NAME || `local`,
       versions: {
         nodejs: nodejsVersion,
         gatsby: gatsbyVersion,
@@ -145,7 +182,7 @@ class BenchMeta {
         webpack: webpackVersion,
       },
       counts: {
-        pages: pageCount,
+        pages: parseInt(process.env.NUM_PAGES),
         jpgs: jpgCount,
         pngs: pngCount,
         gifs: gifCount,
@@ -153,6 +190,7 @@ class BenchMeta {
       },
       memory,
       publicJsSize,
+      ...benchmarkMetadata,
     }
   }
 
@@ -212,17 +250,17 @@ class BenchMeta {
       method: `POST`,
       headers: {
         "content-type": `application/json`,
-        // "user-agent": this.getUserAgent(),
+        "x-benchmark-secret": process.env.BENCHMARK_REPORTING_SECRET,
       },
       body: json,
     }).then(res => {
       lastStatus = res.status
-      if (lastStatus === 500) {
-        reportInfo(`Got 500 response, waiting for text`)
+      if ([401, 500].includes(lastStatus)) {
+        reportInfo(`Got ${lastStatus} response, waiting for text`)
         res.text().then(content => {
           reportError(
             `Response error`,
-            new Error(`Server responded with a 500 error: ${content}`)
+            new Error(`Server responded with a ${lastStatus} error: ${content}`)
           )
           process.exit(1)
         })
@@ -240,8 +278,22 @@ class BenchMeta {
   }
 }
 
+function init(lifecycle) {
+  if (!benchMeta) {
+    benchMeta = new BenchMeta()
+    // This should be set in the gatsby-config of the site when enabling this plugin
+    reportInfo(
+      `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${
+        BENCHMARK_REPORTING_URL || `the CLI`
+      }`
+    )
+
+    benchMeta.markStart()
+  }
+}
+
 process.on(`exit`, () => {
-  if (!benchMeta.flushed) {
+  if (benchMeta && !benchMeta.flushed && BENCHMARK_REPORTING_URL) {
     // This is probably already a non-zero exit as otherwise node should wait for the last promise to complete
     reportError(
       `gatsby-plugin-benchmark-reporting error`,
@@ -253,34 +305,36 @@ process.on(`exit`, () => {
   }
 })
 
-const benchMeta = new BenchMeta()
-
 async function onPreInit(api) {
   lastApi = api
-  // This should be set in the gatsby-config of the site when enabling this plugin
-  reportInfo(
-    `gatsby-plugin-benchmark-reporting: Will post benchmark data to: ${BENCHMARK_REPORTING_URL ||
-      `the CLI`}`
-  )
-
-  benchMeta.markStart()
+  init(`preInit`)
   benchMeta.markDataPoint(`preInit`)
 }
 
 async function onPreBootstrap(api) {
   lastApi = api
+  init(`preBootstrap`)
   benchMeta.markDataPoint(`preBootstrap`)
 }
 
 async function onPreBuild(api) {
   lastApi = api
+  init(`preBuild`)
   benchMeta.markDataPoint(`preBuild`)
 }
 
 async function onPostBuild(api) {
+  if (!benchMeta) {
+    // Ignore. Don't start measuring on this event.
+    return
+  }
+
   lastApi = api
+
   benchMeta.markDataPoint(`postBuild`)
-  return benchMeta.markEnd()
+  await benchMeta.markEnd()
+
+  benchMeta = undefined
 }
 
 module.exports = { onPreInit, onPreBootstrap, onPreBuild, onPostBuild }

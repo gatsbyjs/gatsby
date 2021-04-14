@@ -1,3 +1,8 @@
+jest.mock(`../browserslist`, () => {
+  return {
+    getBrowsersList: () => [],
+  }
+})
 jest.mock(`webpack`, () => {
   return {
     ...jest.requireActual(`webpack`),
@@ -50,6 +55,7 @@ beforeEach(() => {
 const getConfig = (args = {}) =>
   webpackConfig(
     {
+      directory: process.cwd(),
       extensions: [`.js`],
     },
     process.cwd(),
@@ -84,7 +90,7 @@ describe(`environment variables`, () => {
 
     expect(DefinePlugin).toHaveBeenCalledWith(
       expect.objectContaining({
-        "process.env": `{}`,
+        "process.env": `({})`,
       })
     )
   })

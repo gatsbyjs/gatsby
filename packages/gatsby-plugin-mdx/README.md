@@ -36,10 +36,11 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
       - [Imports](#imports)
       - [Shortcodes](#shortcodes)
       - [Gatsby remark plugins](#gatsby-remark-plugins)
-      - [MD plugins](#md-plugins)
-      - [HAST plugins](#hast-plugins)
+      - [Remark plugins](#remark-plugins)
+      - [Rehype plugins](#rehype-plugins)
       - [Media types](#media-types)
         - [Explanation](#explanation)
+      - [shouldBlockNodeFromTransformation](#shouldblocknodefromtransformation)
     - [Components](#components)
       - [MDXProvider](#mdxprovider)
         - [Related](#related)
@@ -51,7 +52,7 @@ MDX seeks to make writing with Markdown and JSX simpler while being more express
 Install with npm:
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
 Install with yarn:
@@ -84,12 +85,12 @@ By default, this configuration will allow you to automatically create pages
 with `.mdx` files in `src/pages` and will process any Gatsby nodes
 with Markdown media types into MDX content.
 
-Note that `gatsby-plugin-mdx` requires gatsby-source-filesystem to be present
+Note that `gatsby-plugin-mdx` requires `gatsby-source-filesystem` to be present
 and configured to process local markdown files in order to
 generate the resulting Gatsby nodes.
 
 To automatically create pages with `.mdx` from other sources, you also need
-to configure gatsby-plugin-page-creator.
+to configure `gatsby-plugin-page-creator`.
 
 ```js
 module.exports = {
@@ -334,6 +335,7 @@ images can be optimized by Gatsby and you should continue using it.
 // gatsby-config.js
 module.exports = {
   plugins: [
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -357,7 +359,9 @@ Using a string reference is also supported for `gatsbyRemarkPlugins`.
 gatsbyRemarkPlugins: [`gatsby-remark-images`]
 ```
 
-#### MD plugins
+> Note that in the case of `gatsby-remark-images` the plugin needs to be included as both a sub-plugin of gatsby-plugin-mdx and a string entry in the plugins array.
+
+#### Remark plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -372,14 +376,19 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        remarkPlugins: [require("remark-abbr")],
+        remarkPlugins: [
+          require("remark-abbr"),
+          // To pass options, use a 2-element array with the
+          // configuration in an object in the second element
+          [require("remark-external-links"), { target: false }],
+        ],
       },
     },
   ],
 }
 ```
 
-#### HAST plugins
+#### Rehype plugins
 
 This is a configuration option that is [mirrored from the core MDX
 processing pipeline](https://mdxjs.com/plugins). It enables the use of
@@ -394,7 +403,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        rehypePlugins: [require("rehype-slug")],
+        rehypePlugins: [
+          require("rehype-slug"),
+          // To pass options, use a 2-element array with the
+          // configuration in an object in the second element
+          [require("rehype-autolink-headings"), { behavior: "wrap" }],
+        ],
       },
     },
   ],
@@ -471,7 +485,9 @@ all of the MDX content.
 import { MDXProvider } from "@mdx-js/react"
 
 const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
-const MyParagraph = props => <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
+const MyParagraph = props => (
+  <p style={{ fontSize: "18px", lineHeight: 1.6 }} {...props} />
+)
 
 const components = {
   h1: MyH1,
@@ -484,6 +500,8 @@ export const wrapRootElement = ({ element }) => (
 ```
 
 The following components can be customized with the MDXProvider:
+
+<!-- prettier-ignore-start -->
 
 | Tag             | Name                                                                 | Syntax                                              |
 | --------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
@@ -511,8 +529,9 @@ The following components can be customized with the MDXProvider:
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
+<!-- prettier-ignore-end -->
 
-It's important to define the `components` you pass in in a stable way
+It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate
 to a hash. That's why we defined `components` outside of any render
 functions in these examples.
@@ -556,6 +575,22 @@ export const pageQuery = graphql`
     }
   }
 `
+```
+
+## Troubleshooting
+
+### Excerpts for non-latin languages
+
+By default, `excerpt` uses `underscore.string/prune` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
+
+If that is the case, you can set `truncate` option on `excerpt` field, like:
+
+```graphql
+{
+  markdownRemark {
+    excerpt(truncate: true)
+  }
+}
 ```
 
 ## License

@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`npm package resource e2e npm package resource test: NPMPackage create 1`] = `
+Object {
+  "_message": "Installed NPM package is-sorted@1.0.0",
+  "description": "A small module to check if an Array is sorted",
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.0",
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage create plan 1`] = `
+Object {
+  "currentState": undefined,
+  "describe": "Install is-sorted@1.0.0",
+  "newState": "is-sorted@1.0.0",
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage destroy 1`] = `
+Object {
+  "_message": "Installed NPM package is-sorted@1.0.2",
+  "description": "A small module to check if an Array is sorted",
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.2",
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage update 1`] = `
+Object {
+  "_message": "Installed NPM package is-sorted@1.0.2",
+  "description": "A small module to check if an Array is sorted",
+  "id": "is-sorted",
+  "name": "is-sorted",
+  "version": "1.0.2",
+}
+`;
+
+exports[`npm package resource e2e npm package resource test: NPMPackage update plan 1`] = `
+Object {
+  "currentState": "is-sorted@1.0.0",
+  "describe": "Install is-sorted@1.0.2",
+  "newState": "is-sorted@1.0.2",
+}
+`;
+
+exports[`npm package resource installs 2 resources, one prod & one dev 1`] = `
+Object {
+  "_message": "Installed NPM package div@2.0.0",
+  "description": "&lt;Div row&gt; Use flexbox with ease in React! &lt;/Div&gt;",
+  "id": "div",
+  "name": "div",
+  "version": "2.0.0",
+}
+`;
+
+exports[`npm package resource installs 2 resources, one prod & one dev 2`] = `
+Object {
+  "_message": "Installed NPM package is-odd@3.0.1",
+  "description": "Returns true if the given number is odd, and is an integer that does not exceed the JavaScript MAXIMUM_SAFE_INTEGER.",
+  "id": "is-odd",
+  "name": "is-odd",
+  "version": "3.0.1",
+}
+`;
+
+exports[`package manager client commands generates the correct commands for npm 1`] = `
+Array [
+  "install",
+  "gatsby",
+]
+`;
+
+exports[`package manager client commands generates the correct commands for npm 2`] = `
+Array [
+  "install",
+  "--save-dev",
+  "eslint",
+]
+`;
+
+exports[`package manager client commands generates the correct commands for yarn 1`] = `
+Array [
+  "add",
+  "-W",
+  "gatsby",
+]
+`;
+
+exports[`package manager client commands generates the correct commands for yarn 2`] = `
+Array [
+  "add",
+  "-W",
+  "--dev",
+  "eslint",
+]
+`;

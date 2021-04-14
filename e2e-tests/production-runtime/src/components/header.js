@@ -1,6 +1,7 @@
-import React from 'react'
-import { Link } from 'gatsby'
-import PropTypes from 'prop-types'
+import * as React from "react"
+import { Link } from "gatsby"
+import PropTypes from "prop-types"
+import { StaticImage } from "gatsby-plugin-image"
 
 const Header = ({ siteTitle }) => (
   <div
@@ -16,6 +17,11 @@ const Header = ({ siteTitle }) => (
         padding: `1.45rem 1.0875rem`,
       }}
     >
+      <StaticImage
+        src="../images/gatsby-icon.png"
+        alt="Gatsby icon"
+        layout="fixed"
+      />
       <h1 style={{ margin: 0 }}>
         <Link
           data-testid="index-link"

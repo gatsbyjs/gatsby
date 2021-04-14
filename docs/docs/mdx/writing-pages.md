@@ -2,7 +2,7 @@
 title: Writing Pages in MDX
 ---
 
-After [installing](/docs/mdx/getting-started) `gatsby-plugin-mdx`, MDX files
+After [installing](/docs/how-to/routing/mdx/#part-1-getting-started-with-mdx) `gatsby-plugin-mdx`, MDX files
 located in `src/pages` will turn into pages.
 
 Pages are rendered at a URL that is constructed from the filesystem
@@ -14,7 +14,7 @@ result in a page being rendered at `mysite.com/awesome`.
 
 ## Using frontmatter in MDX
 
-By default, `gatsby-plugin-mdx` supports [frontmatter](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files)
+By default, `gatsby-plugin-mdx` supports [frontmatter](/docs/how-to/routing/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files)
 so you can define things like titles and paths to use in your GraphQL
 queries. You can declare frontmatter at the beginning of your MDX document:
 
@@ -28,7 +28,7 @@ date: 2019-01-29
 # Hello, world!
 ```
 
-Which can then be [queried with GraphQL](/docs/graphql-concepts/):
+Which can then be [queried with GraphQL](/docs/conceptual/graphql-concepts/):
 
 ```graphql
 query {
@@ -48,7 +48,7 @@ query {
 
 > **Note:** To query `MDX` content, it must be included in the node system using a
 > source like the `gatsby-source-filesystem` plugin first. Instructions for sourcing
-> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/packages/gatsby-source-filesystem/).
+> content from somewhere like your `/src/pages` directory can be found on the [plugin's README](/plugins/gatsby-source-filesystem/).
 
 Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
@@ -98,21 +98,23 @@ sources
 ### Where do I start?
 
 The documentation offers guides for all different skill levels, you can
-find more info at the Gatsby's [Quick Start page](https://www.gatsbyjs.org/docs/quick-start)
+find more info at the Gatsby's [Quick Start page](/docs/quick-start)
 
 <!-- This default export overrides the default layout ensuring -->
 <!--  that the FAQ component isn't wrapped by other elements -->
-export default ({ children }) => (
-  <>
-    {children}
-  </>
-)
+export default function Layout({ children }) {
+  return (
+    <>
+      {children}
+    </>
+  );
+}
 ```
 
 > **Note**: the default export concept used in this code block is explained in more detail
 > in the docs below on [defining layouts](#defining-a-layout)
 
-You can read more about using React components from other libraries in the [Importing and Using components in MDX guide](/docs/mdx/importing-and-using-components/).
+You can read more about using React components from other libraries in the [Importing and Using components in MDX guide](/docs/how-to/routing/mdx/importing-and-using-components/).
 
 ## Combining frontmatter and imports
 
@@ -184,7 +186,7 @@ query MdxExports {
 
 ### Defining a layout
 
-If you have [provided a default layout](/packages/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
+If you have [provided a default layout](/plugins/gatsby-plugin-mdx/?=mdx#default-layouts) in your `gatsby-config.js`
 through the `gatsby-plugin-mdx` plugin options, the exported component you define
 from this file will replace the default.
 

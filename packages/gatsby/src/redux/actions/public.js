@@ -1,25 +1,30 @@
 // @flow
-const Joi = require(`@hapi/joi`)
 const chalk = require(`chalk`)
 const _ = require(`lodash`)
 const { stripIndent } = require(`common-tags`)
 const report = require(`gatsby-cli/lib/reporter`)
 const { platform } = require(`os`)
 const path = require(`path`)
-const fs = require(`fs`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
 const { slash } = require(`gatsby-core-utils`)
-const { hasNodeChanged, getNode } = require(`../../db/nodes`)
+const { hasNodeChanged, getNode } = require(`../../redux/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
-const fileExistsSync = require(`fs-exists-cached`).sync
-const joiSchemas = require(`../../joi-schemas/joi`)
+const { validatePageComponent } = require(`../../utils/validate-page-component`)
+import { nodeSchema } from "../../joi-schemas/joi"
 const { generateComponentChunkName } = require(`../../utils/js-chunk-names`)
-const { getCommonDir } = require(`../../utils/path`)
+const {
+  getCommonDir,
+  truncatePath,
+  tooLongSegmentsInPath,
+} = require(`../../utils/path`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+
+const isNotTestEnv = process.env.NODE_ENV !== `test`
+const isTestEnv = process.env.NODE_ENV === `test`
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -67,6 +72,15 @@ const findChildren = initialChildren => {
   return children
 }
 
+const displayedWarnings = new Set()
+const warnOnce = (message, key) => {
+  const messageId = key ?? message
+  if (!displayedWarnings.has(messageId)) {
+    displayedWarnings.add(messageId)
+    report.warn(message)
+  }
+}
+
 import type { Plugin } from "./types"
 
 type Job = {
@@ -102,6 +116,15 @@ type ActionOptions = {
   followsSpan: ?Object,
 }
 
+type PageData = {
+  id: string,
+  resultHash: string,
+}
+
+type PageDataRemove = {
+  id: string,
+}
+
 /**
  * Delete a page
  * @param {Object} page a page object
@@ -117,13 +140,18 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
-const pageComponentCache = {}
-const fileOkCache = {}
-
+const pageComponentCache = new Map()
+const reservedFields = [
+  `path`,
+  `matchPath`,
+  `component`,
+  `componentChunkName`,
+  `pluginCreator___NODE`,
+  `pluginCreatorId`,
+]
 /**
  * Create a page. See [the guide on creating and modifying pages](/docs/creating-and-modifying-pages/)
  * for detailed documentation about creating pages.
@@ -158,7 +186,7 @@ actions.createPage = (
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11323`,
         context: {
@@ -174,22 +202,14 @@ actions.createPage = (
 
   // Validate that the context object doesn't overlap with any core page fields
   // as this will cause trouble when running graphql queries.
-  if (_.isObject(page.context)) {
-    const reservedFields = [
-      `path`,
-      `matchPath`,
-      `component`,
-      `componentChunkName`,
-      `pluginCreator___NODE`,
-      `pluginCreatorId`,
-    ]
-    const invalidFields = Object.keys(_.pick(page.context, reservedFields))
+  if (page.context && typeof page.context === `object`) {
+    const invalidFields = reservedFields.filter(field => field in page.context)
 
-    const singularMessage = `${name} used a reserved field name in the context object when creating a page:`
-    const pluralMessage = `${name} used reserved field names in the context object when creating a page:`
     if (invalidFields.length > 0) {
       const error = `${
-        invalidFields.length === 1 ? singularMessage : pluralMessage
+        invalidFields.length === 1
+          ? `${name} used a reserved field name in the context object when creating a page:`
+          : `${name} used reserved field names in the context object when creating a page:`
       }
 
 ${invalidFields.map(f => `  * "${f}"`).join(`\n`)}
@@ -213,7 +233,7 @@ The following fields are used by the page object and should be avoided.
 ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
             `
-      if (process.env.NODE_ENV === `test`) {
+      if (isTestEnv) {
         return error
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
@@ -236,7 +256,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   // Check if a component is set.
   if (!page.component) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11322`,
         context: {
@@ -255,35 +275,21 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     page.component = pageComponentPath
   }
 
-  // Don't check if the component exists during tests as we use a lot of fake
-  // component paths.
-  if (process.env.NODE_ENV !== `test`) {
-    if (!fileExistsSync(page.component)) {
-      report.panic({
-        id: `11325`,
-        context: {
-          pluginName: name,
-          pageObject: page,
-          component: page.component,
-        },
-      })
+  const { error, message, panicOnBuild } = validatePageComponent(
+    page,
+    store.getState().program.directory,
+    name
+  )
+
+  if (error) {
+    if (isNotTestEnv) {
+      if (panicOnBuild) {
+        report.panicOnBuild(error)
+      } else {
+        report.panic(error)
+      }
     }
-  }
-  if (!path.isAbsolute(page.component)) {
-    // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
-      report.panic({
-        id: `11326`,
-        context: {
-          pluginName: name,
-          pageObject: page,
-          component: page.component,
-        },
-      })
-    } else {
-      const message = `${name} must set the absolute path to the page component when create creating a page`
-      return message
-    }
+    return message
   }
 
   // check if we've processed this component path
@@ -291,9 +297,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
-  if (process.env.NODE_ENV !== `test`) {
-    if (pageComponentCache[page.component]) {
-      page.component = pageComponentCache[page.component]
+  if (isNotTestEnv) {
+    if (pageComponentCache.has(page.component)) {
+      page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
 
@@ -353,7 +359,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
-      pageComponentCache[originalPageComponent] = page.component
+      pageComponentCache.set(originalPageComponent, page.component)
     }
   }
 
@@ -361,7 +367,25 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (page.path === `/`) {
     internalComponentName = `ComponentIndex`
   } else {
-    internalComponentName = `Component${pascalCase(page.path)}`
+    internalComponentName = `Component${page.path}`
+  }
+
+  const invalidPathSegments = tooLongSegmentsInPath(page.path)
+
+  if (invalidPathSegments.length > 0) {
+    const truncatedPath = truncatePath(page.path)
+    report.warn(
+      report.stripIndent(`
+        The path to the following page is longer than the supported limit on most
+        operating systems and will cause an ENAMETOOLONG error. The path has been
+        truncated to prevent this.
+
+        Original Path: ${page.path}
+
+        Truncated Path: ${truncatedPath}
+      `)
+    )
+    page.path = truncatedPath
   }
 
   const internalPage: Page = {
@@ -371,8 +395,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     component: page.component,
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
-      actionOptions &&
-      actionOptions.traceId === `initial-createPagesStatefully`,
+      actionOptions?.traceId === `initial-createPagesStatefully`,
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
@@ -381,63 +404,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // If the path doesn't have an initial forward slash, add it.
   if (internalPage.path[0] !== `/`) {
     internalPage.path = `/${internalPage.path}`
-  }
-
-  // Validate that the page component imports React and exports something
-  // (hopefully a component).
-  //
-  // Only run validation once during builds.
-  if (
-    !internalPage.component.includes(`/.cache/`) &&
-    process.env.NODE_ENV === `production` &&
-    !fileOkCache[internalPage.component]
-  ) {
-    const fileName = internalPage.component
-    const fileContent = fs.readFileSync(fileName, `utf-8`)
-    let notEmpty = true
-    let includesDefaultExport = true
-
-    if (fileContent === ``) {
-      notEmpty = false
-    }
-
-    if (
-      !fileContent.includes(`export default`) &&
-      !fileContent.includes(`module.exports`) &&
-      !fileContent.includes(`exports.default`) &&
-      !fileContent.includes(`exports["default"]`) &&
-      !fileContent.match(/export \{.* as default.*\}/s) &&
-      // this check only applies to js and ts, not mdx
-      /\.(jsx?|tsx?)/.test(path.extname(fileName))
-    ) {
-      includesDefaultExport = false
-    }
-    if (!notEmpty || !includesDefaultExport) {
-      const relativePath = path.relative(
-        store.getState().program.directory,
-        fileName
-      )
-
-      if (!notEmpty) {
-        report.panicOnBuild({
-          id: `11327`,
-          context: {
-            relativePath,
-          },
-        })
-      }
-
-      if (!includesDefaultExport) {
-        report.panicOnBuild({
-          id: `11328`,
-          context: {
-            fileName,
-          },
-        })
-      }
-    }
-
-    fileOkCache[internalPage.component] = true
   }
 
   const oldPage: Page = store.getState().pages.get(internalPage.path)
@@ -467,51 +433,57 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 }
 
+const deleteNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * Delete a node
- * @param {object} $0
- * @param {object} $0.node the node object
+ * @param {object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * deleteNode({node: node})
+ * deleteNode(node)
  */
-actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
+actions.deleteNode = (node: any, plugin?: Plugin) => {
   let id
 
-  // Check if using old method signature. Warn about incorrect usage but get
-  // node from nodeID anyway.
-  if (typeof options === `string`) {
+  // TODO(v4): Remove this deprecation warning and only allow deleteNode(node)
+  if (node && node.node) {
     let msg =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }).`
-    if (args && args.name) {
-      // `plugin` used to be the third argument
-      plugin = args
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node)`
+
+    if (plugin && plugin.name) {
       msg = msg + ` "deleteNode" was called by ${plugin.name}`
     }
-    report.warn(msg)
+    if (!deleteNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      deleteNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
 
-    id = options
+    id = node.node.id
   } else {
-    id = options && options.node && options.node.id
+    id = node && node.id
   }
 
   // Always get node from the store, as the node we get as an arg
   // might already have been deleted.
-  const node = getNode(id)
+  const internalNode = getNode(id)
   if (plugin) {
     const pluginName = plugin.name
 
-    if (node && typeOwners[node.internal.type] !== pluginName)
+    if (
+      internalNode &&
+      typeOwners[internalNode.internal.type] &&
+      typeOwners[internalNode.internal.type] !== pluginName
+    )
       throw new Error(stripIndent`
           The plugin "${pluginName}" deleted a node of a type owned by another plugin.
 
-          The node type "${node.internal.type}" is owned by "${
-        typeOwners[node.internal.type]
+          The node type "${internalNode.internal.type}" is owned by "${
+        typeOwners[internalNode.internal.type]
       }".
 
           The node object passed to "deleteNode":
 
-          ${JSON.stringify(node, null, 4)}
+          ${JSON.stringify(internalNode, null, 4)}
 
           The plugin deleting the node:
 
@@ -527,15 +499,13 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
     }
   }
 
-  const deleteAction = createDeleteAction(node)
+  const deleteAction = createDeleteAction(internalNode)
 
   // It's possible the file node was never created as sometimes tools will
   // write and then immediately delete temporary files to the file system.
   const deleteDescendantsActions =
-    node &&
-    findChildren(node.children)
-      .map(getNode)
-      .map(createDeleteAction)
+    internalNode &&
+    findChildren(internalNode.children).map(getNode).map(createDeleteAction)
 
   if (deleteDescendantsActions && deleteDescendantsActions.length) {
     return [...deleteDescendantsActions, deleteAction]
@@ -544,44 +514,17 @@ actions.deleteNode = (options: any, plugin: Plugin, args: any) => {
   }
 }
 
-// Marked private here because it was supressed in documentation pages.
-/**
- * Batch delete nodes
- * @private
- * @param {Array} nodes an array of node ids
- * @example
- * deleteNodes([`node1`, `node2`])
- */
-actions.deleteNodes = (nodes: any[], plugin: Plugin) => {
-  let msg =
-    `The "deleteNodes" action is now deprecated and will be removed in ` +
-    `Gatsby v3. Please use "deleteNode" instead.`
-  if (plugin && plugin.name) {
-    msg = msg + ` "deleteNodes" was called by ${plugin.name}`
+// We add a counter to node.internal for fast comparisons/intersections
+// of various node slices. The counter must increase even across builds.
+function getNextNodeCounter() {
+  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
+  if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
+    throw new Error(
+      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
+    )
   }
-  report.warn(msg)
-
-  // Also delete any nodes transformed from these.
-  const descendantNodes = _.flatten(
-    nodes.map(n => findChildren(getNode(n).children))
-  )
-
-  const nodeIds = [...nodes, ...descendantNodes]
-
-  const deleteNodesAction = {
-    type: `DELETE_NODES`,
-    plugin,
-    // Payload contains node IDs but inference-metadata and loki reducers require
-    // full node instances
-    payload: nodeIds,
-    fullNodes: nodeIds.map(getNode),
-  }
-  return deleteNodesAction
+  return lastNodeCounter + 1
 }
-
-// We add a counter to internal to make sure we maintain insertion order for
-// backends that don't do that out of the box
-let NODE_COUNTER = 0
 
 const typeOwners = {}
 
@@ -681,9 +624,6 @@ const createNode = (
     node.internal = {}
   }
 
-  NODE_COUNTER++
-  node.internal.counter = NODE_COUNTER
-
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
     node.children = []
@@ -713,7 +653,7 @@ const createNode = (
 
   trackCli(`CREATE_NODE`, trackParams, { debounce: true })
 
-  const result = Joi.validate(node, joiSchemas.nodeSchema)
+  const result = nodeSchema.validate(node)
   if (result.error) {
     if (!hasErroredBecauseOfNodeValidation.has(result.error.message)) {
       const errorObj = {
@@ -841,6 +781,8 @@ const createNode = (
         .map(createDeleteAction)
     }
 
+    node.internal.counter = getNextNodeCounter()
+
     updateNodeAction = {
       ...actionOptions,
       type: `CREATE_NODE`,
@@ -878,36 +820,46 @@ actions.createNode = (...args) => dispatch => {
   })
 }
 
+const touchNodeDeprecationWarningDisplayedMessages = new Set()
+
 /**
  * "Touch" a node. Tells Gatsby a node still exists and shouldn't
  * be garbage collected. Primarily useful for source plugins fetching
  * nodes from a remote system that can return only nodes that have
  * updated. The source plugin then touches all the nodes that haven't
  * updated but still exist so Gatsby knows to keep them.
- * @param {Object} $0
- * @param {string} $0.nodeId The id of a node
+ * @param {Object} node A node object. See the "createNode" action for more information about the node object details.
  * @example
- * touchNode({ nodeId: `a-node-id` })
+ * touchNode(node)
  */
-actions.touchNode = (options: any, plugin?: Plugin) => {
-  let nodeId = _.get(options, `nodeId`)
-
-  // Check if using old method signature. Warn about incorrect usage
-  if (typeof options === `string`) {
-    console.warn(
-      `Calling "touchNode" with a nodeId is deprecated. Please pass an object containing a nodeId instead: touchNode({ nodeId: 'a-node-id' })`
-    )
+actions.touchNode = (node: any, plugin?: Plugin) => {
+  // TODO(v4): Remove this deprecation warning and only allow touchNode(node)
+  if (node && node.nodeId) {
+    let msg =
+      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
+      `the node directly to the function: touchNode(node)`
 
     if (plugin && plugin.name) {
-      console.log(`"touchNode" was called by ${plugin.name}`)
+      msg = msg + ` "touchNode" was called by ${plugin.name}`
     }
 
-    nodeId = options
+    if (!touchNodeDeprecationWarningDisplayedMessages.has(msg)) {
+      report.warn(msg)
+      touchNodeDeprecationWarningDisplayedMessages.add(msg)
+    }
+
+    node = getNode(node.nodeId)
   }
 
-  const node = getNode(nodeId)
   if (node && !typeOwners[node.internal.type]) {
     typeOwners[node.internal.type] = node.internal.owner
+  }
+
+  const nodeId = node?.id
+
+  if (!nodeId) {
+    // if we don't have a node id, we don't want to dispatch this action
+    return []
   }
 
   return {
@@ -919,8 +871,6 @@ actions.touchNode = (options: any, plugin?: Plugin) => {
 
 type CreateNodeInput = {
   node: Object,
-  fieldName?: string,
-  fieldValue?: string,
   name?: string,
   value: any,
 }
@@ -933,10 +883,8 @@ type CreateNodeInput = {
  * directly. So to extend another node, use this.
  * @param {Object} $0
  * @param {Object} $0.node the target node object
- * @param {string} $0.fieldName [deprecated] the name for the field
- * @param {string} $0.fieldValue [deprecated] the value for the field
  * @param {string} $0.name the name for the field
- * @param {string} $0.value the value for the field
+ * @param {any} $0.value the value for the field
  * @example
  * createNodeField({
  *   node,
@@ -947,26 +895,10 @@ type CreateNodeInput = {
  * // The field value is now accessible at node.fields.happiness
  */
 actions.createNodeField = (
-  { node, name, value, fieldName, fieldValue }: CreateNodeInput,
+  { node, name, value }: CreateNodeInput,
   plugin: Plugin,
   actionOptions?: ActionOptions
 ) => {
-  if (fieldName) {
-    console.warn(
-      `Calling "createNodeField" with "fieldName" is deprecated. Use "name" instead`
-    )
-    if (!name) {
-      name = fieldName
-    }
-  }
-  if (fieldValue) {
-    console.warn(
-      `Calling "createNodeField" with "fieldValue" is deprecated. Use "value" instead`
-    )
-    if (!value) {
-      value = fieldValue
-    }
-  }
   // Ensure required fields are set.
   if (!node.internal.fieldOwners) {
     node.internal.fieldOwners = {}
@@ -1025,9 +957,9 @@ actions.createParentChildLink = (
   { parent, child }: { parent: any, child: any },
   plugin?: Plugin
 ) => {
-  // Update parent
-  parent.children.push(child.id)
-  parent.children = _.uniq(parent.children)
+  if (!parent.children.includes(child.id)) {
+    parent.children.push(child.id)
+  }
 
   return {
     type: `ADD_CHILD_NODE_TO_PARENT_NODE`,
@@ -1046,6 +978,18 @@ actions.createParentChildLink = (
  * @param {Object} config partial webpack config, to be merged into the current one
  */
 actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `SET_WEBPACK_CONFIG`,
     plugin,
@@ -1063,6 +1007,18 @@ actions.setWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config complete webpack config
  */
 actions.replaceWebpackConfig = (config: Object, plugin?: ?Plugin = null) => {
+  if (config.node?.fs === `empty`) {
+    report.warn(
+      `[deprecated${
+        plugin ? ` ` + plugin.name : ``
+      }] node.fs is deprecated. Please set "resolve.fallback.fs = false".`
+    )
+    delete config.node.fs
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false
+  }
+
   return {
     type: `REPLACE_WEBPACK_CONFIG`,
     plugin,
@@ -1090,7 +1046,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options)) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1098,7 +1054,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options.options)) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1117,7 +1073,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
  * @param {Object} config.options Options to pass to the Babel plugin.
  * @example
  * setBabelPlugin({
- *   name:  `babel-plugin-emotion`,
+ *   name:  `@emotion/babel-plugin`,
  *   options: {
  *     sourceMap: true,
  *   },
@@ -1132,7 +1088,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1168,7 +1124,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1183,18 +1139,28 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * DEPRECATED. Use createJobV2 instead.
+ *
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
+ * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * createJob({ id: `write file id: 123`, fileName: `something.jpeg` })
  */
 actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "createJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `CREATE_JOB`,
     plugin,
@@ -1203,9 +1169,9 @@ actions.createJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
- * Create a "job". This is a long-running process that are generally
- * started as side-effects to GraphQL queries.
- * [`gatsby-plugin-sharp`](/packages/gatsby-plugin-sharp/) uses this for
+ * Create a "job". This is a long-running process that is generally
+ * started as a side-effect to a GraphQL query.
+ * [`gatsby-plugin-sharp`](/plugins/gatsby-plugin-sharp/) uses this for
  * example.
  *
  * Gatsby doesn't finish its process until all jobs are ended.
@@ -1270,15 +1236,25 @@ actions.createJobV2 = (job: JobV2, plugin: Plugin) => (dispatch, getState) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * Set (update) a "job". Sometimes on really long running jobs you want
  * to update the job as it continues.
  *
  * @param {Object} job A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * setJob({ id: `write file id: 123`, progress: 50 })
  */
 actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "setJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `SET_JOB`,
     plugin,
@@ -1287,15 +1263,25 @@ actions.setJob = (job: Job, plugin?: ?Plugin = null) => {
 }
 
 /**
+ * DEPRECATED. Use createJobV2 instead.
+ *
  * End a "job".
  *
  * Gatsby doesn't finish its process until all jobs are ended.
  * @param {Object} job  A job object with at least an id set
  * @param {id} job.id The id of the job
+ * @deprecated Use "createJobV2" instead
  * @example
  * endJob({ id: `write file id: 123` })
  */
 actions.endJob = (job: Job, plugin?: ?Plugin = null) => {
+  let msg = `Action "endJob" is deprecated. Please use "createJobV2" instead`
+
+  if (plugin?.name) {
+    msg = msg + ` (called by ${plugin.name})`
+  }
+  warnOnce(msg)
+
   return {
     type: `END_JOB`,
     plugin,
@@ -1335,8 +1321,10 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * Create a redirect from one page to another. Server redirects don't work out
  * of the box. You must have a plugin setup to integrate the redirect data with
  * your hosting technology e.g. the [Netlify
- * plugin](/packages/gatsby-plugin-netlify/), or the [Amazon S3
- * plugin](/packages/gatsby-plugin-s3/).
+ * plugin](/plugins/gatsby-plugin-netlify/), or the [Amazon S3
+ * plugin](/plugins/gatsby-plugin-s3/). Alternatively, you can use
+ * [this plugin](/plugins/gatsby-plugin-meta-redirect/) to generate meta redirect
+ * html files for redirecting on any static file host.
  *
  * @param {Object} redirect Redirect data
  * @param {string} redirect.fromPath Any valid URL. Must start with a forward slash
@@ -1345,6 +1333,7 @@ const maybeAddPathPrefix = (path, pathPrefix) => {
  * @param {boolean} redirect.redirectInBrowser Redirects are generally for redirecting legacy URLs to their new configuration. If you can't update your UI for some reason, set `redirectInBrowser` to true and Gatsby will handle redirecting in the client as well.
  * @param {boolean} redirect.force (Plugin-specific) Will trigger the redirect even if the `fromPath` matches a piece of content. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
  * @param {number} redirect.statusCode (Plugin-specific) Manually set the HTTP status code. This allows you to create a rewrite (status code 200) or custom error page (status code 404). Note that this will override the `isPermanent` option which also sets the status code. This is not part of the Gatsby API, but implemented by (some) plugins that configure hosting provider redirects
+ * @param {boolean} redirect.ignoreCase (Plugin-specific) Ignore case when looking for redirects
  * @example
  * // Generally you create redirects while creating pages.
  * exports.createPages = ({ graphql, actions }) => {
@@ -1360,6 +1349,7 @@ actions.createRedirect = ({
   isPermanent = false,
   redirectInBrowser = false,
   toPath,
+  ignoreCase = true,
   ...rest
 }) => {
   let pathPrefix = ``
@@ -1372,6 +1362,7 @@ actions.createRedirect = ({
     payload: {
       fromPath: maybeAddPathPrefix(fromPath, pathPrefix),
       isPermanent,
+      ignoreCase,
       redirectInBrowser,
       toPath: maybeAddPathPrefix(toPath, pathPrefix),
       ...rest,
@@ -1407,6 +1398,25 @@ actions.createPageDependency = (
       nodeId,
       connection,
     },
+  }
+}
+
+/**
+ * Record that a page was visited on the server..
+ *
+ * @param {Object} $0
+ * @param {string} $0.id the chunkName for the page component.
+ */
+actions.createServerVisitedPage = (chunkName: string) => {
+  if (store.getState().visitedPages.get(`server`)?.has(chunkName)) {
+    // we already have given chunk tracked, let's not emit `CREATE_SERVER_VISITED_PAGE`
+    // action to not cause any additional work
+    return []
+  }
+
+  return {
+    type: `CREATE_SERVER_VISITED_PAGE`,
+    payload: { componentChunkName: chunkName },
   }
 }
 

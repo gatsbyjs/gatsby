@@ -23,7 +23,7 @@ class Index extends React.Component {
     return (
       <Layout>
         <p>
-          <a href="https://www.gatsbyjs.org/packages/gatsby-transformer-sharp/">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-transformer-sharp/">
             <code>gatsby-transformer-sharp</code>
           </a>
           {` `}
@@ -34,7 +34,7 @@ class Index extends React.Component {
           </a>
           . With it and
           {` `}
-          <a href="https://www.gatsbyjs.org/packages/gatsby-image/">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-image/">
             Gatsby Image
           </a>
           {` `}
@@ -44,7 +44,7 @@ class Index extends React.Component {
           <strong>
             Consult the
             {` `}
-            <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/">
+            <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp/">
               documentation
             </a>
             {` `}
@@ -64,7 +64,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#resize">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp/#resize">
             <code>
               <strong>resize</strong>
             </code>
@@ -123,11 +123,9 @@ class Index extends React.Component {
         <p>
           The default is
           <code>ATTENTION</code>, which the Sharp documentation describes as
-          {` "`}
-          focus on the region with the highest luminance frequency, colour
-          saturation and presence of skin tones
-          {`"`} – which is why we actually see Mr. Gatsby toasting to us in the
-          first thumbnail:
+          "focus on the region with the highest luminance frequency, colour
+          saturation and presence of skin tones" – which is why we actually see
+          F. Scott Fitzgerald centered in the first thumbnail:
         </p>
 
         <ul style={{ ...styles.ul, ...styles.row }}>
@@ -178,7 +176,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fluid">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp/#fluid">
             <code>
               <strong>fluid</strong>
             </code>
@@ -221,7 +219,7 @@ class Index extends React.Component {
           {` `}
           (and also available as a Gatsby plugin for Markdown content as
           {` `}
-          <a href="https://www.gatsbyjs.org/packages/gatsby-remark-images/">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-remark-images/">
             gatsby-remark-images
           </a>
           ).
@@ -304,7 +302,7 @@ class Index extends React.Component {
             paddingTop: rhythm(2),
           }}
         >
-          <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-sharp/#fixed">
+          <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-sharp/#fixed">
             <code>fixed</code>
           </a>
         </h2>
@@ -469,28 +467,28 @@ export const pageQuery = graphql`
         }
       }
     }
-    cropDefault: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropDefault: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180) {
           src
         }
       }
     }
-    cropBottomLeft: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropBottomLeft: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: SOUTHWEST) {
           src
         }
       }
     }
-    cropEntropy: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropEntropy: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: ENTROPY) {
           src
         }
       }
     }
-    cropCenter: file(relativePath: { regex: "/gatsby.jpg/" }) {
+    cropCenter: file(relativePath: { regex: "/f-scott.jpg/" }) {
       childImageSharp {
         resize(width: 180, height: 180, cropFocus: CENTER) {
           src

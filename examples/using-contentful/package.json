@@ -5,21 +5,19 @@
   "version": "1.0.0",
   "author": "Marcus Ericsson <mericsson@gmail.com> (mericsson.com)",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-core-utils": "^1.0.28",
-    "gatsby-image": "^2.0.5",
-    "gatsby-plugin-google-analytics": "^2.0.5",
-    "gatsby-plugin-offline": "^2.0.5",
-    "gatsby-plugin-typography": "^2.2.0",
-    "gatsby-source-contentful": "^2.0.1",
-    "gatsby-transformer-remark": "^2.1.1",
-    "lodash": "^4.17.14",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
-    "react-typography": "^0.16.3",
-    "slash": "^2.0.0",
-    "typography": "^0.16.7",
-    "typography-breakpoint-constants": "^0.15.0"
+    "gatsby": "next",
+    "gatsby-core-utils": "next",
+    "gatsby-plugin-image": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-plugin-typography": "next",
+    "gatsby-source-contentful": "next",
+    "gatsby-transformer-remark": "next",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-typography": "^0.16.19",
+    "typography": "^0.16.19",
+    "typography-breakpoint-constants": "^0.16.19"
   },
   "keywords": [
     "gatsby"
@@ -27,7 +25,7 @@
   "license": "MIT",
   "main": "n/a",
   "resolutions": {
-    "contentful": "6.1.0"
+    "contentful": "6.1.3"
   },
   "scripts": {
     "develop": "gatsby develop",

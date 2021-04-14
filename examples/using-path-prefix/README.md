@@ -2,7 +2,7 @@
 
 To test this example site locally run the following commands from this directory
 
-```bash
+```shell
 gatsby build --prefix-paths
 cd public
 mkdir prefix

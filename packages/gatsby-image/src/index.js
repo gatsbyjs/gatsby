@@ -20,15 +20,17 @@ const logDeprecationNotice = (prop, replacement) => {
 
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
-  let convertedProps = { ...props }
+  const convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
   if (resolutions) {
     convertedProps.fixed = resolutions
+    logDeprecationNotice(`resolutions`, `the gatsby-image v2 prop "fixed"`)
     delete convertedProps.resolutions
   }
   if (sizes) {
     convertedProps.fluid = sizes
+    logDeprecationNotice(`sizes`, `the gatsby-image v2 prop "fluid"`)
     delete convertedProps.sizes
   }
 
@@ -71,18 +73,18 @@ const matchesMedia = ({ media }) =>
  * Find the source of an image to use as a key in the image cache.
  * Use `the first image in either `fixed` or `fluid`
  * @param {{fluid: {src: string, media?: string}[], fixed: {src: string, media?: string}[]}} args
- * @return {string}
+ * @return {string?} Returns image src or undefined it not given.
  */
-const getImageSrcKey = ({ fluid, fixed }) => {
-  const data = fluid ? getCurrentSrcData(fluid) : getCurrentSrcData(fixed)
+const getImageCacheKey = ({ fluid, fixed }) => {
+  const srcData = getCurrentSrcData(fluid || fixed || [])
 
-  return data.src
+  return srcData && srcData.src
 }
 
 /**
  * Returns the current src - Preferably with art-direction support.
- * @param currentData  {{media?: string}[]}   The fluid or fixed image array.
- * @return {{src: string, media?: string}}
+ * @param currentData  {{media?: string}[], maxWidth?: Number, maxHeight?: Number}   The fluid or fixed image array.
+ * @return {{src: string, media?: string, maxWidth?: Number, maxHeight?: Number}}
  */
 const getCurrentSrcData = currentData => {
   if (isBrowser && hasArtDirectionSupport(currentData)) {
@@ -90,6 +92,14 @@ const getCurrentSrcData = currentData => {
     const foundMedia = currentData.findIndex(matchesMedia)
     if (foundMedia !== -1) {
       return currentData[foundMedia]
+    }
+
+    // No media matches, select first element without a media condition
+    const noMedia = currentData.findIndex(
+      image => typeof image.media === `undefined`
+    )
+    if (noMedia !== -1) {
+      return currentData[noMedia]
     }
   }
   // Else return the first image.
@@ -101,16 +111,20 @@ const getCurrentSrcData = currentData => {
 const imageCache = Object.create({})
 const inImageCache = props => {
   const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  return imageCache[src] || false
+
+  const cacheKey = getImageCacheKey(convertedProps)
+
+  return imageCache[cacheKey] || false
 }
 
 const activateCacheForImage = props => {
   const convertedProps = convertProps(props)
-  // Find src
-  const src = getImageSrcKey(convertedProps)
-  imageCache[src] = true
+
+  const cacheKey = getImageCacheKey(convertedProps)
+
+  if (cacheKey) {
+    imageCache[cacheKey] = true
+  }
 }
 
 // Native lazy-loading support: https://addyosmani.com/blog/lazy-loading/
@@ -162,7 +176,7 @@ function generateImageSources(imageVariants) {
           sizes={sizes}
         />
       )}
-      <source media={media} srcSet={srcSet} sizes={sizes} />
+      {srcSet && <source media={media} srcSet={srcSet} sizes={sizes} />}
     </React.Fragment>
   ))
 }
@@ -254,14 +268,12 @@ const noscriptImg = props => {
 // Earlier versions of gatsby-image during the 2.x cycle did not wrap
 // the `Img` component in a `picture` element. This maintains compatibility
 // until a breaking change can be introduced in the next major release
-const Placeholder = ({
-  src,
-  imageVariants,
-  generateSources,
-  spreadProps,
-  ariaHidden,
-}) => {
-  const baseImage = <Img src={src} {...spreadProps} ariaHidden={ariaHidden} />
+const Placeholder = React.forwardRef((props, ref) => {
+  const { src, imageVariants, generateSources, spreadProps, ariaHidden } = props
+
+  const baseImage = (
+    <Img ref={ref} src={src} {...spreadProps} ariaHidden={ariaHidden} />
+  )
 
   return imageVariants.length > 1 ? (
     <picture>
@@ -271,7 +283,7 @@ const Placeholder = ({
   ) : (
     baseImage
   )
-}
+})
 
 const Img = React.forwardRef((props, ref) => {
   const {
@@ -346,14 +358,20 @@ class Image extends React.Component {
       imgLoaded: false,
       imgCached: false,
       fadeIn: !this.seenBefore && props.fadeIn,
+      isHydrated: false,
     }
 
     this.imageRef = React.createRef()
+    this.placeholderRef = props.placeholderRef || React.createRef()
     this.handleImageLoaded = this.handleImageLoaded.bind(this)
     this.handleRef = this.handleRef.bind(this)
   }
 
   componentDidMount() {
+    this.setState({
+      isHydrated: isBrowser,
+    })
+
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
@@ -387,14 +405,18 @@ class Image extends React.Component {
         // Once isVisible is true, imageRef becomes accessible, which imgCached needs access to.
         // imgLoaded and imgCached are in a 2nd setState call to be changed together,
         // avoiding initiating unnecessary animation frames from style changes.
-        this.setState({ isVisible: true }, () =>
+        this.setState({ isVisible: true }, () => {
           this.setState({
             imgLoaded: imageInCache,
             // `currentSrc` should be a string, but can be `undefined` in IE,
             // !! operator validates the value is not undefined/null/""
-            imgCached: !!this.imageRef.current.currentSrc,
+            // for lazyloaded components this might be null
+            // TODO fix imgCached behaviour as it's now false when it's lazyloaded
+            imgCached: !!(
+              this.imageRef.current && this.imageRef.current.currentSrc
+            ),
           })
-        )
+        })
       })
     }
   }
@@ -428,6 +450,12 @@ class Image extends React.Component {
       draggable,
     } = convertProps(this.props)
 
+    const imageVariants = fluid || fixed
+    // Abort early if missing image data (#25371)
+    if (!imageVariants) {
+      return null
+    }
+
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
@@ -459,16 +487,22 @@ class Image extends React.Component {
       itemProp,
     }
 
-    if (fluid) {
-      const imageVariants = fluid
-      const image = getCurrentSrcData(fluid)
+    // Initial client render state needs to match SSR until hydration finishes.
+    // Once hydration completes, render again to update to the correct image.
+    // `imageVariants` is always an Array type at this point due to `convertProps()`
+    const image = !this.state.isHydrated
+      ? imageVariants[0]
+      : getCurrentSrcData(imageVariants)
 
+    if (fluid) {
       return (
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
           style={{
             position: `relative`,
             overflow: `hidden`,
+            maxWidth: image.maxWidth ? `${image.maxWidth}px` : null,
+            maxHeight: image.maxHeight ? `${image.maxHeight}px` : null,
             ...style,
           }}
           ref={this.handleRef}
@@ -505,6 +539,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -516,6 +551,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -564,9 +600,6 @@ class Image extends React.Component {
     }
 
     if (fixed) {
-      const imageVariants = fixed
-      const image = getCurrentSrcData(fixed)
-
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,
@@ -606,6 +639,7 @@ class Image extends React.Component {
           {image.base64 && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.base64}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -617,6 +651,7 @@ class Image extends React.Component {
           {image.tracedSVG && (
             <Placeholder
               ariaHidden
+              ref={this.placeholderRef}
               src={image.tracedSVG}
               spreadProps={placeholderImageProps}
               imageVariants={imageVariants}
@@ -702,7 +737,26 @@ const fluidObject = PropTypes.shape({
   srcWebp: PropTypes.string,
   srcSetWebp: PropTypes.string,
   media: PropTypes.string,
+  maxWidth: PropTypes.number,
+  maxHeight: PropTypes.number,
 })
+
+function requireFixedOrFluid(originalPropTypes) {
+  return (props, propName, componentName) => {
+    if (!props.fixed && !props.fluid) {
+      throw new Error(
+        `The prop \`fluid\` or \`fixed\` is marked as required in \`${componentName}\`, but their values are both \`undefined\`.`
+      )
+    }
+
+    PropTypes.checkPropTypes(
+      { [propName]: originalPropTypes },
+      props,
+      `prop`,
+      componentName
+    )
+  }
+}
 
 // If you modify these propTypes, please don't forget to update following files as well:
 // https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-image/index.d.ts
@@ -711,8 +765,12 @@ const fluidObject = PropTypes.shape({
 Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
-  fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
-  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
+  fixed: requireFixedOrFluid(
+    PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)])
+  ),
+  fluid: requireFixedOrFluid(
+    PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)])
+  ),
   fadeIn: PropTypes.bool,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,

@@ -27,7 +27,7 @@ It's important that this array is accurate - if a page entered the array when it
 When all resources for a page have been successfully prefetched, we do _one_ of the following:
 
 - Add the page's path to a temporary array of prefetched paths, if the service worker has not yet installed
-- Send a message to the service worker to let it know to whitelist the page's path, if it is installed
+- Send a message to the service worker to let it know to allow the page's path, if it is installed
 
 Upon initial install, we do the following:
 
@@ -36,13 +36,13 @@ Upon initial install, we do the following:
 
 Note that in both of the above cases, all these files should have already been downloaded once by the browser, so with [proper HTTP caching setup](/docs/caching/) we don't have to download any of the files again. However, one exception to this is `<style>` elements with a `data-href` attribute (indicating that the embedded stylesheet is the same as the stylesheet at the location specified) - we currently fetch the specified file rather than caching the contents of the element.
 
-Another current problem is that we may start fetching the resources for a page before the service worker has finished installing, but finish fetching them all after it has installed - this could cause a page's path to be whitelisted even if some of its resources haven't been cached (since Gatsby assumes the service worker was installed at the start of fetching resources, if it was installed at the end).
+Another current problem is that we may start fetching the resources for a page before the service worker has finished installing, but finish fetching them all after it has installed - this could cause a page's path to be allowed even if some of its resources haven't been cached (since Gatsby assumes the service worker was installed at the start of fetching resources, if it was installed at the end).
 
 ## Gatsby Core
 
 ### Resource loader (`loader.js`)
 
-There are two functions which perform a similar but distinct role in this file: `enqueue` and `getResourcesForPathname`. The former of these, `enqueue`, is designed to speed up navigation by prefetching resources for a page, before we need to display the page, and hence it doesn't return anything. On the other hand, `getResourcesForPathname` is used when we need the resources right now, usually in order to display the page, and therefore it fetches with higher priority than `enqueue` as well as returning them. Another difference between the two is that `getResourcesForPathname` returns the resources for the 404 page if the specified page doesn't exist.
+There are two functions which perform a similar but distinct role in this file: `enqueue` and `loadPage`. The former of these, `enqueue`, is designed to speed up navigation by prefetching resources for a page, before we need to display the page, and hence it doesn't return anything. On the other hand, `loadPage` is used when we need the resources right now, usually in order to display the page, and therefore it fetches with higher priority than `enqueue` as well as returning them. Another difference between the two is that `loadPage` returns the resources for the 404 page if the specified page doesn't exist.
 
 In the future, we could refactor these into a single function which takes parameters for whether or not to return the 404 page if the specified page is missing, and for whether to fetch with high or low priority.
 
@@ -67,13 +67,13 @@ Here is how the `EnsureResources` component handles each of these scenarios:
 The following are some invalid reasons why we might not have resources, i.e. things which we should never have to worry about:
 
 1. 404s from external links, without a custom 404 page - the page will load from the server in the first place, so Gatsby won't even kick in at this point
-2. 404s, with a custom 404 page - `getResourcesForPathname` will automatically return the resources for the custom 404 page
+2. 404s, with a custom 404 page - `loadPage` will automatically return the resources for the custom 404 page
 3. Visiting a previously-visited page via an external link, when the site's resources have since updated - previously-visited pages are cached, so they'll work even if the site has updated since. Unvisited pages will always load from the server and get the latest resources.
 
 ### Service worker update handling
 
-The service worker updates automatically when the browser detects that the contents of the `sw.js` file have changed from the currently installed version. Upon an update, we clear all whitelisted paths to prevent old pages from loading after the update.
+The service worker updates automatically when the browser detects that the contents of the `sw.js` file have changed from the currently installed version. Upon an update, we clear all allowed paths to prevent old pages from loading after the update.
 
-Blank pages can theoretically occur if we serve the app shell when resources are unavailable - however, this _should_ never occur since we only serve the app shell with whitelisted paths (i.e. ones whose resources have been cached entirely). There may be some edge cases when this can occur, e.g. when the Webpack runtime from the old site attempts to load a chunk which is unavailable on the updated site - we are currently investigating ways to prevent this, and make using service workers with Gatsby even more robust.
+Blank pages can theoretically occur if we serve the app shell when resources are unavailable - however, this _should_ never occur since we only serve the app shell with allowed paths (i.e. ones whose resources have been cached entirely). There may be some edge cases when this can occur, e.g. when the webpack runtime from the old site attempts to load a chunk which is unavailable on the updated site - we are currently investigating ways to prevent this, and make using service workers with Gatsby even more robust.
 
-We should also never get incorrect 404 pages following a site update, since we never whitelist 404 pages to serve using the offline shell, meaning that a page which was previously a 404 should always load from the server. If it's no longer a 404, then it will be cached as usual.
+We should also never get incorrect 404 pages following a site update, since we never allow 404 pages to serve using the offline shell, meaning that a page which was previously a 404 should always load from the server. If it's no longer a 404, then it will be cached as usual.

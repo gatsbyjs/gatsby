@@ -3,7 +3,6 @@ const { build } = require(`..`)
 const withResolverContext = require(`../context`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 function makeNodes() {
   return [
@@ -63,7 +62,7 @@ async function queryResult(nodes, query) {
 
 describe(`filtering on linked nodes`, () => {
   it(`filters on linked nodes via id`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `child_2_link`,
@@ -95,7 +94,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`returns nested linked fields`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       [
         {
           id: `child_2`,
@@ -130,7 +129,7 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`returns all matching linked nodes`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `child_2_link`,
@@ -162,39 +161,39 @@ describe(`filtering on linked nodes`, () => {
   })
 
   it(`handles elemMatch operator`, async () => {
-    let result = await queryResult(
+    const result = await queryResult(
       makeNodes().concat([
         {
           id: `1`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 0 },
           children: [],
           linked___NODE: [`child_1`, `child_2`],
           foo: `bar`,
         },
         {
           id: `2`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 1 },
           children: [],
           linked___NODE: [`child_1`],
           foo: `baz`,
         },
         {
           id: `3`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 2 },
           children: [],
           linked___NODE: [`child_2`],
           foo: `foo`,
         },
         {
           id: `4`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 3 },
           children: [],
           array: [{ linked___NODE: [`child_1`, `child_2`] }],
           foo: `lorem`,
         },
         {
           id: `5`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 4 },
           children: [],
           array: [
             { linked___NODE: [`child_1`] },
@@ -204,21 +203,21 @@ describe(`filtering on linked nodes`, () => {
         },
         {
           id: `6`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 5 },
           children: [],
           array: [{ linked___NODE: [`child_1`] }],
           foo: `sit`,
         },
         {
           id: `7`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 6 },
           children: [],
           array: [{ linked___NODE: [`child_2`] }],
           foo: `dolor`,
         },
         {
           id: `8`,
-          internal: { type: `Test` },
+          internal: { type: `Test`, counter: 7 },
           children: [],
           foo: `ipsum`,
         },

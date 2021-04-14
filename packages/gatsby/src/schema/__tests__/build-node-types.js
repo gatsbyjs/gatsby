@@ -1,10 +1,8 @@
 const { graphql, GraphQLString } = require(`graphql`)
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 const { createSchemaComposer } = require(`../schema-composer`)
 const { buildSchema } = require(`../schema`)
 const { LocalNodeModel } = require(`../node-model`)
-const nodeStore = require(`../../db/nodes`)
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions`)
 
@@ -12,7 +10,7 @@ jest.mock(`../../utils/api-runner-node`)
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 
 jest.mock(`../../redux/actions/add-page-dependency`)
-const createPageDependency = require(`../../redux/actions/add-page-dependency`)
+import { createPageDependency } from "../../redux/actions/add-page-dependency"
 
 const { TypeConflictReporter } = require(`../infer/type-conflict-reporter`)
 const typeConflictReporter = new TypeConflictReporter()
@@ -83,7 +81,6 @@ describe(`build-node-types`, () => {
     const schemaComposer = createSchemaComposer()
     const schema = await buildSchema({
       schemaComposer,
-      nodeStore,
       types: [],
       typeConflictReporter,
       thirdPartySchemas: [],
@@ -91,13 +88,12 @@ describe(`build-node-types`, () => {
     })
     store.dispatch({ type: `SET_SCHEMA`, payload: schema })
 
-    let context = { path: `foo` }
-    let { data, errors } = await graphql(schema, query, undefined, {
+    const context = { path: `foo` }
+    const { data, errors } = await graphql(schema, query, undefined, {
       ...context,
       nodeModel: new LocalNodeModel({
         schemaComposer,
         schema,
-        nodeStore,
         createPageDependency,
       }),
     })
@@ -121,7 +117,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should result in a valid queryable schema`, async () => {
-    let { parent, child, relative } = await runQuery(
+    const { parent, child, relative } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
@@ -142,7 +138,7 @@ describe(`build-node-types`, () => {
   })
 
   it(`should link children automatically`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
@@ -158,11 +154,14 @@ describe(`build-node-types`, () => {
   })
 
   it(`should create typed children fields`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {
           childrenChild { # lol
+            id
+          }
+          childChild {
             id
           }
         }
@@ -171,10 +170,13 @@ describe(`build-node-types`, () => {
     )
     expect(parent.childrenChild).toBeDefined()
     expect(parent.childrenChild.map(c => c.id)).toEqual([`c1`, `c2`])
+
+    expect(parent.childChild).toBeDefined()
+    expect(parent.childChild).toEqual({ id: `c1` })
   })
 
   it(`should create typed child field for singular children`, async () => {
-    let { parent } = await runQuery(
+    const { parent } = await runQuery(
       `
       {
         parent(id: { eq: "p1" }) {

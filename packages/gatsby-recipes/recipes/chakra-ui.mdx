@@ -1,0 +1,34 @@
+# Setup Gatsby with Chakra UI
+
+[Chakra UI](https://chakra-ui.com/) is a simple, modular and accessible component library that gives you the building blocks you need to build your React applications.
+
+This recipes sets up and configures [@chakra-ui/gatsby-plugin](https://www.gatsbyjs.com/plugins/@chakra-ui/gatsby-plugin/) by installing it's dependencies and shadowing `theme.js` file to create a custom theme.
+
+---
+
+## Installs necessary NPM packages
+
+<NPMPackage name="framer-motion" />
+<NPMPackage name="@emotion/styled" />
+<NPMPackage name="@emotion/react" />
+<NPMPackage name="@chakra-ui/react" />
+<NPMPackage name="@chakra-ui/gatsby-plugin" />
+
+---
+
+## Installs `@chakra-ui/gatsby-plugin` in `gatsby-config.js`
+
+<GatsbyPlugin name="@chakra-ui/gatsby-plugin" />
+
+---
+
+## Creates @chakra-ui/gatsby-plugin `theme.js` file so you can customize your own global styles
+
+<GatsbyShadowFile theme="@chakra-ui/gatsby-plugin" path="src/theme.js" />
+
+---
+
+## Once you've installed this recipe, you're ready to get started!
+
+- [Learn more about plugin options](https://github.com/chakra-ui/chakra-ui/tree/develop/tooling/gatsby-plugin#plugin-options)
+- [Read more about Chakra UI on the official Chakra docs site](https://chakra-ui.com/docs/getting-started)

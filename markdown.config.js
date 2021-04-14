@@ -25,7 +25,7 @@ module.exports = {
           .map(name => {
             const starter = starters[name]
             return `
-            |[${name}](https://github.com/gatsbyjs/gatsby-starter-${name})|[gatsby-starter-${name}-demo.netlify.com](https://gatsby-starter-${name}-demo.netlify.com/)|${starter.description}|
+            |[${name}](https://github.com/gatsbyjs/gatsby-starter-${name})|[gatsby-starter-${name}-demo.netlify.app](https://gatsby-starter-${name}-demo.netlify.app/)|${starter.description}|
           `.trim()
           })
           .join(`\n`)}

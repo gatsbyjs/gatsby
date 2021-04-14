@@ -28,7 +28,7 @@ const gatsbyBin = path.join(
 const defaultStdio = `ignore`
 
 const collectEventsForDevelop = (events, env = {}) => {
-  const gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+  const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
     stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
     env: {
       ...process.env,
@@ -38,8 +38,9 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
-  const finishedPromise = new Promise(resolve => {
+  const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
+
     gatsbyProcess.on(`message`, msg => {
       if (!listening) {
         return
@@ -55,7 +56,8 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-          resolve()
+
+          setTimeout(resolve, 1000)
         }, 5000)
       }
     })
@@ -103,15 +105,12 @@ const commonAssertions = events => {
     const actionSchema = joi.alternatives().try(
       joi
         .object({
-          type: joi
-            .string()
-            .required()
-            .valid([`SET_STATUS`]),
+          type: joi.string().required().valid(`SET_STATUS`),
           // TODO: We should change this to always be an Object I think pieh
           payload: joi
             .string()
             .required()
-            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`]),
+            .valid(`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
@@ -122,12 +121,7 @@ const commonAssertions = events => {
           type: joi
             .string()
             .required()
-            .valid([
-              `ACTIVITY_START`,
-              `ACTIVITY_UPDATE`,
-              `ACTIVITY_END`,
-              `LOG`,
-            ]),
+            .valid(`ACTIVITY_START`, `ACTIVITY_UPDATE`, `ACTIVITY_END`, `LOG`),
           payload: joi.object(),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
@@ -136,10 +130,7 @@ const commonAssertions = events => {
     )
 
     const eventSchema = joi.object({
-      type: joi
-        .string()
-        .required()
-        .valid([`LOG_ACTION`]),
+      type: joi.string().required().valid(`LOG_ACTION`),
       action: actionSchema,
     })
     events.forEach(event => {
@@ -198,7 +189,9 @@ const commonAssertionsForSuccess = events => {
     expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
     expect(event).toHaveProperty(`action.payload`, `SUCCESS`)
   })
-  it(`it emits just 2 SET_STATUS`, () => {
+  // NOTE(@mxstbr): As part of splitting the develop process into two processes, we removed this guarantee
+  // as the FAILED status will be emitted twice. This does not impact/break Gatsby Cloud (we tested). Ref PR: #22759
+  it.skip(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
       event => event.action.type === `SET_STATUS`
     )
@@ -219,7 +212,9 @@ const commonAssertionsForFailure = events => {
     expect(event).toHaveProperty(`action.type`, `SET_STATUS`)
     expect(event).toHaveProperty(`action.payload`, `IN_PROGRESS`)
   })
-  it(`it emits just 2 SET_STATUS`, () => {
+  // NOTE(@mxstbr): As part of splitting the develop process into two processes, we removed this guarantee
+  // as the FAILED status will be emitted twice. This does not impact/break Gatsby Cloud (we tested). Ref PR: #22759
+  it.skip(`it emits just 2 SET_STATUS`, () => {
     const filteredEvents = events.filter(
       event => event.action.type === `SET_STATUS`
     )
@@ -301,16 +296,19 @@ describe(`develop`, () => {
     describe(`process.kill`, () => {
       let events = []
 
-      beforeAll(async () => {
+      beforeAll(done => {
         const { finishedPromise, gatsbyProcess } = collectEventsForDevelop(
           events
         )
 
         setTimeout(() => {
           gatsbyProcess.kill(`SIGTERM`)
-        }, 1000)
+          setTimeout(() => {
+            done()
+          }, 5000)
+        }, 5000)
 
-        await finishedPromise
+        finishedPromise.then(done)
       })
 
       commonAssertionsForFailure(events)
@@ -325,13 +323,13 @@ describe(`develop`, () => {
   // See https://github.com/gatsbyjs/gatsby/issues/18518
   describe.skip(`test preview workflows`, () => {
     let gatsbyProcess
-    const mitt = new EventEmitter()
+    const eventEmitter = new EventEmitter()
     const events = []
     const clearEvents = () => {
       events.splice(0, events.length)
     }
     beforeAll(async done => {
-      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -351,15 +349,16 @@ describe(`develop`, () => {
           msg.action.payload !== `IN_PROGRESS`
         ) {
           setTimeout(() => {
-            mitt.emit(`done`)
+            eventEmitter.emit(`done`)
             done()
           }, 5000)
         }
       })
     })
 
-    afterAll(() => {
+    afterAll(done => {
       gatsbyProcess.kill()
+      setTimeout(done, 1000)
     })
 
     describe(`code change`, () => {
@@ -397,7 +396,7 @@ describe(`develop`, () => {
             codeWithError
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -412,7 +411,7 @@ describe(`develop`, () => {
             `git checkout -- ${require.resolve(`../src/pages/index.js`)}`
           )
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -437,7 +436,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -459,7 +458,7 @@ describe(`develop`, () => {
             }),
           })
 
-          mitt.once(`done`, () => {
+          eventEmitter.once(`done`, () => {
             done()
           })
         })
@@ -476,7 +475,7 @@ describe(`build`, () => {
     let events = []
 
     beforeAll(async () => {
-      gatsbyProcess = spawn(gatsbyBin, [`build`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -511,7 +510,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -543,7 +542,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -575,7 +574,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -609,7 +608,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,

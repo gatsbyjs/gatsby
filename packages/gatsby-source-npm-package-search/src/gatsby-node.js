@@ -1,31 +1,86 @@
-const algoliasearch = require(`algoliasearch`)
 const got = require(`got`)
 const url = require(`url`)
+const { browse } = require(`./search`)
 
-const client = algoliasearch(`OFCNCOG2CU`, `6fbcaeafced8913bf0e4d39f0b541957`)
-var index = client.initIndex(`npm-search`)
-
-function browse({ index, ...params }) {
-  let hits = []
-  const browser = index.browseAll(params)
-
-  return new Promise((resolve, reject) => {
-    browser.on(`result`, content => (hits = hits.concat(content.hits)))
-    browser.on(`end`, () => resolve(hits))
-    browser.on(`error`, err => reject(err))
-  })
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type NPMPackage implements Node {
+      name: String!
+      slug: String!
+      title: String!
+      created: Date! @dateformat
+      modified: Date! @dateformat
+      deprecated: String
+      downloadsLast30Days: Int!
+      downloadsRatio: Float!
+      humanDownloadsLast30Days: String!
+      popular: Boolean!
+      version: String!
+      description: String
+      gitHead: String
+      homepage: String
+      license: String
+      keywords: [String]
+      computedKeywords: [String]
+      moduleTypes: [String]
+      lastCrawl: Date @dateformat
+      dependents: Int!
+      humanDependents: String
+      changelogFilename: String
+      jsDelivrHits: Int!
+      objectID: String
+      readme: NPMPackageReadme @link
+      repository: NPMPackageRepository
+      githubRepo: NPMPackageGithubRepo
+      owner: NPMPackageOwner
+      owners: [NPMPackageOwner]
+      lastPublisher: NPMPackageOwner
+      _searchInternal: NPMPackage_searchInternal
+    }
+    type NPMPackageReadme implements Node @dontInfer @mimeTypes(types: ["text/markdown"]) {
+      slug: String!
+    }
+    type NPMPackageRepository {
+      url: String
+      project: String
+      user: String
+      host: String
+      path: String
+      head: String
+      branch: String
+      type: String
+      directory: String
+    }
+    type NPMPackageGithubRepo {
+      user: String
+      project: String
+      path: String
+      head: String
+    }
+    type NPMPackageOwner {
+      name: String
+      avatar: String
+      link: String
+      email: String
+    }
+    type NPMPackage_searchInternal {
+      alternativeNames: [String]
+      downloadsMagnitude: Int
+      jsDelivrPopularity: Int
+      concatenatedName: String
+    }
+  `)
 }
 
 exports.sourceNodes = async (
-  { boundActionCreators, createNodeId, createContentDigest },
+  { actions, createNodeId, createContentDigest },
   { keywords }
 ) => {
-  const { createNode } = boundActionCreators
+  const { createNode } = actions
 
   const buildFilter = keywords.map(keyword => `keywords:${keyword}`)
 
   const hits = await browse({
-    index,
     filters: `(${buildFilter.join(` OR `)})`,
     hitsPerPage: 1000,
   })
@@ -71,7 +126,7 @@ exports.sourceNodes = async (
         parent: null,
         children: [],
         slug: `/packages/${hit.objectID}/`,
-        readme___NODE: readmeNode.id,
+        readme: readmeNode.id,
         title: `${hit.objectID}`,
         internal: {
           type: `NPMPackage`,

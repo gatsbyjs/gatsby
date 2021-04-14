@@ -53,7 +53,7 @@ export const query = graphql`
 
 ### Additional resources
 
-- [Tutorial on transforming Markdown to HTML](/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
+- [Tutorial on transforming Markdown to HTML](/docs/tutorial/part-six/#transformer-plugins) using `gatsby-transformer-remark`
 - Browse available transformer plugins in the [Gatsby plugin library](/plugins/?=transformer)
 
 ## Transforming images into grayscale using GraphQL
@@ -84,7 +84,7 @@ export const query = graphql`
  ],
 ```
 
-2.  Query your image using GraphQL and apply a grayscale transformation to the image inline. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
+2. Query your image using GraphQL and apply a grayscale transformation to the image inline. The `relativePath` should be relative to the path you configured in `gatsby-source-filesystem`.
 
 ```graphql
   query {
@@ -110,7 +110,7 @@ import Layout from "../components/layout"
 // highlight-next-line
 import Img from "gatsby-image"
 
-export default () => {
+export default function Home() {
   const data = useStaticQuery(graphql`
     query {
      file(relativePath: { eq: "corgi.jpg" }) {
@@ -143,6 +143,6 @@ export default () => {
 
 ### Additional resources
 
-- [API docs, including grayscale and duotone query tips](/docs/gatsby-image/#shared-query-parameters)
-- [Gatsby Image docs](/docs/gatsby-image/)
+- [API docs, including grayscale and duotone query tips](/docs/reference/built-in-components/gatsby-image/#shared-query-parameters)
+- [Gatsby Image docs](/docs/reference/built-in-components/gatsby-image/)
 - [Image processing examples](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing)

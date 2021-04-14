@@ -41,8 +41,13 @@ describe(`contentful extend node type`, () => {
   }
 
   describe(`resolveFixed`, () => {
-    it(`generates responsive resolution data for images`, async () => {
+    it(`generates responsive resolution data for images using width option`, async () => {
       const resp = await resolveFixed(image, { width: 400 })
+      expect(resp.srcSet.length).toBeGreaterThan(1)
+      expect(resp).toMatchSnapshot()
+    })
+    it(`generates responsive resolution data for images using height option`, async () => {
+      const resp = await resolveFixed(image, { height: 400 })
       expect(resp.srcSet.length).toBeGreaterThan(1)
       expect(resp).toMatchSnapshot()
     })
@@ -75,7 +80,7 @@ describe(`contentful extend node type`, () => {
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(600)
     })
-    it(`if width and height are set that's what is returned`, async () => {
+    it(`returns the correct width and height when both are supplied`, async () => {
       const resp = await resolveFixed(image, {
         width: 450,
         height: 399,
@@ -83,7 +88,7 @@ describe(`contentful extend node type`, () => {
       expect(resp.width).toBe(450)
       expect(resp.height).toBe(399)
     })
-    it(`Always outputs ints`, async () => {
+    it(`always outputs ints`, async () => {
       const resp = await resolveFixed(image, {
         width: 450.1,
         height: 399.1,
@@ -105,6 +110,7 @@ describe(`contentful extend node type`, () => {
       expect(resp).toMatchSnapshot()
     })
   })
+
   describe(`resolveFluid`, () => {
     it(`generates responsive size data for images using a default maxWidth`, async () => {
       const resp = await resolveFluid(image, {})
@@ -145,6 +151,7 @@ describe(`contentful extend node type`, () => {
       expect(resp).toMatchSnapshot()
     })
   })
+
   describe(`resolveResize`, () => {
     it(`generates resized images using a default width`, async () => {
       const resp = await resolveResize(image, {})

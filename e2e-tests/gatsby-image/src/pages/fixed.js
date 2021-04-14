@@ -1,9 +1,9 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import Image from 'gatsby-image'
-import PropTypes from 'prop-types'
+import * as React from "react"
+import { graphql } from "gatsby"
+import Image from "gatsby-image"
+import PropTypes from "prop-types"
 
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
 const FluidPage = ({ data }) => (
   <Layout>

@@ -5,17 +5,15 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-netlify": "^2.1.3",
-    "gatsby-plugin-typography": "^2.2.0",
-    "lodash": "^4.17.14",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
-    "react-transition-group": "^2.4.0",
-    "react-typography": "^0.16.13",
-    "slash": "^1.0.0",
-    "typography": "^0.16.6",
-    "typography-breakpoint-constants": "^0.15.10"
+    "gatsby": "next",
+    "gatsby-plugin-netlify": "next",
+    "gatsby-plugin-typography": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-transition-group": "^2.9.0",
+    "react-typography": "^0.16.19",
+    "typography": "^0.16.19",
+    "typography-breakpoint-constants": "^0.16.19"
   },
   "keywords": [
     "gatsby"

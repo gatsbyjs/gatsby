@@ -10,7 +10,7 @@ rendering and start writing React components that carry their styles with them.
 
 ## Install
 
-`npm install --save gatsby-plugin-glamor glamor`
+`npm install gatsby-plugin-glamor glamor`
 
 ## How to use
 
@@ -24,7 +24,7 @@ Glamor
 [provides many convenient ways to style your components](https://github.com/threepointone/glamor/blob/master/docs/howto.md).
 One particularly convenient (and suggested) way is to use its `css` prop. It
 works exactly the same as the
-[default `style` prop](https://facebook.github.io/react/docs/dom-elements.html#style)
+[default `style` prop](https://reactjs.org/docs/dom-elements.html#style)
 except it supports the entire CSS language. So things not supported by inline
 styles are supported with Glamor like pseudo-classes/-elements, `@media`
 queries, parent/child/contextual selectors, etc.

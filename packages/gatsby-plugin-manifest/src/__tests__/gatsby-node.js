@@ -1,9 +1,11 @@
 jest.mock(`fs`, () => {
   return {
+    ...jest.requireActual(`fs`),
     existsSync: jest.fn().mockImplementation(() => true),
     writeFileSync: jest.fn(),
     mkdirSync: jest.fn(),
     readFileSync: jest.fn().mockImplementation(() => `someIconImage`),
+    copyFileSync: jest.fn(),
     statSync: jest.fn(),
   }
 })
@@ -14,7 +16,7 @@ jest.mock(`fs`, () => {
  */
 
 jest.mock(`sharp`, () => {
-  let sharp = jest.fn(
+  const sharp = jest.fn(
     () =>
       new (class {
         resize() {
@@ -27,6 +29,7 @@ jest.mock(`sharp`, () => {
           return {
             width: 128,
             height: 128,
+            format: `png`,
           }
         }
       })()
@@ -43,7 +46,7 @@ jest.mock(`gatsby-core-utils`, () => {
   return {
     slash: originalCoreUtils.slash,
     cpuCoreCount: jest.fn(() => `1`),
-    createContentDigest: jest.fn(() => `contentDigest`),
+    createContentDigest: originalCoreUtils.createContentDigest,
   }
 })
 
@@ -51,14 +54,15 @@ const fs = require(`fs`)
 const path = require(`path`)
 const sharp = require(`sharp`)
 const reporter = {
-  activityTimer: jest.fn().mockImplementation(function() {
+  activityTimer: jest.fn().mockImplementation(function () {
     return {
       start: jest.fn(),
       end: jest.fn(),
     }
   }),
 }
-const { onPostBootstrap } = require(`../gatsby-node`)
+const { onPostBootstrap, pluginOptionsSchema } = require(`../gatsby-node`)
+const { testPluginOptionsSchema } = require(`gatsby-plugin-utils`)
 
 const apiArgs = {
   reporter,
@@ -86,11 +90,19 @@ const manifestOptions = {
   ],
 }
 
+// Some of these tests check the number of sharp calls to assert that the
+// correct number of images are created.
+//
+// As long as an `icon` is defined in the config, there's always an extra
+// call to sharp to check the source icon is square. Therefore the assertions
+// check for N + 1 sharp calls, where N is the expected number of icons
+// generated.
 describe(`Test plugin manifest options`, () => {
   beforeEach(() => {
     fs.writeFileSync.mockReset()
     fs.mkdirSync.mockReset()
     fs.existsSync.mockReset()
+    fs.copyFileSync.mockReset()
     sharp.mockClear()
   })
 
@@ -151,8 +163,15 @@ describe(`Test plugin manifest options`, () => {
       path.dirname(`other-icons/icon-48x48.png`)
     )
 
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath)
-    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath)
+    // No sharp calls because this is manual mode: user provides all icon sizes
+    // rather than the plugin generating them
+    expect(sharp).toHaveBeenCalledTimes(0)
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, firstIconPath, {
+      recursive: true,
+    })
+    expect(fs.mkdirSync).toHaveBeenNthCalledWith(2, secondIconPath, {
+      recursive: true,
+    })
   })
 
   it(`invokes sharp if icon argument specified`, async () => {
@@ -177,8 +196,45 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
+    // One call to sharp to check the source icon is square
+    // + another for the favicon (enabled by default)
+    // + another for the single icon in the `icons` config
+    // => 3 total calls
+    expect(sharp).toHaveBeenCalledTimes(3)
+    expect(sharp).toHaveBeenCalledWith(icon, { density: 32 }) // the default favicon
     expect(sharp).toHaveBeenCalledWith(icon, { density: size })
+  })
+
+  it(`skips favicon generation if "include_favicon" option is set to false`, async () => {
+    fs.statSync.mockReturnValueOnce({ isFile: () => true })
+
+    const icon = `pretend/this/exists.png`
+    const size = 48
+
+    const pluginSpecificOptions = {
+      icon: icon,
+      icons: [
+        {
+          src: `icons/icon-48x48.png`,
+          sizes: `${size}x${size}`,
+          type: `image/png`,
+        },
+      ],
+      include_favicon: false,
+    }
+
+    await onPostBootstrap(apiArgs, {
+      ...manifestOptions,
+      ...pluginSpecificOptions,
+    })
+
+    // Only two sharp calls here: one to check the source icon size,
+    // and another to generate the single icon in the config.
+    // By default, there would be a 3rd call for the favicon, but that's
+    // disabled by the `include_favicon` option.
     expect(sharp).toHaveBeenCalledTimes(2)
+    expect(sharp).toHaveBeenCalledWith(icon, { density: size })
+    expect(fs.copyFileSync).toHaveBeenCalledTimes(0)
   })
 
   it(`fails on non existing icon`, async () => {
@@ -236,7 +292,11 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    // Two icons in the config, plus a favicon, plus one call to check the
+    // source icon size => 4 total calls to sharp.
+    expect(sharp).toHaveBeenCalledTimes(4)
+
+    // Filenames in the manifest should be suffixed with the content digest
     expect(fs.writeFileSync).toMatchSnapshot()
   })
 
@@ -253,7 +313,9 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    // Two icons in the config, plus a favicon, plus one call to check the
+    // source icon size => 4 total calls to sharp.
+    expect(sharp).toHaveBeenCalledTimes(4)
     expect(fs.writeFileSync).toHaveBeenCalledWith(
       expect.anything(),
       JSON.stringify(manifestOptions)
@@ -274,7 +336,9 @@ describe(`Test plugin manifest options`, () => {
       ...pluginSpecificOptions,
     })
 
-    expect(sharp).toHaveBeenCalledTimes(2)
+    // Two icons in the config, plus a favicon, plus one call to check the
+    // source icon size => 4 total calls to sharp.
+    expect(sharp).toHaveBeenCalledTimes(4)
     const content = JSON.parse(fs.writeFileSync.mock.calls[0][1])
     expect(content.icons[0].purpose).toEqual(`all`)
     expect(content.icons[1].purpose).toEqual(`maskable`)
@@ -338,6 +402,7 @@ describe(`Test plugin manifest options`, () => {
       JSON.stringify(expectedResults[2])
     )
   })
+
   it(`generates all language versions with pathPrefix`, async () => {
     fs.statSync.mockReturnValueOnce({ isFile: () => true })
     const pluginSpecificOptions = {
@@ -429,5 +494,50 @@ describe(`Test plugin manifest options`, () => {
       expect.anything(),
       JSON.stringify(expectedResults[2])
     )
+  })
+
+  it(`writes SVG to public if src icon is SVG`, async () => {
+    sharp.mockReturnValueOnce({
+      metadata: () => {
+        return { format: `svg` }
+      },
+    })
+    const icon = `this/is/an/icon.svg`
+    const specificOptions = {
+      ...manifestOptions,
+      icon: icon,
+    }
+
+    await onPostBootstrap({ ...apiArgs }, specificOptions)
+
+    expect(fs.copyFileSync).toHaveBeenCalledWith(
+      expect.stringContaining(`icon.svg`),
+      expect.stringContaining(`favicon.svg`)
+    )
+
+    expect(fs.copyFileSync).toHaveBeenCalledTimes(1)
+  })
+
+  it(`does not write SVG to public if src icon is PNG`, async () => {
+    const specificOptions = {
+      ...manifestOptions,
+      icon: `this/is/an/icon.png`,
+    }
+
+    await onPostBootstrap({ ...apiArgs }, specificOptions)
+
+    expect(fs.copyFileSync).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe(`pluginOptionsSchema`, () => {
+  it(`validates options correctly`, async () => {
+    expect(await testPluginOptionsSchema(pluginOptionsSchema, manifestOptions))
+      .toMatchInlineSnapshot(`
+      Object {
+        "errors": Array [],
+        "isValid": true,
+      }
+    `)
   })
 })

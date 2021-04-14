@@ -18,16 +18,22 @@ Open a page component (e.g. `src/pages/index.js`) in your Gatsby site. Import th
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
-  <div>
-    <Link to="/contact/">Contact</Link>
-  </div>
-)
+export default function Home() {
+  return (
+    <div>
+      <Link to="/contact/">Contact</Link>
+    </div>
+  )
+}
 ```
 
 The above code will add a link to the contact page, automatically rendered in HTML as `<a href="/contact/">` but with added performance benefits. The link's value is based off of the page's filename which in this case would be `contact.js`.
 
 > **Note:** the value `"/"` for the `to` property will take users to the home page.
+
+## Using relative links in the `<Link />` component
+
+Relative links are ones where the `to` property doesn't start with a `/`. These behave slightly differently from relative links in `<a>` tags, and instead follow [the behavior of @reach/router](https://reach.tech/router/nesting). This avoids confusion with trailing slashes by ignoring them entirely and treating every page as if it were a directory. For example, if you are on either `/blog/my-great-page` or `/blog/my-great-page/` (note the trailing slash), a link to `../second-page` will take you to `/blog/second-page`. Similarly, if you are on `/blog` or `/blog/` a link to `hello-world` will take you to `/blog/hello-world`.
 
 ## Using `<a>` for external links
 
@@ -38,18 +44,20 @@ Additionally, if you wish to have an external link open in new window using the 
 ```jsx
 import React from "react"
 
-export default () => (
-  <div>
-    <a href="https://example.com" target="_blank" rel="noopener noreferrer">
-      External link
-    </a>
-  </div>
-)
+export default function Home() {
+  return (
+    <div>
+      <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+        External link
+      </a>
+    </div>
+  )
+}
 ```
 
 It is also recommended to include a [visual icon](https://thenounproject.com/term/new-window/2864/) or some kind of indicator differentiating external links from internal ones.
 
 ## Other resources
 
-- For the complete example of how to link between pages, see [Part One](/tutorial/part-one/#linking-between-pages/) in the Tutorial
-- Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/gatsby-link/).
+- For the complete example of how to link between pages, see [Part One](/docs/tutorial/part-one/#linking-between-pages/) in the Tutorial
+- Check out more detail on routing in Gatsby in the [API doc for Gatsby Link](/docs/reference/built-in-components/gatsby-link/).

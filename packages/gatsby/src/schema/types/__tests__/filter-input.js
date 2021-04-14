@@ -1,7 +1,6 @@
 const { build } = require(`../..`)
 const { store } = require(`../../../redux`)
 const { actions } = require(`../../../redux/actions`)
-require(`../../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
@@ -69,7 +68,7 @@ describe(`Filter input`, () => {
     const parentFilterInput = schema.getType(`ParentFilterInput`)
     const fields = parentFilterInput.getFields()
     expect(fields.id).toBeDefined()
-    expect(fields.nested).toBeUndefined()
+    expect(fields.nested).not.toBeDefined()
   })
 })
 

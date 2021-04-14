@@ -7,7 +7,7 @@ link to stylesheets that in turn link to font files.
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-preload-fonts
+npm install gatsby-plugin-preload-fonts
 ```
 
 Once you've installed the plugin, you'll want to add the included script
@@ -53,6 +53,10 @@ npm run preload-fonts -- --no-sandbox
 ```
 
 See [Puppeteer](#puppeteer) for more information.
+
+### Using with CI
+
+If you're planning to use this plugin in CI you can set the environment variable `CI=true` (most CI providers like Travis and CircleCI will set this for you). Please note that in this case `font-preload-cache.json` will only get rebuilt when routes change.
 
 ## Explanation of method
 
@@ -137,3 +141,7 @@ npm run preload-fonts -- --no-sandbox
 
 This comes with [inherent security risks](https://chromium.googlesource.com/chromium/src/+/master/docs/linux_suid_sandbox_development.md),
 but you should be alright since you're only running it locally.
+
+### Use different Chrome/Chromium executable
+
+In some cases, you might have to point Puppeteer to an external installation of Chrome/Chromium (e.g., on Alpine Linux, the build-in version of Chromium does not work). You can set the `PUPPETEER_EXECUTABLE_PATH` environment variable to the path of your custom chromium installation. A list with all environment variables to configure Puppeteer can be found [at the official docs](https://pptr.dev/#?product=Puppeteer&version=v1.20.0&show=api-environment-variables).

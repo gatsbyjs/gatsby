@@ -3,7 +3,7 @@ const path = require('path')
 const globby = require('globby')
 const { sortBy, uniq } = require("lodash");
 const loadThemes = require("gatsby/dist/bootstrap/load-themes");
-const { get: levenshtein } = require('fast-levenshtein')
+const { distance: levenshtein } = require('fastest-levenshtein')
 
 let errorsFound = []
 
@@ -16,7 +16,7 @@ const checkGastbyFiles = () => {
   const files = globby.sync(KNOWN_FS_TYPOS)
 
   if (files.length) {
-    errorsFound.push('The following files were encountered with "Gatsby" mispelled as "Gastby"', files)
+    errorsFound.push('The following files were encountered with "Gatsby" misspelled as "Gastby"', files)
   }
 }
 

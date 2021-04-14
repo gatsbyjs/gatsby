@@ -22,11 +22,17 @@ module.exports = (
     removeAccents = false,
     enableCustomId = false,
     isIconAfterHeader = false,
+    elements = null,
   }
 ) => {
   slugs.reset()
 
   visit(markdownAST, `heading`, node => {
+    // If elements array exists, do not create links for heading types not included in array
+    if (Array.isArray(elements) && !elements.includes(`h${node.depth}`)) {
+      return
+    }
+
     let id
     if (enableCustomId && node.children.length > 0) {
       const last = node.children[node.children.length - 1]
@@ -54,9 +60,9 @@ module.exports = (
     patch(data, `hProperties`, {})
     patch(data.htmlAttributes, `id`, id)
     patch(data.hProperties, `id`, id)
-    patch(data.hProperties, `style`, `position:relative;`)
 
     if (icon !== false) {
+      patch(data.hProperties, `style`, `position:relative;`)
       const label = id.split(`-`).join(` `)
       const method = isIconAfterHeader ? `push` : `unshift`
       node.children[method]({

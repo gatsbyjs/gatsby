@@ -2,9 +2,7 @@ describe(`Scroll behaviour`, () => {
   it(`should restore scroll position only when going back in history`, () => {
     cy.visit(`/`).waitForRouteChange()
 
-    cy.getTestElement(`long-page`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`long-page`).click().waitForRouteChange()
 
     cy.scrollTo(`bottom`)
 
@@ -13,9 +11,7 @@ describe(`Scroll behaviour`, () => {
     // it to store scroll position
     cy.wait(500)
 
-    cy.getTestElement(`below-the-fold`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`below-the-fold`).click().waitForRouteChange()
 
     // after going back we expect page will
     // be restore previous scroll position
@@ -28,26 +24,40 @@ describe(`Scroll behaviour`, () => {
     cy.go(`forward`).waitForRouteChange()
 
     // after clicking link we expect page will be scrolled to top
-    cy.getTestElement(`long-page`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`long-page`).click().waitForRouteChange()
 
     cy.window().then(win => {
       expect(win.scrollY).to.eq(0, 0)
     })
 
     // reset to index page
-    cy.getTestElement(`index-link`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`index-link`).click().waitForRouteChange()
+  })
+
+  it(`should scroll to hashes - even with encoded characters`, () => {
+    cy.visit(`/`).waitForRouteChange()
+    cy.getTestElement(`long-page-id`).click().waitForRouteChange()
+
+    // UI should auto scroll to the id with a matching hash
+    cy.window().then(win => {
+      let idScrollY = win.scrollY
+      expect(win.scrollY).not.to.eq(0, 0)
+
+      cy.scrollTo(`bottom`)
+      cy.wait(500) // allow ScrollContext to update scroll position store
+      cy.go(`back`).waitForRouteChange()
+      cy.go(`forward`).waitForRouteChange()
+
+      cy.window().then(updatedWindow => {
+        expect(updatedWindow.scrollY).to.eq(idScrollY)
+      })
+    })
   })
 
   it(`should keep track of location.key`, () => {
     cy.visit(`/`).waitForRouteChange()
 
-    cy.getTestElement(`long-page`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`long-page`).click().waitForRouteChange()
 
     cy.getTestElement(`below-the-fold`)
       .scrollIntoView({
@@ -59,9 +69,7 @@ describe(`Scroll behaviour`, () => {
       .click()
       .waitForRouteChange()
 
-    cy.getTestElement(`long-page`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`long-page`).click().waitForRouteChange()
 
     cy.getTestElement(`even-more-below-the-fold`)
       .scrollIntoView({

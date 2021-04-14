@@ -3,6 +3,372 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@4.0.0-next.0...gatsby-transformer-remark@4.1.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.3.0-next.1...gatsby-transformer-remark@4.0.0-next.0) (2021-04-09)
+
+### Features
+
+- upgrade to remark 13 ([#29678](https://github.com/gatsbyjs/gatsby/issues/29678)) ([a5b5cf8](https://github.com/gatsbyjs/gatsby/commit/a5b5cf8379b7c105119e348d41723f3b2bd7b527))
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.3.0-next.0...gatsby-transformer-remark@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.2.0-next.0...gatsby-transformer-remark@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.1.0-next.2...gatsby-transformer-remark@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.1.0-next.1...gatsby-transformer-remark@3.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.1.0-next.0...gatsby-transformer-remark@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.0.0-next.3...gatsby-transformer-remark@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.0.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.0.0-next.2...gatsby-transformer-remark@3.0.0-next.3) (2021-02-25)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.0.0-next.1...gatsby-transformer-remark@3.0.0-next.2) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@3.0.0-next.0...gatsby-transformer-remark@3.0.0-next.1) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.17.0-next.0...gatsby-transformer-remark@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.17.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.16.0-next.0...gatsby-transformer-remark@2.17.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.16.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.15.0-next.1...gatsby-transformer-remark@2.16.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.15.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.15.0-next.0...gatsby-transformer-remark@2.15.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.15.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.14.0-next.2...gatsby-transformer-remark@2.15.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.14.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.14.0-next.1...gatsby-transformer-remark@2.14.0-next.2) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.14.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.14.0-next.0...gatsby-transformer-remark@2.14.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.13.0-next.1...gatsby-transformer-remark@2.14.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.13.0-next.0...gatsby-transformer-remark@2.13.0-next.1) (2020-12-03)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.12.0-next.0...gatsby-transformer-remark@2.13.0-next.0) (2020-11-26)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** ensure `getNodesByType()` is passed through ([#28218](https://github.com/gatsbyjs/gatsby/issues/28218)) ([7867897](https://github.com/gatsbyjs/gatsby/commit/7867897c5cc4f627a4fb91c939b24d884497ee20))
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.11.0-next.0...gatsby-transformer-remark@2.12.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.10.0-next.0...gatsby-transformer-remark@2.10.0-next.1) (2020-11-10)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** wait for cache promises before returning ([#27871](https://github.com/gatsbyjs/gatsby/issues/27871)) ([071d50d](https://github.com/gatsbyjs/gatsby/commit/071d50d665c6f5542e29286eaef4dc54a61bb4d8))
+
+## [2.9.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.9.0...gatsby-transformer-remark@2.9.1) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** add excerpt_separator to plugin options schema ([#27785](https://github.com/gatsbyjs/gatsby/issues/27785)) ([8f8a419](https://github.com/gatsbyjs/gatsby/commit/8f8a41979bb88c0caf7ddae91ed840325692b4a8)), closes [#27784](https://github.com/gatsbyjs/gatsby/issues/27784)
+
+# [2.9.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.47...gatsby-transformer-remark@2.9.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.8.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.46...gatsby-transformer-remark@2.8.47) (2020-10-28)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.45...gatsby-transformer-remark@2.8.46) (2020-10-22)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.44...gatsby-transformer-remark@2.8.45) (2020-10-21)
+
+### Bug Fixes
+
+- Update plugin schema testing util and associated tests ([#27574](https://github.com/gatsbyjs/gatsby/issues/27574)) ([6d81283](https://github.com/gatsbyjs/gatsby/commit/6d81283e4f47ae2cb571626bf4d02fcd2c9d1af4))
+
+## [2.8.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.43...gatsby-transformer-remark@2.8.44) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
+## [2.8.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.42...gatsby-transformer-remark@2.8.43) (2020-10-19)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.41...gatsby-transformer-remark@2.8.42) (2020-10-16)
+
+### Performance Improvements
+
+- **gatsby:** test sync before calling onCreateNode ([#27442](https://github.com/gatsbyjs/gatsby/issues/27442)) ([6400383](https://github.com/gatsbyjs/gatsby/commit/6400383287db9967a7124df7fb0d096408372b95))
+
+## [2.8.41](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.40...gatsby-transformer-remark@2.8.41) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.40](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.39...gatsby-transformer-remark@2.8.40) (2020-10-15)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.39](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.38...gatsby-transformer-remark@2.8.39) (2020-10-14)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.38](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.37...gatsby-transformer-remark@2.8.38) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.36...gatsby-transformer-remark@2.8.37) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.35...gatsby-transformer-remark@2.8.36) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-remark ([#27148](https://github.com/gatsbyjs/gatsby/issues/27148)) ([2cab85a](https://github.com/gatsbyjs/gatsby/commit/2cab85ae25c3a4e57afc432e5c164e52fa363101))
+
+## [2.8.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.34...gatsby-transformer-remark@2.8.35) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.33...gatsby-transformer-remark@2.8.34) (2020-09-08)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.32...gatsby-transformer-remark@2.8.33) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.31...gatsby-transformer-remark@2.8.32) (2020-08-31)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.30...gatsby-transformer-remark@2.8.31) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.29...gatsby-transformer-remark@2.8.30) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.28...gatsby-transformer-remark@2.8.29) (2020-08-24)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.27...gatsby-transformer-remark@2.8.28) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.26...gatsby-transformer-remark@2.8.27) (2020-07-24)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.25...gatsby-transformer-remark@2.8.26) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.24...gatsby-transformer-remark@2.8.25) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.23...gatsby-transformer-remark@2.8.24) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.22...gatsby-transformer-remark@2.8.23) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.21...gatsby-transformer-remark@2.8.22) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.20...gatsby-transformer-remark@2.8.21) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.19...gatsby-transformer-remark@2.8.20) (2020-06-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.18...gatsby-transformer-remark@2.8.19) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.17...gatsby-transformer-remark@2.8.18) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.16...gatsby-transformer-remark@2.8.17) (2020-06-19)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.15...gatsby-transformer-remark@2.8.16) (2020-06-15)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.14...gatsby-transformer-remark@2.8.15) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.13...gatsby-transformer-remark@2.8.14) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.12...gatsby-transformer-remark@2.8.13) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.11...gatsby-transformer-remark@2.8.12) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.10...gatsby-transformer-remark@2.8.11) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.9...gatsby-transformer-remark@2.8.10) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.8...gatsby-transformer-remark@2.8.9) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.7...gatsby-transformer-remark@2.8.8) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.6...gatsby-transformer-remark@2.8.7) (2020-05-06)
+
+### Features
+
+- **gatsby-transform-remark:** populate id to headings from markdownAST ([#23546](https://github.com/gatsbyjs/gatsby/issues/23546)) ([464bdb4](https://github.com/gatsbyjs/gatsby/commit/464bdb4))
+
+## [2.8.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.5...gatsby-transformer-remark@2.8.6) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.4...gatsby-transformer-remark@2.8.5) (2020-05-04)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.3...gatsby-transformer-remark@2.8.4) (2020-05-01)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.1...gatsby-transformer-remark@2.8.3) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.8.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.8.0...gatsby-transformer-remark@2.8.1) (2020-04-29)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.8.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.5...gatsby-transformer-remark@2.8.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.7.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.4...gatsby-transformer-remark@2.7.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.7.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.3...gatsby-transformer-remark@2.7.4) (2020-04-22)
+
+### Features
+
+- **gatsby-remark-images:** support markdownCaptions in mdx + fix for remark ([#21188](https://github.com/gatsbyjs/gatsby/issues/21188)) ([82c05aa](https://github.com/gatsbyjs/gatsby/commit/82c05aa))
+
+## [2.7.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.2...gatsby-transformer-remark@2.7.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.7.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.1...gatsby-transformer-remark@2.7.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.7.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.7.0...gatsby-transformer-remark@2.7.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+# [2.7.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.59...gatsby-transformer-remark@2.7.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.6.59](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.58...gatsby-transformer-remark@2.6.59) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.58](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.57...gatsby-transformer-remark@2.6.58) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.57](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.56...gatsby-transformer-remark@2.6.57) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.56](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.55...gatsby-transformer-remark@2.6.56) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.55](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.54...gatsby-transformer-remark@2.6.55) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
+## [2.6.54](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.53...gatsby-transformer-remark@2.6.54) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 ## [2.6.53](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@2.6.52...gatsby-transformer-remark@2.6.53) (2020-02-20)
 
 **Note:** Version bump only for package gatsby-transformer-remark

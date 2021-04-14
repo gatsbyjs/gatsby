@@ -4,7 +4,7 @@ Provides drop-in support for Less stylesheets
 
 ## Install
 
-`npm install --save less gatsby-plugin-less`
+`npm install gatsby-plugin-less`
 
 ## How to use
 
@@ -16,8 +16,8 @@ Provides drop-in support for Less stylesheets
 plugins: [`gatsby-plugin-less`]
 ```
 
-If you need to pass options to Less use the plugins options; see [less-loader](https://github.com/webpack-contrib/less-loader)
-for all available options.
+If you need to pass options to the Less loader use the `loaderOptions` and to Less use `lessOptions` object;
+see [`less-loader`](https://github.com/webpack-contrib/less-loader) for all available options.
 
 ```javascript
 // in gatsby-config.js
@@ -25,13 +25,20 @@ plugins: [
   {
     resolve: `gatsby-plugin-less`,
     options: {
-      strictMath: true,
+      loaderOptions: {
+        appendData: `@env: ${process.env.NODE_ENV};`,
+      },
+      lessOptions: {
+        strictMath: true,
+        plugins: [new CleanCSSPlugin({ advanced: true })],
+      },
     },
   },
 ]
 ```
 
 If you need to override the default options passed into [`css-loader`](https://github.com/webpack-contrib/css-loader)
+**Note:** Gatsby is using `css-loader@^5.0.0`.
 
 ```javascript
 // in gatsby-config.js
@@ -47,24 +54,10 @@ plugins: [
 ]
 ```
 
-If you need to provide [Less plugins](https://github.com/less/less-docs/blob/master/content/usage/plugins.md), normally you would provide a `plugins` in the Less options, but this option attribute is already used by Gatsby. It has been remapped to `lessPlugins`
-
-```javascript
-// in gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-plugin-less`,
-    options: {
-      lessPlugins: [MyLessPlugin],
-    },
-  },
-]
-```
-
 ### With CSS Modules
 
-Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `App.less` -> `App.module.less`.
-Any file with the `module` extension will use CSS modules.
+Using CSS modules requires no additional configuration. Simply prepend `.module` to the extension. For example: `app.less` -> `app.module.less`.
+Any file with the `module` extension will use CSS modules. CSS modules are imported as ES Modules to support treeshaking. You'll need to import styles as: `import { yourClassName, anotherClassName } from './app.module.less'`.
 
 ### PostCSS plugins
 
@@ -89,10 +82,15 @@ plugins: [
 
 <!-- Please keep the breaking changes list ordered with the newest change at the top -->
 
+### v4.0.0
+
+- `less-loader` options now possible with the object `loaderOptions`.
+- `less` options moved to the object `lessOptions` because of api change on `less-loader` v6.
+
 ### v2.0.0
 
 - `less` is moved to a peer dependency. Installing the package
-  alongside `gatsby-plugin-less` is now required. Use `npm install --save less`
+  alongside `gatsby-plugin-less` is now required. Use `npm install less`
 
 - support Gatsby v2 only
 

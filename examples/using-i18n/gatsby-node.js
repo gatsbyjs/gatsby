@@ -38,7 +38,7 @@ exports.onCreatePage = ({ page, actions }) => {
   })
 }
 
-// As you don't want to manually add the correct languge to the frontmatter of each file
+// As you don't want to manually add the correct language to the frontmatter of each file
 // a new node is created automatically with the filename
 // It's necessary to do that -- otherwise you couldn't filter by language
 exports.onCreateNode = ({ node, actions }) => {

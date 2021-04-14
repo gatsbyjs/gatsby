@@ -5,12 +5,12 @@
   "version": "1.0.0",
   "author": "Vladimir Guguiev <wizardzloy@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-flow": "^1.0.1",
-    "gatsby-plugin-jss": "^2.0.2",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-jss": "^8.5.0"
+    "gatsby": "next",
+    "gatsby-plugin-flow": "next",
+    "gatsby-plugin-jss": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-jss": "^8.6.1"
   },
   "keywords": [
     "gatsby"

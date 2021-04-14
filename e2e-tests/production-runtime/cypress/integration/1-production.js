@@ -23,13 +23,9 @@ describe(`Production build tests`, () => {
   it(`should navigate back after a reload`, () => {
     cy.getTestElement(`page2`).click()
 
-    cy.waitForRouteChange()
-      .location(`pathname`)
-      .should(`equal`, `/page-2/`)
+    cy.waitForRouteChange().location(`pathname`).should(`equal`, `/page-2/`)
 
-    cy.reload()
-      .waitForRouteChange()
-      .go(`back`)
+    cy.reload().waitForRouteChange().go(`back`)
 
     cy.waitForRouteChange()
       .getTestElement(`page2`)
@@ -45,6 +41,44 @@ describe(`Production build tests`, () => {
       .should(`exist`)
       .location(`pathname`)
       .should(`equal`, `/page-2/`)
+  })
+
+  describe(`relative links`, () => {
+    it(`should navigate to a subdirectory`, () => {
+      cy.visit(`/`)
+        .waitForRouteChange()
+        .getTestElement(`subdir-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-1`)
+    })
+
+    it(`can navigate to a sibling page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
+
+    it(`can navigate to a parent page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-parent-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory`)
+    })
+
+    it(`can navigate to a sibling page programatically`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-button-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `/subdirectory/page-2`)
+    })
   })
 
   it(`should show 404 page when clicking a link to a non-existent page route`, () => {
@@ -64,9 +98,7 @@ describe(`Production build tests`, () => {
       failOnStatusCode: false,
     })
 
-    cy.waitForRouteChange()
-      .getTestElement(`404`)
-      .should(`exist`)
+    cy.waitForRouteChange().getTestElement(`404`).should(`exist`)
   })
 
   it(`should navigate back after a 404 from a direct link entry`, () => {
@@ -81,13 +113,6 @@ describe(`Production build tests`, () => {
       .waitForRouteChange()
       .getTestElement(`index-link`)
       .should(`exist`)
-  })
-
-  it(`should pass pathContext to props`, () => {
-    cy.visit(`/path-context`).waitForRouteChange()
-
-    // `bar` is set in gatsby-node createPages
-    cy.getTestElement(`path-context-foo`).contains(`bar`)
   })
 
   it(`Uses env vars`, () => {
@@ -107,7 +132,7 @@ describe(`Production build tests`, () => {
 
   describe(`Supports unicode characters in urls`, () => {
     it(`Can navigate directly`, () => {
-      cy.visit(`/안녕/`, {
+      cy.visit(encodeURI(`/안녕/`), {
         // Cypress seems to think it's 404
         // even if it's not. 404 page doesn't have
         // `page-2-message` element so the test will fail on
@@ -123,9 +148,7 @@ describe(`Production build tests`, () => {
 
     it(`Can navigate on client`, () => {
       cy.visit(`/`).waitForRouteChange()
-      cy.getTestElement(`page-with-unicode-path`)
-        .click()
-        .waitForRouteChange()
+      cy.getTestElement(`page-with-unicode-path`).click().waitForRouteChange()
 
       cy.getTestElement(`page-2-message`)
         .invoke(`text`)
@@ -133,7 +156,7 @@ describe(`Production build tests`, () => {
     })
 
     it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
-      cy.visit(`/안녕404/`, {
+      cy.visit(encodeURI(`/안녕404/`), {
         failOnStatusCode: false,
       }).waitForRouteChange()
 
@@ -144,6 +167,41 @@ describe(`Production build tests`, () => {
       cy.visit(`/`).waitForRouteChange()
       cy.window()
         .then(win => win.___navigate(`/안녕404/`))
+        .waitForRouteChange()
+
+      cy.getTestElement(`404`).should(`exist`)
+    })
+  })
+
+  describe(`Supports encodable characters in urls`, () => {
+    it(`Can navigate directly`, () => {
+      cy.visit(`/foo/@something/bar`).waitForRouteChange()
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`Can navigate on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.getTestElement(`page-with-encodable-path`).click().waitForRouteChange()
+
+      cy.getTestElement(`page-2-message`)
+        .invoke(`text`)
+        .should(`equal`, `Hi from the second page`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating directly`, () => {
+      cy.visit(`/foo/@something/bar404/`, {
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+
+      cy.getTestElement(`404`).should(`exist`)
+    })
+
+    it(`should show 404 page when url with unicode characters point to a non-existent page route when navigating on client`, () => {
+      cy.visit(`/`).waitForRouteChange()
+      cy.window()
+        .then(win => win.___navigate(`/foo/@something/bar404/`))
         .waitForRouteChange()
 
       cy.getTestElement(`404`).should(`exist`)

@@ -4,11 +4,11 @@
   "description": "Gatsby example site demonstrating using css modules in Gatsby with normal (Postcss) css and sass/scss.",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-sass": "^2.0.1",
-    "node-sass": "^4.9.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "gatsby": "next",
+    "gatsby-plugin-sass": "next",
+    "node-sass": "^4.14.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "license": "MIT",
   "main": "n/a",

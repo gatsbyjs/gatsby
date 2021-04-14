@@ -20,7 +20,7 @@ site](https://netlifycms.org).
 ## Install
 
 ```shell
-npm install --save netlify-cms-app gatsby-plugin-netlify-cms
+npm install netlify-cms-app gatsby-plugin-netlify-cms
 ```
 
 ## How to use
@@ -80,8 +80,12 @@ The js module might look like this:
 import CMS from "netlify-cms-app"
 
 /**
- * Any imported styles will automatically be applied to the editor preview
- * pane, there is no need to use `registerPreviewStyle` for imported styles.
+ * Any imported styles should be automatically be applied to the editor preview
+ * pane thus eliminating the need to use `registerPreviewStyle` for imported
+ * styles. However if you are experiencing build errors regarding importing css,
+ * sass or scss into a cms module when deploying to the netlify platform, you
+ * may need to follow the implementation found in netlify documentation here:
+ * https://www.netlifycms.org/docs/beta-features/#raw-css-in-registerpreviewstyle
  * All of the example imports below would result in styles being applied to the
  * preview pane.
  */
@@ -256,7 +260,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
 ## Support
 
 For help with integrating Netlify CMS with Gatsby, check out the community
-[Slack](https://join.slack.com/t/netlifycms/shared_invite/enQtODE1NTcxODA5Mjg1LTRjYWExM2MyZDJmODA3YmVkMjI2YmQwZDg2ZDUyYTMyM2Y3Zjc1ZTJhNDBkYmMwNjA2ZTkwODY4YjZjNGNlNTE).
+[Slack](https://www.netlifycms.org/chat).
 
 [1]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@2.0.1/packages/gatsby-plugin-netlify-cms/README.md
 [2]: https://github.com/gatsbyjs/gatsby/blob/gatsby-plugin-netlify-cms@3.0.18/packages/gatsby-plugin-netlify-cms/README.md

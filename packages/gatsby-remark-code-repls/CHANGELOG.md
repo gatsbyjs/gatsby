@@ -3,6 +3,162 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@5.0.0-next.0...gatsby-remark-code-repls@5.1.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.3.0-next.1...gatsby-remark-code-repls@5.0.0-next.0) (2021-04-09)
+
+### Features
+
+- upgrade to remark 13 ([#29678](https://github.com/gatsbyjs/gatsby/issues/29678)) ([a5b5cf8](https://github.com/gatsbyjs/gatsby/commit/a5b5cf8379b7c105119e348d41723f3b2bd7b527))
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.3.0-next.0...gatsby-remark-code-repls@4.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.2.0-next.0...gatsby-remark-code-repls@4.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.1.0-next.1...gatsby-remark-code-repls@4.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.1.0-next.0...gatsby-remark-code-repls@4.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@4.0.0-next.0...gatsby-remark-code-repls@4.1.0-next.0) (2021-02-26)
+
+### Features
+
+- shim reporter from gatsby ([#29669](https://github.com/gatsbyjs/gatsby/issues/29669)) ([249905a](https://github.com/gatsbyjs/gatsby/commit/249905ac92f11efdb2333828667b946a860a1a27))
+
+# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.10.0-next.0...gatsby-remark-code-repls@4.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.9.0-next.0...gatsby-remark-code-repls@3.10.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.8.0-next.0...gatsby-remark-code-repls@3.9.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.7.0-next.0...gatsby-remark-code-repls@3.8.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.6.0-next.0...gatsby-remark-code-repls@3.7.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.5.0-next.0...gatsby-remark-code-repls@3.6.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.4.0-next.0...gatsby-remark-code-repls@3.5.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.3.0-next.0...gatsby-remark-code-repls@3.3.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.13...gatsby-remark-code-repls@3.2.14) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.12...gatsby-remark-code-repls@3.2.13) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.11...gatsby-remark-code-repls@3.2.12) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.10...gatsby-remark-code-repls@3.2.11) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.9...gatsby-remark-code-repls@3.2.10) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.8...gatsby-remark-code-repls@3.2.9) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.7...gatsby-remark-code-repls@3.2.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.6...gatsby-remark-code-repls@3.2.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.5...gatsby-remark-code-repls@3.2.6) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.4...gatsby-remark-code-repls@3.2.5) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.3...gatsby-remark-code-repls@3.2.4) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.2...gatsby-remark-code-repls@3.2.3) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.1...gatsby-remark-code-repls@3.2.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.2.0...gatsby-remark-code-repls@3.2.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.1.4...gatsby-remark-code-repls@3.2.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.1.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.1.3...gatsby-remark-code-repls@3.1.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.1.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.1.2...gatsby-remark-code-repls@3.1.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [3.1.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.1.1...gatsby-remark-code-repls@3.1.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.1.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.1.0...gatsby-remark-code-repls@3.1.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+# [3.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.28...gatsby-remark-code-repls@3.1.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [3.0.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.27...gatsby-remark-code-repls@3.0.28) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
+## [3.0.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.26...gatsby-remark-code-repls@3.0.27) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-remark-code-repls
+
 ## [3.0.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-code-repls@3.0.25...gatsby-remark-code-repls@3.0.26) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-remark-code-repls

@@ -5,17 +5,17 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
-    "gatsby": "^2.15.14",
-    "gatsby-image": "^2.2.18",
-    "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-source-contentful": "^2.1.35",
-    "gatsby-transformer-remark": "^2.6.22",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-source-contentful": "next",
+    "gatsby-transformer-remark": "next",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "prettier": "2.1.1"
   },
   "keywords": [
     "gatsby"

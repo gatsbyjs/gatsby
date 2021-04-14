@@ -1,0 +1,30 @@
+type Query {
+  info: String!
+  posts: [Post!]!
+  authors: [Author!]!
+}
+
+type Mutation {
+  createPost(slug: String!, description: String!): Post!
+  updatePost(id: ID!, description: String!): Post
+  deletePost(id: ID!): Post
+}
+
+type Post {
+  id: ID!
+  slug: String!
+  description: String!
+  imgUrl: String!
+  imgAlt: String!
+  author: Author!
+  status: String
+}
+
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Subscription {
+  posts: [Post!]!
+}

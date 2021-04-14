@@ -14,17 +14,19 @@ For example, you could use a component for Buttons on your site. This would enab
 
 ## Importing React components
 
-In Gatsby, when using React components, you can import and use them like you would in a React application. Here's an example of the [Gatsby Link](/docs/gatsby-link/) component in action, which brings with it extra functionality for performance:
+In Gatsby, when using React components, you can import and use them like you would in a React application. Here's an example of the [Gatsby Link](/docs/reference/built-in-components/gatsby-link/) component in action, which brings with it extra functionality for performance:
 
 ```jsx
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
-  <div>
-    <Link to="/contact/">Contact</Link>
-  </div>
-)
+export default function Contact() {
+  return (
+    <div>
+      <Link to="/contact/">Contact</Link>
+    </div>
+  )
+}
 ```
 
 ### Importing third-party components
@@ -57,14 +59,16 @@ import React from "react"
 // import my fancy third-party component
 import Button from "@material-ui/core/Button"
 
-export default () => (
-  <div>
-    <p>This is my super awesome page made with Gatsby!</p>
+export default function Home() {
+  return (
+    <div>
+      <p>This is my super awesome page made with Gatsby!</p>
 
-    {/* use my fancy third-party component */}
-    <Button variant="contained">Fancy button!</Button>
-  </div>
-)
+      {/* use my fancy third-party component */}
+      <Button variant="contained">Fancy button!</Button>
+    </div>
+  )
+}
 ```
 
 ## Things to watch out for

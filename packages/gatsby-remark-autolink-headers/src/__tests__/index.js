@@ -192,7 +192,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
 
 # With *Bold* {#custom-withbold}
 
-# Invalid {#this_is_italic}
+# Not italic {#not_italic_here}
 
 # No custom ID
 
@@ -222,8 +222,8 @@ describe(`gatsby-remark-autolink-headers`, () => {
         text: `With Bold`,
       },
       {
-        id: `invalid-thisisitalic`,
-        text: `Invalid {#thisisitalic}`,
+        id: `not_italic_here`,
+        text: `Not italic`,
       },
       {
         id: `no-custom-id`,
@@ -239,6 +239,7 @@ describe(`gatsby-remark-autolink-headers`, () => {
       },
     ])
   })
+
   it(`adds places anchor after header when isIconAfterHeader prop is passed`, () => {
     const markdownAST = remark.parse(`# Heading Uno`)
 
@@ -251,6 +252,103 @@ describe(`gatsby-remark-autolink-headers`, () => {
       expect(node.children[1].data.hProperties.class).toContain(`after`)
 
       expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`adds id to a markdown heading when elements prop is passed with matching heading type`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h1`] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`does not add data to a markdown heading when elements prop is passed with no matching heading type`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h2`] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data).not.toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`does not add data to a markdown heading with custom id when elements prop is passed with no matching heading type`, () => {
+    const markdownAST = remark.parse(`# Heading Uno {#custom_h1}`)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h2`] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data).not.toBeDefined()
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`only adds ids to markdown headings whose heading type is included in the passed elements prop`, () => {
+    const markdownAST = remark.parse(`
+    # Heading One
+
+    ## Heading Two
+
+    ### Heading Three
+        `)
+
+    const transformed = plugin({ markdownAST }, { elements: [`h2`] })
+
+    visit(transformed, `heading`, node => {
+      if (node.depth === 2) {
+        expect(node.data.id).toBeDefined()
+      } else {
+        expect(node.data).not.toBeDefined()
+      }
+    })
+  })
+
+  it(`does not add data to markdown headings when an empty array elements prop is passed`, () => {
+    const markdownAST = remark.parse(`
+    # Heading One
+
+    ## Heading Two
+
+    ### Heading Three
+        `)
+
+    const transformed = plugin({ markdownAST }, { elements: [] })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data).not.toBeDefined()
+    })
+  })
+
+  it(`allows all six heading depths to be passed in the elements prop`, () => {
+    const markdownAST = remark.parse(`
+    # Heading One
+
+    ## Heading Two
+
+    ### Heading Three
+
+    #### Heading Four
+
+    ##### Heading Five
+
+    ###### Heading Six
+        `)
+
+    const transformed = plugin(
+      { markdownAST },
+      { elements: [`h1`, `h2`, `h3`, `h4`, `h5`, `h6`] }
+    )
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.id).toBeDefined()
     })
   })
 })

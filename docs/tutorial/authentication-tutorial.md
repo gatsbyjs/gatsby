@@ -27,26 +27,28 @@ Create a new component to hold the links. For now, it will act as a placeholder:
 import React from "react"
 import { Link } from "gatsby"
 
-export default () => (
-  <div
-    style={{
-      display: "flex",
-      flex: "1",
-      justifyContent: "space-between",
-      borderBottom: "1px solid #d1c1e0",
-    }}
-  >
-    <span>You are not logged in</span>
+export default function NavBar() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flex: "1",
+        justifyContent: "space-between",
+        borderBottom: "1px solid #d1c1e0",
+      }}
+    >
+      <span>You are not logged in</span>
 
-    <nav>
-      <Link to="/">Home</Link>
-      {` `}
-      <Link to="/">Profile</Link>
-      {` `}
-      <Link to="/">Logout</Link>
-    </nav>
-  </div>
-)
+      <nav>
+        <Link to="/">Home</Link>
+        {` `}
+        <Link to="/">Profile</Link>
+        {` `}
+        <Link to="/">Logout</Link>
+      </nav>
+    </div>
+  )
+}
 ```
 
 And create the layout component that will wrap all pages and display navigation bar:
@@ -74,11 +76,13 @@ import React from "react"
 import Layout from "../components/layout" // highlight-line
 
 // highlight-start
-export default () => (
-  <Layout>
-    <h1>Hello world!</h1>
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      <h1>Hello world!</h1>
+    </Layout>
+  )
+}
 // highlight-end
 ```
 
@@ -146,7 +150,7 @@ exports.onCreatePage = async ({ page, actions }) => {
 }
 ```
 
-> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths)
+> Note: There is a convenient plugin that already does this work for you: [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths)
 
 Now, you must create a generic page that will have the task to generate the restricted content:
 
@@ -255,7 +259,7 @@ Though the routing is working now, you still can access all routes without restr
 To check if a user can access the content, you can wrap the restricted content inside a PrivateRoute component:
 
 ```jsx:title=src/components/privateRoute.js
-import React, { Component } from "react"
+import React from "react"
 import { navigate } from "gatsby"
 import { isLoggedIn } from "../services/auth"
 
@@ -306,13 +310,14 @@ import { Link, navigate } from "gatsby" // highlight-line
 import { getUser, isLoggedIn, logout } from "../services/auth" // highlight-line
 
 // highlight-start
-export default () => {
-  const content = { message: "", login: true }
+export default function NavBar() {
+  let greetingMessage = ""
   if (isLoggedIn()) {
-    content.message = `Hello, ${getUser().name}`
+    greetingMessage = `Hello ${getUser().name}`
   } else {
-    content.message = "You are not logged in"
+    greetingMessage = "You are not logged in"
   }
+
   return (
     // highlight-end
     <div
@@ -323,7 +328,7 @@ export default () => {
         borderBottom: "1px solid #d1c1e0",
       }}
     >
-      <span>{content.message}</span> {/* highlight-line */}
+      <span>{greetingMessage}</span> {/* highlight-line */}
       <nav>
         <Link to="/">Home</Link>
         {` `}
@@ -357,26 +362,28 @@ import { getUser, isLoggedIn } from "../services/auth" // highlight-line
 
 import Layout from "../components/layout"
 
-export default () => (
-  <Layout>
-    {/* highlight-start */}
-    <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
-    <p>
-      {isLoggedIn() ? (
-        <>
-          You are logged in, so check your{" "}
-          <Link to="/app/profile">profile</Link>
-        </>
-      ) : (
-        <>
-          You should <Link to="/app/login">log in</Link> to see restricted
-          content
-        </>
-      )}
-    </p>
-    {/* highlight-end */}
-  </Layout>
-)
+export default function Home() {
+  return (
+    <Layout>
+      {/* highlight-start */}
+      <h1>Hello {isLoggedIn() ? getUser().name : "world"}!</h1>
+      <p>
+        {isLoggedIn() ? (
+          <>
+            You are logged in, so check your{" "}
+            <Link to="/app/profile">profile</Link>
+          </>
+        ) : (
+          <>
+            You should <Link to="/app/login">log in</Link> to see restricted
+            content
+          </>
+        )}
+      </p>
+      {/* highlight-end */}
+    </Layout>
+  )
+}
 ```
 
 And the profile will show the user data:

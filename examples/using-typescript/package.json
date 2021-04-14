@@ -11,10 +11,10 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ignore-path .gitignore --ext .ts,.tsx,.js"
   },
+  "sideEffects": false,
   "dependencies": {
-    "gatsby": "^2.18.0",
-    "gatsby-plugin-typescript": "^2.1.18",
-    "gatsby-plugin-typography": "^2.3.17",
+    "gatsby": "next",
+    "gatsby-plugin-typography": "next",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-typography": "^0.16.19",
@@ -28,9 +28,9 @@
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
     "eslint": "^5.16.0",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-prettier": "^3.1.1",
-    "prettier": "^1.19.1",
-    "typescript": "^3.7.2"
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "2.1.1",
+    "typescript": "^3.9.7"
   }
 }

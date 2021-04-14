@@ -1,3 +1,6 @@
+// needed for graphiql-code-exporter
+import "regenerator-runtime/runtime.js"
+
 import React from "react"
 import ReactDOM from "react-dom"
 
@@ -17,8 +20,8 @@ const parameters = {}
 window.location.search
   .substr(1)
   .split(`&`)
-  .forEach(function(entry) {
-    var eq = entry.indexOf(`=`)
+  .forEach(function (entry) {
+    const eq = entry.indexOf(`=`)
     if (eq >= 0) {
       parameters[decodeURIComponent(entry.slice(0, eq))] = decodeURIComponent(
         entry.slice(eq + 1)
@@ -30,7 +33,7 @@ function locationQuery(params) {
   return (
     `?` +
     Object.keys(params)
-      .map(function(key) {
+      .map(function (key) {
         return encodeURIComponent(key) + `=` + encodeURIComponent(params[key])
       })
       .join(`&`)
@@ -45,7 +48,7 @@ const graphqlParamNames = {
   explorerIsOpen: true,
 }
 const otherParams = {}
-for (var k in parameters) {
+for (const k in parameters) {
   if (parameters.hasOwnProperty(k) && graphqlParamNames[k] !== true) {
     otherParams[k] = parameters[k]
   }
@@ -61,10 +64,15 @@ function graphQLFetcher(graphQLParams) {
     },
     body: JSON.stringify(graphQLParams),
     credentials: `include`,
-  }).then(function(response) {
+  }).then(function (response) {
     return response.json()
   })
 }
+
+const fetchFragments = async () =>
+  fetch(`/___graphiql/fragments`)
+    .catch(err => console.error(`Error fetching external fragments: \n${err}`))
+    .then(response => response.json())
 
 // When the query and variables string is edited, update the URL bar so
 // that it can be easily shared.
@@ -88,12 +96,12 @@ function updateURL() {
 const DEFAULT_QUERY =
   parameters.query ||
   (window.localStorage && window.localStorage.getItem(`graphiql:query`)) ||
-  null
+  undefined
 
 const DEFAULT_VARIABLES =
   parameters.variables ||
   (window.localStorage && window.localStorage.getItem(`graphiql:variables`)) ||
-  null
+  undefined
 
 const QUERY_EXAMPLE_SITEMETADATA_TITLE = `#     {
 #       site {
@@ -163,6 +171,7 @@ const storedCodeExporterPaneState =
 class App extends React.Component {
   state = {
     schema: null,
+    externalFragments: null,
     query: DEFAULT_QUERY,
     variables: DEFAULT_VARIABLES,
     explorerIsOpen: storedExplorerPaneState,
@@ -173,7 +182,11 @@ class App extends React.Component {
     graphQLFetcher({
       query: getIntrospectionQuery(),
     }).then(result => {
-      const newState = { schema: buildClientSchema(result.data) }
+      const newState = {
+        schema: buildClientSchema(result.data),
+        enableRefresh: result.extensions.enableRefresh,
+        refreshToken: result.extensions.refreshToken,
+      }
 
       if (this.state.query === null) {
         try {
@@ -302,8 +315,29 @@ class App extends React.Component {
     this.setState({ codeExporterIsOpen: newCodeExporterIsOpen })
   }
 
+  _refreshExternalDataSources = () => {
+    const options = { method: `post` }
+    if (this.state.refreshToken) {
+      options.headers = {
+        Authorization: this.state.refreshToken,
+      }
+    }
+    fetchFragments().then(externalFragments => {
+      this.setState({ externalFragments })
+    })
+
+    return fetch(`/__refresh`, options)
+  }
+
   render() {
-    const { query, variables, schema, codeExporterIsOpen } = this.state
+    const {
+      query,
+      variables,
+      schema,
+      codeExporterIsOpen,
+      externalFragments: externalFragmentsState,
+    } = this.state
+    const { externalFragments } = this.props
     const codeExporter = codeExporterIsOpen ? (
       <CodeExporter
         hideCodeExporter={this._handleToggleExporter}
@@ -334,6 +368,7 @@ class App extends React.Component {
           onEditQuery={this._handleEditQuery}
           onEditVariables={onEditVariables}
           onEditOperationName={onEditOperationName}
+          externalFragments={externalFragmentsState || externalFragments}
         >
           <GraphiQL.Toolbar>
             <GraphiQL.Button
@@ -356,6 +391,13 @@ class App extends React.Component {
               label="Code Exporter"
               title="Toggle Code Exporter"
             />
+            {this.state.enableRefresh && (
+              <GraphiQL.Button
+                onClick={this._refreshExternalDataSources}
+                label="Refresh Data"
+                title="Refresh Data from External Sources"
+              />
+            )}
           </GraphiQL.Toolbar>
         </GraphiQL>
         {codeExporter}
@@ -364,4 +406,12 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById(`root`))
+// crude way to fetch fragments on boot time
+// it won't hot reload fragments (refresh requires)
+// but good enough for initial integration
+fetchFragments().then(externalFragments => {
+  ReactDOM.render(
+    <App externalFragments={externalFragments} />,
+    document.getElementById(`root`)
+  )
+})

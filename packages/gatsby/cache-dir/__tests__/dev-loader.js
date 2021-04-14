@@ -4,17 +4,28 @@ import DevLoader from "../dev-loader"
 import emitter from "../emitter"
 
 jest.mock(`../emitter`)
-jest.mock(`../socketIo`, () => {
-  return {
-    default: jest.fn(),
-    getPageData: jest.fn().mockResolvedValue(),
-  }
-})
+jest.mock(`../socketIo`, () => jest.fn())
 
 describe(`Dev loader`, () => {
+  let originalBasePath
+  let originalPathPrefix
+  beforeEach(() => {
+    originalBasePath = global.__BASE_PATH__
+    originalPathPrefix = global.__PATH_PREFIX__
+    global.__BASE_PATH__ = ``
+    global.__PATH_PREFIX__ = ``
+  })
+
+  afterEach(() => {
+    global.__BASE_PATH__ = originalBasePath
+    global.__PATH_PREFIX__ = originalPathPrefix
+  })
+
+  const asyncRequires = {
+    components: {},
+  }
+
   describe(`loadPageDataJson`, () => {
-    let originalBasePath
-    let originalPathPrefix
     let xhrCount
 
     /**
@@ -46,23 +57,17 @@ describe(`Dev loader`, () => {
 
     // replace the real XHR object with the mock XHR object before each test
     beforeEach(() => {
-      originalBasePath = global.__BASE_PATH__
-      originalPathPrefix = global.__PATH_PREFIX__
-      global.__BASE_PATH__ = ``
-      global.__PATH_PREFIX__ = ``
       xhrCount = 0
       mock.setup()
     })
 
     // put the real XHR object back and clear the mocks after each test
     afterEach(() => {
-      global.__BASE_PATH__ = originalBasePath
-      global.__PATH_PREFIX__ = originalPathPrefix
       mock.teardown()
     })
 
     it(`should return a pageData json on success`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       mockPageData(`/mypage`, 200, defaultPayload, true)
 
@@ -77,7 +82,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should return a pageData json on success without contentType`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       mockPageData(`/mypage`, 200, defaultPayload)
 
@@ -92,7 +97,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should return a pageData json with an empty compilation hash (gatsby develop)`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       const payload = { ...defaultPayload, webpackCompilationHash: `` }
       mockPageData(`/mypage`, 200, payload)
@@ -108,7 +113,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should load a 404 page when page-path file is not a gatsby json`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       const payload = { ...defaultPayload, path: `/404.html/` }
       mockPageData(`/unknown-page`, 200, { random: `string` }, true)
@@ -128,7 +133,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should load a 404 page when page-path file is not a json`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       const payload = { ...defaultPayload, path: `/404.html/` }
       mockPageData(`/unknown-page`, 200)
@@ -148,7 +153,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should load a 404 page when path returns a 404`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       const payload = { ...defaultPayload, path: `/404.html/` }
       mockPageData(`/unknown-page`, 200)
@@ -168,7 +173,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should return the dev-404-page when no 404 page can be found`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       const payload = { ...defaultPayload, path: `/dev-404-page/` }
       mockPageData(`/unknown-page`, 404)
@@ -188,13 +193,13 @@ describe(`Dev loader`, () => {
       expect(devLoader.pageDataDb.get(`/unknown-page`)).toEqual({
         notFound: true,
         pagePath: `/404.html`,
-        status: `failure`,
+        status: `error`,
       })
       expect(xhrCount).toBe(3)
     })
 
     it(`should return an error when status is 500`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       mockPageData(`/error-page`, 500)
 
@@ -202,15 +207,17 @@ describe(`Dev loader`, () => {
         status: `error`,
         pagePath: `/error-page`,
       }
-      expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual(
-        expectation
-      )
+      expect(await devLoader.loadPageDataJson(`/error-page/`)).toEqual({
+        status: `error`,
+        pagePath: `/dev-404-page`,
+        retries: 3,
+      })
       expect(devLoader.pageDataDb.get(`/error-page`)).toEqual(expectation)
       expect(xhrCount).toBe(1)
     })
 
     it(`should retry 3 times before returning an error`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       mockPageData(`/blocked-page`, 0)
 
@@ -219,15 +226,17 @@ describe(`Dev loader`, () => {
         retries: 3,
         pagePath: `/blocked-page`,
       }
-      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual(
-        expectation
-      )
+      expect(await devLoader.loadPageDataJson(`/blocked-page/`)).toEqual({
+        status: `error`,
+        retries: 3,
+        pagePath: `/dev-404-page`,
+      })
       expect(devLoader.pageDataDb.get(`/blocked-page`)).toEqual(expectation)
       expect(xhrCount).toBe(4)
     })
 
     it(`should recover if we get 1 failure`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       const payload = {
         path: `/blocked-page/`,
       }
@@ -256,7 +265,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`shouldn't load pageData multiple times`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       mockPageData(`/mypage`, 200, defaultPayload, true)
 
@@ -267,7 +276,7 @@ describe(`Dev loader`, () => {
   })
 
   describe(`loadPage`, () => {
-    const createSyncRequires = components => {
+    const createAsyncRequires = components => {
       return {
         components,
       }
@@ -298,16 +307,17 @@ describe(`Dev loader`, () => {
     })
 
     it(`should be successful when component can be loaded`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: `instance`,
+      const asyncRequires = createAsyncRequires({
+        chunk: () => Promise.resolve({ default: () => {} }),
       })
-      const devLoader = new DevLoader(syncRequires, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
         result: {
           pageContext: `something something`,
         },
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -318,7 +328,12 @@ describe(`Dev loader`, () => {
 
       const expectation = await devLoader.loadPage(`/mypage/`)
       expect(expectation).toMatchSnapshot()
-      expect(Object.keys(expectation)).toEqual([`component`, `json`, `page`])
+      expect(Object.keys(expectation)).toEqual([
+        `component`,
+        `json`,
+        `page`,
+        `staticQueryResults`,
+      ])
       expect(devLoader.pageDb.get(`/mypage`)).toEqual(
         expect.objectContaining({
           payload: expectation,
@@ -333,10 +348,10 @@ describe(`Dev loader`, () => {
     })
 
     it(`should set not found on finalResult`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: `instance`,
+      const asyncRequires = createAsyncRequires({
+        chunk: () => Promise.resolve({ default: () => {} }),
       })
-      const devLoader = new DevLoader(syncRequires, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
@@ -360,13 +375,14 @@ describe(`Dev loader`, () => {
     })
 
     it(`should return an error when component cannot be loaded`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: false,
+      const asyncRequires = createAsyncRequires({
+        chunk: () => Promise.resolve(false),
       })
-      const devLoader = new DevLoader(syncRequires, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -382,13 +398,14 @@ describe(`Dev loader`, () => {
     })
 
     it(`should return an error pageData contains an error`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: `instance`,
+      const asyncRequires = createAsyncRequires({
+        chunk: () => Promise.resolve({ default: () => {} }),
       })
-      const devLoader = new DevLoader(syncRequires, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       const pageData = {
         path: `/mypage/`,
         componentChunkName: `chunk`,
+        staticQueryHashes: [],
       }
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
@@ -402,35 +419,36 @@ describe(`Dev loader`, () => {
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
-    it(`should throw an error when 404 cannot be fetched`, async () => {
-      const devLoader = new DevLoader(null, [])
+    it(`should log an error when 404 cannot be fetched`, async () => {
+      const devLoader = new DevLoader(asyncRequires, [])
+      const consoleErrorSpy = jest.spyOn(console, `error`)
+      const defaultXHRMockErrorHandler = XMLHttpRequest.errorCallback
+      mock.error(() => {})
 
-      devLoader.loadPageDataJson = jest.fn(() =>
-        Promise.resolve({
-          status: `failure`,
-        })
+      await devLoader.loadPage(`/404.html/`)
+
+      expect(consoleErrorSpy).toHaveBeenCalledTimes(1)
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        `404 page could not be found. Checkout https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/`
       )
 
-      try {
-        await devLoader.loadPage(`/404.html/`)
-      } catch (err) {
-        expect(err.message).toEqual(
-          expect.stringContaining(`404 page could not be found`)
-        )
-      }
+      mock.error(defaultXHRMockErrorHandler)
+      consoleErrorSpy.mockRestore()
+
       expect(devLoader.pageDb.size).toBe(0)
       expect(emitter.emit).toHaveBeenCalledTimes(0)
     })
 
     it(`should cache the result of loadPage`, async () => {
-      const syncRequires = createSyncRequires({
-        chunk: `instance`,
+      const asyncRequires = createAsyncRequires({
+        chunk: () => Promise.resolve({ default: () => {} }),
       })
-      const devLoader = new DevLoader(syncRequires, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       devLoader.loadPageDataJson = jest.fn(() =>
         Promise.resolve({
           payload: {
             componentChunkName: `chunk`,
+            staticQueryHashes: [],
           },
           status: `success`,
         })
@@ -444,14 +462,14 @@ describe(`Dev loader`, () => {
 
   describe(`loadPageSync`, () => {
     it(`returns page resources when already fetched`, () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       devLoader.pageDb.set(`/mypage`, { payload: true })
       expect(devLoader.loadPageSync(`/mypage/`)).toBe(true)
     })
 
     it(`returns page resources when already fetched`, () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
 
       expect(devLoader.loadPageSync(`/mypage/`)).toBeUndefined()
     })
@@ -461,7 +479,7 @@ describe(`Dev loader`, () => {
     const flushPromises = () => new Promise(resolve => setImmediate(resolve))
 
     it(`shouldn't prefetch when shouldPrefetch is false`, () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       devLoader.shouldPrefetch = jest.fn(() => false)
       devLoader.doPrefetch = jest.fn()
       devLoader.apiRunner = jest.fn()
@@ -473,7 +491,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should trigger custom prefetch logic when core is disabled`, () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.doPrefetch = jest.fn()
       devLoader.apiRunner = jest.fn()
@@ -489,7 +507,7 @@ describe(`Dev loader`, () => {
 
     it(`should prefetch when not yet triggered`, async () => {
       jest.useFakeTimers()
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.apiRunner = jest.fn()
       devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))
@@ -512,7 +530,7 @@ describe(`Dev loader`, () => {
     })
 
     it(`should only run apis once`, async () => {
-      const devLoader = new DevLoader(null, [])
+      const devLoader = new DevLoader(asyncRequires, [])
       devLoader.shouldPrefetch = jest.fn(() => true)
       devLoader.apiRunner = jest.fn()
       devLoader.doPrefetch = jest.fn(() => Promise.resolve({}))

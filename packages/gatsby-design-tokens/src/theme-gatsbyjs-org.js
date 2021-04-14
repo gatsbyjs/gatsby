@@ -73,7 +73,7 @@ const c = {
     linkDefault: colorsTokens.grey[70],
     linkActive: colorsTokens.purple[50],
     linkHover: colorsTokens.gatsby,
-    socialLink: colorsTokens.grey[40],
+    socialLink: colorsTokens.grey[50],
   },
   search: {
     suggestionHighlightBackground: colorsTokens.lavender,
@@ -187,7 +187,7 @@ const c = {
         linkActive: colorsTokens.purple[40],
         linkDefault: colorsTokens.whiteFade[60],
         linkHover: colorsTokens.white,
-        socialLink: colorsTokens.grey[60],
+        socialLink: colorsTokens.grey[50],
       },
       themedInput: {
         background: darkBorder,
@@ -322,6 +322,7 @@ const newTheme = {
 }
 
 export {
+  borders,
   breakpoints,
   fonts,
   fontSizes,

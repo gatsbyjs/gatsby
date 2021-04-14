@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import * as React from "react"
+import { Link } from "gatsby"
 
-import Bio from '../components/bio'
-import Layout from '../components/layout'
-import InstrumentPage from '../utils/instrument-page'
+import Bio from "../components/bio"
+import Layout from "../components/layout"
+import InstrumentPage from "../utils/instrument-page"
 
 const IndexPage = ({ pageContext }) => (
   <Layout>
@@ -24,6 +24,11 @@ const IndexPage = ({ pageContext }) => (
       <li>
         <Link to="/long-page/" data-testid="long-page">
           To long page
+        </Link>
+      </li>
+      <li>
+        <Link to="/long-page#áccentuated" data-testid="long-page-id">
+          To long page (at id)
         </Link>
       </li>
       <li>
@@ -52,13 +57,39 @@ const IndexPage = ({ pageContext }) => (
         </Link>
       </li>
       <li>
-        <Link to="/path-context/" data-testid="path-context">
-          Path Context
+        <Link to="/안녕" data-testid="page-with-unicode-path">
+          Go to page with unicode path
         </Link>
       </li>
       <li>
-        <Link to="/안녕" data-testid="page-with-unicode-path">
+        <Link to="/foo/@something/bar" data-testid="page-with-encodable-path">
           Go to page with unicode path
+        </Link>
+      </li>
+      <li>
+        <Link to="subdirectory/page-1" data-testid="subdir-link">
+          Go to subdirectory
+        </Link>
+      </li>
+      <li>
+        <Link to="collection-routing/root" data-testid="collection-link">
+          Go to collection routing
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/foo"
+          data-testid="client-dynamic-route-foo"
+        >
+          Go to dynamic route (id: foo)
+        </Link>
+      </li>
+      <li>
+        <Link
+          to="client-dynamic-route/splat/blah/blah/blah"
+          data-testid="client-dynamic-route-splat"
+        >
+          Go to client route splat (splat: blah/blah/blah)
         </Link>
       </li>
     </ul>

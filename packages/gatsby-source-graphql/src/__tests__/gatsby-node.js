@@ -1,6 +1,6 @@
-jest.mock(`graphql-tools-fork`, () => {
+jest.mock(`@graphql-tools/wrap`, () => {
   return {
-    transformSchema: jest.fn(),
+    wrapSchema: jest.fn(),
     introspectSchema: jest.fn(),
     RenameTypes: jest.fn(),
   }
@@ -20,7 +20,7 @@ jest.mock(`gatsby/graphql`, () => {
   }
 })
 const { sourceNodes } = require(`../gatsby-node`)
-const nodeFetch = require(`node-fetch`)
+const { fetchWrapper } = require(`../fetch`)
 
 const getInternalGatsbyAPI = () => {
   const actions = {
@@ -98,7 +98,7 @@ describe(`createHttpLink`, () => {
     })
 
     expect(createHttpLink).toHaveBeenCalledWith(
-      expect.objectContaining({ fetch: nodeFetch })
+      expect.objectContaining({ fetch: fetchWrapper })
     )
   })
 })

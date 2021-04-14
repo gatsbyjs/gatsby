@@ -3,6 +3,350 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.3.0-next.1...gatsby-plugin-manifest@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.3.0-next.0...gatsby-plugin-manifest@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.2.0-next.0...gatsby-plugin-manifest@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.1.0-next.2...gatsby-plugin-manifest@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.1.0-next.1...gatsby-plugin-manifest@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.1.0-next.0...gatsby-plugin-manifest@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.0.0-next.2...gatsby-plugin-manifest@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.0.0-next.1...gatsby-plugin-manifest@3.0.0-next.2) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.0.0-next.0...gatsby-plugin-manifest@3.0.0-next.1) (2021-02-22)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.13.0-next.1...gatsby-plugin-manifest@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.13.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.13.0-next.0...gatsby-plugin-manifest@2.13.0-next.1) (2021-02-04)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.12.0-next.1...gatsby-plugin-manifest@2.13.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Fix `or` Joi assertion ([#29242](https://github.com/gatsbyjs/gatsby/issues/29242)) ([844ac84](https://github.com/gatsbyjs/gatsby/commit/844ac842736707427560a205de477ace96f568c0))
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.12.0-next.0...gatsby-plugin-manifest@2.12.0-next.1) (2021-01-26)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** Add `webapp` key ([#29193](https://github.com/gatsbyjs/gatsby/issues/29193)) ([a5714b7](https://github.com/gatsbyjs/gatsby/commit/a5714b7075b7be005d200600e7c53307bf7b6e7b))
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.11.0-next.1...gatsby-plugin-manifest@2.12.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.11.0-next.0...gatsby-plugin-manifest@2.11.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.10.0-next.2...gatsby-plugin-manifest@2.11.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.10.0-next.1...gatsby-plugin-manifest@2.10.0-next.2) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.10.0-next.0...gatsby-plugin-manifest@2.10.0-next.1) (2020-12-17)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.2...gatsby-plugin-manifest@2.10.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.9.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.1...gatsby-plugin-manifest@2.9.0-next.2) (2020-12-04)
+
+### Features
+
+- **gatsby-plugin-manifest:** Add support for share_target ([#28457](https://github.com/gatsbyjs/gatsby/issues/28457)) ([1fe3f9a](https://github.com/gatsbyjs/gatsby/commit/1fe3f9ab6f7385a084ec783b4d109139cdfab620))
+
+# [2.9.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.9.0-next.0...gatsby-plugin-manifest@2.9.0-next.1) (2020-12-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.8.0-next.0...gatsby-plugin-manifest@2.9.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.7.0-next.1...gatsby-plugin-manifest@2.8.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.7.0-next.0...gatsby-plugin-manifest@2.7.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **plugin-manifest:** Allow for all valid WebAppManifest properties ([#27951](https://github.com/gatsbyjs/gatsby/issues/27951)) ([88b990a](https://github.com/gatsbyjs/gatsby/commit/88b990ab44c1cd9acc9e1b7367991a3c194dd308))
+
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.6.0-next.0...gatsby-plugin-manifest@2.6.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.5.0...gatsby-plugin-manifest@2.5.1) (2020-11-02)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** create directories recursively ([#27793](https://github.com/gatsbyjs/gatsby/issues/27793)) ([085d188](https://github.com/gatsbyjs/gatsby/commit/085d1888481881456bbaf4a988cfb7578f28f0d9))
+
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.37...gatsby-plugin-manifest@2.5.0) (2020-11-02)
+
+### Features
+
+- **gatsby:** release plugin option validation ([#27437](https://github.com/gatsbyjs/gatsby/issues/27437)) ([41ae1c0](https://github.com/gatsbyjs/gatsby/commit/41ae1c07ad9919655782ef17feed8cf4f14f12d8))
+
+## [2.4.37](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.36...gatsby-plugin-manifest@2.4.37) (2020-10-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.36](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.35...gatsby-plugin-manifest@2.4.36) (2020-10-27)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** fix plugin option schema and add a test for it ([#27565](https://github.com/gatsbyjs/gatsby/issues/27565)) ([49fdb53](https://github.com/gatsbyjs/gatsby/commit/49fdb53ecd1857b67d7bb078bcd2bb42e352b7cb))
+
+## [2.4.35](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.34...gatsby-plugin-manifest@2.4.35) (2020-10-16)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.34](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.33...gatsby-plugin-manifest@2.4.34) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.33](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.32...gatsby-plugin-manifest@2.4.33) (2020-10-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.32](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.31...gatsby-plugin-manifest@2.4.32) (2020-09-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** re-use domain connection ([#26946](https://github.com/gatsbyjs/gatsby/issues/26946)) ([6d0d2ef](https://github.com/gatsbyjs/gatsby/commit/6d0d2ef069977cec2b0c82bcbc1f24496c2a3d37))
+
+## [2.4.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.30...gatsby-plugin-manifest@2.4.31) (2020-09-23)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.30](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.29...gatsby-plugin-manifest@2.4.30) (2020-09-16)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.29](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.28...gatsby-plugin-manifest@2.4.29) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.28](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.27...gatsby-plugin-manifest@2.4.28) (2020-09-07)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.27](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.26...gatsby-plugin-manifest@2.4.27) (2020-08-31)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.26](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.25...gatsby-plugin-manifest@2.4.26) (2020-08-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.25](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.24...gatsby-plugin-manifest@2.4.25) (2020-08-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.23...gatsby-plugin-manifest@2.4.24) (2020-08-24)
+
+### Features
+
+- **gatsby-core-utils:** Add node.js export, and move site-metadata into its own function ([#26237](https://github.com/gatsbyjs/gatsby/issues/26237)) ([b164147](https://github.com/gatsbyjs/gatsby/commit/b164147))
+
+## [2.4.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.22...gatsby-plugin-manifest@2.4.23) (2020-08-11)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.21...gatsby-plugin-manifest@2.4.22) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.20...gatsby-plugin-manifest@2.4.21) (2020-07-24)
+
+### Features
+
+- **plugin-manifest:** support SVG favicon ([#25276](https://github.com/gatsbyjs/gatsby/issues/25276)) ([f99ae04](https://github.com/gatsbyjs/gatsby/commit/f99ae04))
+
+## [2.4.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.19...gatsby-plugin-manifest@2.4.20) (2020-07-21)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.18...gatsby-plugin-manifest@2.4.19) (2020-07-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.17...gatsby-plugin-manifest@2.4.18) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.16...gatsby-plugin-manifest@2.4.17) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.15...gatsby-plugin-manifest@2.4.16) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.14...gatsby-plugin-manifest@2.4.15) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.13...gatsby-plugin-manifest@2.4.14) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.12...gatsby-plugin-manifest@2.4.13) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.11...gatsby-plugin-manifest@2.4.12) (2020-06-19)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.10...gatsby-plugin-manifest@2.4.11) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.9...gatsby-plugin-manifest@2.4.10) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.8...gatsby-plugin-manifest@2.4.9) (2020-05-22)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.7...gatsby-plugin-manifest@2.4.8) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.6...gatsby-plugin-manifest@2.4.7) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.5...gatsby-plugin-manifest@2.4.6) (2020-05-19)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.4...gatsby-plugin-manifest@2.4.5) (2020-05-18)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.3...gatsby-plugin-manifest@2.4.4) (2020-05-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-manifest:** remove fs from ssr ([#24097](https://github.com/gatsbyjs/gatsby/issues/24097)) ([846b59a](https://github.com/gatsbyjs/gatsby/commit/846b59a))
+
+## [2.4.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.2...gatsby-plugin-manifest@2.4.3) (2020-05-13)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.1...gatsby-plugin-manifest@2.4.2) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.4.0...gatsby-plugin-manifest@2.4.1) (2020-04-28)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.7...gatsby-plugin-manifest@2.4.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.6...gatsby-plugin-manifest@2.3.7) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.5...gatsby-plugin-manifest@2.3.6) (2020-04-21)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.4...gatsby-plugin-manifest@2.3.5) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.3...gatsby-plugin-manifest@2.3.4) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.2...gatsby-plugin-manifest@2.3.3) (2020-03-26)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.1...gatsby-plugin-manifest@2.3.2) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.3.0...gatsby-plugin-manifest@2.3.1) (2020-03-20)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.48...gatsby-plugin-manifest@2.3.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.2.48](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.47...gatsby-plugin-manifest@2.2.48) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.47](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.46...gatsby-plugin-manifest@2.2.47) (2020-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.46](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.45...gatsby-plugin-manifest@2.2.46) (2020-03-10)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.45](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.44...gatsby-plugin-manifest@2.2.45) (2020-03-09)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.44](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.43...gatsby-plugin-manifest@2.2.44) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
+## [2.2.43](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.42...gatsby-plugin-manifest@2.2.43) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-manifest
+
 ## [2.2.42](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@2.2.41...gatsby-plugin-manifest@2.2.42) (2020-02-24)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

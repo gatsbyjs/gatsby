@@ -2,9 +2,13 @@
 
 Easily add Google Analytics to your Gatsby site.
 
+## Upgrade note
+
+This plugin uses Google's `analytics.js` file under the hood. Google has a [guide recommending users upgrade to `gtag.js` instead](https://developers.google.com/analytics/devguides/collection/upgrade/analyticsjs). There is another plugin [`gatsby-plugin-gtag`](https://gatsbyjs.com/plugins/gatsby-plugin-google-gtag/) which uses `gtag.js`.
+
 ## Install
 
-`npm install --save gatsby-plugin-google-analytics`
+`npm install gatsby-plugin-google-analytics`
 
 ## How to use
 
@@ -33,6 +37,8 @@ module.exports = {
         experimentId: "YOUR_GOOGLE_EXPERIMENT_ID",
         // Set Variation ID. 0 for original 1,2,3....
         variationId: "YOUR_GOOGLE_OPTIMIZE_VARIATION_ID",
+        // Defers execution of google analytics script after page load
+        defer: false,
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
@@ -58,13 +64,15 @@ To use it, simply import it and use it like you would the `<a>` element e.g.
 import React from "react"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
 
-export default () => (
+const Component = () => (
   <div>
-    <OutboundLink href="https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/">
+    <OutboundLink href="https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/">
       Visit the Google Analytics plugin page!
     </OutboundLink>
   </div>
 )
+
+export default Component
 ```
 
 ## Options
@@ -101,6 +109,10 @@ you can set a link e.g. in your imprint as follows:
 
 If you enable this optional option, Google Analytics will not be loaded at all for visitors that have "Do Not Track" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
 
+If you are testing this, make sure to disable Do Not Track settings in your own browser.
+For Chrome, Settings > Privacy and security > More
+Then disable `Send a "Do Not Track" request with your browsing traffic`
+
 ### `exclude`
 
 If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
@@ -132,12 +144,14 @@ This plugin supports all optional Create Only Fields documented in [Google Analy
 - `alwaysSendReferrer`: boolean
 - `allowAnchor`: boolean
 - `cookieName`: string
+- `cookieFlags`: string
 - `cookieDomain`: string, defaults to `'auto'` if not given
 - `cookieExpires`: number
 - `storeGac`: boolean
 - `legacyCookieDomain`: string
 - `legacyHistoryImport`: boolean
 - `allowLinker`: boolean
+- `storage`: string
 
 This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
 
@@ -156,10 +170,10 @@ To allow custom events to be tracked, the plugin exposes a function to include i
 To use it, import the package and call the event within your components and business logic.
 
 ```jsx
-import React
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
+import React from "react"
+import { trackCustomEvent } from "gatsby-plugin-google-analytics"
 
-export default () => {
+const Component = () => (
   <div>
     <button
       onClick={e => {
@@ -174,7 +188,7 @@ export default () => {
           // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
           label: "Gatsby Plugin Example Campaign",
           // number - optional - Numeric value associated with the event. (e.g. A product ID)
-          value: 43
+          value: 43,
         })
         //... Other logic here
       }}
@@ -182,7 +196,9 @@ export default () => {
       Tap that!
     </button>
   </div>
-}
+)
+
+export default Component
 ```
 
 ### All Fields Options

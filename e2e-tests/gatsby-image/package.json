@@ -13,8 +13,8 @@
     "gatsby-plugin-sharp": "^2.0.20",
     "gatsby-source-filesystem": "^2.0.20",
     "gatsby-transformer-sharp": "^2.1.13",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
@@ -29,13 +29,13 @@
     "start-server-and-test": "start-server-and-test serve http://localhost:9000 cy:run",
     "serve": "gatsby serve",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
-    "prettier": "^1.14.3",
+    "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"
   },
   "repository": {

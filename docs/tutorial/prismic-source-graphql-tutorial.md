@@ -27,12 +27,16 @@ By the end of this tutorial, you’ll have done the following:
 
 Start a new Gatsby project using the default starter.
 
-    $ gatsby new gatsby-prismic-blog
-    $ cd gatsby-prismic-blog
+```shell
+gatsby new gatsby-prismic-blog
+cd gatsby-prismic-blog
+```
 
 Now, you will have to install missing packages. This command includes the Gatsby Prismic source plugin, and the Prismic kits for facilitating processes in React:
 
-    $ npm i --save gatsby-source-prismic-graphql prismic-javascript prismic-reactjs
+```shell
+npm install gatsby-source-prismic-graphql prismic-javascript prismic-reactjs
+```
 
 If you want to focus on learning how to fetch and render data from a Prismic repository, it's safe to just use the sample repository `gatsby-blog-scratch` but you should create your own so you can modify the content and test out previews. Otherwise, you can follow [this article](https://prismic.io/docs/reactjs/getting-started/create-repo-minimalist-blog) to create your own Prismic repository. You will want to write several blog posts to have some nice content to show off.
 
@@ -115,7 +119,7 @@ export const query = graphql`
 In order to render this data, replace the `export default IndexPage` line in the original `index.js` file with the following:
 
 ```jsx:title=src/pages/index.js
-export default ({ data }) => {
+export default function Home({ data }) {
   const doc = data.prismic.allBlog_homes.edges.slice(0, 1).pop()
   const posts = data.prismic.allPosts.edges
 
@@ -160,7 +164,7 @@ const BlogPosts = ({ posts }) => {
 }
 //highlight-end
 
-export default ({ data }) => {
+export default function Home({ data }) {
   const doc = data.prismic.allBlog_homes.edges.slice(0, 1).pop()
   const posts = data.prismic.allPosts.edges
 
@@ -258,7 +262,7 @@ export const query = graphql`
   }
 `
 
-export default ({ data }) => {
+export default function Post({ data }) {
   const doc = data.prismic.allPosts.edges.slice(0, 1).pop()
   if (!doc) return null
 

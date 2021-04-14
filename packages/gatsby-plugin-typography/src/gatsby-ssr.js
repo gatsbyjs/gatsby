@@ -1,21 +1,19 @@
 import React from "react"
 import { TypographyStyle, GoogleFont } from "react-typography"
-import typography from "./.cache/typography"
+import typography from "typography-plugin-cache-endpoint"
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  if (process.env.BUILD_STAGE === `build-html`) {
-    const googleFont = [].concat(
-      pluginOptions.omitGoogleFont ? (
-        []
-      ) : (
-        <GoogleFont key={`GoogleFont`} typography={typography} />
-      )
+  const googleFont = [].concat(
+    pluginOptions.omitGoogleFont ? (
+      []
+    ) : (
+      <GoogleFont key={`GoogleFont`} typography={typography} />
     )
-    setHeadComponents([
-      <TypographyStyle key={`TypographyStyle`} typography={typography} />,
-      ...googleFont,
-    ])
-  }
+  )
+  setHeadComponents([
+    <TypographyStyle key={`TypographyStyle`} typography={typography} />,
+    ...googleFont,
+  ])
 }
 
 // Move Typography.js styles to the top of the head section so they're loaded first

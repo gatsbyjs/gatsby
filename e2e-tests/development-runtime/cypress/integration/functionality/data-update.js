@@ -9,6 +9,14 @@ A brand new post
 
 `.trim()
 
+before(() => {
+  cy.exec(`npm run reset`)
+})
+
+after(() => {
+  cy.exec(`npm run reset`)
+})
+
 describe(`on new file`, () => {
   beforeEach(() => {
     cy.visit(`/`).waitForRouteChange()
@@ -20,9 +28,7 @@ describe(`on new file`, () => {
       `npm run update -- --file content/new-file.md --file-content \\"${content}\\"`
     )
 
-    cy.get(`ul`)
-      .find(`li:nth-child(2)`)
-      .should(`exist`, 1)
+    cy.get(`ul`).find(`li:nth-child(2)`).should(`exist`, 1)
   })
 })
 

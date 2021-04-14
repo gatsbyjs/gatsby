@@ -5,9 +5,9 @@ disableTableOfContents: true
 
 ## What is continuous deployment?
 
-Continuous deployment (CD) is the automation of code deployments. In a continuous deployment system, you don't push a <q>Deploy</q> button or run a `deploy` command. Instead, you build a _pipeline_ &mdash; a process that builds and releases code automatically, without human intervention.
+Continuous deployment (CD) is the automation of code deployments. In a continuous deployment system, you don't push a <q>Deploy</q> button or run a `deploy` command. Instead, you build a _pipeline_ — a process that [builds](/docs/glossary/build/) and releases code automatically, without human intervention.
 
-You'll most likely use a service to create your continuous deployment pipeline. Services such as [Netlify](http://netlify.com/), [AWS Amplify](https://aws.amazon.com/amplify/), [Azure](https://azure.microsoft.com/en-us/), and [Zeit](https://zeit.co/) are popular with Gatsby users. Or you can use [Gatsby Builds](/blog/2020-01-27-announcing-gatsby-builds-and-reports/), a feature of the [Gatsby Cloud](https://www.gatsbyjs.com/) service.
+You'll most likely use a service to create your continuous deployment pipeline. Services such as [Netlify](https://www.netlify.com/), [AWS Amplify](https://aws.amazon.com/amplify/), [Azure](https://azure.microsoft.com/en-us/), and [Vercel](https://vercel.com/) are popular with Gatsby users. Or you can use [Gatsby Builds](/blog/2020-01-27-announcing-gatsby-builds-and-reports/), a feature of the [Gatsby Cloud](https://www.gatsbyjs.com/) service.
 
 A continuous deployment pipeline begins with a [Git](https://git-scm.com/) repository. Git is source control management software, and you use it to manage changes to your site's code. Most continuous deployment services require a hosted Git service such as [GitHub](https://github.com/), [GitLab](https://about.gitlab.com/), or [Bitbucket](https://bitbucket.org/).
 

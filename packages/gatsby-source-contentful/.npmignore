@@ -27,7 +27,9 @@ build/Release
 node_modules
 *.un~
 yarn.lock
-src/__tests__
+src/**/*
+!src/fragments.js
+scripts
 flow-typed
 coverage
 decls

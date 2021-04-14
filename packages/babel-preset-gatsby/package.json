@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby",
-  "version": "0.2.29",
+  "version": "1.4.0-next.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -9,37 +9,40 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby#readme",
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
-    "@babel/plugin-transform-runtime": "^7.7.6",
-    "@babel/plugin-transform-spread": "^7.7.4",
-    "@babel/preset-env": "^7.7.6",
-    "@babel/preset-react": "^7.7.4",
-    "@babel/runtime": "^7.7.6",
-    "babel-plugin-dynamic-import-node": "^2.3.0",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-classes": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/plugin-transform-spread": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "@babel/runtime": "^7.12.5",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "gatsby-core-utils": "^1.0.28"
+    "gatsby-core-utils": "^2.4.0-next.0",
+    "gatsby-legacy-polyfills": "^1.4.0-next.0"
   },
   "peerDependencies": {
-    "@babel/core": "^7.0.0"
+    "@babel/core": "^7.11.6",
+    "core-js": "^3.0.0"
   },
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --ignore \"**/utils/path-serializer.ts\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore **/utils/path-serializer.js"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore \"**/utils/path-serializer.ts\" --extensions \".ts,.js\""
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1",
+    "@babel/cli": "^7.12.1",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3",
     "slash": "^3.0.0"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

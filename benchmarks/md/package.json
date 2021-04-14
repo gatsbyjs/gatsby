@@ -1,0 +1,51 @@
+{
+  "name": "gatsby-benchmark-md",
+  "private": true,
+  "description": "An example site to benchmark MD",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "build:send": "cross-env BENCHMARK_REPORTING_URL=true gatsby build",
+    "clean": "gatsby clean",
+    "data-update": "ts-node scripts/data-update.ts",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "postinstall": "del-cli src/articles && gatsby clean && willit --use-pregenerated-data --type=md --num-pages=${NUM_PAGES:-512}",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.0",
+    "del-cli": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "faker": "^4.1.0",
+    "front-matter": "^3.1.0",
+    "gatsby": "^2.20.23",
+    "gatsby-image": "^2.3.3",
+    "gatsby-plugin-benchmark-reporting": "*",
+    "gatsby-plugin-page-creator": "^2.2.2",
+    "gatsby-plugin-sharp": "^2.4.12",
+    "gatsby-remark-images": "^3.2.3",
+    "gatsby-source-filesystem": "^2.2.3",
+    "gatsby-transformer-remark": "^2.8.7",
+    "gatsby-transformer-sharp": "^2.4.5",
+    "glob": "^7.1.6",
+    "node-fetch": "^2.6.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3",
+    "willit": "^1.0.0"
+  },
+  "devDependencies": {
+    "prettier": "2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/mdx"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}

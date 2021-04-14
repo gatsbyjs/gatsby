@@ -1,4 +1,4 @@
-const select = require(`unist-util-select`)
+const { selectAll } = require(`unist-util-select`)
 const sharp = require(`./safe-sharp`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
@@ -39,18 +39,12 @@ module.exports = async (
   }
 
   // This will only work for markdown syntax image tags
-  const markdownImageNodes = select(markdownAST, `image`)
+  const markdownImageNodes = selectAll(`image`, markdownAST)
 
   // This will also allow the use of html image tags
-  const rawHtmlNodes = select(markdownAST, `html`)
+  const rawHtmlNodes = selectAll(`html`, markdownAST)
 
-  const generateImagesAndUpdateNode = async function(node, resolve) {
-    // Ignore if it is not contentful image
-
-    if (node.url.indexOf(`images.ctfassets.net`) === -1) {
-      return resolve()
-    }
-
+  const generateImagesAndUpdateNode = async function (node) {
     let originalImg = node.url
     if (!/^(http|https)?:\/\//i.test(node.url)) {
       originalImg = `https:${node.url}`
@@ -58,23 +52,32 @@ module.exports = async (
 
     const srcSplit = node.url.split(`/`)
     const fileName = srcSplit[srcSplit.length - 1]
-    const options = _.defaults(pluginOptions, defaults)
+    const options = _.defaults({}, pluginOptions, defaults)
 
     const optionsHash = createContentDigest(options)
 
-    const cacheKey = `remark-images-ctf-${fileName}-${optionsHash}`
-    let cachedRawHTML = await cache.get(cacheKey)
+    const cacheKey = `remark-images-ctf-${node.url}-${optionsHash}`
+    const cachedRawHTML = await cache.get(cacheKey)
 
     if (cachedRawHTML) {
       return cachedRawHTML
     }
     const metaReader = sharp()
 
-    const response = await axios({
-      method: `GET`,
-      url: originalImg, // for some reason there is a './' prefix
-      responseType: `stream`,
-    })
+    let response
+    try {
+      response = await axios({
+        method: `GET`,
+        url: originalImg, // for some reason there is a './' prefix
+        responseType: `stream`,
+      })
+    } catch (err) {
+      reporter.panic(
+        `Image downloading failed for ${originalImg}, please check if the image still exists on contentful`,
+        err
+      )
+      return []
+    }
 
     response.data.pipe(metaReader)
 
@@ -82,11 +85,14 @@ module.exports = async (
 
     response.data.destroy()
 
-    const responsiveSizesResult = await buildResponsiveSizes({
-      metadata,
-      imageUrl: originalImg,
-      options,
-    })
+    const responsiveSizesResult = await buildResponsiveSizes(
+      {
+        metadata,
+        imageUrl: originalImg,
+        options,
+      },
+      reporter
+    )
 
     // Calculate the paddingBottom %
     const ratio = `${(1 / responsiveSizesResult.aspectRatio) * 100}%`
@@ -200,16 +206,17 @@ ${rawHTML}
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
       node =>
-        new Promise(async (resolve, reject) => {
+        new Promise(resolve => {
           if (node.url.indexOf(`images.ctfassets.net`) !== -1) {
-            const rawHTML = await generateImagesAndUpdateNode(node, resolve)
+            return generateImagesAndUpdateNode(node).then(rawHTML => {
+              if (rawHTML) {
+                // Replace the image node with an inline HTML node.
+                node.type = `html`
+                node.value = rawHTML
+              }
 
-            if (rawHTML) {
-              // Replace the image node with an inline HTML node.
-              node.type = `html`
-              node.value = rawHTML
-            }
-            return resolve(node)
+              return resolve(node)
+            })
           } else {
             // Image isn't relative so there's nothing for us to do.
             return resolve()
@@ -222,6 +229,7 @@ ${rawHTML}
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         node =>
+          // eslint-disable-next-line no-async-promise-executor
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve()
@@ -233,14 +241,15 @@ ${rawHTML}
               return resolve()
             }
 
-            let imageRefs = []
-            $(`img`).each(function() {
+            const imageRefs = []
+            $(`img`).each(function () {
+              // eslint-disable-next-line @babel/no-invalid-this
               imageRefs.push($(this))
             })
 
-            for (let thisImg of imageRefs) {
+            for (const thisImg of imageRefs) {
               // Get the details we need.
-              let formattedImgTag = {}
+              const formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)

@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-gatsby-package",
-  "version": "0.2.16",
+  "version": "1.4.0-next.0",
   "author": "Philipp Spiess <hello@philippspiess.com>",
   "repository": {
     "type": "git",
@@ -8,24 +8,24 @@
     "directory": "packages/babel-preset-gatsby-package"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-preset-gatsby-package#readme",
-  "peerDependencies": {
-    "@babel/core": "^7.0.0"
-  },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
-    "@babel/plugin-transform-runtime": "^7.7.6",
-    "@babel/preset-env": "^7.7.6",
-    "@babel/preset-flow": "^7.7.4",
-    "@babel/preset-react": "^7.7.4",
-    "babel-plugin-dynamic-import-node": "^2.3.0",
-    "core-js": "^2.6.11"
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/plugin-transform-typescript": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-flow": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
+    "core-js": "^3.10.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.11.6"
   },
   "license": "MIT",
   "main": "index.js",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

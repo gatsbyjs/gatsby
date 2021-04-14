@@ -6,7 +6,7 @@ This is a sub-plugin for `gatsby-transformer-remark`. As demoed below, add this 
 
 ## Install
 
-`npm install --save gatsby-remark-autolink-headers`
+`npm install gatsby-remark-autolink-headers`
 
 ## How to use
 
@@ -59,6 +59,7 @@ Note: if you are using `gatsby-remark-prismjs`, make sure that it’s listed aft
 - `removeAccents`: Boolean. Remove accents from generated headings IDs (optional)
 - `enableCustomId`: Boolean. Enable custom header IDs with `{#id}` (optional)
 - `isIconAfterHeader`: Boolean. Enable the anchor icon to be inline at the end of the header text (optional)
+- `elements`: String array. Specify which type of header tags to link (optional)
 
 ```javascript
 // In your gatsby-config.js
@@ -77,6 +78,7 @@ module.exports = {
               maintainCase: true,
               removeAccents: true,
               isIconAfterHeader: true,
+              elements: [`h1`, `h4`],
             },
           },
         ],
@@ -85,3 +87,17 @@ module.exports = {
   ],
 }
 ```
+
+## How to style the anchor link
+
+By default, the anchor link has a class of `anchor` (see `className` option to change this name) on the element but has no additional styling. To make it fit your website, you'll have to write some CSS to change the appearance.
+
+In your CSS you can specify this element, in this instance the anchor tag will appear red:
+
+```css
+a.anchor {
+  fill: "red";
+}
+```
+
+Note: There are a variety of approaches to styling your Gatsby site, see [styling documentation](https://www.gatsbyjs.com/docs/styling/) for more detail.

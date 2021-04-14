@@ -1,20 +1,20 @@
 {
   "name": "gatsby-transformer-screenshot",
   "description": "Gatsby transformer plugin that uses AWS Lambda to take screenshots of websites",
-  "version": "2.1.50",
+  "version": "3.4.0-next.0",
   "author": "David Beckley <beckl.ds@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "better-queue": "^3.8.10"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-screenshot#readme",
   "keywords": [
@@ -25,7 +25,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.33"
+    "gatsby": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -33,13 +33,13 @@
     "directory": "packages/gatsby-transformer-screenshot"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__ --ignore lambda",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --ignore lambda",
     "build-lambda-package": "npm run prepare-lambda-package && cd lambda-dist && zip -rq ../lambda-package.zip .",
     "prepare-lambda-package": "rm -rf lambda-dist && mkdir lambda-dist && cp lambda/package.json lambda-dist/package.json && cp lambda/screenshot.js lambda-dist/screenshot.js && cp lambda/index.js lambda-dist/index.js && cd lambda-dist && npm install --production",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__ --ignore lambda"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --ignore lambda"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

@@ -2,15 +2,15 @@
 title: Adding a List of Markdown Blog Posts
 ---
 
-Once you have added Markdown pages to your site, you are just one step away from being able to list your posts on a dedicated index page.
+Once you have added Markdown pages to your site, you are one step away from being able to list your posts on a dedicated index page.
 
 ## Creating posts
 
-As described [here](/docs/adding-markdown-pages), you will have to create your posts in Markdown files which will look like this:
+As described in [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages), you will have to create your posts in Markdown files which will look like this:
 
 ```markdown
 ---
-path: "/blog/my-first-post"
+slug: "/blog/my-first-post"
 date: "2017-11-07"
 title: "My first blog post"
 ---
@@ -73,7 +73,7 @@ export const pageQuery = graphql`
           excerpt(pruneLength: 250)
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
-            path
+            slug
             title
           }
         }
@@ -93,7 +93,7 @@ import { Link } from "gatsby"
 
 const PostLink = ({ post }) => (
   <div>
-    <Link to={post.frontmatter.path}>
+    <Link to={post.frontmatter.slug}>
       {post.frontmatter.title} ({post.frontmatter.date})
     </Link>
   </div>

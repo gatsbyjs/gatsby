@@ -1,7 +1,6 @@
 const { actions } = require(`../../redux/actions`)
-const { getNode, getNodes } = require(`../nodes`)
 const { store } = require(`../../redux`)
-require(`./fixtures/ensure-loki`)()
+const { getNode, getNodes } = require(`../../redux/nodes`)
 
 const report = require(`gatsby-cli/lib/reporter`)
 jest.mock(`gatsby-cli/lib/reporter`)
@@ -9,6 +8,40 @@ jest.mock(`gatsby-cli/lib/reporter`)
 describe(`nodes db tests`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
+  })
+
+  it(`warns when using old touchNode signature `, () => {
+    store.dispatch(
+      actions.createNode(
+        {
+          id: `hi`,
+          children: [],
+          parent: `test`,
+          internal: {
+            contentDigest: `hasdfljds`,
+            type: `Test`,
+          },
+        },
+        {
+          name: `tests`,
+        }
+      )
+    )
+    expect(getNode(`hi`)).toMatchObject({ id: `hi` })
+    store.dispatch(
+      actions.touchNode(
+        { nodeId: `hi` },
+        {
+          name: `tests`,
+        }
+      )
+    )
+    expect(getNode(`hi`)).toBeDefined()
+    const deprecationNotice =
+      `Calling "touchNode" with an object containing the nodeId is deprecated. Please pass ` +
+      `the node directly to the function: touchNode(node) ` +
+      `"touchNode" was called by tests`
+    expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
   })
 
   it(`deletes previously transformed children nodes when the parent node is updated`, () => {
@@ -189,14 +222,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        {
-          node: getNode(`hi`),
-        },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode(getNode(`hi`), {
+        name: `tests`,
+      })
     )
     expect(getNodes()).toHaveLength(1)
   })
@@ -273,12 +301,9 @@ describe(`nodes db tests`, () => {
       )
     )
     store.dispatch(
-      actions.deleteNode(
-        { node: getNode(`hi`) },
-        {
-          name: `tests`,
-        }
-      )
+      actions.deleteNode(getNode(`hi`), {
+        name: `tests`,
+      })
     )
     expect(getNodes()).toHaveLength(0)
   })
@@ -310,11 +335,7 @@ describe(`nodes db tests`, () => {
         }
       )
     )
-    store.dispatch(
-      actions.deleteNode({
-        node: getNode(`hi`),
-      })
-    )
+    store.dispatch(actions.deleteNode(getNode(`hi`)))
     expect(getNode(`hi`)).toBeUndefined()
   })
 
@@ -337,14 +358,17 @@ describe(`nodes db tests`, () => {
     )
     expect(getNode(`hi`)).toMatchObject({ id: `hi` })
     store.dispatch(
-      actions.deleteNode(`hi`, getNode(`hi`), {
-        name: `tests`,
-      })
+      actions.deleteNode(
+        { node: getNode(`hi`) },
+        {
+          name: `tests`,
+        }
+      )
     )
     expect(getNode(`hi`)).toBeUndefined()
     const deprecationNotice =
-      `Calling "deleteNode" with a nodeId is deprecated. Please pass an ` +
-      `object containing a full node instead: deleteNode({ node }). ` +
+      `Calling "deleteNode" with {node} is deprecated. Please pass ` +
+      `the node directly to the function: deleteNode(node) ` +
       `"deleteNode" was called by tests`
     expect(report.warn).toHaveBeenCalledWith(deprecationNotice)
   })
@@ -368,7 +392,7 @@ describe(`nodes db tests`, () => {
         )
       )
       store.dispatch(
-        actions.deleteNode(`hi`, getNode(`hi`), {
+        actions.deleteNode(getNode(`hi`), {
           name: `tests`,
         })
       )

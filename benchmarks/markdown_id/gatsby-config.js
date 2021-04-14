@@ -3,7 +3,7 @@ module.exports = {
     title: `Gatsby MD Benchmark Blog`,
     author: `Myle Kathews`,
     description: `The MD starter blog turned into a benchmark`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
     social: {
       twitter: `gatsbyjs`,
     },

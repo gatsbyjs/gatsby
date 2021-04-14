@@ -4,7 +4,7 @@ Parses TOML files.
 
 ## Install
 
-`npm install --save gatsby-transformer-toml`
+`npm install gatsby-transformer-toml`
 
 ## How to use
 
@@ -21,7 +21,7 @@ issues.
 
 Live demo of TOML to JSON conversion using
 [toml](https://www.npmjs.com/package/toml) is
-[here](http://binarymuse.github.io/toml-node/).
+[here](https://binarymuse.github.io/toml-node/).
 
 If you have `user.toml` in your project, with contents like this:
 

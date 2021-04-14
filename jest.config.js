@@ -28,32 +28,28 @@ module.exports = {
   coveragePathIgnorePatterns: ignoreDirs,
   testPathIgnorePatterns: [
     `<rootDir>/examples/`,
-    `<rootDir>/www/`,
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
+    `<rootDir>/packages/gatsby-admin/.cache/`,
+    `<rootDir>/deprecated-packages/`,
     `__tests__/fixtures`,
+    `__testfixtures__/`,
   ],
   transform: {
     "^.+\\.[jt]sx?$": `<rootDir>/jest-transformer.js`,
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
+    "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
   },
   snapshotSerializers: [`jest-serializer-path`],
-  collectCoverage: useCoverage,
-  coverageReporters: [`json-summary`, `text`, `html`, `cobertura`],
-  coverageThreshold: {
-    global: {
-      lines: 45,
-      statements: 44,
-      functions: 42,
-      branches: 43,
-    },
-  },
   collectCoverageFrom: coverageDirs,
   reporters: process.env.CI
-    ? [[`jest-silent-reporter`, { useDots: true }]]
+    ? [[`jest-silent-reporter`, { useDots: true }]].concat(
+        useCoverage ? `jest-junit` : []
+      )
     : [`default`].concat(useCoverage ? `jest-junit` : []),
   testEnvironment: `jest-environment-jsdom-fourteen`,
   moduleFileExtensions: [`js`, `jsx`, `ts`, `tsx`, `json`],
+  setupFiles: [`<rootDir>/.jestSetup.js`],
 }

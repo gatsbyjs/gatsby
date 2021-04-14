@@ -401,7 +401,7 @@ describe(`navigation is routed through browser if resources have failed and the 
   })
 })
 
-describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
+describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigates to ${pathPrefix}/article`, () => {
   // We're going to manually set up the event listener here
   let hrefHandler
   let eventDestroyer
@@ -488,5 +488,43 @@ describe(`pathPrefix is handled if catched link to ${pathPrefix}/article navigat
 
     // and trigger click
     clickElement.dispatchEvent(clickEvent)
+  })
+})
+
+describe(`navigation is routed through browser without SVGAnimatedString support`, () => {
+  let hrefHandler
+  let eventDestroyer
+  const oldSVGAnimatedString = SVGAnimatedString
+
+  beforeAll(() => {
+    hrefHandler = jest.fn()
+    eventDestroyer = catchLinks.default(window, {}, hrefHandler)
+    delete global.SVGAnimatedString
+  })
+
+  afterAll(() => {
+    eventDestroyer()
+    global.SVGAnimatedString = oldSVGAnimatedString
+  })
+
+  test(`works without throwing an error`, () => {
+    // create a click element to use for testing
+    const clickElement = document.createElement(`a`)
+    clickElement.setAttribute(`href`, `${window.location.href}/article`)
+    document.body.appendChild(clickElement)
+
+    // create the click event we'll be using for testing
+    const clickEvent = new MouseEvent(`click`, {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    })
+
+    // and trigger click
+    clickElement.dispatchEvent(clickEvent)
+
+    expect(() =>
+      catchLinks.routeThroughBrowserOrApp(jest.fn())(clickEvent)
+    ).not.toThrow()
   })
 })

@@ -7,6 +7,7 @@
 "use strict"
 
 const fs = require(`fs`)
+const glob = require(`glob`)
 const path = require(`path`)
 const chalk = require(`chalk`)
 const yargs = require(`yargs`)
@@ -14,7 +15,8 @@ const execa = require(`execa`)
 
 console.log(`TS Check: Running...`)
 
-const PACKAGES_DIR = path.resolve(__dirname, `../packages`)
+const toAbsolutePath = relativePath => path.join(__dirname, `..`, relativePath)
+const PACKAGES_DIR = toAbsolutePath(`/packages`)
 
 const filterPackage = yargs.argv._[0]
 
@@ -23,9 +25,21 @@ const packages = fs
   .map(file => path.resolve(PACKAGES_DIR, file))
   .filter(f => fs.lstatSync(path.resolve(f)).isDirectory())
 
-let packagesWithTs = packages.filter(p =>
-  fs.existsSync(path.resolve(p, `tsconfig.json`))
-)
+// We only want to typecheck against packages that have a tsconfig.json
+// AND have some ts files in it's source code.
+let packagesWithTs = packages
+  .filter(p => fs.existsSync(path.resolve(p, `tsconfig.json`)))
+  .filter(
+    project =>
+      glob.sync(`/**/*.ts`, {
+        root: project,
+        ignore: `**/node_modules/**`,
+      }).length
+  )
+  // TEMPORARILY NOT CHECKING GATSBY-ADMIN
+  // Gatsby admin is filled with type bugs, and i'm not sure the best way to solve it
+  // because they are coming from theme-ui.
+  .filter(path => !path.includes(`gatsby-admin`))
 
 if (filterPackage) {
   packagesWithTs = packagesWithTs.filter(project =>
@@ -50,9 +64,34 @@ if (filterPackage) {
   }
 }
 
+let totalTsFiles = 0
+let totalJsFiles = 0
+
 packagesWithTs.forEach(project => {
+  const tsFiles = glob.sync(
+    toAbsolutePath(
+      `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.ts`
+    )
+  ).length
+
+  const jsFiles = glob.sync(
+    toAbsolutePath(
+      `./packages/${project.split(/.*packages[/\\]/)[1]}/src/**/*.js`
+    )
+  ).length
+
+  totalTsFiles += tsFiles
+  totalJsFiles += jsFiles
+
+  const percentConverted = Number(
+    ((tsFiles / (jsFiles + tsFiles)) * 100).toFixed(1)
+  )
+
   console.log(
-    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`
+    `TS Check: Checking ./packages/${project.split(/.*packages[/\\]/)[1]}`,
+    `\n  - TS Files: ${tsFiles}`,
+    `\n  - JS Files: ${jsFiles}`,
+    `\n  - Percent Converted: ${percentConverted}%`
   )
 
   const args = [
@@ -75,3 +114,15 @@ packagesWithTs.forEach(project => {
 })
 
 console.log(`TS Check: Success`)
+
+if (!filterPackage) {
+  const percentConverted = Number(
+    ((totalTsFiles / (totalJsFiles + totalTsFiles)) * 100).toFixed(1)
+  )
+
+  console.log(
+    `  - Total TS Files: ${totalJsFiles}`,
+    `\n  - Total JS Files: ${totalJsFiles}`,
+    `\n  - Percent Converted: ${percentConverted}%`
+  )
+}

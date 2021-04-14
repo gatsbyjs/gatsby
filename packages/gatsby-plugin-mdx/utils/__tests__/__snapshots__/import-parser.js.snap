@@ -1,0 +1,1026 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 0 1`] = `
+Object {
+  "input": "import foo from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 1 1`] = `
+Object {
+  "input": "import foo as bar from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "bar",
+    ],
+    "segments": Array [
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 2 1`] = `
+Object {
+  "input": "import * as foo from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "* as foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 3 1`] = `
+Object {
+  "input": "import {foo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 4 1`] = `
+Object {
+  "input": "import {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "bar",
+    ],
+    "segments": Array [
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 5 1`] = `
+Object {
+  "input": "import {foo, bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+      "bar",
+    ],
+    "segments": Array [
+      "foo",
+      "bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 6 1`] = `
+Object {
+  "input": "import {foo, bar as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+      "boo",
+    ],
+    "segments": Array [
+      "foo",
+      "bar as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 7 1`] = `
+Object {
+  "input": "import {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "bar",
+    ],
+    "segments": Array [
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 8 1`] = `
+Object {
+  "input": "import {foo as bar, baz} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "bar",
+      "baz",
+    ],
+    "segments": Array [
+      "foo as bar",
+      "baz",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 9 1`] = `
+Object {
+  "input": "import {foo as bar, baz as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "bar",
+      "boo",
+    ],
+    "segments": Array [
+      "foo as bar",
+      "baz as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 10 1`] = `
+Object {
+  "input": "import ding, {foo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "foo",
+    ],
+    "segments": Array [
+      "ding",
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 11 1`] = `
+Object {
+  "input": "import ding, {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "bar",
+    ],
+    "segments": Array [
+      "ding",
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 12 1`] = `
+Object {
+  "input": "import ding, {foo, bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "foo",
+      "bar",
+    ],
+    "segments": Array [
+      "ding",
+      "foo",
+      "bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 13 1`] = `
+Object {
+  "input": "import ding, {foo, bar as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "foo",
+      "boo",
+    ],
+    "segments": Array [
+      "ding",
+      "foo",
+      "bar as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 14 1`] = `
+Object {
+  "input": "import ding, {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "bar",
+    ],
+    "segments": Array [
+      "ding",
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 15 1`] = `
+Object {
+  "input": "import ding, {foo as bar, baz} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "bar",
+      "baz",
+    ],
+    "segments": Array [
+      "ding",
+      "foo as bar",
+      "baz",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 16 1`] = `
+Object {
+  "input": "import ding, {foo as bar, baz as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "ding",
+      "bar",
+      "boo",
+    ],
+    "segments": Array [
+      "ding",
+      "foo as bar",
+      "baz as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 17 1`] = `
+Object {
+  "input": "import ding as dong, {foo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 18 1`] = `
+Object {
+  "input": "import ding as dong, {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 19 1`] = `
+Object {
+  "input": "import ding as dong, {foo, bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+      "bar",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo",
+      "bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 20 1`] = `
+Object {
+  "input": "import ding as dong, {foo, bar as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+      "boo",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo",
+      "bar as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 21 1`] = `
+Object {
+  "input": "import ding as dong, {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 22 1`] = `
+Object {
+  "input": "import ding as dong, {foo as bar, baz} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+      "baz",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo as bar",
+      "baz",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 23 1`] = `
+Object {
+  "input": "import ding as dong, {foo as bar, baz as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+      "boo",
+    ],
+    "segments": Array [
+      "ding as dong",
+      "foo as bar",
+      "baz as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 24 1`] = `
+Object {
+  "input": "import * as dong, {foo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 25 1`] = `
+Object {
+  "input": "import * as dong, {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 26 1`] = `
+Object {
+  "input": "import * as dong, {foo, bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+      "bar",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo",
+      "bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 27 1`] = `
+Object {
+  "input": "import * as dong, {foo, bar as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+      "boo",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo",
+      "bar as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 28 1`] = `
+Object {
+  "input": "import * as dong, {foo as bar} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo as bar",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 29 1`] = `
+Object {
+  "input": "import * as dong, {foo as bar, baz} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+      "baz",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo as bar",
+      "baz",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 30 1`] = `
+Object {
+  "input": "import * as dong, {foo as bar, baz as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "bar",
+      "boo",
+    ],
+    "segments": Array [
+      "* as dong",
+      "foo as bar",
+      "baz as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 31 1`] = `
+Object {
+  "input": "import * as $, {_ as bar, baz as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "$",
+      "bar",
+      "boo",
+    ],
+    "segments": Array [
+      "* as $",
+      "_ as bar",
+      "baz as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 32 1`] = `
+Object {
+  "input": "import _, {foo as $} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "_",
+      "$",
+    ],
+    "segments": Array [
+      "_",
+      "foo as $",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 33 1`] = `
+Object {
+  "input": "import _ as $ from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "$",
+    ],
+    "segments": Array [
+      "_ as $",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 34 1`] = `
+Object {
+  "input": "import {_, $ as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "_",
+      "boo",
+    ],
+    "segments": Array [
+      "_",
+      "$ as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 35 1`] = `
+Object {
+  "input": "import {_ as $, baz as boo} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "$",
+      "boo",
+    ],
+    "segments": Array [
+      "_ as $",
+      "baz as boo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 36 1`] = `
+Object {
+  "input": "import {_, $} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "_",
+      "$",
+    ],
+    "segments": Array [
+      "_",
+      "$",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 37 1`] = `
+Object {
+  "input": "import as from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "as",
+    ],
+    "segments": Array [
+      "as",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 38 1`] = `
+Object {
+  "input": "import * as as from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "as",
+    ],
+    "segments": Array [
+      "* as as",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 39 1`] = `
+Object {
+  "input": "import from from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "from",
+    ],
+    "segments": Array [
+      "from",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 40 1`] = `
+Object {
+  "input": "import * as from from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "from",
+    ],
+    "segments": Array [
+      "* as from",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 41 1`] = `
+Object {
+  "input": "import as, {from} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "as",
+      "from",
+    ],
+    "segments": Array [
+      "as",
+      "from",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 42 1`] = `
+Object {
+  "input": "import as as x, {from as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "as as x",
+      "from as y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 43 1`] = `
+Object {
+  "input": "import x as as, {x as from} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "as",
+      "from",
+    ],
+    "segments": Array [
+      "x as as",
+      "x as from",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 44 1`] = `
+Object {
+  "input": "import from, {as} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "from",
+      "as",
+    ],
+    "segments": Array [
+      "from",
+      "as",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 45 1`] = `
+Object {
+  "input": "import from as x, {as as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "from as x",
+      "as as y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 46 1`] = `
+Object {
+  "input": "import x as from, {x as as} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "from",
+      "as",
+    ],
+    "segments": Array [
+      "x as from",
+      "x as as",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 47 1`] = `
+Object {
+  "input": "import {as, from} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "as",
+      "from",
+    ],
+    "segments": Array [
+      "as",
+      "from",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 48 1`] = `
+Object {
+  "input": "import {from, as} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "from",
+      "as",
+    ],
+    "segments": Array [
+      "from",
+      "as",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 49 1`] = `
+Object {
+  "input": "import {as as x, from as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "as as x",
+      "from as y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 50 1`] = `
+Object {
+  "input": "import {from as x, as as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "from as x",
+      "as as y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 51 1`] = `
+Object {
+  "input": "import {x as as, y as from} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "as",
+      "from",
+    ],
+    "segments": Array [
+      "x as as",
+      "y as from",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 52 1`] = `
+Object {
+  "input": "import {x as from, y as as} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "from",
+      "as",
+    ],
+    "segments": Array [
+      "x as from",
+      "y as as",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 53 1`] = `
+Object {
+  "input": "import {import as x} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+    ],
+    "segments": Array [
+      "import as x",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 54 1`] = `
+Object {
+  "input": "import {import as x, y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "import as x",
+      "y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 55 1`] = `
+Object {
+  "input": "import {x, import as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "x",
+      "import as y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 56 1`] = `
+Object {
+  "input": "import Events from \\"@components/events/events\\"",
+  "result": Object {
+    "bindings": Array [
+      "Events",
+    ],
+    "segments": Array [
+      "Events",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 57 1`] = `
+Object {
+  "input": "import {x, import as y} from 'bar';",
+  "result": Object {
+    "bindings": Array [
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "x",
+      "import as y",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 58 1`] = `
+Object {
+  "input": "import foo from 'bar' // commment",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 59 1`] = `
+Object {
+  "input": "import foo from 'bar' // commment containing confusing from \\"chars\\"",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 60 1`] = `
+Object {
+  "input": "import foo from 'bar' // import bad from 'imp'",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 61 1`] = `
+Object {
+  "input": "import foo from 'bar'//next to it",
+  "result": Object {
+    "bindings": Array [
+      "foo",
+    ],
+    "segments": Array [
+      "foo",
+    ],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 62 1`] = `
+Object {
+  "input": "import \\"./empty.css\\"",
+  "result": Object {
+    "bindings": Array [],
+    "segments": Array [],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 63 1`] = `
+Object {
+  "input": "import \\"./empty.css\\"; // This happens in the real world",
+  "result": Object {
+    "bindings": Array [],
+    "segments": Array [],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 64 1`] = `
+Object {
+  "input": "import multi as dong, {foo} from 'bar'
+import as as x, {from as y} from 'bar'",
+  "result": Object {
+    "bindings": Array [
+      "dong",
+      "foo",
+      "x",
+      "y",
+    ],
+    "segments": Array [
+      "multi as dong",
+      "foo",
+      "as as x",
+      "from as y",
+    ],
+  },
+}
+`;

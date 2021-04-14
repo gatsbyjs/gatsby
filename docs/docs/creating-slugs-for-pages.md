@@ -6,13 +6,13 @@ The logic for creating slugs from file names can get tricky, the `gatsby-source-
 
 ## Install
 
-`npm install --save gatsby-source-filesystem`
+`npm install gatsby-source-filesystem`
 
 ## Create slugs in gatsby-node.js
 
 Add your new slugs directly onto the `MarkdownRemark` nodes. Any data you add to nodes is available to query later with GraphQL.
 
-To do so, you'll use a function passed to our API implementation called [`createNodeField`](/docs/actions/#createNodeField). This function allows you to create additional fields on nodes created by other plugins.
+To do so, you'll use a function passed to our API implementation called [`createNodeField`](/docs/reference/config-files/actions/#createNodeField). This function allows you to create additional fields on nodes created by other plugins.
 
 ```javascript:title=gatsby-node.js
 const { createFilePath } = require(`gatsby-source-filesystem`)

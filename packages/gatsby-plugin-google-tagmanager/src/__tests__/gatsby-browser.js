@@ -70,6 +70,28 @@ describe(`onRouteUpdate`, () => {
     expect(window.dataLayer).toHaveLength(1)
   })
 
+  it(`registers a custom route change event name if given in routeChangeEventName`, () => {
+    const { onRouteUpdate } = getAPI(() => {
+      process.env.NODE_ENV = `production`
+    })
+    const customEventName = `custom-route-change-event-name`
+
+    onRouteUpdate(
+      {},
+      {
+        routeChangeEventName: customEventName,
+      }
+    )
+
+    jest.runAllTimers()
+
+    expect(window.dataLayer).toEqual([
+      {
+        event: customEventName,
+      },
+    ])
+  })
+
   it(`registers new data layer variable if dataLayerName is specified`, () => {
     const { onRouteUpdate } = getAPI(() => {
       process.env.NODE_ENV = `production`

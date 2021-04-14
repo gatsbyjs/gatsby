@@ -6,9 +6,7 @@ describe(`hot reloading template component`, () => {
     cy.visit(`/2018-12-14-hello-world/`).waitForRouteChange()
   })
   it(`displays placeholder content on launch`, () => {
-    cy.getTestElement(TEST_ID)
-      .invoke(`text`)
-      .should(`contain`, TEMPLATE)
+    cy.getTestElement(TEST_ID).invoke(`text`).should(`contain`, TEMPLATE)
   })
 
   it(`hot reloads with new content`, () => {
@@ -17,8 +15,8 @@ describe(`hot reloading template component`, () => {
       `npm run update -- --file src/templates/blog-post.js --replacements "${TEMPLATE}:${message}"`
     )
 
-    cy.getTestElement(TEST_ID)
-      .invoke(`text`)
-      .should(`eq`, `Hello ${message}`)
+    cy.waitForHmr()
+
+    cy.getTestElement(TEST_ID).should(`have.text`, `Hello ${message}`)
   })
 })

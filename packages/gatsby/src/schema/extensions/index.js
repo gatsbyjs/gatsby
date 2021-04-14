@@ -6,7 +6,7 @@ const {
 } = require(`graphql`)
 
 const { link, fileByPath } = require(`../resolvers`)
-const { getDateResolver } = require(`../types/date`)
+import { getDateResolver } from "../types/date"
 
 import type { GraphQLFieldConfigArgumentMap, GraphQLFieldConfig } from "graphql"
 import type { ComposeFieldConfig, ComposeOutputType } from "graphql-compose"
@@ -27,23 +27,9 @@ const dontInferExtensionName = `dontInfer`
 const typeExtensions = {
   [inferExtensionName]: {
     description: `Infer field types from field values.`,
-    args: {
-      noDefaultResolvers: {
-        type: `Boolean`,
-        description: `Don't add default resolvers to defined fields.`,
-        deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
-      },
-    },
   },
   [dontInferExtensionName]: {
     description: `Do not infer field types from field values.`,
-    args: {
-      noDefaultResolvers: {
-        type: `Boolean`,
-        description: `Don't add default resolvers to defined fields.`,
-        deprecationReason: `noDefaultResolvers is deprecated, annotate individual fields.`,
-      },
-    },
   },
   mimeTypes: {
     description: `Define the mime-types handled by this type.`,
@@ -58,7 +44,7 @@ const typeExtensions = {
   childOf: {
     description:
       `Define parent-child relations between types. This is used to add ` +
-      `\`child*\` or \`children*\` convenience fields like \`childImageSharp\`.`,
+      `\`child*\` and \`children*\` convenience fields like \`childImageSharp\`.`,
     args: {
       mimeTypes: {
         type: `[String!]!`,
@@ -74,15 +60,11 @@ const typeExtensions = {
           `A list of types this type is a child of. Usually these are the ` +
           `types handled by a transformer plugin.`,
       },
-      many: {
-        type: `Boolean!`,
-        defaultValue: false,
-        description: `Specifies whether a parent can have multiple children of this type or not.`,
-      },
     },
   },
   nodeInterface: {
     description:
+      `DEPRECATED: Use interface inheritance instead, i.e. "interface Foo implements Node".\n\n` +
       `Adds root query fields for an interface. All implementing types ` +
       `must also implement the Node interface.`,
     locations: [DirectiveLocation.INTERFACE],
@@ -92,7 +74,7 @@ const typeExtensions = {
 const builtInFieldExtensions = {
   dateformat: {
     name: `dateformat`,
-    description: `Add date formating options.`,
+    description: `Add date formatting options.`,
     args: {
       formatString: `String`,
       locale: `String`,
@@ -116,7 +98,9 @@ const builtInFieldExtensions = {
       on: `String`,
     },
     extend(args, fieldConfig, schemaComposer) {
-      const type = args.on && schemaComposer.typeMapper.getWrapped(args.on)
+      const type =
+        args.on &&
+        schemaComposer.typeMapper.convertSDLWrappedTypeName(args.on)?.getType()
       return {
         resolve: link({ ...args, type }, fieldConfig),
       }
@@ -189,6 +173,12 @@ const toDirectives = ({
     }
     // Support the `graphql-compose` style of directly providing the field type as string
     const normalizedArgs = schemaComposer.typeMapper.convertArgConfigMap(args)
+
+    // arg.type is a composer that needs to be converted to graphql-js type
+    Object.keys(normalizedArgs).forEach(argName => {
+      normalizedArgs[argName].type = normalizedArgs[argName].type.getType()
+    })
+
     return new GraphQLDirective({
       name,
       args: normalizedArgs,

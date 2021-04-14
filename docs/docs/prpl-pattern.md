@@ -4,7 +4,7 @@ title: PRPL Pattern
 
 ## What is PRPL?
 
-PRPL is a web site architecture developed by Google for building websites and
+PRPL is a website architecture developed by Google for building websites and
 apps that work exceptionally well on smartphones and other devices with
 unreliable network connections.
 

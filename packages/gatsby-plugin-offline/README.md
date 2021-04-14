@@ -1,8 +1,8 @@
 # gatsby-plugin-offline
 
 Adds drop-in support for making a Gatsby site work offline and more resistant to
-bad network connections. It creates a service worker for the site and loads the
-service worker into the client.
+bad network connections. It uses [Workbox Build](https://developers.google.com/web/tools/workbox/modules/workbox-build)
+to create a service worker for the site and loads the service worker into the client.
 
 If you're using this plugin with `gatsby-plugin-manifest` (recommended) this
 plugin should be listed _after_ that plugin so the manifest file can be included
@@ -10,7 +10,7 @@ in the service worker.
 
 ## Install
 
-`npm install --save gatsby-plugin-offline`
+`npm install gatsby-plugin-offline`
 
 ## How to use
 
@@ -146,9 +146,10 @@ const options = {
       handler: `CacheFirst`,
     },
     {
-      // page-data.json files are not content hashed
-      urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-      handler: `NetworkFirst`,
+      // page-data.json files, static query results and app-data.json
+      // are not content hashed
+      urlPattern: /^https?:.*\/page-data\/.*\.json/,
+      handler: `StaleWhileRevalidate`,
     },
     {
       // Add runtime caching of various other page resources
@@ -172,7 +173,7 @@ If you want to remove `gatsby-plugin-offline` from your site at a later point,
 substitute it with [`gatsby-plugin-remove-serviceworker`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
 to safely remove the service worker. First, install the new package:
 
-```bash
+```shell
 npm install gatsby-plugin-remove-serviceworker
 npm uninstall gatsby-plugin-offline
 ```
@@ -214,3 +215,31 @@ Alternatively you can have a look at the `/public/index.html` file in your proje
 ### App shell and server logs
 
 Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like `/offline-plugin-app-shell-fallback/index.html`, this is a result of `gatsby-plugin-offline` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.
+
+### Using with gatsby-plugin-manifest
+
+If using this plugin with `gatsby-plugin-manifest` you may find that your icons are not cached.
+In order to solve this, update your `gatsby-config.js` as follows:
+
+```js
+// gatsby-config.js
+{
+   resolve: 'gatsby-plugin-manifest',
+   options: {
+      icon: 'icon.svg',
+      cache_busting_mode: 'none'
+   }
+},
+{
+   resolve: 'gatsby-plugin-offline',
+   options: {
+      workboxConfig: {
+         globPatterns: ['**/icon-path*']
+      }
+   }
+}
+```
+
+Updating `cache_busting_mode` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
+Adding the `globPatterns` makes sure that the offline plugin will cache everything.
+Note that you have to prefix your icon with `icon-path` or whatever you may call it

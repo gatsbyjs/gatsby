@@ -1,68 +1,80 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.9.0",
+  "version": "3.4.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
-    "gatsby": "lib/index.js"
+    "gatsby": "cli.js"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.5.5",
-    "@babel/runtime": "^7.7.6",
-    "@hapi/joi": "^15.1.1",
-    "better-opn": "^1.0.0",
-    "bluebird": "^3.7.2",
-    "chalk": "^2.4.2",
-    "clipboardy": "^2.1.0",
+    "@babel/code-frame": "^7.10.4",
+    "@types/common-tags": "^1.8.0",
+    "better-opn": "^2.0.0",
+    "chalk": "^4.1.0",
+    "clipboardy": "^2.3.0",
     "common-tags": "^1.8.0",
-    "configstore": "^5.0.0",
+    "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "core-js": "^2.6.11",
-    "envinfo": "^7.5.0",
+    "create-gatsby": "^1.4.0-next.0",
+    "envinfo": "^7.7.3",
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.0.28",
-    "gatsby-telemetry": "^1.1.49",
-    "hosted-git-info": "^3.0.2",
+    "gatsby-core-utils": "^2.4.0-next.0",
+    "gatsby-recipes": "^0.15.0-next.0",
+    "gatsby-telemetry": "^2.4.0-next.0",
+    "hosted-git-info": "^3.0.6",
     "is-valid-path": "^0.1.1",
-    "lodash": "^4.17.15",
-    "meant": "^1.0.1",
-    "node-fetch": "^2.6.0",
-    "object.entries": "^1.1.0",
+    "joi": "^17.4.0",
+    "lodash": "^4.17.21",
+    "meant": "^1.0.2",
+    "node-fetch": "^2.6.1",
     "opentracing": "^0.14.4",
     "pretty-error": "^2.1.1",
     "progress": "^2.0.3",
-    "prompts": "^2.3.0",
-    "react": "^16.8.0",
-    "redux": "^4.0.4",
-    "resolve-cwd": "^2.0.0",
-    "semver": "^6.3.0",
-    "signal-exit": "^3.0.2",
+    "prompts": "^2.3.2",
+    "redux": "^4.0.5",
+    "resolve-cwd": "^3.0.0",
+    "semver": "^7.3.2",
+    "signal-exit": "^3.0.3",
     "source-map": "0.7.3",
     "stack-trace": "^0.0.10",
     "strip-ansi": "^5.2.0",
-    "update-notifier": "^3.0.1",
-    "uuid": "3.3.3",
-    "yargs": "^12.0.5",
-    "yurnalist": "^1.1.1"
+    "update-notifier": "^5.0.1",
+    "uuid": "3.4.0",
+    "yargs": "^15.4.1",
+    "yoga-layout-prebuilt": "^1.9.6",
+    "yurnalist": "^2.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1"
-  },
-  "optionalDependencies": {
-    "ink": "^2.6.0",
-    "ink-spinner": "^3.0.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-replace": "^2.3.3",
+    "@types/hosted-git-info": "^3.0.1",
+    "@types/yargs": "^15.0.8",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3",
+    "ink": "^3.0.8",
+    "ink-spinner": "^4.0.1",
+    "npm-run-all": "4.1.5",
+    "react": "^16.9.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.34.2",
+    "rollup-plugin-auto-external": "^2.0.0",
+    "rollup-plugin-internal": "^1.0.0",
+    "typescript": "^4.1.5"
   },
   "files": [
-    "lib",
-    "scripts"
+    "lib/",
+    "scripts/",
+    "cli.js"
   ],
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-cli#readme",
   "keywords": [
@@ -76,12 +88,17 @@
     "directory": "packages/gatsby-cli"
   },
   "scripts": {
-    "build": "babel src --out-dir lib --ignore \"**/__tests__\" --extensions \".ts,.js\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir lib --ignore \"**/__tests__\"  --extensions \".ts,.js\"",
+    "build:babel": "babel src --out-dir lib --ignore \"**/__tests__\" --ignore \"src/reporter/loggers/ink/**/*\" --extensions \".ts,.js,.tsx\"",
+    "build:rollup": "rollup -c",
+    "build": "npm-run-all -p build:babel build:rollup",
+    "prepare": "cross-env NODE_ENV=production npm run build && npm run typegen",
+    "typegen": "rimraf \"lib/**/*.d.ts\" && tsc --emitDeclarationOnly --declaration --declarationDir lib/",
+    "watch:babel": "npm run build:babel -- --watch",
+    "watch:rollup": "npm run build:rollup -- -w",
+    "watch": "npm-run-all -p watch:babel watch:rollup",
     "postinstall": "node scripts/postinstall.js"
   },
-  "yargs": {
-    "boolean-negation": false
+  "engines": {
+    "node": ">=12.13.0"
   }
 }

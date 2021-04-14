@@ -1,31 +1,32 @@
 {
   "name": "gatsby-remark-images",
   "description": "Processes images in markdown so they can be used in the production build.",
-  "version": "3.1.44",
+  "version": "5.1.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
-    "chalk": "^2.4.2",
+    "@babel/runtime": "^7.12.5",
+    "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
-    "gatsby-core-utils": "^1.0.28",
+    "gatsby-core-utils": "^2.4.0-next.0",
     "is-relative-url": "^3.0.0",
-    "lodash": "^4.17.15",
-    "mdast-util-definitions": "^1.2.5",
-    "potrace": "^2.1.2",
-    "query-string": "^6.9.0",
-    "unist-util-select": "^1.5.0",
-    "unist-util-visit-parents": "^2.1.2"
+    "lodash": "^4.17.21",
+    "mdast-util-definitions": "^4.0.0",
+    "potrace": "^2.1.8",
+    "query-string": "^6.13.3",
+    "unist-util-select": "^3.0.4",
+    "unist-util-visit-parents": "^3.1.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1",
-    "hast-util-to-html": "^6.0.2",
-    "mdast-util-to-hast": "^6.0.2"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3",
+    "gatsby-plugin-utils": "^1.4.0-next.0",
+    "hast-util-to-html": "^7.1.2",
+    "mdast-util-to-hast": "^10.2.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images#readme",
   "keywords": [
@@ -39,8 +40,8 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-sharp": "^2.0.0-beta.5"
+    "gatsby": "^3.0.0-next.0",
+    "gatsby-plugin-sharp": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -48,11 +49,11 @@
     "directory": "packages/gatsby-remark-images"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

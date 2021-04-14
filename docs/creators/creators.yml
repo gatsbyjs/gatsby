@@ -1,3 +1,15 @@
+- name: Annie Taylor Chen
+  type: individual
+  description: >-
+    Full-stack developer | Photographer - enriching your digital products with
+    amazing UI/UX through clean code
+  location: Stockholm, Sweden | Worldwide (remote)
+  website: https://www.annietaylorchen.com/
+  github: https://github.com/AnnieTaylorCHEN
+  image: images/annie-taylor-chen.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
 - name: Fabian Schultz
   type: individual
   description: >-
@@ -5,9 +17,9 @@
     Germany. I’ve been working both as a product designer and frontend developer
     for over 5 years now. I particularly enjoy working with companies that try
     to meet broad and unique user needs.
-  location: "Potsdam, Germany"
-  website: "https://fabianschultz.com/"
-  github: "https://github.com/fabe"
+  location: Potsdam, Germany
+  website: https://fabianschultz.com/
+  github: https://github.com/fabe
   image: images/fabian-schultz.jpg
   for_hire: true
   portfolio: true
@@ -23,9 +35,9 @@
     freelance projects. Feel free to get in touch if you have an interesting
     project that you want to collaborate on. Or if you just want to say hello,
     that’s cool too.
-  location: "New York, US"
-  website: "https://k-create.com/"
-  github: "https://github.com/kristofferh"
+  location: New York, US
+  website: https://k-create.com/
+  github: https://github.com/kristofferh
   image: images/kris-hedstrom.jpg
   for_hire: true
   portfolio: true
@@ -37,8 +49,8 @@
     responsive websites, with strong focus on performance & responsive design
     using the latest technologies.
   location: India
-  website: "https://mojaave.com/"
-  github: "https://github.com/mhjadav/mojaave"
+  website: https://mojaave.com/
+  github: https://github.com/mhjadav/mojaave
   image: images/mahipat-jadav.jpg
   for_hire: true
   portfolio: true
@@ -49,7 +61,7 @@
     development using Static Site Generators, Headless CMS, CI / CD and CDN
     setup.
   location: Poland
-  website: "https://bejamas.io/"
+  website: https://bejamas.io/
   github: null
   image: images/bejamas.jpg
   for_hire: true
@@ -60,8 +72,8 @@
   description: >-
     Spacetime is a Dallas-based digital experience agency specializing in web,
     app, startup, and digital experience creation.
-  location: "Texas, US"
-  website: "https://www.heyspacetime.com/"
+  location: Texas, US
+  website: https://www.heyspacetime.com/
   github: null
   image: images/spacetime.jpg
   for_hire: false
@@ -72,8 +84,8 @@
   description: >-
     Iron Cove Solutions is a cloud based consulting firm. We help companies
     deliver a return on cloud usage by applying best practices
-  location: "California, US"
-  website: "https://ironcovesolutions.com/"
+  location: California, US
+  website: https://ironcovesolutions.com/
   github: null
   image: images/iron-cove-solutions.jpg
   for_hire: true
@@ -84,9 +96,9 @@
   description: >-
     Hi,
     I'm a developer from Canada who loves making memorable websites and apps. I pay particular attention to performance, accessibility and the little details that make all the difference.
-  location: "Québec, Canada"
-  website: "https://www.marcantoineruel.com/"
-  github: "https://github.com/maru3l"
+  location: Québec, Canada
+  website: https://www.marcantoineruel.com/
+  github: https://github.com/maru3l
   image: images/marc-antoine-ruel.jpg
   for_hire: true
   hiring: false
@@ -95,9 +107,9 @@
   type: individual
   description: >-
     Hi I'm Ste! I’m a full-stack web developer based in Leeds, England. I like to make bold, beautiful websites that don’t take themselves too seriously. I'm currently working on a Gatsby.js course, so keep an eye on my website for a sneak peek!
-  location: "Leeds, England"
-  website: "https://steoneill.dev"
-  github: "https://github.com/steoneill"
+  location: Leeds, England
+  website: https://steoneill.dev
+  github: https://github.com/steoneill
   image: images/ste-oneill.jpg
   for_hire: true
   hiring: false
@@ -109,8 +121,8 @@
     Savvy startups hire me when there’s no time for a spec or reviews, yet no
     room for failure. Comfortable under pressure. Kolbe A Index: 5-9-2-2
   location: Austin, TX
-  website: "http://www.coreyward.me/"
-  github: "https://github.com/coreyward"
+  website: http://www.coreyward.me/
+  github: https://github.com/coreyward
   image: images/corey-ward.jpg
   for_hire: true
   hiring: false
@@ -119,8 +131,8 @@
   type: individual
   description: Michael Uloth is a Toronto-based web developer who specializes in building fast-loading, accessible websites with Gatsby.
   location: Toronto
-  website: "https://www.michaeluloth.com"
-  github: "https://github.com/ooloth"
+  website: https://www.michaeluloth.com
+  github: https://github.com/ooloth
   image: images/michael-uloth.jpg
   for_hire: true
   hiring: false
@@ -129,8 +141,8 @@
   type: individual
   description: Digital product designer. Full-stack developer. Eclectic flâneur extraordinaire in constant exploration of spoken, visual and programming languages.
   location: Poland
-  website: "https://piotrf.pl"
-  github: "https://github.com/piotrf"
+  website: https://piotrf.pl
+  github: https://github.com/piotrf
   image: images/piotr-fedorczyk.jpeg
   for_hire: true
   hiring: false
@@ -139,8 +151,8 @@
   type: agency
   description: >-
     Coletiv teams up with companies of all sizes to design, develop & launch digital products for iOS, Android & the Web.
-  location: "Porto, PT"
-  website: "https://coletiv.com/"
+  location: Porto, PT
+  website: https://coletiv.com/
   github: https://github.com/coletiv
   image: images/coletiv.jpg
   for_hire: true
@@ -163,18 +175,18 @@
     Hi, I'm Lennart — a self-taught and passionate graphic/web designer & frontend developer. I create accessible, fast and beautiful designed websites with Gatsby.
     I regularly create Gatsby starters, tutorials and contribute to the project. I know Gatsby by heart & can help you transition your website to the JAMStack.
     Feel free to contact me if you want to launch a blazingly fast website!
-  location: "Darmstadt, Germany"
-  website: "https://www.lekoarts.de"
-  github: "https://github.com/LeKoArts"
+  location: Darmstadt, Germany
+  website: https://www.lekoarts.de
+  github: https://github.com/LekoArts
   image: images/lekoarts.jpg
-  for_hire: true
+  for_hire: false
   portfolio: true
 - name: Ventura Digitalagentur
   type: agency
   description: >-
     Ventura is a digital agency specialized in developing web-based applications, native apps and Progressive Web Apps for companies of all sizes.
-  location: "Cologne, Germany"
-  website: "https://www.ventura-digital.de"
+  location: Cologne, Germany
+  website: https://www.ventura-digital.de
   image: images/ventura-digitalagentur.jpg
   for_hire: true
   portfolio: true
@@ -183,16 +195,16 @@
   description: >-
     Hey, I'm Steven! I am the founder of Gatsby Manor, we build themes for gatsby.
     We have themes for all types of projects including, personal, business, docs,
-    portfolio, ecommerce, marketing, and creative designs. We also run an in-house
+    portfolio, e-commerce, marketing, and creative designs. We also run an in-house
     web dev and design studio. If you cannot find what you want, we can build it for you!
     Therefore there is no theme we cannot make for your project. Email us at gatsbymanor@gmail.com
     with questions. Visit gatsbymanor.com to see our themes. Outside of Gatsby Manor,
     I am a software engineer working on cloud native infrastructure and tools.
     I spend a great deal of my time with AWS, GCP, Terraform and Kubernetes.
     In my free, time I build sites with Gatsby, Netlify, Contentful, and I love it!
-  location: "New York, US"
-  website: "https://www.stevennatera.com"
-  github: "https://github.com/nodox"
+  location: New York, US
+  website: https://www.stevennatera.com
+  github: https://github.com/nodox
   image: images/steven-natera.jpg
   for_hire: true
   portfolio: true
@@ -203,9 +215,9 @@
     Currently at Everymundo and Freelancer in other companies.
     Fan number 1 of Jamstack, I propose solutions serverless.
     I give professional advice to developers and companies.
-  location: "Guayaquil, Ecuador"
-  website: "https://ramonchancay.me"
-  github: "https://github.com/devrchancay"
+  location: Guayaquil, Ecuador
+  website: https://ramonchancay.me
+  github: https://github.com/devrchancay
   image: images/ramon-chancay.png
   for_hire: true
   hiring: false
@@ -217,8 +229,8 @@
     I work in a web agency who builds websites using Laravel, React or WordPress
     depending on our clients.
   location: France
-  website: "https://k-legrand.com"
-  github: "https://github.com/Manoz"
+  website: https://k-legrand.com
+  github: https://github.com/Manoz
   image: images/kevin-legrand.jpg
   for_hire: false
   portfolio: true
@@ -228,7 +240,7 @@
     Software engineer & full-stack web developer.
     I design applications, interactive systems and websites. I focus mainly on the React and Node.js ecosystems.
   location: Utrecht, Netherlands
-  website: "https://www.vauxlab.com"
+  website: https://www.vauxlab.com
   github: https://github.com/0x80
   image: images/thijs-koerselman.jpg
   for_hire: true
@@ -239,7 +251,7 @@
   description: >-
     We are a dev agency who specializes in JS. We have built different projects with GatsbyJS and we love working on it.
   location: Barcelona, Spain
-  website: "https://origen.studio"
+  website: https://origen.studio
   github: https://github.com/OrigenStudio
   image: images/origen-studio.jpg
   for_hire: true
@@ -253,16 +265,16 @@
 
     Kaordica's currently based in Brazil, but we work remotely and are available for tavelling ;)"
   location: Brazil
-  website: "https://kaordica.design"
+  website: https://kaordica.design
   for_hire: true
   hiring: false
   portfolio: true
 - name: 3merge
   type: agency
   image: images/3merge.png
-  description: "We are a JavaScript development agency that builds native and progressive web applications."
+  description: We are a JavaScript development agency that builds native and progressive web applications.
   location: Canada
-  website: "https://3merge.ca/"
+  website: https://3merge.ca/
   for_hire: true
   portfolio: true
 - name: WEBhart
@@ -271,9 +283,9 @@
     Hi, I'm Rien (pronounced Reen) from Belgium but based in Girona, Spain. I'm an autodidact, committed to learning until the end of time.
 
     Dabbled in iOS (Objective-C) and worked as back-end/api (php) developer (2010-2013). After a break from programming, chasing a cyclist dream and working part-time mechanics jobs (yes, I'm a nerd who can do manual work!) I discovered Gatsby at the beginning of 2018. Since then I've been building sites and started freelancing as a developer/designer.
-  location: "Girona, Spain"
-  website: "https://www.web-hart.com"
-  github: "https://github.com/riencoertjens"
+  location: Girona, Spain
+  website: https://www.web-hart.com
+  github: https://github.com/riencoertjens
   image: images/web-hart.jpg
   for_hire: true
   portfolio: true
@@ -315,8 +327,8 @@
     Hey! I'm Sankarsan (aka Traction). I'm a programmer who likes
     building & breaking programmable systems, exploring their
     details and stretching their capabilities.
-  website: "https://traction.one/"
-  github: "https://github.com/k3rn31p4nic"
+  website: https://traction.one/
+  github: https://github.com/k3rn31p4nic
   image: images/sankarsan-kampa.jpg
   for_hire: true
   portfolio: true
@@ -326,8 +338,8 @@
     Hey! I'm Erno Salo also known as Endormi on GitHub and Twitter.
     I'm a Full Stack Developer, Open Source Contributor and I enjoy building web applications that help make a difference in the world.
     I currently live in Helsinki, Finland.
-  website: "https://endormi.io/"
-  github: "https://github.com/endormi"
+  website: https://endormi.io/
+  github: https://github.com/endormi
   image: images/endormi.png
   for_hire: false
   portfolio: true
@@ -337,8 +349,8 @@
     We help agencies and companies with JAMStack tools. This includes web
     development using Static Site Generators, Headless CMS, CI / CD and CDN
     setup.
-  website: "https://wpspark.io/"
-  github: "https://github.com/wpspark/"
+  website: https://wpspark.io/
+  github: https://github.com/wpspark/
   image: images/wp-spark.jpg
   for_hire: false
   portfolio: true
@@ -348,7 +360,7 @@
     Twteam is a Swiss-based software agency specialized in web development with React and Gatsby.
     This technology stack makes it possible to develop smart and cost-efficient WebApps for small and medium-sized businesses.
   location: Switzerland
-  website: "https://twteam.ch"
+  website: https://twteam.ch
   image: images/twteam.jpg
   for_hire: true
   portfolio: false
@@ -359,8 +371,8 @@
     We are one of the fastest growing independent agencies in the UK. We love solving problems and making an impact with the work we create.
     Through our Rapid, Actionable Innovation engine we create digital products and experiences your customers and employees will love.
   location: London, UK
-  website: "https://www.somoglobal.com"
-  github: "https://github.com/SomoGlobal"
+  website: https://www.somoglobal.com
+  github: https://github.com/SomoGlobal
   for_hire: true
   hiring: false # we are though!
   portfolio: true
@@ -370,8 +382,8 @@
     I am a Front-End web Developer based in Nicaragua. Actually i'm
     in love working with JAMstack.
   location: Nicaragua
-  website: "https://gmartinez.dev/"
-  github: "https://github.com/nephlin7"
+  website: https://gmartinez.dev/
+  github: https://github.com/nephlin7
   image: images/gerald-martinez.jpg
   for_hire: false
   hiring: false
@@ -383,8 +395,8 @@
     distributed systems based in France, Canada and Morocco. Our core expertises include
     Data Engineering, Data Science, DevOps, Cloud Computing and Web technologies.
   location: France
-  website: "https://www.adaltas.com/"
-  github: "https://github.com/adaltas"
+  website: https://www.adaltas.com/
+  github: https://github.com/adaltas
   image: images/adaltas.png
   for_hire: true
   hiring: false
@@ -395,8 +407,8 @@
   description: >-
     We are a small studio entirely focused on JAMstack websites built with Gatsby. We help companies around the world to build beautiful and high-performant websites, landing pages and e-shops.
   location: Bulgaria
-  website: "https://jamchefs.com/"
-  github: "https://github.com/jamchefs"
+  website: https://jamchefs.com/
+  github: https://github.com/jamchefs
   image: images/jamchefs.png
   for_hire: true
   hiring: false
@@ -406,10 +418,10 @@
   description: >-
     Desarol is a remote digital agency that specializes in building static websites
     built on the decoupled CMS of your choice. We use Agile processes, we love Headless
-    Drupal, performance and accessibilty excite us.
+    Drupal, performance and accessibility excite us.
   location: United States
-  website: "https://desarol.com/"
-  github: "https://github.com/desarol/"
+  website: https://desarol.com/
+  github: https://github.com/desarol/
   image: images/desarol.png
   for_hire: true
   hiring: true
@@ -428,8 +440,8 @@
     Although I've been writing code for the past decade, I've also given talks and guest lectures on software related topics and enjoy writing about tech.
     I am also a musician and an amateur astronomer. Feel free to get in touch!
   location: India
-  website: "https://arvind.io/"
-  github: "https://github.com/EnKrypt/"
+  website: https://arvind.io/
+  github: https://github.com/EnKrypt/
   image: images/arvind-kumar.jpg
   for_hire: true
   hiring: false
@@ -441,8 +453,8 @@
     to build your web or mobile product,
     or become the part of your remote team.
   location: UK & Poland
-  website: "https://pagepro.co"
-  github: "https://github.com/Pagepro"
+  website: https://pagepro.co
+  github: https://github.com/Pagepro
   image: images/pagepro.jpg
   for_hire: true
   hiring: true
@@ -453,7 +465,7 @@
   description: >-
     We’re an agile group of full-time, fast-moving, hard-working, idea-generating, results-getting, on-timing, on-budgeting, espresso-fuelled content writers, designers, developers, media mavens, strategists, and producers.
   location: Canada
-  website: "https://bare.ca/"
+  website: https://bare.ca/
   for_hire: true
   hiring: false
   portfolio: true
@@ -463,7 +475,7 @@
   description: >-
     We help startups and small business to grow their business. We provide business and tech consulting alongside web and mobile development.
   location: Brazil and Sweden
-  website: "https://epicawesome.se/"
+  website: https://epicawesome.se/
   for_hire: true
   hiring: false
   portfolio: true
@@ -472,8 +484,8 @@
   description: >-
     My name is Eric Howey. I am a web developer and mental health therapist. I specialize in Gatsby, React, and Theme-UI. I listen and care.
   location: Canada
-  website: "https://www.erichowey.dev/"
-  github: "https://github.com/ehowey"
+  website: https://www.erichowey.dev/
+  github: https://github.com/ehowey
   image: images/eric-howey.jpeg
   for_hire: true
   hiring: false
@@ -481,9 +493,9 @@
 - name: App Design
   type: agency
   description: >-
-    My name is Oliver. I´m a web developer specialized in React JS, Gatsby, Netlify and Wordpress CMS.
-  location: "Madrid, Spain"
-  website: "https://appdesign.dev/"
+    My name is Oliver. I´m a web developer specialized in React JS, Gatsby, Netlify and WordPress CMS.
+  location: Madrid, Spain
+  website: https://appdesign.dev/
   github: null
   image: images/app-design-dev.jpeg
   for_hire: false
@@ -494,8 +506,59 @@
   description: >-
     Ahmad Awais is an award-winning open-source engineer and a Google Developers Expert. As a principal developer advocate, he cares deeply about developers and developer experience. Author of various open-source dev-tools and software libraries used by millions of developers worldwide. Like the Shades of Purple code-theme. He’s known for his open-source community contributions in the Node.js Community Committee as well as a decade of that in the WordPress Core software (which empowers 1/3rd of the web). He’s a TEDx Speaker, a member of SmashingMagazine Experts Panel, featured/published author at CSS-Tricks, Tuts+, Scotch.io, SitePoint, and a self-confessed tech-comedian. You can find Awais most active on Twitter @MrAhmadAwais, where he tweets #OneDevMinute dev tips and cracks silly tech jokes in the JavaScript web and cloud communities.
   location: Canada
-  website: "https://ahmadawais.com/"
-  github: "https://github.com/ahmadawais"
+  website: https://ahmadawais.com/
+  github: https://github.com/ahmadawais
   image: images/ahmad-awais.jpg
+  for_hire: true
+  portfolio: true
+- name: Usama liaquat
+  type: individual
+  image: images/usama-liaquat.jpg
+  description: >-
+    Usama liaquat is a contributor of react/react-native teams. He develop lib/packages and distributed them into many software industries
+  location: Pakistan
+  website: https://www.linkedin.com/in/usamaliaquat/
+  github: https://github.com/Usamaliaquat123
+  for_hire: true
+  portfolio: true
+- name: Softblues
+  type: agency
+  image: images/softblues.png
+  description: >-
+    SoftBlues is an experience software development company specializing in modern stack technologies e.g. Gatsby, Jamstack, Headless E-commerce, Progressive Web Application and PHP Since 2009,  we have been reliable technology partners for companies aiming at business automation (AgTech, E-commerce, education and automotive industries), creating products for mass market (WordPress/WooCommerce) and startups.
+    Our mission is to deliver success to our clients, team members and partners. We are proud of our team leadership and cultivate corporate our culture based on trust, transparency, responsibility, excellent planning and  continuous improvement.
+    We’re looking forward to win-win cooperation with you!
+  location: Ukraine
+  website: https://softblues.io/
+  for_hire: true
+  portfolio: true
+- name: Amruth Pillai
+  type: individual
+  description: >-
+    I build beautiful websites and applications that help people around the world. Some of my open source works include Reactive Resume, a resume builder that has over 1k+ starts, and Be Thrifty Today, a money management app that has about 1000+ downloads on Google Play Store.
+  location: Bangalore, India
+  website: https://amruthpillai.com
+  github: https://github.com/AmruthPillai
+  image: images/amruth-pillai.png
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: John Kavanagh
+  type: individual
+  description: >-
+    John is a specialist front-end web developer based in Brighton in the UK. With close to two decades of hands-on development experience, he specialises in building fundamentally well-engineered, maintainable, testable and scalable front-end code.  He delivers carefully-crafted, semantic and intuitive websites and SPAs using React and Gatsby.
+  location: Brighton, UK
+  website: https://johnkavanagh.co.uk
+  github: https://github.com/johnkavanagh/
+  image: images/john-kavanagh.jpg
+  for_hire: true
+  hiring: false
+  portfolio: true
+- name: Webplace
+  type: agency
+  image: images/webplace.png
+  description: >-
+    Webplace have been providing exceptional digital experiences for a vast range of clients since 2003. We provide digital strategy, UX / UI design, Web development, QA testing and ongoing maintenance & support. We are experts at WordPress, Drupal & Joomla and now use WordPress and Drupal as a Headless CMS with React / Gatsby as the frontend.
+  website: https://www.webplace.com.au
   for_hire: true
   portfolio: true

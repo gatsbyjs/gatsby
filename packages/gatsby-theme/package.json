@@ -1,6 +1,6 @@
 {
   "name": "gatsby-theme",
-  "version": "0.0.9",
+  "version": "0.14.0-next.0",
   "main": "index.js",
   "bin": {
     "gatsby-theme": "./cli.js"
@@ -14,16 +14,19 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme#readme",
   "dependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/helper-plugin-utils": "^7.0.0",
-    "@babel/plugin-syntax-jsx": "^7.7.4",
+    "@babel/core": "^7.12.3",
+    "@babel/helper-plugin-utils": "^7.10.4",
+    "@babel/plugin-syntax-jsx": "^7.12.1",
     "commander": "^2.20.3",
-    "fast-levenshtein": "^2.0.6",
+    "fastest-levenshtein": "^1.0.12",
     "glob": "^7.1.6",
-    "globby": "^10.0.1",
+    "globby": "^10.0.2",
     "inquirer": "^6.5.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mkdirp": "^0.5.1",
     "npm-keyword": "^6.1.0"
+  },
+  "engines": {
+    "node": ">=12.13.0"
   }
 }

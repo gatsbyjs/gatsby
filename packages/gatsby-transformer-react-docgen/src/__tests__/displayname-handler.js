@@ -31,7 +31,7 @@ describe(`DisplayNameHandler`, () => {
   it(`Explicitly set displayName as static class member`, () => {
     const doc = parse(
       `
-    class MyComponent { static displayName = 'foo'; render() {} }
+    class MyComponent extends React.Component { static displayName = 'foo'; render() {} }
   `,
       displayNameHandler
     )
@@ -66,7 +66,7 @@ describe(`DisplayNameHandler`, () => {
     {
       const doc = parse(
         `
-      class MyComponent { render() {} }
+      class MyComponent extends React.Component { render() {} }
     `,
         displayNameHandler
       )
@@ -76,7 +76,7 @@ describe(`DisplayNameHandler`, () => {
     {
       const doc = parse(
         `
-      var x = class MyComponent { render() {} }
+      var x = class MyComponent extends React.Component { render() {} }
     `,
         displayNameHandler
       )

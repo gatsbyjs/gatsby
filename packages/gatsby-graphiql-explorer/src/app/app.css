@@ -17,3 +17,7 @@ code {
   height: 100vh;
   width: 100vw;
 }
+
+div.graphiql-explorer-root > div:last-child {
+  display: none;
+}

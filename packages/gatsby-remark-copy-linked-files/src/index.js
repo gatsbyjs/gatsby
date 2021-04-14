@@ -1,3 +1,4 @@
+/* eslint-disable @babel/no-invalid-this */
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
 const fsExtra = require(`fs-extra`)
@@ -58,16 +59,13 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
-    lpath ? true : false
-  )
-  return path.posix.join(...linkPaths)
+  return `${pathPrefix ? pathPrefix : ``}/${destination}`
 }
 
 function toArray(buf) {
-  var arr = new Array(buf.length)
+  const arr = new Array(buf.length)
 
-  for (var i = 0; i < buf.length; i++) {
+  for (let i = 0; i < buf.length; i++) {
     arr[i] = buf[i]
   }
 
@@ -85,7 +83,7 @@ module.exports = (
   if (!validateDestinationDir(destinationDir))
     return Promise.reject(invalidDestinationDirMessage(destinationDir))
 
-  const options = _.defaults(pluginOptions, defaults)
+  const options = _.defaults({}, pluginOptions, defaults)
 
   const filesToCopy = new Map()
   // Copy linked files to the destination directory and modify the AST to point
@@ -120,7 +118,7 @@ module.exports = (
 
   // Takes a node and generates the needed images and then returns
   // the needed HTML replacement for the image
-  const generateImagesAndUpdateNode = function(image, node) {
+  const generateImagesAndUpdateNode = function (image, node) {
     const imagePath = path.posix.join(
       getNode(markdownNode.parent).dir,
       image.attr(`src`)
@@ -223,10 +221,10 @@ module.exports = (
   visit(markdownAST, [`html`, `jsx`], node => {
     const $ = cheerio.load(node.value)
 
-    function processUrl({ url }) {
+    function processUrl({ url, isRequired }) {
       try {
         const ext = url.split(`.`).pop()
-        if (!options.ignoreFileExtensions.includes(ext)) {
+        if (!options.ignoreFileExtensions.includes(ext) || isRequired) {
           // The link object will be modified to the new location so we'll
           // use that data to update our ref
           const link = { url }
@@ -243,7 +241,7 @@ module.exports = (
       return (
         selection
           // extract the elements that have the attribute
-          .map(function() {
+          .map(function () {
             const element = $(this)
             const url = $(this).attr(attribute)
             if (url && isRelativeUrl(url)) {
@@ -277,6 +275,14 @@ module.exports = (
       $(`video source[src], video[src]`),
       `src`
     ).forEach(processUrl)
+
+    // Handle video poster.
+    extractUrlAttributeAndElement(
+      $(`video[poster]`),
+      `poster`
+    ).forEach(extractedUrlAttributeAndElement =>
+      processUrl({ ...extractedUrlAttributeAndElement, isRequired: true })
+    )
 
     // Handle audio tags.
     extractUrlAttributeAndElement(

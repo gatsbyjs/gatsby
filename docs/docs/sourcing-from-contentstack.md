@@ -41,9 +41,9 @@ _**Note:** if you wish to preview the pages of your Gatsby site from within the 
 To build a sample home page, perform the following steps in Contentstack:
 
 1. Create a ‘Home’ content type with ‘Title’ and ‘Body’ fields
-1. Create an entry for the ‘Home’ content type
-1. Create a development environment
-1. Publish the ‘Home’ entry to the development environment
+2. Create an entry for the ‘Home’ content type
+3. Create a development environment
+4. Publish the ‘Home’ entry to the development environment
 
 ### Step 4: Run Gatsby
 
@@ -72,7 +72,7 @@ Go to the pages folder inside the src folder, and create a home.js file. Add the
 import React from "react"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <div>
       <h1>{data.contentstackHome.title}</h1>
@@ -93,7 +93,9 @@ This will display the title of your home page on `http://localhost:8000/home`. L
 
 ## Closing note
 
-The above example is meant to demonstrate how to set up a simple Gatsby site that sources content directly from Contentstack. Contentstack has also published a few articles that demonstrate how Contentstack works with Gatsby in their [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
+The above example is meant to demonstrate how to set up a Gatsby site that sources content directly from Contentstack. Contentstack has also published a few articles that demonstrate how Contentstack works with Gatsby in their [documentation](https://www.contentstack.com/docs/?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack):
 
 - [Getting started with Contentstack and Gatsby](https://www.contentstack.com/docs/example-apps/build-a-sample-website-using-gatsby-and-contentstack?utm_source=gatsby&utm_medium=referral&utm_campaign=2019_06_17_sourcing_from_contentstack)
 - [Build an example website using Gatsby and Contentstack](https://www.contentstack.com/blog/announcements/best-content-management-platform-2019-siia-codie-award?utm_source=prnewswire&utm_medium=referral&utm_campaign=2019_06_18_best_cms_codie_award)
+
+<CloudCallout />

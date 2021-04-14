@@ -12,7 +12,7 @@ ButterCMS is a headless CMS that lets you manage content using their dashboard a
 
 ButterCMS provides a user-friendly UI for managing marketing sites, blogging, and custom content scenarios. It can be used for SEO landing pages, customer case studies, company news & updates, events + webinar pages, education center, location pages, knowledgebases, and more.
 
-ButterCMS is different from a traditional CMS like Drupal or WordPress in that they're not a large piece of software you need to download, host, customize, and maintain. Instead they provide easy to consume, performant content API's that you add to your application.
+ButterCMS is different from a traditional CMS like Drupal or WordPress in that they're not a large piece of software you need to download, host, customize, and maintain. Instead, they provide consumable, performant content API's that you add to your application.
 
 For example, if you wanted to enable a non-technical person to be able to add customer case study pages to your marketing site, you might create a Case Study Page Type to represent these pages. The non-technical person would be able to manage these pages from their dashboard and the JSON API output would look something like this:
 
@@ -45,7 +45,7 @@ Run this in your terminal:
 ### Adding configuration
 
 Here you'll specify the config that will be needed to pull down data from ButterCMS.
-Make sure to add your **API_TOKEN** from your dashboard. In this guide you will be creating `faq_items`, `faq_headline`, `homepage` , `customer_case_study` as stated in the config below. Do well to change it if you named it something differently.
+Make sure to add your **API_TOKEN** from your dashboard. In this guide you will be creating `faq_items`, `faq_headline`, `homepage`, `customer_case_study` as stated in the config below. Do well to change it if you named it something differently.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -109,7 +109,7 @@ ButterCMS has full support for localization of your content. Locale names and ke
 
 Quickly launch a new marketing site or add [CMS-powered pages](https://buttercms.com/gatsbyjs-cms/) to your existing site using Pages.
 
-Adding a CMS-powered page to your app involves three easy steps:
+Adding a CMS-powered page to your app involves three steps:
 
 1. Create the Page structure
 2. Populate the content
@@ -129,7 +129,7 @@ Then populate your new page with content. In the next step, you'll call the Butt
 
 #### Integrate into your application
 
-With your homepage defined, the ButterCMS graphQL query will return some data that looks like this:
+With your homepage defined, the ButterCMS GraphQL query will return some data that looks like this:
 
 ```json
 {
@@ -261,7 +261,7 @@ Now open up `http://localhost:8000/home` to see the home page populated with the
 
 ### Create multiple pages using Page Types
 
-Suppose you want to add a set of customer case study pages to your marketing site. They all have the same structure but the content is different. Page Types are perfect for this scenario and involves three easy steps:
+Suppose you want to add a set of customer case study pages to your marketing site. They all have the same structure but the content is different. Page Types are perfect for this scenario and involves three steps:
 
 1. Create the Page Type structure
 2. Populate the content
@@ -596,15 +596,15 @@ was used by Gatsby to create each case study page.
 
 ### FAQ page example
 
-Suppose you want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ (Frequently Asked Questions) page. ButterCMS makes it easy to create such content with Collections. Now you'll create a collection named `FAQs`having a `question` and `answer` field.
+Suppose you want to add a CMS to a static FAQ page with a title and a list of questions with answers. Most websites have a FAQ (Frequently Asked Questions) page. ButterCMS makes it possible to create such content with Collections. Now you'll create a collection named `FAQs`having a `question` and `answer` field.
 
 #### Set up content fields
 
 Making your content dynamic with Butter is a two-step process:
 
 1. **Setup custom content fields in Butter**
-1. **Integrate the fields into your application**
-1. **To setup custom content fields, first sign in to the Butter dashboard.**
+2. **Integrate the fields into your application**
+3. **To setup custom content fields, first sign in to the Butter dashboard.**
 
 Create a new workspace or click on an existing one. Workspaces let you organize content fields in a friendly way for content editors and have no effect on development or the API. For example, a real-estate website might have a workspace called "Properties" and another called "About Page".
 
@@ -707,7 +707,7 @@ export default Faq
 
 ### Introduction
 
-Butter CMS is also a great feat if you want to spin up a blog, it's pretty easy as they provide a [blog engine](https://buttercms.com/gatsbyjs-blog-engine/) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
+ButterCMS is also a great feat if you want to spin up a blog, which you can do through their provided [blog engine](https://buttercms.com/gatsbyjs-blog-engine/) that helps you manage content in one place. Gatsby then pulls down the data at build time and create static pages off that data.
 
 ### Blog home page
 
@@ -818,7 +818,7 @@ export const pageQuery = graphql`
 
 ### Creating a blog template
 
-Now you've listed your blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/node-apis/#createPages) API you would generate blog post pages using a template:
+Now you've listed your blog posts in `src/pages/blog.js`, using gatsby [createpages](/docs/reference/config-files/gatsby-node/#createPages) API you would generate blog post pages using a template:
 
 ```jsx:title=src/pages/template/blog-post.js
 import React from "react"

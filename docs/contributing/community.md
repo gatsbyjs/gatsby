@@ -2,18 +2,20 @@
 title: Community
 ---
 
-As of December 2019, the Gatsby community is comprised of over 2,800 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
+import EmailCaptureForm from "@components/email-capture-form"
+
+As of June 2020, the Gatsby community is comprised of over 3,300 contributors and tens of thousands of developers building both personal and commercial websites on Gatsby.
 
 Open source doesn’t always have the best reputation for being friendly and welcoming, and that makes us sad. **Everyone belongs in open source, and Gatsby is dedicated to making you feel welcome.**
 
-We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through helping you contribute to the Gatsby ecosystem, offering [free swag for contributors](https://gatsby.dev/swag), giving control to the community by [auto-inviting all contributors to the Gatsby GitHub org](https://github.com/gatsbyjs/gatsby/pull/7699#issuecomment-416665803), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
+We will never judge, condescend, or exclude anyone. Instead, we will go above and beyond to support the community, through helping you contribute to the Gatsby ecosystem, offering [free swag for contributors](https://gatsby.dev/swag), an open and inclusive [code of conduct](/contributing/code-of-conduct/), and other means that empower and embrace the incredible community that makes Gatsby possible.
 
 One of our community's values is that ["you belong here"](/blog/2018-09-07-gatsby-values/#you-belong-here).
 
 ## Gatsby Contributor Covenant Code of Conduct
 
 In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
+contributors and maintainers pledge to make participation in our project and
 our community a harassment-free experience for everyone, regardless of age, body
 size, disability, ethnicity, gender identity and expression, level of
 experience, nationality, personal appearance, race, religion, or sexual identity
@@ -38,7 +40,7 @@ The Gatsby community welcomes contributions. Please refer to the guides below on
 
 Sign up for the Gatsby newsletter to keep up with the latest from the Gatsby community! Hear about new features, tips & tricks, and what people are building.
 
-[Sign up here](/newsletter/)
+<EmailCaptureForm signupMessage="Want to keep up with the latest tips &amp; tricks? Subscribe to our newsletter!" />
 
 ### Twitter
 
@@ -50,15 +52,19 @@ For the latest news about Gatsby,
 ### Stack Overflow
 
 Many members of the community use Stack Overflow to ask questions. Read through
-the [existing questions](http://stackoverflow.com/questions/tagged/gatsby)
+the [existing questions](https://stackoverflow.com/questions/tagged/gatsby)
 tagged with `gatsby` or
-[ask your own](http://stackoverflow.com/questions/ask?tags=gatsby)!
+[ask your own](https://stackoverflow.com/questions/ask?tags=gatsby)!
 
 ### Discord
 
 If you need an answer right away, check out the
 [Gatsby Discord](https://gatsby.dev/discord). Community & team members are happy to help you out or point you to
 useful resources.
+
+### GitHub Discussions
+
+Directly integrated into the repository, you can use [GitHub Discussions](https://github.com/gatsbyjs/gatsby/discussions) to ask for help or share ideas.
 
 ### Hashnode
 

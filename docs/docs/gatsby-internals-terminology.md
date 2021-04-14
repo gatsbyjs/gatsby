@@ -18,20 +18,9 @@ Throughout the Gatsby code, you'll see the below object fields and variables men
 
 ### Page Object
 
-created by calls to [createPage](/docs/actions/#createPage) (see [Page Creation](/docs/page-creation)).
+created by calls to [createPage](/docs/reference/config-files/actions/#createPage) (see [Page Creation](/docs/page-creation)).
 
-- [path](#path)
-- [matchPath](#matchpath)
-- [jsonName](#jsonname)
-- [component](#component)
-- [componentChunkName](#componentchunkname)
-- [internalComponentName](#internalcomponentname) (unused)
-- [context](#pagecontext)
-- updatedAt
-
-The above fields are explained below
-
-### path
+#### path
 
 The publicly accessible path in the web URL to access the page in question. E.g
 
@@ -39,27 +28,31 @@ The publicly accessible path in the web URL to access the page in question. E.g
 
 It is created when the page object is created (see [Page Creation](/docs/page-creation/))
 
+#### updatedAt
+
+Last updated time.
+
 ### Redux `pages` namespace
 
 Contains a map of Page [path](#path) -> [Page object](#page-object).
 
-### matchPath
+#### matchPath
 
 Think of this instead as `client matchPath`. It is ignored when creating pages during the build. But on the frontend, when resolving the page from the path ([find-path.js]()), it is used (via [reach router](https://github.com/reach/router/blob/master/src/lib/utils.js)) to find the matching page. Note that the [pages are sorted](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/pages-writer.js#L38) so that those with matchPaths are at the end, so that explicit paths are matched first.
 
-This is also used by [gatsby-plugin-create-client-paths](/packages/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g. `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the frontend.
+This is also used by [gatsby-plugin-create-client-paths](/plugins/gatsby-plugin-create-client-paths/?=client). It duplicates pages whose path match some client-only prefix (e.g. `/app/`). The duplicated page has a `matchPath` so that it is resolved first on the frontend.
 
-It is also used by [gatsby-plugin-netlify](/packages/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
+It is also used by [gatsby-plugin-netlify](/plugins/gatsby-plugin-netlify/?=netlify) when creating `_redirects`.
 
-### jsonName
+#### jsonName
 
-The logical name for the page's query json result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
+The logical name for the page's query JSON result. The name is constructed during [createPage](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/redux/actions.js#L229) using a kebabHash of page path. E.g. For the above page path, it is:
 
 `blog-2018-07-17-announcing-gatsby-preview-995`
 
-The actual json file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
+The actual JSON file is written to disk after [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk/).
 
-### component
+#### component
 
 The path on disk to the JavaScript file containing the React component. E.g
 
@@ -83,9 +76,9 @@ Mapping from `component` (path on disk) to its [Page object](#page-object). It i
 }
 ```
 
-Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/internal-plugins/query-runner/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
+Query starts off as empty, but is set during the extractQueries phase by [query-watcher/handleQuery](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-watcher.js#L68), once the query has compiled by relay (see [Query Extraction](/docs/query-extraction/)).
 
-### componentChunkName
+#### componentChunkName
 
 The `[name]` portion of the webpack chunkFilename (`[name]-[contenthash].js`) (see [Production App webpack config](/docs/production-app/#webpack-config)). Its name is the concatenation of `component---` and the `component` name passed through [kebab-hash](https://www.npmjs.com/package/kebab-hash). E.g, the componentChunkName for component
 
@@ -97,15 +90,15 @@ is
 
 This is used extensively throughout Gatsby, but especially during [Code Splitting](/docs/how-code-splitting-works/).
 
-### internalComponentName
+#### internalComponentName
 
 If the path is `/`, internalComponentName = `ComponentIndex`. Otherwise, for a path of `/blog/foo`, it would be `ComponentBlogFoo`.
 
 Created as part of page, but currently unused.
 
-### page.context
+#### page.context
 
-This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.js#L79) and then is [passed to graphql](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.js#L28) queries as the `context` parameter.
+This is [merged with the page itself](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L79) and then is [passed to GraphQL](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/query/query-runner.ts#L36) queries as the `context` parameter.
 
 ## Query
 
@@ -189,7 +182,7 @@ export const pageQuery = graphql`
 `
 ```
 
-## Webpack stuff
+## webpack stuff
 
 ### /.cache/async-requires.js
 

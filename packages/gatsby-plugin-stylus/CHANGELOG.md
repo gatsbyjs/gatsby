@@ -3,6 +3,171 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.3.0-next.1...gatsby-plugin-stylus@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.3.0-next.0...gatsby-plugin-stylus@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.2.0-next.1...gatsby-plugin-stylus@3.3.0-next.0) (2021-03-25)
+
+### Features
+
+- enable better cssOptions override for modules ([#30112](https://github.com/gatsbyjs/gatsby/issues/30112)) ([4571d2b](https://github.com/gatsbyjs/gatsby/commit/4571d2b098e1830ae7a9b1ddd0e23cb1abdcc86c))
+
+# [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.2.0-next.0...gatsby-plugin-stylus@3.2.0-next.1) (2021-03-19)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.1.0-next.2...gatsby-plugin-stylus@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.1.0-next.1...gatsby-plugin-stylus@3.1.0-next.2) (2021-02-26)
+
+### Bug Fixes
+
+- **mini-css-extract:** don't use loader in ssr ([#29801](https://github.com/gatsbyjs/gatsby/issues/29801)) ([b2d6617](https://github.com/gatsbyjs/gatsby/commit/b2d66171081dffbfdd9e5def281d09c011a6a821))
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.1.0-next.0...gatsby-plugin-stylus@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.0.0-next.1...gatsby-plugin-stylus@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@3.0.0-next.0...gatsby-plugin-stylus@3.0.0-next.1) (2021-02-19)
+
+### Bug Fixes
+
+- make minicss-extract-plugin compatible with plugins ([#29599](https://github.com/gatsbyjs/gatsby/issues/29599)) ([c0ab195](https://github.com/gatsbyjs/gatsby/commit/c0ab19598708750ce98b39448469a39126f55571))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.11.0-next.0...gatsby-plugin-stylus@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.10.0-next.0...gatsby-plugin-stylus@2.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.9.0-next.0...gatsby-plugin-stylus@2.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.8.0-next.0...gatsby-plugin-stylus@2.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.7.0-next.0...gatsby-plugin-stylus@2.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.6.0-next.0...gatsby-plugin-stylus@2.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.5.0-next.0...gatsby-plugin-stylus@2.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.4.0-next.0...gatsby-plugin-stylus@2.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.12...gatsby-plugin-stylus@2.3.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.11...gatsby-plugin-stylus@2.3.12) (2020-09-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-stylus ([#27133](https://github.com/gatsbyjs/gatsby/issues/27133)) ([bce4713](https://github.com/gatsbyjs/gatsby/commit/bce4713cc4498c9d774017d49cb57796b0efcbda))
+- **docs:** remove README.md not displaying on Gatsby plugin library ([#27040](https://github.com/gatsbyjs/gatsby/issues/27040)) ([6987edb](https://github.com/gatsbyjs/gatsby/commit/6987edb84d9cfa79c7f60a4656e1048d13d5f6d8))
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.10...gatsby-plugin-stylus@2.3.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.9...gatsby-plugin-stylus@2.3.10) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.8...gatsby-plugin-stylus@2.3.9) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.7...gatsby-plugin-stylus@2.3.8) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.6...gatsby-plugin-stylus@2.3.7) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.5...gatsby-plugin-stylus@2.3.6) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.4...gatsby-plugin-stylus@2.3.5) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.3...gatsby-plugin-stylus@2.3.4) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.2...gatsby-plugin-stylus@2.3.3) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.1...gatsby-plugin-stylus@2.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.3.0...gatsby-plugin-stylus@2.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.2.4...gatsby-plugin-stylus@2.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.2.3...gatsby-plugin-stylus@2.2.4) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.2.2...gatsby-plugin-stylus@2.2.3) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [2.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.2.1...gatsby-plugin-stylus@2.2.2) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.2.0...gatsby-plugin-stylus@2.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+# [2.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.1.23...gatsby-plugin-stylus@2.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [2.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.1.22...gatsby-plugin-stylus@2.1.23) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
+## [2.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.1.21...gatsby-plugin-stylus@2.1.22) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-plugin-stylus
+
 ## [2.1.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-stylus@2.1.20...gatsby-plugin-stylus@2.1.21) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-plugin-stylus

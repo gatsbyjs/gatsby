@@ -6,23 +6,25 @@ Gatsby and its ecosystem of plugins provide all kinds of data through a
 GraphQL interface. This guide will show how that data can be used to
 programmatically create pages.
 
+> **Note:** For most use cases you'll be able to use the [File System Route API](/docs/reference/routing/file-system-route-api/) to create pages. Please read on if you need more control over the page creation or consume data outside of Gatsby's GraphQL data layer.
+
 ## Prerequisites
 
 Though you can use any data source you'd like, this guide will show how to
 create pages from Markdown files (following after the example introduced in
-[earlier guides](/docs/adding-markdown-pages/)).
+[earlier guides](/docs/how-to/routing/adding-markdown-pages/)).
 
 ## Creating pages
 
 The Gatsby Node API provides the
-[`createPages`](/docs/node-apis/#createPages)
+[`createPages`](/docs/reference/config-files/gatsby-node/#createPages)
 extension point which you'll use to add pages. This function will give you
 access to the
-[`createPage`](/docs/actions/#createPage) action
+[`createPage`](/docs/reference/config-files/actions/#createPage) action
 which is at the core of programmatically creating a page.
 
 ```js:title=gatsby-node.js
-exports.createPages = async function({ actions, graphql }) {
+exports.createPages = async function ({ actions, graphql }) {
   const { data } = await graphql(`
     query {
       allMarkdownRemark {
@@ -78,7 +80,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.markdownRemark
   return (
     <Layout>
@@ -111,7 +113,7 @@ are also available as the `pageContext` prop in the template component itself.
 ## Not just Markdown
 
 The
-[`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/)
+[`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/)
 plugin is just one of a multitude of Gatsby plugins that can provide data
 through the GraphQL interface. Any of that data can be used to
 programmatically create pages.
@@ -119,5 +121,5 @@ programmatically create pages.
 ## Other resources
 
 - [Example Repository](https://github.com/jbranchaud/gatsby-programmatic-pages)
-- [Using Gatsby without GraphQL](/docs/using-gatsby-without-graphql/)
+- [Using Gatsby without GraphQL](/docs/how-to/querying-data/using-gatsby-without-graphql/)
 - [CodeSandbox example creating pages from 3rd party data](https://codesandbox.io/s/b84oz)

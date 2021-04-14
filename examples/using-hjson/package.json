@@ -4,12 +4,12 @@
   "description": "Gatsby example site using hjson",
   "author": "Remi Barraquand <dev@remibarraquand.com>",
   "dependencies": {
-    "core-js": "^2.5.5",
-    "gatsby": "^2.0.0",
-    "gatsby-source-filesystem": "^2.0.1",
-    "gatsby-transformer-hjson": "^2.1.1",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "core-js": "^2.6.11",
+    "gatsby": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-hjson": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "license": "MIT",
   "main": "n/a",

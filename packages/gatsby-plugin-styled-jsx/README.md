@@ -1,10 +1,10 @@
 # gatsby-plugin-styled-jsx
 
-Provides drop-in support for [styled-jsx](https://github.com/zeit/styled-jsx).
+Provides drop-in support for [styled-jsx](https://github.com/vercel/styled-jsx).
 
 ## Install
 
-`npm install --save styled-jsx gatsby-plugin-styled-jsx`
+`npm install styled-jsx gatsby-plugin-styled-jsx`
 
 ## How to use
 
@@ -14,7 +14,7 @@ Add the plugin to the plugins array in your `gatsby-config.js` and use `<style j
 plugins: [`gatsby-plugin-styled-jsx`]
 ```
 
-You can add styled-jsx [plugins](https://github.com/zeit/styled-jsx#css-preprocessing-via-plugins) with the `jsxPlugins` option
+You can add styled-jsx [plugins](https://github.com/vercel/styled-jsx#css-preprocessing-via-plugins) with the `jsxPlugins` option
 
 ```js
 plugins: [
@@ -27,7 +27,7 @@ plugins: [
 ]
 ```
 
-[Configuration options for `styled-jsx`](https://github.com/zeit/styled-jsx#configuration-options) can also be specified:
+[Configuration options for `styled-jsx`](https://github.com/vercel/styled-jsx#configuration-options) can also be specified:
 
 ```js
 plugins: [

@@ -1,7 +1,3 @@
-
-packages/*/yarn.lock
-packages/*/package-lock.json
-
 # Logs
 logs
 *.log
@@ -30,8 +26,7 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-examples/biz-website/public/
-examples/blog/public/
+integration-tests/gatsby-cli/execution-folder/*
 *.un~
 dist
 bin/published.js
@@ -42,8 +37,11 @@ test/**/public
 .DS_Store
 public/
 node_modules/
+e2e-tests/gatsby-pnp/
+__diff_output__/
 .cache/
 .netlify
+.Rhistory
 
 # IDE specific
 .idea/
@@ -53,10 +51,13 @@ node_modules/
 # misc
 .serverless/
 .eslintcache
+scripts/.env
 
 # lock files
 yarn.lock
 package-lock.json
+# ignore any lock file other than main lock file
+!/yarn.lock
 
 # starters are special; we want to persist the lock files
 !starters/*/package-lock.json

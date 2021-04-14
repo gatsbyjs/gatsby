@@ -4,15 +4,6 @@ title: Code Contributions
 
 The beauty of contributing to open source is that you can clone your favorite project, get it running locally, and test out experiments and changes in real time! Way to feel like a wizard.
 
-On this page:
-
-- [Repo setup](#repo-setup)
-- [Creating your own plugins and loaders](#creating-your-own-plugins-and-loaders)
-- [Making changes to the starter Library](#making-changes-to-the-starter-library)
-- [Contributing example sites](#contributing-example-sites)
-- [Using Docker to set up test environments](#using-docker-to-set-up-test-environments)
-- [Development tools](#development-tools)
-
 ## Repo setup
 
 This page includes details specific to the Gatsby core and ecosystem codebase.
@@ -21,27 +12,11 @@ To start setting up the Gatsby repo on your machine using git, Yarn and Gatsby-C
 
 Alternatively, you can skip the local setup and [use an online dev environment](/contributing/using-an-online-dev-environment/).
 
-To contribute to the blog or Gatsbyjs.org website, check out the setup steps on the [blog and website contributions](/contributing/blog-and-website-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
+To contribute to the blog, check out the setup steps on the [blog contributions](/contributing/blog-contributions/) page. For instructions on contributing to the docs, visit the [docs contributions page](/contributing/docs-contributions/).
 
 ## Creating your own plugins and loaders
 
 If you create a loader or plugin, we would love for you to open source it and put it on npm. For more information on creating custom plugins, please see the documentation for [plugins](/docs/plugins/) and the [API specification](/docs/api-specification/).
-
-## Making changes to the starter library
-
-Note: You don't need to follow these steps to submit to the starter library. This is only necessary if you'd like to contribute to the functionality of the starter library. To submit a starter, [follow these steps instead](/contributing/submit-to-starter-library/).
-
-To develop on the starter library, you'll need to supply a GitHub personal access token.
-
-1. Create a personal access token in your GitHub [Developer settings](https://github.com/settings/tokens).
-2. In the new token's settings, grant that token the "public_repo" scope.
-3. Create a file in the root of `www` called `.env.development`, and add the token to that file like so:
-
-```text:title=.env.development
-GITHUB_API_TOKEN=YOUR_TOKEN_HERE
-```
-
-The `.env.development` file is ignored by git. Your token should never be committed.
 
 ## Contributing example sites
 
@@ -118,6 +93,18 @@ Using Docker Compose, you can start and stop a WordPress instance and integrate 
 ### Debugging the build process
 
 Check [Debugging the build process](/docs/debugging-the-build-process/) page to learn how to debug Gatsby.
+
+## Official theme development
+
+This section is for official theme development. If you are looking
+to build your own theme, see [building themes](/docs/themes/building-themes/).
+
+Themes live in their own [repo](https://github.com/gatsbyjs/themes). The themes themselves live in the `packages` directory and starters using them are in the `starters` directory. In order to work on a theme, find the starter that uses it and do the following:
+
+1. Run `yarn` in your terminal in the root of the repo.
+2. Still in the repo root, run `yarn workspace <starter name> develop`.
+
+From there, you can make changes in the theme and see them reflected in the running site.
 
 ## Feedback
 

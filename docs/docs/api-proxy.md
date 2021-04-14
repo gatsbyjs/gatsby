@@ -4,7 +4,7 @@ title: Proxying API Requests in Development
 
 ## Resources
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/conceptual/gatsby-lifecycle-apis/).
 
 ## Proxying API requests in development
 
@@ -47,13 +47,16 @@ Keep in mind that `proxy` only has effect in development (with `gatsby develop`)
 Sometimes you need more granular/flexible access to the development server. Gatsby exposes the [Express.js](https://expressjs.com/) development server to your site's `gatsby-config.js` where you can add Express middleware as needed.
 
 ```javascript:title=gatsby-config.js
-var proxy = require("http-proxy-middleware")
+const { createProxyMiddleware } = require("http-proxy-middleware") //v1.x.x
+// Use implicit require for v0.x.x of 'http-proxy-middleware'
+// const proxy = require('http-proxy-middleware')
+// be sure to replace 'createProxyMiddleware' with 'proxy' where applicable
 
 module.exports = {
   developMiddleware: app => {
     app.use(
       "/.netlify/functions/",
-      proxy({
+      createProxyMiddleware({
         target: "http://localhost:9000",
         pathRewrite: {
           "/.netlify/functions/": "",
@@ -71,12 +74,16 @@ Keep in mind that middleware only has effect in development (with `gatsby develo
 If you proxy to local APIs with self-signed certificates, set the option `secure` to `false`.
 
 ```javascript:title=gatsby-config.js
-var proxy = require("http-proxy-middleware")
+const { createProxyMiddleware } = require("http-proxy-middleware") //v1.x.x
+// Use implicit require for v0.x.x of 'http-proxy-middleware'
+// const proxy = require('http-proxy-middleware')
+// be sure to replace 'createProxyMiddleware' with 'proxy' where applicable
+
 module.exports = {
   developMiddleware: app => {
     app.use(
       "/.netlify/functions/",
-      proxy({
+      createProxyMiddleware({
         target: "http://localhost:9000",
         secure: false, // Do not reject self-signed certificates.
         pathRewrite: {

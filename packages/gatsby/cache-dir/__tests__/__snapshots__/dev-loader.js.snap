@@ -2,7 +2,7 @@
 
 exports[`Dev loader loadPage should be successful when component can be loaded 1`] = `
 Object {
-  "component": "instance",
+  "component": [Function],
   "json": Object {
     "pageContext": "something something",
   },
@@ -10,7 +10,9 @@ Object {
     "componentChunkName": "chunk",
     "matchPath": undefined,
     "path": "/mypage/",
+    "staticQueryHashes": Array [],
     "webpackCompilationHash": "123",
   },
+  "staticQueryResults": Object {},
 }
 `;

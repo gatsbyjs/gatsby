@@ -24,10 +24,44 @@ describe(`navigate`, () => {
       .should(`eq`, withTrailingSlash(pathPrefix))
   })
 
+  describe(`relative links`, () => {
+    it(`can navigate to a subdirectory`, () => {
+      cy.getTestElement(`subdir-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `${pathPrefix}/subdirectory/page-1`)
+    })
+
+    it(`can navigate to a sibling page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `${pathPrefix}/subdirectory/page-2`)
+    })
+
+    it(`can navigate to a parent page`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-parent-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `${pathPrefix}/subdirectory`)
+    })
+
+    it(`can navigate to a sibling page programatically`, () => {
+      cy.visit(`/subdirectory/page-1`)
+        .waitForRouteChange()
+        .getTestElement(`page-2-button-link`)
+        .click()
+        .location(`pathname`)
+        .should(`eq`, `${pathPrefix}/subdirectory/page-2`)
+    })
+  })
+
   it(`can navigate to 404`, () => {
-    cy.getTestElement(`404-link`)
-      .click()
-      .waitForRouteChange()
+    cy.getTestElement(`404-link`).click().waitForRouteChange()
 
     cy.get(`h1`).contains(`NOT FOUND`)
   })

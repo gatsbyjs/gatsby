@@ -523,6 +523,40 @@ Object {
 }
 `;
 
+exports[`Headings are generated correctly from schema returns id if heading has one 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "id": "first-title",
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "id": "second-title",
+      "value": "second title",
+    },
+  ],
+}
+`;
+
+exports[`Headings are generated correctly from schema returns null id if heading has no id 1`] = `
+Object {
+  "headings": Array [
+    Object {
+      "depth": 1,
+      "id": null,
+      "value": "first title",
+    },
+    Object {
+      "depth": 2,
+      "id": null,
+      "value": "second title",
+    },
+  ],
+}
+`;
+
 exports[`Headings are generated correctly from schema returns value 1`] = `
 Object {
   "headings": Array [
@@ -597,7 +631,9 @@ Object {
 <li><a href=\\"/my%20little%20pony/#second-title\\">second title</a></li>
 </ul>
 </li>
-<li><a href=\\"/my%20little%20pony/#third-title\\">third title</a></li>
+<li>
+<p><a href=\\"/my%20little%20pony/#third-title\\">third title</a></p>
+</li>
 </ul>",
 }
 `;
@@ -614,7 +650,9 @@ Object {
 <li><a href=\\"#second-title\\">second title</a></li>
 </ul>
 </li>
-<li><a href=\\"#third-title\\">third title</a></li>
+<li>
+<p><a href=\\"#third-title\\">third title</a></p>
+</li>
 </ul>",
 }
 `;

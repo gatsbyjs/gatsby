@@ -23,14 +23,23 @@ describe(`gatsby-plugin-less`, () => {
     stages: [`develop`, `build-javascript`, `develop-html`, `build-html`],
     options: {
       "No options": {},
-      "Less options #1": {
-        modifyVars: {
-          "text-color": `#fff`,
+      "Loader options #1": {
+        loaderOptions: {
+          appendData: `@env: ${process.env.NODE_ENV};`,
         },
-        strictMath: true,
+      },
+      "Less options #1": {
+        lessOptions: {
+          modifyVars: {
+            "text-color": `#fff`,
+          },
+          strictMath: true,
+        },
       },
       "Less options #2": {
-        modifyVars: require(`../theme-test.js`),
+        lessOptions: {
+          modifyVars: require(`../theme-test.js`),
+        },
       },
       "PostCss plugins": {
         postCssPlugins: [`test1`],
@@ -40,11 +49,19 @@ describe(`gatsby-plugin-less`, () => {
           camelCase: false,
         },
       },
+      "css-loader use commonjs": {
+        cssLoaderOptions: {
+          esModule: false,
+          modules: {
+            namedExport: false,
+          },
+        },
+      },
     },
   }
 
   tests.stages.forEach(stage => {
-    for (let label in tests.options) {
+    for (const label in tests.options) {
       const options = tests.options[label]
       it(`Stage: ${stage} / ${label}`, () => {
         onCreateWebpackConfig({ actions, loaders, stage }, options)

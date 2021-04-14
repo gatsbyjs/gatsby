@@ -1,33 +1,17 @@
 const fs = require(`fs-extra`)
-const got = require(`got`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const path = require(`path`)
 const { isWebUri } = require(`valid-url`)
 const Queue = require(`better-queue`)
-const readChunk = require(`read-chunk`)
-const fileType = require(`file-type`)
-const { createProgress } = require(`./utils`)
-
+const { fetchRemoteFile } = require(`gatsby-core-utils`)
 const { createFileNode } = require(`./create-file-node`)
-const {
-  getRemoteFileExtension,
-  getRemoteFileName,
-  createFilePath,
-} = require(`./utils`)
-const cacheId = url => `create-remote-file-node-${url}`
+const { getRemoteFileExtension, createFilePath } = require(`./utils`)
 
-let bar
-// Keep track of the total number of jobs we push in the queue
-let totalJobs = 0
+let showFlagWarning = !!process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER
 
 /********************
  * Type Definitions *
  ********************/
-
-/**
- * @typedef {Redux}
- * @see [Redux Docs]{@link https://redux.js.org/api-reference}
- */
 
 /**
  * @typedef {GatsbyCache}
@@ -52,20 +36,12 @@ let totalJobs = 0
  * @description Create Remote File Node Payload
  *
  * @param  {String} options.url
- * @param  {Redux} options.store
  * @param  {GatsbyCache} options.cache
  * @param  {Function} options.createNode
+ * @param  {Function} options.getCache
  * @param  {Auth} [options.auth]
  * @param  {Reporter} [options.reporter]
  */
-
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
-const STALL_RETRY_LIMIT = 3
-const STALL_TIMEOUT = 30000
-
-const CONNECTION_RETRY_LIMIT = 5
-const CONNECTION_TIMEOUT = 30000
 
 /********************
  * Queue Management *
@@ -81,14 +57,6 @@ const queue = new Queue(pushToQueue, {
   id: `url`,
   merge: (old, _, cb) => cb(old),
   concurrent: process.env.GATSBY_CONCURRENT_DOWNLOAD || 200,
-})
-
-// when the queue is empty we stop the progressbar
-queue.on(`drain`, () => {
-  if (bar) {
-    bar.done()
-  }
-  totalJobs = 0
 })
 
 /**
@@ -121,79 +89,6 @@ async function pushToQueue(task, cb) {
  ******************/
 
 /**
- * requestRemoteNode
- * --
- * Download the requested file
- *
- * @param  {String}   url
- * @param  {Headers}  headers
- * @param  {String}   tmpFilename
- * @param  {Object}   httpOpts
- * @param  {number}   attempt
- * @return {Promise<Object>}  Resolves with the [http Result Object]{@link https://nodejs.org/api/http.html#http_class_http_serverresponse}
- */
-const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
-  new Promise((resolve, reject) => {
-    let timeout
-
-    // Called if we stall for 30s without receiving any data
-    const handleTimeout = async () => {
-      fsWriteStream.close()
-      fs.removeSync(tmpFilename)
-      if (attempt < STALL_RETRY_LIMIT) {
-        // Retry by calling ourself recursively
-        resolve(
-          requestRemoteNode(url, headers, tmpFilename, httpOpts, attempt + 1)
-        )
-      } else {
-        reject(`Failed to download ${url} after ${STALL_RETRY_LIMIT} attempts`)
-      }
-    }
-
-    const resetTimeout = () => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      timeout = setTimeout(handleTimeout, STALL_TIMEOUT)
-    }
-    const responseStream = got.stream(url, {
-      headers,
-      timeout: CONNECTION_TIMEOUT,
-      retries: CONNECTION_RETRY_LIMIT,
-      ...httpOpts,
-    })
-    const fsWriteStream = fs.createWriteStream(tmpFilename)
-    responseStream.pipe(fsWriteStream)
-
-    // If there's a 400/500 response or other error.
-    responseStream.on(`error`, error => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      fs.removeSync(tmpFilename)
-      reject(error)
-    })
-
-    fsWriteStream.on(`error`, error => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-      reject(error)
-    })
-
-    responseStream.on(`response`, response => {
-      resetTimeout()
-
-      fsWriteStream.on(`finish`, () => {
-        if (timeout) {
-          clearTimeout(timeout)
-        }
-        resolve(response)
-      })
-    })
-  })
-
-/**
  * processRemoteNode
  * --
  * Request the remote file and return the fileNode
@@ -203,7 +98,6 @@ const requestRemoteNode = (url, headers, tmpFilename, httpOpts, attempt = 1) =>
  */
 async function processRemoteNode({
   url,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -213,64 +107,24 @@ async function processRemoteNode({
   ext,
   name,
 }) {
-  // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
-  await fs.ensureDir(pluginCacheDir)
-
-  // See if there's response headers for this url
-  // from a previous request.
-  const cachedHeaders = await cache.get(cacheId(url))
-  const headers = { ...httpHeaders }
-  if (cachedHeaders && cachedHeaders.etag) {
-    headers[`If-None-Match`] = cachedHeaders.etag
-  }
-
-  // Add htaccess authentication if passed in. This isn't particularly
-  // extensible. We should define a proper API that we validate.
-  const httpOpts = {}
-  if (auth && (auth.htaccess_pass || auth.htaccess_user)) {
-    httpOpts.auth = `${auth.htaccess_user}:${auth.htaccess_pass}`
-  }
-
-  // Create the temp and permanent file names for the url.
-  const digest = createContentDigest(url)
-  if (!name) {
-    name = getRemoteFileName(url)
-  }
-  if (!ext) {
-    ext = getRemoteFileExtension(url)
-  }
-
-  const tmpFilename = createFilePath(pluginCacheDir, `tmp-${digest}`, ext)
-
-  // Fetch the file.
-  const response = await requestRemoteNode(url, headers, tmpFilename, httpOpts)
-
-  if (response.statusCode == 200) {
-    // Save the response headers for future requests.
-    await cache.set(cacheId(url), response.headers)
-  }
-
-  // If the user did not provide an extension and we couldn't get one from remote file, try and guess one
-  if (ext === ``) {
-    const buffer = readChunk.sync(tmpFilename, 0, fileType.minimumBytes)
-    const filetype = fileType(buffer)
-    if (filetype) {
-      ext = `.${filetype.ext}`
-    }
-  }
-
-  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
-  // If the status code is 200, move the piped temp file to the real name.
-  if (response.statusCode === 200) {
-    await fs.move(tmpFilename, filename, { overwrite: true })
-    // Else if 304, remove the empty response.
+  let filename
+  if (process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER) {
+    filename = await fetchPlaceholder({
+      fromPath: process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER,
+      url,
+      cache,
+      ext,
+      name,
+    })
   } else {
-    await fs.remove(tmpFilename)
+    filename = await fetchRemoteFile({
+      url,
+      cache,
+      auth,
+      httpHeaders,
+      ext,
+      name,
+    })
   }
 
   // Create the file node.
@@ -285,6 +139,19 @@ async function processRemoteNode({
   await createNode(fileNode, { name: `gatsby-source-filesystem` })
 
   return fileNode
+}
+
+async function fetchPlaceholder({ fromPath, url, cache, ext, name }) {
+  const pluginCacheDir = cache.directory
+  const digest = createContentDigest(url)
+
+  if (!ext) {
+    ext = getRemoteFileExtension(url)
+  }
+
+  const filename = createFilePath(path.join(pluginCacheDir, digest), name, ext)
+  fs.copySync(fromPath, filename)
+  return filename
 }
 
 /**
@@ -327,19 +194,32 @@ const pushTask = task =>
  * @param {CreateRemoteFileNodePayload} options
  * @return {Promise<Object>}                  Returns the created node
  */
-module.exports = ({
+module.exports = function createRemoteFileNode({
   url,
-  store,
   cache,
   createNode,
+  getCache,
   parentNodeId = null,
   auth = {},
   httpHeaders = {},
   createNodeId,
   ext = null,
   name = null,
-  reporter,
-}) => {
+}) {
+  if (showFlagWarning) {
+    showFlagWarning = false
+    // Note: This will use a placeholder image as the default for every file that is downloaded through this API.
+    //       That may break certain cases, in particular when the file is not meant to be an image or when the image
+    //       is expected to be of a particular type that is other than the placeholder. This API is meant to bypass
+    //       the remote download for local testing only.
+    console.info(
+      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: Any file downloaded by \`createRemoteFileNode\` will use the same placeholder image and skip the remote fetch. Note: This is an experimental flag that can change/disappear at any point.`
+    )
+    console.info(
+      `GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER: File to use: \`${process.env.GATSBY_EXPERIMENTAL_REMOTE_FILE_PLACEHOLDER}\``
+    )
+  }
+
   // validation of the input
   // without this it's notoriously easy to pass in the wrong `createNodeId`
   // see gatsbyjs/gatsby#6643
@@ -351,11 +231,14 @@ module.exports = ({
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
   }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
+  if (typeof getCache === `function`) {
+    // use cache of this plugin and not cache of function caller
+    cache = getCache(`gatsby-source-filesystem`)
   }
   if (typeof cache !== `object`) {
-    throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+    throw new Error(
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
+    )
   }
 
   // Check if we already requested node for this remote file
@@ -365,20 +248,13 @@ module.exports = ({
   }
 
   if (!url || isWebUri(url) === undefined) {
-    return Promise.reject(`wrong url: ${url}`)
+    return Promise.reject(
+      `url passed to createRemoteFileNode is either missing or not a proper web uri: ${url}`
+    )
   }
-
-  if (totalJobs === 0) {
-    bar = createProgress(`Downloading remote files`, reporter)
-    bar.start()
-  }
-
-  totalJobs += 1
-  bar.total = totalJobs
 
   const fileDownloadPromise = pushTask({
     url,
-    store,
     cache,
     createNode,
     parentNodeId,
@@ -389,11 +265,7 @@ module.exports = ({
     name,
   })
 
-  processingCache[url] = fileDownloadPromise.then(node => {
-    bar.tick()
-
-    return node
-  })
+  processingCache[url] = fileDownloadPromise.then(node => node)
 
   return processingCache[url]
 }

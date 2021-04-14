@@ -2,8 +2,9 @@ import groupBy from "lodash/groupBy"
 import path from "path"
 import gatsbyNode from "../gatsby-node"
 
-describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let createdNodes, updatedNodes
+describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
+  let createdNodes
+  let updatedNodes
   const createNodeId = jest.fn(id => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
 
@@ -88,6 +89,24 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       )
     })
 
+    it(`should extract out a captions from examples`, () => {
+      const pearNode = createdNodes.find(node => node.name === `pear`)
+
+      expect(pearNode.examples.length).toBe(2)
+      expect(pearNode.examples).toMatchSnapshot(`examplesWithCaptions`)
+
+      expect(pearNode.examples[1].caption).toBeDefined()
+
+      const pearDescriptionNode = createdNodes.find(
+        node => node.id === pearNode.description___NODE
+      )
+
+      expect(pearDescriptionNode).toBeDefined()
+      expect(pearDescriptionNode.internal.content).toMatchSnapshot(
+        `description content`
+      )
+    })
+
     it(`should extract code and docs location`, () => {
       const appleNode = createdNodes.find(node => node.name === `apple`)
 
@@ -129,7 +148,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       await run(getFileNode(`complex-example.js`))
     })
 
-    let callbackNode, typedefNode
+    let callbackNode
+    let typedefNode
 
     it(`should create top-level node for callback`, () => {
       callbackNode = createdNodes.find(
@@ -152,7 +172,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect(typedefNode).toBeDefined()
       })
 
-      let readyNode, nestedNode
+      let readyNode
+      let nestedNode
 
       it(`should have property nodes for typedef`, () => {
         expect(typedefNode.properties___NODE).toBeDefined()
@@ -166,7 +187,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
         expect(readyNode).toMatchSnapshot()
       })
 
-      let nestedFooNode, nestedOptionalNode, nestedCallbackNode
+      let nestedFooNode
+      let nestedOptionalNode
+      let nestedCallbackNode
 
       it(`should have second param as nested object`, () => {
         expect(nestedNode.name).toBe(`nested`)
@@ -211,7 +234,8 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     })
 
     describe(`should handle members`, () => {
-      let complexNode, memberNode
+      let complexNode
+      let memberNode
       beforeAll(() => {
         complexNode = createdNodes.find(
           node => node.name === `complex` && node.parent === `node_1`
@@ -331,7 +355,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   describe(`Sanity checks`, () => {
     it(`should extract create description nodes with markdown types`, () => {
-      let types = groupBy(createdNodes, `internal.type`)
+      const types = groupBy(createdNodes, `internal.type`)
       expect(
         types.DocumentationJSComponentDescription.every(
           d => d.internal.mediaType === `text/markdown`
@@ -360,5 +384,9 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
       await run(getFileNode(`code.js`))
       expect(createdNodes.length).toBeGreaterThan(0)
     })
+  })
+
+  it(`doesn't cause a stack overflow for nodes of the same name`, () => {
+    expect(run(getFileNode(`same-name.ts`))).resolves.toBeUndefined()
   })
 })

@@ -1,15 +1,5 @@
 const { downloadContentfulAssets } = require(`../download-contentful-assets`)
 
-jest.mock(
-  `progress`,
-  () =>
-    class MockProgress {
-      constructor() {
-        this.tick = jest.fn()
-      }
-    }
-)
-
 jest.mock(`gatsby-source-filesystem`, () => {
   return {
     createRemoteFileNode: jest.fn(({ url }) => {
@@ -19,6 +9,15 @@ jest.mock(`gatsby-source-filesystem`, () => {
     }),
   }
 })
+
+const reporter = {
+  createProgress: jest.fn(() => {
+    return {
+      start: jest.fn(),
+      tick: jest.fn(),
+    }
+  }),
+}
 
 const fixtures = [
   {
@@ -63,8 +62,10 @@ describe.only(`downloadContentfulAssets`, () => {
     }
     await downloadContentfulAssets({
       actions: { touchNode: jest.fn() },
-      getNodes: () => fixtures,
+      getNodesByType: () => fixtures,
       cache,
+      assetDownloadWorkers: 50,
+      reporter,
     })
 
     fixtures.forEach(n => {

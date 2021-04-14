@@ -2,7 +2,7 @@
 title: Starting a New Translation
 ---
 
-This page lists the steps to take to create a a new Gatsbyjs.org translation.
+This page lists the steps to take to create a new Gatsby docs translation.
 
 ## Creating a translation
 

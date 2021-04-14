@@ -32,7 +32,7 @@ p {
 import "./src/styles/global.css"
 ```
 
-> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-config.js` file.
+> **Note:** You can also make use of `require('./src/styles/global.css')` to import the global CSS file in your `gatsby-browser.js` file.
 
 3. Run `gatsby-develop` to observe the global styling being applied across your site.
 
@@ -40,7 +40,7 @@ import "./src/styles/global.css"
 
 ### Additional resources
 
-- More on [adding global styles without a layout component](/docs/global-css/#adding-global-styles-without-a-layout-component)
+- More on [adding global styles without a layout component](/docs/how-to/styling/global-css/#adding-global-styles-without-a-layout-component)
 
 ## Using global styles in a layout component
 
@@ -50,7 +50,7 @@ import "./src/styles/global.css"
 
 ### Directions
 
-You can add global styles to a [shared layout component](/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
+You can add global styles to a [shared layout component](/docs/tutorial/part-three/#your-first-layout-component). This component is used for things that are common throughout the site, like a header or footer.
 
 1. If you don't already have one, create a new directory in your site at `/src/components`.
 
@@ -70,7 +70,9 @@ body {
 import React from "react"
 import "./layout.css"
 
-export default ({ children }) => <div>{children}</div>
+export default function Layout({ children }) {
+  return <div>{children}</div>
+}
 ```
 
 5. Now edit your site's homepage at `/src/pages/index.js` and use the new layout component:
@@ -79,20 +81,22 @@ export default ({ children }) => <div>{children}</div>
 import React from "react"
 import Layout from "../components/layout"
 
-export default () => <Layout>Hello world!</Layout>
+export default function Home() {
+  return <Layout>Hello world!</Layout>
+}
 ```
 
 ### Additional resources
 
-- [Standard Styling with Global CSS Files](/docs/global-css/)
-- [More about layout components](/tutorial/part-three)
+- [Standard Styling with Global CSS Files](/docs/how-to/styling/global-css/)
+- [More about layout components](/docs/tutorial/part-three)
 
 ## Using Styled Components
 
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start/) with an index page component
-- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/packages/gatsby-plugin-styled-components/) installed in `package.json`
+- [gatsby-plugin-styled-components, styled-components, and babel-plugin-styled-components](/plugins/gatsby-plugin-styled-components/) installed in `package.json`
 
 ### Directions
 
@@ -142,27 +146,29 @@ const User = props => (
   </>
 )
 
-export default () => (
-  <Container>
-    <h1>About Styled Components</h1>
-    <p>Styled Components is cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-    />
-  </Container>
-)
+export default function UsersList() {
+  return (
+    <Container>
+      <h1>About Styled Components</h1>
+      <p>Styled Components is cool</p>
+      <User
+        username="Jane Doe"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
+      />
+      <User
+        username="Bob Smith"
+        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
+      />
+    </Container>
+  )
+}
 ```
 
 4. Run `gatsby develop` to see the changes
 
 ### Additional resources
 
-- [More on Using Styled Components](/docs/styled-components/)
+- [More on Using Styled Components](/docs/how-to/styling/styled-components/)
 - [Egghead lesson](https://egghead.io/lessons/gatsby-style-gatsby-sites-with-styled-components)
 
 ## Using CSS Modules
@@ -188,13 +194,15 @@ export default () => (
 import React from "react"
 
 // highlight-start
-import style from "./index.module.css"
+import * as style from "./index.module.css"
 
-export default () => (
-  <section className={style.feature}>
-    <h1>Using CSS Modules</h1>
-  </section>
-)
+export default function Home() {
+  return (
+    <section className={style.feature}>
+      <h1>Using CSS Modules</h1>
+    </section>
+  )
+}
 // highlight-end
 ```
 
@@ -205,7 +213,7 @@ Notice that the file extension is `.module.css` instead of `.css`, which tells G
 
 ### Additional resources
 
-- More on [Using CSS Modules](/tutorial/part-two/#css-modules)
+- More on [Using CSS Modules](/docs/tutorial/part-two/#css-modules)
 - [Live example on Using CSS modules](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-css-modules)
 
 ## Using Sass/SCSS
@@ -222,9 +230,9 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 
 ### Directions
 
-1. Install the Gatsby plugin [gatsby-plugin-sass](https://www.gatsbyjs.org/packages/gatsby-plugin-sass/) and `node-sass`.
+1. Install the Gatsby plugin [gatsby-plugin-sass](/plugins/gatsby-plugin-sass/) and `sass`.
 
-`npm install --save node-sass gatsby-plugin-sass`
+`npm install sass gatsby-plugin-sass`
 
 2. Include the plugin in your `gatsby-config.js` file.
 
@@ -232,7 +240,7 @@ Sass will compile `.scss` and `.sass` files to `.css` files for you, so you can 
 plugins: [`gatsby-plugin-sass`],
 ```
 
-3.  Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
+3. Write your stylesheets as `.sass` or `.scss` files and import them. If you don't know how to import styles, take a look at [Styling with CSS](/docs/recipes/#2-styling-with-css)
 
 ```css:title=styles.scss
 $font-stack: Helvetica, sans-serif;
@@ -262,9 +270,9 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 
 ### Additional resources
 
-- [Difference between .sass and .scss](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
+- [Difference between `.sass` and `.scss`](https://responsivedesign.is/articles/difference-between-sass-and-scss/)
 - [Sass guide from the official Sass website](https://sass-lang.com/guide)
-- [A more complete installation tutorial on Sass with some more explanations and more resources](https://www.gatsbyjs.org/docs/sass/)
+- [A more complete installation tutorial on Sass with some more explanations and more resources](/docs/how-to/styling/sass/)
 
 ## Adding a Local Font
 
@@ -276,10 +284,6 @@ _Note: You can use Sass/SCSS files as modules too, like mentioned in the previou
 ### Directions
 
 1. Copy a font file into your Gatsby project, such as `src/fonts/fontname.woff2`.
-
-```text
-src/fonts/fontname.woff2
-```
 
 2. Import the font asset into a CSS file to bundle it into your Gatsby site:
 
@@ -304,7 +308,7 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Additional resources
 
-- More on [importing assets into files](/docs/importing-assets-into-files/)
+- More on [importing assets into files](/docs/how-to/images-and-media/importing-assets-into-files/)
 
 ## Using Emotion
 
@@ -316,10 +320,10 @@ If fonts are not updating following steps above, make sure to replace the existi
 
 ### Directions
 
-1. Install the [Gatsby Emotion plugin](/packages/gatsby-plugin-emotion/) and Emotion packages.
+1. Install the [Gatsby Emotion plugin](/plugins/gatsby-plugin-emotion/) and Emotion packages.
 
 ```shell
-npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
+npm install gatsby-plugin-emotion @emotion/react @emotion/styled
 ```
 
 2. Add the `gatsby-plugin-emotion` plugin to your `gatsby-config.js` file:
@@ -336,20 +340,22 @@ Import Emotion's `css` core package. You can then use the `css` prop to add [Emo
 
 ```jsx:title=src/pages/emotion-sample.js
 import React from "react"
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 
-export default () => (
-  <div>
-    <p
-      css={{
-        background: "pink",
-        color: "blue",
-      }}
-    >
-      This page is using Emotion.
-    </p>
-  </div>
-)
+export default function EmotionSample() {
+  return (
+    <div>
+      <p
+        css={{
+          background: "pink",
+          color: "blue",
+        }}
+      >
+        This page is using Emotion.
+      </p>
+    </div>
+  )
+}
 ```
 
 4. To use Emotion's [styled components](https://emotion.sh/docs/styled), import the package and define them using the `styled` function.
@@ -366,16 +372,18 @@ const Content = styled.div`
   }
 `
 
-export default () => (
-  <Content>
-    <p>This page is using Emotion.</p>
-  </Content>
-)
+export default function EmotionSample() {
+  return (
+    <Content>
+      <p>This page is using Emotion.</p>
+    </Content>
+  )
+}
 ```
 
 ### Additional resources
 
-- [Using Emotion in Gatsby](/docs/emotion/)
+- [Using Emotion in Gatsby](/docs/how-to/styling/emotion/)
 - [Emotion website](https://emotion.sh)
 - [Getting started with Emotion and Gatsby](https://egghead.io/lessons/gatsby-getting-started-with-emotion-and-gatsby)
 
@@ -386,36 +394,42 @@ Hosting your own [Google Fonts](https://fonts.google.com/) locally within a proj
 ### Prerequisites
 
 - A [Gatsby site](/docs/quick-start)
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
-- Choosing a font package from [the typefaces project](https://github.com/KyleAMathews/typefaces)
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
+- A chosen font package from [Fontsource](https://github.com/fontsource/fontsource)
 
 ### Directions
 
-1. Run `npm install --save typeface-your-chosen-font`, replacing `your-chosen-font` with the name of the font you want to install from [the typefaces project](https://github.com/KyleAMathews/typefaces).
+This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-An example to load the popular 'Source Sans Pro' font would be: `npm install --save typeface-source-sans-pro`.
+1. Run `npm install @fontsource/open-sans` to download the necessary package files.
 
-2. Add `import "typeface-your-chosen-font"` to a layout template, page component, or `gatsby-browser.js`.
+2. Then within your app entry file or site component, import the font package. It is recommended you import it via the layout template (`layout.js`). However, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
 
 ```jsx:title=src/components/layout.js
-import "typeface-your-chosen-font"
+import "@fontsource/open-sans" // Defaults to weight 400.
 ```
+
+If you wish to select a particular weight or style, you may specify it by changing the import path.
+
+```jsx:title=src/components/layout.js
+import "@fontsource/open-sans/500.css" // Weight 500.
+import "@fontsource/open-sans/900-italic.css" // Loads the italic variant.
+```
+
+**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 
 ```css:title=src/components/layout.css
 body {
-  font-family: "Your Chosen Font";
+  font-family: "Open Sans";
 }
 ```
 
-_NOTE: So for the above example, the relevant CSS declaration would be `font-family: 'Source Sans Pro';`_
-
 ### Additional resources
 
-- [Typography.js](/docs/typography-js/) - Another option for using Google fonts on a Gatsby site
-- [The Typefaces Project Docs](https://github.com/KyleAMathews/typefaces/blob/master/README.md)
-- [Live example on Kyle Mathews' blog](https://www.bricolage.io/typefaces-easiest-way-to-self-host-fonts/)
+- [Fontsource repo on GitHub](https://github.com/fontsource/fontsource)
+- [Typography.js](/docs/using-typography-js/) - Another option for using Google fonts on a Gatsby site
 
 ## Using Font Awesome
 
@@ -423,7 +437,7 @@ Using [Font Awesome](https://fontawesome.com/) gives you access to thousands of 
 
 ### Prerequisites
 
-- The [Gatsby CLI](/docs/gatsby-cli/) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 - A [Gatsby site](/docs/quick-start)
 
 ### Directions

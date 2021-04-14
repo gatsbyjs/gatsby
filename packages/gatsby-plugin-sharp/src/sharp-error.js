@@ -1,4 +1,4 @@
-// This custom error should help us debug sharp errors when occuring.
+// This custom error should help us debug sharp errors when occurring.
 
 export class SharpError extends Error {
   /**
@@ -13,6 +13,7 @@ export class SharpError extends Error {
       fullErrorMessage += `
 
 Original error:
+${err.shortMessage ?? ``}
 ${err.message}`
     }
 

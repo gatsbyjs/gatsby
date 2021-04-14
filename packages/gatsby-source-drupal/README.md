@@ -15,7 +15,7 @@ been used since jsonapi version `8.x-1.0-alpha4`.
 
 ## Install
 
-`npm install --save gatsby-source-drupal`
+`npm install gatsby-source-drupal`
 
 ## How to use
 
@@ -98,6 +98,36 @@ module.exports = {
 }
 ```
 
+### Fastbuilds
+
+You can use the `fastBuilds` option to enable fastbuilds. This requires the
+Gatsby Drupal module (called gatsby_fastbuilds) to be enabled. This will speed
+up your development and build process by only downloading content that has
+changed since you last ran `gatsby build` or `gatsby develop`.
+
+This will require authentication to your Drupal site and a Drupal user with the
+Drupal permission to `sync gatsby fastbuild log entities`.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        basicAuth: {
+          username: process.env.BASIC_AUTH_USERNAME,
+          password: process.env.BASIC_AUTH_PASSWORD,
+        },
+        fastBuilds: true,
+      },
+    },
+  ],
+}
+```
+
 ## Request Headers
 
 You can add optional request headers to the request using `headers` param.
@@ -136,6 +166,28 @@ module.exports = {
         params: {
           "api-key": "your-api-key-header-here", // any valid key value pair here
         },
+      },
+    },
+  ],
+}
+```
+
+### File Downloads
+
+You can use the `skipFileDownloads` option if you do not want Gatsby to download
+files from your Drupal website. This is useful if you are using another option
+for processing/serving images.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`, // optional, defaults to `jsonapi`
+        skipFileDownloads: true,
       },
     },
   ],
@@ -208,6 +260,32 @@ module.exports = {
           // Use includes so only the news content paragraph components are fetched.
           "node--news": "include=field_content",
         },
+      },
+    },
+  ],
+}
+```
+
+## Entity Reference revisions and relationships
+
+By default `gatsby-source-drupal` resolves Entity Reference relationships using just ID. If you are
+using the contrib module [Entity reference revisions](https://drupal.org/project/entity_reference_revisions) and [Paragraphs](https://drupal.org/project/paragraphs),
+you may have advanced use-cases such as fetching drafts where you want to resolve these relationships using both ID and
+revision ID. You can nominate entity-type IDs where you wish to resolve relationships using the revision ID by adding
+them to the `entityReferenceRevisions` configuration option. Please note that `gatsby-source-drupal` only ever fetches
+the default (published) revision, so this functionality is only needed in advanced cases where you have custom code
+Drupal side that is applying additional logic.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+        entityReferenceRevisions: ["paragraph"], // optional, defaults to `[]`
       },
     },
   ],

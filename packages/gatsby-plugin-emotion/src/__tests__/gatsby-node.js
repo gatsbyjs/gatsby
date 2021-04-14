@@ -15,7 +15,7 @@ describe(`gatsby-plugin-emotion`, () => {
         ),
         options: {
           sourceMap: true,
-          autoLabel: true,
+          autoLabel: `dev-only`,
         },
       })
     })
@@ -33,7 +33,7 @@ describe(`gatsby-plugin-emotion`, () => {
         ),
         options: {
           sourceMap: true,
-          autoLabel: true,
+          autoLabel: `dev-only`,
           useBuiltIns: true,
         },
       })
@@ -63,7 +63,7 @@ describe(`gatsby-plugin-emotion`, () => {
           ),
           options: {
             sourceMap: false,
-            autoLabel: false,
+            autoLabel: `dev-only`,
           },
         })
       })

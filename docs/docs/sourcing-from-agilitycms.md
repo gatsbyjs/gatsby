@@ -4,13 +4,19 @@ title: Sourcing from Agility CMS
 
 This guide takes you through the steps involved in setting up a Gatsby site that fetches content from [Agility CMS](https://agilitycms.com/).
 
+Check our [docs](https://help.agilitycms.com/hc/en-us/articles/360039879872) for up-to-date documentation.
+
 ## What is Agility CMS? What makes it different?
 
-[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that lets you define your custom content types and relationships. This is called Content Architecture, and you can reuse this content for your websites and apps.
+[Agility CMS](https://agilitycms.com/) is a headless Content Management System (CMS) that lets you define your custom content types, relationships and pages. This is called Content Architecture, and you can reuse this content for your websites and apps.
 
-In addition, Agility CMS provides a page routing API, which allows you to offload control of the sitemap to the content editors.
+Agility believes that a successful website balances the **User Experience (UX)**, **Editor Experience (EX)**, and **Developer Experience (DX)**.
 
-All content is available through the Agility CMS Fetch or Preview API.
+While Gatsby tends to handle **UX** and **DX** quite well, editors are not always comfortable working directly in a codebase. They prefer to manage their sitemap and see what content is on which pages. Using Gatsby with a headless CMS allows for this.
+
+Agility aims to empower and improve the **Editor Experience** by providing built-in **Page Management**. This means developers can build UI Components and leave editors to compose their pages.
+
+[Learn more about Agility CMS and Gatsby](https://help.agilitycms.com/hc/en-us/articles/360039879872)
 
 ## Getting started
 
@@ -60,7 +66,7 @@ If you use the `preview` key, you won't have to publish to see the changes you'v
 
 ## How it works
 
-The Gatsby Source Plugin downloads all the Pages on the Agility CMS Sitemap, as well as any Shared Content that's referenced on the `sharedContent` property in the `gatsby-config.js` file.
+The Gatsby Source Plugin will synchronize your sitemap, pages, and content for you and place it into **GraphQL**.
 
 All of those pages and content are then made available in GraphQL to the React Components you will write to render those pages.
 

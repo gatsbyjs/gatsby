@@ -1,4 +1,8 @@
+import reporter from "gatsby-cli/lib/reporter"
+
 import {
+  IGatsbyConfig,
+  IGatsbyPlugin,
   ProgramStatus,
   ICreatePageDependencyAction,
   IDeleteComponentDependenciesAction,
@@ -11,17 +15,20 @@ import {
   ISetProgramStatusAction,
   IPageQueryRunAction,
   IRemoveStaleJobAction,
+  ISetSiteConfig,
+  IDefinitionMeta,
+  ISetGraphQLDefinitionsAction,
+  IQueryStartAction,
+  IApiFinishedAction,
+  IQueryClearDirtyQueriesListToEmitViaWebsocket,
 } from "../types"
 
-// import type { Plugin } from "./types"
+import { gatsbyConfigSchema } from "../../joi-schemas/joi"
+import { didYouMean } from "../../utils/did-you-mean"
 
 /**
  * Create a dependency between a page and data. Probably for
  * internal use only.
- * @param {Object} $0
- * @param {string} $0.path the path to the page
- * @param {string} $0.nodeId A node ID
- * @param {string} $0.connection A connection type
  * @private
  */
 export const createPageDependency = (
@@ -29,7 +36,7 @@ export const createPageDependency = (
     path,
     nodeId,
     connection,
-  }: { path: string; nodeId: string; connection: string },
+  }: { path: string; nodeId?: string; connection?: string },
   plugin = ``
 ): ICreatePageDependencyAction => {
   return {
@@ -46,11 +53,10 @@ export const createPageDependency = (
 /**
  * Delete dependencies between an array of pages and data. Probably for
  * internal use only. Used when deleting pages.
- * @param {Array} paths the paths to delete.
  * @private
  */
 export const deleteComponentsDependencies = (
-  paths: string[]
+  paths: Array<string>
 ): IDeleteComponentDependenciesAction => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
@@ -81,14 +87,29 @@ export const replaceComponentQuery = ({
   }
 }
 
+export const apiFinished = (
+  payload: IApiFinishedAction["payload"]
+): IApiFinishedAction => {
+  return {
+    type: `API_FINISHED`,
+    payload,
+  }
+}
+
 /**
  * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
  * components, it calls this to store the query with its component.
  * @private
  */
 export const replaceStaticQuery = (
-  args: any,
-  plugin: Plugin | null | undefined = null
+  args: {
+    name: string
+    componentPath: string
+    id: string
+    query: string
+    hash: string
+  },
+  plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
     type: `REPLACE_STATIC_QUERY`,
@@ -101,16 +122,11 @@ export const replaceStaticQuery = (
  *
  * Report that a query has been extracted from a component. Used by
  * query-compiler.js.
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {query} $0.query The GraphQL query that was extracted from the component.
  * @private
  */
 export const queryExtracted = (
   { componentPath, query }: { componentPath: string; query: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedAction => {
   return {
@@ -122,18 +138,30 @@ export const queryExtracted = (
 }
 
 /**
+ * Set Definitions for fragment extraction, etc.
+ *
+ * Used by developer tools such as vscode-graphql & graphiql
+ *
+ * query-compiler.js.
+ * @private
+ */
+export const setGraphQLDefinitions = (
+  definitionsByName: Map<string, IDefinitionMeta>
+): ISetGraphQLDefinitionsAction => {
+  return {
+    type: `SET_GRAPHQL_DEFINITIONS`,
+    payload: definitionsByName,
+  }
+}
+
+/**
  *
  * Report that the Relay Compiler found a graphql error when attempting to extract a query
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {error} $0.error The GraphQL query that was extracted from the component.
  * @private
  */
 export const queryExtractionGraphQLError = (
   { componentPath, error }: { componentPath: string; error: string },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionGraphQLErrorAction => {
   return {
@@ -148,15 +176,11 @@ export const queryExtractionGraphQLError = (
  *
  * Report that babel was able to extract the graphql query.
  * Indicates that the file is free of JS errors.
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
  * @private
  */
 export const queryExtractedBabelSuccess = (
   { componentPath },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractedBabelSuccessAction => {
   return {
@@ -170,16 +194,11 @@ export const queryExtractedBabelSuccess = (
 /**
  *
  * Report that the Relay Compiler found a babel error when attempting to extract a query
- *
- * @param {Object} $0
- * @param {componentPath} $0.componentPath The path to the component that just had
- * its query read.
- * @param {error} $0.error The Babel error object
  * @private
  */
 export const queryExtractionBabelError = (
   { componentPath, error }: { componentPath: string; error: Error },
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IQueryExtractionBabelErrorAction => {
   return {
@@ -192,13 +211,11 @@ export const queryExtractionBabelError = (
 
 /**
  * Set overall program status e.g. `BOOTSTRAPING` or `BOOTSTRAP_FINISHED`.
- *
- * @param {string} Program status
  * @private
  */
 export const setProgramStatus = (
   status: ProgramStatus,
-  plugin: Plugin,
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): ISetProgramStatusAction => {
   return {
@@ -211,32 +228,47 @@ export const setProgramStatus = (
 
 /**
  * Broadcast that a page's query was run.
- *
- * @param {string} Path to the page component that changed.
  * @private
  */
 export const pageQueryRun = (
-  { path, componentPath, isPage },
-  plugin: Plugin,
+  payload: IPageQueryRunAction["payload"],
+  plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
   return {
     type: `PAGE_QUERY_RUN`,
     plugin,
     traceId,
+    payload,
+  }
+}
+
+export const queryStart = (
+  { path, componentPath, isPage },
+  plugin: IGatsbyPlugin,
+  traceId?: string
+): IQueryStartAction => {
+  return {
+    type: `QUERY_START`,
+    plugin,
+    traceId,
     payload: { path, componentPath, isPage },
+  }
+}
+
+export const clearDirtyQueriesListToEmitViaWebsocket = (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
+  return {
+    type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
   }
 }
 
 /**
  * Remove jobs which are marked as stale (inputPath doesn't exists)
- *
- * @param {string} contentDigest
  * @private
  */
 export const removeStaleJob = (
   contentDigest: string,
-  plugin: Plugin,
+  plugin?: IGatsbyPlugin,
   traceId?: string
 ): IRemoveStaleJobAction => {
   return {
@@ -246,5 +278,53 @@ export const removeStaleJob = (
     payload: {
       contentDigest,
     },
+  }
+}
+
+/**
+ * Set gatsby config
+ * @private
+ */
+export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
+  const result = gatsbyConfigSchema.validate(config || {})
+  const normalizedPayload: IGatsbyConfig = result.value
+
+  if (result.error) {
+    const hasUnknownKeys = result.error.details.filter(
+      details => details.type === `object.unknown`
+    )
+
+    if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {
+      const errorMessages = hasUnknownKeys.map(unknown => {
+        const { context, message } = unknown
+        const key = context?.key
+        const suggestion = key && didYouMean(key)
+
+        if (suggestion) {
+          return `${message}. ${suggestion}`
+        }
+
+        return message
+      })
+
+      reporter.panic({
+        id: `10122`,
+        context: {
+          sourceMessage: errorMessages.join(`\n`),
+        },
+      })
+    }
+
+    reporter.panic({
+      id: `10122`,
+      context: {
+        sourceMessage: result.error.message,
+      },
+    })
+  }
+
+  return {
+    type: `SET_SITE_CONFIG`,
+    payload: normalizedPayload,
   }
 }

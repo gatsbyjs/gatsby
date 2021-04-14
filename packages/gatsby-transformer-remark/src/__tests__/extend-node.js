@@ -4,7 +4,7 @@ const extendNodeType = require(`../extend-node-type`)
 const { createContentDigest } = require(`gatsby-core-utils`)
 const { typeDefs } = require(`../create-schema-customization`)
 
-jest.mock(`gatsby-cli/lib/reporter`, () => {
+jest.mock(`gatsby/reporter`, () => {
   return {
     log: jest.fn(),
     info: jest.fn(),
@@ -26,13 +26,16 @@ async function queryResult(
   fragment,
   { additionalParameters = {}, pluginOptions = {} }
 ) {
+  const cache = {
+    // GatsbyCache
+    get: async () => null,
+    set: async () => null,
+  }
   const extendNodeTypeFields = await extendNodeType(
     {
       type: { name: `MarkdownRemark` },
-      cache: {
-        get: () => null,
-        set: () => null,
-      },
+      cache,
+      getCache: () => cache,
       getNodesByType: type => [],
       ...additionalParameters,
     },
@@ -104,23 +107,24 @@ const bootstrapTest = (
 
   it(label, async done => {
     node.content = content
-    const createNode = markdownNode => {
-      queryResult([markdownNode], query, {
+    async function createNode(markdownNode) {
+      const result = await queryResult([markdownNode], query, {
         additionalParameters,
         pluginOptions,
-      }).then(result => {
-        if (result.errors) {
-          done.fail(result.errors)
-        }
-
-        try {
-          test(result.data.listNode[0])
-          done()
-        } catch (err) {
-          done.fail(err)
-        }
       })
+
+      if (result.errors) {
+        done.fail(result.errors)
+      }
+
+      try {
+        test(result.data.listNode[0])
+        done()
+      } catch (err) {
+        done.fail(err)
+      }
     }
+
     const createParentChildLink = jest.fn()
     const actions = { createNode, createParentChildLink }
     const createNodeId = jest.fn()
@@ -933,7 +937,7 @@ some text
 
 some other text
 `,
-    `tableOfContents
+    `tableOfContents(absolute: true, pathToSlugField: "fields.slug")
     frontmatter {
         title
     }`,
@@ -961,7 +965,7 @@ some other text
 
 final text
 `,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -988,7 +992,7 @@ some other text
 
 final text
 `,
-    `tableOfContents(absolute: false)
+    `tableOfContents
     frontmatter {
         title
     }`,
@@ -1010,7 +1014,7 @@ some text
 ## second title
 
 some other text`,
-    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1)
+    `tableOfContents(pathToSlugField: "frontmatter.title", maxDepth: 1, absolute: true)
     frontmatter {
         title
     }`,
@@ -1034,7 +1038,7 @@ some text
 ## second title
 
 some other text`,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1069,7 +1073,7 @@ some other text
 # third title
 
 final text`,
-    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", heading: "first title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1099,7 +1103,7 @@ Content - content
 ### Embedding \`<code>\` Tags
 
 It's easier than you may imagine`,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1123,7 +1127,7 @@ Content - content
 ### Embedding \`<code>\` Tags
 
 It's easier than you may imagine`,
-    `tableOfContents(pathToSlugField: "frontmatter.title")
+    `tableOfContents(pathToSlugField: "frontmatter.title", absolute: true)
     frontmatter {
         title
     }`,
@@ -1263,6 +1267,77 @@ describe(`Headings are generated correctly from schema`, () => {
           depth: 2,
         },
       ])
+    }
+  )
+
+  bootstrapTest(
+    `returns null id if heading has no id`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: null,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: null,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    }
+  )
+
+  bootstrapTest(
+    `returns id if heading has one`,
+    `
+  # first title
+
+  ## second title
+  `,
+    `headings {
+        id
+        value
+        depth
+      }`,
+    node => {
+      expect(node).toMatchSnapshot()
+      expect(node.headings).toEqual([
+        {
+          id: `first-title`,
+          value: `first title`,
+          depth: 1,
+        },
+        {
+          id: `second-title`,
+          value: `second title`,
+          depth: 2,
+        },
+      ])
+    },
+    {
+      pluginOptions: {
+        plugins: [
+          // to pass subplugin we need to use object with `resolve` and `pluginOptions`
+          // (this is what gatsby core internally turns plugin entries to + gatsby core always set empty object {}
+          // if options were not provided and lot of plugins rely on this and are not checking for options existence)
+          {
+            resolve: require.resolve(`gatsby-remark-autolink-headers/src`),
+            pluginOptions: {},
+          },
+        ],
+      },
     }
   )
 

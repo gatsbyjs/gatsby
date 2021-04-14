@@ -1,22 +1,15 @@
 ---
 name: Documentation 📝
-about: Suggest better docs coverage for a particular tool or process.
-labels:
-  - "type: documentation"
+about: Suggest specific improvements for our documentation. For questions, please use "Discussions".
+labels: "type: documentation"
 ---
 
 <!--
   To make it easier for us to help you, please include as much useful information as possible.
 
   Useful Links:
-  - Documentation: https://www.gatsbyjs.org/docs/
-  - Contributing: https://www.gatsbyjs.org/contributing/
-
-  Gatsby has several community support channels, try asking your question on:
-
-  - Discord: https://gatsby.dev/discord
-  - Spectrum: https://spectrum.chat/gatsby-js
-  - Twitter: https://twitter.com/gatsbyjs
+  - Documentation: https://www.gatsbyjs.com/docs/
+  - Contributing: https://www.gatsbyjs.com/contributing/
 
   Before opening a new issue, please search existing issues https://github.com/gatsbyjs/gatsby/issues
 -->
@@ -41,10 +34,9 @@ Why should we document this and who will benefit from it?
 ### Draft the doc
 
 - [ ] Write the doc, following the format listed in these resources:
-  - [Overview on contributing to documentation](https://www.gatsbyjs.org/contributing/docs-contributions/)
-  - [Docs Templates](https://www.gatsbyjs.org/contributing/docs-templates/)
+  - [Overview on contributing to documentation](https://www.gatsbyjs.com/contributing/docs-contributions/)
+  - [Docs Templates](https://www.gatsbyjs.com/contributing/docs-templates/)
   - [Example of a similar article]()
-- [ ] Add the article to the [docs sidebar](https://github.com/gatsbyjs/gatsby/blob/master/www/src/data/sidebars/doc-links.yaml) under the [parent doc] section.
 
 ### Open a pull request
 

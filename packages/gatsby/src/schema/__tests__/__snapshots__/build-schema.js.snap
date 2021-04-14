@@ -1,10 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Built-in types includes built-in types 1`] = `
-"\\"\\"\\"Provides default value for input field.\\"\\"\\"
-directive @default(value: JSON!) on INPUT_FIELD_DEFINITION
-
-\\"\\"\\"Add date formating options.\\"\\"\\"
+"\\"\\"\\"Add date formatting options.\\"\\"\\"
 directive @dateformat(formatString: String, locale: String, fromNow: Boolean, difference: String) on FIELD_DEFINITION
 
 \\"\\"\\"Link to node by foreign-key relation.\\"\\"\\"
@@ -17,16 +14,10 @@ directive @fileByRelativePath(from: String) on FIELD_DEFINITION
 directive @proxy(from: String!, fromNode: Boolean! = false) on FIELD_DEFINITION
 
 \\"\\"\\"Infer field types from field values.\\"\\"\\"
-directive @infer(
-  \\"\\"\\"Don't add default resolvers to defined fields.\\"\\"\\"
-  noDefaultResolvers: Boolean
-) on OBJECT
+directive @infer on OBJECT
 
 \\"\\"\\"Do not infer field types from field values.\\"\\"\\"
-directive @dontInfer(
-  \\"\\"\\"Don't add default resolvers to defined fields.\\"\\"\\"
-  noDefaultResolvers: Boolean
-) on OBJECT
+directive @dontInfer on OBJECT
 
 \\"\\"\\"Define the mime-types handled by this type.\\"\\"\\"
 directive @mimeTypes(
@@ -35,8 +26,7 @@ directive @mimeTypes(
 ) on OBJECT
 
 \\"\\"\\"
-Define parent-child relations between types. This is used to add \`child*\` or
-\`children*\` convenience fields like \`childImageSharp\`.
+Define parent-child relations between types. This is used to add \`child*\` and \`children*\` convenience fields like \`childImageSharp\`.
 \\"\\"\\"
 directive @childOf(
   \\"\\"\\"
@@ -48,43 +38,16 @@ directive @childOf(
   A list of types this type is a child of. Usually these are the types handled by a transformer plugin.
   \\"\\"\\"
   types: [String!]! = []
-
-  \\"\\"\\"
-  Specifies whether a parent can have multiple children of this type or not.
-  \\"\\"\\"
-  many: Boolean! = false
 ) on OBJECT
 
 \\"\\"\\"
+DEPRECATED: Use interface inheritance instead, i.e. \\"interface Foo implements Node\\".
+
 Adds root query fields for an interface. All implementing types must also implement the Node interface.
 \\"\\"\\"
 directive @nodeInterface on INTERFACE
 
-input BooleanQueryOperatorInput {
-  eq: Boolean
-  ne: Boolean
-  in: [Boolean]
-  nin: [Boolean]
-}
-
-\\"\\"\\"
-A date string, such as 2007-12-03, compliant with the ISO 8601 standard for
-representation of dates and times using the Gregorian calendar.
-\\"\\"\\"
-scalar Date
-
-input DateQueryOperatorInput {
-  eq: Date
-  ne: Date
-  gt: Date
-  gte: Date
-  lt: Date
-  lte: Date
-  in: [Date]
-  nin: [Date]
-}
-
-type Directory implements Node {
+type File implements Node {
   sourceInstanceName: String!
   absolutePath: String!
   relativePath: String!
@@ -93,9 +56,7 @@ type Directory implements Node {
   prettySize: String!
   modifiedTime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -103,9 +64,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -114,9 +73,7 @@ type Directory implements Node {
   ): Date!
   accessTime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -124,9 +81,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -135,9 +90,7 @@ type Directory implements Node {
   ): Date!
   changeTime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -145,9 +98,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -156,9 +107,7 @@ type Directory implements Node {
   ): Date!
   birthTime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -166,9 +115,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -193,9 +140,7 @@ type Directory implements Node {
   ctimeMs: Float!
   atime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -203,9 +148,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -214,9 +157,7 @@ type Directory implements Node {
   ): Date!
   mtime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -224,9 +165,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -235,9 +174,7 @@ type Directory implements Node {
   ): Date!
   ctime(
     \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
     \\"\\"\\"
     formatString: String
 
@@ -245,9 +182,7 @@ type Directory implements Node {
     fromNow: Boolean
 
     \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
     \\"\\"\\"
     difference: String
 
@@ -262,12 +197,518 @@ type Directory implements Node {
   internal: Internal!
 }
 
+\\"\\"\\"Node Interface\\"\\"\\"
+interface Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type Internal {
+  content: String
+  contentDigest: String!
+  description: String
+  fieldOwners: [String]
+  ignoreType: Boolean
+  mediaType: String
+  owner: String!
+  type: String!
+}
+
+\\"\\"\\"
+A date string, such as 2007-12-03, compliant with the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+\\"\\"\\"
+scalar Date
+
+type Directory implements Node {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  accessTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  changeTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  birthTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  mtime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  ctime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date!
+  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type Site implements Node {
+  buildTime(
+    \\"\\"\\"
+    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for documentation for different tokens.
+    \\"\\"\\"
+    formatString: String
+
+    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
+    fromNow: Boolean
+
+    \\"\\"\\"
+    Returns the difference between this date and the current time. Defaults to \\"milliseconds\\" but you can also pass in as the measurement \\"years\\", \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
+    \\"\\"\\"
+    difference: String
+
+    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
+    locale: String
+  ): Date
+  siteMetadata: SiteSiteMetadata
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type SiteSiteMetadata {
+  title: String
+  description: String
+}
+
+type SitePage implements Node {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type Query {
+  file(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): File
+  allFile(filter: FileFilterInput, sort: FileSortInput, skip: Int, limit: Int): FileConnection!
+  directory(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Directory
+  allDirectory(filter: DirectoryFilterInput, sort: DirectorySortInput, skip: Int, limit: Int): DirectoryConnection!
+  site(buildTime: DateQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Site
+  allSite(filter: SiteFilterInput, sort: SiteSortInput, skip: Int, limit: Int): SiteConnection!
+  sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
+  allSitePage(filter: SitePageFilterInput, sort: SitePageSortInput, skip: Int, limit: Int): SitePageConnection!
+}
+
+input StringQueryOperatorInput {
+  eq: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: String
+  glob: String
+}
+
+input IntQueryOperatorInput {
+  eq: Int
+  ne: Int
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+  in: [Int]
+  nin: [Int]
+}
+
+input DateQueryOperatorInput {
+  eq: Date
+  ne: Date
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  in: [Date]
+  nin: [Date]
+}
+
+input FloatQueryOperatorInput {
+  eq: Float
+  ne: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float]
+  nin: [Float]
+}
+
+input NodeFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input NodeFilterListInput {
+  elemMatch: NodeFilterInput
+}
+
+input InternalFilterInput {
+  content: StringQueryOperatorInput
+  contentDigest: StringQueryOperatorInput
+  description: StringQueryOperatorInput
+  fieldOwners: StringQueryOperatorInput
+  ignoreType: BooleanQueryOperatorInput
+  mediaType: StringQueryOperatorInput
+  owner: StringQueryOperatorInput
+  type: StringQueryOperatorInput
+}
+
+input BooleanQueryOperatorInput {
+  eq: Boolean
+  ne: Boolean
+  in: [Boolean]
+  nin: [Boolean]
+}
+
+type FileConnection {
+  totalCount: Int!
+  edges: [FileEdge!]!
+  nodes: [File!]!
+  pageInfo: PageInfo!
+  distinct(field: FileFieldsEnum!): [String!]!
+  max(field: FileFieldsEnum!): Float
+  min(field: FileFieldsEnum!): Float
+  sum(field: FileFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
+}
+
+type FileEdge {
+  next: File
+  node: File!
+  previous: File
+}
+
+type PageInfo {
+  currentPage: Int!
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  itemCount: Int!
+  pageCount: Int!
+  perPage: Int
+  totalCount: Int!
+}
+
+enum FileFieldsEnum {
+  sourceInstanceName
+  absolutePath
+  relativePath
+  extension
+  size
+  prettySize
+  modifiedTime
+  accessTime
+  changeTime
+  birthTime
+  root
+  dir
+  base
+  ext
+  name
+  relativeDirectory
+  dev
+  mode
+  nlink
+  uid
+  gid
+  rdev
+  ino
+  atimeMs
+  mtimeMs
+  ctimeMs
+  atime
+  mtime
+  ctime
+  birthtime
+  birthtimeMs
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+}
+
+type FileGroupConnection {
+  totalCount: Int!
+  edges: [FileEdge!]!
+  nodes: [File!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+input FileFilterInput {
+  sourceInstanceName: StringQueryOperatorInput
+  absolutePath: StringQueryOperatorInput
+  relativePath: StringQueryOperatorInput
+  extension: StringQueryOperatorInput
+  size: IntQueryOperatorInput
+  prettySize: StringQueryOperatorInput
+  modifiedTime: DateQueryOperatorInput
+  accessTime: DateQueryOperatorInput
+  changeTime: DateQueryOperatorInput
+  birthTime: DateQueryOperatorInput
+  root: StringQueryOperatorInput
+  dir: StringQueryOperatorInput
+  base: StringQueryOperatorInput
+  ext: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  relativeDirectory: StringQueryOperatorInput
+  dev: IntQueryOperatorInput
+  mode: IntQueryOperatorInput
+  nlink: IntQueryOperatorInput
+  uid: IntQueryOperatorInput
+  gid: IntQueryOperatorInput
+  rdev: IntQueryOperatorInput
+  ino: FloatQueryOperatorInput
+  atimeMs: FloatQueryOperatorInput
+  mtimeMs: FloatQueryOperatorInput
+  ctimeMs: FloatQueryOperatorInput
+  atime: DateQueryOperatorInput
+  mtime: DateQueryOperatorInput
+  ctime: DateQueryOperatorInput
+  birthtime: DateQueryOperatorInput
+  birthtimeMs: FloatQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input FileSortInput {
+  fields: [FileFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+enum SortOrderEnum {
+  ASC
+  DESC
+}
+
 type DirectoryConnection {
   totalCount: Int!
   edges: [DirectoryEdge!]!
   nodes: [Directory!]!
   pageInfo: PageInfo!
   distinct(field: DirectoryFieldsEnum!): [String!]!
+  max(field: DirectoryFieldsEnum!): Float
+  min(field: DirectoryFieldsEnum!): Float
+  sum(field: DirectoryFieldsEnum!): Float
   group(skip: Int, limit: Int, field: DirectoryFieldsEnum!): [DirectoryGroupConnection!]!
 }
 
@@ -397,6 +838,15 @@ enum DirectoryFieldsEnum {
   internal___type
 }
 
+type DirectoryGroupConnection {
+  totalCount: Int!
+  edges: [DirectoryEdge!]!
+  nodes: [Directory!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
 input DirectoryFilterInput {
   sourceInstanceName: StringQueryOperatorInput
   absolutePath: StringQueryOperatorInput
@@ -435,245 +885,38 @@ input DirectoryFilterInput {
   internal: InternalFilterInput
 }
 
-type DirectoryGroupConnection {
-  totalCount: Int!
-  edges: [DirectoryEdge!]!
-  nodes: [Directory!]!
-  pageInfo: PageInfo!
-  field: String!
-  fieldValue: String
-}
-
 input DirectorySortInput {
   fields: [DirectoryFieldsEnum]
   order: [SortOrderEnum] = [ASC]
 }
 
-type File implements Node {
-  sourceInstanceName: String!
-  absolutePath: String!
-  relativePath: String!
-  extension: String!
-  size: Int!
-  prettySize: String!
-  modifiedTime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  accessTime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  changeTime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  birthTime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  root: String!
-  dir: String!
-  base: String!
-  ext: String!
-  name: String!
-  relativeDirectory: String!
-  dev: Int!
-  mode: Int!
-  nlink: Int!
-  uid: Int!
-  gid: Int!
-  rdev: Int!
-  ino: Float!
-  atimeMs: Float!
-  mtimeMs: Float!
-  ctimeMs: Float!
-  atime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  mtime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  ctime(
-    \\"\\"\\"
-    Format the date using Moment.js' date tokens, e.g. \`date(formatString: \\"YYYY
-    MMMM DD\\")\`. See https://momentjs.com/docs/#/displaying/format/ for
-    documentation for different tokens.
-    \\"\\"\\"
-    formatString: String
-
-    \\"\\"\\"Returns a string generated with Moment.js' \`fromNow\` function\\"\\"\\"
-    fromNow: Boolean
-
-    \\"\\"\\"
-    Returns the difference between this date and the current time. Defaults to
-    \\"milliseconds\\" but you can also pass in as the measurement \\"years\\",
-    \\"months\\", \\"weeks\\", \\"days\\", \\"hours\\", \\"minutes\\", and \\"seconds\\".
-    \\"\\"\\"
-    difference: String
-
-    \\"\\"\\"Configures the locale Moment.js will use to format the date.\\"\\"\\"
-    locale: String
-  ): Date!
-  birthtime: Date @deprecated(reason: \\"Use \`birthTime\` instead\\")
-  birthtimeMs: Float @deprecated(reason: \\"Use \`birthTime\` instead\\")
-  id: ID!
-  parent: Node
-  children: [Node!]!
-  internal: Internal!
+input SiteSiteMetadataFilterInput {
+  title: StringQueryOperatorInput
+  description: StringQueryOperatorInput
 }
 
-type FileConnection {
+type SiteConnection {
   totalCount: Int!
-  edges: [FileEdge!]!
-  nodes: [File!]!
+  edges: [SiteEdge!]!
+  nodes: [Site!]!
   pageInfo: PageInfo!
-  distinct(field: FileFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
+  distinct(field: SiteFieldsEnum!): [String!]!
+  max(field: SiteFieldsEnum!): Float
+  min(field: SiteFieldsEnum!): Float
+  sum(field: SiteFieldsEnum!): Float
+  group(skip: Int, limit: Int, field: SiteFieldsEnum!): [SiteGroupConnection!]!
 }
 
-type FileEdge {
-  next: File
-  node: File!
-  previous: File
+type SiteEdge {
+  next: Site
+  node: Site!
+  previous: Site
 }
 
-enum FileFieldsEnum {
-  sourceInstanceName
-  absolutePath
-  relativePath
-  extension
-  size
-  prettySize
-  modifiedTime
-  accessTime
-  changeTime
-  birthTime
-  root
-  dir
-  base
-  ext
-  name
-  relativeDirectory
-  dev
-  mode
-  nlink
-  uid
-  gid
-  rdev
-  ino
-  atimeMs
-  mtimeMs
-  ctimeMs
-  atime
-  mtime
-  ctime
-  birthtime
-  birthtimeMs
+enum SiteFieldsEnum {
+  buildTime
+  siteMetadata___title
+  siteMetadata___description
   id
   parent___id
   parent___parent___id
@@ -762,154 +1005,27 @@ enum FileFieldsEnum {
   internal___type
 }
 
-input FileFilterInput {
-  sourceInstanceName: StringQueryOperatorInput
-  absolutePath: StringQueryOperatorInput
-  relativePath: StringQueryOperatorInput
-  extension: StringQueryOperatorInput
-  size: IntQueryOperatorInput
-  prettySize: StringQueryOperatorInput
-  modifiedTime: DateQueryOperatorInput
-  accessTime: DateQueryOperatorInput
-  changeTime: DateQueryOperatorInput
-  birthTime: DateQueryOperatorInput
-  root: StringQueryOperatorInput
-  dir: StringQueryOperatorInput
-  base: StringQueryOperatorInput
-  ext: StringQueryOperatorInput
-  name: StringQueryOperatorInput
-  relativeDirectory: StringQueryOperatorInput
-  dev: IntQueryOperatorInput
-  mode: IntQueryOperatorInput
-  nlink: IntQueryOperatorInput
-  uid: IntQueryOperatorInput
-  gid: IntQueryOperatorInput
-  rdev: IntQueryOperatorInput
-  ino: FloatQueryOperatorInput
-  atimeMs: FloatQueryOperatorInput
-  mtimeMs: FloatQueryOperatorInput
-  ctimeMs: FloatQueryOperatorInput
-  atime: DateQueryOperatorInput
-  mtime: DateQueryOperatorInput
-  ctime: DateQueryOperatorInput
-  birthtime: DateQueryOperatorInput
-  birthtimeMs: FloatQueryOperatorInput
-  id: StringQueryOperatorInput
-  parent: NodeFilterInput
-  children: NodeFilterListInput
-  internal: InternalFilterInput
-}
-
-type FileGroupConnection {
+type SiteGroupConnection {
   totalCount: Int!
-  edges: [FileEdge!]!
-  nodes: [File!]!
+  edges: [SiteEdge!]!
+  nodes: [Site!]!
   pageInfo: PageInfo!
   field: String!
   fieldValue: String
 }
 
-input FileSortInput {
-  fields: [FileFieldsEnum]
-  order: [SortOrderEnum] = [ASC]
-}
-
-input FloatQueryOperatorInput {
-  eq: Float
-  ne: Float
-  gt: Float
-  gte: Float
-  lt: Float
-  lte: Float
-  in: [Float]
-  nin: [Float]
-}
-
-type Internal {
-  content: String
-  contentDigest: String!
-  description: String
-  fieldOwners: [String]
-  ignoreType: Boolean
-  mediaType: String
-  owner: String!
-  type: String!
-}
-
-input InternalFilterInput {
-  content: StringQueryOperatorInput
-  contentDigest: StringQueryOperatorInput
-  description: StringQueryOperatorInput
-  fieldOwners: StringQueryOperatorInput
-  ignoreType: BooleanQueryOperatorInput
-  mediaType: StringQueryOperatorInput
-  owner: StringQueryOperatorInput
-  type: StringQueryOperatorInput
-}
-
-input IntQueryOperatorInput {
-  eq: Int
-  ne: Int
-  gt: Int
-  gte: Int
-  lt: Int
-  lte: Int
-  in: [Int]
-  nin: [Int]
-}
-
-\\"\\"\\"
-The \`JSON\` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-\\"\\"\\"
-scalar JSON
-
-\\"\\"\\"Node Interface\\"\\"\\"
-interface Node {
-  id: ID!
-  parent: Node
-  children: [Node!]!
-  internal: Internal!
-}
-
-input NodeFilterInput {
+input SiteFilterInput {
+  buildTime: DateQueryOperatorInput
+  siteMetadata: SiteSiteMetadataFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
 }
 
-input NodeFilterListInput {
-  elemMatch: NodeFilterInput
-}
-
-type PageInfo {
-  currentPage: Int!
-  hasPreviousPage: Boolean!
-  hasNextPage: Boolean!
-  itemCount: Int!
-  pageCount: Int!
-  perPage: Int
-}
-
-type Query {
-  file(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): File
-  allFile(filter: FileFilterInput, sort: FileSortInput, skip: Int, limit: Int): FileConnection!
-  directory(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Directory
-  allDirectory(filter: DirectoryFilterInput, sort: DirectorySortInput, skip: Int, limit: Int): DirectoryConnection!
-  sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
-  allSitePage(filter: SitePageFilterInput, sort: SitePageSortInput, skip: Int, limit: Int): SitePageConnection!
-}
-
-type SitePage implements Node {
-  path: String!
-  component: String!
-  internalComponentName: String!
-  componentChunkName: String!
-  matchPath: String
-  id: ID!
-  parent: Node
-  children: [Node!]!
-  internal: Internal!
+input SiteSortInput {
+  fields: [SiteFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
 }
 
 type SitePageConnection {
@@ -918,6 +1034,9 @@ type SitePageConnection {
   nodes: [SitePage!]!
   pageInfo: PageInfo!
   distinct(field: SitePageFieldsEnum!): [String!]!
+  max(field: SitePageFieldsEnum!): Float
+  min(field: SitePageFieldsEnum!): Float
+  sum(field: SitePageFieldsEnum!): Float
   group(skip: Int, limit: Int, field: SitePageFieldsEnum!): [SitePageGroupConnection!]!
 }
 
@@ -1021,6 +1140,15 @@ enum SitePageFieldsEnum {
   internal___type
 }
 
+type SitePageGroupConnection {
+  totalCount: Int!
+  edges: [SitePageEdge!]!
+  nodes: [SitePage!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
 input SitePageFilterInput {
   path: StringQueryOperatorInput
   component: StringQueryOperatorInput
@@ -1033,32 +1161,9 @@ input SitePageFilterInput {
   internal: InternalFilterInput
 }
 
-type SitePageGroupConnection {
-  totalCount: Int!
-  edges: [SitePageEdge!]!
-  nodes: [SitePage!]!
-  pageInfo: PageInfo!
-  field: String!
-  fieldValue: String
-}
-
 input SitePageSortInput {
   fields: [SitePageFieldsEnum]
   order: [SortOrderEnum] = [ASC]
-}
-
-enum SortOrderEnum {
-  ASC
-  DESC
-}
-
-input StringQueryOperatorInput {
-  eq: String
-  ne: String
-  in: [String]
-  nin: [String]
-  regex: String
-  glob: String
 }
 "
 `;

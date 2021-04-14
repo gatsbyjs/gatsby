@@ -1,5 +1,5 @@
 import { HEADER_COMMENT } from "./constants"
-import { appendFile, exists, readFile, writeFile } from "fs-extra"
+import { exists, readFile, writeFile } from "fs-extra"
 
 export default async function writeRedirectsFile(
   pluginData,
@@ -12,8 +12,18 @@ export default async function writeRedirectsFile(
 
   const FILE_PATH = publicFolder(`_redirects`)
 
-  // Map redirect data to the format Netlify expects
   // https://www.netlify.com/docs/redirects/
+  const NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST = [
+    `query`,
+    `conditions`,
+    `headers`,
+    `signed`,
+    `edge_handler`,
+    `Language`,
+    `Country`,
+  ]
+
+  // Map redirect data to the format Netlify expects
   redirects = redirects.map(redirect => {
     const {
       fromPath,
@@ -34,7 +44,7 @@ export default async function writeRedirectsFile(
     // The order for rest params (key-value pairs) is arbitrary.
     const pieces = [fromPath, toPath, status]
 
-    for (let key in rest) {
+    for (const key in rest) {
       const value = rest[key]
 
       if (typeof value === `string` && value.includes(` `)) {
@@ -43,7 +53,9 @@ export default async function writeRedirectsFile(
             `Values should not contain spaces.`
         )
       } else {
-        pieces.push(`${key}=${value}`)
+        if (NETLIFY_REDIRECT_KEYWORDS_ALLOWLIST.includes(key)) {
+          pieces.push(`${key}=${value}`)
+        }
       }
     }
 
@@ -54,22 +66,27 @@ export default async function writeRedirectsFile(
     ({ fromPath, toPath }) => `${fromPath}  ${toPath}  200`
   )
 
-  let appendToFile = false
+  let commentFound = false
 
   // Websites may also have statically defined redirects
   // In that case we should append to them (not overwrite)
   // Make sure we aren't just looking at previous build results though
   const fileExists = await exists(FILE_PATH)
+  let fileContents = ``
   if (fileExists) {
-    const fileContents = await readFile(FILE_PATH)
-    if (fileContents.indexOf(HEADER_COMMENT) < 0) {
-      appendToFile = true
-    }
+    fileContents = await readFile(FILE_PATH, `utf8`)
+    commentFound = fileContents.includes(HEADER_COMMENT)
+  }
+  let data
+  if (commentFound) {
+    const [theirs] = fileContents.split(`\n${HEADER_COMMENT}\n`)
+    data = theirs
+  } else {
+    data = fileContents
   }
 
-  const data = `${HEADER_COMMENT}\n\n${[...redirects, ...rewrites].join(`\n`)}`
-
-  return appendToFile
-    ? appendFile(FILE_PATH, `\n\n${data}`)
-    : writeFile(FILE_PATH, data)
+  return writeFile(
+    FILE_PATH,
+    [data, HEADER_COMMENT, ...redirects, ...rewrites].join(`\n`)
+  )
 }

@@ -8,46 +8,65 @@ export const withoutTrailingSlash = path =>
 export const writeFile = pify(fs.writeFile)
 export const renameFile = pify(fs.rename)
 
-export const runQuery = (handler, query, excludes, pathPrefix) =>
-  handler(query).then(r => {
-    if (r.errors) {
-      throw new Error(r.errors.join(`, `))
-    }
+export function filterQuery(
+  results,
+  excludes,
+  pathPrefix,
+  resolveSiteUrl = defaultOptions.resolveSiteUrl
+) {
+  const { errors, data } = results
 
-    // Removing excluded paths
-    r.data.allSitePage.edges = r.data.allSitePage.edges.filter(
-      page =>
-        !excludes.some(excludedRoute =>
-          minimatch(
-            withoutTrailingSlash(page.node.path),
-            withoutTrailingSlash(excludedRoute)
-          )
+  if (errors) {
+    throw new Error(errors.join(`, `))
+  }
+
+  const { allSitePage, ...otherData } = data
+
+  let { allPages, originalType } = getNodes(allSitePage)
+
+  // Removing excluded paths
+  allPages = allPages.filter(
+    page =>
+      !excludes.some(excludedRoute =>
+        minimatch(
+          withoutTrailingSlash(page.path),
+          withoutTrailingSlash(excludedRoute)
         )
-    )
-
-    // Add path prefix
-    r.data.allSitePage.edges = r.data.allSitePage.edges.map(page => {
-      page.node.path = (pathPrefix + page.node.path).replace(/^\/\//g, `/`)
-      return page
-    })
-
-    // siteUrl Validation
-    if (
-      !r.data.site.siteMetadata.siteUrl ||
-      r.data.site.siteMetadata.siteUrl.trim().length == 0
-    ) {
-      throw new Error(
-        `SiteMetaData 'siteUrl' property is required and cannot be left empty. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
       )
-    }
+  )
 
-    // remove trailing slash of siteUrl
-    r.data.site.siteMetadata.siteUrl = withoutTrailingSlash(
-      r.data.site.siteMetadata.siteUrl
-    )
-
-    return r.data
+  // Add path prefix
+  allPages = allPages.map(page => {
+    page.path = (pathPrefix + page.path).replace(/^\/\//g, `/`)
+    return page
   })
+
+  // siteUrl Validation
+
+  let siteUrl = resolveSiteUrl(data)
+
+  if (!siteUrl || siteUrl.trim().length == 0) {
+    throw new Error(
+      `SiteMetaData 'siteUrl' property is required and cannot be left empty. Check out the documentation to see a working example: https://www.gatsbyjs.org/packages/gatsby-plugin-sitemap/#how-to-use`
+    )
+  }
+
+  // remove trailing slash of siteUrl
+  siteUrl = withoutTrailingSlash(siteUrl)
+
+  return {
+    ...otherData,
+    allSitePage: {
+      [originalType]:
+        originalType === `nodes`
+          ? allPages
+          : allPages.map(page => {
+              return { node: page }
+            }),
+    },
+    site: { siteMetadata: { siteUrl } },
+  }
+}
 
 export const defaultOptions = {
   query: `
@@ -74,12 +93,31 @@ export const defaultOptions = {
     `/offline-plugin-app-shell-fallback`,
   ],
   createLinkInHead: true,
-  serialize: ({ site, allSitePage }) =>
-    allSitePage.edges.map(edge => {
+  serialize: ({ site, allSitePage }) => {
+    const { allPages } = getNodes(allSitePage)
+    return allPages?.map(page => {
       return {
-        url: site.siteMetadata.siteUrl + edge.node.path,
+        url: `${site.siteMetadata?.siteUrl ?? ``}${page.path}`,
         changefreq: `daily`,
         priority: 0.7,
       }
-    }),
+    })
+  },
+  resolveSiteUrl: data => data.site.siteMetadata.siteUrl,
+}
+
+function getNodes(results) {
+  if (`nodes` in results) {
+    return { allPages: results.nodes, originalType: `nodes` }
+  }
+
+  if (`edges` in results) {
+    return {
+      allPages: results?.edges?.map(edge => edge.node),
+      originalType: `edges`,
+    }
+  }
+  throw new Error(
+    `[gatsby-plugin-sitemap]: Plugin is unsure how to handle the results of your query, you'll need to write custom page filter and serializer in your gatsby config`
+  )
 }

@@ -4,16 +4,17 @@ const { GraphQLList } = require(`graphql`)
 const invariant = require(`invariant`)
 const report = require(`gatsby-cli/lib/reporter`)
 
-const { isFile } = require(`./is-file`)
-const { isDate } = require(`../types/date`)
-const { addDerivedType } = require(`../types/derived-types`)
-const is32BitInteger = require(`./is-32-bit-integer`)
+import { isFile } from "./is-file"
+import { isDate } from "../types/date"
+import { addDerivedType } from "../types/derived-types"
+import { is32BitInteger } from "../../utils/is-32-bit-integer"
+import { printDirectives } from "../print"
+const { getNode, getNodes } = require(`../../redux/nodes`)
 
 const addInferredFields = ({
   schemaComposer,
   typeComposer,
   exampleValue,
-  nodeStore,
   typeMapping,
   parentSpan,
 }) => {
@@ -21,15 +22,11 @@ const addInferredFields = ({
     typeComposer,
     defaults: {
       shouldAddFields: true,
-      shouldAddDefaultResolvers: typeComposer.hasExtension(`infer`)
-        ? false
-        : true,
     },
   })
   addInferredFieldsImpl({
     schemaComposer,
     typeComposer,
-    nodeStore,
     exampleObject: exampleValue,
     prefix: typeComposer.getTypeName(),
     unsanitizedFieldPath: [typeComposer.getTypeName()],
@@ -45,7 +42,6 @@ module.exports = {
 const addInferredFieldsImpl = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   exampleObject,
   typeMapping,
   prefix,
@@ -84,7 +80,6 @@ const addInferredFieldsImpl = ({
       ...selectedField,
       schemaComposer,
       typeComposer,
-      nodeStore,
       prefix,
       unsanitizedFieldPath,
       typeMapping,
@@ -98,42 +93,6 @@ const addInferredFieldsImpl = ({
         typeComposer.addFields({ [key]: fieldConfig })
         typeComposer.setFieldExtension(key, `createdFrom`, `inference`)
       }
-    } else {
-      // Deprecated, remove in v3
-      if (config.shouldAddDefaultResolvers) {
-        // Add default resolvers to existing fields if the type matches
-        // and the field has neither args nor resolver explicitly defined.
-        const field = typeComposer.getField(key)
-        if (
-          field.type.toString().replace(/[[\]!]/g, ``) ===
-            fieldConfig.type.toString() &&
-          _.isEmpty(field.args) &&
-          !field.resolve
-        ) {
-          const { extensions } = fieldConfig
-          if (extensions) {
-            Object.keys(extensions)
-              .filter(name =>
-                // It is okay to list allowed extensions explicitly here,
-                // since this is deprecated anyway and won't change.
-                [`dateformat`, `fileByRelativePath`, `link`, `proxy`].includes(
-                  name
-                )
-              )
-              .forEach(name => {
-                if (!typeComposer.hasFieldExtension(key, name)) {
-                  typeComposer.setFieldExtension(key, name, extensions[name])
-                  report.warn(
-                    `Deprecation warning - adding inferred resolver for field ` +
-                      `${typeComposer.getTypeName()}.${key}. In Gatsby v3, ` +
-                      `only fields with an explicit directive/extension will ` +
-                      `get a resolver.`
-                  )
-                }
-              })
-          }
-        }
-      }
     }
   })
 
@@ -143,7 +102,6 @@ const addInferredFieldsImpl = ({
 const getFieldConfig = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   prefix,
   exampleValue,
   key,
@@ -170,7 +128,6 @@ const getFieldConfig = ({
   } else if (unsanitizedKey.includes(`___NODE`)) {
     fieldConfig = getFieldConfigFromFieldNameConvention({
       schemaComposer,
-      nodeStore,
       value: exampleValue,
       key: unsanitizedKey,
     })
@@ -179,7 +136,6 @@ const getFieldConfig = ({
     fieldConfig = getSimpleFieldConfig({
       schemaComposer,
       typeComposer,
-      nodeStore,
       key,
       value,
       selector,
@@ -250,7 +206,6 @@ const getFieldConfigFromMapping = ({ typeMapping, selector }) => {
 // probably should be in example value
 const getFieldConfigFromFieldNameConvention = ({
   schemaComposer,
-  nodeStore,
   value,
   key,
 }) => {
@@ -260,8 +215,8 @@ const getFieldConfigFromFieldNameConvention = ({
 
   const getNodeBy = value =>
     foreignKey
-      ? nodeStore.getNodes().find(node => _.get(node, foreignKey) === value)
-      : nodeStore.getNode(value)
+      ? getNodes().find(node => _.get(node, foreignKey) === value)
+      : getNode(value)
 
   const linkedNodes = value.linkedNodes.map(getNodeBy)
 
@@ -302,7 +257,6 @@ const getFieldConfigFromFieldNameConvention = ({
 const getSimpleFieldConfig = ({
   schemaComposer,
   typeComposer,
-  nodeStore,
   key,
   value,
   selector,
@@ -320,7 +274,7 @@ const getSimpleFieldConfig = ({
       if (isDate(value)) {
         return { type: `Date`, extensions: { dateformat: {} } }
       }
-      if (isFile(nodeStore, unsanitizedFieldPath, value)) {
+      if (isFile(unsanitizedFieldPath, value)) {
         // NOTE: For arrays of files, where not every path references
         // a File node in the db, it is semi-random if the field is
         // inferred as File or String, since the exampleValue only has
@@ -354,9 +308,7 @@ const getSimpleFieldConfig = ({
           if (lists !== arrays) return null
         } else {
           // When the field type has not been explicitly defined, we
-          // don't need to continue in case of @dontInfer, because
-          // "addDefaultResolvers: true" only makes sense for
-          // pre-existing types.
+          // don't need to continue in case of @dontInfer
           if (!config.shouldAddFields) return null
 
           const typeName = createTypeName(selector)
@@ -391,7 +343,6 @@ const getSimpleFieldConfig = ({
           type: addInferredFieldsImpl({
             schemaComposer,
             typeComposer: fieldTypeComposer,
-            nodeStore,
             exampleObject: value,
             typeMapping,
             prefix: selector,
@@ -406,10 +357,7 @@ const getSimpleFieldConfig = ({
 
 const createTypeName = selector => {
   const keys = selector.split(`.`)
-  const suffix = keys
-    .slice(1)
-    .map(_.upperFirst)
-    .join(``)
+  const suffix = keys.slice(1).map(_.upperFirst).join(``)
   return `${keys[0]}${suffix}`
 }
 
@@ -448,8 +396,5 @@ const getInferenceConfig = ({ typeComposer, defaults }) => {
     shouldAddFields: typeComposer.hasExtension(`infer`)
       ? typeComposer.getExtension(`infer`)
       : defaults.shouldAddFields,
-    shouldAddDefaultResolvers: typeComposer.hasExtension(`addDefaultResolvers`)
-      ? typeComposer.getExtension(`addDefaultResolvers`)
-      : defaults.shouldAddDefaultResolvers,
   }
 }

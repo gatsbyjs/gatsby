@@ -1,6 +1,6 @@
 {
   "name": "gatsby-design-tokens",
-  "version": "2.0.2",
+  "version": "3.4.0-next.0",
   "description": "Gatsby Design Tokens",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -14,12 +14,12 @@
     "directory": "packages/gatsby-design-tokens"
   },
   "files": [
-    "dist/**/*"
+    "dist/"
   ],
   "scripts": {
     "build": "npm run build:tokens && npm run build:theme && npm run build:theme-gatsbyjs-org",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "microbundle watch {src/index.js,src/theme.js,src/theme-gatsbyjs-org.js} --sourcemap=false -f es,cjs",
+    "watch": "microbundle watch src/index.js src/theme.js src/theme-gatsbyjs-org.js --sourcemap=false -f es,cjs",
     "build:tokens": "(microbundle build --sourcemap=false -f es,cjs && agadoo dist/index.esm.js) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
     "build:theme": "(microbundle build src/theme.js -o dist/theme.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\"",
     "build:theme-gatsbyjs-org": "(microbundle build src/theme-gatsbyjs-org.js -o dist/theme-gatsbyjs-org.js --sourcemap=false -f es,cjs) || node -e \"console.log('\\nMicrobundle failed, make sure you\\'re using node version 10.16 or higher\\n');process.exit(1)\""
@@ -30,8 +30,11 @@
   },
   "devDependencies": {
     "agadoo": "^1.1.0",
-    "cross-env": "^5.2.1",
-    "microbundle": "gatsbyjs/microbundle#brotli-try-catch-plus-dist",
+    "cross-env": "^7.0.3",
+    "microbundle": "^0.13.0",
     "preval.macro": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=12.13.0"
   }
 }

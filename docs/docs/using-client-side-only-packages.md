@@ -6,7 +6,7 @@ On occasion, you may need to use a function or library that only works client-si
 
 You'll need to use one of the workarounds outlined below if your project fails to compile with `gatsby develop` or `gatsby build` with an error like:
 
-```bash
+```shell
 Reference error: Window is not Defined
 ```
 
@@ -50,11 +50,11 @@ class MyComponent extends Component {
 }
 ```
 
-## Workaround 3: Load client-side dependent components with react-loadable
+## Workaround 3: Load client-side dependent components with loadable-components
 
 Install [loadable-components](https://github.com/smooth-code/loadable-components) and use it as a wrapper for a component that wants to use a client-side only package.
 
-```bash
+```shell
 npm install @loadable/component
 # or use yarn
 yarn add @loadable/component

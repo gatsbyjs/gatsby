@@ -44,10 +44,12 @@ You're done! Your terminal will output the address of the domain where your site
 
 ## Step 4: Bonus - Remembering a domain
 
-To ensure future deploys are sent to the same location, you can store the domain name in a [`CNAME`](https://surge.sh/help/remembering-a-domain) file from your project root. Assuming your site was deployed to `https://my-cool-domain.surge.sh`, run the following command:
+To ensure future deploys are sent to the same location, you can store the domain name in a [`CNAME`](https://surge.sh/help/remembering-a-domain) file that is added your project. First, create a [`static` directory](/docs/how-to/images-and-media/static-folder/) at the root of your Gatsby project if it doesn't already exist. Then put a file named `CNAME` (no file extension) in the `static` directory.
+
+Assuming your site was deployed to `https://my-cool-domain.surge.sh`, the following command will add the file for you:
 
 ```shell
-echo my-cool-domain.surge.sh > CNAME
+echo my-cool-domain.surge.sh > static/CNAME
 ```
 
 Consult the [Surge Docs](https://surge.sh/help/) for information about how to customize your deployment further. Remember that each time you redeploy your site, you will need to rerun `gatsby build` first.

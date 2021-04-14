@@ -43,7 +43,7 @@ module.exports = (htmlPath, pathPrefix) => {
 
     // check resource URLs from header tags start with the correct prefix
     // (these are not page URLs)
-    if (!blackListRegex.test(url) && url.startsWith(`${pathPrefix}/`)) {
+    if (url && !blackListRegex.test(url) && url.startsWith(`${pathPrefix}/`)) {
       criticalFilePaths.push(url.replace(/^\//, ``))
     }
   })

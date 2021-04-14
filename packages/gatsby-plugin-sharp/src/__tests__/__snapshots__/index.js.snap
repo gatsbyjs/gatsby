@@ -5,7 +5,17 @@ Object {
   "aspectRatio": 1,
   "height": 20,
   "originalName": "test.png",
-  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
+  "width": 20,
+}
+`;
+
+exports[`gatsby-plugin-sharp base64 should support option: 'background' 1`] = `
+Object {
+  "aspectRatio": 1,
+  "height": 20,
+  "originalName": "alphatest.png",
+  "src": "data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAUABQDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAGfAAAB/8QAFBABAAAAAAAAAAAAAAAAAAAAMP/aAAgBAQABBQIf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAFBABAAAAAAAAAAAAAAAAAAAAMP/aAAgBAQAGPwIf/8QAFBABAAAAAAAAAAAAAAAAAAAAMP/aAAgBAQABPyEf/9oADAMBAAIAAwAAABAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAEDAQE/EB//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/EB//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAE/EB//2Q==",
   "width": 20,
 }
 `;
@@ -13,7 +23,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fixed 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
   "height": 100,
   "originalName": "test.png",
   "src": "/static/1234/df2e1/test.png",
@@ -26,7 +36,7 @@ Object {
 exports[`gatsby-plugin-sharp duotone fluid 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAACXBIWXMAAAPoAAAD6AG1e1JrAAABk0lEQVQ4y7VUy07DMBDsf9IDhcauaVM4IajUIuALOFRI/R24wB8AgkpInJKI9ME5zDi24rx5HjZKvOP17Hg2neh8nNjo8CGESGL7sbpwMvrlaepriF4J3dQLMlsXvzbVFCKHLJ3J8+5PRxqlF0OzleFLkSG7Xrp4faiyRaI/Lgs13QhNVB5uCUyUTDyUloidvkjezvyMEB8B4uZkqAHCiR44bYtCcecSirD5XQDmIGzVjOrEiJo4fhvY2jWTG3C6g/TLmZ+8VwEJekWy20+loUSzA5kDp15BKJmXhmD6Iqcjtep5eSArk0ZQPPpqPNAaWiBpbKt0pLgEU2xuIOewTh7rmFWFRH9/M78uaG8yNuox4oYbbrQEhaI4HKEh7mvfS2OE98WR0r6P26zj2ofW5rWowlzY2WduAQxZ14odmNZuMWA0h6wo5pplDxj+MrgnqDM3W32E/QYNxaxN2f7ztNx6qWUCOC3H+F/Y35EU2XCw3QkGhBrHX/WXLbwG4wewoAwMst84t/0jH4ZG36DFLv9m7E/1HjvIa/canAAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAHNUN2pAAAAD1BMVEXugW5lZmbMemybcGl6aWdJY41OAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAVUlEQVQY062QUQ6AMAhD28L9z2w2RObEH+P7WJquK2TAgEh0SoVfF+GQPk9DC5kvxNLv+QYJ1eBVy0VGxJYJltFfkI/q+87T2mzxQo3pj8rmI6QPGx6CUQCaU8vWagAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/df2e1/test.png",
   "originalName": "test.png",
@@ -48,6 +58,7 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -72,8 +83,10 @@ exports[`gatsby-plugin-sharp fixed correctly infers the width when only the heig
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -102,6 +115,7 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -126,8 +140,10 @@ exports[`gatsby-plugin-sharp fixed does not warn when the requested width is equ
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -156,6 +172,7 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -180,8 +197,10 @@ exports[`gatsby-plugin-sharp fixed should give the same result with createJob as
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -210,6 +229,7 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -220,8 +240,10 @@ exports[`gatsby-plugin-sharp fixed warns when the requested width is greater tha
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -250,6 +272,7 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -288,8 +311,10 @@ exports[`gatsby-plugin-sharp fluid accepts srcSet breakpoints 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -318,6 +343,7 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -328,8 +354,10 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -353,84 +381,577 @@ exports[`gatsby-plugin-sharp fluid adds pathPrefix if defined 1`] = `
 `;
 
 exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 1`] = `
-[MockFunction] {
-  "calls": Array [
-    Array [
-      Object {
-        "args": Object {
-          "operations": Array [
-            Object {
-              "args": Object {
-                "height": 5,
-                "toFormat": "png",
-                "width": 5,
-              },
-              "outputPath": "9363c/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 10,
-                "toFormat": "png",
-                "width": 10,
-              },
-              "outputPath": "480f5/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 20,
-                "toFormat": "png",
-                "width": 20,
-              },
-              "outputPath": "cad77/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 30,
-                "toFormat": "png",
-                "width": 30,
-              },
-              "outputPath": "ef107/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 40,
-                "toFormat": "png",
-                "width": 40,
-              },
-              "outputPath": "4fa69/test.png",
-            },
-            Object {
-              "args": Object {
-                "height": 281,
-                "toFormat": "png",
-                "width": 281,
-              },
-              "outputPath": "1a70e/test.png",
-            },
-          ],
-          "pluginOptions": Object {
-            "defaultQuality": 50,
-            "forceBase64Format": false,
-            "lazyImageGeneration": true,
-            "stripMetadata": true,
-            "useMozJpeg": false,
-          },
-        },
-        "inputPaths": Array [
-          "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
-        ],
-        "name": "IMAGE_PROCESSING",
-        "outputDir": "<PROJECT_ROOT>/public/static/1234",
-      },
-    ],
-  ],
-  "results": Array [
+Array [
+  Array [
     Object {
-      "type": "return",
-      "value": Promise {},
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "9363c/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "480f5/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "cad77/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "ef107/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "4fa69/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "1a70e/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
     },
   ],
-}
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 2`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "f018e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "40ed2/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "ec252/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "d228c/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "48fd7/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "b9b70/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 3`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "068c4/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "ffe9f/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "d4f5e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "33bda/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "f5042/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "7aa47/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 4`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 5,
+              "toFormat": "png",
+              "width": 5,
+            },
+            "outputPath": "484a6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 10,
+              "toFormat": "png",
+              "width": 10,
+            },
+            "outputPath": "02248/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 20,
+              "toFormat": "png",
+              "width": 20,
+            },
+            "outputPath": "a30d6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 30,
+              "toFormat": "png",
+              "width": 30,
+            },
+            "outputPath": "e240e/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 40,
+              "toFormat": "png",
+              "width": 40,
+            },
+            "outputPath": "c993a/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "9b0d3/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 5`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "be55a/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "f56f3/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "14fcf/test.png",
+          },
+          Object {
+            "args": Object {
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "1a70e/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 6`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "5e5c6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "ad3ed/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "9e7dd/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "fill",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "b9b70/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 7`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 34,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "45628/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 68,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "52a18/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 136,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "279d8/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "inside",
+              "height": 191,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "24238/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
+`;
+
+exports[`gatsby-plugin-sharp fluid calculate height based on width when maxWidth & maxHeight are present 8`] = `
+Array [
+  Array [
+    Object {
+      "args": Object {
+        "isLazy": false,
+        "operations": Array [
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 50,
+              "toFormat": "png",
+              "width": 50,
+            },
+            "outputPath": "2bae6/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 100,
+              "toFormat": "png",
+              "width": 100,
+            },
+            "outputPath": "c2888/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 200,
+              "toFormat": "png",
+              "width": 200,
+            },
+            "outputPath": "518f4/test.png",
+          },
+          Object {
+            "args": Object {
+              "fit": "outside",
+              "height": 281,
+              "toFormat": "png",
+              "width": 281,
+            },
+            "outputPath": "9b0d3/test.png",
+          },
+        ],
+        "pluginOptions": Object {
+          "base64Width": 20,
+          "defaultQuality": 50,
+          "failOnError": true,
+          "forceBase64Format": "",
+          "lazyImageGeneration": true,
+          "stripMetadata": true,
+          "useMozJpeg": false,
+        },
+      },
+      "inputPaths": Array [
+        "<PROJECT_ROOT>/packages/gatsby-plugin-sharp/src/__tests__/images/144-density.png",
+      ],
+      "name": "IMAGE_PROCESSING",
+      "outputDir": "<PROJECT_ROOT>/public/static/1234",
+    },
+  ],
+]
 `;
 
 exports[`gatsby-plugin-sharp fluid does not change the arguments object it is given 1`] = `
@@ -439,6 +960,7 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -449,8 +971,10 @@ exports[`gatsby-plugin-sharp fluid does not change the arguments object it is gi
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -479,6 +1003,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -517,8 +1042,10 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -544,7 +1071,7 @@ exports[`gatsby-plugin-sharp fluid ensure maxWidth is in srcSet breakpoints 1`] 
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
@@ -561,7 +1088,7 @@ Object {
 exports[`gatsby-plugin-sharp fluid includes responsive image properties, e.g. sizes, srcset, etc. with the createJob api 1`] = `
 Object {
   "aspectRatio": 1,
-  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsSAAALEgHS3X78AAABKklEQVQ4y8WUy07DMBBFrwMpr4aybjepUeqIFd/CAgmJsuIHgWXVL+Gx4C3xCdQJnpm0UDJNAQnVuouMM8dzY4+DcoA/C/8Fe9bv4ABMMpQOZc5yFPqfwEUQY499jHoY9/BsKQyTRTNMyzu8WAwTbBnI2DY438XbPr0qFsFCvlrkMTERYFgRL3HYUvh5OMdpQqkbBtPC9NDiINQPCZM6LGVvUzIpwNch4V5EGxHS/DeYtjfHZbcyXB8yGfaPimcafLEMHqmw2L5OsWkUUuY6Ee5V28WUP25TXjwPS3iWUFnfcFQPFna98rlmSGL4IOZucQvgT76Po53qeOTYTtp4qpFKe/qM29PhJsVVl3SXsluntLfS7rPvn10MP1Aau+lKBuA9I/kV/AyW6gNTIWTuA/r8lQAAAABJRU5ErkJggg==",
+  "base64": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAABP0lEQVQ4y2P4r8ZANmKgvuZ/agy/VaHojyopmv+CNf/XQCCoCEHNf1VBqv+oM5yVY1giwbBakuG2AkjknzoW/eh2/tdgOCPHYM7OwMDAwAgiGFgYGMJ5GF4og43ApRmuk58JqpMJRjIwMBizMbxTZviPaj8ihCD6rThAStkgljJATWEHc3P5wT5SxdD8B2ztERmQIiYGdAAxSpaF4T2q5TDN4HCaLgZSxMyAE1yQgwY+Fs1zxQloviSPTTMktM7JgVzIiKEH4hElFoavKogAQgltiJA3F0gdOyPC58yw8GsUwhFgUMvVGR4oMqiwogQbhOHLxfBLDcVabIlEneGxEkMMLwMvTLc4M0OdEMN3VfRIxp48/6mDnPdCieGkHCiRflRh+K+JPXljz1IQJ0AzhjrRGQPZC5As+ZeuhQGRmgHU8mT34D0STQAAAABJRU5ErkJggg==",
   "density": 72,
   "originalImg": "/static/1234/7e516/test.png",
   "originalName": "test.png",
@@ -581,6 +1108,7 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -626,8 +1154,10 @@ exports[`gatsby-plugin-sharp fluid infers the maxWidth if only maxHeight is give
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -656,6 +1186,7 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -666,8 +1197,10 @@ exports[`gatsby-plugin-sharp fluid keeps original file name 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -696,6 +1229,7 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -727,8 +1261,10 @@ exports[`gatsby-plugin-sharp fluid prevents duplicate breakpoints 1`] = `
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -757,6 +1293,7 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -795,8 +1332,10 @@ exports[`gatsby-plugin-sharp fluid reject any breakpoints larger than the origin
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -825,6 +1364,7 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -835,8 +1375,10 @@ exports[`gatsby-plugin-sharp fluid should give the same result with createJob as
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -880,6 +1422,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -890,8 +1433,10 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob file name works w
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -922,6 +1467,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -932,8 +1478,10 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJob should round heig
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -964,6 +1512,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -974,8 +1523,10 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 file name works
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1004,6 +1555,7 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round he
     Array [
       Object {
         "args": Object {
+          "isLazy": false,
           "operations": Array [
             Object {
               "args": Object {
@@ -1014,8 +1566,10 @@ exports[`gatsby-plugin-sharp queueImageResizing with createJobV2 should round he
             },
           ],
           "pluginOptions": Object {
+            "base64Width": 20,
             "defaultQuality": 50,
-            "forceBase64Format": false,
+            "failOnError": true,
+            "forceBase64Format": "",
             "lazyImageGeneration": true,
             "stripMetadata": true,
             "useMozJpeg": false,
@@ -1058,7 +1612,7 @@ Object {
   "originalName": "test.png",
   "src": "/static/1234/7e516/test.png",
   "srcSet": "/static/1234/7e516/test.png 1x",
-  "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
+  "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
   "width": 100,
 }
 `;
@@ -1078,6 +1632,6 @@ Object {
 /static/1234/a1812/test.png 50w,
 /static/1234/7e516/test.png 100w",
   "srcSetType": "image/png",
-  "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
+  "tracedSVG": "data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='100'%20height='100'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3e%3cpath%20d='M41%2024c-18%207-24%2029-11%2043%2015%2017%2044%208%2046-15%201-19-17-34-35-28'%20fill='red'%20fill-rule='evenodd'/%3e%3c/svg%3e",
 }
 `;

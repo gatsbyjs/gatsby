@@ -3,6 +3,192 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@6.0.0-next.0...gatsby-remark-embed-snippet@6.1.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [6.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.3.0-next.1...gatsby-remark-embed-snippet@6.0.0-next.0) (2021-04-09)
+
+### Features
+
+- upgrade to remark 13 ([#29678](https://github.com/gatsbyjs/gatsby/issues/29678)) ([a5b5cf8](https://github.com/gatsbyjs/gatsby/commit/a5b5cf8379b7c105119e348d41723f3b2bd7b527))
+
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.3.0-next.0...gatsby-remark-embed-snippet@5.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.2.0-next.0...gatsby-remark-embed-snippet@5.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.1.0-next.2...gatsby-remark-embed-snippet@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.1.0-next.1...gatsby-remark-embed-snippet@5.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.1.0-next.0...gatsby-remark-embed-snippet@5.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.0.0-next.1...gatsby-remark-embed-snippet@5.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@5.0.0-next.0...gatsby-remark-embed-snippet@5.0.0-next.1) (2021-02-19)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [5.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.11.0-next.0...gatsby-remark-embed-snippet@5.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.10.0-next.0...gatsby-remark-embed-snippet@4.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.9.0-next.0...gatsby-remark-embed-snippet@4.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.8.0-next.0...gatsby-remark-embed-snippet@4.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.7.0-next.0...gatsby-remark-embed-snippet@4.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.6.0-next.0...gatsby-remark-embed-snippet@4.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.5.0-next.0...gatsby-remark-embed-snippet@4.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.4.0-next.0...gatsby-remark-embed-snippet@4.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.16...gatsby-remark-embed-snippet@4.3.17) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.15...gatsby-remark-embed-snippet@4.3.16) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.14...gatsby-remark-embed-snippet@4.3.15) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.13...gatsby-remark-embed-snippet@4.3.14) (2020-08-05)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.12...gatsby-remark-embed-snippet@4.3.13) (2020-07-09)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.11...gatsby-remark-embed-snippet@4.3.12) (2020-07-02)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.10...gatsby-remark-embed-snippet@4.3.11) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.9...gatsby-remark-embed-snippet@4.3.10) (2020-07-01)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.9](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.8...gatsby-remark-embed-snippet@4.3.9) (2020-06-29)
+
+### Features
+
+- **gatsby-remark-embed-snippet:** Add the ability to embed named snippets ([#24512](https://github.com/gatsbyjs/gatsby/issues/24512)) ([2b68c84](https://github.com/gatsbyjs/gatsby/commit/2b68c84))
+
+## [4.3.8](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.7...gatsby-remark-embed-snippet@4.3.8) (2020-06-24)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.7](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.6...gatsby-remark-embed-snippet@4.3.7) (2020-06-22)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.5...gatsby-remark-embed-snippet@4.3.6) (2020-06-20)
+
+### Bug Fixes
+
+- **gatsby-remark-embed-snippet:** readme - add example sources ([#24874](https://github.com/gatsbyjs/gatsby/issues/24874)) ([592801b](https://github.com/gatsbyjs/gatsby/commit/592801b))
+
+## [4.3.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.4...gatsby-remark-embed-snippet@4.3.5) (2020-06-09)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.3...gatsby-remark-embed-snippet@4.3.4) (2020-06-09)
+
+### Bug Fixes
+
+- **gatsby-remark-embed-snippet:** readme - change code language ([#24821](https://github.com/gatsbyjs/gatsby/issues/24821)) ([8fcff17](https://github.com/gatsbyjs/gatsby/commit/8fcff17))
+
+## [4.3.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.2...gatsby-remark-embed-snippet@4.3.3) (2020-06-02)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.1...gatsby-remark-embed-snippet@4.3.2) (2020-05-20)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.3.0...gatsby-remark-embed-snippet@4.3.1) (2020-05-05)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.2.5...gatsby-remark-embed-snippet@4.3.0) (2020-04-27)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.2.5](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.2.4...gatsby-remark-embed-snippet@4.2.5) (2020-04-24)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.2.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.2.3...gatsby-remark-embed-snippet@4.2.4) (2020-04-17)
+
+### Bug Fixes
+
+- wrap ignore pattern in quotes ([#23176](https://github.com/gatsbyjs/gatsby/issues/23176)) ([7563db6](https://github.com/gatsbyjs/gatsby/commit/7563db6))
+
+## [4.2.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.2.2...gatsby-remark-embed-snippet@4.2.3) (2020-04-16)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.2.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.2.1...gatsby-remark-embed-snippet@4.2.2) (2020-04-11)
+
+### Features
+
+- **remark-embed-snippet:** embed specific lines ([#21907](https://github.com/gatsbyjs/gatsby/issues/21907)) ([109b905](https://github.com/gatsbyjs/gatsby/commit/109b905))
+
+## [4.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.2.0...gatsby-remark-embed-snippet@4.2.1) (2020-03-23)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+# [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.1.24...gatsby-remark-embed-snippet@4.2.0) (2020-03-20)
+
+### Features
+
+- **gatsby:** bump node min version to 10.13.0 ([#22400](https://github.com/gatsbyjs/gatsby/issues/22400)) ([83d681a](https://github.com/gatsbyjs/gatsby/commit/83d681a))
+
+## [4.1.24](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.1.23...gatsby-remark-embed-snippet@4.1.24) (2020-03-16)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
+## [4.1.23](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.1.22...gatsby-remark-embed-snippet@4.1.23) (2020-03-06)
+
+**Note:** Version bump only for package gatsby-remark-embed-snippet
+
 ## [4.1.22](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-embed-snippet@4.1.21...gatsby-remark-embed-snippet@4.1.22) (2020-02-01)
 
 **Note:** Version bump only for package gatsby-remark-embed-snippet

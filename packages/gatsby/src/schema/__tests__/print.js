@@ -1,9 +1,10 @@
 const { build } = require(`..`)
-const { buildObjectType } = require(`../types/type-builders`)
+import { buildObjectType } from "../types/type-builders"
 const { store } = require(`../../redux`)
 const { actions } = require(`../../redux/actions/restricted`)
+const { actions: publicActions } = require(`../../redux/actions/public`)
+const { createParentChildLink } = publicActions
 const { printTypeDefinitions } = actions
-require(`../../db/__tests__/fixtures/ensure-loki`)()
 
 jest.mock(`fs-extra`)
 const fs = require(`fs-extra`)
@@ -42,14 +43,35 @@ jest.spyOn(global.Date.prototype, `toISOString`).mockReturnValue(`2019-01-01`)
 describe(`Print type definitions`, () => {
   beforeEach(() => {
     store.dispatch({ type: `DELETE_CACHE` })
-    const node = {
+    const node1 = {
       id: `test1`,
       internal: {
         type: `Test`,
       },
+      children: [],
       foo: 26,
     }
-    store.dispatch({ type: `CREATE_NODE`, payload: { ...node } })
+    const node2 = {
+      id: `test2`,
+      parent: `test1`,
+      internal: {
+        type: `FooChild`,
+      },
+      bar: `bar`,
+    }
+    const node3 = {
+      id: `test3`,
+      parent: `test1`,
+      internal: {
+        type: `BarChild`,
+      },
+      bar: `bar`,
+    }
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node1 } })
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node2 } })
+    store.dispatch({ type: `CREATE_NODE`, payload: { ...node3 } })
+    createParentChildLink({ parent: node1, child: node2 })
+    createParentChildLink({ parent: node1, child: node3 })
     const typeDefs = []
     typeDefs.push(`
       type AnotherTest implements Node & ITest {
@@ -68,6 +90,10 @@ describe(`Print type definitions`, () => {
         bar: Boolean
       }
       interface ITest @nodeInterface {
+        id: ID!
+        date: Date @dateformat(formatString: "YYYY")
+      }
+      interface ITest2 implements Node {
         id: ID!
         date: Date @dateformat(formatString: "YYYY")
       }
@@ -97,6 +123,18 @@ describe(`Print type definitions`, () => {
             types: [`OneMoreTest`],
           },
         },
+      }),
+      buildObjectType({
+        name: `BarChild`,
+        fields: {
+          id: `ID!`,
+        },
+        interfaces: [`Node`],
+        extensions: {
+          childOf: {
+            types: [`Test`],
+          },
+        },
       })
     )
     store.dispatch({
@@ -107,6 +145,11 @@ describe(`Print type definitions`, () => {
     store.dispatch({
       type: `CREATE_TYPES`,
       payload: typeDefs[1],
+      plugin: { name: `gatsby-plugin-another-test` },
+    })
+    store.dispatch({
+      type: `CREATE_TYPES`,
+      payload: typeDefs[2],
       plugin: { name: `gatsby-plugin-another-test` },
     })
   })

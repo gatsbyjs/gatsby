@@ -1,1 +1,18 @@
-{"timestamp":1566554603385,"hash":"48a54d2e702044cb3ef5db4ae899e8d7","assets":{"/about/":{"http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2":true},"/404.html":{"http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2":true},"/contact/":{"http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2":true},"/":{"http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2":true}}}
+{
+  "timestamp": 1566554603385,
+  "hash": "48a54d2e702044cb3ef5db4ae899e8d7",
+  "assets": {
+    "/about/": {
+      "http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2": true
+    },
+    "/404.html": {
+      "http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2": true
+    },
+    "/contact/": {
+      "http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2": true
+    },
+    "/": {
+      "http://localhost:8000/static/fontawesome-webfont-db812d8a70a4e88e888744c1c9a27e89.woff2": true
+    }
+  }
+}

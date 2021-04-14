@@ -1,33 +1,32 @@
 {
   "name": "gatsby-source-filesystem",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-  "version": "2.1.48",
+  "description": "Gatsby source plugin for building websites from local data. Markdown, JSON, images, YAML, CSV, and dozens of other data types supported.",
+  "version": "3.4.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.7.6",
+    "@babel/runtime": "^7.12.5",
     "better-queue": "^3.8.10",
-    "bluebird": "^3.7.2",
-    "chokidar": "3.3.0",
-    "file-type": "^12.4.0",
+    "chokidar": "^3.4.3",
+    "file-type": "^16.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.0.28",
-    "got": "^8.3.2",
-    "md5-file": "^3.2.3",
-    "mime": "^2.4.4",
-    "pretty-bytes": "^5.3.0",
+    "gatsby-core-utils": "^2.4.0-next.0",
+    "got": "^9.6.0",
+    "md5-file": "^5.0.0",
+    "mime": "^2.4.6",
+    "pretty-bytes": "^5.4.1",
     "progress": "^2.0.3",
-    "read-chunk": "^3.2.0",
     "valid-url": "^1.0.9",
-    "xstate": "^4.7.2"
+    "xstate": "^4.14.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3",
+    "msw": "^0.25.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#readme",
   "keywords": [
@@ -36,7 +35,7 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.2.0"
+    "gatsby": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -44,12 +43,12 @@
     "directory": "packages/gatsby-source-filesystem"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "types": "index.d.ts",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

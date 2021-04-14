@@ -6,10 +6,10 @@ title: Themes API Reference
 
 Themes are packaged Gatsby sites shipped as plugins, so you have access to all of Gatsby's APIs for modifying default configuration settings and functionality.
 
-- [Gatsby Config](https://www.gatsbyjs.org/docs/gatsby-config/)
-- [Actions](https://www.gatsbyjs.org/docs/actions/)
-- [Node Interface](https://www.gatsbyjs.org/docs/node-interface/)
-- ... [and more](https://www.gatsbyjs.org/docs/api-specification/)
+- [Gatsby Config](/docs/reference/config-files/gatsby-config/)
+- [Actions](/docs/reference/config-files/actions/)
+- [Node Interface](/docs/reference/graphql-data-layer/node-interface/)
+- ... [and more](/docs/api-specification/)
 
 If you're new to Gatsby you can get started by following along with the guides for building out a site. Converting it to a theme will be straightforward later on since themes are prepackaged Gatsby sites.
 
@@ -86,7 +86,9 @@ Taking the `Header` example from before, when you write your shadowing file at `
 import Header from "gatsby-theme-amazing/src/components/header"
 
 // these props are the same as the original component would get
-export default props => <Header {...props} myProp="true" />
+export default function MyHeader(props) {
+  return <Header {...props} myProp="true" />
+}
 ```
 
 Taking this approach means that when you upgrade your theme later you can also take advantage of all the updates to the `Header` component because you haven't fully replaced it, just modified it.
@@ -107,7 +109,7 @@ and here is the path where you would shadow it in your site:
 <your-site>/src/gatsby-theme-amazing/components/header.js
 ```
 
-Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of Webpack, so the module graph needs to include the shadowable file.
+Shadowing only works on imported files in the `src` directory. This is because shadowing is built on top of webpack, so the module graph needs to include the shadowable file.
 
 Since you can use multiple themes in a given site, there are many potential places to shadow a given file (one for each theme and one for the user's site). In the event that multiple themes are attempting to shadow `gatsby-theme-amazing/src/components/header.js`, the last theme included in the plugins array will win. The site itself takes the highest priority in shadowing.
 
@@ -133,7 +135,7 @@ Themes at their core are an algorithm that merges multiple `gatsby-config.js` fi
 
 The first example results in a final ordering of `['gatsby-theme-parent', 'gatsby-theme-child']` (parents always come before their children so that children can override functionality), while the second example results in `['gatsby-theme-blog', 'gatsby-theme-notes']`.
 
-Once you have the final ordering of themes you merge them together using a reduce function. [This reduce function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/merge-gatsby-config.js) specifies the way each key in `gatsby-config.js` will merge together. Unless otherwise specified below, the last value wins.
+Once you have the final ordering of themes you merge them together using a reduce function. [This reduce function](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/merge-gatsby-config.ts) specifies the way each key in `gatsby-config.js` will merge together. Unless otherwise specified below, the last value wins.
 
-- `siteMetadata` and `mapping` both merge deeply using lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
+- `siteMetadata` and `mapping` both merge deeply using Lodash's `merge` function. This means a theme can set default values in `siteMetadata` and the site can override them using the standard `siteMetadata` object in `gatsby-config.js`.
 - `plugins` are normalized to remove duplicates, then concatenated together.

@@ -1,6 +1,6 @@
 const { SchemaComposer, GraphQLJSON } = require(`graphql-compose`)
 const { getNodeInterface } = require(`./types/node-interface`)
-const { GraphQLDate } = require(`./types/date`)
+import { GraphQLDate } from "./types/date"
 const { addDirectives } = require(`./extensions`)
 
 const createSchemaComposer = ({ fieldExtensions } = {}) => {
@@ -13,8 +13,8 @@ const createSchemaComposer = ({ fieldExtensions } = {}) => {
   schemaComposer._directives = [...BUILT_IN_DIRECTIVES]
 
   getNodeInterface({ schemaComposer })
-  schemaComposer.addAsComposer(GraphQLDate)
-  schemaComposer.addAsComposer(GraphQLJSON)
+  schemaComposer.add(GraphQLDate)
+  schemaComposer.add(GraphQLJSON)
   addDirectives({ schemaComposer, fieldExtensions })
   return schemaComposer
 }

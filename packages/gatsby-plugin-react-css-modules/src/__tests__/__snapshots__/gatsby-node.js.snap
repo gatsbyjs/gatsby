@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`gatsby-plugin-react-css-modules should add babel-plugin-react-css-modules plugin to babel config 1`] = `
+Array [
+  Object {
+    "name": "babel-plugin-react-css-modules",
+    "options": Object {
+      "generateScopedName": "[name]--[local]--[hash:base64:5]",
+      "webpackHotModuleReloading": true,
+    },
+  },
+]
+`;

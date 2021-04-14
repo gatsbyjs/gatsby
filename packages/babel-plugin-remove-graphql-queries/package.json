@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-remove-graphql-queries",
-  "version": "2.7.23",
+  "version": "3.4.0-next.0",
   "author": "Jason Quense <monastic.panic@gmail.com>",
   "repository": {
     "type": "git",
@@ -9,23 +9,24 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/babel-plugin-remove-graphql-queries#readme",
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
-    "babel-preset-gatsby-package": "^0.2.16",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3",
+    "gatsby-core-utils": "^2.4.0-next.0"
+  },
+  "peerDependencies": {
+    "@babel/core": "^7.0.0",
+    "gatsby": "^3.0.0-next.0"
   },
   "license": "MIT",
   "main": "index.js",
-  "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "graphql": "^14.1.1"
-  },
   "scripts": {
-    "build": "babel src --out-dir . --ignore **/__tests__",
+    "build": "babel src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\"",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore **/__tests__"
+    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\" --extensions \".ts,.js\""
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.13.0"
   }
 }

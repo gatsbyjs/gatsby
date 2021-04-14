@@ -15,7 +15,7 @@ const LocalizedLink = ({ to, ...props }) => {
   // Because otherwise this would add a trailing slash
   const path = locales[locale].default
     ? to
-    : `${locales[locale].path}${isIndex ? `` : `${to}`}`
+    : `/${locales[locale].path}${isIndex ? `` : `${to}`}`
 
   return <Link {...props} to={path} />
 }

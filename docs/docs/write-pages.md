@@ -12,7 +12,7 @@ title: Write Out Pages
 >
 > You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
 
-This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. Webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
+This is one of the last bootstrap stages before we hand off to webpack to perform code optimization and code splitting. webpack builds a web bundle. It has no knowledge of Gatsby's core code. Instead, it operates only on files in the `.cache` directory. It also doesn't have access to all the Redux information that was built up during bootstrap. So instead, we create dynamic JavaScript and JSON files that are dependent on by the webpack application in the `.cache` directory (see [Building the JavaScript App](/docs/production-app/)).
 
 You can think of this step as taking all the data that was generated during bootstrap and saving it to disk for consumption by webpack.
 
@@ -59,14 +59,14 @@ The dynamic files that are created are (all under the `.cache` directory).
 
 ## pages.json
 
-This is a collection of page objects, created from redux `pages` namespace. For each page it includes the
+This is a collection of page objects, created from Redux `pages` namespace. For each page it includes the
 
-- [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname)
-- [jsonName](/docs/behind-the-scenes-terminology/#jsonname)
-- [path](/docs/behind-the-scenes-terminology/#path)
-- [matchPath](/docs/behind-the-scenes-terminology/#matchpath)
+- [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname)
+- [jsonName](/docs/gatsby-internals-terminology/#jsonname)
+- [path](/docs/gatsby-internals-terminology/#path)
+- [matchPath](/docs/gatsby-internals-terminology/#matchpath)
 
-The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/behind-the-scenes-terminology/#matchpath) for more info.
+The pages are sorted such that those with `matchPath`s come before those without. This is to assist [find-page.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/find-page.js) in selecting pages via regex before trying explicit paths. See [matchPaths](/docs/gatsby-internals-terminology/#matchpath) for more info.
 
 e.g
 
@@ -85,7 +85,7 @@ e.g
 
 ## sync-requires.js
 
-This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` redux namespace. The keys are the [componentChunkName](/docs/behind-the-scenes-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
+This is a dynamically generated JavaScript file that exports `components`. It is an object created by iterating over the `components` Redux namespace. The keys are the [componentChunkName](/docs/gatsby-internals-terminology/#componentchunkname) (e.g. `component---src-blog-2-js`), and the values are expressions that require the component. E.g. `/home/site/src/blog/2.js`. The file will look something like this:
 
 ```javascript
 exports.components = {
@@ -122,7 +122,7 @@ Remember, `sync-requires.js` is used during [Page HTML Generation](/docs/html-ge
 
 ## data.json
 
-This is a generated json file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
+This is a generated JSON file. It contains the entire `pages.json` contents ([as above](/docs/write-pages/#pagesjson)), and the entire Redux `jsonDataPaths` which was created at the end of the [Query Execution](/docs/query-execution/#save-query-results-to-redux-and-disk) stage. So, it looks like:
 
 ```javascript
 {
@@ -142,11 +142,11 @@ This is a generated json file. It contains the entire `pages.json` contents ([as
  }
 ```
 
-`data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load json results](/docs/production-app/#load-page-resources) for a page.
+`data.json` is used in two places. First, it's lazily imported by `async-requires.js` (above), which in turn is used by `production-app` to [load JSON results](/docs/production-app/#load-page-resources) for a page.
 
 It is also used by [Page HTML Generation](/docs/html-generation/) in two ways:
 
 1. `static-entry.js` produces a `page-renderer.js` webpack bundle that generates the HTML for a path. It requires `data.json` and uses the `pages` to lookup the page for the page.
-2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual json result by looking it up in `data.json.dataPaths[jsonName]`.
+2. To get the `jsonName` from the page object, and uses it to construct a resource path for the actual JSON result by looking it up in `data.json.dataPaths[jsonName]`.
 
-Now that Gatsby has written out page data, it can start on the [Webpack section](/docs/webpack-and-ssr/).
+Now that Gatsby has written out page data, it can start on the [webpack section](/docs/webpack-and-ssr/).

@@ -20,7 +20,6 @@ const {
   isAbstractType,
   Kind,
   FragmentsOnCompositeTypesRule,
-  KnownTypeNamesRule,
   LoneAnonymousOperationRule,
   PossibleFragmentSpreadsRule,
   ScalarLeafsRule,
@@ -29,9 +28,11 @@ const {
   VariablesInAllowedPositionRule,
 } = require(`graphql`)
 
-const getGatsbyDependents = require(`../utils/gatsby-dependents`)
+import { getGatsbyDependents } from "../utils/gatsby-dependents"
 const { store } = require(`../redux`)
-import * as actions from "../redux/actions/internal"
+import { actions } from "../redux/actions"
+
+import { websocketManager } from "../utils/websocket-manager"
 const { default: FileParser } = require(`./file-parser`)
 const {
   graphqlError,
@@ -44,15 +45,13 @@ const {
   default: errorParser,
   locInGraphQlToLocInFile,
 } = require(`./error-parser`)
-const websocketManager = require(`../utils/websocket-manager`)
 
 const overlayErrorID = `graphql-compiler`
 
 export default async function compile({ parentSpan } = {}): Promise<
   Map<string, RootQuery>
 > {
-  // TODO: swap plugins to themes
-  const { program, schema, themes, flattenedPlugins } = store.getState()
+  const { program, schema, flattenedPlugins } = store.getState()
 
   const activity = report.activityTimer(`extract queries from components`, {
     parentSpan,
@@ -66,13 +65,11 @@ export default async function compile({ parentSpan } = {}): Promise<
   const parsedQueries = await parseQueries({
     base: program.directory,
     additional: resolveThemes(
-      themes.themes
-        ? themes.themes
-        : flattenedPlugins.map(plugin => {
-            return {
-              themeDir: plugin.pluginFilepath,
-            }
-          })
+      flattenedPlugins.map(plugin => {
+        return {
+          themeDir: plugin.pluginFilepath,
+        }
+      })
     ),
     addError,
     parentSpan,
@@ -174,6 +171,8 @@ export const processQueries = ({
     parentSpan
   )
 
+  store.dispatch(actions.setGraphQLDefinitions(definitionsByName))
+
   return processDefinitions({
     schema,
     operations,
@@ -185,7 +184,6 @@ export const processQueries = ({
 
 const preValidationRules = [
   LoneAnonymousOperationRule,
-  KnownTypeNamesRule,
   FragmentsOnCompositeTypesRule,
   VariablesAreInputTypesRule,
   ScalarLeafsRule,
@@ -215,7 +213,12 @@ const extractOperations = (schema, parsedQueries, addError, parentSpan) => {
           const location = {
             start: locInGraphQlToLocInFile(templateLoc, error.locations[0]),
           }
-          return errorParser({ message: error.message, filePath, location })
+          return errorParser({
+            message: error.message,
+            filePath,
+            location,
+            error,
+          })
         })
       )
 
@@ -348,7 +351,7 @@ const processDefinitions = ({
       continue
     }
 
-    let document = {
+    const document = {
       kind: Kind.DOCUMENT,
       definitions: Array.from(usedFragments.values())
         .map(name => definitionsByName.get(name).def)
@@ -382,13 +385,12 @@ const processDefinitions = ({
             },
             message,
             filePath,
+            error,
           })
         )
       }
       continue
     }
-
-    document = addExtraFields(document, schema)
 
     const query = {
       name,
@@ -397,7 +399,8 @@ const processDefinitions = ({
       path: filePath,
       isHook: originalDefinition.isHook,
       isStaticQuery: originalDefinition.isStaticQuery,
-      hash: originalDefinition.hash,
+      // ensure hash should be a string and not a number
+      hash: String(originalDefinition.hash),
     }
 
     if (query.isStaticQuery) {
@@ -478,57 +481,4 @@ const determineUsedFragmentsForDefinition = (
     }
     return { usedFragments, missingFragments }
   }
-}
-
-/**
- * Automatically add:
- *   `__typename` field to abstract types (unions, interfaces)
- *   `id` field to all object/interface types having an id
- * TODO: Remove this in v3.0 as it is a legacy from Relay compiler
- */
-const addExtraFields = (document, schema) => {
-  const typeInfo = new TypeInfo(schema)
-  const contextStack = []
-
-  const transformer = visitWithTypeInfo(typeInfo, {
-    enter: {
-      [Kind.SELECTION_SET]: node => {
-        // Entering selection set:
-        //   selection sets can be nested, so keeping their metadata stacked
-        contextStack.push({ hasTypename: false })
-      },
-      [Kind.FIELD]: node => {
-        // Entering a field of the current selection-set:
-        //   mark which fields already exist in this selection set to avoid duplicates
-        const context = contextStack[contextStack.length - 1]
-        if (
-          node.name.value === `__typename` ||
-          node?.alias?.value === `__typename`
-        ) {
-          context.hasTypename = true
-        }
-      },
-    },
-    leave: {
-      [Kind.SELECTION_SET]: node => {
-        // Modify the selection-set AST on leave (add extra fields unless they already exist)
-        const context = contextStack.pop()
-        const parentType = typeInfo.getParentType()
-        const extraFields = []
-
-        // Adding __typename to unions and interfaces (if required)
-        if (!context.hasTypename && isAbstractType(parentType)) {
-          extraFields.push({
-            kind: Kind.FIELD,
-            name: { kind: Kind.NAME, value: `__typename` },
-          })
-        }
-        return extraFields.length > 0
-          ? { ...node, selections: [...extraFields, ...node.selections] }
-          : undefined
-      },
-    },
-  })
-
-  return visit(document, transformer)
 }

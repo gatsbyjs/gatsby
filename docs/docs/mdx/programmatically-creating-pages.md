@@ -9,7 +9,7 @@ arbitrary locations outside of `src/pages/` or in remote CMSes.
 For instance, let's say you have a Gatsby website, and you want to add
 support for MDX so you can start your blog. The posts will live in
 `content/posts/`. You can do this with the help of
-`gatsby-source-filesystem` and [`createPages`](/docs/node-apis/#createPages) in
+`gatsby-source-filesystem` and [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) in
 `gatsby-node.js`.
 
 ## Source MDX pages from the filesystem
@@ -24,7 +24,7 @@ root.
 
 > **Note**: `gatsby-plugin-mdx` uses `.mdx` by default as a file extension to
 > recognize which files to use. You can also [use `.md` as a file
-> extension](/packages/gatsby-plugin-mdx#extensions) if you want.
+> extension](/plugins/gatsby-plugin-mdx#extensions) if you want.
 
 ```javascript:title=gatsby-config.js
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
 ```
 
 You can read about
-[`gatsby-source-filesystem`](/packages/gatsby-source-filesystem)
+[`gatsby-source-filesystem`](/plugins/gatsby-source-filesystem)
 if you'd like to learn more.
 
 ## Add MDX files
@@ -129,14 +129,14 @@ to set up our page. `/blog${value}` is a [template
 string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
 that will result in:
 
-- blog-1.mdx => http://localhost:8000/blog/blog-1/
-- blog-2.mdx => http://localhost:8000/blog/blog-2/
+- `blog-1.mdx` => `http://localhost:8000/blog/blog-1/`
+- `blog-2.mdx` => `http://localhost:8000/blog/blog-2/`
 
-[`createFilePath`](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/?=gatsby-source#createfilepath)
+[`createFilePath`](/plugins/gatsby-source-filesystem/?=gatsby-source#createfilepath)
 is a function from `gatsby-source-filesystem` that translates file
 paths to usable URLs.
 
-[`onCreateNode`](https://www.gatsbyjs.org/docs/node-apis/#onCreateNode)
+[`onCreateNode`](/docs/reference/config-files/gatsby-node/#onCreateNode)
 is a Gatsby lifecycle method that gets called whenever a new node is
 created. In this case only `MDX` nodes are touched.
 
@@ -214,7 +214,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 ```
 
 For further reading, check out the
-[createPages](https://www.gatsbyjs.org/docs/node-apis/#createPages)
+[createPages](/docs/reference/config-files/gatsby-node/#createPages)
 API.
 
 ## Make a template for your posts
@@ -224,7 +224,7 @@ will be rendered as the template for all posts. There's a component,
 `MDXRenderer` which is used by `gatsby-plugin-mdx` that will be used to render any
 programmatically accessed MDX content.
 
-For now, to update imports within .mdx files, you should rerun your Gatsby development environment. Otherwise, it will raise a `ReferenceError`. To import things dynamically, you can use the `MDXProvider` component and provide it all the common components you'll be using, such as `Link`.
+For now, to update imports within `.mdx` files, you should rerun your Gatsby development environment. Otherwise, it will raise a `ReferenceError`. To import things dynamically, you can use the `MDXProvider` component and provide it all the common components you'll be using, such as `Link`.
 
 First, create a component that accepts the queried MDX data (which will be
 added in the next step).
@@ -274,13 +274,19 @@ component should look like:
 ```jsx:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
+import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { Link } from "gatsby"
+
+const shortcodes = { Link } // Provide common components here
 
 export default function PageTemplate({ data: { mdx } }) {
   return (
     <div>
       <h1>{mdx.frontmatter.title}</h1>
-      <MDXRenderer>{mdx.body}</MDXRenderer>
+      <MDXProvider components={shortcodes}>
+        <MDXRenderer>{mdx.body}</MDXRenderer>
+      </MDXProvider>
     </div>
   )
 }

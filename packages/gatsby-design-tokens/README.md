@@ -18,7 +18,7 @@
 
 > Design tokens are the visual design atoms of the design system — specifically, they are named entities that store visual design attributes. We use them in place of hard-coded values (such as hex values for color or pixel values for spacing) in order to maintain a scalable and consistent visual system for UI development.
 
-This quote from the [Lightning Desing System Design Tokens documentation](https://www.lightningdesignsystem.com/design-tokens/) accurately describes the tokens contained in this package — to be a bit more specific: `gatsby-design-tokens` offers _plain objects or arrays of values for related **CSS properties**_. Currently.
+This quote from the [Lightning Design System Design Tokens documentation](https://www.lightningdesignsystem.com/design-tokens/) accurately describes the tokens contained in this package — to be a bit more specific: `gatsby-design-tokens` offers _plain objects or arrays of values for related **CSS properties**_. Currently.
 
 Gatsby's design tokens are following the [System UI Theme Specification](https://system-ui.com/theme/) as well as the [Theme UI Theme Specification](https://theme-ui.com/theme-spec).
 
@@ -177,7 +177,7 @@ The Gatsby monorepo, which hosts this package, also contains the source for gats
 
 Follow the [official guide](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#fork-clone-and-branch-the-repository) to clone/fork and set up the Gatsby monorepo. This will roughly look like this:
 
-```bash
+```shell
 # clone the repo/your fork
 git clone https://github.com/gatsbyjs/gatsby.git
 cd gatsby
@@ -196,19 +196,19 @@ git checkout -b topics/new-feature-name
 
 Assuming `gatsby-cli` [is installed](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes), let's install [`gatsby-dev-cli`](<(https://www.npmjs.com/package/gatsby-dev-cli)>) with
 
-```bash
+```shell
 yarn global add gatsby-dev-cli
 ```
 
 `gatsby-dev-cli` needs to know where your local Gatsby repository lives; navigate to its root folder, get the absolute path to it via `pwd`, and tell `gatsby-dev-cli` about it with
 
-```bash
+```shell
 gatsby-dev --set-path-to-repo /path-to-local-gatsby/gatsby
 ```
 
 ### 2. Get `www` running on `localhost`
 
-```bash
+```shell
 cd /path-to-local-gatsby/gatsby/www
 
 yarn # to install dependencies
@@ -242,4 +242,4 @@ with
 const header = system
 ```
 
-and you should see `Futura PT` turning into `system-ui` within a few moments on your `localhost:8000`.
+and you should see `Futura PT` turning into `system-ui` within a few moments on your `http://localhost:8000`.

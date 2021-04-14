@@ -30,8 +30,7 @@ function validHeaders(headers, reporter) {
       _.every(headersList, header => {
         if (_.isString(header)) {
           if (!getHeaderName(header)) {
-            // TODO panic on builds on v3
-            reporter.warn(
+            reporter.panic(
               `[gatsby-plugin-netlify] ${path} contains an invalid header (${header}). Please check your plugin configuration`
             )
           }
@@ -94,7 +93,7 @@ function headersPath(pathPrefix, path) {
 }
 
 function preloadHeadersByPage({ pages, manifest, pathPrefix, publicFolder }) {
-  let linksByPage = {}
+  const linksByPage = {}
 
   const appDataPath = publicFolder(PAGE_DATA_DIR, `app-data.json`)
   const hasAppData = existsSync(appDataPath)
@@ -234,7 +233,7 @@ const validateUserOptions = (pluginOptions, reporter) => headers => {
   if (!_.isFunction(pluginOptions.transformHeaders)) {
     throw new Error(
       `The "transformHeaders" option to gatsby-plugin-netlify must be a function ` +
-        `that returns a array of header strings.` +
+        `that returns an array of header strings. ` +
         `Check your gatsby-config.js.`
     )
   }

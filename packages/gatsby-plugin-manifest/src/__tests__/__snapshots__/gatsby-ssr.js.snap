@@ -23,6 +23,7 @@ Array [
 exports[`gatsby-plugin-manifest CORS Generation Does not add crossOrigin when 'crossOrigin' is blank 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -32,50 +33,57 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does file name cache busting if "cache_busting_mode" option is set to name 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48-contentDigest.png"
+    href="/favicon-32x32-00913339321ee5a854812aea11f8a5d4.png"
     rel="icon"
+    type="image/png"
   />,
   <link
+    href="/favicon-00913339321ee5a854812aea11f8a5d4.svg"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48-contentDigest.png"
+    href="/icons/icon-48x48-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72-contentDigest.png"
+    href="/icons/icon-72x72-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96-contentDigest.png"
+    href="/icons/icon-96x96-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144-contentDigest.png"
+    href="/icons/icon-144x144-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192-contentDigest.png"
+    href="/icons/icon-192x192-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256-contentDigest.png"
+    href="/icons/icon-256x256-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384-contentDigest.png"
+    href="/icons/icon-384x384-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512-contentDigest.png"
+    href="/icons/icon-512x512-00913339321ee5a854812aea11f8a5d4.png"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -85,50 +93,57 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to query 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
+    type="image/png"
   />,
   <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/icons/icon-48x48.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png?v=contentDigest"
+    href="/icons/icon-72x72.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png?v=contentDigest"
+    href="/icons/icon-96x96.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png?v=contentDigest"
+    href="/icons/icon-144x144.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png?v=contentDigest"
+    href="/icons/icon-192x192.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png?v=contentDigest"
+    href="/icons/icon-256x256.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png?v=contentDigest"
+    href="/icons/icon-384x384.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png?v=contentDigest"
+    href="/icons/icon-512x512.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -138,50 +153,57 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting Does query cache busting if "cache_busting_mode" option is set to undefined 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
+    type="image/png"
   />,
   <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/icons/icon-48x48.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png?v=contentDigest"
+    href="/icons/icon-72x72.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png?v=contentDigest"
+    href="/icons/icon-96x96.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png?v=contentDigest"
+    href="/icons/icon-144x144.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png?v=contentDigest"
+    href="/icons/icon-192x192.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png?v=contentDigest"
+    href="/icons/icon-256x256.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png?v=contentDigest"
+    href="/icons/icon-384x384.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png?v=contentDigest"
+    href="/icons/icon-512x512.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -191,10 +213,17 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting if "cache_busting_mode" option is set to none 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/favicon-32x32.png"
     rel="icon"
+    type="image/png"
   />,
   <link
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -244,6 +273,7 @@ Array [
 exports[`gatsby-plugin-manifest Cache Busting doesn't add cache busting in manual mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -263,10 +293,17 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Adds link favicon tag if "include_favicon" is set to true 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png"
+    href="/favicon-32x32.png"
     rel="icon"
+    type="image/png"
   />,
   <link
+    href="/favicon.svg"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -276,6 +313,7 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Does not add a link favicon if "include_favicon" option is set to false 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -285,6 +323,7 @@ Array [
 exports[`gatsby-plugin-manifest Favicon Does not add a link favicon if in manual mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -294,6 +333,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does create legacy links if "legacy" not specified in automatic mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -343,6 +383,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does create legacy links if "legacy" not specified in hybrid mode. 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -362,6 +403,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does create legacy links if "legacy" not specified in manual mode. 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -381,6 +423,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does not create legacy links If "legacy" options is false and in automatic 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -390,6 +433,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does not create legacy links If "legacy" options is false and in hybrid mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -399,6 +443,7 @@ Array [
 exports[`gatsby-plugin-manifest Legacy Icons Does not create legacy links If "legacy" options is false and in manual mode 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -412,6 +457,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Add a "theme color" meta tag if "theme_color_in_head" is set to true 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -425,10 +471,17 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds "icon" and "manifest" links and "theme_color" meta tag to head 1`] = `
 Array [
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/favicon-32x32.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="icon"
+    type="image/png"
   />,
   <link
+    href="/favicon.svg?v=00913339321ee5a854812aea11f8a5d4"
+    rel="icon"
+    type="image/svg+xml"
+  />,
+  <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -437,42 +490,42 @@ Array [
     name="theme-color"
   />,
   <link
-    href="/icons/icon-48x48.png?v=contentDigest"
+    href="/icons/icon-48x48.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="48x48"
   />,
   <link
-    href="/icons/icon-72x72.png?v=contentDigest"
+    href="/icons/icon-72x72.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="72x72"
   />,
   <link
-    href="/icons/icon-96x96.png?v=contentDigest"
+    href="/icons/icon-96x96.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="96x96"
   />,
   <link
-    href="/icons/icon-144x144.png?v=contentDigest"
+    href="/icons/icon-144x144.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="144x144"
   />,
   <link
-    href="/icons/icon-192x192.png?v=contentDigest"
+    href="/icons/icon-192x192.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="192x192"
   />,
   <link
-    href="/icons/icon-256x256.png?v=contentDigest"
+    href="/icons/icon-256x256.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="256x256"
   />,
   <link
-    href="/icons/icon-384x384.png?v=contentDigest"
+    href="/icons/icon-384x384.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="384x384"
   />,
   <link
-    href="/icons/icon-512x512.png?v=contentDigest"
+    href="/icons/icon-512x512.png?v=00913339321ee5a854812aea11f8a5d4"
     rel="apple-touch-icon"
     sizes="512x512"
   />,
@@ -482,6 +535,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds a "theme color" meta tag to head if "theme_color_in_head" is not provided 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -495,6 +549,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds correct (default) i18n "manifest" link to head 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -544,6 +599,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Adds correct (es) i18n "manifest" link to head 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest_es.webmanifest"
     rel="manifest"
   />,
@@ -593,6 +649,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Does not add a "theme color" meta tag if "theme_color_in_head" is set to false 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,
@@ -602,6 +659,7 @@ Array [
 exports[`gatsby-plugin-manifest Manifest Link Generation Does not add a "theme_color" meta tag to head if "theme_color" option is not provided. 1`] = `
 Array [
   <link
+    crossOrigin="anonymous"
     href="/manifest.webmanifest"
     rel="manifest"
   />,

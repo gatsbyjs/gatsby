@@ -45,7 +45,8 @@ function prepareDescriptionNode(node, markdownStr, name, helpers) {
 exports.sourceNodes = ({ actions }) => {
   const { createTypes } = actions
   const typeDefs = /* GraphQL */ `
-    type DocumentationJs implements Node {
+    type DocumentationJs implements Node
+      @childOf(types: ["File", "DocumentationJs"], many: true) {
       name: String
       kind: String
       memberof: String
@@ -82,6 +83,11 @@ exports.sourceNodes = ({ actions }) => {
       members: DocumentationJsMembers
       codeLocation: DocumenationJSLocationRange
       docsLocation: DocumenationJSLocationRange
+    }
+
+    type DocumentationJSComponentDescription implements Node
+      @mimeTypes(types: ["text/markdown"]) {
+      id: ID! # empty type
     }
 
     type DocumentationJSLocation {
@@ -179,24 +185,28 @@ exports.createResolvers = ({ createResolvers }) => {
   })
 }
 
+function unstable_shouldOnCreateNode({ node }) {
+  return (
+    node.internal.type === `File` &&
+    (node.internal.mediaType === `application/javascript` ||
+      node.extension === `tsx` ||
+      node.extension === `ts`)
+  )
+}
+
+exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
 /**
  * Implement the onCreateNode API to create documentation.js nodes
  * @param {Object} super this is a super param
  */
 exports.onCreateNode = async ({ node, actions, ...helpers }) => {
-  const { createNodeId, createContentDigest } = helpers
-  const { createNode, createParentChildLink } = actions
-
-  if (
-    node.internal.type !== `File` ||
-    !(
-      node.internal.mediaType === `application/javascript` ||
-      node.extension === `tsx` ||
-      node.extension === `ts`
-    )
-  ) {
+  if (!unstable_shouldOnCreateNode({ node })) {
     return null
   }
+
+  const { createNodeId, createContentDigest } = helpers
+  const { createNode, createParentChildLink } = actions
 
   let documentationJson
   try {
@@ -212,7 +222,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
     const handledDocs = new WeakMap()
     const typeDefs = new Map()
 
-    const getNodeIDForType = typeName => {
+    const getNodeIDForType = (typeName, parent) => {
       if (typeDefs.has(typeName)) {
         return typeDefs.get(typeName)
       }
@@ -220,10 +230,17 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const index = documentationJson.findIndex(
         docsJson =>
           docsJson.name === typeName &&
-          [`typedef`, `constant`].includes(docsJson.kind)
+          [`interface`, `typedef`, `constant`].includes(docsJson.kind)
       )
 
-      if (index !== -1) {
+      const isCycle = parent === documentationJson[index]
+      if (isCycle) {
+        helpers.reporter.warn(
+          `Unexpected cycle detected creating DocumentationJS nodes for file:\n\n\t${node.absolutePath}\n\nFor type: ${typeName}`
+        )
+      }
+
+      if (index !== -1 && !isCycle) {
         return prepareNodeForDocs(documentationJson[index], {
           commentNumber: index,
         }).node.id
@@ -232,21 +249,21 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       return null
     }
 
-    const tryToAddTypeDef = type => {
+    const tryToAddTypeDef = (type, parent) => {
       if (type.applications) {
-        type.applications.forEach(tryToAddTypeDef)
+        type.applications.forEach(t => tryToAddTypeDef(t, parent))
       }
 
       if (type.expression) {
-        tryToAddTypeDef(type.expression)
+        tryToAddTypeDef(type.expression, parent)
       }
 
       if (type.elements) {
-        type.elements.forEach(tryToAddTypeDef)
+        type.elements.forEach(t => tryToAddTypeDef(t, parent))
       }
 
       if (type.type === `NameExpression` && type.name) {
-        type.typeDef___NODE = getNodeIDForType(type.name)
+        type.typeDef___NODE = getNodeIDForType(type.name, parent)
       }
     }
 
@@ -274,7 +291,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
       const docSkeletonNode = {
         commentNumber,
         level,
-        id: createNodeId(docId(node.id, docsJson)),
+        id: createNodeId(docId(parent, docsJson)),
         parent,
         children: [],
         internal: {
@@ -328,7 +345,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
           picked.type = picked.type.expression
         }
 
-        tryToAddTypeDef(picked.type)
+        tryToAddTypeDef(picked.type, docsJson)
       }
 
       const mdFields = [`description`, `deprecated`]
@@ -366,10 +383,7 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
               // When documenting destructured parameters, the name
               // is parent.child where we just want the child.
               if (docObj.name && docObj.name.split(`.`).length > 1) {
-                docObj.name = docObj.name
-                  .split(`.`)
-                  .slice(-1)
-                  .join(`.`)
+                docObj.name = docObj.name.split(`.`).slice(-1).join(`.`)
               }
 
               const adjustedObj = {
@@ -421,8 +435,12 @@ exports.onCreateNode = async ({ node, actions, ...helpers }) => {
 
       if (docsJson.examples) {
         picked.examples = docsJson.examples.map(example => {
+          // Extract value from <caption/> element
+          const caption =
+            example?.caption?.children[0]?.children[0].value || null
           return {
             ...example,
+            caption,
             raw: example.description,
             highlighted: Prism.highlight(
               example.description,

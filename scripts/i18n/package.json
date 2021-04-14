@@ -4,6 +4,8 @@
   "description": "Scripts for gatsby internationalization",
   "scripts": {
     "create": "node ./create.js",
+    "run-all": "node ./run-all.js",
+    "sync": "node ./sync.js",
     "update-source": "node ./update-source.js"
   },
   "author": "Nat Alison",
@@ -14,6 +16,7 @@
     "dotenv": "^8.2.0",
     "js-yaml": "^3.13.1",
     "log4js": "^5.2.2",
+    "node-fetch": "^2.6.0",
     "shelljs": "^0.8.3"
   }
 }

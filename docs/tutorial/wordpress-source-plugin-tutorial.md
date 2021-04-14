@@ -4,6 +4,12 @@ title: "WordPress Source Plugin Tutorial"
 
 ## How to create a site with data pulled from WordPress
 
+<mark>Warning:</mark>
+
+The version of `gatsby-source-wordpress` that this tutorial uses will soon be deprecated and replaced with a complete rewrite in the next major version (v4). The reason for this is that we've adopted the use of WPGraphQL to support Preview and incremental builds as well as to make the schema generally more stable and consistent.
+
+Please follow the tutorial on [creating a new site with `gatsby-source-wordpress`](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/tutorials/building-a-new-site-wordpress-and-gatsby.md) instead, as that package is a beta of the next major version of `gatsby-source-wordpress`.
+
 ### What this tutorial covers:
 
 In this tutorial, you will install the `gatsby-source-wordpress` plugin in order to pull blog and image data from a WordPress install into your Gatsby site and render that data. This [Gatsby + WordPress demo site](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress) shows you the source code for an example site similar to what you’re going to be building in this tutorial, although it’s missing the cool images you’ll be adding in the next part of this tutorial, [Adding Images to a WordPress Site](/tutorial/wordpress-image-tutorial/). :D
@@ -12,7 +18,7 @@ In this tutorial, you will install the `gatsby-source-wordpress` plugin in order
 
 If you prefer using GraphQL, there's a [wp-graphql](https://github.com/wp-graphql/wp-graphql) plugin to easily expose both default and custom data in WordPress.
 
-The same authentication schemes supported by the WP-API are supported in wp-graphql, which can be used with the [gatsby-source-graphql](/packages/gatsby-source-graphql/) plugin.
+The same authentication schemes supported by the WP-API are supported in wp-graphql, which can be used with the [gatsby-source-graphql](/plugins/gatsby-source-graphql/) plugin.
 
 ## Why go through this tutorial?
 
@@ -29,7 +35,7 @@ Create a new Gatsby project and change directories into the new project you just
 cd wordpress-tutorial-site
 ```
 
-Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/packages/gatsby-source-wordpress/?=wordpress).
+Install the `gatsby-source-wordpress` plugin. For extra reading on the plugin’s features and examples of GraphQL queries not included in this tutorial, see the [`gatsby-source-wordpress` plugin’s README file](/plugins/gatsby-source-wordpress/?=wordpress).
 
 ```shell
 npm install gatsby-source-wordpress
@@ -158,7 +164,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   //highlight-line
   return (
     <Layout>
@@ -209,9 +215,9 @@ To do this, you need to:
 1. Create pages for each blog post
 2. Link up the title on the index page with the post page.
 
-If you haven't already, please read through [Part 7](/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
+If you haven't already, please read through [Part 7](/docs/tutorial/part-seven/) of the foundational tutorial, as it goes through the concept and examples of this process with Markdown instead of WordPress.
 
-### Creating pages for each blog post.
+### Creating pages for each blog post
 
 In Part 7 of the tutorial, the first step in creating pages is creating slugs for the markdown files. Since you are using WordPress and not Markdown files, you can grab the slugs that get returned from your API call to the WordPress source. You can skip creating slugs, since you already have them.
 
@@ -241,7 +247,7 @@ exports.createPages = ({ graphql, actions }) => {
 }
 ```
 
-Next, [stop and restart](https://www.gatsbyjs.org/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
+Next, [stop and restart](/docs/tutorial/part-zero/#view-your-site-locally) the `gatsby develop` environment. As you watch the terminal you should see two Post objects log to the terminal:
 
 ![Two posts logged to the terminal](./images/wordpress-source-plugin-log.jpg)
 
@@ -256,7 +262,7 @@ import React from "react"
 import Layout from "../components/layout"
 import { graphql } from "gatsby"
 
-export default ({ data }) => {
+export default function BlogPost({ data }) {
   const post = data.allWordpressPost.edges[0].node
   console.log(post)
   return (
@@ -282,7 +288,7 @@ export const query = graphql`
 `
 ```
 
-What is this file doing? After importing your dependencies, it constructs the layout of the post with JSX. It wraps everything in the `Layout` component, so the style is the same throughout the site. Then, it simply adds the post title and the post content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
+What is this file doing? After importing your dependencies, it constructs the layout of the post with JSX. It wraps everything in the `Layout` component, so the style is the same throughout the site. Then, it adds the post title and the post content. You can add anything you want and can query for here (e.g. feature image, post meta, custom fields, etc.).
 
 Below that, you can see the GraphQL query calling the specific post based on the `$slug`. This variable is passed to the `blog-post.js` template when the page is created in `gatsby-node.js`. To accomplish this, add the following code to the `gatsby-node.js` file:
 
@@ -328,7 +334,7 @@ You will need to stop and start your environment again using `gatsby develop`. W
 
 But nobody likes to go to a 404 page to find a blog post! So, let's link these up from the home page.
 
-### Linking to posts from the homepage.
+### Linking to posts from the homepage
 
 Since you already have your structure and query done for the `index.js` page, all you need to do is use the `Link` component to wrap your titles and you should be good to go.
 
@@ -340,7 +346,7 @@ import { Link, graphql } from "gatsby" //highlight-line
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-export default ({ data }) => {
+export default function Home({ data }) {
   return (
     <Layout>
       <SEO title="home" />
@@ -379,6 +385,6 @@ And that's it! When you wrap the title in the `Link` component and reference the
 
 ![Final product with links from the home page to the blog posts](./images/wordpress-source-plugin-home-to-post-links.gif)
 
-### Wrapping up.
+### Wrapping up
 
 You can apply the same procedure to calling and creating pages, custom post types, custom fields, taxonomies, and all the fun and flexible content WordPress is known for. This can be as simple or as complex as you would like it to be, so explore and have fun with it!

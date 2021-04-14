@@ -7,7 +7,7 @@ import { graphql } from "gatsby"
  * @example
  * childImageSharp {
  *   fixed {
- *     ...GatsbyImageSharpFixed 
+ *     ...GatsbyImageSharpFixed
  *     # ^ identical to using the following fields:
  *     # base64
  *     # width
@@ -116,6 +116,17 @@ export const GatsbyImageSharpFluid = graphql`
 `
 
 /**
+ * Presentation sizes to make sure a fluid container does not overflow
+ * @type {Fragment}
+ */
+export const GatsbyImageSharpFluidLimitPresentationSize = graphql`
+  fragment GatsbyImageSharpFluidLimitPresentationSize on ImageSharpFluid {
+    maxHeight: presentationHeight
+    maxWidth: presentationWidth
+  }
+`
+
+/**
  * Traced SVG fluid images
  * @type {Fragment}
  */
@@ -145,7 +156,6 @@ export const GatsbyImageSharpFluid_withWebp = graphql`
   }
 `
 
-
 /**
  * Traced SVG fluid images that prefer Webp
  * @type {Fragment}
@@ -161,7 +171,6 @@ export const GatsbyImageSharpFluid_withWebp_tracedSVG = graphql`
     sizes
   }
 `
-
 
 /**
  * Traced SVG fluid images without the blurred base64 image
@@ -182,135 +191,6 @@ export const GatsbyImageSharpFluid_noBase64 = graphql`
  */
 export const GatsbyImageSharpFluid_withWebp_noBase64 = graphql`
   fragment GatsbyImageSharpFluid_withWebp_noBase64 on ImageSharpFluid {
-    aspectRatio
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-    sizes
-  }
-`
-
-// TODO: in v3 remove these legacy fragments
-export const GatsbyImageSharpResolutions = graphql`
-  fragment GatsbyImageSharpResolutions on ImageSharpResolutions {
-    base64
-    width
-    height
-    src
-    srcSet
-  }
-`
-
-export const GatsbyImageSharpResolutions_tracedSVG = graphql`
-  fragment GatsbyImageSharpResolutions_tracedSVG on ImageSharpResolutions {
-    tracedSVG
-    width
-    height
-    src
-    srcSet
-  }
-`
-
-export const GatsbyImageSharpResolutions_withWebp = graphql`
-  fragment GatsbyImageSharpResolutions_withWebp on ImageSharpResolutions {
-    base64
-    width
-    height
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-  }
-`
-
-export const GatsbyImageSharpResolutions_withWebp_tracedSVG = graphql`
-  fragment GatsbyImageSharpResolutions_withWebp_tracedSVG on ImageSharpResolutions {
-    tracedSVG
-    width
-    height
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-  }
-`
-
-export const GatsbyImageSharpResolutions_noBase64 = graphql`
-  fragment GatsbyImageSharpResolutions_noBase64 on ImageSharpResolutions {
-    width
-    height
-    src
-    srcSet
-  }
-`
-
-export const GatsbyImageSharpResolutions_withWebp_noBase64 = graphql`
-  fragment GatsbyImageSharpResolutions_withWebp_noBase64 on ImageSharpResolutions {
-    width
-    height
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-  }
-`
-
-export const GatsbyImageSharpSizes = graphql`
-  fragment GatsbyImageSharpSizes on ImageSharpSizes {
-    base64
-    aspectRatio
-    src
-    srcSet
-    sizes
-  }
-`
-
-export const GatsbyImageSharpSizes_tracedSVG = graphql`
-  fragment GatsbyImageSharpSizes_tracedSVG on ImageSharpSizes {
-    tracedSVG
-    aspectRatio
-    src
-    srcSet
-    sizes
-  }
-`
-
-export const GatsbyImageSharpSizes_withWebp = graphql`
-  fragment GatsbyImageSharpSizes_withWebp on ImageSharpSizes {
-    base64
-    aspectRatio
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-    sizes
-  }
-`
-
-export const GatsbyImageSharpSizes_withWebp_tracedSVG = graphql`
-  fragment GatsbyImageSharpSizes_withWebp_tracedSVG on ImageSharpSizes {
-    tracedSVG
-    aspectRatio
-    src
-    srcSet
-    srcWebp
-    srcSetWebp
-    sizes
-  }
-`
-
-export const GatsbyImageSharpSizes_noBase64 = graphql`
-  fragment GatsbyImageSharpSizes_noBase64 on ImageSharpSizes {
-    aspectRatio
-    src
-    srcSet
-    sizes
-  }
-`
-
-export const GatsbyImageSharpSizes_withWebp_noBase64 = graphql`
-  fragment GatsbyImageSharpSizes_withWebp_noBase64 on ImageSharpSizes {
     aspectRatio
     src
     srcSet

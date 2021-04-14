@@ -4,16 +4,24 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "cypress": "3.4.1",
-    "gatsby": "^2.0.118",
-    "gatsby-plugin-manifest": "^2.0.17",
-    "gatsby-plugin-offline": "^3.0.0",
-    "gatsby-plugin-react-helmet": "^3.0.6",
+    "babel-plugin-search-and-replace": "^1.1.0",
+    "cypress": "^6.5.0",
+    "gatsby": "^3.0.0-next.6",
+    "gatsby-plugin-image": "^1.0.0-next.5",
+    "gatsby-plugin-less": "^5.1.0-next.2",
+    "gatsby-plugin-manifest": "^3.0.0-next.0",
+    "gatsby-plugin-offline": "^4.0.0-next.1",
+    "gatsby-plugin-react-helmet": "^4.0.0-next.0",
+    "gatsby-plugin-sass": "^4.1.0-next.2",
+    "gatsby-plugin-sharp": "^3.0.0-next.5",
+    "gatsby-plugin-stylus": "^3.1.0-next.2",
     "gatsby-seo": "^0.1.0",
     "glob": "^7.1.3",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-helmet": "^5.2.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.0",
+    "sass": "^1.32.8",
+    "typeface-merriweather": "^1.1.13"
   },
   "keywords": [
     "gatsby"
@@ -35,14 +43,14 @@
     "cy:open:offline": "npm run cy:open -- --env TEST_PLUGIN_OFFLINE=y",
     "cy:run": "npm run cy:run:normal && npm run cy:run:slow",
     "cy:run:offline": "npm run cy:run:normal -- --env TEST_PLUGIN_OFFLINE=y && npm run cy:run:slow -- --env TEST_PLUGIN_OFFLINE=y",
-    "cy:run:normal": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome",
+    "cy:run:normal": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome",
     "cy:run:slow": "cross-env CYPRESS_CONNECTION_TYPE=slow cypress run --browser chrome --config testFiles=prefetching.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
     "fs-extra": "^7.0.1",
     "is-ci": "^2.0.0",
-    "prettier": "^1.14.3",
+    "prettier": "2.0.4",
     "start-server-and-test": "^1.7.1"
   },
   "repository": {

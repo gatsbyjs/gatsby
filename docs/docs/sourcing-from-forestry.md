@@ -12,7 +12,7 @@ All configurations can be done through your Forestry site dashboard, but they ca
 
 To complete this tutorial, you will need a Forestry account. You can sign-up at [Forestry.io](https://app.forestry.io/signup).
 
-_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.
 
 ## Setup
 
@@ -22,14 +22,14 @@ First, clone the Gatsby default starter repository.
 git clone https://github.com/gatsbyjs/gatsby-starter-default.git gatsby-forestry-example
 ```
 
-Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure Devops as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
+Next, on GitHub create a new repository. The repository must live on a Git provider for it to be available to Forestry CMS. I'm using GitHub, but you can also use GitLab, Bitbucket, or Azure DevOps as well. Set your cloned repository's remote url to point to your newly created repository on GitHub.
 
 ```shell
 git remote set-url origin <your-github-repo-link>
 git push -u origin master
 ```
 
-Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static html file for the Forestry CMS login page at the path: /admin.
+Now that your repository is on GitHub, follow the [Forestry.io get started guide](https://forestry.io/docs/quickstart/setup-site/) on Forestry.io to connect the repository to Forestry. You have to allow Forestry access to your GitHub account to make this work. A pop-up window will automatically open when you select your GitHub repo in the Forestry site setup. Once the site is connected, go to the site settings on the Forestry dashboard. In the Admin Path setting, enter "/static/admin" and click "Deploy Admin". This will create a static HTML file for the Forestry CMS login page at the path: /admin.
 
 Once Forestry is connected with your GitHub Gatsby site repository, pull Forestry's changes.
 
@@ -73,7 +73,7 @@ upload_dir: static/uploads
 public_path: "/static/uploads"
 ```
 
-This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/static-folder/) to learn more. The rest of the settings can remain the same.
+This sets where media is saved. Visit Gatsby's [guide on its static folder](/docs/how-to/images-and-media/static-folder/) to learn more. The rest of the settings can remain the same.
 
 Open `package.json` and add the following to scripts already available:
 
@@ -122,10 +122,9 @@ new_page_extension: md
 auto_deploy: false
 admin_path: /static/admin
 webhook_url:
-sections:
 upload_dir: static/uploads
 public_path: "/static/uploads"
-front_matter_path: ''
+front_matter_path: ""
 use_front_matter_path: false
 file_template: ":filename:"
 build:
@@ -136,13 +135,15 @@ build:
   working_dir: "/srv"
   instant_preview_command: npm run forestry:preview
 sections:
-- type: directory
-  path: src/content/posts
-  label: Posts
-  create: documents
-  match: "**/*"
-  templates:
-  - blog
+  - type: directory
+    path: src/content/posts
+    label: Posts
+    create: documents
+    match: "**/*"
+    templates:
+      - blog
+---
+
 ```
 
 Because Forestry's `admin.html` file is in the `/static` directory, this page will only be available once your Gatsby site is built. Run `gatsby build && gatsby serve`. Once the server is running, it will print the address to open for viewing. It's typically `http://localhost:8000`. Now navigate to `/admin` - so if your site is at `http://localhost:8000`, go to `http://localhost:8000/admin`
@@ -157,7 +158,7 @@ window pops up (check for blocked pop ups if you don't see it), and try creating
 new blog post. Once you've done that, you'll find a new `content/posts` directory in your GitHub repo
 containing a Markdown file with your blog post content!
 
-Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/mdx/writing-pages/).
+Now you can do whatever you want to with the CMS content. Here is the guide for creating pages from Markdown files in Gatsby: [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/). The docs also have a guide for doing this with MDX if you need to use JSX in your CMS content: [Writing Pages in MDX](/docs/how-to/routing/mdx/writing-pages/).
 
 Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses to locate markdown files.
 
@@ -165,4 +166,4 @@ Both these guides explain the `gatsby-source-filesystem` plugin that Gatsby uses
 
 For more examples and help, visit the [Forestry.io docs](https://forestry.io/docs/welcome/).
 
-_Note_: You can see the complete example at [https://github.com/cameron-yee/gatsby-forestry-example](https://github.com/cameron-yee/gatsby-forestry-example).
+_Note_: You can see the complete example at https://github.com/cameron-yee/gatsby-forestry-example.

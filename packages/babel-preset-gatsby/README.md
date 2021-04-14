@@ -15,12 +15,13 @@ For more information on how to customize the Babel configuration of your Gatsby 
 - [`babel-plugin-transform-react-remove-prop-types`](https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types)
 - [`@babel/plugin-proposal-nullish-coalescing-operator`](https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator)
 - [`@babel/plugin-proposal-optional-chaining`](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining)
+- [`babel-plugin-optimize-hook-destructuring`](src/optimize-hook-destructuring.ts)
 
 ## Usage
 
 Install `babel-preset-gatsby` and add a `.babelrc` file with the following content to the root of your project:
 
-```bash
+```shell
 npm install --dev babel-preset-gatsby
 ```
 

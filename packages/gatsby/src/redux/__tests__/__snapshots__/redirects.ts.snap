@@ -1,0 +1,339 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add redirects allows you to add redirects 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects create redirects as permanent 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world",
+    "ignoreCase": true,
+    "isPermanent": true,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects from the URL starts with // 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "//example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world-2",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects from the URL starts with ftp 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "ftp://example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world-3",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects from the URL starts with http 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "http://example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world-1",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects from the URL starts with https 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "https://example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world-0",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects from the URL starts with mailto 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "mailto:example@email.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/new/hello-world-4",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects to the URL starts with // 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world-2",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "//example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects to the URL starts with ftp 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world-3",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "ftp://example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects to the URL starts with http 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world-1",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "http://example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects to the URL starts with https 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world-0",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "https://example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects to the URL starts with mailto 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world-4",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "mailto:example@email.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects creates redirects with in-browser redirect option 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/old/hello-world",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/new/hello-world",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs allows you to add redirects 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs create redirects as permanent 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world",
+    "ignoreCase": true,
+    "isPermanent": true,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects from the URL starts with // 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "//example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world-2",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects from the URL starts with ftp 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "ftp://example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world-3",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects from the URL starts with http 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "http://example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world-1",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects from the URL starts with https 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "https://example.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world-0",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects from the URL starts with mailto 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "mailto:example@email.com",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "/blog/new/hello-world-4",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects to the URL starts with // 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world-2",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "//example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects to the URL starts with ftp 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world-3",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "ftp://example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects to the URL starts with http 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world-1",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "http://example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects to the URL starts with https 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world-0",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "https://example.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects to the URL starts with mailto 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world-4",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": false,
+    "toPath": "mailto:example@email.com",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;
+
+exports[`Add redirects with path prefixs creates redirects with in-browser redirect option 1`] = `
+Object {
+  "payload": Object {
+    "fromPath": "/blog/old/hello-world",
+    "ignoreCase": true,
+    "isPermanent": false,
+    "redirectInBrowser": true,
+    "toPath": "/blog/new/hello-world",
+  },
+  "type": "CREATE_REDIRECT",
+}
+`;

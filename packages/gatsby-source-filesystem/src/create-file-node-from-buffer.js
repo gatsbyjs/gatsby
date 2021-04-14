@@ -12,11 +12,6 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  ********************/
 
 /**
- * @typedef {Redux}
- * @see [Redux Docs]{@link https://redux.js.org/api-reference}
- */
-
-/**
  * @typedef {GatsbyCache}
  * @see gatsby/packages/gatsby/utils/cache.js
  */
@@ -28,13 +23,10 @@ const cacheId = hash => `create-file-node-from-buffer-${hash}`
  *
  * @param  {Buffer} options.buffer
  * @param  {String} options.hash
- * @param  {Redux} options.store
  * @param  {GatsbyCache} options.cache
+ * @param  {Function} options.getCache
  * @param  {Function} options.createNode
  */
-
-const CACHE_DIR = `.cache`
-const FS_PLUGIN_DIR = `gatsby-source-filesystem`
 
 /**
  * writeBuffer
@@ -62,7 +54,6 @@ const writeBuffer = (filename, buffer) =>
 async function processBufferNode({
   buffer,
   hash,
-  store,
   cache,
   createNode,
   parentNodeId,
@@ -70,13 +61,7 @@ async function processBufferNode({
   ext,
   name,
 }) {
-  // Ensure our cache directory exists.
-  const pluginCacheDir = path.join(
-    store.getState().program.directory,
-    CACHE_DIR,
-    FS_PLUGIN_DIR
-  )
-  await fs.ensureDir(pluginCacheDir)
+  const pluginCacheDir = cache.directory
 
   // See if there's a cache file for this buffer's contents from
   // a previous run
@@ -85,12 +70,12 @@ async function processBufferNode({
     // If the user did not provide an extension and we couldn't get
     // one from remote file, try and guess one
     if (typeof ext === `undefined`) {
-      const filetype = fileType(buffer)
+      const filetype = await fileType.fromBuffer(buffer)
       ext = filetype ? `.${filetype.ext}` : `.bin`
     }
 
-    await fs.ensureDir(path.join(pluginCacheDir, hash))
     filename = createFilePath(path.join(pluginCacheDir, hash), name, ext)
+    await fs.ensureDir(path.dirname(filename))
 
     // Cache the buffer contents
     await writeBuffer(filename, buffer)
@@ -135,9 +120,9 @@ const processingCache = {}
 module.exports = ({
   buffer,
   hash,
-  store,
   cache,
   createNode,
+  getCache,
   parentNodeId = null,
   createNodeId,
   ext,
@@ -154,11 +139,14 @@ module.exports = ({
   if (typeof createNode !== `function`) {
     throw new Error(`createNode must be a function, was ${typeof createNode}`)
   }
-  if (typeof store !== `object`) {
-    throw new Error(`store must be the redux store, was ${typeof store}`)
+  if (typeof getCache === `function`) {
+    // use cache of this plugin and not cache of function caller
+    cache = getCache(`gatsby-source-filesystem`)
   }
   if (typeof cache !== `object`) {
-    throw new Error(`cache must be the Gatsby cache, was ${typeof cache}`)
+    throw new Error(
+      `Neither "cache" or "getCache" was passed. getCache must be function that return Gatsby cache, "cache" must be the Gatsby cache, was ${typeof cache}`
+    )
   }
 
   if (!buffer) {
@@ -178,7 +166,6 @@ module.exports = ({
   const bufferCachePromise = processBufferNode({
     buffer,
     hash,
-    store,
     cache,
     createNode,
     parentNodeId,

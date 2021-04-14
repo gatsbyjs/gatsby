@@ -4,16 +4,16 @@ title: Creating Tags Pages for Blog Posts
 
 Creating tag pages for your blog post is a way to let visitors browse related content.
 
-To add tags to your blog posts, you will first want to have your site set up to turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](/tutorial/part-four/) and [Adding Markdown Pages](/docs/adding-markdown-pages/).
+To add tags to your blog posts, you will first want to have your site set up to turn your markdown pages into blog posts. To get your blog pages set up, see the [tutorial on Gatsby's data layer](/docs/tutorial/part-four/) and [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/).
 
 The process will essentially look like this:
 
-1.  Add tags to your `markdown` files
-2.  Write a query to get all tags for your posts
-3.  Make a tags page template (for `/tags/{tag}`)
-4.  Modify `gatsby-node.js` to render pages using that template
-5.  Make a tags index page (`/tags`) that renders a list of all tags
-6.  _(optional)_ Render tags inline with your blog posts
+1. Add tags to your `markdown` files
+2. Write a query to get all tags for your posts
+3. Make a tags page template (for `/tags/{tag}`)
+4. Modify `gatsby-node.js` to render pages using that template
+5. Make a tags index page (`/tags`) that renders a list of all tags
+6. _(optional)_ Render tags inline with your blog posts
 
 ## Add tags to your `markdown` files
 
@@ -61,7 +61,7 @@ The above query groups posts by `tags`, and returns each `tag` with the number o
 
 ## Make a tags page template (for `/tags/{tag}`)
 
-If you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in your posts.
+If you followed the How-To Guide for [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/), then this process should sound familiar: Make a tag page template, then use it in `createPages` in `gatsby-node.js` to generate individual pages for the tags in your posts.
 
 First, you'll add a tags template at `src/templates/tags.js`:
 
@@ -154,7 +154,7 @@ export const pageQuery = graphql`
 
 ## Modify `gatsby-node.js` to render pages using that template
 
-Now you've got a template. Great! Assuming you followed the tutorial for [Adding Markdown Pages](/docs/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/node-apis/#createPages) looks something like this:
+Now you've got a template. Great! Assuming you followed the How-To Guide for [Adding Markdown Pages](/docs/how-to/routing/adding-markdown-pages/) and provide a sample `createPages` that generates post pages as well as tag pages. In the site's `gatsby-node.js` file, include `lodash` (`const _ = require('lodash')`) and then make sure your [`createPages`](/docs/reference/config-files/gatsby-node/#createPages) looks something like this:
 
 ```js:title=gatsby-node.js
 const path = require("path")
@@ -231,7 +231,7 @@ Some notes:
 
 ## Make a tags index page (`/tags`) that renders a list of all tags
 
-Your `/tags` page will simply list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
+Your `/tags` page will list out all tags, followed by the number of posts with that tag. You can get the data with the first query you wrote earlier, that groups posts by tags:
 
 ```jsx:title=src/pages/tags.js
 import React from "react"
@@ -308,4 +308,4 @@ export const pageQuery = graphql`
 
 ## _(optional)_ Render tags inline with your blog posts
 
-The home stretch! Anywhere else you'd like to render your tags, simply add them to the `frontmatter` section of your `graphql` query and access them in your component like any other prop.
+The home stretch! Anywhere else you'd like to render your tags, add them to the `frontmatter` section of your `graphql` query and access them in your component like any other prop.

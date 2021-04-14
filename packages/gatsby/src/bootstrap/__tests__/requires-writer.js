@@ -1,11 +1,11 @@
 const { joinPath } = require(`gatsby-core-utils`)
 const requiresWriter = require(`../requires-writer`)
-const { match } = require(`@reach/router/lib/utils`)
+const { match } = require(`@gatsbyjs/reach-router/lib/utils`)
 
 const now = Date.now()
 
 const generatePagesState = pages => {
-  let state = new Map()
+  const state = new Map()
   pages.forEach(page => {
     state.set(page.path, {
       component: ``,
@@ -20,6 +20,7 @@ const generatePagesState = pages => {
 jest.mock(`fs-extra`, () => {
   return {
     writeFile: () => Promise.resolve(),
+    outputFileSync: () => {},
     move: () => {},
   }
 })
@@ -30,7 +31,7 @@ describe(`requires-writer`, () => {
   const program = {
     directory: `/dir`,
   }
-  let originalDateNow = global.Date.now
+  const originalDateNow = global.Date.now
 
   beforeEach(() => {
     global.Date.now = () => now
@@ -293,7 +294,7 @@ describe(`requires-writer`, () => {
         expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2"`)
       })
 
-      it(`will find path with dynamic paramter before path with wildcard`, async () => {
+      it(`will find path with dynamic parameter before path with wildcard`, async () => {
         const { allMatchingPages, selectedPage } = await testScenario(
           `/mp1/test`
         )
@@ -324,6 +325,31 @@ describe(`requires-writer`, () => {
 
         expect(selectedPage).toMatchInlineSnapshot(`"/mp1/mp2/*"`)
       })
+    })
+  })
+
+  describe(`getComponents`, () => {
+    it(`should return components in a deterministic order`, () => {
+      const pagesInput = generatePagesState([
+        {
+          component: `component1`,
+          componentChunkName: `chunkName1`,
+          matchPath: `matchPath1`,
+          path: `/path1`,
+        },
+        {
+          component: `component2`,
+          componentChunkName: `chunkName2`,
+          path: `/path2`,
+        },
+      ])
+
+      const pages = [...pagesInput.values()]
+      const pagesReversed = [...pagesInput.values()].reverse()
+
+      expect(requiresWriter.getComponents(pages)).toEqual(
+        requiresWriter.getComponents(pagesReversed)
+      )
     })
   })
 })

@@ -8,7 +8,10 @@ const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
 const { getDependantPackages } = require(`./utils/get-dependant-packages`)
-const { promisifiedSpawn } = require(`./utils/promisified-spawn`)
+const {
+  setDefaultSpawnStdio,
+  promisifiedSpawn,
+} = require(`./utils/promisified-spawn`)
 const { traversePackagesDeps } = require(`./utils/traverse-package-deps`)
 
 let numCopied = 0
@@ -29,6 +32,7 @@ async function watch(
   packages,
   { scanOnce, quiet, forceInstall, monoRepoPackages, localPackages }
 ) {
+  setDefaultSpawnStdio(quiet ? `ignore` : `inherit`)
   // determine if in yarn workspace - if in workspace, force using verdaccio
   // as current logic of copying files will not work correctly.
   const yarnWorkspaceRoot = findWorkspaceRoot()
@@ -62,7 +66,11 @@ async function watch(
       // This fixes the issue where after running gatsby-dev, running `yarn gatsby develop`
       // fails with a permission issue.
       // @fixes https://github.com/gatsbyjs/gatsby/issues/18809
-      if (/bin\/gatsby.js$/.test(newPath)) {
+      // Binary files we target:
+      // - gatsby/bin/gatsby.js
+      //  -gatsby/cli.js
+      //  -gatsby-cli/cli.js
+      if (/(bin\/gatsby.js|gatsby(-cli)?\/cli.js)$/.test(newPath)) {
         fs.chmodSync(newPath, `0755`)
       }
 
@@ -121,7 +129,7 @@ async function watch(
     ? _.intersection(packages, seenPackages)
     : seenPackages
 
-  let ignoredPackageJSON = new Map()
+  const ignoredPackageJSON = new Map()
   const ignorePackageJSONChanges = (packageName, contentArray) => {
     ignoredPackageJSON.set(packageName, contentArray)
 
@@ -132,13 +140,22 @@ async function watch(
 
   if (forceInstall) {
     try {
-      await publishPackagesLocallyAndInstall({
-        packagesToPublish: allPackagesToWatch,
-        root,
-        localPackages,
-        ignorePackageJSONChanges,
-        yarnWorkspaceRoot,
-      })
+      if (allPackagesToWatch.length > 0) {
+        await publishPackagesLocallyAndInstall({
+          packagesToPublish: allPackagesToWatch,
+          root,
+          localPackages,
+          ignorePackageJSONChanges,
+          yarnWorkspaceRoot,
+        })
+      } else {
+        // run `yarn`
+        const yarnInstallCmd = [`yarn`]
+
+        console.log(`Installing packages from public NPM registry`)
+        await promisifiedSpawn(yarnInstallCmd)
+        console.log(`Installation complete`)
+      }
     } catch (e) {
       console.log(e)
     }
@@ -151,6 +168,10 @@ async function watch(
     return
   }
 
+  const allPackagesIgnoringThemesToWatch = allPackagesToWatch.filter(
+    pkgName => !pkgName.startsWith(`gatsby-theme`)
+  )
+
   const ignored = [
     /[/\\]node_modules[/\\]/i,
     /\.git/i,
@@ -159,7 +180,9 @@ async function watch(
     /[/\\]__mocks__[/\\]/i,
     /\.npmrc/i,
   ].concat(
-    allPackagesToWatch.map(p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`))
+    allPackagesIgnoringThemesToWatch.map(
+      p => new RegExp(`${p}[\\/\\\\]src[\\/\\\\]`, `i`)
+    )
   )
   const watchers = _.uniq(
     allPackagesToWatch
@@ -170,6 +193,7 @@ async function watch(
   let allCopies = []
   const packagesToPublish = new Set()
   let isInitialScan = true
+  let isPublishing = false
 
   const waitFor = new Set()
   let anyPackageNotInstalled = false
@@ -205,6 +229,12 @@ async function watch(
       )
 
       if (relativePackageFile === `package.json`) {
+        // package.json files will change during publish to adjust version of package (and dependencies), so ignore
+        // changes during this process
+        if (isPublishing) {
+          return
+        }
+
         // Compare dependencies with local version
 
         const didDepsChangedPromise = checkDepsChanges({
@@ -265,7 +295,7 @@ async function watch(
         return
       }
 
-      let localCopies = [copyPath(filePath, newPath, quiet, packageName)]
+      const localCopies = [copyPath(filePath, newPath, quiet, packageName)]
 
       // If this is from "cache-dir" also copy it into the site's .cache
       if (_.includes(filePath, `cache-dir`)) {
@@ -286,6 +316,7 @@ async function watch(
       if (isInitialScan) {
         isInitialScan = false
         if (packagesToPublish.size > 0) {
+          isPublishing = true
           await publishPackagesLocallyAndInstall({
             packagesToPublish: Array.from(packagesToPublish),
             root,
@@ -293,6 +324,7 @@ async function watch(
             ignorePackageJSONChanges,
           })
           packagesToPublish.clear()
+          isPublishing = false
         } else if (anyPackageNotInstalled) {
           // run `yarn`
           const yarnInstallCmd = [`yarn`]

@@ -1,0 +1,40 @@
+* {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+header {
+  background: #a4e1cd;
+  margin-bottom: 1.45rem;
+  color: black;
+}
+
+h3 {
+  margin: 0;
+}
+
+nav {
+  margin-top: "20px";
+  color: "white";
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li {
+  display: inline-block;
+  padding: 10px;
+}
+
+nav ul li a {
+  font-weight: 800;
+}
+
+nav ul li a:visited {
+  color: black;
+}
+
+nav ul li a:focus {
+  outline: 2px solid #39806a;
+}

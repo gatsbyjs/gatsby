@@ -6,9 +6,7 @@ beforeEach(() => {
 
 describe(`hot-reloading static queries`, () => {
   it(`displays placeholder content on launch`, () => {
-    cy.getTestElement(`hot`)
-      .invoke(`text`)
-      .should(`not.contain`, author)
+    cy.getTestElement(`hot`).invoke(`text`).should(`not.contain`, author)
   })
 
   it(`can update a StaticQuery element`, () => {
@@ -16,9 +14,7 @@ describe(`hot-reloading static queries`, () => {
       `npm run update -- --file src/components/static-query/hot.js --replacements "# %AUTHOR%:author" --exact`
     )
 
-    cy.getTestElement(`hot`)
-      .invoke(`text`)
-      .should(`contain`, author)
+    cy.getTestElement(`hot`).invoke(`text`).should(`contain`, author)
   })
 
   describe(`useStaticQuery`, () => {
@@ -32,6 +28,8 @@ describe(`hot-reloading static queries`, () => {
       cy.exec(
         `npm run update -- --file src/components/static-query/use-static-query/hot.js --replacements "# %AUTHOR%:author" --exact`
       )
+
+      cy.waitForHmr()
 
       cy.getTestElement(`use-static-query-hot`)
         .invoke(`text`)

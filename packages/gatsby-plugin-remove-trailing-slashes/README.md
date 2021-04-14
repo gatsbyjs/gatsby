@@ -24,7 +24,7 @@ For example, if the current route is `/about`, the component `<Link to="/about/"
 This can be negated through the use of their Pretty URL feature, which rewrites URLs to pretty URLs.
 
 Please see the Netlify docs for more information:
-[https://www.netlify.com/docs/redirects/#trailing-slash](https://www.netlify.com/docs/redirects/#trailing-slash)
+[https://docs.netlify.com/routing/redirects/redirect-options/#trailing-slash](https://docs.netlify.com/routing/redirects/redirect-options/#trailing-slash)
 
 ## Usage
 

@@ -2,19 +2,13 @@
 title: How Queries Work
 ---
 
-> This documentation isn't up to date with the latest version of Gatsby.
->
-> Outdated areas are:
->
-> - _links to source files_ need to be updated
->
-> You can help by making a PR to [update this documentation](https://github.com/gatsbyjs/gatsby/issues/14228).
+In Gatsby, GraphQL queries are specified as tagged `graphql` expressions. These can be exported in your page source files, used in the `StaticQuery` component, or used in the `useStaticQuery` hook in your React code. Plugins can also define fragments for use in queries.
 
-As part of Gatsby's data layer, GraphQL queries can be specified as tagged graphql expressions at the bottom of your component source file (e.g. [query for Gatsby frontpage](https://github.com/gatsbyjs/gatsby/blob/master/www/src/pages/index.js#L165)), StaticQueries within your components (e.g. [showcase site details](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/showcase-details.js#L103)), or fragments created by plugins (e.g. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-contentful/src/fragments.js)).
+Note that the process outlined in this section only applies to queries that are specified in components or templates. It does _not_ apply to queries specified in a `gatsby-node.js` file which are typically used for the creation of dynamic pages. (For an example of a query in a `gatsby-node.js` file, check out the [Creating Pages](/docs/tutorial/part-seven/#creating-pages) section from Part 7 of the Gatsby tutorial.
 
-Note that this process only applies to queries that are specified directly in components or templates. It doesn't apply to queries involved in the creation of dynamic pages through your site's `gatsby-node.js` file (e.g. on [Gatsby's website](https://github.com/gatsbyjs/gatsby/blob/master/www/gatsby-node.js#L165)).
+Most code to do with queries is in the [src/query](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/query) directory in the Gatsby monorepo.
 
-Almost all logic to do with queries is in the internal-plugin [query-runner](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby/src/internal-plugins/query-runner). There are two steps involved in a Query's life time. The first is extracting it, and the second is running it. These are separated into two bootstrap phases.
+There are two steps involved in the lifetime of a GraphQL query in Gatsby. The first is extracting and validating it, and the second is running it.
 
 1. [Query Extraction](/docs/query-extraction/)
 2. [Query Execution](/docs/query-execution/)

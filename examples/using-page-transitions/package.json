@@ -4,13 +4,13 @@
   "version": "1.0.0",
   "author": "Steven Surgnier <stevensurgnier@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-plugin-layout": "^1.0.0",
-    "gatsby-plugin-react-helmet": "^3.0.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-helmet": "^5.2.0",
-    "react-transition-group": "^2.4.0"
+    "gatsby": "next",
+    "gatsby-plugin-layout": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1",
+    "react-transition-group": "^2.9.0"
   },
   "keywords": [
     "gatsby"

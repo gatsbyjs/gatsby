@@ -25,7 +25,7 @@ describe(`babel-plugin-pluck-imports`, () => {
 
     expect(result.code).toEqual(`export default (({
   children
-}) => React.createElement("div", null, children));
+}) => /*#__PURE__*/React.createElement("div", null, children));
 export const pageQuery = graphql\`
   query MDXWhatever {
     name

@@ -1,0 +1,201 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Babelrc actions/reducer adds stage option to babel-preset-gatsby defined with userland babelrc 1`] = `
+Array [
+  Array [
+    Array [
+      "/path/to/module/babel-preset-gatsby",
+      Object {
+        "stage": "develop",
+      },
+    ],
+    Object {
+      "type": "preset",
+    },
+  ],
+]
+`;
+
+exports[`Babelrc actions/reducer allows adding a new plugin 1`] = `
+Object {
+  "stages": Object {
+    "build-html": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+    "build-javascript": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+    "develop": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+    "develop-html": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [
+        Object {
+          "name": "test-babel-plugin",
+          "options": Object {},
+        },
+      ],
+      "presets": Array [],
+    },
+  },
+}
+`;
+
+exports[`Babelrc actions/reducer allows adding a new preset 1`] = `
+Object {
+  "stages": Object {
+    "build-html": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+    "build-javascript": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+    "develop": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+    "develop-html": Object {
+      "options": Object {
+        "cacheDirectory": true,
+        "sourceType": "unambiguous",
+      },
+      "plugins": Array [],
+      "presets": Array [
+        Object {
+          "name": "test-babel-preset",
+          "options": Object {},
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`Babelrc actions/reducer allows merging config items 1`] = `
+Array [
+  Array [
+    Array [
+      "hi",
+      Object {
+        "wat": 2,
+      },
+    ],
+    Object {
+      "type": "plugin",
+    },
+  ],
+]
+`;
+
+exports[`Babelrc actions/reducer allows merging config items 2`] = `
+Array [
+  Object {
+    "file": Object {
+      "resolved": "hi",
+    },
+    "options": Object {
+      "wat": 1,
+    },
+  },
+  Object {
+    "file": Object {
+      "resolved": "hi2",
+    },
+    "options": Object {
+      "wat": 2,
+    },
+  },
+]
+`;
+
+exports[`Babelrc actions/reducer sets default presets/plugins if there's no userland babelrc 1`] = `
+Array [
+  Array [
+    Array [
+      "/path/to/module/babel-plugin-remove-graphql-queries",
+      Object {
+        "stage": "test",
+        "staticQueryDir": "page-data/sq/d",
+      },
+    ],
+    Object {
+      "type": "plugin",
+    },
+  ],
+  Array [
+    Array [
+      "/path/to/module/babel-preset-gatsby",
+      Object {
+        "reactRuntime": undefined,
+        "stage": "test",
+      },
+    ],
+    Object {
+      "type": "preset",
+    },
+  ],
+]
+`;

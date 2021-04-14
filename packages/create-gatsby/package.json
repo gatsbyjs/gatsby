@@ -1,0 +1,47 @@
+{
+  "name": "create-gatsby",
+  "version": "1.4.0-next.0",
+  "main": "lib/index.js",
+  "bin": "cli.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "microbundle -i src/index.ts --no-pkg-main --target=node -f=cjs --sourcemap=false --compress --alias worker_threads=@ascorbic/worker-threads-shim",
+    "watch": "microbundle -i src/index.ts --no-pkg-main --target=node -f=cjs --alias worker_threads=@ascorbic/worker-threads-shim --watch ",
+    "prepare": "yarn build",
+    "import-plugin-options": "node ./scripts/import-options-schema.js"
+  },
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/create-gatsby#readme",
+  "files": [
+    "lib/index.js",
+    "cli.js"
+  ],
+  "devDependencies": {
+    "@ascorbic/worker-threads-shim": "^1.0.0",
+    "@babel/runtime": "^7.12.5",
+    "@types/configstore": "^4.0.0",
+    "@types/fs-extra": "^9.0.2",
+    "@types/node": "^14.14.5",
+    "ansi-wordwrap": "^1.0.2",
+    "common-tags": "^1.8.0",
+    "enquirer": "^2.3.6",
+    "eslint": "^7.18.0",
+    "execa": "^4.1.0",
+    "fs-extra": "^9.0.1",
+    "gatsby-plugin-utils": "^1.4.0-next.0",
+    "joi": "^17.2.1",
+    "microbundle": "^0.13.0",
+    "node-fetch": "^2.6.1",
+    "prettier": "^2.1.2",
+    "string-length": "^4.0.1",
+    "terminal-link": "^2.1.1",
+    "tiny-spin": "^1.0.2",
+    "typescript": "^4.1.5",
+    "uuid": "3.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/create-gatsby"
+  },
+  "author": "Matt Kane <matt@gatsbyjs.com>"
+}

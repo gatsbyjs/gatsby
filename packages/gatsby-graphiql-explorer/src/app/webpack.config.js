@@ -23,7 +23,7 @@ module.exports = {
               [
                 `@babel/preset-env`,
                 {
-                  corejs: 2,
+                  corejs: 3,
                   loose: true,
                   modules: `commonjs`,
                   useBuiltIns: `usage`,
@@ -35,7 +35,7 @@ module.exports = {
                 {
                   useBuiltIns: true,
                   pragma: `React.createElement`,
-                  development: false,
+                  development: mode !== `production`,
                 },
               ],
             ],

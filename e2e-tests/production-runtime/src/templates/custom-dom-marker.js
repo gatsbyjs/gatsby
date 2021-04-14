@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from "react"
 
-import InstrumentPage from '../utils/instrument-page'
+import InstrumentPage from "../utils/instrument-page"
 
 const StaticPage = ({ pageContext }) => (
   <pre data-testid="dom-marker">{pageContext.domMarker}</pre>

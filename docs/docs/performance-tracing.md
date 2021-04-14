@@ -14,6 +14,8 @@ Gatsby allows a build to be traced, enabling you to find which plugins or parts 
 
 Gatsby code is instrumented with OpenTracing, which is a general tracing API that is implementation agnostic. Therefore, you'll need to include and configure an OpenTracing compatible library in your application, as well as a backend to collect the trace data.
 
+In addition, Gatsby has additional tracing for GraphQL resolvers. This traces every resolver and might have performance impact, so it's disabled by default. You can enable it with `--graphql-tracing` argument for the build command.
+
 The steps required to add tracing are below. Or, you can skip ahead if you want specific instructions for [Jaeger](/docs/performance-tracing/#local-jaeger-with-docker) or [Zipkin](/docs/performance-tracing/#local-zipkin-with-docker).
 
 ### 1. Library dependency
@@ -41,68 +43,68 @@ There are many OpenTracing compatible backends available. Below are examples of 
 
 [Jaeger](https://www.jaegertracing.io/) is an open source tracing system that can be run locally using Docker.
 
-1.  Add [jaeger-client](https://www.npmjs.com/package/jaeger-client) to your site:
+1. Add [jaeger-client](https://www.npmjs.com/package/jaeger-client) to your site:
 
-    ```shell
-    yarn add jaeger-client
-    ```
+   ```shell
+   yarn add jaeger-client
+   ```
 
-    or
+   or
 
-    ```shell
-    npm install jaeger-client
-    ```
+   ```shell
+   npm install jaeger-client
+   ```
 
-2.  Run Jaeger's all-in-one Docker instance with:
+2. Run Jaeger's all-in-one Docker instance with:
 
-    ```shell
-    docker run -d --name jaeger \
-        -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
-        -p 5775:5775/udp \
-        -p 6831:6831/udp \
-        -p 6832:6832/udp \
-        -p 5778:5778 \
-        -p 16686:16686 \
-        -p 14268:14268 \
-        -p 9411:9411 \
-        jaegertracing/all-in-one:1.8
-    ```
+   ```shell
+   docker run -d --name jaeger \
+       -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
+       -p 5775:5775/udp \
+       -p 6831:6831/udp \
+       -p 6832:6832/udp \
+       -p 5778:5778 \
+       -p 16686:16686 \
+       -p 14268:14268 \
+       -p 9411:9411 \
+       jaegertracing/all-in-one:1.8
+   ```
 
-    See [Jaeger getting started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
+   See [Jaeger getting started](https://www.jaegertracing.io/docs/1.8/getting-started/) for more information.
 
-3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.js) that will send tracing spans to your local Docker instance over HTTP. E.g
+3. Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Jaeger configuration file. An example file is provided in the Gatsby project under [node_modules/gatsby/dist/utils/tracer/jaeger-local.ts](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/src/utils/tracer/jaeger-local.ts) that will send tracing spans to your local Docker instance over HTTP. E.g
 
-    ```shell
-    gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js
-    ```
+   ```shell
+   gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/jaeger-local.js
+   ```
 
-4.  Once the build is complete, view your tracing information at `http://localhost:16686`. On the left menu, select the `build` operation to see your build's root trace.
+4. Once the build is complete, view your tracing information at `http://localhost:16686`. On the left menu, select the `build` operation to see your build's root trace.
 
 ### Local Zipkin with Docker
 
 [Zipkin](https://zipkin.io/) is an open source tracing system that can be run locally using Docker.
 
-1.  Add following dependencies to your site's `package.json`
+1. Add following dependencies to your site's `package.json`
 
-    - [zipkin](https://www.npmjs.com/package/zipkin)
-    - [zipkin-javascript-opentracing](https://www.npmjs.com/package/zipkin-javascript-opentracing)
-    - [zipkin-transport-http](https://www.npmjs.com/package/zipkin-transport-http)
+   - [zipkin](https://www.npmjs.com/package/zipkin)
+   - [zipkin-javascript-opentracing](https://www.npmjs.com/package/zipkin-javascript-opentracing)
+   - [zipkin-transport-http](https://www.npmjs.com/package/zipkin-transport-http)
 
-2.  Run Zipkin's all-in-one Docker instance with `docker run -d -p 9411:9411 openzipkin/zipkin`. See [Zipkin getting started](https://zipkin.io/pages/quickstart.html) for more information.
+2. Run Zipkin's all-in-one Docker instance with `docker run -d -p 9411:9411 openzipkin/zipkin`. See [Zipkin getting started](https://zipkin.io/pages/quickstart.html) for more information.
 
-3.  Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Zipkin configuration file. An example file is provided in the Gatsby project under `node_modules/gatsby/dist/utils/tracer/zipkin-local.js` that will send tracing spans to your local Docker instance. E.g
+3. Start Gatsby `build` or `develop` with `--open-tracing-config-file` pointing at the Zipkin configuration file. An example file is provided in the Gatsby project under `node_modules/gatsby/dist/utils/tracer/zipkin-local.js` that will send tracing spans to your local Docker instance. E.g
 
-    ```shell
-    gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
-    ```
+   ```shell
+   gatsby build --open-tracing-config-file node_modules/gatsby/dist/utils/tracer/zipkin-local.js
+   ```
 
-4.  Once the build is complete, view your tracing information at `http://localhost:9411`
+4. Once the build is complete, view your tracing information at `http://localhost:9411`
 
 ## Adding your own tracing
 
 The default tracing that comes with Gatsby can give you a good idea of which plugins or stages of the build are slowing down your site. But sometimes, you'll want to trace the internals of your site. Or if you're a plugin author, you might want to trace long operations.
 
-To provide custom tracing, you can use the `tracing` object, which is present in the args passed to API implementers. This tracing object contains a function called `startSpan`. This simply wraps [OpenTracing startSpan](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts#L79), but provides the default `childOf: parentSpan` span args. `startSpan` returns a span object that you must explicitly end by calling its `.finish()` method. For example:
+To provide custom tracing, you can use the `tracing` object, which is present in the args passed to API implementers. This tracing object contains a function called `startSpan`. This wraps [OpenTracing startSpan](https://github.com/opentracing/opentracing-javascript/blob/master/src/tracer.ts#L79), but provides the default `childOf: parentSpan` span args. `startSpan` returns a span object that you must explicitly end by calling its `.finish()` method. For example:
 
 ```javascript:title=gatsby-node.js
 exports.sourceNodes = async ({ actions, tracing }) => {
@@ -117,6 +119,6 @@ exports.sourceNodes = async ({ actions, tracing }) => {
 }
 ```
 
-With this span, you can perform any OpenTracing span operation such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Just make sure that the tracing backend supports these operations. You can provide an optional second span options argument to `startSpan` which will be passed to the underlying OpenTracing call.
+With this span, you can perform any OpenTracing span operation such as [span.setTag](https://github.com/opentracing/opentracing-javascript/blob/master/src/span.ts#L89). Make sure that the tracing backend supports these operations. You can provide an optional second span options argument to `startSpan` which will be passed to the underlying OpenTracing call.
 
 For advanced use cases, the `tracing` object also provides `tracer` and `parentSpan` fields. You can use these to construct independent spans, or your own child spans (see the [OpenTracing project](https://github.com/opentracing/opentracing-javascript/tree/master/src) for more info).

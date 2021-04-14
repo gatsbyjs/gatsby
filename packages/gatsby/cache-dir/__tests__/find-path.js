@@ -18,6 +18,16 @@ describe(`find-path`, () => {
       global.__BASE_PATH__ = `/blog`
       expect(cleanPath(`/blog/mypath`)).toBe(`/mypath`)
     })
+
+    it(`strip out a complex basePrefix`, () => {
+      global.__BASE_PATH__ = `/test/blog`
+      expect(cleanPath(`/test/blog/new`)).toBe(`/new`)
+    })
+
+    it(`strip out an encoded basePrefix`, () => {
+      global.__BASE_PATH__ = encodeURIComponent(`/тест`)
+      expect(cleanPath(`/тест/mypath`)).toBe(`/mypath`)
+    })
   })
 
   describe(`findMatchPath`, () => {
@@ -83,10 +93,10 @@ describe(`find-path`, () => {
 
     it(`should only process a request once`, () => {
       jest.resetModules()
-      jest.mock(`@reach/router/lib/utils`)
+      jest.mock(`@gatsbyjs/reach-router/lib/utils`)
       const findPath = require(`../find-path`).findPath
       const setMatchPaths = require(`../find-path`).setMatchPaths
-      const match = require(`@reach/router/lib/utils`).match
+      const pick = require(`@gatsbyjs/reach-router/lib/utils`).pick
 
       setMatchPaths([
         {
@@ -103,7 +113,7 @@ describe(`find-path`, () => {
       )
       expect(findPath(`/notanapp/my-page`)).toBe(`/notanapp/my-page`)
 
-      expect(match).toHaveBeenCalledTimes(1)
+      expect(pick).toHaveBeenCalledTimes(1)
     })
   })
 })
