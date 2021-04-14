@@ -19,7 +19,7 @@ const createWebpackConfig = async ({
   siteDirectoryPath,
   functionsDirectory,
   store,
-}) => {
+}): webpack.Configuration => {
   const files = await new Promise((resolve, reject) => {
     const functionsGlob = `**/*.{js,ts}`
     glob(functionsGlob, { cwd: functionsDirectory }, (err, files) => {
@@ -167,6 +167,9 @@ export async function onPreBootstrap({
   await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
 
   try {
+    // We do this ungainly thing as we need to make accessible
+    // the resolve/reject functions to our shared callback function
+    // eslint-disable-next-line
     await new Promise(async (resolve, reject) => {
       const config = await createWebpackConfig({
         siteDirectoryPath,
