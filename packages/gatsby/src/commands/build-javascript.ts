@@ -1,4 +1,3 @@
-import { compile } from "joi"
 import { Span } from "opentracing"
 import webpack, { WebpackError } from "webpack"
 import webpackConfig from "../utils/webpack.config"
