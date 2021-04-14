@@ -128,8 +128,34 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
 
   // Create nodes for functions
-  const { functions } = store.getState()
-  const createFunctionNode = ({ file, url }) => {
+  if (process.env.GATSBY_EXPERIMENTAL_FUNCTIONS) {
+    const { functions } = store.getState()
+    const createFunctionNode = ({ file, url }) => {
+      createNode({
+        id: `gatsby-function-${file}`,
+        file,
+        url,
+        parent: null,
+        children: [],
+        internal: {
+          contentDigest: createContentDigest({ file, url }),
+          type: `SiteFunction`,
+        },
+      })
+    }
+    Array.from(functions).forEach(([url, file]) => {
+      createFunctionNode({ url, file })
+    })
+
+    // Listen for updates to functions to update the nodes.
+    emitter.on(`SET_SITE_FUNCTIONS`, action => {
+      Array.from(action.payload).forEach(([url, file]) => {
+        createFunctionNode({ url, file })
+      })
+    })
+  } else {
+    // If not enabled, create a dummy node so we can ignore it in the dev 404 page
+    const [url, file] = [`FAKE`, `FAKE`]
     createNode({
       id: `gatsby-function-${file}`,
       file,
@@ -142,16 +168,6 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
       },
     })
   }
-  Array.from(functions).forEach(([url, file]) => {
-    createFunctionNode({ url, file })
-  })
-
-  // Listen for updates to functions to update the nodes.
-  emitter.on(`SET_SITE_FUNCTIONS`, action => {
-    Array.from(action.payload).forEach(([url, file]) => {
-      createFunctionNode({ url, file })
-    })
-  })
 }
 
 function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {
