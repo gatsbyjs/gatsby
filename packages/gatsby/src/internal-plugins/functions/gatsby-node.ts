@@ -270,7 +270,10 @@ export async function onCreateDevServer({
           `.cache`,
           `functions`
         )
-        const funcNameToJs = functions.get(functionName) as string
+
+        // Ignore the original extension as all compiled functions now end with js.
+        const funcNameToJs =
+          path.parse(functions.get(functionName)).name + `.js`
 
         try {
           const pathToFunction = path.join(compiledFunctionsDir, funcNameToJs)
