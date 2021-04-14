@@ -127,14 +127,6 @@ const createWebpackConfig = async ({
         },
       ],
     },
-    // optimization: {
-    // minimize: true,
-    // minimizer: [
-    // new TerserPlugin({
-    // extractComments: false,
-    // }),
-    // ],
-    // },
     plugins: [new webpack.DefinePlugin(processEnvVars)],
   }
 
@@ -210,7 +202,7 @@ export async function onPreBootstrap({
         webpack(config).run(callback)
       } else {
         // When in watch mode, you call things differently
-        let compiler = webpack(config, callback)
+        let compiler = webpack(config).watch({}, callback)
 
         // Watch for env files to change and restart the webpack watcher.
         chokidar
@@ -229,7 +221,7 @@ export async function onPreBootstrap({
             )
 
             // Otherwise, restart the watcher
-            compiler.close(async () => {
+            compiler.close(async err => {
               const config = await createWebpackConfig({
                 siteDirectoryPath,
                 functionsDirectory,

@@ -41,8 +41,13 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ createContentDigest, actions, store }) => {
-  const { createNode } = actions
+exports.sourceNodes = ({
+  createContentDigest,
+  getNodesByType,
+  actions,
+  store,
+}) => {
+  const { createNode, deleteNode } = actions
   const { program, flattenedPlugins, config } = store.getState()
 
   // Add our default development page since we know it's going to
@@ -149,7 +154,19 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
 
     // Listen for updates to functions to update the nodes.
     emitter.on(`SET_SITE_FUNCTIONS`, action => {
-      Array.from(action.payload).forEach(([url, file]) => {
+      // Identify any now deleted functions and remove their nodes.
+      const existingNodes = getNodesByType(`SiteFunction`)
+      const newFunctions = Array.from(action.payload)
+      const newFunctionsSet = new Set()
+      newFunctions.forEach(([url, file]) =>
+        newFunctionsSet.add(`gatsby-function-${file}`)
+      )
+      const toBeDeleted = existingNodes.filter(
+        node => !newFunctionsSet.has(node.id)
+      )
+      toBeDeleted.forEach(node => deleteNode(node))
+
+      newFunctions.forEach(([url, file]) => {
         createFunctionNode({ url, file })
       })
     })

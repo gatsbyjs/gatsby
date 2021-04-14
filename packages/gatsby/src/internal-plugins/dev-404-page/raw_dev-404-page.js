@@ -100,7 +100,9 @@ class Dev404Page extends React.Component {
       <div>
         <h1>Gatsby.js development 404 page</h1>
         <p>
-          {`There's not a page or function yet at `}
+          {`There's not a page ${
+            functionsEnabled ? `or function ` : ``
+          }yet at `}
           <code>{pathname}</code>
         </p>
         {this.props.custom404 ? (
