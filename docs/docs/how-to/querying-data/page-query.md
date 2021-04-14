@@ -2,7 +2,7 @@
 title: Querying Data in Pages with GraphQL
 ---
 
-Gatsby's `graphql` tag enables page components to retrieve data via a GraphQL query.
+Gatsby's `graphql` tag enables page components to query data via a GraphQL query.
 
 In this guide, you will learn [how to use the `graphql` tag](/docs/how-to/querying-data/page-query#add-the-graphql-query) in your pages, as well as go a little deeper into [how the `graphql` tag works](/docs/how-to/querying-data/page-query#how-does-the-graphql-tag-work).
 
@@ -10,11 +10,13 @@ If you’re curious, you can also read more about [why Gatsby uses GraphQL](/doc
 
 ## How to use the `graphql` tag in pages
 
-Gatsby uses the concept of a page query, which is a query for a specific page in a site. It is unique in that it can take query variables unlike Gatsby's static queries.
+Page components can have their own query. The query can use variables passed in when creating the page to select data for that page.
+
+Let's do a quick tutorial on writing a simple page query.
 
 ### Add `description` to `siteMetadata`
 
-The first step in displaying the description will be ensuring you have one to begin with.
+Add a description to your site's metadata.
 
 ```js:title=gatsby-config.js
 module.exports = {
@@ -25,9 +27,9 @@ module.exports = {
 }
 ```
 
-### Mark up basic index page
+### Make a basic index page
 
-An index page (`src/pages/index.js`) can be marked up like so:
+Created an home page (`src/pages/index.js`) like so:
 
 ```jsx:title=src/pages/index.js
 import React from "react"
@@ -76,7 +78,7 @@ const HomePage = () => {
 
 The first part of writing the GraphQL query is including the operation (in this case "`query`") along with a name.
 
-From [browsing GraphiQL](/docs/tutorial/part-five/#introducing-graphiql/), you'll find that one of the fields that you can query on is `site`, which in turn has its own `siteMetadata` fields that correspond to the data provided in `gatsby-config.js`.
+From [exploring in the GraphQL IDE, GraphiQL](/docs/tutorial/part-five/#introducing-graphiql/), you've learned that one of the types that you can query is `site`, which in turn has its own `siteMetadata` field with subfields that correspond to the data provided in `gatsby-config.js`.
 
 Putting this together, the completed query looks like:
 
@@ -93,11 +95,9 @@ export const query = graphql`
 `
 ```
 
-### Provide data to the `<HomePage />` component
+### Use the query result in the `<HomePage />` component
 
-To start, update the `HomePage` component to destructure `data` from props.
-
-The `data` prop contains the results of the GraphQL query, and matches the shape you would expect. With this in mind, the updated `HomePage` markup looks like:
+The `data` prop contains the results of the page GraphQL query, and matches the shape of the query. With this in mind, the updated `HomePage` markup looks like:
 
 ```diff:title=src/pages/index.js
 import * as React from 'react'
