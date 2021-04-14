@@ -88,10 +88,12 @@ export function findManyPaginated<TSource, TArgs, TNodeType>(
     // `distinct` which might need to be resolved.
     const group = getProjectedField(info, `group`)
     const distinct = getProjectedField(info, `distinct`)
+    const max = getProjectedField(info, `max`)
     const extendedArgs = {
       ...args,
       group: group || [],
       distinct: distinct || [],
+      max: max || [],
     }
 
     const result = await findMany<TSource, PaginatedArgs<TArgs>>(typeName)(
@@ -133,6 +135,78 @@ export const distinct: GatsbyResolver<
     }
   })
   return Array.from(values).sort()
+}
+
+export const min: GatsbyResolver<
+  IGatsbyConnection<any>,
+  IFieldConnectionArgs
+> = function minResolver(source, args): number | null {
+  const { field } = args
+  const { edges } = source
+
+  let min = Number.MAX_SAFE_INTEGER
+
+  edges.forEach(({ node }) => {
+    let value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
+
+    if (typeof value !== `number`) {
+      value = Number(value)
+    }
+    if (!isNaN(value) && value < min) {
+      min = value
+    }
+  })
+  if (min === Number.MAX_SAFE_INTEGER) {
+    return null
+  }
+  return min
+}
+
+export const max: GatsbyResolver<
+  IGatsbyConnection<any>,
+  IFieldConnectionArgs
+> = function maxResolver(source, args): number | null {
+  const { field } = args
+  const { edges } = source
+
+  let max = Number.MIN_SAFE_INTEGER
+
+  edges.forEach(({ node }) => {
+    let value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
+    if (typeof value !== `number`) {
+      value = Number(value)
+    }
+    if (!isNaN(value) && value > max) {
+      max = value
+    }
+  })
+  if (max === Number.MIN_SAFE_INTEGER) {
+    return null
+  }
+  return max
+}
+
+export const sum: GatsbyResolver<
+  IGatsbyConnection<any>,
+  IFieldConnectionArgs
+> = function sumResolver(source, args): number | null {
+  const { field } = args
+  const { edges } = source
+
+  return edges.reduce<number | null>((prev, { node }) => {
+    let value =
+      getValueAt(node, `__gatsby_resolved.${field}`) || getValueAt(node, field)
+
+    if (typeof value !== `number`) {
+      value = Number(value)
+    }
+    if (!isNaN(value)) {
+      return (prev || 0) + value
+    }
+    return prev
+  }, null)
 }
 
 type IGatsbyGroupReturnValue<NodeType> = Array<

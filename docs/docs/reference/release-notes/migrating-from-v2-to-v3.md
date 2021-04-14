@@ -103,7 +103,7 @@ Gatsby has an _amazing_ ecosystem of plugins that make it easier to get up and r
 
 Depending on how the plugin authors have declared dependencies (e.g. marking a package as a dependency instead of a peerDependency) within those plugins, there could be a myriad of failures that arise. If you encounter any of these issues when migrating your project to Gatsby Version 3, we recommend that you use [Yarn resolutions](https://yarnpkg.com/configuration/manifest#resolutions) within your `package.json`.
 
-**Please note:** If your rely on a plugin that is not found within the [list of plugins within the Gatsby framework](https://github.com/gatsbyjs/gatsby/tree/master/packages), you very well may need to use the following resolutions in the near term.
+**Please note:** If you rely on a plugin that is not found within the [list of plugins within the Gatsby framework](https://github.com/gatsbyjs/gatsby/tree/master/packages), you very well may need to use the following resolutions in the near term.
 
 The specific resolutions we recommend at this time are found below:
 
@@ -856,6 +856,17 @@ In most cases, you won't have to do anything to be v3 compatible. But one thing 
   "peerDependencies": {
 -   "gatsby": "^2.32.0",
 +   "gatsby": "^3.0.0",
+  }
+}
+```
+
+If your plugin supports both versions:
+
+```diff:title=package.json
+{
+  "peerDependencies": {
+-   "gatsby": "^2.32.0",
++   "gatsby": "^2.32.0 || ^3.0.0",
   }
 }
 ```

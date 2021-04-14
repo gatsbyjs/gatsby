@@ -501,6 +501,9 @@ type FileConnection {
   nodes: [File!]!
   pageInfo: PageInfo!
   distinct(field: FileFieldsEnum!): [String!]!
+  max(field: FileFieldsEnum!): Float
+  min(field: FileFieldsEnum!): Float
+  sum(field: FileFieldsEnum!): Float
   group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
 }
 
@@ -703,6 +706,9 @@ type DirectoryConnection {
   nodes: [Directory!]!
   pageInfo: PageInfo!
   distinct(field: DirectoryFieldsEnum!): [String!]!
+  max(field: DirectoryFieldsEnum!): Float
+  min(field: DirectoryFieldsEnum!): Float
+  sum(field: DirectoryFieldsEnum!): Float
   group(skip: Int, limit: Int, field: DirectoryFieldsEnum!): [DirectoryGroupConnection!]!
 }
 
@@ -895,6 +901,9 @@ type SiteConnection {
   nodes: [Site!]!
   pageInfo: PageInfo!
   distinct(field: SiteFieldsEnum!): [String!]!
+  max(field: SiteFieldsEnum!): Float
+  min(field: SiteFieldsEnum!): Float
+  sum(field: SiteFieldsEnum!): Float
   group(skip: Int, limit: Int, field: SiteFieldsEnum!): [SiteGroupConnection!]!
 }
 
@@ -1025,6 +1034,9 @@ type SitePageConnection {
   nodes: [SitePage!]!
   pageInfo: PageInfo!
   distinct(field: SitePageFieldsEnum!): [String!]!
+  max(field: SitePageFieldsEnum!): Float
+  min(field: SitePageFieldsEnum!): Float
+  sum(field: SitePageFieldsEnum!): Float
   group(skip: Int, limit: Int, field: SitePageFieldsEnum!): [SitePageGroupConnection!]!
 }
 

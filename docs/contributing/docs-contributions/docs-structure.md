@@ -17,7 +17,7 @@ The [Gatsby documentation site](/docs) includes four different types of material
 
 ![Each of the four types of docs has a different intended audience. The Tutorial is for learning-oriented readers, who want practical steps to help when they're studying. How-To Guides are for problem-oriented readers, who want practical steps to help when they're working. Reference Guides are for information-oriented readers, who want theoretical knowledge to help when they're working. Conceptual Guides are for understanding-oriented readers, who want theoretical knowledge to help when they're studying.](./doc-type-quadrants.svg)
 
-> This documentation structure is based on the [Divio documentation system](https://documentation.divio.com) created by Daniele Procida.
+> This documentation structure is based on the [Diátaxis documentation system](https://diataxis.fr) created by Daniele Procida.
 
 ### Choosing what type of doc to write
 
