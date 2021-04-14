@@ -95,6 +95,24 @@ const createWebpackConfig = async ({
       "process.env": `({})`,
     }
   )
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
+
+  // Write out manifest for use by `gatsby serve` and plugins
+  const manifest = {}
+  Array.from(knownFunctions).forEach(([, file]) => {
+    const name = path.parse(file).name
+    const compiledPath = path.join(compiledFunctionsDir, name + `.js`)
+    manifest[name] = compiledPath
+  })
+
+  fs.writeFileSync(
+    path.join(compiledFunctionsDir, `manifest.json`),
+    JSON.stringify(manifest, null, 4)
+  )
 
   const entries = {}
   Array.from(knownFunctions).forEach(([, file]) => {
@@ -110,7 +128,7 @@ const createWebpackConfig = async ({
   const config = {
     entry: entries,
     output: {
-      path: path.join(siteDirectoryPath, `.cache`, `functions`),
+      path: compiledFunctionsDir,
       filename: `[name].js`,
       libraryTarget: `commonjs2`,
     },
