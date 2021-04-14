@@ -58,10 +58,11 @@ const randomChanceToBeTrue = (): boolean => {
 
 // We are only showing feedback requests to users in if they pass a few checks:
 // 1. They pass a Math.random() check. This is a skateboard version of not sending out all requests in one day.
-// 2. They haven't disabled the feedback mechanism
+// 2. Gatsby is not running in CI
 // 3. They don't have the environment variable to disable feedback present
-// 4. It's been at least 3 months since the last feedback request
-// 5. They are on the most recent version of Gatsby
+// 4. They haven't disabled the feedback mechanism
+// 5. It's been at least 3 months since the last feedback request
+// 6. They are on the most recent version of Gatsby
 export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
   // Heuristic 1
   // We originally wrote this to have a single chance of hitting.
@@ -82,9 +83,9 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     return false
   }
 
-  // Heuristic 4
+  // Heuristic 5
   const lastDateValue = getConfigStore().get(lastDateKey)
-  // 4.a if the user has never received the feedback request, this is undefined
+  // 5.a if the user has never received the feedback request, this is undefined
   //     Which is effectively a pass, because it's been ~infinity~ since they last
   //     received a request from us.
   if (lastDateValue) {
@@ -97,7 +98,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     }
   }
 
-  // 4.b
+  // 5.b
   // we don't want to give them this survey right after the seven day feedback survey
   const sevenDayFeedback = getConfigStore().get(sevenDayKey)
   if (sevenDayFeedback) {
@@ -110,7 +111,7 @@ export async function userPassesFeedbackRequestHeuristic(): Promise<boolean> {
     }
   }
 
-  // Heuristic 5
+  // Heuristic 6
   const versionPoints = getGatsbyVersion().split(`.`)
   let latestVersionPoints: Array<string> = []
   try {
