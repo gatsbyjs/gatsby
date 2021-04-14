@@ -196,8 +196,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildSSRBundleActivityProgress.start()
   let pageRenderer: string
+  let waitForCompilerCloseBuildHtml
   try {
-    pageRenderer = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    pageRenderer = result.rendererPath
+    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
@@ -235,6 +238,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
+
+  await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
 
   report.info(`Done building in ${process.uptime()} sec`)
 
@@ -290,7 +295,4 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
-
-  await waitForCompilerClose
-  // await new Promise(resolve => setTimeout(resolve, 30000))
 }

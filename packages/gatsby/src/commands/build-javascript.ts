@@ -2,6 +2,7 @@ import { Span } from "opentracing"
 import webpack, { WebpackError } from "webpack"
 import webpackConfig from "../utils/webpack.config"
 import { IProgram } from "./types"
+import reporter from "gatsby-cli/lib/reporter"
 
 export const buildProductionBundle = async (
   program: IProgram,
@@ -33,8 +34,15 @@ export const buildProductionBundle = async (
         return reject(stats.compilation.errors)
       }
 
+      // TODO: add parentSpan
+      const activity = reporter.activityTimer(
+        `Caching JavaScript and CSS webpack compilation`
+      )
+      activity.start()
+
       const waitForCompilerClose = new Promise<void>((resolve, reject) => {
         compiler.close(error => {
+          activity.end()
           if (error) {
             return reject(error)
           }

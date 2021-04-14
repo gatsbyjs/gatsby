@@ -57,14 +57,30 @@ const runWebpack = (
   compilerConfig,
   stage: Stage,
   directory
-): Bluebird<webpack.Stats> =>
+): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
-      webpack(compilerConfig).run((err, stats) => {
+      const compiler = webpack(compilerConfig)
+      compiler.run((err, stats) => {
+        const activity = reporter.activityTimer(
+          `Caching HTML renderer compilation`
+        )
+        activity.start()
+
+        const waitForCompilerClose = new Promise<void>((resolve, reject) => {
+          compiler.close(error => {
+            activity.end()
+            if (error) {
+              return reject(error)
+            }
+            return resolve()
+          })
+        })
+
         if (err) {
           return reject(err)
         } else {
-          return resolve(stats)
+          return resolve({ stats, waitForCompilerClose })
         }
       })
     } else if (
@@ -110,8 +126,12 @@ const doBuildRenderer = async (
   { directory }: IProgram,
   webpackConfig: webpack.Configuration,
   stage: Stage
-): Promise<string> => {
-  const stats = await runWebpack(webpackConfig, stage, directory)
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
+  const { stats, waitForCompilerClose } = await runWebpack(
+    webpackConfig,
+    stage,
+    directory
+  )
   if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
@@ -127,14 +147,17 @@ const doBuildRenderer = async (
   }
 
   // render-page.js is hard coded in webpack.config
-  return `${directory}/public/render-page.js`
+  return {
+    rendererPath: `${directory}/public/render-page.js`,
+    waitForCompilerClose,
+  }
 }
 
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity
-): Promise<string> => {
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
