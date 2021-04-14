@@ -37,11 +37,9 @@ Quickly get started using the Gatsby notes theme! This starter creates a new Gat
 
 ## 🚀 Quick start (Gatsby Cloud)
 
-1.  **Create a Gatsby site.**
+Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/): 
 
-    Use the deploy now feature in Gatsby cloud to host your application:
-
-    [<img src="https://www.gatsbyjs.com/deploynow.svg">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-notes-theme)
+[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-notes-theme)
 
 ## 🧐 What's inside?
 
