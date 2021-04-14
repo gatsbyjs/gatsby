@@ -124,8 +124,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildActivityTimer.start()
   let stats
+  let waitForCompilerClose
   try {
-    stats = await buildProductionBundle(program, buildActivityTimer.span)
+    const result = await buildProductionBundle(program, buildActivityTimer.span)
+    stats = result.stats
+    waitForCompilerClose = result.waitForCompilerClose
 
     if (stats.hasWarnings()) {
       const rawMessages = stats.toJson({ moduleTrace: false })
@@ -287,4 +290,7 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   } else if (await userPassesFeedbackRequestHeuristic()) {
     showFeedbackRequest()
   }
+
+  await waitForCompilerClose
+  // await new Promise(resolve => setTimeout(resolve, 30000))
 }
