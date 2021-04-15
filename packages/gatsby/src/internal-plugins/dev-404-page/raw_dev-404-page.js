@@ -82,8 +82,9 @@ class Dev404Page extends React.Component {
     // are *not* enabled. That seems the simplest way to communicate whether
     // functions are enabled or not to this page.
     // TODO remove when functions are shipped.
-    const functionsEnabled =
-      this.props.data.allSiteFunction.nodes[0].url !== `FAKE`
+    const functionsEnabled = !(
+      this.props.data.allSiteFunction.nodes[0]?.url === `FAKE`
+    )
     const { pathname } = this.props.location
     const isAPI = false
     let newFilePath

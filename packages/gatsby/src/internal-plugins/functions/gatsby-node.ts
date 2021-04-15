@@ -19,6 +19,7 @@ const createWebpackConfig = async ({
   siteDirectoryPath,
   functionsDirectory,
   store,
+  reporter,
 }): webpack.Configuration => {
   const files = await new Promise((resolve, reject) => {
     const functionsGlob = `**/*.{js,ts}`
@@ -185,6 +186,7 @@ export async function onPreBootstrap({
         siteDirectoryPath,
         functionsDirectory,
         store,
+        reporter,
       })
 
       function callback(err, stats): any {
@@ -244,6 +246,7 @@ export async function onPreBootstrap({
                 siteDirectoryPath,
                 functionsDirectory,
                 store,
+                reporter,
               })
               compiler = webpack(config, callback)
             })
