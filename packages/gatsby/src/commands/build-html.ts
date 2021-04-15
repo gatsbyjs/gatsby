@@ -115,7 +115,7 @@ const runWebpack = (
 
             oldHash = newHash
 
-            return resolve(stats)
+            return resolve({ stats, waitForCompilerClose: Promise.resolve() })
           }
         }
       ) as IWebpackWatchingPauseResume
@@ -321,7 +321,7 @@ export const buildHTML = async ({
   activity: IActivity
   workerPool: IWorkerPool
 }): Promise<void> => {
-  const rendererPath = await buildRenderer(program, stage, activity.span)
+  const { rendererPath } = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
   await deleteRenderer(rendererPath)
 }
