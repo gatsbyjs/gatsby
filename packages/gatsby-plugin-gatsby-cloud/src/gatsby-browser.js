@@ -172,9 +172,9 @@ const getBuildInfo = async () => {
     headers: {
       "Content-Type": `application/json`,
       /*
-      * NOTE: Current auth token used is the same auth token that preview exposes
-      * Currently this token is only used for read-only purposes but it's good to note for the future if this changes
-      */
+       * NOTE: Current auth token used is the same auth token that preview exposes
+       * Currently this token is only used for read-only purposes but it's good to note for the future if this changes
+       */
       Authorization: process.env.GATSBY_PREVIEW_AUTH_TOKEN,
       "x-runner-type": `PREVIEW`,
     },
@@ -251,7 +251,6 @@ export class Indicator extends React.Component {
   componentDidMount() {
     const prettyUrlRegex = /^preview-/
     const host = window.location.hostname
-    let error
     let buildId
 
     try {
@@ -302,7 +301,7 @@ export class Indicator extends React.Component {
           )
         }
       }, POLLING_INTERVAL)
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
@@ -315,7 +314,7 @@ export class Indicator extends React.Component {
         <>
           <Style />
           <div
-            data-testid='preview-status-indicator'
+            data-testid="preview-status-indicator"
             onClick={this.state.attributes.onclick}
             style={{
               color: this.state.attributes.color,
@@ -323,7 +322,9 @@ export class Indicator extends React.Component {
               cursor: this.state.attributes.cursor,
             }}
             data-gatsby-loading-indicator="root"
-            data-gatsby-loading-indicator-visible={this.state.attributes.visible}
+            data-gatsby-loading-indicator-visible={
+              this.state.attributes.visible
+            }
             aria-live="assertive"
           >
             {this.state.icon}
@@ -338,13 +339,14 @@ export class Indicator extends React.Component {
   }
 }
 
-export const wrapPageElement = ({ element, props }) => {
-  if (process.env.GATSBY_PREVIEW_INDICATOR_ENABLED === 'true') {
-    return <>
-      <Indicator>{element}</Indicator>
-    </>
+export const wrapPageElement = ({ element }) => {
+  if (process.env.GATSBY_PREVIEW_INDICATOR_ENABLED === `true`) {
+    return (
+      <>
+        <Indicator>{element}</Indicator>
+      </>
+    )
   } else {
     return <>{element}</>
   }
 }
-
