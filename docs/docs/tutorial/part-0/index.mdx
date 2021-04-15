@@ -1,5 +1,6 @@
 ---
 title: Set Up Your Development Environment
+tableOfContentsDepth: 2
 ---
 
 ## Introduction
@@ -7,6 +8,12 @@ title: Set Up Your Development Environment
 Welcome to the Gatsby Tutorial! We're excited you're here.
 
 Before you start building your first Gatsby site, you’ll need to familiarize yourself with some core web technologies and make sure that you have installed all required software tools.
+
+By the end of this part of the Tutorial, you will:
+
+* Have a basic understanding of the key technologies needed to create a Gatsby site.
+* Install all the required software tools.
+* Create all the necessary accounts for deploying your site online.
 
 ## Background Knowledge
 
@@ -19,14 +26,16 @@ The Tutorial is intended to be approachable as approachable as possible for peop
 * **CSS**: A presentational language used to style the appearance of your web content (fonts, colors, layout, etc). It stands for Cascading Style Sheets.
     * Learn more about CSS with the [Basic CSS course on freeCodeCamp](https://www.freecodecamp.org/learn/responsive-web-design/#basic-css).
 * **JavaScript**: A programming language that lets you make your web content dynamic and interactive.
+    * In this Tutorial you will use the following concepts: creating and using variables, destructuring objects and arrays, arrow functions, array methods like `.map()`.
     * Learn more about JavaScript with the [Basic JavaScript course on freeCodeCamp](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/#basic-javascript).
 * The **command line**: The command line is a text-based interface used to run commands on your computer. You’ll also often see it referred to as the **terminal**. In this tutorial, we’ll use both interchangeably.
+    * If you’re new to the command line, "running" a command, means "writing a given set of instructions in your command prompt, and hitting the Enter key". Commands will be shown in a highlighted box, something like `node --version`, but not every highlighted box is a command! If something is a command it will be mentioned as something you have to run/execute.
     * The instructions for how to use the command line differ slightly based on what operating system your computer uses:
         * [Command line instructions for Mac](https://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
         * [Command line instructions for Windows](https://www.lifewire.com/how-to-open-command-prompt-2618089)
         * [Command line instructions for Linux](https://www.howtogeek.com/140679/beginner-geek-how-to-start-using-the-linux-terminal/).
 
-In addition to the ones listed above, Gatsby uses a few more technologies under the hood. The Tutorial will teach you everything you need to know about these tools. But if you're interested in getting a head start, here's a bit more information:
+In addition to the ones listed above, Gatsby uses a few more technologies under the hood. The Tutorial will teach you everything you need to know about the following tools. But if you're interested in getting a head start, here's a bit more information:
 
 * **React**: A code library (built with JavaScript) for building user interfaces. It’s the framework that Gatsby uses to build pages and structure content.
     * Learn more about React with the [React course on freeCodeCamp](https://www.freecodecamp.org/learn/front-end-libraries/#react).
@@ -38,18 +47,201 @@ In addition to the ones listed above, Gatsby uses a few more technologies under 
 
 The rest of this part of the Tutorial walks you through how to install the following tools:
 
-* Node.js
-* Git
-* Gatsby CLI
-* VS Code
+* [Node.js](#nodejs) (v12 or newer)
+* [Git](#git)
+* [Gatsby command line interface (CLI)](#gatsby-cli) (v3 or newer)
+* [Visual Studio Code](#vs-code)
 
 ### Node.js
+
+[Node.js](https://nodejs.dev/learn) is an environment that can run JavaScript code outside of a web browser. Gatsby is built with Node.js. To get up and running with Gatsby, you’ll need to have Node.js version 12 (or newer) installed on your computer.
+
+[npm](https://docs.npmjs.com/getting-started/what-is-npm) is a package manager that comes bundled with Node.js. You'll use the npm command line interface to add packages to your site (like Gatsby plugins) and to run command line tasks (like starting up your site).
+
+Follow the installation instructions below, based on your computer's operating system. (Click the header to expand the section.)
+
+<details>
+
+<summary>
+
+#### Mac instructions
+
+</summary>
+
+To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
+
+##### How to install or verify Homebrew on your computer:
+
+1. Open the Terminal app.
+2. See if Homebrew is installed by typing the command below. You should see "Homebrew" and a version number.
+
+```shell
+brew -v
+```
+
+3. If not, [download and install Homebrew](https://docs.brew.sh/Installation).
+4. Once you've installed Homebrew, repeat step 2 to verify that you get the expected version message.
+
+##### Install Xcode Command Line Tools:
+
+1. Open your Terminal.
+2. Install Xcode Command line tools by running:
+
+```shell
+xcode-select --install
+```
+
+> 💡 If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account.
+
+3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
+
+##### Install Node
+
+1. Open your Terminal
+2. Install node with Homebrew:
+
+```shell
+brew install node
+```
+
+> 💡 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+
+</details>
+
+<details>
+
+<summary>
+
+#### Windows Instructions
+
+</summary>
+
+- Download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
+
+</details>
+
+<details>
+
+<summary>
+
+#### Linux Instructions
+
+</summary>
+
+Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
+
+> 💡 When installing a package, if it asks for confirmation, type `y` and press enter.
+
+Select your distro:
+
+- [Ubuntu, Debian, and other apt based distros](#ubuntu-debian-and-other-apt-based-distros)
+- [Arch, Manjaro and other pacman based distros](#arch-manjaro-and-other-pacman-based-distros)
+- [Fedora, RedHat, and other dnf based distros](#fedora-redhat-and-other-dnf-based-distros)
+
+> 💡 If the Linux distribution you are using is not listed here, please find instructions on the web.
+
+##### Ubuntu, Debian, and other `apt` based distros:
+
+1. Make sure your Linux distribution is ready to go run an update and an upgrade:
+
+```shell
+sudo apt update
+sudo apt -y upgrade
+```
+
+2. Install curl which allows you to transfer data and download additional dependencies:
+
+```shell
+sudo apt-get install curl
+```
+
+3. After it finishes installing, download the latest nvm version:
+
+```shell
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+```
+
+4. Confirm this has worked. The output should be a version number. (Note that you may have to reload your bash configuration. Close and restart the terminal or run `source ~/.bashrc`.)
+
+```shell
+nvm --version
+```
+
+5. Continue with the section: [Set default Node.js version](#set-default-nodejs-version)
+
+##### Arch, Manjaro and other `pacman` based distros:
+
+1. Make sure your distribution is ready to go:
+
+```shell
+sudo pacman -Syu
+```
+
+2. These distros come installed with curl, so you can use that to download nvm:
+
+```shell
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+```
+
+3. Before using nvm, you need to install additional dependencies by running:
+
+```shell
+sudo pacman -S grep awk tar
+```
+
+4. Confirm this has worked. The output should be a version number.
+
+```shell
+nvm --version
+```
+
+5. Continue with the section: [Set default Node.js version](#set-default-nodejs-version)
+
+##### Fedora, RedHat, and other `dnf` based distros:
+
+1. These distros come installed with curl, so you can use that to download nvm:
+
+```shell
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+```
+
+2. Confirm this has worked. The output should be a version number.
+
+```shell
+nvm --version
+```
+
+3. Continue with the section: [Set default Node.js version](#set-default-nodejs-version)
+
+##### Set default Node.js version
+
+When nvm is installed, it does not default to a particular node version. You’ll need to install the version you want and give nvm instructions to use it. This example uses the version 10 release, but more recent version numbers can be used instead.
+
+```shell
+nvm install 10
+nvm use 10
+```
+
+Confirm that this worked:
+
+```shell
+npm --version
+node --version
+```
+
+The output should look similar to the screenshot below, showing version numbers in response to the commands.
+
+![Check node and npm versions in terminal](01-node-npm-versions.png)
+
+Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step.
+
+</details>
 
 ### Git
 
 Git is a free and open source distributed version control system. It's a tool that helps you save different versions of your code. It also helps teammates work together on the same codebase at the same time.
 
-When you create a new Gatsby site, Gatsby uses Git behind the scenes to download and install the required files for your new site. You will need to have Git installed to set up your first Gatsby site.
+When you create a new Gatsby site, Gatsby uses Git behind the scenes to download and install the required files for your new site. You will also use Git to push your code to the cloud, so that you can deploy your site on the internet for others to see.
 
 The steps to download and install Git depend on your operating system. Follow the guide for your system:
 
@@ -60,17 +252,52 @@ The steps to download and install Git depend on your operating system. Follow th
 
 ### Gatsby CLI
 
-### VS Code
+The Gatsby command line interface (CLI) is a tool that lets you quickly create new Gatsby-powered sites and run commands for developing Gatsby sites.
+
+The CLI is a published npm package, which means you can install it using npm.
+
+Install the Gatsby CLI globally by running:
+
+```shell
+npm install -g gatsby-cli
+```
+
+_**Note**: When you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands, you can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry)._
+
+See the available commands:
+
+```shell
+gatsby --help
+```
+
+![Check gatsby commands in terminal](05-gatsby-help.png)
+
+> 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
+
+
+### Visual Studio Code
+
+Visual Studio Code (also called VS Code, for short) is a popular code editor that you can use to write code for your project. If you don't have a preferred code editor yet, visit the [VS Code site](https://code.visualstudio.com/#alt-downloads) and download the version appropriate for your platform.
+
+It doesn't matter what code editor you choose to use. Your site will end up looking the same, no matter what tool you use to write it. But the Gatsby documentation sometimes includes screenshots that were taken in VS Code, so using VS Code will make sure that your screen looks like the screenshots in the tutorial and docs. 
 
 ## Account Creation
 
-In this Tutorial, you will learn how to deploy your site to Gatsby Cloud, so that it will be online for other people to see.
+The final step in this part of the tutorial is to create accounts for the online platforms you will need to deploy your site online for others to see.
 
-To use Gatsby Cloud, you will need to set up a GitHub account and a Gatsby Cloud account. (Both accounts are free.)
+In this Tutorial, you will deploy your site using Gatsby Cloud. To use Gatsby Cloud, you will need to set up a GitHub account and a Gatsby Cloud account. (Both accounts are free!)
 
 * [Create a GitHub account.](https://github.com/join) GitHub is a website for storing your Git codebases (also called Git repositories).
 * [Create a Gatsby Cloud account.](/dashboard/signup/) Gatsby Cloud is a platform designed to be the best way to build and deploy your Gatsby sites.
 
 ## Summary
 
+Now that you have all the knowledge and tools you'll need, you're ready for the Tutorial!
 
+In the next part, you'll create your first Gatsby site and deploy it online for everyone to see.
+
+> **Share Your Feedback!**
+>
+> Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
+>
+> Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
