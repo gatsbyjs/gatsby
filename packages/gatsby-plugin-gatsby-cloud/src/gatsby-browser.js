@@ -247,13 +247,24 @@ class Indicator extends React.Component {
   }
 
   componentDidMount() {
+    const prettyUrlRegex = /^preview-/
+    const host = window.location.hostname
+
+    let buildId
+
     setInterval(async () => {
       // currentBuild is the most recent build that is not QUEUED
       // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
       const { currentBuild, latestBuild } = await getBuildInfo()
 
-      const buildId = process.env.GATSBY_BUILD_ID
-      const currentBuildId = currentBuild?.id
+      if (!buildId) {
+        if (prettyUrlRegex.test(host)) {
+          buildId = latestBuild?.id
+        } else {
+          const buildIdMatch = host.match(/build-(.*?(?=\.))/)
+          buildId = buildIdMatch && buildIdMatch[1]
+        }
+      }
 
       if (currentBuild?.buildStatus === `BUILDING`) {
         this.setState(prevState =>
@@ -269,7 +280,7 @@ class Indicator extends React.Component {
             icon: <FailedIcon />,
           })
         )
-      } else if (buildId === currentBuildId) {
+      } else if (buildId === currentBuild?.id) {
         this.setState(prevState =>
           Object.assign({}, prevState, {
             attributes: indicatorSetUpToDate(),
