@@ -34,8 +34,8 @@ const handlerP = (fn: (args: yargs.Arguments) => void) => (
 }
 
 function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
-  const defaultHost = `localhost`
-  const defaultPort = `8000`
+  const defaultHost = process.env.DEFAULT_GATSBY_HOST || `localhost`
+  const defaultPort = process.env.DEFAULT_GATSBY_PORT || `8000`
   const directory = path.resolve(`.`)
 
   // 'not dead' query not available in browserslist used in Gatsby v1
