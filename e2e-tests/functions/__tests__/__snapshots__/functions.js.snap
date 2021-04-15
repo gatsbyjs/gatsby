@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`functions can parse different ways of sending data form data 1`] = `
+Object {
+  "a": "form-data",
+}
+`;
+
+exports[`functions can parse different ways of sending data form parameters 1`] = `
+Object {
+  "a": "form parameters",
+}
+`;
+
+exports[`functions can parse different ways of sending data json body 1`] = `
+Object {
+  "a": "json",
+}
+`;
+
+exports[`functions can parse different ways of sending data query string 1`] = `
+Object {
+  "amIReal": "true",
+}
+`;
+
+exports[`response formats returns json correctly 1`] = `
+Object {
+  "amIJSON": true,
+}
+`;
+
+exports[`response formats returns json correctly 2`] = `
+Object {
+  "access-control-allow-origin": "*",
+  "connection": "close",
+  "content-length": "16",
+  "content-type": "application/json; charset=utf-8",
+  "etag": "W/\\"10-R6td1pV+B+Xz9CJkNeaEI2kP+QY\\"",
+  "vary": "Accept-Encoding",
+  "x-powered-by": "Express",
+}
+`;
+
+exports[`response formats returns text correctly 1`] = `"I am typescript"`;
+
+exports[`response formats returns text correctly 2`] = `
+Object {
+  "access-control-allow-origin": "*",
+  "connection": "close",
+  "content-length": "15",
+  "content-type": "text/html; charset=utf-8",
+  "etag": "W/\\"f-zwggT56l/fnWBm4dI0PkA4E3i4E\\"",
+  "vary": "Accept-Encoding",
+  "x-powered-by": "Express",
+}
+`;
+
+exports[`routing secondary-level API 1`] = `"I am at a secondary-level"`;
+
+exports[`routing secondary-level API 2`] = `"I am another sub-directory function"`;
+
+exports[`routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
+
+exports[`routing top-level API 1`] = `"I am at the top-level"`;
+
+exports[`typescript typescript functions work 1`] = `"I am typescript"`;

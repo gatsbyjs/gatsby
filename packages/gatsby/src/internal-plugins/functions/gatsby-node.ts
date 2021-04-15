@@ -42,10 +42,13 @@ const createWebpackConfig = async ({
   }
 
   const knownFunctions = new Map(
-    files.map(file => [
-      urlResolve(path.parse(file).dir, path.parse(file).name),
-      file,
-    ])
+    files.map(file => {
+      const name = path.parse(file).name
+      return [
+        urlResolve(path.parse(file).dir, name === `index` ? `` : name),
+        file,
+      ]
+    })
   )
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
@@ -136,7 +139,7 @@ const createWebpackConfig = async ({
     target: `node`,
 
     mode: isProductionEnv ? `production` : `development`,
-    watch: !isProductionEnv,
+    // watch: !isProductionEnv,
     module: {
       rules: [
         {
@@ -248,7 +251,7 @@ export async function onPreBootstrap({
                 store,
                 reporter,
               })
-              compiler = webpack(config, callback)
+              compiler = webpack(config).watch({}, callback)
             })
           })
       }
@@ -293,8 +296,8 @@ export async function onCreateDevServer({
         )
 
         // Ignore the original extension as all compiled functions now end with js.
-        const funcNameToJs =
-          path.parse(functions.get(functionName)).name + `.js`
+        const parsed = path.parse(functions.get(functionName))
+        const funcNameToJs = path.join(parsed.dir, parsed.name + `.js`)
 
         try {
           const pathToFunction = path.join(compiledFunctionsDir, funcNameToJs)
