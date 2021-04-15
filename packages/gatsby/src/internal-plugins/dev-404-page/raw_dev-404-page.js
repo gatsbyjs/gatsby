@@ -78,6 +78,10 @@ class Dev404Page extends React.Component {
   }
 
   render() {
+    // Detect when the query returns the default function node that's added when functions
+    // are *not* enabled. That seems the simplest way to communicate whether
+    // functions are enabled or not to this page.
+    // TODO remove when functions are shipped.
     const functionsEnabled =
       this.props.data.allSiteFunction.nodes[0].url !== `FAKE`
     const { pathname } = this.props.location
@@ -174,7 +178,7 @@ export default function API (req, res) {
                   Functions ({this.props.data.allSiteFunction.nodes.length})
                 </h2>
                 <ul>
-                  {this.props.data.allSiteFunction.nodes.map((node, index) => {
+                  {this.props.data.allSiteFunction.nodes.map(node => {
                     const url = `/api/${node.url}`
                     return (
                       <li key={url}>
