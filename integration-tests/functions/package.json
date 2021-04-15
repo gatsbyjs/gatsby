@@ -4,15 +4,21 @@
   "private": true,
   "description": "functions",
   "author": "Kyle Mathews",
-  "keywords": [
-    "gatsby"
-  ],
+  "keywords": ["gatsby"],
   "scripts": {
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "test:jest": "jest",
+    "test": "start-server-and-test develop http://localhost:8000 test:jest"
+  },
+  "devDependencies": {
+    "fs-extra": "^9.0.0",
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
+    "start-server-and-test": "^1.11.3"
   },
   "dependencies": {
     "gatsby": "3.4.0-next.0-dev-1618514414024",
