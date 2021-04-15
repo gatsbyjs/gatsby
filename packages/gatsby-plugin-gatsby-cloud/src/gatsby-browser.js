@@ -1,5 +1,7 @@
 import React from "react"
-// import Style from "../gatsby/cache-dir/loading-indicator/style.js"
+
+export const POLLING_INTERVAL = 1500
+
 function css(strings, ...keys) {
   const lastIndex = strings.length - 1
   return (
@@ -170,9 +172,9 @@ const getBuildInfo = async () => {
     headers: {
       "Content-Type": `application/json`,
       /*
-       * NOTE: Current auth token used is the same auth token that preview exposes
-       * Currently this token is only used for read-only purposes but it's good to note for the future if this changes
-       */
+      * NOTE: Current auth token used is the same auth token that preview exposes
+      * Currently this token is only used for read-only purposes but it's good to note for the future if this changes
+      */
       Authorization: process.env.GATSBY_PREVIEW_AUTH_TOKEN,
       "x-runner-type": `PREVIEW`,
     },
@@ -240,7 +242,7 @@ const FailedIcon = () => (
   </>
 )
 
-class Indicator extends React.Component {
+export class Indicator extends React.Component {
   state = {
     attributes: {},
     icon: ``,
@@ -249,88 +251,100 @@ class Indicator extends React.Component {
   componentDidMount() {
     const prettyUrlRegex = /^preview-/
     const host = window.location.hostname
-
+    let error
     let buildId
 
-    setInterval(async () => {
-      // currentBuild is the most recent build that is not QUEUED
-      // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
-      const { currentBuild, latestBuild } = await getBuildInfo()
+    try {
+      setInterval(async () => {
+        // currentBuild is the most recent build that is not QUEUED
+        // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
+        const { currentBuild, latestBuild } = await getBuildInfo()
 
-      if (!buildId) {
-        if (prettyUrlRegex.test(host)) {
-          buildId = latestBuild?.id
-        } else {
-          const buildIdMatch = host.match(/build-(.*?(?=\.))/)
-          buildId = buildIdMatch && buildIdMatch[1]
+        if (!buildId) {
+          if (prettyUrlRegex.test(host)) {
+            buildId = latestBuild?.id
+          } else {
+            const buildIdMatch = host.match(/build-(.*?(?=\.))/)
+            buildId = buildIdMatch && buildIdMatch[1]
+          }
         }
-      }
 
-      if (currentBuild?.buildStatus === `BUILDING`) {
-        this.setState(prevState =>
-          Object.assign({}, prevState, {
-            attributes: indicatorSetBuilding(),
-            icon: <Spinner />,
-          })
-        )
-      } else if (currentBuild?.buildStatus === `ERROR`) {
-        this.setState(prevState =>
-          Object.assign({}, prevState, {
-            attributes: indicatorSetFailed(),
-            icon: <FailedIcon />,
-          })
-        )
-      } else if (buildId === currentBuild?.id) {
-        this.setState(prevState =>
-          Object.assign({}, prevState, {
-            attributes: indicatorSetUpToDate(),
-            icon: ``,
-          })
-        )
-      } else if (
-        buildId !== latestBuild?.id &&
-        latestBuild?.buildStatus === `SUCCESS`
-      ) {
-        this.setState(prevState =>
-          Object.assign({}, prevState, {
-            attributes: indicatorSetSuccess(latestBuild?.id),
-            icon: <SuccessIcon />,
-          })
-        )
-      }
-    }, 1500)
+        if (currentBuild?.buildStatus === `BUILDING`) {
+          this.setState(prevState =>
+            Object.assign({}, prevState, {
+              attributes: indicatorSetBuilding(),
+              icon: <Spinner />,
+            })
+          )
+        } else if (currentBuild?.buildStatus === `ERROR`) {
+          this.setState(prevState =>
+            Object.assign({}, prevState, {
+              attributes: indicatorSetFailed(),
+              icon: <FailedIcon />,
+            })
+          )
+        } else if (buildId === currentBuild?.id) {
+          this.setState(prevState =>
+            Object.assign({}, prevState, {
+              attributes: indicatorSetUpToDate(),
+              icon: ``,
+            })
+          )
+        } else if (
+          buildId !== latestBuild?.id &&
+          latestBuild?.buildStatus === `SUCCESS`
+        ) {
+          this.setState(prevState =>
+            Object.assign({}, prevState, {
+              attributes: indicatorSetSuccess(latestBuild?.id),
+              icon: <SuccessIcon />,
+            })
+          )
+        }
+      }, POLLING_INTERVAL)
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   render() {
-    return (
-      <>
-        <Style />
-        <div
-          onClick={this.state.attributes.onclick}
-          style={{
-            color: this.state.attributes.color,
-            backgroundColor: this.state.attributes.backgroundColor,
-            cursor: this.state.attributes.cursor,
-          }}
-          data-gatsby-loading-indicator="root"
-          data-gatsby-loading-indicator-visible={this.state.attributes.visible}
-          aria-live="assertive"
-        >
-          {this.state.icon}
-          <div data-gatsby-loading-indicator="text">
-            {this.state.attributes.text}
+    if (Object.keys(this.state.attributes).length === 0) {
+      return <>{this.props.children}</>
+    } else {
+      return (
+        <>
+          <Style />
+          <div
+            data-testid='preview-status-indicator'
+            onClick={this.state.attributes.onclick}
+            style={{
+              color: this.state.attributes.color,
+              backgroundColor: this.state.attributes.backgroundColor,
+              cursor: this.state.attributes.cursor,
+            }}
+            data-gatsby-loading-indicator="root"
+            data-gatsby-loading-indicator-visible={this.state.attributes.visible}
+            aria-live="assertive"
+          >
+            {this.state.icon}
+            <div data-gatsby-loading-indicator="text">
+              {this.state.attributes.text}
+            </div>
           </div>
-        </div>
-        {this.props.children}
-      </>
-    )
+          {this.props.children}
+        </>
+      )
+    }
   }
 }
 
-export const wrapPageElement = ({ element, props }) => (
-  // if (process.env.GATSBY_PREVIEW_INDICATOR_ENABLED === 'true') {
-  <>
-    <Indicator {...props}>{element}</Indicator>
-  </>
-)
-// }
+export const wrapPageElement = ({ element, props }) => {
+  if (process.env.GATSBY_PREVIEW_INDICATOR_ENABLED === 'true') {
+    return <>
+      <Indicator>{element}</Indicator>
+    </>
+  } else {
+    return <>{element}</>
+  }
+}
+
