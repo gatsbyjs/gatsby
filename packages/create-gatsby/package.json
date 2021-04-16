@@ -24,7 +24,7 @@
     "ansi-wordwrap": "^1.0.2",
     "common-tags": "^1.8.0",
     "enquirer": "^2.3.6",
-    "eslint": "^7.18.0",
+    "eslint": "^7.24.0",
     "execa": "^4.1.0",
     "fs-extra": "^9.0.1",
     "gatsby-plugin-utils": "^1.4.0-next.0",
