@@ -112,6 +112,7 @@
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.27.0",
+    "multer": "^1.4.2",
     "name-all-modules-plugin": "^1.0.1",
     "normalize-path": "^3.0.0",
     "null-loader": "^4.0.1",

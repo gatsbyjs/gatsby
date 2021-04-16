@@ -218,7 +218,9 @@ export function loadPlugins(
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
-  ]
+    process.env.GATSBY_EXPERIMENTAL_FUNCTIONS &&
+      `../../internal-plugins/functions`,
+  ].filter(Boolean) as Array<string>
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath))
