@@ -56,6 +56,19 @@ Object {
 }
 `;
 
+exports[`routing dynamic routes 1`] = `
+Object {
+  "super": "additional",
+  "userId": "23",
+}
+`;
+
+exports[`routing dynamic routes 2`] = `
+Object {
+  "0": "super",
+}
+`;
+
 exports[`routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
 
 exports[`routing routes with special characters 2`] = `"some whitespace.js"`;

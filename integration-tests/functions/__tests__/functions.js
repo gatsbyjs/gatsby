@@ -48,6 +48,19 @@ describe(`routing`, () => {
       expect(result).toMatchSnapshot()
     }
   })
+
+  test(`dynamic routes`, async () => {
+    const routes = [
+      `http://localhost:8000/api/users/23/additional`,
+      `http://localhost:8000/api/dir/super`,
+    ]
+
+    for (const route of routes) {
+      const result = await fetch(route).then(res => res.json())
+
+      expect(result).toMatchSnapshot()
+    }
+  })
 })
 
 describe(`environment variables`, () => {

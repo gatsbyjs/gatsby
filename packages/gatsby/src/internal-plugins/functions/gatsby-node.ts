@@ -12,8 +12,27 @@ import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
+import pathToRegexp from "path-to-regexp"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
+
+// TODO put this in gatsby-core-utils and share with gatsby-plugin-page-creator
+// Does the following transformations:
+//   `/foo/[id]/` => `/foo/:id`
+//   `/foo/[...id]/` => `/foo/*id`
+//   `/foo/[...]/` => `/foo/*`
+function getMatchPath(srcPagesPath: string): string | undefined {
+  if (srcPagesPath.includes(`[`) === false) return undefined
+  const startRegex = /\[/g
+  const endRegex = /\]/g
+  const splatRegex = /\[\.\.\./g
+
+  return srcPagesPath
+    .replace(splatRegex, `*`)
+    .replace(startRegex, `:`)
+    .replace(endRegex, ``)
+    .replace(/\/$/, ``)
+}
 
 const createWebpackConfig = async ({
   siteDirectoryPath,
@@ -43,9 +62,13 @@ const createWebpackConfig = async ({
   const knownFunctions = new Map(
     files.map(file => {
       const { dir, name } = path.parse(file)
-      return [urlResolve(dir, name === `index` ? `` : name), file]
+      const finalName = urlResolve(dir, name === `index` ? `` : name)
+      console.log(getMatchPath(finalName))
+      return [finalName, { file, matchPath: getMatchPath(finalName) }]
     })
   )
+
+  console.log({ knownFunctions })
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
 
@@ -103,7 +126,7 @@ const createWebpackConfig = async ({
 
   // Write out manifest for use by `gatsby serve` and plugins
   const manifest = {}
-  Array.from(knownFunctions).forEach(([, file]) => {
+  Array.from(knownFunctions).forEach(([, { file }]) => {
     const name = path.parse(file).name
     const compiledPath = path.join(compiledFunctionsDir, name + `.js`)
     manifest[name] = compiledPath
@@ -115,7 +138,7 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  Array.from(knownFunctions).forEach(([, file]) => {
+  Array.from(knownFunctions).forEach(([, { file }]) => {
     const filePath = path.join(functionsDirectory, file)
 
     // Get path without the extension (as it could be ts or js)
@@ -165,7 +188,6 @@ export async function onPreBootstrap({
 
   const {
     program: { directory: siteDirectoryPath },
-    functions,
   } = store.getState()
 
   const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
@@ -283,12 +305,47 @@ export async function onCreateDevServer({
     express.json(),
     express.raw(),
     async (req, res, next) => {
-      const { "0": functionName } = req.params
+      console.log(req.params)
+      const { "0": pathFragment } = req.params
 
       const { functions } = store.getState()
 
-      if (functions.has(functionName)) {
-        reporter.verbose(`Running ${functionName}`)
+      console.log({ functions })
+
+      let functionKey
+
+      if (functions.has(pathFragment)) {
+        functionKey = pathFragment
+      } else {
+        // Check if there's any matchPaths that match
+        Array.from(functions).forEach(([funcName, { matchPath }]) => {
+          let exp
+          const keys = []
+          if (matchPath) {
+            exp = pathToRegexp(matchPath, keys)
+          }
+          console.log({
+            matchPath,
+            exp,
+            keys,
+            pathFragment,
+            result: exp && exp.exec(pathFragment),
+          })
+          if (exp && exp.exec(pathFragment) !== null) {
+            functionKey = funcName
+            const matches = [...pathFragment.match(exp)].slice(1)
+            console.log({ matches, keys })
+            const newParams = {}
+            matches.forEach(
+              (match, index) => (newParams[keys[index].name] = match)
+            )
+            req.params = newParams
+          }
+        })
+      }
+
+      if (functionKey) {
+        reporter.verbose(`Running ${functionKey}`)
         const start = Date.now()
         const compiledFunctionsDir = path.join(
           siteDirectoryPath,
@@ -297,7 +354,7 @@ export async function onCreateDevServer({
         )
 
         // Ignore the original extension as all compiled functions now end with js.
-        const parsed = path.parse(functions.get(functionName))
+        const parsed = path.parse(functions.get(functionKey).file)
         const funcNameToJs = path.join(parsed.dir, parsed.name + `.js`)
 
         try {
@@ -315,7 +372,7 @@ export async function onCreateDevServer({
 
         const end = Date.now()
         reporter.log(
-          `Executed function "/api/${functionName}" in ${end - start}ms`
+          `Executed function "/api/${functionKey}" in ${end - start}ms`
         )
       } else {
         next()
