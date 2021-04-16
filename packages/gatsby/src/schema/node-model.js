@@ -253,6 +253,9 @@ class LocalNodeModel {
       sort: query.sort,
       group: query.group,
       distinct: query.distinct,
+      max: query.max,
+      min: query.min,
+      sum: query.sum,
     })
     const fieldsToResolve = determineResolvableFields(
       this.schemaComposer,
@@ -593,7 +596,7 @@ const toNodeTypeNames = (schema, gqlTypeName) => {
     .map(type => type.name)
 }
 
-const getQueryFields = ({ filter, sort, group, distinct }) => {
+const getQueryFields = ({ filter, sort, group, distinct, max, min, sum }) => {
   const filterFields = filter ? dropQueryOperators(filter) : {}
   const sortFields = (sort && sort.fields) || []
 
@@ -609,11 +612,32 @@ const getQueryFields = ({ filter, sort, group, distinct }) => {
     distinct = []
   }
 
+  if (max && !Array.isArray(max)) {
+    max = [max]
+  } else if (max == null) {
+    max = []
+  }
+
+  if (min && !Array.isArray(min)) {
+    min = [min]
+  } else if (min == null) {
+    min = []
+  }
+
+  if (sum && !Array.isArray(sum)) {
+    sum = [sum]
+  } else if (sum == null) {
+    sum = []
+  }
+
   return _.merge(
     filterFields,
     ...sortFields.map(pathToObject),
     ...group.map(pathToObject),
-    ...distinct.map(pathToObject)
+    ...distinct.map(pathToObject),
+    ...max.map(pathToObject),
+    ...min.map(pathToObject),
+    ...sum.map(pathToObject)
   )
 }
 

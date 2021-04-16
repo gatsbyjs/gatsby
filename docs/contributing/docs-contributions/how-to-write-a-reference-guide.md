@@ -12,7 +12,7 @@ Reference Guides work well for describing the nuts and bolts of how to use a Gat
 
 A Reference Guide isn't meant to be read from start to finish. Rather, it's meant to be used by developers who are actively working on a project and need to look up some details about how a particular Gatsby feature works. It might include code examples to show how to use a feature in context, but it doesn't provide a full step-by-step process like what you'd expect from a [How-To Guide](/contributing/docs-contributions/how-to-write-a-how-to-guide) or [Tutorial](/contributing/docs-contributions/how-to-write-a-tutorial)
 
-> For more information on Reference Guides, check out the [Divio documentation system](https://documentation.divio.com/reference-guides/), which the Gatsby docs are based on.
+> For more information on Reference Guides, check out the [Diátaxis documentation system](https://diataxis.fr/reference-guides/), which the Gatsby docs are based on.
 
 ## A near-perfect example of a Reference Guide
 
