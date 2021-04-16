@@ -20,10 +20,9 @@ const createWebpackConfig = async ({
   functionsDirectory,
   store,
   reporter,
-}): webpack.Configuration => {
+}): Promise<webpack.Configuration> => {
   const files = await new Promise((resolve, reject) => {
-    const functionsGlob = `**/*.{js,ts}`
-    glob(functionsGlob, { cwd: functionsDirectory }, (err, files) => {
+    glob(`**/*.{js,ts}`, { cwd: functionsDirectory }, (err, files) => {
       if (err) {
         reject(err)
       } else {
