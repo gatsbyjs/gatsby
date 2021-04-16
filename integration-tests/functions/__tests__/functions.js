@@ -139,6 +139,7 @@ describe(`functions can parse different ways of sending data`, () => {
     expect(result).toMatchSnapshot()
   })
 
+  // TODO enable when functions support uploading files.
   // test(`file in multipart/form`, async () => {
   // const { readFileSync } = require("fs")
 
