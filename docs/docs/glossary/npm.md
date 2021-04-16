@@ -13,9 +13,9 @@ update libraries and frameworks (dependencies) for Node-based projects, and
 interact with the npm Registry. You'll use npm to install and upgrade Gatsby and
 its plugins.
 
-npm is a [command line](/docs/glossary#command-line) tool. You'll need Terminal (Mac, Linux) or Command Prompt (Windows) in order to run its commands. To use one of npm's features, type `npm <command>` . For example, `npm help` displays a list of available features, including `install`, `uninstall`, `update`, and `search`.
+npm is a [command line](/docs/glossary#command-line) tool. You'll need Terminal (Mac, Linux) or Command Prompt (Windows) in order to run its commands. To use one of npm's features, type `npm <command>`. For example, `npm help` displays a list of available features, including `install`, `uninstall`, `update`, and `search`.
 
-npm is installed alongside Node during the default [installation process](/tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system). You don't need to take any additional steps to add it to your environment.
+npm is installed alongside Node during the default [installation process](/docs/tutorial/part-zero/#install-nodejs-for-your-appropriate-operating-system). You don't need to take any additional steps to add it to your environment.
 
 ### Using npm to install Gatsby
 
@@ -41,7 +41,7 @@ This will download and install the latest version of Gatsby, then create a new G
 
 ### Using npm to install Gatsby plugins
 
-Gatsby has a robust collection of [plugins](/plugins/) that add functionality or data sourcing to your Gatsby sites. Adding a plugin as a project dependency uses the same process as installing Gatsby itself. Use `npm install <package-name>`. To add the [gatsby-source-filesystem](/packages/gatsby-source-filesystem), plugin, for example, you'd use the following command.
+Gatsby has a robust collection of [plugins](/plugins/) that add functionality or data sourcing to your Gatsby sites. Adding a plugin as a project dependency uses the same process as installing Gatsby itself. Use `npm install <package-name>`. To add the [gatsby-source-filesystem](/plugins/gatsby-source-filesystem), plugin, for example, you'd use the following command.
 
 ```shell
 npm install gatsby-source-filesystem
@@ -58,4 +58,4 @@ This will update the dependencies list of `package.json` and `package-lock.json`
 - [npm](https://www.npmjs.com/) official website
 - [Node.js](https://nodejs.org/en/) official website
 - [An introduction to the npm package manager](https://nodejs.dev/an-introduction-to-the-npm-package-manager) from Nodejs.dev
-- [Set Up Your Development Environment](/tutorial/part-zero/) from the Gatsby docs
+- [Set Up Your Development Environment](/docs/tutorial/part-zero/) from the Gatsby docs

@@ -3,7 +3,7 @@ import Queue from "better-queue"
 import lodash from "lodash"
 import mitt from "mitt"
 
-import resources from "../resources"
+import * as resources from "../resources"
 
 import RecipesReconciler from "./reconciler"
 import ErrorBoundary from "./error-boundary"
@@ -51,7 +51,9 @@ const Wrapper = ({
     >
       <ResourceProvider value={plan}>
         <InputProvider value={inputs}>
-          <Suspense fallback={<p>Loading recipe...</p>}>{children}</Suspense>
+          <Suspense fallback={<p>Loading recipe 1/2...</p>}>
+            {children}
+          </Suspense>
         </InputProvider>
       </ResourceProvider>
     </GlobalsProvider>
@@ -190,40 +192,35 @@ const handleResource = (resourceName, context, props) => {
 
   const fn = mode === `apply` ? `create` : `plan`
 
-  let promise
-  try {
-    promise = new Promise((resolve, reject) => {
-      // Multiple of the same promises can be queued due to re-rendering
-      // so this first checks for the cached result again before executing
-      // the request.
-      const cachedValue = resultCache.get(cacheKey)
-      if (cachedValue) {
-        resolve(cachedValue)
-      } else {
-        resources[resourceName][fn](context, props)
-          .then(result => {
-            if (fn === `create`) {
-              result.isDone = true
-            }
-            inFlightCache.set(cacheKey, false)
-            return result
-          })
-          .then(result => {
-            resultCache.set(cacheKey, result)
-            return result
-          })
-          .then(resolve)
-          .catch(e => {
-            if (e.name === `MissingInfoError`) {
-              inFlightCache.delete(cacheKey)
-            }
-            reject(e)
-          })
-      }
-    })
-  } catch (e) {
-    throw e
-  }
+  const promise = new Promise((resolve, reject) => {
+    // Multiple of the same promises can be queued due to re-rendering
+    // so this first checks for the cached result again before executing
+    // the request.
+    const cachedValue = resultCache.get(cacheKey)
+    if (cachedValue) {
+      resolve(cachedValue)
+    } else {
+      resources[resourceName][fn](context, props)
+        .then(result => {
+          if (fn === `create`) {
+            result.isDone = true
+          }
+          inFlightCache.set(cacheKey, false)
+          return result
+        })
+        .then(result => {
+          resultCache.set(cacheKey, result)
+          return result
+        })
+        .then(resolve)
+        .catch(e => {
+          if (e.name === `MissingInfoError`) {
+            inFlightCache.delete(cacheKey)
+          }
+          reject(e)
+        })
+    }
+  })
 
   inFlightCache.set(cacheKey, promise)
 
@@ -328,7 +325,7 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   })
 
   // When there's no resources, renderResources finishes synchronously
-  // so wait for the next tick so the emitter listners can be setup first.
+  // so wait for the next tick so the emitter listeners can be setup first.
   process.nextTick(() => renderResources())
 
   if (isStream) {
@@ -347,5 +344,4 @@ const render = (recipe, cb, context = {}, isApply, isStream, name) => {
   }
 }
 
-module.exports.render = render
-module.exports.ResourceComponent = ResourceComponent
+export { render, ResourceComponent }

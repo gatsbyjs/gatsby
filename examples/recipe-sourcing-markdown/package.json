@@ -5,16 +5,16 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
-    "gatsby": "^2.24.50",
-    "gatsby-source-filesystem": "^2.3.25",
-    "gatsby-transformer-remark": "^2.8.29",
+    "gatsby": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-remark": "next",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "2.1.0"
+    "prettier": "2.1.1"
   },
   "keywords": [
     "gatsby"

@@ -28,7 +28,7 @@ const gatsbyBin = path.join(
 const defaultStdio = `ignore`
 
 const collectEventsForDevelop = (events, env = {}) => {
-  const gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+  const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
     stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
     env: {
       ...process.env,
@@ -38,8 +38,9 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
-  const finishedPromise = new Promise(resolve => {
+  const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
+
     gatsbyProcess.on(`message`, msg => {
       if (!listening) {
         return
@@ -55,7 +56,8 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-          resolve()
+
+          setTimeout(resolve, 1000)
         }, 5000)
       }
     })
@@ -103,12 +105,12 @@ const commonAssertions = events => {
     const actionSchema = joi.alternatives().try(
       joi
         .object({
-          type: joi.string().required().valid([`SET_STATUS`]),
+          type: joi.string().required().valid(`SET_STATUS`),
           // TODO: We should change this to always be an Object I think pieh
           payload: joi
             .string()
             .required()
-            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`]),
+            .valid(`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
@@ -119,12 +121,7 @@ const commonAssertions = events => {
           type: joi
             .string()
             .required()
-            .valid([
-              `ACTIVITY_START`,
-              `ACTIVITY_UPDATE`,
-              `ACTIVITY_END`,
-              `LOG`,
-            ]),
+            .valid(`ACTIVITY_START`, `ACTIVITY_UPDATE`, `ACTIVITY_END`, `LOG`),
           payload: joi.object(),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
@@ -133,7 +130,7 @@ const commonAssertions = events => {
     )
 
     const eventSchema = joi.object({
-      type: joi.string().required().valid([`LOG_ACTION`]),
+      type: joi.string().required().valid(`LOG_ACTION`),
       action: actionSchema,
     })
     events.forEach(event => {
@@ -332,7 +329,7 @@ describe(`develop`, () => {
       events.splice(0, events.length)
     }
     beforeAll(async done => {
-      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -359,8 +356,9 @@ describe(`develop`, () => {
       })
     })
 
-    afterAll(() => {
+    afterAll(done => {
       gatsbyProcess.kill()
+      setTimeout(done, 1000)
     })
 
     describe(`code change`, () => {
@@ -477,7 +475,7 @@ describe(`build`, () => {
     let events = []
 
     beforeAll(async () => {
-      gatsbyProcess = spawn(gatsbyBin, [`build`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -512,7 +510,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -544,7 +542,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -576,7 +574,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -610,7 +608,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,

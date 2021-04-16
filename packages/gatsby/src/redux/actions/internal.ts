@@ -16,6 +16,11 @@ import {
   IPageQueryRunAction,
   IRemoveStaleJobAction,
   ISetSiteConfig,
+  IDefinitionMeta,
+  ISetGraphQLDefinitionsAction,
+  IQueryStartAction,
+  IApiFinishedAction,
+  IQueryClearDirtyQueriesListToEmitViaWebsocket,
 } from "../types"
 
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
@@ -51,7 +56,7 @@ export const createPageDependency = (
  * @private
  */
 export const deleteComponentsDependencies = (
-  paths: string[]
+  paths: Array<string>
 ): IDeleteComponentDependenciesAction => {
   return {
     type: `DELETE_COMPONENTS_DEPENDENCIES`,
@@ -82,13 +87,28 @@ export const replaceComponentQuery = ({
   }
 }
 
+export const apiFinished = (
+  payload: IApiFinishedAction["payload"]
+): IApiFinishedAction => {
+  return {
+    type: `API_FINISHED`,
+    payload,
+  }
+}
+
 /**
  * When the query watcher extracts a "static" GraphQL query from <StaticQuery>
  * components, it calls this to store the query with its component.
  * @private
  */
 export const replaceStaticQuery = (
-  args: any,
+  args: {
+    name: string
+    componentPath: string
+    id: string
+    query: string
+    hash: string
+  },
   plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
@@ -114,6 +134,23 @@ export const queryExtracted = (
     plugin,
     traceId,
     payload: { componentPath, query },
+  }
+}
+
+/**
+ * Set Definitions for fragment extraction, etc.
+ *
+ * Used by developer tools such as vscode-graphql & graphiql
+ *
+ * query-compiler.js.
+ * @private
+ */
+export const setGraphQLDefinitions = (
+  definitionsByName: Map<string, IDefinitionMeta>
+): ISetGraphQLDefinitionsAction => {
+  return {
+    type: `SET_GRAPHQL_DEFINITIONS`,
+    payload: definitionsByName,
   }
 }
 
@@ -194,7 +231,7 @@ export const setProgramStatus = (
  * @private
  */
 export const pageQueryRun = (
-  { path, componentPath, isPage },
+  payload: IPageQueryRunAction["payload"],
   plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
@@ -202,7 +239,26 @@ export const pageQueryRun = (
     type: `PAGE_QUERY_RUN`,
     plugin,
     traceId,
+    payload,
+  }
+}
+
+export const queryStart = (
+  { path, componentPath, isPage },
+  plugin: IGatsbyPlugin,
+  traceId?: string
+): IQueryStartAction => {
+  return {
+    type: `QUERY_START`,
+    plugin,
+    traceId,
     payload: { path, componentPath, isPage },
+  }
+}
+
+export const clearDirtyQueriesListToEmitViaWebsocket = (): IQueryClearDirtyQueriesListToEmitViaWebsocket => {
+  return {
+    type: `QUERY_CLEAR_DIRTY_QUERIES_LIST_TO_EMIT_VIA_WEBSOCKET`,
   }
 }
 
@@ -235,7 +291,7 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
-      details => details.type === `object.allowUnknown`
+      details => details.type === `object.unknown`
     )
 
     if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {

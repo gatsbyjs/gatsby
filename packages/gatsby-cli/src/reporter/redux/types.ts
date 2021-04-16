@@ -1,8 +1,9 @@
 import { Actions, ActivityStatuses, ActivityTypes } from "../constants"
 import { IStructuredError } from "../../structured-errors/types"
+import { ErrorCategory } from "../../structured-errors/error-map"
 
 export interface IGatsbyCLIState {
-  messages: ILog[]
+  messages: Array<ILog>
   activities: {
     [id: string]: IActivity
   }
@@ -42,6 +43,7 @@ interface ILog {
   group: string | undefined
   code: string | undefined
   type: string | undefined
+  category?: keyof typeof ErrorCategory
   filePath: string | undefined
   location: IStructuredError["location"] | undefined
   docsUrl: string | undefined
@@ -52,6 +54,7 @@ interface ILog {
   activity_uuid: string | undefined
   timestamp: string
   stack: IStructuredError["stack"] | undefined
+  pluginName: string | undefined
 }
 
 export interface ICreateLog {

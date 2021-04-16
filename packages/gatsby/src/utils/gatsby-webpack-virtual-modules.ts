@@ -1,5 +1,6 @@
 import VirtualModulesPlugin from "webpack-virtual-modules"
 import * as path from "path"
+import * as fs from "fs-extra"
 /*
  * This module allows creating virtual (in memory only) modules / files
  * that webpack compilation can access without the need to write module
@@ -20,7 +21,7 @@ interface IGatsbyWebpackVirtualModulesContext {
 }
 
 const fileContentLookup: Record<string, string> = {}
-const instances: IGatsbyWebpackVirtualModulesContext[] = []
+const instances: Array<IGatsbyWebpackVirtualModulesContext> = []
 
 export const VIRTUAL_MODULES_BASE_PATH = `.cache/_this_is_virtual_fs_path_`
 
@@ -45,6 +46,10 @@ export function writeModule(filePath: string, fileContents: string): void {
     // we already have this, no need to cause invalidation
     return
   }
+
+  // workaround webpack marking virtual modules as deleted because those files don't really exist
+  // so we create those files just so watchpack doesn't mark them as initially missing
+  fs.outputFileSync(adjustedFilePath, fileContents)
 
   fileContentLookup[adjustedFilePath] = fileContents
 

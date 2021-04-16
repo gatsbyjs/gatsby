@@ -5,24 +5,24 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@mdx-js/mdx": "^1.6.16",
-    "@mdx-js/react": "^1.6.16",
-    "gatsby": "^2.24.50",
-    "gatsby-image": "^2.4.16",
-    "gatsby-plugin-manifest": "^2.4.24",
-    "gatsby-plugin-mdx": "^1.2.35",
-    "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-sharp": "^2.6.28",
-    "gatsby-source-filesystem": "^2.3.25",
-    "gatsby-transformer-sharp": "^2.5.13",
+    "@mdx-js/mdx": "^1.6.18",
+    "@mdx-js/react": "^1.6.18",
+    "gatsby": "next",
+    "gatsby-image": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-plugin-mdx": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-sharp": "next",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "prettier": "2.1.0"
+    "prettier": "2.1.1"
   },
   "keywords": [
     "gatsby"

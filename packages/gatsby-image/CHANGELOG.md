@@ -3,6 +3,98 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.3.0-next.1...gatsby-image@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.3.0-next.0...gatsby-image@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.2.0-next.0...gatsby-image@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.1.0-next.2...gatsby-image@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.1.0-next.1...gatsby-image@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.1.0-next.0...gatsby-image@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.0.0-next.1...gatsby-image@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@3.0.0-next.0...gatsby-image@3.0.0-next.1) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-image
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.12.0-next.0...gatsby-image@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.11.0-next.0...gatsby-image@2.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.10.0-next.1...gatsby-image@2.11.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.10.0-next.0...gatsby-image@2.10.0-next.1) (2021-01-12)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.9.0-next.0...gatsby-image@2.10.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.8.0-next.0...gatsby-image@2.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.7.0-next.0...gatsby-image@2.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.6.0-next.0...gatsby-image@2.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-image
+
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.5.0-next.0...gatsby-image@2.5.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.20...gatsby-image@2.4.21) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.19...gatsby-image@2.4.20) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.18...gatsby-image@2.4.19) (2020-09-16)
+
+### Bug Fixes
+
+- **gatsby-image:** Don't assume DOM state is valid at hydration stage ([#26097](https://github.com/gatsbyjs/gatsby/issues/26097)) ([cf34304](https://github.com/gatsbyjs/gatsby/commit/cf3430462748cecdfb4b9f6b61285534fb4a2ea9))
+
+## [2.4.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.17...gatsby-image@2.4.18) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-image
+
+## [2.4.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.16...gatsby-image@2.4.17) (2020-09-07)
+
+### Bug Fixes
+
+- **gatsby-image:** do not render the source tag if no srcSet is provided ([#26766](https://github.com/gatsbyjs/gatsby/issues/26766)) ([268d982](https://github.com/gatsbyjs/gatsby/commit/268d982))
+
 ## [2.4.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-image@2.4.15...gatsby-image@2.4.16) (2020-08-12)
 
 ### Bug Fixes

@@ -242,4 +242,4 @@ with
 const header = system
 ```
 
-and you should see `Futura PT` turning into `system-ui` within a few moments on your `localhost:8000`.
+and you should see `Futura PT` turning into `system-ui` within a few moments on your `http://localhost:8000`.

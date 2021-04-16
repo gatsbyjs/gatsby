@@ -13,6 +13,7 @@ jest.mock(`gatsby-core-utils`, () => {
   return {
     ...jest.requireActual(`gatsby-core-utils`),
     getGatsbyVersion: jest.fn(() => `2.1.1`),
+    isCI: (): boolean => false,
   }
 })
 
@@ -37,6 +38,7 @@ const clearStateToAllowHeuristicsToPass = (): void => {
   delete process.env.GATSBY_FEEDBACK_DISABLED
   // Heuristic 4
   getConfigStore().set(`feedback.lastRequestDate`, dateFromSixMonthsAgo)
+  getConfigStore().set(`feedback.sevenDayFeedbackDate`, dateFromSixMonthsAgo)
   // Heuristic 5
   ;(getGatsbyVersion as jest.Mock).mockReturnValue(`2.1.1`)
 }

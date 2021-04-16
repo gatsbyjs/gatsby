@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.3.0-next.1...gatsby-transformer-hjson@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.3.0-next.0...gatsby-transformer-hjson@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.2.0-next.0...gatsby-transformer-hjson@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.1.0-next.1...gatsby-transformer-hjson@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.1.0-next.0...gatsby-transformer-hjson@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.0.0-next.1...gatsby-transformer-hjson@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@3.0.0-next.0...gatsby-transformer-hjson@3.0.0-next.1) (2021-02-22)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-hjson ([#28231](https://github.com/gatsbyjs/gatsby/issues/28231)) ([dbb5faf](https://github.com/gatsbyjs/gatsby/commit/dbb5fafbfe2d098b9200b675a9dc9f00d449d73b))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.12.0-next.0...gatsby-transformer-hjson@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.11.0-next.0...gatsby-transformer-hjson@2.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.10.0-next.0...gatsby-transformer-hjson@2.11.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.9.0-next.0...gatsby-transformer-hjson@2.10.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.8.0-next.0...gatsby-transformer-hjson@2.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.7.0-next.0...gatsby-transformer-hjson@2.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.6.0-next.0...gatsby-transformer-hjson@2.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.5.0-next.0...gatsby-transformer-hjson@2.5.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+## [2.4.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.13...gatsby-transformer-hjson@2.4.14) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
+## [2.4.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.12...gatsby-transformer-hjson@2.4.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+## [2.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.11...gatsby-transformer-hjson@2.4.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
+## [2.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.10...gatsby-transformer-hjson@2.4.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-transformer-hjson
+
 ## [2.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-hjson@2.4.9...gatsby-transformer-hjson@2.4.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-transformer-hjson

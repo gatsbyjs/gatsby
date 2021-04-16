@@ -3,6 +3,165 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.3.0-next.1...gatsby-transformer-sharp@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.3.0-next.0...gatsby-transformer-sharp@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.2.0-next.0...gatsby-transformer-sharp@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.1.0-next.2...gatsby-transformer-sharp@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.1.0-next.1...gatsby-transformer-sharp@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.1.0-next.0...gatsby-transformer-sharp@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.0.0-next.2...gatsby-transformer-sharp@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.0.0-next.1...gatsby-transformer-sharp@3.0.0-next.2) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@3.0.0-next.0...gatsby-transformer-sharp@3.0.0-next.1) (2021-02-11)
+
+### Bug Fixes
+
+- add common-tags to package.jsons ([#29424](https://github.com/gatsbyjs/gatsby/issues/29424)) ([94689ad](https://github.com/gatsbyjs/gatsby/commit/94689addc401f62248928a4df1587922261c96e6))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.13.0-next.0...gatsby-transformer-sharp@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.12.0-next.1...gatsby-transformer-sharp@2.13.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.12.0-next.0...gatsby-transformer-sharp@2.12.0-next.1) (2021-01-26)
+
+### Features
+
+- **gatsby-plugin-image:** Add support for backgroundColor in sharp ([#29141](https://github.com/gatsbyjs/gatsby/issues/29141)) ([eb2bede](https://github.com/gatsbyjs/gatsby/commit/eb2bede99328e149b34a7e893c870094fc1ae6de))
+- **gatsby-plugin-sharp:** Add image plugin defaults ([#29147](https://github.com/gatsbyjs/gatsby/issues/29147)) ([8b6bfa6](https://github.com/gatsbyjs/gatsby/commit/8b6bfa61a8ed502df71057409862b7771b096156))
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.11.0-next.1...gatsby-transformer-sharp@2.12.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+### Features
+
+- **gatsby-plugin-image:** Change fullWidth to use breakpoints ([#29002](https://github.com/gatsbyjs/gatsby/issues/29002)) ([9bcc12c](https://github.com/gatsbyjs/gatsby/commit/9bcc12c57728bb7ca08cefe4f2f4c684b65d3111))
+
+# [2.11.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.11.0-next.0...gatsby-transformer-sharp@2.11.0-next.1) (2021-01-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** PathPrefix isn't being passed/set for GatsbyImage ([#28845](https://github.com/gatsbyjs/gatsby/issues/28845)) ([5874414](https://github.com/gatsbyjs/gatsby/commit/58744145d6f8ef2e36c9a5f2f4e06290b0cff942))
+
+### Features
+
+- Add support for aspectRatio ([#28941](https://github.com/gatsbyjs/gatsby/issues/28941)) ([ed19fa0](https://github.com/gatsbyjs/gatsby/commit/ed19fa052a93e948b1135ac128cf5abec48752b6))
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.3...gatsby-transformer-sharp@2.11.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.10.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.2...gatsby-transformer-sharp@2.10.0-next.3) (2020-12-29)
+
+### Features
+
+- Add AVIF image support to beta image plugin ([#28742](https://github.com/gatsbyjs/gatsby/issues/28742)) ([2058775](https://github.com/gatsbyjs/gatsby/commit/205877542a9447e5d48a83718f5c0a751e44738d))
+
+# [2.10.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.1...gatsby-transformer-sharp@2.10.0-next.2) (2020-12-17)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-transformer-sharp ([#28510](https://github.com/gatsbyjs/gatsby/issues/28510)) ([b712950](https://github.com/gatsbyjs/gatsby/commit/b712950af10fbf31eb21f3bf6452c8761e7bb2df))
+
+# [2.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.10.0-next.0...gatsby-transformer-sharp@2.10.0-next.1) (2020-12-17)
+
+### Features
+
+- **gatsby-plugin-image:** Make dimensions optional and default to constrained ([#28662](https://github.com/gatsbyjs/gatsby/issues/28662)) ([f24a23d](https://github.com/gatsbyjs/gatsby/commit/f24a23d5b1f24ab33aec7a8ac882dbbccdf7d01e))
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.9.0-next.0...gatsby-transformer-sharp@2.10.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.8.0-next.1...gatsby-transformer-sharp@2.9.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.8.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.8.0-next.0...gatsby-transformer-sharp@2.8.0-next.1) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.7.0-next.1...gatsby-transformer-sharp@2.8.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+# [2.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.7.0-next.0...gatsby-transformer-sharp@2.7.0-next.1) (2020-11-16)
+
+### Bug Fixes
+
+- **gatsby-transformer-sharp:** create child nodes only for Files ([#27992](https://github.com/gatsbyjs/gatsby/issues/27992)) ([001e045](https://github.com/gatsbyjs/gatsby/commit/001e045c92dfd37a7d573d75ee9d81ae44c8e7a5))
+
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.6.0-next.0...gatsby-transformer-sharp@2.6.0-next.1) (2020-11-10)
+
+### Features
+
+- **gatsby-transformer-sharp:** Resolver API changes ([#27783](https://github.com/gatsbyjs/gatsby/issues/27783)) ([fe0b5de](https://github.com/gatsbyjs/gatsby/commit/fe0b5de77d223f5c13a9b315b650d8514cbdb9f9)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
+## [2.5.21](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.20...gatsby-transformer-sharp@2.5.21) (2020-11-02)
+
+### Features
+
+- Add new image resolvers ([#27443](https://github.com/gatsbyjs/gatsby/issues/27443)) ([e2022c2](https://github.com/gatsbyjs/gatsby/commit/e2022c23203c9d0bf43d7de74d8999a7c738391f)), closes [#27554](https://github.com/gatsbyjs/gatsby/issues/27554) [#27619](https://github.com/gatsbyjs/gatsby/issues/27619)
+
+## [2.5.20](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.19...gatsby-transformer-sharp@2.5.20) (2020-10-26)
+
+### Bug Fixes
+
+- **gatsby-source-filesystem,gatsby-transformer-sharp:** Use custom errors ([#27576](https://github.com/gatsbyjs/gatsby/issues/27576)) ([752e27a](https://github.com/gatsbyjs/gatsby/commit/752e27a2614ea6ee6d52d4cac161035108e977e7))
+
+## [2.5.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.18...gatsby-transformer-sharp@2.5.19) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
+## [2.5.18](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.17...gatsby-transformer-sharp@2.5.18) (2020-10-16)
+
+### Performance Improvements
+
+- **gatsby:** test sync before calling onCreateNode ([#27442](https://github.com/gatsbyjs/gatsby/issues/27442)) ([6400383](https://github.com/gatsbyjs/gatsby/commit/6400383287db9967a7124df7fb0d096408372b95))
+
+## [2.5.17](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.16...gatsby-transformer-sharp@2.5.17) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.5.16](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.15...gatsby-transformer-sharp@2.5.16) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
+## [2.5.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.14...gatsby-transformer-sharp@2.5.15) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-transformer-sharp
+
 ## [2.5.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-sharp@2.5.13...gatsby-transformer-sharp@2.5.14) (2020-08-31)
 
 **Note:** Version bump only for package gatsby-transformer-sharp

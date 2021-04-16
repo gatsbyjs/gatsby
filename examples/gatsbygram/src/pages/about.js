@@ -37,7 +37,7 @@ class About extends React.Component {
             </a>
           </p>
           <p>
-            <a href="https://www.gatsbyjs.org/blog/gatsbygram-case-study/">
+            <a href="https://www.gatsbyjs.com/blog/gatsbygram-case-study/">
               Read a case study on how Gatsbygram was built
             </a>
           </p>

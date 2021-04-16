@@ -16,7 +16,7 @@ const installedGatsbyVersion = (directory: string): number | undefined => {
   }
 }
 
-export const getBrowsersList = (directory: string): string[] => {
+export const getBrowsersList = (directory: string): Array<string> => {
   const fallback =
     installedGatsbyVersion(directory) === 1
       ? [`>1%`, `last 2 versions`, `IE >= 9`]

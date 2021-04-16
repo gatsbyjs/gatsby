@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.3.0-next.2...gatsby-remark-custom-blocks@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [3.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.3.0-next.1...gatsby-remark-custom-blocks@3.3.0-next.2) (2021-04-09)
+
+### Features
+
+- upgrade to remark 13 ([#29678](https://github.com/gatsbyjs/gatsby/issues/29678)) ([a5b5cf8](https://github.com/gatsbyjs/gatsby/commit/a5b5cf8379b7c105119e348d41723f3b2bd7b527))
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.3.0-next.0...gatsby-remark-custom-blocks@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.2.0-next.0...gatsby-remark-custom-blocks@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.1.0-next.1...gatsby-remark-custom-blocks@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.1.0-next.0...gatsby-remark-custom-blocks@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@3.0.0-next.0...gatsby-remark-custom-blocks@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.11.0-next.0...gatsby-remark-custom-blocks@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.10.0-next.0...gatsby-remark-custom-blocks@2.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.9.0-next.0...gatsby-remark-custom-blocks@2.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.8.0-next.0...gatsby-remark-custom-blocks@2.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.7.0-next.0...gatsby-remark-custom-blocks@2.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.6.0-next.0...gatsby-remark-custom-blocks@2.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.5.0-next.0...gatsby-remark-custom-blocks@2.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.4.0-next.0...gatsby-remark-custom-blocks@2.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.3.13...gatsby-remark-custom-blocks@2.3.14) (2020-10-20)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.3.12...gatsby-remark-custom-blocks@2.3.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.3.11...gatsby-remark-custom-blocks@2.3.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
+## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.3.10...gatsby-remark-custom-blocks@2.3.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-remark-custom-blocks
+
 ## [2.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-custom-blocks@2.3.9...gatsby-remark-custom-blocks@2.3.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-remark-custom-blocks

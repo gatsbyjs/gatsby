@@ -19,7 +19,7 @@ This guide will cover how configure and use the [`gatsby-source-sanity`](https:/
 ## Basic usage
 
 ```shell
-npm install --save gatsby-source-sanity
+npm install gatsby-source-sanity
 ```
 
 ```js:title=gatsby-config.js
@@ -133,7 +133,7 @@ export const query = graphql`
 
 ### Available fragments
 
-These are the fragments available on image assets, which allows easy lookup of the fields required by gatsby-image in various modes:
+These are the fragments available on image assets, which allows lookup of the fields required by gatsby-image in various modes:
 
 - `GatsbySanityImageFixed`
 - `GatsbySanityImageFixed_noBase64`
@@ -228,7 +228,7 @@ You can install [block-content-to-react](https://www.npmjs.com/package/@sanity/b
 
 ## Using .env variables
 
-If you don't want to attach your Sanity project's ID to the repo, you can easily store it in .env files by doing the following:
+If you don't want to attach your Sanity project's ID to the repo, you can store it in .env files by doing the following:
 
 ```text:title=.env
 SANITY_PROJECT_ID = abc123
@@ -255,6 +255,6 @@ module.exports = {
 }
 ```
 
-This example is based off [Gatsby Docs' implementation](/docs/environment-variables/).
+This example is based off [Gatsby Docs' implementation](/docs/how-to/local-development/environment-variables/).
 
 <CloudCallout />

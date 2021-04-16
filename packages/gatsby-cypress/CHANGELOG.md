@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.3.0-next.1...gatsby-cypress@1.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.3.0-next.0...gatsby-cypress@1.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.2.0-next.0...gatsby-cypress@1.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.1.0-next.2...gatsby-cypress@1.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.1.0-next.1...gatsby-cypress@1.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.1.0-next.0...gatsby-cypress@1.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@1.0.0-next.0...gatsby-cypress@1.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [1.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.12.0-next.0...gatsby-cypress@1.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.11.0-next.0...gatsby-cypress@0.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.10.0-next.0...gatsby-cypress@0.11.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.9.0-next.0...gatsby-cypress@0.10.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.8.0-next.0...gatsby-cypress@0.9.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.7.0-next.0...gatsby-cypress@0.8.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.6.0-next.0...gatsby-cypress@0.7.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-cypress
+
+# [0.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.5.0-next.0...gatsby-cypress@0.5.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-cypress
+
+## [0.4.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.4.11...gatsby-cypress@0.4.12) (2020-09-28)
+
+### Bug Fixes
+
+- **docs:** remove README.md not displaying on Gatsby plugin library ([#27040](https://github.com/gatsbyjs/gatsby/issues/27040)) ([6987edb](https://github.com/gatsbyjs/gatsby/commit/6987edb84d9cfa79c7f60a4656e1048d13d5f6d8))
+
+## [0.4.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.4.10...gatsby-cypress@0.4.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-cypress
+
 ## [0.4.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-cypress@0.4.9...gatsby-cypress@0.4.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-cypress

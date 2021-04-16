@@ -13,7 +13,7 @@ This guide will get you started in a few steps:
 Workers Sites requires [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/). The more straight forward way to install wrangler is with [npm](https://www.npmjs.com/), run the following command:
 
 ```shell
-npm i -g @cloudflare/wrangler
+npm install -g @cloudflare/wrangler
 ```
 
 2. Initialize the Project

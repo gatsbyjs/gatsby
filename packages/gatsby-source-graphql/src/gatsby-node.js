@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require(`uuid`)
+const uuidv4 = require(`uuid/v4`)
 const { buildSchema, printSchema } = require(`gatsby/graphql`)
 const {
   wrapSchema,
@@ -7,8 +7,8 @@ const {
 } = require(`@graphql-tools/wrap`)
 const { linkToExecutor } = require(`@graphql-tools/links`)
 const { createHttpLink } = require(`apollo-link-http`)
-const nodeFetch = require(`node-fetch`)
 const invariant = require(`invariant`)
+const { fetchWrapper } = require(`./fetch`)
 const { createDataloaderLink } = require(`./batching/dataloader-link`)
 
 const {
@@ -26,7 +26,7 @@ exports.sourceNodes = async (
     typeName,
     fieldName,
     headers = {},
-    fetch = nodeFetch,
+    fetch = fetchWrapper,
     fetchOptions = {},
     createLink,
     createSchema,
@@ -114,13 +114,11 @@ exports.sourceNodes = async (
         defaultTransforms,
         options,
       })
-    : wrapSchema(
-        {
-          schema: introspectionSchema,
-          executor: linkToExecutor(link),
-        },
-        defaultTransforms
-      )
+    : wrapSchema({
+        schema: introspectionSchema,
+        executor: linkToExecutor(link),
+        transforms: defaultTransforms,
+      })
 
   addThirdPartySchema({ schema })
 

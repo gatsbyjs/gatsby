@@ -28,11 +28,8 @@ const addInferredTypes = ({
     let typeComposer
     if (schemaComposer.has(typeName)) {
       typeComposer = schemaComposer.getOTC(typeName)
-      // Infer if we have enabled "@infer" or if it's "@dontInfer" but we
-      // have "addDefaultResolvers: true"
       const runInfer = typeComposer.hasExtension(`infer`)
-        ? typeComposer.getExtension(`infer`) ||
-          typeComposer.getExtension(`addDefaultResolvers`)
+        ? typeComposer.getExtension(`infer`)
         : true
       if (runInfer) {
         if (!typeComposer.hasInterface(`Node`)) {

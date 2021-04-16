@@ -6,13 +6,13 @@ import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../../redux/types"
 import JestWorker from "jest-worker"
 export interface IGroupedQueryIds {
-  pageQueryIds: string[]
-  staticQueryIds: string[]
+  pageQueryIds: Array<string>
+  staticQueryIds: Array<string>
 }
 
 export interface IMutationAction {
   type: string
-  payload: unknown[]
+  payload: Array<unknown>
 }
 export interface IDataLayerContext {
   deferNodeMutation?: boolean
@@ -23,8 +23,9 @@ export interface IDataLayerContext {
   gatsbyNodeGraphQLFunction?: Runner
   graphqlRunner?: GraphQLRunner
   webhookBody?: Record<string, unknown>
+  webhookSourcePluginName?: string
   refresh?: boolean
   workerPool?: JestWorker
-  pagesToBuild?: string[]
-  pagesToDelete?: string[]
+  pagesToBuild?: Array<string>
+  pagesToDelete?: Array<string>
 }

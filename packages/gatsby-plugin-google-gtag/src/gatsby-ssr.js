@@ -42,10 +42,6 @@ exports.onRenderBody = (
     ? setHeadComponents
     : setPostBodyComponents
 
-  // TODO: remove pluginOptions.respectDNT in the next major release of this plugin.
-  // See issue https://github.com/gatsbyjs/gatsby/issues/11159 for the discussion.
-  const respectDNT = pluginConfig.respectDNT || pluginOptions.respectDNT
-
   const renderHtml = () => `
       ${
         excludeGtagPaths.length
@@ -59,7 +55,7 @@ exports.onRenderBody = (
           : ``
       }
       if(${
-        respectDNT
+        pluginConfig.respectDNT
           ? `!(navigator.doNotTrack == "1" || window.doNotTrack == "1")`
           : `true`
       }) {

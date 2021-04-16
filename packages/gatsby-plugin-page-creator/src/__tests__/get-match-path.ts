@@ -21,5 +21,14 @@ describe(`getMatchPath`, () => {
     expect(getMatchPath(`/products/[id]/[...page]`)).toEqual(
       `/products/:id/*page`
     )
+    expect(getMatchPath(`/products/[brand]/offer/[coupon]`)).toEqual(
+      `/products/:brand/offer/:coupon`
+    )
+  })
+
+  it(`handles collection paths in-between`, () => {
+    expect(getMatchPath(`/products/{Model.foo}/[...page]`)).toEqual(
+      `/products/{Model.foo}/*page`
+    )
   })
 })

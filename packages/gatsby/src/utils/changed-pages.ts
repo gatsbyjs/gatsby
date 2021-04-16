@@ -1,5 +1,6 @@
-import { boundActionCreators } from "../redux/actions"
-const { deletePage, deleteComponentsDependencies } = boundActionCreators
+import { actions } from "../redux/actions"
+import { store } from "../redux"
+const { deletePage } = actions
 
 import { isEqualWith, IsEqualCustomizer } from "lodash"
 import { IGatsbyPage } from "../redux/types"
@@ -7,8 +8,8 @@ import { IGatsbyPage } from "../redux/types"
 export function deleteUntouchedPages(
   currentPages: Map<string, IGatsbyPage>,
   timeBeforeApisRan: number
-): string[] {
-  const deletedPages: string[] = []
+): Array<string> {
+  const deletedPages: Array<string> = []
 
   // Delete pages that weren't updated when running createPages.
   currentPages.forEach(page => {
@@ -17,8 +18,7 @@ export function deleteUntouchedPages(
       page.updatedAt < timeBeforeApisRan &&
       page.path !== `/404.html`
     ) {
-      deleteComponentsDependencies([page.path])
-      deletePage(page)
+      store.dispatch(deletePage(page))
       deletedPages.push(page.path, `/page-data${page.path}`)
     }
   })
@@ -29,10 +29,10 @@ export function findChangedPages(
   oldPages: Map<string, IGatsbyPage>,
   currentPages: Map<string, IGatsbyPage>
 ): {
-  changedPages: string[]
-  deletedPages: string[]
+  changedPages: Array<string>
+  deletedPages: Array<string>
 } {
-  const changedPages: string[] = []
+  const changedPages: Array<string> = []
 
   const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) =>
     key === `updatedAt` || undefined
@@ -43,7 +43,7 @@ export function findChangedPages(
       changedPages.push(path)
     }
   })
-  const deletedPages: string[] = []
+  const deletedPages: Array<string> = []
   oldPages.forEach((_page, key) => {
     if (!currentPages.has(key)) {
       deletedPages.push(key)

@@ -9,6 +9,7 @@ describe(`CI detection`, () => {
     ;[
       `CI`,
       `CIRCLECI`,
+      `CIRCLE_BRANCH`,
       `CIRCLE_PULL_REQUEST`,
       `SYSTEM_TEAMFOUNDATIONCOLLECTIONURI`,
       `SYSTEM_PULLREQUEST_PULLREQUESTID`,

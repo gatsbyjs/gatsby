@@ -1,0 +1,26 @@
+{
+  "name": "gatsby-image-test",
+  "description": "Gatsby hello world starter",
+  "license": "MIT",
+  "scripts": {
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "build-and-test": "yarn build && yarn test",
+    "test": "jest --config=../jest.config.js images/",
+    "serve": "gatsby serve"
+  },
+  "dependencies": {
+    "gatsby": "next",
+    "gatsby-plugin-image": "next",
+    "gatsby-plugin-sharp": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-sharp": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "devDependencies": {
+    "jest": "^24.0.0",
+    "jest-cli": "^24.0.0",
+    "pixelmatch": "^5.2.1"
+  }
+}

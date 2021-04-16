@@ -1,5 +1,5 @@
-import glob from "globby"
 import _ from "lodash"
+import glob from "globby"
 import systemPath from "path"
 import { sync as existsSync } from "fs-exists-cached"
 import {
@@ -9,18 +9,25 @@ import {
   PluginOptions,
   PluginCallback,
 } from "gatsby"
+import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { parse, GraphQLString } from "gatsby/graphql"
+import {
+  createPath,
+  watchDirectory,
+  IPathIgnoreOptions,
+} from "gatsby-page-utils"
+import { Options as ISlugifyOptions } from "@sindresorhus/slugify"
 import { createPage } from "./create-page-wrapper"
-import { createPath, watchDirectory } from "gatsby-page-utils"
 import { collectionExtractQueryString } from "./collection-extract-query-string"
-import { parse, GraphQLString } from "graphql"
 import { derivePath } from "./derive-path"
 import { validatePathQuery } from "./validate-path-query"
-import { trackFeatureIsUsed } from "gatsby-telemetry"
+import { CODES, ERROR_MAP, prefixId } from "./error-utils"
 
 interface IOptions extends PluginOptions {
   path: string
-  pathCheck: boolean
-  ignore: Array<string>
+  pathCheck?: boolean
+  ignore?: IPathIgnoreOptions | string | Array<string> | null
+  slugify?: ISlugifyOptions
 }
 
 const knownCollections = new Map()
@@ -39,7 +46,12 @@ export async function createPagesStatefully(
   }: CreatePagesArgs & {
     traceId: "initial-createPages"
   },
-  { path: pagesPath, pathCheck = true, ignore }: IOptions,
+  {
+    path: pagesPath,
+    pathCheck = true,
+    ignore,
+    slugify: slugifyOptions,
+  }: IOptions,
   doneCb: PluginCallback
 ): Promise<void> {
   try {
@@ -49,51 +61,73 @@ export async function createPagesStatefully(
     const exts = program.extensions.map(e => `${e.slice(1)}`).join(`,`)
 
     if (!pagesPath) {
-      reporter.panic(`"path" is a required option for gatsby-plugin-page-creator
+      reporter.panic({
+        id: prefixId(CODES.RequiredPath),
+        context: {
+          sourceMessage: `"path" is a required option for gatsby-plugin-page-creator
 
-See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`)
+See docs here - https://www.gatsbyjs.org/plugins/gatsby-plugin-page-creator/`,
+        },
+      })
     }
 
     // Validate that the path exists.
     if (pathCheck && !existsSync(pagesPath)) {
-      reporter.panic(`The path passed to gatsby-plugin-page-creator does not exist on your file system:
+      reporter.panic({
+        id: prefixId(CODES.NonExistingPath),
+        context: {
+          sourceMessage: `The path passed to gatsby-plugin-page-creator does not exist on your file system:
 
 ${pagesPath}
 
-Please pick a path to an existing directory.`)
+Please pick a path to an existing directory.`,
+        },
+      })
     }
 
     const pagesDirectory = systemPath.resolve(process.cwd(), pagesPath)
     const pagesGlob = `**/*.{${exts}}`
 
     // Get initial list of files.
-    let files = await glob(pagesGlob, { cwd: pagesPath })
+    const files = await glob(pagesGlob, { cwd: pagesPath })
     files.forEach(file => {
-      createPage(file, pagesDirectory, actions, ignore, graphql, reporter)
+      createPage(
+        file,
+        pagesDirectory,
+        actions,
+        graphql,
+        reporter,
+        ignore,
+        slugifyOptions
+      )
     })
+
+    const knownFiles = new Set(files)
 
     watchDirectory(
       pagesPath,
       pagesGlob,
       addedPath => {
         try {
-          if (!_.includes(files, addedPath)) {
+          if (!knownFiles.has(addedPath)) {
             createPage(
               addedPath,
               pagesDirectory,
               actions,
-              ignore,
               graphql,
-              reporter
+              reporter,
+              ignore,
+              slugifyOptions
             )
-            files.push(addedPath)
+            knownFiles.add(addedPath)
           }
         } catch (e) {
-          reporter.panic(
-            e.message.startsWith(`PageCreator`)
-              ? e.message
-              : `PageCreator: ${e.message}`
-          )
+          reporter.panic({
+            id: prefixId(CODES.FileSystemAdd),
+            context: {
+              sourceMessage: e.message,
+            },
+          })
         }
       },
       removedPath => {
@@ -103,39 +137,39 @@ Please pick a path to an existing directory.`)
           store.getState().pages.forEach(page => {
             if (page.component === componentPath) {
               deletePage({
-                path: createPath(removedPath),
+                path: page.path,
                 component: componentPath,
               })
             }
           })
-          files = files.filter(f => f !== removedPath)
+          knownFiles.delete(removedPath)
         } catch (e) {
-          reporter.panic(
-            e.message.startsWith(`PageCreator`)
-              ? e.message
-              : `PageCreator: ${e.message}`
-          )
+          reporter.panic({
+            id: prefixId(CODES.FileSystemRemove),
+            context: {
+              sourceMessage: e.message,
+            },
+          })
         }
       }
     ).then(() => doneCb(null, null))
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.Generic),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
   }
 }
 
-export function setFieldsOnGraphQLNodeType({
-  getNode,
-  type,
-  store,
-  reporter,
-}: SetFieldsOnGraphQLNodeTypeArgs): object {
+export function setFieldsOnGraphQLNodeType(
+  { getNode, type, store, reporter }: SetFieldsOnGraphQLNodeTypeArgs,
+  { slugify: slugifyOptions }: PluginOptions & { slugify: ISlugifyOptions }
+): Record<string, unknown> {
   try {
     const extensions = store.getState().program.extensions
-    const collectionQuery = `all${type.name}`
+    const collectionQuery = _.camelCase(`all ${type.name}`)
     if (knownCollections.has(collectionQuery)) {
       return {
         gatsbyPath: {
@@ -146,7 +180,7 @@ export function setFieldsOnGraphQLNodeType({
             },
           },
           resolve: (
-            source: object,
+            source: Record<string, unknown>,
             { filePath }: { filePath: string }
           ): string => {
             // This is a quick hack for attaching parents to the node.
@@ -162,8 +196,14 @@ export function setFieldsOnGraphQLNodeType({
             }
 
             validatePathQuery(filePath, extensions)
+            const { derivedPath } = derivePath(
+              filePath,
+              sourceCopy,
+              reporter,
+              slugifyOptions
+            )
 
-            return derivePath(filePath, sourceCopy, reporter)
+            return createPath(derivedPath)
           },
         },
       }
@@ -171,11 +211,12 @@ export function setFieldsOnGraphQLNodeType({
 
     return {}
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.GraphQLResolver),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
     return {}
   }
 }
@@ -184,18 +225,17 @@ export async function onPreInit(
   { reporter }: ParentSpanPluginArgs,
   { path: pagesPath }: IOptions
 ): Promise<void> {
+  if (reporter.setErrorMap) {
+    reporter.setErrorMap(ERROR_MAP)
+  }
+
   try {
-    const pagesGlob = `**/\\{*\\}**`
+    const pagesGlob = `**/**\\{*\\}**`
 
     const files = await glob(pagesGlob, { cwd: pagesPath })
 
     if (files.length > 0) {
       trackFeatureIsUsed(`UnifiedRoutes:collection-page-builder`)
-      if (!process.env.GATSBY_EXPERIMENTAL_ROUTING_APIS) {
-        reporter.panic(
-          `PageCreator: Found a collection route, but the proper env was not set to enable this experimental feature. Please run again with \`GATSBY_EXPERIMENTAL_ROUTING_APIS=1\` to enable.`
-        )
-      }
     }
 
     await Promise.all(
@@ -217,10 +257,11 @@ export async function onPreInit(
       })
     )
   } catch (e) {
-    reporter.panic(
-      e.message.startsWith(`PageCreator`)
-        ? e.message
-        : `PageCreator: ${e.message}`
-    )
+    reporter.panicOnBuild({
+      id: prefixId(CODES.Generic),
+      context: {
+        sourceMessage: e.message,
+      },
+    })
   }
 }

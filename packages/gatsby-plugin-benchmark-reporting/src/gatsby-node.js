@@ -2,7 +2,7 @@ const { performance } = require(`perf_hooks`)
 
 const { sync: glob } = require(`fast-glob`)
 const nodeFetch = require(`node-fetch`)
-const { v4: uuidv4 } = require(`uuid`)
+const uuidv4 = require(`uuid/v4`)
 const { execSync } = require(`child_process`)
 const fs = require(`fs`)
 

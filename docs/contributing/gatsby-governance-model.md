@@ -20,7 +20,7 @@ It’s important to note that Gatsby’s governance model is a work in progress 
 
 The following groups are the primary categories of Gatsby OSS contributors.
 
-- **Outside Contributors** - The outstanding community of contributors who help make Gatsby awesome. These are people who’ve had a Gatsby pull request merged and adhere to the [Gatsby Code of Conduct](/docs/contributing/code-of-conduct/).
+- **Outside Contributors** - The outstanding community of contributors who help make Gatsby awesome. These are people who’ve had a Gatsby pull request merged and adhere to the [Gatsby Code of Conduct](/contributing/code-of-conduct/).
 - **[Admins](https://github.com/orgs/gatsbyjs/teams/admin/members)** - The official team members of Gatsby, Inc. (sometimes referred to as the "inkteam"), including the Gatsby Core Team who maintain Gatsby OSS.
 
 ### Decision-Making Process
@@ -35,9 +35,9 @@ If you’d like to request or propose a Gatsby feature (or a change to an existi
 
 ### Community PR and Issue Review Process
 
-Issues submitted by the community go through our Triage Process. You can learn more about this process in our [Triaging GitHub Issues doc](/docs/contributing/triaging-github-issues/).
+Issues submitted by the community go through our Triage Process. You can learn more about this process in our [Triaging GitHub Issues doc](/contributing/triaging-github-issues/).
 
-Our pull request review process is outlined in our [Managing Pull Requests doc](/docs/contributing/managing-pull-requests/).
+Our pull request review process is outlined in our [Managing Pull Requests doc](/contributing/managing-pull-requests/).
 
 If you have any questions about an issue or PR, you can add a comment to the issue/PR on GitHub or reach out to us via one of the options in the "Engage with the Gatsby Team" section below.
 
@@ -45,18 +45,17 @@ If you have any questions about an issue or PR, you can add a comment to the iss
 
 In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-[Read the full code of conduct](/docs/contributing/code-of-conduct/)
+[Read the full code of conduct](/contributing/code-of-conduct/)
 
 ## Guidance and documentation for contributors
 
 Here are some relevant docs and resources for contributors:
 
-- [Contributing to Gatsby.js](/docs/contributing)
-- [How to contribute](/docs/contributing/how-to-contribute/)
-- [How to file an issue](/docs/contributing/how-to-file-an-issue/)
-- [Request-for-comment (RFC) process](/docs/contributing/rfc-process/)
-- [Community Maintainers Meeting](/docs/contributing/community/#community-maintainers-meeting)
-- [Pair programming sessions](/docs/contributing/pair-programming/)
+- [Contributing to Gatsby.js](/contributing)
+- [How to contribute](/contributing/how-to-contribute/)
+- [How to file an issue](/contributing/how-to-file-an-issue/)
+- [Request-for-comment (RFC) process](/contributing/rfc-process/)
+- [Community Maintainers Meeting](/contributing/community/#community-maintainers-meeting)
 
 ## Engage with the Gatsby team
 

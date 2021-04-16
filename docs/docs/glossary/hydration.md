@@ -48,6 +48,6 @@ When a visitor requests their first URL from your site, the response contains st
 
 ### Learn More
 
-- [Understanding React Hydration](/docs/react-hydration/) from the Gatsby docs
+- [Understanding React Hydration](/docs/conceptual/react-hydration/) from the Gatsby docs
 - [ReactDOM.hydrate()](https://reactjs.org/docs/react-dom.html#hydrate) from the React API Reference
 - [Rendering on the Web](https://developers.google.com/web/updates/2019/02/rendering-on-the-web) from Google

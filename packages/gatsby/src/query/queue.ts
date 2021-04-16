@@ -10,6 +10,12 @@ import { ProgressActivityTracker } from "../.."
 export type Task = any
 type TaskResult = any
 
+if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
+  console.info(
+    `GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY: Running with concurrency set to \`${process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY}\``
+  )
+}
+
 const createBaseOptions = (): Pick<
   BetterQueue.QueueOptions<Task, TaskResult>,
   "concurrent" | "store"
@@ -30,10 +36,13 @@ const createBuildQueue = (
 
   const queueOptions: BetterQueue.QueueOptions<Task, TaskResult> = {
     ...createBaseOptions(),
-    process: ({ job, activity }, callback): void => {
-      queryRunner(graphqlRunner, job, activity?.span)
-        .then(result => callback(null, result))
-        .catch(callback)
+    async process({ job, activity }, callback): Promise<void> {
+      try {
+        const result = await queryRunner(graphqlRunner, job, activity?.span)
+        callback(null, result)
+      } catch (e) {
+        callback(e)
+      }
     },
   }
   return new Queue(queueOptions)
@@ -56,20 +65,20 @@ const createDevelopQueue = (getRunner: () => GraphQLRunner): Queue => {
     ): void => {
       cb(null, newTask)
     },
-    process: ({ job: queryJob, activity }, callback): void => {
-      queryRunner(getRunner(), queryJob, activity?.span).then(
-        result => {
-          if (!queryJob.isPage) {
-            websocketManager.emitStaticQueryData({
-              result,
-              id: queryJob.id,
-            })
-          }
+    async process({ job: queryJob, activity }, callback): Promise<void> {
+      try {
+        const result = await queryRunner(getRunner(), queryJob, activity?.span)
+        if (!queryJob.isPage) {
+          websocketManager.emitStaticQueryData({
+            result,
+            id: queryJob.hash,
+          })
+        }
 
-          callback(null, result)
-        },
-        error => callback(error)
-      )
+        callback(null, result)
+      } catch (e) {
+        callback(e)
+      }
     },
   }
 
@@ -97,7 +106,7 @@ const createAppropriateQueue = (
  */
 const processBatch = async (
   queue: Queue<Task, TaskResult>,
-  jobs: Task[],
+  jobs: Array<Task>,
   activity: ProgressActivityTracker
 ): Promise<unknown> => {
   if (jobs.length === 0) {

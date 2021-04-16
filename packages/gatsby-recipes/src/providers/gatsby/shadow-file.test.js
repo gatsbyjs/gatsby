@@ -1,5 +1,8 @@
 const path = require(`path`)
 const rimraf = require(`rimraf`)
+jest.mock(`node-fetch`, () => require(`fetch-mock-jest`).sandbox())
+const { mockReadmeLoader } = require(`../../test-helper`)
+mockReadmeLoader()
 
 const resourceTestHelper = require(`../resource-test-helper`)
 

@@ -16,6 +16,8 @@ import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
 import JestWorker from "jest-worker"
+import { handleStalePageData } from "../utils/page-data"
+
 const tracer = globalTracer()
 
 export async function bootstrap(
@@ -53,6 +55,8 @@ export async function bootstrap(
   await createPages(context)
 
   await createPagesStatefully(context)
+
+  await handleStalePageData()
 
   await rebuildSchemaWithSitePage(context)
 

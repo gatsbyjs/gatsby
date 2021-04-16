@@ -4,7 +4,7 @@ Create an RSS feed (or multiple feeds) for your Gatsby site.
 
 ## Install
 
-`npm install --save gatsby-plugin-feed`
+`npm install gatsby-plugin-feed`
 
 ## How to Use
 

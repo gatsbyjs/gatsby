@@ -19,9 +19,9 @@ const diagnosticsMiddleware = createStructuredLoggingDiagnosticsMiddleware(
 export type GatsbyCLIStore = typeof store
 type StoreListener = (store: GatsbyCLIStore) => void
 type ActionLogListener = (action: ActionsUnion) => any
-type Thunk = (...args: any[]) => ActionsUnion
+type Thunk = (...args: Array<any>) => ActionsUnion
 
-const storeSwapListeners: StoreListener[] = []
+const storeSwapListeners: Array<StoreListener> = []
 const onLogActionListeners = new Set<ActionLogListener>()
 
 export const getStore = (): typeof store => store
@@ -41,7 +41,6 @@ export const dispatch = (action: ActionsUnion | Thunk): void => {
 
   action = {
     ...action,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore this is a typescript no-no..
     // And i'm pretty sure this timestamp isn't used anywhere.
     // but for now, the structured logs integration tests expect it

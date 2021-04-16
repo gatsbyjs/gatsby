@@ -1,10 +1,10 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const Joi = require(`@hapi/joi`)
-const getDiff = require(`../utils/get-diff`)
-const lock = require(`../lock`)
+import fs from "fs-extra"
+import path from "path"
+import * as Joi from "@hapi/joi"
+import getDiff from "../utils/get-diff"
+import lock from "../lock"
 
-const resourceSchema = require(`../resource-schema`)
+import resourceSchema from "../resource-schema"
 
 const readPackageJson = async root => {
   const fullPath = path.join(root, `package.json`)
@@ -65,10 +65,9 @@ const validate = resource => {
   return Joi.validate(resource, schema, { abortEarly: false })
 }
 
-exports.schema = schema
-exports.validate = validate
+export { schema, validate }
 
-module.exports.plan = async ({ root }, { id, name, value }) => {
+export const plan = async ({ root }, { id, name, value }) => {
   const key = id || name
   const currentState = await readPackageJson(root)
   const newState = { ...currentState, [key]: value }
@@ -84,7 +83,7 @@ module.exports.plan = async ({ root }, { id, name, value }) => {
   }
 }
 
-module.exports.all = async ({ root }) => {
+export const all = async ({ root }) => {
   const pkg = await readPackageJson(root)
 
   return Object.keys(pkg).map(key => {
@@ -95,10 +94,8 @@ module.exports.all = async ({ root }) => {
   })
 }
 
-module.exports.create = create
-module.exports.update = create
-module.exports.read = read
-module.exports.destroy = destroy
-module.exports.config = {
+export { create, create as update, read, destroy }
+
+export const config = {
   serial: true,
 }

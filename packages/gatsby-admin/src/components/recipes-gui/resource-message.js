@@ -2,7 +2,7 @@
 /* eslint-disable */
 import React from "react"
 import { MdRefresh, MdBrightness1 } from "react-icons/md"
-import { keyframes } from "@emotion/core"
+import { keyframes } from "@emotion/react"
 import { BaseAnchor, SuccessIcon } from "gatsby-interface"
 import { makeResourceId } from "./utils"
 import { jsx } from "theme-ui"

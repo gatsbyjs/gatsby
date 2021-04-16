@@ -6,6 +6,8 @@ import { buildActions } from "./actions"
 import { developServices } from "./services"
 import { IBuildContext } from "../../services"
 
+const RECOMPILE_PANIC_LIMIT = 6
+
 /**
  * This is the top-level state machine for the `gatsby develop` command
  */
@@ -28,6 +30,9 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     WEBHOOK_RECEIVED: {
       target: `reloadingData`,
       actions: `assignWebhookBody`,
+    },
+    QUERY_RUN_REQUESTED: {
+      actions: `trackRequestedQueryRun`,
     },
   },
   states: {
@@ -56,7 +61,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: [`markNodesDirty`, `callApi`],
+          actions: `callApi`,
         },
       },
       invoke: {
@@ -101,6 +106,12 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         SOURCE_FILE_CHANGED: {
           actions: [forwardTo(`run-queries`), `markSourceFilesDirty`],
         },
+        ADD_NODE_MUTATION: {
+          actions: [`markNodesDirty`, `callApi`],
+        },
+        QUERY_RUN_REQUESTED: {
+          actions: forwardTo(`run-queries`),
+        },
       },
       invoke: {
         id: `run-queries`,
@@ -113,6 +124,7 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           gatsbyNodeGraphQLFunction,
           graphqlRunner,
           websocketManager,
+          pendingQueryRuns,
         }: IBuildContext): IQueryRunningContext => {
           return {
             program,
@@ -121,14 +133,37 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             gatsbyNodeGraphQLFunction,
             graphqlRunner,
             websocketManager,
+            pendingQueryRuns,
           }
         },
         onDone: [
           {
+            // If we're at the recompile limit and nodes were mutated again then panic
+            target: `waiting`,
+            actions: `panicBecauseOfInfiniteLoop`,
+            cond: ({
+              nodesMutatedDuringQueryRun = false,
+              nodesMutatedDuringQueryRunRecompileCount = 0,
+            }: IBuildContext): boolean =>
+              nodesMutatedDuringQueryRun &&
+              nodesMutatedDuringQueryRunRecompileCount >= RECOMPILE_PANIC_LIMIT,
+          },
+          {
+            // Nodes were mutated while querying, so we need to re-run everything
+            target: `recreatingPages`,
+            cond: ({ nodesMutatedDuringQueryRun }: IBuildContext): boolean =>
+              !!nodesMutatedDuringQueryRun,
+            actions: [
+              `markNodesClean`,
+              `incrementRecompileCount`,
+              `clearPendingQueryRuns`,
+            ],
+          },
+          {
             // If we have no compiler (i.e. it's first run), then spin up the
             // webpack and socket.io servers
             target: `startingDevServers`,
-            actions: `setQueryRunningFinished`,
+            actions: [`setQueryRunningFinished`, `clearPendingQueryRuns`],
             cond: ({ compiler }: IBuildContext): boolean => !compiler,
           },
           {
@@ -136,24 +171,29 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
             target: `recompiling`,
             cond: ({ sourceFilesDirty }: IBuildContext): boolean =>
               !!sourceFilesDirty,
+            actions: [`clearPendingQueryRuns`],
           },
           {
             // ...otherwise just wait.
             target: `waiting`,
+            actions: [`clearPendingQueryRuns`],
           },
         ],
         onError: {
-          actions: `logError`,
+          actions: [`logError`, `clearPendingQueryRuns`],
           target: `waiting`,
         },
       },
     },
     // Recompile the JS bundle
     recompiling: {
+      // Important: mark source files as clean when recompiling starts
+      // Doing this `onDone` will wipe all file change events that occur **during** recompilation
+      // See https://github.com/gatsbyjs/gatsby/issues/27609
+      entry: `markSourceFilesClean`,
       invoke: {
         src: `recompile`,
         onDone: {
-          actions: `markSourceFilesClean`,
           target: `waiting`,
         },
         onError: {
@@ -182,7 +222,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Idle, waiting for events that make us rebuild
     waiting: {
-      entry: `saveDbState`,
+      always: [
+        {
+          target: `runningQueries`,
+          cond: ({ pendingQueryRuns }: IBuildContext): boolean =>
+            !!pendingQueryRuns && pendingQueryRuns.size > 0,
+        },
+      ],
+      entry: [`saveDbState`, `resetRecompileCount`],
       on: {
         // Forward these events to the child machine, so it can handle batching
         ADD_NODE_MUTATION: {
@@ -203,8 +250,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
         data: ({
           store,
           nodeMutationBatch = [],
+          sourceFilesDirty,
         }: IBuildContext): IWaitingContext => {
-          return { store, nodeMutationBatch, runningBatch: [] }
+          return {
+            store,
+            nodeMutationBatch,
+            sourceFilesDirty,
+            runningBatch: [],
+          }
         },
         // "done" means we need to rebuild
         onDone: {
@@ -221,10 +274,8 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
       on: {
         // We need to run mutations immediately when in this state
         ADD_NODE_MUTATION: {
-          actions: [`markNodesDirty`, `callApi`],
+          actions: `callApi`,
         },
-        // Ignore, because we're about to extract them anyway
-        SOURCE_FILE_CHANGED: undefined,
       },
       invoke: {
         src: `reloadData`,
@@ -232,11 +283,13 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
           parentSpan,
           store,
           webhookBody,
+          webhookSourcePluginName,
         }: IBuildContext): IDataLayerContext => {
           return {
             parentSpan,
             store,
             webhookBody,
+            webhookSourcePluginName,
             refresh: true,
             deferNodeMutation: true,
           }
@@ -257,7 +310,14 @@ const developConfig: MachineConfig<IBuildContext, any, AnyEventObject> = {
     },
     // Rebuild pages if a node has been mutated outside of sourceNodes
     recreatingPages: {
+      on: {
+        // We need to run mutations immediately when in this state
+        ADD_NODE_MUTATION: {
+          actions: `callApi`,
+        },
+      },
       invoke: {
+        id: `recreate-pages`,
         src: `recreatePages`,
         data: ({ parentSpan, store }: IBuildContext): IDataLayerContext => {
           return { parentSpan, store, deferNodeMutation: true }

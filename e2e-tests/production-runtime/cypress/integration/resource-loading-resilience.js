@@ -1,30 +1,8 @@
-Cypress.on(`uncaught:exception`, (err, runnable) => {
-  // returning false here prevents Cypress from
-  // failing the test
-  console.log(err)
-  return false
-})
-
 const waitForAPIOptions = {
-  timeout: 3000,
+  timeout: 10000,
 }
 
-function assertOnNavigate(
-  page = null,
-  locationAssert,
-  shouldLocationAssert,
-  assertShouldBe
-) {
-  if (page) {
-    cy.getTestElement(page).click()
-  }
-  cy.waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
-    .location(`pathname`)
-    .should(locationAssert, shouldLocationAssert)
-  cy.getTestElement(`dom-marker`).contains(assertShouldBe)
-}
-
-const runTests = (testNameSuffix = `Unknown scenario`) => {
+function runTests(testNameSuffix) {
   it(`Loads index - ${testNameSuffix}`, () => {
     cy.visit(`/`).waitForAPIorTimeout(`onRouteUpdate`, waitForAPIOptions)
     cy.getTestElement(`dom-marker`).contains(`index`)
@@ -63,52 +41,63 @@ const runTests = (testNameSuffix = `Unknown scenario`) => {
   })
 }
 
-const getTestNameSuffix = (scenario, args) => {
-  if (scenario === `blockAssetsForChunk` && args.chunk === `app`) {
-    return `Blocked "app" chunk`
-  } else if (scenario === `blockAssetsForPage`) {
-    return `Blocked "${args.filter}" for "${args.pagePath}"`
-  }
-
-  return undefined
-}
-
-const runBlockedScenario = (scenario, args) => {
-  describe(`Block resources`, () => {
-    before(done => {
-      cy.task(`restoreAllBlockedResources`).then(() => {
-        cy.task(scenario, args).then(() => {
-          done()
+const runBlockedScenario = ({ filter, pagePath }) => {
+  beforeEach(() => {
+    cy.task("getAssetsForPage", {
+      pagePath,
+      filter,
+    }).then(urls => {
+      for (const url of urls) {
+        cy.intercept(url, {
+          statusCode: 404,
+          body: "",
         })
-      })
+        cy.log(`intercept ${url}`)
+      }
     })
-
-    runTests(getTestNameSuffix(scenario, args))
   })
+
+  afterEach(() => {
+    // check if assets are actually stubbed
+    cy.task("getAssetsForPage", {
+      pagePath,
+      filter,
+    }).then(urls => {
+      expect(Object.keys(cy.state("routes")).length).to.equal(urls.length)
+    })
+  })
+
+  runTests(`Blocked "${filter}" for "${pagePath}"`)
 }
 
 const runSuiteForPage = (label, pagePath) => {
   describe(`Missing "${label}" resources`, () => {
     describe(`Missing "${label}" page query results`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `page-data`,
       })
     })
+    describe(`Missing "${label}" static query results`, () => {
+      runBlockedScenario({
+        pagePath,
+        filter: `static-query-data`,
+      })
+    })
     describe(`Missing "${label}" page page-template asset`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `page-template`,
       })
     })
     describe(`Missing "${label}" page extra assets`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `extra`,
       })
     })
     describe(`Missing all "${label}" page assets`, () => {
-      runBlockedScenario(`blockAssetsForPage`, {
+      runBlockedScenario({
         pagePath,
         filter: `all`,
       })
@@ -117,24 +106,38 @@ const runSuiteForPage = (label, pagePath) => {
 }
 
 describe(`Every resources available`, () => {
-  it(`Restore resources`, () => {
-    cy.task(`restoreAllBlockedResources`)
-  })
   runTests(`Every resource available`)
 })
 
 describe(`Missing top level resources`, () => {
   describe(`Deleted app chunk assets`, () => {
-    runBlockedScenario(`blockAssetsForChunk`, { chunk: `app` })
+    beforeEach(() => {
+      cy.task("getAssetsForChunk", {
+        filter: "app",
+      }).then(urls => {
+        for (const url of urls) {
+          cy.intercept(url, {
+            statusCode: 404,
+            body: "",
+          })
+          cy.log(`intercept ${url}`)
+        }
+      })
+    })
+
+    afterEach(() => {
+      // check if assets are actually stubbed
+      cy.task("getAssetsForChunk", {
+        filter: "app",
+      }).then(urls => {
+        expect(Object.keys(cy.state("routes")).length).to.equal(urls.length)
+      })
+    })
+
+    runTests(`Blocked "app" chunk`)
   })
 })
 
 runSuiteForPage(`Index`, `/`)
 runSuiteForPage(`Page-2`, `/page-2/`)
 runSuiteForPage(`404`, `/404.html`)
-
-describe(`Cleanup`, () => {
-  it(`Restore resources`, () => {
-    cy.task(`restoreAllBlockedResources`)
-  })
-})

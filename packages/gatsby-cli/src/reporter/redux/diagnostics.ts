@@ -1,4 +1,4 @@
-import { ActionsUnion } from "./types"
+import { ActionsUnion, IActivity } from "./types"
 import { ActivityStatuses } from "../constants"
 import { calcElapsedTime } from "../../util/calc-elapsed-time"
 import { isActivityInProgress } from "./utils"
@@ -64,25 +64,32 @@ export function createStructuredLoggingDiagnosticsMiddleware(
   let stuckStatusWatchdogTimer: NodeJS.Timeout | null = null
   let reporter: Reporter
 
-  function generateStuckStatusDiagnosticMessage(): string {
+  function inProgressActivities(): Array<
+    IActivity & { diagnostics_elapsed_seconds?: string }
+  > {
     const { activities } = store.getState().logs
+    return Object.values(activities)
+      .filter(activity => isActivityInProgress(activity.status))
+      .map(activity => {
+        if (!activity.startTime) {
+          return activity
+        }
 
-    return JSON.stringify(
-      Object.values(activities)
-        .filter(activity => isActivityInProgress(activity.status))
-        .map(activity => {
-          if (!activity.startTime) {
-            return activity
-          }
+        return {
+          ...activity,
+          diagnostics_elapsed_seconds: calcElapsedTime(activity.startTime),
+        }
+      })
+  }
 
-          return {
-            ...activity,
-            diagnostics_elapsed_seconds: calcElapsedTime(activity.startTime),
-          }
-        }),
-      null,
-      2
-    )
+  function generateStuckStatusDiagnosticMessage(): string {
+    const activities = inProgressActivities()
+    return Object.values(activities)
+      .map(
+        activity =>
+          `- Activity "${activity.text}" of type "${activity.type}" is currently in state "${activity.status}"`
+      )
+      .join(`\n`)
   }
 
   return function diagnosticMiddleware(action: ActionsUnion): void {
@@ -163,15 +170,15 @@ export function createStructuredLoggingDiagnosticsMiddleware(
         if (currentStatus === ActivityStatuses.InProgress) {
           stuckStatusWatchdogTimer = setTimeout(
             function fatalStuckStatusHandler() {
-              reporter.panic(
-                `Terminating the process (due to GATSBY_WATCHDOG_STUCK_STATUS_TIMEOUT):\n\nGatsby is in "${
-                  store.getState().logs.status
-                }" state without any updates for ${(
-                  stuckStatusWatchdogTimeoutDelay / 1000
-                ).toFixed(
-                  3
-                )} seconds. Activities preventing Gatsby from transitioning to idle state:\n\n${generateStuckStatusDiagnosticMessage()}`
-              )
+              reporter.panic({
+                id: `11701`,
+                context: {
+                  activities: inProgressActivities(),
+                  status: store.getState().logs.status,
+                  stuckStatusDiagnosticMessage: generateStuckStatusDiagnosticMessage(),
+                  stuckStatusWatchdogTimeoutDelay,
+                },
+              })
             },
             stuckStatusWatchdogTimeoutDelay
           )

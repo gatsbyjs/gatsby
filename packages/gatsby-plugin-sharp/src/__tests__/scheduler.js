@@ -10,11 +10,11 @@ const fs = require(`fs-extra`)
 const workerMock = require(`../gatsby-worker`).IMAGE_PROCESSING
 
 describe(`scheduler`, () => {
-  let boundActionCreators = {}
+  let actions = {}
   let scheduler
   beforeEach(() => {
     workerMock.mockReset()
-    boundActionCreators = {
+    actions = {
       createJob: jest.fn(),
       endJob: jest.fn(),
     }
@@ -43,7 +43,7 @@ describe(`scheduler`, () => {
         pluginOptions: {},
       },
     }
-    await scheduleJob(job, boundActionCreators)
+    await scheduleJob(job, actions)
 
     expect(workerMock).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -79,7 +79,7 @@ describe(`scheduler`, () => {
             pluginOptions: {},
           },
         },
-        boundActionCreators
+        actions
       )
     } catch (err) {
       expect(err).toEqual(`failed transform`)
@@ -104,7 +104,7 @@ describe(`scheduler`, () => {
         pluginOptions: {},
       },
     }
-    await scheduleJob(job, boundActionCreators)
+    await scheduleJob(job, actions)
 
     expect(workerMock).not.toHaveBeenCalled()
     fs.existsSync = orignalSync
@@ -126,8 +126,8 @@ describe(`scheduler`, () => {
         pluginOptions: {},
       },
     }
-    const jobPromise = scheduleJob(job, boundActionCreators)
-    const job2Promise = scheduleJob(job, boundActionCreators)
+    const jobPromise = scheduleJob(job, actions)
+    const job2Promise = scheduleJob(job, actions)
     expect(jobPromise).toStrictEqual(job2Promise)
 
     await Promise.all([jobPromise, job2Promise])
@@ -165,7 +165,7 @@ describe(`scheduler`, () => {
         },
       }
 
-      await scheduleJob(job, boundActionCreators)
+      await scheduleJob(job, actions)
 
       expect(got.post).toHaveBeenCalledWith(
         process.env.GATSBY_CLOUD_IMAGE_SERVICE_URL,

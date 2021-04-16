@@ -4,7 +4,7 @@ title: Proxying API Requests in Development
 
 ## Resources
 
-If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/gatsby-lifecycle-apis/).
+If you’re not familiar with Gatsby’s lifecycle, see the overview [Gatsby Lifecycle APIs](/docs/conceptual/gatsby-lifecycle-apis/).
 
 ## Proxying API requests in development
 

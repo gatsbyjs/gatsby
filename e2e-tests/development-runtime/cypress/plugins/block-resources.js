@@ -5,7 +5,9 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const glob = require(`glob`)
 
-const publicDir = path.join(__dirname, `..`, `..`, `public`)
+const siteDir = path.join(__dirname, `..`, `..`)
+const srcDir = path.join(siteDir, `src`)
+const publicDir = path.join(siteDir, `public`)
 
 const moveAsset = (from, to) => {
   const fromExists = fs.existsSync(from)
@@ -18,7 +20,7 @@ const moveAsset = (from, to) => {
   }
 }
 
-const restorePageData = hiddenPath => {
+const restoreAsset = hiddenPath => {
   if (path.basename(hiddenPath).charAt(0) !== `_`) {
     throw new Error(`hiddenPath should have _ prefix`)
   }
@@ -51,10 +53,28 @@ const blockAssetsForPage = ({ pagePath, filter }) => {
   return null
 }
 
+function blockPageComponent({ path: pageComponentPath }) {
+  const hiddenPath = path.join(
+    path.dirname(pageComponentPath),
+    `_` + path.basename(pageComponentPath)
+  )
+
+  moveAsset(path.join(srcDir, pageComponentPath), path.join(srcDir, hiddenPath))
+  return null
+}
+
 const restore = () => {
-  const globPattern = path.join(publicDir, `/page-data/**`, `_page-data.json`)
-  const hiddenPageDatas = glob.sync(globPattern)
-  hiddenPageDatas.forEach(restorePageData)
+  const hiddenPageDataGlobPattern = path.join(
+    publicDir,
+    `/page-data/**`,
+    `_page-data.json`
+  )
+  const hiddenPageDatas = glob.sync(hiddenPageDataGlobPattern)
+  hiddenPageDatas.forEach(restoreAsset)
+
+  const hiddenPageComponentGlobPattern = path.join(srcDir, `**`, `_*`)
+  const hiddenPageComponents = glob.sync(hiddenPageComponentGlobPattern)
+  hiddenPageComponents.forEach(restoreAsset)
 
   console.log(`Restored resources`)
   return null
@@ -63,4 +83,5 @@ const restore = () => {
 module.exports = {
   restoreAllBlockedResources: restore,
   blockAssetsForPage,
+  blockPageComponent,
 }

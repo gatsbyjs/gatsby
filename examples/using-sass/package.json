@@ -11,13 +11,13 @@
   "author": "Daniel Farrell <daniel.farrell@mobelux.com>",
   "license": "MIT",
   "dependencies": {
-    "gatsby": "^2.24.50",
-    "gatsby-plugin-google-analytics": "^2.3.13",
-    "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-sass": "^2.3.12",
+    "gatsby": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-sass": "next",
     "node-sass": "^4.14.1",
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "tachyons-sass": "^4.9.5"
   }
 }

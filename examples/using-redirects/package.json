@@ -4,10 +4,10 @@
   "description": "Gatsby example site demonstrating using createRedirect for client-side, in browser redirection in Gatsby",
   "author": "Ricky de Laveaga <ricky@rdela.com>",
   "dependencies": {
-    "gatsby": "^2.24.50",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "gatsby": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [

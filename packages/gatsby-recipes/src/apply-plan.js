@@ -1,4 +1,5 @@
-const render = require(`./renderer`)
+import render from "./renderer"
 
-module.exports = (context, cb) =>
-  render(context.recipe, cb, context, true, true, true)
+export default function ApplyPlan(context, cb) {
+  return render(context.recipe, cb, context, true, true, true)
+}

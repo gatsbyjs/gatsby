@@ -2,12 +2,10 @@ import * as fs from "fs"
 import * as path from "path"
 import sharp from "./safe-sharp"
 import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
-import {
-  defaultIcons,
-  doesIconExist,
-  addDigestToPath,
-  favicons,
-} from "./common"
+import { defaultIcons, addDigestToPath, favicons } from "./common"
+import { doesIconExist } from "./node-helpers"
+
+import pluginOptionsSchema from "./pluginOptionsSchema"
 
 sharp.simd(true)
 
@@ -58,8 +56,11 @@ async function checkCache(cache, icon, srcIcon, srcIconDigest, callback) {
   }
 }
 
+exports.pluginOptionsSchema = pluginOptionsSchema
+
 /**
  * Setup pluginOption defaults
+ * TODO: Remove once pluginOptionsSchema is stable
  */
 exports.onPreInit = (_, pluginOptions) => {
   pluginOptions.cache_busting_mode = pluginOptions.cache_busting_mode ?? `query`
@@ -85,7 +86,7 @@ exports.onPostBootstrap = async (
 
   activity.start()
 
-  let cache = new Map()
+  const cache = new Map()
 
   await makeManifest({ cache, reporter, pluginOptions: manifest, basePath })
 
@@ -172,14 +173,14 @@ const makeManifest = async ({
   }
 
   // Determine destination path for icons.
-  let paths = {}
+  const paths = {}
   manifest.icons.forEach(icon => {
     const iconPath = path.join(`public`, path.dirname(icon.src))
     if (!paths[iconPath]) {
       const exists = fs.existsSync(iconPath)
-      //create destination directory if it doesn't exist
+      // create destination directory if it doesn't exist
       if (!exists) {
-        fs.mkdirSync(iconPath)
+        fs.mkdirSync(iconPath, { recursive: true })
       }
       paths[iconPath] = true
     }
@@ -205,7 +206,7 @@ const makeManifest = async ({
       )
     }
 
-    //add cache busting
+    // add cache busting
     const cacheMode =
       typeof pluginOptions.cache_busting_mode !== `undefined`
         ? pluginOptions.cache_busting_mode
@@ -218,7 +219,7 @@ const makeManifest = async ({
      * the source icon image.
      */
     async function processIconSet(iconSet) {
-      //if cacheBusting is being done via url query icons must be generated before cache busting runs
+      // if cacheBusting is being done via url query icons must be generated before cache busting runs
       if (cacheMode === `query`) {
         await Promise.all(
           iconSet.map(dstIcon =>
@@ -229,13 +230,13 @@ const makeManifest = async ({
 
       if (cacheMode !== `none`) {
         iconSet = iconSet.map(icon => {
-          let newIcon = { ...icon }
+          const newIcon = { ...icon }
           newIcon.src = addDigestToPath(icon.src, iconDigest, cacheMode)
           return newIcon
         })
       }
 
-      //if file names are being modified by cacheBusting icons must be generated after cache busting runs
+      // if file names are being modified by cacheBusting icons must be generated after cache busting runs
       if (cacheMode !== `query`) {
         await Promise.all(
           iconSet.map(dstIcon =>
@@ -260,7 +261,7 @@ const makeManifest = async ({
     }
   }
 
-  //Fix #18497 by prefixing paths
+  // Fix #18497 by prefixing paths
   manifest.icons = manifest.icons.map(icon => {
     return {
       ...icon,
@@ -272,7 +273,7 @@ const makeManifest = async ({
     manifest.start_url = path.posix.join(basePath, manifest.start_url)
   }
 
-  //Write manifest
+  // Write manifest
   fs.writeFileSync(
     path.join(`public`, `manifest${suffix}.webmanifest`),
     JSON.stringify(manifest)

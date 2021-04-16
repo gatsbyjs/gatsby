@@ -24,7 +24,9 @@ export function logTransitions<T = DefaultContext>(
       return
     }
     last = state
-    reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    if (process.env.gatsby_log_level === `verbose`) {
+      reporter.verbose(`Transition to ${JSON.stringify(state.value)}`)
+    }
     // eslint-disable-next-line no-unused-expressions
     service.children?.forEach(child => {
       // We want to ensure we don't attach a listener to the same
@@ -40,11 +42,13 @@ export function logTransitions<T = DefaultContext>(
             return
           }
           sublast = substate
-          reporter.verbose(
-            `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
-              substate.value
-            )}`
-          )
+          if (process.env.gatsby_log_level === `verbose`) {
+            reporter.verbose(
+              `Transition to ${JSON.stringify(state.value)} > ${JSON.stringify(
+                substate.value
+              )}`
+            )
+          }
         })
         listeners.add(child)
       }

@@ -1,4 +1,4 @@
-const providedResources = require(`../resources`)
+import * as providedResources from "../resources"
 const isResource = type => type && (type === `Input` || providedResources[type])
 
 const extractPlan = (node, type) => {
@@ -71,7 +71,7 @@ const transform = (props = {}, type) => {
   return plan
 }
 
-module.exports = renderTree => {
+export default function transformToPlanStructure(renderTree) {
   const [doc] = renderTree.children
 
   return transform(doc)

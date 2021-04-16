@@ -1,4 +1,4 @@
-module.exports = api => {
+export default function babelPluginCopyKeyProp(api) {
   const { types: t } = api
 
   return {

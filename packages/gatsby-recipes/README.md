@@ -77,7 +77,7 @@ Install necessary NPM packages
 <!-- refer to the API in this doc to see what APIs are available, like `NPMPackage` -->
 
 <NPMPackage name="gatsby-plugin-emotion" />
-<NPMPackage name="@emotion/core" />
+<NPMPackage name="@emotion/react" />
 <NPMPackage name="@emotion/styled" />
 
 ---

@@ -4,10 +4,10 @@
   "description": "Gatsby example site using using-styled-jsx",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.24.50",
-    "gatsby-plugin-styled-jsx": "^3.3.11",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "gatsby": "next",
+    "gatsby-plugin-styled-jsx": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "styled-jsx": "^3.3.0"
   },
   "license": "MIT",

@@ -11,8 +11,8 @@
     "gatsby-source-filesystem": "latest",
     "gatsby-transformer-sharp": "latest",
     "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.0"
   },
   "keywords": [
@@ -25,15 +25,17 @@
     "test": "jest --config=../jest.config.js gatsby-pipeline/"
   },
   "devDependencies": {
-    "execa": "^1.0.0",
-    "fs-extra": "^7.0.1",
-    "jest": "^24.0.0",
-    "jest-cli": "^24.0.0",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.5"
+    "execa": "^4.0.3",
+    "fs-extra": "^9.0.1",
+    "node-fetch": "^2.6.0",
+    "jest": "^25.5.4",
+    "jest-cli": "^25.5.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "engines": {
+    "node": ">=12.13.0"
   }
 }

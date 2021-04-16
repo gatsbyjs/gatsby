@@ -5,7 +5,7 @@ import manager, {
   MultiCache,
 } from "cache-manager"
 import fs from "fs-extra"
-import fsStore from "cache-manager-fs-hash"
+import fsStore from "../cache/cache-fs"
 import path from "path"
 
 const MAX_CACHE_SIZE = 250
@@ -16,24 +16,22 @@ interface ICacheProperties {
   store?: Store
 }
 
-export default class Cache {
+export default class GatsbyCache {
   public name: string
   public store: Store
+  public directory: string
   public cache?: MultiCache
 
   constructor({ name = `db`, store = fsStore }: ICacheProperties = {}) {
     this.name = name
     this.store = store
+    this.directory = path.join(process.cwd(), `.cache/caches/${name}`)
   }
 
-  get directory(): string {
-    return path.join(process.cwd(), `.cache/caches/${this.name}`)
-  }
-
-  init(): Cache {
+  init(): GatsbyCache {
     fs.ensureDirSync(this.directory)
 
-    const configs: StoreConfig[] = [
+    const configs: Array<StoreConfig> = [
       {
         store: `memory`,
         max: MAX_CACHE_SIZE,
@@ -56,11 +54,11 @@ export default class Cache {
     return this
   }
 
-  get<T = unknown>(key): Promise<T | undefined> {
+  async get<T = unknown>(key): Promise<T | undefined> {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `GatsbyCache wasn't initialised yet, please run the init method first`
         )
       }
       this.cache.get<T>(key, (err, res) => {
@@ -69,7 +67,7 @@ export default class Cache {
     })
   }
 
-  set<T>(
+  async set<T>(
     key: string,
     value: T,
     args: CachingConfig = { ttl: TTL }
@@ -77,7 +75,7 @@ export default class Cache {
     return new Promise(resolve => {
       if (!this.cache) {
         throw new Error(
-          `Cache wasn't initialised yet, please run the init method first`
+          `GatsbyCache wasn't initialised yet, please run the init method first`
         )
       }
       this.cache.set(key, value, args, err => {

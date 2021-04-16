@@ -1,3230 +1,517 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`gatsby-plugin resource all returns plugins as array 1`] = `
-Array [
-  Object {
-    "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-    "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
-    "id": "gatsby-source-filesystem",
-    "name": "gatsby-source-filesystem",
-    "options": Object {
-      "name": "pages",
-      "path": "\${__dirname}/src/pages",
-    },
-    "readme": "# gatsby-source-filesystem
-
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
-
-The plugin creates \`File\` nodes from files. The various \\"transformer\\"
-plugins can transform \`File\` nodes into various other types of data e.g.
-\`gatsby-transformer-json\` transforms JSON files into JSON data nodes and
-\`gatsby-transformer-remark\` transforms markdown files into \`MarkdownRemark\`
-nodes from which you can query an HTML representation of the markdown.
-
-## Install
-
-\`npm install --save gatsby-source-filesystem\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // \\"pages\\" directory for Markdown files and a \\"data\\" directory
-    // for \`.json\`, \`.yaml\`, \`.csv\`.
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`pages\`,
-        path: \`\${__dirname}/src/pages/\`,
-      },
-    },
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`data\`,
-        path: \`\${__dirname}/src/data/\`,
-        ignore: [\`**//.*\`], // ignore files starting with a dot
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-In addition to the name and path parameters you may pass an optional \`ignore\` array of file globs to ignore.
-
-They will be added to the following default list:
-
-\`\`\`text
-**/*.un~
-**/.DS_Store
-**/.gitignore
-**/.npmignore
-**/.babelrc
-**/yarn.lock
-**/node_modules
-../**/dist/**
-\`\`\`
-
-To prevent concurrent requests overload of \`processRemoteNode\`, you can adjust the \`200\` default concurrent downloads, with \`GATSBY_CONCURRENT_DOWNLOAD\` environment variable.
-
-## How to query
-
-You can query file nodes like the following:
-
-\`\`\`graphql
-{
-  allFile {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-To filter by the \`name\` you specified in the config, use \`sourceInstanceName\`:
-
-\`\`\`graphql
-{
-  allFile(filter: { sourceInstanceName: { eq: \\"data\\" } }) {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-## Helper functions
-
-\`gatsby-source-filesystem\` exports three helper functions:
-
-- \`createFilePath\`
-- \`createRemoteFileNode\`
-- \`createFileNodeFromBuffer\`
-
-### createFilePath
-
-When building pages from files, you often want to create a URL from a file's path on the file system. E.g. if you have a markdown file at \`src/content/2018-01-23-an-exploration-of-the-nature-of-reality/index.md\`, you might want to turn that into a page on your site at \`example.com/2018-01-23-an-exploration-of-the-nature-of-reality/\`. \`createFilePath\` is a helper function to make this task easier.
-
-\`\`\`javascript
-createFilePath({
-  // The node you'd like to convert to a path
-  // e.g. from a markdown, JSON, YAML file, etc
-  node,
-  // Method used to get a node
-  // The parameter from \`onCreateNode\` should be passed in here
-  getNode,
-  // The base path for your files.
-  // Defaults to \`src/pages\`. For the example above, you'd use \`src/content\`.
-  basePath,
-  // Whether you want your file paths to contain a trailing \`/\` slash
-  // Defaults to true
-  trailingSlash,
-})
-\`\`\`
-
-#### Example usage
-
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
-\`\`\`javascript
-const { createFilePath } = require(\`gatsby-source-filesystem\`)
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  // Ensures we are processing only markdown files
-  if (node.internal.type === \\"MarkdownRemark\\") {
-    // Use \`createFilePath\` to turn markdown files in our \`data/faqs\` directory into \`/faqs/slug\`
-    const relativeFilePath = createFilePath({
-      node,
-      getNode,
-      basePath: \\"data/faqs/\\",
-    })
-
-    // Creates new query'able field with name of 'slug'
-    createNodeField({
-      node,
-      name: \\"slug\\",
-      value: \`/faqs\${relativeFilePath}\`,
-    })
-  }
-}
-\`\`\`
-
-### createRemoteFileNode
-
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
-
-The \`createRemoteFileNode\` helper makes it easy to download remote files and add them to your site's GraphQL schema.
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file.jpg\`,
-
-  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
-  parentNodeId,
-
-  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  getCache,
-
-  // The action used to create nodes
-  createNode,
-
-  // A helper function for creating node Ids
-  createNodeId,
-
-  // OPTIONAL
-  // Adds htaccess authentication to the download request if passed in.
-  auth: { htaccess_user: \`USER\`, htaccess_pass: \`PASSWORD\` },
-
-  // OPTIONAL
-  // Adds extra http headers to download request if passed in.
-  httpHeaders: { Authorization: \`Bearer someAccessToken\` },
-
-  // OPTIONAL
-  // Sets the file extension
-  ext: \\".jpg\\",
-})
-\`\`\`
-
-#### Example usage
-
-The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as \`File\` nodes and then linked to the WordPress Media node, so it can be queried both as a regular \`File\` node and from the \`localFile\` field in the Media node.
-
-\`\`\`javascript
-const { createRemoteFileNode } = require(\`gatsby-source-filesystem\`)
-
-exports.downloadMediaFiles = ({
-  nodes,
-  getCache,
-  createNode,
-  createNodeId,
-  _auth,
-}) => {
-  nodes.map(async node => {
-    let fileNode
-    // Ensures we are only processing Media Files
-    // \`wordpress__wp_media\` is the media file type name for WordPress
-    if (node.__type === \`wordpress__wp_media\`) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.source_url,
-          parentNodeId: node.id,
-          getCache,
-          createNode,
-          createNodeId,
-          auth: _auth,
-        })
-      } catch (e) {
-        // Ignore
-      }
-    }
-
-    // Adds a field \`localFile\` to the node
-    // ___NODE appendix tells Gatsby that this field will link to another node
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
-  })
-}
-\`\`\`
-
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
-
-#### Retrieving the remote file name and extension
-
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is \`https://example.com/image.jpg\`, the extension will be inferred as \`.jpg\` and the name as \`image\`). If the url does not contain an extension, we use the [\`file-type\`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file-without-an-extension\`,
-  parentNodeId: node.id,
-  getCache,
-  createNode,
-  createNodeId,
-  // if necessary!
-  ext: \\".jpg\\",
-  name: \\"image\\",
-})
-\`\`\`
-
-### createFileNodeFromBuffer
-
-When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
-
-The \`createFileNodeFromBuffer\` helper accepts a \`Buffer\`, caches its contents to disk, and creates a file node that points to it.
-
-## Example usage
-
-The following example is adapted from the source of [\`gatsby-source-mysql\`](https://github.com/malcolm-kee/gatsby-source-mysql):
-
-\`\`\`js
-// gatsby-node.js
-const createMySqlNodes = require(\`./create-nodes\`)
-
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
-
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
-
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(\`gatsby-source-filesystem\`)
-const createNodeHelpers = require(\`gatsby-node-helpers\`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: \`mysql\` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
-      })
-    )
-    value = \`Buffer\`
-  }
-
-  node[key] = value
-}
-
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
-
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
-}
-
-module.exports = createMySqlNodes
-\`\`\`
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- \`STALL_RETRY_LIMIT\`, default: \`3\`
-- \`STALL_TIMEOUT\`, default: \`30000\`
-- \`CONNECTION_TIMEOUT\`, default: \`30000\`
-",
-    "shadowableFiles": Array [
-      "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
-      "src/gatsby-source-filesystem/__tests__/create-file-node.js",
-      "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
-      "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
-      "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
-      "src/gatsby-source-filesystem/__tests__/index.js",
-      "src/gatsby-source-filesystem/__tests__/utils.js",
-      "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
-      "src/gatsby-source-filesystem/create-file-node.js",
-      "src/gatsby-source-filesystem/create-file-path.js",
-      "src/gatsby-source-filesystem/create-remote-file-node.js",
-      "src/gatsby-source-filesystem/extend-file-node.js",
-      "src/gatsby-source-filesystem/gatsby-node.js",
-      "src/gatsby-source-filesystem/index.js",
-      "src/gatsby-source-filesystem/utils.js",
-    ],
-    "shadowedFiles": Array [],
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": Object {
+    "name": "pages",
+    "path": "\${__dirname}/src/pages",
   },
-  Object {
-    "_message": "Installed gatsby-transformer-sharp in gatsby-config.js",
-    "description": "Gatsby transformer plugin for images using Sharp",
-    "id": "gatsby-transformer-sharp",
-    "name": "gatsby-transformer-sharp",
-    "options": undefined,
-    "readme": "# gatsby-transformer-sharp
-
-Creates \`ImageSharp\` nodes from image types that are supported by the
-[Sharp](https://github.com/lovell/sharp) image processing library and provides
-fields in their GraphQL types for processing your images in a variety of ways
-including resizing, cropping, and creating responsive images.
-
-[Live demo](https://image-processing.gatsbyjs.org/)
-([source](https://github.com/gatsbyjs/gatsby/tree/master/examples/image-processing))
-
-## Install
-
-\`npm install --save gatsby-transformer-sharp gatsby-plugin-sharp\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [\`gatsby-plugin-sharp\`, \`gatsby-transformer-sharp\`],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-Please note that you must have a source plugin (which brings in images) installed in your project. Otherwise, no \`ImageSharp\` nodes can be created for your files. Examples would be [\`gatsby-source-filesystem\`](/packages/gatsby-source-filesystem) or source plugins for (headless) CMSs like [\`gatsby-source-wordpress\`](/packages/gatsby-source-wordpress).
-
-**Note**: An exception to this is when using [\`gatsby-source-contentful\`](/packages/gatsby-source-contentful/), as the source plugin and the assets are not [downloaded to the local filesystem](https://www.gatsbyjs.org/packages/gatsby-source-contentful/#download-assets-for-static-distribution). By default, the \`gatsby-source-contentful\` plugin creates a \`ContentfulAsset\` node for every image with links to Contentful’s CDN, therefore it is not necessary to use \`gatsby-transformer-sharp\` together with \`gatsby-source-contentful\`.
-
-## Parsing algorithm
-
-It recognizes files with the following extensions as images.
-
-- jpeg
-- jpg
-- png
-- webp
-- tif
-- tiff
-
-Each image file is parsed into a node of type \`ImageSharp\`.
-
-## Configuration options
-
-\`checkSupportedExtensions\` [boolean][optional]
-
-Sharp only supports certain image formats (see the Parsing algorithm section above) and hence throws a warning when you e.g. use a .gif in an \`ImageSharp\` query. You'll need to use \`publicURL\` instead. With this option you can disable the warning behavior.
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    \`gatsby-plugin-sharp\`,
-    {
-      resolve: \`gatsby-transformer-sharp\`,
-      options: {
-        // The option defaults to true
-        checkSupportedExtensions: false,
-      },
-    },
-  ],
+exports[`gatsby-plugin resource all returns plugins as array 2`] = `
+Object {
+  "_message": "Installed gatsby-transformer-sharp in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-transformer-sharp",
+  "name": "gatsby-transformer-sharp",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-## Troubleshooting
+exports[`gatsby-plugin resource all returns plugins as array 3`] = `
+Object {
+  "_message": "Installed gatsby-plugin-emotion in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-emotion",
+  "name": "gatsby-plugin-emotion",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
 
-### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
-
-This means that there are multiple incompatible versions of the \`sharp\` package installed in \`node_modules\`. The complete error typically looks like this:
-
-\`\`\`text
-Something went wrong installing the \\"sharp\\" module
-
-dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
-  Referenced from: /Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node
-  Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
-\`\`\`
-
-To fix this, you'll need to update all Gatsby plugins in the current project that depend on the \`sharp\` package. Here's a list of official plugins that you might need to update in case your projects uses them:
-
-- \`gatsby-plugin-sharp\`
-- \`gatsby-plugin-manifest\`
-- \`gatsby-remark-images-contentful\`
-- \`gatsby-source-contentful\`
-- \`gatsby-transformer-sharp\`
-- \`gatsby-transformer-sqip\`
-
-To update these packages, run:
-
-\`\`\`shell
-npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
-\`\`\`
-
-If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of \`sharp\`. Try running \`npm list sharp\` or \`yarn why sharp\` to see all packages in the current project that use \`sharp\` and try updating them as well.
-",
-    "shadowableFiles": Array [
-      "src/gatsby-transformer-sharp/__tests__/__snapshots__/gatsby-node.js.snap",
-      "src/gatsby-transformer-sharp/__tests__/gatsby-node.js",
-      "src/gatsby-transformer-sharp/create-resolvers.js",
-      "src/gatsby-transformer-sharp/customize-schema.js",
-      "src/gatsby-transformer-sharp/fragments.js",
-      "src/gatsby-transformer-sharp/gatsby-node.js",
-      "src/gatsby-transformer-sharp/on-node-create.js",
-      "src/gatsby-transformer-sharp/safe-sharp.js",
-      "src/gatsby-transformer-sharp/supported-extensions.js",
-      "src/gatsby-transformer-sharp/types.js",
-    ],
-    "shadowedFiles": Array [],
+exports[`gatsby-plugin resource all returns plugins as array 4`] = `
+Object {
+  "_message": "Installed gatsby-plugin-typography in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-typography",
+  "name": "gatsby-plugin-typography",
+  "options": Object {
+    "pathToConfigModule": "src/utils/typography",
   },
-  Object {
-    "_message": "Installed gatsby-plugin-emotion in gatsby-config.js",
-    "description": "Gatsby plugin to add support for Emotion",
-    "id": "gatsby-plugin-emotion",
-    "name": "gatsby-plugin-emotion",
-    "options": undefined,
-    "readme": "# gatsby-plugin-emotion
-
-Provide support for using the css-in-js library
-[Emotion](https://github.com/emotion-js/emotion) including server side
-rendering.
-
-**This plugin supports Emotion v10+**
-
-Older versions should use versions of this plugin which support Emotion 8 and 9. Check out the Emotion 10 [migration
-guide](https://emotion.sh/docs/migrating-to-emotion-10#incremental-migration) for more information on how to upgrade.
-
-## Install
-
-\`\`\`shell
-npm install --save gatsby-plugin-emotion @emotion/core @emotion/styled
-\`\`\`
-
-## How to use
-
-Add the plugin to your \`gatsby-config.js\`.
-
-\`\`\`js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-emotion\`,
-      options: {
-        // Accepts all options defined by \`babel-plugin-emotion\` plugin.
-      },
-    },
-  ],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-emotion/__tests__/gatsby-node.js",
-      "src/gatsby-plugin-emotion/gatsby-node.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "_message": "Installed gatsby-plugin-typography in gatsby-config.js",
-    "description": "Gatsby plugin to setup server rendering of Typography.js' CSS",
-    "id": "gatsby-plugin-typography",
-    "name": "gatsby-plugin-typography",
-    "options": Object {
-      "pathToConfigModule": "src/utils/typography",
-    },
-    "readme": "# gatsby-plugin-typography
+`;
 
-A Gatsby plugin for utilizing the [Typography](https://kyleamathews.github.io/typography.js/) library with minimal configuration.
-
-See it in action in the [Tutorial](https://www.gatsbyjs.org/tutorial/part-three/)
-([source](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography))
-
-## Install
-
-\`npm install --save gatsby-plugin-typography react-typography typography\`
-
-## Why to use
-
-A typical \`typography.js\` file utilizing one of its themes might look like this:
-
-\`\`\`javascript
-import Typography from \\"typography\\"
-import grandViewTheme from \\"typography-theme-grand-view\\"
-
-const typography = new Typography(grandViewTheme)
-
-// Export helper functions
-export const { scale, rhythm, options } = typography
-export default typography
-\`\`\`
-
-You then have to take the exported stylesheets and inline them in your entry file. Since a theme comes with two fonts, you also have to make sure you have the fonts available somehow.
-
-By using \`gatsby-plugin-typography\` and specifying the path to your \`typography.js\` file via the \`pathToConfigModule\` option (see below), the inclusion of your typography styles _and_ any relevant fonts is taken care of by a pair of helper methods under the hood, keeping your typography-related config in a single location and your entry file sparse.
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-typography\`,
-      options: {
-        pathToConfigModule: \`src/utils/typography\`,
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-- \`pathToConfigModule\`: (string) The path to the file in which you export your typography configuration.
-- \`omitGoogleFont\`: (boolean, default: \`false\`) Typography includes [a helper](https://github.com/KyleAMathews/typography.js/blob/e7e71c82f63c7a146eb1b5ac7017695359dd9cba/packages/react-typography/src/GoogleFont.js) that makes a request to Google's font CDN for the fonts you need. You might, however, want to inject the fonts into JS or use a CDN of your choosing. Setting this value to \`true\` will make \`gatsby-plugin-typography\` skip the inclusion of this helper. **You will have to include the appropriate fonts yourself.**
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-typography/__tests__/gatsby-browser.js",
-      "src/gatsby-plugin-typography/__tests__/gatsby-ssr.js",
-      "src/gatsby-plugin-typography/gatsby-browser.js",
-      "src/gatsby-plugin-typography/gatsby-node.js",
-      "src/gatsby-plugin-typography/gatsby-ssr.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "_message": "Installed gatsby-transformer-remark in gatsby-config.js",
-    "description": "Gatsby transformer plugin for Markdown using the Remark library and ecosystem",
-    "id": "gatsby-transformer-remark",
-    "name": "gatsby-transformer-remark",
-    "options": Object {
-      "plugins": Array [
-        Object {
-          "options": Object {
-            "maxWidth": 590,
-          },
-          "resolve": "gatsby-remark-images",
+exports[`gatsby-plugin resource all returns plugins as array 5`] = `
+Object {
+  "_message": "Installed gatsby-transformer-remark in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-transformer-remark",
+  "name": "gatsby-transformer-remark",
+  "options": Object {
+    "plugins": Array [
+      Object {
+        "options": Object {
+          "maxWidth": 590,
         },
-        Object {
-          "options": Object {
-            "wrapperStyle": "margin-bottom: 1.0725rem",
-          },
-          "resolve": "gatsby-remark-responsive-iframe",
+        "resolve": "gatsby-remark-images",
+      },
+      Object {
+        "options": Object {
+          "wrapperStyle": "margin-bottom: 1.0725rem",
         },
-        "gatsby-remark-prismjs",
-        "gatsby-remark-copy-linked-files",
-        "gatsby-remark-smartypants",
-      ],
-    },
-    "readme": "# gatsby-transformer-remark
-
-Parses Markdown files using [Remark](http://remark.js.org/).
-
-## Install
-
-\`npm install --save gatsby-transformer-remark\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: \`gatsby-transformer-remark\`,
-    options: {
-      // CommonMark mode (default: true)
-      commonmark: true,
-      // Footnotes mode (default: true)
-      footnotes: true,
-      // Pedantic mode (default: true)
-      pedantic: true,
-      // GitHub Flavored Markdown mode (default: true)
-      gfm: true,
-      // Plugins configs
-      plugins: [],
-    },
-  },
-],
-\`\`\`
-
-The following parts of \`options\` are passed down to Remark as options:
-
-- \`options.commonmark\`
-- \`options.footnotes\`
-- \`options.pedantic\`
-- \`options.gfm\`
-
-The details of the Remark options above could be found in [\`remark-parse\`'s documentation](https://github.com/remarkjs/remark/tree/main/packages/remark-parse#processoruseparse-options)
-
-A full explanation of how to use markdown in Gatsby can be found here:
-[Creating a Blog with Gatsby](https://www.gatsbyjs.org/blog/2017-07-19-creating-a-blog-with-gatsby/)
-
-There are many Gatsby Remark plugins which you can install to customize how Markdown is processed. Many of them are demoed at https://using-remark.gatsbyjs.org/. See also the [source code for using-remark](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark).
-
-## Parsing algorithm
-
-It recognizes files with the following extensions as Markdown:
-
-- md
-- markdown
-
-Each Markdown file is parsed into a node of type \`MarkdownRemark\`.
-
-All frontmatter fields are converted into GraphQL fields. TODO link to docs on
-auto-inferring types/fields.
-
-This plugin adds additional fields to the \`MarkdownRemark\` GraphQL type
-including \`html\`, \`excerpt\`, \`headings\`, etc. Other Gatsby plugins can also add
-additional fields.
-
-## How to query
-
-A sample GraphQL query to get MarkdownRemark nodes:
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        html
-        headings {
-          depth
-          value
-        }
-        frontmatter {
-          # Assumes you're using title in your frontmatter.
-          title
-        }
-      }
-    }
-  }
-}
-\`\`\`
-
-### Getting table of contents
-
-Using the following GraphQL query you'll be able to get the table of contents
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        html
-        tableOfContents
-      }
-    }
-  }
-}
-\`\`\`
-
-### Configuring the tableOfContents
-
-By default the tableOfContents is using the field \`slug\` to generate absolute URLs. You can however provide another field using the pathToSlugField parameter. **Note** that providing a non existing field will cause the result to be null. You can also pass \`absolute: false\` to generate relative path. To alter the default values for tableOfContents generation, include values for \`heading\` (string) and/or \`maxDepth\` (number 1 to 6) in GraphQL query. If a value for \`heading\` is given, the first heading that matches will be omitted and the toc is generated from the next heading of the same depth onwards. Value for \`maxDepth\` sets the maximum depth of the toc (i.e. if a maxDepth of 3 is set, only h1 to h3 headings will appear in the toc).
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        html
-        tableOfContents(
-          absolute: true
-          pathToSlugField: \\"frontmatter.path\\"
-          heading: \\"only show toc from this heading onwards\\"
-          maxDepth: 2
-        )
-        frontmatter {
-          # Assumes you're using path in your frontmatter.
-          path
-        }
-      }
-    }
-  }
-}
-\`\`\`
-
-To pass default options to the plugin generating the tableOfContents, configure it in gatsby-config.js as shown below. The options shown below are the defaults used by the plugin.
-
-\`\`\`javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: \`gatsby-transformer-remark\`,
-    options: {
-      tableOfContents: {
-        heading: null,
-        maxDepth: 6,
+        "resolve": "gatsby-remark-responsive-iframe",
       },
-    },
-  },
-]
-\`\`\`
-
-### Excerpts
-
-#### Length
-
-By default, excerpts have a maximum length of 140 characters. You can change the default using the \`pruneLength\` argument. For example, if you need 500 characters, you can specify:
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        html
-        excerpt(pruneLength: 500)
-      }
-    }
-  }
-}
-\`\`\`
-
-#### Format
-
-By default, Gatsby will return excerpts as plain text. This might be useful for populating [opengraph](https://en.wikipedia.org/wiki/Facebook_Platform#Open_Graph_protocol) HTML tags for SEO reasons. You can also explicitly specify a \`PLAIN\` format like so:
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        excerpt(format: PLAIN)
-      }
-    }
-  }
-}
-\`\`\`
-
-It's also possible to ask Gatsby to return excerpts formatted as HTML. You might use this if you have a blog post whose excerpt contains markdown content--e.g. header, link, etc.--and you want these links to render as HTML.
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        excerpt(format: HTML)
-      }
-    }
-  }
-}
-\`\`\`
-
-You can also get excerpts in Markdown format.
-
-\`\`\`graphql
-{
-  allMarkdownRemark {
-    edges {
-      node {
-        excerpt(format: MARKDOWN)
-      }
-    }
-  }
-}
-\`\`\`
-
-## gray-matter options
-
-\`gatsby-transformer-remark\` uses [gray-matter](https://github.com/jonschlinkert/gray-matter) to parse markdown frontmatter, so you can specify any of the options mentioned [here](https://github.com/jonschlinkert/gray-matter#options) in the \`gatsby-config.js\` file.
-
-### Example: Excerpts
-
-If you don't want to use \`pruneLength\` for excerpts but a custom separator, you can specify an \`excerpt_separator\` in the \`gatsby-config.js\` file:
-
-\`\`\`javascript
-{
-  \\"resolve\\": \`gatsby-transformer-remark\`,
-  \\"options\\": {
-    \\"excerpt_separator\\": \`<!-- end -->\`
-  }
-}
-\`\`\`
-
-Any file that does not have the given \`excerpt_separator\` will fall back to the default pruning method.
-
-## Troubleshooting
-
-### Excerpts for non-latin languages
-
-By default, \`excerpt\` uses \`underscore.string/prune\` which doesn't handle non-latin characters ([https://github.com/epeli/underscore.string/issues/418](https://github.com/epeli/underscore.string/issues/418)).
-
-If that is the case, you can set \`truncate\` option on \`excerpt\` field, like:
-
-\`\`\`graphql
-{
-  markdownRemark {
-    excerpt(truncate: true)
-  }
-}
-\`\`\`
-
-### Excerpts for HTML embedded in Markdown files
-
-If your Markdown file contains HTML, \`excerpt\` will not return a value.
-
-In that case, you can set an \`excerpt_separator\` in the \`gatsby-config.js\` file:
-
-\`\`\`javascript
-{
-  \\"resolve\\": \`gatsby-transformer-remark\`,
-  \\"options\\": {
-    \\"excerpt_separator\\": \`<!-- endexcerpt -->\`
-  }
-}
-\`\`\`
-
-Edit your Markdown files to include that HTML tag after the text you'd like to appear in the excerpt:
-
-\`\`\`markdown
----
-title: \\"my little pony\\"
-date: \\"2017-09-18T23:19:51.246Z\\"
----
-
-<p>Where oh where is that pony?</p>
-<!-- endexcerpt -->
-<p>Is he in the stable or down by the stream?</p>
-\`\`\`
-
-Then specify \`MARKDOWN\` as the format in your graphql query:
-
-\`\`\`graphql
-{
-  markdownRemark {
-    excerpt(format: MARKDOWN)
-  }
-}
-\`\`\`
-",
-    "shadowableFiles": Array [
-      "src/gatsby-transformer-remark/__tests__/__snapshots__/extend-node.js.snap",
-      "src/gatsby-transformer-remark/__tests__/__snapshots__/on-node-create.js.snap",
-      "src/gatsby-transformer-remark/__tests__/extend-node.js",
-      "src/gatsby-transformer-remark/__tests__/on-node-create.js",
-      "src/gatsby-transformer-remark/code-handler.js",
-      "src/gatsby-transformer-remark/create-schema-customization.js",
-      "src/gatsby-transformer-remark/extend-node-type.js",
-      "src/gatsby-transformer-remark/gatsby-node.js",
-      "src/gatsby-transformer-remark/hast-processing.js",
-      "src/gatsby-transformer-remark/on-node-create.js",
-      "src/gatsby-transformer-remark/utils/get-heading-id.js",
-      "src/gatsby-transformer-remark/utils/time-to-read.js",
+      "gatsby-remark-prismjs",
+      "gatsby-remark-copy-linked-files",
+      "gatsby-remark-smartypants",
     ],
-    "shadowedFiles": Array [],
   },
-  Object {
-    "_message": "Installed gatsby-plugin-sharp in gatsby-config.js",
-    "description": "Wrapper of the Sharp image manipulation library for Gatsby plugins",
-    "id": "gatsby-plugin-sharp",
-    "name": "gatsby-plugin-sharp",
-    "options": undefined,
-    "readme": "# gatsby-plugin-sharp
-
-Exposes several image processing functions built on the
-[Sharp image processing library](https://github.com/lovell/sharp). This is a
-low-level helper plugin generally used by other Gatsby plugins. You generally
-shouldn't be using this directly but might find it helpful if doing very custom
-image processing.
-
-It aims to provide excellent out-of-the box settings for processing common web
-image formats.
-
-For JPEGs it generates progressive images with a default quality level of 50.
-
-For PNGs it uses [pngquant](https://github.com/pornel/pngquant) to compress
-images. By default it uses a quality setting of [50-75]. The \`pngCompressionSpeed\`
-value is a speed/quality trade-off from 1 (brute-force) to 10 (fastest). Speed
-10 has 5% lower quality, but is 8 times faster than the default (4). In most
-cases you should stick with the default, but if you have very large numbers
-of PNGs then it can significantly reduce build times.
-
-## Install
-
-\`npm install --save gatsby-plugin-sharp\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: \`gatsby-plugin-sharp\`,
-    options: {
-      // Available options and their defaults:
-      base64Width: 20,
-      forceBase64Format: \`\`, // valid formats: png,jpg,webp
-      useMozJpeg: process.env.GATSBY_JPEG_ENCODER === \`MOZJPEG\`,
-      stripMetadata: true,
-      defaultQuality: 50,
-    },
-  },
-]
-\`\`\`
-
-## Methods
-
-### resize
-
-#### Parameters
-
-- \`width\` (int, default: 400)
-- \`height\` (int)
-- \`quality\` (int, default: 50)
-- \`jpegQuality\` (int)
-- \`pngQuality\` (int)
-- \`webpQuality\` (int)
-- \`jpegProgressive\` (bool, default: true)
-- \`pngCompressionLevel\` (int, default: 9)
-- \`base64\`(bool, default: false)
-
-#### Returns
-
-- \`src\` (string)
-- \`width\` (int)
-- \`height\` (int)
-- \`aspectRatio\` (float)
-
-### fixed
-
-Automatically create sizes for different resolutions — we do 1x, 1.5x, and 2x.
-
-#### Parameters
-
-- \`width\` (int, default: 400)
-- \`height\` (int)
-- \`quality\` (int, default: 50)
-- \`jpegQuality\` (int)
-- \`pngQuality\` (int)
-- \`webpQuality\` (int)
-
-#### Returns
-
-- \`base64\` (string)
-- \`aspectRatio\` (float)
-- \`width\` (float)
-- \`height\` (float)
-- \`src\` (string)
-- \`srcSet\` (string)
-
-### fluid
-
-Create fluid sizes (in width) for the image. If the max width of the container for the
-rendered markdown file is 800px, the sizes would then be: 200px, 400px, 800px, 1200px,
-1600px – enough to provide close to the optimal image size for every device
-size / screen resolution.
-
-If you want more control over which sizes are output you can use the \`srcSetBreakpoints\`
-parameter. For example, if you want images that are 200, 340, 520, and 890 wide you
-can add \`srcSetBreakpoints: [ 200, 340, 520, 890 ]\` as a parameter. You will also get
-\`maxWidth\` as a breakpoint (which is 800 by default), so you will actually get
-\`[ 200, 340, 520, 800, 890 ]\` as breakpoints.
-
-On top of that, \`fluid\` returns everything else (namely aspectRatio and
-a base64 image to use as a placeholder) you need to implement the \\"blur up\\"
-technique popularized by Medium and Facebook (and also available as a Gatsby
-plugin for Markdown content as gatsby-remark-images).
-
-When both a \`maxWidth\` and \`maxHeight\` are provided, sharp will [resize the image][6] using
-\`COVER\` as a fit strategy by default. You can choose between \`COVER\`, \`CONTAIN\`, \`FILL\`,
-\`INSIDE\`, and \`OUTSIDE\` as a fit strategy. See the [fit parameter below](#fit)
-for more details.
-
-#### Parameters
-
-- \`maxWidth\` (int, default: 800)
-- \`maxHeight\` (int)
-- \`quality\` (int, default: 50)
-- \`jpegQuality\` (int)
-- \`pngQuality\` (int)
-- \`webpQuality\` (int)
-- \`srcSetBreakpoints\` (array of int, default: [])
-- \`background\` (string, default: 'rgba(0,0,0,1)')
-- [deprecated] \`sizeByPixelDensity\` (bool, default: false)
-  - Pixel density is only used in vector images, which Gatsby’s implementation of Sharp doesn’t support. This option is currently a no-op and will be removed in the next major version of Gatsby.
-
-#### Returns
-
-- \`base64\` (string)
-- \`aspectRatio\` (float)
-- \`src\` (string)
-- \`srcSet\` (string)
-- \`srcSetType\` (string)
-- \`sizes\` (string)
-- \`originalImg\` (string)
-
-### Shared Options
-
-In addition to their individual parameters, all methods above share the
-following:
-
-- \`grayscale\` (bool, default: false)
-- \`duotone\` (bool|obj, default: false)
-- \`toFormat\` (string, default: '')
-- \`toFormatBase64\` (string, default: '')
-- \`base64Width\` (int, default: 20)
-- \`cropFocus\` (string, default: 'ATTENTION')
-- \`fit\` (string, default: 'COVER')
-- \`pngCompressionSpeed\` (int, default: 4)
-- \`rotate\` (int, default: 0)
-
-#### toFormat
-
-Convert the source image to one of the following available options: \`NO_CHANGE\`,
-\`JPG\`, \`PNG\`, \`WEBP\`.
-
-#### toFormatBase64
-
-base64 image uses the image format from the source , or the value of \`toFormat\`. This setting allows a different image format instead, available options are: \`JPG\`, \`PNG\`, \`WEBP\`.
-
-\`WEBP\` allows for a smaller data size, allowing you to reduce your HTML size when transferring over the network, or to use a larger base64 placeholder width default for improved image placeholder quality.
-
-[Not all browsers support \`WEBP\`](https://caniuse.com/#feat=webp). It would be wasteful to include a fallback image format in this case. Consider also adding a \`backgroundColor\` placeholder as a fallback instead.
-
-The plugin config option \`forceBase64Format\` performs the equivalent functionality by default to all your base64 placeholders. \`toFormatBase64\` has a higher priority for base64 images that need to selectively use a different format.
-
-#### base64Width
-
-The width in pixels for your base64 placeholder to use. The height will also be adjusted based on the aspect ratio of the image. Use this to increase the image quality by allowing more pixels to be used at the expense of increasing the file size of the data to be transferred.
-
-The default for Gatsby is \`20\`px. This keeps the data size low enough to embed into the HTML document for immediate display on DOM loaded and avoids an additional network request.
-
-[Facebook](https://engineering.fb.com/android/the-technology-behind-preview-photos/) and [Medium](https://jmperezperez.com/medium-image-progressive-loading-placeholder/) are both known to use \`42\`px width for their image placeholders. However Medium presently uses a solid background color placeholder to load the page as fast as possible, followed by an image placeholder requested over the network instead of embedding it with base64.
-
-The plugin config has an equivalent option, allowing you to change the default for all base64 placeholders. This parameter option has a higher priority over the plugin config option.
-
-#### cropFocus
-
-Change the cropping focus. Available options: \`CENTER\`, \`NORTH\`, \`NORTHEAST\`,
-\`EAST\`, \`SOUTHEAST\`, \`SOUTH\`, \`SOUTHWEST\`, \`WEST\`, \`NORTHWEST\`, \`ENTROPY\`,
-\`ATTENTION\`. See Sharp's [resize][6].
-
-#### fit
-
-Select the fit strategy for sharp to use when resizing images. Available options
-are: \`COVER\`, \`CONTAIN\`, \`FILL\`, \`INSIDE\`, \`OUTSIDE\`. See Sharp's [resize][6].
-
-**Note:** The fit strategies \`CONTAIN\` and \`FILL\` will not work when \`cropFocus\` is
-set to \`ENTROPY\` or \`ATTENTION\`.
-
-The following image shows the effects of each fit option. You can see that the
-\`INSIDE\` option results in one dimension being smaller than requested, while
-the \`OUTSIDE\` option results in one dimension being larger than requested.
-![Sharp transform fit options](./sharp-transform-fit-options.png)
-
-#### pngCompressionSpeed
-
-Change the speed/quality tradeoff for PNG compression from 1 (brute-force) to
-10 (fastest). See pngquant's [options][19].
-
-#### rotate
-
-Rotate the image (after cropping). See Sharp's [rotate][7].
-
-#### grayscale
-
-Uses Sharp's [greyscale][8] to convert the source image to 8-bit greyscale, 256
-shades of grey, e.g.
-
-\`\`\`graphql
-allImageSharp {
-  edges {
-    node {
-      ... on ImageSharp {
-        resize(width: 150, height: 150, grayscale: true) {
-          src
-        }
-      }
-    }
-  }
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-#### duotone
-
-Applys a \\"duotone\\" effect (see [I][1], [II][2], [III][3]) to the source image if
-given two hex colors \`shadow\` and \`highlight\` defining start and end color of
-the duotone gradient, e.g.
-
-\`\`\`graphql
-fixed(
-  width: 800,
-  duotone: {
-    highlight: \\"#f00e2e\\",
-    shadow: \\"#192550\\"
-  }
-) {
-  src
-  srcSet
-  base64
+exports[`gatsby-plugin resource all returns plugins as array 6`] = `
+Object {
+  "_message": "Installed gatsby-plugin-sharp in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-sharp",
+  "name": "gatsby-plugin-sharp",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-the source image colors will be converted to match a gradient color chosen based
-on each pixel's [relative luminance][4].\\\\
-Logic is borrowed from [react-duotone][5].
-
-You can pass a third optional parameter, \`opacity\`:
-
-\`\`\`graphql
-fluid(
-  width: 800,
-  duotone: {
-    highlight: \\"#f00e2e\\",
-    shadow: \\"#192550\\",
-    opacity: 50
-  }
-) {
-  src
-  srcSet
-  base64
+exports[`gatsby-plugin resource all returns plugins as array 7`] = `
+Object {
+  "_message": "Installed gatsby-plugin-google-analytics in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-google-analytics",
+  "name": "gatsby-plugin-google-analytics",
+  "options": Object {
+    "trackingId": "UA-774017-3",
+  },
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-If set, a semi-transparent version of duotone'd image will be composited over
-the original image, allowing the original image and its colors to partially
-\\"shine through\\". _Heads up_: If the original image contains an alpha channel it
-will be [flattened][15] before creating the composite.
-
-This works by adding an alpha channel to the duotone'd image - then we let Sharp
-do its magic via
-[\`overlayWith\`](http://sharp.pixelplumbing.com/en/stable/api-composite/#overlaywith);
-quoting the Sharp documentation:
-
-> If the overlay image contains an alpha channel then composition with
-> <a href=\\"https://en.wikipedia.org/wiki/Alpha_compositing\\">premultiplication</a>
-> will occur.
-
-#### tracedSVG
-
-Generates a traced SVG of the image (see [the original GitHub issue][9]) and
-returns the SVG as \\"[optimized URL-encoded][10]\\" \`data:\` URI. It used in
-[gatsby-image](/packages/gatsby-image/) to provide an
-alternative to the default inline base64 placeholder image.
-
-Uses [node-potrace][11] and [SVGO][12] under the hood. Default settings for
-node-potrace:
-
-\`\`\`javascript
-  {
-    color: \`lightgray\`,
-    optTolerance: 0.4,
-    turdSize: 100,
-    turnPolicy: TURNPOLICY_MAJORITY,
-  }
-\`\`\`
-
-All [node-potrace \`Potrace\` parameters][13] are exposed and can be set via the
-\`traceSVG\` argument:
-
-\`\`\`javascript
-fixed(
-  traceSVG: {
-    color: \\"#f00e2e\\"
-    turnPolicy: TURNPOLICY_MINORITY
-    blackOnWhite: false
-  }
-) {
-  src
-  srcSet
-  tracedSVG
+exports[`gatsby-plugin resource all returns plugins as array 8`] = `
+Object {
+  "_message": "Installed gatsby-plugin-manifest in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-manifest",
+  "name": "gatsby-plugin-manifest",
+  "options": Object {
+    "background_color": null,
+    "display": "minimal-ui",
+    "icon": "static/logo.png",
+    "name": "Bricolage",
+    "short_name": "Bricolage",
+    "start_url": "/",
+    "theme_color": null,
+  },
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-### Setting a default quality
-
-You can pass a default image quality to \`sharp\` by setting the \`defaultQuality\` option.
-
-### Using MozJPEG
-
-You can opt-in to use [MozJPEG][16] for jpeg-encoding. MozJPEG provides even
-better image compression than the default encoder used in \`gatsby-plugin-sharp\`.
-However, when using MozJPEG the build time of your Gatsby project will increase
-significantly.
-
-To enable MozJPEG, you can set the \`useMozJpeg\` plugin option to \`true\` in
-\`gatsby-config.js\`.
-
-For backwards compatible reasons, if \`useMozJpeg\` is not defined in the plugin
-options, the [environment variable](/docs/environment-variables/#environment-variables)
-\`GATSBY_JPEG_ENCODER\` acts as a fallback if set to \`MOZJPEG\`:
-
-\`\`\`shell
-GATSBY_JPEG_ENCODER=MOZJPEG
-\`\`\`
-
-### EXIF and ICC metadata
-
-By default, \`gatsby-plugin-sharp\` strips all EXIF, ICC and other metadata
-present in your source file. This is the recommended default as it leads to
-smaller file sizes.
-
-However, in situations where you wish to preserve EXIF metadata or ICC profiles
-(example: you are building a photography portfolio and wish to conserve
-the color profile or the copyright information of the photos you've exported
-from Adobe Lightroom or Phase One's Capture One), you can set the \`stripMetadata\`
-plugin option to \`false\` in \`gatsby-config.js\`.
-
-It is important to note that if \`stripMetadata\` is set to \`false\`, **all**
-metadata information will be preserved from the source image, including but not
-limited to the latitude/longitude information of where the picture was taken
-(if present). If you wish to strip this information from the source file, you
-can either leave \`stripMetadata\` to its default of \`true\`, or manually
-pre-process your images with a tool such as [ExifTool][17].
-
-## Troubleshooting
-
-### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
-
-This means that there are multiple incompatible versions of the \`sharp\` package installed in \`node_modules\`. The complete error typically looks like this:
-
-\`\`\`text
-Something went wrong installing the \\"sharp\\" module
-
-dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
-  Referenced from: /Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node
-  Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
-\`\`\`
-
-To fix this, you'll need to update all Gatsby plugins in the current project that depend on the \`sharp\` package. Here's a list of official plugins that you might need to update in case your projects uses them:
-
-- \`gatsby-plugin-sharp\`
-- \`gatsby-plugin-manifest\`
-- \`gatsby-remark-images-contentful\`
-- \`gatsby-source-contentful\`
-- \`gatsby-transformer-sharp\`
-- \`gatsby-transformer-sqip\`
-
-To update these packages, run:
-
-\`\`\`shell
-npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
-\`\`\`
-
-If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of \`sharp\`. Try running \`npm list sharp\` or \`yarn why sharp\` to see all packages in the current project that use \`sharp\` and try updating them as well.
-
-[1]: https://alistapart.com/article/finessing-fecolormatrix
-[2]: http://blog.72lions.com/blog/2015/7/7/duotone-in-js
-[3]: https://ines.io/blog/dynamic-duotone-svg-jade
-[4]: https://en.wikipedia.org/wiki/Relative_luminance
-[5]: https://github.com/nagelflorian/react-duotone
-[6]: http://sharp.pixelplumbing.com/en/stable/api-resize/#crop
-[7]: http://sharp.pixelplumbing.com/en/stable/api-operation/#rotate
-[8]: http://sharp.pixelplumbing.com/en/stable/api-colour/#greyscale
-[9]: https://github.com/gatsbyjs/gatsby/issues/2435
-[10]: https://codepen.io/tigt/post/optimizing-svgs-in-data-uris
-[11]: https://github.com/tooolbox/node-potrace
-[12]: https://github.com/svg/svgo
-[13]: https://github.com/tooolbox/node-potrace#parameters
-[14]: https://github.com/oliver-moran/jimp
-[15]: http://sharp.pixelplumbing.com/en/stable/api-operation/#flatten
-[16]: https://github.com/mozilla/mozjpeg
-[17]: https://www.sno.phy.queensu.ca/~phil/exiftool/
-[18]: https://www.npmjs.com/package/color
-[19]: https://pngquant.org/#options
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-sharp/__tests__/__snapshots__/index.js.snap",
-      "src/gatsby-plugin-sharp/__tests__/gatsby-worker.js",
-      "src/gatsby-plugin-sharp/__tests__/images/144-density.png",
-      "src/gatsby-plugin-sharp/__tests__/images/alphatest.png",
-      "src/gatsby-plugin-sharp/__tests__/images/padding-bytes.jpg",
-      "src/gatsby-plugin-sharp/__tests__/images/test.png",
-      "src/gatsby-plugin-sharp/__tests__/index.js",
-      "src/gatsby-plugin-sharp/__tests__/process-file.js",
-      "src/gatsby-plugin-sharp/__tests__/scheduler.js",
-      "src/gatsby-plugin-sharp/__tests__/trace-svg.js",
-      "src/gatsby-plugin-sharp/__tests__/utils.js",
-      "src/gatsby-plugin-sharp/duotone.js",
-      "src/gatsby-plugin-sharp/gatsby-node.js",
-      "src/gatsby-plugin-sharp/gatsby-worker.js",
-      "src/gatsby-plugin-sharp/index.js",
-      "src/gatsby-plugin-sharp/plugin-options.js",
-      "src/gatsby-plugin-sharp/process-file.js",
-      "src/gatsby-plugin-sharp/report-error.js",
-      "src/gatsby-plugin-sharp/safe-sharp.js",
-      "src/gatsby-plugin-sharp/scheduler.js",
-      "src/gatsby-plugin-sharp/sharp-error.js",
-      "src/gatsby-plugin-sharp/trace-svg.js",
-      "src/gatsby-plugin-sharp/utils.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "_message": "Installed gatsby-plugin-google-analytics in gatsby-config.js",
-    "description": "Gatsby plugin to add google analytics onto a site",
-    "id": "gatsby-plugin-google-analytics",
-    "name": "gatsby-plugin-google-analytics",
-    "options": Object {
-      "trackingId": "UA-774017-3",
-    },
-    "readme": "# gatsby-plugin-google-analytics
-
-Easily add Google Analytics to your Gatsby site.
-
-## Install
-
-\`npm install --save gatsby-plugin-google-analytics\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-google-analytics\`,
-      options: {
-        // The property ID; the tracking code won't be generated without it
-        trackingId: \\"YOUR_GOOGLE_ANALYTICS_TRACKING_ID\\",
-        // Defines where to place the tracking script - \`true\` in the head and \`false\` in the body
-        head: false,
-        // Setting this parameter is optional
-        anonymize: true,
-        // Setting this parameter is also optional
-        respectDNT: true,
-        // Avoids sending pageview hits from custom paths
-        exclude: [\\"/preview/**\\", \\"/do-not-track/me/too/\\"],
-        // Delays sending pageview hits on route update (in milliseconds)
-        pageTransitionDelay: 0,
-        // Enables Google Optimize using your container Id
-        optimizeId: \\"YOUR_GOOGLE_OPTIMIZE_TRACKING_ID\\",
-        // Enables Google Optimize Experiment ID
-        experimentId: \\"YOUR_GOOGLE_EXPERIMENT_ID\\",
-        // Set Variation ID. 0 for original 1,2,3....
-        variationId: \\"YOUR_GOOGLE_OPTIMIZE_VARIATION_ID\\",
-        // Defers execution of google analytics script after page load
-        defer: false,
-        // Any additional optional fields
-        sampleRate: 5,
-        siteSpeedSampleRate: 10,
-        cookieDomain: \\"example.com\\",
-      },
-    },
-  ],
+exports[`gatsby-plugin resource all returns plugins as array 9`] = `
+Object {
+  "_message": "Installed gatsby-plugin-offline in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-offline",
+  "name": "gatsby-plugin-offline",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
+`;
 
-See below for the complete list of [optional fields](#optional-fields).
-
-Note that this plugin is disabled while running \`gatsby develop\`. This way, actions are not tracked while you are still developing your project. Once you run \`gatsby build\` the plugin is enabled. Test it with \`gatsby serve\`.
-
-## \`<OutboundLink>\` component
-
-To make it easy to track clicks on outbound links in Google Analytics,
-the plugin provides a component.
-
-To use it, simply import it and use it like you would the \`<a>\` element e.g.
-
-\`\`\`jsx
-import React from \\"react\\"
-import { OutboundLink } from \\"gatsby-plugin-google-analytics\\"
-
-export default () => (
-  <div>
-    <OutboundLink href=\\"https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/\\">
-      Visit the Google Analytics plugin page!
-    </OutboundLink>
-  </div>
-)
-\`\`\`
-
-## Options
-
-### \`trackingId\`
-
-Here you place your Google Analytics tracking id.
-
-### \`head\`
-
-Where do you want to place the GA script? By putting \`head\` to \`true\`, it will be placed in the \\"&lt;head&gt;\\" of your website. By setting it to \`false\`, it will be placed in the \\"&lt;body&gt;\\". The default value resolves to \`false\`.
-
-### \`anonymize\`
-
-Some countries (such as Germany) require you to use the
-[/_anonymizeIP](https://support.google.com/analytics/answer/2763052) function for
-Google Analytics. Otherwise you are not allowed to use it. The option adds two
-blocks to the code:
-
-\`\`\`javascript
-function gaOptout(){document.cookie=disableStr+'=true; expires=Thu, 31 Dec 2099 23:59:59 UTC;path=/',window[disableStr]=!0}var gaProperty='UA-XXXXXXXX-X',disableStr='ga-disable-'+gaProperty;document.cookie.indexOf(disableStr+'=true')>-1&&(window[disableStr]=!0);
-
-...
-
-ga('set', 'anonymizeIp', 1);
-\`\`\`
-
-If your visitors should be able to set an Opt-Out-Cookie (No future tracking)
-you can set a link e.g. in your imprint as follows:
-
-\`<a href=\\"javascript:gaOptout();\\">Deactivate Google Analytics</a>\`
-
-### \`respectDNT\`
-
-If you enable this optional option, Google Analytics will not be loaded at all for visitors that have \\"Do Not Track\\" enabled. While using Google Analytics does not necessarily constitute Tracking, you might still want to do this to cater to more privacy oriented users.
-
-If you are testing this, make sure to disable Do Not Track settings in your own browser.
-For Chrome, Settings > Privacy and security > More
-Then disable \`Send a \\"Do Not Track\\" request with your browsing traffic\`
-
-### \`exclude\`
-
-If you need to exclude any path from the tracking system, you can add it (one or more) to this optional array as glob expressions.
-
-### \`pageTransitionDelay\`
-
-If your site uses any custom transitions on route update (e.g. [\`gatsby-plugin-transition-link\`](https://www.gatsbyjs.org/blog/2018-12-04-per-link-gatsby-page-transitions-with-transitionlink/)), then you can delay processing the page view event until the new page is mounted.
-
-### \`optimizeId\`
-
-If you need to use Google Optimize for A/B testing, you can add this optional Optimize container id to allow Google Optimize to load the correct test parameters for your site.
-
-### \`experimentId\`
-
-If you need to set up SERVER_SIDE Google Optimize experiment, you can add the experiment ID. The experiment ID is shown on the right-hand panel on the experiment details page. [Server-side Experiments](https://developers.google.com/optimize/devguides/experiments)
-
-### \`variationId\`
-
-Besides the experiment ID you also need the variation ID for SERVER_SIDE experiments in Google Optimize. Set 0 for original version.
-
-## Optional Fields
-
-This plugin supports all optional Create Only Fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#create):
-
-- \`name\`: string, tracker name
-- \`clientId\`: string
-- \`sampleRate\`: number
-- \`siteSpeedSampleRate\`: number
-- \`alwaysSendReferrer\`: boolean
-- \`allowAnchor\`: boolean
-- \`cookieName\`: string
-- \`cookieFlags\`: string
-- \`cookieDomain\`: string, defaults to \`'auto'\` if not given
-- \`cookieExpires\`: number
-- \`storeGac\`: boolean
-- \`legacyCookieDomain\`: string
-- \`legacyHistoryImport\`: boolean
-- \`allowLinker\`: boolean
-- \`storage\`: string
-
-This plugin also supports several optional General fields documented in [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#general):
-
-- \`allowAdFeatures\`: boolean
-- \`dataSource\`: string
-- \`queueTime\`: number
-- \`forceSSL\`: boolean
-- \`transport\`: string
-
-These fields can be specified in the plugin's \`options\` as shown in the [How to use](#how-to-use) section.
-
-## TrackCustomEvent Function
-
-To allow custom events to be tracked, the plugin exposes a function to include in your project.
-
-To use it, import the package and call the event within your components and business logic.
-
-\`\`\`jsx
-import React
-import { trackCustomEvent } from 'gatsby-plugin-google-analytics'
-
-export default () => {
-  <div>
-    <button
-      onClick={e => {
-        // To stop the page reloading
-        e.preventDefault()
-        // Lets track that custom click
-        trackCustomEvent({
-          // string - required - The object that was interacted with (e.g.video)
-          category: \\"Special Button\\",
-          // string - required - Type of interaction (e.g. 'play')
-          action: \\"Click\\",
-          // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
-          label: \\"Gatsby Plugin Example Campaign\\",
-          // number - optional - Numeric value associated with the event. (e.g. A product ID)
-          value: 43
-        })
-        //... Other logic here
-      }}
-    >
-      Tap that!
-    </button>
-  </div>
+exports[`gatsby-plugin resource all returns plugins as array 10`] = `
+Object {
+  "_message": "Installed gatsby-plugin-react-helmet in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-plugin-react-helmet",
+  "name": "gatsby-plugin-react-helmet",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
 }
-\`\`\`
-
-### All Fields Options
-
-- \`category\`: string - required
-- \`action\`: string - required
-- \`label\`: string
-- \`value\`: integer
-- \`nonInteraction\`: bool
-- \`transport\`: string
-- \`hitCallback\`: function
-
-For more information see the [Google Analytics](https://developers.google.com/analytics/devguides/collection/analyticsjs/field-reference#events) documentation.
-
-#### hitCallback
-
-A timeout is included by default incase the Analytics library fails to load. For more information see [Google Analytics - Handling Timeouts](https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#handling_timeouts)
-
-## Troubleshooting
-
-### No actions are tracked
-
-#### Check the tracking ID
-
-Make sure you supplied the correct Google Analytics tracking ID. It should look like this: \`trackingId: \\"UA-111111111-1\\"\`
-
-#### Make sure plugin and script are loaded first
-
-The analytics script tag is not properly loaded into the DOM. You can fix this by moving the plugin to the top of your \`gatsby-config.js\` and into the head of the DOM:
-
-\`\`\`javascript
-module.exports = {
-  siteMetadata: {
-    /* your metadata */
-  },
-  plugins: [
-    // Make sure this plugin is first in the array of plugins
-    {
-      resolve: \`gatsby-plugin-google-analytics\`,
-      options: {
-        trackingId: \\"UA-111111111-1\\",
-        // this option places the tracking script into the head of the DOM
-        head: true,
-        // other options
-      },
-    },
-  ],
-  // other plugins
-}
-\`\`\`
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-google-analytics/__tests__/__snapshots__/index.js.snap",
-      "src/gatsby-plugin-google-analytics/__tests__/gatsby-browser.js",
-      "src/gatsby-plugin-google-analytics/__tests__/gatsby-ssr.js",
-      "src/gatsby-plugin-google-analytics/__tests__/index.js",
-      "src/gatsby-plugin-google-analytics/gatsby-browser.js",
-      "src/gatsby-plugin-google-analytics/gatsby-node.js",
-      "src/gatsby-plugin-google-analytics/gatsby-ssr.js",
-      "src/gatsby-plugin-google-analytics/index.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "_message": "Installed gatsby-plugin-manifest in gatsby-config.js",
-    "description": "Gatsby plugin which adds a manifest.webmanifest to make sites progressive web apps",
-    "id": "gatsby-plugin-manifest",
-    "name": "gatsby-plugin-manifest",
-    "options": Object {
-      "background_color": null,
-      "display": "minimal-ui",
-      "icon": "static/logo.png",
-      "name": "Bricolage",
-      "short_name": "Bricolage",
-      "start_url": "/",
-      "theme_color": null,
-    },
-    "readme": "# gatsby-plugin-manifest
-
-The web app manifest (part of the [PWA](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps) specification) enabled by this plugin allows users to add your site to their home screen on most mobile browsers —
-[see here](http://caniuse.com/#feat=web-app-manifest). The manifest provides configuration and icons to the phone.
-
-This plugin provides several features beyond manifest configuration to make your life easier, they are:
-
-- Auto icon generation - generates multiple icon sizes from a single source
-- [Favicon support](https://www.w3.org/2005/10/howto-favicon)
-- Legacy icon support (iOS)[^1]
-- [Cache busting](https://www.keycdn.com/support/what-is-cache-busting)
-- Localization - Provides unique manifests for path-based localization ([Gatsby Example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n))
-
-Each of these features has extensive configuration available so you are always in control.
-
-## Install
-
-\`\`\`shell
-npm install --save gatsby-plugin-manifest
-\`\`\`
-
-## How to use
-
-### Add plugin and manifest settings - **Required**
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-      },
-    },
-  ],
-}
-\`\`\`
-
-If you're using this plugin together with [\`gatsby-plugin-offline\`](https://www.gatsbyjs.org/packages/gatsby-plugin-offline) (recommended),
-this plugin should be listed _before_ the offline plugin so that it can cache
-the created \`manifest.webmanifest\`.
-
-For more information on configuring your web app [see here](https://developers.google.com/web/fundamentals/web-app-manifest/).
-
-### Configure icons and their generations - **Required**
-
-There are three modes in which icon generation can function: automatic, hybrid, and manual(disabled). These modes can affect other configurations defaults.
-
-- Automatic - Generate a pre-configured set of icons from a single source icon.
-
-  - Favicon - yes
-  - Legacy icon support - yes
-  - Cache busting - yes
-  - Localization - optional
-
-- Hybrid - Generate a manually configured set of icons from a single source icon.
-
-  - Favicon - yes
-  - Legacy icon support - yes
-  - Cache busting - yes
-  - Localization - optional
-
-- Manual - Don't generate or pre-configure any icons.
-
-  - Favicon - never
-  - Legacy icon support - yes
-  - Cache busting - never
-  - Localization - optional
-
-**_IMPORTANT:_** For best results, if you're providing an icon for generation it should be...
-
-- ...at least as big as the largest icon being generated (512x512 by default).
-- ...square (if it's not, transparent bars will automatically be added to make it square).
-- ...of one of the following formats: JPEG, PNG, WebP, TIFF, GIF or SVG.
-
-#### Automatic mode configuration
-
-Add the following line to the plugin options
-
-\`\`\`js
-  icon: \`src/images/icon.png\`, // This path is relative to the root of the site.
-\`\`\`
-
-Automatic mode is the easiest option for most people.
-
-#### Hybrid mode configuration
-
-Add the following line to the plugin options
-
-\`\`\`js
-  icon: \`src/images/icon.png\`, // This path is relative to the root of the site.
-  icons: [
-    {
-      src: \`/favicons/android-chrome-192x192.png\`,
-      sizes: \`192x192\`,
-      type: \`image/png\`,
-    },
-    {
-      src: \`/favicons/android-chrome-512x512.png\`,
-      sizes: \`512x512\`,
-      type: \`image/png\`,
-    },
-  ], // Add or remove icon sizes as desired
-\`\`\`
-
-If you want to include more or fewer sizes, then the hybrid option is for you. Like automatic mode, you include a high-resolution icon from which to generate smaller icons. But unlike automatic mode, you provide the \`icons\` array config and icons are generated based on the sizes defined in your config.
-
-The hybrid option allows the most flexibility while still not requiring you to create all icon sizes manually.
-
-#### Manual mode configuration
-
-Add the following line to the plugin options
-
-\`\`\`js
-icons: [
-  {
-    src: \`/favicons/android-chrome-192x192.png\`,
-    sizes: \`192x192\`,
-    type: \`image/png\`,
-  },
-  {
-    src: \`/favicons/android-chrome-512x512.png\`,
-    sizes: \`512x512\`,
-    type: \`image/png\`,
-  },
-], // Add or remove icon sizes as desired
-\`\`\`
-
-In the manual mode, you are responsible for defining the entire web app manifest and providing the defined icons in the [static](https://www.gatsbyjs.org/docs/static-folder/) folder. Only icons you provide will be available. There is no automatic resizing done for you.
-
-### Feature configuration - **Optional**
-
-#### Localization configuration
-
-Localization allows you to create unique manifests for each localized version of your site. You can add as many languages as you want. Localization requires unique paths for each language (e.g. if your default about page is at \`/about\`, the German (\`de\`) version would be \`/de/about\`).
-
-The default site language should be configured in your root plugin options. Any additional languages should be defined in the \`localize\` array. The root settings will be used as defaults if not overridden in a locale. Any configuration option available in the root is also available in the \`localize\` array.
-
-\`lang\` and \`start_url\` are the only _required_ options in the array objects. \`name\`, \`short_name\`, and \`description\` are [recommended](https://www.w3.org/TR/appmanifest/#dfn-directionality-capable-members) to be translated if being used in the default language. All other config options are optional. This is helpful if you want to provide unique icons for each locale.
-
-The [\`lang\` option](https://www.w3.org/TR/appmanifest/#lang-member) is part of the web app manifest specification and thus is required to be a [valid language tag](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry).
-
-Using localization requires name-based cache busting when using a unique icon in automatic mode for a specific locale. This is automatically enabled if you provide an \`icon\` in a specific locale without uniquely defining \`icons\`. If you're using icon creation in hybrid or manual mode for your locales, remember to provide unique icon paths.
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`The Cool Application\`,
-        short_name: \`Cool App\`,
-        description: \`The application does cool things and makes your life better.\`,
-        lang: \`en\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`,
-        start_url: \`/\`,
-        background_color: \`#663399\`,
-        theme_color: \`#fff\`,
-        localize: [
-          {
-            start_url: \`/de/\`,
-            lang: \`de\`,
-            name: \`Die coole Anwendung\`,
-            short_name: \`Coole Anwendung\`,
-            description: \`Die Anwendung macht coole Dinge und macht Ihr Leben besser.\`,
-          },
-        ],
-      },
-    },
-  ],
-}
-\`\`\`
-
-#### Iterative icon options
-
-The \`icon_options\` object may be used to iteratively add configuration items to the \`icons\` array. Any options included in this object will be merged with each object of the \`icons\` array (custom or default). Key value pairs already in the \`icons\` array will take precedence over duplicate items in the \`icon_options\` array.
-
-\`icon_options\` may be used as follows:
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`,
-        icon_options: {
-          // For all the options available, please see:
-          // https://developer.mozilla.org/en-US/docs/Web/Manifest
-          // https://w3c.github.io/manifest/#purpose-member
-          purpose: \`maskable\`,
-        },
-      },
-    },
-  ],
-}
-\`\`\`
-
-#### Disable legacy icons
-
-iOS 11.3 added support for the web app manifest specification. Previous iOS versions won't recognize the icons defined in the webmanifest and the creation of \`apple-touch-icon\` links in \`<head>\` is needed. This plugin creates them by default. If you don't want those icons to be generated you can set the \`legacy\` option to \`false\` in the plugin configuration:
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`,
-        legacy: false, // this will not add apple-touch-icon links to <head>
-      },
-    },
-  ],
-}
-\`\`\`
-
-#### Disable favicon
-
-A favicon is generated by default in automatic and hybrid modes (a 32x32 PNG, included via a \`<link rel=\\"icon\\" />\` tag in the document head). Additionally, if an SVG icon is provided as the source, it will be used in the document head without modification as a favicon. The PNG will still be created and included as a fallback. Including the SVG icon allows creating a responsive icon with CSS Media Queries such as [dark mode](https://catalin.red/svg-favicon-light-dark-theme/#browser-support-and-fallbacks) and [others](https://css-tricks.com/svg-favicons-and-all-the-fun-things-we-can-do-with-them/#other-media-queries).
-
-You can set the \`include_favicon\` plugin option to \`false\` to opt-out of this behavior.
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`, // This path is relative to the root of the site.
-        include_favicon: false, // This will exclude favicon link tag
-      },
-    },
-  ],
-}
-\`\`\`
-
-#### Disable or configure \\"[cache busting](https://www.keycdn.com/support/what-is-cache-busting)\\"
-
-Cache Busting allows your updated icon to be quickly/easily visible to your site's visitors. HTTP caches could otherwise keep an old icon around for days and weeks. Cache busting can only be done in 'automatic' and 'hybrid' modes.
-
-Cache busting works by calculating a unique \\"digest\\" of the provided icon and modifying links or file names of generated images with that unique digest. If you ever update your icon, the digest will change and caches will be busted.
-
-**Options:**
-
-- **\\\\\`query\\\\\`** - This is the default mode. File names are unmodified but a URL query is appended to all links. e.g. \`icons/icon-48x48.png?digest=abc123\`.
-
-- **\\\\\`name\\\\\`** - Changes the cache busting mode to be done by file name. File names and links are modified with the icon digest. e.g. \`icons/icon-48x48-abc123.png\` (only needed if your CDN does not support URL query based cache busting). This mode is required and automatically enabled for a locale's icons if you are providing a unique icon for a specific locale in automatic mode using the localization features.
-
-- **\\\\\`none\\\\\`** - Disables cache busting. File names and links remain unmodified.
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`,
-        cache_busting_mode: \`none\`, // \`query\`(default), \`name\`, or \`none\`
-      },
-    },
-  ],
-}
-\`\`\`
-
-#### Using with gatsby-plugin-offline
-
-If using this plugin with \`gatsby-plugin-offline\` you may find that your icons are not cached.
-In order to solve this, update your \`gatsby-config.js\` as follows:
-
-\`\`\`js
-// gatsby-config.js
-{
-   resolve: 'gatsby-plugin-manifest',
-   options: {
-      icon: 'icon.svg',
-      cache_busting_mode: 'none'
-   }
-},
-{
-   resolve: 'gatsby-plugin-offline',
-   options: {
-      workboxConfig: {
-         globPatterns: ['**/icon-path*']
-      }
-   }
-}
-\`\`\`
-
-Updating \`cache_busting_mode\` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
-Adding the \`globPatterns\` makes sure that the offline plugin will cache everything.
-Note that you have to prefix your icon with \`icon-path\` or whatever you may call it
-
-#### Remove \`theme-color\` meta tag
-
-By default a \`<meta content={theme_color} name=\\"theme-color\\" />\` tag is inserted into the html output. This can be problematic if you want to programmatically control that tag (e.g. when implementing light/dark themes in your project). You can set \`theme_color_in_head\` plugin option to \`false\` to opt-out of this behavior.
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`,
-        theme_color_in_head: false, // This will avoid adding theme-color meta tag.
-      },
-    },
-  ],
-}
-\`\`\`
-
-#### Enable CORS using \`crossorigin\` attribute
-
-Add a \`crossorigin\` attribute to the manifest \`<link rel=\\"manifest\\" crossorigin=\\"use-credentials\\" href=\\"/manifest.webmanifest\\" />\` link tag.
-
-You can set \`crossOrigin\` plugin option to \`'use-credentials'\` to enable sharing resources via cookies. Any invalid keyword or empty string will fallback to \`'anonymous'\`.
-
-You can find more information about \`crossorigin\` on [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes).
-
-\`\`\`js
-// in gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-manifest\`,
-      options: {
-        name: \`GatsbyJS\`,
-        short_name: \`GatsbyJS\`,
-        start_url: \`/\`,
-        background_color: \`#f7f0eb\`,
-        theme_color: \`#a2466c\`,
-        display: \`standalone\`,
-        icon: \`src/images/icon.png\`,
-        crossOrigin: \`use-credentials\`, // \`use-credentials\` or \`anonymous\`
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Appendices
-
-Additional information that may be interesting or valuable.
-
-### Default icon config
-
-When in automatic mode the following json array is injected into the manifest configuration you provide and the icons are generated from it.
-
-\`\`\`json
-[
-  {
-    \\"src\\": \\"icons/icon-48x48.png\\",
-    \\"sizes\\": \\"48x48\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-72x72.png\\",
-    \\"sizes\\": \\"72x72\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-96x96.png\\",
-    \\"sizes\\": \\"96x96\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-144x144.png\\",
-    \\"sizes\\": \\"144x144\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-192x192.png\\",
-    \\"sizes\\": \\"192x192\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-256x256.png\\",
-    \\"sizes\\": \\"256x256\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-384x384.png\\",
-    \\"sizes\\": \\"384x384\\",
-    \\"type\\": \\"image/png\\"
-  },
-  {
-    \\"src\\": \\"icons/icon-512x512.png\\",
-    \\"sizes\\": \\"512x512\\",
-    \\"type\\": \\"image/png\\"
-  }
-]
-\`\`\`
-
-### Legacy icon support coverage
-
-Currently this feature only covers older versions of [iOS Safari](https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html).
-
-Internet Explorer is the only other major browser that doesn't support the web app manifest, and its market share is so small no one has contributed support.
-
-### Additional resources
-
-This article from the Chrome DevRel team is a good intro to the web app
-manifest — https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-
-For more information see the [W3C specification](https://www.w3.org/TR/appmanifest/) or [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest).
-
-## Troubleshooting
-
-### Incompatible library version: sharp.node requires version X or later, but Z provides version Y
-
-This means that there are multiple incompatible versions of the \`sharp\` package installed in \`node_modules\`. The complete error typically looks like this:
-
-\`\`\`text
-Something went wrong installing the \\"sharp\\" module
-
-dlopen(/Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node, 1): Library not loaded: @rpath/libglib-2.0.dylib
-  Referenced from: /Users/misiek/dev/gatsby-starter-blog/node_modules/sharp/build/Release/sharp.node
-  Reason: Incompatible library version: sharp.node requires version 6001.0.0 or later, but libglib-2.0.dylib provides version 5801.0.0
-\`\`\`
-
-To fix this, you'll need to update all Gatsby plugins in the current project that depend on the \`sharp\` package. Here's a list of official plugins that you might need to update in case your projects use them:
-
-- \`gatsby-plugin-sharp\`
-- \`gatsby-plugin-manifest\`
-- \`gatsby-remark-images-contentful\`
-- \`gatsby-source-contentful\`
-- \`gatsby-transformer-sharp\`
-- \`gatsby-transformer-sqip\`
-
-To update these packages, run:
-
-\`\`\`shell
-npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-contentful gatsby-source-contentful gatsby-transformer-sharp gatsby-transformer-sqip
-\`\`\`
-
-If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of \`sharp\`. Try running \`npm list sharp\` or \`yarn why sharp\` to see all packages in the current project that use \`sharp\` and try updating them as well.
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-manifest/__tests__/__snapshots__/common.js.snap",
-      "src/gatsby-plugin-manifest/__tests__/__snapshots__/gatsby-node.js.snap",
-      "src/gatsby-plugin-manifest/__tests__/__snapshots__/gatsby-ssr.js.snap",
-      "src/gatsby-plugin-manifest/__tests__/common.js",
-      "src/gatsby-plugin-manifest/__tests__/gatsby-browser.js",
-      "src/gatsby-plugin-manifest/__tests__/gatsby-node.js",
-      "src/gatsby-plugin-manifest/__tests__/gatsby-ssr.js",
-      "src/gatsby-plugin-manifest/__tests__/images/gatsby-logo.png",
-      "src/gatsby-plugin-manifest/common.js",
-      "src/gatsby-plugin-manifest/gatsby-browser.js",
-      "src/gatsby-plugin-manifest/gatsby-node.js",
-      "src/gatsby-plugin-manifest/gatsby-ssr.js",
-      "src/gatsby-plugin-manifest/get-manifest-pathname.js",
-      "src/gatsby-plugin-manifest/safe-sharp.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "_message": "Installed gatsby-plugin-offline in gatsby-config.js",
-    "description": "Gatsby plugin which sets up a site to be able to run offline",
-    "id": "gatsby-plugin-offline",
-    "name": "gatsby-plugin-offline",
-    "options": undefined,
-    "readme": "# gatsby-plugin-offline
-
-Adds drop-in support for making a Gatsby site work offline and more resistant to
-bad network connections. It uses [Workbox Build](https://developers.google.com/web/tools/workbox/modules/workbox-build)
-to create a service worker for the site and loads the service worker into the client.
-
-If you're using this plugin with \`gatsby-plugin-manifest\` (recommended) this
-plugin should be listed _after_ that plugin so the manifest file can be included
-in the service worker.
-
-## Install
-
-\`npm install --save gatsby-plugin-offline\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-plugins: [\`gatsby-plugin-offline\`]
-\`\`\`
-
-## Available options
-
-In \`gatsby-plugin-offline\` 3.x, the following options are available:
-
-- \`precachePages\` lets you specify pages whose resources should be precached by the service worker, using an array of globs. For example:
-
-  \`\`\`javascript:title=gatsby-config.js
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-offline\`,
-      options: {
-        precachePages: [\`/about-us/\`, \`/projects/*\`],
-      },
-    },
-  ]
-  \`\`\`
-
-  Note: while essential resources of specified pages will be precached, such as JavaScript and CSS, non-essential resources such as fonts and images will not be included. Instead, these will be cached at runtime when a user visits a given page that includes these resources.
-
-- \`appendScript\` lets you specify a file to be appended at the end of the generated service worker (\`sw.js\`). For example:
-
-  \`\`\`javascript:title=gatsby-config.js
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-offline\`,
-      options: {
-        appendScript: require.resolve(\`src/custom-sw-code.js\`),
-      },
-    },
-  ]
-  \`\`\`
-
-  <br />
-
-  \`\`\`javascript:title=src/custom-sw-code.js
-  // show a notification after 15 seconds (the notification
-  // permission must be granted first)
-  setTimeout(() => {
-    self.registration.showNotification(\\"Hello, world!\\")
-  }, 15000)
-
-  // register a custom navigation route
-  const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
-    // ...
-  })
-  workbox.routing.registerRoute(customRoute)
-  \`\`\`
-
-- \`debug\` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on \`localhost\` only.
-
-- \`workboxConfig\` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
-
-  \`\`\`javascript:title=gatsby-config.js
-  plugins: [
-    {
-      resolve: \`gatsby-plugin-offline\`,
-      options: {
-        workboxConfig: {
-          importWorkboxFrom: \`cdn\`,
-        },
-      },
-    },
-  ]
-  \`\`\`
-
-## Upgrading from 2.x
-
-To upgrade from 2.x to 3.x, move any existing options into the \`workboxConfig\` option. If you haven't specified any options, you have nothing to do.
-
-For example, here is a 2.x config:
-
-\`\`\`javascript
-plugins: [
-  {
-    resolve: \`gatsby-plugin-offline\`,
-    options: {
-      importWorkboxFrom: \`cdn\`,
-    },
-  },
-]
-\`\`\`
-
-Here is the equivalent 3.x config:
-
-\`\`\`javascript
-plugins: [
-  {
-    resolve: \`gatsby-plugin-offline\`,
-    options: {
-      workboxConfig: {
-        importWorkboxFrom: \`cdn\`,
-      },
-    },
-  },
-]
-\`\`\`
-
-In version 3, Workbox is also upgraded to version 4 so you may need to update your \`workboxConfig\` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
-
-## Overriding Workbox configuration
-
-When adding this plugin to your \`gatsby-config.js\`, you can use the option \`workboxConfig\` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
-
-The default \`workboxConfig\` is as follows. Note that some of these options are configured automatically, e.g. \`globPatterns\`. If you're not sure about what all of these options mean, it's best to leave them as-is - otherwise, you may end up causing errors on your site, causing old files to be remain cached, or even breaking offline support.
-
-\`\`\`javascript
-const options = {
-  importWorkboxFrom: \`local\`,
-  globDirectory: rootDir,
-  globPatterns,
-  modifyURLPrefix: {
-    // If \`pathPrefix\` is configured by user, we should replace
-    // the default prefix with \`pathPrefix\`.
-    \\"/\\": \`\${pathPrefix}/\`,
-  },
-  cacheId: \`gatsby-plugin-offline\`,
-  // Don't cache-bust JS or CSS files, and anything in the static directory,
-  // since these files have unique URLs and their contents will never change
-  dontCacheBustURLsMatching: /(/.js$|/.css$|static//)/,
-  runtimeCaching: [
-    {
-      // Use cacheFirst since these don't need to be revalidated (same RegExp
-      // and same reason as above)
-      urlPattern: /(/.js$|/.css$|static//)/,
-      handler: \`CacheFirst\`,
-    },
-    {
-      // page-data.json files, static query results and app-data.json
-      // are not content hashed
-      urlPattern: /^https?:.*//page-data//.*/.json/,
-      handler: \`StaleWhileRevalidate\`,
-    },
-    {
-      // Add runtime caching of various other page resources
-      urlPattern: /^https?:.*/.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: \`StaleWhileRevalidate\`,
-    },
-    {
-      // Google Fonts CSS (doesn't end in .css so we need to specify it)
-      urlPattern: /^https?:////fonts/.googleapis/.com//css/,
-      handler: \`StaleWhileRevalidate\`,
-    },
-  ],
-  skipWaiting: true,
-  clientsClaim: true,
-}
-\`\`\`
-
-## Remove
-
-If you want to remove \`gatsby-plugin-offline\` from your site at a later point,
-substitute it with [\`gatsby-plugin-remove-serviceworker\`](https://www.npmjs.com/package/gatsby-plugin-remove-serviceworker)
-to safely remove the service worker. First, install the new package:
-
-\`\`\`shell
-npm install gatsby-plugin-remove-serviceworker
-npm uninstall gatsby-plugin-offline
-\`\`\`
-
-Then, update your \`gatsby-config.js\`:
-
-\`\`\`diff:title=gatsby-config.js
- plugins: [
--  \`gatsby-plugin-offline\`,
-+  \`gatsby-plugin-remove-serviceworker\`,
- ]
-\`\`\`
-
-This will ensure that the worker is properly unregistered, instead of leaving an
-outdated version registered in users' browsers.
-
-## Notes
-
-### Empty View Source and SEO
-
-Gatsby offers great SEO capabilities and that is no different with \`gatsby-plugin-offline\`. However, you shouldn't think that Gatsby doesn't serve HTML tags anymore when looking at your source code in the browser (with \`Right click\` => \`View source\`). \`View source\` doesn't represent the actual HTML data since \`gatsby-plugin-offline\` registers and loads a service worker that will cache and handle this differently. Your site is loaded from the service worker, not from its actual source (check your \`Network\` tab in the DevTools for that).
-
-To see the HTML data that crawlers will receive, run this in your terminal:
-
-**on Windows (using powershell):**
-
-\`\`\`shell
-Invoke-WebRequest https://www.yourdomain.tld | Select -ExpandProperty Content
-\`\`\`
-
-**on Mac OS/Linux:**
-
-\`\`\`shell
-curl https://www.yourdomain.tld
-\`\`\`
-
-Alternatively you can have a look at the \`/public/index.html\` file in your project folder.
-
-### App shell and server logs
-
-Server logs (like from [Netlify analytics](https://www.netlify.com/products/analytics/)) may show a large number of pageviews to a route like \`/offline-plugin-app-shell-fallback/index.html\`, this is a result of \`gatsby-plugin-offline\` adding an [app shell](https://developers.google.com/web/fundamentals/architecture/app-shell) to the page. The app shell is a minimal amount of user interface that can be cached offline for reliable performance loading on repeat visits. The shell can be loaded from the cache, and the content of the site loaded into the shell by the service worker.
-
-### Using with gatsby-plugin-manifest
-
-If using this plugin with \`gatsby-plugin-manifest\` you may find that your icons are not cached.
-In order to solve this, update your \`gatsby-config.js\` as follows:
-
-\`\`\`js
-// gatsby-config.js
-{
-   resolve: 'gatsby-plugin-manifest',
-   options: {
-      icon: 'icon.svg',
-      cache_busting_mode: 'none'
-   }
-},
-{
-   resolve: 'gatsby-plugin-offline',
-   options: {
-      workboxConfig: {
-         globPatterns: ['**/icon-path*']
-      }
-   }
-}
-\`\`\`
-
-Updating \`cache_busting_mode\` is necessary. Otherwise, workbox will break while attempting to find the cached URLs.
-Adding the \`globPatterns\` makes sure that the offline plugin will cache everything.
-Note that you have to prefix your icon with \`icon-path\` or whatever you may call it
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-offline/__tests__/__snapshots__/gatsby-node.js.snap",
-      "src/gatsby-plugin-offline/__tests__/__snapshots__/get-resources-from-html.js.snap",
-      "src/gatsby-plugin-offline/__tests__/fixtures/custom-sw-code.js",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/index.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/page1.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/page2.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/script.js",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir1/style.css",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/index.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/page1.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/page2.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/script.js",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/dir2/style.css",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/index.html",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/no-index-html/style.css",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/script.js",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/style.css",
-      "src/gatsby-plugin-offline/__tests__/fixtures/public/test.html",
-      "src/gatsby-plugin-offline/__tests__/gatsby-browser.test.js",
-      "src/gatsby-plugin-offline/__tests__/gatsby-node.js",
-      "src/gatsby-plugin-offline/__tests__/get-resources-from-html.js",
-      "src/gatsby-plugin-offline/app-shell.js",
-      "src/gatsby-plugin-offline/gatsby-browser.js",
-      "src/gatsby-plugin-offline/gatsby-node.js",
-      "src/gatsby-plugin-offline/gatsby-ssr.js",
-      "src/gatsby-plugin-offline/get-resources-from-html.js",
-      "src/gatsby-plugin-offline/sw-append.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-  Object {
-    "_message": "Installed gatsby-plugin-react-helmet in gatsby-config.js",
-    "description": "Manage document head data with react-helmet. Provides drop-in server rendering support for Gatsby.",
-    "id": "gatsby-plugin-react-helmet",
-    "name": "gatsby-plugin-react-helmet",
-    "options": undefined,
-    "readme": "# gatsby-plugin-react-helmet
-
-Provides drop-in support for server rendering data added with
-[React Helmet](https://github.com/nfl/react-helmet).
-
-React Helmet is a component which lets you control your document head using
-their React component.
-
-With this plugin, attributes you add in their component, e.g. title, meta
-attributes, etc. will get added to the static HTML pages Gatsby builds.
-
-This is important not just for site viewers, but also for SEO -- title and description metadata stored in the document head is a key component used by Google in determining placement in search results.
-
-## Install
-
-\`npm install --save gatsby-plugin-react-helmet react-helmet\`
-
-## How to use
-
-Just add the plugin to the plugins array in your \`gatsby-config.js\`
-
-\`\`\`javascript
-plugins: [\`gatsby-plugin-react-helmet\`]
-\`\`\`
-
-## Titles don't appear when opening in the background, while using \`gatsby-plugin-offline\`
-
-If you're using \`gatsby-plugin-offline\`, you might notice that when opening a link in the background, the title doesn't appear in the tab bar until switching to that tab. This is an [upstream issue with React Helmet](https://github.com/nfl/react-helmet/issues/315); however, it can be worked around by passing the \`defer={false}\` prop into your \`Helmet\` component. For example:
-
-\`\`\`jsx
-<Helmet title=\\"foo bar\\" defer={false} />
-\`\`\`
-
-## Compatibility with React 16.8 useEffect hook
-
-If you are using this plugin with React hooks, you may notice some errors like \`maximum call stack size exceeded\`. To ensure everything is running smoothly when using these technologies together, make sure to validate the following:
-
-- You have updated to the latest version of \`gatsby-plugin-react-helmet\`
-- You are using version 6.0.0-beta or later of \`react-helmet\`
-- You are importing React Helmet using \`import { Helmet } from 'react-helmet'\` rather than the old \`import Helmet from 'react-helmet'\`
-
-## Examples
-
-- [GatsbyJS.org](https://github.com/gatsbyjs/gatsby/blob/master/www/src/components/site-metadata.js)
-- [Jason Lengstorf personal website](https://github.com/jlengstorf/gatsby-theme-jason-blog/blob/master/src/components/SEO/SEO.js)
-",
-    "shadowableFiles": Array [
-      "src/gatsby-plugin-react-helmet/__mocks__/react-helmet.js",
-      "src/gatsby-plugin-react-helmet/__tests__/gatsby-ssr.js",
-      "src/gatsby-plugin-react-helmet/gatsby-ssr.js",
-    ],
-    "shadowedFiles": Array [],
-  },
-]
 `;
 
 exports[`gatsby-plugin resource creates default gatsby-config.js if there isn't one already 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": Any<String>,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
-  "readme": "# gatsby-source-filesystem
-
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
-
-The plugin creates \`File\` nodes from files. The various \\"transformer\\"
-plugins can transform \`File\` nodes into various other types of data e.g.
-\`gatsby-transformer-json\` transforms JSON files into JSON data nodes and
-\`gatsby-transformer-remark\` transforms markdown files into \`MarkdownRemark\`
-nodes from which you can query an HTML representation of the markdown.
-
-## Install
-
-\`npm install --save gatsby-source-filesystem\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // \\"pages\\" directory for Markdown files and a \\"data\\" directory
-    // for \`.json\`, \`.yaml\`, \`.csv\`.
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`pages\`,
-        path: \`\${__dirname}/src/pages/\`,
-      },
-    },
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`data\`,
-        path: \`\${__dirname}/src/data/\`,
-        ignore: [\`**//.*\`], // ignore files starting with a dot
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-In addition to the name and path parameters you may pass an optional \`ignore\` array of file globs to ignore.
-
-They will be added to the following default list:
-
-\`\`\`text
-**/*.un~
-**/.DS_Store
-**/.gitignore
-**/.npmignore
-**/.babelrc
-**/yarn.lock
-**/node_modules
-../**/dist/**
-\`\`\`
-
-To prevent concurrent requests overload of \`processRemoteNode\`, you can adjust the \`200\` default concurrent downloads, with \`GATSBY_CONCURRENT_DOWNLOAD\` environment variable.
-
-## How to query
-
-You can query file nodes like the following:
-
-\`\`\`graphql
-{
-  allFile {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-To filter by the \`name\` you specified in the config, use \`sourceInstanceName\`:
-
-\`\`\`graphql
-{
-  allFile(filter: { sourceInstanceName: { eq: \\"data\\" } }) {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-## Helper functions
-
-\`gatsby-source-filesystem\` exports three helper functions:
-
-- \`createFilePath\`
-- \`createRemoteFileNode\`
-- \`createFileNodeFromBuffer\`
-
-### createFilePath
-
-When building pages from files, you often want to create a URL from a file's path on the file system. E.g. if you have a markdown file at \`src/content/2018-01-23-an-exploration-of-the-nature-of-reality/index.md\`, you might want to turn that into a page on your site at \`example.com/2018-01-23-an-exploration-of-the-nature-of-reality/\`. \`createFilePath\` is a helper function to make this task easier.
-
-\`\`\`javascript
-createFilePath({
-  // The node you'd like to convert to a path
-  // e.g. from a markdown, JSON, YAML file, etc
-  node,
-  // Method used to get a node
-  // The parameter from \`onCreateNode\` should be passed in here
-  getNode,
-  // The base path for your files.
-  // Defaults to \`src/pages\`. For the example above, you'd use \`src/content\`.
-  basePath,
-  // Whether you want your file paths to contain a trailing \`/\` slash
-  // Defaults to true
-  trailingSlash,
-})
-\`\`\`
-
-#### Example usage
-
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
-\`\`\`javascript
-const { createFilePath } = require(\`gatsby-source-filesystem\`)
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  // Ensures we are processing only markdown files
-  if (node.internal.type === \\"MarkdownRemark\\") {
-    // Use \`createFilePath\` to turn markdown files in our \`data/faqs\` directory into \`/faqs/slug\`
-    const relativeFilePath = createFilePath({
-      node,
-      getNode,
-      basePath: \\"data/faqs/\\",
-    })
-
-    // Creates new query'able field with name of 'slug'
-    createNodeField({
-      node,
-      name: \\"slug\\",
-      value: \`/faqs\${relativeFilePath}\`,
-    })
-  }
-}
-\`\`\`
-
-### createRemoteFileNode
-
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
-
-The \`createRemoteFileNode\` helper makes it easy to download remote files and add them to your site's GraphQL schema.
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file.jpg\`,
-
-  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
-  parentNodeId,
-
-  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  getCache,
-
-  // The action used to create nodes
-  createNode,
-
-  // A helper function for creating node Ids
-  createNodeId,
-
-  // OPTIONAL
-  // Adds htaccess authentication to the download request if passed in.
-  auth: { htaccess_user: \`USER\`, htaccess_pass: \`PASSWORD\` },
-
-  // OPTIONAL
-  // Adds extra http headers to download request if passed in.
-  httpHeaders: { Authorization: \`Bearer someAccessToken\` },
-
-  // OPTIONAL
-  // Sets the file extension
-  ext: \\".jpg\\",
-})
-\`\`\`
-
-#### Example usage
-
-The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as \`File\` nodes and then linked to the WordPress Media node, so it can be queried both as a regular \`File\` node and from the \`localFile\` field in the Media node.
-
-\`\`\`javascript
-const { createRemoteFileNode } = require(\`gatsby-source-filesystem\`)
-
-exports.downloadMediaFiles = ({
-  nodes,
-  getCache,
-  createNode,
-  createNodeId,
-  _auth,
-}) => {
-  nodes.map(async node => {
-    let fileNode
-    // Ensures we are only processing Media Files
-    // \`wordpress__wp_media\` is the media file type name for WordPress
-    if (node.__type === \`wordpress__wp_media\`) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.source_url,
-          parentNodeId: node.id,
-          getCache,
-          createNode,
-          createNodeId,
-          auth: _auth,
-        })
-      } catch (e) {
-        // Ignore
-      }
-    }
-
-    // Adds a field \`localFile\` to the node
-    // ___NODE appendix tells Gatsby that this field will link to another node
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
-  })
-}
-\`\`\`
-
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
-
-#### Retrieving the remote file name and extension
-
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is \`https://example.com/image.jpg\`, the extension will be inferred as \`.jpg\` and the name as \`image\`). If the url does not contain an extension, we use the [\`file-type\`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file-without-an-extension\`,
-  parentNodeId: node.id,
-  getCache,
-  createNode,
-  createNodeId,
-  // if necessary!
-  ext: \\".jpg\\",
-  name: \\"image\\",
-})
-\`\`\`
-
-### createFileNodeFromBuffer
-
-When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
-
-The \`createFileNodeFromBuffer\` helper accepts a \`Buffer\`, caches its contents to disk, and creates a file node that points to it.
-
-## Example usage
-
-The following example is adapted from the source of [\`gatsby-source-mysql\`](https://github.com/malcolm-kee/gatsby-source-mysql):
-
-\`\`\`js
-// gatsby-node.js
-const createMySqlNodes = require(\`./create-nodes\`)
-
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
-
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
-
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(\`gatsby-source-filesystem\`)
-const createNodeHelpers = require(\`gatsby-node-helpers\`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: \`mysql\` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
-      })
-    )
-    value = \`Buffer\`
-  }
-
-  node[key] = value
-}
-
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
-
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
-}
-
-module.exports = createMySqlNodes
-\`\`\`
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- \`STALL_RETRY_LIMIT\`, default: \`3\`
-- \`STALL_TIMEOUT\`, default: \`30000\`
-- \`CONNECTION_TIMEOUT\`, default: \`30000\`
-",
-  "shadowableFiles": Array [
-    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
-    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
-    "src/gatsby-source-filesystem/__tests__/index.js",
-    "src/gatsby-source-filesystem/__tests__/utils.js",
-    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/create-file-node.js",
-    "src/gatsby-source-filesystem/create-file-path.js",
-    "src/gatsby-source-filesystem/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/extend-file-node.js",
-    "src/gatsby-source-filesystem/gatsby-node.js",
-    "src/gatsby-source-filesystem/index.js",
-    "src/gatsby-source-filesystem/utils.js",
-  ],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
   "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin create 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin create plan 1`] = `
+Object {
+  "currentState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+  ].filter(Boolean),
+};
+",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 1
++ Modified  + 5
+
+@@ -3,7 +3,6 @@
+  });
+
+  const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+-
+  module.exports = {
+    siteMetadata: {
+      siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+@@ -50,6 +49,11 @@
+          reportFilename: \`_bundle.html\`,
+          openAnalyzer: false,
+        },
++     },
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
+      },
+    ].filter(Boolean),
+  };",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ].filter(Boolean),
+};
+",
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin destroy 1`] = `undefined`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin update 1`] = `
+Object {
+  "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
+  "description": Any<String>,
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "options": undefined,
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
+  "shadowedFiles": Array [],
+}
+`;
+
+exports[`gatsby-plugin resource e2e plugin resource test with edge-casy starter: GatsbyPlugin update plan 1`] = `
+Object {
+  "currentState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    \\"gatsby-source-filesystem\\",
+  ].filter(Boolean),
+};
+",
+  "dependsOn": Array [
+    Object {
+      "name": "gatsby-source-filesystem",
+      "resourceName": "NPMPackage",
+    },
+  ],
+  "describe": "Install gatsby-source-filesystem in gatsby-config.js",
+  "diff": "- Original  - 0
++ Modified  + 5
+
+@@ -51,6 +51,11 @@
+        },
+      },
+      \\"gatsby-source-filesystem\\",
++     {
++       resolve: \\"gatsby-source-filesystem\\",
++       options: undefined,
++       __key: \\"gatsby-source-filesystem\\",
++     },
+    ].filter(Boolean),
+  };
+",
+  "id": "gatsby-source-filesystem",
+  "name": "gatsby-source-filesystem",
+  "newState": "require(\`dotenv\`).config({
+  path: \`.env\`,
+});
+
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+module.exports = {
+  siteMetadata: {
+    siteTitleAlt: \`Minimal Blog - Gatsby Theme\`,
+  },
+  plugins: [
+    {
+      resolve: \`@lekoarts/gatsby-theme-minimal-blog\`,
+      options: {
+        navigation: [
+          {
+            title: \`Blog\`,
+            slug: \`/blog\`,
+          },
+          {
+            title: \`About\`,
+            slug: \`/about\`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: \`Twitter\`,
+            url: \`https://twitter.com/lekoarts_de\`,
+          },
+          {
+            name: \`Instagram\`,
+            url: \`https://www.instagram.com/lekoarts.de/\`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: \`gatsby-plugin-google-analytics\`,
+      options: {
+        trackingId: process.env.GOOGLE_ANALYTICS_ID,
+      },
+    },
+    \`gatsby-plugin-sitemap\`,
+    \`gatsby-plugin-offline\`,
+    \`gatsby-plugin-netlify\`,
+    shouldAnalyseBundle && {
+      resolve: \`gatsby-plugin-webpack-bundle-analyser-v2\`,
+      options: {
+        analyzerMode: \`static\`,
+        reportFilename: \`_bundle.html\`,
+        openAnalyzer: false,
+      },
+    },
+    \\"gatsby-source-filesystem\\",
+    {
+      resolve: \\"gatsby-source-filesystem\\",
+      options: undefined,
+      __key: \\"gatsby-source-filesystem\\",
+    },
+  ].filter(Boolean),
+};
+",
 }
 `;
 
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": Any<String>,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
-  "readme": "# gatsby-source-filesystem
-
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
-
-The plugin creates \`File\` nodes from files. The various \\"transformer\\"
-plugins can transform \`File\` nodes into various other types of data e.g.
-\`gatsby-transformer-json\` transforms JSON files into JSON data nodes and
-\`gatsby-transformer-remark\` transforms markdown files into \`MarkdownRemark\`
-nodes from which you can query an HTML representation of the markdown.
-
-## Install
-
-\`npm install --save gatsby-source-filesystem\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // \\"pages\\" directory for Markdown files and a \\"data\\" directory
-    // for \`.json\`, \`.yaml\`, \`.csv\`.
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`pages\`,
-        path: \`\${__dirname}/src/pages/\`,
-      },
-    },
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`data\`,
-        path: \`\${__dirname}/src/data/\`,
-        ignore: [\`**//.*\`], // ignore files starting with a dot
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-In addition to the name and path parameters you may pass an optional \`ignore\` array of file globs to ignore.
-
-They will be added to the following default list:
-
-\`\`\`text
-**/*.un~
-**/.DS_Store
-**/.gitignore
-**/.npmignore
-**/.babelrc
-**/yarn.lock
-**/node_modules
-../**/dist/**
-\`\`\`
-
-To prevent concurrent requests overload of \`processRemoteNode\`, you can adjust the \`200\` default concurrent downloads, with \`GATSBY_CONCURRENT_DOWNLOAD\` environment variable.
-
-## How to query
-
-You can query file nodes like the following:
-
-\`\`\`graphql
-{
-  allFile {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-To filter by the \`name\` you specified in the config, use \`sourceInstanceName\`:
-
-\`\`\`graphql
-{
-  allFile(filter: { sourceInstanceName: { eq: \\"data\\" } }) {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-## Helper functions
-
-\`gatsby-source-filesystem\` exports three helper functions:
-
-- \`createFilePath\`
-- \`createRemoteFileNode\`
-- \`createFileNodeFromBuffer\`
-
-### createFilePath
-
-When building pages from files, you often want to create a URL from a file's path on the file system. E.g. if you have a markdown file at \`src/content/2018-01-23-an-exploration-of-the-nature-of-reality/index.md\`, you might want to turn that into a page on your site at \`example.com/2018-01-23-an-exploration-of-the-nature-of-reality/\`. \`createFilePath\` is a helper function to make this task easier.
-
-\`\`\`javascript
-createFilePath({
-  // The node you'd like to convert to a path
-  // e.g. from a markdown, JSON, YAML file, etc
-  node,
-  // Method used to get a node
-  // The parameter from \`onCreateNode\` should be passed in here
-  getNode,
-  // The base path for your files.
-  // Defaults to \`src/pages\`. For the example above, you'd use \`src/content\`.
-  basePath,
-  // Whether you want your file paths to contain a trailing \`/\` slash
-  // Defaults to true
-  trailingSlash,
-})
-\`\`\`
-
-#### Example usage
-
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
-\`\`\`javascript
-const { createFilePath } = require(\`gatsby-source-filesystem\`)
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  // Ensures we are processing only markdown files
-  if (node.internal.type === \\"MarkdownRemark\\") {
-    // Use \`createFilePath\` to turn markdown files in our \`data/faqs\` directory into \`/faqs/slug\`
-    const relativeFilePath = createFilePath({
-      node,
-      getNode,
-      basePath: \\"data/faqs/\\",
-    })
-
-    // Creates new query'able field with name of 'slug'
-    createNodeField({
-      node,
-      name: \\"slug\\",
-      value: \`/faqs\${relativeFilePath}\`,
-    })
-  }
-}
-\`\`\`
-
-### createRemoteFileNode
-
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
-
-The \`createRemoteFileNode\` helper makes it easy to download remote files and add them to your site's GraphQL schema.
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file.jpg\`,
-
-  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
-  parentNodeId,
-
-  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  getCache,
-
-  // The action used to create nodes
-  createNode,
-
-  // A helper function for creating node Ids
-  createNodeId,
-
-  // OPTIONAL
-  // Adds htaccess authentication to the download request if passed in.
-  auth: { htaccess_user: \`USER\`, htaccess_pass: \`PASSWORD\` },
-
-  // OPTIONAL
-  // Adds extra http headers to download request if passed in.
-  httpHeaders: { Authorization: \`Bearer someAccessToken\` },
-
-  // OPTIONAL
-  // Sets the file extension
-  ext: \\".jpg\\",
-})
-\`\`\`
-
-#### Example usage
-
-The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as \`File\` nodes and then linked to the WordPress Media node, so it can be queried both as a regular \`File\` node and from the \`localFile\` field in the Media node.
-
-\`\`\`javascript
-const { createRemoteFileNode } = require(\`gatsby-source-filesystem\`)
-
-exports.downloadMediaFiles = ({
-  nodes,
-  getCache,
-  createNode,
-  createNodeId,
-  _auth,
-}) => {
-  nodes.map(async node => {
-    let fileNode
-    // Ensures we are only processing Media Files
-    // \`wordpress__wp_media\` is the media file type name for WordPress
-    if (node.__type === \`wordpress__wp_media\`) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.source_url,
-          parentNodeId: node.id,
-          getCache,
-          createNode,
-          createNodeId,
-          auth: _auth,
-        })
-      } catch (e) {
-        // Ignore
-      }
-    }
-
-    // Adds a field \`localFile\` to the node
-    // ___NODE appendix tells Gatsby that this field will link to another node
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
-  })
-}
-\`\`\`
-
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
-
-#### Retrieving the remote file name and extension
-
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is \`https://example.com/image.jpg\`, the extension will be inferred as \`.jpg\` and the name as \`image\`). If the url does not contain an extension, we use the [\`file-type\`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file-without-an-extension\`,
-  parentNodeId: node.id,
-  getCache,
-  createNode,
-  createNodeId,
-  // if necessary!
-  ext: \\".jpg\\",
-  name: \\"image\\",
-})
-\`\`\`
-
-### createFileNodeFromBuffer
-
-When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
-
-The \`createFileNodeFromBuffer\` helper accepts a \`Buffer\`, caches its contents to disk, and creates a file node that points to it.
-
-## Example usage
-
-The following example is adapted from the source of [\`gatsby-source-mysql\`](https://github.com/malcolm-kee/gatsby-source-mysql):
-
-\`\`\`js
-// gatsby-node.js
-const createMySqlNodes = require(\`./create-nodes\`)
-
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
-
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
-
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(\`gatsby-source-filesystem\`)
-const createNodeHelpers = require(\`gatsby-node-helpers\`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: \`mysql\` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
-      })
-    )
-    value = \`Buffer\`
-  }
-
-  node[key] = value
-}
-
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
-
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
-}
-
-module.exports = createMySqlNodes
-\`\`\`
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- \`STALL_RETRY_LIMIT\`, default: \`3\`
-- \`STALL_TIMEOUT\`, default: \`30000\`
-- \`CONNECTION_TIMEOUT\`, default: \`30000\`
-",
-  "shadowableFiles": Array [
-    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
-    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
-    "src/gatsby-source-filesystem/__tests__/index.js",
-    "src/gatsby-source-filesystem/__tests__/utils.js",
-    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/create-file-node.js",
-    "src/gatsby-source-filesystem/create-file-path.js",
-    "src/gatsby-source-filesystem/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/extend-file-node.js",
-    "src/gatsby-source-filesystem/gatsby-node.js",
-    "src/gatsby-source-filesystem/index.js",
-    "src/gatsby-source-filesystem/utils.js",
-  ],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
   "shadowedFiles": Array [],
 }
 `;
@@ -3291,373 +578,12 @@ exports[`gatsby-plugin resource e2e plugin resource test with hello world starte
 exports[`gatsby-plugin resource e2e plugin resource test with hello world starter: GatsbyPlugin update 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": Any<String>,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
-  "readme": "# gatsby-source-filesystem
-
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
-
-The plugin creates \`File\` nodes from files. The various \\"transformer\\"
-plugins can transform \`File\` nodes into various other types of data e.g.
-\`gatsby-transformer-json\` transforms JSON files into JSON data nodes and
-\`gatsby-transformer-remark\` transforms markdown files into \`MarkdownRemark\`
-nodes from which you can query an HTML representation of the markdown.
-
-## Install
-
-\`npm install --save gatsby-source-filesystem\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // \\"pages\\" directory for Markdown files and a \\"data\\" directory
-    // for \`.json\`, \`.yaml\`, \`.csv\`.
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`pages\`,
-        path: \`\${__dirname}/src/pages/\`,
-      },
-    },
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`data\`,
-        path: \`\${__dirname}/src/data/\`,
-        ignore: [\`**//.*\`], // ignore files starting with a dot
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-In addition to the name and path parameters you may pass an optional \`ignore\` array of file globs to ignore.
-
-They will be added to the following default list:
-
-\`\`\`text
-**/*.un~
-**/.DS_Store
-**/.gitignore
-**/.npmignore
-**/.babelrc
-**/yarn.lock
-**/node_modules
-../**/dist/**
-\`\`\`
-
-To prevent concurrent requests overload of \`processRemoteNode\`, you can adjust the \`200\` default concurrent downloads, with \`GATSBY_CONCURRENT_DOWNLOAD\` environment variable.
-
-## How to query
-
-You can query file nodes like the following:
-
-\`\`\`graphql
-{
-  allFile {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-To filter by the \`name\` you specified in the config, use \`sourceInstanceName\`:
-
-\`\`\`graphql
-{
-  allFile(filter: { sourceInstanceName: { eq: \\"data\\" } }) {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-## Helper functions
-
-\`gatsby-source-filesystem\` exports three helper functions:
-
-- \`createFilePath\`
-- \`createRemoteFileNode\`
-- \`createFileNodeFromBuffer\`
-
-### createFilePath
-
-When building pages from files, you often want to create a URL from a file's path on the file system. E.g. if you have a markdown file at \`src/content/2018-01-23-an-exploration-of-the-nature-of-reality/index.md\`, you might want to turn that into a page on your site at \`example.com/2018-01-23-an-exploration-of-the-nature-of-reality/\`. \`createFilePath\` is a helper function to make this task easier.
-
-\`\`\`javascript
-createFilePath({
-  // The node you'd like to convert to a path
-  // e.g. from a markdown, JSON, YAML file, etc
-  node,
-  // Method used to get a node
-  // The parameter from \`onCreateNode\` should be passed in here
-  getNode,
-  // The base path for your files.
-  // Defaults to \`src/pages\`. For the example above, you'd use \`src/content\`.
-  basePath,
-  // Whether you want your file paths to contain a trailing \`/\` slash
-  // Defaults to true
-  trailingSlash,
-})
-\`\`\`
-
-#### Example usage
-
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
-\`\`\`javascript
-const { createFilePath } = require(\`gatsby-source-filesystem\`)
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  // Ensures we are processing only markdown files
-  if (node.internal.type === \\"MarkdownRemark\\") {
-    // Use \`createFilePath\` to turn markdown files in our \`data/faqs\` directory into \`/faqs/slug\`
-    const relativeFilePath = createFilePath({
-      node,
-      getNode,
-      basePath: \\"data/faqs/\\",
-    })
-
-    // Creates new query'able field with name of 'slug'
-    createNodeField({
-      node,
-      name: \\"slug\\",
-      value: \`/faqs\${relativeFilePath}\`,
-    })
-  }
-}
-\`\`\`
-
-### createRemoteFileNode
-
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
-
-The \`createRemoteFileNode\` helper makes it easy to download remote files and add them to your site's GraphQL schema.
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file.jpg\`,
-
-  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
-  parentNodeId,
-
-  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  getCache,
-
-  // The action used to create nodes
-  createNode,
-
-  // A helper function for creating node Ids
-  createNodeId,
-
-  // OPTIONAL
-  // Adds htaccess authentication to the download request if passed in.
-  auth: { htaccess_user: \`USER\`, htaccess_pass: \`PASSWORD\` },
-
-  // OPTIONAL
-  // Adds extra http headers to download request if passed in.
-  httpHeaders: { Authorization: \`Bearer someAccessToken\` },
-
-  // OPTIONAL
-  // Sets the file extension
-  ext: \\".jpg\\",
-})
-\`\`\`
-
-#### Example usage
-
-The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as \`File\` nodes and then linked to the WordPress Media node, so it can be queried both as a regular \`File\` node and from the \`localFile\` field in the Media node.
-
-\`\`\`javascript
-const { createRemoteFileNode } = require(\`gatsby-source-filesystem\`)
-
-exports.downloadMediaFiles = ({
-  nodes,
-  getCache,
-  createNode,
-  createNodeId,
-  _auth,
-}) => {
-  nodes.map(async node => {
-    let fileNode
-    // Ensures we are only processing Media Files
-    // \`wordpress__wp_media\` is the media file type name for WordPress
-    if (node.__type === \`wordpress__wp_media\`) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.source_url,
-          parentNodeId: node.id,
-          getCache,
-          createNode,
-          createNodeId,
-          auth: _auth,
-        })
-      } catch (e) {
-        // Ignore
-      }
-    }
-
-    // Adds a field \`localFile\` to the node
-    // ___NODE appendix tells Gatsby that this field will link to another node
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
-  })
-}
-\`\`\`
-
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
-
-#### Retrieving the remote file name and extension
-
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is \`https://example.com/image.jpg\`, the extension will be inferred as \`.jpg\` and the name as \`image\`). If the url does not contain an extension, we use the [\`file-type\`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file-without-an-extension\`,
-  parentNodeId: node.id,
-  getCache,
-  createNode,
-  createNodeId,
-  // if necessary!
-  ext: \\".jpg\\",
-  name: \\"image\\",
-})
-\`\`\`
-
-### createFileNodeFromBuffer
-
-When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
-
-The \`createFileNodeFromBuffer\` helper accepts a \`Buffer\`, caches its contents to disk, and creates a file node that points to it.
-
-## Example usage
-
-The following example is adapted from the source of [\`gatsby-source-mysql\`](https://github.com/malcolm-kee/gatsby-source-mysql):
-
-\`\`\`js
-// gatsby-node.js
-const createMySqlNodes = require(\`./create-nodes\`)
-
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
-
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
-
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(\`gatsby-source-filesystem\`)
-const createNodeHelpers = require(\`gatsby-node-helpers\`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: \`mysql\` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
-      })
-    )
-    value = \`Buffer\`
-  }
-
-  node[key] = value
-}
-
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
-
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
-}
-
-module.exports = createMySqlNodes
-\`\`\`
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- \`STALL_RETRY_LIMIT\`, default: \`3\`
-- \`STALL_TIMEOUT\`, default: \`30000\`
-- \`CONNECTION_TIMEOUT\`, default: \`30000\`
-",
-  "shadowableFiles": Array [
-    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
-    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
-    "src/gatsby-source-filesystem/__tests__/index.js",
-    "src/gatsby-source-filesystem/__tests__/utils.js",
-    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/create-file-node.js",
-    "src/gatsby-source-filesystem/create-file-path.js",
-    "src/gatsby-source-filesystem/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/extend-file-node.js",
-    "src/gatsby-source-filesystem/gatsby-node.js",
-    "src/gatsby-source-filesystem/index.js",
-    "src/gatsby-source-filesystem/utils.js",
-  ],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
   "shadowedFiles": Array [],
 }
 `;
@@ -3724,373 +650,12 @@ module.exports = {
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin create 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": Any<String>,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
-  "readme": "# gatsby-source-filesystem
-
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
-
-The plugin creates \`File\` nodes from files. The various \\"transformer\\"
-plugins can transform \`File\` nodes into various other types of data e.g.
-\`gatsby-transformer-json\` transforms JSON files into JSON data nodes and
-\`gatsby-transformer-remark\` transforms markdown files into \`MarkdownRemark\`
-nodes from which you can query an HTML representation of the markdown.
-
-## Install
-
-\`npm install --save gatsby-source-filesystem\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // \\"pages\\" directory for Markdown files and a \\"data\\" directory
-    // for \`.json\`, \`.yaml\`, \`.csv\`.
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`pages\`,
-        path: \`\${__dirname}/src/pages/\`,
-      },
-    },
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`data\`,
-        path: \`\${__dirname}/src/data/\`,
-        ignore: [\`**//.*\`], // ignore files starting with a dot
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-In addition to the name and path parameters you may pass an optional \`ignore\` array of file globs to ignore.
-
-They will be added to the following default list:
-
-\`\`\`text
-**/*.un~
-**/.DS_Store
-**/.gitignore
-**/.npmignore
-**/.babelrc
-**/yarn.lock
-**/node_modules
-../**/dist/**
-\`\`\`
-
-To prevent concurrent requests overload of \`processRemoteNode\`, you can adjust the \`200\` default concurrent downloads, with \`GATSBY_CONCURRENT_DOWNLOAD\` environment variable.
-
-## How to query
-
-You can query file nodes like the following:
-
-\`\`\`graphql
-{
-  allFile {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-To filter by the \`name\` you specified in the config, use \`sourceInstanceName\`:
-
-\`\`\`graphql
-{
-  allFile(filter: { sourceInstanceName: { eq: \\"data\\" } }) {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-## Helper functions
-
-\`gatsby-source-filesystem\` exports three helper functions:
-
-- \`createFilePath\`
-- \`createRemoteFileNode\`
-- \`createFileNodeFromBuffer\`
-
-### createFilePath
-
-When building pages from files, you often want to create a URL from a file's path on the file system. E.g. if you have a markdown file at \`src/content/2018-01-23-an-exploration-of-the-nature-of-reality/index.md\`, you might want to turn that into a page on your site at \`example.com/2018-01-23-an-exploration-of-the-nature-of-reality/\`. \`createFilePath\` is a helper function to make this task easier.
-
-\`\`\`javascript
-createFilePath({
-  // The node you'd like to convert to a path
-  // e.g. from a markdown, JSON, YAML file, etc
-  node,
-  // Method used to get a node
-  // The parameter from \`onCreateNode\` should be passed in here
-  getNode,
-  // The base path for your files.
-  // Defaults to \`src/pages\`. For the example above, you'd use \`src/content\`.
-  basePath,
-  // Whether you want your file paths to contain a trailing \`/\` slash
-  // Defaults to true
-  trailingSlash,
-})
-\`\`\`
-
-#### Example usage
-
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
-\`\`\`javascript
-const { createFilePath } = require(\`gatsby-source-filesystem\`)
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  // Ensures we are processing only markdown files
-  if (node.internal.type === \\"MarkdownRemark\\") {
-    // Use \`createFilePath\` to turn markdown files in our \`data/faqs\` directory into \`/faqs/slug\`
-    const relativeFilePath = createFilePath({
-      node,
-      getNode,
-      basePath: \\"data/faqs/\\",
-    })
-
-    // Creates new query'able field with name of 'slug'
-    createNodeField({
-      node,
-      name: \\"slug\\",
-      value: \`/faqs\${relativeFilePath}\`,
-    })
-  }
-}
-\`\`\`
-
-### createRemoteFileNode
-
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
-
-The \`createRemoteFileNode\` helper makes it easy to download remote files and add them to your site's GraphQL schema.
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file.jpg\`,
-
-  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
-  parentNodeId,
-
-  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  getCache,
-
-  // The action used to create nodes
-  createNode,
-
-  // A helper function for creating node Ids
-  createNodeId,
-
-  // OPTIONAL
-  // Adds htaccess authentication to the download request if passed in.
-  auth: { htaccess_user: \`USER\`, htaccess_pass: \`PASSWORD\` },
-
-  // OPTIONAL
-  // Adds extra http headers to download request if passed in.
-  httpHeaders: { Authorization: \`Bearer someAccessToken\` },
-
-  // OPTIONAL
-  // Sets the file extension
-  ext: \\".jpg\\",
-})
-\`\`\`
-
-#### Example usage
-
-The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as \`File\` nodes and then linked to the WordPress Media node, so it can be queried both as a regular \`File\` node and from the \`localFile\` field in the Media node.
-
-\`\`\`javascript
-const { createRemoteFileNode } = require(\`gatsby-source-filesystem\`)
-
-exports.downloadMediaFiles = ({
-  nodes,
-  getCache,
-  createNode,
-  createNodeId,
-  _auth,
-}) => {
-  nodes.map(async node => {
-    let fileNode
-    // Ensures we are only processing Media Files
-    // \`wordpress__wp_media\` is the media file type name for WordPress
-    if (node.__type === \`wordpress__wp_media\`) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.source_url,
-          parentNodeId: node.id,
-          getCache,
-          createNode,
-          createNodeId,
-          auth: _auth,
-        })
-      } catch (e) {
-        // Ignore
-      }
-    }
-
-    // Adds a field \`localFile\` to the node
-    // ___NODE appendix tells Gatsby that this field will link to another node
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
-  })
-}
-\`\`\`
-
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
-
-#### Retrieving the remote file name and extension
-
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is \`https://example.com/image.jpg\`, the extension will be inferred as \`.jpg\` and the name as \`image\`). If the url does not contain an extension, we use the [\`file-type\`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file-without-an-extension\`,
-  parentNodeId: node.id,
-  getCache,
-  createNode,
-  createNodeId,
-  // if necessary!
-  ext: \\".jpg\\",
-  name: \\"image\\",
-})
-\`\`\`
-
-### createFileNodeFromBuffer
-
-When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
-
-The \`createFileNodeFromBuffer\` helper accepts a \`Buffer\`, caches its contents to disk, and creates a file node that points to it.
-
-## Example usage
-
-The following example is adapted from the source of [\`gatsby-source-mysql\`](https://github.com/malcolm-kee/gatsby-source-mysql):
-
-\`\`\`js
-// gatsby-node.js
-const createMySqlNodes = require(\`./create-nodes\`)
-
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
-
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
-
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(\`gatsby-source-filesystem\`)
-const createNodeHelpers = require(\`gatsby-node-helpers\`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: \`mysql\` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
-      })
-    )
-    value = \`Buffer\`
-  }
-
-  node[key] = value
-}
-
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
-
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
-}
-
-module.exports = createMySqlNodes
-\`\`\`
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- \`STALL_RETRY_LIMIT\`, default: \`3\`
-- \`STALL_TIMEOUT\`, default: \`30000\`
-- \`CONNECTION_TIMEOUT\`, default: \`30000\`
-",
-  "shadowableFiles": Array [
-    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
-    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
-    "src/gatsby-source-filesystem/__tests__/index.js",
-    "src/gatsby-source-filesystem/__tests__/utils.js",
-    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/create-file-node.js",
-    "src/gatsby-source-filesystem/create-file-path.js",
-    "src/gatsby-source-filesystem/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/extend-file-node.js",
-    "src/gatsby-source-filesystem/gatsby-node.js",
-    "src/gatsby-source-filesystem/index.js",
-    "src/gatsby-source-filesystem/utils.js",
-  ],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
   "shadowedFiles": Array [],
 }
 `;
@@ -4272,373 +837,12 @@ exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin destroy 1
 exports[`gatsby-plugin resource e2e plugin resource test: GatsbyPlugin update 1`] = `
 Object {
   "_message": "Installed gatsby-source-filesystem in gatsby-config.js",
-  "description": "Gatsby plugin which parses files within a directory for further parsing by other plugins",
+  "description": Any<String>,
   "id": "gatsby-source-filesystem",
   "name": "gatsby-source-filesystem",
   "options": undefined,
-  "readme": "# gatsby-source-filesystem
-
-A Gatsby source plugin for sourcing data into your Gatsby application
-from your local filesystem.
-
-The plugin creates \`File\` nodes from files. The various \\"transformer\\"
-plugins can transform \`File\` nodes into various other types of data e.g.
-\`gatsby-transformer-json\` transforms JSON files into JSON data nodes and
-\`gatsby-transformer-remark\` transforms markdown files into \`MarkdownRemark\`
-nodes from which you can query an HTML representation of the markdown.
-
-## Install
-
-\`npm install --save gatsby-source-filesystem\`
-
-## How to use
-
-\`\`\`javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    // You can have multiple instances of this plugin
-    // to read source nodes from different locations on your
-    // filesystem.
-    //
-    // The following sets up the Jekyll pattern of having a
-    // \\"pages\\" directory for Markdown files and a \\"data\\" directory
-    // for \`.json\`, \`.yaml\`, \`.csv\`.
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`pages\`,
-        path: \`\${__dirname}/src/pages/\`,
-      },
-    },
-    {
-      resolve: \`gatsby-source-filesystem\`,
-      options: {
-        name: \`data\`,
-        path: \`\${__dirname}/src/data/\`,
-        ignore: [\`**//.*\`], // ignore files starting with a dot
-      },
-    },
-  ],
-}
-\`\`\`
-
-## Options
-
-In addition to the name and path parameters you may pass an optional \`ignore\` array of file globs to ignore.
-
-They will be added to the following default list:
-
-\`\`\`text
-**/*.un~
-**/.DS_Store
-**/.gitignore
-**/.npmignore
-**/.babelrc
-**/yarn.lock
-**/node_modules
-../**/dist/**
-\`\`\`
-
-To prevent concurrent requests overload of \`processRemoteNode\`, you can adjust the \`200\` default concurrent downloads, with \`GATSBY_CONCURRENT_DOWNLOAD\` environment variable.
-
-## How to query
-
-You can query file nodes like the following:
-
-\`\`\`graphql
-{
-  allFile {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-To filter by the \`name\` you specified in the config, use \`sourceInstanceName\`:
-
-\`\`\`graphql
-{
-  allFile(filter: { sourceInstanceName: { eq: \\"data\\" } }) {
-    edges {
-      node {
-        extension
-        dir
-        modifiedTime
-      }
-    }
-  }
-}
-\`\`\`
-
-## Helper functions
-
-\`gatsby-source-filesystem\` exports three helper functions:
-
-- \`createFilePath\`
-- \`createRemoteFileNode\`
-- \`createFileNodeFromBuffer\`
-
-### createFilePath
-
-When building pages from files, you often want to create a URL from a file's path on the file system. E.g. if you have a markdown file at \`src/content/2018-01-23-an-exploration-of-the-nature-of-reality/index.md\`, you might want to turn that into a page on your site at \`example.com/2018-01-23-an-exploration-of-the-nature-of-reality/\`. \`createFilePath\` is a helper function to make this task easier.
-
-\`\`\`javascript
-createFilePath({
-  // The node you'd like to convert to a path
-  // e.g. from a markdown, JSON, YAML file, etc
-  node,
-  // Method used to get a node
-  // The parameter from \`onCreateNode\` should be passed in here
-  getNode,
-  // The base path for your files.
-  // Defaults to \`src/pages\`. For the example above, you'd use \`src/content\`.
-  basePath,
-  // Whether you want your file paths to contain a trailing \`/\` slash
-  // Defaults to true
-  trailingSlash,
-})
-\`\`\`
-
-#### Example usage
-
-The following is taken from [Gatsby Tutorial, Part Seven](https://www.gatsbyjs.org/tutorial/part-seven/) and is used to create URL slugs for markdown pages.
-
-\`\`\`javascript
-const { createFilePath } = require(\`gatsby-source-filesystem\`)
-
-exports.onCreateNode = ({ node, getNode, actions }) => {
-  const { createNodeField } = actions
-  // Ensures we are processing only markdown files
-  if (node.internal.type === \\"MarkdownRemark\\") {
-    // Use \`createFilePath\` to turn markdown files in our \`data/faqs\` directory into \`/faqs/slug\`
-    const relativeFilePath = createFilePath({
-      node,
-      getNode,
-      basePath: \\"data/faqs/\\",
-    })
-
-    // Creates new query'able field with name of 'slug'
-    createNodeField({
-      node,
-      name: \\"slug\\",
-      value: \`/faqs\${relativeFilePath}\`,
-    })
-  }
-}
-\`\`\`
-
-### createRemoteFileNode
-
-When building source plugins for remote data sources such as headless CMSs, their data will often link to files stored remotely that are often convenient to download so you can work with them locally.
-
-The \`createRemoteFileNode\` helper makes it easy to download remote files and add them to your site's GraphQL schema.
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file.jpg\`,
-
-  // The id of the parent node (i.e. the node to which the new remote File node will be linked to.
-  parentNodeId,
-
-  // Gatsby's cache which the helper uses to check if the file has been downloaded already. It's passed to all Node APIs.
-  getCache,
-
-  // The action used to create nodes
-  createNode,
-
-  // A helper function for creating node Ids
-  createNodeId,
-
-  // OPTIONAL
-  // Adds htaccess authentication to the download request if passed in.
-  auth: { htaccess_user: \`USER\`, htaccess_pass: \`PASSWORD\` },
-
-  // OPTIONAL
-  // Adds extra http headers to download request if passed in.
-  httpHeaders: { Authorization: \`Bearer someAccessToken\` },
-
-  // OPTIONAL
-  // Sets the file extension
-  ext: \\".jpg\\",
-})
-\`\`\`
-
-#### Example usage
-
-The following example is pulled from [gatsby-source-wordpress](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress). Downloaded files are created as \`File\` nodes and then linked to the WordPress Media node, so it can be queried both as a regular \`File\` node and from the \`localFile\` field in the Media node.
-
-\`\`\`javascript
-const { createRemoteFileNode } = require(\`gatsby-source-filesystem\`)
-
-exports.downloadMediaFiles = ({
-  nodes,
-  getCache,
-  createNode,
-  createNodeId,
-  _auth,
-}) => {
-  nodes.map(async node => {
-    let fileNode
-    // Ensures we are only processing Media Files
-    // \`wordpress__wp_media\` is the media file type name for WordPress
-    if (node.__type === \`wordpress__wp_media\`) {
-      try {
-        fileNode = await createRemoteFileNode({
-          url: node.source_url,
-          parentNodeId: node.id,
-          getCache,
-          createNode,
-          createNodeId,
-          auth: _auth,
-        })
-      } catch (e) {
-        // Ignore
-      }
-    }
-
-    // Adds a field \`localFile\` to the node
-    // ___NODE appendix tells Gatsby that this field will link to another node
-    if (fileNode) {
-      node.localFile___NODE = fileNode.id
-    }
-  })
-}
-\`\`\`
-
-The file node can then be queried using GraphQL. See an example of this in the [gatsby-source-wordpress README](/packages/gatsby-source-wordpress/#image-processing) where downloaded images are queried using [gatsby-transformer-sharp](/packages/gatsby-transformer-sharp/) to use in the component [gatsby-image](/packages/gatsby-image/).
-
-#### Retrieving the remote file name and extension
-
-The helper tries first to retrieve the file name and extension by parsing the url and the path provided (e.g. if the url is \`https://example.com/image.jpg\`, the extension will be inferred as \`.jpg\` and the name as \`image\`). If the url does not contain an extension, we use the [\`file-type\`](https://www.npmjs.com/package/file-type) package to infer the file type. Finally, the name and the extension _can_ be explicitly passed, like so:
-
-\`\`\`javascript
-createRemoteFileNode({
-  // The source url of the remote file
-  url: \`https://example.com/a-file-without-an-extension\`,
-  parentNodeId: node.id,
-  getCache,
-  createNode,
-  createNodeId,
-  // if necessary!
-  ext: \\".jpg\\",
-  name: \\"image\\",
-})
-\`\`\`
-
-### createFileNodeFromBuffer
-
-When working with data that isn't already stored in a file, such as when querying binary/blob fields from a database, it's helpful to cache that data to the filesystem in order to use it with other transformers that accept files as input.
-
-The \`createFileNodeFromBuffer\` helper accepts a \`Buffer\`, caches its contents to disk, and creates a file node that points to it.
-
-## Example usage
-
-The following example is adapted from the source of [\`gatsby-source-mysql\`](https://github.com/malcolm-kee/gatsby-source-mysql):
-
-\`\`\`js
-// gatsby-node.js
-const createMySqlNodes = require(\`./create-nodes\`)
-
-exports.sourceNodes = async ({ actions, createNodeId, getCache }, config) => {
-  const { createNode } = actions
-  const { conn, queries } = config
-  const { db, results } = await query(conn, queries)
-
-  try {
-    queries
-      .map((query, i) => ({ ...query, ___sql: results[i] }))
-      .forEach(result =>
-        createMySqlNodes(result, results, createNode, {
-          createNode,
-          createNodeId,
-          getCache,
-        })
-      )
-    db.end()
-  } catch (e) {
-    console.error(e)
-    db.end()
-  }
-}
-
-// create-nodes.js
-const { createFileNodeFromBuffer } = require(\`gatsby-source-filesystem\`)
-const createNodeHelpers = require(\`gatsby-node-helpers\`).default
-
-const { createNodeFactory } = createNodeHelpers({ typePrefix: \`mysql\` })
-
-function attach(node, key, value, ctx) {
-  if (Buffer.isBuffer(value)) {
-    ctx.linkChildren.push(parentNodeId =>
-      createFileNodeFromBuffer({
-        buffer: value,
-        getCache: ctx.getCache,
-        createNode: ctx.createNode,
-        createNodeId: ctx.createNodeId,
-      })
-    )
-    value = \`Buffer\`
-  }
-
-  node[key] = value
-}
-
-function createMySqlNodes({ name, __sql, idField, keys }, results, ctx) {
-  const MySqlNode = createNodeFactory(name)
-  ctx.linkChildren = []
-
-  return __sql.forEach(row => {
-    if (!keys) keys = Object.keys(row)
-
-    const node = { id: row[idField] }
-
-    for (const key of keys) {
-      attach(node, key, row[key], ctx)
-    }
-
-    node = ctx.createNode(node)
-
-    for (const link of ctx.linkChildren) {
-      link(node.id)
-    }
-  })
-}
-
-module.exports = createMySqlNodes
-\`\`\`
-
-## Troubleshooting
-
-In case that due to spotty network, or slow connection, some remote files fail to download. Even after multiple retries and adjusting concurrent downloads, you can adjust timeout and retry settings with these environment variables:
-
-- \`STALL_RETRY_LIMIT\`, default: \`3\`
-- \`STALL_TIMEOUT\`, default: \`30000\`
-- \`CONNECTION_TIMEOUT\`, default: \`30000\`
-",
-  "shadowableFiles": Array [
-    "src/gatsby-source-filesystem/__tests__/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/__tests__/create-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/__tests__/fixtures/file.json",
-    "src/gatsby-source-filesystem/__tests__/gatsby-node.js",
-    "src/gatsby-source-filesystem/__tests__/index.js",
-    "src/gatsby-source-filesystem/__tests__/utils.js",
-    "src/gatsby-source-filesystem/create-file-node-from-buffer.js",
-    "src/gatsby-source-filesystem/create-file-node.js",
-    "src/gatsby-source-filesystem/create-file-path.js",
-    "src/gatsby-source-filesystem/create-remote-file-node.js",
-    "src/gatsby-source-filesystem/extend-file-node.js",
-    "src/gatsby-source-filesystem/gatsby-node.js",
-    "src/gatsby-source-filesystem/index.js",
-    "src/gatsby-source-filesystem/utils.js",
-  ],
+  "readme": Any<String>,
+  "shadowableFiles": Any<Array>,
   "shadowedFiles": Array [],
 }
 `;

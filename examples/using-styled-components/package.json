@@ -6,17 +6,17 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "babel-plugin-styled-components": "^1.11.1",
-    "gatsby": "^2.24.50",
-    "gatsby-plugin-google-analytics": "^2.3.13",
-    "gatsby-plugin-offline": "^2.2.10",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-plugin-styled-components": "^3.3.10",
+    "gatsby": "next",
+    "gatsby-plugin-google-analytics": "next",
+    "gatsby-plugin-offline": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-plugin-styled-components": "next",
     "lodash": "^4.17.20",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^5.2.1",
     "slash": "^2.0.0",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.2.0"
   },
   "keywords": [
     "gatsby"

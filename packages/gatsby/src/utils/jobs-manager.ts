@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid"
+import uuidv4 from "uuid/v4"
 import path from "path"
 import hasha from "hasha"
 import fs from "fs-extra"
@@ -22,7 +22,7 @@ interface IBaseJob {
 }
 
 interface IJobInput {
-  inputPaths: string[]
+  inputPaths: Array<string>
   plugin: {
     name: string
     version: string
@@ -33,10 +33,10 @@ interface IJobInput {
 interface IInternalJob {
   id: string
   contentDigest: string
-  inputPaths: {
+  inputPaths: Array<{
     path: string
     contentDigest: string
-  }[]
+  }>
   plugin: {
     name: string
     version: string
@@ -71,7 +71,7 @@ let hasShownIPCDisabledWarning = false
 
 const jobsInProcess: Map<
   string,
-  { id: string; deferred: pDefer.DeferredPromise<object> }
+  { id: string; deferred: pDefer.DeferredPromise<Record<string, unknown>> }
 > = new Map()
 const externalJobsMap: Map<
   string,
@@ -184,7 +184,10 @@ function runExternalWorker(job: InternalJob): Promise<any> {
  * If we do, run it locally.
  * TODO add external job execution through ipc
  */
-function runJob(job: InternalJob, forceLocal = false): Promise<object> {
+function runJob(
+  job: InternalJob,
+  forceLocal = false
+): Promise<Record<string, unknown>> {
   const { plugin } = job
   try {
     const worker = require(path.posix.join(plugin.resolve, `gatsby-worker.js`))
@@ -281,7 +284,9 @@ export function createInternalJob(
 /**
  * Creates a job
  */
-export async function enqueueJob(job: InternalJob): Promise<object> {
+export async function enqueueJob(
+  job: InternalJob
+): Promise<Record<string, unknown>> {
   // When we already have a job that's executing, return the same promise.
   // we have another check in our createJobV2 action to return jobs that have been done in a previous gatsby run
   if (jobsInProcess.has(job.contentDigest)) {
@@ -299,7 +304,7 @@ export async function enqueueJob(job: InternalJob): Promise<object> {
     activityForJobs!.start()
   }
 
-  const deferred = pDefer<object>()
+  const deferred = pDefer<Record<string, unknown>>()
   jobsInProcess.set(job.contentDigest, {
     id: job.id,
     deferred,
@@ -334,7 +339,7 @@ export async function enqueueJob(job: InternalJob): Promise<object> {
  */
 export function getInProcessJobPromise(
   contentDigest: string
-): Promise<object> | undefined {
+): Promise<Record<string, unknown>> | undefined {
   return jobsInProcess.get(contentDigest)?.deferred.promise
 }
 

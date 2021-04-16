@@ -10,9 +10,9 @@ import { testRequireError } from "../utils/test-require-error"
 const staticallyAnalyzeExports = (
   modulePath: string,
   resolver = require.resolve
-): string[] => {
+): Array<string> => {
   let absPath: string | undefined
-  const exportNames: string[] = []
+  const exportNames: Array<string> = []
 
   try {
     absPath = resolver(modulePath)
@@ -81,10 +81,16 @@ const staticallyAnalyzeExports = (
     // get foo from `export { foo } from 'bar'`
     // get foo from `export { foo }`
     ExportSpecifier: function ExportSpecifier(astPath) {
-      const exportName = astPath?.node?.exported?.name
       isES6 = true
-      if (exportName) {
-        exportNames.push(exportName)
+      const exp = astPath?.node?.exported
+      if (!exp) {
+        return
+      }
+      if (exp.type === `Identifier`) {
+        const exportName = exp.name
+        if (exportName) {
+          exportNames.push(exportName)
+        }
       }
     },
 
@@ -183,7 +189,7 @@ https://gatsby.dev/no-mixed-modules
 export const resolveModuleExports = (
   modulePath: string,
   { mode = `analysis`, resolver = require.resolve } = {}
-): string[] => {
+): Array<string> => {
   if (mode === `require`) {
     let absPath: string | undefined
     try {

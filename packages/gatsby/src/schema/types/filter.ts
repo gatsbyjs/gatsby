@@ -63,7 +63,7 @@ const removeEmptyFields = (
     const fields = itc.getFields()
     const nonEmptyFields = {}
     Object.keys(fields).forEach(fieldName => {
-      const fieldITC = fields[fieldName]
+      const fieldITC = fields[fieldName].type
       if (fieldITC instanceof InputTypeComposer) {
         const convertedITC = convert(fieldITC)
         if (convertedITC.getFieldNames().length) {
@@ -108,8 +108,8 @@ const ARRAY_OPERATORS = [IN, NIN]
 
 const getOperatorFields = (
   fieldType: string,
-  operators: string[]
-): Record<string, string | string[]> => {
+  operators: Array<string>
+): Record<string, string | Array<string>> => {
   const result = {}
   operators.forEach(op => {
     if (ARRAY_OPERATORS.includes(op)) {
@@ -179,7 +179,7 @@ const convert = ({
     )
   }
 
-  schemaComposer.addAsComposer(convertedITC)
+  schemaComposer.add(convertedITC)
 
   const fieldNames = inputTypeComposer.getFieldNames()
   const convertedFields = {}

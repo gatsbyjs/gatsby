@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react"
+import React, { useState, useLayoutEffect, createContext } from "react"
 import { getStore, onLogAction } from "../../redux"
 import { IGatsbyState } from "gatsby/src/redux/types"
 
@@ -17,7 +17,7 @@ export const StoreStateProvider: React.FC = ({
     (getStore().getState() as any) as IGatsbyState
   )
 
-  useEffect(
+  useLayoutEffect(
     () =>
       onLogAction(() => {
         setState((getStore().getState() as any) as IGatsbyState)

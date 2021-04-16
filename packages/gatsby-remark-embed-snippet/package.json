@@ -1,22 +1,22 @@
 {
   "name": "gatsby-remark-embed-snippet",
   "description": "Gatsby plugin to embed formatted code snippets within markdown",
-  "version": "4.3.14",
+  "version": "6.1.0-next.0",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.12.5",
     "normalize-path": "^3.0.0",
-    "parse-numeric-range": "^0.0.2",
-    "unist-util-map": "^1.0.5"
+    "parse-numeric-range": "^1.2.0",
+    "unist-util-map": "^2.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-embed-snippet#readme",
   "keywords": [
@@ -26,8 +26,8 @@
     "remark"
   ],
   "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-remark-prismjs": "^3.0.0"
+    "gatsby": "^3.0.0-next.0",
+    "gatsby-remark-prismjs": "^3.0.0-next.0"
   },
   "license": "MIT",
   "main": "index.js",
@@ -42,6 +42,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

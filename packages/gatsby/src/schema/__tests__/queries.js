@@ -224,6 +224,7 @@ describe(`Query schema`, () => {
             edges {
               node {
                 childMarkdown { frontmatter { title } }
+                childrenMarkdown { frontmatter { title } }
               }
             }
           }
@@ -236,16 +237,23 @@ describe(`Query schema`, () => {
             {
               node: {
                 childMarkdown: { frontmatter: { title: `Markdown File 1` } },
+                childrenMarkdown: [
+                  { frontmatter: { title: `Markdown File 1` } },
+                ],
               },
             },
             {
               node: {
                 childMarkdown: { frontmatter: { title: `Markdown File 2` } },
+                childrenMarkdown: [
+                  { frontmatter: { title: `Markdown File 2` } },
+                ],
               },
             },
             {
               node: {
                 childMarkdown: null,
+                childrenMarkdown: [],
               },
             },
           ],
@@ -261,6 +269,7 @@ describe(`Query schema`, () => {
           allFile {
             edges {
               node {
+                childAuthor { name }
                 childrenAuthor { name }
               }
             }
@@ -273,16 +282,19 @@ describe(`Query schema`, () => {
           edges: [
             {
               node: {
+                childAuthor: null,
                 childrenAuthor: [],
               },
             },
             {
               node: {
+                childAuthor: null,
                 childrenAuthor: [],
               },
             },
             {
               node: {
+                childAuthor: { name: `Author 2` },
                 childrenAuthor: [{ name: `Author 2` }, { name: `Author 1` }],
               },
             },
@@ -1191,6 +1203,124 @@ describe(`Query schema`, () => {
         `)
       })
     })
+    describe(`aggregation fields`, () => {
+      it(`calculates max value of numeric field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              max(field: frontmatter___views)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.max).toEqual(200)
+      })
+
+      it(`calculates max value of numeric string field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              max(field: frontmatter___price)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.max).toEqual(3.99)
+      })
+
+      it(`calculates min value of numeric field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              min(field: frontmatter___views)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.min).toEqual(100)
+      })
+
+      it(`calculates min value of numeric string field`, async () => {
+        const query = `
+          {
+            allMarkdown {
+              min(field: frontmatter___price)
+            }
+          }
+        `
+        const results = await runQuery(query)
+        expect(results.errors).toBeUndefined()
+        expect(results.data.allMarkdown.min).toEqual(1.99)
+      })
+    })
+
+    it(`calculates sum of numeric field`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            sum(field: frontmatter___views)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.sum).toEqual(300)
+    })
+
+    it(`calculates sum of numeric string field`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            sum(field: frontmatter___price)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.sum).toEqual(5.98)
+    })
+
+    it(`returns null for min of non-numeric fields`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            min(field: frontmatter___title)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.min).toBeNull()
+    })
+
+    it(`returns null for max of non-numeric fields`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            max(field: frontmatter___title)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.max).toBeNull()
+    })
+
+    it(`returns null for sum of non-numeric fields`, async () => {
+      const query = `
+        {
+          allMarkdown {
+            sum(field: frontmatter___title)
+          }
+        }
+      `
+      const results = await runQuery(query)
+      expect(results.errors).toBeUndefined()
+      expect(results.data.allMarkdown.sum).toBeNull()
+    })
   })
 
   describe(`on fields added by setFieldsOnGraphQLNodeType API`, () => {
@@ -1570,6 +1700,104 @@ describe(`Query schema`, () => {
                 reviewer: {
                   name: `Author 2`,
                 },
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+  })
+
+  describe(`with regex filter`, () => {
+    /**
+     * double-escape character escape sequences when written inline (test only)
+     * (see also the test src/utils/__tests__/prepare-regex.ts)
+     */
+    it(`escape sequences work when correctly escaped`, async () => {
+      const query = `
+        {
+          allMarkdown(filter: { frontmatter: { authors: { elemMatch: { email: { regex: "/^\\\\w{6}\\\\d@\\\\w{7}\\\\.COM$/i" } } } } }) {
+            nodes {
+              frontmatter {
+                authors {
+                  email
+                }
+              }
+            }
+          }
+        }
+      `
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      }
+      expect(results.errors).toBeUndefined()
+      expect(results.data).toEqual(expected)
+    })
+
+    /**
+     * queries are read from file and parsed with babel
+     */
+    it(`escape sequences work when correctly escaped`, async () => {
+      const fs = require(`fs`)
+      const path = require(`path`)
+      const babel = require(`@babel/parser`)
+      const fileContent = fs.readFileSync(
+        path.join(__dirname, `./fixtures/regex-query.js`),
+        `utf-8`
+      )
+      const ast = babel.parse(fileContent)
+      const query = ast.program.body[0].expression.right.quasis[0].value.raw
+
+      const results = await runQuery(query)
+      const expected = {
+        allMarkdown: {
+          nodes: [
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                  {
+                    email: `author2@example.com`,
+                  },
+                ],
+              },
+            },
+            {
+              frontmatter: {
+                authors: [
+                  {
+                    email: `author1@example.com`,
+                  },
+                ],
               },
             },
           ],

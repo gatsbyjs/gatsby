@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@4.3.0-next.1...gatsby-plugin-lodash@4.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@4.3.0-next.0...gatsby-plugin-lodash@4.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@4.2.0-next.0...gatsby-plugin-lodash@4.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@4.1.0-next.1...gatsby-plugin-lodash@4.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@4.1.0-next.0...gatsby-plugin-lodash@4.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [4.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@4.0.0-next.0...gatsby-plugin-lodash@4.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [4.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.11.0-next.0...gatsby-plugin-lodash@4.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [3.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.10.0-next.0...gatsby-plugin-lodash@3.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [3.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.9.0-next.0...gatsby-plugin-lodash@3.10.0-next.0) (2021-01-18)
+
+### Bug Fixes
+
+- **security:** update vulnerable packages, include React 17 in peerDeps ([#28545](https://github.com/gatsbyjs/gatsby/issues/28545)) ([18b5f30](https://github.com/gatsbyjs/gatsby/commit/18b5f30e367895aa5f3af46e4989b347912a0f35))
+
+# [3.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.8.0-next.0...gatsby-plugin-lodash@3.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [3.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.7.0-next.0...gatsby-plugin-lodash@3.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [3.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.6.0-next.0...gatsby-plugin-lodash@3.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.5.0-next.0...gatsby-plugin-lodash@3.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.4.0-next.0...gatsby-plugin-lodash@3.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+## [3.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.3.12...gatsby-plugin-lodash@3.3.13) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+## [3.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.3.11...gatsby-plugin-lodash@3.3.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
+## [3.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.3.10...gatsby-plugin-lodash@3.3.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-plugin-lodash
+
 ## [3.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-lodash@3.3.9...gatsby-plugin-lodash@3.3.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-plugin-lodash

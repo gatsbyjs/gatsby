@@ -53,7 +53,7 @@ export default function ({
 
       path.parent.id = t.objectPattern(
         path.parent.id.elements.reduce(
-          (acc: BabelTypes.ObjectProperty[], element, i) => {
+          (acc: Array<BabelTypes.ObjectProperty>, element, i) => {
             if (element) {
               acc.push(t.objectProperty(t.numericLiteral(i), element))
             }

@@ -23,7 +23,7 @@ if (os.platform() === `win32`) {
 // Check if update is available
 updateNotifier({ pkg }).notify({ isGlobal: true })
 
-const MIN_NODE_VERSION = `10.13.0`
+const MIN_NODE_VERSION = `12.13.0`
 // const NEXT_MIN_NODE_VERSION = `10.13.0`
 
 const { version } = process

@@ -13,10 +13,12 @@ This plugin provides several features beyond manifest configuration to make your
 
 Each of these features has extensive configuration available so you are always in control.
 
+This guide focuses on configuring the plugin. For more information on the web app manifest, check out the additional resources below.
+
 ## Install
 
 ```shell
-npm install --save gatsby-plugin-manifest
+npm install gatsby-plugin-manifest
 ```
 
 ## How to use
@@ -200,10 +202,9 @@ module.exports = {
         display: `standalone`,
         icon: `src/images/icon.png`,
         icon_options: {
-          // For all the options available, please see:
-          // https://developer.mozilla.org/en-US/docs/Web/Manifest
-          // https://w3c.github.io/manifest/#purpose-member
-          purpose: `maskable`,
+          // For all the options available,
+          // please see the section "Additional Resources" below.
+          purpose: `any maskable`,
         },
       },
     },
@@ -444,7 +445,13 @@ Internet Explorer is the only other major browser that doesn't support the web a
 This article from the Chrome DevRel team is a good intro to the web app
 manifest — https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
 
-For more information see the [W3C specification](https://www.w3.org/TR/appmanifest/) or [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+For more information, see the [W3C specification](https://www.w3.org/TR/appmanifest/), [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/Manifest) or [Web.Dev guide](https://web.dev/add-manifest/). More information about `icon_options` can be found in [this Web.Dev guide](https://web.dev/maskable-icon/).
+
+### Plugin options validation
+
+This plugin validates plugin options set in the `gatsby-config.js`. It validates the options used by the plugin and the entire WebAppManifest spec. To see the exact implementation of the validator see [src/pluginOptionsSchema.js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-manifest/src/pluginOptionsSchema.js).
+
+The WebAppManifest spec is not stable at the time of writing. This version of the validator adheres the [most recent](https://www.w3.org/TR/2020/WD-appmanifest-20201019/) version of the specification available.
 
 ## Troubleshooting
 
@@ -476,3 +483,63 @@ npm install gatsby-plugin-sharp gatsby-plugin-manifest gatsby-remark-images-cont
 ```
 
 If updating these doesn't fix the issue, your project probably uses other plugins from the community that depend on a different version of `sharp`. Try running `npm list sharp` or `yarn why sharp` to see all packages in the current project that use `sharp` and try updating them as well.
+
+### APACHE: Error while trying to use the following icon from the Manifest
+
+If you are on an Apache webserver and utilizing the automatic solution, you may receive an error when attempting to access an icon listed in the manifest as residing in the `/icons` folder. This is because Apache restricts access to all `/icons` folders by default. You can fix this by switching to the hybrid solution and changing the folder name from `icons` to something like `favicons`.
+
+Example:
+
+```js
+// In the gatsby-plugin-manifest section of your gatsby-config.js
+  icon: `src/images/icon.png`, // This path is relative to the root of the site.
+  icons: [
+    {
+        "src": "favicons/icon-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    },  // Add or remove icon sizes as desired
+  ]
+```
+
+Alternatively, if you have access to modify Apache, you can resolve this issue by removing the restriction on `/icons` folders.
+
+#### On Debian based systems
+
+Backup the `/etc/apache2/mods-available/alias.conf` file:
+
+```shell
+cp /etc/apache2/mods-available/alias.conf /etc/apache2/mods-available/alias.conf.back
+```
+
+Comment out the Alias `/icons/ "/usr/share/apache2/icons/"` row in `/etc/apache2/mods-available/alias.conf` file:
+
+```shell
+cat /etc/apache2/mods-available/alias.conf | grep "Alias /icons/"
+```
+
+Reload Apache service:
+
+```shell
+service apache2 reload
+```
+
+#### On Red Hat or CentOS systems
+
+Create a backup of `/etc/httpd/conf.d/autoindex.conf`:
+
+```shell
+cp /etc/httpd/conf.d/autoindex.conf /etc/httpd/conf.d/autoindex.conf.back
+```
+
+Comment out `"Alias /icons/"` in `/etc/httpd/conf.d/autoindex.conf`:
+
+```shell
+cat /etc/httpd/conf.d/autoindex.conf | grep "Alias /icons/"
+```
+
+Reload Apache or restart the server:
+
+```shell
+service httpd reload
+```

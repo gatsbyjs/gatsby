@@ -27,3 +27,18 @@ exports.onCreateNode = async (
     }
   }
 }
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type UnsplashImagesYaml implements Node {
+      url: String
+      title: String
+      credit: String
+      gallery: Boolean
+      localFile: File @link(from: "localFile___NODE")
+    }
+
+  `)
+}

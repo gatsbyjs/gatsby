@@ -1,5 +1,5 @@
-const { makeExecutableSchema } = require(`@graphql-tools/schema`)
-const { SchemaDirectiveVisitor } = require(`@graphql-tools/utils`)
+import { makeExecutableSchema } from "@graphql-tools/schema"
+import { SchemaDirectiveVisitor } from "@graphql-tools/utils"
 
 const gqlFieldsToArray = fields =>
   Object.entries(fields).reduce((acc, [key, value]) => {
@@ -36,7 +36,7 @@ const makeMetadataDirective = metadata => {
 
 // TODO: Support relations/collections for mapping schema to CMS
 //       content models for providers.
-module.exports = (typeDefs, { metadata } = {}) => {
+export default function getGraphQLFields(typeDefs, { metadata } = {}) {
   const metadataDirective = makeMetadataDirective(metadata)
 
   const { _typeMap: typeMap } = makeExecutableSchema({

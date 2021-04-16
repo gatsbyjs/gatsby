@@ -4,18 +4,18 @@ title: Making a Gatsby Blog with Netlify CMS
 
 https://youtu.be/JeTqxCJC56Q
 
-This tutorial will use [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog), a Gatsby starter based on the official [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory, `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/) for content editing. It also adds VS Code highlighting for code blocks.
+This tutorial will use [gatsby-personal-starter-blog](https://github.com/thomaswang/gatsby-personal-starter-blog), a Gatsby starter based on the official [gatsby-starter-blog](/starters/gatsbyjs/gatsby-starter-blog/). The differences are that `gatsby-personal-starter-blog` is configured to run the blog on a subdirectory, `/blog`, and comes pre-installed with [Netlify CMS](https://www.netlifycms.org/) for content editing. It also adds VS Code highlighting for code blocks.
 
 ## Prerequisites
 
 - A GitHub account
-- The [Gatsby CLI](/docs/gatsby-cli) installed
+- The [Gatsby CLI](/docs/reference/gatsby-cli/) installed
 
 ## Set up a Netlify CMS-managed Gatsby site in 5 steps:
 
 ### Step 1
 
-Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](http://t.wang.sh/gatsby-personal-starter-blog).
+Open your Terminal and run the following command from the Gatsby CLI to create a new Gatsby site using [gatsby-personal-starter-blog](https://github.com/thomaswang/gatsby-personal-starter-blog).
 
 ```shell
 gatsby new [your-project-name] https://github.com/thomaswangio/gatsby-personal-starter-blog

@@ -1,11 +1,10 @@
-const React = require(`react`)
-const { useState, useEffect } = require(`react`)
+import React, { useState, useEffect } from "react"
 import SelectInput from "ink-select-input"
 import { render, Box, Text, useInput, useApp, Transform } from "ink"
 import Spinner from "ink-spinner"
 import StepRenderer from "../components/step-renderer"
-const hicat = require(`hicat`)
-const { trackCli } = require(`gatsby-telemetry`)
+import hicat from "hicat"
+import { trackCli } from "gatsby-telemetry"
 import {
   useResource,
   useResourceByUUID,
@@ -13,20 +12,20 @@ import {
 } from "../renderer/resource-provider"
 import terminalLink from "terminal-link"
 import PropTypes from "prop-types"
-const {
+import {
   createClient,
   useMutation,
   useSubscription,
   Provider,
   defaultExchanges,
   subscriptionExchange,
-} = require(`urql`)
-const { SubscriptionClient } = require(`subscriptions-transport-ws`)
-const fetch = require(`node-fetch`)
-const ws = require(`ws`)
-const semver = require(`semver`)
-const remove = require(`unist-util-remove`)
-const recipesList = require(`./recipes-list`).default
+} from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
+import fetch from "node-fetch"
+import ws from "ws"
+import semver from "semver"
+import remove from "unist-util-remove"
+import recipesList from "../recipes-list"
 
 const removeJsx = () => tree => {
   remove(tree, `export`, () => true)
@@ -93,7 +92,7 @@ const RecipesList = ({ setRecipe }) => {
   const items = recipesList
 
   return (
-    <SelectInput.default
+    <SelectInput
       items={items}
       onSelect={setRecipe}
       indicatorComponent={item => (
@@ -342,7 +341,7 @@ export default async ({
             key={`${p.resourceName}-${i}`}
           >
             <Text>
-              {p.isDone ? `✔ ` : <Spinner.default />}
+              {p.isDone ? `✔ ` : <Spinner />}
               {` `}
               <Text italic>{p.resourceName}:</Text>
               {` `}
@@ -436,7 +435,11 @@ export default async ({
             </Text>
             <RecipesList
               setRecipe={async recipeItem => {
-                setRecipe(recipeItem.value.slice(0, -4))
+                if (recipeItem.value.endsWith(`.mdx`)) {
+                  setRecipe(recipeItem.value.slice(0, -4))
+                } else {
+                  setRecipe(recipeItem.value)
+                }
                 trackCli(`RECIPE_RUN`, { name: recipeItem.value })
                 showRecipesList = false
                 try {
@@ -531,7 +534,7 @@ export default async ({
       if (!isReady) {
         return (
           <Text>
-            <Spinner.default /> Loading recipe
+            <Spinner /> Loading recipe
           </Text>
         )
       }

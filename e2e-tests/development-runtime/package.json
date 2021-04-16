@@ -4,21 +4,28 @@
   "version": "1.0.0",
   "author": "Dustin Schau <dustin@gatsbyjs.com>",
   "dependencies": {
-    "gatsby": "^2.4.4",
-    "gatsby-image": "^2.0.41",
-    "gatsby-plugin-manifest": "^2.0.17",
-    "gatsby-plugin-offline": "^2.1.0",
-    "gatsby-plugin-react-helmet": "^3.0.6",
-    "gatsby-plugin-sharp": "^2.0.37",
+    "babel-plugin-search-and-replace": "^1.1.0",
+    "gatsby": "^3.0.0-next.6",
+    "gatsby-image": "^3.0.0-next.0",
+    "gatsby-plugin-image": "^1.0.0-next.5",
+    "gatsby-plugin-less": "^5.1.0-next.2",
+    "gatsby-plugin-manifest": "^3.0.0-next.0",
+    "gatsby-plugin-offline": "^4.0.0-next.1",
+    "gatsby-plugin-react-helmet": "^4.0.0-next.0",
+    "gatsby-plugin-sass": "^4.1.0-next.2",
+    "gatsby-plugin-sharp": "^3.0.0-next.5",
+    "gatsby-plugin-stylus": "^3.1.0-next.2",
     "gatsby-seo": "^0.1.0",
-    "gatsby-source-filesystem": "^2.0.33",
-    "gatsby-transformer-remark": "^2.3.12",
-    "gatsby-transformer-sharp": "^2.1.19",
-    "isomorphic-fetch": "^2.2.1",
+    "gatsby-source-filesystem": "^3.0.0-next.2",
+    "gatsby-transformer-json": "^3.0.0-next.0",
+    "gatsby-transformer-remark": "^3.0.0-next.0",
+    "gatsby-transformer-sharp": "^3.0.0-next.1",
+    "node-fetch": "^2.6.1",
     "prop-types": "^15.6.2",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "react-helmet": "^5.2.1"
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-helmet": "^5.2.1",
+    "sass": "^1.32.8"
   },
   "keywords": [
     "gatsby",
@@ -27,8 +34,9 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "cross-env GATSBY_EXPERIMENTAL_ROUTING_APIS=1 CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop",
+    "develop": "cross-env CYPRESS_SUPPORT=y ENABLE_GATSBY_REFRESH_ENDPOINT=true GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND=y gatsby develop",
     "serve": "gatsby serve",
+    "clean": "gatsby clean",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "test": "npm run start-server-and-test || (npm run reset && exit 1)",
@@ -37,15 +45,17 @@
     "reset:preview": "curl -X POST http://localhost:8000/__refresh",
     "update": "node scripts/update.js",
     "update:webhook": "node scripts/webhook.js",
-    "update:preview": "curl -X POST -d '{ \"fake-data-update\": true }' -H \"Content-Type: application/json\" http://localhost:8000/__refresh",
+    "update:cms-webhook": "node scripts/cms-webhook.js",
+    "update:preview": "curl -X POST -d \"{ \\\"fake-data-update\\\": true }\" -H \"Content-Type: application/json\" http://localhost:8000/__refresh",
     "start-server-and-test": "start-server-and-test develop http://localhost:8000 cy:run",
+    "start-server-and-debug": "start-server-and-test develop http://localhost:8000 cy:open",
     "cy:open": "cypress open",
-    "cy:run": "(is-ci && cypress run --browser chrome --record) || cypress run --browser chrome"
+    "cy:run": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^6.0.0",
+    "@testing-library/cypress": "^7.0.0",
     "cross-env": "^5.2.0",
-    "cypress": "3.4.1",
+    "cypress": "6.1.0",
     "fs-extra": "^7.0.1",
     "gatsby-cypress": "^0.1.7",
     "is-ci": "^2.0.0",
@@ -58,6 +68,6 @@
     "url": "https://github.com/gatsbyjs/gatsby"
   },
   "resolutions": {
-    "cypress": "3.4.1"
+    "cypress": "6.1.0"
   }
 }

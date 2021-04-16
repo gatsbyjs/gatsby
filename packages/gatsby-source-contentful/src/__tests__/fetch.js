@@ -83,9 +83,21 @@ beforeAll(() => {
   }
 })
 
+const start = jest.fn()
+const end = jest.fn()
+
+const mockActivity = {
+  start,
+  end,
+  done: end,
+}
+
 const reporter = {
   info: jest.fn(),
+  verbose: jest.fn(),
   panic: jest.fn(),
+  activityTimer: jest.fn(() => mockActivity),
+  createProgress: jest.fn(() => mockActivity),
 }
 
 beforeEach(() => {
@@ -145,7 +157,7 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
 
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
-    limit: 100,
+    limit: 1000,
     order: `sys.createdAt`,
     skip: 0,
   })
@@ -169,24 +181,6 @@ it(`calls contentful.getContentTypes with custom plugin option page limit`, asyn
   })
 })
 
-it(`panics when localeFilter reduces locale list to 0`, async () => {
-  await fetchData({
-    pluginConfig: createPluginConfig({
-      accessToken: `6f35edf0db39085e9b9c19bd92943e4519c77e72c852d961968665f1324bfc94`,
-      spaceId: `rocybtov1ozk`,
-      pageLimit: 50,
-      localeFilter: () => false,
-    }),
-    reporter,
-  })
-
-  expect(reporter.panic).toBeCalledWith(
-    expect.stringContaining(
-      `Please check if your localeFilter is configured properly. Locales 'en-us' were found but were filtered down to none.`
-    )
-  )
-})
-
 describe(`Displays troubleshooting tips and detailed plugin options on contentful client error`, () => {
   it(`Generic fallback error`, async () => {
     mockClient.getLocales.mockImplementation(() => {
@@ -196,11 +190,23 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Accessing your Contentful space failed`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Accessing your Contentful space failed`
+          ),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -221,11 +227,21 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`You seem to be offline`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(`You seem to be offline`),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
@@ -239,23 +255,40 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
   it(`API 404 response handling`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
-      err.response = { status: 404 }
+      err.responseData = { status: 404 }
       throw err
     })
+    const masterOptions = { ...options, environment: `master` }
+    const masterConfig = createPluginConfig(masterOptions)
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchData({
+      pluginConfig: masterConfig,
+      reporter,
+    })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`Check if host and spaceId settings are correct`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Check if host and spaceId settings are correct`
+          ),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
-        ...options,
+        ...masterOptions,
       }),
       {
         host: `Check if setting is correct`,
@@ -264,23 +297,73 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
     )
   })
 
-  it(`API authorization error handling`, async () => {
+  it(`API 404 response handling with environment set`, async () => {
     mockClient.getLocales.mockImplementation(() => {
       const err = new Error(`error`)
-      err.response = { status: 401 }
+      err.responseData = { status: 404 }
       throw err
     })
 
     await fetchData({ pluginConfig, reporter })
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(
-        `Check if accessToken and environment are correct`
-      )
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Unable to access your space. Check if environment is correct and your accessToken has access to the env and the master environments.`
+          ),
+        },
+      })
     )
 
     expect(reporter.panic).toBeCalledWith(
-      expect.stringContaining(`formatPluginOptionsForCLIMock`)
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
+    )
+
+    expect(formatPluginOptionsForCLI).toBeCalledWith(
+      expect.objectContaining({
+        ...options,
+      }),
+      {
+        accessToken: `Check if setting is correct`,
+        environment: `Check if setting is correct`,
+      }
+    )
+  })
+
+  it(`API authorization error handling`, async () => {
+    mockClient.getLocales.mockImplementation(() => {
+      const err = new Error(`error`)
+      err.responseData = { status: 401 }
+      throw err
+    })
+
+    await fetchData({ pluginConfig, reporter })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Check if accessToken and environment are correct`
+          ),
+        },
+      })
+    )
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
     )
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(

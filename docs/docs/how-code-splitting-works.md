@@ -167,7 +167,7 @@ If the asset is CSS, you [inject it inline in the head](https://github.com/gatsb
 
 #### Prefetching chunks
 
-As shown above, Gatsby uses "preload" to speed up loading of resources required by the page. These are its CSS and its core JavaScript needed to run the page. But if you stopped there, then when a user clicked a link to another page, he would have to wait for that pages resources to download before showing it. To speed this up, once the current page has loaded, Gatsby looks for all links on the page, and for each starts prefetching the page that the link points to.
+As shown above, Gatsby uses "preload" to speed up loading of resources required by the page. These are its CSS and its core JavaScript needed to run the page. But if you stopped there, then when a user clicked a link to another page, they would have to wait for that pages resources to download before showing it. To speed this up, once the current page has loaded, Gatsby looks for all links on the page, and for each starts prefetching the page that the link points to.
 
 It does this using the `<link rel="prefetch" href="..." />` parameter. When the browser sees this tag, it will start downloading the resource but at an extremely low priority and only when the resources for the current page have finished loading. Check out the [MDN prefetch docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) for more.
 
@@ -199,4 +199,4 @@ Now the loader can create the full component asset path using [chunkMapping](htt
 
 You may notice that prefetching doesn't prefetch the shared chunks (e.g. `id0` and `id1`). Why? This is a punt. We're guessing that shared chunks will have been loaded earlier for other pages. And if not, then the main page loading logic will download it. It just won't be prefetched.
 
-One more thing, prefetching can be disabled by implementing the [disableCorePrefetching](/docs/browser-apis/#disableCorePrefetching) browser API and returning true. This value is checked in [loader.enqueue](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L242). An example plugin that implements this is [gatsby-plugin-guess-js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L3).
+One more thing, prefetching can be disabled by implementing the [disableCorePrefetching](/docs/reference/config-files/gatsby-browser/#disableCorePrefetching) browser API and returning true. This value is checked in [loader.enqueue](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/loader.js#L242). An example plugin that implements this is [gatsby-plugin-guess-js](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-plugin-guess-js/src/gatsby-browser.js#L3).

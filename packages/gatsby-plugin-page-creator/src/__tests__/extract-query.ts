@@ -18,39 +18,55 @@ describe(`extract query`, () => {
       ).toBe(`{allThing{nodes{id}}}`)
     })
 
-    it(`works with different file extsnions`, () => {
+    it(`handles lowercased model name`, () => {
+      expect(
+        generateQueryFromString(
+          `contentfulType`,
+          compatiblePath(`/foo/{contentfulType.id}.js`)
+        )
+      ).toBe(`{allContentfulType{nodes{id}}}`)
+    })
+
+    it(`handles model name with underscore`, () => {
+      expect(
+        generateQueryFromString(
+          `_customType`,
+          compatiblePath(`/foo/{_customType.id}.js`)
+        )
+      ).toBe(`{allCustomType{nodes{id}}}`)
+    })
+
+    it(`handles model name with number`, () => {
+      expect(
+        generateQueryFromString(
+          `Type123`,
+          compatiblePath(`/foo/{Type123.id}.js`)
+        )
+      ).toBe(`{allType123{nodes{id}}}`)
+    })
+
+    it(`handles fields with number or underscore`, () => {
+      expect(
+        generateQueryFromString(
+          `_type123`,
+          compatiblePath(`/foo/{_type123.field123}.js`)
+        )
+      ).toBe(`{allType123{nodes{field123,id}}}`)
+      expect(
+        generateQueryFromString(
+          `_type123`,
+          compatiblePath(`/foo/{_type123._field123}.js`)
+        )
+      ).toBe(`{allType123{nodes{_field123,id}}}`)
+    })
+
+    it(`works with different file extensions`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}.tsx`)
         )
       ).toBe(`{allThing{nodes{id}}}`)
-    })
-
-    it(`works with arguments arguments`, () => {
-      expect(
-        generateQueryFromString(
-          `{ allThing(filter: { main_url: { nin: [] }}) { ...CollectionPagesQueryFragment } }`,
-          compatiblePath(`/foo/bar/{Thing.id}.js`)
-        )
-      ).toBe(`{ allThing(filter: { main_url: { nin: [] }}) { nodes{id} } }`)
-    })
-
-    it(`supports a special fragment`, () => {
-      expect(
-        generateQueryFromString(
-          `{ allMarkdownRemark {
-        group(field: frontmatter___topic) {
-            ...CollectionPagesQueryFragment
-        }}
-    }`,
-          compatiblePath(`/foo/bar/{MarkdownRemark.frontmatter__topic}.js`)
-        )
-      ).toEqual(`{ allMarkdownRemark {
-        group(field: frontmatter___topic) {
-            nodes{frontmatter{topic},id}
-        }}
-    }`)
     })
   })
 
@@ -80,6 +96,12 @@ describe(`extract query`, () => {
           compatiblePath(`/foo/bar/{Thing.id}/{Thing.name}.js`)
         )
       ).toBe(`{allThing{nodes{id,name}}}`)
+      expect(
+        generateQueryFromString(
+          `Thing`,
+          compatiblePath(`/foo/bar/{Thing.id}-{Thing.name}.js`)
+        )
+      ).toBe(`{allThing{nodes{id,name}}}`)
     })
 
     it(`nested nodes`, () => {
@@ -91,11 +113,52 @@ describe(`extract query`, () => {
       ).toBe(`{allThing{nodes{id,fields{name}}}}`)
     })
 
+    it(`multiple nested nodes`, () => {
+      expect(
+        generateQueryFromString(
+          `thing`,
+          compatiblePath(
+            `/foo/bar/{thing.fields__name}/{thing.fields__description}.js`
+          )
+        )
+      ).toBe(`{allThing{nodes{fields{name},fields{description},id}}}`)
+    })
+
     it(`deeply nested nodes`, () => {
       expect(
         generateQueryFromString(
           `Thing`,
           compatiblePath(`/foo/bar/{Thing.id}/{Thing.fields__name__thing}.js`)
+        )
+      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+      expect(
+        generateQueryFromString(
+          `customType`,
+          compatiblePath(
+            `/foo/bar/{customType.id}/{customType.fields__name__thing}.js`
+          )
+        )
+      ).toBe(`{allCustomType{nodes{id,fields{name{thing}}}}}`)
+    })
+
+    it(`deeply nested nodes with prefixes`, () => {
+      expect(
+        generateQueryFromString(
+          `Thing`,
+          compatiblePath(
+            `/foo/bar/prefix-{Thing.id}/another-prefix_{Thing.fields__name__thing}.js`
+          )
+        )
+      ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
+    })
+
+    it(`deeply nested nodes with postfixes`, () => {
+      expect(
+        generateQueryFromString(
+          `Thing`,
+          compatiblePath(
+            `/foo/bar/{Thing.id}-postfix/{Thing.fields__name__thing}_another-postfix.js`
+          )
         )
       ).toBe(`{allThing{nodes{id,fields{name{thing}}}}}`)
     })
@@ -136,6 +199,14 @@ describe(`reverseLookupParams`, () => {
     ).toEqual({
       id: `foo`,
     })
+    expect(
+      reverseLookupParams(
+        { id: `foo`, otherProp: `bar` },
+        compatiblePath(`/{model.id}.js`)
+      )
+    ).toEqual({
+      id: `foo`,
+    })
   })
 
   it(`handles multiple depth items`, () => {
@@ -145,6 +216,16 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{Model.fields__name}.js`)
       )
     ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      fields__name: `foo`,
+    })
+    expect(
+      reverseLookupParams(
+        { fields: { name: `foo` } },
+        compatiblePath(`/{_model.fields__name}.js`)
+      )
+    ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       fields__name: `foo`,
     })
   })
@@ -157,6 +238,17 @@ describe(`reverseLookupParams`, () => {
         compatiblePath(`/{Model.parent__(File)__relativePath}.js`)
       )
     ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      parent__relativePath: `foo`,
+    })
+    expect(
+      reverseLookupParams(
+        // Unions are not present in the resulting structure
+        { parent: { relativePath: `foo` } },
+        compatiblePath(`/{model123.parent__(File)__relativePath}.js`)
+      )
+    ).toEqual({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       parent__relativePath: `foo`,
     })
   })

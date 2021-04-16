@@ -8,4 +8,4 @@ Example site that demonstrates how to build Gatsby sites with
 ## References
 
 - [Official Emotion site](https://emotion.sh)
-- [gatsby-plugin-emotion](https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/)
+- [gatsby-plugin-emotion](https://www.gatsbyjs.com/plugins/gatsby-plugin-emotion/)

@@ -1,0 +1,261 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`handle flags filters out flags marked false 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_EXPERIMENTAL_SOMETHING_COOL",
+      "experimental": false,
+      "name": "ALL_COMMANDS",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+  ],
+  "message": "The following flags are active:
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+
+We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags were automatically enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+
+There are 5 other flags available that you might be interested in:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+- ONLY_BUILDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
+",
+  "unknownFlagMessage": "",
+}
+`;
+
+exports[`handle flags opts in sites to a flag if their site is selected for partial release 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+  ],
+  "message": "We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags were automatically enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+",
+  "unknownFlagMessage": "",
+}
+`;
+
+exports[`handle flags returns a message about unknown flags in the config 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_EXPERIMENTAL_SOMETHING_COOL",
+      "experimental": false,
+      "name": "ALL_COMMANDS",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+  ],
+  "message": "The following flags are active:
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+
+We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags were automatically enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+
+There are 5 other flags available that you might be interested in:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+- ONLY_BUILDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
+",
+  "unknownFlagMessage": "The following flag(s) found in your gatsby-config.js are not known:
+- FASTLY_DEV (did you mean: FAST_DEV)
+- SUPER_COOL_FLAG",
+}
+`;
+
+exports[`handle flags returns enabledConfigFlags and a message 1`] = `
+Object {
+  "enabledConfigFlags": Array [
+    Object {
+      "command": "develop",
+      "description": "Enable all experiments aimed at improving develop server start time",
+      "env": "GATSBY_EXPERIMENTAL_FAST_DEV",
+      "experimental": false,
+      "includedFlags": Array [
+        "DEV_SSR",
+        "QUERY_ON_DEMAND",
+      ],
+      "name": "FAST_DEV",
+      "telemetryId": "test",
+      "testFitness": [Function],
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_EXPERIMENTAL_SOMETHING_COOL",
+      "experimental": false,
+      "name": "ALL_COMMANDS",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "all",
+      "description": "test",
+      "env": "GATSBY_READY_TO_GO_NEW_LODASH",
+      "experimental": false,
+      "name": "PARTIAL_RELEASE_ONLY_NEW_LODASH",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "test",
+    },
+    Object {
+      "command": "develop",
+      "description": "SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.",
+      "env": "GATSBY_EXPERIMENTAL_DEV_SSR",
+      "experimental": false,
+      "name": "DEV_SSR",
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "https://github.com/gatsbyjs/gatsby/discussions/28138",
+    },
+    Object {
+      "command": "develop",
+      "description": "Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.",
+      "env": "GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND",
+      "experimental": false,
+      "name": "QUERY_ON_DEMAND",
+      "noCI": true,
+      "telemetryId": "test",
+      "testFitness": [Function],
+      "umbrellaIssue": "https://github.com/gatsbyjs/gatsby/discussions/27620",
+    },
+  ],
+  "message": "The following flags are active:
+- FAST_DEV · Enable all experiments aimed at improving develop server start time
+- ALL_COMMANDS · (Umbrella Issue (test)) · test
+- DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
+- QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
+
+We're shipping new features! For final testing, we're rolling them out first to a small % of Gatsby users
+and your site was automatically chosen as one of them. With your help, we'll then release them to everyone in the next minor release.
+
+We greatly appreciate your help testing the change. Please report any feedback good or bad in the umbrella issue. If you do encounter problems, please disable the flag by setting it to false in your gatsby-config.js like:
+
+flags: {
+  THE_FLAG: false
+}
+
+The following flags were automatically enabled on your site:
+- PARTIAL_RELEASE · (Umbrella Issue (test)) · test
+- PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+
+There are 2 other flags available that you might be interested in:
+- ONLY_BUILDS · (Umbrella Issue (test)) · test
+- YET_ANOTHER · (Umbrella Issue (test)) · test
+",
+  "unknownFlagMessage": "",
+}
+`;

@@ -18,12 +18,14 @@ describe(`hot reloading new page component`, () => {
   })
 
   it(`can hot reload a new page file`, () => {
+    cy.visit(`/sample`).waitForRouteChange()
+
     const text = `World`
     cy.exec(
       `npm run update -- --file src/pages/sample.js --replacements "REPLACEMENT:${text}"`
     )
 
-    cy.visit(`/sample`).waitForRouteChange()
+    cy.waitForHmr()
 
     cy.getTestElement(`message`).invoke(`text`).should(`eq`, `Hello ${text}`)
   })

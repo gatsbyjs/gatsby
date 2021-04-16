@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "author": "jonniebigodes",
   "dependencies": {
-    "gatsby": "^2.24.50",
+    "gatsby": "next",
     "js-yaml": "^3.14.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
@@ -22,6 +22,6 @@
     "format": "prettier --write \"src/**/*.js\""
   },
   "devDependencies": {
-    "prettier": "2.1.0"
+    "prettier": "2.1.1"
   }
 }

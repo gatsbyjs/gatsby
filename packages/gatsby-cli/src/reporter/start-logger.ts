@@ -9,15 +9,8 @@ import { initializeYurnalistLogger } from "./loggers/yurnalist"
 import { initializeINKLogger } from "./loggers/ink"
 
 export const startLogger = (): void => {
-  let inkExists = false
-  try {
-    inkExists = !!require.resolve(`ink`)
-    // eslint-disable-next-line no-empty
-  } catch (err) {}
-
   if (!process.env.GATSBY_LOGGER) {
     if (
-      inkExists &&
       semver.satisfies(process.version, `>=8`) &&
       !isCI() &&
       typeof jest === `undefined`

@@ -5,18 +5,28 @@ import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { navigate as reachNavigate } from "@reach/router"
-import { globalHistory } from "@reach/router/lib/history"
+import { navigate as reachNavigate } from "@gatsbyjs/reach-router"
+import { globalHistory } from "@gatsbyjs/reach-router/lib/history"
 import { parsePath } from "gatsby-link"
 
 // Convert to a map for faster lookup in maybeRedirect()
-const redirectMap = redirects.reduce((map, redirect) => {
-  map[redirect.fromPath] = redirect
-  return map
-}, {})
+
+const redirectMap = new Map()
+const redirectIgnoreCaseMap = new Map()
+
+redirects.forEach(redirect => {
+  if (redirect.ignoreCase) {
+    redirectIgnoreCaseMap.set(redirect.fromPath, redirect)
+  } else {
+    redirectMap.set(redirect.fromPath, redirect)
+  }
+})
 
 function maybeRedirect(pathname) {
-  const redirect = redirectMap[pathname]
+  let redirect = redirectMap.get(pathname)
+  if (!redirect) {
+    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
+  }
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
@@ -43,6 +53,12 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
+    if (
+      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
+      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+    ) {
+      emitter.emit(`onRouteUpdate`, { location, prevLocation })
+    }
   }
 }
 
@@ -56,7 +72,10 @@ const navigate = (to, options = {}) => {
   }
 
   let { pathname } = parsePath(to)
-  const redirect = redirectMap[pathname]
+  let redirect = redirectMap.get(pathname)
+  if (!redirect) {
+    redirect = redirectIgnoreCaseMap.get(pathname.toLowerCase())
+  }
 
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
@@ -113,7 +132,6 @@ const navigate = (to, options = {}) => {
           })
         }
 
-        console.log(`Site has changed on server. Reloading browser`)
         window.location = pathname
       }
     }
@@ -129,7 +147,12 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    getSavedScrollPosition: args => this._stateStorage.read(args),
+    getSavedScrollPosition: args => [
+      0,
+      // FIXME this is actually a big code smell, we should fix this
+      // eslint-disable-next-line @babel/no-invalid-this
+      this._stateStorage.read(args, args.key),
+    ],
   })
   if (results.length > 0) {
     // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
@@ -196,6 +219,18 @@ class RouteAnnouncer extends React.Component {
   }
 }
 
+const compareLocationProps = (prevLocation, nextLocation) => {
+  if (prevLocation.href !== nextLocation.href) {
+    return true
+  }
+
+  if (prevLocation?.state?.key !== nextLocation?.state?.key) {
+    return true
+  }
+
+  return false
+}
+
 // Fire on(Pre)RouteUpdate APIs
 class RouteUpdates extends React.Component {
   constructor(props) {
@@ -207,19 +242,18 @@ class RouteUpdates extends React.Component {
     onRouteUpdate(this.props.location, null)
   }
 
-  componentDidUpdate(prevProps, prevState, shouldFireRouteUpdate) {
-    if (shouldFireRouteUpdate) {
-      onRouteUpdate(this.props.location, prevProps.location)
-    }
-  }
-
-  getSnapshotBeforeUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+  shouldComponentUpdate(prevProps) {
+    if (compareLocationProps(prevProps.location, this.props.location)) {
       onPreRouteUpdate(this.props.location, prevProps.location)
       return true
     }
-
     return false
+  }
+
+  componentDidUpdate(prevProps) {
+    if (compareLocationProps(prevProps.location, this.props.location)) {
+      onRouteUpdate(this.props.location, prevProps.location)
+    }
   }
 
   render() {
