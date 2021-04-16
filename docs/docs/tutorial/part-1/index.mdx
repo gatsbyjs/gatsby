@@ -1,0 +1,134 @@
+---
+title: Create and Deploy Your First Gatsby Site
+---
+
+import { Announcement } from 'gatsby-interface'
+
+## Introduction
+
+Now that you've set up your computer with all the tools you'll need, it's time to get started!
+
+In this part of the Tutorial, you will go through the process of creating your first Gatsby site and deploying it online for everyone to see.
+
+## Create a Gatsby site
+
+To create your first Gatsby site, you're going to use a command from the Gatsby command line interface (CLI): `gatsby new`. This command brings up an interactive prompt that asks you questions about the site you want to build. After you enter all the information, the CLI uses your answers to automatically generate your new Gatsby site.
+
+Let's take a closer look at the process:
+
+1. Open the command line, and use the `cd` command to change directories into the folder where you want to create your new Gatsby site. For example, if you wanted to create your new site on your desktop, you might type:
+```shell:title=~
+cd Desktop
+```
+
+2. Run the following command from the command line. This will start up the interactive prompt to help you create a new Gatsby site.
+```shell:title=~/Desktop
+gatsby new
+```
+
+3. When the prompt asks, **"What would you like to call your site?"** type a name for your site and press Enter.
+```shell
+What would you like to call your site?
+✔ · My First Gatsby Site
+```
+
+4. When the prompt asks, **"What would you like to name the folder where your site will be created?"** press Enter to use the default folder name. The default will be based on the site name you chose.
+```shell
+What would you like to name the folder where your site will be created?
+✔ gatsby/ my-first-gatsby-site
+```
+
+5. When the prompt asks, **"Will you be using a CMS?"** use the arrow keys to select **"No (or I'll add it later)"** and press Enter.
+```shell
+✔ Will you be using a CMS?
+· No (or I'll add it later)
+```
+
+<Announcement>
+
+In the future, you can use these options to tell `gatsby new` what features you want to add to your site, and `gatsby new` will automatically configure them for you. It's a much quicker way to set up new projects.
+
+But in this first site, you'll set things up manually to learn about how Gatsby's pieces fit together.
+
+</Announcement>
+
+6. When the prompt asks, **"Would you like to install a styling system?"** use the arrow keys to select **"No (or I'll add it later)"** and press Enter. (You'll add styles manually later.)
+```shell
+✔ Would you like to install a styling system?
+· No (or I'll add it later)
+```
+
+7. When the prompt asks, **"Would you like to install additional features with other plugins?"** use the arrow keys and press enter to select **"Build and host for free on Gatsby Cloud"**. Then use the arrow keys and press enter to select "Done".
+
+    This tells `gatsby new` to add a plugin called `gatsby-plugin-gatsby-cloud` to your site. Don't worry about the details of this just yet. You'll learn about plugins later on in the Tutorial. For now, all you need to know is that this plugin will help your site work better when you deploy it with Gatsby Cloud.
+
+8. The prompt will show you a summary of what `gatsby new` will do. It should look something like the output below.
+```shell
+Thanks! Here's what we'll now do:
+
+    🛠  Create a new Gatsby site in the folder my-first-gatsby-site
+    🔌 Install gatsby-plugin-gatsby-cloud
+
+
+? Shall we do this? (Y/n) › Yes
+```
+
+9. When the prompt asks, "Shall we do this?" type **Yes** and press Enter. The `gatsby new` command will start building your site, and after a few moments you should see a message like this:
+```shell
+🎉  Your new Gatsby site My First Gatsby Site has been successfully
+created at ~/Desktop/my-first-gatsby-site.
+Start by going to the directory with
+
+  cd my-first-gatsby-site
+
+Start the local development server with
+
+  npm run develop
+
+See all commands at
+
+  https://www.gatsbyjs.com/docs/gatsby-cli/
+```
+
+Congratulations, you're now the owner of a brand new Gatsby site!
+
+## Run your site locally
+
+Now that you've got the code for your site started, it's time to open it in a browser. To do that, you'll first need to start up your site's local development server.
+
+1. In the command line, change into the directory you created for your site:
+```shell:title=~/Desktop
+cd my-first-gatsby-site
+```
+
+2. From your site directory, start the development server by running the following command:
+```shell:title=~/Desktop/my-first-gatsby-site
+npm run develop
+```
+
+3. After a few moments, you should see a message like the one below in the command line. This means your development server is ready to go!
+
+```shell
+You can now view my-first-gatsby-site in the browser.
+⠀
+  http://localhost:8000/
+⠀
+View GraphiQL, an in-browser IDE, to explore your site's data and
+schema
+⠀
+  http://localhost:8000/___graphql
+```
+
+4. Open your favorite web browser and go to `http://localhost:8000`.
+
+## Set up a GitHub repo for your site
+
+## Build your site with Gatsby Cloud
+
+## Set up Gatsby Hosting
+
+## Summary
+
+Now that you've created the skeleton for your site and deployed it to Gatsby Cloud, you have a link to your site that you can share with anyone!
+
+In the next section, you'll learn how to customize the contents of your site using React.
