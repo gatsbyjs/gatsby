@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { graphql, Link, navigate } from "gatsby"
 import queryString from "query-string"
+import StringSimilarity from "string-similarity"
 
 class Dev404Page extends React.Component {
   static propTypes = {
@@ -15,13 +16,17 @@ class Dev404Page extends React.Component {
     const { data, location } = this.props
     const pagePaths = data.allSitePage.nodes.map(node => node.path)
     const urlState = queryString.parse(location.search)
-
+    const closestPath = StringSimilarity.findBestMatch(
+      location.pathname,
+      pagePaths
+    ).bestMatch
     const initialPagePathSearchTerms = urlState.filter ? urlState.filter : ``
 
     this.state = {
       showCustom404: false,
       initPagePaths: pagePaths,
       pagePathSearchTerms: initialPagePathSearchTerms,
+      closestPath,
       pagePaths: this.getFilteredPagePaths(
         pagePaths,
         initialPagePathSearchTerms
@@ -119,6 +124,15 @@ class Dev404Page extends React.Component {
         </p>
         {this.state.initPagePaths.length > 0 && (
           <div>
+            {this.state.closestPath.rating > 0.7 && (
+              <p>
+                Trying to find a different page? You were probably looking for
+                {` `}
+                <Link to={this.state.closestPath.target}>
+                  {this.state.closestPath.target}
+                </Link>
+              </p>
+            )}
             <p>
               If you were trying to reach another page, perhaps you can find it
               below.
