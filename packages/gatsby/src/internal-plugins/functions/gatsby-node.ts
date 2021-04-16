@@ -43,11 +43,8 @@ const createWebpackConfig = async ({
 
   const knownFunctions = new Map(
     files.map(file => {
-      const name = path.parse(file).name
-      return [
-        urlResolve(path.parse(file).dir, name === `index` ? `` : name),
-        file,
-      ]
+      const { dir, name } = path.parse(file)
+      return [urlResolve(dir, name === `index` ? `` : name), file]
     })
   )
 
