@@ -60,7 +60,9 @@ export function lazyHydrate(
           layout,
           width,
           height,
-          wrapperBackgroundColor
+          wrapperBackgroundColor,
+          objectFit,
+          objectPosition
         )}
       />
 
