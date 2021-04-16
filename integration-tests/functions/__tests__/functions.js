@@ -33,6 +33,21 @@ describe(`routing`, () => {
 
     expect(result).toMatchSnapshot()
   })
+  test(`routes with special characters`, async () => {
+    const routes = [
+      `http://localhost:8000/api/I-Am-Capitalized`,
+      `http://localhost:8000/api/some whitespace`,
+      `http://localhost:8000/api/with-äöü-umlaut`,
+      `http://localhost:8000/api/some-àè-french`,
+      encodeURI(`http://localhost:8000/api/some-אודות`),
+    ]
+
+    for (const route of routes) {
+      const result = await fetch(route).then(res => res.text())
+
+      expect(result).toMatchSnapshot()
+    }
+  })
 })
 
 describe(`environment variables`, () => {

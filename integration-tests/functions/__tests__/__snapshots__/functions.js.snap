@@ -56,6 +56,16 @@ Object {
 }
 `;
 
+exports[`routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
+
+exports[`routing routes with special characters 2`] = `"some whitespace.js"`;
+
+exports[`routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
+
+exports[`routing routes with special characters 4`] = `"some-àè-french.js"`;
+
+exports[`routing routes with special characters 5`] = `"some-אודות.js"`;
+
 exports[`routing secondary-level API 1`] = `"I am at a secondary-level"`;
 
 exports[`routing secondary-level API 2`] = `"I am another sub-directory function"`;
