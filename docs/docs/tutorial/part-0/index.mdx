@@ -3,6 +3,8 @@ title: Set Up Your Development Environment
 tableOfContentsDepth: 2
 ---
 
+import { Announcement } from 'gatsby-interface'
+
 ## Introduction
 
 Welcome to the Gatsby Tutorial! We're excited you're here.
@@ -19,7 +21,9 @@ By the end of this part of the Tutorial, you will:
 
 The Tutorial is intended to be approachable as approachable as possible for people who are new to Gatsby and React. With that said, if you are brand new to web development (welcome!), you might find it helpful to learn some fundamentals first.
 
-> Don't worry, you don't need to be an expert with these! A high-level understanding of the basics should be enough. You'll pick up a lot through the course of the Tutorial.
+<Announcement>
+Don't worry, you don't need to be an expert with these! A high-level understanding of the basics should be enough. You'll pick up a lot through the course of the Tutorial.
+</Announcement>
 
 * **HTML**: A markup language that every web browser is able to understand. It stands for HyperText Markup Language. You use HTML to add structure to your web content, defining things like headings, paragraphs, and more.
     * Learn more about HTML with the [Basic HTML and HTML5 course on freeCodeCamp](https://www.freecodecamp.org/learn/responsive-web-design/#basic-html-and-html5).
@@ -91,7 +95,9 @@ brew -v
 xcode-select --install
 ```
 
-> 💡 If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account.
+<Announcement>
+If that fails, download it [directly from Apple's site](https://developer.apple.com/download/more/), after signing-in with an Apple developer account.
+</Announcement>
 
 3. After being prompted to start the installation, you'll be prompted again to accept a software license for the tools to download.
 
@@ -104,7 +110,11 @@ xcode-select --install
 brew install node
 ```
 
-> 💡 If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+<Announcement>
+
+If you don't want to install it through Homebrew, download the latest Node.js version from [the official Node.js website](https://nodejs.org/en/), double click on the downloaded file and go through the installation process.
+
+</Announcement>
 
 </details>
 
@@ -130,7 +140,10 @@ brew install node
 
 Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
 
-> 💡 When installing a package, if it asks for confirmation, type `y` and press enter.
+
+<Announcement>
+When installing a package, if it asks for confirmation, type `y` and press enter.
+</Announcement>
 
 Select your distro:
 
@@ -138,7 +151,9 @@ Select your distro:
 - [Arch, Manjaro and other pacman based distros](#arch-manjaro-and-other-pacman-based-distros)
 - [Fedora, RedHat, and other dnf based distros](#fedora-redhat-and-other-dnf-based-distros)
 
-> 💡 If the Linux distribution you are using is not listed here, please find instructions on the web.
+<Announcement>
+If the Linux distribution you are using is not listed here, please find instructions on the web.
+</Announcement>
 
 ##### Ubuntu, Debian, and other `apt` based distros:
 
@@ -262,7 +277,11 @@ Install the Gatsby CLI globally by running:
 npm install -g gatsby-cli
 ```
 
-_**Note**: When you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands, you can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry)._
+<Announcement>
+
+**Note:** When you install Gatsby and run it for the first time, you'll see a short message notifying you about anonymous usage data that is being collected for Gatsby commands. You can read more about how that data is pulled out and used in the [telemetry doc](/docs/telemetry).
+
+</Announcement>
 
 See the available commands:
 
@@ -270,10 +289,15 @@ See the available commands:
 gatsby --help
 ```
 
-![Check gatsby commands in terminal](05-gatsby-help.png)
+![Check Gatsby commands in terminal](05-gatsby-help.png)
 
-> 💡 If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
+<Announcement>
 
+**Troubleshooting**
+
+If you are unable to successfully run the Gatsby CLI due to a permissions issue, you may want to check out the [npm docs on fixing permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions), or [this guide](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md).
+
+</Announcement>
 
 ### Visual Studio Code
 
@@ -296,8 +320,12 @@ Now that you have all the knowledge and tools you'll need, you're ready for the 
 
 In the next part, you'll create your first Gatsby site and deploy it online for everyone to see.
 
-> **Share Your Feedback!**
->
-> Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
->
-> Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
