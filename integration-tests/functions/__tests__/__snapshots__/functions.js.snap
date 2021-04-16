@@ -1,36 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`functions can parse different ways of sending data form data 1`] = `
+exports[`develop functions can parse different ways of sending data form data 1`] = `
 Object {
   "a": "form-data",
 }
 `;
 
-exports[`functions can parse different ways of sending data form parameters 1`] = `
+exports[`develop functions can parse different ways of sending data form parameters 1`] = `
 Object {
   "a": "form parameters",
 }
 `;
 
-exports[`functions can parse different ways of sending data json body 1`] = `
+exports[`develop functions can parse different ways of sending data json body 1`] = `
 Object {
   "a": "json",
 }
 `;
 
-exports[`functions can parse different ways of sending data query string 1`] = `
+exports[`develop functions can parse different ways of sending data query string 1`] = `
 Object {
   "amIReal": "true",
 }
 `;
 
-exports[`response formats returns json correctly 1`] = `
+exports[`develop response formats returns json correctly 1`] = `
 Object {
   "amIJSON": true,
 }
 `;
 
-exports[`response formats returns json correctly 2`] = `
+exports[`develop response formats returns json correctly 2`] = `
 Object {
   "access-control-allow-origin": "*",
   "connection": "close",
@@ -42,9 +42,9 @@ Object {
 }
 `;
 
-exports[`response formats returns text correctly 1`] = `"I am typescript"`;
+exports[`develop response formats returns text correctly 1`] = `"I am typescript"`;
 
-exports[`response formats returns text correctly 2`] = `
+exports[`develop response formats returns text correctly 2`] = `
 Object {
   "access-control-allow-origin": "*",
   "connection": "close",
@@ -56,35 +56,120 @@ Object {
 }
 `;
 
-exports[`routing dynamic routes 1`] = `
+exports[`develop routing dynamic routes 1`] = `
 Object {
   "super": "additional",
   "userId": "23",
 }
 `;
 
-exports[`routing dynamic routes 2`] = `
+exports[`develop routing dynamic routes 2`] = `
 Object {
   "0": "super",
 }
 `;
 
-exports[`routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
+exports[`develop routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
 
-exports[`routing routes with special characters 2`] = `"some whitespace.js"`;
+exports[`develop routing routes with special characters 2`] = `"some whitespace.js"`;
 
-exports[`routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
+exports[`develop routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
 
-exports[`routing routes with special characters 4`] = `"some-àè-french.js"`;
+exports[`develop routing routes with special characters 4`] = `"some-àè-french.js"`;
 
-exports[`routing routes with special characters 5`] = `"some-אודות.js"`;
+exports[`develop routing routes with special characters 5`] = `"some-אודות.js"`;
 
-exports[`routing secondary-level API 1`] = `"I am at a secondary-level"`;
+exports[`develop routing secondary-level API 1`] = `"I am at a secondary-level"`;
 
-exports[`routing secondary-level API 2`] = `"I am another sub-directory function"`;
+exports[`develop routing secondary-level API 2`] = `"I am another sub-directory function"`;
 
-exports[`routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
+exports[`develop routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
 
-exports[`routing top-level API 1`] = `"I am at the top-level"`;
+exports[`develop routing top-level API 1`] = `"I am at the top-level"`;
 
-exports[`typescript typescript functions work 1`] = `"I am typescript"`;
+exports[`develop typescript typescript functions work 1`] = `"I am typescript"`;
+
+exports[`serve functions can parse different ways of sending data form data 1`] = `
+Object {
+  "a": "form-data",
+}
+`;
+
+exports[`serve functions can parse different ways of sending data form parameters 1`] = `
+Object {
+  "a": "form parameters",
+}
+`;
+
+exports[`serve functions can parse different ways of sending data json body 1`] = `
+Object {
+  "a": "json",
+}
+`;
+
+exports[`serve functions can parse different ways of sending data query string 1`] = `
+Object {
+  "amIReal": "true",
+}
+`;
+
+exports[`serve response formats returns json correctly 1`] = `
+Object {
+  "amIJSON": true,
+}
+`;
+
+exports[`serve response formats returns json correctly 2`] = `
+Object {
+  "connection": "close",
+  "content-length": "16",
+  "content-type": "application/json; charset=utf-8",
+  "etag": "W/\\"10-R6td1pV+B+Xz9CJkNeaEI2kP+QY\\"",
+  "x-powered-by": "Express",
+}
+`;
+
+exports[`serve response formats returns text correctly 1`] = `"I am typescript"`;
+
+exports[`serve response formats returns text correctly 2`] = `
+Object {
+  "connection": "close",
+  "content-length": "15",
+  "content-type": "text/html; charset=utf-8",
+  "etag": "W/\\"f-zwggT56l/fnWBm4dI0PkA4E3i4E\\"",
+  "x-powered-by": "Express",
+}
+`;
+
+exports[`serve routing dynamic routes 1`] = `
+Object {
+  "super": "additional",
+  "userId": "23",
+}
+`;
+
+exports[`serve routing dynamic routes 2`] = `
+Object {
+  "0": "super",
+}
+`;
+
+exports[`serve routing routes with special characters 1`] = `"I-Am-Capitalized.js"`;
+
+exports[`serve routing routes with special characters 2`] = `"some whitespace.js"`;
+
+exports[`serve routing routes with special characters 3`] = `"with-äöü-umlaut.js"`;
+
+exports[`serve routing routes with special characters 4`] = `"some-àè-french.js"`;
+
+exports[`serve routing routes with special characters 5`] = `"some-אודות.js"`;
+
+exports[`serve routing secondary-level API 1`] = `"I am at a secondary-level"`;
+
+exports[`serve routing secondary-level API 2`] = `"I am another sub-directory function"`;
+
+exports[`serve routing secondary-level API with index.js 1`] = `"I am an index.js in a sub-directory!"`;
+
+exports[`serve routing top-level API 1`] = `"I am at the top-level"`;
+
+exports[`serve typescript typescript functions work 1`] = `"I am typescript"`;

@@ -22,6 +22,12 @@ const createWebpackConfig = async ({
   store,
   reporter,
 }): Promise<webpack.Configuration> => {
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
+
   const files = await new Promise((resolve, reject) => {
     glob(`**/*.{js,ts}`, { cwd: functionsDirectory }, (err, files) => {
       if (err) {
@@ -44,14 +50,33 @@ const createWebpackConfig = async ({
   const knownFunctions = new Map(
     files.map(file => {
       const { dir, name } = path.parse(file)
+      // Ignore the original extension as all compiled functions now end with js.
+      const compiledFunctionName = path.join(dir, name + `.js`)
       const finalName = urlResolve(dir, name === `index` ? `` : name)
-      return [finalName, { file, matchPath: getMatchPath(finalName) }]
+      return [
+        finalName,
+        {
+          originalFile: file,
+          file: compiledFunctionName,
+          matchPath: getMatchPath(finalName),
+        },
+      ]
     })
   )
 
-  console.log({ knownFunctions })
-
   store.dispatch(internalActions.setFunctions(knownFunctions))
+
+  // Write out manifest for use by `gatsby serve` and plugins
+  const manifest = {}
+  Array.from(knownFunctions).forEach(([name, { file, matchPath }]) => {
+    const compiledPath = path.join(compiledFunctionsDir, file)
+    manifest[name] = { compiledPath, matchPath }
+  })
+
+  fs.writeFileSync(
+    path.join(compiledFunctionsDir, `manifest.json`),
+    JSON.stringify(manifest, null, 4)
+  )
 
   // Load environment variables from process.env.GATSBY_* and .env.* files.
   // Logic is shared with webpack.config.js
@@ -99,34 +124,19 @@ const createWebpackConfig = async ({
       "process.env": `({})`,
     }
   )
-  const compiledFunctionsDir = path.join(
-    siteDirectoryPath,
-    `.cache`,
-    `functions`
-  )
-
-  // Write out manifest for use by `gatsby serve` and plugins
-  const manifest = {}
-  Array.from(knownFunctions).forEach(([, { file }]) => {
-    const name = path.parse(file).name
-    const compiledPath = path.join(compiledFunctionsDir, name + `.js`)
-    manifest[name] = compiledPath
-  })
-
-  fs.writeFileSync(
-    path.join(compiledFunctionsDir, `manifest.json`),
-    JSON.stringify(manifest, null, 4)
-  )
 
   const entries = {}
-  Array.from(knownFunctions).forEach(([, { file }]) => {
-    const filePath = path.join(functionsDirectory, file)
+  Array.from(knownFunctions).forEach(([, { originalFile }]) => {
+    const filePath = path.join(functionsDirectory, originalFile)
 
     // Get path without the extension (as it could be ts or js)
-    const parsed = path.parse(file)
-    const name = path.join(parsed.dir, parsed.name)
+    const parsedFile = path.parse(originalFile)
+    const compiledNameWithoutExtension = path.join(
+      parsedFile.dir,
+      parsedFile.name
+    )
 
-    entries[name] = filePath
+    entries[compiledNameWithoutExtension] = filePath
   })
 
   const config = {
@@ -179,10 +189,15 @@ export async function onPreBootstrap({
   )
 
   reporter.verbose(`Attaching functions to development server`)
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
 
-  await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+  await fs.ensureDir(compiledFunctionsDir)
 
-  await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+  await fs.emptyDir(compiledFunctionsDir)
 
   try {
     // We do this ungainly thing as we need to make accessible
@@ -286,12 +301,9 @@ export async function onCreateDevServer({
     express.json(),
     express.raw(),
     async (req, res, next) => {
-      console.log(req.params)
       const { "0": pathFragment } = req.params
 
       const { functions } = store.getState()
-
-      console.log({ functions })
 
       let functionKey
 
@@ -306,17 +318,9 @@ export async function onCreateDevServer({
           if (matchPath) {
             exp = pathToRegexp(matchPath, keys)
           }
-          console.log({
-            matchPath,
-            exp,
-            keys,
-            pathFragment,
-            result: exp && exp.exec(pathFragment),
-          })
           if (exp && exp.exec(pathFragment) !== null) {
             functionKey = funcName
             const matches = [...pathFragment.match(exp)].slice(1)
-            console.log({ matches, keys })
             const newParams = {}
             matches.forEach(
               (match, index) => (newParams[keys[index].name] = match)
