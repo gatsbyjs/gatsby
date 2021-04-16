@@ -105,7 +105,9 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
             layout,
             width,
             height,
-            placeholderBackgroundColor
+            placeholderBackgroundColor,
+            objectFit,
+            objectPosition
           )}
         />
 
