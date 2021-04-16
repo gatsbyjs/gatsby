@@ -318,7 +318,8 @@ export async function onCreateDevServer({
         functionKey = pathFragment
       } else {
         // Check if there's any matchPaths that match
-        Array.from(functions).forEach(([funcName, { matchPath }]) => {
+        // Only loop until we find a match
+        Array.from(functions).some(([funcName, { matchPath }]) => {
           let exp
           const keys = []
           if (matchPath) {
@@ -340,6 +341,10 @@ export async function onCreateDevServer({
               (match, index) => (newParams[keys[index].name] = match)
             )
             req.params = newParams
+
+            return true
+          } else {
+            return false
           }
         })
       }
