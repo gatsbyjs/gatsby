@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.1...gatsby@3.4.0-next.2) (2021-04-16)
+
+### Features
+
+- **gatsby-plugin-functions:** Add the ability to run functions locally and on Gatsby Cloud ([#30192](https://github.com/gatsbyjs/gatsby/issues/30192)) ([41eef2b](https://github.com/gatsbyjs/gatsby/commit/41eef2bdcc8890991e8d5e7c0d5df795992096ff)), closes [#30222](https://github.com/gatsbyjs/gatsby/issues/30222) [#30277](https://github.com/gatsbyjs/gatsby/issues/30277) [#30338](https://github.com/gatsbyjs/gatsby/issues/30338)
+
 # [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.0...gatsby@3.4.0-next.1) (2021-04-16)
 
 ### Bug Fixes
