@@ -1,4 +1,4 @@
-import { getMatchPath } from "../get-match-path"
+import { getMatchPath } from "../match-path"
 
 describe(`getMatchPath`, () => {
   it(`returns an empty object when there is no match path interpolation`, () => {
