@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.4.0-next.0...gatsby-source-wordpress@5.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** change `console.warning` to `console.warn` ([#30764](https://github.com/gatsbyjs/gatsby/issues/30764)) ([8ebbb68](https://github.com/gatsbyjs/gatsby/commit/8ebbb685406569258435460b536f38408ade8f50))
+- **gatsby-source-wordpress:** invalidate less queries during previews ([#30770](https://github.com/gatsbyjs/gatsby/issues/30770)) ([bb25e5b](https://github.com/gatsbyjs/gatsby/commit/bb25e5b84527dbd04aa3a0a5833b917fc7ec8f12))
+
 # [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.3.0-next.3...gatsby-source-wordpress@5.4.0-next.0) (2021-04-09)
 
 **Note:** Version bump only for package gatsby-source-wordpress
