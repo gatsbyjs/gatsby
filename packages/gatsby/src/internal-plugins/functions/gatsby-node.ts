@@ -4,7 +4,7 @@ import path from "path"
 import webpack from "webpack"
 import multer from "multer"
 import * as express from "express"
-import { urlResolve } from "gatsby-core-utils"
+import { urlResolve, getMatchPath } from "gatsby-core-utils"
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
 import TerserPlugin from "terser-webpack-plugin"
 import { internalActions } from "../../redux/actions"
@@ -15,24 +15,6 @@ import chokidar from "chokidar"
 import pathToRegexp from "path-to-regexp"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
-
-// TODO put this in gatsby-core-utils and share with gatsby-plugin-page-creator
-// Does the following transformations:
-//   `/foo/[id]/` => `/foo/:id`
-//   `/foo/[...id]/` => `/foo/*id`
-//   `/foo/[...]/` => `/foo/*`
-function getMatchPath(srcPagesPath: string): string | undefined {
-  if (srcPagesPath.includes(`[`) === false) return undefined
-  const startRegex = /\[/g
-  const endRegex = /\]/g
-  const splatRegex = /\[\.\.\./g
-
-  return srcPagesPath
-    .replace(splatRegex, `*`)
-    .replace(startRegex, `:`)
-    .replace(endRegex, ``)
-    .replace(/\/$/, ``)
-}
 
 const createWebpackConfig = async ({
   siteDirectoryPath,
@@ -63,7 +45,6 @@ const createWebpackConfig = async ({
     files.map(file => {
       const { dir, name } = path.parse(file)
       const finalName = urlResolve(dir, name === `index` ? `` : name)
-      console.log(getMatchPath(finalName))
       return [finalName, { file, matchPath: getMatchPath(finalName) }]
     })
   )
