@@ -20,8 +20,6 @@ For full documentation on all configuration options, see [the Gatsby Image Plugi
 npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-1. Upgrade `gatsby` to at least `2.24.78`.
-
 2. Add the plugins to your `gatsby-config.js`:
 
 ```javascript

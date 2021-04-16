@@ -10,9 +10,9 @@ Rather than focusing on specific technical details, Conceptual Guides take a ste
 
 You can think of a Conceptual Guide as a discussion. It compares the benefits and risks of different approaches. It provides additional historical context to explain how things ended up the way they are.
 
-> For more information on Conceptual Guides, check out the [Divio documentation system](https://documentation.divio.com/explanation/), which the Gatsby docs are based on.
+> For more information on Conceptual Guides, check out the [Diátaxis documentation system](https://diataxis.fr/explanation/), which the Gatsby docs are based on.
 >
-> **Note:** In the Divio system, these types of docs are called "Explanations" instead of "Conceptual Guides".
+> **Note:** In the Diátaxis system, these types of docs are called "Explanations" instead of "Conceptual Guides".
 
 ## A near-perfect example of a Conceptual Guide
 
