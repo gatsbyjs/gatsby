@@ -246,6 +246,12 @@ module.exports = () => {
   const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
   return <div>{data.doo}</div>;
 }`,
+    "static-query-hooks-commonjs-no-destructuring.js": `const gatsby = require('gatsby')
+const {graphql} = require('gatsby')
+module.exports = () => {
+  const data = gatsby.useStaticQuery(graphql\`query StaticQueryNameNoDestructuring { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
   }
 
   const parser = new FileParser()
