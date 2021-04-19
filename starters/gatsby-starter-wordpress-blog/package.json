@@ -17,13 +17,13 @@
     "gatsby-plugin-sharp": "^2.14.3",
     "gatsby-source-wordpress-experimental": "^7.0.6",
     "gatsby-transformer-sharp": "^2.12.1",
-    "html-react-parser": "^0.14.1",
+    "html-react-parser": "^1.2.6",
     "lodash": "^4.17.21",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1",
-    "typeface-merriweather": "0.0.72",
-    "typeface-montserrat": "0.0.75"
+    "react-helmet": "^6.1.0",
+    "typeface-merriweather": "1.1.13",
+    "typeface-montserrat": "1.1.13"
   },
   "devDependencies": {
     "dumper.js": "^1.3.1",
