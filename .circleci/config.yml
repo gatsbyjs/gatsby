@@ -234,7 +234,7 @@ jobs:
           command: |
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-            nvm install 12 && npm i -g npm@6.9.0 && nvm alias default 12 && nvm use 12
+      - run: nvm install 12 && npm i -g npm@6.9.0 && nvm alias default 12 && nvm use 12
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
