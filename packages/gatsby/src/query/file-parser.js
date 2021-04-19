@@ -57,14 +57,19 @@ function followVariableDeclarations(binding) {
   return binding
 }
 
-function isUseStaticQuery(path) {
-  return (
-    (path.node.callee.type === `MemberExpression` &&
-      path.node.callee.property.name === `useStaticQuery` &&
-      path.get(`callee`).get(`object`).referencesImport(`gatsby`)) ||
-    (path.node.callee.name === `useStaticQuery` &&
-      path.get(`callee`).referencesImport(`gatsby`))
-  )
+function isUseStaticQuery(path): boolean {
+  const callee = path.node.callee
+  if (callee.type === `MemberExpression`) {
+    const property = callee.property
+    if (property.name === `useStaticQuery`) {
+      return path.get(`callee`).get(`object`).referencesImport(`gatsby`, ``)
+    }
+    return false
+  }
+  if (callee.name === `useStaticQuery`) {
+    return path.get(`callee`).referencesImport(`gatsby`, ``)
+  }
+  return false
 }
 
 const warnForUnknownQueryVariable = (varName, file, usageFunction) =>

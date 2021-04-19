@@ -69,6 +69,11 @@ query {
     render={data => <div>{data.doo}</div>}
   />
 )`,
+    "static-query-hooks-commonjs.js": `const { graphql, useStaticQuery } = require('gatsby')
+module.exports = () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
     "static-query-no-name.js": `import { graphql } from 'gatsby'
   export default () => (
   <StaticQuery
