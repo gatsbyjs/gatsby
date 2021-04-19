@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0...gatsby@3.3.1) (2021-04-19)
+
+### Bug Fixes
+
+- **gatsby:** "Cannot find module 'babel-preset-gatsby'" error ([#30813](https://github.com/gatsbyjs/gatsby/issues/30813)) ([#30946](https://github.com/gatsbyjs/gatsby/issues/30946)) ([ef8feae](https://github.com/gatsbyjs/gatsby/commit/ef8feae4bae08ff2ad832d21080c6d24b726b0a3))
+- **gatsby:** Better Fast Refresh handling for <Root /> ([#30901](https://github.com/gatsbyjs/gatsby/issues/30901)) ([#30945](https://github.com/gatsbyjs/gatsby/issues/30945)) ([8e10d48](https://github.com/gatsbyjs/gatsby/commit/8e10d4888d362864b3dc7138fdbe8c53c4183500))
+
 # [3.3.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.3...gatsby@3.3.0) (2021-04-13)
 
 ### Bug Fixes
