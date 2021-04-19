@@ -327,7 +327,7 @@ Gatsby supports almost every possible styling option (if there isn't a plugin ye
 - [JSS](/plugins/gatsby-plugin-jss/)
 - [Stylus](/plugins/gatsby-plugin-stylus/)
 - [PostCSS](/plugins/gatsby-plugin-postcss/)
-- [Tailwind](/how-to/styling/tailwind-css/)
+- [Tailwind](/docs/how-to/styling/tailwind-css/)
 
 and more!
 
