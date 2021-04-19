@@ -582,7 +582,7 @@ workflows:
   build-test:
     jobs:
       - bootstrap
-      # - lint
+      - lint
       # - typecheck:
       #     requires:
       #       - bootstrap
