@@ -158,7 +158,6 @@ commands:
         default: "yarn test"
     steps:
       - checkout
-      - run: npm -v
       # In case of failure, add these steps again. Cache probably got deleted
       #- <<: *restore_cache
       #- <<: *install_node_modules
@@ -244,6 +243,7 @@ jobs:
       - run: nvm use 12
       - run: node -v
       - run: npm -v
+      - run: npm i -g yarn
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
