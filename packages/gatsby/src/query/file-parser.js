@@ -57,7 +57,7 @@ function followVariableDeclarations(binding) {
   return binding
 }
 
-function isUseStaticQuery(path): boolean {
+function isUseStaticQuery(path) {
   const callee = path.node.callee
   if (callee.type === `MemberExpression`) {
     const property = callee.property
@@ -67,7 +67,20 @@ function isUseStaticQuery(path): boolean {
     return false
   }
   if (callee.name === `useStaticQuery`) {
-    return path.get(`callee`).referencesImport(`gatsby`, ``)
+    // This works for es6 imports
+    if (path.get(`callee`).referencesImport(`gatsby`, ``)) {
+      return true
+    } else {
+      // This finds where userStaticQuery was declared and then checks
+      // if it is a "require" and "gatsby" is the argument.
+      const declaration = path.scope.getBinding(path.node.callee.name)
+      if (
+        declaration.path.node.init.callee.name === `require` &&
+        declaration.path.node.init.arguments[0].value === `gatsby`
+      ) {
+        return true
+      }
+    }
   }
   return false
 }

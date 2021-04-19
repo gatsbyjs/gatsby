@@ -1497,6 +1497,80 @@ Object {
     },
     "text": "query{foo}",
   },
+  "22": Object {
+    "doc": Object {
+      "definitions": Array [
+        Object {
+          "directives": Array [],
+          "kind": "OperationDefinition",
+          "loc": Object {
+            "end": 29,
+            "start": 0,
+          },
+          "name": Object {
+            "kind": "Name",
+            "loc": Object {
+              "end": 21,
+              "start": 6,
+            },
+            "value": "StaticQueryName",
+          },
+          "operation": "query",
+          "selectionSet": Object {
+            "kind": "SelectionSet",
+            "loc": Object {
+              "end": 29,
+              "start": 22,
+            },
+            "selections": Array [
+              Object {
+                "alias": undefined,
+                "arguments": Array [],
+                "directives": Array [],
+                "kind": "Field",
+                "loc": Object {
+                  "end": 27,
+                  "start": 24,
+                },
+                "name": Object {
+                  "kind": "Name",
+                  "loc": Object {
+                    "end": 27,
+                    "start": 24,
+                  },
+                  "value": "foo",
+                },
+                "selectionSet": undefined,
+              },
+            ],
+          },
+          "variableDefinitions": Array [],
+        },
+      ],
+      "kind": "Document",
+      "loc": Object {
+        "end": 29,
+        "start": 0,
+      },
+    },
+    "filePath": "static-query-hooks-commonjs.js",
+    "hash": 2687344169,
+    "isHook": true,
+    "isStaticQuery": true,
+    "templateLoc": SourceLocation {
+      "end": Position {
+        "column": 67,
+        "line": 3,
+      },
+      "filename": undefined,
+      "identifierName": undefined,
+      "start": Position {
+        "column": 38,
+        "line": 3,
+      },
+    },
+    "text": "query StaticQueryName{foo}",
+  },
   "3": Object {
     "doc": Object {
       "definitions": Array [

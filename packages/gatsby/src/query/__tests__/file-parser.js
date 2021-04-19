@@ -69,11 +69,6 @@ query {
     render={data => <div>{data.doo}</div>}
   />
 )`,
-    "static-query-hooks-commonjs.js": `const { graphql, useStaticQuery } = require('gatsby')
-module.exports = () => {
-  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
-  return <div>{data.doo}</div>;
-}`,
     "static-query-no-name.js": `import { graphql } from 'gatsby'
   export default () => (
   <StaticQuery
@@ -246,6 +241,11 @@ export default () => {
     render={data => <div>{data.doo}</div>}
   />
 )`,
+    "static-query-hooks-commonjs.js": `const { graphql, useStaticQuery } = require('gatsby')
+module.exports = () => {
+  const data = useStaticQuery(graphql\`query StaticQueryName { foo }\`);
+  return <div>{data.doo}</div>;
+}`,
   }
 
   const parser = new FileParser()
@@ -267,6 +267,7 @@ export default () => {
     // Check that invalid entries are not in the results and thus haven't been extracted
     expect(results).toEqual(
       expect.arrayContaining([
+        expect.objectContaining({ filePath: `static-query-hooks-commonjs.js` }),
         expect.not.objectContaining({ filePath: `no-query.js` }),
         expect.not.objectContaining({ filePath: `other-graphql-tag.js` }),
         expect.not.objectContaining({ filePath: `global-query.js` }),
