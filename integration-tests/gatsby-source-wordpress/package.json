@@ -5,7 +5,9 @@
   "description": "A simple Gatsby WP site for running integrations tests",
   "scripts": {
     "run-jest": "jest --config=jest.config.js --runInBand",
-    "test": "npm run run-jest && WARM_CACHE=true npm run run-jest"
+    "test": "npm run docker-start && npm run run-jest && WARM_CACHE=true npm run run-jest",
+    "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans",
+    "docker-rebuild": "./docker/rebuild.sh"
   },
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "license": "MIT",

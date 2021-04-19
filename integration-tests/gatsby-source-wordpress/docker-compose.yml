@@ -13,18 +13,11 @@ services:
       - "db_data:/var/lib/mysql"
       - "./docker/seed:/docker-entrypoint-initdb.d"
 
-  docker-host:
-    image: qoomon/docker-host
-    cap_add: ["NET_ADMIN", "NET_RAW"]
-    mem_limit: 8M
-    restart: on-failure
-
   wordpress:
     depends_on:
       - db
     env_file:
-      - ./test-site/.env.test
-      - ./test-site/.env.plugins
+      - ./.env.test
     build:
       context: ./docker/wordpress
     ports:
@@ -47,8 +40,7 @@ services:
     environment:
       CPT_UI_VERSION: 1.8.1
     env_file:
-      - ./test-site/.env.test
-      - ./test-site/.env.plugins
+      - ./.env.test
     build:
       context: ./docker/wp-cli
     volumes:
