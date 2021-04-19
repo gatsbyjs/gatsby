@@ -158,6 +158,7 @@ commands:
         default: "yarn test"
     steps:
       - checkout
+      - run: npm -v
       # In case of failure, add these steps again. Cache probably got deleted
       #- <<: *restore_cache
       #- <<: *install_node_modules
