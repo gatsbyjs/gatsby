@@ -229,7 +229,6 @@ jobs:
 
   integration_tests_gatsby_source_wordpress:
     machine: true
-    image: circleci/python:3.7-node
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
