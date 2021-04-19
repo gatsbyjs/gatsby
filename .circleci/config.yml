@@ -583,9 +583,9 @@ workflows:
     jobs:
       - bootstrap
       - lint
-      # - typecheck:
-      #     requires:
-      #       - bootstrap
+      - typecheck:
+          requires:
+            - bootstrap
       # - windows_unit_tests:
       #     <<: *ignore_docs
       #     requires:
