@@ -175,7 +175,7 @@ Another possibility that could cause this issue is from empty strings used for i
 
 ### Problems installing `sharp` with `gatsby-plugin-sharp` - gyp ERR! build error
 
-If you see an error message in the console when installing dependencies that look related to sharp like `gyp ERR! build error` and `npm ERR! Failed at the sharp@x.x.x install script`, they can often be resolved by deleting the `node_nodules` folder in the root of your project and installing dependencies again:
+If you see an error message in the console when installing dependencies that look related to sharp like `gyp ERR! build error` and `npm ERR! Failed at the sharp@x.x.x install script`, they can often be resolved by deleting the `node_modules` folder in the root of your project and installing dependencies again:
 
 ```shell
 # be careful as this command will delete all files recursively in

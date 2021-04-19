@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.4.0-next.0...gatsby-core-utils@2.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** fetch-remote-file download failure when missing content-length header ([#30810](https://github.com/gatsbyjs/gatsby/issues/30810)) ([1164a93](https://github.com/gatsbyjs/gatsby/commit/1164a93b5dfe411bba088267ba1ffb6a2ad5449d))
+
 # [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.3.0-next.1...gatsby-core-utils@2.4.0-next.0) (2021-04-09)
 
 **Note:** Version bump only for package gatsby-core-utils

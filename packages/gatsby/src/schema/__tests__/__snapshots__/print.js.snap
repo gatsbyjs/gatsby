@@ -90,6 +90,11 @@ type SiteSiteMetadata {
   description: String
 }
 
+type SiteFunction implements Node @dontInfer {
+  url: String!
+  file: String!
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
@@ -242,6 +247,11 @@ type Site implements Node @dontInfer {
 type SiteSiteMetadata {
   title: String
   description: String
+}
+
+type SiteFunction implements Node @dontInfer {
+  url: String!
+  file: String!
 }
 
 type SitePage implements Node @dontInfer {
@@ -407,6 +417,11 @@ type Site implements Node @dontInfer {
 type SiteSiteMetadata {
   title: String
   description: String
+}
+
+type SiteFunction implements Node @dontInfer {
+  url: String!
+  file: String!
 }
 
 type SitePage implements Node @dontInfer {

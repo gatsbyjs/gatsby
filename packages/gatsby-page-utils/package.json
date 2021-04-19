@@ -1,6 +1,6 @@
 {
   "name": "gatsby-page-utils",
-  "version": "1.4.0-next.0",
+  "version": "1.4.0-next.1",
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
     "bluebird": "^3.7.2",
     "chokidar": "^3.5.1",
     "fs-exists-cached": "^1.0.0",
-    "gatsby-core-utils": "^2.4.0-next.0",
+    "gatsby-core-utils": "^2.4.0-next.1",
     "glob": "^7.1.6",
     "lodash": "^4.17.21",
     "micromatch": "^4.0.2"
