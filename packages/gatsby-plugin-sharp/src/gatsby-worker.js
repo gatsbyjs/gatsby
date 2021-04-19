@@ -32,7 +32,7 @@ const q = queue(
         args.pluginOptions
       )
     ),
-  cpuCoreCount() - 1
+  Math.max(1, cpuCoreCount() - 1)
 )
 
 /**

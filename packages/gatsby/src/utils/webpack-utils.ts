@@ -660,7 +660,7 @@ export const createWebpackUtils = (
         },
         ...terserOptions,
       },
-      parallel: cpuCoreCount() - 1,
+      parallel: Math.max(1, cpuCoreCount() - 1),
       ...options,
     })
 
@@ -731,7 +731,7 @@ export const createWebpackUtils = (
     }
   ): CssMinimizerPlugin =>
     new CssMinimizerPlugin({
-      parallel: cpuCoreCount() - 1,
+      parallel: Math.max(1, cpuCoreCount() - 1),
       ...options,
     })
 

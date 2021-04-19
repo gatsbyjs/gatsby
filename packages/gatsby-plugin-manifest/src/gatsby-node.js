@@ -1,7 +1,7 @@
 import * as fs from "fs"
 import * as path from "path"
 import sharp from "./safe-sharp"
-import { createContentDigest, cpuCoreCount, slash } from "gatsby-core-utils"
+import { createContentDigest, slash } from "gatsby-core-utils"
 import { defaultIcons, addDigestToPath, favicons } from "./common"
 import { doesIconExist } from "./node-helpers"
 
@@ -9,10 +9,8 @@ import pluginOptionsSchema from "./pluginOptionsSchema"
 
 sharp.simd(true)
 
-// Handle Sharp's concurrency based on the Gatsby CPU count
-// See: http://sharp.pixelplumbing.com/en/stable/api-utility/#concurrency
-// See: https://www.gatsbyjs.org/docs/multi-core-builds/
-sharp.concurrency(cpuCoreCount() - 1)
+// force it to be 1 as we only resize one image
+sharp.concurrency(1)
 
 async function generateIcon(icon, srcIcon) {
   const imgPath = path.join(`public`, icon.src)
