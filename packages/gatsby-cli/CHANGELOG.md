@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.1...gatsby-cli@3.4.0-next.2) (2021-04-19)
+
+### Bug Fixes
+
+- **gatsby-cli:** added HOST environment variable ([#26712](https://github.com/gatsbyjs/gatsby/issues/26712)) ([b1990c9](https://github.com/gatsbyjs/gatsby/commit/b1990c996a1b061ad1b2bc7dfc1a45c07f459485))
+
 # [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.4.0-next.0...gatsby-cli@3.4.0-next.1) (2021-04-16)
 
 **Note:** Version bump only for package gatsby-cli
