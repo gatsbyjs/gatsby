@@ -167,7 +167,7 @@ exports.sourceNodes = ({
       )
       toBeDeleted.forEach(node => deleteNode(node))
 
-      newFunctions.forEach(config => {
+      action.payload.forEach(config => {
         createFunctionNode(config)
       })
     })
