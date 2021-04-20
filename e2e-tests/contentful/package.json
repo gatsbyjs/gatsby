@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@contentful/rich-text-types": "^14.1.2",
     "cypress": "^6.8.0",
     "cypress-image-snapshot": "^4.0.1",
     "gatsby": "^3.1.1",
