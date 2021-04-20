@@ -203,8 +203,6 @@ export async function onPreBootstrap({
 
   await fs.ensureDir(compiledFunctionsDir)
 
-  await fs.emptyDir(compiledFunctionsDir)
-
   try {
     // We do this ungainly thing as we need to make accessible
     // the resolve/reject functions to our shared callback function
