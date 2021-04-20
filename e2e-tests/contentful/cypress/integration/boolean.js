@@ -1,6 +1,6 @@
 describe(`boolean`, () => {
   beforeEach(() => {
-    cy.visit("/boolean")
+    cy.visit("/boolean").waitForRouteChange()
   })
   it(`boolean: No`, () => {
     cy.get('[data-cy-id="boolean-no"] [data-cy-value]').should(

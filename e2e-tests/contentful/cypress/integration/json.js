@@ -1,6 +1,6 @@
 describe(`json`, () => {
   beforeEach(() => {
-    cy.visit("/json")
+    cy.visit("/json").waitForRouteChange()
   })
   it(`json: Simple`, () => {
     cy.get('[data-cy-id="simple"]').within(() => {

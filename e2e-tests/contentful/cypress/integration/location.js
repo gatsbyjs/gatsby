@@ -1,6 +1,6 @@
 describe(`location`, () => {
   beforeEach(() => {
-    cy.visit("/location")
+    cy.visit("/location").waitForRouteChange()
   })
   it(`location`, () => {
     cy.get('[data-cy-id="location"] [data-cy-value-lat]').should(

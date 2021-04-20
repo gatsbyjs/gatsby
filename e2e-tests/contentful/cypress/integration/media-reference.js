@@ -1,6 +1,6 @@
 describe(`media-reference`, () => {
   beforeEach(() => {
-    cy.visit("/media-reference")
+    cy.visit("/media-reference").waitForRouteChange()
   })
   it(`media-reference: many`, () => {
     cy.get('[data-cy-id="media-reference-many"]').within(() => {

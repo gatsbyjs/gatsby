@@ -1,6 +1,6 @@
 describe(`text`, () => {
   beforeEach(() => {
-    cy.visit("/text")
+    cy.visit("/text").waitForRouteChange()
   })
 
   it(`text: Short`, () => {

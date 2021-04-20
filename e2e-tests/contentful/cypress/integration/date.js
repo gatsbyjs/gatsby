@@ -1,6 +1,6 @@
 describe(`date`, () => {
   beforeEach(() => {
-    cy.visit("/date")
+    cy.visit("/date").waitForRouteChange()
   })
   it(`date: Date only`, () => {
     cy.get('[data-cy-id="date-date-only"]').within(() => {
