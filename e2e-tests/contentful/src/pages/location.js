@@ -13,8 +13,9 @@ const LocationPage = ({ data }) => {
         return (
           <div data-cy-id={slug} key={slug}>
             <h2>{title}</h2>
-            <p data-cy-value>
-              Lat: {location.lat} Long: {location.lon}
+            <p>
+              Lat: <span data-cy-value-lat>{location.lat}</span> Long:{" "}
+              <span data-cy-value-lon>{location.lon}</span>
             </p>
           </div>
         )
