@@ -91,6 +91,7 @@ Object {
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
   },

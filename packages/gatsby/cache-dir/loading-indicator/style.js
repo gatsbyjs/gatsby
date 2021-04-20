@@ -22,8 +22,7 @@ const Style = () => (
           --black: #000000;
           --grey-90: #232129;
           --radii: 4px;
-          --z-index-normal: 5;
-          --z-index-elevated: 10;
+          --z-index-indicator: 9000;
           --shadow: 0px 2px 4px rgba(46, 41, 51, 0.08),
             0px 4px 8px rgba(71, 63, 79, 0.16);
         }
@@ -39,7 +38,7 @@ const Style = () => (
           left: 1.5em;
           box-shadow: var(--shadow);
           border-radius: var(--radii);
-          z-index: var(--z-index-elevated);
+          z-index: var(--z-index-indicator);
           border-left: 0.25em solid var(--purple-40);
           display: flex;
           align-items: center;

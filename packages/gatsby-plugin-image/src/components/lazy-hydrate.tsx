@@ -14,8 +14,6 @@ type LazyHydrateProps = Omit<GatsbyImageProps, "as" | "style" | "className"> & {
   ref: MutableRefObject<HTMLImageElement | undefined>
 }
 
-const IS_DEV = process.env.NODE_ENV === `development`
-
 export function lazyHydrate(
   {
     image,
@@ -32,7 +30,8 @@ export function lazyHydrate(
     ...props
   }: LazyHydrateProps,
   root: MutableRefObject<HTMLElement | undefined>,
-  hydrated: MutableRefObject<boolean>
+  hydrated: MutableRefObject<boolean>,
+  forceHydrate: MutableRefObject<boolean>
 ): (() => void) | null {
   const {
     width,
@@ -61,7 +60,9 @@ export function lazyHydrate(
           layout,
           width,
           height,
-          wrapperBackgroundColor
+          wrapperBackgroundColor,
+          objectFit,
+          objectPosition
         )}
       />
 
@@ -84,10 +85,12 @@ export function lazyHydrate(
     </LayoutWrapper>
   )
 
-  // Force render to mitigate "Expected server HTML to contain a matching" in develop
-  const doRender = hydrated.current || IS_DEV ? render : hydrate
-  doRender(component, root.current)
-  hydrated.current = true
+  if (root.current) {
+    // Force render to mitigate "Expected server HTML to contain a matching" in develop
+    const doRender = hydrated.current || forceHydrate.current ? render : hydrate
+    doRender(component, root.current)
+    hydrated.current = true
+  }
 
   return (): void => {
     if (root.current) {

@@ -14,6 +14,7 @@ import {
   hasNativeLazyLoadSupport,
   storeImageloaded,
   hasImageLoaded,
+  gatsbyImageIsInstalled,
 } from "./hooks"
 import { PlaceholderProps } from "./placeholder"
 import { MainImageProps } from "./main-image"
@@ -61,6 +62,10 @@ class GatsbyImageHydrator extends Component<
     HTMLImageElement | undefined
   >()
   hydrated: MutableRefObject<boolean> = { current: false }
+  forceRender: MutableRefObject<boolean> = {
+    // In dev we use render not hydrate, to avoid hydration warnings
+    current: process.env.NODE_ENV === `development`,
+  }
   lazyHydrator: () => void | null = null
   ref = createRef<HTMLImageElement>()
   unobserveRef: Unobserver
@@ -101,7 +106,8 @@ class GatsbyImageHydrator extends Component<
           ...props,
         },
         this.root,
-        this.hydrated
+        this.hydrated,
+        this.forceRender
       )
     })
   }
@@ -132,7 +138,10 @@ class GatsbyImageHydrator extends Component<
 
   shouldComponentUpdate(nextProps, nextState): boolean {
     let hasChanged = false
-
+    if (!this.state.isLoading && nextState.isLoading && !nextState.isLoaded) {
+      // Props have changed between SSR and hydration, so we need to force render instead of hydrate
+      this.forceRender.current = true
+    }
     // this check mostly means people do not have the correct ref checks in place, we want to reset some state to suppport loading effects
     if (this.props.image.images !== nextProps.image.images) {
       // reset state, we'll rely on intersection observer to reload
@@ -174,7 +183,11 @@ class GatsbyImageHydrator extends Component<
       const cacheKey = JSON.stringify(this.props.image.images)
 
       // when SSR and native lazyload is supported we'll do nothing ;)
-      if (hasNativeLazyLoadSupport() && ssrElement && global.GATSBY___IMAGE) {
+      if (
+        hasNativeLazyLoadSupport() &&
+        ssrElement &&
+        gatsbyImageIsInstalled()
+      ) {
         this.props.onStartLoad?.({ wasCached: false })
 
         // When the image is already loaded before we have hydrated, we trigger onLoad and cache the item
@@ -264,8 +277,8 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     return null
   }
 
-  if (!global.GATSBY___IMAGE) {
-    console.warn(
+  if (!gatsbyImageIsInstalled()) {
+    console.error(
       `[gatsby-plugin-image] You're missing out on some cool performance features. Please add "gatsby-plugin-image" to your gatsby-config.js`
     )
   }

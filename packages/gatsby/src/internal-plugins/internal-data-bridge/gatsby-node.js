@@ -41,8 +41,13 @@ function transformPackageJson(json) {
 
 const createPageId = path => `SitePage ${path}`
 
-exports.sourceNodes = ({ createContentDigest, actions, store }) => {
-  const { createNode } = actions
+exports.sourceNodes = ({
+  createContentDigest,
+  getNodesByType,
+  actions,
+  store,
+}) => {
+  const { createNode, deleteNode } = actions
   const { program, flattenedPlugins, config } = store.getState()
 
   // Add our default development page since we know it's going to
@@ -126,6 +131,60 @@ exports.sourceNodes = ({ createContentDigest, actions, store }) => {
     `gatsby-config.js`
   )
   watchConfig(pathToGatsbyConfig, createGatsbyConfigNode)
+
+  // Create nodes for functions
+  if (process.env.GATSBY_EXPERIMENTAL_FUNCTIONS) {
+    const { functions } = store.getState()
+    const createFunctionNode = ({ file, url }) => {
+      createNode({
+        id: `gatsby-function-${file}`,
+        file,
+        url,
+        parent: null,
+        children: [],
+        internal: {
+          contentDigest: createContentDigest({ file, url }),
+          type: `SiteFunction`,
+        },
+      })
+    }
+    Array.from(functions).forEach(([url, file]) => {
+      createFunctionNode({ url, file })
+    })
+
+    // Listen for updates to functions to update the nodes.
+    emitter.on(`SET_SITE_FUNCTIONS`, action => {
+      // Identify any now deleted functions and remove their nodes.
+      const existingNodes = getNodesByType(`SiteFunction`)
+      const newFunctions = Array.from(action.payload)
+      const newFunctionsSet = new Set()
+      newFunctions.forEach(([url, file]) =>
+        newFunctionsSet.add(`gatsby-function-${file}`)
+      )
+      const toBeDeleted = existingNodes.filter(
+        node => !newFunctionsSet.has(node.id)
+      )
+      toBeDeleted.forEach(node => deleteNode(node))
+
+      newFunctions.forEach(([url, file]) => {
+        createFunctionNode({ url, file })
+      })
+    })
+  } else {
+    // If not enabled, create a dummy node so we can ignore it in the dev 404 page
+    const [url, file] = [`FAKE`, `FAKE`]
+    createNode({
+      id: `gatsby-function-${file}`,
+      file,
+      url,
+      parent: null,
+      children: [],
+      internal: {
+        contentDigest: createContentDigest({ file, url }),
+        type: `SiteFunction`,
+      },
+    })
+  }
 }
 
 function watchConfig(pathToGatsbyConfig, createGatsbyConfigNode) {

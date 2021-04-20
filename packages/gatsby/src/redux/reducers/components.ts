@@ -1,4 +1,4 @@
-import normalize from "normalize-path"
+import normalize from "./normalize-path"
 import { IGatsbyState, ActionsUnion } from "../types"
 
 let programStatus = `BOOTSTRAPPING`

@@ -1,4 +1,4 @@
-const select = require(`unist-util-select`)
+const { selectAll } = require(`unist-util-select`)
 const sharp = require(`./safe-sharp`)
 const axios = require(`axios`)
 const _ = require(`lodash`)
@@ -39,10 +39,10 @@ module.exports = async (
   }
 
   // This will only work for markdown syntax image tags
-  const markdownImageNodes = select(markdownAST, `image`)
+  const markdownImageNodes = selectAll(`image`, markdownAST)
 
   // This will also allow the use of html image tags
-  const rawHtmlNodes = select(markdownAST, `html`)
+  const rawHtmlNodes = selectAll(`html`, markdownAST)
 
   const generateImagesAndUpdateNode = async function (node) {
     let originalImg = node.url

@@ -41,7 +41,7 @@ export const fetchAndCreateSingleNode = async ({
   const query = getNodeQuery()
 
   const {
-    helpers: { reporter },
+    helpers: { reporter, getNode },
     pluginOptions,
   } = getGatsbyApi()
 
@@ -71,7 +71,7 @@ export const fetchAndCreateSingleNode = async ({
     errorContext: `Error occurred while updating a single "${singleName}" node.`,
   })
 
-  const remoteNode = data[singleName]
+  let remoteNode = data[singleName]
 
   if (!data || !remoteNode) {
     reporter.warn(
@@ -88,6 +88,30 @@ export const fetchAndCreateSingleNode = async ({
     singleName,
     id,
   })
+
+  if (isPreview) {
+    const existingNode = getNode(id)
+
+    /**
+     * For Preview, revisions of a node type can have data that updates unecessarily
+     * This code block fixes that. The result being that less queries
+     * are invalidated in Gatsby. For example if you have a query where you're getting the latest published post using the date field, that should be static but each preview updates the date field on the node being previewed (because the revision has a new date). So if we prevent the following fields from changing, this will be less problematic.
+     */
+    if (existingNode) {
+      remoteNode = {
+        ...remoteNode,
+        databaseId: existingNode.databaseId,
+        date: existingNode.date,
+        dateGmt: existingNode.dateGmt,
+        slug: existingNode.slug,
+        guid: existingNode.guid,
+        id: existingNode.id,
+        link: existingNode.link,
+        uri: existingNode.uri,
+        status: existingNode.status,
+      }
+    }
+  }
 
   data[singleName] = remoteNode
 
@@ -254,8 +278,8 @@ const wpActionUPDATE = async ({ helpers, wpAction }) => {
     await setPersistentCache({ key: CREATED_NODE_IDS, value: validNodeIds })
 
     if (existingNode) {
-      await actions.touchNode({ nodeId })
-      await actions.deleteNode({ node: existingNode })
+      await actions.touchNode(existingNode)
+      await actions.deleteNode(existingNode)
       reportUpdate({ setAction: `DELETE` })
     }
 
