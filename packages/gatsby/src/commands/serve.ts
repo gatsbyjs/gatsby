@@ -7,6 +7,7 @@ import chalk from "chalk"
 import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
+import multer from "multer"
 
 import telemetry from "gatsby-telemetry"
 
@@ -110,6 +111,57 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(express.static(`public`, { dotfiles: `allow` }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
+
+  if (process.env.GATSBY_EXPERIMENTAL_FUNCTIONS) {
+    const compiledFunctionsDir = path.join(
+      program.directory,
+      `.cache`,
+      `functions`
+    )
+
+    const functionsManifest = JSON.parse(
+      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`))
+    )
+
+    app.use(
+      `/api/*`,
+      multer().none(),
+      express.urlencoded({ extended: true }),
+      express.text(),
+      express.json(),
+      express.raw(),
+      async (req, res, next) => {
+        const { "0": functionName } = req.params
+
+        if (functionsManifest[functionName]) {
+          const start = Date.now()
+
+          try {
+            const pathToFunction = functionsManifest[functionName]
+            delete require.cache[require.resolve(pathToFunction)]
+            const fn = require(pathToFunction)
+
+            const fnToExecute = (fn && fn.default) || fn
+
+            await Promise.resolve(fnToExecute(req, res))
+          } catch (e) {
+            console.error(e)
+            res.sendStatus(500)
+          }
+
+          const end = Date.now()
+          console.log(
+            `Executed function "/api/${functionName}" in ${end - start}ms`
+          )
+
+          return
+        } else {
+          next()
+        }
+      }
+    )
+  }
+
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })

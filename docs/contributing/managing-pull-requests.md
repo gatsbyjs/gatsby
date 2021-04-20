@@ -39,7 +39,7 @@ We typically look for the following in [PRs that add documentation](/contributin
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
-- Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
+- Type & Format – whether docs and learning materials align with our recommendations and [docs structure](/contributing/docs-contributions/docs-structure/)
 
 If a PR includes code examples, tutorials, recipes, or actionable guides, the reviewer must test out the material to ensure accuracy. **No PRs should be approved or merged that haven't been vetted for errors or omissions.**
 

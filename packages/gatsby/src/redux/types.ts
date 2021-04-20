@@ -39,6 +39,10 @@ export interface IGatsbyPage {
   componentPath: SystemPath
 }
 
+export interface IGatsbyFunction {
+  path: string
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
     // This is the name of the plugin like `gatsby-plugin-manifest
@@ -222,12 +226,14 @@ export interface IGatsbyState {
     pluginFilepath: SystemPath
   }>
   config: IGatsbyConfig
+  functions: Map<string, IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
   status: {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
+    LAST_NODE_COUNTER: number
   }
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
@@ -738,6 +744,11 @@ export interface ISetGraphQLDefinitionsAction {
 export interface ISetSiteConfig {
   type: `SET_SITE_CONFIG`
   payload: IGatsbyState["config"]
+}
+
+export interface ISetSiteFunctions {
+  type: `SET_SITE_FUNCTIONS`
+  payload: IGatsbyState["functions"]
 }
 
 export interface ICreateNodeAction {

@@ -1,128 +1,95 @@
 import path from "path"
-import sitemap from "sitemap"
-import {
-  defaultOptions,
-  filterQuery,
-  writeFile,
-  renameFile,
-  withoutTrailingSlash,
-} from "./internals"
-import { stripIndent } from "common-tags"
-import { parse } from "gatsby/graphql"
+import { simpleSitemapAndIndex } from "sitemap"
+import { pluginOptionsSchema } from "./options-validation"
+import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals"
 
-const publicPath = `./public`
+exports.pluginOptionsSchema = pluginOptionsSchema
 
 exports.onPostBuild = async (
-  { graphql, pathPrefix, basePath = pathPrefix },
-  pluginOptions
-) => {
-  const options = { ...pluginOptions }
-  delete options.plugins
-  delete options.createLinkInHead
-
-  const {
-    query,
-    serialize,
+  { graphql, reporter, pathPrefix },
+  {
     output,
-    exclude,
-    hostname,
+    entryLimit,
+    query,
+    excludes,
     resolveSiteUrl,
-    ...rest
-  } = {
-    ...defaultOptions,
-    ...options,
+    resolvePagePath,
+    resolvePages,
+    filterPages,
+    serialize,
   }
+) => {
+  const { data: queryRecords } = await graphql(query)
 
-  const saved = path.join(publicPath, output)
-
-  // Paths we're excluding...
-  const excludeOptions = exclude.concat(defaultOptions.exclude)
-
-  const queryRecords = await graphql(query)
-
-  const filteredRecords = filterQuery(
-    queryRecords,
-    excludeOptions,
-    basePath,
-    resolveSiteUrl
+  reporter.verbose(
+    `${REPORTER_PREFIX} Query Results:\n${JSON.stringify(
+      queryRecords,
+      null,
+      2
+    )}`
   )
-  const urls = await serialize(filteredRecords)
 
-  if (!rest.sitemapSize || urls.length <= rest.sitemapSize) {
-    const map = sitemap.createSitemap(rest)
-    urls.forEach(u => map.add(u))
-    return writeFile(saved, map.toString())
+  // resolvePages and resolveSuteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
+  const allPages = await Promise.resolve(
+    resolvePages(queryRecords)
+  ).catch(err =>
+    reporter.panic(`${REPORTER_PREFIX} Error resolving Pages`, err)
+  )
+
+  const siteUrl = await Promise.resolve(
+    resolveSiteUrl(queryRecords)
+  ).catch(err =>
+    reporter.panic(`${REPORTER_PREFIX} Error resolving Site URL`, err)
+  )
+
+  if (!Array.isArray(allPages)) {
+    reporter.panic(
+      `${REPORTER_PREFIX} The \`resolvePages\` function did not return an array.`
+    )
   }
 
-  const {
-    site: {
-      siteMetadata: { siteUrl },
+  reporter.verbose(
+    `${REPORTER_PREFIX} Filtering ${allPages.length} pages based on ${excludes.length} excludes`
+  )
+
+  const { filteredPages, messages } = pageFilter(
+    {
+      allPages,
+      filterPages,
+      excludes,
     },
-  } = filteredRecords
-  return new Promise(resolve => {
-    // sitemap-index.xml is default file name. (https://git.io/fhNgG)
-    const indexFilePath = path.join(
-      publicPath,
-      `${rest.sitemapName || `sitemap`}-index.xml`
-    )
-    const sitemapIndexOptions = {
-      ...rest,
-      hostname:
-        (hostname || withoutTrailingSlash(siteUrl)) +
-        withoutTrailingSlash(pathPrefix || ``),
-      targetFolder: publicPath,
-      urls,
-      callback: error => {
-        if (error) throw new Error(error)
-        renameFile(indexFilePath, saved).then(resolve)
-      },
+    { reporter }
+  )
+
+  messages.forEach(message => reporter.verbose(message))
+
+  reporter.verbose(
+    `${REPORTER_PREFIX} ${filteredPages.length} pages remain after filtering`
+  )
+
+  const serializedPages = []
+
+  for (const page of filteredPages) {
+    try {
+      const { url, ...rest } = await Promise.resolve(
+        serialize(page, { resolvePagePath })
+      )
+      serializedPages.push({
+        url: prefixPath({ url, siteUrl, pathPrefix }),
+        ...rest,
+      })
+    } catch (err) {
+      reporter.panic(`${REPORTER_PREFIX} Error serializing pages`, err)
     }
-    sitemap.createSitemapIndex(sitemapIndexOptions)
+  }
+
+  const sitemapPath = path.join(`public`, output)
+
+  return simpleSitemapAndIndex({
+    hostname: siteUrl,
+    destinationDir: sitemapPath,
+    sourceData: serializedPages,
+    limit: entryLimit,
+    gzip: false,
   })
 }
-
-exports.pluginOptionsSchema = ({ Joi }) =>
-  Joi.object()
-    .keys({
-      output: Joi.string()
-        .default(`/sitemap.xml`)
-        .description(`The filepath and name`),
-      exclude: Joi.array()
-        .items(Joi.string())
-        .description(`An array of paths to exclude from the sitemap`),
-      createLinkInHead: Joi.boolean()
-        .default(true)
-        .description(
-          `Whether to populate the \`<head>\` of your site with a link to the sitemap.`
-        ),
-      serialize: Joi.function().description(
-        `Takes the output of the data query and lets you return an array of sitemap entries.`
-      ),
-      resolveSiteUrl: Joi.function().description(
-        `Takes the output of the data query and lets you return the site URL.`
-      ),
-      query: Joi.string().description(
-        stripIndent`
-      The query for the data you need to generate the sitemap. It’s required to get the site’s URL, 
-      if you are not fetching it from site.siteMetadata.siteUrl, you will need to set a custom resolveSiteUrl function. 
-      If you override the query, you probably will also need to set a serializer to return the correct data for the sitemap. 
-      Due to how this plugin was built it is currently expected/required to fetch the page paths from allSitePage, 
-      but you may use the allSitePage.edges.node or allSitePage.nodes query structure.`
-      ),
-      sitemapSize: Joi.number().description(
-        `The number of entries per sitemap file.`
-      ),
-    })
-    .external(({ query }) => {
-      if (query) {
-        try {
-          parse(query)
-        } catch (e) {
-          throw new Error(
-            stripIndent`
-            Invalid plugin options for "gatsby-plugin-sitemap":
-            "query" must be a valid GraphQL query. Received the error "${e.message}"`
-          )
-        }
-      }
-    })

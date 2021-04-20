@@ -200,7 +200,7 @@ module.exports = {
         createLink: pluginOptions =>
           ApolloLink.from([
             retryLink,
-            createHttpLink({ url: pluginOptions.url }),
+            createHttpLink({ uri: pluginOptions.url }),
           ]),
       },
     },

@@ -22,13 +22,12 @@ Object {
       "url": "#heading-uno",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -50,13 +49,12 @@ Object {
     "id": "heading-uno",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -89,13 +87,12 @@ Object {
       "url": "#heading-uno",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -117,13 +114,12 @@ Object {
     "id": "heading-uno",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -156,13 +152,12 @@ Object {
       "url": "#heading-uno",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -184,13 +179,12 @@ Object {
     "id": "heading-uno",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -205,13 +199,12 @@ exports[`gatsby-remark-autolink-headers adds id to a markdown header with no ico
 Object {
   "children": Array [
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -232,13 +225,12 @@ Object {
     "id": "heading-uno",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -271,13 +263,12 @@ Object {
       "url": "#heading-uno",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -299,13 +290,12 @@ Object {
     "id": "heading-uno",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -320,13 +310,12 @@ exports[`gatsby-remark-autolink-headers adds places anchor after header when isI
 Object {
   "children": Array [
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -366,13 +355,12 @@ Object {
     "id": "heading-uno",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -387,13 +375,12 @@ exports[`gatsby-remark-autolink-headers does not add data to a markdown heading 
 Object {
   "children": Array [
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 1,
           "offset": 13,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -405,13 +392,12 @@ Object {
     },
   ],
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 1,
       "offset": 13,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -426,13 +412,12 @@ exports[`gatsby-remark-autolink-headers does not add data to a markdown heading 
 Object {
   "children": Array [
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 27,
           "line": 1,
           "offset": 26,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 1,
@@ -444,13 +429,12 @@ Object {
     },
   ],
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 27,
       "line": 1,
       "offset": 26,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 1,
@@ -483,13 +467,12 @@ Object {
       "url": "#Heading-One",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 14,
           "line": 2,
           "offset": 14,
         },
-        "indent": Array [],
         "start": Object {
           "column": 3,
           "line": 2,
@@ -511,13 +494,12 @@ Object {
     "id": "Heading-One",
   },
   "depth": 1,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 14,
       "line": 2,
       "offset": 14,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 2,
@@ -550,13 +532,12 @@ Object {
       "url": "#Heading-Two",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 15,
           "line": 4,
           "offset": 30,
         },
-        "indent": Array [],
         "start": Object {
           "column": 4,
           "line": 4,
@@ -578,13 +559,12 @@ Object {
     "id": "Heading-Two",
   },
   "depth": 2,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 15,
       "line": 4,
       "offset": 30,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 4,
@@ -617,13 +597,12 @@ Object {
       "url": "#Heading-Three",
     },
     Object {
-      "position": Position {
+      "position": Object {
         "end": Object {
           "column": 18,
           "line": 6,
           "offset": 49,
         },
-        "indent": Array [],
         "start": Object {
           "column": 5,
           "line": 6,
@@ -645,13 +624,12 @@ Object {
     "id": "Heading-Three",
   },
   "depth": 3,
-  "position": Position {
+  "position": Object {
     "end": Object {
       "column": 18,
       "line": 6,
       "offset": 49,
     },
-    "indent": Array [],
     "start": Object {
       "column": 1,
       "line": 6,
