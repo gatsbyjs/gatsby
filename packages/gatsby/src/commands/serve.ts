@@ -141,11 +141,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         const { "0": pathFragment } = req.params
 
         let pathToFunction
+        // Check first for exact matches.
         if (functionsManifest[pathFragment]?.compiledPath) {
           pathToFunction = functionsManifest[pathFragment]?.compiledPath
         } else {
-          // Check if there's any matchPaths that match
-          // Only loop until we find a match
+          // Check if there's any matchPaths that match.
+          // We loop until we find the first match.
           Object.entries(functionsManifest).some(
             ([, { compiledPath, matchPath }]) => {
               let exp

@@ -307,11 +307,12 @@ export async function onCreateDevServer({
 
       let functionKey
 
+      // Check first for exact matches.
       if (functions.has(pathFragment)) {
         functionKey = pathFragment
       } else {
-        // Check if there's any matchPaths that match
-        // Only loop until we find a match
+        // Check if there's any matchPaths that match.
+        // We loop until we find the first match.
         Array.from(functions).some(([funcName, { matchPath }]) => {
           let exp
           const keys = []
