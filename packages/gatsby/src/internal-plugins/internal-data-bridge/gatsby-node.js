@@ -135,52 +135,51 @@ exports.sourceNodes = ({
   // Create nodes for functions
   if (process.env.GATSBY_EXPERIMENTAL_FUNCTIONS) {
     const { functions } = store.getState()
-    const createFunctionNode = ({ file, url }) => {
+    const createFunctionNode = config => {
       createNode({
-        id: `gatsby-function-${file}`,
-        file,
-        url,
+        id: `gatsby-function-${config.absoluteCompiledFilePath}`,
+        ...config,
         parent: null,
         children: [],
         internal: {
-          contentDigest: createContentDigest({ file, url }),
+          contentDigest: createContentDigest(config),
           type: `SiteFunction`,
         },
       })
     }
-    Array.from(functions).forEach(([url, file]) => {
-      createFunctionNode({ url, file })
+    functions.forEach(config => {
+      createFunctionNode(config)
     })
 
     // Listen for updates to functions to update the nodes.
     emitter.on(`SET_SITE_FUNCTIONS`, action => {
       // Identify any now deleted functions and remove their nodes.
       const existingNodes = getNodesByType(`SiteFunction`)
-      const newFunctions = Array.from(action.payload)
       const newFunctionsSet = new Set()
-      newFunctions.forEach(([url, file]) =>
-        newFunctionsSet.add(`gatsby-function-${file}`)
+      action.payload.forEach(config =>
+        newFunctionsSet.add(
+          `gatsby-function-${config.absoluteCompiledFilePath}`
+        )
       )
       const toBeDeleted = existingNodes.filter(
         node => !newFunctionsSet.has(node.id)
       )
       toBeDeleted.forEach(node => deleteNode(node))
 
-      newFunctions.forEach(([url, file]) => {
-        createFunctionNode({ url, file })
+      action.payload.forEach(config => {
+        createFunctionNode(config)
       })
     })
   } else {
     // If not enabled, create a dummy node so we can ignore it in the dev 404 page
-    const [url, file] = [`FAKE`, `FAKE`]
+    const config = { apiRoute: `FAKE`, absoluteCompiledFilePath: `FAKE` }
     createNode({
-      id: `gatsby-function-${file}`,
-      file,
-      url,
+      id: `gatsby-function-${config.absoluteCompiledFilePath}`,
+      ...config,
       parent: null,
       children: [],
       internal: {
-        contentDigest: createContentDigest({ file, url }),
+        contentDigest: createContentDigest(config),
         type: `SiteFunction`,
       },
     })

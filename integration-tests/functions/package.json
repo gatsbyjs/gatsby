@@ -6,22 +6,24 @@
   "author": "Kyle Mathews",
   "keywords": ["gatsby"],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
     "build": "gatsby build",
+    "develop": "gatsby develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
+    "start-servers-and-test": "start-server-and-test servers '8000|9000' test:jest",
+    "servers": "run-p develop serve",
     "test:jest": "jest",
-    "test": "start-server-and-test develop http://localhost:8000 test:jest"
+    "test": "npm-run-all -s build start-servers-and-test"
   },
   "devDependencies": {
     "fs-extra": "^9.0.0",
     "jest": "^24.0.0",
     "jest-cli": "^24.0.0",
+    "npm-run-all": "4.1.5",
     "start-server-and-test": "^1.11.3"
   },
   "dependencies": {
-    "gatsby": "3.4.0-next.0-dev-1618514414024",
+    "gatsby": "3.4.0-next.2-dev-1618947033238",
+    "gatsby-plugin-gatsby-cloud": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
