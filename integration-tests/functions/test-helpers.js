@@ -4,7 +4,7 @@ const fs = require(`fs-extra`)
 const path = require(`path`)
 const FormData = require("form-data")
 
-function runTests(env, host) {
+export function runTests(env, host) {
   describe(env, () => {
     describe(`routing`, () => {
       test(`top-level API`, async () => {
@@ -236,7 +236,3 @@ function runTests(env, host) {
     // })
   })
 }
-
-// Run dev tests
-// runTests(`serve`, `http://localhost:9000`)
-runTests(`develop`, `http://localhost:8000`)
