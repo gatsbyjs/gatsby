@@ -2,7 +2,8 @@ require(`dotenv`).config({
   path: `.env.test`,
 })
 
-const on = require(`wait-on`)
+const urling = require(`urling`)
+
 const {
   spawnGatsbyProcess,
   gatsbyCleanBeforeAll,
@@ -18,7 +19,9 @@ const isWarmCache = process.env.WARM_CACHE
 const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
-  beforeAll(done => {
+  beforeAll(async done => {
+    await urling(`http://localhost:8001/`)
+
     if (isWarmCache) {
       done()
     } else {
@@ -51,7 +54,7 @@ describe(`[gatsby-source-wordpress] Run tests on develop build`, () => {
 
     gatsbyDevelopProcess = spawnGatsbyProcess(`develop`)
 
-    await on({ resources: [`http://localhost:8000`] })
+    await urling(`http://localhost:8000`)
     done()
   })
 
