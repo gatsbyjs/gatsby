@@ -1,6 +1,6 @@
 # `gatsby-core-utils`
 
-A list of utilities used in multiple gatsby packages.
+A list of utilities used in multiple Gatsby packages.
 
 ## Usage
 
