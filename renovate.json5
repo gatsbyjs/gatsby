@@ -2016,7 +2016,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-source-filesystem",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es"],
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "msw"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2027,6 +2027,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-source-filesystem",
       excludePackageNames: ["cross-env"],
+      packageNames: ["msw"],
     },
     {
       groupName: "minor and patch for gatsby-telemetry",
@@ -2096,7 +2097,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-recipes",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "express-graphql", "lodash", "lodash-es", "react-reconciler"],
+      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "react-reconciler", "remark-mdx", "remark-mdxjs"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2107,7 +2108,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-recipes",
       excludePackageNames: ["cross-env"],
-      packageNames: ["express-graphql", "react-reconciler"],
+      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "react-reconciler", "remark-mdx", "remark-mdxjs"],
     },
     {
       groupName: "minor and patch for gatsby-source-contentful",
@@ -2237,7 +2238,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "express-graphql", "lodash", "lodash-es"],
+      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "remark-mdx", "remark-mdxjs", "webpack-virtual-modules"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2248,7 +2249,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby",
       excludePackageNames: ["cross-env"],
-      packageNames: ["express-graphql"],
+      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "remark-mdx", "remark-mdxjs", "webpack-virtual-modules"],
     },
     {
       groupName: "minor and patch for gatsby-admin",
@@ -2258,7 +2259,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-admin",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es"],
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "theme-ui"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2269,6 +2270,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-admin",
       excludePackageNames: ["cross-env"],
+      packageNames: ["theme-ui"],
     },
   ],
 }

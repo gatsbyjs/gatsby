@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.2...gatsby@3.4.0-next.3) (2021-04-19)
+
+### Bug Fixes
+
+- **gatsby:** Better Fast Refresh handling for <Root /> ([#30901](https://github.com/gatsbyjs/gatsby/issues/30901)) ([70b25d1](https://github.com/gatsbyjs/gatsby/commit/70b25d1f82ba35fd992d0442bc72f660c8427f87))
+
+# [3.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.1...gatsby@3.4.0-next.2) (2021-04-16)
+
+### Features
+
+- **gatsby-plugin-functions:** Add the ability to run functions locally and on Gatsby Cloud ([#30192](https://github.com/gatsbyjs/gatsby/issues/30192)) ([41eef2b](https://github.com/gatsbyjs/gatsby/commit/41eef2bdcc8890991e8d5e7c0d5df795992096ff)), closes [#30222](https://github.com/gatsbyjs/gatsby/issues/30222) [#30277](https://github.com/gatsbyjs/gatsby/issues/30277) [#30338](https://github.com/gatsbyjs/gatsby/issues/30338)
+
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.0...gatsby@3.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby:** "Cannot find module 'babel-preset-gatsby'" error ([#30813](https://github.com/gatsbyjs/gatsby/issues/30813)) ([9789823](https://github.com/gatsbyjs/gatsby/commit/97898232e98e59926f39a711e263cf999ddc37ca))
+- **gatsby:** Decode base path in runtime ([#30682](https://github.com/gatsbyjs/gatsby/issues/30682)) ([304e585](https://github.com/gatsbyjs/gatsby/commit/304e5859d5b25691c3d1f5183c3c2855aac79602))
+- **gatsby:** lower memory pressure in SSR ([#30793](https://github.com/gatsbyjs/gatsby/issues/30793)) ([c03e562](https://github.com/gatsbyjs/gatsby/commit/c03e562e3b7493c1903e710f80c24857b01267b6))
+- **gatsby:** webpack warnings are no longer in object format by default ([#30801](https://github.com/gatsbyjs/gatsby/issues/30801)) ([33415c8](https://github.com/gatsbyjs/gatsby/commit/33415c821bf9546aa3d1ac62afb75b9ffeb67a76))
+- **gatsby:** z-index for loading-indicator ([#30888](https://github.com/gatsbyjs/gatsby/issues/30888)) ([18482b1](https://github.com/gatsbyjs/gatsby/commit/18482b123ec87e76cdc738180a1314ea81ad7afa))
+
+### Features
+
+- **gatsby:** Add aggregation resolvers ([#30789](https://github.com/gatsbyjs/gatsby/issues/30789)) ([0e91c82](https://github.com/gatsbyjs/gatsby/commit/0e91c82ace7eff1c21ec23667021a9f19056c564))
+- **gatsby:** Memoize process.env access and repeated function calls ([#30768](https://github.com/gatsbyjs/gatsby/issues/30768)) ([7802e3c](https://github.com/gatsbyjs/gatsby/commit/7802e3c371b20b4f212a45b7a23887d23847709a))
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.3...gatsby@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby
+
+# [3.3.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.2...gatsby@3.3.0-next.3) (2021-04-09)
+
+### Performance Improvements
+
+- **gatsby:** cache babel config items ([#28738](https://github.com/gatsbyjs/gatsby/issues/28738)) ([ecd823f](https://github.com/gatsbyjs/gatsby/commit/ecd823fb424a82a8f7b8aa5da56dbaca74d3269d))
+
+# [3.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.1...gatsby@3.3.0-next.2) (2021-04-07)
+
+### Bug Fixes
+
+- **docs:** edits to Gatsby Node APIs doc ([#30656](https://github.com/gatsbyjs/gatsby/issues/30656)) ([9699e31](https://github.com/gatsbyjs/gatsby/commit/9699e31e354fd484b3834bea2ac4a2e50d6179b4))
+- **gatsby:** fix incorrect intersection of filtered results ([#30594](https://github.com/gatsbyjs/gatsby/issues/30594)) ([e432c23](https://github.com/gatsbyjs/gatsby/commit/e432c231eb65e66208ab29605aa670e6c873303f))
+
 # [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.3.0-next.0...gatsby@3.3.0-next.1) (2021-03-30)
 
 ### Bug Fixes

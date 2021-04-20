@@ -115,11 +115,14 @@ const paginatedWpNodeFetch = async ({
               )
             )
           }
-          helpers.reporter.info(
-            formatLogMessage(
-              `#${node.databaseId} (${node?.uri}) is a duplicate of ${existingNode.databaseId} (${existingNode?.uri})`
+
+          if (node?.databaseId && node?.uri && existingNode?.uri) {
+            helpers.reporter.info(
+              formatLogMessage(
+                `#${node.databaseId} (${node.uri}) is a duplicate of ${existingNode.databaseId} (${existingNode.uri})`
+              )
             )
-          )
+          }
         }
       } else {
         idSet.add(node.id)

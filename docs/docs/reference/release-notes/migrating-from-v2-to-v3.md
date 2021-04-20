@@ -10,7 +10,7 @@ Looking for the [v2 docs](https://v2.gatsbyjs.com)?
 
 This is a reference for upgrading your site from Gatsby v2 to Gatsby v3. Since the last major release was in September 2018, Gatsby v3 includes a couple of breaking changes. If you're curious what's new, head over to the [v3.0 release notes](/docs/reference/release-notes/v3.0).
 
-> If you want to start fresh, run `npm init gatsby` or `yarn create gatsby` in your terminal.
+> If you want to start a new Gatsby v3 site, run `npm init gatsby` or `yarn create gatsby` in your terminal.
 
 ## Table of Contents
 
@@ -79,7 +79,7 @@ npm install gatsby-plugin-sharp@latest
 yarn upgrade-interactive --latest
 ```
 
-You'll be given an overview of packages where you can select to upgrade them to `latest`.
+You'll be given an overview of packages which to select to upgrade them to `latest`.
 
 #### Updating community plugins
 
@@ -95,17 +95,15 @@ If you are using npm 7, the warning may instead be an error:
 npm ERR! ERESOLVE unable to resolve dependency tree
 ```
 
-This is because the plugin needs to set its `peerDependencies` to the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
+This is because the plugin needs to update its `peerDependencies` to include the new version of Gatsby (see section [for plugin maintainers](#for-plugin-maintainers)). While this might indicate that the plugin has incompatibilities, in most cases they should continue to work. When using npm 7, you can pass the `--legacy-peer-deps` to ignore the warning and install anyway. Please look for already opened issues or PRs on the plugin's repository to see the status. If you don't see any, help the maintainers by opening an issue or PR yourself! :)
 
 #### Handling dependencies for plugins that are not yet updated
-
-If you run into the scenarios listed below, you will need to use yarn resolutions until the plugin authors upgrade the plugins they maintain.
 
 Gatsby has an _amazing_ ecosystem of plugins that make it easier to get up and running, and to incorporate various data sources and functionality into your Gatsby project. Part of that huge ecosystem includes dependency trees!
 
 Depending on how the plugin authors have declared dependencies (e.g. marking a package as a dependency instead of a peerDependency) within those plugins, there could be a myriad of failures that arise. If you encounter any of these issues when migrating your project to Gatsby Version 3, we recommend that you use [Yarn resolutions](https://yarnpkg.com/configuration/manifest#resolutions) within your `package.json`.
 
-**Please note:** If your rely on a plugin that is not found within the [list of plugins within the Gatsby framework](https://github.com/gatsbyjs/gatsby/tree/master/packages), you very well may need to use the following resolutions in the near term.
+**Please note:** If you rely on a plugin that is not found within the [list of plugins within the Gatsby framework](https://github.com/gatsbyjs/gatsby/tree/master/packages), you very well may need to use the following resolutions in the near term.
 
 The specific resolutions we recommend at this time are found below:
 
@@ -858,6 +856,17 @@ In most cases, you won't have to do anything to be v3 compatible. But one thing 
   "peerDependencies": {
 -   "gatsby": "^2.32.0",
 +   "gatsby": "^3.0.0",
+  }
+}
+```
+
+If your plugin supports both versions:
+
+```diff:title=package.json
+{
+  "peerDependencies": {
+-   "gatsby": "^2.32.0",
++   "gatsby": "^2.32.0 || ^3.0.0",
   }
 }
 ```

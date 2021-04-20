@@ -13,6 +13,7 @@ const normalize = require(`../normalize`)
 
 const startersBlogFixture = require(`../__fixtures__/starter-blog-data`)
 const richTextFixture = require(`../__fixtures__/rich-text-data`)
+const restrictedContentTypeFixture = require(`../__fixtures__/restricted-content-type`)
 
 const pluginOptions = { spaceId: `testSpaceId` }
 
@@ -738,6 +739,40 @@ describe(`gatsby-node`, () => {
           sourceMessage: `Please check if your localeFilter is configured properly. Locales '${locales.join(
             `,`
           )}' were found but were filtered down to none.`,
+        },
+      })
+    )
+  })
+
+  it(`panics when response contains restricted content types`, async () => {
+    cache.get.mockClear()
+    cache.set.mockClear()
+    fetch.mockImplementationOnce(restrictedContentTypeFixture.initialSync)
+
+    const mockPanicReporter = {
+      ...reporter,
+      panic: jest.fn(),
+    }
+
+    await gatsbyNode.sourceNodes(
+      {
+        actions,
+        store,
+        getNodes,
+        getNode,
+        reporter: mockPanicReporter,
+        createNodeId,
+        cache,
+        getCache,
+        schema,
+      },
+      pluginOptions
+    )
+
+    expect(mockPanicReporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: `Restricted ContentType name found. The name "reference" is not allowed.`,
         },
       })
     )
