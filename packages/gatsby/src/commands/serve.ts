@@ -119,16 +119,16 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     `functions`
   )
 
-  let functionsManifest
+  let functions
   try {
-    functionsManifest = JSON.parse(
+    functions = JSON.parse(
       fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`))
     )
   } catch (e) {
     // ignore
   }
 
-  if (functionsManifest) {
+  if (functions) {
     app.use(
       `/api/*`,
       multer().none(),
@@ -139,38 +139,38 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       async (req, res, next) => {
         const { "0": pathFragment } = req.params
 
-        let pathToFunction
         // Check first for exact matches.
-        if (functionsManifest[pathFragment]?.compiledPath) {
-          pathToFunction = functionsManifest[pathFragment]?.compiledPath
-        } else {
+        let functionObj = functions.find(
+          ({ apiRoute }) => apiRoute === pathFragment
+        )
+
+        if (!functionObj) {
           // Check if there's any matchPaths that match.
           // We loop until we find the first match.
-          Object.entries(functionsManifest).some(
-            ([, { compiledPath, matchPath }]) => {
-              let exp
-              const keys = []
-              if (matchPath) {
-                exp = pathToRegexp(matchPath, keys)
-              }
-              if (exp && exp.exec(pathFragment) !== null) {
-                pathToFunction = compiledPath
-                const matches = [...pathFragment.match(exp)].slice(1)
-                const newParams = {}
-                matches.forEach(
-                  (match, index) => (newParams[keys[index].name] = match)
-                )
-                req.params = newParams
-
-                return true
-              } else {
-                return false
-              }
+          functions.some(f => {
+            let exp
+            const keys = []
+            if (f.matchPath) {
+              exp = pathToRegexp(f.matchPath, keys)
             }
-          )
+            if (exp && exp.exec(pathFragment) !== null) {
+              functionObj = f
+              const matches = [...pathFragment.match(exp)].slice(1)
+              const newParams = {}
+              matches.forEach(
+                (match, index) => (newParams[keys[index].name] = match)
+              )
+              req.params = newParams
+
+              return true
+            } else {
+              return false
+            }
+          })
         }
 
-        if (pathToFunction) {
+        if (functionObj) {
+          const pathToFunction = functionObj.absoluteCompiledFilePath
           const start = Date.now()
 
           try {
@@ -187,7 +187,9 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
           const end = Date.now()
           console.log(
-            `Executed function "/api/${pathFragment}" in ${end - start}ms`
+            `Executed function "/api/${functionObj.apiRoute}" in ${
+              end - start
+            }ms`
           )
 
           return

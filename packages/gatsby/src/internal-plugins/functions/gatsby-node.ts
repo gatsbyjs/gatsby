@@ -16,6 +16,19 @@ import pathToRegexp from "path-to-regexp"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
+interface IFunction {
+  /** The route in the browser to access the function **/
+  apiRoute: string
+  /** The relative path to the original function **/
+  originalFilePath: string
+  /** The relative path to the compiled function (always ends with .js) **/
+  relativeCompiledFilePath: string
+  /** The absolute path to the compiled function (doesn't transfer across machines) **/
+  absoluteCompiledFilePath: string
+  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
+  matchPath: string
+}
+
 const createWebpackConfig = async ({
   siteDirectoryPath,
   functionsDirectory,
@@ -47,7 +60,7 @@ const createWebpackConfig = async ({
     )
   }
 
-  const knownFunctions = {}
+  const knownFunctions: Array<IFunction> = []
   files.map(file => {
     const { dir, name } = path.parse(file)
     // Ignore the original extension as all compiled functions now end with js.
@@ -55,12 +68,13 @@ const createWebpackConfig = async ({
     const compiledPath = path.join(compiledFunctionsDir, compiledFunctionName)
     const finalName = urlResolve(dir, name === `index` ? `` : name)
 
-    knownFunctions[finalName] = {
-      originalFile: file,
-      file: compiledFunctionName,
-      compiledPath,
+    knownFunctions.push({
+      apiRoute: finalName,
+      originalFilePath: file,
+      relativeCompiledFilePath: compiledFunctionName,
+      absoluteCompiledFilePath: compiledPath,
       matchPath: getMatchPath(finalName),
-    }
+    })
   })
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
@@ -119,11 +133,11 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  Object.values(knownFunctions).forEach(({ originalFile }) => {
-    const filePath = path.join(functionsDirectory, originalFile)
+  knownFunctions.forEach(({ originalFilePath }) => {
+    const filePath = path.join(functionsDirectory, originalFilePath)
 
     // Get path without the extension (as it could be ts or js)
-    const parsedFile = path.parse(originalFile)
+    const parsedFile = path.parse(originalFilePath)
     const compiledNameWithoutExtension = path.join(
       parsedFile.dir,
       parsedFile.name
@@ -296,24 +310,24 @@ export async function onCreateDevServer({
     async (req, res, next) => {
       const { "0": pathFragment } = req.params
 
-      const { functions } = store.getState()
-
-      let functionKey
+      const { functions }: { functions: Array<IFunction> } = store.getState()
 
       // Check first for exact matches.
-      if (functions[pathFragment]) {
-        functionKey = pathFragment
-      } else {
+      let functionObj = functions.find(
+        ({ apiRoute }) => apiRoute === pathFragment
+      )
+
+      if (!functionObj) {
         // Check if there's any matchPaths that match.
         // We loop until we find the first match.
-        Object.entries(functions).some(([funcName, { matchPath }]) => {
+        functions.some(f => {
           let exp
           const keys = []
-          if (matchPath) {
-            exp = pathToRegexp(matchPath, keys)
+          if (f.matchPath) {
+            exp = pathToRegexp(f.matchPath, keys)
           }
           if (exp && exp.exec(pathFragment) !== null) {
-            functionKey = funcName
+            functionObj = f
             const matches = [...pathFragment.match(exp)].slice(1)
             const newParams = {}
             matches.forEach(
@@ -328,21 +342,12 @@ export async function onCreateDevServer({
         })
       }
 
-      if (functionKey) {
-        reporter.verbose(`Running ${functionKey}`)
+      if (functionObj) {
+        reporter.verbose(`Running ${functionObj.apiRoute}`)
         const start = Date.now()
-        const compiledFunctionsDir = path.join(
-          siteDirectoryPath,
-          `.cache`,
-          `functions`
-        )
-
-        // Ignore the original extension as all compiled functions now end with js.
-        const parsed = path.parse(functions[functionKey].file)
-        const funcNameToJs = path.join(parsed.dir, parsed.name + `.js`)
+        const pathToFunction = functionObj.absoluteCompiledFilePath
 
         try {
-          const pathToFunction = path.join(compiledFunctionsDir, funcNameToJs)
           delete require.cache[require.resolve(pathToFunction)]
           const fn = require(pathToFunction)
 
@@ -356,7 +361,7 @@ export async function onCreateDevServer({
 
         const end = Date.now()
         reporter.log(
-          `Executed function "/api/${functionKey}" in ${end - start}ms`
+          `Executed function "/api/${functionObj.apiRoute}" in ${end - start}ms`
         )
       } else {
         next()
