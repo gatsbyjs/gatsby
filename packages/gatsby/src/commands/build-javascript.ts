@@ -34,15 +34,21 @@ export const buildProductionBundle = async (
         return reject(stats.compilation.errors)
       }
 
-      const activity = reporter.activityTimer(
-        `Caching JavaScript and CSS webpack compilation`,
-        { parentSpan }
-      )
-      activity.start()
+      let activity
+      if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+        activity = reporter.activityTimer(
+          `Caching JavaScript and CSS webpack compilation`,
+          { parentSpan }
+        )
+        activity.start()
+      }
 
       const waitForCompilerClose = new Promise<void>((resolve, reject) => {
         compiler.close(error => {
-          activity.end()
+          if (activity) {
+            activity.end()
+          }
+
           if (error) {
             return reject(error)
           }

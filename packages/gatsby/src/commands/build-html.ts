@@ -63,15 +63,21 @@ const runWebpack = (
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
       const compiler = webpack(compilerConfig)
       compiler.run((err, stats) => {
-        const activity = reporter.activityTimer(
-          `Caching HTML renderer compilation`,
-          { parentSpan }
-        )
-        activity.start()
+        let activity
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          activity = reporter.activityTimer(
+            `Caching HTML renderer compilation`,
+            { parentSpan }
+          )
+          activity.start()
+        }
 
         const waitForCompilerClose = new Promise<void>((resolve, reject) => {
           compiler.close(error => {
-            activity.end()
+            if (activity) {
+              activity.end()
+            }
+
             if (error) {
               return reject(error)
             }

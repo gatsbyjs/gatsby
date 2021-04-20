@@ -763,7 +763,10 @@ module.exports = async (
     }
   }
 
-  if (stage === `build-javascript` || stage === `build-htmlz`) {
+  if (
+    process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
+    (stage === `build-javascript` || stage === `build-html`)
+  ) {
     const cacheLocation = path.join(
       program.directory,
       `.cache`,
