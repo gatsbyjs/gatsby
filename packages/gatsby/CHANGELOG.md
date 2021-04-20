@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.3...gatsby@3.4.0-next.4) (2021-04-20)
+
+### Bug Fixes
+
+- **gatsby:** add support for useStaticQuery with commonjs/require ([#30941](https://github.com/gatsbyjs/gatsby/issues/30941)) ([0d23703](https://github.com/gatsbyjs/gatsby/commit/0d23703c104c3557a77cfbc0e98d5dc9f947c909))
+- **gatsby:** change order of feedbackDisabled checks to allow CI AWS lambda build ([#30653](https://github.com/gatsbyjs/gatsby/issues/30653)) ([303dc4b](https://github.com/gatsbyjs/gatsby/commit/303dc4bd5b1c79b5bb982e2ac8b5de67630d7083))
+
+### Features
+
+- **gatsby:** add support for dynamic routes for API functions ([#30904](https://github.com/gatsbyjs/gatsby/issues/30904)) ([e44d6a7](https://github.com/gatsbyjs/gatsby/commit/e44d6a78f7f63e434a159536f07d1105067e997b))
+
 # [3.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.2...gatsby@3.4.0-next.3) (2021-04-19)
 
 ### Bug Fixes
