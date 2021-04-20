@@ -763,15 +763,13 @@ module.exports = async (
     }
   }
 
-  if (stage === `build-javascript` || stage === `build-html`) {
+  if (stage === `build-javascript` || stage === `build-htmlz`) {
     const cacheLocation = path.join(
       program.directory,
       `.cache`,
       `webpack`,
       `stage-` + stage
     )
-
-    // fs.ensureDirSync(cacheLocation)
 
     const cacheConfig = {
       type: `filesystem`,
@@ -790,13 +788,7 @@ module.exports = async (
       },
     }
 
-    console.log(cacheConfig)
-
     config.cache = cacheConfig
-
-    // config.infrastructureLogging = {
-    //   debug: /webpack\.cache/,
-    // }
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))
