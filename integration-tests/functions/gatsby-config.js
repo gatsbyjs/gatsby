@@ -5,5 +5,5 @@ module.exports = {
   siteMetadata: {
     title: "functions",
   },
-  plugins: [],
+  plugins: [`gatsby-plugin-gatsby-cloud`],
 }
