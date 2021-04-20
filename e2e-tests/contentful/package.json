@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "gatsby-cypress": "^1.1.0",
+    "gatsby-cypress": "^1.3.0",
     "is-ci": "^3.0.0",
     "prettier": "2.2.1",
     "start-server-and-test": "^1.7.1"

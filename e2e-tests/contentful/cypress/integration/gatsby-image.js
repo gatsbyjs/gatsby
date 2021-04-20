@@ -39,7 +39,7 @@ function testGatsbyImage(type, testPlaceholder) {
 
 describe(`gatsby-image`, () => {
   beforeEach(() => {
-    cy.visit("/gatsby-image")
+    cy.visit("/gatsby-image").waitForRouteChange()
   })
   it(`fluid`, () => testGatsbyImage(`fluid`, hasJPEGPlaceholder))
   it(`fixed`, () => testGatsbyImage(`fixed`, hasJPEGPlaceholder))

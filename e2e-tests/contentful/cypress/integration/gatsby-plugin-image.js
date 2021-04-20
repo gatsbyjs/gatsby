@@ -51,7 +51,7 @@ function testGatsbyPluginImage(type, testPlaceholder) {
 
 describe(`gatsby-plugin-image`, () => {
   beforeEach(() => {
-    cy.visit("/gatsby-plugin-image")
+    cy.visit("/gatsby-plugin-image").waitForRouteChange()
   })
 
   it(`constrained`, () =>
