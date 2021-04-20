@@ -157,7 +157,7 @@ it(`calls contentful.getContentTypes with default page limit`, async () => {
 
   expect(reporter.panic).not.toBeCalled()
   expect(mockClient.getContentTypes).toHaveBeenCalledWith({
-    limit: 100,
+    limit: 1000,
     order: `sys.createdAt`,
     skip: 0,
   })
@@ -258,8 +258,13 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
       err.responseData = { status: 404 }
       throw err
     })
+    const masterOptions = { ...options, environment: `master` }
+    const masterConfig = createPluginConfig(masterOptions)
 
-    await fetchData({ pluginConfig, reporter })
+    await fetchData({
+      pluginConfig: masterConfig,
+      reporter,
+    })
 
     expect(reporter.panic).toBeCalledWith(
       expect.objectContaining({
@@ -283,11 +288,51 @@ describe(`Displays troubleshooting tips and detailed plugin options on contentfu
 
     expect(formatPluginOptionsForCLI).toBeCalledWith(
       expect.objectContaining({
-        ...options,
+        ...masterOptions,
       }),
       {
         host: `Check if setting is correct`,
         spaceId: `Check if setting is correct`,
+      }
+    )
+  })
+
+  it(`API 404 response handling with environment set`, async () => {
+    mockClient.getLocales.mockImplementation(() => {
+      const err = new Error(`error`)
+      err.responseData = { status: 404 }
+      throw err
+    })
+
+    await fetchData({ pluginConfig, reporter })
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `Unable to access your space. Check if environment is correct and your accessToken has access to the env and the master environments.`
+          ),
+        },
+      })
+    )
+
+    expect(reporter.panic).toBeCalledWith(
+      expect.objectContaining({
+        context: {
+          sourceMessage: expect.stringContaining(
+            `formatPluginOptionsForCLIMock`
+          ),
+        },
+      })
+    )
+
+    expect(formatPluginOptionsForCLI).toBeCalledWith(
+      expect.objectContaining({
+        ...options,
+      }),
+      {
+        accessToken: `Check if setting is correct`,
+        environment: `Check if setting is correct`,
       }
     )
   })

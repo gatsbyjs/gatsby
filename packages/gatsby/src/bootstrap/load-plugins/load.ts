@@ -47,17 +47,25 @@ const createPluginId = (
   )
 
 /**
- * @param pluginName
- * This can be a name of a local plugin, the name of a plugin located in
- * node_modules, or a Gatsby internal plugin. In the last case the pluginName
- * will be an absolute path.
+ * @param plugin
+ * This should be a plugin spec object where possible but can also be the
+ * name of a plugin.
+ *
+ * When it is a name, it can be a name of a local plugin, the name of a plugin
+ * located in node_modules, or a Gatsby internal plugin. In the last case the
+ * plugin will be an absolute path.
  * @param rootDir
  * This is the project location, from which are found the plugins
  */
 export function resolvePlugin(
-  pluginName: string,
+  plugin: PluginRef,
   rootDir: string | null
 ): IPluginInfo {
+  const pluginName = _.isString(plugin) ? plugin : plugin.resolve
+
+  // Respect the directory that the plugin was sourced from initially
+  rootDir = (!_.isString(plugin) && plugin.parentDir) || rootDir
+
   // Only find plugins when we're not given an absolute path
   if (!existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
@@ -192,7 +200,7 @@ export function loadPlugins(
         }
       }
 
-      const info = resolvePlugin(plugin.resolve, plugin.parentDir || rootDir)
+      const info = resolvePlugin(plugin, rootDir)
 
       return {
         ...info,
@@ -210,7 +218,9 @@ export function loadPlugins(
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
     `../../internal-plugins/bundle-optimisations`,
-  ]
+    process.env.GATSBY_EXPERIMENTAL_FUNCTIONS &&
+      `../../internal-plugins/functions`,
+  ].filter(Boolean) as Array<string>
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath))

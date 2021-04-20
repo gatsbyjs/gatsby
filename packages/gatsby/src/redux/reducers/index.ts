@@ -27,6 +27,7 @@ import { staticQueriesByTemplateReducer } from "./static-queries-by-template"
 import { queriesReducer } from "./queries"
 import { visitedPagesReducer } from "./visited-page"
 import { htmlReducer } from "./html"
+import { functionsReducer } from "./functions"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -61,4 +62,5 @@ export {
   staticQueriesByTemplateReducer as staticQueriesByTemplate,
   queriesReducer as queries,
   htmlReducer as html,
+  functionsReducer as functions,
 }

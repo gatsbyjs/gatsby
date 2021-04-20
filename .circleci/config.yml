@@ -285,6 +285,13 @@ jobs:
       - store_artifacts:
           path: integration-tests/images/__diff_output__
 
+  integration_tests_functions:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/functions
+          test_command: yarn test
+
   e2e_tests_path-prefix:
     <<: *e2e-executor
     environment:
@@ -623,6 +630,8 @@ workflows:
       - integration_tests_ssr:
           <<: *e2e-test-workflow
       - integration_tests_images:
+          <<: *e2e-test-workflow
+      - integration_tests_functions:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:

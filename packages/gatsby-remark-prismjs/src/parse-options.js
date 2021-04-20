@@ -19,8 +19,8 @@ module.exports = language => {
       const splitOption = option.replace(/ /g, ``).split(`:`)
 
       // Test if the option is for line highlighting
-      if (splitOption.length === 1 && rangeParser.parse(option).length > 0) {
-        highlightLines = rangeParser.parse(option).filter(n => n > 0)
+      if (splitOption.length === 1 && rangeParser(option).length > 0) {
+        highlightLines = rangeParser(option).filter(n => n > 0)
       }
       // Test if the option is for line numbering
       // Option must look like `numberLines: true` or `numberLines: <integer>`
@@ -45,9 +45,7 @@ module.exports = language => {
         promptUserLocal = splitOption[1]
       }
       if (splitOption.length === 2 && splitOption[0] === `outputLines`) {
-        outputLines = rangeParser
-          .parse(splitOption[1].trim())
-          .filter(n => n > 0)
+        outputLines = rangeParser(splitOption[1].trim()).filter(n => n > 0)
       }
     })
 

@@ -21,6 +21,7 @@ import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { getBrowsersList } from "./browserslist"
 import { builtinModules } from "module"
+const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -211,6 +212,7 @@ module.exports = async (
       }),
 
       plugins.virtualModules(),
+      new BabelConfigItemsCacheInvalidatorPlugin(),
     ]
 
     switch (stage) {
