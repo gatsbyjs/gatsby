@@ -55,10 +55,8 @@ gatsby-starter-blog-theme
 │       └── my-second-post.mdx
 ├── src
 │   └── gatsby-theme-blog
-│       ├── components
-│       │   └── bio-content.js
-│       └── gatsby-theme-ui
-│           └── colors.js
+│       └── components
+│           └── bio-content.js
 ├── .gitignore
 ├── .prettierrc
 ├── gatsby-config.js
