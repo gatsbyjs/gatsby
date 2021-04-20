@@ -6,7 +6,6 @@ import multer from "multer"
 import * as express from "express"
 import { urlResolve, getMatchPath } from "gatsby-core-utils"
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
-import TerserPlugin from "terser-webpack-plugin"
 import { internalActions } from "../../redux/actions"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
@@ -270,7 +269,7 @@ export async function onPreBootstrap({
             )
 
             // Otherwise, restart the watcher
-            compiler.close(async err => {
+            compiler.close(async () => {
               const config = await createWebpackConfig({
                 siteDirectoryPath,
                 functionsDirectory,
@@ -294,10 +293,6 @@ export async function onCreateDevServer({
   app,
   store,
 }: CreateDevServerArgs): Promise<void> {
-  const {
-    program: { directory: siteDirectoryPath },
-  } = store.getState()
-
   reporter.verbose(`Attaching functions to development server`)
 
   app.use(

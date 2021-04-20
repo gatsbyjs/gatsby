@@ -86,7 +86,6 @@ class Dev404Page extends React.Component {
       this.props.data.allSiteFunction.nodes[0]?.apiRoute === `FAKE`
     )
     const { pathname } = this.props.location
-    const isAPI = false
     let newFilePath
     let newAPIPath
     if (pathname === `/`) {
