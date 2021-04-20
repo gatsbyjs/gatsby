@@ -135,7 +135,6 @@ exports.sourceNodes = ({
   // Create nodes for functions
   if (process.env.GATSBY_EXPERIMENTAL_FUNCTIONS) {
     const { functions } = store.getState()
-    console.log(functions)
     const createFunctionNode = config => {
       createNode({
         id: `gatsby-function-${config.absoluteCompiledFilePath}`,
