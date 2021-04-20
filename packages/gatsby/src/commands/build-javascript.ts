@@ -34,9 +34,9 @@ export const buildProductionBundle = async (
         return reject(stats.compilation.errors)
       }
 
-      // TODO: add parentSpan
       const activity = reporter.activityTimer(
-        `Caching JavaScript and CSS webpack compilation`
+        `Caching JavaScript and CSS webpack compilation`,
+        { parentSpan }
       )
       activity.start()
 

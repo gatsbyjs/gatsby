@@ -56,14 +56,16 @@ let newHash = ``
 const runWebpack = (
   compilerConfig,
   stage: Stage,
-  directory
+  directory,
+  parentSpan?: Span
 ): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
       const compiler = webpack(compilerConfig)
       compiler.run((err, stats) => {
         const activity = reporter.activityTimer(
-          `Caching HTML renderer compilation`
+          `Caching HTML renderer compilation`,
+          { parentSpan }
         )
         activity.start()
 
@@ -125,12 +127,14 @@ const runWebpack = (
 const doBuildRenderer = async (
   { directory }: IProgram,
   webpackConfig: webpack.Configuration,
-  stage: Stage
+  stage: Stage,
+  parentSpan?: Span
 ): Promise<{ rendererPath: string; waitForCompilerClose }> => {
   const { stats, waitForCompilerClose } = await runWebpack(
     webpackConfig,
     stage,
-    directory
+    directory,
+    parentSpan
   )
   if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
@@ -163,7 +167,7 @@ export const buildRenderer = async (
     parentSpan,
   })
 
-  return doBuildRenderer(program, config, stage)
+  return doBuildRenderer(program, config, stage, parentSpan)
 }
 
 export const deleteRenderer = async (rendererPath: string): Promise<void> => {
