@@ -8,6 +8,8 @@ services:
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: gtsb-wp-dckr-user
+    ports:
+      - "3306:3306"
     restart: always
     volumes:
       - "db_data:/var/lib/mysql"
