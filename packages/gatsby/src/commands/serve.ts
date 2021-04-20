@@ -128,7 +128,6 @@ module.exports = async (program: IServeProgram): Promise<void> => {
     // ignore
   }
 
-  console.log({ functionsManifest })
   if (functionsManifest) {
     app.use(
       `/api/*`,
