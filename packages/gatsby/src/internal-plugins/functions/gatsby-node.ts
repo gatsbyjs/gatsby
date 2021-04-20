@@ -47,35 +47,28 @@ const createWebpackConfig = async ({
     )
   }
 
-  const knownFunctions = new Map(
-    files.map(file => {
-      const { dir, name } = path.parse(file)
-      // Ignore the original extension as all compiled functions now end with js.
-      const compiledFunctionName = path.join(dir, name + `.js`)
-      const finalName = urlResolve(dir, name === `index` ? `` : name)
-      return [
-        finalName,
-        {
-          originalFile: file,
-          file: compiledFunctionName,
-          matchPath: getMatchPath(finalName),
-        },
-      ]
-    })
-  )
+  const knownFunctions = {}
+  files.map(file => {
+    const { dir, name } = path.parse(file)
+    // Ignore the original extension as all compiled functions now end with js.
+    const compiledFunctionName = path.join(dir, name + `.js`)
+    const compiledPath = path.join(compiledFunctionsDir, compiledFunctionName)
+    const finalName = urlResolve(dir, name === `index` ? `` : name)
+
+    knownFunctions[finalName] = {
+      originalFile: file,
+      file: compiledFunctionName,
+      compiledPath,
+      matchPath: getMatchPath(finalName),
+    }
+  })
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
 
   // Write out manifest for use by `gatsby serve` and plugins
-  const manifest = {}
-  Array.from(knownFunctions).forEach(([name, { file, matchPath }]) => {
-    const compiledPath = path.join(compiledFunctionsDir, file)
-    manifest[name] = { compiledPath, matchPath }
-  })
-
   fs.writeFileSync(
     path.join(compiledFunctionsDir, `manifest.json`),
-    JSON.stringify(manifest, null, 4)
+    JSON.stringify(knownFunctions, null, 4)
   )
 
   // Load environment variables from process.env.GATSBY_* and .env.* files.
@@ -126,7 +119,7 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  Array.from(knownFunctions).forEach(([, { originalFile }]) => {
+  Object.values(knownFunctions).forEach(({ originalFile }) => {
     const filePath = path.join(functionsDirectory, originalFile)
 
     // Get path without the extension (as it could be ts or js)
@@ -308,12 +301,12 @@ export async function onCreateDevServer({
       let functionKey
 
       // Check first for exact matches.
-      if (functions.has(pathFragment)) {
+      if (functions[pathFragment]) {
         functionKey = pathFragment
       } else {
         // Check if there's any matchPaths that match.
         // We loop until we find the first match.
-        Array.from(functions).some(([funcName, { matchPath }]) => {
+        Object.entries(functions).some(([funcName, { matchPath }]) => {
           let exp
           const keys = []
           if (matchPath) {
@@ -345,7 +338,7 @@ export async function onCreateDevServer({
         )
 
         // Ignore the original extension as all compiled functions now end with js.
-        const parsed = path.parse(functions.get(functionKey).file)
+        const parsed = path.parse(functions[functionKey].file)
         const funcNameToJs = path.join(parsed.dir, parsed.name + `.js`)
 
         try {
