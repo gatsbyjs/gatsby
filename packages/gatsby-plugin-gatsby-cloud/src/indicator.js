@@ -23,13 +23,12 @@ const Style = () => (
           --black: #000000;
           --grey-90: #232129;
           --radii: 4px;
-          --z-index-normal: 5;
-          --z-index-elevated: 10;
+          --z-index-preview-indicator: 9000;
           --shadow: 0px 2px 4px rgba(46, 41, 51, 0.08),
             0px 4px 8px rgba(71, 63, 79, 0.16);
         }
 
-        [data-gatsby-loading-indicator="root"] {
+        [data-gatsby-preview-indicator="root"] {
           font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
             "Segoe UI Symbol" !important;
@@ -40,7 +39,7 @@ const Style = () => (
           left: 1.5em;
           box-shadow: var(--shadow);
           border-radius: var(--radii);
-          z-index: var(--z-index-elevated);
+          z-index: var(--z-index-preview-indicator);
           border-left: 0.25em solid var(--purple-40);
           display: flex;
           align-items: center;
@@ -50,7 +49,7 @@ const Style = () => (
           min-width: 196px;
         }
 
-        [data-gatsby-loading-indicator-visible="false"] {
+        [data-gatsby-preview-indicator-visible="false"] {
           opacity: 0;
           visibility: hidden;
           will-change: opacity, transform;
@@ -58,21 +57,21 @@ const Style = () => (
           transition: all 0.3s ease-in-out;
         }
 
-        [data-gatsby-loading-indicator-visible="true"] {
+        [data-gatsby-preview-indicator-visible="true"] {
           opacity: 1;
           visibility: visible;
           transform: translateY(0px);
           transition: all 0.3s ease-in-out;
         }
 
-        [data-gatsby-loading-indicator="spinner"] {
+        [data-gatsby-preview-indicator="spinner"] {
           animation: spin 1s linear infinite;
           height: 18px;
           width: 18px;
           color: var(--gatsby);
         }
 
-        [data-gatsby-loading-indicator="text"] {
+        [data-gatsby-preview-indicator="text"] {
           margin-left: 0.75em;
           line-height: 18px;
         }
@@ -87,24 +86,24 @@ const Style = () => (
         }
 
         @media (prefers-reduced-motion: reduce) {
-          [data-gatsby-loading-indicator="spinner"] {
+          [data-gatsby-preview-indicator="spinner"] {
             animation: none;
           }
-          [data-gatsby-loading-indicator-visible="false"] {
+          [data-gatsby-preview-indicator-visible="false"] {
             transition: none;
           }
 
-          [data-gatsby-loading-indicator-visible="true"] {
+          [data-gatsby-preview-indicator-visible="true"] {
             transition: none;
           }
         }
 
         @media (prefers-color-scheme: dark) {
-          [data-gatsby-loading-indicator="root"] {
+          [data-gatsby-preview-indicator="root"] {
             background: var(--grey-90);
             color: var(--white);
           }
-          [data-gatsby-loading-indicator="spinner"] {
+          [data-gatsby-preview-indicator="spinner"] {
             color: var(--purple-20);
           }
         }
@@ -183,7 +182,7 @@ const getBuildInfo = async () => {
 }
 
 const Spinner = () => (
-  <div data-gatsby-loading-indicator="spinner" aria-hidden="true">
+  <div data-gatsby-preview-indicator="spinner" aria-hidden="true">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -323,14 +322,14 @@ export default class Indicator extends React.Component {
               backgroundColor: this.state.attributes.backgroundColor,
               cursor: this.state.attributes.cursor,
             }}
-            data-gatsby-loading-indicator="root"
-            data-gatsby-loading-indicator-visible={
+            data-gatsby-preview-indicator="root"
+            data-gatsby-preview-indicator-visible={
               this.state.attributes.visible
             }
             aria-live="assertive"
           >
             {this.state.icon}
-            <div data-gatsby-loading-indicator="text">
+            <div data-gatsby-preview-indicator="text">
               {this.state.attributes.text}
             </div>
           </div>

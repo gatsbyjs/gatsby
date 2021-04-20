@@ -1,10 +1,10 @@
 import React from "react"
 import "@testing-library/jest-dom"
+import userEvent from "@testing-library/user-event"
 import { render, screen } from "@testing-library/react"
+
 import { wrapPageElement } from "../gatsby-browser"
 import Indicator from "../indicator"
-
-import userEvent from "@testing-library/user-event"
 
 describe(`Preview status indicator`, () => {
   const waitForPoll = ms =>
