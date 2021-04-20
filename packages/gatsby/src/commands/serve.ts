@@ -113,91 +113,93 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
 
-  const compiledFunctionsDir = path.join(
-    program.directory,
-    `.cache`,
-    `functions`
-  )
-
-  let functions
-  try {
-    functions = JSON.parse(
-      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`))
+  if (process.env.GATSBY_EXPERIMENTAL_FUNCTIONS) {
+    const compiledFunctionsDir = path.join(
+      program.directory,
+      `.cache`,
+      `functions`
     )
-  } catch (e) {
-    // ignore
-  }
 
-  if (functions) {
-    app.use(
-      `/api/*`,
-      multer().none(),
-      express.urlencoded({ extended: true }),
-      express.text(),
-      express.json(),
-      express.raw(),
-      async (req, res, next) => {
-        const { "0": pathFragment } = req.params
+    let functions
+    try {
+      functions = JSON.parse(
+        fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`))
+      )
+    } catch (e) {
+      // ignore
+    }
 
-        // Check first for exact matches.
-        let functionObj = functions.find(
-          ({ apiRoute }) => apiRoute === pathFragment
-        )
+    if (functions) {
+      app.use(
+        `/api/*`,
+        multer().none(),
+        express.urlencoded({ extended: true }),
+        express.text(),
+        express.json(),
+        express.raw(),
+        async (req, res, next) => {
+          const { "0": pathFragment } = req.params
 
-        if (!functionObj) {
-          // Check if there's any matchPaths that match.
-          // We loop until we find the first match.
-          functions.some(f => {
-            let exp
-            const keys = []
-            if (f.matchPath) {
-              exp = pathToRegexp(f.matchPath, keys)
-            }
-            if (exp && exp.exec(pathFragment) !== null) {
-              functionObj = f
-              const matches = [...pathFragment.match(exp)].slice(1)
-              const newParams = {}
-              matches.forEach(
-                (match, index) => (newParams[keys[index].name] = match)
-              )
-              req.params = newParams
-
-              return true
-            } else {
-              return false
-            }
-          })
-        }
-
-        if (functionObj) {
-          const pathToFunction = functionObj.absoluteCompiledFilePath
-          const start = Date.now()
-
-          try {
-            delete require.cache[require.resolve(pathToFunction)]
-            const fn = require(pathToFunction)
-
-            const fnToExecute = (fn && fn.default) || fn
-
-            await Promise.resolve(fnToExecute(req, res))
-          } catch (e) {
-            console.error(e)
-            res.sendStatus(500)
-          }
-
-          const end = Date.now()
-          console.log(
-            `Executed function "/api/${functionObj.apiRoute}" in ${
-              end - start
-            }ms`
+          // Check first for exact matches.
+          let functionObj = functions.find(
+            ({ apiRoute }) => apiRoute === pathFragment
           )
 
-          return
-        } else {
-          next()
+          if (!functionObj) {
+            // Check if there's any matchPaths that match.
+            // We loop until we find the first match.
+            functions.some(f => {
+              let exp
+              const keys = []
+              if (f.matchPath) {
+                exp = pathToRegexp(f.matchPath, keys)
+              }
+              if (exp && exp.exec(pathFragment) !== null) {
+                functionObj = f
+                const matches = [...pathFragment.match(exp)].slice(1)
+                const newParams = {}
+                matches.forEach(
+                  (match, index) => (newParams[keys[index].name] = match)
+                )
+                req.params = newParams
+
+                return true
+              } else {
+                return false
+              }
+            })
+          }
+
+          if (functionObj) {
+            const pathToFunction = functionObj.absoluteCompiledFilePath
+            const start = Date.now()
+
+            try {
+              delete require.cache[require.resolve(pathToFunction)]
+              const fn = require(pathToFunction)
+
+              const fnToExecute = (fn && fn.default) || fn
+
+              await Promise.resolve(fnToExecute(req, res))
+            } catch (e) {
+              console.error(e)
+              res.sendStatus(500)
+            }
+
+            const end = Date.now()
+            console.log(
+              `Executed function "/api/${functionObj.apiRoute}" in ${
+                end - start
+              }ms`
+            )
+
+            return
+          } else {
+            next()
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   router.use((req, res, next) => {
