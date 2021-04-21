@@ -20,7 +20,7 @@ Agility aims to empower and improve the **Editor Experience** by providing built
 
 ## Getting Started
 
-This guide walks you through the steps involved in setting up a Gatsby site that fetching content from Agility CMS.
+This guide walks you through the steps involved in setting up a Gatsby site that fetches content from Agility CMS.
 
 ### Step 1: Create a free Agility account
 
@@ -58,7 +58,7 @@ Make a copy of `.env.development.example` file called `.env.development`.
 cp .env.development.example .env.development
 ```
 
-Add your `AGILITY_GUID` and `AGILITY_API_KEY` variable values to the `.env.development` file, you can find these in the Content Manager by going to [Settings](https://manager.agilitycms.com/settings/apikeys)
+Add your `AGILITY_GUID` and `AGILITY_API_KEY` variable values to the `.env.development` file, you can find these in the Content Manager by going to [Settings](https://manager.agilitycms.com/settings/apikeys).
 
 ```text:title=.env.development
 # Your Instance Id
@@ -291,6 +291,31 @@ exports.createResolvers = args => {
     },
   }
   createResolvers(resolvers)
+}
+```
+
+Now on the agilityPost node, you'll be able to query the category:
+
+```graphql
+query {
+  posts: allAgilityPost {
+    nodes {
+      customFields {
+        title
+        date(formatString: "MMMM DD, YYYY")
+        image {
+          url
+          label
+        }
+        content
+      }
+      linkedContent_agilityCategory {
+        customFields {
+          title
+        }
+      }
+    }
+  }
 }
 ```
 
