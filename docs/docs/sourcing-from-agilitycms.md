@@ -60,7 +60,7 @@ cp .env.development.example .env.development
 
 Add your `AGILITY_GUID` and `AGILITY_API_KEY` variable values to the `.env.development` file, you can find these in the Content Manager by going to [Settings](https://manager.agilitycms.com/settings/apikeys)
 
-```shell
+```text:title=.env.development
 # Your Instance Id
 AGILITY_GUID=
 
