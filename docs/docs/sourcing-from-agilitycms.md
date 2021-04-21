@@ -93,7 +93,7 @@ The source plugin uses the [@agility/content-sync](https://github.com/agility/ag
 
 To query content from Agility CMS, you would query `allAgility<contentTypeName>`, for example, `allAgilityPost`, then select what fields you want to retrieve for each item. An example can be seen here in the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter/blob/main/src/components/agility-pageModules/PostsListing.jsx):
 
-```shell
+```graphql
 query {
   posts: allAgilityPost {
     nodes {
