@@ -8,7 +8,7 @@ Check our [docs](https://help.agilitycms.com/hc/en-us/articles/360039879872) for
 
 ## What is Agility CMS?
 
-[Agility CMS](https://agilitycms.com/) is a flexible headless Content Management System (CMS) with an infinite number of ways to configure and set up your pages and content. Agility lets you define custom content types, relationships and pages. This is called Content Architecture, and you can reuse this content for your websites and apps. 
+[Agility CMS](https://agilitycms.com/) is a flexible headless Content Management System (CMS) with an infinite number of ways to configure and set up your pages and content. Agility lets you define custom content types, relationships and pages. This is called Content Architecture, and you can reuse this content for your websites and apps.
 
 Agility believes that a successful website balances the **User Experience (UX)**, **Editor Experience (EX)**, and **Developer Experience (DX)**.
 
