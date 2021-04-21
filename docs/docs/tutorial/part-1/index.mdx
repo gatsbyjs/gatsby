@@ -18,7 +18,7 @@ The diagram below shows a high-level view of how all the pieces of this process 
 
 <summary>
 
-*Expand for detailed description*
+*Expand for detailed description* 👈
 
 </summary>
 
@@ -206,61 +206,94 @@ For instructions on how to set up an SSH key, follow GitHub's guide: [Connecting
 
 </Announcement>
 
-Now you have your a copy of your code saved on GitHub's servers. In the next step, you'll set up Gatsby Cloud to build your site from your GitHub repo.
+Now you have your a copy of your code saved on GitHub's servers. In the next step, you'll connect your Gatsby Cloud account to the GitHub repo you just created.
 
 ## Build your site with Gatsby Cloud
 
-Gatsby Cloud is an infrastructure platform that is specifically optimized for building, deploying, and hosting Gatsby sites.
+Gatsby Cloud is an infrastructure platform that is specifically optimized for building, deploying, and hosting Gatsby sites. Once you connect your Gatsby Cloud account to your GitHub repository, Gatsby Cloud will build your site and make it available for others on the internet to see.
 
-You can connect your codebase to Gatsby Cloud through GitHub:
+To connect your code on GitHub to your Gatsby Cloud account, do the following:
 
-1. Go to your [Gatsby Cloud Dashboard](https://gatsbyjs.com/dashboard/). Click on the "Add a site" button.
+1. Go to your [Gatsby Cloud Dashboard](https://gatsbyjs.com/dashboard/). Click on the **"Add a site"** button.
 
-   ![GATSBY_EMPTY_ALT](./01-create-a-site-button.png)
+   ![An empty Gatsby Cloud dashboard](./01-create-a-site-button.png)
 
-1. The next few steps will help you go through the steps to add your site to Gatsby Cloud. First, select "Import from a Git repository" and click the "Next" button at the bottom of the page.
+1. The next few steps will help you add your site to Gatsby Cloud. First, select **"Import from a Git repository"** and click the **"Next"** button at the bottom of the page.
 
-   ![GATSBY_EMPTY_ALT](./02-import-a-git-repo.png)
+   ![The "Add a site" screen. The option for "Import from a Git repository" is selected.](./02-import-a-git-repo.png)
 
-1. Select GitHub as the Git provider.
+1. Select **GitHub** as the Git provider.
 
-   ![GATSBY_EMPTY_ALT](./03-select-a-git-provider.png)
+   ![The "Git provider" tab of the "Add a site" screen. It lists two options: GitHub or GitLab.](./03-select-a-git-provider.png)
 
-1. SOMETHING
+1. If this is your first time connecting GitHub to Gatsby Cloud, you'll need to give Gatsby Cloud permission to access your GitHub account. When asked, **"Where should we host this new project?"** click the **"Select destination"** button.
 
-    ![](./04-select-destination.png)
+    ![The "Repository" tab of the "Add a site" screen.](./04-select-destination.png)
 
-1. SOMETHING
+1. A new browser window should open, where GitHub will ask you whether you want to give Gatsby Cloud permission to your GitHub repositories. You can choose whether to give Gatsby Cloud access to all of your GitHub repositories or to only the repository you created (`my-first-gatsby-site`). Then click **"Install"**.
 
-    ![](./05-github-gatsby-cloud-permissions.png)
+    ![The GitHub permissions page, asking whether you want to give Gatsby Cloud access to your repos. The "All repositories" option is selected.](./05-github-gatsby-cloud-permissions.png)
 
-1. Now, when you go back to the Gatsby Cloud window, you should be able to find your repo using the "Select a Repository" field.
+1. Now, when you go back to the Gatsby Cloud window, the **"Select a Repository"** dropdown should list your GitHub repository. Select it.
 
-    ![](06-select-repository.png)
+    ![The "Select a Repository" dropdown in Gatsby Cloud lists the "my-first-gatsby-site" GitHub repository.](06-select-repository.png)
 
-1. Once you select your repo, a few more options will show up, which you can use to configure the branch and display name that Gatsby Cloud will use for your site. You can leave the default settings and click the "Next" button.
+1. Once you select your repo, a few more input fields will show up. These let you tell Gatsby Cloud where to look in your GitHub repo for your Gatsby site. You can also change what Gatsby Cloud will name your site. **Leave the default settings** and click the **"Next"** button.
 
-    ![](./07-add-site-details.png)
+    ![The new fields. "Base Branch" is set to "main", "Base Directory" is set to "/", and "Site Name" is set to "my-first-gatsby-site-main".](./07-add-site-details.png)
 
-1. Gatsby Cloud will ask you if you want to add any optional integrations to your site. For future projects, this might be useful if you want to use a CMS. But for now, click the "Skip this step" button.
+1. Gatsby Cloud will ask you if you want to add any optional integrations to your site. For future projects, this might be useful if you want to use a CMS. But for now, click the **"Skip this step"** button.
 
-    ![](./08-optional-integrations.png)
+    ![The "Integrations" tab of the "Add a site" screen.](./08-optional-integrations.png)
 
-1. Gatsby Cloud will also ask if you want to add any environment variables. Skip this section, and click the "Create site" button.
+1. Gatsby Cloud will also ask if you want to add any environment variables. Skip this section, and click the **"Create site"** button.
 
-    ![](./09-setup.png)
+    ![The "Setup" tab of the "Add a site" screen.](./09-setup.png)
 
-1. Now that your site has been created, you'll be taken to a site dashboard where you can see the status of your builds. Gatsby Cloud should start building your site automatically.
+1. Now that your site has been created, you'll be taken to a site dashboard where you can see the status of your builds. Gatsby Cloud should start building your site automatically. You'll see a link to your new site, which is automatically hosted on Gatsby Cloud. You can share this link with anyone, and they'll be able to see your site online!
 
-    ![](./10-site-page.png)
+    ![The Gatsby Cloud dashboard for a new site.](./10-site-page.png)
+
+You did it! Your Gatsby site is now online! 👏
 
 Every time you push a new change to the main branch of your GitHub repo, Gatsby Cloud will see the changes and automatically start a build for the new version of your site.
 
-There will be a unique URL for each build (like `https://build-49535320-b3ae-4761-bbeb-f8f7fa07e0fc.gtsb.io/`), and a URL that always has the latest build (like `my-awesome-repo-main.gtsb.io`).
+<Announcement>
 
+**Tip:** There will be a unique URL for each build (like `https://build-49535320-b3ae-4761-bbeb-f8f7fa07e0fc.gtsb.io/`), and a URL that always has the latest build (like `my-first-gatsby-site-main.gatsbyjs.io`). You'll mostly want to share the human-readable URL, so that people can always see the most up-to-date version of your site. But in some cases (like when you're trying to debug a specific build of your site) it can be helpful to use the unique build URL.
+
+</Announcement>
 
 ## Summary
 
-Now that you've created the skeleton for your site and deployed it to Gatsby Cloud, you have a link to your site that you can share with anyone!
+In this section, you learned how to create a new Gatsby site and deploy it online using Gatsby Cloud. As a quick review, here's the diagram outlining the process:
 
-In the next section, you'll learn how to customize the contents of your site using React.
+![The workflow for how your code gets from your computer to your users. Extended description below.](deployment-workflow.png)
+
+<details>
+
+<summary>
+
+*Expand for detailed description* 👈
+
+</summary>
+
+First, you write the code for your Gatsby site from your computer. When you're ready to make your changes live on the internet, you go through the following steps:
+
+1. You push your changes from your computer to a remote repository on GitHub. GitHub is an online platform for storing code for your projects.
+1. Gatsby Cloud watches your GitHub repository for changes. When it sees your new changes, Gatsby Cloud builds your site from your code on GitHub.
+1. Gatsby Cloud hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
+
+</details>
+
+Now that you have a default Gatsby site up and running, it's time to make it your own. In the next section, you'll learn how to use React to customize the design and contents of your site.
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
