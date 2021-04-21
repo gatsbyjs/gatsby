@@ -95,7 +95,7 @@ To reduce your JavaScript bundle size, follow the steps below.
 
 #### Step 1: Profile your bundle
 
-The first step to fix this is to figure out what's going on. Use `gatsby-plugin-webpack-bundle-analyzer` and the _experimental_ plugin `gatsby-plugin-perf-budgets` to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
+The first step to fix this is to figure out what's going on. Use `gatsby-plugin-webpack-bundle-analyzer-v2` and the _experimental_ plugin `gatsby-plugin-perf-budgets` to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
 
 Chunk naming patterns help you break down a page into three categories:
 
@@ -103,7 +103,7 @@ Chunk naming patterns help you break down a page into three categories:
 - template-level chunks (shared with all pages of the same template),
 - page-level data imports
 
-Visuals illustrating this breakdown: [all chunks on a page](https://docs.google.com/presentation/d/1tRsmG77NqG85tTbNZF9lDIKe44NPNqZgzWA-J_seQek/edit#slide=id.gbd2ab6a11d_0_35), [only application-level chunks](https://docs.google.com/presentation/d/1tRsmG77NqG85tTbNZF9lDIKe44NPNqZgzWA-J_seQek/edit#slide=id.gbd2ab6a11d_0_29), [only template-level chunks](https://docs.google.com/presentation/d/1tRsmG77NqG85tTbNZF9lDIKe44NPNqZgzWA-J_seQek/edit#slide=id.gbd2e5f47fd_0_11).
+Visuals illustrating this breakdown: [all chunks on a page](https://www.slideshare.net/calcsam/the-anatomy-of-a-performance-audit/29), [only application-level chunks](https://www.slideshare.net/calcsam/the-anatomy-of-a-performance-audit/30), [only template-level chunks](https://www.slideshare.net/calcsam/the-anatomy-of-a-performance-audit/31).
 
 #### Step 2: Remove unneeded third-party imports from application-level chunks
 
