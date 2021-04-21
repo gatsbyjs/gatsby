@@ -232,8 +232,6 @@ In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-
 
 For example, if a Page Template has a reference name of MainTemplate in the CMS, then while the page is being rendered by the gatsby-source-agilitycms plugin, it will look for ./src/components/agility-pageTemplates/MainTemplate.jsx in the ./src/components/agility-pageTemplates directory.
 
-**MainTemplate.jsx:**
-
 ```jsx:title=src/components/agility-pageTemplates/MainTemplate.jsx
 import React from "react"
 import ContentZone from "../../agility/components/ContentZone"
