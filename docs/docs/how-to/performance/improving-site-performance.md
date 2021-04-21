@@ -50,7 +50,7 @@ Performance work can be surprisingly nonlinear in impact.
 When you run a test in your testing tool of choice, it will give you a number of recommendations. These can be bucketed into five core categories:
 
 - [Blocking calls & third-party scripts](#address-third-party-script-impact).
-- [Javascript bundle size](#reduce-your-javascript-bundle-cost).
+- [JavaScript bundle size](#reduce-your-javascript-bundle-cost).
 - [Stylesheets and font files](#styling--fonts).
 - [Images and other media](#images--media).
 - [Resource requests & CDN caching configuration](#resource-requests--cdn-configuration).
@@ -81,9 +81,9 @@ Other options include:
 
 - if you are using [html.js](https://www.gatsbyjs.org/docs/custom-html/) instead, you can modify that fileto include your snippet.
 
-### Reduce your Javascript bundle cost
+### Reduce your JavaScript bundle cost
 
-Among all assets, Javascript can be uniquely costly to your performance. This is due to three main reasons:
+Among all assets, JavaScript can be uniquely costly to your performance. This is due to three main reasons:
 
 - Like other assets, it needs to be loaded into your browser.
 
