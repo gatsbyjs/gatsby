@@ -15,7 +15,7 @@
     "@types/express": "^4.17.3",
     "@types/fs-extra": "^8.1.1",
     "@types/got": "^9.6.11",
-    "@types/jaeger-client": "^3.15.4",
+    "@types/jaeger-client": "^3.18.0",
     "@types/jest": "^24.9.1",
     "@types/joi": "^14.3.4",
     "@types/lodash": "^4.14.168",
