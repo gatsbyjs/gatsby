@@ -265,9 +265,7 @@ Resolvers are added to your gatsby-node.js in your site, and they allow you to a
 
 An example of this can be found [here](https://github.com/agility/agilitycms-gatsby-starter/blob/main/gatsby-node.js) in the starter site:
 
-**gatsby-node.js:**
-
-```shell
+```js:title=gatsby-node.js
 const agility = require("./src/agility/utils")
 
 //CREATE RESOLVERS
