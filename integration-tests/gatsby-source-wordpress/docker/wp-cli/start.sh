@@ -1,16 +1,14 @@
 #!/bin/bash
 set -e
 
+# Delete unwanted plugins
+wp plugin delete akismet hello
 
-wp user update admin --user_pass="secret"
+# Install
 wp plugin install custom-post-type-ui --version=$CPT_UI_VERSION
 
 # activate plugins
-wp plugin activate wp-graphql custom-post-type-ui wp-graphql-custom-post-type-ui advanced-custom-fields-pro basic-auth
-
-wp plugin activate wp-graphql-acf
-
-wp plugin activate wp-gatsby
+wp plugin activate wp-graphql custom-post-type-ui wp-graphql-custom-post-type-ui advanced-custom-fields-pro basic-auth wp-graphql-acf wp-gatsby
 
 # this seems to be needed now
 wp core update-db
