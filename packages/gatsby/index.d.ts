@@ -1553,10 +1553,17 @@ export type GatsbyAPIFunctionResponse<T = any> = ServerResponse & {
  */
 export interface GatsbyAPIFunctionRequest extends IncomingMessage {
   /**
-   * Object of `query` values from url
+   * Object of values from URL query parameters (after the ? in the URL)
    */
   query: {
-    [key: string]: string | string[]
+    [key: string]: string
+  }
+
+  /**
+   * Object of values from route parameters
+   */
+  params: {
+    [key: string]: string
   }
 
   body: any
