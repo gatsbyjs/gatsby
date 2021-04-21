@@ -79,7 +79,7 @@ Once your environment variables have been added for development, you can run the
 gatsby develop
 ```
 
-If successful, your site's build should complete and you be able to view the site in your browser on http://localhost:8000. You can also run the GraphiQL IDE at http://localhost:8000/___graphql. The GraphiQL IDE will help you explore the app’s data, including data from Agility.
+If successful, your site's build should complete and you be able to view the site in your browser on `http://localhost:8000`. You can also run the GraphiQL IDE at `http://localhost:8000/___graphql`. The GraphiQL IDE will help you explore the app’s data, including data from Agility.
 
 For production, follow the same steps using the `.env.production` file and your Live API Key.
 
