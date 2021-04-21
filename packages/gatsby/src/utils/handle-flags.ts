@@ -69,6 +69,15 @@ const handleFlags = (
   const lockedInFlags = new Map<string, IFlag>()
   const lockedInFlagsThatAreInConfig = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
+    const isForCommand =
+      flag.command === `all` || flag.command === executingCommand
+    // If we're in CI, filter out any flags that don't want to be enabled in CI
+    const isForCi = isCI() ? flag.noCI !== true : true
+
+    if (!isForCommand || !isForCi) {
+      return
+    }
+
     const fitness = flag.testFitness(flag)
 
     const flagIsSetInConfig = typeof configFlags[flag.name] !== `undefined`
