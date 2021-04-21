@@ -12,6 +12,7 @@ import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
 import pathToRegexp from "path-to-regexp"
+import cookie from "cookie"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
@@ -298,6 +299,17 @@ export async function onCreateDevServer({
     `/api/*`,
     multer().none(),
     express.urlencoded({ extended: true }),
+    (req, res, next) => {
+      const cookies = req.headers.cookie
+
+      if (!cookies) {
+        return next()
+      }
+
+      req.cookies = cookie.parse(cookies)
+
+      return next()
+    },
     express.text(),
     express.json(),
     express.raw(),
