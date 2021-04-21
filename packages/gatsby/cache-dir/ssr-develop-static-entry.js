@@ -2,7 +2,7 @@ import React from "react"
 import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
-import { joinPath } from "gatsby-core-utils"
+import nodePath from "path"
 import apiRunner from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
@@ -26,7 +26,7 @@ const getStats = publicDir => {
     return cachedStats
   } else {
     cachedStats = JSON.parse(
-      fs.readFileSync(joinPath(publicDir, `webpack.stats.json`), `utf-8`)
+      fs.readFileSync(nodePath.join(publicDir, `webpack.stats.json`), `utf-8`)
     )
 
     return cachedStats
@@ -107,12 +107,12 @@ export default (pagePath, isClientOnlyPage, publicDir, callback) => {
 
     const getPageDataPath = path => {
       const fixedPagePath = path === `/` ? `index` : path
-      return joinPath(`page-data`, fixedPagePath, `page-data.json`)
+      return nodePath.join(`page-data`, fixedPagePath, `page-data.json`)
     }
 
     const getPageData = pagePath => {
       const pageDataPath = getPageDataPath(pagePath)
-      const absolutePageDataPath = joinPath(publicDir, pageDataPath)
+      const absolutePageDataPath = nodePath.join(publicDir, pageDataPath)
       const pageDataJson = fs.readFileSync(absolutePageDataPath, `utf8`)
 
       try {
