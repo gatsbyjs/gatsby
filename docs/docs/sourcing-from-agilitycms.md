@@ -120,9 +120,7 @@ The `gatsby-source-agilitycms` plugin makes it easy to source content, but it al
 
 Each page in Agility is composed and generated dynamically at _build-time_ using a **masterPageTemplate** that you define in your `gatsby-config.js` plugin options.
 
-*gatsby-config.js*:
-
-```shell
+```js:title=gatsby-config.js
 module.exports = {
   siteMetadata: {
     title: "Agility CMS Gatsby Starter",
