@@ -15,7 +15,7 @@ import pathToRegexp from "path-to-regexp"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
 
-interface IFunction {
+interface IFunctionData {
   /** The route in the browser to access the function **/
   apiRoute: string
   /** The relative path to the original function **/
@@ -59,7 +59,8 @@ const createWebpackConfig = async ({
     )
   }
 
-  const knownFunctions: Array<IFunction> = []
+  const knownFunctions: Array<IFunctionData> = []
+  knownFunctions.forEach(f => f.apiRoute)
   files.map(file => {
     const { dir, name } = path.parse(file)
     // Ignore the original extension as all compiled functions now end with js.
@@ -303,7 +304,9 @@ export async function onCreateDevServer({
     async (req, res, next) => {
       const { "0": pathFragment } = req.params
 
-      const { functions }: { functions: Array<IFunction> } = store.getState()
+      const {
+        functions,
+      }: { functions: Array<IFunctionData> } = store.getState()
 
       // Check first for exact matches.
       let functionObj = functions.find(
