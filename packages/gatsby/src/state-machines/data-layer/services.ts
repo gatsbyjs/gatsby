@@ -2,7 +2,6 @@ import { ServiceConfig } from "xstate"
 import {
   customizeSchema,
   createPages,
-  createPagesStatefully,
   buildSchema,
   sourceNodes,
   rebuildSchemaWithSitePage,
@@ -18,7 +17,6 @@ export const dataLayerServices: Record<
   sourceNodes,
   createPages,
   buildSchema,
-  createPagesStatefully,
   rebuildSchemaWithSitePage,
   writeOutRedirectsAndWatch,
 }

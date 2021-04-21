@@ -197,6 +197,18 @@ exports.createPages = async ({ actions, graphql }) => {
   }
 }
 
+exports.createPagesStatefully = async ({ actions }) => {
+  if (runNumber !== 3) {
+    actions.createPage({
+      path: `/stateful-page-not-recreated-in-third-run/`,
+      component: require.resolve(`./src/templates/dummy`),
+      context: {
+        dummyId: `stateful-page`,
+      },
+    })
+  }
+}
+
 exports.onPreBuild = () => {
   console.log(`[test] onPreBuild`)
   changedBrowserCompilationHash = `not-changed`
