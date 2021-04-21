@@ -69,12 +69,13 @@ const handleFlags = (
   const lockedInFlags = new Map<string, IFlag>()
   const lockedInFlagsThatAreInConfig = new Map<string, IFlag>()
   availableFlags.forEach(flag => {
-    const isForCommand =
-      flag.command === `all` || flag.command === executingCommand
-    // If we're in CI, filter out any flags that don't want to be enabled in CI
-    const isForCi = isCI() ? flag.noCI !== true : true
+    if (flag.command !== `all` && flag.command !== executingCommand) {
+      // if flag is not for all commands and current command doesn't match command flag is for - skip
+      return
+    }
 
-    if (!isForCommand || !isForCi) {
+    if (flag.noCI && isCI()) {
+      // If we're in CI and flag is not available for CI - skip
       return
     }
 
@@ -102,15 +103,18 @@ const handleFlags = (
 
   // Filter enabledConfigFlags against various tests
   enabledConfigFlags = enabledConfigFlags.filter(flag => {
-    // Is this flag available for this command?
-    const isForCommand =
-      flag.command === `all` || flag.command === executingCommand
-    // If we're in CI, filter out any flags that don't want to be enabled in CI
-    const isForCi = isCI() ? flag.noCI !== true : true
+    if (flag.command !== `all` && flag.command !== executingCommand) {
+      // if flag is not for all commands and current command doesn't match command flag is for - skip
+      return false
+    }
 
-    const passesFitness = flag.testFitness(flag)
+    if (flag.noCI && isCI()) {
+      // If we're in CI and flag is not available for CI - skip
+      return false
+    }
 
-    return isForCommand && isForCi && passesFitness
+    // finally check if flag passes fitness check
+    return flag.testFitness(flag)
   })
 
   const addIncluded = (flag): void => {
