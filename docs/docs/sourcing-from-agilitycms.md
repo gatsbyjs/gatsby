@@ -197,7 +197,7 @@ export default AgilityPage
 
 Page Modules in Agility CMS are the functional components that make up a page. Editors use these to compose what type of content is on each page and in what order they appear. Developers define what page modules are available in the CMS and what fields they have. Each module defined in Agility CMS should correspond to a React Component in your Gatsby site.
 
-In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter) site, the name of the page module is used to find a corresponding react component that matches the same name. If a match is found, that component is dynamically imported and rendered.
+In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter) site, the name of the page module is used to find a corresponding React component that matches the same name. If a match is found, that component is dynamically imported and rendered.
 
 For example, if a module has a reference name of RichTextArea in the CMS, then while the page is being rendered by the gatsby-source-agilitycms plugin, it will look for `./src/components/agility-pageModules/RichTextArea.jsx` in the `./src/components/agility-pageModules` directory.
 
