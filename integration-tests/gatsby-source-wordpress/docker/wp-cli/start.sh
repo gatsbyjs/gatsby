@@ -1,13 +1,6 @@
 #!/bin/bash
 set -e
 
-wp core install \
-    --path="/var/www/html" \
-    --url="http://localhost:8001" \
-    --title="Gatsby & WordPress" \
-    --admin_user=admin \
-    --admin_password=secret \
-    --admin_email=admin@admin.com
 
 wp user update admin --user_pass="secret"
 wp plugin install custom-post-type-ui --version=$CPT_UI_VERSION
