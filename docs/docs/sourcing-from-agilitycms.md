@@ -236,7 +236,7 @@ For example, if a Page Template has a reference name of MainTemplate in the CMS,
 
 **MainTemplate.jsx:**
 
-```shell
+```jsx:title=src/components/agility-pageTemplates/MainTemplate.jsx
 import React from "react"
 import ContentZone from "../../agility/components/ContentZone"
 import { getModule } from "../../components/agility-pageModules"
