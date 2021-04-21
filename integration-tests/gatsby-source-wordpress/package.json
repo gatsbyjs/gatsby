@@ -6,7 +6,7 @@
   "scripts": {
     "run-jest": "jest --config=jest.config.js --runInBand",
     "test": "npm run docker-start && npm run run-jest && WARM_CACHE=true npm run run-jest",
-    "docker-start": "docker-compose up --build --force-recreate --remove-orphans -d",
+    "docker-start": "docker-compose build --no-cache && docker-compose up -d",
     "docker-rebuild": "./docker/rebuild.sh"
   },
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
