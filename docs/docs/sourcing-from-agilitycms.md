@@ -142,9 +142,7 @@ module.exports = {
 }
 ```
 
-**AgilityPage.jsx:**
-
-```shell
+```jsx:title=src/AgilityPage.jsx
 import React from "react"
 import { graphql } from "gatsby"
 ...
