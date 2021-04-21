@@ -52,7 +52,7 @@ npm install
 
 ### Step 3: Authenticate your Gatsby site with Agility
 
-Make a copy of .env.development.example file called .env.development.
+Make a copy of `.env.development.example` file called `.env.development`.
 
 ```shell
 cp .env.development.example .env.development
