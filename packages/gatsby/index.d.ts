@@ -1559,6 +1559,8 @@ export interface GatsbyAPIFunctionRequest extends IncomingMessage {
     [key: string]: string | string[]
   }
 
+  body: any
+
   // TODO add when add cookie support
   /**
    * Object of `cookies` from header
@@ -1566,6 +1568,4 @@ export interface GatsbyAPIFunctionRequest extends IncomingMessage {
   // cookies: {
   // [key: string]: string
   // }
-
-  body: any
 }
