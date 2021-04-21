@@ -261,7 +261,7 @@ When querying a Post, for example, you may want to also retrieve the details for
 
 In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter), we resolve Linked Content by using [Gatsby Resolvers](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/).
 
-Resolvers are added to your gatsby-node.js in your site, and they allow you to add a new field to your content node which will handle resolving your Linked Content reference. This means you are telling GraphQL, when you query a specific property on a node, it will actually run a function to go and get your Linked Content and return it.
+Resolvers are added to your `gatsby-node.js` in your site, and they allow you to add a new field to your content node which will handle resolving your Linked Content reference. This means you are telling GraphQL, when you query a specific property on a node, it will actually run a function to go and get your Linked Content and return it.
 
 An example of this can be found [here](https://github.com/agility/agilitycms-gatsby-starter/blob/main/gatsby-node.js) in the starter site:
 
