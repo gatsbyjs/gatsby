@@ -112,7 +112,7 @@
   "private": true,
   "resolutions": {
     "theme-ui": "0.4.0-rc.14",
-    "csstype": "2.6.14"
+    "csstype": "2.6.17"
   },
   "scripts": {
     "bootstrap": "npm-run-all -s check-versions \"lerna-prepare -- --{@}\" --",
