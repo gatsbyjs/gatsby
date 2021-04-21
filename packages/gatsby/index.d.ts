@@ -1531,17 +1531,17 @@ type Send<T> = (body: T) => void
 /**
  * Gatsby API Function route response
  */
-export type GatsbyAPIFunctionResponse<T = any> = ServerResponse & {
+export interface GatsbyAPIFunctionResponse extends ServerResponse {
   /**
    * Send `any` data in response
    */
   send: Send<T>
   /**
-   * Send `json` data in response
+   * Send `JSON` data in response
    */
   json: Send<T>
   /**
-   * Set the http status code of the response
+   * Set the HTTP status code of the response
    */
   status: (statusCode: number) => GatsbyAPIFunctionResponse<T>
   redirect(url: string): GatsbyAPIFunctionResponse<T>
@@ -1555,16 +1555,12 @@ export interface GatsbyAPIFunctionRequest extends IncomingMessage {
   /**
    * Object of values from URL query parameters (after the ? in the URL)
    */
-  query: {
-    [key: string]: string
-  }
+  query: Record<string, string>
 
   /**
    * Object of values from route parameters
    */
-  params: {
-    [key: string]: string
-  }
+  params: Record<string, string>
 
   body: any
 
