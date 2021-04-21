@@ -149,7 +149,7 @@ We recommend you use the [gatsby plugin to install `loadable-components`](https:
 
 #### Step 6: Consider using the Preact plugin
 
-[Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [Gatsby-plugin-preact](https://www.gatsbyjs.com/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of Javascript from your bundle.
+[Preact](https://preactjs.com/) is a UI library that works similarly to React, but is much smaller (~3kb compressed as opposed to ~40kb). [gatsby-plugin-preact](https://www.gatsbyjs.com/plugins/gatsby-plugin-preact/) is a drop-in plugin that will render your site in Preact instead of React, cutting 35-40kb of JavaScript from your bundle.
 
 This step can make sense if the `framework.js` bundle is a large part of your overall bundle size, and want to further optimize.
 
