@@ -36,7 +36,7 @@ It's a good practice to profile memory periodically once your site crosses 10k o
 
 There are two ways to do this.
 
-**First, you can run gatsby within a memory profiler like [process-top]**(https://github.com/mafintosh/process-top).To do this, you'll need to globally install process-top, then run something like the following (substituting the path to your global Gatsby install for /opt/homebrew/bin/gatsby)
+**First, you can run gatsby within a memory profiler like [process-top](https://github.com/mafintosh/process-top)**.To do this, you'll need to globally install `process-top`, then run something like the following (substituting the path to your global Gatsby install for `/opt/homebrew/bin/gatsby`)
 
 `process-top /opt/homebrew/bin/gatsby build`
 
@@ -44,7 +44,7 @@ This will output memory usage every second, and you can look for spikes at the v
 
 `cpu: 180.5% | rss: 431 MB (5.0%) | heap: 163 MB / 269 MB (60.7%) | ext: 280 MB | delay: 792 ms | 00:00:09 | loadavg: 1.71, 1.65, 1.78`
 
-**Second, you can use an experimental tool** created by the Gatsby team **to generate build memory charts**. [This tool is called gjl](https://github.com/pieh/gjl) and is a wrapper around the gatsby process. Instructions for setting gjl up are in the README. A sample graph is below:
+**Second, you can use an experimental tool** created by the Gatsby team **to generate build memory charts**. [This tool is called gjl](https://github.com/pieh/gjl) and is a wrapper around the gatsby process. Instructions for setting `gjl` up are in the README. A sample graph is below:
 
 ![](https://lh6.googleusercontent.com/j9tUf6rJuyIgFP_-XJ7KvqGZrmA8BzRj43hoSgIxC5m8LMTcAlmM5BOO5KF6Cw3VKzkHexzOwK3UFpEItp4KHq7CTUvG09l1hqu6zLeMYPuBQoy0YD9ruPssxsG7BAmsYHeKcYhB)
 
@@ -72,13 +72,13 @@ So if you're experiencing out of memory issues during any of those steps, you ca
 
 The default node process in node >= 12 has a 2GB "heap size" allocated for memory.
 
-It's plausible that you could increase memory usage significantly. Increasing the max heap size to 4GB or 8GB is quite common (using NODE_OPTIONS=--max-old-space-size set to 4096 or 8192).
+It's plausible that you could increase memory usage significantly. Increasing the max heap size to 4GB or 8GB is quite common (using `NODE_OPTIONS=--max-old-space-size` set to 4096 or 8192).
 
 The theoretical limit on a 64-bit machine is 16 terabytes, but of course the practical limit is much lower. Netflix experimented with raising this limit to 32GB [back in 2014](https://netflixtechblog.com/node-js-in-flames-ddd073803aa4); the Gatsby team is aware of a few sites that run this at 16GB (on machines with 16GB of RAM).
 
 So:
 
-- Some Gatsby build hosts, like Gatsby Cloud, will automatically set the memory limit to the maximum available in memory. Others may require you to use the NODE_OPTIONS key if you want to increase the memory limit.
+- Some Gatsby build hosts, like Gatsby Cloud, will automatically set the memory limit to the maximum available in memory. Others may require you to use the `NODE_OPTIONS` key if you want to increase the memory limit.
 
 - if you're at the memory limit for your plan tier, and your build host offers more memory at the next tier, you may want to consider upgrading plan tiers.
 
@@ -86,7 +86,7 @@ So:
 
 In addition, if you do these in production, when running gatsby develop locally, you'll probably also want to limit the number of nodes used in the development process and/or allocate additional memory locally as well.
 
-Finally, you can't allocate more memory than is available on your machine, so be careful not to set NODE_OPTIONS=--max-old-space-size to a value greater than your hardware's RAM, as that may negatively impact the Node process's ability to garbage collect properly.
+Finally, you can't allocate more memory than is available on your machine, so be careful not to set `NODE_OPTIONS=--max-old-space-size` to a value greater than your hardware's RAM, as that may negatively impact the Node process's ability to garbage collect properly.
 
 ### 2. Reducing crashes due to gatsby-plugin-image
 
