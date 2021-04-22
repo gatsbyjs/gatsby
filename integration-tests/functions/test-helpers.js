@@ -216,7 +216,7 @@ export function runTests(env, host) {
       test(`normal`, async () => {
         const result = await fetch(`${host}/api/redirect-me`)
 
-        expect(result.url).toEqual(`host`)
+        expect(result.url).toEqual(host + `/`)
       })
     })
 
