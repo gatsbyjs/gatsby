@@ -23,7 +23,7 @@ export function prettifyStack(errorInformation) {
 }
 
 export function openInEditor(file, lineNumber = 1) {
-  window.fetch(
+  fetch(
     `/__open-stack-frame-in-editor?fileName=` +
       window.encodeURIComponent(file) +
       `&lineNumber=` +
