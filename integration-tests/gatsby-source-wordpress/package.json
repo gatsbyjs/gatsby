@@ -7,7 +7,7 @@
     "run-jest": "jest --config=jest.config.js --runInBand",
     "test": "npm run docker-clean-start && npm run run-jest && WARM_CACHE=true npm run run-jest",
     "docker-start": "docker-compose up --build --force-recreate --always-recreate-deps --remove-orphans -d",
-    "docker-clean-start": "docker-compose stop && docker-compose rm -f && docker volume rm gatsby-source-wordpress_db_data gatsby-source-wordpress_wp_data || true && docker-compose pull && docker-compose build --no-cache --force-rm --pull && docker-compose up --build -d --force-recreate --always-recreate-deps --renew-anon-volumes --remove-orphans"
+    "docker-clean-start": "docker-compose stop && docker-compose rm -f && docker volume rm gatsby-source-wordpress_db_data gatsby-source-wordpress_wp_data || true && docker-compose pull && docker-compose build --no-cache --force-rm --pull && docker-compose up -d"
   },
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
   "license": "MIT",
