@@ -2,7 +2,7 @@
 title: Gatsby Framework Version Support
 ---
 
-## Overview
+## Introduction
 
 As we continue evolving the Gatsby framework, and as we move from one major version to the next, we will communicate the duration and types of support provided to the prior major version. This allows users to effectively plan their Gatsby framework upgrades.
 
