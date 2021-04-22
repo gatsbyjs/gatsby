@@ -142,7 +142,7 @@ const activeFlags: Array<IFlag> = [
     command: `all`,
     telemetryId: `PreserveWebpackCache`,
     experimental: false,
-    description: `Don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
+    description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
     testFitness: (): fitnessEnum => true,
   },
