@@ -4,9 +4,6 @@ set -e
 # Delete unwanted plugins
 wp plugin delete akismet hello
 
-# Install
-wp plugin install custom-post-type-ui --version=$CPT_UI_VERSION
-
 # activate plugins
 wp plugin activate wp-graphql custom-post-type-ui wp-graphql-custom-post-type-ui advanced-custom-fields-pro basic-auth wp-graphql-acf wp-gatsby
 

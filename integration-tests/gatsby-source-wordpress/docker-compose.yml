@@ -38,9 +38,6 @@ services:
     depends_on:
       - db
       - wordpress
-    # Specify versions for wp cli or composer here
-    environment:
-      CPT_UI_VERSION: 1.8.1
     env_file:
       - ./.env.test
     build:
