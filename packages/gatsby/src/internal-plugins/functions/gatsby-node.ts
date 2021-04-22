@@ -367,7 +367,7 @@ export async function onCreateDevServer({
           res
             .status(500)
             .send(
-              `Error when executing "${functionObj.originalFilePath}": "${e.message}"`
+              `Error when executing function "${functionObj.originalFilePath}": "${e.message}"`
             )
         }
 
