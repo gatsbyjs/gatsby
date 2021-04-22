@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-flow",
-  "version": "2.4.0-next.0",
+  "version": "2.4.0-next.1",
   "description": "Provides drop-in support for Flow by adding @babel/preset-flow.",
   "main": "index.js",
   "scripts": {

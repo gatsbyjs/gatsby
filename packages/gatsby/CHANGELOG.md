@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.5...gatsby@3.4.0-next.6) (2021-04-22)
+
+### Bug Fixes
+
+- **gatsby:** Don't use process.cwd() to find public directory for DEV_SSR ([#30605](https://github.com/gatsbyjs/gatsby/issues/30605)) ([31e2f79](https://github.com/gatsbyjs/gatsby/commit/31e2f79a3e3e7efa5b53345399f935b8dba7aefb))
+- **gatsby:** filter out not applicable flags (isCi / command) when constructing flags message ([#30977](https://github.com/gatsbyjs/gatsby/issues/30977)) ([b9ef04a](https://github.com/gatsbyjs/gatsby/commit/b9ef04a1d47f1178feadb49afca336a4b5d077cf))
+
+### Features
+
+- **gatsby:** Add Typescript types for function requests/responses ([#30991](https://github.com/gatsbyjs/gatsby/issues/30991)) ([b8692ac](https://github.com/gatsbyjs/gatsby/commit/b8692ac15bcef0c6bdbd3f6c920e36af848240b3))
+- **gatsby:** parse cookies in functions to req.cookies ([#30993](https://github.com/gatsbyjs/gatsby/issues/30993)) ([ca172c8](https://github.com/gatsbyjs/gatsby/commit/ca172c8f043c842a297f1e6029b078b94031d3b5))
+
 # [3.4.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.4...gatsby@3.4.0-next.5) (2021-04-20)
 
 **Note:** Version bump only for package gatsby
