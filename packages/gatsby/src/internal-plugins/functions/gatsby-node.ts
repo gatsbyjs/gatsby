@@ -364,7 +364,11 @@ export async function onCreateDevServer({
           await Promise.resolve(fnToExecute(req, res))
         } catch (e) {
           reporter.error(e)
-          res.status(500).send(`Error when executing function: "${e.message}"`)
+          res
+            .status(500)
+            .send(
+              `Error when executing "${functionObj.originalFilePath}": "${e.message}"`
+            )
         }
 
         const end = Date.now()
