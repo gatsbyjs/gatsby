@@ -20,7 +20,7 @@ const testOnColdCacheOnly = isWarmCache ? test.skip : test
 
 describe(`[gatsby-source-wordpress] Build default options`, () => {
   beforeAll(async done => {
-    await urling(`http://localhost:8001/`)
+    await urling({ url: `http://localhost:8001/graphql`, retry: 15 })
 
     if (isWarmCache) {
       done()
