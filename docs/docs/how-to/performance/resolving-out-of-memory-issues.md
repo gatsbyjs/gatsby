@@ -34,9 +34,7 @@ If you've either experienced, or are worried about OOM memory crashes, we strong
 
 It's a good practice to profile memory periodically once your site crosses 10k or 20k pages, or if you've experienced out-of-memory challenges on smaller sites.
 
-There are two ways to do this.
-
-**First, you can run gatsby within a profiling tool like [process-top](https://github.com/mafintosh/process-top)**. Run your site like the following:
+The Gatsby team's recommendation is to run gatsby within a profiling tool like [process-top](https://github.com/mafintosh/process-top). Run your site like the following:
 
 `npx process-top ./node_modules/.bin/gatsby build`
 
@@ -45,10 +43,6 @@ This will output every second profile information like the following:
 `cpu: 180.5% | rss: 431 MB (5.0%) | heap: 163 MB / 269 MB (60.7%) | ext: 280 MB | delay: 792 ms | 00:00:09 | loadavg: 1.71, 1.65, 1.78`
 
 ("RSS" is the total memory being used).
-
-**Second, you can use an experimental tool** created by the Gatsby team **to generate build memory charts**. [This tool is called gjl](https://github.com/pieh/gjl) and is a wrapper around the gatsby process. Instructions for setting `gjl` up are in the README. A sample graph is below:
-
-![](https://lh6.googleusercontent.com/j9tUf6rJuyIgFP_-XJ7KvqGZrmA8BzRj43hoSgIxC5m8LMTcAlmM5BOO5KF6Cw3VKzkHexzOwK3UFpEItp4KHq7CTUvG09l1hqu6zLeMYPuBQoy0YD9ruPssxsG7BAmsYHeKcYhB)
 
 ## Options to reduce "out-of-memory" risk
 
