@@ -122,8 +122,14 @@ const handleFlags = (
       flag.includedFlags.forEach(includedName => {
         const incExp = flags.find(e => e.name == includedName)
         if (incExp) {
-          enabledConfigFlags.push(incExp)
-          addIncluded(incExp)
+          const flagIsDisabledByUser =
+            typeof configFlags[includedName] !== `undefined` &&
+            !configFlags[includedName]
+
+          if (!flagIsDisabledByUser) {
+            enabledConfigFlags.push(incExp)
+            addIncluded(incExp)
+          }
         }
       })
     }
@@ -197,23 +203,28 @@ The following flags were automatically enabled on your site:`
       })
     }
 
-    const otherFlagsCount = applicableFlags.size - enabledConfigFlags.length
-    // Check if there is other flags and if the user actually set any flags themselves.
-    // Don't count flags they were automatically opted into.
-    if (otherFlagsCount > 0 && Object.keys(configFlags).length > 0) {
-      message += `\n\nThere ${
-        otherFlagsCount === 1
-          ? `is one other flag`
-          : `are ${otherFlagsCount} other flags`
-      } available that you might be interested in:`
+    const otherFlagSuggestionLines: Array<string> = []
+    const enabledFlagsSet = new Set()
+    enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
+    applicableFlags.forEach(flag => {
+      if (
+        !enabledFlagsSet.has(flag.name) &&
+        typeof configFlags[flag.name] === `undefined`
+      ) {
+        // we want to suggest flag when it's not enabled and user specifically didn't use it in config
+        // we don't want to suggest flag user specifically wanted to disable
+        otherFlagSuggestionLines.push(generateFlagLine(flag))
+      }
+    })
 
-      const enabledFlagsSet = new Set()
-      enabledConfigFlags.forEach(f => enabledFlagsSet.add(f.name))
-      applicableFlags.forEach(flag => {
-        if (!enabledFlagsSet.has(flag.name)) {
-          message += generateFlagLine(flag)
-        }
-      })
+    if (otherFlagSuggestionLines.length > 0) {
+      message += `\n\nThere ${
+        otherFlagSuggestionLines.length === 1
+          ? `is one other flag`
+          : `are ${otherFlagSuggestionLines.length} other flags`
+      } available that you might be interested in:${otherFlagSuggestionLines.join(
+        ``
+      )}`
     }
 
     if (message.length > 0) {

@@ -261,12 +261,10 @@ describe(`handle flags`, () => {
       - ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
       - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 
-      There are 5 other flags available that you might be interested in:
+      There are 3 other flags available that you might be interested in:
       - FAST_DEV · Enable all experiments aimed at improving develop server start time
       - ALL_COMMANDS · (Umbrella Issue (test)) · test
       - YET_ANOTHER · (Umbrella Issue (test)) · test
-      - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
-      - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
       "
     `)
   })
@@ -441,8 +439,120 @@ describe(`handle flags`, () => {
         - FAST_DEV · Enable all experiments aimed at improving develop server start time
         - ALL_COMMANDS · (Umbrella Issue (test)) · test
         - YET_ANOTHER · (Umbrella Issue (test)) · test
-        - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
-        - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+  })
+
+  describe(`includeFlags`, () => {
+    it(`enabling umbrella flag implies enabling individual flags`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `UMBRELLA`,
+            env: `GATSBY_UMBRELLA`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+            includedFlags: [`SUB_FLAG_A`, `SUB_FLAG_B`],
+          },
+          {
+            name: `SUB_FLAG_A`,
+            env: `GATSBY_SUB_FLAG_A`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `SUB_FLAG_B`,
+            env: `GATSBY_SUB_FLAG_B`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          UMBRELLA: true,
+        },
+        `build`
+      )
+
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_A` })
+      )
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_B` })
+      )
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - UMBRELLA · (Umbrella Issue (test)) · test
+        - SUB_FLAG_A · (Umbrella Issue (test)) · test
+        - SUB_FLAG_B · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`allow disabling individual flags that umbrella flag would enable`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `UMBRELLA`,
+            env: `GATSBY_UMBRELLA`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+            includedFlags: [`SUB_FLAG_A`, `SUB_FLAG_B`],
+          },
+          {
+            name: `SUB_FLAG_A`,
+            env: `GATSBY_SUB_FLAG_A`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `SUB_FLAG_B`,
+            env: `GATSBY_SUB_FLAG_B`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          UMBRELLA: true,
+          SUB_FLAG_B: false,
+        },
+        `build`
+      )
+
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_A` })
+      )
+      expect(response.enabledConfigFlags).not.toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_B` })
+      )
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - UMBRELLA · (Umbrella Issue (test)) · test
+        - SUB_FLAG_A · (Umbrella Issue (test)) · test
         "
       `)
     })
