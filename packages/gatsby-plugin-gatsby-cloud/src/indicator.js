@@ -259,8 +259,8 @@ export default class Indicator extends React.Component {
     try {
       setInterval(
         async () => {
-          // currentBuild is the most recent build that is not QUEUED
-          // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
+           // currentBuild is the most recent build that is not QUEUED
+           // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
           const isOnPrettyUrl = prettyUrlRegex.test(host)
           const { currentBuild, latestBuild } = await getBuildInfo()
 
