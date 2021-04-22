@@ -212,6 +212,14 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`functions can redirect`, () => {
+      test(`normal`, async () => {
+        const result = await fetch(`${host}/api/redirect-me`)
+
+        expect(result.url).toEqual(`http://localhost:8000/`)
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)

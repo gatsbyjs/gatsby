@@ -364,7 +364,7 @@ export async function onCreateDevServer({
           await Promise.resolve(fnToExecute(req, res))
         } catch (e) {
           reporter.error(e)
-          res.sendStatus(500)
+          res.status(500).send(`Error when executing function: "${e.message}"`)
         }
 
         const end = Date.now()
