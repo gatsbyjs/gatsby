@@ -19,7 +19,7 @@ export function useScrollRestoration(
       const position = state.read(location, identifier)
       ref.current.scrollTo(0, position || 0)
     }
-  }, [])
+  }, [location])
 
   return {
     ref,
