@@ -61,9 +61,25 @@ export const pageQuery = graphql`
           ... on ContentfulContentReference {
             contentful_id
             title
-            content_reference {
+            one {
+              ... on ContentfulText {
+                title
+                short
+              }
               ... on ContentfulContentReference {
-                contentful_id
+                title
+              }
+            }
+            many {
+              ... on ContentfulText {
+                title
+                short
+              }
+              ... on ContentfulNumber {
+                title
+                integer
+              }
+              ... on ContentfulContentReference {
                 title
               }
             }
@@ -84,9 +100,25 @@ export const pageQuery = graphql`
           ... on ContentfulContentReference {
             contentful_id
             title
-            content_reference {
+            one {
+              ... on ContentfulText {
+                title
+                short
+              }
               ... on ContentfulContentReference {
-                id
+                title
+              }
+            }
+            many {
+              ... on ContentfulText {
+                title
+                short
+              }
+              ... on ContentfulNumber {
+                title
+                integer
+              }
+              ... on ContentfulContentReference {
                 title
               }
             }
