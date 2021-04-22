@@ -311,6 +311,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
+  pages?: IGatsbyState["pages"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
@@ -376,7 +377,6 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
-  | IDeletedStalePageDataFiles
   | IRemovedHtml
   | ITrackedHtmlCleanup
   | IGeneratedHtml
@@ -827,13 +827,6 @@ interface ISetProgramAction {
 interface ISetProgramExtensions {
   type: `SET_PROGRAM_EXTENSIONS`
   payload: Array<string>
-}
-
-interface IDeletedStalePageDataFiles {
-  type: `DELETED_STALE_PAGE_DATA_FILES`
-  payload: {
-    pagePathsToClear: Set<string>
-  }
 }
 
 interface IRemovedHtml {

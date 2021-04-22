@@ -879,7 +879,7 @@ describe(`query caching between builds`, () => {
     }, 99999)
   })
 
-  describe.skip(`Changing page context invalidates page queries`, () => {
+  describe(`Changing page context invalidates page queries`, () => {
     beforeAll(() => {
       let pageChangeCounter = 1
       let nodeChangeCounter = 1

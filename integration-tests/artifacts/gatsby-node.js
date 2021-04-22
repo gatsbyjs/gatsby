@@ -164,6 +164,14 @@ exports.createPages = async ({ actions, graphql }) => {
     }`
   )
 
+  actions.createPage({
+    path: `/changing-context/`,
+    component: require.resolve(`./src/templates/dummy`),
+    context: {
+      dummyId: `runNumber: ${runNumber}`,
+    },
+  })
+
   const { data } = await graphql(`
     {
       allDepPageQuery {
@@ -184,6 +192,18 @@ exports.createPages = async ({ actions, graphql }) => {
           : require.resolve(`./src/templates/deps-page-query`),
       context: {
         id: depPageQueryNode.id,
+      },
+    })
+  }
+}
+
+exports.createPagesStatefully = async ({ actions }) => {
+  if (runNumber !== 3) {
+    actions.createPage({
+      path: `/stateful-page-not-recreated-in-third-run/`,
+      component: require.resolve(`./src/templates/dummy`),
+      context: {
+        dummyId: `stateful-page`,
       },
     })
   }

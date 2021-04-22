@@ -49,17 +49,8 @@ const initialCreatePagesStates: StatesConfig<IDataLayerContext, any, any> = {
       id: `creating-pages`,
       src: `createPages`,
       onDone: {
-        target: `creatingPagesStatefully`,
-        actions: `assignChangedPages`,
-      },
-    },
-  },
-  creatingPagesStatefully: {
-    invoke: {
-      src: `createPagesStatefully`,
-      id: `creating-pages-statefully`,
-      onDone: {
         target: `rebuildingSchemaWithSitePage`,
+        actions: `assignChangedPages`,
       },
     },
   },
