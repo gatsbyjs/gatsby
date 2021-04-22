@@ -154,8 +154,21 @@ describe(`Preview status indicator`, () => {
       expect(screen.getByText(`New preview building`)).toBeInTheDocument()
     })
 
-    xit(`renders NO state when on most successful build`, async () => {
-      // TODO: Waiting for design to be finished to know what to test
+    it(`renders NO state when on most successful build`, async () => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          json: () => {
+            return {
+              currentBuild: { id: `123`, buildStatus: `SUCCESS` },
+              latestBuild: { id: `123`, buildStatus: `SUCCESS` },
+            }
+          },
+        })
+      )
+
+      expect(
+        screen.queryByTestId(`preview-status-indicator`)
+      ).not.toBeInTheDocument()
     })
   })
 })

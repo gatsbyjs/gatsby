@@ -1,5 +1,6 @@
 import React from "react"
-import { POLLING_INTERVAL } from "./constants"
+
+const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
 function css(strings, ...keys) {
   const lastIndex = strings.length - 1
@@ -112,7 +113,7 @@ const Style = () => (
   />
 )
 
-const indicatorSetSuccess = newBuildId => {
+const indicatorSetSuccess = (newBuildId, isOnPrettyUrl) => {
   return {
     text: `New preview available`,
     color: `black`,
@@ -122,11 +123,15 @@ const indicatorSetSuccess = newBuildId => {
     onclick: () => {
       const previewDomain = window.location.host.match(/\..+/)
 
-      window.location.replace(
-        `https://build-${newBuildId}${previewDomain && previewDomain[0]}${
-          window.location.pathname
-        }`
-      )
+      if (isOnPrettyUrl) {
+        window.location.reload()
+      } else {
+        window.location.replace(
+          `https://build-${newBuildId}${previewDomain && previewDomain[0]}${
+            window.location.pathname
+          }`
+        )
+      }
     },
   }
 }
@@ -256,10 +261,11 @@ export default class Indicator extends React.Component {
         async () => {
           // currentBuild is the most recent build that is not QUEUED
           // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
+          const isOnPrettyUrl = prettyUrlRegex.test(host)
           const { currentBuild, latestBuild } = await getBuildInfo()
 
           if (!buildId) {
-            if (prettyUrlRegex.test(host)) {
+            if (isOnPrettyUrl) {
               buildId = latestBuild?.id
             } else {
               const buildIdMatch = host.match(/build-(.*?(?=\.))/)
@@ -294,7 +300,7 @@ export default class Indicator extends React.Component {
           ) {
             this.setState(prevState =>
               Object.assign({}, prevState, {
-                attributes: indicatorSetSuccess(latestBuild?.id),
+                attributes: indicatorSetSuccess(latestBuild?.id, isOnPrettyUrl),
                 icon: <SuccessIcon />,
               })
             )
