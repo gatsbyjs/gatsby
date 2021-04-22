@@ -82,7 +82,7 @@ exports.buildResolvableSet = ({
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
-    if (node.internal.owner === `gatsby-source-contentful` && node.sys.id) {
+    if (node.internal.owner === `gatsby-source-contentful` && node?.sys?.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
       resolvable.add(generateReferenceId(node))
