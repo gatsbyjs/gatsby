@@ -1,5 +1,5 @@
 import { Span } from "opentracing"
-import { emitter, store } from "./index"
+import { emitter } from "./index"
 import apiRunnerNode from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
 
@@ -41,26 +41,12 @@ interface ICreatePageAction {
 }
 
 export const startPluginRunner = (): void => {
-  const plugins = store.getState().flattenedPlugins
-  const implementingPlugins = plugins.filter(plugin => {
-    const includesOnCreatePage = plugin.nodeAPIs.includes(`onCreatePage`)
-    if (includesOnCreatePage && process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
-      if (plugin.name === `internal-data-bridge`) {
-        return false
-      } else {
-        return includesOnCreatePage
-      }
-    }
-    return includesOnCreatePage
+  emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
+    const page = action.payload
+    apiRunnerNode(
+      `onCreatePage`,
+      { page, traceId: action.traceId, parentSpan: action.parentSpan },
+      { pluginSource: action.plugin.name, activity: action.activity }
+    )
   })
-  if (implementingPlugins.length > 0) {
-    emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
-      const page = action.payload
-      apiRunnerNode(
-        `onCreatePage`,
-        { page, traceId: action.traceId, parentSpan: action.parentSpan },
-        { pluginSource: action.plugin.name, activity: action.activity }
-      )
-    })
-  }
 }

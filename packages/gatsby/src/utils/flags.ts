@@ -174,8 +174,7 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `NoPageNodes`,
     description: `Don't create page nodes. Saves time when creating pages for larger sites. Will be the new default behavior in v3.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
-    // testFitness: (): fitnessEnum => true,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
+    testFitness: (): fitnessEnum => true,
   },
 ]
 
