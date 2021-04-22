@@ -28034,7 +28034,21 @@ webidl-conversions@^6.1.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
-webpack-assets-manifest@^5.0.1, webpack-assets-manifest@^5.0.5:
+webpack-assets-manifest@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-5.0.1.tgz#5f2b45579e87f122dc9af714f9508c462383a722"
+  integrity sha512-4Hpv0eP1yL06cvERpwxZ+N0Pmns5j/WtiaKZeoNsFUFZB52F6wPycCyxhdyfFKMxdwC/+xeTTlBffY62I3kh2Q==
+  dependencies:
+    chalk "^4.0"
+    deepmerge "^4.0"
+    lockfile "^1.0"
+    lodash.escaperegexp "^4.0"
+    lodash.get "^4.0"
+    lodash.has "^4.0"
+    schema-utils "^3.0"
+    tapable "^2.0"
+
+webpack-assets-manifest@^5.0.5:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/webpack-assets-manifest/-/webpack-assets-manifest-5.0.5.tgz#0727d9855129110a962c0992504d91c13f5613e8"
   integrity sha512-sZ5i2O5OTjbdjnJZE0ZAHqFqYejD0PSXjKUOIBie1DMGlZo/2OLdx7UYMuOQyiygfRYB8FPYBqz3QGWV+1BPvw==
