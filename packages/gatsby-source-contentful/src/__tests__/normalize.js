@@ -1,4 +1,6 @@
 const normalize = require(`../normalize`)
+const { restrictedNodeFields } = require(`../config`)
+
 const {
   currentSyncData,
   contentTypeItems,
@@ -8,15 +10,6 @@ const {
 } = require(`./data.json`)
 
 const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [
-  `id`,
-  `children`,
-  `contentful_id`,
-  `parent`,
-  `fields`,
-  `internal`,
-]
 
 describe(`Process contentful data (by name)`, () => {
   let entryList

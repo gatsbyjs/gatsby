@@ -46,11 +46,18 @@ const makeId = ({ spaceId, id, currentLocale, defaultLocale, type }) => {
 
 exports.makeId = makeId
 
+// Generates an unique id over multiple spaces for Gatsby
 const makeMakeId = ({ currentLocale, defaultLocale, createNodeId }) => (
   spaceId,
   id,
   type
 ) => createNodeId(makeId({ spaceId, id, currentLocale, defaultLocale, type }))
+
+// Generates an unique id per space for reference resolving
+const generateReferenceId = nodeOrLink =>
+  `${nodeOrLink.sys.id}___${nodeOrLink.sys.linkType || nodeOrLink.sys.type}`
+
+exports.generateReferenceId = generateReferenceId
 
 exports.buildEntryList = ({ contentTypeItems, mergedSyncData }) => {
   // Create buckets for each type sys.id that we care about (we will always want an array for each, even if its empty)
@@ -75,22 +82,18 @@ exports.buildResolvableSet = ({
 }) => {
   const resolvable = new Set()
   existingNodes.forEach(node => {
-    if (node.internal.owner === `gatsby-source-contentful`) {
+    if (node.internal.owner === `gatsby-source-contentful` && node.sys.id) {
       // We need to add only root level resolvable (assets and entries)
       // Derived nodes (markdown or JSON) will be recreated if needed.
-      resolvable.add(`${node.contentful_id}___${node.sys.type}`)
+      resolvable.add(generateReferenceId(node))
     }
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry =>
-      resolvable.add(`${entry.sys.id}___${entry.sys.type}`)
-    )
+    entries.forEach(entry => resolvable.add(`${entry.sys.id}___Entry`))
   })
 
-  assets.forEach(assetItem =>
-    resolvable.add(`${assetItem.sys.id}___${assetItem.sys.type}`)
-  )
+  assets.forEach(assetItem => resolvable.add(`${assetItem.sys.id}___Asset`))
 
   return resolvable
 }
@@ -131,7 +134,7 @@ exports.buildForeignReferenceMap = ({
               entryItemFieldValue[0].sys.id
             ) {
               entryItemFieldValue.forEach(v => {
-                const key = `${v.sys.id}___${v.sys.linkType || v.sys.type}`
+                const key = generateReferenceId(v)
                 // Don't create link to an unresolvable field.
                 if (!resolvable.has(key)) {
                   return
@@ -152,9 +155,7 @@ exports.buildForeignReferenceMap = ({
             entryItemFieldValue?.sys?.type &&
             entryItemFieldValue.sys.id
           ) {
-            const key = `${entryItemFieldValue.sys.id}___${
-              entryItemFieldValue.sys.linkType || entryItemFieldValue.sys.type
-            }`
+            const key = generateReferenceId(entryItemFieldValue)
             // Don't create link to an unresolvable field.
             if (!resolvable.has(key)) {
               return
@@ -189,7 +190,7 @@ function prepareTextNode(id, node, key, text) {
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.updatedAt is source of truth from contentful
-      contentDigest: node.updatedAt,
+      contentDigest: node.sys.updatedAt,
     },
   }
 
@@ -300,11 +301,7 @@ exports.createNodesForContentType = ({
                 // creating an empty node field in case when original key field value
                 // is empty due to links to missing entities
                 const resolvableEntryItemFieldValue = entryItemFieldValue
-                  .filter(function (v) {
-                    return resolvable.has(
-                      `${v.sys.id}___${v.sys.linkType || v.sys.type}`
-                    )
-                  })
+                  .filter(v => resolvable.has(generateReferenceId(v)))
                   .map(function (v) {
                     return mId(
                       space.sys.id,
@@ -326,14 +323,7 @@ exports.createNodesForContentType = ({
               entryItemFieldValue.sys.type &&
               entryItemFieldValue.sys.id
             ) {
-              if (
-                resolvable.has(
-                  `${entryItemFieldValue.sys.id}___${
-                    entryItemFieldValue.sys.linkType ||
-                    entryItemFieldValue.sys.type
-                  }`
-                )
-              ) {
+              if (resolvable.has(generateReferenceId(entryItemFieldValue))) {
                 entryItemFields[`${entryItemFieldKey}___NODE`] = mId(
                   space.sys.id,
                   entryItemFieldValue.sys.id,
@@ -348,7 +338,7 @@ exports.createNodesForContentType = ({
 
         // Add reverse linkages if there are any for this node
         const foreignReferences =
-          foreignReferenceMap[`${entryItem.sys.id}___${entryItem.sys.type}`]
+          foreignReferenceMap[generateReferenceId(entryItem)]
         if (foreignReferences) {
           foreignReferences.forEach(foreignReference => {
             const existingReference = entryItemFields[foreignReference.name]
@@ -379,27 +369,21 @@ exports.createNodesForContentType = ({
           })
         }
 
+        // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
         const sys = {
           type: entryItem.sys.type,
-        }
-
-        // Revision applies to entries, assets, and content types
-        if (entryItem.sys.revision) {
-          sys.revision = entryItem.sys.revision
-        }
-
-        // Content type applies to entries only
-        if (entryItem.sys.contentType) {
-          sys.contentType___NODE = createNodeId(contentTypeItemId)
+          id: entryItem.sys.id,
+          space: entryItem.sys.space,
+          contentType___NODE: createNodeId(contentTypeItemId),
+          revision: entryItem.sys.revision,
+          createdAt: entryItem.sys.createdAt,
+          updatedAt: entryItem.sys.updatedAt,
+          locale: entryItem.sys.locale,
         }
 
         // Create actual entry node
         let entryNode = {
           id: entryNodeId,
-          spaceId: space.sys.id,
-          contentful_id: entryItem.sys.id,
-          createdAt: entryItem.sys.createdAt,
-          updatedAt: entryItem.sys.updatedAt,
           parent: contentTypeItemId,
           children: [],
           internal: {
@@ -456,7 +440,6 @@ exports.createNodesForContentType = ({
         entryNode = {
           ...entryItemFields,
           ...entryNode,
-          node_locale: locale.code,
         }
 
         return entryNode
@@ -472,6 +455,8 @@ exports.createNodesForContentType = ({
       internal: {
         type: `${makeTypeName(`ContentType`)}`,
       },
+      // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+      sys: contentTypeItem.sys,
     }
 
     // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
@@ -511,11 +496,7 @@ exports.createAssetNodes = ({
     })
 
     const assetNode = {
-      contentful_id: assetItem.sys.id,
-      spaceId: space.sys.id,
       id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
-      createdAt: assetItem.sys.createdAt,
-      updatedAt: assetItem.sys.updatedAt,
       parent: null,
       children: [],
       file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
@@ -523,21 +504,13 @@ exports.createAssetNodes = ({
       description: assetItem.fields.description
         ? getField(assetItem.fields.description)
         : ``,
-      node_locale: locale.code,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
         // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
         contentDigest: assetItem.sys.updatedAt,
       },
-      // @todo we can probably remove this now
-      sys: {
-        type: assetItem.sys.type,
-      },
-    }
-
-    // Revision applies to entries, assets, and content types
-    if (assetItem.sys.revision) {
-      assetNode.sys.revision = assetItem.sys.revision
+      // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+      sys: assetItem.sys,
     }
 
     createNodePromises.push(createNode(assetNode))

@@ -9,21 +9,12 @@ const { CODES } = require(`./report`)
 
 const normalize = require(`./normalize`)
 const fetchData = require(`./fetch`)
+const { restrictedNodeFields } = require(`./config`)
 const { generateSchema } = require(`./generate-schema`)
 const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
 
 const conflictFieldPrefix = `contentful`
-
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [
-  `children`,
-  `contentful_id`,
-  `fields`,
-  `id`,
-  `internal`,
-  `parent`,
-]
 
 const restrictedContentTypes = [`entity`, `reference`]
 
@@ -536,17 +527,21 @@ exports.sourceNodes = async (
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(normalize.generateReferenceId(entry))
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
+    .filter(
+      n =>
+        n?.sys?.type &&
+        newOrUpdatedEntries.has(normalize.generateReferenceId(n))
+    )
     .forEach(n => {
-      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
-        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
+      if (foreignReferenceMap[normalize.generateReferenceId(n)]) {
+        foreignReferenceMap[normalize.generateReferenceId(n)].forEach(
           foreignReference => {
             // Add reverse links
             if (n[foreignReference.name]) {

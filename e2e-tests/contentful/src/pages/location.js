@@ -28,7 +28,7 @@ export default LocationPage
 
 export const pageQuery = graphql`
   query LocationQuery {
-    allContentfulLocation(sort: { fields: contentful_id }) {
+    allContentfulLocation(sort: { fields: sys___id }) {
       nodes {
         title
         location {

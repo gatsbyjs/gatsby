@@ -96,30 +96,31 @@ export const pageQuery = graphql`
           raw
           references {
             __typename
+            sys {
+              id
+            }
             ... on ContentfulAsset {
-              contentful_id
               fluid(maxWidth: 200) {
                 ...GatsbyContentfulFluid
               }
             }
             ... on ContentfulText {
-              contentful_id
               title
               short
             }
             ... on ContentfulLocation {
-              contentful_id
               location {
                 lat
                 lon
               }
             }
             ... on ContentfulContentReference {
-              contentful_id
               title
               one {
                 __typename
-                contentful_id
+                sys {
+                  id
+                }
                 ... on ContentfulText {
                   title
                   short
@@ -140,7 +141,9 @@ export const pageQuery = graphql`
               }
               many {
                 __typename
-                contentful_id
+                sys {
+                  id
+                }
                 ... on ContentfulText {
                   title
                   short

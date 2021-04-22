@@ -20,7 +20,7 @@ const ContentReferencePage = ({ data }) => {
   const entries = data.allContentfulContentReference.nodes
   return (
     <Layout>
-      {entries.map(({ contentful_id, title, one, many }) => {
+      {entries.map(({ sys: { id }, title, one, many }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -33,7 +33,7 @@ const ContentReferencePage = ({ data }) => {
         }
 
         return (
-          <div data-cy-id={slug} key={contentful_id}>
+          <div data-cy-id={slug} key={id}>
             <h2>{title}</h2>
             {content}
           </div>
@@ -50,13 +50,21 @@ export const pageQuery = graphql`
     allContentfulContentReference(sort: { fields: title }) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         one {
           __typename
-          contentful_id
+          sys {
+            id
+          }
           ... on ContentfulText {
             title
             short
+          }
+          ... on ContentfulNumber {
+            title
+            integer
           }
           ... on ContentfulContentReference {
             title
@@ -64,6 +72,10 @@ export const pageQuery = graphql`
               ... on ContentfulText {
                 title
                 short
+              }
+              ... on ContentfulNumber {
+                title
+                integer
               }
               ... on ContentfulContentReference {
                 title
@@ -86,7 +98,9 @@ export const pageQuery = graphql`
         }
         many {
           __typename
-          contentful_id
+          sys {
+            id
+          }
           ... on ContentfulText {
             title
             short
@@ -101,6 +115,10 @@ export const pageQuery = graphql`
               ... on ContentfulText {
                 title
                 short
+              }
+              ... on ContentfulNumber {
+                title
+                integer
               }
               ... on ContentfulContentReference {
                 title

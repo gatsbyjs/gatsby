@@ -9,7 +9,7 @@ const MediaReferencePage = ({ data }) => {
   const entries = data.allContentfulMediaReference.nodes
   return (
     <Layout>
-      {entries.map(({ contentful_id, title, one, many }) => {
+      {entries.map(({ sys: { id }, title, one, many }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -24,7 +24,7 @@ const MediaReferencePage = ({ data }) => {
         }
 
         return (
-          <div data-cy-id={slug} key={contentful_id}>
+          <div data-cy-id={slug} key={id}>
             <h2>{title}</h2>
             {content}
           </div>
@@ -41,7 +41,9 @@ export const pageQuery = graphql`
     allContentfulMediaReference(sort: { fields: title }) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         one {
           fluid(maxWidth: 200) {
             ...GatsbyContentfulFluid

@@ -7,6 +7,7 @@ import Layout from "../components/layout"
 const JSONPage = ({ data }) => {
   const simple = data.simple.json
   const actors = data.complex.json.Actors
+
   return (
     <Layout>
       <h1>Simple:</h1>
@@ -29,7 +30,7 @@ const JSONPage = ({ data }) => {
             <p data-cy-value-name>Name: {actor.name}</p>
             <p data-cy-value-photo>Photo: {actor.photo}</p>
             <p data-cy-value-birthdate>Birthdate: {actor.Birthdate}</p>
-            <p data-cy-value-born-at>Born at: {actor.Born_At}</p>
+            <p data-cy-value-born-at>Born at: {actor["Born At"]}</p>
             <p data-cy-value-weight>Weight: {actor.weight}</p>
             <p data-cy-value-age>Age: {actor.age}</p>
             <p data-cy-value-wife>Wife: {actor.wife}</p>
@@ -51,10 +52,10 @@ export default JSONPage
 
 export const pageQuery = graphql`
   query JSONQuery {
-    simple: contentfulJson(contentful_id: { eq: "2r6tNjP8brkyy5yLR39hhh" }) {
+    simple: contentfulJson(sys: { id: { eq: "2r6tNjP8brkyy5yLR39hhh" } }) {
       json
     }
-    complex: contentfulJson(contentful_id: { eq: "2y71nV0cpW9vzTmJybq571" }) {
+    complex: contentfulJson(sys: { id: { eq: "2y71nV0cpW9vzTmJybq571" } }) {
       json
     }
   }

@@ -694,7 +694,7 @@ describe(`gatsby-node`, () => {
     const initNodes = getNodes()
 
     const homeNodes = initNodes.filter(
-      ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
+      ({ sys: { id } }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
     homeNodes.forEach(homeNode => {
       expect(homeNode.content.references___NODE).toStrictEqual([

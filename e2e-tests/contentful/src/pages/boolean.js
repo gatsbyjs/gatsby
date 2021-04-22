@@ -25,7 +25,7 @@ export default BooleanPage
 
 export const pageQuery = graphql`
   query BooleanQuery {
-    allContentfulBoolean(sort: { fields: contentful_id }) {
+    allContentfulBoolean(sort: { fields: sys___id }) {
       nodes {
         title
         boolean

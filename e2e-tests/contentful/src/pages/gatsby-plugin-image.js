@@ -158,15 +158,17 @@ export const pageQuery = graphql`
   query GatsbyPluginImageQuery {
     allContentfulAsset(
       filter: {
-        contentful_id: {
-          in: [
-            "3ljGfnpegOnBTFGhV07iC1"
-            "3BSI9CgDdAn1JchXmY5IJi"
-            "65syuRuRVeKi03HvRsOkkb"
-          ]
+        sys: {
+          id: {
+            in: [
+              "3ljGfnpegOnBTFGhV07iC1"
+              "3BSI9CgDdAn1JchXmY5IJi"
+              "65syuRuRVeKi03HvRsOkkb"
+            ]
+          }
         }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title
