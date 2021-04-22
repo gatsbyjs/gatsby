@@ -48,7 +48,7 @@ This will output every second profile information like the following:
 
 **Second, you can use an experimental tool** created by the Gatsby team **to generate build memory charts**. [This tool is called gjl](https://github.com/pieh/gjl) and is a wrapper around the gatsby process. Instructions for setting `gjl` up are in the README. A sample graph is below:
 
-![](https://lh6.googleusercontent.com/j9tUf6rJuyIgFP_-XJ7KvqGZrmA8BzRj43hoSgIxC5m8LMTcAlmM5BOO5KF6Cw3VKzkHexzOwK3UFpEItp4KHq7CTUvG09l1hqu6zLeMYPuBQoy0YD9ruPssxsG7BAmsYHeKcYhB)
+![A chart showing the Gatsby develop process. The left Y-Axis shows the event loop delay, the right Y-Axis the memory usage. The X-Axis is the time in seconds. The memory usage and event loop delay are plotted as a line chart over the time, in the background the different stages of the build are shown.](https://lh6.googleusercontent.com/j9tUf6rJuyIgFP_-XJ7KvqGZrmA8BzRj43hoSgIxC5m8LMTcAlmM5BOO5KF6Cw3VKzkHexzOwK3UFpEItp4KHq7CTUvG09l1hqu6zLeMYPuBQoy0YD9ruPssxsG7BAmsYHeKcYhB)
 
 ## Options to reduce "out-of-memory" risk
 
@@ -68,7 +68,7 @@ Paid tiers of Gatsby Cloud parallelize image processing and run other parts of t
 
 Gatsby defaults to using the number of physical cores on your machine to speed up builds, and parallelizes during certain steps of the process (image processing, Javascript bundle creation, and HTML generation).
 
-So if you're experiencing out of memory issues during any of those steps, you can try setting the environment variable GATSBY_CPU_COUNT to a lower number, like 2. Note that this will slow your builds down!
+So if you're experiencing out of memory issues during any of those steps, you can try setting the environment variable `GATSBY_CPU_COUNT` to a lower number, like 2. Note that this will slow your builds down!
 
 #### Increase allocated memory and/or upgrade your hardware.
 
@@ -94,7 +94,7 @@ Finally, you can't allocate more memory than is available on your machine, so be
 
 #### Pre-optimize images by downsampling
 
-Overly large images being used by Gatsby image can cause memory spikes. For example, if your image will only ever be 1000 pixels wide, and you're have a 2000 x 3000 pixel source image stored in your repository or headless CMS, it may be worthwhile to convert that source image to a 667 x 1000 pixel version. [This piece on pre-optimizing images](https://www.gatsbyjs.com/docs/preoptimizing-images/) can give some guidance.
+Overly large images being used by Gatsby image can cause memory spikes. For example, if your image will only ever be 1000 pixels wide, and you're have a 2000 x 3000 pixel source image stored in your repository or headless CMS, it may be worthwhile to convert that source image to a 667 x 1000 pixel version. [This piece on pre-optimizing images](/docs/preoptimizing-images/) can give some guidance.
 
 #### Disable AVIF
 
@@ -104,13 +104,13 @@ Generating AVIFs often causes increased memory usage by gatsby-plugin-image. Thi
 
 #### Turn off source maps generation
 
-Use Gatsby plugin that disables sourcemap generation by modifying webpack config: [gatsby-plugin-no-sourcemaps](https://www.gatsbyjs.com/plugins/gatsby-plugin-no-sourcemaps/) (this can help build speed as well).
+Use Gatsby plugin that disables sourcemap generation by modifying webpack config: [gatsby-plugin-no-sourcemaps](/plugins/gatsby-plugin-no-sourcemaps/) (this can help build speed as well).
 
 The side effect is that this will make any errors happening in production significantly harder to debug by obscuring the stacktrace, so if your team regularly inspects production errors (perhaps using eg Sentry, Rollbar, or comparable tools), you may want to consider other options.
 
 #### Inspect and reduce bundle sizes
 
-Serialization memory spikes are proportional to template sizes. [Optimizations to improve bundle size](https://www.gatsbyjs.com/docs/how-to/performance/improving-site-performance/#reduce-your-javascript-bundle-cost), especially of your largest bundle sizes, should have benefits to this.
+Serialization memory spikes are proportional to template sizes. [Optimizations to improve bundle size](/docs/how-to/performance/improving-site-performance/#reduce-your-javascript-bundle-cost), especially of your largest bundle sizes, should have benefits to this.
 
 When you're scanning bundle sizes to see what might be causing out-of-memory issues, rather than focusing on critical paths, focus on anomalously large bundles. If one of your bundles is 3MB and the rest are 300KB, you might have, eg, accidentally imported an 2.5MB image directly into a bundle.
 
@@ -132,6 +132,6 @@ Because the amount of baseline memory usage is roughly proportional to the numbe
 
 #### Disable cache persistence
 
-When the amount of nodes approaches 1.5 million (typically a 100k page Contentful site, or a 300k page Sanity site), the way Gatsby serializes internal state can cause out of memory issues. If your site is near this, and you're experiencing issues, try setting the environment variable GATSBY_DISABLE_CACHE_PERSISTENCE=1.
+When the amount of nodes approaches 1.5 million (typically a 100k page Contentful site, or a 300k page Sanity site), the way Gatsby serializes internal state can cause out of memory issues. If your site is near this, and you're experiencing issues, try setting the environment variable `GATSBY_DISABLE_CACHE_PERSISTENCE=1`.
 
 Note that for sites at this scale, build times may also become a workflow issue for your team, so be sure to spend time thinking about how to improve build times as well.
