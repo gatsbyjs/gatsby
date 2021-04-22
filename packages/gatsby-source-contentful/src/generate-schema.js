@@ -163,12 +163,13 @@ export function generateSchema({
     type ContentfulInternalSys @dontInfer {
       type: String!
       id: String!
-      space: JSON # ContentfulSpace @todo define
+      spaceId: String!
+      environmentId: String!
       contentType: ContentfulContentType @link(by: "id", from: "contentType___NODE")
-      revision: Int!
-      createdAt: Date!
-      updatedAt: Date!
-      locale: JSON # String
+      firstPublishedAt: Date!
+      publishedAt: Date!
+      publishedVersion: Int!
+      locale: String!
     }
   `)
 

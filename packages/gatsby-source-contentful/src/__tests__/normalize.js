@@ -127,7 +127,7 @@ describe(`Skip existing nodes in warm build`, () => {
         // returned is not relevant to test so update if anything breaks.
         return {
           id,
-          internal: { contentDigest: entryList[0][0].sys.updatedAt },
+          internal: { contentDigest: entryList[0][0].sys.publishedAt },
         }
       }
       // All other nodes are new ("unknown")
@@ -211,7 +211,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         return {
           id,
           internal: {
-            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+            contentDigest: entryList[0][0].sys.publishedAt + `changed`,
           },
         }
       }

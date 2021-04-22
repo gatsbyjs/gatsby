@@ -189,8 +189,8 @@ function prepareTextNode(id, node, key, text) {
       type: `ContentfulNodeTypeText`,
       mediaType: `text/markdown`,
       content: str,
-      // entryItem.sys.updatedAt is source of truth from contentful
-      contentDigest: node.sys.updatedAt,
+      // entryItem.sys.publishedAt is source of truth from contentful
+      contentDigest: node.sys.publishedAt,
     },
   }
 
@@ -369,18 +369,6 @@ exports.createNodesForContentType = ({
           })
         }
 
-        // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
-        const sys = {
-          type: entryItem.sys.type,
-          id: entryItem.sys.id,
-          space: entryItem.sys.space,
-          contentType___NODE: createNodeId(contentTypeItemId),
-          revision: entryItem.sys.revision,
-          createdAt: entryItem.sys.createdAt,
-          updatedAt: entryItem.sys.updatedAt,
-          locale: entryItem.sys.locale,
-        }
-
         // Create actual entry node
         let entryNode = {
           id: entryNodeId,
@@ -391,7 +379,19 @@ exports.createNodesForContentType = ({
             // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
             contentDigest: entryItem.sys.updatedAt,
           },
-          sys,
+          // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
+          // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
+          sys: {
+            type: entryItem.sys.type,
+            id: entryItem.sys.id,
+            locale: locale.code,
+            spaceId: entryItem.sys.space.sys.id,
+            environmentId: entryItem.sys.environment.sys.id,
+            contentType___NODE: createNodeId(contentTypeItemId),
+            firstPublishedAt: entryItem.sys.createdAt,
+            publishedAt: entryItem.sys.updatedAt,
+            publishedVersion: entryItem.sys.revision,
+          },
         }
 
         // Replace text fields with text nodes so we can process their markdown
@@ -447,6 +447,7 @@ exports.createNodesForContentType = ({
       .filter(Boolean)
 
     // Create a node for each content type
+
     const contentTypeNode = {
       id: createNodeId(contentTypeItemId),
       name: contentTypeItem.name,
@@ -456,7 +457,17 @@ exports.createNodesForContentType = ({
         type: `${makeTypeName(`ContentType`)}`,
       },
       // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
-      sys: contentTypeItem.sys,
+      // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
+      sys: {
+        type: contentTypeItem.sys.type,
+        id: contentTypeItem.sys.id,
+        locale: locale.code,
+        spaceId: contentTypeItem.sys.space.sys.id,
+        environmentId: contentTypeItem.sys.environment.sys.id,
+        firstPublishedAt: contentTypeItem.sys.createdAt,
+        publishedAt: contentTypeItem.sys.updatedAt,
+        publishedVersion: contentTypeItem.sys.revision,
+      },
     }
 
     // The content of an entry is guaranteed to be updated if and only if the .sys.updatedAt field changed
@@ -510,7 +521,17 @@ exports.createAssetNodes = ({
         contentDigest: assetItem.sys.updatedAt,
       },
       // https://www.contentful.com/developers/docs/references/content-delivery-api/#/introduction/common-resource-attributes
-      sys: assetItem.sys,
+      // https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/sys-field
+      sys: {
+        type: assetItem.sys.type,
+        id: assetItem.sys.id,
+        locale: locale.code,
+        spaceId: assetItem.sys.space.sys.id,
+        environmentId: assetItem.sys.environment.sys.id,
+        firstPublishedAt: assetItem.sys.createdAt,
+        publishedAt: assetItem.sys.updatedAt,
+        publishedVersion: assetItem.sys.revision,
+      },
     }
 
     createNodePromises.push(createNode(assetNode))
