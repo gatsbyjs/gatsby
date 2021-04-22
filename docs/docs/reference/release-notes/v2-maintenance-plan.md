@@ -8,7 +8,13 @@ As we continue evolving the Gatsby framework, and as we move from one major vers
 
 ## What is happening, when?
 
-Gatsby Version 2.32 will enter Maintenance Long Term Support on **June 8, 2021**. At that same time, Gatsby Version 3 will be considered the Active Long Term Support version of Gatsby. The Maintenance Long Term Support will continue until the release of Gatsby v4 (date TBD).
+Starting on **June 8, 2021**:
+
+* Gatsby Version 3 will be considered the Active Long-Term Support version of Gatsby.
+    * This means that ???.
+* Gatsby Version 2.32 will enter Maintenance Long-Term Support.
+    * This means that ???.
+    * The Maintenance Long-Term Support will continue until the release of Gatsby v4 (date TBD).
 
 ## What does this mean to users?
 
