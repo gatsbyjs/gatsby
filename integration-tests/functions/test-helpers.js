@@ -202,6 +202,16 @@ export function runTests(env, host) {
       // })
     })
 
+    describe(`functions get parsed cookies`, () => {
+      test(`cookie`, async () => {
+        const result = await fetch(`${host}/api/cookie-me`, {
+          headers: { cookie: `foo=blue;` },
+        }).then(res => res.json())
+
+        expect(result).toMatchSnapshot()
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)

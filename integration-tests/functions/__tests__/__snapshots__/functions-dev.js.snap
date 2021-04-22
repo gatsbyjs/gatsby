@@ -24,6 +24,12 @@ Object {
 }
 `;
 
+exports[`develop functions get parsed cookies cookie 1`] = `
+Object {
+  "foo": "blue",
+}
+`;
+
 exports[`develop response formats returns json correctly 1`] = `
 Object {
   "amIJSON": true,

@@ -46,6 +46,7 @@
     "chokidar": "^3.4.2",
     "common-tags": "^1.8.0",
     "compression": "^1.7.4",
+    "cookie": "^0.4.1",
     "copyfiles": "^2.3.0",
     "core-js": "^3.9.0",
     "cors": "^2.8.5",

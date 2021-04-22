@@ -9,6 +9,7 @@ import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
 import multer from "multer"
 import pathToRegexp from "path-to-regexp"
+import cookie from "cookie"
 
 import telemetry from "gatsby-telemetry"
 
@@ -133,6 +134,17 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       `/api/*`,
       multer().none(),
       express.urlencoded({ extended: true }),
+      (req, res, next) => {
+        const cookies = req.headers.cookie
+
+        if (!cookies) {
+          return next()
+        }
+
+        req.cookies = cookie.parse(cookies)
+
+        return next()
+      },
       express.text(),
       express.json(),
       express.raw(),

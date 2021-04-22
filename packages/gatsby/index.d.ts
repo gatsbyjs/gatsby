@@ -1561,14 +1561,9 @@ export interface GatsbyAPIFunctionRequest extends IncomingMessage {
    * Object of values from route parameters
    */
   params: Record<string, string>
-
   body: any
-
-  // TODO add when add cookie support
   /**
    * Object of `cookies` from header
    */
-  // cookies: {
-  // [key: string]: string
-  // }
+  cookies: Record<string, string>
 }
