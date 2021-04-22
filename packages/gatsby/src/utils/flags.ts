@@ -166,6 +166,16 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/parallel-sourcing-feedback`,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `FUNCTIONS`,
+    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
+    command: `all`,
+    telemetryId: `Functions`,
+    experimental: true,
+    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
+    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags

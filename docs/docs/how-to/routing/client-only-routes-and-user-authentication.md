@@ -20,9 +20,9 @@ Gatsby converts components in the `pages` folder into static HTML files for the 
 
 Gatsby uses [@reach/router](https://reach.tech/router/) under the hood so we'll use it to setup client-only routes within our app.
 
-You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/[app].js` in the code example below:
+You first need to set up routes on a page that is built by Gatsby. You can see the routes added to `src/pages/app/[...].js` in the code example below:
 
-```jsx:title=src/pages/[app].js
+```jsx:title=src/pages/app/[...].js
 import React from "react"
 import { Router } from "@reach/router" // highlight-line
 import Layout from "../components/Layout"
@@ -55,7 +55,7 @@ Briefly, when a page loads, Reach Router looks at the `path` prop of each compon
 
 With [authentication set up](/docs/how-to/adding-common-features/building-a-site-with-authentication) on your site, you can create a component like a `<PrivateRoute/>` to extend the example above and gate content:
 
-```jsx:title=src/pages/[app].js
+```jsx:title=src/pages/app/[...].js
 import React from "react"
 import { Router } from "@reach/router"
 import Layout from "../components/Layout"

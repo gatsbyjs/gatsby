@@ -231,6 +231,40 @@ function assertHTMLCorrectness(runNumber) {
     })
   })
 
+  describe(`/changing-context/`, () => {
+    let pageDataContent
+    let htmlContent
+    beforeAll(() => {
+      pageDataContent = fs.readJsonSync(
+        path.join(
+          process.cwd(),
+          `public`,
+          `page-data`,
+          `changing-context`,
+          `page-data.json`
+        )
+      )
+
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `changing-context`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html is correctly generated using fresh page context`, () => {
+      // remove <!-- --> from html content string as that's impl details of react ssr
+      expect(htmlContent.replace(/<!-- -->/g, ``)).toContain(
+        `Dummy page for runNumber: ${runNumber}`
+      )
+    })
+
+    it(`page-data is correctly generated using fresh page context`, () => {
+      expect(pageDataContent.result.pageContext).toEqual({
+        dummyId: `runNumber: ${runNumber}`,
+      })
+    })
+  })
+
   describe(`/webpack/local-plugin-1/`, () => {
     let htmlContent
     beforeAll(() => {
@@ -530,6 +564,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/static-query-result-tracking/should-invalidate/`,
     `/page-query-template-change/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
+    `/changing-context/`,
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
@@ -539,6 +574,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/static-query-result-tracking/stable/`,
     `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
     `/page-that-will-have-trailing-slash-removed`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   const expectedPages = [
@@ -623,6 +659,7 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     `/stale-pages/only-in-first/`,
     `/page-query-dynamic-1/`,
     `/page-query-dynamic-2/`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   let changedFileOriginalContent
@@ -708,6 +745,7 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   const expectedPages = [
     `/stale-pages/only-not-in-first`,
     `/page-query-dynamic-4/`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   const unexpectedPages = [

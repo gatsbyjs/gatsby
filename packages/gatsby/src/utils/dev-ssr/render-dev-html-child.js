@@ -129,6 +129,7 @@ exports.renderHTML = ({
   path,
   componentPath,
   htmlComponentRendererPath,
+  publicDir,
   isClientOnlyPage = false,
   directory,
 }) =>
@@ -139,6 +140,7 @@ exports.renderHTML = ({
         htmlComponentRenderer.default(
           path,
           isClientOnlyPage,
+          publicDir,
           (_throwAway, htmlString) => {
             resolve(htmlString)
           }

@@ -259,20 +259,10 @@ export async function handleStalePageData(): Promise<void> {
   })
 
   const deletionPromises: Array<Promise<void>> = []
-  const pagePathsToClear = new Set<string>()
-  for (const pageDataFilePath of pageDataFilesFromPreviousBuilds) {
+  pageDataFilesFromPreviousBuilds.forEach(pageDataFilePath => {
     if (!expectedPageDataFiles.has(pageDataFilePath)) {
-      const stalePageDataContent = await fs.readJson(pageDataFilePath)
-      pagePathsToClear.add(stalePageDataContent.path)
       deletionPromises.push(fs.remove(pageDataFilePath))
     }
-  }
-
-  store.dispatch({
-    type: `DELETED_STALE_PAGE_DATA_FILES`,
-    payload: {
-      pagePathsToClear,
-    },
   })
 
   await Promise.all(deletionPromises)

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.4.0-next.2...gatsby-plugin-image@1.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.4.0-next.1...gatsby-plugin-image@1.4.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-image
+
+# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.4.0-next.0...gatsby-plugin-image@1.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Apply object-fit and object-position to placeholder ([#30894](https://github.com/gatsbyjs/gatsby/issues/30894)) ([8affcf5](https://github.com/gatsbyjs/gatsby/commit/8affcf5fde3b6c31ce9527957f9758e9bfb0fa5c))
+- **gatsby-plugin-image:** Check for render container ([#30898](https://github.com/gatsbyjs/gatsby/issues/30898)) ([9ee366e](https://github.com/gatsbyjs/gatsby/commit/9ee366ed5be36bc277285ebac7421d364ef45abd))
+
 # [1.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.3.0-next.3...gatsby-plugin-image@1.4.0-next.0) (2021-04-09)
 
 **Note:** Version bump only for package gatsby-plugin-image
