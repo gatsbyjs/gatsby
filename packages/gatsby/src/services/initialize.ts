@@ -539,7 +539,7 @@ export async function initialize({
       // we need a relative import path to keep contenthash the same if directory changes
       const relativePluginPath = path.relative(siteDir, plugin.resolve)
       return `{
-      plugin: require('${slash(relativePluginPath)}'),
+      plugin: () => require('${slash(relativePluginPath)}'),
       options: ${JSON.stringify(plugin.options)},
     }`
     })
