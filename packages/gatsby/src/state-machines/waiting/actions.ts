@@ -8,6 +8,7 @@ import {
 } from "xstate"
 import { IWaitingContext } from "./types"
 import { AnyAction } from "redux"
+import { genericOnError } from "../../utils/generic-on-error"
 import { callRealApi } from "../../utils/call-deferred-api"
 
 export const callApi: ActionFunction<IWaitingContext, AnyEventObject> = (
@@ -36,5 +37,6 @@ export const extractQueries = sendParent<IWaitingContext, AnyEventObject>(
 export const waitingActions: ActionFunctionMap<IWaitingContext, AnyAction> = {
   addNodeMutation,
   extractQueries,
+  genericOnError,
   callApi,
 }

@@ -6,6 +6,7 @@ import {
   AnyEventObject,
 } from "xstate"
 import { enqueueFlush } from "../../utils/page-data"
+import { genericOnError } from "../../utils/generic-on-error"
 
 export const flushPageData = (): void => {
   enqueueFlush()
@@ -51,6 +52,7 @@ export const clearCurrentlyHandledPendingQueryRuns = assign<
 export const queryActions: ActionFunctionMap<IQueryRunningContext, any> = {
   assignDirtyQueries,
   flushPageData,
+  genericOnError,
   markSourceFilesDirty,
   markSourceFilesClean,
   trackRequestedQueryRun,

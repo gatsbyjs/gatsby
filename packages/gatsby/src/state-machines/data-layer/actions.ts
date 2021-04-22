@@ -4,6 +4,7 @@ import reporter from "gatsby-cli/lib/reporter"
 import { IDataLayerContext } from "./types"
 import { assertStore } from "../../utils/assert-store"
 import { GraphQLRunner } from "../../query/graphql-runner"
+import { genericOnError } from "../../utils/generic-on-error"
 
 const concatUnique = <T>(
   array1: Array<T> = [],
@@ -39,4 +40,5 @@ export const assignGraphQLRunners = assign<IDataLayerContext>(
 export const dataLayerActions: ActionFunctionMap<IDataLayerContext, any> = {
   assignChangedPages,
   assignGraphQLRunners,
+  genericOnError,
 }

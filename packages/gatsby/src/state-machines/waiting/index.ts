@@ -2,6 +2,7 @@ import { MachineConfig, assign, Machine } from "xstate"
 import { IWaitingContext } from "./types"
 import { waitingActions } from "./actions"
 import { waitingServices } from "./services"
+import { genericOnError } from "../../utils/generic-on-error"
 
 const NODE_MUTATION_BATCH_SIZE = 100
 const NODE_MUTATION_BATCH_TIMEOUT = 500
@@ -122,6 +123,9 @@ export const waitingStates: MachineConfig<IWaitingContext, any, any> = {
             runningBatch: [],
           }),
           target: `rebuild`,
+        },
+        onError: {
+          actions: `genericOnError`,
         },
       },
     },

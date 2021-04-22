@@ -50,6 +50,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
           target: `writingRequires`,
           actions: `markSourceFilesClean`,
         },
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     writingRequires: {
@@ -58,6 +61,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         id: `writing-requires`,
         onDone: {
           target: `calculatingDirtyQueries`,
+        },
+        onError: {
+          actions: `genericOnError`,
         },
       },
     },
@@ -78,6 +84,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
             `clearCurrentlyHandledPendingQueryRuns`,
           ],
         },
+        onError: {
+          actions: `genericOnError`,
+        },
       },
     },
     runningStaticQueries: {
@@ -86,6 +95,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         id: `running-static-queries`,
         onDone: {
           target: `runningPageQueries`,
+        },
+        onError: {
+          actions: `genericOnError`,
         },
       },
     },
@@ -96,6 +108,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         onDone: {
           target: `waitingForJobs`,
           actions: `flushPageData`,
+        },
+        onError: {
+          actions: `genericOnError`,
         },
       },
     },
@@ -118,6 +133,9 @@ export const queryStates: MachineConfig<IQueryRunningContext, any, any> = {
         id: `waiting-for-jobs`,
         onDone: {
           target: `done`,
+        },
+        onError: {
+          actions: `genericOnError`,
         },
       },
     },
