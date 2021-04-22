@@ -4,17 +4,14 @@ title: Improving Build Performance Guide
 
 One of the challenges as your Gatsby site grows is that site build times can increase. Longer build times can be costly to your team in several ways:
 
-- Longer build times can slow down your team by adding time to your CI/CD pipelines, increasing the amount of time to verify, review, and share changes.
-
-- Longer build times can cause friction with business stakeholders who want to publish content quickly
-
-- As local development server bootstrap time -- which is roughly proportional to build time -- increases, local development involving changes to `gatsby-node.js` or `gatsby-config.js` takes longer, and it is more costly to pull down teammates' changes.
+- Longer build times slow your CI/CD pipelines, increasing the amount of time to verify, review, and share changes.
+- Longer build times can cause friction for business stakeholders who want to publish content quickly
 
 ## Improving build times
 
-Some types of build performance are an iterative process: locate key problem areas, identify potential changes, test the impact of those changes on build speed, and ship changes that help.
+Improving build performance is an iterative process: locate key problem areas, identify potential changes, test the impact of those changes on build speed, and ship changes that help.
 
-Other types are more of architectural changes that require more in-depth work to ship. For these, it's worth doing a quick prototype to verify that the change will have its desired effect before embarking on a multi-day or multi-week project.
+Some improvements require a larger architectural changes that require more in-depth work to ship. For these, it's worth doing a quick prototype to verify that the change will have its desired effect before embarking on a multi-day or multi-week project.
 
 While the best options will depend on the kind of site you have, some places to look are below
 
@@ -24,9 +21,9 @@ While the best options will depend on the kind of site you have, some places to 
 
 The Gatsby team is constantly updating plugins to use less memory and run faster. If you're not on the latest versions, consider upgrading. This may not do anything -- but it may make a large impact.
 
-Audit plugin configuration and queries and remove unused ones
+#### Audit plugin configuration and queries and remove unused ones
 
-Depending on how long you've worked on the codebase and how many other people are using and have used it, you may want to look through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using the queries you have set up (and that you need the fields in each query).
+As your site's codebaes evolves, you might acccumulate plugins that are not longer needed. Try looking through your `gatsby-config.js` to make sure you're using all the plugins you have installed. In addition, you may want to look through queries to make sure you're using them (and the fields in each query).
 
 #### Make sure you're not clearing the cache between builds
 
