@@ -10,20 +10,20 @@ As we continue evolving the Gatsby framework, and as we move from one major vers
 
 Starting on **June 8, 2021**:
 
-* Gatsby Version 3 will be considered the Active Long-Term Support version of Gatsby.
-    * This means that ???.
-* Gatsby Version 2.32 will enter Maintenance Long-Term Support.
-    * This means that ???.
-    * The Maintenance Long-Term Support will continue until the release of Gatsby v4 (date TBD).
-
-## What does this mean to users?
-
-- As of June 8, 2021, Gatsby version 2.32 will only receive critical patches.
-- To take advantage of new capabilities within Gatsby, you must be on version 3.0 or later
+- Gatsby Version 3 will be considered the Active Long-Term Support version of Gatsby.
+  - This means that users will need to leverage Gatsby Version 3 in order to take advantage of new features and receive bug fixes.
+- Gatsby Version 2.32 will enter Maintenance Long-Term Support.
+  - This means that users of Version 2.32 will only receive critical patches
+  - The Maintenance Long-Term Support will continue until the release of Gatsby v4 (date TBD).
 
 ## What are the characteristics of a "critical patch"?
 
 Critical patches address issues that prevent the Gatsby framework from delivering intended user value under typical conditions. Other items, such as minor bug fixes and new features are not considered "critical patches" to Gatsby.
+
+## What does this mean for users of the Gatsby framework?
+
+- To receive the newest enhancements and bug fixes, ensure that you've [migrated to Gatsby Version 3](https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v2-to-v3/) by **June 8, 2021**
+- Continue reporting any issues as you typically would, either using [support](https://www.gatsbyjs.com/support/) on Gatsbyjs.com, or by [opening an issues](https://github.com/gatsbyjs/gatsby/issues/new/choose) in our Github repository.
 
 ## What does this mean for Gatsby Cloud?
 
