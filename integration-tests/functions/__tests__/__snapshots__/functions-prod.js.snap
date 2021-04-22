@@ -24,6 +24,12 @@ Object {
 }
 `;
 
+exports[`production functions get parsed cookies cookie 1`] = `
+Object {
+  "foo": "blue",
+}
+`;
+
 exports[`production response formats returns json correctly 1`] = `
 Object {
   "amIJSON": true,

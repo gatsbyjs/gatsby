@@ -4,7 +4,5 @@ export default function topLevel(
   req: GatsbyAPIFunctionRequest,
   res: GatsbyAPIFunctionResponse
 ) {
-  if (req.method === `GET`) {
-    res.send(`I am typescript`)
-  }
+  res.json(req.cookies)
 }
