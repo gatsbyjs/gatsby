@@ -17,6 +17,7 @@
     "mdast-util-to-string": "^2.0.0",
     "mdast-util-toc": "^5.1.0",
     "remark": "^13.0.0",
+    "remark-footnotes": "^3.0.0",
     "remark-gfm": "^1.0.0",
     "remark-parse": "^9.0.0",
     "remark-retext": "^4.0.0",
