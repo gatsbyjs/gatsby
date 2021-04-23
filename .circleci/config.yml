@@ -80,9 +80,9 @@ aliases:
           - /docs.+/
           - /blog.+/
     requires:
-      # - lint
+      - lint
       - typecheck
-      # - unit_tests_node12
+      - unit_tests_node12
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
