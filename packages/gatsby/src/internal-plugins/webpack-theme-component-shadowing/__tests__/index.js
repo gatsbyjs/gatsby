@@ -39,6 +39,7 @@ describe(`Component Shadowing`, () => {
             themeDir: xplatPath(`/some/place/${name}`),
           }
         }),
+        extensions: [],
       })
       expect(plugin.getThemeAndComponent(xplatPath(componentFullPath))).toEqual(
         [

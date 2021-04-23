@@ -202,6 +202,51 @@ test.each([
     ],
   ],
   [
+    `support for legacy extension handling`,
+    {
+      mode: `development`,
+      entry: `./index.js`,
+      resolve: {
+        extensions: [`.js`, `.customscript`],
+        plugins: [
+          new ShadowRealm({
+            extensions: [`.js`, `.customscript`],
+            themes: [
+              {
+                themeName: `theme-a`,
+                themeDir: path.join(
+                  __dirname,
+                  `./fixtures/test-sites/legacy-extensions-shadowing/node_modules/theme-a`
+                ),
+              },
+            ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/legacy-extensions-shadowing`
+            ),
+          }),
+        ],
+      },
+      module: {
+        rules: [{ test: /\.customscript?$/, use: `gatsby-raw-loader` }],
+      },
+      resolveLoader: {
+        modules: [`../../fake-loaders`],
+      },
+    },
+    {
+      context: path.resolve(
+        __dirname,
+        `fixtures/test-sites/legacy-extensions-shadowing`
+      ),
+    },
+    [
+      `./node_modules/theme-a/src/file-a.js`,
+      `./src/theme-a/file-b.js`,
+      `./src/theme-a/file-c.customscript`,
+    ],
+  ],
+  [
     `edge case; extra extensions in filename`,
     {
       mode: `development`,

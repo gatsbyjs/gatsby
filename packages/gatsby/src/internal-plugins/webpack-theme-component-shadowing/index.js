@@ -3,17 +3,51 @@ const debug = require(`debug`)(`gatsby:component-shadowing`)
 const fs = require(`fs`)
 const _ = require(`lodash`)
 
-// By default, a file can only be shadowed by a file of the same extension.
-// However, the following table determine additionnal shadowing extensions that
-// will be looked for, given the extension of the file being shadowed.
-// This list maybe extended by user (by customizing webpack's configuration), in
-// order to allow less common use cases (ie. allow css files being shadowed by
-// a scss file, or jpg files being shadowed by png...)
-const DEFAULT_ADDITIONNAL_SHADOW_EXTENSIONS = {
-  js: [`js`, `jsx`, `ts`, `tsx`],
-  jsx: [`js`, `jsx`, `ts`, `tsx`],
-  ts: [`js`, `jsx`, `ts`, `tsx`],
-  tsx: [`js`, `jsx`, `ts`, `tsx`],
+// A file can be shadowed by a file of the same extension, or a file of a
+// "compatible" file extension; two files extensions are compatible if they both
+// belongs to the same "category". For example, a .JS file (that is code), may
+// be shadowed by a .TS file or a .JSX file (both are code), but not by a .CSS
+// file (that is a stylesheet) or a .PNG file (that is an image). The following
+// list establish to which category a given file extension belongs. Note that if
+// a file is not present in this list, then it can only be shadowed by a file
+// of the same extension.
+
+// FIXME: Determine how this list can be extended by user/plugins
+const DEFAULT_FILE_EXTENSIONS_CATEGORIES = {
+  // Code formats
+  js: `code`,
+  jsx: `code`,
+  ts: `code`,
+  tsx: `code`,
+  cjs: `code`,
+  mjs: `code`,
+  coffee: `code`,
+
+  // JSON-like data formats
+  json: `json`,
+  yaml: `json`,
+  yml: `json`,
+
+  // Stylesheets formats
+  css: `stylesheet`,
+  sass: `stylesheet`,
+  scss: `stylesheet`,
+  less: `stylesheet`,
+  "css.js": `stylesheet`,
+
+  // Images formats
+  jpeg: `image`,
+  jpg: `image`,
+  jfif: `image`,
+  png: `image`,
+  tiff: `image`,
+  webp: `image`,
+  avif: `image`,
+  gif: `image`,
+
+  // Fonts
+  woff: `font`,
+  woff2: `font`,
 }
 
 // TO-DO:
@@ -23,7 +57,7 @@ const DEFAULT_ADDITIONNAL_SHADOW_EXTENSIONS = {
 //      see memoized `shadowCreatePagePath` function used in `createPage` action creator.
 
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
-  constructor({ projectRoot, themes, additionnalShadowExtensions }) {
+  constructor({ projectRoot, themes, extensions, extensionsCategory }) {
     debug(
       `themes list`,
       themes.map(({ themeName }) => themeName)
@@ -31,22 +65,50 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     this.themes = themes
     this.projectRoot = projectRoot
 
-    // Concatenate default additionnal extensions with those configured by user
-    // then sort these in reverse length (so that something such as ".css.js"
-    // get caught before ".js"); also make sure the extension itself is added in
-    // the list of allowed shadow extensions.
-    const additionnalShadowExtensionsList = Object.entries({
-      ...DEFAULT_ADDITIONNAL_SHADOW_EXTENSIONS,
-      ...(additionnalShadowExtensions || {}),
-    })
-    this.additionnalShadowExtensions = additionnalShadowExtensionsList
-      .sort(([a], [b]) => a.length <= b.length)
-      .map(([key, value]) => {
-        return { key, value: [...value, key] }
-      })
+    this.extensions = extensions ?? []
+    this.extensionsCategory = {
+      ...DEFAULT_FILE_EXTENSIONS_CATEGORIES,
+      ...extensionsCategory,
+    }
+    this.additionnalShadowExtensions = this.buildAdditionnalShadowExtensions()
+  }
+
+  buildAdditionnalShadowExtensions() {
+    const extensionsByCategory = _.groupBy(
+      this.extensions,
+      ext => this.extensionsCategory[ext.substring(1)] || `undefined`
+    )
+
+    const additionnalExtensions = []
+    for (const [category, exts] of Object.entries(extensionsByCategory)) {
+      if (category === `undefined`) continue
+      for (const ext of exts) {
+        additionnalExtensions.push({ key: ext, value: exts })
+      }
+    }
+
+    // Sort extensions in reverse length order, so that something such as
+    // ".css.js" get caught before ".js"
+    return additionnalExtensions.sort(
+      ({ key: a }, { key: b }) => a.length <= b.length
+    )
   }
 
   apply(resolver) {
+    // This hook is executed very early and captures the original file name
+    resolver
+      .getHook(`resolve`)
+      .tapAsync(
+        `GatsbyThemeComponentShadowingResolverPlugin`,
+        (request, stack, callback) => {
+          if (!request._gatsbyThemeShadowingOriginalRequestPath) {
+            request._gatsbyThemeShadowingOriginalRequestPath = request.request
+          }
+          return callback()
+        }
+      )
+
+    // This is where the magic really happens
     resolver
       .getHook(`before-resolved`)
       .tapAsync(
@@ -86,10 +148,15 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
             return callback()
           }
 
+          const originalRequestPath =
+            request._gatsbyThemeShadowingOriginalRequestPath
+          const originalRequestComponent = path.basename(originalRequestPath)
+
           // This is the shadowing algorithm.
           const builtComponentPath = this.resolveComponentPath({
             theme,
             component,
+            originalRequestComponent,
           })
 
           if (builtComponentPath) {
@@ -108,7 +175,7 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   // check the user's project and the theme files
-  resolveComponentPath({ theme, component }) {
+  resolveComponentPath({ theme, component, originalRequestComponent }) {
     // don't include matching theme in possible shadowing paths
     const themes = this.themes.filter(
       ({ themeName }) => themeName !== theme.themeName
@@ -123,18 +190,19 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     )
 
     const acceptableShadowFileNames = this.getAcceptableShadowFileNames(
-      path.basename(component)
+      path.basename(component),
+      originalRequestComponent
     )
 
     for (const theme of themesArray) {
-      const possibleComponentPath = path.dirname(path.join(theme, component))
+      const possibleComponentPath = path.join(theme, component)
       debug(`possibleComponentPath`, possibleComponentPath)
 
       let dir
       try {
         // we use fs/path instead of require.resolve to work with
         // TypeScript and alternate syntaxes
-        dir = fs.readdirSync(possibleComponentPath)
+        dir = fs.readdirSync(path.dirname(possibleComponentPath))
       } catch (e) {
         continue
       }
@@ -145,7 +213,10 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
         existsDir.includes(shadowFile)
       )
       if (matchingShadowFile) {
-        return path.join(possibleComponentPath, matchingShadowFile)
+        return path.join(
+          path.dirname(possibleComponentPath),
+          matchingShadowFile
+        )
       }
     }
     return null
@@ -212,17 +283,24 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
     return shadowFiles.includes(issuerPath)
   }
 
-  getAcceptableShadowFileNames(componentName) {
+  getAcceptableShadowFileNames(componentName, originalRequestComponent) {
     const matchingEntry = this.additionnalShadowExtensions.find(entry =>
       componentName.endsWith(entry.key)
     )
 
-    // By default, a file may only be shadowed by a file of the same extension
-    if (!matchingEntry) {
-      return [componentName]
+    let additionnalNames = []
+    if (matchingEntry) {
+      const baseName = componentName.slice(0, -matchingEntry.key.length)
+      additionnalNames = matchingEntry.value.map(ext => `${baseName}${ext}`)
     }
 
-    const baseName = componentName.slice(0, -(matchingEntry.key.length + 1))
-    return matchingEntry.value.map(ext => `${baseName}.${ext}`)
+    let legacyAdditionnalNames = []
+    if (originalRequestComponent) {
+      legacyAdditionnalNames = this.extensions.map(
+        ext => `${originalRequestComponent}${ext}`
+      )
+    }
+
+    return [componentName, ...additionnalNames, ...legacyAdditionnalNames]
   }
 }

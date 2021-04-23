@@ -18,6 +18,7 @@ module.exports = function (pageComponent) {
     const componentPath = shadowingPlugin.resolveComponentPath({
       theme,
       component,
+      originalRequestComponent: pageComponent,
     })
     if (componentPath) {
       return componentPath
