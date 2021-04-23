@@ -528,63 +528,63 @@ jobs:
 workflows:
   version: 2
 
-  # weekly-i18n-sync:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 1 * * 6"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - sync_translation_repo
+  weekly-i18n-sync:
+    triggers:
+      - schedule:
+          cron: "0 1 * * 6"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - sync_translation_repo
 
-  # nightly-react-next:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * 1,2,3,4,5"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - bootstrap-with-experimental-react:
-  #         version: "next"
-  #     - e2e_tests_gatsby-image_with_next_react:
-  #         nightly: true
-  #         requires:
-  #           - bootstrap-with-experimental-react
-  #     - e2e_tests_development_runtime_with_next_react:
-  #         nightly: true
-  #         requires:
-  #           - bootstrap-with-experimental-react
-  #     - e2e_tests_production_runtime_with_next_react:
-  #         nightly: true
-  #         requires:
-  #           - bootstrap-with-experimental-react
-  # nightly-react-experimental:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 0 * * 1,2,3,4,5"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - bootstrap-with-experimental-react:
-  #         version: "experimental"
-  #     - e2e_tests_gatsby-image_with_experimental_react:
-  #         nightly: true
-  #         requires:
-  #           - bootstrap-with-experimental-react
-  #     - e2e_tests_development_runtime_with_experimental_react:
-  #         nightly: true
-  #         requires:
-  #           - bootstrap-with-experimental-react
-  #     - e2e_tests_production_runtime_with_experimental_react:
-  #         nightly: true
-  #         requires:
-  #           - bootstrap-with-experimental-react
+  nightly-react-next:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "next"
+      - e2e_tests_gatsby-image_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime_with_next_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+  nightly-react-experimental:
+    triggers:
+      - schedule:
+          cron: "0 0 * * 1,2,3,4,5"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bootstrap-with-experimental-react:
+          version: "experimental"
+      - e2e_tests_gatsby-image_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_development_runtime_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
+      - e2e_tests_production_runtime_with_experimental_react:
+          nightly: true
+          requires:
+            - bootstrap-with-experimental-react
 
   build-test:
     jobs:
@@ -593,72 +593,72 @@ workflows:
       - typecheck:
           requires:
             - bootstrap
-      # - windows_unit_tests:
-      #     <<: *ignore_docs
-      #     requires:
-      #       - lint
-      # - unit_tests_node12:
-      #     <<: *ignore_docs
-      #     requires:
-      #       - lint
-      #       - typecheck
-      #       - bootstrap
-      # - unit_tests_node14:
-      #     <<: *ignore_docs
-      #     requires:
-      #       - lint
-      #       - typecheck
-      #       - bootstrap
+      - windows_unit_tests:
+          <<: *ignore_docs
+          requires:
+            - lint
+      - unit_tests_node12:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - unit_tests_node14:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
       - integration_tests_gatsby_source_wordpress:
           <<: *e2e-test-workflow
-      # - integration_tests_long_term_caching:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_cache_resilience:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_gatsby_pipeline:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_structured_logging:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_artifacts:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_ssr:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_images:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_functions:
-      #     <<: *e2e-test-workflow
-      # - integration_tests_gatsby_cli:
-      #     requires:
-      #       - bootstrap
-      # - e2e_tests_pnp:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_path-prefix:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_gatsby-image:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_gatsby-static-image:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_visual-regression:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_development_runtime:
-      #     <<: *e2e-test-workflow
-      # - e2e_tests_production_runtime:
-      #     <<: *e2e-test-workflow
-      # - themes_e2e_tests_production_runtime:
-      #     <<: *e2e-test-workflow
-      # - themes_e2e_tests_development_runtime:
-      #     <<: *e2e-test-workflow
-      # - mdx_e2e_tests:
-      #     <<: *e2e-test-workflow
-      # - starters_validate:
-      #     <<: *ignore_master
-      # - starters_publish:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      # - update_i18n_source:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - integration_tests_long_term_caching:
+          <<: *e2e-test-workflow
+      - integration_tests_cache_resilience:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_pipeline:
+          <<: *e2e-test-workflow
+      - integration_tests_structured_logging:
+          <<: *e2e-test-workflow
+      - integration_tests_artifacts:
+          <<: *e2e-test-workflow
+      - integration_tests_ssr:
+          <<: *e2e-test-workflow
+      - integration_tests_images:
+          <<: *e2e-test-workflow
+      - integration_tests_functions:
+          <<: *e2e-test-workflow
+      - integration_tests_gatsby_cli:
+          requires:
+            - bootstrap
+      - e2e_tests_pnp:
+          <<: *e2e-test-workflow
+      - e2e_tests_path-prefix:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_gatsby-static-image:
+          <<: *e2e-test-workflow
+      - e2e_tests_visual-regression:
+          <<: *e2e-test-workflow
+      - e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_production_runtime:
+          <<: *e2e-test-workflow
+      - themes_e2e_tests_development_runtime:
+          <<: *e2e-test-workflow
+      - mdx_e2e_tests:
+          <<: *e2e-test-workflow
+      - starters_validate:
+          <<: *ignore_master
+      - starters_publish:
+          filters:
+            branches:
+              only:
+                - master
+      - update_i18n_source:
+          filters:
+            branches:
+              only:
+                - master
