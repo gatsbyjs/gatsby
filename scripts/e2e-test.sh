@@ -5,9 +5,6 @@ SRC_PATH=$1
 CUSTOM_COMMAND="${2:-yarn test}"
 GATSBY_PATH="${CIRCLE_WORKING_DIRECTORY:-../../}"
 
-command npm -v
-command yarn -v
-
 # cypress docker does not support sudo and does not need it, but the default node executor does
 command -v gatsby-dev || command -v sudo && sudo npm install -g gatsby-dev-cli@next || npm install -g gatsby-dev-cli@next
 
