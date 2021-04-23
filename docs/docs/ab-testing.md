@@ -4,7 +4,7 @@ title: A/B Testing
 
 There are a number of potential approaches to applying A/B testing tools to Gatsby websites.
 
-Traditional A/B testing tools can have negative performance implications, and in general don't work as well with statically generated HTML pages.
+Traditional A/B testing tools can slow down y our site, and in general don't work as well with statically generated HTML pages.
 
 However, there are several potential approaches:
 
