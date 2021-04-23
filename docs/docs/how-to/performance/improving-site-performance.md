@@ -95,7 +95,7 @@ To reduce your JavaScript bundle size, follow the steps below.
 
 #### Step 1: Profile your bundle
 
-The first step to fix this is to figure out what's going on. Use `gatsby-plugin-webpack-bundle-analyzer-v2` and the _experimental_ plugin `gatsby-plugin-perf-budgets` to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
+The first step to fix this is to figure out what's going on. Use `gatsby-plugin-webpack-bundle-analyser-v2` and the _experimental_ plugin `gatsby-plugin-perf-budgets` to profile your bundle. When you add this tool to your `gatsby-config.js`, you can analyze the bundle size on each page in your application.
 
 Chunk naming patterns help you break down a page into three categories:
 
