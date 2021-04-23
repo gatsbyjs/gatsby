@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createPortal } from "react-dom"
 
-export const ShadowPortal = function Portal({ children }) {
+export const ShadowPortal = ({ children, identifier }) => {
   const mountNode = React.useRef(null)
   const portalNode = React.useRef(null)
   const shadowNode = React.useRef(null)
@@ -9,7 +9,7 @@ export const ShadowPortal = function Portal({ children }) {
 
   React.useLayoutEffect(() => {
     const ownerDocument = mountNode.current.ownerDocument
-    portalNode.current = ownerDocument.createElement(`gatsby-fast-refresh`)
+    portalNode.current = ownerDocument.createElement(identifier)
     shadowNode.current = portalNode.current.attachShadow({ mode: `open` })
     ownerDocument.body.appendChild(portalNode.current)
     forceUpdate({})
