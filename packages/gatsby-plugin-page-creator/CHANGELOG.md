@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.4.0-next.3...gatsby-plugin-page-creator@3.5.0-next.0) (2021-04-23)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-page-creator ([#30824](https://github.com/gatsbyjs/gatsby/issues/30824)) ([4f2b721](https://github.com/gatsbyjs/gatsby/commit/4f2b72122017485906c9935354d3572ecff3e0f2))
+
+### Performance Improvements
+
+- **gatsby-plugin-page-creator:** De-dupe collection pages ([#31016](https://github.com/gatsbyjs/gatsby/issues/31016)) ([e56f544](https://github.com/gatsbyjs/gatsby/commit/e56f544d367ed82dc2044705f6d0e03369f5ae27))
+
 # [3.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.4.0-next.2...gatsby-plugin-page-creator@3.4.0-next.3) (2021-04-20)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator
