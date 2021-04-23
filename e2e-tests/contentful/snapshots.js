@@ -1,31 +1,28 @@
 module.exports = {
   "content-reference": {
-    "content-reference: Many": {
-      "1": "Content Reference: Many[ContentfulInteger] 42[ContentfulText] The quick brown fox jumps over the lazy dog."
-    },
     "content-reference-many-2nd-level-loop": {
-      "1": "Content Reference: Many (2nd level loop)[ContentfulInteger] 42[ContentfulText] The quick brown fox jumps over the lazy dog.[ContentfulReference] Content Reference: One (Loop A -> B): [Content Reference: Many (2nd level loop), Content Reference: One (Loop B -> A)]"
+      "1": "<div data-cy-id=\"content-reference-many-2nd-level-loop\">\n  <h2>Content Reference: Many (2nd level loop)</h2>\n  <p data-cy-id=\"integer\">[ContentfulInteger] 42</p>\n  <p data-cy-id=\"text\">[ContentfulText] The quick brown fox jumps over the lazy\n    dog.</p>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: One (Loop A\n    -&gt; B): [Content Reference: One (Loop B -&gt; A)]</p>\n</div>"
     },
     "content-reference-many-loop-a-greater-b": {
-      "1": "Content Reference: Many (Loop A -> B)[ContentfulInteger] 42[ContentfulText] The quick brown fox jumps over the lazy dog.[ContentfulReference] Content Reference: Many (Loop B -> A): [Content Reference: Many (Loop A -> B)]"
+      "1": "<div data-cy-id=\"content-reference-many-loop-a-greater-b\">\n  <h2>Content Reference: Many (Loop A -&gt; B)</h2>\n  <p data-cy-id=\"integer\">[ContentfulInteger] 42</p>\n  <p data-cy-id=\"text\">[ContentfulText] The quick brown fox jumps over the lazy\n    dog.</p>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: Many (Loop\n    B -&gt; A): [Number: Integer, Text: Short, Content Reference: Many (Loop A\n    -&gt; B)]</p>\n</div>"
     },
     "content-reference-many-loop-b-greater-a": {
-      "1": "Content Reference: Many (Loop B -> A)[ContentfulInteger] 42[ContentfulText] The quick brown fox jumps over the lazy dog.[ContentfulReference] Content Reference: Many (Loop A -> B): [Content Reference: Many (Loop B -> A)]"
+      "1": "<div data-cy-id=\"content-reference-many-loop-b-greater-a\">\n  <h2>Content Reference: Many (Loop B -&gt; A)</h2>\n  <p data-cy-id=\"integer\">[ContentfulInteger] 42</p>\n  <p data-cy-id=\"text\">[ContentfulText] The quick brown fox jumps over the lazy\n    dog.</p>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: Many (Loop\n    A -&gt; B): [Number: Integer, Text: Short, Content Reference: Many (Loop B\n    -&gt; A)]</p>\n</div>"
     },
     "content-reference-many-self-reference": {
-      "1": "Content Reference: Many (Self Reference)[ContentfulInteger] 42[ContentfulText] The quick brown fox jumps over the lazy dog.[ContentfulReference] Content Reference: Many (Self Reference): [Content Reference: Many (Self Reference)]"
+      "1": "<div data-cy-id=\"content-reference-many-self-reference\">\n  <h2>Content Reference: Many (Self Reference)</h2>\n  <p data-cy-id=\"integer\">[ContentfulInteger] 42</p>\n  <p data-cy-id=\"text\">[ContentfulText] The quick brown fox jumps over the lazy\n    dog.</p>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: Many (Self\n    Reference): [Number: Integer, Text: Short, Content Reference: Many (Self\n    Reference)]</p>\n</div>"
     },
     "content-reference-one": {
-      "1": "Content Reference: One[ContentfulText] The quick brown fox jumps over the lazy dog."
+      "1": "<div data-cy-id=\"content-reference-one\">\n  <h2>Content Reference: One</h2>\n  <p data-cy-id=\"text\">[ContentfulText] The quick brown fox jumps over the lazy\n    dog.</p>\n</div>"
     },
     "content-reference-one-loop-a-greater-b": {
-      "1": "Content Reference: One (Loop A -> B)[ContentfulReference] Content Reference: One (Loop B -> A): [Content Reference: One (Loop A -> B)]"
+      "1": "<div data-cy-id=\"content-reference-one-loop-a-greater-b\">\n  <h2>Content Reference: One (Loop A -&gt; B)</h2>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: One (Loop B\n    -&gt; A): [Content Reference: One (Loop A -&gt; B)]</p>\n</div>"
     },
     "content-reference-one-loop-b-greater-a": {
-      "1": "Content Reference: One (Loop B -> A)[ContentfulReference] Content Reference: One (Loop A -> B): [Content Reference: Many (2nd level loop), Content Reference: One (Loop B -> A)]"
+      "1": "<div data-cy-id=\"content-reference-one-loop-b-greater-a\">\n  <h2>Content Reference: One (Loop B -&gt; A)</h2>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: One (Loop A\n    -&gt; B): [Content Reference: One (Loop B -&gt; A)]</p>\n</div>"
     },
     "content-reference-one-self-reference": {
-      "1": "Content Reference: One (Self Reference)[ContentfulReference] Content Reference: One (Self Reference): [Content Reference: One (Self Reference)]"
+      "1": "<div data-cy-id=\"content-reference-one-self-reference\">\n  <h2>Content Reference: One (Self Reference)</h2>\n  <p data-cy-id=\"reference\">[ContentfulReference] Content Reference: One (Self\n    Reference): [Content Reference: One (Self Reference)]</p>\n</div>"
     }
   },
   "__version": "6.8.0",
