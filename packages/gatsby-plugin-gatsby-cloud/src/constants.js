@@ -41,3 +41,5 @@ export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
 export const COMMON_BUNDLES = [`commons`, `app`]
 
 export const PAGE_DATA_DIR = `page-data/`
+
+export const POLLING_INTERVAL = 5000
