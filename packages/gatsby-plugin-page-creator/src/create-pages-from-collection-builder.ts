@@ -105,38 +105,47 @@ ${errors.map(error => error.message).join(`\n`)}`.trim(),
 
   let derivePathErrors = 0
 
+  const knownPagePaths = new Set<string>()
+
   // 3. Loop through each node and create the page, also save the path it creates to pass to the watcher
   //    the watcher will use this data to delete the pages if the query changes significantly.
-  const paths = nodes.map((node: Record<string, Record<string, unknown>>) => {
-    // URL path for the component and node
-    const { derivedPath, errors } = derivePath(
-      filePath,
-      node,
-      reporter,
-      slugifyOptions
-    )
-    const path = createPath(derivedPath)
-    // Params is supplied to the FE component on props.params
-    const params = getCollectionRouteParams(createPath(filePath), path)
-    // nodeParams is fed to the graphql query for the component
-    const nodeParams = reverseLookupParams(node, absolutePath)
-    // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
-    const matchPath = getMatchPath(path)
+  const paths = nodes
+    .map((node: Record<string, Record<string, unknown>>) => {
+      // URL path for the component and node
+      const { derivedPath, errors } = derivePath(
+        filePath,
+        node,
+        reporter,
+        slugifyOptions
+      )
+      const path = createPath(derivedPath)
+      // We've already created a page with this path
+      if (knownPagePaths.has(path)) {
+        return false
+      }
+      knownPagePaths.add(path)
+      // Params is supplied to the FE component on props.params
+      const params = getCollectionRouteParams(createPath(filePath), path)
+      // nodeParams is fed to the graphql query for the component
+      const nodeParams = reverseLookupParams(node, absolutePath)
+      // matchPath is an optional value. It's used if someone does a path like `{foo}/[bar].js`
+      const matchPath = getMatchPath(path)
 
-    actions.createPage({
-      path: path,
-      matchPath,
-      component: absolutePath,
-      context: {
-        ...nodeParams,
-        __params: params,
-      },
+      actions.createPage({
+        path: path,
+        matchPath,
+        component: absolutePath,
+        context: {
+          ...nodeParams,
+          __params: params,
+        },
+      })
+
+      derivePathErrors += errors
+
+      return path
     })
-
-    derivePathErrors += errors
-
-    return path
-  })
+    .filter((value): value is string => Boolean(value))
 
   if (derivePathErrors > 0) {
     reporter.panicOnBuild({
