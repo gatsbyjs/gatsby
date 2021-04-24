@@ -170,7 +170,7 @@ function assertHTMLCorrectness(runNumber) {
         : `component---src-templates-deps-page-query-alternative-js`
 
     const expectedBackground =
-      runNumber < 6 ? `white` : runNumber === 6 ? `yellow` : `green`
+      runNumber < 8 ? `white` : runNumber === 8 ? `yellow` : `green`
 
     let pageDataContent
     let htmlContent
@@ -228,6 +228,102 @@ function assertHTMLCorrectness(runNumber) {
         data: { depPageQuery: { label: `Stable (always created)` } },
         pageContext: { id: `page-query-template-change` },
       })
+    })
+  })
+
+  describe(`/changing-context/`, () => {
+    let pageDataContent
+    let htmlContent
+    beforeAll(() => {
+      pageDataContent = fs.readJsonSync(
+        path.join(
+          process.cwd(),
+          `public`,
+          `page-data`,
+          `changing-context`,
+          `page-data.json`
+        )
+      )
+
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `changing-context`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html is correctly generated using fresh page context`, () => {
+      // remove <!-- --> from html content string as that's impl details of react ssr
+      expect(htmlContent.replace(/<!-- -->/g, ``)).toContain(
+        `Dummy page for runNumber: ${runNumber}`
+      )
+    })
+
+    it(`page-data is correctly generated using fresh page context`, () => {
+      expect(pageDataContent.result.pageContext).toEqual({
+        dummyId: `runNumber: ${runNumber}`,
+      })
+    })
+  })
+
+  describe(`/webpack/local-plugin-1/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(
+          process.cwd(),
+          `public`,
+          `webpack`,
+          `local-plugin-1`,
+          `index.html`
+        ),
+        `utf-8`
+      )
+    })
+
+    it(`webpack plugin is used correctly (webpack cache gets invalidate on plugin change)`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 6 ? `localWebpackPlugin1_1` : `localWebpackPlugin1_2`
+      )
+    })
+  })
+
+  describe(`/webpack/local-plugin-2/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(
+          process.cwd(),
+          `public`,
+          `webpack`,
+          `local-plugin-2`,
+          `index.html`
+        ),
+        `utf-8`
+      )
+    })
+
+    it(`webpack plugin is used correctly (webpack cache gets invalidate on plugin change)`, () => {
+      expect(htmlContent).toContain(
+        runNumber < 7 ? `localWebpackPlugin2_1` : `localWebpackPlugin2_2`
+      )
+    })
+  })
+}
+
+function assertNodeCorrectness(runNumber) {
+  describe(`node correctness`, () => {
+    it(`nodes do not have repeating counters`, () => {
+      const seenCounters = new Map()
+      const duplicates = []
+      // Just a convenience step to display node ids with duplicate counters
+      manifest[runNumber].allNodeCounters.forEach(([id, counter]) => {
+        if (seenCounters.has(counter)) {
+          duplicates.push({ counter, nodeIds: [id, seenCounters.get(counter)] })
+        }
+        seenCounters.set(counter, id)
+      })
+      expect(manifest[runNumber].allNodeCounters.length).toBeGreaterThan(0)
+      expect(duplicates).toEqual([])
     })
   })
 }
@@ -454,6 +550,8 @@ describe(`First run (baseline)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Second run (different pages created, data changed)`, () => {
@@ -466,6 +564,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/static-query-result-tracking/should-invalidate/`,
     `/page-query-template-change/`,
     `/stale-pages/sometimes-i-have-trailing-slash-sometimes-i-dont/`,
+    `/changing-context/`,
   ]
 
   const expectedPagesToRemainFromPreviousBuild = [
@@ -475,6 +574,7 @@ describe(`Second run (different pages created, data changed)`, () => {
     `/static-query-result-tracking/stable/`,
     `/static-query-result-tracking/rerun-query-but-dont-recreate-html/`,
     `/page-that-will-have-trailing-slash-removed`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   const expectedPages = [
@@ -541,6 +641,8 @@ describe(`Second run (different pages created, data changed)`, () => {
   assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Third run (js change, all pages are recreated)`, () => {
@@ -557,6 +659,7 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     `/stale-pages/only-in-first/`,
     `/page-query-dynamic-1/`,
     `/page-query-dynamic-2/`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   let changedFileOriginalContent
@@ -632,6 +735,8 @@ describe(`Third run (js change, all pages are recreated)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
@@ -640,6 +745,7 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   const expectedPages = [
     `/stale-pages/only-not-in-first`,
     `/page-query-dynamic-4/`,
+    `/stateful-page-not-recreated-in-third-run/`,
   ]
 
   const unexpectedPages = [
@@ -718,6 +824,8 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
 describe(`Fifth run (.cache is deleted but public isn't)`, () => {
@@ -792,9 +900,11 @@ describe(`Fifth run (.cache is deleted but public isn't)`, () => {
   assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
-describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () => {
+describe(`Sixth run (change webpack plugin variant 1 - invalidate webpack cache)`, () => {
   const runNumber = 6
 
   const expectedPages = [
@@ -809,6 +919,203 @@ describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () =
     `/page-query-dynamic-3/`,
     `/page-query-dynamic-4/`,
     `/page-query-dynamic-5/`,
+  ]
+
+  let changedFileOriginalContent
+  const changedFileAbspath = path.join(
+    process.cwd(),
+    `plugins`,
+    `gatsby-plugin-webpack-1`,
+    `local-webpack-plugin.js`
+  )
+
+  beforeAll(async () => {
+    // make change to used webpack plugin
+    changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
+    filesToRevert[changedFileAbspath] = changedFileOriginalContent
+
+    const newContent = changedFileOriginalContent.replace(
+      `localWebpackPlugin1_1`,
+      `localWebpackPlugin1_2`
+    )
+
+    if (newContent === changedFileOriginalContent) {
+      throw new Error(`Test setup failed`)
+    }
+
+    fs.writeFileSync(changedFileAbspath, newContent)
+    await runGatsbyWithRunTestSetup(runNumber)()
+  })
+
+  describe(`html files`, () => {
+    const type = `html`
+
+    describe(`should have expected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+
+    it(`should recreate all html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        manifest[runNumber].allPages.sort()
+      )
+    })
+  })
+
+  describe(`page-data files`, () => {
+    const type = `page-data`
+
+    describe(`should have expected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+  })
+
+  // Sixth run - webpack plugin changed - both ssr and browser bundles should be invalidated
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
+
+  assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
+})
+
+describe(`Seventh run (change webpack plugin variant 2 - invalidate webpack cache)`, () => {
+  const runNumber = 7
+
+  const expectedPages = [
+    `/stale-pages/only-not-in-first`,
+    `/page-query-dynamic-7/`,
+  ]
+
+  const unexpectedPages = [
+    `/stale-pages/only-in-first/`,
+    `/page-query-dynamic-1/`,
+    `/page-query-dynamic-2/`,
+    `/page-query-dynamic-3/`,
+    `/page-query-dynamic-4/`,
+    `/page-query-dynamic-5/`,
+    `/page-query-dynamic-6/`,
+  ]
+
+  let changedFileOriginalContent
+  const changedFileAbspath = path.join(
+    process.cwd(),
+    `plugins`,
+    `gatsby-plugin-webpack-2`,
+    `on-create-webpack-config.js`
+  )
+
+  beforeAll(async () => {
+    // make change to used webpack plugin
+    changedFileOriginalContent = fs.readFileSync(changedFileAbspath, `utf-8`)
+    filesToRevert[changedFileAbspath] = changedFileOriginalContent
+
+    const newContent = changedFileOriginalContent.replace(
+      `localWebpackPlugin2_1`,
+      `localWebpackPlugin2_2`
+    )
+
+    if (newContent === changedFileOriginalContent) {
+      throw new Error(`Test setup failed`)
+    }
+
+    fs.writeFileSync(changedFileAbspath, newContent)
+    await runGatsbyWithRunTestSetup(runNumber)()
+  })
+
+  describe(`html files`, () => {
+    const type = `html`
+
+    describe(`should have expected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+
+    it(`should recreate all html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        manifest[runNumber].allPages.sort()
+      )
+    })
+  })
+
+  describe(`page-data files`, () => {
+    const type = `page-data`
+
+    describe(`should have expected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+  })
+
+  // Seventh run - webpack plugin changed - both ssr and browser bundles should be invalidated
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
+
+  assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
+})
+
+describe(`Eight run (ssr-only change - only ssr compilation hash changes)`, () => {
+  const runNumber = 8
+
+  const expectedPages = [
+    `/stale-pages/only-not-in-first`,
+    `/page-query-dynamic-8/`,
+  ]
+
+  const unexpectedPages = [
+    `/stale-pages/only-in-first/`,
+    `/page-query-dynamic-1/`,
+    `/page-query-dynamic-2/`,
+    `/page-query-dynamic-3/`,
+    `/page-query-dynamic-4/`,
+    `/page-query-dynamic-5/`,
+    `/page-query-dynamic-6/`,
+    `/page-query-dynamic-7/`,
   ]
 
   let changedFileOriginalContent
@@ -878,18 +1185,20 @@ describe(`Sixth run (ssr-only change - only ssr compilation hash changes)`, () =
     })
   })
 
-  // Sixth run - only ssr bundle should change as only file used by ssr was changed
+  // Eight run - only ssr bundle should change as only file used by ssr was changed
   assertWebpackBundleChanges({ browser: false, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })
 
-describe(`Seventh run (no change in any file that is bundled, we change untracked file, but previous build used unsafe method so all should rebuild)`, () => {
-  const runNumber = 7
+describe(`Ninth run (no change in any file that is bundled, we change untracked file, but previous build used unsafe method so all should rebuild)`, () => {
+  const runNumber = 9
 
   const expectedPages = [
     `/stale-pages/only-not-in-first`,
-    `/page-query-dynamic-7/`,
+    `/page-query-dynamic-9/`,
   ]
 
   const unexpectedPages = [
@@ -900,6 +1209,8 @@ describe(`Seventh run (no change in any file that is bundled, we change untracke
     `/page-query-dynamic-4/`,
     `/page-query-dynamic-5/`,
     `/page-query-dynamic-6/`,
+    `/page-query-dynamic-7/`,
+    `/page-query-dynamic-8/`,
   ]
 
   let changedFileOriginalContent
@@ -966,8 +1277,10 @@ describe(`Seventh run (no change in any file that is bundled, we change untracke
     })
   })
 
-  // Seventh run - no bundle should change as we don't change anything that IS bundled
+  // Ninth run - no bundle should change as we don't change anything that IS bundled
   assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
 
   assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
 })

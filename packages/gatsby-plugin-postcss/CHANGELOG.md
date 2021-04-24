@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.4.0-next.0...gatsby-plugin-postcss@4.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.3.0-next.1...gatsby-plugin-postcss@4.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.3.0-next.0...gatsby-plugin-postcss@4.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-postcss
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.2.0-next.1...gatsby-plugin-postcss@4.3.0-next.0) (2021-03-25)
+
+### Features
+
+- enable better cssOptions override for modules ([#30112](https://github.com/gatsbyjs/gatsby/issues/30112)) ([4571d2b](https://github.com/gatsbyjs/gatsby/commit/4571d2b098e1830ae7a9b1ddd0e23cb1abdcc86c))
+
 # [4.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-postcss@4.2.0-next.0...gatsby-plugin-postcss@4.2.0-next.1) (2021-03-19)
 
 **Note:** Version bump only for package gatsby-plugin-postcss

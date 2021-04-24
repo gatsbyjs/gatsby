@@ -78,10 +78,20 @@ class Dev404Page extends React.Component {
   }
 
   render() {
+    // Detect when the query returns the default function node that's added when functions
+    // are *not* enabled. That seems the simplest way to communicate whether
+    // functions are enabled or not to this page.
+    // TODO remove when functions are shipped.
+    const functionsEnabled = !(
+      this.props.data.allSiteFunction.nodes[0]?.apiRoute === `FAKE`
+    )
     const { pathname } = this.props.location
     let newFilePath
+    let newAPIPath
     if (pathname === `/`) {
       newFilePath = `src/pages/index.js`
+    } else if (functionsEnabled && pathname.slice(0, 4) === `/api`) {
+      newAPIPath = `src${pathname}.js`
     } else if (pathname.slice(-1) === `/`) {
       newFilePath = `src/pages${pathname.slice(0, -1)}.js`
     } else {
@@ -94,7 +104,9 @@ class Dev404Page extends React.Component {
       <div>
         <h1>Gatsby.js development 404 page</h1>
         <p>
-          {`There's not a page yet at `}
+          {`There's not a page ${
+            functionsEnabled ? `or function ` : ``
+          }yet at `}
           <code>{pathname}</code>
         </p>
         {this.props.custom404 ? (
@@ -109,20 +121,74 @@ class Dev404Page extends React.Component {
             <code>src/pages/404.js</code>.
           </p>
         )}
-        <p>
-          Create a React.js component in your site directory at
-          {` `}
-          <code>{newFilePath}</code>
-          {` `}
-          and this page will automatically refresh to show the new page
-          component you created.
-        </p>
+        {newFilePath && (
+          <div>
+            <h2>Create a page at this url</h2>
+            <p>
+              Create a React.js component like the following in your site
+              directory at
+              {` `}"<code>{newFilePath}</code>"{` `}
+              and this page will automatically refresh to show the new page
+              component you created.
+            </p>
+            <pre>
+              <code
+                dangerouslySetInnerHTML={{
+                  __html: `
+export default function Component () {
+  return "Hello world"
+}`,
+                }}
+              />
+            </pre>
+          </div>
+        )}
+        {newAPIPath && (
+          <div>
+            <h2>Create an API function at this url</h2>
+            <p>
+              Create a javascript file like the following in your site directory
+              at
+              {` `}"<code>{newAPIPath}</code>"{` `}
+              and refresh to execute the new API function you created.
+            </p>
+            <pre>
+              <code
+                dangerouslySetInnerHTML={{
+                  __html: `
+export default function API (req, res) {
+  res.json({ hello: "world" })
+}`,
+                }}
+              />
+            </pre>
+          </div>
+        )}
         {this.state.initPagePaths.length > 0 && (
           <div>
+            <hr />
             <p>
-              If you were trying to reach another page, perhaps you can find it
+              If you were trying to reach another page
+              {functionsEnabled ? ` or function` : ``}, perhaps you can find it
               below.
             </p>
+            {functionsEnabled && (
+              <>
+                <h2>
+                  Functions ({this.props.data.allSiteFunction.nodes.length})
+                </h2>
+                <ul>
+                  {this.props.data.allSiteFunction.nodes.map(node => {
+                    const apiRoute = `/api/${node.apiRoute}`
+                    return (
+                      <li key={apiRoute}>
+                        <a href={apiRoute}>{apiRoute}</a>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </>
+            )}
             <h2>
               Pages (
               {this.state.pagePaths.length != this.state.initPagePaths.length
@@ -170,6 +236,11 @@ export default Dev404Page
 
 export const pagesQuery = graphql`
   query PagesQuery {
+    allSiteFunction {
+      nodes {
+        apiRoute
+      }
+    }
     allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {
       nodes {
         path

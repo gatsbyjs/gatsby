@@ -3,15 +3,13 @@ title: Commands (Gatsby CLI)
 tableOfContentsDepth: 2
 ---
 
-The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including like running a development server and building out your Gatsby application for deployment.
+The Gatsby command line tool (CLI) is the main entry point for getting up and running with a Gatsby application and for using functionality including running a development server and building out your Gatsby application for deployment.
 
-_We provide similar documentation available with the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md), and our [cheat sheet](/docs/cheat-sheet/) has all the top CLI commands ready to print out._
+_This page provides similar documentation as the gatsby-cli [README](https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/README.md). The [Gatsby cheat sheet](/docs/cheat-sheet/) has docs for top CLI commands & APIs all ready to print out._
 
 ## How to use gatsby-cli
 
-The Gatsby CLI (`gatsby-cli`) is packaged as an executable that can be used globally. The Gatsby CLI is available via [npm](https://www.npmjs.com/) and should be installed globally by running `npm install -g gatsby-cli` to use it locally.
-
-Run `gatsby --help` for full help.
+The Gatsby CLI is available via [npm](https://www.npmjs.com/) and is installed globally by running `npm install -g gatsby-cli`.
 
 You can also use the `package.json` script variant of these commands, typically exposed _for you_ with most [starters](/docs/starters/). For example, if you want to make the [`gatsby develop`](#develop) command available in your application, open up `package.json` and add a script like so:
 
@@ -24,6 +22,8 @@ You can also use the `package.json` script variant of these commands, typically 
 ```
 
 ## API commands
+
+All the following documentation is available in the tool by running `gatsby --help`.
 
 ### `new`
 
@@ -72,7 +72,7 @@ Would you like to install additional features with other plugins? (multiple choi
 
 #### Creating a site from a starter
 
-To create a site from a starter instead, run the command while immediately specifying your site name and starter URL:
+To create a site from a starter instead, run the command with your site name and starter URL:
 
 ```shell
 gatsby new [<site-name> [<starter-url>]]
@@ -119,6 +119,7 @@ Once you've installed a Gatsby site, go to the root directory of your project an
 | `-p`, `--port`  | Set port. Defaults to env.PORT or 8000          |
 | `-o`, `--open`  | Open the site in your (default) browser for you |
 | `-S`, `--https` | Use HTTPS                                       |
+|   `--inspect`   | Opens a port for debugging                      |
 
 Follow the [Local HTTPS guide](/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.

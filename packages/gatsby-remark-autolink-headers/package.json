@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-autolink-headers",
   "description": "Gatsby plugin to autolink headers in markdown processed by Remark",
-  "version": "3.2.0-next.0",
+  "version": "4.2.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,15 +10,15 @@
     "@babel/runtime": "^7.12.5",
     "github-slugger": "^1.3.0",
     "lodash": "^4.17.21",
-    "mdast-util-to-string": "^1.1.0",
-    "unist-util-visit": "^1.4.1"
+    "mdast-util-to-string": "^2.0.0",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.2.0-next.0",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.2.0-next.0"
+    "gatsby-plugin-utils": "^1.5.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-autolink-headers#readme",
   "keywords": [

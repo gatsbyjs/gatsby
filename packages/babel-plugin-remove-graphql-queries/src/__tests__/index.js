@@ -11,6 +11,7 @@ function matchesSnapshot(query) {
     plugins: [plugin],
     filename: `src/components/test.js`,
   })
+
   expect(codeWithoutFileName).toMatchSnapshot()
   expect(codeWithFileName).toMatchSnapshot()
 }
@@ -49,6 +50,21 @@ describe(`babel-plugin-remove-graphql-queries`, () => {
   import { graphql, useStaticQuery } from 'gatsby'
 
   export default () => {
+    const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
+
+    return (
+      <h1>{siteTitle.site.siteMetadata.title}</h1>
+    )
+  }
+  `)
+  })
+
+  it(`Transforms queries in useStaticQuery that use commonjs`, () => {
+    matchesSnapshot(`
+  const React = require("react")
+  const { graphql, useStaticQuery } = require("gatsby")
+
+  module.exports = () => {
     const siteTitle = useStaticQuery(graphql\`{site { siteMetadata { title }}}\`)
 
     return (

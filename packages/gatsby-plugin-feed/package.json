@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-feed",
   "description": "Creates an RSS feed for your Gatsby site.",
-  "version": "3.2.0-next.0",
+  "version": "3.5.0-next.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -11,14 +11,14 @@
     "@hapi/joi": "^15.1.1",
     "common-tags": "^1.8.0",
     "fs-extra": "^9.1.0",
-    "gatsby-plugin-utils": "^1.2.0-next.0",
+    "gatsby-plugin-utils": "^1.5.0-next.0",
     "lodash.merge": "^4.6.2",
     "rss": "^1.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.2.0-next.0",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-feed#readme",

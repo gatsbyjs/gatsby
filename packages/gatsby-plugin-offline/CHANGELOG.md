@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.4.0-next.3...gatsby-plugin-offline@4.5.0-next.0) (2021-04-23)
+
+### Bug Fixes
+
+- **gatsby,gatsby-plugin-offline:** register offline plugin when not on preview ([#30984](https://github.com/gatsbyjs/gatsby/issues/30984)) ([17f028d](https://github.com/gatsbyjs/gatsby/commit/17f028d7085e1e4dc7bd361134bf0230b2cb7d95))
+
+# [4.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.4.0-next.2...gatsby-plugin-offline@4.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [4.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.4.0-next.1...gatsby-plugin-offline@4.4.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [4.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.4.0-next.0...gatsby-plugin-offline@4.4.0-next.1) (2021-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [4.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.3.0-next.1...gatsby-plugin-offline@4.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [4.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.3.0-next.0...gatsby-plugin-offline@4.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
+# [4.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.2.0-next.0...gatsby-plugin-offline@4.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 # [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.1.0-next.2...gatsby-plugin-offline@4.2.0-next.0) (2021-03-11)
 
 **Note:** Version bump only for package gatsby-plugin-offline

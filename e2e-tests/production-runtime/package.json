@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "babel-plugin-search-and-replace": "^1.1.0",
     "cypress": "^6.5.0",
     "gatsby": "^3.0.0-next.6",
     "gatsby-plugin-image": "^1.0.0-next.5",

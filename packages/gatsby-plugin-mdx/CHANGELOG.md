@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.4.0-next.3...gatsby-plugin-mdx@2.5.0-next.0) (2021-04-23)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Reference style links broken in static builds ([#30967](https://github.com/gatsbyjs/gatsby/issues/30967)) ([b457b3d](https://github.com/gatsbyjs/gatsby/commit/b457b3db68ba850a837754cc7390dc5c08f8d739))
+
+# [2.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.4.0-next.2...gatsby-plugin-mdx@2.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.4.0-next.1...gatsby-plugin-mdx@2.4.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.4.0-next.0...gatsby-plugin-mdx@2.4.0-next.1) (2021-04-16)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.3.0-next.2...gatsby-plugin-mdx@2.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.3.0-next.1...gatsby-plugin-mdx@2.3.0-next.2) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
+# [2.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.3.0-next.0...gatsby-plugin-mdx@2.3.0-next.1) (2021-03-30)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** timeToRead returns NaN when word count is 0 ([#30489](https://github.com/gatsbyjs/gatsby/issues/30489)) ([75e234a](https://github.com/gatsbyjs/gatsby/commit/75e234ac9116e16fbd177d24f3b98d7c14409b4e))
+
+# [2.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.2.0-next.0...gatsby-plugin-mdx@2.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 # [2.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.1.0-next.2...gatsby-plugin-mdx@2.2.0-next.0) (2021-03-11)
 
 ### Bug Fixes

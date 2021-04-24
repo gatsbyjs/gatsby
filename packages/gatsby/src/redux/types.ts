@@ -39,6 +39,10 @@ export interface IGatsbyPage {
   componentPath: SystemPath
 }
 
+export interface IGatsbyFunction {
+  path: string
+}
+
 export interface IGatsbyConfig {
   plugins?: Array<{
     // This is the name of the plugin like `gatsby-plugin-manifest
@@ -222,12 +226,14 @@ export interface IGatsbyState {
     pluginFilepath: SystemPath
   }>
   config: IGatsbyConfig
+  functions: Map<string, IGatsbyFunction>
   pages: Map<string, IGatsbyPage>
   schema: GraphQLSchema
   definitions: Map<string, IDefinitionMeta>
   status: {
     plugins: Record<string, IGatsbyPlugin>
     PLUGINS_HASH: Identifier
+    LAST_NODE_COUNTER: number
   }
   queries: {
     byNode: Map<Identifier, Set<Identifier>>
@@ -305,6 +311,7 @@ export interface ICachedReduxState {
   staticQueryComponents: IGatsbyState["staticQueryComponents"]
   webpackCompilationHash: IGatsbyState["webpackCompilationHash"]
   pageDataStats: IGatsbyState["pageDataStats"]
+  pages?: IGatsbyState["pages"]
   staticQueriesByTemplate: IGatsbyState["staticQueriesByTemplate"]
   pendingPageDataWrites: IGatsbyState["pendingPageDataWrites"]
   queries: IGatsbyState["queries"]
@@ -370,7 +377,6 @@ export type ActionsUnion =
   | IDisableTypeInferenceAction
   | ISetProgramAction
   | ISetProgramExtensions
-  | IDeletedStalePageDataFiles
   | IRemovedHtml
   | ITrackedHtmlCleanup
   | IGeneratedHtml
@@ -740,6 +746,11 @@ export interface ISetSiteConfig {
   payload: IGatsbyState["config"]
 }
 
+export interface ISetSiteFunctions {
+  type: `SET_SITE_FUNCTIONS`
+  payload: IGatsbyState["functions"]
+}
+
 export interface ICreateNodeAction {
   type: `CREATE_NODE`
   payload: IGatsbyNode
@@ -816,13 +827,6 @@ interface ISetProgramAction {
 interface ISetProgramExtensions {
   type: `SET_PROGRAM_EXTENSIONS`
   payload: Array<string>
-}
-
-interface IDeletedStalePageDataFiles {
-  type: `DELETED_STALE_PAGE_DATA_FILES`
-  payload: {
-    pagePathsToClear: Set<string>
-  }
 }
 
 interface IRemovedHtml {

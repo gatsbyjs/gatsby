@@ -11,6 +11,7 @@ export async function createPages({
   gatsbyNodeGraphQLFunction,
   store,
   deferNodeMutation,
+  shouldRunCreatePagesStatefully,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: Array<string>
   changedPages: Array<string>
@@ -33,6 +34,28 @@ export async function createPages({
     },
     { activity }
   )
+  activity.end()
+
+  if (shouldRunCreatePagesStatefully) {
+    const activity = reporter.activityTimer(`createPagesStatefully`, {
+      parentSpan,
+    })
+    activity.start()
+    await apiRunnerNode(
+      `createPagesStatefully`,
+      {
+        graphql: gatsbyNodeGraphQLFunction,
+        traceId: `initial-createPagesStatefully`,
+        waitForCascadingActions: true,
+        parentSpan: activity.span,
+        deferNodeMutation,
+      },
+      {
+        activity,
+      }
+    )
+    activity.end()
+  }
 
   reporter.info(
     `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
@@ -50,11 +73,13 @@ export async function createPages({
     )
   }
 
-  activity.end()
-
   reporter.verbose(`Checking for deleted pages`)
 
-  const deletedPages = deleteUntouchedPages(store.getState().pages, timestamp)
+  const deletedPages = deleteUntouchedPages(
+    store.getState().pages,
+    timestamp,
+    !!shouldRunCreatePagesStatefully
+  )
 
   reporter.verbose(
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
