@@ -1,10 +1,11 @@
-import { IErrorMapEntry, ErrorId } from "./error-map"
+import { IErrorMapEntry, ErrorId, ErrorCategory } from "./error-map"
 
 export interface IConstructError {
   details: {
     id?: ErrorId
     context?: Record<string, string>
     error?: Error
+    pluginName?: string
     [key: string]: unknown
   }
 }
@@ -30,11 +31,13 @@ export interface IStructuredError {
     start: ILocationPosition
     end?: ILocationPosition
   }
+  category?: keyof typeof ErrorCategory
   error?: Error
   group?: string
   level: IErrorMapEntry["level"]
   type?: IErrorMapEntry["type"]
   docsUrl?: string
+  pluginName?: string
 }
 
 export interface IOptionalGraphQLInfoContext {

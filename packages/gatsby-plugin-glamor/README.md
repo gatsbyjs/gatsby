@@ -10,7 +10,7 @@ rendering and start writing React components that carry their styles with them.
 
 ## Install
 
-`npm install --save gatsby-plugin-glamor glamor`
+`npm install gatsby-plugin-glamor glamor`
 
 ## How to use
 

@@ -1,8 +1,8 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const Joi = require(`@hapi/joi`)
+import fs from "fs-extra"
+import path from "path"
+import * as Joi from "@hapi/joi"
 
-const resourceSchema = require(`../resource-schema`)
+import resourceSchema from "../resource-schema"
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
 
@@ -50,7 +50,7 @@ const destroy = async (context, directoryResource) => {
   return directoryResource
 }
 
-module.exports.plan = async (context, { id, path: directoryPath }) => {
+export const plan = async (context, { id, path: directoryPath }) => {
   const plan = {
     describe: `Create directory "${directoryPath}"`,
   }
@@ -64,11 +64,8 @@ const schema = {
   path: Joi.string(),
   ...resourceSchema,
 }
-exports.schema = schema
-exports.validate = resource =>
+
+export const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-module.exports.create = create
-module.exports.update = update
-module.exports.read = read
-module.exports.destroy = destroy
+export { schema, create, update, read, destroy }

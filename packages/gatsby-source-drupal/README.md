@@ -15,7 +15,7 @@ been used since jsonapi version `8.x-1.0-alpha4`.
 
 ## Install
 
-`npm install --save gatsby-source-drupal`
+`npm install gatsby-source-drupal`
 
 ## How to use
 
@@ -260,6 +260,32 @@ module.exports = {
           // Use includes so only the news content paragraph components are fetched.
           "node--news": "include=field_content",
         },
+      },
+    },
+  ],
+}
+```
+
+## Entity Reference revisions and relationships
+
+By default `gatsby-source-drupal` resolves Entity Reference relationships using just ID. If you are
+using the contrib module [Entity reference revisions](https://drupal.org/project/entity_reference_revisions) and [Paragraphs](https://drupal.org/project/paragraphs),
+you may have advanced use-cases such as fetching drafts where you want to resolve these relationships using both ID and
+revision ID. You can nominate entity-type IDs where you wish to resolve relationships using the revision ID by adding
+them to the `entityReferenceRevisions` configuration option. Please note that `gatsby-source-drupal` only ever fetches
+the default (published) revision, so this functionality is only needed in advanced cases where you have custom code
+Drupal side that is applying additional logic.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        apiBase: `api`,
+        entityReferenceRevisions: ["paragraph"], // optional, defaults to `[]`
       },
     },
   ],

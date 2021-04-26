@@ -1,13 +1,13 @@
-const execa = require(`execa`)
-const path = require(`path`)
-const fs = require(`fs`)
-const detectPort = require(`detect-port`)
-const { getService, createServiceLock } = require(`gatsby-core-utils`)
+import execa from "execa"
+import path from "path"
+import fs from "fs"
+import detectPort from "detect-port"
+import { getService, createServiceLock } from "gatsby-core-utils"
 
 // NOTE(@mxstbr): The forceStart boolean enforces us to start the recipes graphql server
 // even if another instance might already be running. This is necessary to ensure the gatsby
 // develop command does not _not_ run the server if the user is running gatsby recipes at the same time.
-export default async (programPath, forceStart) => {
+export default async function startGraphQLServer(programPath, forceStart) {
   // If this env variable is set, we're in dev mode & assume the recipes API was already started
   // manually.
   if (process.env.RECIPES_DEV_MODE) {
@@ -29,7 +29,7 @@ export default async (programPath, forceStart) => {
         all: true,
         env: {
           // Chalk doesn't want to output color in a child process
-          // as it (correctly) thinks it's not in a normal terminal environemnt.
+          // as it (correctly) thinks it's not in a normal terminal environment.
           // Since we're just returning data, we'll override that.
           FORCE_COLOR: `true`,
         },

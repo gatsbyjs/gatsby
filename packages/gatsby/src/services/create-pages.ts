@@ -3,6 +3,7 @@ import apiRunnerNode from "../utils/api-runner-node"
 import { IDataLayerContext } from "../state-machines/data-layer/types"
 import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
+import { actions } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
 
 export async function createPages({
@@ -10,6 +11,7 @@ export async function createPages({
   gatsbyNodeGraphQLFunction,
   store,
   deferNodeMutation,
+  shouldRunCreatePagesStatefully,
 }: Partial<IDataLayerContext>): Promise<{
   deletedPages: Array<string>
   changedPages: Array<string>
@@ -21,7 +23,6 @@ export async function createPages({
   activity.start()
   const timestamp = Date.now()
   const currentPages = new Map<string, IGatsbyPage>(store.getState().pages)
-
   await apiRunnerNode(
     `createPages`,
     {
@@ -33,18 +34,52 @@ export async function createPages({
     },
     { activity }
   )
-  reporter.verbose(
-    `Now have ${store.getState().nodes.size} nodes with ${
-      store.getState().nodesByType.size
-    } types, and ${
-      store.getState().nodesByType?.get(`SitePage`)?.size
-    } SitePage nodes`
-  )
   activity.end()
+
+  if (shouldRunCreatePagesStatefully) {
+    const activity = reporter.activityTimer(`createPagesStatefully`, {
+      parentSpan,
+    })
+    activity.start()
+    await apiRunnerNode(
+      `createPagesStatefully`,
+      {
+        graphql: gatsbyNodeGraphQLFunction,
+        traceId: `initial-createPagesStatefully`,
+        waitForCascadingActions: true,
+        parentSpan: activity.span,
+        deferNodeMutation,
+      },
+      {
+        activity,
+      }
+    )
+    activity.end()
+  }
+
+  reporter.info(
+    `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
+      store.getState().nodesByType?.get(`SitePage`)?.size
+    } (use --verbose for breakdown)`
+  )
+
+  if (process.env.gatsby_log_level === `verbose`) {
+    reporter.verbose(
+      `Number of node types: ${
+        store.getState().nodesByType.size
+      }. Nodes per type: ${[...store.getState().nodesByType.entries()]
+        .map(([type, nodes]) => type + `: ` + nodes.size)
+        .join(`, `)}`
+    )
+  }
 
   reporter.verbose(`Checking for deleted pages`)
 
-  const deletedPages = deleteUntouchedPages(store.getState().pages, timestamp)
+  const deletedPages = deleteUntouchedPages(
+    store.getState().pages,
+    timestamp,
+    !!shouldRunCreatePagesStatefully
+  )
 
   reporter.verbose(
     `Deleted ${deletedPages.length} page${deletedPages.length === 1 ? `` : `s`}`
@@ -64,6 +99,8 @@ export async function createPages({
     }`
   )
   tim.end()
+
+  store.dispatch(actions.apiFinished({ apiName: `createPages` }))
 
   return {
     changedPages,

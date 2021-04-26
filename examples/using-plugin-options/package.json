@@ -3,7 +3,7 @@
   "description": "An example with the default starter using a plugin with options",
   "version": "0.1.0",
   "dependencies": {
-    "gatsby": "^2.24.54",
+    "gatsby": "next",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

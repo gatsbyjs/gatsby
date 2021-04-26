@@ -2,9 +2,11 @@ import React from "react"
 import { Provider, Client } from "urql"
 import { ThemeProvider, getTheme } from "gatsby-interface"
 import { ThemeProvider as StrictUIProvider } from "strict-ui"
-import { Spinner, merge } from "theme-ui"
+import { merge } from "theme-ui"
 import { createUrqlClient } from "../urql-client"
 import "normalize.css"
+import { ServicesProvider, useServices } from "./services-provider"
+import { ErrorTracker } from "./error-tracker"
 
 const baseTheme = getTheme()
 
@@ -131,23 +133,19 @@ const theme = merge(recipesTheme, {
   },
 })
 
-const GraphQLProvider: React.FC<{}> = ({ children }) => {
-  const [status, setStatus] = React.useState(`loading`)
-  const [client, setClient] = React.useState<Client | null>(null)
+const GraphQLProvider: React.FC<Record<string, unknown>> = ({ children }) => {
+  const services = useServices()
+  const [client, setClient] = React.useState<Client | null>(() =>
+    services
+      ? createUrqlClient({ port: services.recipesgraphqlserver.port })
+      : null
+  )
 
   React.useEffect(() => {
-    setStatus(`loading`)
-    fetch(`/___services`)
-      .then(res => res.json())
-      .then(json => {
-        setStatus(`idle`)
-        if (json.recipesgraphqlserver) {
-          setClient(createUrqlClient({ port: json.recipesgraphqlserver.port }))
-        }
-      })
-  }, [])
-
-  if (status === `loading`) return <Spinner />
+    if (services.recipesgraphqlserver) {
+      setClient(createUrqlClient({ port: services.recipesgraphqlserver.port }))
+    }
+  }, [services])
 
   if (client === null)
     return (
@@ -160,10 +158,15 @@ const GraphQLProvider: React.FC<{}> = ({ children }) => {
   return <Provider value={client}>{children}</Provider>
 }
 
-const Providers: React.FC<{}> = ({ children }) => (
+const Providers: React.FC<Record<string, unknown>> = ({ children }) => (
   <StrictUIProvider theme={theme}>
     <ThemeProvider theme={theme}>
-      <GraphQLProvider>{children}</GraphQLProvider>
+      {/* NOTE(@mxstbr): The GraphQLProvider needs to be in the ServicesProvider */}
+      <ServicesProvider>
+        <ErrorTracker>
+          <GraphQLProvider>{children}</GraphQLProvider>
+        </ErrorTracker>
+      </ServicesProvider>
     </ThemeProvider>
   </StrictUIProvider>
 )

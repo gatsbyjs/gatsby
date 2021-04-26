@@ -1,13 +1,12 @@
-const unified = require(`unified`)
-const remarkMdx = require(`remark-mdx`)
-const remarkMdxjs = require(`remark-mdxjs`)
-const remarkParse = require(`remark-parse`)
-const remarkStringify = require(`remark-stringify`)
-const visit = require(`unist-util-visit`)
-const remove = require(`unist-util-remove`)
-const transformMdx = require(`../transform-recipe-mdx`).default
-
-const { uuid } = require(`./util`)
+import unified from "unified"
+import remarkMdx from "remark-mdx"
+import remarkMdxjs from "remark-mdxjs"
+import remarkParse from "remark-parse"
+import remarkStringify from "remark-stringify"
+import visit from "unist-util-visit"
+import remove from "unist-util-remove"
+import transformMdx from "../transform-recipe-mdx"
+import { uuid } from "./util"
 
 const IGNORED_COMPONENTS = [`RecipeIntroduction`, `RecipeStep`]
 
@@ -19,7 +18,7 @@ const asRoot = node => {
 }
 
 const pluckExports = tree => {
-  let exports = []
+  const exports = []
   visit(tree, `export`, node => {
     exports.push(node)
   })
@@ -79,59 +78,54 @@ const toMdx = nodes => {
 }
 
 const parse = async src => {
-  try {
-    const ast = u.parse(src)
-    const exportNodes = pluckExports(ast)
-    const [intro, ...resourceSteps] = partitionSteps(ast)
+  const ast = u.parse(src)
+  const exportNodes = pluckExports(ast)
+  const [intro, ...resourceSteps] = partitionSteps(ast)
 
-    const wrappedIntroStep = {
-      type: `mdxBlockElement`,
-      name: `RecipeIntroduction`,
-      attributes: [],
-      children: intro,
-    }
+  const wrappedIntroStep = {
+    type: `mdxBlockElement`,
+    name: `RecipeIntroduction`,
+    attributes: [],
+    children: intro,
+  }
 
-    const wrappedResourceSteps = resourceSteps.map((step, i) => {
-      return {
-        type: `mdxBlockElement`,
-        name: `RecipeStep`,
-        attributes: [
-          {
-            type: `mdxAttribute`,
-            name: `step`,
-            value: String(i + 1),
-          },
-          {
-            type: `mdxAttribute`,
-            name: `totalSteps`,
-            value: String(resourceSteps.length),
-          },
-        ],
-        children: step,
-      }
-    })
-
-    const steps = [wrappedIntroStep, ...wrappedResourceSteps]
-    ast.children = [...exportNodes, ...ast.children]
-
-    const exportsAsMdx = exportNodes.map(toMdx)
-    const stepsAsMdx = steps.map(toMdx)
-    const stepsAsJS = stepsAsMdx.map(transformMdx)
-
+  const wrappedResourceSteps = resourceSteps.map((step, i) => {
     return {
-      ast,
-      steps,
-      exports: exportNodes,
-      exportsAsMdx,
-      stepsAsMdx,
-      stepsAsJS,
-      recipe: exportsAsMdx.join(`\n`) + `\n\n` + stepsAsMdx.join(`\n`),
+      type: `mdxBlockElement`,
+      name: `RecipeStep`,
+      attributes: [
+        {
+          type: `mdxAttribute`,
+          name: `step`,
+          value: String(i + 1),
+        },
+        {
+          type: `mdxAttribute`,
+          name: `totalSteps`,
+          value: String(resourceSteps.length),
+        },
+      ],
+      children: step,
     }
-  } catch (e) {
-    throw e
+  })
+
+  const steps = [wrappedIntroStep, ...wrappedResourceSteps]
+  ast.children = [...exportNodes, ...ast.children]
+
+  const exportsAsMdx = exportNodes.map(toMdx)
+  const stepsAsMdx = steps.map(toMdx)
+  const stepsAsJS = stepsAsMdx.map(transformMdx)
+
+  return {
+    ast,
+    steps,
+    exports: exportNodes,
+    exportsAsMdx,
+    stepsAsMdx,
+    stepsAsJS,
+    recipe: exportsAsMdx.join(`\n`) + `\n\n` + stepsAsMdx.join(`\n`),
   }
 }
 
-module.exports = parse
-module.exports.parse = parse
-module.exports.u = u
+export default parse
+export { parse, u }

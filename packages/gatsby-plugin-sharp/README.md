@@ -20,7 +20,7 @@ of PNGs then it can significantly reduce build times.
 
 ## Install
 
-`npm install --save gatsby-plugin-sharp`
+`npm install gatsby-plugin-sharp`
 
 ## How to use
 
@@ -30,7 +30,11 @@ plugins: [
   {
     resolve: `gatsby-plugin-sharp`,
     options: {
-      // Available options and their defaults:
+      // Defaults used for gatsbyImageData and StaticImage
+      defaults: {},
+      // Set to false to allow builds to continue on image errors
+      failOnError: true,
+      // deprecated options and their defaults:
       base64Width: 20,
       forceBase64Format: ``, // valid formats: png,jpg,webp
       useMozJpeg: process.env.GATSBY_JPEG_ENCODER === `MOZJPEG`,
@@ -40,6 +44,15 @@ plugins: [
   },
 ]
 ```
+
+## Options
+
+- `defaults`: default values used for `gatsbyImageData` and `StaticImage` from [gatsby-plugin-image](https://www.gatsbyjs.com/plugins/gatsby-plugin-image).
+  Available options are: `formats`,`placeholder`,`quality`,`breakpoints`,`backgroundColor`,`tracedSVGOptions`,`blurredOptions`,`jpgOptions`,`pngOptions`,`webpOptions`,`avifOptions`.
+  For details of these, see [the reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
+- `failOnError`: default = `true`. By default builds will fail if there is a corrupted image. Set to false to continue the build on error. The image will return `undefined`.
+
+Other options are deprecated, and should only be used for the legacy `fixed` and `fluid` functions.
 
 ## Methods
 
@@ -154,7 +167,7 @@ Convert the source image to one of the following available options: `NO_CHANGE`,
 
 #### toFormatBase64
 
-base64 image uses the image format from the source , or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
+base64 image uses the image format from the source, or the value of `toFormat`. This setting allows a different image format instead, available options are: `JPG`, `PNG`, `WEBP`.
 
 `WEBP` allows for a smaller data size, allowing you to reduce your HTML size when transferring over the network, or to use a larger base64 placeholder width default for improved image placeholder quality.
 
@@ -278,7 +291,7 @@ quoting the Sharp documentation:
 
 Generates a traced SVG of the image (see [the original GitHub issue][9]) and
 returns the SVG as "[optimized URL-encoded][10]" `data:` URI. It used in
-[gatsby-image](/packages/gatsby-image/) to provide an
+[gatsby-image](/plugins/gatsby-image/) to provide an
 alternative to the default inline base64 placeholder image.
 
 Uses [node-potrace][11] and [SVGO][12] under the hood. Default settings for
@@ -331,6 +344,10 @@ options, the [environment variable](/docs/environment-variables/#environment-var
 ```shell
 GATSBY_JPEG_ENCODER=MOZJPEG
 ```
+
+### Allow build to continue on image processing error
+
+By default, the build will fail when it encounters an error while processing an image. You can change this so that it continues the build process by setting the plugin option `failOnError` to `false`. Sharp will still throw an error and display it in the console as a GraphQL error, but it will not exit the process. It is important to note that any images that would have otherwise failed will not be accessible via `childImageSharp` until the underlying issue with the image is addressed.
 
 ### EXIF and ICC metadata
 

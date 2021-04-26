@@ -16,7 +16,7 @@ describe(`Activities`, () => {
   let events = []
 
   beforeAll(async done => {
-    gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+    gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
       stdio: [`ignore`, `ignore`, `ignore`, `ipc`],
       env: {
         ...process.env,
@@ -50,8 +50,8 @@ describe(`Activities`, () => {
     - Start
     - Update (Optional)
     - End
-    
-    These tests assert whether events are correctly emitted for the complete lifecycle. 
+
+    These tests assert whether events are correctly emitted for the complete lifecycle.
    */
   it(`emit start, update and end events for a successful activity`, async () => {
     const activityEvents = events.filter(

@@ -1,7 +1,7 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
-export default ({ element }) => (
+const WrapRootElement = ({ element }) => (
   <StaticQuery
     query={graphql`
       query MetaQuery {
@@ -22,8 +22,13 @@ export default ({ element }) => (
         <div>
           StaticQuery in wrapRootElement test (should show site title):
           <span data-testid="wrap-root-element-result">{title}</span>
+          <div data-testid="gatsby-browser-hmr">
+            %TEST_HMR_IN_GATSBY_BROWSER%
+          </div>
         </div>
       </>
     )}
   />
 )
+
+export default WrapRootElement

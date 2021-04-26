@@ -7,14 +7,10 @@
 import { store } from "../redux"
 import { eslintConfig } from "./eslint-config"
 import { hasLocalEslint } from "./local-eslint-config-finder"
-import { RuleSetRule, Compiler, RuleSetQuery, RuleSetLoader } from "webpack"
+import { Compiler } from "webpack"
 import { GraphQLSchema } from "graphql"
-
-function isEslintRule(rule?: RuleSetRule): boolean {
-  const options = rule?.use?.[0]?.options
-  return options && typeof options.useEslintrc !== `undefined`
-}
-
+import { reactHasJsxRuntime } from "./webpack-utils"
+import ESLintPlugin from "eslint-webpack-plugin"
 export class GatsbyWebpackEslintGraphqlSchemaReload {
   private plugin: { name: string }
   private schema: GraphQLSchema | null
@@ -24,10 +20,11 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
     this.schema = null
   }
 
-  findEslintOptions(compiler: Compiler): RuleSetQuery | undefined {
-    const [rule] = compiler.options.module?.rules.find(isEslintRule)
-      ?.use as Array<RuleSetLoader>
-    return rule.options
+  findEslintOptions(compiler: Compiler): any | undefined {
+    const plugin = compiler.options.plugins.find(
+      item => item instanceof ESLintPlugin
+    )
+    return typeof plugin === `object` ? plugin?.options : undefined
   }
 
   apply(compiler: Compiler): void {
@@ -48,9 +45,13 @@ export class GatsbyWebpackEslintGraphqlSchemaReload {
       // Original eslint config object from webpack rules
       const options = this.findEslintOptions(compiler)
 
+      if (!options) {
+        return
+      }
+
       // Hackish but works:
       // replacing original eslint options object with updated config
-      Object.assign(options, eslintConfig(schema))
+      Object.assign(options, eslintConfig(schema, reactHasJsxRuntime()))
     })
   }
 }

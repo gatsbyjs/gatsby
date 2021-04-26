@@ -7,7 +7,7 @@ Learn what <q>headless WordPress</q> means, how it differs from other ways of us
 
 ## What is Headless WordPress?
 
-_Headless WordPress_ is the practice of using WordPress as a [headless CMS](/docs/headless-cms/) for your [JAMstack](/docs/glossary/jamstack/) site. Headless WordPress takes advantage of the WordPress REST API to separate its content from the frontend that displays it.
+A _headless WordPress_ site is one that uses WordPress for managing content and some other custom frontend stack to display that content. Headless WordPress enables content writers to use a familiar interface while giving web developers the flexibility to use any frontend technology stack.
 
 > Note: WordPress has two products: an open source, self-hosted package that you can [download](https://wordpress.org/) from WordPress.org; and a hosted service, [WordPress.com](https://wordpress.com/). This article applies to both.
 
@@ -15,18 +15,18 @@ Most WordPress installations use _themes_, which are a collection of template fi
 
 The WordPress REST API, on the other hand, returns JSON instead of HTML. Using a content API gives you more flexibility around what kind of frontend you use: vanilla JavaScript, a native mobile application, your Gatsby site, or all of the above.
 
-Gatsby [supports WordPress](/docs/sourcing-from-wordpress/) as a content source with the [`gatsby-source-wordpress`](/packages/gatsby-source-wordpress/) plugin. As with Gatsby, you can install the `gatsby-source-wordpress` plugin using [npm](/docs/glossary/#npm):
+Gatsby [supports WordPress](/docs/how-to/sourcing-data/sourcing-from-wordpress/) as a content source with the [`gatsby-source-wordpress`](/plugins/gatsby-source-wordpress/) plugin. As with Gatsby, you can install the `gatsby-source-wordpress` plugin using [npm](/docs/glossary/#npm):
 
 ```shell
-npm install --save gatsby-source-wordpress
+npm install gatsby-source-wordpress
 ```
 
-The `gatsby-source-wordpress` plugin works with self-hosted WordPress sites, and those hosted by WordPress.com. Be aware, however, that the WordPress.com API supports a smaller set of features than that of self-hosted WordPress sites. It's also compatible with the [Advanced Custom Fields](https://www.advancedcustomfields.com/) plugin.
+The `gatsby-source-wordpress` plugin works with self-hosted WordPress sites and those hosted by WordPress.com. Be aware, however, that the WordPress.com API supports a smaller set of features than that of self-hosted WordPress sites.
 
-Headless WordPress lets your content team use an interface they're familiar with, while giving you the flexibility to use any frontend you'd like.
+Headless WordPress enables content writers to use a familiar interface while giving web developers the flexibility to use any frontend technology stack.
 
 ## Learn More
 
-- [REST API Resources](https://developer.wordpress.com/docs/api/) from WordPress.com
-- [WordPress REST API](https://developer.wordpress.org/rest-api/) for self-hosted WordPress
-- [<q>How To Build A Blog with WordPress and Gatsby.js</q>](/blog/2019-04-26-how-to-build-a-blog-with-wordpress-and-gatsby-part-1/) from the Gatsby blog
+- [Gatsby's WordPress integration](/plugins/gatsby-source-wordpress/) for headless WordPress projects
+- [GraphQL for WordPress](https://www.wpgraphql.com/) open-source plugin
+- [Why Gatsby chose WordPress](/blog/gatsby-blog-wordpress/) - a case study

@@ -10,7 +10,7 @@ import { createUrqlClient } from "../../urql-client"
 import { useMutation, useSubscription } from "urql"
 
 import lodash from "lodash"
-import fetch from "isomorphic-fetch"
+import fetch from "cross-fetch"
 
 import { Button, Heading } from "gatsby-interface"
 import { StepRenderer } from "gatsby-recipes/components"
@@ -19,15 +19,15 @@ import Step from "./recipe-step"
 import { components, removeJsx, log } from "./utils"
 import ResourceMessage from "./resource-message"
 
-let isSubscriptionConnected = false
+const isSubscriptionConnected = false
 let isRecipeStarted = false
 let sessionId
 let sendEvent
 let projectRoot
-let api_endpoint
+let apiEndpoint
 
 const checkServerSession = async () => {
-  const response = await fetch(`${api_endpoint}/session`)
+  const response = await fetch(`${apiEndpoint}/session`)
   const newSessionId = await response.text()
   if (!sessionId) {
     sessionId = newSessionId
@@ -84,7 +84,7 @@ const RecipeInterpreter = ({ recipe }) => {
       .then(json => {
         if (json.metadata) projectRoot = json.metadata.sitePath
         if (json.recipesgraphqlserver) {
-          api_endpoint = `http://localhost:${json.recipesgraphqlserver.port}`
+          apiEndpoint = `http://localhost:${json.recipesgraphqlserver.port}`
           const newClient = createUrqlClient({
             port: json.recipesgraphqlserver.port,
             connectionCallback: async () => {
@@ -182,7 +182,7 @@ const RecipeInterpreter = ({ recipe }) => {
     })
   }
 
-  let { plan, stepsAsJS, exports } = state.context
+  const { plan, stepsAsJS, exports } = state.context
 
   const groupedPlansByResource = lodash.groupBy(plan, p => p.resourceName)
 

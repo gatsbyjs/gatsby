@@ -11,7 +11,7 @@ Object {
       "options": Object {
         "babelrc": false,
         "cacheDirectory": "<TEMP_DIR>/test/.cache/webpack/babel",
-        "cacheIdentifier": "develop---gatsby-dependencies@1.0.0",
+        "cacheIdentifier": "{\\"browerslist\\":[],\\"gatsbyPreset\\":\\"1.0.0\\"}",
         "compact": false,
         "configFile": false,
         "presets": Array [
@@ -42,6 +42,7 @@ Object {
         "compact": false,
         "configFile": true,
         "reactRuntime": "classic",
+        "rootDir": "<TEMP_DIR>/test",
         "stage": "develop",
       },
     },

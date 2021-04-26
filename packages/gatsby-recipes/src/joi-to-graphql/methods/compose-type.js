@@ -1,8 +1,6 @@
-"use strict"
-
-const Hoek = require(`@hapi/hoek`)
-const Joi = require(`@hapi/joi`)
-const { joiToGraphql } = require(`../helpers`)
+import Hoek from "@hapi/hoek"
+import * as Joi from "@hapi/joi"
+import { joiToGraphql } from "../helpers"
 
 const internals = {}
 
@@ -13,7 +11,7 @@ internals.configSchema = Joi.object().keys({
   description: Joi.string(),
 })
 
-module.exports = (schema, config = {}) => {
+export default function composeType(schema, config = {}) {
   config = Joi.attempt(config, internals.configSchema)
 
   Hoek.assert(typeof schema !== `undefined`, `schema argument must be defined`)

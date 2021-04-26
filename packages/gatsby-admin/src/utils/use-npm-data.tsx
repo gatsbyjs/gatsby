@@ -19,7 +19,7 @@ export default function useNpmPackageData(
 ): IUseNpmPackageDataResult {
   const [fetching, setFetching] = React.useState(true)
   const [error, setError] = React.useState<Error | null>(null)
-  const [data, setData] = React.useState<{} | null>(null)
+  const [data, setData] = React.useState<Record<string, unknown> | null>(null)
 
   React.useEffect(() => {
     setFetching(true)

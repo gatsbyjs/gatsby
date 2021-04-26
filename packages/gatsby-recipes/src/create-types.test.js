@@ -1,4 +1,4 @@
-const createTypes = require(`./create-types`)
+import createTypes from "./create-types"
 
 test(`create-types`, () => {
   const result = createTypes()

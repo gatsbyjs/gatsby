@@ -4,4 +4,5 @@ import startGraphQLServer from "./graphql-server"
 // data = { recipe?: string, graphqlPort: number, projectRoot: string }
 const recipesHandler = async data => cli(data)
 
+export * from "./resources"
 export { startGraphQLServer, recipesHandler }

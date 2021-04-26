@@ -1,5 +1,5 @@
-const generate = require(`@babel/generator`).default
-const t = require(`@babel/types`)
+import generate from "@babel/generator"
+import * as t from "@babel/types"
 
 const getKeyNameFromAttribute = node => node.key.name || node.key.value
 
@@ -12,6 +12,7 @@ const isLiteral = node =>
 const getValueFromNode = node => {
   if (t.isTemplateLiteral(node)) {
     delete node.leadingComments
+    delete node.trailingComments
     const literalContents = generate(node).code
     return unwrapTemplateLiteral(literalContents)
   }
@@ -57,5 +58,5 @@ const getObjectFromNode = nodeValue => {
   return props
 }
 
-module.exports = getObjectFromNode
-module.exports.getValueFromNode = getValueFromNode
+export default getObjectFromNode
+export { getValueFromNode }

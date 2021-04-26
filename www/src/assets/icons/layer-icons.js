@@ -1,5 +1,0 @@
-export { default as AbstractSymbol } from "./abstract-symbol.svg"
-export { default as AtomicSymbol } from "./atomic-symbol.svg"
-export { default as GraphqlLogo } from "./graphql-logo.svg"
-export { default as ReactLogo } from "./react-logo.svg"
-export { default as AppWindow } from "./app-window.svg"

@@ -2,7 +2,9 @@
 title: Blog Contributions
 ---
 
-If you'd like to contribute a post to the Gatsby blog, please review the process and guidelines outlined below and submit your idea for the post to our [Gatsby blog proposal form](https://airtable.com/shr3449954866i3iF)
+Blog posts are a great way to share your own experiences working with Gatsby at work or on a personal project.
+
+If you'd like to contribute a post to the Gatsby blog, please review the process and guidelines outlined below and submit your post idea using the [Gatsby blog proposal form](https://airtable.com/shr3449954866i3iF).
 
 ## Blog proposal submission process
 

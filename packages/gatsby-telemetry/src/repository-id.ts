@@ -54,7 +54,7 @@ const getGitRemoteWithGit = (): IRepositoryId | null => {
     // we may live multiple levels in git repo
     const originBuffer = execSync(
       `git config --local --get remote.origin.url`,
-      { timeout: 1000, stdio: `pipe` }
+      { timeout: 1000, stdio: `pipe`, windowsHide: true }
     )
     const repo = String(originBuffer).trim()
     if (repo) {

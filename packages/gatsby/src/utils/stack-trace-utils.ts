@@ -1,5 +1,12 @@
 import stackTrace, { StackFrame } from "stack-trace"
 import { codeFrameColumns } from "@babel/code-frame"
+import {
+  NullableMappedPosition,
+  SourceMapConsumer,
+  RawSourceMap,
+  RawIndexMap,
+} from "source-map"
+
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const chalk = require(`chalk`)
@@ -76,4 +83,36 @@ export const getNonGatsbyCodeFrameFormatted = ({ highlightCode = true } = {}):
 
   const { fileName, line, column, codeFrame } = possibleCodeFrame
   return `File ${chalk.bold(`${fileName}:${line}:${column}`)}\n${codeFrame}`
+}
+
+interface IOriginalSourcePositionAndContent {
+  sourcePosition: NullableMappedPosition | null
+  sourceContent: string | null
+}
+
+export async function findOriginalSourcePositionAndContent(
+  webpackSource: RawSourceMap | RawIndexMap | string,
+  position: { line: number; column: number | null }
+): Promise<IOriginalSourcePositionAndContent> {
+  return await SourceMapConsumer.with(webpackSource, null, consumer => {
+    const sourcePosition = consumer.originalPositionFor({
+      line: position.line,
+      column: position.column ?? 0,
+    })
+
+    if (!sourcePosition.source) {
+      return {
+        sourcePosition: null,
+        sourceContent: null,
+      }
+    }
+
+    const sourceContent: string | null =
+      consumer.sourceContentFor(sourcePosition.source, true) ?? null
+
+    return {
+      sourcePosition,
+      sourceContent,
+    }
+  })
 }

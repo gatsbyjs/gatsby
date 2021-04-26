@@ -5,14 +5,14 @@
   "version": "1.0.0",
   "author": "Madalyn Parker <hello@madalyn.dev>",
   "dependencies": {
-    "@reach/skip-nav": "^0.8.0",
-    "gatsby": "^2.24.54",
-    "gatsby-plugin-manifest": "^2.4.28",
-    "gatsby-plugin-react-helmet": "^3.3.10",
-    "gatsby-source-filesystem": "^2.3.28",
+    "@reach/skip-nav": "^0.11.2",
+    "gatsby": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-filesystem": "next",
     "lodash": "^4.17.20",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [

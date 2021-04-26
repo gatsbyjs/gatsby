@@ -128,6 +128,7 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
+| [`commonmark`](#commonmark)                                               | `false`                                | Use CommonMark                                                        |
 
 #### Extensions
 
@@ -376,7 +377,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        remarkPlugins: [require("remark-abbr")],
+        remarkPlugins: [
+          require("remark-abbr"),
+          // To pass options, use a 2-element array with the
+          // configuration in an object in the second element
+          [require("remark-external-links"), { target: false }],
+        ],
       },
     },
   ],
@@ -398,7 +404,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        rehypePlugins: [require("rehype-slug")],
+        rehypePlugins: [
+          require("rehype-slug"),
+          // To pass options, use a 2-element array with the
+          // configuration in an object in the second element
+          [require("rehype-autolink-headings"), { behavior: "wrap" }],
+        ],
       },
     },
   ],
@@ -456,6 +467,10 @@ module.exports = {
 }
 ```
 
+#### CommonMark
+
+MDX will be parsed using CommonMark.
+
 ### Components
 
 MDX and `gatsby-plugin-mdx` use components for different things like rendering
@@ -475,7 +490,9 @@ all of the MDX content.
 import { MDXProvider } from "@mdx-js/react"
 
 const MyH1 = props => <h1 style={{ color: "tomato" }} {...props} />
-const MyParagraph = props => <p style={{ fontSize: "18px", lineHeight: 1.6 }} />
+const MyParagraph = props => (
+  <p style={{ fontSize: "18px", lineHeight: 1.6 }} {...props} />
+)
 
 const components = {
   h1: MyH1,
@@ -488,6 +505,8 @@ export const wrapRootElement = ({ element }) => (
 ```
 
 The following components can be customized with the MDXProvider:
+
+<!-- prettier-ignore-start -->
 
 | Tag             | Name                                                                 | Syntax                                              |
 | --------------- | -------------------------------------------------------------------- | --------------------------------------------------- |
@@ -515,6 +534,7 @@ The following components can be customized with the MDXProvider:
 | `hr`            | [Break](https://github.com/syntax-tree/mdast#break)                  | `---`                                               |
 | `a`             | [Link](https://github.com/syntax-tree/mdast#link)                    | `<https://mdxjs.com>` or `[MDX](https://mdxjs.com)` |
 | `img`           | [Image](https://github.com/syntax-tree/mdast#image)                  | `![alt](https://mdx-logo.now.sh)`                   |
+<!-- prettier-ignore-end -->
 
 It's important to define the `components` you pass in a stable way
 so that the references don't change if you want to be able to navigate

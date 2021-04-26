@@ -18,7 +18,7 @@ For an introduction on what Pull Requests are and how to file one, check out the
 
 Some general things we verify in a pull request are:
 
-- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.org/docs/some-reference/`)
+- Links ought to be relative instead of absolute when linking to docs (`/docs/some-reference/` instead of `https://www.gatsbyjs.com/docs/some-reference/`)
 - Language ought to be inclusive and accessible
 - Issues and Requests for Comments (RFCs) (if any) that this PR addresses ought to be linked to
 
@@ -39,7 +39,7 @@ We typically look for the following in [PRs that add documentation](/contributin
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Headings – whether the heading levels in a doc start with h2 (`##` in Markdown) and grow in order, establishing an accessible content hierarchy
-- Type & Format – whether docs and learning materials align with our recommendations and [docs templates](/contributing/docs-templates/)
+- Type & Format – whether docs and learning materials align with our recommendations and [docs structure](/contributing/docs-contributions/docs-structure/)
 
 If a PR includes code examples, tutorials, recipes, or actionable guides, the reviewer must test out the material to ensure accuracy. **No PRs should be approved or merged that haven't been vetted for errors or omissions.**
 
@@ -69,11 +69,11 @@ For PRs that add a blog post, we ought to check:
 - Correctness — whether the added documentation is technically correct
 - Style — whether the written language follows our [style guide](/contributing/gatsby-style-guide/)
 - Subject matter — blog posts should not be purely promotional, spammy, or inappropriate. An author should check with a member of the Gatsby team that their post is appropriate for the blog before creating their PR.
-- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should go in the [Reference Guides](/docs/guides/) or [Tutorials](/tutorial/) section of the docs.
+- Time Sensitivity — blog posts are more time dependent than docs, especially since they get buried after more posts are published. If something is continually relevant and more of a general how-to, it should go in the [Reference Guides](/docs/guides/) or [Tutorials](/docs/tutorial/) section of the docs.
 
 ## Automated Checks
 
-Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.org).
+Our repository on [GitHub](https://github.com/gatsbyjs/gatsby) has several automated CI checks that are run automatically for all PRs. These include tests, linting and even preview builds for [gatsbyjs.org](https://www.gatsbyjs.com).
 
 We want all of these checks to pass. While we'll sometimes review a work in progress PR with some failed checks, a PR is only ready to ship when all the tests have passed.
 
@@ -154,9 +154,8 @@ Every PR opened in the repository needs to be approved before it can be merged. 
 Typically this is:
 
 - **gatsbyjs/themes** for certain features like Themes, Recipes, and Admin
-- **gatsbyjs/learning** for documentation
+- **gatsbyjs/documentation** for documentation
 - **gatsbyjs/core** for any other code
-- **gatsbyjs/website** for anything related to GatsbyJS.com
 
 We also have `CODEOWNERS` set on different parts of the repo and an approval by someone in the `CODEOWNERS` for the file(s) the PR is changing can also suffice.
 

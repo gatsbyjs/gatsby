@@ -22,7 +22,7 @@ You can import your own components.
 <Message>MDX gives you JSX in Markdown!</Message> // highlight-line
 ```
 
-**Note**: steps for importing custom components or MDX documents from a relative location in your project are also covered in the [Writing Pages in MDX guide](/docs/mdx/writing-pages/).
+**Note**: steps for importing custom components or MDX documents from a relative location in your project are also covered in the [Writing Pages in MDX guide](/docs/how-to/routing/mdx/writing-pages/).
 
 <EggheadEmbed
   lessonLink="https://egghead.io/lessons/gatsby-import-and-use-a-react-component-in-markdown-with-mdx"
@@ -50,7 +50,7 @@ export default function Layout({ children }) {
 }
 ```
 
-All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX documents that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/packages/gatsby-plugin-mdx/#default-layouts).
+All MDX components passed into the `components` prop of the `MDXProvider` will be made available to MDX documents that are nested under the provider. The `MDXProvider` in this example is in a layout component that wraps all MDX pages, you can read about this pattern in [the layout section of the `gatsby-plugin-mdx` README](/plugins/gatsby-plugin-mdx/#default-layouts).
 
 Now, you can include components in your MDX without importing them:
 
@@ -79,7 +79,7 @@ Because the `<Message />` and `<Chart />` components were passed into the provid
 
 When you use components in your `.mdx` files, Gatsby will bundle them into the main application bundle. This can cause performance problems.
 
-In the future, [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx) will address this. In the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for lazy-loading an imaginary `Thing` component:
+In the future, [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx) will address this. In the meantime, it can be prudent to lazy-load very large dependencies. The following snippet provides an example for lazy-loading an imaginary `Thing` component:
 
 ```jsx:title=src/components/LazyThing.js
 import React from "react"

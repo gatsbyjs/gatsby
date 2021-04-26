@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-images-contentful",
-  "version": "2.3.16",
+  "version": "4.2.0-next.0",
   "description": "Process Images in Contentful markdown so they can use the images API.",
   "main": "index.js",
   "scripts": {
@@ -15,21 +15,21 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-images-contentful#readme",
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "axios": "^0.19.2",
-    "chalk": "^2.4.2",
+    "@babel/runtime": "^7.12.5",
+    "axios": "^0.21.1",
+    "chalk": "^4.1.0",
     "cheerio": "^1.0.0-rc.3",
     "is-relative-url": "^3.0.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "semver": "^7.3.2",
-    "sharp": "^0.25.4",
-    "unist-util-select": "^1.5.0"
+    "sharp": "^0.28.0",
+    "unist-util-select": "^3.0.4"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
+    "cross-env": "^7.0.3"
   },
   "keywords": [
     "contentful",
@@ -40,9 +40,9 @@
   "author": "Khaled Garbaya <khaledgarbaya@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.15"
+    "gatsby": "^3.0.0-next.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

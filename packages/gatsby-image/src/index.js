@@ -20,7 +20,7 @@ const logDeprecationNotice = (prop, replacement) => {
 
 // Handle legacy props during their deprecation phase
 const convertProps = props => {
-  let convertedProps = { ...props }
+  const convertedProps = { ...props }
   const { resolutions, sizes, critical } = convertedProps
 
   if (resolutions) {
@@ -358,6 +358,7 @@ class Image extends React.Component {
       imgLoaded: false,
       imgCached: false,
       fadeIn: !this.seenBefore && props.fadeIn,
+      isHydrated: false,
     }
 
     this.imageRef = React.createRef()
@@ -367,6 +368,10 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      isHydrated: isBrowser,
+    })
+
     if (this.state.isVisible && typeof this.props.onStartLoad === `function`) {
       this.props.onStartLoad({ wasCached: inImageCache(this.props) })
     }
@@ -445,6 +450,12 @@ class Image extends React.Component {
       draggable,
     } = convertProps(this.props)
 
+    const imageVariants = fluid || fixed
+    // Abort early if missing image data (#25371)
+    if (!imageVariants) {
+      return null
+    }
+
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded
     const shouldFadeIn = this.state.fadeIn === true && !this.state.imgCached
 
@@ -476,10 +487,14 @@ class Image extends React.Component {
       itemProp,
     }
 
-    if (fluid) {
-      const imageVariants = fluid
-      const image = getCurrentSrcData(fluid)
+    // Initial client render state needs to match SSR until hydration finishes.
+    // Once hydration completes, render again to update to the correct image.
+    // `imageVariants` is always an Array type at this point due to `convertProps()`
+    const image = !this.state.isHydrated
+      ? imageVariants[0]
+      : getCurrentSrcData(imageVariants)
 
+    if (fluid) {
       return (
         <Tag
           className={`${className ? className : ``} gatsby-image-wrapper`}
@@ -585,9 +600,6 @@ class Image extends React.Component {
     }
 
     if (fixed) {
-      const imageVariants = fixed
-      const image = getCurrentSrcData(fixed)
-
       const divStyle = {
         position: `relative`,
         overflow: `hidden`,

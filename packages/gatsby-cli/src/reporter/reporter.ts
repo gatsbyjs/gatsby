@@ -7,8 +7,9 @@ import * as reporterActions from "./redux/actions"
 import { LogLevels, ActivityStatuses } from "./constants"
 import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
+import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
-import { IStructuredError } from "../structured-errors/types"
+import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
@@ -35,6 +36,23 @@ class Reporter {
    */
   stripIndent = stripIndent
   format = chalk
+
+  errorMap: Record<ErrorId, IErrorMapEntry> = {}
+
+  /**
+   * Set a custom error map to the reporter. This allows
+   * the reporter to extend the internal error map
+   *
+   * Please note: The entered IDs ideally should be different from the ones we internally use:
+   * https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-cli/src/structured-errors/error-map.ts
+   */
+
+  setErrorMap = (entry: Record<string, IErrorMapEntry>): void => {
+    this.errorMap = {
+      ...this.errorMap,
+      ...entry,
+    }
+  }
 
   /**
    * Toggle verbosity.
@@ -65,8 +83,12 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic = (errorMeta: ErrorMeta, error?: Error | Array<Error>): never => {
-    const reporterError = this.error(errorMeta, error)
+  panic = (
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error>,
+    pluginName?: string
+  ): never => {
+    const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
     return process.exit(1)
@@ -74,9 +96,10 @@ class Reporter {
 
   panicOnBuild = (
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
-    const reporterError = this.error(errorMeta, error)
+    const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
@@ -87,12 +110,10 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | Array<ErrorMeta>,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
-    let details: {
-      error?: Error
-      context: {}
-    } = {
+    let details: IConstructError["details"] = {
       context: {},
     }
 
@@ -136,9 +157,23 @@ class Reporter {
       }
     }
 
-    const structuredError = constructError({ details })
+    if (pluginName) {
+      details.pluginName = pluginName
+      const id = details?.id
+
+      if (id) {
+        const isPrefixed = id.includes(`${pluginName}_`)
+        if (!isPrefixed) {
+          details.id = `${pluginName}_${id}`
+        }
+      }
+    }
+
+    const structuredError = constructError({ details }, this.errorMap)
+
     if (structuredError) {
       reporterActions.createLog(structuredError)
+      trackError(`GENERIC_ERROR`, { error: structuredError })
     }
 
     // TODO: remove this once Error component can render this info

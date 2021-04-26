@@ -61,6 +61,6 @@ Unable to find a file at: \\"<PROJECT_ROOT>/src/pages/foo/{bar}\\""
       validatePathQuery(filePath, [`.js`, `.ts`, `.mjs`])
     }).not.toThrow()
 
-    await fs.remove(systemPath.join(process.cwd(), `src`))
+    await fs.remove(systemPath.join(process.cwd(), `src/pages`))
   })
 })

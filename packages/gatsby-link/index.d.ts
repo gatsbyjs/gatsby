@@ -1,6 +1,7 @@
 import * as React from "react"
 import { NavigateFn, LinkProps } from "@reach/router"
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   /** A class to apply when this Link is active */
   activeClassName?: string
@@ -41,21 +42,3 @@ export const navigate: NavigateFn
  */
 export const withPrefix: (path: string) => string
 export const withAssetPrefix: (path: string) => string
-
-/**
- * @deprecated
- * TODO: Remove for Gatsby v3
- */
-export const push: (to: string) => void
-
-/**
- * @deprecated
- * TODO: Remove for Gatsby v3
- */
-export const replace: (to: string) => void
-
-/**
- * @deprecated
- * TODO: Remove for Gatsby v3
- */
-export const navigateTo: (to: string) => void

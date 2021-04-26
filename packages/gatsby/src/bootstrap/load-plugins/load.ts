@@ -17,6 +17,7 @@ import {
   ISiteConfig,
 } from "./types"
 import { PackageJson } from "../../.."
+import reporter from "gatsby-cli/lib/reporter"
 
 function createFileContentHash(root: string, globPattern: string): string {
   const hash = crypto.createHash(`md5`)
@@ -46,17 +47,25 @@ const createPluginId = (
   )
 
 /**
- * @param pluginName
- * This can be a name of a local plugin, the name of a plugin located in
- * node_modules, or a Gatsby internal plugin. In the last case the pluginName
- * will be an absolute path.
+ * @param plugin
+ * This should be a plugin spec object where possible but can also be the
+ * name of a plugin.
+ *
+ * When it is a name, it can be a name of a local plugin, the name of a plugin
+ * located in node_modules, or a Gatsby internal plugin. In the last case the
+ * plugin will be an absolute path.
  * @param rootDir
  * This is the project location, from which are found the plugins
  */
 export function resolvePlugin(
-  pluginName: string,
+  plugin: PluginRef,
   rootDir: string | null
 ): IPluginInfo {
+  const pluginName = _.isString(plugin) ? plugin : plugin.resolve
+
+  // Respect the directory that the plugin was sourced from initially
+  rootDir = (!_.isString(plugin) && plugin.parentDir) || rootDir
+
   // Only find plugins when we're not given an absolute path
   if (!existsSync(pluginName)) {
     // Find the plugin in the local plugins folder
@@ -118,9 +127,17 @@ export function resolvePlugin(
       version: packageJSON.version,
     }
   } catch (err) {
-    throw new Error(
-      `Unable to find plugin "${pluginName}". Perhaps you need to install its package?`
-    )
+    if (process.env.gatsby_log_level === `verbose`) {
+      reporter.panicOnBuild(
+        `plugin "${pluginName} threw the following error:\n`,
+        err
+      )
+    } else {
+      reporter.panicOnBuild(
+        `There was a problem loading plugin "${pluginName}". Perhaps you need to install its package?\nUse --verbose to see actual error.`
+      )
+    }
+    throw new Error(`unreachable`)
   }
 }
 
@@ -183,7 +200,7 @@ export function loadPlugins(
         }
       }
 
-      const info = resolvePlugin(plugin.resolve, plugin.parentDir || rootDir)
+      const info = resolvePlugin(plugin, rootDir)
 
       return {
         ...info,
@@ -200,7 +217,10 @@ export function loadPlugins(
     `../../internal-plugins/internal-data-bridge`,
     `../../internal-plugins/prod-404`,
     `../../internal-plugins/webpack-theme-component-shadowing`,
-  ]
+    `../../internal-plugins/bundle-optimisations`,
+    process.env.GATSBY_EXPERIMENTAL_FUNCTIONS &&
+      `../../internal-plugins/functions`,
+  ].filter(Boolean) as Array<string>
   internalPlugins.forEach(relPath => {
     const absPath = path.join(__dirname, relPath)
     plugins.push(processPlugin(absPath))
@@ -229,6 +249,26 @@ export function loadPlugins(
       })
     )
   })
+
+  // TypeScript support by default! use the user-provided one if it exists
+  const typescriptPlugin = (config.plugins || []).find(
+    plugin => plugin.resolve === `gatsby-plugin-typescript`
+  )
+
+  if (typescriptPlugin === undefined) {
+    plugins.push(
+      processPlugin({
+        resolve: require.resolve(`gatsby-plugin-typescript`),
+        options: {
+          // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
+          // pluginOptionsSchema of gatsby-plugin-typescript
+          allExtensions: false,
+          isTSX: false,
+          jsxPragma: `React`,
+        },
+      })
+    )
+  }
 
   // Add the site's default "plugin" i.e. gatsby-x files in root of site.
   plugins.push({
@@ -261,21 +301,6 @@ export function loadPlugins(
       // override the options if there are any user specified options
       pageCreatorOptions = pageCreatorPlugin.options
     }
-  }
-
-  // TypeScript support by default! use the user-provided one if it exists
-  const typescriptPlugin = (config.plugins || []).find(
-    plugin =>
-      (plugin as IPluginRefObject).resolve === `gatsby-plugin-typescript` ||
-      plugin === `gatsby-plugin-typescript`
-  )
-
-  if (typescriptPlugin === undefined) {
-    plugins.push(
-      processPlugin({
-        resolve: require.resolve(`gatsby-plugin-typescript`),
-      })
-    )
   }
 
   plugins.push(

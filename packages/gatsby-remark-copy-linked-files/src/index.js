@@ -1,3 +1,4 @@
+/* eslint-disable @babel/no-invalid-this */
 const visit = require(`unist-util-visit`)
 const isRelativeUrl = require(`is-relative-url`)
 const fsExtra = require(`fs-extra`)
@@ -58,16 +59,13 @@ const newPath = (linkNode, options) => {
 const newLinkURL = (linkNode, options, pathPrefix) => {
   const { destinationDir } = options
   const destination = getDestination(linkNode, destinationDir)
-  const linkPaths = [`/`, pathPrefix, destination].filter(lpath =>
-    lpath ? true : false
-  )
-  return path.posix.join(...linkPaths)
+  return `${pathPrefix ? pathPrefix : ``}/${destination}`
 }
 
 function toArray(buf) {
-  var arr = new Array(buf.length)
+  const arr = new Array(buf.length)
 
-  for (var i = 0; i < buf.length; i++) {
+  for (let i = 0; i < buf.length; i++) {
     arr[i] = buf[i]
   }
 

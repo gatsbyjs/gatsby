@@ -1,9 +1,6 @@
 module.exports = {
   plugins: [
-    {
-      resolve: "gatsby-plugin-react-helmet",
-      options: {},
-    },
+    "gatsby-plugin-react-helmet",
     {
       resolve: "gatsby-plugin-webfonts",
       options: {

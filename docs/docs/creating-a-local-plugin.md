@@ -30,7 +30,7 @@ module.exports = {
 }
 ```
 
-Then the plugin can begin to hook into Gatsby through [Node](/docs/node-apis/) and [SSR](/docs/ssr-apis/) APIs.
+Then the plugin can begin to hook into Gatsby through [Node](/docs/reference/config-files/gatsby-node/) and [SSR](/docs/reference/config-files/gatsby-ssr/) APIs.
 
 ## Developing a local plugin that is outside your project
 
@@ -72,7 +72,4 @@ This is a similar process to setting up yarn workspaces for development with Gat
 
 ## Compilation and processing with Babel
 
-Like all `gatsby-*` files, the code is not processed by Babel. If you want
-to use JavaScript syntax which isn't supported by your version of Node.js, you
-can place the files in a `src` subfolder and build them to the plugin folder
-root.
+Except for the `gatsby-browser.js` file, which is processed as a part of the webpack bundling step, the code from all `gatsby-*` files is not processed by babel. If you want to use JavaScript syntax which isn't supported by your version of Node.js, you can place the files in your `src` subfolder and build them to the plugin folder root.

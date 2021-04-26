@@ -1,41 +1,80 @@
 {
   "name": "gatsby-source-wordpress",
-  "description": "Gatsby source plugin for building websites using the WordPress CMS as a data source.",
-  "version": "3.3.33",
-  "author": "Sebastien Fichot <fichot.sebastien@gmail.com>",
+  "description": "Source data from WordPress in an efficient and scalable way.",
+  "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
+  "version": "5.5.0-next.0",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  "bundledDependencies": [],
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "axios": "^0.19.2",
+    "@babel/runtime": "^7.6.3",
+    "@rematch/core": "^1.3.0",
+    "@rematch/immer": "^1.2.0",
+    "async-retry": "^1.3.1",
+    "atob": "^2.1.2",
+    "axios": "^0.21.1",
+    "axios-rate-limit": "^1.3.0",
     "better-queue": "^3.8.10",
-    "bluebird": "^3.7.2",
-    "deep-map": "^1.5.0",
-    "deep-map-keys": "^1.2.0",
-    "gatsby-source-filesystem": "^2.3.29",
-    "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.20",
-    "minimatch": "^3.0.4",
-    "qs": "^6.9.4"
+    "btoa": "^1.2.1",
+    "cache-manager": "^3.4.0",
+    "cache-manager-fs-hash": "^0.0.9",
+    "chalk": "^4.1.0",
+    "cheerio": "^1.0.0-rc.3",
+    "clipboardy": "^2.1.0",
+    "diff": "^5.0.0",
+    "dumper.js": "^1.3.1",
+    "execall": "^2.0.0",
+    "fast-json-stable-stringify": "^2.1.0",
+    "file-type": "^15.0.1",
+    "filesize": "^6.1.0",
+    "fs-extra": "^9.0.1",
+    "gatsby-core-utils": "^2.5.0-next.0",
+    "gatsby-image": "^3.5.0-next.0",
+    "gatsby-plugin-catch-links": "^3.5.0-next.0",
+    "gatsby-source-filesystem": "^3.5.0-next.0",
+    "glob": "^7.1.6",
+    "got": "^11.7.0",
+    "graphql-query-compress": "^1.2.2",
+    "lodash": "^4.17.21",
+    "node-fetch": "^2.6.0",
+    "p-queue": "^6.3.0",
+    "read-chunk": "^3.2.0",
+    "replaceall": "^0.1.6",
+    "semver": "^7.3.2",
+    "valid-url": "^1.0.9"
   },
-  "deprecated": false,
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-private-methods": "^7.10.1",
+    "@types/cache-manager": "^2.10.3",
+    "@types/ink": "^2.0.3",
+    "@types/semver": "^7.3.4",
+    "babel-plugin-import-globals": "^2.0.0",
+    "babel-plugin-module-resolver": "4.0.0",
+    "babel-preset-gatsby": "^1.5.0-next.0",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
+    "cross-env": "^7.0.3",
+    "identity-obj-proxy": "^3.0.0",
+    "react-test-renderer": "^16.12.0",
+    "rimraf": "^3.0.2",
+    "tree-kill": "^1.2.2",
+    "wait-on": "^4.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-wordpress#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
-    "gatsby-source-plugin"
+    "gatsby-plugin-wordpress",
+    "gatsby-source-wordpress",
+    "wordpress"
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.0.15"
+    "gatsby": "^3.0.0-next.0",
+    "gatsby-plugin-sharp": "^3.0.0-next.0",
+    "gatsby-transformer-sharp": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -43,11 +82,14 @@
     "directory": "packages/gatsby-source-wordpress"
   },
   "scripts": {
-    "build": "babel src --out-dir . --ignore \"**/__tests__\"",
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
+    "prepare": "npm run build",
+    "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
+    "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --verbose --extensions \".ts,.js\" --source-maps",
+    "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js",
+    "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans",
+    "docker-rebuild": "./docker/rebuild.sh"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

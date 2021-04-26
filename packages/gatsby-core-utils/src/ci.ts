@@ -1,12 +1,16 @@
 import ci from "ci-info"
 
 const CI_DEFINITIONS = [
-  envFromCIAndCIName,
   getEnvDetect({ key: `NOW_BUILDER_ANNOTATE`, name: `ZEIT Now` }),
   getEnvDetect({ key: `NOW_REGION`, name: `ZEIT Now v1` }),
   getEnvDetect({ key: `VERCEL_URL`, name: `Vercel Now` }),
   getEnvDetect({ key: `NOW_BUILDER`, name: `Vercel Now` }),
   getEnvDetect({ key: `VERCEL_BUILDER`, name: `Vercel Now` }),
+  getEnvDetect({ key: `CODESANDBOX_SSE`, name: `CodeSandbox` }),
+  getEnvDetect({ key: `GITHUB_ACTIONS`, name: `GitHub Actions` }),
+  getEnvDetect({ key: `CIRCLE_BRANCH`, name: `CircleCI` }),
+  getEnvDetect({ key: `CIRCLECI`, name: `CircleCI` }),
+  envFromCIAndCIName,
   herokuDetect,
   getEnvFromCIInfo,
   envFromCIWithNoName,

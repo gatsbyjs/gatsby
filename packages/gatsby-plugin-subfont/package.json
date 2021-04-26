@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-subfont",
-  "version": "2.2.11",
+  "version": "3.5.0-next.0",
   "description": "Runs the font delivery optimizing CLI tool subfont on the homepage of your site during the Gatsby build",
   "main": "index.js",
   "scripts": {
@@ -24,15 +24,18 @@
   },
   "license": "MIT",
   "dependencies": {
-    "subfont": "^4.2.2"
+    "subfont": "^5.3.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
+    "cross-env": "^7.0.3"
+  },
+  "peerDependencies": {
+    "gatsby": "^3.0.0-next.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

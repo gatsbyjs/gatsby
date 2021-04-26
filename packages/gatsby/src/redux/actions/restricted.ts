@@ -264,10 +264,12 @@ export const actions = {
     extension: GraphQLFieldExtensionDefinition,
     plugin: IGatsbyPlugin,
     traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateFieldExtension> => (
-    dispatch,
-    getState
-  ): void => {
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateFieldExtension
+  > => (dispatch, getState): void => {
     const { name } = extension || {}
     const { fieldExtensions } = getState().schemaCustomization
 
@@ -303,6 +305,8 @@ export const actions = {
    * list of types to include/exclude. This is recommended to avoid including
    * definitions for plugin-created types.
    *
+   * The first object parameter is required, however all the fields in the object are optional.
+   *
    * @availableIn [createSchemaCustomization]
    *
    * @param {object} $0
@@ -313,7 +317,17 @@ export const actions = {
    * @param {object} [$0.exclude] Configure types to exclude
    * @param {string[]} [$0.exclude.types] Do not include these types
    * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
-   * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+   * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`.
+   *   actions.printTypeDefinitions({})
+   * }
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`, but this time it does not include field types.
+   *   actions.printTypeDefinitions({ withFieldTypes: false })
+   * }
    */
   printTypeDefinitions: (
     {
@@ -357,7 +371,7 @@ export const actions = {
    *   actions.createResolverContext({ getHtml })
    * }
    * // The context value can then be accessed in any field resolver like this:
-   * exports.createSchemaCustomization = ({ actions }) => {
+   * exports.createSchemaCustomization = ({ actions, schema }) => {
    *   actions.createTypes(schema.buildObjectType({
    *     name: 'Test',
    *     interfaces: ['Node'],
@@ -377,9 +391,12 @@ export const actions = {
     context: IGatsbyPluginContext,
     plugin: IGatsbyPlugin,
     traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateResolverContext> => (
-    dispatch
-  ): void => {
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateResolverContext
+  > => (dispatch): void => {
     if (!context || typeof context !== `object`) {
       report.error(
         `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
@@ -449,7 +466,7 @@ type AvailableActionsByAPI = Record<
 >
 
 const set = (
-  availableActionsByAPI: {},
+  availableActionsByAPI: Record<string, any>,
   api: API,
   actionName: RestrictionActionNames,
   action: SomeActionCreator

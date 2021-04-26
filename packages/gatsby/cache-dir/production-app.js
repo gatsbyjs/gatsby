@@ -1,7 +1,7 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate, Location, BaseContext } from "@reach/router"
+import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
 import { ScrollContext } from "gatsby-react-router-scroll"
 import domReady from "@mikaelkristiansson/domready"
 import { StaticQueryContext } from "gatsby"
@@ -39,7 +39,7 @@ navigationInit()
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
-  if (apiRunner(`registerServiceWorker`).length > 0) {
+  if (apiRunner(`registerServiceWorker`).filter(Boolean).length > 0) {
     require(`./register-service-worker`)
   }
 
@@ -152,9 +152,16 @@ apiRunnerAsync(`onClientEntry`).then(() => {
 
   publicLoader.loadPage(browserLoc.pathname).then(page => {
     if (!page || page.status === PageResourceStatus.Error) {
-      throw new Error(
-        `page resources for ${browserLoc.pathname} not found. Not rendering React`
-      )
+      const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
+
+      // if the chunk throws an error we want to capture the real error
+      // This should help with https://github.com/gatsbyjs/gatsby/issues/19618
+      if (page && page.error) {
+        console.error(message)
+        throw page.error
+      }
+
+      throw new Error(message)
     }
 
     window.___webpackCompilationHash = page.page.webpackCompilationHash

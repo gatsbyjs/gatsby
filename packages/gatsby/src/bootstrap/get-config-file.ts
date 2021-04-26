@@ -1,4 +1,4 @@
-import levenshtein from "fast-levenshtein"
+import { distance as levenshtein } from "fastest-levenshtein"
 import fs from "fs-extra"
 import { testRequireError } from "../utils/test-require-error"
 import report from "gatsby-cli/lib/reporter"
@@ -11,7 +11,7 @@ function isNearMatch(
   distance: number
 ): boolean {
   if (!fileName) return false
-  return levenshtein.get(fileName, configName) <= distance
+  return levenshtein(fileName, configName) <= distance
 }
 
 export async function getConfigFile(

@@ -29,7 +29,7 @@ exports.onCreateNode = args => {
 
 There is a bug in this code and using it will produce the error below:
 
-```js
+```shell
 TypeError: Cannot read property 'internal' of undefined
 
   - gatsby-node.js:6 Object.exports.onCreateNode.args [as onCreateNode]
@@ -61,7 +61,7 @@ exports.onCreateNode = args => {
 }
 ```
 
-To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
+To read more about Gatsby's build process, check out the differences between [build and runtime](/docs/conceptual/overview-of-the-gatsby-build-process#build-time-vs-runtime). Generally speaking, Node.js is responsible for building Gatsby pages and therefore its built-in objects like `console` can be used at build time. At client-side [runtime](/docs/glossary#runtime), the browser's `console.log` API will add messages to the developer tools console.
 
 ## VS Code Debugger (Auto-Config)
 
@@ -82,6 +82,8 @@ If you use VS Code and its integrated terminal, you can configure it to automati
 Using built-in debuggers in code editors is very convenient. You will be able to skip a lot of setup needed to use Chrome DevTools. You will also be able to put breakpoints in the same view you write your code.
 
 We won't go in depth here about how to debug in VS Code - for that you can check the [excellent VS Code documentation](https://code.visualstudio.com/docs/editor/debugging). We will however share a launch configuration needed to run and debug Gatsby:
+
+### Linux
 
 ```json:title=launch.json
 {
@@ -109,6 +111,40 @@ We won't go in depth here about how to debug in VS Code - for that you can check
 }
 ```
 
+### Windows
+
+```json:title=launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Gatsby develop",
+      "type": "pwa-node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/.bin/gatsby",
+      "windows": {
+        "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby"
+      },
+      "args": ["develop"],
+      "runtimeArgs": ["--nolazy"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Gatsby build",
+      "type": "pwa-node",
+      "request": "launch",
+      "program": "${workspaceRoot}/node_modules/.bin/gatsby",
+      "windows": {
+        "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby"
+      },
+      "args": ["build"],
+      "runtimeArgs": ["--nolazy"],
+      "console": "integratedTerminal"
+    }
+  ]
+}
+```
+
 After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` command from VS Code you can see the final result:
 
 ![VSCode breakpoint hit](./images/vscode-debug.png)
@@ -120,14 +156,11 @@ After putting a breakpoint in `gatsby-node.js` and using the `Start debugging` c
 
 ### Running Gatsby with the `inspect` flag
 
-In your project directory instead of running `npm run develop` run the following command:
+In your project directory with the global Gatsby CLI installed run the following command:
 
 ```shell
-node --no-lazy node_modules/.bin/gatsby develop --inspect-brk
+gatsby develop --inspect
 ```
-
-- `--inspect-brk` will enable Node's inspector agent which will allow you to connect a debugger. It will also pause execution until the debugger is connected and then wait for you to resume it.
-- `--no-lazy` - this will force Node's V8 engine to disable lazy compilation and will help with using breakpoints.
 
 ### Connecting DevTools
 

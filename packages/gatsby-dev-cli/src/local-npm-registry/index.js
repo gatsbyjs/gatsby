@@ -55,7 +55,7 @@ exports.publishPackagesLocallyAndInstall = async ({
 
   const newlyPublishedPackageVersions = {}
 
-  for (let packageName of packagesToPublish) {
+  for (const packageName of packagesToPublish) {
     newlyPublishedPackageVersions[packageName] = await publishPackage({
       packageName,
       packagesToPublish,

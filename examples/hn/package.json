@@ -6,13 +6,13 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "flat": "^2.0.1",
-    "gatsby": "^2.24.54",
-    "gatsby-core-utils": "^1.3.19",
-    "gatsby-plugin-manifest": "^2.4.28",
-    "gatsby-source-hacker-news": "^2.4.10",
+    "gatsby": "next",
+    "gatsby-core-utils": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-source-hacker-news": "next",
     "lodash": "^4.17.20",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "slash": "^2.0.0"
   },
   "keywords": [

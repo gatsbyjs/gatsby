@@ -4,7 +4,7 @@ Parses AsciiDoc files using [Asciidoctor.js](https://asciidoctor.org/docs/asciid
 
 ## Install
 
-`npm install --save gatsby-transformer-asciidoc`
+`npm install gatsby-transformer-asciidoc`
 
 ## How to use
 
@@ -154,30 +154,30 @@ Each attribute with the prefix page- will be automatically added under `pageAttr
 }
 ```
 
-## Define a custom converter
+## Define a Custom Converter
 
 You can define a custom converter by adding the `converterFactory` option.
 
 ```javascript
-// In your gatsby-config.js, make sure to import or declare TemplateConverter
+// In your gatsby-config.js, make sure to import or declare CustomConverter
 plugins: [
   {
     resolve: `gatsby-transformer-asciidoc`,
     options: {
-      converterFactory: TemplateConverter,
+      converterFactory: CustomConverter,
     },
   },
 ]
 ```
 
-`TemplateConverter` is a custom javascript class you'll need to create. Information on how to write a custom `TemplateConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.app/asciidoctor.js/extend/converter/custom-converter/).
+`CustomConverter` is a custom javascript class you'll need to create. Information on how to write a custom `CustomConverter` can be found at the [asciidoctor docs](https://asciidoctor-docs.netlify.app/asciidoctor.js/extend/converter/custom-converter/).
 
 In the example below, we will use a custom converter to convert paragraphs but the other nodes will be converted using the built-in HTML5 converter:
 
 ```javascript
 const asciidoc = require(`asciidoctor`)()
 
-class TemplateConverter {
+class CustomConverter {
   constructor() {
     this.baseConverter = asciidoc.Html5Converter.$new()
   }
@@ -191,3 +191,6 @@ class TemplateConverter {
   }
 }
 ```
+
+gatsby-transformer-asciidoc takes then this class, **not** a instance of `CustomConverter`, as the `converterFactory` option.
+You can also reuse the internal converter of gatsby-transformer-asciidoc, since the constructor of a given `CustomConverter` will be call with it as parameter.

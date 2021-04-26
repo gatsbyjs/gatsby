@@ -19,4 +19,6 @@ export interface IQueryRunningContext {
   queryIds?: IGroupedQueryIds
   websocketManager?: WebsocketManager
   filesDirty?: boolean
+  pendingQueryRuns?: Set<string>
+  currentlyHandledPendingQueryRuns?: Set<string>
 }

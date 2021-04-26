@@ -32,7 +32,7 @@ Create a new site using
 gatsby new gatsby-algolia-guide https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-The starter blog contains the pages you will index in the directory `content/blog`. These are Markdown files that have the [frontmatter field](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) `title`. It is referenced when configuring the Algolia query. If you call this field something else, the query needs to be modified.
+The starter blog contains the pages you will index in the directory `content/blog`. These are Markdown files that have the [frontmatter field](/docs/how-to/routing/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) `title`. It is referenced when configuring the Algolia query. If you call this field something else, the query needs to be modified.
 
 ## Indexing
 
@@ -54,7 +54,7 @@ Then, go to [the 'API Keys' section of your Algolia profile](https://www.algolia
 
 ![The API Keys section of the Algolia profile](./images/algolia-api-keys.png)
 
-Copy out the Application ID, Search-Only API Key, and Admin API Key from Algolia and create a file called `.env` in the root of your project (`gatsby-algolia-guide` if created as described above). This file contains your [project environment variables](/docs/environment-variables). Replace the placeholders with your copied values:
+Copy out the Application ID, Search-Only API Key, and Admin API Key from Algolia and create a file called `.env` in the root of your project (`gatsby-algolia-guide` if created as described above). This file contains your [project environment variables](/docs/how-to/local-development/environment-variables). Replace the placeholders with your copied values:
 
 ```text:title=.env
 GATSBY_ALGOLIA_APP_ID=<App ID>
@@ -191,7 +191,7 @@ The guide will use the following frameworks:
 
 - [React InstantSearch](https://community.algolia.com/react-instantsearch), a component library provided by Algolia for easily building search interfaces.
 - [Algolia Search](https://www.npmjs.com/package/algoliasearch) provides the API client for calling Algolia.
-- [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/packages/gatsby-plugin-styled-components/).
+- [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/plugins/gatsby-plugin-styled-components/).
 - [Styled Icons](https://styled-icons.js.org/) provides the magnifying glass icon for the search bar.
 
 Styled Components can also be replaced by any other CSS solution you prefer.
@@ -559,7 +559,7 @@ const Layout = ({ location, title, children }) => {
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <a href="https://www.gatsbyjs.com">Gatsby</a>
       </footer>
     </div>
   )
@@ -588,7 +588,7 @@ You therefore need to declare the same environment variables you put in `.env` i
 
 ![Netlify environment variable configuration](./images/algolia-netlify-env.png)
 
-The Netlify documentation has more information on [how to configure environment variables in Netlify](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables). Also see the chapter [Environment Variables](/docs/environment-variables) for an overview of environment variables in Gatsby.
+The Netlify documentation has more information on [how to configure environment variables in Netlify](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables). Also see the [Environment Variables](/docs/how-to/local-development/environment-variables) guide for an overview of environment variables in Gatsby.
 
 ## Additional Resources
 

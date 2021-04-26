@@ -1,7 +1,10 @@
 const Promise = require(`bluebird`)
 const _ = require(`lodash`)
 const chalk = require(`chalk`)
-const { bindActionCreators } = require(`redux`)
+const { bindActionCreators: origBindActionCreators } = require(`redux`)
+const memoize = require(`memoizee`)
+
+const bindActionCreators = memoize(origBindActionCreators)
 
 const tracer = require(`opentracing`).globalTracer()
 const reporter = require(`gatsby-cli/lib/reporter`)
@@ -24,7 +27,6 @@ const {
   getNodes,
   getNode,
   getNodesByType,
-  hasNodeChanged,
   getNodeAndSavePathDependency,
 } = require(`../redux/nodes`)
 const { getPublicPath } = require(`./get-public-path`)
@@ -32,6 +34,15 @@ const { getNonGatsbyCodeFrameFormatted } = require(`./stack-trace-utils`)
 const { trackBuildError, decorateEvent } = require(`gatsby-telemetry`)
 import errorParser from "./api-runner-error-parser"
 const { loadNodeContent } = require(`../db/nodes`)
+
+if (!process.env.BLUEBIRD_DEBUG && !process.env.BLUEBIRD_LONG_STACK_TRACES) {
+  // Unless specified - disable longStackTraces
+  // as this have severe perf penalty ( http://bluebirdjs.com/docs/api/promise.longstacktraces.html )
+  // This is mainly for `gatsby develop` due to NODE_ENV being set to development
+  // which cause bluebird to enable longStackTraces
+  // `gatsby build` (with NODE_ENV=production) already doesn't enable longStackTraces
+  Promise.config({ longStackTraces: false })
+}
 
 // Bind action creators per plugin so we can auto-add
 // metadata to actions they create.
@@ -101,7 +112,6 @@ const deferredAction = type => (...args) => {
 const NODE_MUTATION_ACTIONS = [
   `createNode`,
   `deleteNode`,
-  `deleteNodes`,
   `touchNode`,
   `createParentChildLink`,
   `createNodeField`,
@@ -115,10 +125,111 @@ const deferActions = actions => {
   return deferred
 }
 
-const getLocalReporter = (activity, reporter) =>
-  activity
-    ? { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
-    : reporter
+/**
+ * Create a local reporter
+ * Used to override reporter methods with activity methods
+ */
+function getLocalReporter({ activity, reporter }) {
+  // If we have an activity, bind panicOnBuild to the activities method to
+  // join them
+  if (activity) {
+    return { ...reporter, panicOnBuild: activity.panicOnBuild.bind(activity) }
+  }
+
+  return reporter
+}
+
+function getErrorMapWithPluginName(pluginName, errorMap) {
+  const entries = Object.entries(errorMap)
+
+  return entries.reduce((memo, [key, val]) => {
+    memo[`${pluginName}_${key}`] = val
+
+    return memo
+  }, {})
+}
+
+function extendLocalReporterToCatchPluginErrors({
+  reporter,
+  pluginName,
+  runningActivities,
+}) {
+  let setErrorMap
+
+  let error = reporter.error
+  let panic = reporter.panic
+  let panicOnBuild = reporter.panicOnBuild
+
+  if (pluginName && reporter?.setErrorMap) {
+    setErrorMap = errorMap =>
+      reporter.setErrorMap(getErrorMapWithPluginName(pluginName, errorMap))
+
+    error = (errorMeta, error) => {
+      reporter.error(errorMeta, error, pluginName)
+    }
+
+    panic = (errorMeta, error) => {
+      reporter.panic(errorMeta, error, pluginName)
+    }
+
+    panicOnBuild = (errorMeta, error) => {
+      reporter.panicOnBuild(errorMeta, error, pluginName)
+    }
+  }
+
+  return {
+    ...reporter,
+    setErrorMap,
+    error,
+    panic,
+    panicOnBuild,
+    activityTimer: (...args) => {
+      // eslint-disable-next-line prefer-spread
+      const activity = reporter.activityTimer.apply(reporter, args)
+
+      const originalStart = activity.start
+      const originalEnd = activity.end
+
+      activity.start = () => {
+        originalStart.apply(activity)
+        runningActivities.add(activity)
+      }
+
+      activity.end = () => {
+        originalEnd.apply(activity)
+        runningActivities.delete(activity)
+      }
+
+      return activity
+    },
+
+    createProgress: (...args) => {
+      // eslint-disable-next-line prefer-spread
+      const activity = reporter.createProgress.apply(reporter, args)
+
+      const originalStart = activity.start
+      const originalEnd = activity.end
+      const originalDone = activity.done
+
+      activity.start = () => {
+        originalStart.apply(activity)
+        runningActivities.add(activity)
+      }
+
+      activity.end = () => {
+        originalEnd.apply(activity)
+        runningActivities.delete(activity)
+      }
+
+      activity.done = () => {
+        originalDone.apply(activity)
+        runningActivities.delete(activity)
+      }
+
+      return activity
+    },
+  }
+}
 
 const getUninitializedCache = plugin => {
   const message =
@@ -127,10 +238,11 @@ const getUninitializedCache = plugin => {
     (plugin && plugin !== `default-site-plugin` ? ` (called in ${plugin})` : ``)
 
   return {
-    get() {
+    // GatsbyCache
+    async get() {
       throw new Error(message)
     },
-    set() {
+    async set() {
       throw new Error(message)
     },
   }
@@ -138,6 +250,8 @@ const getUninitializedCache = plugin => {
 
 const pluginNodeCache = new Map()
 
+const availableActionsCache = new Map()
+let publicPath
 const runAPI = async (plugin, api, args, activity) => {
   let gatsbyNode = pluginNodeCache.get(plugin.name)
   if (!gatsbyNode) {
@@ -152,15 +266,23 @@ const runAPI = async (plugin, api, args, activity) => {
 
     pluginSpan.setTag(`api`, api)
     pluginSpan.setTag(`plugin`, plugin.name)
-
     const {
       publicActions,
       restrictedActionsAvailableInAPI,
     } = require(`../redux/actions`)
-    const availableActions = {
-      ...publicActions,
-      ...(restrictedActionsAvailableInAPI[api] || {}),
+
+    let availableActions
+    if (availableActionsCache.has(api)) {
+      availableActions = availableActionsCache.get(api)
+    } else {
+      availableActions = {
+        ...publicActions,
+        ...(restrictedActionsAvailableInAPI[api] || {}),
+      }
+
+      availableActionsCache.set(api, availableActions)
     }
+
     let boundActionCreators = bindActionCreators(
       availableActions,
       store.dispatch
@@ -180,7 +302,10 @@ const runAPI = async (plugin, api, args, activity) => {
     const { config, program } = store.getState()
 
     const pathPrefix = (program.prefixPaths && config.pathPrefix) || ``
-    const publicPath = getPublicPath({ ...config, ...program }, ``)
+
+    if (typeof publicPath === `undefined`) {
+      publicPath = getPublicPath({ ...config, ...program }, ``)
+    }
 
     const namespacedCreateNodeId = id => createNodeId(id, plugin.name)
 
@@ -237,55 +362,16 @@ const runAPI = async (plugin, api, args, activity) => {
         },
       }
     }
-    const localReporter = getLocalReporter(activity, reporter)
+
+    const localReporter = getLocalReporter({ activity, reporter })
 
     const runningActivities = new Set()
 
-    const localReporterThatCleansUpAfterMisbehavingPlugins = {
-      ...localReporter,
-      activityTimer: (...args) => {
-        const activity = reporter.activityTimer.apply(reporter, args)
-
-        const originalStart = activity.start
-        const originalEnd = activity.end
-
-        activity.start = () => {
-          originalStart.apply(activity)
-          runningActivities.add(activity)
-        }
-
-        activity.end = () => {
-          originalEnd.apply(activity)
-          runningActivities.delete(activity)
-        }
-
-        return activity
-      },
-      createProgress: (...args) => {
-        const activity = reporter.createProgress.apply(reporter, args)
-
-        const originalStart = activity.start
-        const originalEnd = activity.end
-        const originalDone = activity.done
-
-        activity.start = () => {
-          originalStart.apply(activity)
-          runningActivities.add(activity)
-        }
-
-        activity.end = () => {
-          originalEnd.apply(activity)
-          runningActivities.delete(activity)
-        }
-
-        activity.done = () => {
-          originalDone.apply(activity)
-          runningActivities.delete(activity)
-        }
-
-        return activity
-      },
-    }
+    const extendedLocalReporter = extendLocalReporterToCatchPluginErrors({
+      reporter: localReporter,
+      pluginName: plugin.name,
+      runningActivities,
+    })
 
     const endInProgressActivitiesCreatedByThisRun = () => {
       runningActivities.forEach(activity => activity.end())
@@ -296,7 +382,6 @@ const runAPI = async (plugin, api, args, activity) => {
         ...args,
         basePath: pathPrefix,
         pathPrefix: publicPath,
-        boundActionCreators: actions,
         actions,
         loadNodeContent,
         store,
@@ -305,8 +390,7 @@ const runAPI = async (plugin, api, args, activity) => {
         getNodes,
         getNode,
         getNodesByType,
-        hasNodeChanged,
-        reporter: localReporterThatCleansUpAfterMisbehavingPlugins,
+        reporter: extendedLocalReporter,
         getNodeAndSavePathDependency,
         cache,
         createNodeId: namespacedCreateNodeId,
@@ -381,9 +465,15 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     // call an action which will trigger the same API being called.
     // `onCreatePage` is the only example right now. In these cases, we should
     // avoid calling the originating plugin again.
-    const implementingPlugins = plugins.filter(
+    let implementingPlugins = plugins.filter(
       plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
     )
+
+    if (api === `sourceNodes` && args.pluginName) {
+      implementingPlugins = implementingPlugins.filter(
+        plugin => plugin.name === args.pluginName
+      )
+    }
 
     const apiRunInstance = {
       api,
@@ -448,65 +538,109 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       }
     }
 
-    Promise.mapSeries(implementingPlugins, plugin => {
-      if (stopQueuedApiRuns) {
-        return null
-      }
+    let apiRunPromiseOptions = {}
+    let runPromise
+    if (
+      api === `sourceNodes` &&
+      process.env.GATSBY_EXPERIMENTAL_PARALLEL_SOURCING
+    ) {
+      runPromise = Promise.map
+      apiRunPromiseOptions.concurrency = 20
+    } else {
+      runPromise = Promise.mapSeries
+      apiRunPromiseOptions = undefined
+    }
 
-      const pluginName =
-        plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
+    runPromise(
+      implementingPlugins,
+      plugin => {
+        if (stopQueuedApiRuns) {
+          return null
+        }
 
-      return new Promise(resolve => {
-        resolve(runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity))
-      }).catch(err => {
-        decorateEvent(`BUILD_PANIC`, {
-          pluginName: `${plugin.name}@${plugin.version}`,
-        })
+        let gatsbyNode = pluginNodeCache.get(plugin.name)
+        if (!gatsbyNode) {
+          gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+          pluginNodeCache.set(plugin.name, gatsbyNode)
+        }
 
-        const localReporter = getLocalReporter(activity, reporter)
+        const pluginName =
+          plugin.name === `default-site-plugin` ? `gatsby-node.js` : plugin.name
 
-        const file = stackTrace
-          .parse(err)
-          .find(file => /gatsby-node/.test(file.fileName))
-
-        let codeFrame = ``
-        const structuredError = errorParser({ err })
-
-        if (file) {
-          const { fileName, lineNumber: line, columnNumber: column } = file
-
-          const code = fs.readFileSync(fileName, { encoding: `utf-8` })
-          codeFrame = codeFrameColumns(
-            code,
-            {
-              start: {
-                line,
-                column,
-              },
-            },
-            {
-              highlightCode: true,
-            }
+        // TODO: rethink createNode API to handle this better
+        if (
+          api === `onCreateNode` &&
+          gatsbyNode?.unstable_shouldOnCreateNode && // Don't bail if this api is not exported
+          !gatsbyNode.unstable_shouldOnCreateNode(
+            { node: args.node },
+            plugin.pluginOptions
           )
+        ) {
+          // Do not try to schedule an async event for this node for this plugin
+          return null
+        }
 
-          structuredError.location = {
-            start: { line: line, column: column },
+        return new Promise(resolve => {
+          resolve(
+            runAPI(plugin, api, { ...args, parentSpan: apiSpan }, activity)
+          )
+        }).catch(err => {
+          decorateEvent(`BUILD_PANIC`, {
+            pluginName: `${plugin.name}@${plugin.version}`,
+          })
+
+          const localReporter = getLocalReporter({ activity, reporter })
+
+          const file = stackTrace
+            .parse(err)
+            .find(file => /gatsby-node/.test(file.fileName))
+
+          let codeFrame = ``
+          const structuredError = errorParser({ err })
+
+          if (file) {
+            const { fileName, lineNumber: line, columnNumber: column } = file
+
+            try {
+              const code = fs.readFileSync(fileName, { encoding: `utf-8` })
+              codeFrame = codeFrameColumns(
+                code,
+                {
+                  start: {
+                    line,
+                    column,
+                  },
+                },
+                {
+                  highlightCode: true,
+                }
+              )
+            } catch (_e) {
+              // sometimes stack trace point to not existing file
+              // particularly when file is transpiled and path actually changes
+              // (like pointing to not existing `src` dir or original typescript file)
+            }
+
+            structuredError.location = {
+              start: { line: line, column: column },
+            }
+            structuredError.filePath = fileName
           }
-          structuredError.filePath = fileName
-        }
 
-        structuredError.context = {
-          ...structuredError.context,
-          pluginName,
-          api,
-          codeFrame,
-        }
+          structuredError.context = {
+            ...structuredError.context,
+            pluginName,
+            api,
+            codeFrame,
+          }
 
-        localReporter.panicOnBuild(structuredError)
+          localReporter.panicOnBuild(structuredError)
 
-        return null
-      })
-    }).then(results => {
+          return null
+        })
+      },
+      apiRunPromiseOptions
+    ).then(results => {
       if (onAPIRunComplete) {
         onAPIRunComplete()
       }
