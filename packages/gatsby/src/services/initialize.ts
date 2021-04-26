@@ -423,7 +423,8 @@ export async function initialize({
           // Add webpack
           deleteGlobs.push(`!${cacheDirectory}/webpack`)
         }
-        await del(deleteGlobs)
+        console.log(deleteGlobs)
+        // await del(deleteGlobs)
       } else {
         // Attempt to empty dir if remove fails,
         // like when directory is mount point

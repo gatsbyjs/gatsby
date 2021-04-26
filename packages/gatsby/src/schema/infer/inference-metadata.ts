@@ -57,7 +57,7 @@ of fields in the node object (including nested fields)
   (still rare edge cases possible when reporting may be confusing, i.e. when node is deleted)
 */
 
-import { isEqual } from "lodash"
+import { intersectionWith, isEqual } from "lodash"
 import { is32BitInteger } from "../../utils/is-32-bit-integer"
 import { looksLikeADate } from "../types/date"
 import { Node } from "../../../index"
@@ -128,38 +128,106 @@ export interface ITypeMetadata {
 
 type Operation = "add" | "del"
 
-const getType = (value: unknown, key: string): ValueType | "null" => {
+const setAndReturnFieldType = (typeKeyKey, countsObject, inferCounts) =>
+  function setFieldType(fieldType) {
+    countsObject.count += 1
+    // We haven't seen this field before so set it
+    if (
+      countsObject.fieldType === null &&
+      countsObject.fieldType !== fieldType
+    ) {
+      countsObject.fieldType = fieldType
+      // We have seen this field but it's different :-(
+    } else if (
+      countsObject.fieldType !== null &&
+      countsObject.fieldType !== fieldType
+    ) {
+      countsObject.allSame = false
+    }
+
+    // Set this and save
+    inferCounts.set(typeKeyKey, countsObject)
+    return fieldType
+  }
+
+const inferCounts = new Map()
+let totalCalls = 0
+const getType = (
+  value: unknown,
+  key: string,
+  nodeType: string
+): ValueType | "null" => {
+  const typeofValue = typeof value
+  if (
+    value === null ||
+    ![`number`, `string`, `boolean`, `object`].includes(typeofValue)
+  ) {
+    return `null`
+  }
+
+  const typeKeyKey = `${nodeType}-${key}`
+
+  let countsObject = inferCounts.get(typeKeyKey)
+
+  // Inferring values is very expensive. If after 10 times inferring a field
+  // we've gotten the same value each time, we start just returning the
+  // previously inferred values.
+  if (countsObject?.count > 10 && countsObject.allSame) {
+    // countsObject.count += 1;
+    // inferCounts.set(typeKeyKey, countsObject);
+    return countsObject.fieldType
+  }
+
+  if (!countsObject) {
+    countsObject = {
+      count: 1,
+      fieldType: null,
+      allSame: true,
+    }
+  }
+
+  // totalCalls += 1;
+
+  // if (totalCalls % 1000 === 0) {
+  // console.log(
+  // { totalCalls, typeKeyKey, countsObject, value, typeOf: typeof value }
+  // );
+  // }
+
+  const setValue = setAndReturnFieldType(typeKeyKey, countsObject, inferCounts)
+
   // Staying as close as possible to GraphQL types
-  switch (typeof value) {
+  switch (typeofValue) {
     case `number`:
-      return is32BitInteger(value) ? `int` : `float`
+      return setValue(is32BitInteger(value) ? `int` : `float`)
     case `string`:
       if (key.includes(`___NODE`)) {
-        return `relatedNode`
+        return setValue(`relatedNode`)
       }
-      return looksLikeADate(value) ? `date` : `string`
+      return setValue(looksLikeADate(value) ? `date` : `string`)
     case `boolean`:
-      return `boolean`
+      return setValue(`boolean`)
     case `object`:
-      if (value === null) return `null`
-      if (value instanceof Date) return `date`
-      if (value instanceof String) return `string`
+      if (value === null) return setValue(`null`)
+      if (value instanceof Date) return setValue(`date`)
+      if (value instanceof String) return setValue(`string`)
       if (Array.isArray(value)) {
         if (value.length === 0) {
-          return `null`
+          return setValue(`null`)
         }
-        return key.includes(`___NODE`) ? `relatedNodeList` : `array`
+        return setValue(key.includes(`___NODE`) ? `relatedNodeList` : `array`)
       }
-      if (!Object.keys(value).length) return `null`
-      return `object`
+      if (!Object.keys(value).length) return setValue(`null`)
+      return setValue(`object`)
     default:
       // bigint, symbol, function, unknown (host objects in IE were typeof "unknown", for example)
-      return `null`
+      return setValue(`null`)
   }
 }
 
 const updateValueDescriptorObject = (
   value: Record<string, unknown>,
+  nodeType: string,
   typeInfo: ITypeInfoObject,
   nodeId: string,
   operation: Operation,
@@ -171,6 +239,10 @@ const updateValueDescriptorObject = (
   const { dprops = {} } = typeInfo
   typeInfo.dprops = dprops
 
+  if (!value) {
+    console.log({ value, nodeType, nodeId })
+  }
+
   Object.keys(value).forEach(key => {
     const v = value[key]
 
@@ -180,7 +252,16 @@ const updateValueDescriptorObject = (
       dprops[key] = descriptor
     }
 
-    updateValueDescriptor(nodeId, key, v, operation, descriptor, metadata, path)
+    updateValueDescriptor(
+      nodeId,
+      nodeType,
+      key,
+      v,
+      operation,
+      descriptor,
+      metadata,
+      path
+    )
   })
 
   path.pop()
@@ -188,6 +269,7 @@ const updateValueDescriptorObject = (
 
 const updateValueDescriptorArray = (
   value: Array<unknown>,
+  nodeType: string,
   key: string,
   typeInfo: ITypeInfoArray,
   nodeId: string,
@@ -204,6 +286,7 @@ const updateValueDescriptorArray = (
 
     updateValueDescriptor(
       nodeId,
+      nodeType,
       key,
       item,
       operation,
@@ -251,6 +334,7 @@ const updateValueDescriptorString = (
 
 const updateValueDescriptor = (
   nodeId: string,
+  nodeType: string,
   key: string,
   value: unknown,
   operation: Operation = `add`,
@@ -264,7 +348,7 @@ const updateValueDescriptor = (
     return
   }
 
-  const typeName = getType(value, key)
+  const typeName = getType(value, key, nodeType)
 
   if (typeName === `null`) {
     return
@@ -301,6 +385,7 @@ const updateValueDescriptor = (
     case `object`:
       updateValueDescriptorObject(
         value as Record<string, unknown>,
+        nodeType,
         typeInfo as ITypeInfoObject,
         nodeId,
         operation,
@@ -311,6 +396,7 @@ const updateValueDescriptor = (
     case `array`:
       updateValueDescriptorArray(
         value as Array<unknown>,
+        nodeType,
         key,
         typeInfo as ITypeInfoArray,
         nodeId,
@@ -446,6 +532,7 @@ const updateTypeMetadata = (
 
     updateValueDescriptor(
       node.id,
+      node.internal.type,
       field,
       node[field],
       operation,
@@ -480,9 +567,9 @@ const addNodes = (
 ): ITypeMetadata => nodes.reduce(addNode, metadata)
 
 const possibleTypes = (descriptor: IValueDescriptor = {}): Array<ValueType> =>
-  Object.keys(descriptor).filter(type => descriptor[type].total > 0) as Array<
-    ValueType
-  >
+  Object.keys(descriptor).filter(
+    type => descriptor[type].total > 0
+  ) as Array<ValueType>
 
 const isEmpty = ({ fieldMap }): boolean =>
   Object.keys(fieldMap).every(
