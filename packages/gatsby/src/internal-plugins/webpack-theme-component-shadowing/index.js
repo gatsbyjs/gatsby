@@ -70,26 +70,26 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       ...DEFAULT_FILE_EXTENSIONS_CATEGORIES,
       ...extensionsCategory,
     }
-    this.additionnalShadowExtensions = this.buildAdditionnalShadowExtensions()
+    this.additionalShadowExtensions = this.buildAdditionalShadowExtensions()
   }
 
-  buildAdditionnalShadowExtensions() {
+  buildAdditionalShadowExtensions() {
     const extensionsByCategory = _.groupBy(
       this.extensions,
       ext => this.extensionsCategory[ext.substring(1)] || `undefined`
     )
 
-    const additionnalExtensions = []
+    const additionalExtensions = []
     for (const [category, exts] of Object.entries(extensionsByCategory)) {
       if (category === `undefined`) continue
       for (const ext of exts) {
-        additionnalExtensions.push({ key: ext, value: exts })
+        additionalExtensions.push({ key: ext, value: exts })
       }
     }
 
     // Sort extensions in reverse length order, so that something such as
     // ".css.js" get caught before ".js"
-    return additionnalExtensions.sort(
+    return additionalExtensions.sort(
       ({ key: a }, { key: b }) => a.length <= b.length
     )
   }
@@ -284,23 +284,23 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
   }
 
   getAcceptableShadowFileNames(componentName, originalRequestComponent) {
-    const matchingEntry = this.additionnalShadowExtensions.find(entry =>
+    const matchingEntry = this.additionalShadowExtensions.find(entry =>
       componentName.endsWith(entry.key)
     )
 
-    let additionnalNames = []
+    let additionalNames = []
     if (matchingEntry) {
       const baseName = componentName.slice(0, -matchingEntry.key.length)
-      additionnalNames = matchingEntry.value.map(ext => `${baseName}${ext}`)
+      additionalNames = matchingEntry.value.map(ext => `${baseName}${ext}`)
     }
 
-    let legacyAdditionnalNames = []
+    let legacyAdditionalNames = []
     if (originalRequestComponent) {
-      legacyAdditionnalNames = this.extensions.map(
+      legacyAdditionalNames = this.extensions.map(
         ext => `${originalRequestComponent}${ext}`
       )
     }
 
-    return [componentName, ...additionnalNames, ...legacyAdditionnalNames]
+    return [componentName, ...additionalNames, ...legacyAdditionalNames]
   }
 }
