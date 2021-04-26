@@ -3,15 +3,14 @@ import fs from "fs-extra"
 import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"
 import { isCI } from "gatsby-core-utils"
-
+import { Stats } from "webpack"
 import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
 import { emitter } from "../../redux"
-import { Stats } from "webpack"
 
-const startWorker = (): any => {
+const startWorker = (): JestWorker => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
     exposedMethods: [`renderHTML`, `deleteModuleCache`, `warmup`],
     numWorkers: 1,
@@ -20,8 +19,8 @@ const startWorker = (): any => {
       env: {
         ...process.env,
         NODE_ENV: isCI() ? `production` : `development`,
-        forceColors: true,
-        GATSBY_EXPERIMENTAL_DEV_SSR: true,
+        forceColors: `true`,
+        GATSBY_EXPERIMENTAL_DEV_SSR: `true`,
       },
     },
   })
@@ -40,11 +39,11 @@ export const initDevWorkerPool = (): void => {
 }
 
 let changeCount = 0
-export const restartWorker = (htmlComponentRendererPath): void => {
+export const restartWorker = (htmlComponentRendererPath: string): void => {
   changeCount += 1
   // Forking is expensive — each time we re-require the outputted webpack
   // file, memory grows ~10 mb — 25 regenerations means ~250mb which seems
-  // like an accepatable amount of memory to grow before we reclaim it
+  // like an acceptable amount of memory to grow before we reclaim it
   // by rebooting the worker process.
   if (changeCount > 25) {
     const oldWorker = worker
@@ -57,7 +56,10 @@ export const restartWorker = (htmlComponentRendererPath): void => {
   }
 }
 
-const searchFileForString = (substring, filePath): Promise<boolean> =>
+const searchFileForString = (
+  substring: string,
+  filePath: string
+): Promise<boolean> =>
   new Promise(resolve => {
     const escapedSubString = substring.replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
 
@@ -86,7 +88,7 @@ const searchFileForString = (substring, filePath): Promise<boolean> =>
 const ensurePathComponentInSSRBundle = async (
   page,
   directory
-): Promise<any> => {
+): Promise<boolean> => {
   // This shouldn't happen.
   if (!page) {
     report.panic(`page not found`, page)

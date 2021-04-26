@@ -549,18 +549,12 @@ const errors = {
     docsUrl: `https://www.gatsbyjs.com/docs/reference/gatsby-cli#new`,
   },
   "11614": {
-    text: ({
-      path,
-      filePath,
-      line,
-      column,
-    }): string => `The path "${path}" errored during SSR.
-
-    Edit its component ${filePath}${
-      line ? `:${line}:${column}` : ``
-    } to resolve the error.`,
+    text: (context): string =>
+      stripIndent(`The path "${context.path}" errored during SSR.
+    Edit its component ${context.filePath}${
+        context.line ? `:${context.line}:${context.column}` : ``
+      } to resolve the error.`),
     level: Level.WARNING,
-    docsUrl: `https://gatsby.dev/debug-html`,
   },
   // Watchdog
   "11701": {

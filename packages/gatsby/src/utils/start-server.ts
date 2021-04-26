@@ -48,6 +48,7 @@ import {
   routeLoadingIndicatorRequests,
   writeVirtualLoadingIndicatorModule,
 } from "./loading-indicator"
+import { renderDevHTML } from "./dev-ssr/render-dev-html"
 
 type ActivityTracker = any // TODO: Replace this with proper type once reporter is typed
 
@@ -487,9 +488,130 @@ module.exports = {
 
   // Render an HTML page and serve it.
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
-    // Setup HTML route.
-    const { route } = require(`./dev-ssr/develop-html-route`)
-    route({ app, program, store })
+    app.get(`*`, async (req, res, next) => {
+      telemetry.trackFeatureIsUsed(`GATSBY_EXPERIMENTAL_DEV_SSR`)
+
+      const pathObj = findPageByPath(store.getState(), decodeURI(req.path))
+
+      if (!pathObj) {
+        return next()
+      }
+
+      await appendPreloadHeaders(pathObj.path, res)
+
+      const htmlActivity = report.phantomActivity(`building HTML for path`, {})
+      htmlActivity.start()
+
+      try {
+        const renderResponse = await renderDevHTML({
+          path: pathObj.path,
+          page: pathObj,
+          skipSsr: req.query[`skip-ssr`] || false,
+          store,
+          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          directory: program.directory,
+        })
+        res.status(200).send(renderResponse)
+      } catch (error) {
+        // The page errored but couldn't read the page component.
+        // This is a race condition when a page is deleted but its requested
+        // immediately after before anything can recompile.
+        if (error === `404 page`) {
+          return next()
+        }
+
+        report.error({
+          id: `11614`,
+          context: {
+            path: pathObj.path,
+            filePath: error.filename,
+            line: error.line,
+            column: error.column,
+          },
+        })
+
+        const compilation =
+          res.locals?.webpack?.devMiddleware?.stats?.compilation
+        const emptyResponse = {
+          codeFrame: `No codeFrame could be generated`,
+          sourcePosition: null,
+          sourceContent: null,
+        }
+
+        if (!compilation) {
+          res.json(emptyResponse)
+        }
+
+        const moduleId = pathObj.path
+        const lineNumber = parseInt(error.line, 10)
+        const columnNumber = parseInt(error.column, 10)
+
+        let fileModule
+        for (const module of compilation.modules) {
+          const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
+          if (moduleIdentifier === moduleId) {
+            fileModule = module
+            break
+          }
+        }
+
+        if (!fileModule) {
+          res.json(emptyResponse)
+        }
+
+        // We need the internal webpack file that is used in the bundle, not the module source.
+        // It doesn't have the correct sourceMap.
+        const webpackSource = compilation?.codeGenerationResults
+          ?.get(fileModule)
+          ?.sources.get(`javascript`)
+
+        const sourceMap = webpackSource?.map()
+
+        if (!sourceMap) {
+          res.json(emptyResponse)
+        }
+
+        const position = {
+          line: lineNumber,
+          column: columnNumber,
+        }
+        const result = await findOriginalSourcePositionAndContent(
+          sourceMap,
+          position
+        )
+
+        const sourcePosition = result?.sourcePosition
+        const sourceLine = sourcePosition?.line
+        const sourceColumn = sourcePosition?.column
+        const sourceContent = result?.sourceContent
+
+        if (!sourceContent || !sourceLine) {
+          res.json(emptyResponse)
+        }
+
+        const codeFrame = codeFrameColumns(
+          sourceContent,
+          {
+            start: {
+              line: sourceLine,
+              column: sourceColumn ?? 0,
+            },
+          },
+          {
+            highlightCode: true,
+          }
+        )
+        res.json({
+          codeFrame,
+          sourcePosition,
+          sourceContent,
+        })
+      }
+
+      htmlActivity.end()
+
+      return null
+    })
   }
 
   if (
