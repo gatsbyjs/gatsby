@@ -9,17 +9,14 @@ describe(`testPluginOptionsSchema`, () => {
         nb: Joi.number(),
         toVerify: Joi.boolean(),
       })
+    const expectedErrors = [`"toVerify" must be a boolean`]
 
     const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"toVerify\\" must be a boolean",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should partially validate multiples value of a schema`, async () => {
@@ -29,6 +26,10 @@ describe(`testPluginOptionsSchema`, () => {
         nb: Joi.number(),
         toVerify: Joi.boolean(),
       })
+    const expectedErrors = [
+      `"nb" must be a number`,
+      `"toVerify" must be a boolean`,
+    ]
 
     const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       toVerify: `abcd`,
@@ -36,12 +37,7 @@ describe(`testPluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"nb\\" must be a number",
-        "\\"toVerify\\" must be a boolean",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate half of a real world plugin schema`, async () => {
@@ -84,6 +80,15 @@ describe(`testPluginOptionsSchema`, () => {
         siteSpeedSampleRate: Joi.number(),
         cookieDomain: Joi.string(),
       })
+    const expectedErrors = [
+      `"trackingId" is required`,
+      `"head" must be a boolean`,
+      `"anonymize" must be a boolean`,
+      `"respectDNT" must be a boolean`,
+      `"exclude[0]" must be a string`,
+      `"exclude[1]" must be a string`,
+      `"exclude[2]" must be a string`,
+    ]
 
     const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
@@ -94,17 +99,7 @@ describe(`testPluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"trackingId\\" is required",
-        "\\"head\\" must be a boolean",
-        "\\"anonymize\\" must be a boolean",
-        "\\"respectDNT\\" must be a boolean",
-        "\\"exclude[0]\\" must be a string",
-        "\\"exclude[1]\\" must be a string",
-        "\\"exclude[2]\\" must be a string",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate an entire real world plugin schema`, async () => {
@@ -147,6 +142,23 @@ describe(`testPluginOptionsSchema`, () => {
         siteSpeedSampleRate: Joi.number(),
         cookieDomain: Joi.string(),
       })
+    const expectedErrors = [
+      `"trackingId" is required`,
+      `"head" must be a boolean`,
+      `"anonymize" must be a boolean`,
+      `"respectDNT" must be a boolean`,
+      `"exclude[0]" must be a string`,
+      `"exclude[1]" must be a string`,
+      `"exclude[2]" must be a string`,
+      `"pageTransitionDelay" must be a number`,
+      `"optimizeId" must be a string`,
+      `"experimentId" must be a string`,
+      `"variationId" must be a string`,
+      `"defer" must be a boolean`,
+      `"sampleRate" must be a number`,
+      `"siteSpeedSampleRate" must be a number`,
+      `"cookieDomain" must be a string`,
+    ]
 
     const { isValid, errors } = await testPluginOptionsSchema(pluginSchema, {
       trackingId: undefined,
@@ -165,25 +177,7 @@ describe(`testPluginOptionsSchema`, () => {
     })
 
     expect(isValid).toBe(false)
-    expect(errors).toMatchInlineSnapshot(`
-      Array [
-        "\\"trackingId\\" is required",
-        "\\"head\\" must be a boolean",
-        "\\"anonymize\\" must be a boolean",
-        "\\"respectDNT\\" must be a boolean",
-        "\\"exclude[0]\\" must be a string",
-        "\\"exclude[1]\\" must be a string",
-        "\\"exclude[2]\\" must be a string",
-        "\\"pageTransitionDelay\\" must be a number",
-        "\\"optimizeId\\" must be a string",
-        "\\"experimentId\\" must be a string",
-        "\\"variationId\\" must be a string",
-        "\\"defer\\" must be a boolean",
-        "\\"sampleRate\\" must be a number",
-        "\\"siteSpeedSampleRate\\" must be a number",
-        "\\"cookieDomain\\" must be a string",
-      ]
-    `)
+    expect(errors).toEqual(expectedErrors)
   })
 
   it(`should check the validity of a schema`, async () => {

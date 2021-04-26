@@ -19,52 +19,60 @@ describe(`pluginOptionsSchema`, () => {
       `"root" must be a string`,
     ]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      extensions: [1, 2, 3],
-      defaultLayouts: `this should be an object`,
-      gatsbyRemarkPlugins: [1, { not: `existing prop` }, `valid one`],
-      remarkPlugins: `this should be an array of object`,
-      rehypePlugins: `this should be an array of object`,
-      plugins: [2],
-      mediaTypes: [1, 2],
-      shouldBlockNodeFromTransformation: (wrong, number) => null,
-      root: 1,
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        extensions: [1, 2, 3],
+        defaultLayouts: `this should be an object`,
+        gatsbyRemarkPlugins: [1, { not: `existing prop` }, `valid one`],
+        remarkPlugins: `this should be an array of object`,
+        rehypePlugins: `this should be an array of object`,
+        plugins: [2],
+        mediaTypes: [1, 2],
+        shouldBlockNodeFromTransformation: (wrong, number) => null,
+        root: 1,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      extensions: [`.mdx`, `.mdxx`],
-      defaultLayouts: {
-        posts: `../post-layout.js`,
-        default: `../default-layout.js`,
-      },
-      gatsbyRemarkPlugins: [
-        {
-          resolve: `gatsby-remark-images`,
-          options: {
-            maxWidth: 590,
-          },
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        extensions: [`.mdx`, `.mdxx`],
+        defaultLayouts: {
+          posts: `../post-layout.js`,
+          default: `../default-layout.js`,
         },
-        `gatsby-remark-other-plugin`,
-      ],
-      lessBabel: false,
-      remarkPlugins: [
-        require(`../gatsby-node.js`),
-        [require(`../gatsby-node.js`), { target: false }],
-      ],
-      plugins: [{ resolve: `remark-autolink-plugin` }],
-      rehypePlugins: [
-        require(`../gatsby-node.js`),
-        [require(`../gatsby-node.js`), { behavior: `wrap` }],
-      ],
-      mediaTypes: [`text/markdown`, `text/x-markdown`, `custom-media/type`],
-      shouldBlockNodeFromTransformation: node => Boolean(node),
-      root: `james-holden`,
-    })
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          `gatsby-remark-other-plugin`,
+        ],
+        lessBabel: false,
+        remarkPlugins: [
+          require(`../gatsby-node.js`),
+          [require(`../gatsby-node.js`), { target: false }],
+        ],
+        plugins: [{ resolve: `remark-autolink-plugin` }],
+        rehypePlugins: [
+          require(`../gatsby-node.js`),
+          [require(`../gatsby-node.js`), { behavior: `wrap` }],
+        ],
+        mediaTypes: [`text/markdown`, `text/x-markdown`, `custom-media/type`],
+        shouldBlockNodeFromTransformation: node => Boolean(node),
+        root: `james-holden`,
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })

@@ -11,34 +11,42 @@ describe(`gatsby-node.js`, () => {
       `"plugins" must be an array`,
     ]
 
-    const { errors } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      commonmark: `this should be a boolean`,
-      footnotes: `this should be a boolean`,
-      pedantic: `this should be a boolean`,
-      gfm: `this should be a boolean`,
-      plugins: `this should be an array`,
-    })
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        commonmark: `this should be a boolean`,
+        footnotes: `this should be a boolean`,
+        pedantic: `this should be a boolean`,
+        gfm: `this should be a boolean`,
+        plugins: `this should be an array`,
+      }
+    )
 
+    expect(isValid).toBe(false)
     expect(errors).toEqual(expectedErrors)
   })
 
   it(`should validate the schema`, async () => {
-    const { isValid } = await testPluginOptionsSchema(pluginOptionsSchema, {
-      commonmark: false,
-      footnotes: false,
-      pedantic: false,
-      gfm: false,
-      plugins: [
-        `gatsby-remark-copy-linked-files`,
-        {
-          resolve: `gatsby-remark-images`,
-          options: {
-            maxWidth: 756,
+    const { isValid, errors } = await testPluginOptionsSchema(
+      pluginOptionsSchema,
+      {
+        commonmark: false,
+        footnotes: false,
+        pedantic: false,
+        gfm: false,
+        plugins: [
+          `gatsby-remark-copy-linked-files`,
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 756,
+            },
           },
-        },
-      ],
-    })
+        ],
+      }
+    )
 
     expect(isValid).toBe(true)
+    expect(errors).toEqual([])
   })
 })
