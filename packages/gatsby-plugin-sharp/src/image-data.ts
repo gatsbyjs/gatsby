@@ -236,7 +236,9 @@ export async function generateImageData({
   const primaryIndex =
     layout === `fullWidth`
       ? imageSizes.sizes.length - 1 // The largest image
-      : imageSizes.sizes.findIndex(size => size === imageSizes.unscaledWidth)
+      : imageSizes.sizes.findIndex(
+          size => size === Math.round(imageSizes.unscaledWidth)
+        )
 
   if (primaryIndex === -1) {
     reporter.error(
