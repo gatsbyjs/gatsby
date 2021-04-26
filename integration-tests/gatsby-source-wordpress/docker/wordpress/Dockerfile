@@ -4,14 +4,11 @@ ARG WP_CONTENT_DIR=/usr/src/wordpress/wp-content
 ARG PLUGIN_DIR=${WP_CONTENT_DIR}/plugins
 ARG UPLOADS_DIR=${WP_CONTENT_DIR}/uploads
 
-LABEL maintainer="rikki@gatsbyjs.com" 
+LABEL maintainer="tyler@gatsbyjs.com"
 
 # Set timezone, install XDebug, PHP Composer, WP-CLI
 RUN echo 'date.timezone = "UTC"' > /usr/local/etc/php/conf.d/timezone.ini \
   && apt-get update && apt-get install unzip git -y && rm -rf /var/lib/apt/lists/* \
-  && pecl install xdebug \
-  && docker-php-ext-enable xdebug \
-  && docker-php-ext-install pdo_mysql \
   && curl -Ls 'https://raw.githubusercontent.com/composer/getcomposer.org/fc4099e0ac116a1c8f61fffaf6693594dda79d16/web/installer' | php -- --quiet \
   && chmod +x composer.phar \
   && mv composer.phar /usr/local/bin/composer \
