@@ -37,10 +37,7 @@ describe(`useScrollRestoration`, () => {
 
     // jsdom doesn't support .scrollTo(), lets fix this temporarily
     if (typeof htmlElementPrototype.scrollTo === `undefined`) {
-      function scrollTo(options?: ScrollToOptions): void
-      function scrollTo(x: number, y: number): void
-      function scrollTo(
-        this: HTMLElement,
+      htmlElementPrototype.scrollTo = function scrollTo(
         optionsOrX?: ScrollToOptions | number,
         y?: number
       ): void {
@@ -51,8 +48,6 @@ describe(`useScrollRestoration`, () => {
           this.scrollTop = y
         }
       }
-
-      htmlElementPrototype.scrollTo = scrollTo
       fakedScrollTo = true
     }
   })
@@ -63,7 +58,8 @@ describe(`useScrollRestoration`, () => {
   })
 
   afterAll(() => {
-    if (fakedScrollTo) {
+    if (fakedScrollTo && htmlElementPrototype.scrollTo) {
+      // @ts-ignore
       delete htmlElementPrototype.scrollTo
     }
   })
