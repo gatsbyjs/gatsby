@@ -10,14 +10,14 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.13.17",
     "coffee-loader": "^0.9.0",
     "coffee-react-transform": "^5.0.0",
     "coffeescript": "^2.5.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
     "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3"
   },

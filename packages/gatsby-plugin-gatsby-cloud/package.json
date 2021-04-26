@@ -7,15 +7,15 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.13.17",
     "fs-extra": "^8.1.0",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
     "webpack-assets-manifest": "^5.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
     "@testing-library/dom": "^7.30.3",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",

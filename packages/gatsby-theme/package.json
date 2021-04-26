@@ -14,9 +14,9 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-theme#readme",
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/helper-plugin-utils": "^7.10.4",
-    "@babel/plugin-syntax-jsx": "^7.12.1",
+    "@babel/core": "^7.13.16",
+    "@babel/helper-plugin-utils": "^7.13.0",
+    "@babel/plugin-syntax-jsx": "^7.12.13",
     "commander": "^2.20.3",
     "fastest-levenshtein": "^1.0.12",
     "glob": "^7.1.6",
