@@ -9,6 +9,10 @@ exports.setFieldsOnGraphQLNodeType = require(`./extend-node-type`)
 
 exports.pluginOptionsSchema = function ({ Joi }) {
   return Joi.object({
+    // Options `commonmark` and `pedantic` have no effect since gatsby-transformer-remark@4.0.0
+    // TODO: remove in v5
+    commonmark: Joi.any(),
+    pedantic: Joi.any(),
     footnotes: Joi.boolean().description(
       `Activates Footnotes mode (default: true)`
     ),
