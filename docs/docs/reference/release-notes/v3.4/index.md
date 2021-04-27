@@ -9,7 +9,7 @@ Welcome to `gatsby@3.4.0` release (April 2021 #2)
 
 Key highlights of this release:
 
-- [TODO](#todo)
+- [Experimental: Enable webpack persistent caching for production builds](#experimental-enable-webpack-persistent-caching-for-production-builds) - significantly speed up webpack compilation on subsequent builds
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
