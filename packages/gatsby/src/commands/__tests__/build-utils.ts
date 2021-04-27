@@ -4,14 +4,21 @@ import {
   IHtmlFileState,
   IStaticQueryResultState,
 } from "../../redux/types"
-import { calcDirtyHtmlFiles } from "../build-utils"
 
+const platformSpy = jest.spyOn(require(`os`), `platform`)
 interface IMinimalStateSliceForTest {
   html: IGatsbyState["html"]
   pages: IGatsbyState["pages"]
 }
 
 describe(`calcDirtyHtmlFiles`, () => {
+  let calcDirtyHtmlFiles
+  beforeEach(() => {
+    jest.isolateModules(() => {
+      calcDirtyHtmlFiles = require(`../build-utils`).calcDirtyHtmlFiles
+    })
+  })
+
   function generateStateToTestHelper(
     pages: Record<
       string,
@@ -222,6 +229,71 @@ describe(`calcDirtyHtmlFiles`, () => {
     expect(Array.from(results.toCleanupFromTrackedState).sort()).toEqual([
       `/slash-removed-without-onCreatePage/`,
     ])
+  })
+
+  describe(`onCreatePage + deletePage + createPage that change path casing of a page`, () => {
+    afterAll(() => {
+      platformSpy.mockRestore()
+    })
+
+    it(`linux (case sensitive file system)`, () => {
+      let isolatedCalcDirtyHtmlFiles
+      jest.isolateModules(() => {
+        platformSpy.mockImplementation(() => `linux`)
+        isolatedCalcDirtyHtmlFiles = require(`../build-utils`)
+          .calcDirtyHtmlFiles
+      })
+
+      const state = generateStateToTestHelper({
+        // page was created, then deleted and similar page with slightly different path was created for it
+        // different artifacts would be created for them
+        "/TEST/": {
+          dirty: 0,
+          removedOrDeleted: `deleted`,
+        },
+        "/test/": {
+          dirty: 1,
+        },
+      })
+
+      const results = isolatedCalcDirtyHtmlFiles(state)
+
+      // on case sensitive file systems /test/ and /TEST/ are different files so we do need to delete a file
+      expect(results.toRegenerate.sort()).toEqual([`/test/`])
+      expect(results.toDelete.sort()).toEqual([`/TEST/`])
+      expect(Array.from(results.toCleanupFromTrackedState).sort()).toEqual([])
+    })
+
+    it(`windows / mac (case insensitive file system)`, () => {
+      let isolatedCalcDirtyHtmlFiles
+      jest.isolateModules(() => {
+        platformSpy.mockImplementation(() => `win32`)
+        isolatedCalcDirtyHtmlFiles = require(`../build-utils`)
+          .calcDirtyHtmlFiles
+      })
+
+      const state = generateStateToTestHelper({
+        // page was created, then deleted and similar page with slightly different path was created for it
+        // both page paths would result in same artifacts
+        "/TEST/": {
+          dirty: 0,
+          removedOrDeleted: `deleted`,
+        },
+        "/test/": {
+          dirty: 1,
+        },
+      })
+
+      const results = isolatedCalcDirtyHtmlFiles(state)
+
+      // on case insensitive file systems /test/ and /TEST/ are NOT different files so we should
+      // not delete files, but still we should cleanup tracked state
+      expect(results.toRegenerate.sort()).toEqual([`/test/`])
+      expect(results.toDelete.sort()).toEqual([])
+      expect(Array.from(results.toCleanupFromTrackedState).sort()).toEqual([
+        `/TEST/`,
+      ])
+    })
   })
 
   // cases above are to be able to pinpoint exact failure, kitchen sink case is to test all of above in one go
