@@ -22,7 +22,23 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-TODO
+## Experimental: Enable webpack persistent caching for production builds
+
+[Webpack 5 introduced built in persistent caching](https://webpack.js.org/blog/2020-10-10-webpack-5-release/#persistent-caching). It allows webpack to reuse result of previous compilations and significantly speed up compilation steps.
+
+To use it, add a flag to your `gatsby-config.js`:
+
+```js
+// In your gatsby-config.js
+module.exports = {
+  // your existing config
+  flags: {
+    PRESERVE_WEBPACK_CACHE: true,
+  },
+}
+```
+
+[Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/28331).
 
 ## Notable bugfixes & improvements
 
