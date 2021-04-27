@@ -2103,7 +2103,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-recipes",
       commitMessageExtra: "",
-      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "react-reconciler", "remark-mdx", "remark-mdxjs", "typescript"],
+      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "react-reconciler", "remark-mdx", "typescript"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2114,7 +2114,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-recipes",
       excludePackageNames: ["cross-env"],
-      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "react-reconciler", "remark-mdx", "remark-mdxjs"],
+      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "react-reconciler", "remark-mdx"],
     },
     {
       groupName: "minor and patch for gatsby-source-contentful",
@@ -2244,7 +2244,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby",
       commitMessageExtra: "",
-      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "remark-mdx", "remark-mdxjs", "typescript", "webpack-virtual-modules"],
+      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "remark-mdx", "typescript", "webpack-virtual-modules"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2255,7 +2255,7 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby",
       excludePackageNames: ["cross-env"],
-      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "remark-mdx", "remark-mdxjs", "typescript", "webpack-virtual-modules"],
+      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "remark-mdx", "typescript", "webpack-virtual-modules"],
     },
     {
       groupName: "minor and patch for gatsby-admin",
