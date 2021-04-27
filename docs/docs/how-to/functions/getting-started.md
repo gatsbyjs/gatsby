@@ -2,7 +2,7 @@
 title: Getting Started
 ---
 
-Gatsby Functions help you build backends without running servers.
+Gatsby Functions help you build [Express.js-style](https://expressjs.com/) backends without running servers.
 
 ## Hello World
 
