@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-netlify",
   "description": "A Gatsby plugin which generates a _headers file for netlify",
-  "version": "3.4.0-next.1",
+  "version": "3.4.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -22,9 +22,9 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.4.0-next.0",
+    "babel-preset-gatsby-package": "^1.4.0",
     "cross-env": "^7.0.3",
-    "gatsby-plugin-utils": "^1.4.0-next.0"
+    "gatsby-plugin-utils": "^1.4.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-netlify#readme",
   "keywords": [

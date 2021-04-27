@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.4.0-next.3...gatsby-plugin-manifest@3.4.0) (2021-04-27)
+
+### Bug Fixes
+
+- use cpuCount for all parallel parts ([#30548](https://github.com/gatsbyjs/gatsby/issues/30548)) ([9dbb772](https://github.com/gatsbyjs/gatsby/commit/9dbb77238f23eedbb9b6dcf5ffb3453cb67bc9b8))
+
 # [3.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.4.0-next.2...gatsby-plugin-manifest@3.4.0-next.3) (2021-04-20)
 
 **Note:** Version bump only for package gatsby-plugin-manifest

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@3.4.0-next.0...gatsby-transformer-excel@3.4.0) (2021-04-27)
+
+**Note:** Version bump only for package gatsby-transformer-excel
+
 # [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-excel@3.3.0-next.1...gatsby-transformer-excel@3.4.0-next.0) (2021-04-09)
 
 **Note:** Version bump only for package gatsby-transformer-excel

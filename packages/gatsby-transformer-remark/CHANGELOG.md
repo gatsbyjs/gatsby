@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@4.1.0-next.3...gatsby-transformer-remark@4.1.0) (2021-04-27)
+
+### Bug Fixes
+
+- **gatsby-transformer-remark:** Activate footnotes by default & remove included options with remark v13 ([#31019](https://github.com/gatsbyjs/gatsby/issues/31019)) ([#31080](https://github.com/gatsbyjs/gatsby/issues/31080)) ([bab3b55](https://github.com/gatsbyjs/gatsby/commit/bab3b5552ee848216eef52cb02f08c0e84b41231))
+
 # [4.1.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-remark@4.1.0-next.2...gatsby-transformer-remark@4.1.0-next.3) (2021-04-20)
 
 **Note:** Version bump only for package gatsby-transformer-remark
