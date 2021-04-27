@@ -47,21 +47,9 @@ module.exports = {
 
 We're making our initial alpha release of serverless functions in Gatsby!
 
-To try it, add a flag to your `gatsby-config.js`:
-
-```js
-// In your gatsby-config.js
-module.exports = {
-  // your existing config
-  flags: {
-    FUNCTIONS: true,
-  },
-}
-```
-
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/30735). [Original PR](https://github.com/gatsbyjs/gatsby/pull/30192).
 
-[Sign up for early access to Gatsby Functions in Gatsby Cloud](https://www.gatsbyjs.com/functions/).
+[Sign up for early access to Functions in Gatsby Cloud](https://www.gatsbyjs.com/functions/).
 
 ## New Aggregation Resolvers
 
