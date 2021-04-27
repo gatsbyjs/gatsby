@@ -90,10 +90,10 @@ exports.buildResolvableSet = ({
   })
 
   entryList.forEach(entries => {
-    entries.forEach(entry => resolvable.add(`${entry.sys.id}___Entry`))
+    entries.forEach(entry => resolvable.add(generateReferenceId(entry)))
   })
 
-  assets.forEach(assetItem => resolvable.add(`${assetItem.sys.id}___Asset`))
+  assets.forEach(assetItem => resolvable.add(generateReferenceId(assetItem)))
 
   return resolvable
 }
