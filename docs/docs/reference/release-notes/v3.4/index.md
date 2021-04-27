@@ -45,9 +45,9 @@ module.exports = {
 
 ## Experimental: Gatsby Functions
 
-We're introducing serverless functions in Gatsby & Gatsby Cloud and you can use it as an experiment now!
+We're making our initial alpha release serverless functions in Gatsby!
 
-To use it, add a flag to your `gatsby-config.js`:
+To try it, add a flag to your `gatsby-config.js`:
 
 ```js
 // In your gatsby-config.js
@@ -60,6 +60,8 @@ module.exports = {
 ```
 
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/30735). [Original PR](https://github.com/gatsbyjs/gatsby/pull/30192).
+
+[Sign up for early access to Gatsby Functions in Gatsby Cloud](https://www.gatsbyjs.com/functions/).
 
 ## New Aggregation Resolvers
 
