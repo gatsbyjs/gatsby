@@ -45,7 +45,7 @@ module.exports = {
 
 ## Experimental: Gatsby Functions
 
-We're making our initial alpha release serverless functions in Gatsby!
+We're making our initial alpha release of serverless functions in Gatsby!
 
 To try it, add a flag to your `gatsby-config.js`:
 
