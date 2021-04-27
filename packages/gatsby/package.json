@@ -141,6 +141,7 @@
     "socket.io": "3.1.1",
     "socket.io-client": "3.1.1",
     "source-map": "^0.7.3",
+    "source-map-support": "^0.5.19",
     "st": "^2.0.0",
     "stack-trace": "^0.0.10",
     "string-similarity": "^1.2.2",

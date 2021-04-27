@@ -1,4 +1,6 @@
+require(`source-map-support`).install()
 const sysPath = require(`path`)
+const fs = require(`fs-extra`)
 const { slash } = require(`gatsby-core-utils`)
 
 const getPosition = function (stackObject) {
@@ -50,6 +52,8 @@ const parseError = function ({ err, directory, componentPath }) {
     ...position.filename.split(sysPath.sep).slice(2)
   )
 
+  const code = fs.readFileSync(filename, `utf-8`)
+
   const splitMessage = err.message ? err.message.split(`\n`) : [``]
   const message = splitMessage[splitMessage.length - 1]
   const type = err.type ? err.type : err.name
@@ -66,6 +70,7 @@ const parseError = function ({ err, directory, componentPath }) {
     filename: slash(sysPath.relative(directory, trueFileName)),
     message: message,
     type: type,
+    code,
     stack: stack,
     line: position.line,
     column: position.column,
@@ -100,8 +105,6 @@ exports.renderHTML = ({
         })
       }
     } catch (err) {
-      console.log({ err, componentPath, directory, path })
-
       const error = parseError({ err, directory, componentPath })
       reject(error)
     }

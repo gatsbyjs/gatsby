@@ -520,72 +520,29 @@ module.exports = {
           return next()
         }
 
+        const lineNumber = error?.line
+        const columnNumber = error?.column
+        const filePath = error?.filename
+        const sourceContent = error?.code
+
         report.error({
           id: `11614`,
           context: {
             path: pathObj.path,
-            filePath: error.filename,
-            line: error.line,
-            column: error.column,
+            filePath: filePath,
+            line: lineNumber,
+            column: columnNumber,
           },
         })
 
-        const compilation =
-          res.locals?.webpack?.devMiddleware?.stats?.compilation
         const emptyResponse = {
+          isDevSSRError: true,
           codeFrame: `No codeFrame could be generated`,
           sourcePosition: null,
           sourceContent: null,
         }
 
-        if (!compilation) {
-          res.json(emptyResponse)
-        }
-
-        const moduleId = pathObj.path
-        const lineNumber = parseInt(error.line, 10)
-        const columnNumber = parseInt(error.column, 10)
-
-        let fileModule
-        for (const module of compilation.modules) {
-          const moduleIdentifier = compilation.chunkGraph.getModuleId(module)
-          if (moduleIdentifier === moduleId) {
-            fileModule = module
-            break
-          }
-        }
-
-        if (!fileModule) {
-          res.json(emptyResponse)
-        }
-
-        // We need the internal webpack file that is used in the bundle, not the module source.
-        // It doesn't have the correct sourceMap.
-        const webpackSource = compilation?.codeGenerationResults
-          ?.get(fileModule)
-          ?.sources.get(`javascript`)
-
-        const sourceMap = webpackSource?.map()
-
-        if (!sourceMap) {
-          res.json(emptyResponse)
-        }
-
-        const position = {
-          line: lineNumber,
-          column: columnNumber,
-        }
-        const result = await findOriginalSourcePositionAndContent(
-          sourceMap,
-          position
-        )
-
-        const sourcePosition = result?.sourcePosition
-        const sourceLine = sourcePosition?.line
-        const sourceColumn = sourcePosition?.column
-        const sourceContent = result?.sourceContent
-
-        if (!sourceContent || !sourceLine) {
+        if (!sourceContent || !lineNumber) {
           res.json(emptyResponse)
         }
 
@@ -593,8 +550,8 @@ module.exports = {
           sourceContent,
           {
             start: {
-              line: sourceLine,
-              column: sourceColumn ?? 0,
+              line: lineNumber,
+              column: columnNumber ?? 0,
             },
           },
           {
@@ -602,8 +559,14 @@ module.exports = {
           }
         )
         res.json({
+          isDevSsrError: true,
           codeFrame,
-          sourcePosition,
+          sourcePosition: {
+            source: filePath,
+            line: lineNumber,
+            column: columnNumber ?? 0,
+            name: null,
+          },
           sourceContent,
         })
       }
