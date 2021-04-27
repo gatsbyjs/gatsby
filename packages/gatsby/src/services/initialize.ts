@@ -415,7 +415,10 @@ export async function initialize({
         ]
 
         if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-          // Add gatsby-source-filesystem
+          // Stop the caches directory from being deleted, add all sub directories, 
+          // but remove gatsby-source-filesystem
+          deleteGlobs.push(`!${cacheDirectory}/caches`)
+          deleteGlobs.push(`${cacheDirectory}/caches/*`)
           deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
         }
 
