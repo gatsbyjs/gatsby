@@ -43,7 +43,7 @@ module.exports = {
 
 [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/28331).
 
-## Experimental: Gatsby Functions
+## Experimental: Functions
 
 We're making our initial alpha release of serverless functions in Gatsby!
 
