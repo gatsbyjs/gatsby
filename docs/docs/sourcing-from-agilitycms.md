@@ -255,7 +255,7 @@ While you are sourcing and querying content in gatsby, you are likely to come ac
 
 When querying a Post, for example, you may want to also retrieve the details for the Category. On your Post GraphQL node, you may notice a category property, however, it will only contain a contentID reference, not the entire node representing the Category. You'll need to resolve this Linked Content when you need it.
 
-In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter), we resolve Linked Content by using [Gatsby Resolvers](https://www.gatsbyjs.org/blog/2019-03-04-new-schema-customization/).
+In the [agilitycms-gatsby-starter](https://github.com/agility/agilitycms-gatsby-starter), the Linked Content is resolved by using [Gatsby Resolvers](/docs/reference/graphql-data-layer/schema-customization/#createresolvers-api).
 
 Resolvers are added to your `gatsby-node.js` in your site, and they allow you to add a new field to your content node which will handle resolving your Linked Content reference. This means you are telling GraphQL, when you query a specific property on a node, it will actually run a function to go and get your Linked Content and return it.
 
