@@ -1,5 +1,4 @@
 const _ = require(`lodash`)
-const stringify = require(`json-stringify-safe`)
 
 const typePrefix = `Contentful`
 export const makeTypeName = type =>
