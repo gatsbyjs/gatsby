@@ -81,16 +81,6 @@ function DevOverlay({ children }) {
     }
   }, [dispatch])
 
-  React.useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(`/`)
-      console.log(res)
-      const json = await res.json()
-      console.log(json)
-    }
-    fetchData()
-  }, [])
-
   const dismiss = () => {
     dispatch({ action: `DISMISS` })
     window._gatsbyEvents = []

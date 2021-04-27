@@ -558,17 +558,19 @@ module.exports = {
             highlightCode: true,
           }
         )
-        res.json({
-          isDevSsrError: true,
+
+        const message = {
           codeFrame,
-          sourcePosition: {
-            source: filePath,
-            line: lineNumber,
-            column: columnNumber ?? 0,
-            name: null,
-          },
-          sourceContent,
-        })
+          source: filePath,
+          line: lineNumber,
+          column: columnNumber ?? 0,
+        }
+
+        const fileContent = `<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="note" content="environment=development"/><script src="/socket.io/socket.io.js"></script><link rel="stylesheet" href="/commons.css"/></head><body><div id="___gatsby"></div><script src="/polyfill.js" nomodule=""></script><script src="/framework.js"></script><script src="/commons.js"></script><script>window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH",{action: "SHOW_DEV_SSR_ERROR",payload: ${JSON.stringify(
+          message
+        )}}])</script></body></html>`
+
+        res.send(fileContent)
       }
 
       htmlActivity.end()
