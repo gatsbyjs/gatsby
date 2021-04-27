@@ -321,7 +321,7 @@ query {
 
 ### How Images Work
 
-With the release of [Gatsby V3](https://www.gatsbyjs.com/blog/gatsby-v3/) and the new [Gatsby Image Plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image), we were able to create `gatsby-image-agilitycms`. This is a custom image component that takes images stored within Agility CMS and handles all of the hard parts of displaying responsive images that follow best practices for performance on your website or application.
+Agility CMS also provides `gatsby-image-agilitycms` as a npm package. This is a custom image component that takes images stored within Agility CMS and handles all of the hard parts of displaying responsive images that follow best practices for performance on your website or application.
 
 ```jsx
 import { AgilityImage } from "@agility/gatsby-image-agilitycms"
