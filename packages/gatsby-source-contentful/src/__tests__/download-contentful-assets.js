@@ -22,34 +22,38 @@ const reporter = {
 const fixtures = [
   {
     id: `aa1beda4-b14a-50f5-89a8-222992a46a41`,
-    contentful_id: `idJjXOxmNga8CSnQGEwTw`,
     internal: {
       owner: `gatsby-source-contentful`,
       type: `ContentfulAsset`,
     },
     title: `TundraUS`,
-    node_locale: `en-US`,
     file: {
       url: `//images.ctfassets.net/testing/us-image.jpeg`,
     },
     localFile: {
       base: `us-image.jpeg`,
     },
+    sys: {
+      locale: `en-US`,
+      id: `idJjXOxmNga8CSnQGEwTw`,
+    },
   },
   {
     id: `586c12ca-fbe3-5acd-94ee-7598bf3f6d77`,
-    contentful_id: `idJjXOxmNga8CSnQGEwTw`,
     internal: {
       owner: `gatsby-source-contentful`,
       type: `ContentfulAsset`,
     },
     title: `TundraFR`,
-    node_locale: `fr`,
     file: {
       url: `//images.ctfassets.net/testing/fr-image.jpg`,
     },
     localFile: {
       base: `fr-image.jpg`,
+    },
+    sys: {
+      locale: `fr`,
+      id: `idJjXOxmNga8CSnQGEwTw`,
     },
   },
 ]
@@ -70,10 +74,10 @@ describe.only(`downloadContentfulAssets`, () => {
 
     fixtures.forEach(n => {
       expect(cache.get).toHaveBeenCalledWith(
-        `contentful-asset-${n.contentful_id}-${n.node_locale}`
+        `contentful-asset-${n.sys.id}-${n.sys.locale}`
       )
       expect(cache.set).toHaveBeenCalledWith(
-        `contentful-asset-${n.contentful_id}-${n.node_locale}`,
+        `contentful-asset-${n.sys.id}-${n.sys.locale}`,
         expect.anything()
       )
     })

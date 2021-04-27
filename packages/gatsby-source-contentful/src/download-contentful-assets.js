@@ -51,8 +51,7 @@ const downloadContentfulAssets = async gatsbyFunctions => {
     assetNodes.map(node => async () => {
       let fileNodeID
       const {
-        sys: { id },
-        node_locale: locale,
+        sys: { id, locale },
       } = node
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
