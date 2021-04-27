@@ -47,9 +47,9 @@ module.exports = {
 
 We're making our initial alpha release of serverless functions in Gatsby!
 
-[Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/30735). [Original PR](https://github.com/gatsbyjs/gatsby/pull/30192).
-
-[Sign up for early access to Functions in Gatsby Cloud](https://www.gatsbyjs.com/functions/).
+- [Details and discussion](https://github.com/gatsbyjs/gatsby/discussions/30735)
+- [Original PR](https://github.com/gatsbyjs/gatsby/pull/30192).
+- [Sign up for early access to Functions in Gatsby Cloud](https://www.gatsbyjs.com/functions/).
 
 ## New Aggregation Resolvers
 
