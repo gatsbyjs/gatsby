@@ -276,7 +276,7 @@ exports.createResolvers = args => {
     configOptions,
   } = args
 
-  // here we use resolvers to resolve the data we need for linked content
+  // The data needed for Linked Content is resolved here
   const resolvers = {
     // on the 'agilityPost' node type
     agilityPost: {
