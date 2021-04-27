@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import path from "path"
-
+import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -70,6 +70,11 @@ function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
   }
+
+  if (platform() === `win32` || platform() === `darwin`) {
+    path = path.toLowerCase()
+  }
+
   return path.endsWith(`/`) ? path.slice(0, -1) : path
 }
 
