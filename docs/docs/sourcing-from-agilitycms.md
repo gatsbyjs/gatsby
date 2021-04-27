@@ -116,7 +116,7 @@ query {
 
 We believe that Editors should have full control over their website pages and not rely on a developer. 
 
-The `gatsby-source-agilitycms` plugin makes it easy to source content, but it also generates your Pages for you based off of your sitemap in Agility CMS. This means that editors in the CMS control what pages are available, what their URLs are, and exactly what UI components (we call these Page Modules) make up each page.
+The `gatsby-source-agilitycms` plugin makes it easy to source content, but it also generates your Pages for you based off of your sitemap in Agility CMS. This means that editors in the CMS control what pages are available, what their URLs are, and exactly what UI components (Agility CMS calls these Page Modules) make up each page.
 
 Each page in Agility is composed and generated dynamically at _build-time_ using a **masterPageTemplate** that you define in your `gatsby-config.js` plugin options.
 
