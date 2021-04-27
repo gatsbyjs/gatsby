@@ -114,7 +114,6 @@ query {
 
 ### How Pages Work
 
-We believe that Editors should have full control over their website pages and not rely on a developer. 
 
 The `gatsby-source-agilitycms` plugin makes it easy to source content, but it also generates your Pages for you based off of your sitemap in Agility CMS. This means that editors in the CMS control what pages are available, what their URLs are, and exactly what UI components (Agility CMS calls these Page Modules) make up each page.
 
