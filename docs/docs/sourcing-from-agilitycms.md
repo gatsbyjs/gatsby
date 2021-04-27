@@ -24,7 +24,7 @@ This guide walks you through the steps involved in setting up a Gatsby site that
 
 ### Step 1: Create a free Agility account
 
-In order to showcase best practices, evaluate, and help onboard new users when using Agility CMS, we recommend signing up for our pre-configured Blog Template. This template has a few Pages along with some Page Modules and Content Models already set for you to help support a familiar blogging experience.
+In order to showcase best practices, evaluate, and help onboard new users when using Agility CMS, this guide uses the pre-configured Blog Template. This template has a few Pages along with some Page Modules and Content Models already set for you to help support a familiar blogging experience.
 
 It's important to note though, that you can customize anything and everything in this template, it's just giving you a head start and serving as an example!
 
