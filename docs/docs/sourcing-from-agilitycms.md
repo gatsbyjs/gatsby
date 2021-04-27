@@ -294,7 +294,7 @@ exports.createResolvers = args => {
 }
 ```
 
-Now on the agilityPost node, you'll be able to query the category:
+Now on the `agilityPost` node, you'll be able to query the category:
 
 ```graphql
 query {
