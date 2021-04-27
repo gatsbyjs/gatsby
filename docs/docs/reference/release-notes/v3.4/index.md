@@ -26,7 +26,8 @@ TODO
 
 ## Notable bugfixes & improvements
 
-TODO
+- Fixed page context changes not triggering query rerunning [PR #28590](https://github.com/gatsbyjs/gatsby/pull/28590)
+- Fixed not being able to disable `DEV_SSR` flag when `FAST_DEV` is enabled [PR #30992](https://github.com/gatsbyjs/gatsby/pull/30992)
 
 ## Contributors
 
