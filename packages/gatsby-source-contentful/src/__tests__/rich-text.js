@@ -5,7 +5,7 @@ import { BLOCKS, INLINES } from "@contentful/rich-text-types"
 import { initialSync } from "../__fixtures__/rich-text-data"
 import { cloneDeep } from "lodash"
 
-const raw = JSON.stringify({
+const raw = {
   nodeType: `document`,
   data: {},
   content: [
@@ -401,7 +401,7 @@ const raw = JSON.stringify({
       data: {},
     },
   ],
-})
+}
 
 const fixtures = initialSync().currentSyncData
 
