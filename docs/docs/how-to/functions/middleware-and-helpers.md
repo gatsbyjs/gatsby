@@ -2,8 +2,8 @@
 title: Middleware and Helpers
 ---
 
-Gatsby Functions provides an Express-like architecture that simplifies building
-Node.js APIs.
+Gatsby Functions provides an [Express-like](https://expressjs.com/) architecture that simplifies building
+Node.js APIs. We include a number of middlewares to parse common request data as well as response helpers.
 
 ## Data formats
 
@@ -23,9 +23,9 @@ We parse commonly used data types. Available on the `req` object:
 
 ## Custom middleware
 
-Connect/Express middleware are supported.
+Custom Connect/Express middleware are supported.
 
-### CORS example
+An example of how to add CORS support to route:
 
 ```js:title=src/api/cors.js
 import Cors from "cors"

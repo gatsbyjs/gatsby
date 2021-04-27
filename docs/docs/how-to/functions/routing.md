@@ -17,11 +17,9 @@ Both top-level and nested routes are supported.
 
 ### Param routes
 
-Dynamic routes share syntax with [client-only routes](/docs/reference/routing/file-system-route-api/#creating-client-only-routes).
+Use square brackets (`[ ]`) in the file path to mark dynamic segments of the URL.
 
-You use square brackets (`[ ]`) in the file path to mark dynamic segments of the URL.
-
-So to create an API Function for fetching user information:
+So to create an Function for fetching user information by `userId`:
 
 ```js:title=src/api/users/[id].js
 export default async function handler(req, res) {
@@ -33,6 +31,8 @@ export default async function handler(req, res) {
   res.json(user)
 }
 ```
+
+Dynamic routes share syntax with [client-only routes](/docs/reference/routing/file-system-route-api/#creating-client-only-routes).
 
 ### Splat or wildcard routes
 

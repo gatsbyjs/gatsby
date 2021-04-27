@@ -2,13 +2,13 @@
 title: Getting Started
 ---
 
-Gatsby Functions help you build [Express.js-style](https://expressjs.com/) backends without running servers.
+Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
 
 ## Hello World
 
-JavaScript and Typescript files in `src/api/*` become Functions like files in `src/pages/*` become pages.
+JavaScript and Typescript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages.
 
-For example, the following Function will be run and return a JSON object when you visit the URL `/api/hello-world`
+For example, the following Function is run when you visit the URL `/api/hello-world`
 
 ```js:title=src/api/hello-world.js
 export default function handler(req, res) {
