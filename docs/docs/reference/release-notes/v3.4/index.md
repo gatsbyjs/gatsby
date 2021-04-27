@@ -79,7 +79,7 @@ An example query:
 
 ## Better Fast Refresh handling for styling libraries
 
-Since the introduction of Fast Refresh changes to theme files both in [Theme UI](https://theme-ui.com/) and [Chakra UI](https://chakra-ui.com/) didn't result in correct hot-reloading behavior as the user had to manually reload the page to see their changes. The [PR #30901](https://github.com/gatsbyjs/gatsby/pull/30901) added better Fast Refresh handling for components that don't satisfy the constraints set by Fast Refresh but it didn't completely the incorrect behavior in both plugins. Upstream PRs from us to [Theme UI](https://github.com/system-ui/theme-ui/pull/1659) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/pull/3841) fixed the behavior! Install `theme-ui@^0.7.1` or `@chakra-ui/gatsby-plugin@^2.0.0` to get the updates.
+Since the introduction of Fast Refresh changes to theme files both in [Theme UI](https://theme-ui.com/) and [Chakra UI](https://chakra-ui.com/) didn't result in correct hot-reloading behavior as the user had to manually reload the page to see their changes. The [PR #30901](https://github.com/gatsbyjs/gatsby/pull/30901) added better Fast Refresh handling for components that don't satisfy the constraints set by Fast Refresh but it didn't completely fix the incorrect behavior in both plugins. Upstream PRs from us to [Theme UI](https://github.com/system-ui/theme-ui/pull/1659) and [Chakra UI](https://github.com/chakra-ui/chakra-ui/pull/3841) fixed the behavior! Install `theme-ui@^0.7.1` or `@chakra-ui/gatsby-plugin@^2.0.0` to get the updates.
 
 ## Notable bugfixes & improvements
 
