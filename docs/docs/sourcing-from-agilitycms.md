@@ -264,8 +264,6 @@ An example of this can be found [here](https://github.com/agility/agilitycms-gat
 ```js:title=gatsby-node.js
 const agility = require("./src/agility/utils")
 
-//CREATE RESOLVERS
-
 exports.createResolvers = args => {
   const {
     createResolvers,
