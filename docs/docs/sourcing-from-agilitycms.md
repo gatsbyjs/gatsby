@@ -87,7 +87,7 @@ For production, follow the same steps using the `.env.production` file and your 
 
 ### Sourcing and Querying Agility Content in Gatsby
 
-Sourcing content from Agility into your Gatsby site uses the [gatsby-source-agilitycms](https://github.com/agility/gatsby-source-agilitycms) plugin which will synchronize all of your content, page modules, sitemaps and pages, and make them available via GraphQL.
+You can source content from Agility CMS into your Gatsby site with [`gatsby-source-agilitycms`](https://github.com/agility/gatsby-source-agilitycms) which will synchronize all of your content, page modules, sitemaps and pages, and make them available via GraphQL.
 
 The source plugin uses [`@agility/content-sync`](https://github.com/agility/agility-sync-sdk) which ensures that only content that has changed is updated. It keeps things in-sync for you. This means your first build will download all of your content, while subsequent builds only update what has changed. This enables incremental builds and results in bleeding-edge, fast build times.
 
