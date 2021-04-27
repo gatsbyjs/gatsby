@@ -71,7 +71,7 @@ describe(`Process contentful data (by name)`, () => {
     expect(createNode.mock.calls).toMatchSnapshot()
 
     // Relevant to compare to compare warm and cold situation. Actual number not relevant.
-    expect(createNode.mock.calls.length).toBe(74) // "cold build entries" count
+    expect(createNode.mock.calls.length).toBe(70) // "cold build entries" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -154,7 +154,7 @@ describe(`Skip existing nodes in warm build`, () => {
 
     // Relevant to compare to compare warm and cold situation. Actual number not relevant.
     // This number ought to be less than the cold build
-    expect(createNode.mock.calls.length).toBe(71) // "warm build where entry was not changed" count
+    expect(createNode.mock.calls.length).toBe(70) // "warm build where entry was not changed" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -239,7 +239,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
 
     // Relevant to compare to compare warm and cold situation. Actual number not relevant.
     // This number ought to be the same as the cold build
-    expect(createNode.mock.calls.length).toBe(74) // "warm build where entry was changed" count
+    expect(createNode.mock.calls.length).toBe(70) // "warm build where entry was changed" count
   })
 
   it(`creates nodes for each asset`, () => {

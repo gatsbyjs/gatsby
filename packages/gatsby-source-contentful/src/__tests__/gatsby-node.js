@@ -672,7 +672,7 @@ describe(`gatsby-node`, () => {
     )
   })
 
-  it(`stores rich text as raw with references attached`, async () => {
+  it(`stores rich text as JSON`, async () => {
     fetch.mockImplementationOnce(richTextFixture.initialSync)
 
     // initial sync
@@ -696,11 +696,9 @@ describe(`gatsby-node`, () => {
     const homeNodes = initNodes.filter(
       ({ sys: { id } }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
+
     homeNodes.forEach(homeNode => {
-      expect(homeNode.content.references___NODE).toStrictEqual([
-        ...new Set(homeNode.content.references___NODE),
-      ])
-      expect(homeNode.content.references___NODE).toMatchSnapshot()
+      expect(homeNode.content).toMatchSnapshot()
     })
   })
 
