@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.13.0-next.0...gatsby-plugin-graphql-config@0.14.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.13.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.12.0-next.1...gatsby-plugin-graphql-config@0.13.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.12.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.12.0-next.0...gatsby-plugin-graphql-config@0.12.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.11.0-next.0...gatsby-plugin-graphql-config@0.12.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.10.0-next.1...gatsby-plugin-graphql-config@0.11.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.10.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.10.0-next.0...gatsby-plugin-graphql-config@0.10.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.9.0-next.0...gatsby-plugin-graphql-config@0.10.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.8.0-next.0...gatsby-plugin-graphql-config@0.9.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-graphql-config
+
+# [0.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.7.0-next.0...gatsby-plugin-graphql-config@0.8.0-next.0) (2021-01-28)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-graphql-config ([#29178](https://github.com/gatsbyjs/gatsby/issues/29178)) ([fcb65e2](https://github.com/gatsbyjs/gatsby/commit/fcb65e2e52135b0866277df35dec40f35f7873d1))
+
 # [0.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-graphql-config@0.6.0-next.0...gatsby-plugin-graphql-config@0.7.0-next.0) (2021-01-18)
 
 **Note:** Version bump only for package gatsby-plugin-graphql-config

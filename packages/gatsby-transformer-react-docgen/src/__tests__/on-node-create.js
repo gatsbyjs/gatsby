@@ -13,7 +13,11 @@ const readFile = file =>
   })
 
 describe(`transformer-react-doc-gen: onCreateNode`, () => {
-  let loadNodeContent, actions, node, createdNodes, updatedNodes
+  let loadNodeContent
+  let actions
+  let node
+  let createdNodes
+  let updatedNodes
   const createNodeId = jest.fn()
   let i
 
@@ -22,7 +26,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
     createNodeId.mockImplementation(() => i++)
   })
 
-  let run = (node, opts = {}) => {
+  const run = (node, opts = {}) => {
     const createContentDigest = jest.fn().mockReturnValue(`contentDigest`)
     return onCreateNode(
       {
@@ -95,14 +99,14 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   it(`should extract all components in a file`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, n => n.internal.type)
+    const types = groupBy(createdNodes, n => n.internal.type)
     expect(types.ComponentMetadata).toHaveLength(6)
   })
 
   it(`should give all components a name`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, `internal.type`)
+    const types = groupBy(createdNodes, `internal.type`)
 
     expect(types.ComponentMetadata.map(c => c.displayName)).toEqual([
       `Baz`,
@@ -117,7 +121,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   it(`should handle duplicate doclet values`, async () => {
     await run(node)
 
-    let Bar = groupBy(createdNodes, `internal.type`).ComponentMetadata.find(
+    const Bar = groupBy(createdNodes, `internal.type`).ComponentMetadata.find(
       d => d.displayName === `Bar`
     )
 
@@ -147,14 +151,14 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   it(`should extract all propTypes`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, `internal.type`)
+    const types = groupBy(createdNodes, `internal.type`)
     expect(types.ComponentProp).toHaveLength(14)
   })
 
   it(`should delicately remove doclets`, async () => {
     await run(node)
 
-    let types = groupBy(createdNodes, `internal.type`)
+    const types = groupBy(createdNodes, `internal.type`)
 
     const id = types.ComponentProp[0].id
 
@@ -170,7 +174,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
 
   it(`should extract create description nodes with markdown types`, async () => {
     await run(node)
-    let types = groupBy(createdNodes, `internal.type`)
+    const types = groupBy(createdNodes, `internal.type`)
     expect(
       types.ComponentDescription.every(
         d => d.internal.mediaType === `text/markdown`
@@ -179,7 +183,7 @@ describe(`transformer-react-doc-gen: onCreateNode`, () => {
   })
 
   it(`should allow specifying handlers`, async () => {
-    let handler = jest.fn()
+    const handler = jest.fn()
     await run(node, {
       handlers: [handler],
     })

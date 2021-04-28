@@ -43,7 +43,7 @@ export async function appendPreloadHeaders(
         `Link`,
         `</${path.join(
           `page-data`,
-          fixedPagePath(pagePath),
+          encodeURI(fixedPagePath(pagePath)),
           `page-data.json`
         )}>; rel=preload; as=fetch ; crossorigin`
       )

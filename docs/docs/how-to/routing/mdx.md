@@ -13,10 +13,10 @@ This is useful in content-driven sites where you want the ability to introduce c
 If you already have a Gatsby site that you'd like to add MDX to, you can follow these steps for configuring the [gatsby-plugin-mdx](/plugins/gatsby-plugin-mdx/) plugin.
 
 > **Starting a new project?** Skip the setup and create a new project using the [MDX
-> starter](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic):
+> starter](https://github.com/gatsbyjs/gatsby-starter-mdx-basic):
 >
 > ```shell
-> gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
+> gatsby new my-mdx-starter https://github.com/gatsbyjs/gatsby-starter-mdx-basic
 > ```
 
 > **Already using Remark?** Check out the How-To Guide on [Migrating from Remark to MDX](/docs/how-to/routing/migrate-remark-to-mdx).

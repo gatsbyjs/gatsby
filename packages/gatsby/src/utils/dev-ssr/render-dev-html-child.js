@@ -3,6 +3,7 @@ const { codeFrameColumns } = require(`@babel/code-frame`)
 const ansiHTML = require(`ansi-html`)
 const fs = require(`fs-extra`)
 const sysPath = require(`path`)
+const { slash } = require(`gatsby-core-utils`)
 
 const getPosition = function (stackObject) {
   let filename
@@ -33,9 +34,9 @@ const getPosition = function (stackObject) {
     row = 0
   }
   return {
-    filename: filename,
-    line: line,
-    row: row,
+    filename,
+    line,
+    row,
   }
 }
 // Colors taken from Gatsby's design tokens
@@ -61,7 +62,7 @@ const parseError = function ({ err, directory, componentPath }) {
     directory,
     // Don't need to use path.sep as webpack always uses a single forward slash
     // as a path separator.
-    ...position.filename.split(`/`).slice(2)
+    ...position.filename.split(sysPath.sep).slice(2)
   )
 
   const splitMessage = err.message ? err.message.split(`\n`) : [``]
@@ -76,7 +77,7 @@ const parseError = function ({ err, directory, componentPath }) {
     ? componentPath
     : filename
   const data = {
-    filename: sysPath.relative(directory, trueFileName),
+    filename: slash(sysPath.relative(directory, trueFileName)),
     message: message,
     type: type,
     stack: stack,
@@ -128,6 +129,7 @@ exports.renderHTML = ({
   path,
   componentPath,
   htmlComponentRendererPath,
+  publicDir,
   isClientOnlyPage = false,
   directory,
 }) =>
@@ -138,6 +140,7 @@ exports.renderHTML = ({
         htmlComponentRenderer.default(
           path,
           isClientOnlyPage,
+          publicDir,
           (_throwAway, htmlString) => {
             resolve(htmlString)
           }
@@ -153,7 +156,7 @@ exports.renderHTML = ({
       // Only generate error pages for webpack errors. If it's not a webpack
       // error, it's not a user error so probably a system error so we'll just
       // panic and quit.
-      const regex = /webpack:\/lib\//gm
+      const regex = /webpack:[/\\]/gm
       const moduleBuildFailed = /Module.build.failed/gm
       if (stack.match(moduleBuildFailed)) {
         reject(`500 page`)

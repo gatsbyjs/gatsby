@@ -1,7 +1,9 @@
 import { walkStream as fsWalkStream, Entry } from "@nodelib/fs.walk"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
+import fastq from "fastq"
 import path from "path"
+import { createContentDigest } from "gatsby-core-utils"
 import { IGatsbyPage } from "../redux/types"
 import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
@@ -99,8 +101,10 @@ export async function writePageData(
   store.dispatch({
     type: `ADD_PAGE_DATA_STATS`,
     payload: {
+      pagePath,
       filePath: outputFilePath,
       size: pageDataSize,
+      pageDataHash: createContentDigest(bodyStr),
     },
   })
 
@@ -134,7 +138,7 @@ export async function flush(): Promise<void> {
 
   const pagesToWrite = pagePaths.values()
 
-  for (const pagePath of pagesToWrite) {
+  const flushQueue = fastq(async (pagePath, cb) => {
     const page = pages.get(pagePath)
 
     // It's a gloomy day in Bombay, let me tell you a short story...
@@ -162,7 +166,7 @@ export async function flush(): Promise<void> {
 
         if (hasFlag(query.dirty, FLAG_DIRTY_NEW_PAGE)) {
           // query results are not written yet
-          continue
+          return cb(null, true)
         }
       }
 
@@ -184,11 +188,24 @@ export async function flush(): Promise<void> {
         })
       }
     }
+
     store.dispatch({
       type: `CLEAR_PENDING_PAGE_DATA_WRITE`,
       payload: {
         page: pagePath,
       },
+    })
+
+    return cb(null, true)
+  }, 25)
+
+  for (const pagePath of pagesToWrite) {
+    flushQueue.push(pagePath, () => {})
+  }
+
+  if (!flushQueue.idle()) {
+    await new Promise(resolve => {
+      flushQueue.drain = resolve as () => unknown
     })
   }
 

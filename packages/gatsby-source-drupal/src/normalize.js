@@ -1,12 +1,19 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
-const nodeFromData = (datum, createNodeId) => {
-  const { attributes: { id: _attributes_id, ...attributes } = {} } = datum
+const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
+  const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
-    typeof _attributes_id !== `undefined` ? { _attributes_id } : {}
+    typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
   return {
-    id: createNodeId(datum.id),
+    id: createNodeId(
+      createNodeIdWithVersion(
+        datum.id,
+        datum.type,
+        attributes.drupal_internal__revision_id,
+        entityReferenceRevisions
+      )
+    ),
     drupal_id: datum.id,
     parent: null,
     drupal_parent_menu_item: attributes.parent,
@@ -23,6 +30,25 @@ const nodeFromData = (datum, createNodeId) => {
 
 exports.nodeFromData = nodeFromData
 
+const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
+  entityReferenceRevisions.findIndex(
+    revisionType => type.indexOf(revisionType) === 0
+  ) !== -1
+
+const createNodeIdWithVersion = (
+  id,
+  type,
+  revisionId,
+  entityReferenceRevisions = []
+) =>
+  // The relationship between an entity and another entity also depends on the revision ID if the field is of type
+  // entity reference revision such as for paragraphs.
+  isEntityReferenceRevision(type, entityReferenceRevisions)
+    ? `${id}.${revisionId || 0}`
+    : id
+
+exports.createNodeIdWithVersion = createNodeIdWithVersion
+
 const isFileNode = node =>
   node.internal.type === `files` || node.internal.type === `file__file`
 
@@ -34,7 +60,6 @@ exports.downloadFile = async (
 ) => {
   // handle file downloads
   if (isFileNode(node)) {
-    let fileNode
     let fileType
 
     let fileUrl = node.url
@@ -42,8 +67,8 @@ exports.downloadFile = async (
       // Support JSON API 2.x file URI format https://www.drupal.org/node/2982209
       fileUrl = node.uri.url
       // get file type from uri prefix ("S3:", "public:", etc.)
-      const uri_prefix = node.uri.value.match(/^\w*:/)
-      fileType = uri_prefix ? uri_prefix[0] : null
+      const uriPrefix = node.uri.value.match(/^\w*:/)
+      fileType = uriPrefix ? uriPrefix[0] : null
     }
     // Resolve w/ baseUrl if node.uri isn't absolute.
     const url = new URL(fileUrl, baseUrl)
@@ -56,7 +81,7 @@ exports.downloadFile = async (
             htaccess_pass: basicAuth.password,
           }
         : {}
-    fileNode = await createRemoteFileNode({
+    const fileNode = await createRemoteFileNode({
       url: url.href,
       store,
       cache,

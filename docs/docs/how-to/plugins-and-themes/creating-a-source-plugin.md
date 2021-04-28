@@ -764,9 +764,9 @@ exports.sourceNodes = async (
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
   // highlight-end
 
@@ -786,9 +786,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   // highlight-start
@@ -811,9 +811,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   if (pluginOptions.previewMode) {
@@ -854,9 +854,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   if (pluginOptions.previewMode) {
@@ -887,9 +887,7 @@ exports.sourceNodes = async (
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(nodeId),
-            })
+            deleteNode(getNode(nodeId))
             break
           case "created":
           case "updated":

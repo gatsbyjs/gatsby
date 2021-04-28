@@ -33,14 +33,22 @@ function isIntInput(type) {
   expect(type.name).toBe(`IntQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLInt },
-    ne: { name: `ne`, type: GraphQLInt },
-    lt: { name: `lt`, type: GraphQLInt },
-    lte: { name: `lte`, type: GraphQLInt },
-    gt: { name: `gt`, type: GraphQLInt },
-    gte: { name: `gte`, type: GraphQLInt },
-    in: { name: `in`, type: new GraphQLList(GraphQLInt) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLInt) },
+    eq: { name: `eq`, type: GraphQLInt, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLInt, astNode: expect.any(Object) },
+    lt: { name: `lt`, type: GraphQLInt, astNode: expect.any(Object) },
+    lte: { name: `lte`, type: GraphQLInt, astNode: expect.any(Object) },
+    gt: { name: `gt`, type: GraphQLInt, astNode: expect.any(Object) },
+    gte: { name: `gte`, type: GraphQLInt, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLInt),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLInt),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -48,14 +56,22 @@ function isDateInput(type) {
   expect(type.name).toBe(`DateQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLDate },
-    ne: { name: `ne`, type: GraphQLDate },
-    lt: { name: `lt`, type: GraphQLDate },
-    lte: { name: `lte`, type: GraphQLDate },
-    gt: { name: `gt`, type: GraphQLDate },
-    gte: { name: `gte`, type: GraphQLDate },
-    in: { name: `in`, type: new GraphQLList(GraphQLDate) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLDate) },
+    eq: { name: `eq`, type: GraphQLDate, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLDate, astNode: expect.any(Object) },
+    lt: { name: `lt`, type: GraphQLDate, astNode: expect.any(Object) },
+    lte: { name: `lte`, type: GraphQLDate, astNode: expect.any(Object) },
+    gt: { name: `gt`, type: GraphQLDate, astNode: expect.any(Object) },
+    gte: { name: `gte`, type: GraphQLDate, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLDate),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLDate),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -63,10 +79,18 @@ function isIdInput(type) {
   expect(type.name).toBe(`IDQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLID },
-    ne: { name: `ne`, type: GraphQLID },
-    in: { name: `in`, type: new GraphQLList(GraphQLID) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLID) },
+    eq: { name: `eq`, type: GraphQLID, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLID, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLID),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLID),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -74,12 +98,20 @@ function isStringInput(type) {
   expect(type.name).toBe(`StringQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLString },
-    ne: { name: `ne`, type: GraphQLString },
-    regex: { name: `regex`, type: GraphQLString },
-    glob: { name: `glob`, type: GraphQLString },
-    in: { name: `in`, type: new GraphQLList(GraphQLString) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLString) },
+    eq: { name: `eq`, type: GraphQLString, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLString, astNode: expect.any(Object) },
+    regex: { name: `regex`, type: GraphQLString, astNode: expect.any(Object) },
+    glob: { name: `glob`, type: GraphQLString, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLString),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLString),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -87,12 +119,20 @@ function isJsonInput(type) {
   expect(type.name).toBe(`JSONQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLJSON },
-    ne: { name: `ne`, type: GraphQLJSON },
-    regex: { name: `regex`, type: GraphQLJSON },
-    glob: { name: `glob`, type: GraphQLJSON },
-    in: { name: `in`, type: new GraphQLList(GraphQLJSON) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLJSON) },
+    eq: { name: `eq`, type: GraphQLJSON, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLJSON, astNode: expect.any(Object) },
+    regex: { name: `regex`, type: GraphQLJSON, astNode: expect.any(Object) },
+    glob: { name: `glob`, type: GraphQLJSON, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLJSON),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLJSON),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -100,14 +140,22 @@ function isFloatInput(type) {
   expect(type.name).toBe(`FloatQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLFloat },
-    ne: { name: `ne`, type: GraphQLFloat },
-    lt: { name: `lt`, type: GraphQLFloat },
-    lte: { name: `lte`, type: GraphQLFloat },
-    gt: { name: `gt`, type: GraphQLFloat },
-    gte: { name: `gte`, type: GraphQLFloat },
-    in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLFloat) },
+    eq: { name: `eq`, type: GraphQLFloat, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLFloat, astNode: expect.any(Object) },
+    lt: { name: `lt`, type: GraphQLFloat, astNode: expect.any(Object) },
+    lte: { name: `lte`, type: GraphQLFloat, astNode: expect.any(Object) },
+    gt: { name: `gt`, type: GraphQLFloat, astNode: expect.any(Object) },
+    gte: { name: `gte`, type: GraphQLFloat, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLFloat),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLFloat),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -115,30 +163,54 @@ function isBoolInput(type) {
   expect(type.name).toBe(`BooleanQueryOperatorInput`)
   expect(type instanceof GraphQLInputObjectType).toBeTruthy()
   expect(type.getFields()).toEqual({
-    eq: { name: `eq`, type: GraphQLBoolean },
-    ne: { name: `ne`, type: GraphQLBoolean },
-    in: { name: `in`, type: new GraphQLList(GraphQLBoolean) },
-    nin: { name: `nin`, type: new GraphQLList(GraphQLBoolean) },
+    eq: { name: `eq`, type: GraphQLBoolean, astNode: expect.any(Object) },
+    ne: { name: `ne`, type: GraphQLBoolean, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(GraphQLBoolean),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(GraphQLBoolean),
+      astNode: expect.any(Object),
+    },
   })
 }
 
 function isCustomScalarInput(queryType, type) {
   expect(queryType instanceof GraphQLInputObjectType).toBeTruthy()
   expect(queryType.getFields()).toEqual({
-    eq: { name: `eq`, type },
-    ne: { name: `ne`, type },
-    in: { name: `in`, type: new GraphQLList(type) },
-    nin: { name: `nin`, type: new GraphQLList(type) },
+    eq: { name: `eq`, type, astNode: expect.any(Object) },
+    ne: { name: `ne`, type, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(type),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(type),
+      astNode: expect.any(Object),
+    },
   })
 }
 
 function isEnumInput(queryType, type) {
   expect(queryType instanceof GraphQLInputObjectType).toBeTruthy()
   expect(queryType.getFields()).toEqual({
-    eq: { name: `eq`, type },
-    ne: { name: `ne`, type },
-    in: { name: `in`, type: new GraphQLList(type) },
-    nin: { name: `nin`, type: new GraphQLList(type) },
+    eq: { name: `eq`, type, astNode: expect.any(Object) },
+    ne: { name: `ne`, type, astNode: expect.any(Object) },
+    in: {
+      name: `in`,
+      type: new GraphQLList(type),
+      astNode: expect.any(Object),
+    },
+    nin: {
+      name: `nin`,
+      type: new GraphQLList(type),
+      astNode: expect.any(Object),
+    },
   })
 }
 
@@ -200,11 +272,11 @@ describe(`GraphQL Input args from fields`, () => {
     const json = inferredFields.scal_json.type
     isJsonInput(json)
 
-    const custom_scalar = inferredFields.scal_odd.type
-    isCustomScalarInput(custom_scalar, fields.scal_odd.type)
+    const customScalar = inferredFields.scal_odd.type
+    isCustomScalarInput(customScalar, fields.scal_odd.type)
 
-    const custom_enum = inferredFields.scal_enum.type
-    isEnumInput(custom_enum, fields.scal_enum.type)
+    const customEnum = inferredFields.scal_enum.type
+    isEnumInput(customEnum, fields.scal_enum.type)
   })
 
   it(`recursively converts object types`, async () => {
@@ -386,14 +458,22 @@ describe(`GraphQL Input args from fields`, () => {
 
     expect(list instanceof GraphQLInputObjectType).toBeTruthy()
     expect(list.getFields()).toEqual({
-      eq: { name: `eq`, type: GraphQLFloat },
-      ne: { name: `ne`, type: GraphQLFloat },
-      gt: { name: `gt`, type: GraphQLFloat },
-      gte: { name: `gte`, type: GraphQLFloat },
-      lt: { name: `lt`, type: GraphQLFloat },
-      lte: { name: `lte`, type: GraphQLFloat },
-      in: { name: `in`, type: new GraphQLList(GraphQLFloat) },
-      nin: { name: `nin`, type: new GraphQLList(GraphQLFloat) },
+      eq: { name: `eq`, type: GraphQLFloat, astNode: expect.any(Object) },
+      ne: { name: `ne`, type: GraphQLFloat, astNode: expect.any(Object) },
+      gt: { name: `gt`, type: GraphQLFloat, astNode: expect.any(Object) },
+      gte: { name: `gte`, type: GraphQLFloat, astNode: expect.any(Object) },
+      lt: { name: `lt`, type: GraphQLFloat, astNode: expect.any(Object) },
+      lte: { name: `lte`, type: GraphQLFloat, astNode: expect.any(Object) },
+      in: {
+        name: `in`,
+        type: new GraphQLList(GraphQLFloat),
+        astNode: expect.any(Object),
+      },
+      nin: {
+        name: `nin`,
+        type: new GraphQLList(GraphQLFloat),
+        astNode: expect.any(Object),
+      },
     })
   })
 

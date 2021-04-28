@@ -40,9 +40,7 @@ exports.sourceNodes = async function sourceNodes({
     deleted.forEach(node => {
       const existing = getNode(node.id)
       if (existing) {
-        deleteNode({
-          node: existing,
-        })
+        deleteNode(existing)
       }
     })
   }

@@ -4,9 +4,12 @@ import fs from "fs-extra"
 import compression from "compression"
 import express from "express"
 import chalk from "chalk"
-import { match as reachMatch } from "@reach/router/lib/utils"
+import { match as reachMatch } from "@gatsbyjs/reach-router/lib/utils"
 import onExit from "signal-exit"
 import report from "gatsby-cli/lib/reporter"
+import multer from "multer"
+import pathToRegexp from "path-to-regexp"
+import cookie from "cookie"
 
 import telemetry from "gatsby-telemetry"
 
@@ -101,6 +104,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   const root = path.join(program.directory, `public`)
 
   const app = express()
+  // eslint-disable-next-line new-cap
   const router = express.Router()
 
   app.use(telemetry.expressMiddleware(`SERVE`))
@@ -109,6 +113,105 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   router.use(express.static(`public`, { dotfiles: `allow` }))
   const matchPaths = await readMatchPaths(program)
   router.use(matchPathRouter(matchPaths, { root }))
+
+  const compiledFunctionsDir = path.join(
+    program.directory,
+    `.cache`,
+    `functions`
+  )
+
+  let functions
+  try {
+    functions = JSON.parse(
+      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`))
+    )
+  } catch (e) {
+    // ignore
+  }
+
+  if (functions) {
+    app.use(
+      `/api/*`,
+      multer().none(),
+      express.urlencoded({ extended: true }),
+      (req, res, next) => {
+        const cookies = req.headers.cookie
+
+        if (!cookies) {
+          return next()
+        }
+
+        req.cookies = cookie.parse(cookies)
+
+        return next()
+      },
+      express.text(),
+      express.json(),
+      express.raw(),
+      async (req, res, next) => {
+        const { "0": pathFragment } = req.params
+
+        // Check first for exact matches.
+        let functionObj = functions.find(
+          ({ apiRoute }) => apiRoute === pathFragment
+        )
+
+        if (!functionObj) {
+          // Check if there's any matchPaths that match.
+          // We loop until we find the first match.
+          functions.some(f => {
+            let exp
+            const keys = []
+            if (f.matchPath) {
+              exp = pathToRegexp(f.matchPath, keys)
+            }
+            if (exp && exp.exec(pathFragment) !== null) {
+              functionObj = f
+              const matches = [...pathFragment.match(exp)].slice(1)
+              const newParams = {}
+              matches.forEach(
+                (match, index) => (newParams[keys[index].name] = match)
+              )
+              req.params = newParams
+
+              return true
+            } else {
+              return false
+            }
+          })
+        }
+
+        if (functionObj) {
+          const pathToFunction = functionObj.absoluteCompiledFilePath
+          const start = Date.now()
+
+          try {
+            delete require.cache[require.resolve(pathToFunction)]
+            const fn = require(pathToFunction)
+
+            const fnToExecute = (fn && fn.default) || fn
+
+            await Promise.resolve(fnToExecute(req, res))
+          } catch (e) {
+            console.error(e)
+            res.sendStatus(500)
+          }
+
+          const end = Date.now()
+          console.log(
+            `Executed function "/api/${functionObj.apiRoute}" in ${
+              end - start
+            }ms`
+          )
+
+          return
+        } else {
+          next()
+        }
+      }
+    )
+  }
+
   router.use((req, res, next) => {
     if (req.accepts(`html`)) {
       return res.status(404).sendFile(`404.html`, { root })

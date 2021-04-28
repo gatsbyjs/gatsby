@@ -5,18 +5,19 @@ import * as stringSimilarity from "string-similarity"
 import { version as gatsbyVersion } from "gatsby/package.json"
 import reporter from "gatsby-cli/lib/reporter"
 import { validateOptionsSchema, Joi } from "gatsby-plugin-utils"
+import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
+import { stripIndent } from "common-tags"
+import { trackCli } from "gatsby-telemetry"
 import { resolveModuleExports } from "../resolve-module-exports"
 import { getLatestAPIs } from "../../utils/get-latest-apis"
-import { GatsbyNode } from "../../../"
+import { GatsbyNode, PackageJson } from "../../../"
 import {
   IPluginInfo,
   IFlattenedPlugin,
   IPluginInfoOptions,
   ISiteConfig,
 } from "./types"
-import { IPluginRefObject } from "gatsby-plugin-utils/dist/types"
-import { stripIndent } from "common-tags"
-import { trackCli } from "gatsby-telemetry"
+import { resolvePlugin } from "./load"
 
 interface IApi {
   version?: string
@@ -187,9 +188,9 @@ async function validatePluginsOptions(
   const newPlugins = await Promise.all(
     plugins.map(async plugin => {
       let gatsbyNode
-
       try {
-        gatsbyNode = require(`${plugin.resolve}/gatsby-node`)
+        const resolvedPlugin = resolvePlugin(plugin, rootDir)
+        gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
       } catch (err) {
         gatsbyNode = {}
       }
@@ -444,7 +445,7 @@ export const handleMultipleReplaceRenderers = ({
 
 export function warnOnIncompatiblePeerDependency(
   name: string,
-  packageJSON: object
+  packageJSON: PackageJson
 ): void {
   // Note: In the future the peer dependency should be enforced for all plugins.
   const gatsbyPeerDependency = _.get(packageJSON, `peerDependencies.gatsby`)

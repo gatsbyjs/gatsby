@@ -1,9 +1,15 @@
-import React, { ElementType, FunctionComponent, CSSProperties } from "react"
+import React, {
+  ElementType,
+  FunctionComponent,
+  CSSProperties,
+  WeakValidationMap,
+} from "react"
 import { GatsbyImageProps, IGatsbyImageData } from "./gatsby-image.browser"
 import { getWrapperProps, getMainProps, getPlaceholderProps } from "./hooks"
 import { Placeholder } from "./placeholder"
 import { MainImage, MainImageProps } from "./main-image"
 import { LayoutWrapper } from "./layout-wrapper"
+import PropTypes from "prop-types"
 
 const removeNewLines = (str: string): string => str.replace(/\n/g, ``)
 
@@ -99,7 +105,9 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
             layout,
             width,
             height,
-            placeholderBackgroundColor
+            placeholderBackgroundColor,
+            objectFit,
+            objectPosition
           )}
         />
 
@@ -123,3 +131,21 @@ export const GatsbyImage: FunctionComponent<GatsbyImageProps> = function GatsbyI
     </GatsbyImageHydrator>
   )
 }
+
+export const altValidator: PropTypes.Validator<string> = (
+  props: GatsbyImageProps,
+  propName,
+  componentName,
+  ...rest
+): Error | undefined => {
+  if (!props.alt && props.alt !== ``) {
+    return new Error(
+      `The "alt" prop is required in ${componentName}. If the image is purely presentational then pass an empty string: e.g. alt="". Learn more: https://a11y-style-guide.com/style-guide/section-media.html`
+    )
+  }
+  return PropTypes.string(props, propName, componentName, ...rest)
+}
+export const propTypes = {
+  image: PropTypes.object.isRequired,
+  alt: altValidator,
+} as WeakValidationMap<GatsbyImageProps>

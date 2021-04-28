@@ -38,6 +38,7 @@ test/**/public
 public/
 node_modules/
 e2e-tests/gatsby-pnp/
+__diff_output__/
 .cache/
 .netlify
 .Rhistory
@@ -50,6 +51,7 @@ e2e-tests/gatsby-pnp/
 # misc
 .serverless/
 .eslintcache
+scripts/.env
 
 # lock files
 yarn.lock

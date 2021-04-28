@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.4.0-next.0...gatsby-source-hacker-news@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.3.0-next.1...gatsby-source-hacker-news@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.3.0-next.0...gatsby-source-hacker-news@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.2.0-next.0...gatsby-source-hacker-news@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.1.0-next.2...gatsby-source-hacker-news@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.1.0-next.1...gatsby-source-hacker-news@3.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.1.0-next.0...gatsby-source-hacker-news@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.0.0-next.1...gatsby-source-hacker-news@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@3.0.0-next.0...gatsby-source-hacker-news@3.0.0-next.1) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.12.0-next.0...gatsby-source-hacker-news@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
+# [2.12.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.11.0-next.0...gatsby-source-hacker-news@2.12.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-source-hacker-news
+
 # [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-hacker-news@2.10.0-next.0...gatsby-source-hacker-news@2.11.0-next.0) (2021-01-18)
 
 ### Bug Fixes

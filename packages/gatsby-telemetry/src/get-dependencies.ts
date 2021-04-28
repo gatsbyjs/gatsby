@@ -12,7 +12,7 @@ export function getDependencies(): {
   }
 }
 
-function mapData(deps: object): Array<string> | undefined {
+function mapData(deps: Record<string, unknown>): Array<string> | undefined {
   if (!deps) {
     return undefined
   }
@@ -26,7 +26,10 @@ function mapData(deps: object): Array<string> | undefined {
     .map(({ name, version }) => `${name}@${version}`)
 }
 
-function parsePackageJson(): { dependencies: object; devDependencies: object } {
+function parsePackageJson(): {
+  dependencies: Record<string, unknown>
+  devDependencies: Record<string, unknown>
+} {
   try {
     const packageJson = readFileSync(`./package.json`, `utf8`)
     if (!packageJson) {

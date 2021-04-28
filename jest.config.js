@@ -31,6 +31,7 @@ module.exports = {
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
     `<rootDir>/packages/gatsby-admin/.cache/`,
+    `<rootDir>/deprecated-packages/`,
     `__tests__/fixtures`,
     `__testfixtures__/`,
   ],
@@ -39,6 +40,7 @@ module.exports = {
   },
   moduleNameMapper: {
     "^highlight.js$": `<rootDir>/node_modules/highlight.js/lib/index.js`,
+    "^@reach/router(.*)": `<rootDir>/node_modules/@gatsbyjs/reach-router$1`,
   },
   snapshotSerializers: [`jest-serializer-path`],
   collectCoverageFrom: coverageDirs,

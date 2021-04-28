@@ -9,6 +9,7 @@ jest.mock(`fs`, () => {
   return {
     ...fs,
     readFileSync: jest.fn(),
+    readFile: jest.fn(),
   }
 })
 jest.mock(`gatsby/package.json`, () => {
@@ -44,18 +45,30 @@ jest.mock(
   }
 )
 
+jest.mock(
+  `../../public/chunk-map.json`,
+  () => {
+    return {}
+  },
+  {
+    virtual: true,
+  }
+)
+
+const pageDataMock = {
+  componentChunkName: `page-component---src-pages-test-js`,
+  path: `/about/`,
+  webpackCompilationHash: `1234567890abcdef1234`,
+  staticQueryHashes: [],
+}
+
 const MOCK_FILE_INFO = {
   [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
   [`${process.cwd()}/public/chunk-map.json`]: `{}`,
   [join(
     process.cwd(),
     `/public/page-data/about/page-data.json`
-  )]: JSON.stringify({
-    componentChunkName: `page-component---src-pages-test-js`,
-    path: `/about/`,
-    webpackCompilationHash: `1234567890abcdef1234`,
-    staticQueryHashes: [],
-  }),
+  )]: JSON.stringify(pageDataMock),
   [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
@@ -64,6 +77,7 @@ const MOCK_FILE_INFO = {
 let staticEntry
 beforeEach(() => {
   fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
+  fs.readFile.mockImplementation(file => Promise.resolve(MOCK_FILE_INFO[file]))
   staticEntry = require(`../static-entry`).default
 })
 
@@ -150,23 +164,25 @@ const fakeComponentsPluginFactory = type => {
   }
 }
 
+const publicDir = join(process.cwd(), `public`)
 const SSR_DEV_MOCK_FILE_INFO = {
-  [`${process.cwd()}/public/webpack.stats.json`]: `{}`,
-  [join(
-    process.cwd(),
-    `/public/page-data/about/page-data.json`
-  )]: JSON.stringify({
+  [join(publicDir, `webpack.stats.json`)]: `{}`,
+  [join(publicDir, `page-data/about/page-data.json`)]: JSON.stringify({
     componentChunkName: `page-component---src-pages-about-js`,
     path: `/about/`,
     webpackCompilationHash: `1234567890abcdef1234`,
     staticQueryHashes: [],
   }),
-  [join(process.cwd(), `/public/page-data/app-data.json`)]: JSON.stringify({
+  [join(publicDir, `page-data/app-data.json`)]: JSON.stringify({
     webpackCompilationHash: `1234567890abcdef1234`,
   }),
 }
 
 describe(`develop-static-entry`, () => {
+  const developStaticEntryArgs = {
+    pagePath: `/about/`,
+  }
+
   let ssrDevelopStaticEntry
   beforeEach(() => {
     fs.readFileSync.mockImplementation(file => SSR_DEV_MOCK_FILE_INFO[file])
@@ -179,7 +195,7 @@ describe(`develop-static-entry`, () => {
   test(`SSR: onPreRenderHTML can be used to replace headComponents`, done => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -191,7 +207,7 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
@@ -203,14 +219,14 @@ describe(`develop-static-entry`, () => {
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, (_, html) => {
       expect(html).toMatchSnapshot()
       done()
     })
   })
 
   test(`SSR: onPreRenderHTML adds metatag note for development environment`, done => {
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -221,7 +237,7 @@ describe(`develop-static-entry`, () => {
   test(`SSR: onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
     global.plugins = [reverseHeadersPlugin]
 
-    ssrDevelopStaticEntry(`/about/`, false, (_, html) => {
+    ssrDevelopStaticEntry(`/about/`, false, publicDir, (_, html) => {
       expect(html).toContain(
         `<meta name="note" content="environment=development"/>`
       )
@@ -229,61 +245,60 @@ describe(`develop-static-entry`, () => {
     })
   })
 
-  test(`onPreRenderHTML can be used to replace headComponents`, done => {
+  test(`onPreRenderHTML can be used to replace headComponents`, () => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    developStaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
+    const html = developStaticEntry(developStaticEntryArgs)
+    expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML can be used to replace postBodyComponents`, done => {
+  test(`onPreRenderHTML can be used to replace postBodyComponents`, () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    developStaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
+    const html = developStaticEntry(developStaticEntryArgs)
+    expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML can be used to replace preBodyComponents`, done => {
+  test(`onPreRenderHTML can be used to replace preBodyComponents`, () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    developStaticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
+    const html = developStaticEntry(developStaticEntryArgs)
+    expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML adds metatag note for development environment`, done => {
-    developStaticEntry(`/about/`, (_, html) => {
-      expect(html).toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
-    })
+  test(`onPreRenderHTML adds metatag note for development environment`, () => {
+    const html = developStaticEntry(developStaticEntryArgs)
+    expect(html).toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 
-  test(`onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, done => {
+  test(`onPreRenderHTML adds metatag note for development environment after replaceHeadComponents`, () => {
     global.plugins = [reverseHeadersPlugin]
 
-    developStaticEntry(`/about/`, (_, html) => {
-      expect(html).toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
-    })
+    const html = developStaticEntry(developStaticEntryArgs)
+    expect(html).toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 })
 
 describe(`static-entry sanity checks`, () => {
+  const staticEntryFnArgs = {
+    pagePath: `/about/`,
+    pageData: pageDataMock,
+    scripts: [],
+    styles: [],
+    reversedStyles: [],
+    reversedScripts: [],
+  }
+
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
@@ -297,46 +312,38 @@ describe(`static-entry sanity checks`, () => {
   ]
 
   methodsToCheck.forEach(methodName => {
-    test(`${methodName} can filter out null value`, done => {
+    test(`${methodName} can filter out null value`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, null)
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      staticEntry(`/about/`, (_, html) => {
-        done()
-      })
+      staticEntry(staticEntryFnArgs)
     })
 
-    test(`${methodName} can filter out null values`, done => {
+    test(`${methodName} can filter out null values`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [
         null,
         null,
       ])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      staticEntry(`/about/`, (_, html) => {
-        done()
-      })
+      staticEntry(staticEntryFnArgs)
     })
 
-    test(`${methodName} can filter out empty array`, done => {
+    test(`${methodName} can filter out empty array`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      staticEntry(`/about/`, (_, html) => {
-        done()
-      })
+      staticEntry(staticEntryFnArgs)
     })
 
-    test(`${methodName} can filter out empty arrays`, done => {
+    test(`${methodName} can filter out empty arrays`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [[], []])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      staticEntry(`/about/`, (_, html) => {
-        done()
-      })
+      staticEntry(staticEntryFnArgs)
     })
 
-    test(`${methodName} can flatten arrays`, done => {
+    test(`${methodName} can flatten arrays`, () => {
       const plugin = injectValuePlugin(`onPreRenderHTML`, methodName, [
         <style key="style1"> .style1 {} </style>,
         <style key="style2"> .style2 {} </style>,
@@ -345,60 +352,59 @@ describe(`static-entry sanity checks`, () => {
       ])
       global.plugins = [plugin, checkNonEmptyHeadersPlugin]
 
-      staticEntry(`/about/`, (_, html) => {
-        done()
-      })
+      staticEntry(staticEntryFnArgs)
     })
   })
 })
 
 describe(`static-entry`, () => {
+  const staticEntryFnArgs = {
+    pagePath: `/about/`,
+    pageData: pageDataMock,
+    scripts: [],
+    styles: [],
+    reversedStyles: [],
+    reversedScripts: [],
+  }
+
   beforeEach(() => {
     global.__PATH_PREFIX__ = ``
     global.__BASE_PATH__ = ``
     fs.readFileSync.mockImplementation(file => MOCK_FILE_INFO[file])
   })
 
-  test(`onPreRenderHTML can be used to replace headComponents`, done => {
+  test(`onPreRenderHTML can be used to replace headComponents`, () => {
     global.plugins = [fakeStylesPlugin, reverseHeadersPlugin]
 
-    staticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
+    const html = staticEntry(staticEntryFnArgs)
+    expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML can be used to replace postBodyComponents`, done => {
+  test(`onPreRenderHTML can be used to replace postBodyComponents`, () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Post`),
       reverseBodyComponentsPluginFactory(`Post`),
     ]
 
-    staticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
+    const html = staticEntry(staticEntryFnArgs)
+    expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML can be used to replace preBodyComponents`, done => {
+  test(`onPreRenderHTML can be used to replace preBodyComponents`, () => {
     global.plugins = [
       fakeComponentsPluginFactory(`Pre`),
       reverseBodyComponentsPluginFactory(`Pre`),
     ]
 
-    staticEntry(`/about/`, (_, html) => {
-      expect(html).toMatchSnapshot()
-      done()
-    })
+    const html = staticEntry(staticEntryFnArgs)
+    expect(html).toMatchSnapshot()
   })
 
-  test(`onPreRenderHTML does not add metatag note for development environment`, done => {
-    staticEntry(`/about/`, (_, html) => {
-      expect(html).not.toContain(
-        `<meta name="note" content="environment=development"/>`
-      )
-      done()
-    })
+  test(`onPreRenderHTML does not add metatag note for development environment`, () => {
+    const html = staticEntry(staticEntryFnArgs)
+    expect(html).not.toContain(
+      `<meta name="note" content="environment=development"/>`
+    )
   })
 })
 

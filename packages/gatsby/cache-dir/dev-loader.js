@@ -7,6 +7,8 @@ import normalizePagePath from "./normalize-page-path"
 // TODO move away from lodash
 import isEqual from "lodash/isEqual"
 
+const preferDefault = m => (m && m.default) || m
+
 function mergePageEntry(cachedPage, newPageData) {
   return {
     ...cachedPage,
@@ -22,10 +24,21 @@ function mergePageEntry(cachedPage, newPageData) {
 }
 
 class DevLoader extends BaseLoader {
-  constructor(syncRequires, matchPaths) {
-    const loadComponent = chunkName =>
-      Promise.resolve(syncRequires.components[chunkName])
+  constructor(asyncRequires, matchPaths) {
+    const loadComponent = chunkName => {
+      if (!asyncRequires.components[chunkName]) {
+        throw new Error(
+          `We couldn't find the correct component chunk with the name "${chunkName}"`
+        )
+      }
 
+      return (
+        asyncRequires.components[chunkName]()
+          .then(preferDefault)
+          // loader will handle the case when component is error
+          .catch(err => err)
+      )
+    }
     super(loadComponent, matchPaths)
 
     const socket = getSocket()

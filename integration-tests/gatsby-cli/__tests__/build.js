@@ -15,9 +15,6 @@ describe(`gatsby build`, () => {
     logs.should.contain(`success open and validate gatsby-configs`)
     logs.should.contain(`success load plugins`)
     logs.should.contain(`success onPreInit`)
-    logs.should.contain(
-      `success delete html and css files from previous builds`
-    )
     logs.should.contain(`success initialize cache`)
     logs.should.contain(`success copy gatsby files`)
     logs.should.contain(`success onPreBootstrap`)

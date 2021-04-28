@@ -1,7 +1,9 @@
 exports.onCreateWebpackConfig = ({ actions }) => {
     actions.setWebpackConfig({
-      node: {
-        fs: 'empty'
+      resolve: {
+        alias: {
+          path: require.resolve("path-browserify")
+        }
       }
     })
   }

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import uuidv4 from "uuid"
 import { trackCli } from "gatsby-telemetry"
 import signalExit from "signal-exit"

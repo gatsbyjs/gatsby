@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-/** */
+/***/
 const GatsbyReporter = {
   /**
    * @callback GatsbyReporterFn
@@ -60,7 +60,7 @@ const GatsbyReporter = {
   verbose: true,
 };
 
-/** */
+/***/
 const GatsbyCache = {
   /**
    * Retrieve cached value
@@ -82,7 +82,7 @@ const GatsbyCache = {
   set: true,
 };
 
-/** */
+/***/
 const GatsbyTracing = {
   /**
    * Global tracer instance. Check
@@ -166,16 +166,6 @@ module.exports.createContentDigest = true;
  *
  * See [`actions`](/docs/actions/) reference.
  * @type {Actions}
- * @deprecated Will be removed in gatsby 3.0. Use [actions](#actions)
- * instead.
- */
-module.exports.boundActionCreators = true;
-
-/**
- * Collection of functions used to programmatically modify Gatsby’s internal state.
- *
- * See [`actions`](/docs/actions/) reference.
- * @type {Actions}
  */
 module.exports.actions = true;
 
@@ -238,17 +228,6 @@ module.exports.getNode = true;
  * const markdownNodes = getNodesByType(`MarkdownRemark`)
  */
 module.exports.getNodesByType = true;
-
-/**
- * Compares `contentDigest` of cached node with passed value
- * to determine if node has changed.
- *
- * @param {string} id of node
- * @param {string} contentDigest of node
- * @returns {boolean}
- * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
- */
-module.exports.hasNodeChanged = true;
 
 /**
  * Set of utilities to output information to user
