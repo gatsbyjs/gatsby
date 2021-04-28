@@ -34,7 +34,7 @@ export default async function handler(req, res) {
 
 Dynamic routes share syntax with [client-only routes](/docs/reference/routing/file-system-route-api/#creating-client-only-routes).
 
-### Splat or wildcard routes
+### Splat routes
 
 Gatsby also supports splat (or wildcard) routes, which are routes that will match anything after the splat. These are less common, but still have use cases.
 
