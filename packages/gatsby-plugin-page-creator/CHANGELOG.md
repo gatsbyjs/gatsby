@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.4.0-next.3...gatsby-plugin-page-creator@3.5.0-next.0) (2021-04-23)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-page-creator ([#30824](https://github.com/gatsbyjs/gatsby/issues/30824)) ([4f2b721](https://github.com/gatsbyjs/gatsby/commit/4f2b72122017485906c9935354d3572ecff3e0f2))
+
+### Performance Improvements
+
+- **gatsby-plugin-page-creator:** De-dupe collection pages ([#31016](https://github.com/gatsbyjs/gatsby/issues/31016)) ([e56f544](https://github.com/gatsbyjs/gatsby/commit/e56f544d367ed82dc2044705f6d0e03369f5ae27))
+
+# [3.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.4.0-next.2...gatsby-plugin-page-creator@3.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
+# [3.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.4.0-next.1...gatsby-plugin-page-creator@3.4.0-next.2) (2021-04-20)
+
+### Features
+
+- **gatsby:** add support for dynamic routes for API functions ([#30904](https://github.com/gatsbyjs/gatsby/issues/30904)) ([e44d6a7](https://github.com/gatsbyjs/gatsby/commit/e44d6a78f7f63e434a159536f07d1105067e997b))
+
 # [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.4.0-next.0...gatsby-plugin-page-creator@3.4.0-next.1) (2021-04-16)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

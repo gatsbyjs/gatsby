@@ -83,10 +83,9 @@ class Dev404Page extends React.Component {
     // functions are enabled or not to this page.
     // TODO remove when functions are shipped.
     const functionsEnabled = !(
-      this.props.data.allSiteFunction.nodes[0]?.url === `FAKE`
+      this.props.data.allSiteFunction.nodes[0]?.apiRoute === `FAKE`
     )
     const { pathname } = this.props.location
-    const isAPI = false
     let newFilePath
     let newAPIPath
     if (pathname === `/`) {
@@ -180,10 +179,10 @@ export default function API (req, res) {
                 </h2>
                 <ul>
                   {this.props.data.allSiteFunction.nodes.map(node => {
-                    const url = `/api/${node.url}`
+                    const apiRoute = `/api/${node.apiRoute}`
                     return (
-                      <li key={url}>
-                        <a href={url}>{url}</a>
+                      <li key={apiRoute}>
+                        <a href={apiRoute}>{apiRoute}</a>
                       </li>
                     )
                   })}
@@ -239,7 +238,7 @@ export const pagesQuery = graphql`
   query PagesQuery {
     allSiteFunction {
       nodes {
-        url
+        apiRoute
       }
     }
     allSitePage(filter: { path: { ne: "/dev-404-page/" } }) {

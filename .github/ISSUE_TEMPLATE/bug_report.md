@@ -12,6 +12,7 @@ labels: "type: bug"
   - How to File an Issue: https://www.gatsbyjs.com/contributing/how-to-file-an-issue/
 
   Before opening a new issue, please search existing issues: https://github.com/gatsbyjs/gatsby/issues
+  And existing Discussions: https://github.com/gatsbyjs/gatsby/discussions
 -->
 
 ## Description
@@ -34,4 +35,4 @@ What happened.
 
 ### Environment
 
-Run `gatsby info --clipboard` in your project directory and paste the output here.
+Run `gatsby info --clipboard` in your project directory and paste the output here. Also name any `flags` you use inside `gatsby-config.js`.

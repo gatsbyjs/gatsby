@@ -43,6 +43,7 @@ import {
   markWebpackStatusAsDone,
 } from "../utils/webpack-status"
 import { updateSiteMetadata, isTruthy } from "gatsby-core-utils"
+import { showExperimentNotices } from "../utils/show-experiment-notice"
 
 module.exports = async function build(program: IBuildArgs): Promise<void> {
   if (isTruthy(process.env.VERBOSE)) {
@@ -124,8 +125,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildActivityTimer.start()
   let stats
+  let waitForCompilerClose
   try {
-    stats = await buildProductionBundle(program, buildActivityTimer.span)
+    const result = await buildProductionBundle(program, buildActivityTimer.span)
+    stats = result.stats
+    waitForCompilerClose = result.waitForCompilerClose
 
     if (stats.hasWarnings()) {
       const rawMessages = stats.toJson({ moduleTrace: false })
@@ -193,8 +197,11 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
   )
   buildSSRBundleActivityProgress.start()
   let pageRenderer: string
+  let waitForCompilerCloseBuildHtml
   try {
-    pageRenderer = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    const result = await buildRenderer(program, Stage.BuildHTML, buildSpan)
+    pageRenderer = result.rendererPath
+    waitForCompilerCloseBuildHtml = result.waitForCompilerClose
   } catch (err) {
     buildActivityTimer.panic(structureWebpackErrors(Stage.BuildHTML, err))
   } finally {
@@ -232,6 +239,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
 
   // Make sure we saved the latest state so we have all jobs cached
   await db.saveState()
+
+  await Promise.all([waitForCompilerClose, waitForCompilerCloseBuildHtml])
 
   report.info(`Done building in ${process.uptime()} sec`)
 
@@ -281,6 +290,8 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     await fs.writeFile(deletedFilesPath, deletedFilesContent, `utf8`)
     report.info(`.cache/deletedPages.txt created`)
   }
+
+  showExperimentNotices()
 
   if (await userGetsSevenDayFeedback()) {
     showSevenDayFeedbackRequest()

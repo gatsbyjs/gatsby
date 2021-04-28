@@ -38,8 +38,11 @@ const fileType = `
 
 const siteFunctionType = `
   type SiteFunction implements Node @infer {
-    url: String!
-    file: String!
+    apiRoute: String!
+    originalFilePath: String!
+    relativeCompiledFilePath: String!
+    absoluteCompiledFilePath: String!
+    matchPath: String
   }
 `
 

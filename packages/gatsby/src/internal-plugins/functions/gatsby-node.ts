@@ -4,16 +4,30 @@ import path from "path"
 import webpack from "webpack"
 import multer from "multer"
 import * as express from "express"
-import { urlResolve } from "gatsby-core-utils"
+import { urlResolve, getMatchPath } from "gatsby-core-utils"
 import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
-import TerserPlugin from "terser-webpack-plugin"
 import { internalActions } from "../../redux/actions"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
 import chokidar from "chokidar"
+import pathToRegexp from "path-to-regexp"
+import cookie from "cookie"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
+
+interface IFunctionData {
+  /** The route in the browser to access the function **/
+  apiRoute: string
+  /** The relative path to the original function **/
+  originalFilePath: string
+  /** The relative path to the compiled function (always ends with .js) **/
+  relativeCompiledFilePath: string
+  /** The absolute path to the compiled function (doesn't transfer across machines) **/
+  absoluteCompiledFilePath: string
+  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
+  matchPath: string
+}
 
 const createWebpackConfig = async ({
   siteDirectoryPath,
@@ -21,6 +35,12 @@ const createWebpackConfig = async ({
   store,
   reporter,
 }): Promise<webpack.Configuration> => {
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
+
   const files = await new Promise((resolve, reject) => {
     glob(`**/*.{js,ts}`, { cwd: functionsDirectory }, (err, files) => {
       if (err) {
@@ -40,14 +60,31 @@ const createWebpackConfig = async ({
     )
   }
 
-  const knownFunctions = new Map(
-    files.map(file => {
-      const { dir, name } = path.parse(file)
-      return [urlResolve(dir, name === `index` ? `` : name), file]
+  const knownFunctions: Array<IFunctionData> = []
+  knownFunctions.forEach(f => f.apiRoute)
+  files.map(file => {
+    const { dir, name } = path.parse(file)
+    // Ignore the original extension as all compiled functions now end with js.
+    const compiledFunctionName = path.join(dir, name + `.js`)
+    const compiledPath = path.join(compiledFunctionsDir, compiledFunctionName)
+    const finalName = urlResolve(dir, name === `index` ? `` : name)
+
+    knownFunctions.push({
+      apiRoute: finalName,
+      originalFilePath: file,
+      relativeCompiledFilePath: compiledFunctionName,
+      absoluteCompiledFilePath: compiledPath,
+      matchPath: getMatchPath(finalName),
     })
-  )
+  })
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
+
+  // Write out manifest for use by `gatsby serve` and plugins
+  fs.writeFileSync(
+    path.join(compiledFunctionsDir, `manifest.json`),
+    JSON.stringify(knownFunctions, null, 4)
+  )
 
   // Load environment variables from process.env.GATSBY_* and .env.* files.
   // Logic is shared with webpack.config.js
@@ -95,34 +132,19 @@ const createWebpackConfig = async ({
       "process.env": `({})`,
     }
   )
-  const compiledFunctionsDir = path.join(
-    siteDirectoryPath,
-    `.cache`,
-    `functions`
-  )
-
-  // Write out manifest for use by `gatsby serve` and plugins
-  const manifest = {}
-  Array.from(knownFunctions).forEach(([, file]) => {
-    const name = path.parse(file).name
-    const compiledPath = path.join(compiledFunctionsDir, name + `.js`)
-    manifest[name] = compiledPath
-  })
-
-  fs.writeFileSync(
-    path.join(compiledFunctionsDir, `manifest.json`),
-    JSON.stringify(manifest, null, 4)
-  )
 
   const entries = {}
-  Array.from(knownFunctions).forEach(([, file]) => {
-    const filePath = path.join(functionsDirectory, file)
+  knownFunctions.forEach(({ originalFilePath }) => {
+    const filePath = path.join(functionsDirectory, originalFilePath)
 
     // Get path without the extension (as it could be ts or js)
-    const parsed = path.parse(file)
-    const name = path.join(parsed.dir, parsed.name)
+    const parsedFile = path.parse(originalFilePath)
+    const compiledNameWithoutExtension = path.join(
+      parsedFile.dir,
+      parsedFile.name
+    )
 
-    entries[name] = filePath
+    entries[compiledNameWithoutExtension] = filePath
   })
 
   const config = {
@@ -165,7 +187,6 @@ export async function onPreBootstrap({
 
   const {
     program: { directory: siteDirectoryPath },
-    functions,
   } = store.getState()
 
   const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
@@ -176,10 +197,13 @@ export async function onPreBootstrap({
   )
 
   reporter.verbose(`Attaching functions to development server`)
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
 
-  await fs.ensureDir(path.join(siteDirectoryPath, `.cache`, `functions`))
-
-  await fs.emptyDir(path.join(siteDirectoryPath, `.cache`, `functions`))
+  await fs.ensureDir(compiledFunctionsDir)
 
   try {
     // We do this ungainly thing as we need to make accessible
@@ -245,7 +269,7 @@ export async function onPreBootstrap({
             )
 
             // Otherwise, restart the watcher
-            compiler.close(async err => {
+            compiler.close(async () => {
               const config = await createWebpackConfig({
                 siteDirectoryPath,
                 functionsDirectory,
@@ -269,39 +293,69 @@ export async function onCreateDevServer({
   app,
   store,
 }: CreateDevServerArgs): Promise<void> {
-  const {
-    program: { directory: siteDirectoryPath },
-  } = store.getState()
-
   reporter.verbose(`Attaching functions to development server`)
 
   app.use(
     `/api/*`,
     multer().none(),
     express.urlencoded({ extended: true }),
+    (req, res, next) => {
+      const cookies = req.headers.cookie
+
+      if (!cookies) {
+        return next()
+      }
+
+      req.cookies = cookie.parse(cookies)
+
+      return next()
+    },
     express.text(),
     express.json(),
     express.raw(),
     async (req, res, next) => {
-      const { "0": functionName } = req.params
+      const { "0": pathFragment } = req.params
 
-      const { functions } = store.getState()
+      const {
+        functions,
+      }: { functions: Array<IFunctionData> } = store.getState()
 
-      if (functions.has(functionName)) {
-        reporter.verbose(`Running ${functionName}`)
+      // Check first for exact matches.
+      let functionObj = functions.find(
+        ({ apiRoute }) => apiRoute === pathFragment
+      )
+
+      if (!functionObj) {
+        // Check if there's any matchPaths that match.
+        // We loop until we find the first match.
+        functions.some(f => {
+          let exp
+          const keys = []
+          if (f.matchPath) {
+            exp = pathToRegexp(f.matchPath, keys)
+          }
+          if (exp && exp.exec(pathFragment) !== null) {
+            functionObj = f
+            const matches = [...pathFragment.match(exp)].slice(1)
+            const newParams = {}
+            matches.forEach(
+              (match, index) => (newParams[keys[index].name] = match)
+            )
+            req.params = newParams
+
+            return true
+          } else {
+            return false
+          }
+        })
+      }
+
+      if (functionObj) {
+        reporter.verbose(`Running ${functionObj.apiRoute}`)
         const start = Date.now()
-        const compiledFunctionsDir = path.join(
-          siteDirectoryPath,
-          `.cache`,
-          `functions`
-        )
-
-        // Ignore the original extension as all compiled functions now end with js.
-        const parsed = path.parse(functions.get(functionName))
-        const funcNameToJs = path.join(parsed.dir, parsed.name + `.js`)
+        const pathToFunction = functionObj.absoluteCompiledFilePath
 
         try {
-          const pathToFunction = path.join(compiledFunctionsDir, funcNameToJs)
           delete require.cache[require.resolve(pathToFunction)]
           const fn = require(pathToFunction)
 
@@ -310,12 +364,16 @@ export async function onCreateDevServer({
           await Promise.resolve(fnToExecute(req, res))
         } catch (e) {
           reporter.error(e)
-          res.sendStatus(500)
+          res
+            .status(500)
+            .send(
+              `Error when executing function "${functionObj.originalFilePath}": "${e.message}"`
+            )
         }
 
         const end = Date.now()
         reporter.log(
-          `Executed function "/api/${functionName}" in ${end - start}ms`
+          `Executed function "/api/${functionObj.apiRoute}" in ${end - start}ms`
         )
       } else {
         next()

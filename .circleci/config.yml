@@ -228,8 +228,16 @@ jobs:
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    executor: node
+    machine: true
     steps:
+      - run:
+          command: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: nvm install v12
+      - run: nvm alias default v12
+      - run: nvm use v12
+      - run: npm i -g yarn@1.22.10
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
@@ -415,6 +423,20 @@ jobs:
           path: e2e-tests/visual-regression/__diff_output__
       - store_test_results:
           path: e2e-tests/visual-regression/cypress/results
+
+  e2e_tests_contentful:
+    <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: 2193cm
+      CYPRESS_RECORD_KEY: 57e9563e-af49-494c-837c-5af53c2d6f76
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/contentful
+          test_command: yarn test
+      - store_artifacts:
+          path: e2e-tests/contentful/__diff_output__
+      - store_test_results:
+          path: e2e-tests/contentful/cypress/results
 
   starters_validate:
     executor: node
@@ -631,6 +653,8 @@ workflows:
       - e2e_tests_gatsby-static-image:
           <<: *e2e-test-workflow
       - e2e_tests_visual-regression:
+          <<: *e2e-test-workflow
+      - e2e_tests_contentful:
           <<: *e2e-test-workflow
       - e2e_tests_development_runtime:
           <<: *e2e-test-workflow

@@ -52,31 +52,31 @@ exports[`[gatsby-source-wordpress] Run tests on develop build data resolution re
 Array [
   Object {
     "id": "cG9zdDo3NzQ4",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1002-4312x2868-1-scaled.jpg",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/08/1002-4312x2868-1-scaled.jpg",
   },
   Object {
     "id": "cG9zdDo3NzQw",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/file-sample_1MB.doc",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/08/file-sample_1MB.doc",
   },
   Object {
     "id": "cG9zdDo3NzU2",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1001-5616x3744-1-scaled.jpg",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/08/1001-5616x3744-1-scaled.jpg",
   },
   Object {
     "id": "cG9zdDo3NzUy",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/08/1003-1181x1772-1.jpg",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/08/1003-1181x1772-1.jpg",
   },
   Object {
     "id": "cG9zdDoxMDQ0NQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.doc",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample.doc",
   },
   Object {
     "id": "cG9zdDoxMDQzOQ==",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/10/sample.pdf",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample.pdf",
   },
   Object {
     "id": "cG9zdDozNjI=",
-    "mediaItemUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
   },
 ]
 `;
@@ -197,7 +197,22 @@ Object {
           },
           "author": Object {
             "node": Object {
-              "name": "Tyler",
+              "name": "admin",
+            },
+          },
+          "title": "Activity",
+          "uri": "/activity/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
             },
           },
           "title": "ACF Field Test",
@@ -222,7 +237,7 @@ Object {
           "author": Object {
             "node": Object {
               "avatar": Object {
-                "url": "https://secure.gravatar.com/avatar/5fc9a2065017733c9d5f49a5ecd71d64?s=96&d=mm&r=g",
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
               },
               "comments": Object {
                 "nodes": Array [],
@@ -232,7 +247,7 @@ Object {
           "featuredImage": Object {
             "node": Object {
               "altText": "",
-              "sourceUrl": "https://gatsbyinttests.wpengine.com/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+              "sourceUrl": "http://localhost:8001/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
             },
           },
           "title": "Hello world!",
@@ -261,7 +276,7 @@ Object {
         "generalSettingsTimeFormat": "g:i a",
         "generalSettingsTimezone": "",
         "generalSettingsTitle": "Automated testing for Gatsby source WordPress V4",
-        "generalSettingsUrl": "https://gatsbyinttests.wpengine.com",
+        "generalSettingsUrl": "http://localhost:8001",
         "readingSettingsPostsPerPage": 10,
         "writingSettingsDefaultCategory": 23,
         "writingSettingsDefaultPostFormat": "",
@@ -285,12 +300,15 @@ Object {
     "allWpUser": Object {
       "nodes": Array [
         Object {
-          "databaseId": 1,
-          "name": "Tyler",
+          "databaseId": 4,
+          "name": "admin",
           "pages": Object {
             "nodes": Array [
               Object {
                 "title": "ACF Field Test",
+              },
+              Object {
+                "title": "Activity",
               },
             ],
           },
@@ -305,7 +323,7 @@ Object {
       ],
     },
     "testUser": Object {
-      "firstName": "Tyler",
+      "name": "admin",
     },
   },
   "extensions": Object {},

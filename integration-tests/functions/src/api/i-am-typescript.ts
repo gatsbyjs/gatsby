@@ -1,6 +1,9 @@
-import * as express from "express"
+import { GatsbyAPIFunctionResponse, GatsbyAPIFunctionRequest } from "gatsby"
 
-export default function topLevel(req: express.Request, res: express.Response) {
+export default function topLevel(
+  req: GatsbyAPIFunctionRequest,
+  res: GatsbyAPIFunctionResponse
+) {
   if (req.method === `GET`) {
     res.send(`I am typescript`)
   }
