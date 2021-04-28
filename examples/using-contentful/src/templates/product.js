@@ -1,8 +1,11 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
-import Img from "gatsby-image"
+
+import { Link, graphql } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
+
 import Layout from "../layouts"
+import { rhythm } from "../utils/typography"
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -19,18 +22,23 @@ class ProductTemplate extends React.Component {
       brand,
       categories,
     } = product
+    const productImg = image[0]?.gatsbyImageData
     return (
       <Layout>
         <div
           style={{
             display: `flex`,
-            alignItems: `center`,
+            justifyContent: `center`,
           }}
         >
-          <Img fixed={image[0].fixed} />
-          <h4>{productName}</h4>
+          {productImg && (
+            <GatsbyImage
+              style={{ marginBottom: rhythm(1) }}
+              image={productImg}
+            />
+          )}
         </div>
-        <h1>{productName}</h1>
+        <h1 style={{ marginBottom: rhythm(1 / 2) }}>{productName}</h1>
         <h4>Made by {brand.companyName.companyName}</h4>
         <div>
           <span>Price: ${price}</span>
@@ -74,13 +82,7 @@ export const pageQuery = graphql`
       }
       price
       image {
-        fixed(width: 50, height: 50) {
-          base64
-          src
-          srcSet
-          height
-          width
-        }
+        gatsbyImageData(width: 200)
       }
       brand {
         companyName {

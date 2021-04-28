@@ -655,8 +655,8 @@ exports.queries = {
   `,
   users: /* GraphQL */ `
     {
-      testUser: wpUser(id: { eq: "dXNlcjox" }) {
-        firstName
+      testUser: wpUser(id: { eq: "dXNlcjo0" }) {
+        name
       }
       allWpUser {
         nodes {

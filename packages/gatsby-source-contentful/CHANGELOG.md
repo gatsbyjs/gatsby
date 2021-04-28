@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.3...gatsby-source-contentful@5.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.2...gatsby-source-contentful@5.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.1...gatsby-source-contentful@5.4.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.0...gatsby-source-contentful@5.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** De-dupe type names ([#30834](https://github.com/gatsbyjs/gatsby/issues/30834)) ([71ec0cd](https://github.com/gatsbyjs/gatsby/commit/71ec0cdb0f6e5143f3eec9a4f918104c6b3a815d))
+
+### Features
+
+- **contentful:** warn users when using restricted content type names ([#30715](https://github.com/gatsbyjs/gatsby/issues/30715)) ([62a4121](https://github.com/gatsbyjs/gatsby/commit/62a4121a32b7eb2ad4e7e3337c2730993c202e20)), closes [#30089](https://github.com/gatsbyjs/gatsby/issues/30089)
+
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.2...gatsby-source-contentful@5.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
 # [5.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.1...gatsby-source-contentful@5.3.0-next.2) (2021-04-07)
 
 ### Bug Fixes

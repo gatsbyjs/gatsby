@@ -1,20 +1,20 @@
 {
   "name": "gatsby-remark-katex",
   "description": "Transform math nodes to html markup",
-  "version": "4.3.0-next.1",
+  "version": "5.2.0-next.0",
   "author": "Jeffrey Xiao <jeffrey.xiao1998@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "remark-math": "^1.0.6",
-    "unist-util-visit": "^1.4.1"
+    "remark-math": "^4.0.0",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^1.3.0-next.1",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3",
     "katex": "^0.13.0"
   },
@@ -29,7 +29,7 @@
   "main": "index.js",
   "peerDependencies": {
     "gatsby": "^3.0.0-next.0",
-    "katex": "^0.10.0"
+    "katex": "^0.12.0"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.4.0-next.1...gatsby-plugin-gatsby-cloud@2.5.0-next.0) (2021-04-23)
+
+### Features
+
+- **gatsby-plugin-gatsby-cloud:** add prototype of preview indicator ([#30839](https://github.com/gatsbyjs/gatsby/issues/30839)) ([841c0d2](https://github.com/gatsbyjs/gatsby/commit/841c0d248fa59df7a045845d59987b093d43112f))
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.4.0-next.0...gatsby-plugin-gatsby-cloud@2.4.0-next.1) (2021-04-20)
+
+### Features
+
+- **gatsby:** add support for dynamic routes for API functions ([#30904](https://github.com/gatsbyjs/gatsby/issues/30904)) ([e44d6a7](https://github.com/gatsbyjs/gatsby/commit/e44d6a78f7f63e434a159536f07d1105067e997b))
+
+# [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.3.0-next.2...gatsby-plugin-gatsby-cloud@2.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-gatsby-cloud
+
+# [2.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.3.0-next.1...gatsby-plugin-gatsby-cloud@2.3.0-next.2) (2021-04-09)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** Add missing index.js (so the plugin can be resolved in workspaces) ([#30761](https://github.com/gatsbyjs/gatsby/issues/30761)) ([4336d04](https://github.com/gatsbyjs/gatsby/commit/4336d04005745fe8de2defd8bba0b93380f04359))
+
 # [2.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.3.0-next.0...gatsby-plugin-gatsby-cloud@2.3.0-next.1) (2021-04-07)
 
 **Note:** Version bump only for package gatsby-plugin-gatsby-cloud

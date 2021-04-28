@@ -56,15 +56,39 @@ let newHash = ``
 const runWebpack = (
   compilerConfig,
   stage: Stage,
-  directory
-): Bluebird<webpack.Stats> =>
+  directory,
+  parentSpan?: Span
+): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
-      webpack(compilerConfig).run((err, stats) => {
+      const compiler = webpack(compilerConfig)
+      compiler.run((err, stats) => {
+        let activity
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          activity = reporter.activityTimer(
+            `Caching HTML renderer compilation`,
+            { parentSpan }
+          )
+          activity.start()
+        }
+
+        const waitForCompilerClose = new Promise<void>((resolve, reject) => {
+          compiler.close(error => {
+            if (activity) {
+              activity.end()
+            }
+
+            if (error) {
+              return reject(error)
+            }
+            return resolve()
+          })
+        })
+
         if (err) {
           return reject(err)
         } else {
-          return resolve(stats)
+          return resolve({ stats, waitForCompilerClose })
         }
       })
     } else if (
@@ -99,7 +123,7 @@ const runWebpack = (
 
             oldHash = newHash
 
-            return resolve(stats)
+            return resolve({ stats, waitForCompilerClose: Promise.resolve() })
           }
         }
       ) as IWebpackWatchingPauseResume
@@ -109,9 +133,15 @@ const runWebpack = (
 const doBuildRenderer = async (
   { directory }: IProgram,
   webpackConfig: webpack.Configuration,
-  stage: Stage
-): Promise<string> => {
-  const stats = await runWebpack(webpackConfig, stage, directory)
+  stage: Stage,
+  parentSpan?: Span
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
+  const { stats, waitForCompilerClose } = await runWebpack(
+    webpackConfig,
+    stage,
+    directory,
+    parentSpan
+  )
   if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
@@ -127,20 +157,23 @@ const doBuildRenderer = async (
   }
 
   // render-page.js is hard coded in webpack.config
-  return `${directory}/public/render-page.js`
+  return {
+    rendererPath: `${directory}/public/render-page.js`,
+    waitForCompilerClose,
+  }
 }
 
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity
-): Promise<string> => {
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
   })
 
-  return doBuildRenderer(program, config, stage)
+  return doBuildRenderer(program, config, stage, parentSpan)
 }
 
 export const deleteRenderer = async (rendererPath: string): Promise<void> => {
@@ -298,7 +331,7 @@ export const buildHTML = async ({
   activity: IActivity
   workerPool: IWorkerPool
 }): Promise<void> => {
-  const rendererPath = await buildRenderer(program, stage, activity.span)
+  const { rendererPath } = await buildRenderer(program, stage, activity.span)
   await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
   await deleteRenderer(rendererPath)
 }

@@ -8,7 +8,7 @@ showTopLevelSignatures: true
 
 ## Introduction
 
-The file `gatsby-browser.js` lets you respond to actions within the browser, and wrap your site in additional components. The Gatsby Browser API gives you many options for interacting with the [client-side](/docs/glossary#client-side) of Gatsby.
+The file `gatsby-browser.js` lets you respond to Gatsby-specific events within the browser, and wrap your page components in additional global components. The Gatsby Browser API gives you many options for interacting with the [client-side](/docs/glossary#client-side) of Gatsby.
 
 ## Usage
 
@@ -30,4 +30,4 @@ exports.wrapPageElement = ({ element, props }) => {
 }
 ```
 
-> Note: The APIs `wrapPageElement` and `wrapRootElement` exist in both the browser and [Server-Side Rendering (SSR) APIs](/docs/reference/config-files/gatsby-ssr). If you use one of them, consider if you should implement it in both `gatsby-ssr.js` and `gatsby-browser.js` so that pages generated through SSR with Node.js are the same after being [hydrated](/docs/glossary#hydration) with browser JavaScript.
+> Note: The APIs `wrapPageElement` and `wrapRootElement` exist in both the browser and [Server-Side Rendering (SSR) APIs](/docs/reference/config-files/gatsby-ssr). You generally should implement the same components in both `gatsby-ssr.js` and `gatsby-browser.js` so that pages generated through SSR are the same after being [hydrated](/docs/glossary#hydration) in the browser.

@@ -20,8 +20,14 @@ import { init as navigationInit } from "./navigation"
 // this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
 import "./blank.css"
 
-// Enable fast-refresh for virtual sync-requires and gatsby-browser
-module.hot.accept([`$virtual/async-requires`, `./api-runner-browser`])
+// Enable fast-refresh for virtual sync-requires, gatsby-browser & navigation
+// To ensure that our <Root /> component can hot reload in case anything below doesn't
+// satisfy fast-refresh constraints
+module.hot.accept([
+  `$virtual/async-requires`,
+  `./api-runner-browser`,
+  `./navigation`,
+])
 
 window.___emitter = emitter
 

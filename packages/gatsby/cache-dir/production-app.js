@@ -39,7 +39,7 @@ navigationInit()
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
-  if (apiRunner(`registerServiceWorker`).length > 0) {
+  if (apiRunner(`registerServiceWorker`).filter(Boolean).length > 0) {
     require(`./register-service-worker`)
   }
 

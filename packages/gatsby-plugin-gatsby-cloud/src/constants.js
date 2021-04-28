@@ -7,6 +7,8 @@ export const BUILD_CSS_STAGE = `build-css`
 // Plugin values
 export const HEADERS_FILENAME = `_headers.json`
 export const REDIRECTS_FILENAME = `_redirects.json`
+export const PUBLIC_FUNCTIONS_FILENAME = `_functions.json`
+export const CACHE_FUNCTIONS_FILENAME = `manifest.json`
 
 export const DEFAULT_OPTIONS = {
   headers: {},
@@ -39,3 +41,5 @@ export const LINK_REGEX = /^(Link: <\/)(.+)(>;.+)/
 export const COMMON_BUNDLES = [`commons`, `app`]
 
 export const PAGE_DATA_DIR = `page-data/`
+
+export const POLLING_INTERVAL = 5000

@@ -312,7 +312,9 @@ export function getPlaceholderProps(
   layout: Layout,
   width?: number,
   height?: number,
-  backgroundColor?: string
+  backgroundColor?: string,
+  objectFit?: CSSProperties["objectFit"],
+  objectPosition?: CSSProperties["objectPosition"]
 ): PlaceholderImageAttrs {
   const wrapperStyle: CSSProperties = {}
 
@@ -339,6 +341,13 @@ export function getPlaceholderProps(
     }
   }
 
+  if (objectFit) {
+    wrapperStyle.objectFit = objectFit
+  }
+
+  if (objectPosition) {
+    wrapperStyle.objectPosition = objectPosition
+  }
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,

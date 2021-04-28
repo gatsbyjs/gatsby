@@ -6,7 +6,6 @@ import {
   sourceNodes,
   buildSchema,
   createPages,
-  createPagesStatefully,
   extractQueries,
   writeOutRedirects,
   postBootstrap,
@@ -32,9 +31,12 @@ export async function bootstrap(
 
   const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
-  const bootstrapContext: IBuildContext = {
+  const bootstrapContext: IBuildContext & {
+    shouldRunCreatePagesStatefully: boolean
+  } = {
     ...initialContext,
     parentSpan,
+    shouldRunCreatePagesStatefully: true,
   }
 
   const context = {
@@ -53,8 +55,6 @@ export async function bootstrap(
   )
 
   await createPages(context)
-
-  await createPagesStatefully(context)
 
   await handleStalePageData()
 

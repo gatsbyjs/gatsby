@@ -189,7 +189,7 @@ async function validatePluginsOptions(
     plugins.map(async plugin => {
       let gatsbyNode
       try {
-        const resolvedPlugin = resolvePlugin(plugin.resolve, rootDir)
+        const resolvedPlugin = resolvePlugin(plugin, rootDir)
         gatsbyNode = require(`${resolvedPlugin.resolve}/gatsby-node`)
       } catch (err) {
         gatsbyNode = {}

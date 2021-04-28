@@ -1,9 +1,10 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
-import Img from "gatsby-image"
-import Layout from "../layouts"
 
+import { Link, graphql } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
+
+import Layout from "../layouts"
 import { rhythm } from "../utils/typography"
 
 const propTypes = {
@@ -18,29 +19,28 @@ class CategoryTemplate extends React.Component {
       product,
       icon,
     } = category
-    const iconImg = icon.fixed
+    const iconImg = icon.gatsbyImageData
     return (
       <Layout>
         <div
           style={{
             display: `flex`,
             alignItems: `center`,
-            marginBottom: rhythm(1 / 2),
+            marginBottom: rhythm(1),
           }}
         >
-          <Img
-            style={{
-              height: iconImg.height,
-              width: iconImg.width,
-              marginRight: rhythm(1 / 2),
-            }}
-            fixed={iconImg}
-          />
-          <h4 style={{ marginBottom: 0 }}>{title}</h4>
+          {iconImg && (
+            <GatsbyImage
+              style={{
+                marginRight: rhythm(1 / 2),
+              }}
+              image={iconImg}
+            />
+          )}
+          <h1 style={{ marginBottom: 0 }}>Category: {title}</h1>
         </div>
-        <h1>{title}</h1>
         <div>
-          <span>Products</span>
+          <h2>Products</h2>
           <ul>
             {product &&
               product.map((p, i) => (
@@ -68,13 +68,7 @@ export const pageQuery = graphql`
         title
       }
       icon {
-        fixed(width: 75) {
-          base64
-          src
-          srcSet
-          height
-          width
-        }
+        gatsbyImageData(layout: FIXED, width: 75)
       }
       product {
         id

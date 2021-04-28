@@ -92,7 +92,7 @@ const activeFlags: Array<IFlag> = [
     command: `develop`,
     telemetryId: `DevSsr`,
     experimental: false,
-    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.`,
+    description: `Server Side Render (SSR) pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds. See umbrella issue for how to update custom webpack config.`,
     umbrellaIssue: `https://gatsby.dev/dev-ssr-feedback`,
     testFitness: (): fitnessEnum => {
       if (sampleSiteForExperiment(`DEV_SSR`, 20)) {
@@ -142,7 +142,7 @@ const activeFlags: Array<IFlag> = [
     command: `all`,
     telemetryId: `PreserveWebpackCache`,
     experimental: false,
-    description: `Don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
+    description: `Use webpack's persistent caching and don't delete webpack's cache when changing gatsby-node.js & gatsby-config.js files.`,
     umbrellaIssue: `https://gatsby.dev/cache-clearing-feedback`,
     testFitness: (): fitnessEnum => true,
   },
@@ -174,6 +174,16 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `NoPageNodes`,
     description: `Don't create page nodes. Saves time when creating pages for larger sites. Will be the new default behavior in v3.`,
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
+    testFitness: (): fitnessEnum => true,
+  },
+  {
+    name: `FUNCTIONS`,
+    env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
+    command: `all`,
+    telemetryId: `Functions`,
+    experimental: true,
+    description: `Compile Serverless functions in your Gatsby project and write them to disk, ready to deploy to Gatsby Cloud`,
+    umbrellaIssue: `https://gatsby.dev/functions-feedback`,
     testFitness: (): fitnessEnum => true,
   },
 ]

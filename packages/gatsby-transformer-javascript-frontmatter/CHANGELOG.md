@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.4.0-next.0...gatsby-transformer-javascript-frontmatter@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.3.0-next.1...gatsby-transformer-javascript-frontmatter@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
 # [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.3.0-next.0...gatsby-transformer-javascript-frontmatter@3.3.0-next.1) (2021-04-07)
 
 **Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
