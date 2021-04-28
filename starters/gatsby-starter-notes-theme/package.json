@@ -10,9 +10,9 @@
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^2.32.11",
-    "gatsby-theme-notes": "^2.0.5",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "gatsby": "^3.3.1",
+    "gatsby-theme-notes": "^3.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

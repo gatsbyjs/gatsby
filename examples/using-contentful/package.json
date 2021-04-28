@@ -7,7 +7,6 @@
   "dependencies": {
     "gatsby": "next",
     "gatsby-core-utils": "next",
-    "gatsby-image": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
     "gatsby-plugin-typography": "next",

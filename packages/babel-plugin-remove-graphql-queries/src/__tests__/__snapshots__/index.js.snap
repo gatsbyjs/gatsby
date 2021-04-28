@@ -526,6 +526,34 @@ var _default = () => {
 exports.default = _default;"
 `;
 
+exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery that use commonjs 1`] = `
+"const React = require(\\"react\\");
+
+const {
+  useStaticQuery
+} = require(\\"gatsby\\");
+
+module.exports = () => {
+  const siteTitle = useStaticQuery(\\"426988268\\");
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};"
+`;
+
+exports[`babel-plugin-remove-graphql-queries Transforms queries in useStaticQuery that use commonjs 2`] = `
+"\\"use strict\\";
+
+const React = require(\\"react\\");
+
+const {
+  useStaticQuery
+} = require(\\"gatsby\\");
+
+module.exports = () => {
+  const siteTitle = useStaticQuery(\\"426988268\\");
+  return /*#__PURE__*/React.createElement(\\"h1\\", null, siteTitle.site.siteMetadata.title);
+};"
+`;
+
 exports[`babel-plugin-remove-graphql-queries allows the global tag 1`] = `"const query = \\"426988268\\";"`;
 
 exports[`babel-plugin-remove-graphql-queries allows the global tag 2`] = `

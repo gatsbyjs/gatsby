@@ -144,8 +144,10 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
       _.option(`H`, {
         alias: `host`,
         type: `string`,
-        default: defaultHost,
-        describe: `Set host. Defaults to ${defaultHost}`,
+        default: process.env.HOST || defaultHost,
+        describe: process.env.HOST
+          ? `Set host. Defaults to ${process.env.HOST} (set by env.HOST) (otherwise defaults ${defaultHost})`
+          : `Set host. Defaults to ${defaultHost}`,
       })
         .option(`p`, {
           alias: `port`,

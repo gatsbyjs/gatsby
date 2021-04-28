@@ -62,6 +62,23 @@ Object {
     },
   },
   "pageDataStats": Map {},
+  "pages": Map {
+    "/my-sweet-new-page/" => Object {
+      "component": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
+      "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "context": Object {
+        "id": "123456",
+      },
+      "internalComponentName": "Component/my-sweet-new-page/",
+      "isCreatedByStatefulCreatePages": false,
+      "matchPath": undefined,
+      "path": "/my-sweet-new-page/",
+      "pluginCreatorId": "",
+      "pluginCreator___NODE": "",
+      "updatedAt": 1,
+    },
+  },
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
   },
@@ -91,6 +108,7 @@ Object {
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
   },

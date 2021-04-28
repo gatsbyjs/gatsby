@@ -21,6 +21,7 @@ import { StaticQueryMapper } from "./webpack/static-query-mapper"
 import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 import { getBrowsersList } from "./browserslist"
 import { builtinModules } from "module"
+const { BabelConfigItemsCacheInvalidatorPlugin } = require(`./babel-loader`)
 
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
@@ -211,6 +212,7 @@ module.exports = async (
       }),
 
       plugins.virtualModules(),
+      new BabelConfigItemsCacheInvalidatorPlugin(),
     ]
 
     switch (stage) {
@@ -759,6 +761,37 @@ module.exports = async (
     config.externals = {
       "socket.io-client": `io`,
     }
+  }
+
+  if (
+    process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE &&
+    (stage === `build-javascript` || stage === `build-html`)
+  ) {
+    const cacheLocation = path.join(
+      program.directory,
+      `.cache`,
+      `webpack`,
+      `stage-` + stage
+    )
+
+    const cacheConfig = {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation,
+      buildDependencies: {
+        config: [
+          __filename,
+          ...store
+            .getState()
+            .flattenedPlugins.filter(plugin =>
+              plugin.nodeAPIs.includes(`onCreateWebpackConfig`)
+            )
+            .map(plugin => path.join(plugin.resolve, `gatsby-node.js`)),
+        ],
+      },
+    }
+
+    config.cache = cacheConfig
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

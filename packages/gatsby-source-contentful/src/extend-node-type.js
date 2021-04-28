@@ -15,10 +15,6 @@ const {
   GraphQLList,
 } = require(`gatsby/graphql`)
 const qs = require(`qs`)
-const { generateImageData } = require(`gatsby-plugin-image`)
-const {
-  getGatsbyImageFieldConfig,
-} = require(`gatsby-plugin-image/graphql-utils`)
 const { stripIndent } = require(`common-tags`)
 
 const cacheImage = require(`./cache-image`)
@@ -27,6 +23,8 @@ const {
   ImageFormatType,
   ImageResizingBehavior,
   ImageCropFocusType,
+  ImageLayoutType,
+  ImagePlaceholderType,
 } = require(`./schemes`)
 
 // By default store the images in `.cache` but allow the user to override
@@ -720,6 +718,8 @@ exports.extendNodeType = ({ type, store }) => {
   const resolveGatsbyImageData = async (image, options) => {
     if (!isImage(image)) return null
 
+    const { generateImageData } = require(`gatsby-plugin-image`)
+
     const { baseUrl, contentType, width, height } = getBasicImageProps(
       image,
       options
@@ -773,6 +773,10 @@ exports.extendNodeType = ({ type, store }) => {
 
   // gatsby-plugin-image
   const getGatsbyImageData = () => {
+    const {
+      getGatsbyImageFieldConfig,
+    } = require(`gatsby-plugin-image/graphql-utils`)
+
     const fieldConfig = getGatsbyImageFieldConfig(resolveGatsbyImageData, {
       jpegProgressive: {
         type: GraphQLBoolean,
@@ -787,6 +791,25 @@ exports.extendNodeType = ({ type, store }) => {
       quality: {
         type: GraphQLInt,
         defaultValue: 50,
+      },
+      layout: {
+        type: ImageLayoutType,
+        description: stripIndent`
+            The layout for the image.
+            CONSTRAINED: Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size. 
+            FIXED: A static image size, that does not resize according to the screen width
+            FULL_WIDTH: The image resizes to fit its container, even if that is larger than the source image.
+            Pass a value to "sizes" if the container is not the full width of the screen.
+        `,
+      },
+      placeholder: {
+        type: ImagePlaceholderType,
+        description: stripIndent`
+            Format of generated placeholder image, displayed while the main image loads.
+            BLURRED: a blurred, low resolution image, encoded as a base64 data URI (default)
+            DOMINANT_COLOR: a solid color, calculated from the dominant color of the image.
+            TRACED_SVG: a low-resolution traced SVG of the image.
+            NONE: no placeholder. Set the argument "backgroundColor" to use a fixed background color.`,
       },
       formats: {
         type: GraphQLList(ImageFormatType),

@@ -60,7 +60,9 @@ export function lazyHydrate(
           layout,
           width,
           height,
-          wrapperBackgroundColor
+          wrapperBackgroundColor,
+          objectFit,
+          objectPosition
         )}
       />
 
@@ -83,10 +85,12 @@ export function lazyHydrate(
     </LayoutWrapper>
   )
 
-  // Force render to mitigate "Expected server HTML to contain a matching" in develop
-  const doRender = hydrated.current || forceHydrate.current ? render : hydrate
-  doRender(component, root.current)
-  hydrated.current = true
+  if (root.current) {
+    // Force render to mitigate "Expected server HTML to contain a matching" in develop
+    const doRender = hydrated.current || forceHydrate.current ? render : hydrate
+    doRender(component, root.current)
+    hydrated.current = true
+  }
 
   return (): void => {
     if (root.current) {

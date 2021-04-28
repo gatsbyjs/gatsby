@@ -28,4 +28,5 @@ export interface IDataLayerContext {
   workerPool?: JestWorker
   pagesToBuild?: Array<string>
   pagesToDelete?: Array<string>
+  shouldRunCreatePagesStatefully?: boolean
 }

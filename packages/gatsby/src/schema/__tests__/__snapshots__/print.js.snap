@@ -90,6 +90,14 @@ type SiteSiteMetadata {
   description: String
 }
 
+type SiteFunction implements Node @dontInfer {
+  apiRoute: String!
+  originalFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
+}
+
 type SitePage implements Node @dontInfer {
   path: String!
   component: String!
@@ -242,6 +250,14 @@ type Site implements Node @dontInfer {
 type SiteSiteMetadata {
   title: String
   description: String
+}
+
+type SiteFunction implements Node @dontInfer {
+  apiRoute: String!
+  originalFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
 }
 
 type SitePage implements Node @dontInfer {
@@ -407,6 +423,14 @@ type Site implements Node @dontInfer {
 type SiteSiteMetadata {
   title: String
   description: String
+}
+
+type SiteFunction implements Node @dontInfer {
+  apiRoute: String!
+  originalFilePath: String!
+  relativeCompiledFilePath: String!
+  absoluteCompiledFilePath: String!
+  matchPath: String
 }
 
 type SitePage implements Node @dontInfer {

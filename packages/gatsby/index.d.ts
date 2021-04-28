@@ -14,6 +14,7 @@ import {
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
+import { IncomingMessage, ServerResponse } from "http"
 
 export {
   default as Link,
@@ -1520,4 +1521,49 @@ export interface IPluginRefOptions {
 
 export interface PluginOptionsSchemaArgs {
   Joi: PluginOptionsSchemaJoi
+}
+
+/**
+ * Send body of response
+ */
+type Send<T> = (body: T) => void
+
+/**
+ * Gatsby API Function route response
+ */
+export interface GatsbyAPIFunctionResponse extends ServerResponse {
+  /**
+   * Send `any` data in response
+   */
+  send: Send<T>
+  /**
+   * Send `JSON` data in response
+   */
+  json: Send<T>
+  /**
+   * Set the HTTP status code of the response
+   */
+  status: (statusCode: number) => GatsbyAPIFunctionResponse<T>
+  redirect(url: string): GatsbyAPIFunctionResponse<T>
+  redirect(status: number, url: string): GatsbyAPIFunctionResponse<T>
+}
+
+/**
+ * Gatsby API function route request
+ */
+export interface GatsbyAPIFunctionRequest extends IncomingMessage {
+  /**
+   * Object of values from URL query parameters (after the ? in the URL)
+   */
+  query: Record<string, string>
+
+  /**
+   * Object of values from route parameters
+   */
+  params: Record<string, string>
+  body: any
+  /**
+   * Object of `cookies` from header
+   */
+  cookies: Record<string, string>
 }

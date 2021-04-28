@@ -28,9 +28,7 @@ function deepMap(obj, fn) {
   return obj
 }
 
-const cssTests = []
-
-function replaceRule(value, stage) {
+function replaceRule(value) {
   // If `value` does not have a `test` property, it isn't a rule object.
   if (!value || !value.test) {
     return value
@@ -96,20 +94,6 @@ exports.onCreateWebpackConfig = (
     return Promise.resolve()
   }
 
-  // populate cssTests array later used by isCssRule
-  if (`develop` === stage) {
-    cssTests.push(
-      ...[
-        rules.cssModules().test,
-        rules.css().test,
-        /\.s(a|c)ss$/,
-        /\.module\.s(a|c)ss$/,
-        /\.less$/,
-        /\.module\.less$/,
-      ].map(t => t.toString())
-    )
-  }
-
   const gatsbyConfig = getConfig()
   const { program } = store.getState()
   const publicPathClean = trim(publicPath, `/`)
@@ -161,7 +145,7 @@ exports.onCreateWebpackConfig = (
     },
     module: {
       rules: deepMap(gatsbyConfig.module.rules, value =>
-        replaceRule(value, stage)
+        replaceRule(value)
       ).filter(Boolean),
     },
     plugins: [
@@ -169,7 +153,11 @@ exports.onCreateWebpackConfig = (
       // application, or that we want to replace with our own instance.
       ...gatsbyConfig.plugins.filter(
         plugin =>
-          ![`MiniCssExtractPlugin`, `GatsbyWebpackStatsExtractor`].find(
+          ![
+            `MiniCssExtractPlugin`,
+            `GatsbyWebpackStatsExtractor`,
+            `StaticQueryMapper`,
+          ].find(
             pluginName =>
               plugin.constructor && plugin.constructor.name === pluginName
           )
@@ -210,7 +198,8 @@ exports.onCreateWebpackConfig = (
       // Exclude CSS from index.html, as any imported styles are assumed to be
       // targeting the editor preview pane. Uses `excludeAssets` option from
       // `HtmlWebpackPlugin` config
-      // not compatible with webpack 5
+      // HtmlWebpackExcludeAssetsPlugin is not compatible with webpack 5
+      // TODO: Replace `html-webpack-exclude-assets-plugin` with `html-webpack-skip-assets-plugin`
       // new HtmlWebpackExcludeAssetsPlugin(),
 
       // Pass in needed Gatsby config values.

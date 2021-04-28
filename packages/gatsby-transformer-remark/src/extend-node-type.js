@@ -1,5 +1,5 @@
 const Remark = require(`remark`)
-const select = require(`unist-util-select`)
+const { selectAll } = require(`unist-util-select`)
 const _ = require(`lodash`)
 const visit = require(`unist-util-visit`)
 const toHAST = require(`mdast-util-to-hast`)
@@ -8,6 +8,8 @@ const mdastToToc = require(`mdast-util-toc`)
 const mdastToString = require(`mdast-util-to-string`)
 const unified = require(`unified`)
 const parse = require(`remark-parse`)
+const remarkGfm = require(`remark-gfm`)
+const remarkFootnotes = require(`remark-footnotes`)
 const stringify = require(`remark-stringify`)
 const english = require(`retext-english`)
 const remark2retext = require(`remark-retext`)
@@ -94,26 +96,31 @@ module.exports = function remarkExtendNodeType(
     // Setup Remark.
     const {
       blocks,
-      commonmark = true,
       footnotes = true,
       gfm = true,
-      pedantic = true,
       tableOfContents = {
         heading: null,
         maxDepth: 6,
       },
     } = pluginOptions
     const tocOptions = tableOfContents
-    const remarkOptions = {
-      commonmark,
-      footnotes,
-      gfm,
-      pedantic,
-    }
+    const remarkOptions = {}
+
     if (_.isArray(blocks)) {
       remarkOptions.blocks = blocks
     }
+
     let remark = new Remark().data(`settings`, remarkOptions)
+
+    if (gfm) {
+      // TODO: deprecate `gfm` option in favor of explicit remark-gfm as a plugin?
+      remark = remark.use(remarkGfm)
+    }
+
+    if (footnotes) {
+      // TODO: deprecate `footnotes` option in favor of explicit remark-footnotes as a plugin?
+      remark = remark.use(remarkFootnotes, { inlineNotes: true })
+    }
 
     for (const plugin of pluginOptions.plugins) {
       const requiredPlugin = require(plugin.resolve)
@@ -170,7 +177,7 @@ module.exports = function remarkExtendNodeType(
         parseString: string => parseString(string, markdownNode),
         generateHTML: ast =>
           hastToHTML(markdownASTToHTMLAst(ast), {
-            allowDangerousHTML: true,
+            allowDangerousHtml: true,
           }),
       }
 
@@ -263,7 +270,7 @@ module.exports = function remarkExtendNodeType(
       }
 
       const ast = await getAST(markdownNode)
-      const headings = select(ast, `heading`).map(heading => {
+      const headings = selectAll(`heading`, ast).map(heading => {
         return {
           id: getHeadingID(heading),
           value: mdastToString(heading),
@@ -333,8 +340,8 @@ module.exports = function remarkExtendNodeType(
 
         // addSlugToUrl may clear the map
         if (tocAst.map) {
-          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHTML: true }), {
-            allowDangerousHTML: true,
+          toc = hastToHTML(toHAST(tocAst.map, { allowDangerousHtml: true }), {
+            allowDangerousHtml: true,
           })
         }
       }
@@ -345,7 +352,7 @@ module.exports = function remarkExtendNodeType(
 
     function markdownASTToHTMLAst(ast) {
       return toHAST(ast, {
-        allowDangerousHTML: true,
+        allowDangerousHtml: true,
         handlers: { code: codeHandler },
       })
     }
@@ -373,7 +380,7 @@ module.exports = function remarkExtendNodeType(
         const ast = await getHTMLAst(markdownNode)
         // Save new HTML to cache and return
         const html = hastToHTML(ast, {
-          allowDangerousHTML: true,
+          allowDangerousHtml: true,
         })
 
         // Save new HTML to cache
@@ -447,7 +454,7 @@ module.exports = function remarkExtendNodeType(
       })
 
       return hastToHTML(excerptAST, {
-        allowDangerousHTML: true,
+        allowDangerousHtml: true,
       })
     }
 

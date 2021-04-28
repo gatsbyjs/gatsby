@@ -2,6 +2,7 @@ import WebpackAssetsManifest from "webpack-assets-manifest"
 
 import makePluginData from "./plugin-data"
 import buildHeadersProgram from "./build-headers-program"
+import copyFunctionsManifest from "./copy-functions-manifest"
 import createRedirects from "./create-redirects"
 import { readJSON } from "fs-extra"
 import { joinPath } from "gatsby-core-utils"
@@ -55,6 +56,7 @@ exports.onPostBuild = async (
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
     createRedirects(pluginData, redirects, rewrites),
+    copyFunctionsManifest(pluginData, redirects, rewrites),
   ])
 }
 

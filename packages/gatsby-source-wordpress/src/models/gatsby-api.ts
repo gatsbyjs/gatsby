@@ -3,6 +3,7 @@ import merge from "lodash/merge"
 import { createRemoteMediaItemNode } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
 import { menuBeforeChangeNode } from "~/steps/source-nodes/before-change-node/menu"
 import { cloneDeep } from "lodash"
+import { inPreviewMode } from "~/steps/preview"
 
 export interface IPluginOptionsPreset {
   presetName: string
@@ -13,15 +14,9 @@ export interface IPluginOptionsPreset {
   options: IPluginOptions
 }
 
-const inDevelopPreview =
-  process.env.NODE_ENV === `development` &&
-  !!process.env.ENABLE_GATSBY_REFRESH_ENDPOINT
-
-const inPreviewRunner = process.env.RUNNER_TYPE === `PREVIEW`
-
 export const previewOptimizationPreset: IPluginOptionsPreset = {
   presetName: `PREVIEW_OPTIMIZATION`,
-  useIf: (): boolean => inDevelopPreview || inPreviewRunner,
+  useIf: inPreviewMode,
   options: {
     html: {
       useGatsbyImage: false,

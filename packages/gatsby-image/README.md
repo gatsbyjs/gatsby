@@ -1,4 +1,4 @@
-## :warning: This package is now deprecated
+## ⚠️ This package is now deprecated
 
 The `gatsby-image` package is now deprecated. The new [Gatsby image plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image) has better performance, cool new features and a simpler API. See [the migration guide](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide/) to learn how to upgrade.
 

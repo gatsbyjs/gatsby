@@ -26,7 +26,7 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(1)
+    expect(data[`allWpPage`].totalCount).toBe(2)
     expect(data[`allWpPost`].totalCount).toBe(1)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -75,7 +75,7 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(12)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(13)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -196,7 +196,7 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    expect(result.data.testUser.firstName).toEqual(`Tyler`)
+    expect(result.data.testUser.name).toEqual(`admin`)
   })
 
   it(`resolves root fields`, async () => {
