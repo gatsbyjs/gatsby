@@ -2,6 +2,7 @@ import { Span } from "opentracing"
 import { emitter } from "./index"
 import apiRunnerNode from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
+import { ICreateNodeAction } from "./types"
 
 type Plugin = any // TODO
 
@@ -51,7 +52,7 @@ export const startPluginRunner = (): void => {
   })
 
   // We make page nodes special so call onCreateNode here.
-  emitter.on(`CREATE_NODE`, (action: ICreatePageAction) => {
+  emitter.on(`CREATE_NODE`, (action: ICreateNodeAction) => {
     const node = action.payload
     apiRunnerNode(`onCreateNode`, {
       node,
