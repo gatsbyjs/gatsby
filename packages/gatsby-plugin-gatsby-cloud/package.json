@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-gatsby-cloud",
   "description": "A Gatsby plugin which optimizes working with Gatsby Cloud",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
