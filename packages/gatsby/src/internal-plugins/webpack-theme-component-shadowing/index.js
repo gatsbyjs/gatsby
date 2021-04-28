@@ -301,6 +301,6 @@ module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
       )
     }
 
-    return [componentName, ...additionalNames, ...legacyAdditionalNames]
+    return _.uniq([componentName, ...additionalNames, ...legacyAdditionalNames])
   }
 }
