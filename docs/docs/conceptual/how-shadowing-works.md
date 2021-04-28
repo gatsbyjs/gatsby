@@ -60,6 +60,7 @@ exports.onCreateWebpackConfig = (
     resolve: {
       plugins: [
         new GatsbyThemeComponentShadowingResolverPlugin({
+          extensions: program.extensions,
           themes: flattenedPlugins.map(plugin => {
             return {
               themeDir: plugin.pluginFilepath,
@@ -76,17 +77,35 @@ exports.onCreateWebpackConfig = (
 
 ## Structure of a webpack Plugin
 
-The webpack plugin itself has a constructor and an apply function which webpack calls as part of module resolution. We tap right before the "resolved" hook in [the pipeline](https://github.com/webpack/enhanced-resolve/blob/f08fe3f1a22c90c722eca14b38a9300ad00c62e8/lib/ResolverFactory.js#L594).
+The webpack plugin itself has a constructor and an apply function which webpack calls as part of module resolution. We tap into `resolve` hook and right before the "resolved" hook in [the pipeline](https://github.com/webpack/enhanced-resolve/blob/f08fe3f1a22c90c722eca14b38a9300ad00c62e8/lib/ResolverFactory.js#L594).
 
 ```js:title=packages/gatsby/src/internal-plugins/webpack-theme-component-shadowing/index.js
 module.exports = class GatsbyThemeComponentShadowingResolverPlugin {
-  constructor({ projectRoot, themes, additionnalShadowExtensions }) {
+  constructor({ projectRoot, themes, extensions, extensionsCategory }) {
     this.themes = themes
     this.projectRoot = projectRoot
-    this.additionnalShadowExtensions = ... // See more on this below
+
+    // See more on extensions handling below
+    this.extensions = ...
+    this.extensionsCategory = ...
+    this.additionalShadowExtensions = ...
   }
 
   apply(resolver) {
+    // This hook is executed very early and captures the original file name
+    resolver
+      .getHook(`resolve`)
+      .tapAsync(
+        `GatsbyThemeComponentShadowingResolverPlugin`,
+        (request, stack, callback) => {
+          if (!request._gatsbyThemeShadowingOriginalRequestPath) {
+            request._gatsbyThemeShadowingOriginalRequestPath = request.request
+          }
+          return callback()
+        }
+      )
+
+    // This is where the magic really happens
     resolver
       .getHook(`before-resolved`)
       .tapAsync(
@@ -150,7 +169,7 @@ getThemeAndComponent(filepath) {
 
 The `resolved` hook is called after Webpack's default resolution process has been completed. At that point, the requested path has been resolved to the absolute path on disk of the file that would have been used if no shadowing was being performed. At that point, `node_modules`, aliases and symlinks have all been resolved. Also, the requested path will contains the file extension that was determined by Webpack.
 
-For example, let's assume that user code requires a file named `gatsby-theme-tomato/src/button/heading`. On entering `GatsbyThemeComponentShadowingResolverPlugin`, `request.path` might looks something like `/some/path/my-site/node_modules/gatsby-theme-tomato/src/button/heading.js` (that is if `gatsby-theme-tomato` has been installed from a npm repository; that would be `/some/path/my-site/packages/gatsby-theme-tomato/src/button/heading.js` if yarn-style workspaces are being used). Now, assuming that theme `gatsby-theme-tomato` has been properly registered in that site's gatsby-config.js, then `getThemeAndComponent` will return:
+For example, let's assume that user code requires a file named `gatsby-theme-tomato/src/button/heading`. On entering `before-resolved` hook for `GatsbyThemeComponentShadowingResolverPlugin`, `request.path` might looks something like `/some/path/my-site/node_modules/gatsby-theme-tomato/src/button/heading.js` (that is if `gatsby-theme-tomato` has been installed from a npm repository; that would be `/some/path/my-site/packages/gatsby-theme-tomato/src/button/heading.js` if yarn-style workspaces are being used). Now, assuming that theme `gatsby-theme-tomato` has been properly registered in that site's gatsby-config.js, then `getThemeAndComponent` will return:
 
 ```js
 ;[
@@ -187,6 +206,7 @@ Once it is determined that a file file being required belongs to theme, we need 
 const builtComponentPath = this.resolveComponentPath({
   theme,
   component,
+  originalRequestComponent,
 })
 
 if (builtComponentPath) {
@@ -237,35 +257,79 @@ const themesArray = [
 )
 ```
 
-#### Additionnal Shadow Extensions
+#### Shadow Extensions
 
-We want to allow a file such as `heading.js` to be shadowed by a file of another but compatible file extension, such as `heading.jsx` or `heading.ts`. Note however that `heading.css` would not logically be an acceptable shadow for `heading.js` since they are not providing the same type of content.
+Shadowing algorithm allows to use different extension than a file that is being shadowed. This does rely on theme using import paths that don't contain extensions (`./heading` imports would allow to use different extension while `./heading.jsx` would require to use exact same extension) and does rely on extension list that webpack can automatically resolve (via `resolve.extensions` webpack config option).
 
-Unfortunately, at the time the shadowing algorithm gets called by Webpack, the requested path contains the file extension that was determined by Webpack based on the original theme, rather than the original extension requested by the issuer code.
-
-For example, let's assume that the issuer code requires a file named `gatsby-theme-tomato/src/button/heading`. On entering `GatsbyThemeComponentShadowingResolverPlugin`, `request.path` might looks something like `/some/path/my-site/node_modules/gatsby-theme-tomato/src/button/heading.js` (that is if `gatsby-theme-tomato` has been installed from a npm repository; that would be `/some/path/my-site/packages/gatsby-theme-tomato/src/button/heading.js` if yarn-style workspaces are being used).
-
-For this reason, the shadowing algorithm uses a table indicating acceptable shadow extensions given the extension of the original file being shadowed. By default, this table is defined as follow:
+To get access to original request we tap into `resolve` hook and store `request` in `_gatsbyThemeShadowingOriginalRequestPath` field to have access to it later in `before-resolved` hook:
 
 ```js
-const DEFAULT_ADDITIONNAL_SHADOW_EXTENSIONS = {
-  js: [`js`, `jsx`, `ts`, `tsx`],
-  jsx: [`js`, `jsx`, `ts`, `tsx`],
-  ts: [`js`, `jsx`, `ts`, `tsx`],
-  tsx: [`js`, `jsx`, `ts`, `tsx`],
+  apply(resolver) {
+    // This hook is executed very early and captures the original file name
+    resolver
+      .getHook(`resolve`)
+      .tapAsync(
+        `GatsbyThemeComponentShadowingResolverPlugin`,
+        (request, stack, callback) => {
+          if (!request._gatsbyThemeShadowingOriginalRequestPath) {
+            request._gatsbyThemeShadowingOriginalRequestPath = request.request
+          }
+          return callback()
+        }
+      )
+```
+
+Note however that `heading.css` would not logically be an acceptable shadow for `heading.js` since they are not providing the same type of content. Because of this we have extension compatibility table:
+
+```js
+const DEFAULT_FILE_EXTENSIONS_CATEGORIES = {
+  // Code formats
+  js: `code`,
+  jsx: `code`,
+  ts: `code`,
+  tsx: `code`,
+  cjs: `code`,
+  mjs: `code`,
+  coffee: `code`,
+
+  // JSON-like data formats
+  json: `json`,
+  yaml: `json`,
+  yml: `json`,
+
+  // Stylesheets formats
+  css: `stylesheet`,
+  sass: `stylesheet`,
+  scss: `stylesheet`,
+  less: `stylesheet`,
+  "css.js": `stylesheet`,
+
+  // Images formats
+  jpeg: `image`,
+  jpg: `image`,
+  jfif: `image`,
+  png: `image`,
+  tiff: `image`,
+  webp: `image`,
+  avif: `image`,
+  gif: `image`,
+
+  // Fonts
+  woff: `font`,
+  woff2: `font`,
 }
 ```
 
-Note that this default configuration provide reasonable support for the very common usage pattern of mixed JavaScript and TypeScript code with React language extensions. One could however wish to modify this table, for example to add support for CoffeScript files, to allow `css` files being shadowed by `sass` or `scss` files, or to allow `jpeg` files being shadowed by `png` or `webp` files.
+We currently lack proper public API to extend this table, but it can be extended by passing the `extensionsCategory` property to the `GatsbyThemeComponentShadowingResolverPlugin` plugin in the Webpack configuration file. This requires that a Gatsby plugin (or the site itself) intercept the `onCreateWebpackConfig` event, then grab the existing Webpack configuration, find the existing `GatsbyThemeComponentShadowingResolverPlugin` entry in `resolve.plugins`, add or modify the `extensionsCategory` property, and finally call `setWebpackConfig` with the modified configuration. Note that it should be considered internal API and it can break at any time so use this method with caution.
 
-This table can be extended by passing the `additionnalShadowExtensions` property to the `GatsbyThemeComponentShadowingResolverPlugin` plugin in the Webpack configuration file. This requires that a Gatsby plugin (or the site itself) intercept the `onCreateWebpackConfig` event, then grab the existing Webpack configuration, find the existing `GatsbyThemeComponentShadowingResolverPlugin` entry in `resolve.plugins`, add or modify the `additionnalShadowExtensions` property, and finally call `setWebpackConfig` with the modified configuration.
+Finally, because the table is not exhaustive, we check extensions for the same category as shadowed file first before falling back to rest of extensions defined by `resolve.extensions` to not introduce breaking changes.
 
 #### All together
 
 The shadowing algorithm can be boiled down the following function that's roughly 40 lines of code:
 
 ```js
-resolveComponentPath({ theme, component }) {
+resolveComponentPath({ theme, component, originalRequestComponent }) {
   // don't include matching theme in possible shadowing paths
   const themes = this.themes.filter(
     ({ themeName }) => themeName !== theme.themeName
@@ -280,18 +344,19 @@ resolveComponentPath({ theme, component }) {
   )
 
   const acceptableShadowFileNames = this.getAcceptableShadowFileNames(
-    path.basename(component)
+    path.basename(component),
+    originalRequestComponent
   )
 
   for (const theme of themesArray) {
-    const possibleComponentPath = path.dirname(path.join(theme, component))
+    const possibleComponentPath = path.join(theme, component)
     debug(`possibleComponentPath`, possibleComponentPath)
 
     let dir
     try {
       // we use fs/path instead of require.resolve to work with
       // TypeScript and alternate syntaxes
-      dir = fs.readdirSync(possibleComponentPath)
+      dir = fs.readdirSync(path.dirname(possibleComponentPath))
     } catch (e) {
       continue
     }
@@ -302,7 +367,10 @@ resolveComponentPath({ theme, component }) {
       existsDir.includes(shadowFile)
     )
     if (matchingShadowFile) {
-      return path.join(possibleComponentPath, matchingShadowFile)
+      return path.join(
+        path.dirname(possibleComponentPath),
+        matchingShadowFile
+      )
     }
   }
   return null
