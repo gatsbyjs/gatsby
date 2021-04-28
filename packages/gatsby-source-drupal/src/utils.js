@@ -200,6 +200,9 @@ const handleWebhookUpdate = async (
     if (node.internal.owner) {
       delete node.internal.owner
     }
+    if (node.fields) {
+      delete node.fields
+    }
     node.internal.contentDigest = createContentDigest(node)
     createNode(node)
     reporter.log(`Updated node: ${node.id}`)
