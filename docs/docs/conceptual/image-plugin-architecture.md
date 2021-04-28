@@ -8,13 +8,13 @@ Image processing in Gatsby has a large number of parts, with `gatsby-plugin-imag
 
 ### `gatsby-plugin-image`
 
-This is the main plugin that users interact with. It includes two components for displaying images, as well as helper funcitons and a toolkit for plugin developers.
+This is the main plugin that users interact with. It includes two components for displaying images, as well as helper functions and a toolkit for plugin developers.
 
-#### `GatsbyImage`
+#### The `GatsbyImage` component
 
 This is a React component, and is the actual component used to display all images. If somebody uses `StaticImage`, or an image component from a CMS provider, they all use `GatsbyImage` under the hood for the actual image display.
 
-#### `StaticImage`
+#### The `StaticImage` component
 
 A a lightweight wrapper around `GatsbyImage`, this component is detected during the build process and the props are extracted to enable images to be downloaded, and processed by `gatsby-plugin-sharp` without needing GraphQL.
 
@@ -44,7 +44,7 @@ The image plugin uses `createRemoteFileNode` when a `StaticImage` component has 
 
 ### Third-party plugins
 
-Many source plugins now support `GatsbyImage`. They do this by generating image data objects that can be passed to the `GatsbyImage` component, or by providing their own components that wrap it. This data is either returned from a custom `gatsbyImageData` resolver on the plugin's nodes, or via a runtime helper that accepts data from elsewhere. An example of the latter would be the new Shopify plugin, which includes a `getShopifyImage` function that can be used to generate images from the Shopify search or cart APIs. These plugins all use the plugin toolkit from `gatsby-plugin-image` to ensure that the object they create are compatible. The API for each plugin's `gatsbyImageData` resolver will depend on the individual plugin, but authors are encouraged to provide an API similar to the one from `gatsby-transformer-sharp`.
+Many source plugins now support `GatsbyImage`. They do this by generating image data objects that can be passed to the `GatsbyImage` component, or by providing their own components that wrap it. This data is either returned from a custom `gatsbyImageData` resolver on the plugin's nodes, or via a runtime helper that accepts data from elsewhere. An example of the latter would be the new Shopify plugin, which includes a `getShopifyImage` function that can be used to generate images from the Shopify search or cart APIs. These plugins all use the plugin toolkit from `gatsby-plugin-image` to ensure that the object they create are compatible. These do not require sharp, as the CMS or CDN provider handles the resizing. The API for each plugin's `gatsbyImageData` resolver will depend on the individual plugin, but authors are encouraged to provide an API similar to the one from `gatsby-transformer-sharp`.
 
 ## How `GatsbyImage` works
 
@@ -60,17 +60,17 @@ Throughout the component there are different versions delivered for browser and 
 
 Inside the `GatsbyImage` browser component, this means the load handling is skipped for any component that was rendered in SSR (which is indicated by adding a `data-gatsby-image-ssr` prop in the server component). However for any images that do not have this prop, this load handling happens in React. This will be the case for any image rendered after initial load, such as after page navigation or conditional rendering.
 
-The browser component is a class component, which uses `shouldComponentUpdate` to ensure that it is never hydrated as part of the normal rendering process in the browser. Instead, the image hydrates or renders itself manually, using the lazy-loaded `lazyHydrate` function. This takes the `ref` of the wrapper's HTML element, and uses `hydrate` or `render` from `react-dom` to render or hydrate the inner components as their own React tree. This ensures that the hydration of the images never blocks page loading, contributing to faster TTI.
+The browser component is a class component, which uses `shouldComponentUpdate` to ensure that it is never hydrated as part of the normal rendering process in the browser. Instead, the image hydrates or renders itself manually, using the `lazyHydrate` function, which is itself loaded asynchronously using `import()`. This takes the `ref` of the wrapper's HTML element, and uses `hydrate` or `render` from `react-dom` to render or hydrate the inner components as their own React tree. This ensures that the hydration of the images never blocks page loading, contributing to faster TTI.
 
 #### Sizer
 
-The `GatsbyImage` component supports three types of layout, which define the resizing behavior of the images. The component uses a `Sizer` component inside `layout-wrapper.tsx` to ensure that the wrapper is the correct size, even before any image has loaded. This avoids the page needing to re-layout, which looks bad for the user and is a serious problem for performance. For fixed layout components the size is just set via CSS. For full-width images, `Sizer` uses the `padding-top` hack to maintain aspect ratio as the image scales infinitely. For constrained layouts, `Sizer` uses an `<img>` tag with an inline, empty SVG src to make the browser use its native `<img>` resizing behaviour, even though the main image will not have loaded at this point.
+The `GatsbyImage` component supports three types of layout, which define the resizing behavior of the images. The component uses a `Sizer` component inside `layout-wrapper.tsx` to ensure that the wrapper is the correct size, even before any image has loaded. This avoids the page needing to re-layout, which looks bad for the user and is a serious problem for performance. For fixed layout components the size is just set via CSS. For full-width images, `Sizer` uses a `padding-top` hack to maintain aspect ratio as the image scales infinitely. For constrained layouts, `Sizer` uses an `<img>` tag with an inline, empty SVG `src` to make the browser use its native `<img>` resizing behaviour, even though the main image will not have loaded at this point.
 
 #### Placeholder
 
-`GatbsyImage` supports displaying a placeholder while the main image loads. There are two kinds of placeholder that are currently supported: flat colors and images. The type of placeholder is set via the image data object passed-in, and will either be a data URI for the image, or a CSS color value. The image will either be a base65-encoded low resolution raster image (called `BLURRED` when using sharp) or a URI-encoded SVG (called `TRACED_SVG`). The raster image will by default be 20px wide, and the same aspect ratio as the main image. This will be resized to fill the full container, giving a blurred effect. The SVG image is expected to be a single-color, simplified SVG generated using [potrace](http://potrace.sourceforge.net/). While these are the defaults produced by sharp, and also used by many third-party source plugins, we do not enforce this, and it can be any URI. We strongly encourage the use of inline data URIs, as any placeholder that needs to make a network request will defeat much of the purpose of using a placeholder. The actual element is a regular `<img>` tag, even for SVGs.
+`GatbsyImage` supports displaying a placeholder while the main image loads. There are two kinds of placeholder that are currently supported: flat colors and images. The type of placeholder is set via the image data object, and will either be a data URI for the image, or a CSS color value. The image will either be a base64-encoded low resolution raster image (called `BLURRED` when using sharp) or a URI-encoded SVG (called `TRACED_SVG`). The raster image will by default be 20px wide, and the same aspect ratio as the main image. This will be resized to fill the full container, giving a blurred effect. The SVG image is expected to be a single-color, simplified SVG generated using [potrace](http://potrace.sourceforge.net/). While these are the defaults produced by sharp, and also used by many third-party source plugins, we do not enforce this, and it can be any URI. We strongly encourage the use of inline data URIs, as any placeholder that needs to make a network request will defeat much of the purpose of using a placeholder. The actual placeholder element is a regular `<img>` tag, even for SVGs.
 
-The alternative placeholder is a flat color. This is expected to be calculated from the dominant color of the source image. sharp supports performing this calculation, and some CMSs provide it in the image metadata. This color is applied as a background color to the placeholder element.
+The alternative placeholder is a flat color. This is expected to be calculated from the dominant color of the source image. sharp supports performing this calculation, and some CMSs provide it in the image metadata. This color is applied as a background color to a placeholder `<div>` element.
 
 When the main image is loaded, the placeholder is faded-out using a 250ms CSS opacity transition. We do not currently support disabling or changing this fade-out time, but it is a common request so could be a useful addition.
 
@@ -78,7 +78,7 @@ When the main image is loaded, the placeholder is faded-out using a 250ms CSS op
 
 The main image component displays the actual image, as defined in the image data object. There is a lot of flexibility in how this is rendered, depending on which formats are provided.
 
-In most cases, the object will include multiple sources in next-gen format such as WebP or AVIF, plus one fallback in JPEG or PNG format. In thise cases, the component will render a `<picture>` tag, with multiple `<source>` elements and an `<img>` tag for the fallback. The `<source>` and `<img>` tags will always include a `srcset` prop, with multiple image resolutions according to the layout and size of the source and input images. We strongly recommend that users and source plugin authors allow the image plugin to generate these automatically. We use `w` (pixel width) units for the `srcset` rather than pixel density values, as this offers the browser the most flexibility in choosing the source to download.
+In most cases, the object will include multiple sources in next-gen format such as WebP or AVIF, plus one fallback in JPEG or PNG format. In thise cases, the component will render a `<picture>` tag, with multiple `<source>` elements and an `<img>` tag for the fallback. The `<source>` and `<img>` tags will always include a `srcset` prop, with multiple image resolutions according to the layout and size of the source and input images. We strongly recommend that users and source plugin authors allow the image plugin to generate these automatically. We use `w` (pixel width) units for the `srcset` rather than pixel density values, as this offers the browser the most flexibility in choosing the source to download. If there are not multiple sources provided, then an `<img>` tag will be rendered without an enclosing `<picture>` tag.
 
 We pass through `media` props to the `<source>` elements, allowing art direction to be used. However we do not attempt to do any handling of changing the aspect ratio of the container in these cases, so the user must do this themselves using CSS.
 
