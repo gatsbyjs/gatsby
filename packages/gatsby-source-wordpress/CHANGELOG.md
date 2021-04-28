@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.5.0-next.0...gatsby-source-wordpress@5.5.0-next.1) (2021-04-28)
+
+### Features
+
+- **gatsby-source-wordpress:** use docker for tests ([#30938](https://github.com/gatsbyjs/gatsby/issues/30938)) ([4e1678c](https://github.com/gatsbyjs/gatsby/commit/4e1678c8e44731a3a5c119d5d7606d36b6b18aeb))
+
 # [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.4.0-next.3...gatsby-source-wordpress@5.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-source-wordpress
