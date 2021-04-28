@@ -110,10 +110,10 @@ query {
   }
 }
 ```
+
 [Learn more about Sourcing and Querying Agility Content in Gatsby](https://help.agilitycms.com/hc/en-us/articles/360043003951)
 
 ### How Pages Work
-
 
 The `gatsby-source-agilitycms` plugin makes it easy to source content, but it also generates your Pages for you based off of your sitemap in Agility CMS. This means that editors in the CMS control what pages are available, what their URLs are, and exactly what UI components (Agility CMS calls these Page Modules) make up each page.
 
@@ -128,7 +128,7 @@ module.exports = {
     ...
     {
       //the name of the plugin
-      resolve: "@agility/gatsby-source-agilitycms", 
+      resolve: "@agility/gatsby-source-agilitycms",
       //the options for our plugin
       options: {
         ...
@@ -323,7 +323,7 @@ Agility CMS also provides `gatsby-image-agilitycms` as a npm package. This is a 
 ```jsx
 import { AgilityImage } from "@agility/gatsby-image-agilitycms"
 
-<AgilityImage image={image} layout={fullWidth} />
+;<AgilityImage image={image} layout={fullWidth} />
 ```
 
 [Learn more about How Images Work in Gatsby](https://help.agilitycms.com/hc/en-us/articles/360043048651)
