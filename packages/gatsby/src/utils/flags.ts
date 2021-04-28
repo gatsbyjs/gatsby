@@ -167,12 +167,13 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `NO_PAGE_NODES`,
-    env: `GATSBY_EXPERIMENTAL_NO_PAGE_NODES`,
+    name: `SHARED_PAGE_OBJECT`,
+    env: `GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT`,
     command: `all`,
     experimental: false,
-    telemetryId: `NoPageNodes`,
-    description: `Don't create page nodes. Saves time when creating pages for larger sites. Will be the new default behavior in v3.`,
+    telemetryId: `SharedPageObject`,
+    description: `Have the page object and SitePage node be the same object to avoid duplicating memory and speedup page creation.`,
+    // TODO create new discussion
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
     testFitness: (): fitnessEnum => true,
   },

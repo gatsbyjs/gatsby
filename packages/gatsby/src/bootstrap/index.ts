@@ -62,9 +62,6 @@ export async function bootstrap(
 
   await extractQueries(context)
 
-  // just exit at this point, no need to start running queries etc
-  process.exit(0)
-
   await writeOutRedirects(context)
 
   startRedirectListener()

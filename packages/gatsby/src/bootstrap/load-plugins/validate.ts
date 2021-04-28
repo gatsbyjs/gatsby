@@ -362,7 +362,7 @@ export function collatePluginAPIs({
     if (pluginNodeExports.length > 0) {
       if (
         plugin.name === `internal-data-bridge` &&
-        process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES
+        process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT
       ) {
         // just remove `onCreatePage` from internal-data-bridge
         pluginNodeExports = pluginNodeExports.filter(

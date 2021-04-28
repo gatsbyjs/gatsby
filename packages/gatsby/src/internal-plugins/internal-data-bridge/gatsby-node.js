@@ -50,7 +50,7 @@ exports.sourceNodes = ({
   const { createNode, deleteNode } = actions
   const { program, flattenedPlugins, config } = store.getState()
 
-  if (!process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+  if (!process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT) {
     // Add our default development page since we know it's going to
     // exist and we need a node to exist so its query works :-)
     const page = { path: `/dev-404-page/` }
@@ -233,7 +233,7 @@ exports.createResolvers = ({ createResolvers }) => {
 }
 
 exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  if (!process.env.GATSBY_EXPERIMENTAL_NO_PAGE_NODES) {
+  if (!process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT) {
     const { createNode } = actions
     // eslint-disable-next-line
     const { updatedAt, ...pageWithoutUpdated } = page

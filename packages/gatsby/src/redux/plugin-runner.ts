@@ -49,4 +49,13 @@ export const startPluginRunner = (): void => {
       { pluginSource: action.plugin.name, activity: action.activity }
     )
   })
+
+  // We make page nodes special so call onCreateNode here.
+  emitter.on(`CREATE_NODE`, (action: ICreatePageAction) => {
+    const node = action.payload
+    apiRunnerNode(`onCreateNode`, {
+      node,
+      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+    })
+  })
 }
