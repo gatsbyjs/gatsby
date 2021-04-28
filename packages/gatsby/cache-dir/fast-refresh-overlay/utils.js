@@ -23,6 +23,10 @@ export function openInEditor(file, lineNumber = 1) {
   )
 }
 
+export function reloadPage() {
+  window.location.reload()
+}
+
 export function skipSSR() {
   if (`URLSearchParams` in window) {
     const searchParams = new URLSearchParams(window.location.search)

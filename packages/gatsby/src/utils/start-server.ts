@@ -520,6 +520,7 @@ module.exports = {
           return next()
         }
 
+        // renderDevHTML throws an error with these information
         const lineNumber = error?.line
         const columnNumber = error?.column
         const filePath = error?.filename
@@ -566,11 +567,25 @@ module.exports = {
           column: columnNumber ?? 0,
         }
 
-        const fileContent = `<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="note" content="environment=development"/><script src="/socket.io/socket.io.js"></script><link rel="stylesheet" href="/commons.css"/></head><body><div id="___gatsby"></div><script src="/polyfill.js" nomodule=""></script><script src="/framework.js"></script><script src="/commons.js"></script><script>window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH",{action: "SHOW_DEV_SSR_ERROR",payload: ${JSON.stringify(
-          message
-        )}}])</script></body></html>`
+        // Generate a shell for client-only content -- for the error overlay
+        const clientOnlyShell = await renderDevHTML({
+          path: pathObj.path,
+          page: pathObj,
+          skipSsr: true,
+          store,
+          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+          directory: program.directory,
+        })
 
-        res.send(fileContent)
+        // When the page is served add a "SHOW_DEV_SSR_ERROR" event so that the Fast Refresh overlay displays it
+        const modiefiedShell = clientOnlyShell.replace(
+          `</body>`,
+          `<script>window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH",{action: "SHOW_DEV_SSR_ERROR",payload: ${JSON.stringify(
+            message
+          )}}])</script></body>`
+        )
+
+        res.send(modiefiedShell)
       }
 
       htmlActivity.end()

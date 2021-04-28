@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Overlay, Header, Body, Footer, HeaderOpenClose } from "./overlay"
 import { CodeFrame } from "./code-frame"
-import { prettifyStack, openInEditor, skipSSR } from "../utils"
+import { prettifyStack, openInEditor, skipSSR, reloadPage } from "../utils"
 
 export function DevSsrError({ error }) {
   const { codeFrame, source, line } = error
@@ -33,13 +33,23 @@ export function DevSsrError({ error }) {
         <div data-gatsby-overlay="codeframe__bottom">
           See our docs page for more info on SSR errors:{` `}
           <a href="https://www.gatsbyjs.com/docs/debugging-html-builds/">
-            https://www.gatsbyjs.com/docs/debugging-html-builds/
+            Debugging HTML Builds
           </a>
         </div>
+        <p>
+          If you fixed the error, saved your file, and want to retry server
+          rendering this page, please reload the page.
+        </p>
+        <button
+          onClick={() => reloadPage()}
+          data-gatsby-overlay="primary-button"
+        >
+          Reload page
+        </button>
         <h2 style={{ marginTop: `var(--space)` }}>Skip SSR</h2>
         <p>
           If you don't wish to fix the SSR error at the moment, press the button
-          to reload the page without attempting to do SSR.
+          below to reload the page without attempting to do SSR.
         </p>
         <button onClick={() => skipSSR()} data-gatsby-overlay="primary-button">
           Skip SSR
