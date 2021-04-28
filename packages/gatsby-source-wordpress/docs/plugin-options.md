@@ -63,6 +63,9 @@
   - [presets[].presetName](#presetspresetname)
   - [presets[].useIf](#presetsuseif)
   - [presets[].options](#presetsoptions)
+- [searchAndReplace](#searchandreplace)
+  - [searchAndReplace[].search](#searchandreplacesearch)
+  - [searchAndReplace[].replace](#searchandreplacereplace)
 
 ## url (**required**)
 
@@ -1277,6 +1280,67 @@ Any valid options except for `url` and `presets`.
   },
 }
 
+```
+
+## searchAndReplace
+
+An array of options to search and replace strings in nodes. See below for options.
+
+**Field type**: `Array`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        search: /https:\/\/some-url.com/,
+        replace: "https://some-new-url.com",
+      }
+    ],
+    ...
+  },
+}
+```
+
+### searchAndReplace[].search
+
+The regex rule used to search a terme.
+
+**Field type**: `String`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        search: /https:\/\/some-url.com/,
+      }
+    ],
+    ...
+  },
+}
+```
+
+### searchAndReplace[].replace
+
+The replacement string for each regex match.
+
+**Field type**: `String`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        replace: "https://some-new-url.com",
+      }
+    ],
+    ...
+  },
+}
 ```
 
 # Up Next :point_right:
