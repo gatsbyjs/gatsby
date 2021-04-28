@@ -6,14 +6,15 @@
   "dependencies": {
     "gatsby": "latest",
     "gatsby-image": "latest",
+    "gatsby-plugin-gatsby-cloud": "latest",
     "gatsby-plugin-react-helmet": "latest",
     "gatsby-plugin-sharp": "latest",
     "gatsby-source-filesystem": "latest",
     "gatsby-transformer-sharp": "latest",
-    "prop-types": "^15.6.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-helmet": "^5.2.0"
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0"
   },
   "keywords": [
     "gatsby"
