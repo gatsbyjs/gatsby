@@ -144,7 +144,6 @@ module.exports = {
 ```jsx:title=src/AgilityPage.jsx
 import React from "react"
 import { graphql } from "gatsby"
-...
 
 export const query = graphql`
   query($pageID: Int!, $contentID: Int!, $languageCode: String!) {
@@ -161,7 +160,6 @@ export const query = graphql`
 `
 
 const AgilityPage = ({ pageContext, data }) => {
-  ...
   return (
     <>
       <SEO
@@ -323,7 +321,7 @@ Agility CMS also provides `gatsby-image-agilitycms` as a npm package. This is a 
 ```jsx
 import { AgilityImage } from "@agility/gatsby-image-agilitycms"
 
-;<AgilityImage image={image} layout={fullWidth} />
+const Component = ({ image }) => <AgilityImage image={image} layout="fullWidth" />
 ```
 
 [Learn more about How Images Work in Gatsby](https://help.agilitycms.com/hc/en-us/articles/360043048651)
