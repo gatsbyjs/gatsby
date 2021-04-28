@@ -38,7 +38,7 @@ describe(`SSR`, () => {
     const pageUrl = `http://localhost:8000/bad-page/`
     // Poll until the new page is bundled (so starts returning a non-404 status).
     const rawDevHtml = await fetchUntil(pageUrl, res => {
-      return res.status === 500
+      return res
     }).then(res => res.text())
     expect(rawDevHtml).toMatchSnapshot()
     await fs.remove(dest)
