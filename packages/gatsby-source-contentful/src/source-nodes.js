@@ -12,6 +12,7 @@ import {
   buildResolvableSet,
   createAssetNodes,
   createNodesForContentType,
+  generateReferenceId,
   makeId,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
@@ -53,7 +54,6 @@ export async function sourceNodes(
     reporter,
     parentSpan,
     schema,
-    createContentDigest,
   },
   pluginOptions
 ) {
@@ -330,30 +330,31 @@ export async function sourceNodes(
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(generateReferenceId(entry))
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse
   // links added.
   existingNodes
-    .filter(n => newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
+    .filter(
+      n => n?.sys?.type && newOrUpdatedEntries.has(generateReferenceId(n))
+    )
     .forEach(n => {
-      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
-        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
-          foreignReference => {
-            // Add reverse links
-            if (n[foreignReference.name]) {
-              n[foreignReference.name].push(foreignReference.id)
-              // It might already be there so we'll uniquify after pushing.
-              n[foreignReference.name] = _.uniq(n[foreignReference.name])
-            } else {
-              // If is one foreign reference, there can always be many.
-              // Best to be safe and put it in an array to start with.
-              n[foreignReference.name] = [foreignReference.id]
-            }
+      const id = generateReferenceId(n)
+      if (foreignReferenceMap[id]) {
+        foreignReferenceMap[id].forEach(foreignReference => {
+          // Add reverse links
+          if (n[foreignReference.name]) {
+            n[foreignReference.name].push(foreignReference.id)
+            // It might already be there so we'll uniquify after pushing.
+            n[foreignReference.name] = _.uniq(n[foreignReference.name])
+          } else {
+            // If is one foreign reference, there can always be many.
+            // Best to be safe and put it in an array to start with.
+            n[foreignReference.name] = [foreignReference.id]
           }
-        )
+        })
       }
     })
 
@@ -441,7 +442,6 @@ export async function sourceNodes(
         pluginConfig,
         syncToken,
         unstable_createNodeManifest,
-        createContentDigest,
       })
     )
   }

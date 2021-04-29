@@ -6,7 +6,7 @@ import { BLOCKS, INLINES } from "@contentful/rich-text-types"
 import { initialSync } from "../__fixtures__/rich-text-data"
 import { cloneDeep } from "lodash"
 
-const raw = JSON.stringify({
+const raw = {
   nodeType: `document`,
   data: {},
   content: [
@@ -402,7 +402,7 @@ const raw = JSON.stringify({
       data: {},
     },
   ],
-})
+}
 
 const fixtures = initialSync().currentSyncData
 
@@ -410,7 +410,6 @@ const references = [
   ...fixtures.entries.map(entity => {
     return {
       sys: entity.sys,
-      contentful_id: entity.sys.id,
       __typename: `ContentfulContent`,
       ...entity.fields,
     }
@@ -418,7 +417,6 @@ const references = [
   ...fixtures.assets.map(entity => {
     return {
       sys: entity.sys,
-      contentful_id: entity.sys.id,
       __typename: `ContentfulAsset`,
       ...entity.fields,
     }
@@ -449,11 +447,7 @@ describe(`rich text`, () => {
               </span>
             )
           }
-          return (
-            <span>
-              Resolved inline Entry ({node.data.target.contentful_id})
-            </span>
-          )
+          return <span>Resolved inline Entry ({node.data.target.sys.id})</span>
         },
         [INLINES.ENTRY_HYPERLINK]: node => {
           if (!node.data.target) {
@@ -464,9 +458,7 @@ describe(`rich text`, () => {
             )
           }
           return (
-            <span>
-              Resolved entry Hyperlink ({node.data.target.contentful_id})
-            </span>
+            <span>Resolved entry Hyperlink ({node.data.target.sys.id})</span>
           )
         },
         [INLINES.ASSET_HYPERLINK]: node => {
@@ -478,9 +470,7 @@ describe(`rich text`, () => {
             )
           }
           return (
-            <span>
-              Resolved asset Hyperlink ({node.data.target.contentful_id})
-            </span>
+            <span>Resolved asset Hyperlink ({node.data.target.sys.id})</span>
           )
         },
         [BLOCKS.EMBEDDED_ENTRY]: node => {
@@ -492,7 +482,7 @@ describe(`rich text`, () => {
           return (
             <h2>
               Resolved embedded Entry: {node.data.target.title[`en-US`]} (
-              {node.data.target.contentful_id})
+              {node.data.target.sys.id})
             </h2>
           )
         },
@@ -505,7 +495,7 @@ describe(`rich text`, () => {
           return (
             <h2>
               Resolved embedded Asset: {node.data.target.title[`en-US`]} (
-              {node.data.target.contentful_id})
+              {node.data.target.sys.id})
             </h2>
           )
         },

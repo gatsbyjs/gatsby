@@ -10,7 +10,7 @@ const MediaReferencePage = ({ data }) => {
   const germanEntries = data.german.nodes
   return (
     <Layout>
-      {defaultEntries.map(({ contentful_id, title, one, many }) => {
+      {defaultEntries.map(({ sys: { id }, title, one, many }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -27,7 +27,7 @@ const MediaReferencePage = ({ data }) => {
         }
 
         return (
-          <div data-cy-id={slug} key={contentful_id}>
+          <div data-cy-id={slug} key={id}>
             <h2>{title}</h2>
             {content}
           </div>
@@ -35,7 +35,7 @@ const MediaReferencePage = ({ data }) => {
       })}
       <h1>English Locale</h1>
       {englishEntries.map(
-        ({ contentful_id, title, one, oneLocalized, many, manyLocalized }) => {
+        ({ sys: { id }, title, one, oneLocalized, many, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
@@ -76,7 +76,7 @@ const MediaReferencePage = ({ data }) => {
           }
 
           return (
-            <div data-cy-id={`english-${slug}`} key={contentful_id}>
+            <div data-cy-id={`english-${slug}`} key={id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -86,7 +86,7 @@ const MediaReferencePage = ({ data }) => {
 
       <h1>German Locale</h1>
       {germanEntries.map(
-        ({ contentful_id, title, one, oneLocalized, many, manyLocalized }) => {
+        ({ sys: { id }, title, one, oneLocalized, many, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
@@ -127,7 +127,7 @@ const MediaReferencePage = ({ data }) => {
           }
 
           return (
-            <div data-cy-id={`german-${slug}`} key={contentful_id}>
+            <div data-cy-id={`german-${slug}`} key={id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -144,11 +144,16 @@ export const pageQuery = graphql`
   query MediaReferenceQuery {
     default: allContentfulMediaReference(
       sort: { fields: title }
-      filter: { title: { glob: "!*Localized*" }, node_locale: { eq: "en-US" } }
+      filter: {
+        title: { glob: "!*Localized*" }
+        sys: { locale: { eq: "en-US" } }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         one {
           file {
             url
@@ -163,11 +168,16 @@ export const pageQuery = graphql`
     }
     english: allContentfulMediaReference(
       sort: { fields: title }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "en-US" } }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         one {
           file {
             url
@@ -192,11 +202,16 @@ export const pageQuery = graphql`
     }
     german: allContentfulMediaReference(
       sort: { fields: title }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "de-DE" } }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         one {
           file {
             url

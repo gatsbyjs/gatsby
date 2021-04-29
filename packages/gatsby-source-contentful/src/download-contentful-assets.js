@@ -51,7 +51,9 @@ export async function downloadContentfulAssets(gatsbyFunctions) {
   await distributeWorkload(
     assetNodes.map(node => async () => {
       let fileNodeID
-      const { contentful_id: id, node_locale: locale } = node
+      const {
+        sys: { id, locale },
+      } = node
       const remoteDataCacheKey = `contentful-asset-${id}-${locale}`
       const cacheRemoteData = await cache.get(remoteDataCacheKey)
       if (!node.file) {
