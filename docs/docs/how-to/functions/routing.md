@@ -15,6 +15,8 @@ Both top-level and nested routes are supported.
 
 ## Dynamic Routing
 
+_Note: Dynamic Routing is not yet supported on Gatsby Cloud. Expect it in another few weeks. It will work locally._
+
 ### Param routes
 
 Use square brackets (`[ ]`) in the file path to mark dynamic segments of the URL.
