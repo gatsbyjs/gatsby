@@ -5,12 +5,10 @@
     ":ignoreUnstable",
     ":prImmediately",
     ":semanticPrefixFixDepsChoreOthers",
-    ":updateNotScheduled",
     ":automergeDisabled",
     ":disablePeerDependencies",
     ":maintainLockFilesDisabled",
     ":disableRateLimiting",
-    ":label(type: maintenance)",
     ":label(topic: automation)",
     ":ignoreModulesAndTests",
     ":enableVulnerabilityAlerts",
@@ -28,7 +26,7 @@
   stabilityDays: 2,
   postUpdateOptions: ["yarnDedupeHighest"],
   timezone: "GMT",
-  schedule: ["before 7am on Monday"],
+  schedule: ["before 7am on the first day of the month"],
   packageRules: [
     {
       depTypeList: ["engines"],
@@ -74,6 +72,12 @@
       groupName: "cross-env",
       paths: ["package.json", "packages/**"],
       packageNames: ["cross-env"],
+      dependencyDashboardApproval: false,
+    },
+    {
+      groupName: "mini-css-extract-plugin",
+      paths: ["package.json", "packages/**"],
+      packageNames: ["mini-css-extract-plugin"],
       dependencyDashboardApproval: false,
     },
     {
@@ -192,26 +196,6 @@
       updateTypes: ["major"],
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-plugin-schema-snapshot",
-      excludePackageNames: ["cross-env"],
-    },
-    {
-      groupName: "minor and patch for gatsby-theme",
-      paths: ["packages/gatsby-theme/"],
-      groupSlug: "gatsby-theme",
-      updateTypes: ["minor", "patch"],
-      // force pr title to be the plugin name
-      commitMessageTopic: "minor and patch for gatsby-theme",
-      commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
-      excludePackagePatterns: ["^lodash/", "^@babel/"],
-    },
-    {
-      groupName: "major for gatsby-theme",
-      paths: ["packages/gatsby-theme/"],
-      groupSlug: "gatsby-theme-major",
-      updateTypes: ["major"],
-      // force pr title to be the plugin name
-      commitMessageSuffix: "for gatsby-theme",
       excludePackageNames: ["cross-env"],
     },
     {
@@ -802,7 +786,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-plugin-netlify-cms",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript", "mini-css-extract-plugin"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2244,7 +2228,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby",
       commitMessageExtra: "",
-      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "remark-mdx", "remark-mdxjs", "typescript", "webpack-virtual-modules"],
+      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "remark-mdx", "remark-mdxjs", "typescript", "webpack-virtual-modules", "mini-css-extract-plugin"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
