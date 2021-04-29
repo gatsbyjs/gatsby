@@ -46,10 +46,13 @@ interface ICreatePageAction {
 
 export const startPluginRunner = (): void => {
   const plugins = store.getState().flattenedPlugins
-  const implementingPlugins = plugins.filter(plugin =>
+  const pluginsImplementingOnCreatePage = plugins.filter(plugin =>
     plugin.nodeAPIs.includes(`onCreatePage`)
   )
-  if (implementingPlugins.length > 0) {
+  const pluginsImplementingOnCreateNode = plugins.filter(plugin =>
+    plugin.nodeAPIs.includes(`onCreatePage`)
+  )
+  if (pluginsImplementingOnCreatePage.length > 0) {
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
       const page = action.payload
       apiRunnerNode(
@@ -60,12 +63,17 @@ export const startPluginRunner = (): void => {
     })
   }
 
-  // We make page nodes special so call onCreateNode here.
-  emitter.on(`CREATE_NODE`, (action: ICreateNodeAction) => {
-    const node = action.payload
-    apiRunnerNode(`onCreateNode`, {
-      node,
-      traceTags: { nodeId: node.id, nodeType: node.internal.type },
+  // We make page nodes outside of the normal action for speed so we manually
+  // call onCreateNode here for SitePage nodes.
+  if (pluginsImplementingOnCreateNode.length > 0) {
+    emitter.on(`CREATE_NODE`, (action: ICreateNodeAction) => {
+      const node = action.payload
+      if (node.internal.type === `SitePage`) {
+        apiRunnerNode(`onCreateNode`, {
+          node,
+          traceTags: { nodeId: node.id, nodeType: node.internal.type },
+        })
+      }
     })
-  })
+  }
 }
