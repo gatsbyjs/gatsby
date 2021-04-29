@@ -11,7 +11,7 @@ import { mett } from "../utils/mett"
 import thunk, { ThunkMiddleware } from "redux-thunk"
 import * as reducers from "./reducers"
 import { writeToCache, readFromCache } from "./persist"
-import { IGatsbyState, ActionsUnion } from "./types"
+import { IGatsbyPage, IGatsbyState, ActionsUnion } from "./types"
 
 // Create event emitter for actions
 export const emitter = mett()
@@ -23,6 +23,10 @@ export const readState = (): IGatsbyState => {
     if (state.nodes) {
       // re-create nodesByType
       state.nodesByType = new Map()
+
+      // Re-create page data
+      state.pages = new Map<string, IGatsbyPage>()
+
       state.nodes.forEach(node => {
         const { type } = node.internal
         if (!state.nodesByType.has(type)) {
@@ -31,6 +35,11 @@ export const readState = (): IGatsbyState => {
         // The `.has` and `.set` calls above make this safe
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         state.nodesByType.get(type)!.set(node.id, node)
+
+        if (type === `SitePage`) {
+          const { id, internal, children, ...page } = node
+          state.pages.set(page.path, page)
+        }
       })
     }
 
@@ -103,7 +112,6 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
-    pages: state.pages,
     pendingPageDataWrites: state.pendingPageDataWrites,
     staticQueriesByTemplate: state.staticQueriesByTemplate,
     queries: state.queries,
