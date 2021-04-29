@@ -1420,4 +1420,24 @@ actions.createServerVisitedPage = (chunkName: string) => {
   }
 }
 
+actions.createNodeManifest = (
+  {
+    manifestId,
+    node,
+  }: {
+    manifestId: string,
+    node: any,
+  },
+  plugin: Plugin
+) => {
+  return {
+    type: `CREATE_NODE_MANIFEST`,
+    payload: {
+      manifestId,
+      node,
+      pluginName: plugin.name,
+    },
+  }
+}
+
 module.exports = { actions }
