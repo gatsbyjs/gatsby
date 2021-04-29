@@ -399,6 +399,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+
+    // Link page to its plugin.
+    pluginCreator___NODE: plugin.id ?? ``,
+    pluginCreatorId: plugin.id ?? ``,
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -425,10 +429,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   }
 
   if (process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT) {
-    // Link page to its plugin.
-    internalPage.pluginCreator___NODE = plugin.id ?? ``
-    internalPage.pluginCreatorId = plugin.id ?? ``
-
     // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
     const { updatedAt, ...node } = internalPage
     node.children = []
