@@ -44,6 +44,7 @@ export const readState = (): IGatsbyState => {
             children,
             fields,
             parent,
+            // eslint-disable-next-line
             __gatsby_resolved,
             ...other
           } = node
