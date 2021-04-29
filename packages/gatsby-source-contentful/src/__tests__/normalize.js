@@ -1,11 +1,12 @@
 // @ts-check
+import { restrictedNodeFields } from "../config"
 import {
   buildEntryList,
-  buildResolvableSet,
-  buildForeignReferenceMap,
-  createNodesForContentType,
-  createAssetNodes,
   buildFallbackChain,
+  buildForeignReferenceMap,
+  buildResolvableSet,
+  createAssetNodes,
+  createNodesForContentType,
   getLocalizedField,
   makeId,
 } from "../normalize"
@@ -20,17 +21,10 @@ const {
 } = require(`./data.json`)
 
 const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [
-  `id`,
-  `children`,
-  `contentful_id`,
-  `parent`,
-  `fields`,
-  `internal`,
-]
 
 const pluginConfig = createPluginConfig({})
+const unstable_createNodeManifest = null
+const syncToken = `mocked`
 
 describe(`Process contentful data (by name)`, () => {
   let entryList
@@ -85,12 +79,14 @@ describe(`Process contentful data (by name)`, () => {
         space,
         useNameForId: true,
         pluginConfig,
+        unstable_createNodeManifest,
+        syncToken,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
 
     // Relevant to compare to compare warm and cold situation. Actual number not relevant.
-    expect(createNode.mock.calls.length).toBe(74) // "cold build entries" count
+    expect(createNode.mock.calls.length).toBe(70) // "cold build entries" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -144,7 +140,7 @@ describe(`Skip existing nodes in warm build`, () => {
         // returned is not relevant to test so update if anything breaks.
         return {
           id,
-          internal: { contentDigest: entryList[0][0].sys.updatedAt },
+          internal: { contentDigest: entryList[0][0].sys.publishedAt },
         }
       }
       // All other nodes are new ("unknown")
@@ -166,13 +162,15 @@ describe(`Skip existing nodes in warm build`, () => {
         space,
         useNameForId: true,
         pluginConfig,
+        unstable_createNodeManifest,
+        syncToken,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
 
     // Relevant to compare to compare warm and cold situation. Actual number not relevant.
     // This number ought to be less than the cold build
-    expect(createNode.mock.calls.length).toBe(71) // "warm build where entry was not changed" count
+    expect(createNode.mock.calls.length).toBe(70) // "warm build where entry was not changed" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -227,7 +225,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         return {
           id,
           internal: {
-            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+            contentDigest: entryList[0][0].sys.publishedAt + `changed`,
           },
         }
       }
@@ -250,13 +248,15 @@ describe(`Process existing mutated nodes in warm build`, () => {
         space,
         useNameForId: true,
         pluginConfig,
+        unstable_createNodeManifest,
+        syncToken,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
 
     // Relevant to compare to compare warm and cold situation. Actual number not relevant.
     // This number ought to be the same as the cold build
-    expect(createNode.mock.calls.length).toBe(74) // "warm build where entry was changed" count
+    expect(createNode.mock.calls.length).toBe(70) // "warm build where entry was changed" count
   })
 
   it(`creates nodes for each asset`, () => {
@@ -331,6 +331,8 @@ describe(`Process contentful data (by id)`, () => {
         space,
         useNameForId: false,
         pluginConfig,
+        unstable_createNodeManifest,
+        syncToken,
       })
     })
     expect(createNode.mock.calls).toMatchSnapshot()
