@@ -43,7 +43,9 @@ interface ICreatePageAction {
 
 export const startPluginRunner = (): void => {
   emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
-    const page = action.payload
+    /* tslint:disable-next-line */
+    const { id, children, internal, ...page } = action.payload // eslint-disable-line
+    // const page = action.payload
     apiRunnerNode(
       `onCreatePage`,
       { page, traceId: action.traceId, parentSpan: action.parentSpan },
