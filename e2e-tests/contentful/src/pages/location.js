@@ -57,8 +57,11 @@ export default LocationPage
 export const pageQuery = graphql`
   query LocationQuery {
     default: allContentfulLocation(
-      sort: { fields: contentful_id }
-      filter: { title: { glob: "!*Localized*" }, node_locale: { eq: "en-US" } }
+      sort: { fields: sys___id }
+      filter: {
+        title: { glob: "!*Localized*" }
+        sys: { locale: { eq: "en-US" } }
+      }
     ) {
       nodes {
         title
@@ -69,8 +72,11 @@ export const pageQuery = graphql`
       }
     }
     english: allContentfulLocation(
-      sort: { fields: contentful_id }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
+      sort: { fields: sys___id }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "en-US" } }
+      }
     ) {
       nodes {
         title
@@ -81,8 +87,11 @@ export const pageQuery = graphql`
       }
     }
     german: allContentfulLocation(
-      sort: { fields: contentful_id }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
+      sort: { fields: sys___id }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "de-DE" } }
+      }
     ) {
       nodes {
         title

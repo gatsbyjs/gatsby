@@ -11,22 +11,11 @@ import {
   buildResolvableSet,
   createAssetNodes,
   createNodesForContentType,
+  generateReferenceId,
   makeId,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
 import { CODES } from "./report"
-
-const conflictFieldPrefix = `contentful`
-
-// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
-const restrictedNodeFields = [
-  `children`,
-  `contentful_id`,
-  `fields`,
-  `id`,
-  `internal`,
-  `parent`,
-]
 
 const CONTENT_DIGEST_COUNTER_SEPARATOR = `_COUNT_`
 
@@ -53,7 +42,6 @@ export async function sourceNodes(
     reporter,
     parentSpan,
     schema,
-    createContentDigest,
   },
   pluginOptions
 ) {
@@ -262,7 +250,7 @@ export async function sourceNodes(
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(generateReferenceId(entry))
     })
   })
 
@@ -317,22 +305,19 @@ export async function sourceNodes(
     .filter(
       n =>
         n.sys.type === `Entry` &&
-        !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`) &&
+        !newOrUpdatedEntries.has(generateReferenceId(n)) &&
         !deletedEntryGatsbyReferenceIds.has(n.id)
     )
     .forEach(n => {
-      if (
-        n.contentful_id &&
-        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`]
-      ) {
-        foreignReferenceMap[`${n.contentful_id}___${n.sys.type}`].forEach(
+      if (n.contentful_id && foreignReferenceMap[generateReferenceId(n)]) {
+        foreignReferenceMap[generateReferenceId(n)].forEach(
           foreignReference => {
-            const { name, id: contentfulId, type, spaceId } = foreignReference
+            const { name, id, type, spaceId } = foreignReference
 
             const nodeId = createNodeId(
               makeId({
                 spaceId,
-                id: contentfulId,
+                id,
                 type,
                 currentLocale: n.node_locale,
                 defaultLocale,
@@ -465,8 +450,6 @@ export async function sourceNodes(
     await Promise.all(
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
@@ -479,7 +462,6 @@ export async function sourceNodes(
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
         unstable_createNodeManifest,
-        createContentDigest,
       })
     )
   }

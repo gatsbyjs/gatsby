@@ -1,11 +1,11 @@
 // @ts-check
 import {
   buildEntryList,
-  buildResolvableSet,
-  buildForeignReferenceMap,
-  createNodesForContentType,
-  createAssetNodes,
   buildFallbackChain,
+  buildForeignReferenceMap,
+  buildResolvableSet,
+  createAssetNodes,
+  createNodesForContentType,
   getLocalizedField,
   makeId,
 } from "../normalize"
@@ -19,19 +19,7 @@ const {
   space,
 } = require(`./data.json`)
 
-const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.com/docs/node-interface/
-const restrictedNodeFields = [
-  `id`,
-  `children`,
-  `contentful_id`,
-  `parent`,
-  `fields`,
-  `internal`,
-]
-
 const pluginConfig = createPluginConfig({})
-
 const unstable_createNodeManifest = jest.fn()
 
 // Counts the created nodes per node type
@@ -200,8 +188,6 @@ describe(`Process contentful data (by name)`, () => {
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
@@ -305,7 +291,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         return {
           id,
           internal: {
-            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+            contentDigest: entryList[0][0].sys.publishedAt + `changed`,
           },
         }
       }
@@ -315,8 +301,6 @@ describe(`Process existing mutated nodes in warm build`, () => {
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,
@@ -419,8 +403,6 @@ describe(`Process contentful data (by id)`, () => {
     contentTypeItems.forEach((contentTypeItem, i) => {
       createNodesForContentType({
         contentTypeItem,
-        restrictedNodeFields,
-        conflictFieldPrefix,
         entries: entryList[i],
         createNode,
         createNodeId,

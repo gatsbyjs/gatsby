@@ -118,7 +118,7 @@ export const pageQuery = graphql`
       sort: { fields: title }
       filter: {
         title: { glob: "!*Localized*|*Validated*" }
-        node_locale: { eq: "en-US" }
+        sys: { locale: { eq: "en-US" } }
       }
     ) {
       nodes {
@@ -128,28 +128,30 @@ export const pageQuery = graphql`
           raw
           references {
             __typename
+            sys {
+              id
+            }
             ... on ContentfulAsset {
               contentful_id
               gatsbyImageData(width: 200)
             }
             ... on ContentfulText {
-              contentful_id
               title
               short
             }
             ... on ContentfulLocation {
-              contentful_id
               location {
                 lat
                 lon
               }
             }
             ... on ContentfulContentReference {
-              contentful_id
               title
               one {
                 __typename
-                contentful_id
+                sys {
+                  id
+                }
                 ... on ContentfulText {
                   title
                   short
@@ -170,7 +172,9 @@ export const pageQuery = graphql`
               }
               many {
                 __typename
-                contentful_id
+                sys {
+                  id
+                }
                 ... on ContentfulText {
                   title
                   short
@@ -200,7 +204,10 @@ export const pageQuery = graphql`
     }
     english: allContentfulRichText(
       sort: { fields: title }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "en-US" } }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "en-US" } }
+      }
     ) {
       nodes {
         id
@@ -212,7 +219,10 @@ export const pageQuery = graphql`
     }
     german: allContentfulRichText(
       sort: { fields: title }
-      filter: { title: { glob: "*Localized*" }, node_locale: { eq: "de-DE" } }
+      filter: {
+        title: { glob: "*Localized*" }
+        sys: { locale: { eq: "de-DE" } }
+      }
     ) {
       nodes {
         id
