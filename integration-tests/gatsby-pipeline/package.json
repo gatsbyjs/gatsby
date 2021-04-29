@@ -23,14 +23,15 @@
   "scripts": {
     "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
-    "test": "jest --config=../jest.config.js gatsby-pipeline/"
+    "test": "jest"
   },
   "devDependencies": {
     "execa": "^4.0.3",
     "fs-extra": "^9.0.1",
+    "md5-file": "^5.0.0",
     "node-fetch": "^2.6.0",
     "jest": "^25.5.4",
-    "jest-cli": "^25.5.4"
+    "tree-kill": "^1.2.2"
   },
   "repository": {
     "type": "git",

@@ -4,8 +4,8 @@
   "private": true,
   "description": "A simple Gatsby WP site for running integrations tests",
   "scripts": {
-    "run-jest": "jest --config=jest.config.js --runInBand",
-    "test": "npm run docker-clean-start && npm run run-jest && WARM_CACHE=true npm run run-jest",
+    "run-jest": "jest --runInBand",
+    "test": "npm run docker-clean-start && npm run run-jest && cross-env WARM_CACHE=true npm run run-jest",
     "docker-start": "docker-compose up --build --force-recreate --always-recreate-deps --remove-orphans -d",
     "docker-clean-start": "docker-compose stop && docker-compose rm -f && docker volume rm gatsby-source-wordpress_db_data gatsby-source-wordpress_wp_data || true && docker-compose pull && docker-compose build --no-cache --force-rm --pull && docker-compose up -d"
   },
@@ -16,9 +16,12 @@
     "gatsby-plugin-sharp": "next",
     "gatsby-source-filesystem": "next",
     "gatsby-source-wordpress": "next",
-    "gatsby-transformer-sharp": "next"
+    "gatsby-transformer-sharp": "next",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "jest": "^26.6.3",
     "rimraf": "^3.0.2",

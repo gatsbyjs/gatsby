@@ -8,6 +8,7 @@
     "gatsby": "^2.0.118",
     "gatsby-plugin-image": "^0.0.2",
     "gatsby-plugin-sharp": "^2.0.20",
+    "gatsby-source-filesystem": "^3.3.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
