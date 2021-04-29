@@ -10,11 +10,6 @@ import richTextFixture from "../__fixtures__/rich-text-data"
 import restrictedContentTypeFixture from "../__fixtures__/restricted-content-type"
 
 jest.mock(`../fetch`)
-jest.mock(`gatsby-core-utils`, () => {
-  return {
-    createContentDigest: () => `contentDigest`,
-  }
-})
 
 const defaultPluginOptions = { spaceId: `testSpaceId` }
 
@@ -91,6 +86,7 @@ describe(`gatsby-node`, () => {
         getCache,
         reporter,
         parentSpan,
+        schema,
       },
       pluginOptions
     )
@@ -758,7 +754,7 @@ describe(`gatsby-node`, () => {
     `)
   })
 
-  it(`stores rich text as raw with references attached`, async () => {
+  it(`stores rich text as JSON`, async () => {
     // @ts-ignore
     fetchContent.mockImplementationOnce(richTextFixture.initialSync)
     // @ts-ignore
@@ -770,14 +766,11 @@ describe(`gatsby-node`, () => {
     const initNodes = getNodes()
 
     const homeNodes = initNodes.filter(
-      ({ contentful_id: id }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
+      ({ sys: { id } }) => id === `6KpLS2NZyB3KAvDzWf4Ukh`
     )
     expect(homeNodes).toHaveLength(2)
     homeNodes.forEach(homeNode => {
-      expect(homeNode.content.references___NODE).toStrictEqual([
-        ...new Set(homeNode.content.references___NODE),
-      ])
-      expect(homeNode.content.references___NODE).toMatchSnapshot()
+      expect(homeNode.content).toMatchSnapshot()
     })
   })
 

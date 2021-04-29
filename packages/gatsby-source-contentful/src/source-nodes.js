@@ -11,6 +11,7 @@ import {
   buildResolvableSet,
   createAssetNodes,
   createNodesForContentType,
+  generateReferenceId,
   makeId,
 } from "./normalize"
 import { createPluginConfig } from "./plugin-options"
@@ -51,7 +52,6 @@ export async function sourceNodes(
     reporter,
     parentSpan,
     schema,
-    createContentDigest,
   },
   pluginOptions
 ) {
@@ -260,31 +260,30 @@ export async function sourceNodes(
   const newOrUpdatedEntries = new Set()
   entryList.forEach(entries => {
     entries.forEach(entry => {
-      newOrUpdatedEntries.add(`${entry.sys.id}___${entry.sys.type}`)
+      newOrUpdatedEntries.add(generateReferenceId(entry))
     })
   })
 
   // Update existing entry nodes that weren't updated but that need reverse links added.
   existingNodes
-    .filter(n => !newOrUpdatedEntries.has(`${n.id}___${n.sys.type}`))
+    .filter(n => !newOrUpdatedEntries.has(generateReferenceId(n)))
     .forEach(n => {
-      if (foreignReferenceMap[`${n.id}___${n.sys.type}`]) {
-        foreignReferenceMap[`${n.id}___${n.sys.type}`].forEach(
-          foreignReference => {
-            const { name, id } = foreignReference
+      const nodeId = generateReferenceId(n)
+      if (foreignReferenceMap[nodeId]) {
+        foreignReferenceMap[nodeId].forEach(foreignReference => {
+          const { name, id } = foreignReference
 
-            // Create new reference field when none exists
-            if (!n[name]) {
-              n[name] = [id]
-              return
-            }
-
-            // Add non existing references to reference field
-            if (n[name] && !n[name].includes(id)) {
-              n[name].push(id)
-            }
+          // Create new reference field when none exists
+          if (!n[name]) {
+            n[name] = [id]
+            return
           }
-        )
+
+          // Add non existing references to reference field
+          if (n[name] && !n[name].includes(id)) {
+            n[name].push(id)
+          }
+        })
       }
     })
 
@@ -371,7 +370,6 @@ export async function sourceNodes(
         useNameForId: pluginConfig.get(`useNameForId`),
         pluginConfig,
         unstable_createNodeManifest,
-        createContentDigest,
       })
     )
   }

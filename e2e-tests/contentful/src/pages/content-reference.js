@@ -24,7 +24,7 @@ const ContentReferencePage = ({ data }) => {
   return (
     <Layout>
       <h1>Default</h1>
-      {defaultEntries.map(({ contentful_id, title, one, many }) => {
+      {defaultEntries.map(({ sys: { id }, title, one, many }) => {
         const slug = slugify(title, { strict: true, lower: true })
 
         let content = null
@@ -37,7 +37,7 @@ const ContentReferencePage = ({ data }) => {
         }
 
         return (
-          <div data-cy-id={`default-${slug}`} key={contentful_id}>
+          <div data-cy-id={`default-${slug}`} key={id}>
             <h2>{title}</h2>
             {content}
           </div>
@@ -45,7 +45,7 @@ const ContentReferencePage = ({ data }) => {
       })}
       <h1>English Locale</h1>
       {englishEntries.map(
-        ({ contentful_id, title, oneLocalized, manyLocalized }) => {
+        ({ sys: { id }, title, oneLocalized, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
@@ -58,7 +58,7 @@ const ContentReferencePage = ({ data }) => {
           }
 
           return (
-            <div data-cy-id={`english-${slug}`} key={contentful_id}>
+            <div data-cy-id={`english-${slug}`} key={id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -67,7 +67,7 @@ const ContentReferencePage = ({ data }) => {
       )}
       <h1>German Locale</h1>
       {germanEntries.map(
-        ({ contentful_id, title, oneLocalized, manyLocalized }) => {
+        ({ sys: { id }, title, oneLocalized, manyLocalized }) => {
           const slug = slugify(title, { strict: true, lower: true })
 
           let content = null
@@ -80,7 +80,7 @@ const ContentReferencePage = ({ data }) => {
           }
 
           return (
-            <div data-cy-id={`german-${slug}`} key={contentful_id}>
+            <div data-cy-id={`german-${slug}`} key={id}>
               <h2>{title}</h2>
               {content}
             </div>
@@ -97,17 +97,28 @@ export const pageQuery = graphql`
   query ContentReferenceQuery {
     default: allContentfulContentReference(
       sort: { fields: title }
-      filter: { node_locale: { eq: "en-US" }, title: { glob: "!*Localized*" } }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        title: { glob: "!*Localized*" }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         one {
           __typename
-          contentful_id
+          sys {
+            id
+          }
           ... on ContentfulText {
             title
             short
+          }
+          ... on ContentfulNumber {
+            title
+            integer
           }
           ... on ContentfulContentReference {
             title
@@ -115,6 +126,10 @@ export const pageQuery = graphql`
               ... on ContentfulText {
                 title
                 short
+              }
+              ... on ContentfulNumber {
+                title
+                integer
               }
               ... on ContentfulContentReference {
                 title
@@ -137,7 +152,9 @@ export const pageQuery = graphql`
         }
         many {
           __typename
-          contentful_id
+          sys {
+            id
+          }
           ... on ContentfulText {
             title
             short
@@ -152,6 +169,10 @@ export const pageQuery = graphql`
               ... on ContentfulText {
                 title
                 short
+              }
+              ... on ContentfulNumber {
+                title
+                integer
               }
               ... on ContentfulContentReference {
                 title
@@ -176,16 +197,23 @@ export const pageQuery = graphql`
     }
     english: allContentfulContentReference(
       sort: { fields: title }
-      filter: { node_locale: { eq: "en-US" }, title: { glob: "*Localized*" } }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        title: { glob: "*Localized*" }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         oneLocalized {
           __typename
-          title
-          decimal
-          integer
+          ... on ContentfulNumber {
+            title
+            decimal
+            integer
+          }
         }
         manyLocalized {
           __typename
@@ -198,7 +226,7 @@ export const pageQuery = graphql`
             title
             short
             longPlain {
-              longPlain
+              raw
             }
           }
         }
@@ -206,16 +234,23 @@ export const pageQuery = graphql`
     }
     german: allContentfulContentReference(
       sort: { fields: title }
-      filter: { node_locale: { eq: "de-DE" }, title: { glob: "*Localized*" } }
+      filter: {
+        sys: { locale: { eq: "de-DE" } }
+        title: { glob: "*Localized*" }
+      }
     ) {
       nodes {
         title
-        contentful_id
+        sys {
+          id
+        }
         oneLocalized {
           __typename
-          title
-          decimal
-          integer
+          ... on ContentfulNumber {
+            title
+            decimal
+            integer
+          }
         }
         manyLocalized {
           __typename
@@ -228,7 +263,7 @@ export const pageQuery = graphql`
             title
             short
             longPlain {
-              longPlain
+              raw
             }
           }
         }

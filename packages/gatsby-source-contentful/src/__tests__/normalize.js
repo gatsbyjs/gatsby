@@ -1,11 +1,12 @@
 // @ts-check
+import { restrictedNodeFields } from "../config"
 import {
   buildEntryList,
-  buildResolvableSet,
-  buildForeignReferenceMap,
-  createNodesForContentType,
-  createAssetNodes,
   buildFallbackChain,
+  buildForeignReferenceMap,
+  buildResolvableSet,
+  createAssetNodes,
+  createNodesForContentType,
   getLocalizedField,
   makeId,
 } from "../normalize"
@@ -20,18 +21,8 @@ const {
 } = require(`./data.json`)
 
 const conflictFieldPrefix = `contentful_test`
-// restrictedNodeFields from here https://www.gatsbyjs.org/docs/node-interface/
-const restrictedNodeFields = [
-  `id`,
-  `children`,
-  `contentful_id`,
-  `parent`,
-  `fields`,
-  `internal`,
-]
 
 const pluginConfig = createPluginConfig({})
-
 const unstable_createNodeManifest = jest.fn()
 
 // Counts the created nodes per node type
@@ -304,7 +295,7 @@ describe(`Skip existing nodes in warm build`, () => {
         // returned is not relevant to test so update if anything breaks.
         return {
           id,
-          internal: { contentDigest: entryList[0][0].sys.updatedAt },
+          internal: { contentDigest: entryList[0][0].sys.publishedAt },
         }
       }
       // All other nodes are new ("unknown")
@@ -394,7 +385,7 @@ describe(`Process existing mutated nodes in warm build`, () => {
         return {
           id,
           internal: {
-            contentDigest: entryList[0][0].sys.updatedAt + `changed`,
+            contentDigest: entryList[0][0].sys.publishedAt + `changed`,
           },
         }
       }
