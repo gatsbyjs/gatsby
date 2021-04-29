@@ -20,7 +20,7 @@ A a lightweight wrapper around `GatsbyImage`, this component is detected during 
 
 #### Plugin toolkit
 
-`gatsby-plugin-image` includes several functions that are used by third-party source plugins to enable them to generate image data objects. This includes helpers in `gatsby-plugin-image/graphql-utils`, which help plugin authors create `gatsbyImageData` resolvers, as well as the `getImageData` function used to generate image data at runtime by plugins with URL-based image resizing APIs. It does not perform any actual image processing (and doesn't require sharp), but does ensure that the correct object is generated with all of the correct iamge sizes. It includes the `getLowResolutionImageURL` function which helps when generating blurred placeholders.
+`gatsby-plugin-image` includes several functions that are used by third-party source plugins to enable them to generate image data objects. This includes helpers in `gatsby-plugin-image/graphql-utils`, which help plugin authors create `gatsbyImageData` resolvers, as well as the `getImageData` function used to generate image data at runtime by plugins with URL-based image resizing APIs. It does not perform any actual image processing (and doesn't require sharp), but does ensure that the correct object is generated with all of the correct image sizes. It includes the `getLowResolutionImageURL` function which helps when generating blurred placeholders.
 
 #### Runtime helpers
 
@@ -52,7 +52,7 @@ Many source plugins now support `GatsbyImage`. They do this by generating image 
 
 ### Anatomy of the component
 
-The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is comething that could be looked-at in future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
+The `GatsbyImage` component wraps several other components, which are all exported by the plugin. It was originally designed to allow users to compose their own custom image components, but we have not documented this, so it should currently be considered unsupported. It is something that could be looked-at in future, but until that point `GatsbyImage` and `StaticImage` should be considered the only public components.
 
 #### Lazy hydration
 
@@ -78,7 +78,7 @@ When the main image is loaded, the placeholder is faded-out using a 250ms CSS op
 
 The main image component displays the actual image, as defined in the image data object. There is a lot of flexibility in how this is rendered, depending on which formats are provided.
 
-In most cases, the object will include multiple sources in next-gen format such as WebP or AVIF, plus one fallback in JPEG or PNG format. In thise cases, the component will render a `<picture>` tag, with multiple `<source>` elements and an `<img>` tag for the fallback. The `<source>` and `<img>` tags will always include a `srcset` prop, with multiple image resolutions according to the layout and size of the source and input images. We strongly recommend that users and source plugin authors allow the image plugin to generate these automatically. We use `w` (pixel width) units for the `srcset` rather than pixel density values, as this offers the browser the most flexibility in choosing the source to download. If there are not multiple sources provided, then an `<img>` tag will be rendered without an enclosing `<picture>` tag.
+In most cases, the object will include multiple sources in next-gen format such as WebP or AVIF, plus one fallback in JPEG or PNG format. In these cases, the component will render a `<picture>` tag, with multiple `<source>` elements and an `<img>` tag for the fallback. The `<source>` and `<img>` tags will always include a `srcset` prop, with multiple image resolutions according to the layout and size of the source and input images. We strongly recommend that users and source plugin authors allow the image plugin to generate these automatically. We use `w` (pixel width) units for the `srcset` rather than pixel density values, as this offers the browser the most flexibility in choosing the source to download. If there are not multiple sources provided, then an `<img>` tag will be rendered without an enclosing `<picture>` tag.
 
 We pass through `media` props to the `<source>` elements, allowing art direction to be used. However we do not attempt to do any handling of changing the aspect ratio of the container in these cases, so the user must do this themselves using CSS.
 
