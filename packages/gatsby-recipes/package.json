@@ -71,7 +71,7 @@
     "@babel/plugin-transform-runtime": "^7.12.1",
     "@mdx-js/mdx": "^2.0.0-next.4",
     "@mdx-js/react": "^2.0.0-next.4",
-    "@mdx-js/runtime": "^2.0.0-next.4",
+    "@mdx-js/runtime": "^2.0.0-next.9",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
@@ -115,7 +115,7 @@
   "resolutions": {
     "@mdx-js/mdx": "^2.0.0-next.4",
     "@mdx-js/react": "^2.0.0-next.4",
-    "@mdx-js/runtime": "^2.0.0-next.4",
+    "@mdx-js/runtime": "^2.0.0-next.9",
     "graphql": "^15.4.0",
     "property-information": "5.5.0",
     "remark-mdx": "^2.0.0-next.4",
