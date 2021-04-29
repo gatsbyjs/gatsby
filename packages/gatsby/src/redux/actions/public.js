@@ -430,7 +430,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     node.children = []
     node.internal = {
       type: `SitePage`,
-      contentDigest: createContentDigest(internalPage),
+      contentDigest: createContentDigest(node),
     }
     node.id = `SitePage ${internalPage.path}`
     const oldNode = getNode(node.id)
@@ -471,13 +471,14 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         payload: node,
       }
     }
+
     const actions = [
       {
         ...actionOptions,
         type: `CREATE_PAGE`,
         contextModified,
         plugin,
-        payload: node,
+        payload: internalPage,
       },
     ]
 
