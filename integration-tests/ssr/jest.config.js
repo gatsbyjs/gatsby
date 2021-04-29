@@ -5,10 +5,4 @@ module.exports = {
     `.cache`,
     `src/test`,
   ],
-  // transform: {
-  //   "^.+\\.[jt]sx?$": `<rootDir>../../jest-transformer.js`,
-  // },
-  // moduleNameMapper: {
-  //   "\\.(css)$": `<rootDir>/__mocks__/styleMock.js`,
-  // },
 }

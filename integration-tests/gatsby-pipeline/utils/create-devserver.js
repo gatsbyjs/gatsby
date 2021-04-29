@@ -12,7 +12,6 @@ const killProcess = devProcess =>
       }, 0)
     })
 
-    // If pid is less than -1, then sig is sent to every process in the process group whose ID is pid.
     kill(devProcess.pid)
   })
 
