@@ -46,7 +46,7 @@ export function DevSsrError({ error }) {
         >
           Reload page
         </button>
-        <h2 style={{ marginTop: `var(--space)` }}>Skip SSR</h2>
+        <h2 style={{ marginTop: `var(--space)` }}>Skip Server Render</h2>
         <p>
           If you don't wish to fix the SSR error at the moment, press the button
           below to reload the page without attempting to do SSR.
