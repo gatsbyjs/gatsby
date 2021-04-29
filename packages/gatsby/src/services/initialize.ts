@@ -104,10 +104,6 @@ export async function initialize({
     args.setStore(store)
   }
 
-  // Start plugin runner which listens to the store
-  // and invokes Gatsby API based on actions.
-  startPluginRunner()
-
   const directory = slash(args.directory)
 
   const program = {
@@ -261,6 +257,10 @@ export async function initialize({
   telemetry.decorateEvent(`DEVELOP_STOP`, {
     plugins: pluginsStr,
   })
+
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  startPluginRunner()
 
   // onPreInit
   activity = reporter.activityTimer(`onPreInit`, {
