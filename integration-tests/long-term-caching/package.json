@@ -5,7 +5,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "test": "jest --config=../jest.config.js long-term-caching/",
+    "test": "jest",
     "serve": "gatsby serve"
   },
   "dependencies": {
@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
-    "jest": "^24.0.0",
-    "jest-cli": "^24.0.0"
+    "jest": "^24.0.0"
   }
 }
