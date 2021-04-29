@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.5.0-next.0...gatsby-plugin-gatsby-cloud@2.5.0-next.1) (2021-04-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-gatsby-cloud:** Copying manifest ([#31092](https://github.com/gatsbyjs/gatsby/issues/31092)) ([a9ad91f](https://github.com/gatsbyjs/gatsby/commit/a9ad91f379d20992e1e92ca2a672f8748d05668f))
+
 # [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-gatsby-cloud@2.4.0-next.1...gatsby-plugin-gatsby-cloud@2.5.0-next.0) (2021-04-23)
 
 ### Features

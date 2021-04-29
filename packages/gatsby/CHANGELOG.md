@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.1...gatsby@3.5.0-next.2) (2021-04-29)
+
+### Bug Fixes
+
+- **webpack-theme-component-shadowing:** Support shadowing in yarn-style workspaces with Webpack 5 ([#30435](https://github.com/gatsbyjs/gatsby/issues/30435)) ([ab919ea](https://github.com/gatsbyjs/gatsby/commit/ab919ea04ed3f9a4490a68fab4cda22834383673))
+
 # [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.0...gatsby@3.5.0-next.1) (2021-04-28)
 
 ### Bug Fixes
