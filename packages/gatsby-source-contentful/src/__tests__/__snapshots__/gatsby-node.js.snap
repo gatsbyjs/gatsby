@@ -4,12 +4,7 @@ exports[`gatsby-node should add a new blogpost and update linkedNodes 1`] = `
 Object {
   "author___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry",
   "body___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
-  "children": Array [
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
-  ],
-  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
-  "createdAt": "2020-06-03T14:22:37.720Z",
+  "children": Array [],
   "description___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
   "heroImage___NODE": "uzfinxahlog0___1aaRo2sQbdfWnG8iNvnkH3___Asset",
   "id": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry",
@@ -18,25 +13,21 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulBlogPost",
   },
-  "node_locale": "en-US",
   "parent": "Blog Post",
   "publishDate": "2020-04-01T00:00+02:00",
   "slug": "integration-tests",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "blogPost",
-        "id": "blogPost",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Blog Post",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:22:37.720Z",
+    "id": "1dHS3UzOqupJZY7AyeDc6s",
+    "locale": "en-US",
+    "publishedAt": "2020-06-03T14:22:37.720Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Integration tests",
-  "updatedAt": "2020-06-03T14:22:37.720Z",
 }
 `;
 
@@ -48,12 +39,8 @@ Object {
     "uzfinxahlog0___2PtC9h1YqIA6kaUaIsWEQ0___Entry",
     "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry",
   ],
-  "children": Array [
-    "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
-  ],
+  "children": Array [],
   "company": "ACME",
-  "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -65,26 +52,22 @@ Object {
     "type": "ContentfulPerson",
   },
   "name": "John Doe",
-  "node_locale": "en-US",
   "parent": "Person",
   "phone": "0176 / 1234567",
   "shortBio___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "person",
-        "id": "person",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Person",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:17:31.246Z",
+    "id": "15jwOBqpxqSAOy2eOO4S0m",
+    "locale": "en-US",
+    "publishedAt": "2020-06-03T14:17:31.246Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -92,12 +75,7 @@ exports[`gatsby-node should add a new blogpost and update linkedNodes 3`] = `
 Object {
   "author___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
   "body___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
-  "children": Array [
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
-  ],
-  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
-  "createdAt": "2020-06-03T14:22:37.720Z",
+  "children": Array [],
   "description___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
   "heroImage___NODE": "uzfinxahlog0___1aaRo2sQbdfWnG8iNvnkH3___Asset___nl",
   "id": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
@@ -106,25 +84,21 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulBlogPost",
   },
-  "node_locale": "nl",
   "parent": "Blog Post",
   "publishDate": "2020-04-01T00:00+02:00",
   "slug": "integration-tests",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "blogPost",
-        "id": "blogPost",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Blog Post",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:22:37.720Z",
+    "id": "1dHS3UzOqupJZY7AyeDc6s",
+    "locale": "nl",
+    "publishedAt": "2020-06-03T14:22:37.720Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Integration tests",
-  "updatedAt": "2020-06-03T14:22:37.720Z",
 }
 `;
 
@@ -136,12 +110,8 @@ Object {
     "uzfinxahlog0___2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
     "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
   ],
-  "children": Array [
-    "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
-  ],
+  "children": Array [],
   "company": "ACME",
-  "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -153,26 +123,22 @@ Object {
     "type": "ContentfulPerson",
   },
   "name": "John Doe",
-  "node_locale": "nl",
   "parent": "Person",
   "phone": "0176 / 1234567",
   "shortBio___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "person",
-        "id": "person",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Person",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:17:31.246Z",
+    "id": "15jwOBqpxqSAOy2eOO4S0m",
+    "locale": "nl",
+    "publishedAt": "2020-06-03T14:17:31.246Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -183,12 +149,8 @@ Object {
     "uzfinxahlog0___3K9b0esdy0q0yGqgW2g6Ke___Entry",
     "uzfinxahlog0___2PtC9h1YqIA6kaUaIsWEQ0___Entry",
   ],
-  "children": Array [
-    "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
-  ],
+  "children": Array [],
   "company": "ACME",
-  "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -200,26 +162,22 @@ Object {
     "type": "ContentfulPerson",
   },
   "name": "John Doe",
-  "node_locale": "en-US",
   "parent": "Person",
   "phone": "0176 / 1234567",
   "shortBio___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "person",
-        "id": "person",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Person",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:17:31.246Z",
+    "id": "15jwOBqpxqSAOy2eOO4S0m",
+    "locale": "en-US",
+    "publishedAt": "2020-06-03T14:17:31.246Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -230,12 +188,8 @@ Object {
     "uzfinxahlog0___3K9b0esdy0q0yGqgW2g6Ke___Entry___nl",
     "uzfinxahlog0___2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
   ],
-  "children": Array [
-    "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
-  ],
+  "children": Array [],
   "company": "ACME",
-  "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -247,26 +201,22 @@ Object {
     "type": "ContentfulPerson",
   },
   "name": "John Doe",
-  "node_locale": "nl",
   "parent": "Person",
   "phone": "0176 / 1234567",
   "shortBio___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "person",
-        "id": "person",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Person",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:17:31.246Z",
+    "id": "15jwOBqpxqSAOy2eOO4S0m",
+    "locale": "nl",
+    "publishedAt": "2020-06-03T14:17:31.246Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -274,12 +224,7 @@ exports[`gatsby-node should update a blogpost 1`] = `
 Object {
   "author___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry",
   "body___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
-  "children": Array [
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrybodyTextNode",
-  ],
-  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
-  "createdAt": "2020-06-03T14:22:37.720Z",
+  "children": Array [],
   "description___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___EntrydescriptionTextNode",
   "heroImage___NODE": "uzfinxahlog0___1aaRo2sQbdfWnG8iNvnkH3___Asset",
   "id": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry",
@@ -288,25 +233,21 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulBlogPost",
   },
-  "node_locale": "en-US",
   "parent": "Blog Post",
   "publishDate": "2020-05-15T00:00+02:00",
   "slug": "hello-world-1234",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "blogPost",
-        "id": "blogPost",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 2,
+    "contentType___NODE": "Blog Post",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:22:37.720Z",
+    "id": "1dHS3UzOqupJZY7AyeDc6s",
+    "locale": "en-US",
+    "publishedAt": "2020-06-03T14:27:24.359Z",
+    "publishedVersion": 2,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Hello world 1234",
-  "updatedAt": "2020-06-03T14:27:24.359Z",
 }
 `;
 
@@ -318,12 +259,8 @@ Object {
     "uzfinxahlog0___2PtC9h1YqIA6kaUaIsWEQ0___Entry",
     "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry",
   ],
-  "children": Array [
-    "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
-  ],
+  "children": Array [],
   "company": "ACME",
-  "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -335,26 +272,22 @@ Object {
     "type": "ContentfulPerson",
   },
   "name": "John Doe",
-  "node_locale": "en-US",
   "parent": "Person",
   "phone": "0176 / 1234567",
   "shortBio___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___EntryshortBioTextNode",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "person",
-        "id": "person",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Person",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:17:31.246Z",
+    "id": "15jwOBqpxqSAOy2eOO4S0m",
+    "locale": "en-US",
+    "publishedAt": "2020-06-03T14:17:31.246Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
@@ -362,12 +295,7 @@ exports[`gatsby-node should update a blogpost 3`] = `
 Object {
   "author___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nl",
   "body___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
-  "children": Array [
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
-    "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nlbodyTextNode",
-  ],
-  "contentful_id": "1dHS3UzOqupJZY7AyeDc6s",
-  "createdAt": "2020-06-03T14:22:37.720Z",
+  "children": Array [],
   "description___NODE": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nldescriptionTextNode",
   "heroImage___NODE": "uzfinxahlog0___1aaRo2sQbdfWnG8iNvnkH3___Asset___nl",
   "id": "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
@@ -376,25 +304,21 @@ Object {
     "owner": "gatsby-source-contentful",
     "type": "ContentfulBlogPost",
   },
-  "node_locale": "nl",
   "parent": "Blog Post",
   "publishDate": "2020-05-15T00:00+02:00",
   "slug": "hello-world-1234",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "blogPost",
-        "id": "blogPost",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 2,
+    "contentType___NODE": "Blog Post",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:22:37.720Z",
+    "id": "1dHS3UzOqupJZY7AyeDc6s",
+    "locale": "nl",
+    "publishedAt": "2020-06-03T14:27:24.359Z",
+    "publishedVersion": 2,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Hello world 1234",
-  "updatedAt": "2020-06-03T14:27:24.359Z",
 }
 `;
 
@@ -406,12 +330,8 @@ Object {
     "uzfinxahlog0___2PtC9h1YqIA6kaUaIsWEQ0___Entry___nl",
     "uzfinxahlog0___1dHS3UzOqupJZY7AyeDc6s___Entry___nl",
   ],
-  "children": Array [
-    "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
-  ],
+  "children": Array [],
   "company": "ACME",
-  "contentful_id": "15jwOBqpxqSAOy2eOO4S0m",
-  "createdAt": "2020-06-03T14:17:31.246Z",
   "email": "john@doe.com",
   "facebook": "johndoe",
   "github": "johndoe",
@@ -423,41 +343,821 @@ Object {
     "type": "ContentfulPerson",
   },
   "name": "John Doe",
-  "node_locale": "nl",
   "parent": "Person",
   "phone": "0176 / 1234567",
   "shortBio___NODE": "uzfinxahlog0___15jwOBqpxqSAOy2eOO4S0m___Entry___nlshortBioTextNode",
-  "spaceId": "uzfinxahlog0",
   "sys": Object {
-    "contentType": Object {
-      "sys": Object {
-        "contentful_id": "person",
-        "id": "person",
-        "linkType": "ContentType",
-        "type": "Link",
-      },
-    },
-    "revision": 1,
+    "contentType___NODE": "Person",
+    "environmentId": "master",
+    "firstPublishedAt": "2020-06-03T14:17:31.246Z",
+    "id": "15jwOBqpxqSAOy2eOO4S0m",
+    "locale": "nl",
+    "publishedAt": "2020-06-03T14:17:31.246Z",
+    "publishedVersion": 1,
+    "spaceId": "uzfinxahlog0",
     "type": "Entry",
   },
   "title": "Web Developer",
   "twitter": "johndoe",
-  "updatedAt": "2020-06-03T14:17:31.246Z",
 }
 `;
 
-exports[`gatsby-node stores rich text as raw with references attached 1`] = `
-Array [
-  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry",
-  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry",
-  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset",
-]
+exports[`gatsby-node stores rich text as JSON 1`] = `
+Object {
+  "content": Array [
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "This is the homepage",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 1",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-1",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 2",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-2",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 3",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-3",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 4",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-4",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 5",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-5",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 6",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-6",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "This is ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [
+            Object {
+              "type": "bold",
+            },
+          ],
+          "nodeType": "text",
+          "value": "bold ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "and ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [
+            Object {
+              "type": "italic",
+            },
+          ],
+          "nodeType": "text",
+          "value": "italic",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": " and ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [
+            Object {
+              "type": "bold",
+            },
+            Object {
+              "type": "italic",
+            },
+          ],
+          "nodeType": "text",
+          "value": "both",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "Very",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "useful",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "list",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "unordered-list",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "content": Array [
+            Object {
+              "data": Object {},
+              "marks": Array [],
+              "nodeType": "text",
+              "value": "This is a quote",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "paragraph",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "blockquote",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Reference tests:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-2",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Inline Link: ",
+        },
+        Object {
+          "content": Array [],
+          "data": Object {
+            "target": Object {
+              "sys": Object {
+                "id": "7oHxo6bs0us9wIkq27qdyK",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          },
+          "nodeType": "embedded-entry-inline",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Link in list:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "",
+                },
+                Object {
+                  "content": Array [],
+                  "data": Object {
+                    "target": Object {
+                      "sys": Object {
+                        "id": "6KpLS2NZyB3KAvDzWf4Ukh",
+                        "linkType": "Entry",
+                        "type": "Link",
+                      },
+                    },
+                  },
+                  "nodeType": "embedded-entry-inline",
+                },
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "ordered-list",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Embedded Entity:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [],
+      "data": Object {
+        "target": Object {
+          "sys": Object {
+            "id": "7oHxo6bs0us9wIkq27qdyK",
+            "linkType": "Entry",
+            "type": "Link",
+          },
+        },
+      },
+      "nodeType": "embedded-entry-block",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Embedded Asset:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-2",
+    },
+    Object {
+      "content": Array [],
+      "data": Object {
+        "target": Object {
+          "sys": Object {
+            "id": "4ZQrqcrTunWiuNaavhGYNT",
+            "linkType": "Asset",
+            "type": "Link",
+          },
+        },
+      },
+      "nodeType": "embedded-asset-block",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+  ],
+  "data": Object {},
+  "nodeType": "document",
+}
 `;
 
-exports[`gatsby-node stores rich text as raw with references attached 2`] = `
-Array [
-  "ahntqop9oi7x___7oHxo6bs0us9wIkq27qdyK___Entry___nl",
-  "ahntqop9oi7x___6KpLS2NZyB3KAvDzWf4Ukh___Entry___nl",
-  "ahntqop9oi7x___4ZQrqcrTunWiuNaavhGYNT___Asset___nl",
-]
+exports[`gatsby-node stores rich text as JSON 2`] = `
+Object {
+  "content": Array [
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "This is the homepage",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 1",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-1",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 2",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-2",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 3",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-3",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 4",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-4",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 5",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-5",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Heading 6",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-6",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "This is ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [
+            Object {
+              "type": "bold",
+            },
+          ],
+          "nodeType": "text",
+          "value": "bold ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "and ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [
+            Object {
+              "type": "italic",
+            },
+          ],
+          "nodeType": "text",
+          "value": "italic",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": " and ",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [
+            Object {
+              "type": "bold",
+            },
+            Object {
+              "type": "italic",
+            },
+          ],
+          "nodeType": "text",
+          "value": "both",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "Very",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "useful",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "list",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "unordered-list",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "content": Array [
+            Object {
+              "data": Object {},
+              "marks": Array [],
+              "nodeType": "text",
+              "value": "This is a quote",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "paragraph",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "blockquote",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Reference tests:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-2",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Inline Link: ",
+        },
+        Object {
+          "content": Array [],
+          "data": Object {
+            "target": Object {
+              "sys": Object {
+                "id": "7oHxo6bs0us9wIkq27qdyK",
+                "linkType": "Entry",
+                "type": "Link",
+              },
+            },
+          },
+          "nodeType": "embedded-entry-inline",
+        },
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Link in list:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "content": Array [
+            Object {
+              "content": Array [
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "",
+                },
+                Object {
+                  "content": Array [],
+                  "data": Object {
+                    "target": Object {
+                      "sys": Object {
+                        "id": "6KpLS2NZyB3KAvDzWf4Ukh",
+                        "linkType": "Entry",
+                        "type": "Link",
+                      },
+                    },
+                  },
+                  "nodeType": "embedded-entry-inline",
+                },
+                Object {
+                  "data": Object {},
+                  "marks": Array [],
+                  "nodeType": "text",
+                  "value": "",
+                },
+              ],
+              "data": Object {},
+              "nodeType": "paragraph",
+            },
+          ],
+          "data": Object {},
+          "nodeType": "list-item",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "ordered-list",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Embedded Entity:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [],
+      "data": Object {
+        "target": Object {
+          "sys": Object {
+            "id": "7oHxo6bs0us9wIkq27qdyK",
+            "linkType": "Entry",
+            "type": "Link",
+          },
+        },
+      },
+      "nodeType": "embedded-entry-block",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "Embedded Asset:",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "heading-2",
+    },
+    Object {
+      "content": Array [],
+      "data": Object {
+        "target": Object {
+          "sys": Object {
+            "id": "4ZQrqcrTunWiuNaavhGYNT",
+            "linkType": "Asset",
+            "type": "Link",
+          },
+        },
+      },
+      "nodeType": "embedded-asset-block",
+    },
+    Object {
+      "content": Array [
+        Object {
+          "data": Object {},
+          "marks": Array [],
+          "nodeType": "text",
+          "value": "",
+        },
+      ],
+      "data": Object {},
+      "nodeType": "paragraph",
+    },
+  ],
+  "data": Object {},
+  "nodeType": "document",
+}
 `;

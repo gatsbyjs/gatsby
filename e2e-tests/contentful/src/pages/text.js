@@ -57,7 +57,7 @@ const TextPage = ({ data }) => {
       </div>
       <h2>Long (Plain):</h2>
       <div data-cy-id="english-long">
-        <p data-cy-value>{longEnglish.longLocalized.longLocalized}</p>
+        <p data-cy-value>{longEnglish.longLocalized.raw}</p>
       </div>
 
       <h1>German Locale</h1>
@@ -67,7 +67,7 @@ const TextPage = ({ data }) => {
       </div>
       <h2>Long (Plain):</h2>
       <div data-cy-id="german-long">
-        <p data-cy-value>{longGerman.longLocalized.longLocalized}</p>
+        <p data-cy-value>{longGerman.longLocalized.raw}</p>
       </div>
     </Layout>
   )
@@ -78,28 +78,24 @@ export default TextPage
 export const pageQuery = graphql`
   query TextQuery {
     short: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "5ZtcN1o7KpN7J7xgiTyaXo" }
+      sys: { id: { eq: "5ZtcN1o7KpN7J7xgiTyaXo" }, locale: { eq: "en-US" } }
     ) {
       short
     }
     shortList: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "7b5U927WTFcQXO2Gewwa2k" }
+      sys: { id: { eq: "7b5U927WTFcQXO2Gewwa2k" }, locale: { eq: "en-US" } }
     ) {
       shortList
     }
     longPlain: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" }
+      sys: { id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" }, locale: { eq: "en-US" } }
     ) {
       longPlain {
         raw
       }
     }
     longMarkdownSimple: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "NyPJw0mcSuCwY2gV0zYny" }
+      sys: { id: { eq: "NyPJw0mcSuCwY2gV0zYny" }, locale: { eq: "en-US" } }
     ) {
       longMarkdown {
         childMarkdownRemark {
@@ -108,8 +104,7 @@ export const pageQuery = graphql`
       }
     }
     longMarkdownComplex: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "3pwKS9UWsYmOguo4UdE1EB" }
+      sys: { id: { eq: "3pwKS9UWsYmOguo4UdE1EB" }, locale: { eq: "en-US" } }
     ) {
       longMarkdown {
         childMarkdownRemark {
@@ -118,31 +113,27 @@ export const pageQuery = graphql`
       }
     }
     shortEnglish: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }
+      sys: { id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }, locale: { eq: "en-US" } }
     ) {
       shortLocalized
     }
     shortGerman: contentfulText(
-      node_locale: { eq: "de-DE" }
-      contentful_id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }
+      sys: { id: { eq: "2sQRyOLUexvWZj9nkzS3nN" }, locale: { eq: "de-DE" } }
     ) {
       shortLocalized
     }
     longEnglish: contentfulText(
-      node_locale: { eq: "en-US" }
-      contentful_id: { eq: "5csovkwdDBqTKwSblAOHvd" }
+      sys: { id: { eq: "5csovkwdDBqTKwSblAOHvd" }, locale: { eq: "en-US" } }
     ) {
       longLocalized {
-        longLocalized
+        raw
       }
     }
     longGerman: contentfulText(
-      node_locale: { eq: "de-DE" }
-      contentful_id: { eq: "5csovkwdDBqTKwSblAOHvd" }
+      sys: { id: { eq: "5csovkwdDBqTKwSblAOHvd" }, locale: { eq: "de-DE" } }
     ) {
       longLocalized {
-        longLocalized
+        raw
       }
     }
   }

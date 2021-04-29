@@ -196,16 +196,18 @@ export const pageQuery = graphql`
   query GatsbyPluginImageQuery {
     default: allContentfulAsset(
       filter: {
-        contentful_id: {
-          in: [
-            "3ljGfnpegOnBTFGhV07iC1"
-            "3BSI9CgDdAn1JchXmY5IJi"
-            "65syuRuRVeKi03HvRsOkkb"
-          ]
+        sys: {
+          id: {
+            in: [
+              "3ljGfnpegOnBTFGhV07iC1"
+              "3BSI9CgDdAn1JchXmY5IJi"
+              "65syuRuRVeKi03HvRsOkkb"
+            ]
+          }
+          locale: { eq: "en-US" }
         }
-        node_locale: { eq: "en-US" }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title
@@ -239,10 +241,9 @@ export const pageQuery = graphql`
     }
     english: allContentfulAsset(
       filter: {
-        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
-        node_locale: { eq: "en-US" }
+        sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "en-US" } }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title
@@ -256,10 +257,9 @@ export const pageQuery = graphql`
     }
     german: allContentfulAsset(
       filter: {
-        contentful_id: { in: ["4FwygYxkL3rAteERtoxxNC"] }
-        node_locale: { eq: "de-DE" }
+        sys: { id: { in: ["4FwygYxkL3rAteERtoxxNC"] }, locale: { eq: "de-DE" } }
       }
-      sort: { fields: contentful_id }
+      sort: { fields: sys___id }
     ) {
       nodes {
         title

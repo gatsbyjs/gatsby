@@ -50,8 +50,11 @@ export default BooleanPage
 export const pageQuery = graphql`
   query BooleanQuery {
     default: allContentfulBoolean(
-      sort: { fields: contentful_id }
-      filter: { node_locale: { eq: "en-US" }, booleanLocalized: { eq: null } }
+      sort: { fields: sys___id }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        booleanLocalized: { eq: null }
+      }
     ) {
       nodes {
         title
@@ -59,8 +62,11 @@ export const pageQuery = graphql`
       }
     }
     english: allContentfulBoolean(
-      sort: { fields: contentful_id }
-      filter: { node_locale: { eq: "en-US" }, booleanLocalized: { ne: null } }
+      sort: { fields: sys___id }
+      filter: {
+        sys: { locale: { eq: "en-US" } }
+        booleanLocalized: { ne: null }
+      }
     ) {
       nodes {
         title
@@ -68,8 +74,11 @@ export const pageQuery = graphql`
       }
     }
     german: allContentfulBoolean(
-      sort: { fields: contentful_id }
-      filter: { node_locale: { eq: "de-DE" }, booleanLocalized: { ne: null } }
+      sort: { fields: sys___id }
+      filter: {
+        sys: { locale: { eq: "de-DE" } }
+        booleanLocalized: { ne: null }
+      }
     ) {
       nodes {
         title
