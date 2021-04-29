@@ -1,46 +1,45 @@
 #!/usr/bin/env node
-const path = require('path')
-const globby = require('globby')
-const { sortBy, uniq } = require("lodash");
-const loadThemes = require("gatsby/dist/bootstrap/load-themes");
-const { distance: levenshtein } = require('fastest-levenshtein')
+const path = require(`path`)
+const globby = require(`globby`)
+const { sortBy, uniq } = require(`lodash`)
+const loadThemes = require(`gatsby/dist/bootstrap/load-themes`)
+const { distance: levenshtein } = require(`fastest-levenshtein`)
 
-let errorsFound = []
+const errorsFound = []
 
 const KNOWN_FS_TYPOS = [
-  'src/gastby-theme-*/**/*.js',
-  'src/gastby-plugin-*/**/*.js'
+  `src/gastby-theme-*/**/*.js`,
+  `src/gastby-plugin-*/**/*.js`,
 ]
 
 const checkGastbyFiles = () => {
   const files = globby.sync(KNOWN_FS_TYPOS)
 
   if (files.length) {
-    errorsFound.push('The following files were encountered with "Gatsby" misspelled as "Gastby"', files)
+    errorsFound.push(
+      `The following files were encountered with "Gatsby" misspelled as "Gastby"`,
+      files
+    )
   }
 }
 
 const getThemes = async () => {
-  const config = require(path.join(
-    process.cwd(),
-    "gatsby-config.js"
-  ), "utf-8");
+  const config = require(path.join(process.cwd(), `gatsby-config.js`), `utf-8`)
 
   const configWithThemes = await loadThemes(config, {
-    useLegacyThemes: false
-  });
+    useLegacyThemes: false,
+  })
 
   return sortBy(
     uniq(configWithThemes.config.plugins.map(({ resolve }) => resolve))
-  )
-    .filter(t => t.startsWith('gatsby-theme-'))
+  ).filter(t => t.startsWith(`gatsby-theme-`))
 }
 
 const getAllShadowableThemeFiles = theme => {
-  const themeSrc = path.join(path.dirname(require.resolve(theme)), `src`);
+  const themeSrc = path.join(path.dirname(require.resolve(theme)), `src`)
   return globby.sync(`**/*.*`, {
-    cwd: themeSrc
-  });
+    cwd: themeSrc,
+  })
 }
 
 const findClosestFile = (fileName, files) => {
@@ -60,8 +59,8 @@ const checkShadowedFileMatch = async theme => {
   const shadowableFiles = await getAllShadowableThemeFiles(theme)
 
   const shadowedFiles = globby.sync(`**/*.*`, {
-    cwd: path.join(process.cwd(), 'src', theme)
-  });
+    cwd: path.join(process.cwd(), `src`, theme),
+  })
 
   shadowedFiles.map(f => {
     if (!shadowableFiles.includes(f)) {
@@ -75,10 +74,14 @@ const checkShadowedFileMatch = async theme => {
 
 const logErrors = () => {
   if (errorsFound.length) {
-    console.log('Found', errorsFound.length, errorsFound.length === 1 ? 'error' : 'errors')
+    console.log(
+      `Found`,
+      errorsFound.length,
+      errorsFound.length === 1 ? `error` : `errors`
+    )
     console.log(errorsFound)
   } else {
-    console.log('No errors found!')
+    console.log(`No errors found!`)
   }
 }
 
@@ -86,7 +89,7 @@ const logErrors = () => {
   const themes = await getThemes()
   checkGastbyFiles()
 
-  //console.log(themes)
+  // console.log(themes)
 
   const themesShadowing = themes.map(async t => {
     await checkShadowedFileMatch(t)
@@ -95,4 +98,4 @@ const logErrors = () => {
   await Promise.all(themesShadowing)
 
   logErrors()
-})();
+})()
