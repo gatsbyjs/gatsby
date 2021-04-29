@@ -9,7 +9,7 @@ jest.setTimeout(100000)
 
 const publicDir = path.join(process.cwd(), `public`)
 
-const gatsbyBin = path.join(`node_modules`, `.bin`, `gatsby`)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const manifest = {}
 const filesToRevert = {}
@@ -20,8 +20,8 @@ function runGatsbyWithRunTestSetup(runNumber = 1) {
   return function beforeAllImpl() {
     exitCode = `reset`
     return new Promise(resolve => {
-      const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-        stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+      const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
+        stdio: [`inherit`, `inherit`, `inherit`],
         env: {
           ...process.env,
           NODE_ENV: `production`,
@@ -358,8 +358,8 @@ function assertExitCode(runNumber) {
 beforeAll(done => {
   fs.removeSync(path.join(__dirname, `__debug__`))
 
-  const gatsbyCleanProcess = spawn(gatsbyBin, [`clean`], {
-    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+  const gatsbyCleanProcess = spawn(process.execPath, [gatsbyBin, `clean`], {
+    stdio: [`inherit`, `inherit`, `inherit`],
     env: {
       ...process.env,
       NODE_ENV: `production`,
