@@ -47,7 +47,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, publicDir, callback) => {
+export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -57,6 +57,19 @@ export default (pagePath, isClientOnlyPage, publicDir, callback) => {
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
+
+  if (error) {
+    postBodyComponents.push([
+      <script
+        key="dev-ssr-error"
+        dangerouslySetInnerHTML={{
+          __html: `window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH", { action: "SHOW_DEV_SSR_ERROR", payload: ${JSON.stringify(
+            error
+          )} }])`,
+        }}
+      />,
+    ])
+  }
 
   const generateBodyHTML = () => {
     const setHeadComponents = components => {

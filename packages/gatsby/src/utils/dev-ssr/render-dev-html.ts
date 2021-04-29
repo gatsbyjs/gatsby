@@ -8,7 +8,8 @@ import { startListener } from "../../bootstrap/requires-writer"
 import { findPageByPath } from "../find-page-by-path"
 import { getPageData as getPageDataExperimental } from "../get-page-data"
 import { getDevSSRWebpack } from "../../commands/build-html"
-import { emitter } from "../../redux"
+import { emitter, GatsbyReduxStore } from "../../redux"
+import { IGatsbyPage } from "../../redux/types"
 
 const startWorker = (): JestWorker => {
   const newWorker = new JestWorker(require.resolve(`./render-dev-html-child`), {
@@ -130,14 +131,30 @@ const ensurePathComponentInSSRBundle = async (
   return found
 }
 
+interface IRenderDevHtmlProps {
+  path: string
+  page: IGatsbyPage
+  skipSsr?: boolean
+  store: GatsbyReduxStore
+  error?: {
+    codeFrame: string
+    source: string
+    line: number
+    column: number
+  }
+  htmlComponentRendererPath: string
+  directory: string
+}
+
 export const renderDevHTML = ({
   path,
   page,
   skipSsr = false,
   store,
+  error = undefined,
   htmlComponentRendererPath,
   directory,
-}): Promise<string> =>
+}: IRenderDevHtmlProps): Promise<string> =>
   // eslint-disable-next-line no-async-promise-executor
   new Promise(async (resolve, reject) => {
     startListener()
@@ -231,6 +248,7 @@ export const renderDevHTML = ({
         directory,
         publicDir,
         isClientOnlyPage,
+        error,
       })
       return resolve(htmlString)
     } catch (error) {

@@ -85,6 +85,7 @@ exports.renderHTML = ({
   htmlComponentRendererPath,
   publicDir,
   isClientOnlyPage = false,
+  error = undefined,
   directory,
 }) =>
   new Promise((resolve, reject) => {
@@ -95,6 +96,7 @@ exports.renderHTML = ({
           path,
           isClientOnlyPage,
           publicDir,
+          error,
           (_throwAway, htmlString) => {
             resolve(htmlString)
           }

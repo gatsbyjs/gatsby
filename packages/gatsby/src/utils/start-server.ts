@@ -521,10 +521,10 @@ module.exports = {
         }
 
         // renderDevHTML throws an error with these information
-        const lineNumber = error?.line
-        const columnNumber = error?.column
-        const filePath = error?.filename
-        const sourceContent = error?.code
+        const lineNumber = error?.line as number
+        const columnNumber = error?.column as number
+        const filePath = error?.filename as string
+        const sourceContent = error?.code as string
 
         report.error({
           id: `11614`,
@@ -573,19 +573,12 @@ module.exports = {
           page: pathObj,
           skipSsr: true,
           store,
+          error: message,
           htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
           directory: program.directory,
         })
 
-        // When the page is served add a "SHOW_DEV_SSR_ERROR" event so that the Fast Refresh overlay displays it
-        const modiefiedShell = clientOnlyShell.replace(
-          `</body>`,
-          `<script>window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH",{action: "SHOW_DEV_SSR_ERROR",payload: ${JSON.stringify(
-            message
-          )}}])</script></body>`
-        )
-
-        res.send(modiefiedShell)
+        res.send(clientOnlyShell)
       }
 
       htmlActivity.end()
