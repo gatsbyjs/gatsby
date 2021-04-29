@@ -23,6 +23,9 @@ interface ICreatePageAction {
   contextModified: boolean
   plugin: Plugin
   payload: {
+    id: string
+    children: any
+    internal: Record<string, unknown>
     internalComponentName: string
     path: string
     matchPath: string | undefined
@@ -43,7 +46,6 @@ interface ICreatePageAction {
 
 export const startPluginRunner = (): void => {
   emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
-    /* tslint:disable-next-line */
     const { id, children, internal, ...page } = action.payload // eslint-disable-line
     // const page = action.payload
     apiRunnerNode(
