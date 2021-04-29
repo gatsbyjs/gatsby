@@ -175,7 +175,7 @@ const activeFlags: Array<IFlag> = [
     description: `Have the page object and SitePage node be the same object to avoid duplicating memory and speedup page creation.`,
     // TODO create new discussion
     umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => `LOCKED_IN`,
   },
   {
     name: `FUNCTIONS`,

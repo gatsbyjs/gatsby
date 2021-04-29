@@ -427,6 +427,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT) {
     // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
     const node = internalPage
+    node.children = []
     node.internal = {
       type: `SitePage`,
       contentDigest: createContentDigest(internalPage),
