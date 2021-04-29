@@ -113,8 +113,8 @@ function generateAssetTypes({ createTypes }) {
       fileName: String
       url: String
       size: Int
-      width: Int?
-      height: Int?
+      width: Int
+      height: Int
     }
   `)
 }
