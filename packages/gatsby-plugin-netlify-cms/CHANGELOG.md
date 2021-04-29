@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.10.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.10.0...gatsby-plugin-netlify-cms@4.10.1) (2021-04-29)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** align mini-css-extract-plugin version ([#31093](https://github.com/gatsbyjs/gatsby/issues/31093)) ([9095266](https://github.com/gatsbyjs/gatsby/commit/9095266f96c43c0f986ac28ce5eef931264065de))
+
 # [4.10.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@4.10.0-next.0...gatsby-plugin-netlify-cms@4.10.0) (2021-02-02)
 
 ### Bug Fixes
