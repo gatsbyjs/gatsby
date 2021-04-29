@@ -18,6 +18,7 @@ export const emitter = mett()
 
 // Read old node data from cache.
 export const readState = (): IGatsbyState => {
+  const date = Date.now()
   try {
     const state = readFromCache() as IGatsbyState
     if (state.nodes) {
@@ -37,7 +38,20 @@ export const readState = (): IGatsbyState => {
         state.nodesByType.get(type)!.set(node.id, node)
 
         if (type === `SitePage`) {
-          const { id, internal, children, ...page } = node
+          const {
+            id,
+            internal,
+            children,
+            fields,
+            parent,
+            __gatsby_resolved,
+            ...other
+          } = node
+          const page = (other as unknown) as IGatsbyPage
+          // We duplicate this for whatever reason in reducers/components.ts
+          // so duplicating this here in case someone else uses it.
+          page.componentPath = page.component
+          page.updatedAt = date
           state.pages.set(page.path, page)
         }
       })
