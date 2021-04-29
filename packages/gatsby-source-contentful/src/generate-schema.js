@@ -105,34 +105,16 @@ const translateFieldType = field => {
 function generateAssetTypes({ createTypes }) {
   createTypes(`
     type ContentfulAsset implements ContentfulInternalReference & Node {
-      file: ContentfulAssetFile
-      title: String
-      description: String
       sys: ContentfulInternalSys
       id: ID!
-    }
-  `)
-
-  createTypes(`
-    type ContentfulAssetFile @derivedTypes {
-      url: String
-      details: ContentfulAssetFileDetails
-      fileName: String
+      title: String
+      description: String
       contentType: String
-    }
-  `)
-
-  createTypes(`
-    type ContentfulAssetFileDetails @derivedTypes {
+      fileName: String
+      url: String
       size: Int
-      image: ContentfulAssetFileDetailsImage
-    }
-  `)
-
-  createTypes(`
-    type ContentfulAssetFileDetailsImage {
-      width: Int
-      height: Int
+      width: Int?
+      height: Int?
     }
   `)
 }
