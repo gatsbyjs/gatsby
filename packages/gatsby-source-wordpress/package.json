@@ -2,7 +2,7 @@
   "name": "gatsby-source-wordpress",
   "description": "Source data from WordPress in an efficient and scalable way.",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "5.5.0-next.0",
+  "version": "5.5.0-next.1",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -85,9 +85,7 @@
     "prepare": "npm run build",
     "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
     "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --verbose --extensions \".ts,.js\" --source-maps",
-    "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js",
-    "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans",
-    "docker-rebuild": "./docker/rebuild.sh"
+    "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {
     "node": ">=12.13.0"
