@@ -25,7 +25,7 @@ export default NumberPage
 
 export const pageQuery = graphql`
   query NumberQuery {
-    allContentfulNumber(sort: { fields: contentful_id }) {
+    allContentfulNumber(sort: { fields: sys___id }) {
       nodes {
         title
         integer

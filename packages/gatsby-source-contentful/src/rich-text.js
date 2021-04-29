@@ -23,7 +23,7 @@ function renderRichText({ raw, references }, options = {}) {
         .map(reference => {
           return {
             ...reference,
-            sys: { type: `Entry`, id: reference.contentful_id },
+            sys: { type: `Entry`, id: reference.sys.id },
           }
         }),
       Asset: references
@@ -31,7 +31,7 @@ function renderRichText({ raw, references }, options = {}) {
         .map(reference => {
           return {
             ...reference,
-            sys: { type: `Asset`, id: reference.contentful_id },
+            sys: { type: `Asset`, id: reference.sys.id },
           }
         }),
     },

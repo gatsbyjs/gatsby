@@ -108,13 +108,8 @@ function generateAssetTypes({ createTypes }) {
       file: ContentfulAssetFile
       title: String
       description: String
-      node_locale: String
-      sys: ContentfulAssetSys
-      contentful_id: String!
+      sys: ContentfulInternalSys
       id: ID!
-      spaceId: String!
-      createdAt: Date @dateformat
-      updatedAt: Date @dateformat
     }
   `)
 
@@ -140,13 +135,6 @@ function generateAssetTypes({ createTypes }) {
       height: Int
     }
   `)
-
-  createTypes(`
-    type ContentfulAssetSys {
-      type: String
-      revision: Int
-    }
-  `)
 }
 
 export function generateSchema({
@@ -157,8 +145,8 @@ export function generateSchema({
 }) {
   createTypes(`
     interface ContentfulInternalReference implements Node {
-      contentful_id: String!
       id: ID!
+      sys: ContentfulInternalSys
     }
   `)
 
@@ -173,17 +161,21 @@ export function generateSchema({
 
   createTypes(`
     type ContentfulInternalSys @dontInfer {
-      type: String
-      revision: Int
+      type: String!
+      id: String!
+      spaceId: String!
+      environmentId: String!
       contentType: ContentfulContentType @link(by: "id", from: "contentType___NODE")
+      firstPublishedAt: Date!
+      publishedAt: Date!
+      publishedVersion: Int!
+      locale: String!
     }
   `)
 
   createTypes(`
     interface ContentfulEntry implements Node @dontInfer {
-      contentful_id: String!
       id: ID!
-      spaceId: String!
       sys: ContentfulInternalSys
     }
   `)
@@ -227,14 +219,20 @@ export function generateSchema({
             }
             traverse(source)
 
-            return context.nodeModel
-              .getAllNodes()
-              .filter(node =>
-                node.internal.owner === `gatsby-source-contentful` &&
-                node.internal.type === `ContentfulAsset`
-                  ? referencedAssets.has(node.contentful_id)
-                  : referencedEntries.has(node.contentful_id)
-              )
+            // Get all nodes and return all that got referenced in the rich text
+            return context.nodeModel.getAllNodes().filter(node => {
+              if (
+                !(
+                  node.internal.owner === `gatsby-source-contentful` &&
+                  node?.sys?.id
+                )
+              ) {
+                return false
+              }
+              return node.internal.type === `ContentfulAsset`
+                ? referencedAssets.has(node.sys.id)
+                : referencedEntries.has(node.sys.id)
+            })
           },
         },
       },
@@ -287,15 +285,7 @@ export function generateSchema({
         schema.buildObjectType({
           name: makeTypeName(type),
           fields: {
-            contentful_id: { type: `String!` },
             id: { type: `ID!` },
-            // @todo reconsider the node per locale workflow
-            node_locale: { type: `String!` },
-            // @todo these should be real dates and in sys
-            spaceId: { type: `String!` },
-            createdAt: { type: `Date`, extensions: { dateformat: {} } },
-            updatedAt: { type: `Date`, extensions: { dateformat: {} } },
-            // @todo add metadata
             sys: { type: `ContentfulInternalSys` },
             ...fields,
           },

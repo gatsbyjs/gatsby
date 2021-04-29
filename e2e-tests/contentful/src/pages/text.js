@@ -53,19 +53,19 @@ export default TextPage
 
 export const pageQuery = graphql`
   query TextQuery {
-    short: contentfulText(contentful_id: { eq: "5ZtcN1o7KpN7J7xgiTyaXo" }) {
+    short: contentfulText(sys: { id: { eq: "5ZtcN1o7KpN7J7xgiTyaXo" } }) {
       short
     }
-    shortList: contentfulText(contentful_id: { eq: "7b5U927WTFcQXO2Gewwa2k" }) {
+    shortList: contentfulText(sys: { id: { eq: "7b5U927WTFcQXO2Gewwa2k" } }) {
       shortList
     }
-    longPlain: contentfulText(contentful_id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" }) {
+    longPlain: contentfulText(sys: { id: { eq: "6ru8cSC9hZi3Ekvtw7P77S" } }) {
       longPlain {
         raw
       }
     }
     longMarkdownSimple: contentfulText(
-      contentful_id: { eq: "NyPJw0mcSuCwY2gV0zYny" }
+      sys: { id: { eq: "NyPJw0mcSuCwY2gV0zYny" } }
     ) {
       longMarkdown {
         childMarkdownRemark {
@@ -74,7 +74,7 @@ export const pageQuery = graphql`
       }
     }
     longMarkdownComplex: contentfulText(
-      contentful_id: { eq: "3pwKS9UWsYmOguo4UdE1EB" }
+      sys: { id: { eq: "3pwKS9UWsYmOguo4UdE1EB" } }
     ) {
       longMarkdown {
         childMarkdownRemark {
