@@ -44,4 +44,26 @@ exports[`gatsby-plugin-sitemap SSR API should create a Link if createLinkInHead 
 }
 `;
 
+exports[`gatsby-plugin-sitemap SSR API should create a Link in root when output is "/" 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Array [
+        <link
+          href="/sitemap-index.xml"
+          rel="sitemap"
+          type="application/xml"
+        />,
+      ],
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`gatsby-plugin-sitemap SSR API should not create Link if createLinkInHead is false 1`] = `[MockFunction]`;
