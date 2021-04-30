@@ -70,28 +70,30 @@ body {
 }
 ```
 
-### Install Google Fonts locally with Fontsource
+### Self-host Google Fonts with Fontsource
 
-The fastest way to get started using Google Fonts is by choosing a font from [Fontsource](https://github.com/fontsource/fontsource).
+[Fontsource](https://github.com/fontsource/fontsource) is a project to provide open source fonts from Google Fonts as NPM Packages.
 
-This example shows how to set up the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
+Self-hosting your fonts can increase your site’s loading speed by up to ~300 milliseconds on desktop and 1+ seconds on 3G connections.
 
-1. Run `npm install @fontsource/open-sans` to download the necessary package files.
+This example shows how to install the [Open Sans](https://fonts.google.com/specimen/Open+Sans) font. If you have a different Google Font you want to use, you can find the corresponding package in [NPM](https://www.npmjs.com/search?q=fontsource) or the [packages directory in the Fontsource repository](https://github.com/fontsource/fontsource/tree/master/packages).
 
-2. Then within your app entry file or site component, import the font package. It is recommended you import it via the layout template (`layout.js`). However, importing via page component (`index.js`), or `gatsby-browser.js` are viable alternatives.
+1. Run `npm install @fontsource/open-sans` to install the necessary package files.
 
-```jsx:title=src/components/layout.js
+2. Then within your app entry file or site component, import the font package. It is recommended you import in your site's gatsby-browser.js file.
+
+```jsx:title=gatsby-browser.js
 import "@fontsource/open-sans" // Defaults to weight 400 with all styles included.
 ```
 
 If you wish to select a particular weight or style, you may specify it by changing the import path.
 
-```jsx:title=src/components/layout.js
+```jsx:title=gatsby-browser.js
 import "@fontsource/open-sans/500.css" // Weight 500 with all styles included.
 import "@fontsource/open-sans/900-normal.css" // Select either normal or italic.
 ```
 
-**Note**: The range of supported weights and styles a font may support is shown in each package's README file.
+**Note**: The weights and styles a font includes is shown in each package's README file.
 
 3. Once it's imported, you can reference the font name in a CSS stylesheet, CSS Module, or CSS-in-JS.
 

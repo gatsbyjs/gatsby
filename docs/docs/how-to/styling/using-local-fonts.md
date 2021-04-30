@@ -12,7 +12,7 @@ This guide uses the Gatsby [default starter](https://github.com/gatsbyjs/gatsby-
 
 Get started by using local fonts by adding them to your project. Copy the font file into your Gatsby project, for example, `src/fonts/fontname.woff2`.
 
-**NOTE:** It’s recommended to limit custom font usage to only the essential needed for performance.to
+**NOTE:** It’s recommended to limit custom font usage to only the essential needed for performance.
 
 The Gatsby default starter project adds [browser safe font](https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Fundamentals#Default_fonts) styling in the `layout.css` file.
 

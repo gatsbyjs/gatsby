@@ -12,7 +12,7 @@ import "../styles/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 export default function HomePage() {
-  ;<div>I'm styled by bootstrap & src/styles/index.css</div>
+  return <div>I'm styled by bootstrap & src/styles/index.css</div>
 }
 ```
 
@@ -26,7 +26,7 @@ CSS files with global styles like typography and colors are typically imported i
 
 We recommend using CSS Modules for component-level CSS. Gatsby has built-in support for CSS Modules.
 
-CSS Modules let you write CSS normally but with a more safety. The tool automatically generates unique class and animation names, so you don’t have to worry about selector name collisions.
+CSS Modules let you write CSS normally but with more safety. The tool automatically generates unique class and animation names, so you don’t have to worry about selector name collisions.
 
 An example of a component CSS Module file imported into its corresponding React component.
 
@@ -45,6 +45,8 @@ export default function Container({ children }) {
   return <div className={containerStyles.container}>{children}</div>
 }
 ```
+
+[Learn more about CSS Modules](/docs/how-to/styling/css-modules)
 
 ## Other CSS Options
 
