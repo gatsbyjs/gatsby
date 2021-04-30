@@ -144,8 +144,6 @@ Two things are important in the file above:
 
 Next you could create a page component at `src/pages/blog/index.js` to serve as a listing page for all your blog posts.
 
-### Create static pages using Gatsby’s Node.js `createPage` API
-
 This should get you started on some basic Markdown functionality in your Gatsby site. You can further customize the frontmatter and the component file to get desired effects!
 
 For more information, have a look in the working example `using-markdown-pages`. You can find it in the [Gatsby examples section](https://github.com/gatsbyjs/gatsby/tree/master/examples).
