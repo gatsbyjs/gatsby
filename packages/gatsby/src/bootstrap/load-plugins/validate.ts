@@ -346,7 +346,7 @@ export function collatePluginAPIs({
     // Discover which APIs this plugin implements and store an array against
     // the plugin node itself *and* in an API to plugins map for faster lookups
     // later.
-    let pluginNodeExports = resolveModuleExports(
+    const pluginNodeExports = resolveModuleExports(
       `${plugin.resolve}/gatsby-node`,
       {
         mode: `require`,
@@ -360,16 +360,6 @@ export function collatePluginAPIs({
     )
 
     if (pluginNodeExports.length > 0) {
-      if (
-        plugin.name === `internal-data-bridge` &&
-        process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT
-      ) {
-        // just remove `onCreatePage` from internal-data-bridge
-        pluginNodeExports = pluginNodeExports.filter(
-          exp => exp !== `onCreatePage`
-        )
-      }
-
       plugin.nodeAPIs = _.intersection(pluginNodeExports, currentAPIs.node)
 
       badExports.node = badExports.node.concat(

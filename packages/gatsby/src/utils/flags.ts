@@ -167,17 +167,6 @@ const activeFlags: Array<IFlag> = [
     testFitness: (): fitnessEnum => true,
   },
   {
-    name: `SHARED_PAGE_OBJECT`,
-    env: `GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT`,
-    command: `all`,
-    experimental: false,
-    telemetryId: `SharedPageObject`,
-    description: `Have the page object and SitePage node be the same object to avoid duplicating memory and speedup page creation.`,
-    // TODO create new discussion
-    umbrellaIssue: `https://github.com/gatsbyjs/gatsby/discussions/29233`,
-    testFitness: (): fitnessEnum => `LOCKED_IN`,
-  },
-  {
     name: `FUNCTIONS`,
     env: `GATSBY_EXPERIMENTAL_FUNCTIONS`,
     command: `all`,

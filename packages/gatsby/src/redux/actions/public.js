@@ -428,80 +428,70 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  if (process.env.GATSBY_EXPERIMENTAL_SHARED_PAGE_OBJECT) {
-    // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
-    const { updatedAt, ...node } = internalPage
-    node.children = []
-    node.internal = {
-      type: `SitePage`,
-      contentDigest: createContentDigest(node),
+  // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
+  const { updatedAt, ...node } = internalPage
+  node.children = []
+  node.internal = {
+    type: `SitePage`,
+    contentDigest: createContentDigest(node),
+  }
+  node.id = `SitePage ${internalPage.path}`
+  const oldNode = getNode(node.id)
+
+  let deleteActions
+  let updateNodeAction
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+    updateNodeAction = {
+      ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
+      payload: node.id,
     }
-    node.id = `SitePage ${internalPage.path}`
-    const oldNode = getNode(node.id)
-
-    let deleteActions
-    let updateNodeAction
-    if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
-      updateNodeAction = {
-        ...actionOptions,
-        plugin,
-        type: `TOUCH_NODE`,
-        payload: node.id,
-      }
-    } else {
-      // Remove any previously created descendant nodes as they're all due
-      // to be recreated.
-      if (oldNode) {
-        const createDeleteAction = node => {
-          return {
-            ...actionOptions,
-            type: `DELETE_NODE`,
-            plugin,
-            payload: node,
-          }
-        }
-        deleteActions = findChildren(oldNode.children)
-          .map(getNode)
-          .map(createDeleteAction)
-      }
-
-      node.internal.counter = getNextNodeCounter()
-
-      updateNodeAction = {
-        ...actionOptions,
-        type: `CREATE_NODE`,
-        plugin,
-        oldNode,
-        payload: node,
-      }
-    }
-
-    const actions = [
-      {
-        ...actionOptions,
-        type: `CREATE_PAGE`,
-        contextModified,
-        plugin,
-        payload: internalPage,
-      },
-    ]
-
-    if (deleteActions && deleteActions.length) {
-      actions.push(...deleteActions)
-    }
-
-    actions.push(updateNodeAction)
-
-    return actions
   } else {
-    return {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const createDeleteAction = node => {
+        return {
+          ...actionOptions,
+          type: `DELETE_NODE`,
+          plugin,
+          payload: node,
+        }
+      }
+      deleteActions = findChildren(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
+    }
+
+    node.internal.counter = getNextNodeCounter()
+
+    updateNodeAction = {
+      ...actionOptions,
+      type: `CREATE_NODE`,
+      plugin,
+      oldNode,
+      payload: node,
+    }
+  }
+
+  const actions = [
+    {
       ...actionOptions,
       type: `CREATE_PAGE`,
       contextModified,
       plugin,
       payload: internalPage,
-    }
+    },
+  ]
+
+  if (deleteActions && deleteActions.length) {
+    actions.push(...deleteActions)
   }
+
+  actions.push(updateNodeAction)
+
+  return actions
 }
 
 const deleteNodeDeprecationWarningDisplayedMessages = new Set()
