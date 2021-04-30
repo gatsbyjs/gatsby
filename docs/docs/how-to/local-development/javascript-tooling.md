@@ -15,7 +15,7 @@ Gatsby uses [webpack](https://webpack.js.org/) to bundle files and [Babel](https
 - [How to configure webpack](/docs/how-to/custom-configuration/add-custom-webpack-config/)
 - [How to configure Babel](/docs/how-to/custom-configuration/babel/)
 
-A number of Gatsby plugins already exist for relatively common tasks; you can install these in your `gatsby-config.js`.
+Most sites work great with the default configuration. Many common changes have [Gatsby plugins](/plugins) already which you can install in your `gatsby-config.js`.
 
 ## Linting and auto-formatting
 
