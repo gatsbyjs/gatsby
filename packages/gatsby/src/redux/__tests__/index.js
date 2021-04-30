@@ -81,7 +81,7 @@ jest.mock(`glob`, () => {
 function getFakeNodes() {
   // Set nodes to something or the cache will fail because it asserts this
   // Actual nodes content should match TS type; these are verified
-  const map /* : Map<string, IReduxNode>*/ = new Map()
+  const map /* : Map<string, IReduxNode> */ = new Map()
   map.set(`pageA`, {
     id: `pageA`,
     internal: {
@@ -108,10 +108,11 @@ describe(`redux db`, () => {
     Date.now = jest.fn(() => ++DateNowCallCount)
 
     store.dispatch(
-      (Array.isArray(pages) ? pages : [pages]).map(page =>
-        createPage(page, {
-          name: `default-site-plugin`,
-        })
+      (Array.isArray(pages) ? pages : [pages]).map(
+        page =>
+          createPage(page, {
+            name: `default-site-plugin`,
+          }).filter(a => a.type === `CREATE_PAGE`)[0]
       )
     )
 
