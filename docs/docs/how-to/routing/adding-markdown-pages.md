@@ -10,8 +10,7 @@ Here are the steps Gatsby follows for making this happen.
 1. Read files into Gatsby from the filesystem
 2. Transform Markdown to HTML and [frontmatter](#frontmatter-for-metadata-in-markdown-files) to data
 3. Add a Markdown file
-4. Create a page component for the Markdown files
-5. Create static pages using Gatsby's Node.js `createPage` API
+4. Create a Collection Route component for the Markdown files
 
 ## Read files into Gatsby from the filesystem
 
