@@ -8,7 +8,7 @@ There are multiple ways to create pages in Gatsby.
 
 The simplest way to create a page is to export a React component from a page located in the `src/pages` directory. For example, exporting a component from `src/pages/about.js` will create a route at `/about`. More details in the [Routing Reference](https://www.gatsbyjs.com/docs/reference/routing/creating-routes/#define-routes-in-srcpages)
 
-## Templates and dynamic routing
+## Collection Routing
 
 Gatsby supports multiple templated pages based on a single component. For example, a file located at `src/pages/products/{Product.name}.js` can generate pages like `/products/burger`, based on information coming in from a CMS or other data source. For details, look at the [File System Route API](/docs/reference/routing/file-system-route-api) documentation.
 
