@@ -16,7 +16,7 @@ We've included setup guides, and links to the integration documentation as well 
   Ordering in this section is driven by Gatsby plugin downloads (/plugins/?=gatsby-source-) & CMS vendor size/adoption. The Gatsby team is responsible for deciding which CMSs are included in the "Main CMSs" section.
 -->
 
-## Main CMSs
+## Popular CMSs
 
 The following CMSs have high popularity among Gatsby users and support key functionality like content previews and incremental builds. If you're choosing between CMSs, we recommend reading the [Choosing Your CMS(s)](https://www.gatsbyjs.com/docs/conceptual/choosing-a-cms/) documentation.
 

@@ -18,8 +18,8 @@ In order to enable a better content composition experience, Gatsby allows you to
 
 ## Using gatsby-node.js
 
-For more fine-grained control over routing, the `gatsby-node.js` file offers helpers that provide an escape hatch. More details in the [Routing Reference](https://www.gatsbyjs.com/docs/reference/routing/creating-routes/#using-gatsby-nodejs)
+If you need more fine-grained control over routing, you can programmatically create pages in `gatsby-node.js`. More details in the [Routing Reference](https://www.gatsbyjs.com/docs/reference/routing/creating-routes/#using-gatsby-nodejs)
 
-## Authentication gating routes
+## Authenticated routes
 
 For pages dealing with sensitive information, Gatsby lets you create [client-only routes](https://www.gatsbyjs.com/docs/how-to/routing/client-only-routes-and-user-authentication) that live behind an authentication gate.
