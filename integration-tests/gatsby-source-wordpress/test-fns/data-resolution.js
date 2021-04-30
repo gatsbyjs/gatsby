@@ -6,8 +6,12 @@ const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
 
+const isWarmCache = process.env.WARM_CACHE
+
 const { testResolvedData } = require("./test-utils/test-resolved-data")
 const { queries } = require("./test-utils/queries")
+
+const { incrementalIt } = require(`./test-utils/incremental-it`)
 
 jest.setTimeout(100000)
 
@@ -26,7 +30,7 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(2)
+    expect(data[`allWpPage`].totalCount).toBe(3)
     expect(data[`allWpPost`].totalCount).toBe(1)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -75,7 +79,7 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(13)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(14)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -157,7 +161,7 @@ describe(`data resolution`, () => {
     expect(categoryNames.includes(`h4`)).toBeTruthy()
   })
 
-  it(`resolves menus`, async () => {
+  incrementalIt(`resolves menus`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.menus,
@@ -166,18 +170,22 @@ describe(`data resolution`, () => {
     expect(result).toMatchSnapshot()
   })
 
-  it(`resolves pages`, async () => {
+  incrementalIt(`resolves pages`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.pages,
     })
 
+    console.log(result)
+
     expect(result).toMatchSnapshot()
 
-    // expect(result.data.testPage.title).toEqual(`Sample Page`)
+    expect(result.data.testPage.title).toEqual(
+      isWarmCache ? `Sample Page DELTA SYNC` : `Sample Page`
+    )
   })
 
-  it(`resolves posts`, async () => {
+  incrementalIt(`resolves posts`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.posts,
@@ -185,10 +193,12 @@ describe(`data resolution`, () => {
 
     expect(result).toMatchSnapshot()
 
-    expect(result.data.testPost.title).toEqual(`Hello world!`)
+    expect(result.data.testPost.title).toEqual(
+      isWarmCache ? `Hello world! DELTA SYNC` : `Hello world!`
+    )
   })
 
-  it(`resolves users`, async () => {
+  incrementalIt(`resolves users`, async () => {
     const result = await fetchGraphql({
       url,
       query: queries.users,

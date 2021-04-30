@@ -25,8 +25,8 @@ exports.resetSchema = async () => {
       updateUser(
         input: {
           clientMutationId: "user-test"
-          firstName: "Tyler"
-          id: "dXNlcjox"
+          firstName: "admin"
+          id: "dXNlcjo0"
         }
       ) {
         clientMutationId
@@ -61,8 +61,8 @@ exports.mutateSchema = async () => {
       updateUser(
         input: {
           clientMutationId: "user-test"
-          firstName: "Tyler DELTA SYNC"
-          id: "dXNlcjox"
+          firstName: "admin DELTA SYNC"
+          id: "dXNlcjo0"
         }
       ) {
         clientMutationId

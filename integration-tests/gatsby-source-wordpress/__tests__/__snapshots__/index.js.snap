@@ -186,11 +186,131 @@ Object {
 }
 `;
 
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves menus INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpMenu": Object {
+      "nodes": Array [
+        Object {
+          "count": 4,
+          "databaseId": 17,
+          "id": "dGVybToxNw==",
+          "menuItems": Object {
+            "nodes": Array [
+              Object {
+                "childItems": Object {
+                  "nodes": Array [],
+                },
+                "databaseId": 564,
+                "id": "cG9zdDo1NjQ=",
+                "label": "Activity",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "/activity/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [
+                    Object {
+                      "childItems": Object {
+                        "nodes": Array [
+                          Object {
+                            "label": "test custom link",
+                            "url": "https://google.com",
+                          },
+                        ],
+                      },
+                      "connectedNode": Object {
+                        "node": Object {
+                          "featuredImage": Object {
+                            "node": Object {
+                              "title": "84-1000×1000",
+                            },
+                          },
+                          "title": "Hello world! DELTA SYNC",
+                          "uri": "/2020/02/25/hello-world/",
+                        },
+                      },
+                      "databaseId": 566,
+                      "id": "cG9zdDo1NjY=",
+                      "label": "Hello world!",
+                    },
+                  ],
+                },
+                "databaseId": 565,
+                "id": "cG9zdDo1NjU=",
+                "label": "Sample Page",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "/sample-page/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [
+                    Object {
+                      "childItems": Object {
+                        "nodes": Array [],
+                      },
+                      "connectedNode": null,
+                      "databaseId": 567,
+                      "id": "cG9zdDo1Njc=",
+                      "label": "test custom link",
+                    },
+                  ],
+                },
+                "databaseId": 566,
+                "id": "cG9zdDo1NjY=",
+                "label": "Hello world!",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "/2020/02/25/hello-world/",
+              },
+              Object {
+                "childItems": Object {
+                  "nodes": Array [],
+                },
+                "databaseId": 567,
+                "id": "cG9zdDo1Njc=",
+                "label": "test custom link",
+                "nodeType": "MenuItem",
+                "target": null,
+                "title": null,
+                "url": "https://google.com",
+              },
+            ],
+          },
+          "name": "main menu",
+        },
+      ],
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
 exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves pages 1`] = `
 Object {
   "data": Object {
     "allWpPage": Object {
       "nodes": Array [
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Sample Page",
+          "uri": "/sample-page/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
         Object {
           "acfPageFields": Object {
             "fieldGroupName": "acfPageFields",
@@ -222,6 +342,69 @@ Object {
           },
         },
       ],
+    },
+    "testPage": Object {
+      "title": "Sample Page",
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves pages INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpPage": Object {
+      "nodes": Array [
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Sample Page DELTA SYNC",
+          "uri": "/sample-page/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Activity",
+          "uri": "/activity/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "ACF Field Test",
+          "uri": "/acf-field-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+      ],
+    },
+    "testPage": Object {
+      "title": "Sample Page DELTA SYNC",
     },
   },
   "extensions": Object {},
@@ -256,6 +439,40 @@ Object {
     },
     "testPost": Object {
       "title": "Hello world!",
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves posts INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpPost": Object {
+      "nodes": Array [
+        Object {
+          "author": Object {
+            "node": Object {
+              "avatar": Object {
+                "url": "http://2.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=96&d=mm&r=g",
+              },
+              "comments": Object {
+                "nodes": Array [],
+              },
+            },
+          },
+          "featuredImage": Object {
+            "node": Object {
+              "altText": "",
+              "sourceUrl": "http://localhost:8001/wp-content/uploads/2020/03/84-1000x1000-1.jpg",
+            },
+          },
+          "title": "Hello world! DELTA SYNC",
+        },
+      ],
+    },
+    "testPost": Object {
+      "title": "Hello world! DELTA SYNC",
     },
   },
   "extensions": Object {},
@@ -310,6 +527,9 @@ Object {
               Object {
                 "title": "Activity",
               },
+              Object {
+                "title": "Sample Page",
+              },
             ],
           },
           "posts": Object {
@@ -330,10 +550,64 @@ Object {
 }
 `;
 
+exports[`[gatsby-source-wordpress] Run tests on develop build data resolution resolves users INCREMENTED 1`] = `
+Object {
+  "data": Object {
+    "allWpUser": Object {
+      "nodes": Array [
+        Object {
+          "databaseId": 4,
+          "name": "admin",
+          "pages": Object {
+            "nodes": Array [
+              Object {
+                "title": "ACF Field Test",
+              },
+              Object {
+                "title": "Activity",
+              },
+              Object {
+                "title": "Sample Page DELTA SYNC",
+              },
+            ],
+          },
+          "posts": Object {
+            "nodes": Array [
+              Object {
+                "title": "Hello world! DELTA SYNC",
+              },
+            ],
+          },
+        },
+      ],
+    },
+    "testUser": Object {
+      "name": "admin",
+    },
+  },
+  "extensions": Object {},
+}
+`;
+
 exports[`[gatsby-source-wordpress] Run tests on develop build filtered type definitions Date field resolver is working 1`] = `
 Object {
   "data": Object {
-    "wpPage": null,
+    "wpPage": Object {
+      "databaseId": 2,
+      "date": "2020-02-25T17:54:21",
+      "dateGmt": "2020-02-25T17:54:21",
+      "dayOfMonth": "25",
+      "dayOfMonthGmt": "25",
+      "dayOfWeekName": "Tuesday",
+      "dayOfWeekNameGmt": "Tuesday",
+      "dayOfWeekNumber": "2",
+      "dayOfWeekNumberGmt": "2",
+      "id": "cG9zdDoy",
+      "month": "February",
+      "monthGmt": "February",
+      "year": "2020",
+      "yearGmt": "2020",
+    },
   },
   "extensions": Object {},
 }
