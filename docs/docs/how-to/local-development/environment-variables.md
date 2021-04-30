@@ -200,3 +200,5 @@ Local testing of the `staging` environment can be done with:
 ```shell
 GATSBY_ACTIVE_ENV=staging npm run develop
 ```
+
+Note that GATSBY_ACTIVE_ENV will NOT be set automatically only if explicitly added at the beginning of `gatsby develop` or `gatsby build` (otheriwse it's just `undefined`).
