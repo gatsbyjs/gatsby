@@ -220,6 +220,15 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`functions can have custom middleware`, () => {
+      test(`normal`, async () => {
+        const result = await fetch(`${host}/api/cors`)
+
+        const headers = Object.fromEntries(result.headers)
+        expect(headers[`access-control-allow-origin`]).toEqual(`*`)
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)
