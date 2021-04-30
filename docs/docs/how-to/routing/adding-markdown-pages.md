@@ -140,7 +140,9 @@ Two things are important in the file above:
 
    **Note: To learn more about GraphQL, consider this [excellent resource](https://www.howtographql.com/)**
 
-2. The result of the query is injected by Gatsby into the component as the `data` prop. `props.data.markdownRemark` is the property that has all the details of the Markdown file. You can use that to construct a template for your blog post view. Since it's a React component, you could style it with any of the [recommended styling systems](/docs/styling/) in Gatsby.
+2. The result of the query is injected by Gatsby into the component as the `data` prop. `props.data.markdownRemark` is the property that has all the details of the Markdown file.
+
+Next you could create a page component at `src/pages/blog/index.js` to serve as a listing page for all your blog posts.
 
 ### Create static pages using Gatsby’s Node.js `createPage` API
 
