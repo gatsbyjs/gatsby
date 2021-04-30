@@ -361,7 +361,6 @@ export function collatePluginAPIs({
 
     if (pluginNodeExports.length > 0) {
       plugin.nodeAPIs = _.intersection(pluginNodeExports, currentAPIs.node)
-
       badExports.node = badExports.node.concat(
         getBadExports(plugin, pluginNodeExports, currentAPIs.node)
       ) // Collate any bad exports

@@ -9,7 +9,6 @@ emitter.on(`CREATE_PAGE`, action => {
   // site 404 pages to be named this.
   // https://www.gatsbyjs.org/docs/how-to/adding-common-features/add-404-page/
   if (!page404 && /^\/?404\/?$/.test(action.payload.path)) {
-    console.log(`found 404`, action)
     store.dispatch(
       actions.createPage(
         {

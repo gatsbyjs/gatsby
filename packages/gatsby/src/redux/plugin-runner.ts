@@ -23,9 +23,6 @@ interface ICreatePageAction {
   contextModified: boolean
   plugin: Plugin
   payload: {
-    id: string
-    children: any
-    internal: Record<string, unknown>
     internalComponentName: string
     path: string
     matchPath: string | undefined
