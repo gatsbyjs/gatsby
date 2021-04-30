@@ -118,6 +118,7 @@
     "normalize-path": "^3.0.0",
     "null-loader": "^4.0.1",
     "opentracing": "^0.14.4",
+    "resolve-from": "^5.0.0",
     "p-defer": "^3.0.0",
     "parseurl": "^1.3.3",
     "path-to-regexp": "0.1.7",
