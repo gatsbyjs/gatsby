@@ -1,8 +1,8 @@
 ---
-title: Creating Pages
+title: Creating Routes
 ---
 
-There are multiple ways to create pages in Gatsby.
+There are multiple ways to create routes in Gatsby.
 
 ## Creating individual pages
 
