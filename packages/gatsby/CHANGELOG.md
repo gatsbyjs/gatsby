@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.2...gatsby@3.5.0-next.3) (2021-05-01)
+
+### Bug Fixes
+
+- **gatsby:** fix profiler for build ([#31116](https://github.com/gatsbyjs/gatsby/issues/31116)) ([643ea7a](https://github.com/gatsbyjs/gatsby/commit/643ea7af1d6e586e7963cb04b4e3d95fd23b5fb5))
+
+### Features
+
+- **gatsby:** enable gatsby-plugin-gatsby-cloud by default ([#30624](https://github.com/gatsbyjs/gatsby/issues/30624)) ([4259940](https://github.com/gatsbyjs/gatsby/commit/4259940f2b6d70ea7fb9f57d763dd6008caaceef))
+- **gatsby:** first pass at API functions docs ([#31066](https://github.com/gatsbyjs/gatsby/issues/31066)) ([88ca620](https://github.com/gatsbyjs/gatsby/commit/88ca6209a3f0cf4f0357df3e6047c17812b0ebac))
+
 # [3.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.1...gatsby@3.5.0-next.2) (2021-04-29)
 
 ### Bug Fixes
