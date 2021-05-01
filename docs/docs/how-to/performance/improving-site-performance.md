@@ -73,7 +73,7 @@ One of the lowest-hanging fruits is to set your scripts to load lazily rather th
 
 For slightly more effort, you can get additional performance gains; rather than loading third-party scripts from external sources, you can inline scripts in your code to reduce the cost of a network call.
 
-There are a number of ways to places to put an in-lined script, depending on how much you want to defer its execution.
+There are a number of places to put an inlined script, depending whether you need it to execute immediately upon loading or can defer execution.
 
 - _No deferring_: This is a good default. Put the script in [onPreRenderHTML](https://www.gatsbyjs.org/docs/ssr-apis/#onPreRenderHTML) to have it added to your document tree. You can place it lower in your DOM to have parsed and evaluated later.
 - _Some deferring_: You can place the script in [onClientEntry](https://www.gatsbyjs.org/docs/browser-apis/#onClientEntry) to have it execute after page load, but before the browser renders the page.
