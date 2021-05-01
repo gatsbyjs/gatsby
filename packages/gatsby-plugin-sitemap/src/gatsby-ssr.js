@@ -1,6 +1,6 @@
 import * as React from "react"
 import { withPrefix as fallbackWithPrefix, withAssetPrefix } from "gatsby"
-import { withoutTrailingSlash } from "./internals"
+import { posix } from "path"
 
 // TODO: Remove for v3 - Fix janky path/asset prefixing
 const withPrefix = withAssetPrefix || fallbackWithPrefix
@@ -17,7 +17,7 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
       key={`gatsby-plugin-sitemap`}
       rel="sitemap"
       type="application/xml"
-      href={withPrefix(withoutTrailingSlash(output) + `/sitemap-index.xml`)}
+      href={withPrefix(posix.join(output, `/sitemap-index.xml`))}
     />,
   ])
 }
