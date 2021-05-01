@@ -8,7 +8,7 @@ This guide will get you started in a few steps:
 
 1. Installing wrangler CLI
 
-Workers Sites requires [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/), a tool to upload your static files. The more straight forward way to install wrangler is with [npm](https://www.npmjs.com/), run the following command:
+Workers Sites requires [wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/), a tool to upload your static files. The most straight forward way to install wrangler is with [npm](https://www.npmjs.com/), run the following command:
 
 ```shell
 npm install -g @cloudflare/wrangler
