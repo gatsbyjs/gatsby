@@ -89,7 +89,7 @@ Now your site is available at gatsby-project.subdomain.workers.dev!
 
 6. CI with GitHub Actions
 
-Use wrangler's GitHub action [plugin](https://github.com/cloudflare/wrangler-action) to automatically deploy to Workers every time you push to master. Alternatively, you can use [Gatsby Cloud Hosting](https://www.gatsbyjs.com/products/cloud/hosting/) or [Cloudflare Pages](https://pages.cloudflare.com/).
+Use wrangler's GitHub action [plugin](https://github.com/cloudflare/wrangler-action) to automatically deploy to Workers every time you push to master. Alternatively, you can use [Gatsby Cloud Hosting](/products/cloud/hosting/) or [Cloudflare Pages](https://pages.cloudflare.com/).
 
 Once GitHub Actions is enabled on your repo, add a file to your project's root called `.github/workflows/main.yml` with the contents:
 
@@ -128,4 +128,3 @@ Set up `CF_API_TOKEN` in GitHub secrets with appropriate values from [Quick Star
 
 - [Quickstart for Workers Sites](https://developers.cloudflare.com/workers/sites/start-from-existing/)
 - [GitHub Action wrangler plugin](https://github.com/cloudflare/wrangler-action)
-- [Gatsby Cloud Hosting](/docs/how-to/previews-deploys/hosting/deploying-to-gatsby-cloud.md)
