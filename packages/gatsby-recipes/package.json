@@ -82,7 +82,7 @@
     "ink-select-input": "^4.2.0",
     "ink-spinner": "^4.0.1",
     "react": "^16.12.0",
-    "react-reconciler": "^0.25.1",
+    "react-reconciler": "^0.26.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.34.2",
     "rollup-plugin-auto-external": "^2.0.0",
