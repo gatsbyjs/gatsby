@@ -21,7 +21,7 @@ describe(`pluginOptionsSchema`, () => {
         "entryLimit": 45000,
         "excludes": Array [],
         "filterPages": [Function],
-        "output": "/sitemap",
+        "output": "/",
         "query": "{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }",
         "resolvePagePath": [Function],
         "resolvePages": [Function],
