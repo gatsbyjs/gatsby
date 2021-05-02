@@ -54,7 +54,7 @@ The [`default config`](https://github.com/gatsbyjs/gatsby/blob/master/packages/g
 
 The options are as follows:
 
-- `output` (string = `/sitemap`) Folder path where sitemaps are stored.
+- `output` (string = `/`) Folder path where sitemaps are stored.
 - `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
 - `entryLimit` (number = 45000) Number of entries per sitemap file, a sitemap index and multiple sitemaps are created if you have more entries.
 - `excludes` (string[] = []) An array of paths to exclude from the sitemap. While this is usually an array of strings it is possible to enter other data types into this array for custom filtering. Doing so will require customization of the [`filterPages`](#filterPages) function.
