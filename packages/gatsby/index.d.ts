@@ -1531,7 +1531,7 @@ type Send<T> = (body: T) => void
 /**
  * Gatsby Function route response
  */
-export interface GatsbyFunctionResponse extends ServerResponse {
+export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
   /**
    * Send `any` data in response
    */
