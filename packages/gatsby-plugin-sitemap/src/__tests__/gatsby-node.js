@@ -155,4 +155,42 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       expect(page.url).toEqual(expect.stringContaining(prefix))
     })
   })
+
+  it(`should output modified paths to sitemap`, async () => {
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: {
+        site: {
+          siteMetadata: {
+            siteUrl: `http://dummy.url`,
+          },
+        },
+        allSitePage: {
+          nodes: [
+            {
+              path: `/page-1`,
+            },
+            {
+              path: `/page-2`,
+            },
+          ],
+        },
+      },
+    })
+    const prefix = `/test`
+    const subdir = `/subdir`
+    const options = {
+      output: subdir,
+    }
+    await onPostBuild(
+      { graphql, pathPrefix: prefix, reporter },
+      await schema.validateAsync(options)
+    )
+    expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].publicBasePath).toBe(
+      path.posix.join(prefix, subdir)
+    )
+    expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].destinationDir).toBe(
+      path.join(`public`, subdir)
+    )
+  })
 })
