@@ -924,7 +924,7 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                   originalFieldConfig
                 )
               }
-            } else if (fieldTypeName) {
+            } else {
               report.warn(
                 `\`createResolvers\` passed resolvers for field ` +
                   `\`${typeName}.${fieldName}\` with type \`${fieldTypeName}\`. ` +
@@ -932,12 +932,6 @@ const addCustomResolveFunctions = async ({ schemaComposer, parentSpan }) => {
                   `on the type. Use \`createTypes\` to override type fields.`
               )
             }
-          } else {
-            tc.addFields({
-              [fieldName]: fieldConfig,
-            })
-            // See resetOverriddenThirdPartyTypeFields for explanation
-            tc.setFieldExtension(fieldName, `createdFrom`, `createResolvers`)
           }
         })
       } else if (!ignoreNonexistentTypes) {
