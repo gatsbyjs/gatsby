@@ -311,7 +311,7 @@ You'll often want to link between pages — Let's look at routing in a Gatsby si
 
 ```jsx:title=src/pages/index.js
 import React from "react"
-import { Link } from "gatsby" // highlight-line
+import { Link } from "gatsby-link" // highlight-line
 import Header from "../components/header"
 
 export default function Home() {
