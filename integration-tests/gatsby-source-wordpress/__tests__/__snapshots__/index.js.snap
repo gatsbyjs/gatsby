@@ -1842,6 +1842,7 @@ Array [
       "id",
       "isFrontPage",
       "isPostsPage",
+      "isPrivacyPage",
       "isRevision",
       "lastEditedBy",
       "link",
@@ -3159,6 +3160,7 @@ Array [
       "slug",
       "status",
       "template",
+      "terms",
       "title",
       "uri",
     ],
@@ -3173,6 +3175,25 @@ Array [
       "node",
     ],
     "name": "ActionMonitorActionToPreviewConnectionEdge",
+  },
+  Object {
+    "fields": Array [
+      "edges",
+      "nodes",
+      "pageInfo",
+    ],
+    "name": "ActionMonitorActionToTermNodeConnection",
+  },
+  Object {
+    "fields": Array [
+      "cursor",
+      "node",
+    ],
+    "name": "ActionMonitorActionToTermNodeConnectionEdge",
+  },
+  Object {
+    "fields": null,
+    "name": "ActionMonitorActionToTermNodeConnectionWhereArgs",
   },
   Object {
     "fields": Array [
@@ -4386,6 +4407,7 @@ Array [
       "isFrontPage",
       "isPostsPage",
       "isPreview",
+      "isPrivacyPage",
       "isRestricted",
       "isRevision",
       "lastEditedBy",
@@ -4930,9 +4952,6 @@ Array [
   },
   Object {
     "fields": Array [
-      "updateCategory",
-      "updatePostFormat",
-      "updateTag",
       "createActionMonitorAction",
       "createCategory",
       "createComment",
@@ -4963,11 +4982,14 @@ Array [
       "restoreComment",
       "sendPasswordResetEmail",
       "updateActionMonitorAction",
+      "updateCategory",
       "updateComment",
       "updateMediaItem",
       "updatePage",
       "updatePost",
+      "updatePostFormat",
       "updateSettings",
+      "updateTag",
       "updateTranslationFilterTest",
       "updateTypeLimit0Test",
       "updateTypeLimitTest",
