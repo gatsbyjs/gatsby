@@ -215,14 +215,18 @@ export class AnalyticsTracker {
   }
 
   getGatsbyVersion(): SemVer {
-    const packageInfo = require(join(
-      process.cwd(),
-      `node_modules`,
-      `gatsby`,
-      `package.json`
-    ))
     try {
-      return packageInfo.version
+      const packageJson = join(
+        require
+          .resolve(`gatsby`)
+          .split(sep) // Resolve where current gatsby would be loaded from.
+          .slice(0, -3) // drop cache-dir/commonjs/gatsby-browser-entry.js
+          .join(sep),
+        `package.json`
+      )
+
+      const { version } = JSON.parse(fs.readFileSync(packageJson, `utf-8`))
+      return version
     } catch (e) {
       // ignore
     }
