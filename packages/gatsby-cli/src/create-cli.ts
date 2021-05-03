@@ -429,7 +429,7 @@ function buildLocalCommands(cli: yargs.Argv, isLocalSite: boolean): void {
     }: yargs.Arguments<{
       cmd: string | undefined
     }>) => {
-      const pluginHandler = require(`./handlers/plugin`)
+      const pluginHandler = require(`./handlers/plugin`).default
       await pluginHandler(siteInfo.directory, cmd)
     },
   })
