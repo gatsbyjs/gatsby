@@ -622,8 +622,7 @@ module.exports = {
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
           })
-          const status = process.env.GATSBY_EXPERIMENTAL_DEV_SSR ? 404 : 200
-          res.status(status).send(renderResponse)
+          res.status(200).send(renderResponse)
         } catch (e) {
           report.error(e)
           res.send(e).status(500)
