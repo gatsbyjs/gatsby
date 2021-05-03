@@ -7,7 +7,12 @@ import compression from "compression"
 import { graphqlHTTP, OptionsData } from "express-graphql"
 import graphqlPlayground from "graphql-playground-middleware-express"
 import graphiqlExplorer from "gatsby-graphiql-explorer"
-import { formatError, FragmentDefinitionNode, Kind } from "graphql"
+import {
+  formatError,
+  FragmentDefinitionNode,
+  GraphQLFormattedError,
+  Kind,
+} from "graphql"
 import { isCI } from "gatsby-core-utils"
 import http from "http"
 import https from "https"
@@ -232,10 +237,14 @@ module.exports = {
             context: {},
             customContext: schemaCustomization.context,
           }),
-          customFormatErrorFn(err) {
+          customFormatErrorFn(
+            err
+          ): GraphQLFormattedError<{ stack: Array<string> }> {
             return {
               ...formatError(err),
-              stack: err.stack ? err.stack.split(`\n`) : [],
+              extensions: {
+                stack: err.stack ? err.stack.split(`\n`) : [],
+              },
             }
           },
         }
