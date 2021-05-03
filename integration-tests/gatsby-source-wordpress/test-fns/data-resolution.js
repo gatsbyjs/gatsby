@@ -6,8 +6,6 @@ const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
 
-const isWarmCache = process.env.WARM_CACHE
-
 const { testResolvedData } = require("./test-utils/test-resolved-data")
 const { queries } = require("./test-utils/queries")
 
@@ -15,6 +13,7 @@ const { incrementalIt } = require(`./test-utils/incremental-it`)
 
 jest.setTimeout(100000)
 
+const isWarmCache = process.env.WARM_CACHE
 const url = `http://localhost:8000/___graphql`
 
 describe(`data resolution`, () => {
