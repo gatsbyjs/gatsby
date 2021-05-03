@@ -622,7 +622,7 @@ module.exports = {
             htmlComponentRendererPath: pageRenderer,
             directory: program.directory,
           })
-          res.status(200).send(renderResponse)
+          res.status(404).send(renderResponse)
         } catch (e) {
           report.error(e)
           res.send(e).status(500)
