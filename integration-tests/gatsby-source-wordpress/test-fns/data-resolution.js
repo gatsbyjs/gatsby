@@ -175,8 +175,6 @@ describe(`data resolution`, () => {
       query: queries.pages,
     })
 
-    console.log(result)
-
     expect(result).toMatchSnapshot()
 
     expect(result.data.testPage.title).toEqual(
