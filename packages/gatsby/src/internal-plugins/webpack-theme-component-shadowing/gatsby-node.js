@@ -10,7 +10,7 @@ exports.onCreateWebpackConfig = (
     resolve: {
       plugins: [
         new GatsbyThemeComponentShadowingResolverPlugin({
-          extensions: getConfig().resolve.extensions,
+          extensions: program.extensions,
           themes: flattenedPlugins.map(plugin => {
             return {
               themeDir: plugin.pluginFilepath,

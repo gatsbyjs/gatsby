@@ -6,7 +6,7 @@ This guide will show you how to configure your images, including choosing layout
 
 ## Components
 
-The Gatsby Image plugin includes two components to display responsive images on your site, used for static and dynamic images.
+The Gatsby Image plugin includes two components to display responsive images on your site. One is used for static and the other for dynamic images.
 
 - **[`StaticImage`](#staticimage):** Use this if the image is the same every time the component is used. _Examples: site logo, index page hero image_
 - **[`GatsbyImage`](#gatsbyimage):** Use this if the image is passed into the component as a prop, or otherwise changes. _Examples: Blog post hero image, author avatar_

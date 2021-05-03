@@ -139,6 +139,10 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 **Start Learning Gatsby: [Follow the Tutorial](https://www.gatsbyjs.com/tutorial/) · [Read the Docs](https://www.gatsbyjs.com/docs/)**
 
+## 🚢 Release Notes
+
+Wondering what we've shipped recently? Check out our [release notes](https://www.gatsbyjs.com/docs/reference/release-notes) for key highlights, performance improvements, new features, and notable bugfixes.
+
 ## 💼 Migration Guides
 
 Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v3 to your site without starting from scratch!
@@ -162,10 +166,7 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 ### Contributing to Gatsby v2
 
-The maintenance window for Gatsby v2 closes on April 1, 2021.
-
-- During this maintenance window, we will continue to address reported bugs in Gatsby v2.
-- After the maintenance window closes, we will only accept critical security updates for Gatsby v2.
+We are only accepting critical security patches for Gatsby v2.
 
 ## 📝 License
 
@@ -173,6 +174,6 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks goes out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
+Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
 
 A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.

@@ -441,7 +441,7 @@ ${getLowerRequestConcurrencyOptionMessage()}`,
       id: CODES.RequestDenied,
       context: {
         sourceMessage: formatLogMessage(
-          `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to whitelist your IP address or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`
+          `${e.message}\n\nThe GraphQL request was forbidden.\nIf you are using a security plugin like WordFence or a server firewall you may need to add your IP address to the allow list or adjust your firewall settings for your GraphQL endpoint.\n\n${errorContext}`
         ),
       },
     })

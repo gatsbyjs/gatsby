@@ -128,6 +128,7 @@ scope, and more.
 | [`rehypePlugins`](#rehype-plugins)                                        | `[]`                                   | Specify rehype plugins                                                |
 | [`mediaTypes`](#media-types)                                              | `["text/markdown", "text/x-markdown"]` | Determine which media types are processed by MDX                      |
 | [`shouldBlockNodeFromTransformation`](#shouldblocknodefromtransformation) | `(node) => false`                      | Disable MDX transformation for nodes where this function returns true |
+| [`commonmark`](#commonmark)                                               | `false`                                | Use CommonMark                                                        |
 
 #### Extensions
 
@@ -465,6 +466,10 @@ module.exports = {
   ],
 }
 ```
+
+#### CommonMark
+
+MDX will be parsed using CommonMark.
 
 ### Components
 

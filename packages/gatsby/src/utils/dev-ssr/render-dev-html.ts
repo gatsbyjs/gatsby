@@ -1,6 +1,6 @@
 import JestWorker from "jest-worker"
 import fs from "fs-extra"
-import { joinPath } from "gatsby-core-utils"
+import nodePath from "path"
 import report from "gatsby-cli/lib/reporter"
 import { isCI } from "gatsby-core-utils"
 
@@ -93,7 +93,11 @@ const ensurePathComponentInSSRBundle = async (
   }
 
   // Now check if it's written to public/render-page.js
-  const htmlComponentRendererPath = joinPath(directory, `public/render-page.js`)
+  const htmlComponentRendererPath = nodePath.join(
+    directory,
+    `public/render-page.js`
+  )
+
   // This search takes 1-10ms
   // We do it as there can be a race conditions where two pages
   // are requested at the same time which means that both are told render-page.js
@@ -215,12 +219,15 @@ export const renderDevHTML = ({
       isClientOnlyPage = true
     }
 
+    const publicDir = nodePath.join(directory, `public`)
+
     try {
       const htmlString = await worker.renderHTML({
         path,
         componentPath: pageObj.component,
         htmlComponentRendererPath,
         directory,
+        publicDir,
         isClientOnlyPage,
       })
       return resolve(htmlString)

@@ -38,16 +38,3 @@ options: {
 ```
 
 Note: The `ssr` option will be ignored. Gatsby will apply it automatically when needed.
-
-### Breaking changes history
-
-<!-- Please keep the breaking changes list ordered with the newest change at the top -->
-
-#### v3.0.0
-
-support Gatsby v2 only
-
-#### v2.0.1
-
-`styled-components` is moved to a peer dependency. Installing the package
-alongside `gatsby-plugin-styled-components` is now required. Use `npm install styled-components`

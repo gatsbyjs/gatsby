@@ -2,7 +2,7 @@
   "name": "gatsby-source-wordpress",
   "description": "Source data from WordPress in an efficient and scalable way.",
   "author": "Tyler Barnes <tylerdbarnes@gmail.com>",
-  "version": "5.3.0-next.1",
+  "version": "5.5.0-next.2",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
@@ -28,10 +28,10 @@
     "file-type": "^15.0.1",
     "filesize": "^6.1.0",
     "fs-extra": "^9.0.1",
-    "gatsby-core-utils": "^2.3.0-next.0",
-    "gatsby-image": "^3.3.0-next.0",
-    "gatsby-plugin-catch-links": "^3.3.0-next.0",
-    "gatsby-source-filesystem": "^3.3.0-next.0",
+    "gatsby-core-utils": "^2.5.0-next.0",
+    "gatsby-image": "^3.5.0-next.0",
+    "gatsby-plugin-catch-links": "^3.5.0-next.0",
+    "gatsby-source-filesystem": "^3.5.0-next.0",
     "glob": "^7.1.6",
     "got": "^11.7.0",
     "graphql-query-compress": "^1.2.2",
@@ -53,8 +53,8 @@
     "@types/semver": "^7.3.4",
     "babel-plugin-import-globals": "^2.0.0",
     "babel-plugin-module-resolver": "4.0.0",
-    "babel-preset-gatsby": "^1.3.0-next.1",
-    "babel-preset-gatsby-package": "^1.3.0-next.0",
+    "babel-preset-gatsby": "^1.5.0-next.0",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3",
     "identity-obj-proxy": "^3.0.0",
     "react-test-renderer": "^16.12.0",
@@ -85,9 +85,7 @@
     "prepare": "npm run build",
     "build": "rimraf dist && babel src --out-dir dist --ignore **/__tests__ --extensions \".ts,.js\" --source-maps && npm run generate-plugin-options-docs",
     "watch": "npm run build && babel -w src --out-dir dist --ignore **/__tests__ --verbose --extensions \".ts,.js\" --source-maps",
-    "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js",
-    "docker-start": "docker-compose up --build --force-recreate -V --remove-orphans",
-    "docker-rebuild": "./docker/rebuild.sh"
+    "generate-plugin-options-docs": "node ./generate-plugin-options-docs.js"
   },
   "engines": {
     "node": ">=12.13.0"

@@ -110,7 +110,7 @@ module.exports = {
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      const rendererPath = await buildRenderer(
+      const { rendererPath } = await buildRenderer(
         program,
         Stage.DevelopHTML,
         activity.span
@@ -141,7 +141,8 @@ module.exports = {
   let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    pageRenderer = await buildRenderer(program, Stage.DevelopHTML)
+    pageRenderer = (await buildRenderer(program, Stage.DevelopHTML))
+      .rendererPath
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
   } else {

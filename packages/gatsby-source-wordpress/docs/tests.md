@@ -1,17 +1,11 @@
-# Running Tests
+# Tests
 
-- `yarn test` will run the entire suite
-- `yarn test-schema` will run the schema integration suite and the increment.
-- `yarn test-schema-watch` will watch the first schema suite.
-- `yarn test-schema-first` will run the first schema suite. you can pass jest arguments here
-- `yarn test-schema-increment` will run the second schema suite
-- `yarn test-build` will run the build integration suite
-- `yarn test-build-watch` will watch the build integration suite
-- `yarn test-update` will run `-u` for all schema and build integration suites.
+This package contains unit tests only. For the integration tests for this package, look in the root of the Gatsby monorepo at `[gatsby-monorepo]/integration-tests/gatsby-source-wordpress`.
 
-# Changing test suite WordPress plugin versions in docker
+## Running Tests
 
-1. Edit the versions as desired in `docker-compose.yml` in the `build.args` for `wordpress` service
-2. Run `yarn docker-start -d` to detach, force re-build images and re-create containers, and ensure the plugins directory (volume) is renewed between builds
-3. Run `yarn test-schema`. You should see a diff in the snapshots that demonstrates the change in schema with the changed plugin versions.
-4. Run `yarn test-update` to update all test snapshots.
+To run these tests check the `package.json` in the root of the Gatsby monorepo. There are npm scripts for running unit tests and integration tests.
+
+## Updating the WP db seed data
+
+If you start up docker by running `npm run docker-clean-start` at `[gatsby-monorepo]/integration-tests/gatsby-source-wordpress`, WordPress will be available at `http://localhost:8001`. You can login with the credentials provided in the `.env.test` file and modify the WP instance. The db is exposed on `http://localhost:3306` and you can login there to export/import the db. Once you've modified the db to your needs, use the [TablePlus app](https://tableplus.com/) to export the db. Replace `[gatsby-monorepo]/integration-tests/gatsby-source-wordpress/docker/seed/backup.sql` with your exported db (keep the name as backup.sql).
