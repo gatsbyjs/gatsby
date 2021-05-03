@@ -25,11 +25,11 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpMediaItem`].nodes).toBeTruthy()
     expect(data[`allWpMediaItem`].nodes).toMatchSnapshot()
-    expect(data[`allWpMediaItem`].totalCount).toBe(7)
+    expect(data[`allWpMediaItem`].totalCount).toBe(8)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(3)
+    expect(data[`allWpPage`].totalCount).toBe(4)
     expect(data[`allWpPost`].totalCount).toBe(1)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -78,7 +78,7 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(14)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(16)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -213,5 +213,43 @@ describe(`data resolution`, () => {
     })
 
     expect(result).toMatchSnapshot()
+  })
+
+  it(`resolves Yoast SEO data`, async () => {
+    const gatsbyResult = await fetchGraphql({
+      url,
+      query: /* GraphQL */ `
+        {
+          wp {
+            ${queries.yoastRootFields}
+          }
+          wpPage(title: {eq: "Yoast SEO"}) {
+            ${queries.pageYoastFields}
+          }
+        }
+      `,
+    })
+
+    const { data: WPGraphQLData } = await fetchGraphql({
+      url: process.env.WPGRAPHQL_URL,
+      query: /* GraphQL */ `
+      {
+        ${queries.yoastRootFields}
+        page(id: "cG9zdDo3ODY4") {
+          ${queries.pageYoastFields}
+        }
+      }
+    `,
+    })
+
+    const wpGraphQLPageNormalizedPaths = JSON.parse(
+      JSON.stringify(WPGraphQLData.page).replace(
+        /http:\/\/localhost:8001/gm,
+        ``
+      )
+    )
+
+    expect(gatsbyResult.data.wpPage).toStrictEqual(wpGraphQLPageNormalizedPaths)
+    expect(gatsbyResult.data.wp.seo).toStrictEqual(WPGraphQLData.seo)
   })
 })

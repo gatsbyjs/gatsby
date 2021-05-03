@@ -67,6 +67,10 @@ Array [
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/08/1003-1181x1772-1.jpg",
   },
   Object {
+    "id": "cG9zdDo3NzYw",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/08/10-2500x1667-1.jpg",
+  },
+  Object {
     "id": "cG9zdDoxMDQ0NQ==",
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample.doc",
   },
@@ -341,6 +345,21 @@ Object {
             "nodes": Array [],
           },
         },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Yoast SEO",
+          "uri": "/beautiful_slug/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
       ],
     },
     "testPage": Object {
@@ -397,6 +416,21 @@ Object {
           },
           "title": "ACF Field Test",
           "uri": "/acf-field-test/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Yoast SEO",
+          "uri": "/beautiful_slug/",
           "wpChildren": Object {
             "nodes": Array [],
           },
@@ -522,6 +556,9 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
+                "title": "Yoast SEO",
+              },
+              Object {
                 "title": "ACF Field Test",
               },
               Object {
@@ -560,6 +597,9 @@ Object {
           "name": "admin",
           "pages": Object {
             "nodes": Array [
+              Object {
+                "title": "Yoast SEO",
+              },
               Object {
                 "title": "ACF Field Test",
               },
@@ -622,6 +662,7 @@ Array [
       "generalSettings",
       "readingSettings",
       "schemaMd5",
+      "seo",
       "viewer",
       "wpGatsby",
       "writingSettings",
@@ -701,6 +742,7 @@ Array [
       "parentDatabaseId",
       "parentId",
       "posts",
+      "seo",
       "slug",
       "taxonomy",
       "termGroupId",
@@ -1407,6 +1449,7 @@ Array [
       "wpParent",
       "parentDatabaseId",
       "parentId",
+      "seo",
       "sizes",
       "slug",
       "sourceUrl",
@@ -1852,6 +1895,7 @@ Array [
       "wpParent",
       "parentDatabaseId",
       "parentId",
+      "seo",
       "slug",
       "status",
       "template",
@@ -2060,6 +2104,7 @@ Array [
       "pingStatus",
       "pinged",
       "postFormats",
+      "seo",
       "slug",
       "status",
       "tags",
@@ -2119,6 +2164,7 @@ Array [
       "link",
       "name",
       "posts",
+      "seo",
       "slug",
       "taxonomy",
       "termGroupId",
@@ -2315,6 +2361,40 @@ Array [
   },
   Object {
     "fields": Array [
+      "breadcrumbs",
+      "canonical",
+      "cornerstone",
+      "focuskw",
+      "fullHead",
+      "metaDesc",
+      "metaKeywords",
+      "metaRobotsNofollow",
+      "metaRobotsNoindex",
+      "opengraphAuthor",
+      "opengraphDescription",
+      "opengraphImage",
+      "opengraphModifiedTime",
+      "opengraphPublishedTime",
+      "opengraphPublisher",
+      "opengraphSiteName",
+      "opengraphTitle",
+      "opengraphType",
+      "opengraphUrl",
+      "readingTime",
+      "schema",
+      "title",
+      "twitterDescription",
+      "twitterImage",
+      "twitterTitle",
+    ],
+    "name": "WpPostTypeSEO",
+  },
+  Object {
+    "fields": null,
+    "name": "WpPostTypeSEOFilterInput",
+  },
+  Object {
+    "fields": Array [
       "postsPerPage",
     ],
     "name": "WpReadingSettings",
@@ -2322,6 +2402,358 @@ Array [
   Object {
     "fields": null,
     "name": "WpReadingSettingsFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "archivePrefix",
+      "boldLast",
+      "enabled",
+      "homeText",
+      "notFoundText",
+      "prefix",
+      "searchPrefix",
+      "separator",
+      "showBlogPage",
+    ],
+    "name": "WpSEOBreadcrumbs",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOBreadcrumbsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOCardType",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOCardTypeQueryOperatorInput",
+  },
+  Object {
+    "fields": Array [
+      "breadcrumbs",
+      "contentTypes",
+      "openGraph",
+      "redirects",
+      "schema",
+      "social",
+      "webmaster",
+    ],
+    "name": "WpSEOConfig",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOConfigFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "archive",
+      "metaDesc",
+      "metaRobotsNoindex",
+      "schema",
+      "schemaType",
+      "title",
+    ],
+    "name": "WpSEOContentType",
+  },
+  Object {
+    "fields": Array [
+      "archiveLink",
+      "breadcrumbTitle",
+      "fullHead",
+      "hasArchive",
+      "metaDesc",
+      "metaRobotsNoindex",
+      "title",
+    ],
+    "name": "WpSEOContentTypeArchive",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOContentTypeArchiveFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOContentTypeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "actionMonitorAction",
+      "mediaItem",
+      "page",
+      "post",
+      "translationFilterTest",
+      "typeLimit0Test",
+      "typeLimitTest",
+    ],
+    "name": "WpSEOContentTypes",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOContentTypesFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "defaultImage",
+      "frontPage",
+    ],
+    "name": "WpSEOOpenGraph",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOOpenGraphFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "description",
+      "image",
+      "title",
+    ],
+    "name": "WpSEOOpenGraphFrontPage",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOOpenGraphFrontPageFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "raw",
+    ],
+    "name": "WpSEOPageInfoSchema",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPageInfoSchemaFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "text",
+      "url",
+    ],
+    "name": "WpSEOPostTypeBreadcrumbs",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPostTypeBreadcrumbsFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPostTypeBreadcrumbsFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "articleType",
+      "pageType",
+      "raw",
+    ],
+    "name": "WpSEOPostTypeSchema",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOPostTypeSchemaFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "format",
+      "origin",
+      "target",
+      "type",
+    ],
+    "name": "WpSEORedirect",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEORedirectFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEORedirectFilterListInput",
+  },
+  Object {
+    "fields": Array [
+      "companyLogo",
+      "companyName",
+      "companyOrPerson",
+      "inLanguage",
+      "logo",
+      "personLogo",
+      "personName",
+      "siteName",
+      "siteUrl",
+      "wordpressSiteName",
+    ],
+    "name": "WpSEOSchema",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSchemaFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "facebook",
+      "instagram",
+      "linkedIn",
+      "mySpace",
+      "pinterest",
+      "twitter",
+      "wikipedia",
+      "youTube",
+    ],
+    "name": "WpSEOSocial",
+  },
+  Object {
+    "fields": Array [
+      "defaultImage",
+      "url",
+    ],
+    "name": "WpSEOSocialFacebook",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialFacebookFilterInput",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "WpSEOSocialInstagram",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialInstagramFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "WpSEOSocialLinkedIn",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialLinkedInFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "WpSEOSocialMySpace",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialMySpaceFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "metaTag",
+      "url",
+    ],
+    "name": "WpSEOSocialPinterest",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialPinterestFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "cardType",
+      "username",
+    ],
+    "name": "WpSEOSocialTwitter",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialTwitterFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "WpSEOSocialWikipedia",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialWikipediaFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "WpSEOSocialYoutube",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOSocialYoutubeFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "raw",
+    ],
+    "name": "WpSEOTaxonomySchema",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOTaxonomySchemaFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "fullHead",
+      "metaDesc",
+      "metaRobotsNofollow",
+      "metaRobotsNoindex",
+      "schema",
+      "social",
+      "title",
+    ],
+    "name": "WpSEOUser",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOUserFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "raw",
+    ],
+    "name": "WpSEOUserSchema",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOUserSchemaFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "facebook",
+      "instagram",
+      "linkedIn",
+      "mySpace",
+      "pinterest",
+      "soundCloud",
+      "twitter",
+      "wikipedia",
+      "youTube",
+    ],
+    "name": "WpSEOUserSocial",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOUserSocialFilterInput",
+  },
+  Object {
+    "fields": Array [
+      "baiduVerify",
+      "googleVerify",
+      "msVerify",
+      "yandexVerify",
+    ],
+    "name": "WpSEOWebmaster",
+  },
+  Object {
+    "fields": null,
+    "name": "WpSEOWebmasterFilterInput",
   },
   Object {
     "fields": Array [
@@ -2361,6 +2793,7 @@ Array [
       "link",
       "name",
       "posts",
+      "seo",
       "slug",
       "taxonomy",
       "termGroupId",
@@ -2527,6 +2960,39 @@ Array [
     "name": "WpTaxonomyGroupConnection",
   },
   Object {
+    "fields": Array [
+      "breadcrumbs",
+      "canonical",
+      "cornerstone",
+      "focuskw",
+      "fullHead",
+      "metaDesc",
+      "metaKeywords",
+      "metaRobotsNofollow",
+      "metaRobotsNoindex",
+      "opengraphAuthor",
+      "opengraphDescription",
+      "opengraphImage",
+      "opengraphModifiedTime",
+      "opengraphPublishedTime",
+      "opengraphPublisher",
+      "opengraphSiteName",
+      "opengraphTitle",
+      "opengraphType",
+      "opengraphUrl",
+      "schema",
+      "title",
+      "twitterDescription",
+      "twitterImage",
+      "twitterTitle",
+    ],
+    "name": "WpTaxonomySEO",
+  },
+  Object {
+    "fields": null,
+    "name": "WpTaxonomySEOFilterInput",
+  },
+  Object {
     "fields": null,
     "name": "WpTaxonomySortInput",
   },
@@ -2633,6 +3099,7 @@ Array [
       "link",
       "modified",
       "modifiedGmt",
+      "seo",
       "slug",
       "status",
       "template",
@@ -2715,6 +3182,7 @@ Array [
       "link",
       "modified",
       "modifiedGmt",
+      "seo",
       "slug",
       "status",
       "template",
@@ -2797,6 +3265,7 @@ Array [
       "link",
       "modified",
       "modifiedGmt",
+      "seo",
       "slug",
       "status",
       "template",
@@ -2882,6 +3351,7 @@ Array [
       "pages",
       "posts",
       "roles",
+      "seo",
       "slug",
       "translationFilterTests",
       "typeLimit0Tests",
@@ -3157,6 +3627,7 @@ Array [
       "referencedNodePluralName",
       "referencedNodeSingularName",
       "referencedNodeStatus",
+      "seo",
       "slug",
       "status",
       "template",
@@ -3237,6 +3708,7 @@ Array [
       "parentDatabaseId",
       "parentId",
       "posts",
+      "seo",
       "slug",
       "taxonomy",
       "termGroupId",
@@ -4093,6 +4565,7 @@ Array [
       "parentId",
       "previewRevisionDatabaseId",
       "previewRevisionId",
+      "seo",
       "sizes",
       "slug",
       "sourceUrl",
@@ -4423,6 +4896,7 @@ Array [
       "previewRevisionId",
       "revisionOf",
       "revisions",
+      "seo",
       "slug",
       "status",
       "template",
@@ -4624,6 +5098,7 @@ Array [
       "previewRevisionId",
       "revisionOf",
       "revisions",
+      "seo",
       "slug",
       "status",
       "tags",
@@ -4656,6 +5131,7 @@ Array [
       "link",
       "name",
       "posts",
+      "seo",
       "slug",
       "taxonomy",
       "termGroupId",
@@ -4767,6 +5243,7 @@ Array [
   Object {
     "fields": Array [
       "cursor",
+      "isPrimary",
       "node",
     ],
     "name": "PostToCategoryConnectionEdge",
@@ -4805,6 +5282,7 @@ Array [
   Object {
     "fields": Array [
       "cursor",
+      "isPrimary",
       "node",
     ],
     "name": "PostToPostFormatConnectionEdge",
@@ -4849,6 +5327,7 @@ Array [
   Object {
     "fields": Array [
       "cursor",
+      "isPrimary",
       "node",
     ],
     "name": "PostToTagConnectionEdge",
@@ -4905,6 +5384,36 @@ Array [
       "viewItems",
     ],
     "name": "PostTypeLabelDetails",
+  },
+  Object {
+    "fields": Array [
+      "breadcrumbs",
+      "canonical",
+      "cornerstone",
+      "focuskw",
+      "fullHead",
+      "metaDesc",
+      "metaKeywords",
+      "metaRobotsNofollow",
+      "metaRobotsNoindex",
+      "opengraphAuthor",
+      "opengraphDescription",
+      "opengraphImage",
+      "opengraphModifiedTime",
+      "opengraphPublishedTime",
+      "opengraphPublisher",
+      "opengraphSiteName",
+      "opengraphTitle",
+      "opengraphType",
+      "opengraphUrl",
+      "readingTime",
+      "schema",
+      "title",
+      "twitterDescription",
+      "twitterImage",
+      "twitterTitle",
+    ],
+    "name": "PostTypeSEO",
   },
   Object {
     "fields": Array [
@@ -5035,6 +5544,7 @@ Array [
       "registeredStylesheets",
       "revisions",
       "schemaMd5",
+      "seo",
       "tag",
       "tags",
       "taxonomies",
@@ -5489,6 +5999,248 @@ Array [
     "name": "RootQueryToUserRoleConnectionEdge",
   },
   Object {
+    "fields": Array [
+      "archivePrefix",
+      "boldLast",
+      "enabled",
+      "homeText",
+      "notFoundText",
+      "prefix",
+      "searchPrefix",
+      "separator",
+      "showBlogPage",
+    ],
+    "name": "SEOBreadcrumbs",
+  },
+  Object {
+    "fields": null,
+    "name": "SEOCardType",
+  },
+  Object {
+    "fields": Array [
+      "breadcrumbs",
+      "contentTypes",
+      "openGraph",
+      "redirects",
+      "schema",
+      "social",
+      "webmaster",
+    ],
+    "name": "SEOConfig",
+  },
+  Object {
+    "fields": Array [
+      "archive",
+      "metaDesc",
+      "metaRobotsNoindex",
+      "schema",
+      "schemaType",
+      "title",
+    ],
+    "name": "SEOContentType",
+  },
+  Object {
+    "fields": Array [
+      "archiveLink",
+      "breadcrumbTitle",
+      "fullHead",
+      "hasArchive",
+      "metaDesc",
+      "metaRobotsNoindex",
+      "title",
+    ],
+    "name": "SEOContentTypeArchive",
+  },
+  Object {
+    "fields": Array [
+      "actionMonitorAction",
+      "mediaItem",
+      "page",
+      "post",
+      "translationFilterTest",
+      "typeLimit0Test",
+      "typeLimitTest",
+    ],
+    "name": "SEOContentTypes",
+  },
+  Object {
+    "fields": Array [
+      "defaultImage",
+      "frontPage",
+    ],
+    "name": "SEOOpenGraph",
+  },
+  Object {
+    "fields": Array [
+      "description",
+      "image",
+      "title",
+    ],
+    "name": "SEOOpenGraphFrontPage",
+  },
+  Object {
+    "fields": Array [
+      "raw",
+    ],
+    "name": "SEOPageInfoSchema",
+  },
+  Object {
+    "fields": Array [
+      "text",
+      "url",
+    ],
+    "name": "SEOPostTypeBreadcrumbs",
+  },
+  Object {
+    "fields": Array [
+      "schema",
+    ],
+    "name": "SEOPostTypePageInfo",
+  },
+  Object {
+    "fields": Array [
+      "articleType",
+      "pageType",
+      "raw",
+    ],
+    "name": "SEOPostTypeSchema",
+  },
+  Object {
+    "fields": Array [
+      "format",
+      "origin",
+      "target",
+      "type",
+    ],
+    "name": "SEORedirect",
+  },
+  Object {
+    "fields": Array [
+      "companyLogo",
+      "companyName",
+      "companyOrPerson",
+      "inLanguage",
+      "logo",
+      "personLogo",
+      "personName",
+      "siteName",
+      "siteUrl",
+      "wordpressSiteName",
+    ],
+    "name": "SEOSchema",
+  },
+  Object {
+    "fields": Array [
+      "facebook",
+      "instagram",
+      "linkedIn",
+      "mySpace",
+      "pinterest",
+      "twitter",
+      "wikipedia",
+      "youTube",
+    ],
+    "name": "SEOSocial",
+  },
+  Object {
+    "fields": Array [
+      "defaultImage",
+      "url",
+    ],
+    "name": "SEOSocialFacebook",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "SEOSocialInstagram",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "SEOSocialLinkedIn",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "SEOSocialMySpace",
+  },
+  Object {
+    "fields": Array [
+      "metaTag",
+      "url",
+    ],
+    "name": "SEOSocialPinterest",
+  },
+  Object {
+    "fields": Array [
+      "cardType",
+      "username",
+    ],
+    "name": "SEOSocialTwitter",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "SEOSocialWikipedia",
+  },
+  Object {
+    "fields": Array [
+      "url",
+    ],
+    "name": "SEOSocialYoutube",
+  },
+  Object {
+    "fields": Array [
+      "raw",
+    ],
+    "name": "SEOTaxonomySchema",
+  },
+  Object {
+    "fields": Array [
+      "fullHead",
+      "metaDesc",
+      "metaRobotsNofollow",
+      "metaRobotsNoindex",
+      "schema",
+      "social",
+      "title",
+    ],
+    "name": "SEOUser",
+  },
+  Object {
+    "fields": Array [
+      "raw",
+    ],
+    "name": "SEOUserSchema",
+  },
+  Object {
+    "fields": Array [
+      "facebook",
+      "instagram",
+      "linkedIn",
+      "mySpace",
+      "pinterest",
+      "soundCloud",
+      "twitter",
+      "wikipedia",
+      "youTube",
+    ],
+    "name": "SEOUserSocial",
+  },
+  Object {
+    "fields": Array [
+      "baiduVerify",
+      "googleVerify",
+      "msVerify",
+      "yandexVerify",
+    ],
+    "name": "SEOWebmaster",
+  },
+  Object {
     "fields": null,
     "name": "SendPasswordResetEmailInput",
   },
@@ -5536,6 +6288,7 @@ Array [
       "link",
       "name",
       "posts",
+      "seo",
       "slug",
       "taxonomy",
       "termGroupId",
@@ -5625,6 +6378,35 @@ Array [
   Object {
     "fields": null,
     "name": "TaxonomyIdTypeEnum",
+  },
+  Object {
+    "fields": Array [
+      "breadcrumbs",
+      "canonical",
+      "cornerstone",
+      "focuskw",
+      "fullHead",
+      "metaDesc",
+      "metaKeywords",
+      "metaRobotsNofollow",
+      "metaRobotsNoindex",
+      "opengraphAuthor",
+      "opengraphDescription",
+      "opengraphImage",
+      "opengraphModifiedTime",
+      "opengraphPublishedTime",
+      "opengraphPublisher",
+      "opengraphSiteName",
+      "opengraphTitle",
+      "opengraphType",
+      "opengraphUrl",
+      "schema",
+      "title",
+      "twitterDescription",
+      "twitterImage",
+      "twitterTitle",
+    ],
+    "name": "TaxonomySEO",
   },
   Object {
     "fields": Array [
@@ -5750,6 +6532,7 @@ Array [
       "preview",
       "previewRevisionDatabaseId",
       "previewRevisionId",
+      "seo",
       "slug",
       "status",
       "template",
@@ -5797,6 +6580,7 @@ Array [
       "preview",
       "previewRevisionDatabaseId",
       "previewRevisionId",
+      "seo",
       "slug",
       "status",
       "template",
@@ -5844,6 +6628,7 @@ Array [
       "preview",
       "previewRevisionDatabaseId",
       "previewRevisionId",
+      "seo",
       "slug",
       "status",
       "template",
@@ -6043,6 +6828,7 @@ Array [
       "registeredDate",
       "revisions",
       "roles",
+      "seo",
       "slug",
       "translationFilterTests",
       "typeLimit0Tests",
@@ -6331,6 +7117,7 @@ Array [
       "endCursor",
       "hasNextPage",
       "hasPreviousPage",
+      "seo",
       "startCursor",
     ],
     "name": "WPPageInfo",
