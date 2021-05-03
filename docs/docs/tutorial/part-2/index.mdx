@@ -1,0 +1,167 @@
+---
+title: Use and Style React Components
+---
+
+import { Announcement } from 'gatsby-interface'
+
+## Introduction
+
+In the previous part of the Tutorial, you created your first Gatsby site and used Gatsby Cloud to deploy it to the internet.
+
+Now that you have everything all set up, it's time to make this site your own! In order to customize your site, you'll need to learn about React components and how Gatsby uses them.
+
+React is the JavaScript library that Gatsby uses under the hood to create user interfaces (UIs). In this part of the Tutorial, you'll learn about the different kinds of React **components** in Gatsby, which will help you create new pages and UI elements for your site.
+
+By the end of this part of the Tutorial, you will be able to:
+
+* Create **page components** to add new pages to your site
+* Use a **pre-built component** from another package
+* Create your own **reusable component**
+* Use **props** to change the way a component renders
+* Use the **`children`** prop to create wrapper components
+
+## A quick intro to React
+
+### What is React?
+
+Gatsby uses a JavaScript library called React to build UIs. With React, you can break down your UI into smaller, reusable pieces called **components**.
+
+For example, imagine the UI for a store's website. To build this site in React, you might have a `<Navbar>` component for the navigation menu, a `<Sidebar>` component for additional information displayed to the side of the main content, and a `<ProductGrid>` component to display all of the products for sale.
+
+You can also create components from other components. For example, you might decide to break down the `<ProductGrid>` component into a list of multiple `<ProductCard>` components, which each display the details about a single product. This pattern is called **composition**, since your larger `<ProductGrid>` component is *composed* of smaller `<ProductCard>` components.
+
+![GATSBY_EMPTY_ALT](./ui-built-from-components.png)
+
+// Task: Split the UI for the example site into components
+
+### A closer look at React components
+
+### Types of React components in a Gatsby site
+
+* page vs. building block components: difference in scope
+* pre-built vs. custom components: difference in how it's made (but both can be used the same way - by importing it into another page or building block component)
+
+## Create a new page component
+
+* New key React concept: How to create a component (3 steps)
+* Component type: page
+* Task: Create an /about page
+
+1. Create a new file: `src/pages/about.js`
+
+```js:title=src/pages/about.js
+import React from 'react'
+
+const AboutPage = () => {
+  return (
+    <main>
+      <title>About Me</title>
+      <h1>About Me</h1>
+      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    </main>
+  )
+}
+
+export default AboutPage
+```
+
+## Use the `<Link>` component
+
+* New React concept: components with props
+* Component type: pre-built building block
+* Task: Use the `<Link>` component to hard-code a navbar into the Home and About pages
+
+1. Add a Link to your about page.
+
+```js:title="src/pages/index.js"
+import React from 'react'
+// highlight-next-line
+import { Link } from 'gatsby'
+
+const AboutPage = () => {
+  return (
+    <main>
+      <title>About Me</title>
+      <h1>About Me</h1>
+      <Link to="/">Back to Home</Link>
+      <p>My name is Megan. I like teaching, video games, and dogs!</p>
+    </main>
+  )
+}
+
+export default AboutPage
+```
+
+1. Update your index page.
+
+```js:title=src/pages/index.js
+import * as React from "react"
+// highlight-next-line
+import { Link } from 'gatsby'
+
+const IndexPage = () => {
+  return (
+    <main>
+      <title>Home Page</title>
+      <h1>
+        Congratulations
+        <br />
+        <span>— you just made a Gatsby site! </span>
+        <span role="img" aria-label="Party popper emojis">
+          🎉🎉🎉
+        </span>
+      </h1>
+      {/* highlight-next-line */}
+      <Link to="/about">About</Link>
+    </main>
+  )
+}
+
+export default IndexPage
+```
+
+## Create a reusable layout component
+
+* New key React concept: components with the `children` prop
+* Component type: custom building block
+* Task: create a Layout component
+
+Notice: there are some repeated parts of our page layout. It's not a big deal now, but imagine how tedious it would be if your site had dozens (or even thousands) of pages. What if you wanted to make a change to the layout? You'd have to go and update every one of those thousands of files. Yuck.
+
+Instead, it would be better to have one common Layout component that you can use anywhere. That way, when you need to make updates, you only have to do it in one place. And those changes will automatically be applied to all your other files.
+
+// INSERT DIAGRAM TO HELP EXPLAIN THIS. Hard-coded links in every page, vs. one layout component that gets imported into every page.
+
+Now, instead of using someone else's building block component, you're creating your own.
+
+But how do you create a wrapper component? You need to learn about children.
+
+// KEY REACT CONCEPT: children prop
+
+1. Create a layout component. (It takes children.)
+
+## Styling components with CSS modules
+
+* New (Gatsby?) concept: CSS modules
+* Task: style the Layout component
+
+## Summary
+
+Key takeaways:
+
+* Any default React component in src/pages will be turned into a page.
+* Building-block components are smaller reusable parts of your UI. They can be imported into page components or other building block components.
+* You can import pre-built components from other packages, or you can write your own custom components from scratch.
+* Gatsby isn't opinionated about what kind of styling approach you want to use.
+
+// Pull out key images
+
+<Announcement>
+
+**Share Your Feedback!**
+
+Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hear your feedback about what you liked or didn't like about this part of the Tutorial.
+
+Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
+
+</Announcement>
