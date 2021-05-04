@@ -165,8 +165,8 @@ import kirkhamTheme from "typography-theme-kirkham"
 
 const typography = new Typography(kirkhamTheme)
 
-export default typography
-export const rhythm = typography.rhythm
+const { rhythm, scale } = typography;
+export { rhythm, scale, typography as default };
 ```
 
 `gatsby-config.js` (must be in the root of your project, not under src)
