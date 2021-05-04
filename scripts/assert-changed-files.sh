@@ -7,6 +7,7 @@ GREP_PATTERN=$1
 PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
 
 echo "PR number: $PR_NUMBER"
+echo "IS_WINDOWS: $IS_WINDOWS"
 
 # See https://discuss.circleci.com/t/create-a-circle-target-branch-envar/10022
 if [ "$IS_WINDOWS" = true ]; then
@@ -22,6 +23,12 @@ echo "url: $url"
 target_branch=$(
   curl "$url" | ./jq '.base.ref' | tr -d '"'
 )
+
+if [[ -z "$target_branch" ]]; then
+  # seems like we can't abort merge - script doesn't really handle that, we should fail this step because something is wonky
+  echo "Something went wrong, we could not determine the base branch. Please re-run the test."
+  exit 1
+fi
 
 echo "Target branch: $target_branch"
 
