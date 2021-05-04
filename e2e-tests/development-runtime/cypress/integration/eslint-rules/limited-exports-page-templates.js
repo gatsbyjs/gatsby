@@ -1,6 +1,5 @@
 describe(`limited-exports-page-templates`, () => {
-  // Skipped because HMR not show warnings because of https://github.com/webpack-contrib/webpack-hot-middleware/pull/397
-  it.skip(`should log warning to console for invalid export`, () => {
+  it(`should log warning to console for invalid export`, () => {
     cy.visit(`/eslint-rules/limited-exports-page-templates`, {
       onBeforeLoad(win) {
         cy.stub(win.console, "log").as(`consoleLog`)
