@@ -234,7 +234,7 @@ export const createRemoteMediaItemNode = async ({
   if (fileSize > maxFileSizeBytes) {
     reporter.warn(
       formatLogMessage(
-        `Remote media item node not created because its size exceeded the maxFileSizeBytes config option ${mediaItemNode}`
+        `\n\n\tRemote media item node not created because its size exceeded the maxFileSizeBytes config option:\n\t${mediaItemNode?.mediaDetails?.file}\n\n`
       )
     )
     return null
@@ -244,7 +244,7 @@ export const createRemoteMediaItemNode = async ({
   if (excludeByMimeTypes.includes(mimeType)) {
     reporter.warn(
       formatLogMessage(
-        `Remote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option`
+        `\n\n\tRemote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option\n\n`
       )
     )
     return null
