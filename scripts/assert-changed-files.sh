@@ -9,8 +9,13 @@ PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
 echo "PR number: $PR_NUMBER"
 
 # See https://discuss.circleci.com/t/create-a-circle-target-branch-envar/10022
-curl -L "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64" \
+if [ "$IS_WINDOWS" = true ]; then
+curl -L "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe" \
   -o jq
+else
+  curl -L "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" \
+  -o jq
+fi
 chmod +x jq
 url="https://api.github.com/repos/gatsbyjs/gatsby/pulls/$PR_NUMBER"
 echo "url: $url"
