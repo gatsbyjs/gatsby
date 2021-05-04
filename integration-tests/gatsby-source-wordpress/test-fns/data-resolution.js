@@ -25,12 +25,12 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpMediaItem`].nodes).toBeTruthy()
     expect(data[`allWpMediaItem`].nodes).toMatchSnapshot()
-    expect(data[`allWpMediaItem`].totalCount).toBe(8)
+    expect(data[`allWpMediaItem`].totalCount).toBe(15)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
     expect(data[`allWpPage`].totalCount).toBe(4)
-    expect(data[`allWpPost`].totalCount).toBe(1)
+    expect(data[`allWpPost`].totalCount).toBe(5)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
     expect(data[`allWpCategory`].totalCount).toBe(9)
@@ -78,7 +78,7 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(16)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(27)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -213,6 +213,62 @@ describe(`data resolution`, () => {
     })
 
     expect(result).toMatchSnapshot()
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg columns`,
+    gatsbyQuery: queries.gutenbergColumns,
+    queryReplace: {
+      from: `wpPost(title: { eq: "Gutenberg: Columns" }) {`,
+      to: `post(id: "cG9zdDoxMjg=") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg layout elements`,
+    gatsbyQuery: queries.gutenbergLayoutElements,
+    queryReplace: {
+      from: `wpPost(id: { eq: "cG9zdDoxMjU=" }) {`,
+      to: `post(id: "cG9zdDoxMjU=") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg formatting blocks`,
+    gatsbyQuery: queries.gutenbergFormattingBlocks,
+    queryReplace: {
+      from: `wpPost(id: { eq: "cG9zdDoxMjI=" }) {`,
+      to: `post(id: "cG9zdDoxMjI=") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
+  })
+
+  testResolvedData({
+    url,
+    title: `resolves wp-graphql-gutenberg common blocks`,
+    gatsbyQuery: queries.gutenbergCommonBlocks,
+    queryReplace: {
+      from: `wpPost(id: { eq: "cG9zdDo5NA==" }) {`,
+      to: `post(id: "cG9zdDo5NA==") {`,
+    },
+    fields: {
+      gatsby: `wpPost`,
+      wpgql: `post`,
+    },
   })
 
   it(`resolves Yoast SEO data`, async () => {

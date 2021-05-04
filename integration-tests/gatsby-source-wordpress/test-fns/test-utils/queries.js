@@ -187,18 +187,21 @@ exports.queries = {
       isDynamic
       order
       originalContent
-      parentNode {
-        id
-        ... on WpPost {
-          title
-        }
-      }
+      # @todo this connection isn't working
+      # parentNode {
+      #   id
+      #   ... on WpPost {
+      #     title
+      #   }
+      # }
       parentNodeDatabaseId
       dynamicContent
       attributes {
-        className
-        verticalAlignment
-        width
+        ... on WpCoreColumnBlockAttributes {
+          className
+          verticalAlignment
+          width
+        }
       }
     }
 
@@ -206,12 +209,13 @@ exports.queries = {
       name
       order
       originalContent
-      parentNode {
-        id
-        ... on WpPost {
-          title
-        }
-      }
+      # @todo this connection isn't working
+      # parentNode {
+      #   id
+      #   ... on WpPost {
+      #     title
+      #   }
+      # }
       parentNodeDatabaseId
       dynamicContent
       attributes {
@@ -223,7 +227,6 @@ exports.queries = {
           verticalAlignment
         }
       }
-      # saveContent
     }
 
     fragment InnerBlocks on WpBlock {

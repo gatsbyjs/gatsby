@@ -59,11 +59,13 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
               : // and we don't actually need more than 1000 in production
                 1000,
         },
+        BlockEditorContentNode: { exclude: true },
       },
     }
   : {
       type: {
         MediaItem: mediaItemTypeSettings,
+        BlockEditorContentNode: { exclude: true },
       },
     }
 
