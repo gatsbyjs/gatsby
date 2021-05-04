@@ -568,17 +568,22 @@ module.exports = {
         }
 
         // Generate a shell for client-only content -- for the error overlay
-        const clientOnlyShell = await renderDevHTML({
-          path: pathObj.path,
-          page: pathObj,
-          skipSsr: true,
-          store,
-          error: message,
-          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
-          directory: program.directory,
-        })
+        try {
+          const clientOnlyShell = await renderDevHTML({
+            path: pathObj.path,
+            page: pathObj,
+            skipSsr: true,
+            store,
+            error: message,
+            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            directory: program.directory,
+          })
 
-        res.send(clientOnlyShell)
+          res.send(clientOnlyShell)
+        } catch (e) {
+          console.log(e)
+          res.send(`:shrug:`)
+        }
       }
 
       htmlActivity.end()
