@@ -52,7 +52,12 @@ const parseError = function ({ err, directory, componentPath }) {
     ...position.filename.split(sysPath.sep).slice(2)
   )
 
-  const code = fs.readFileSync(filename, `utf-8`)
+  let code
+  try {
+    code = fs.readFileSync(filename, `utf-8`)
+  } catch (e) {
+    code = null
+  }
 
   const splitMessage = err.message ? err.message.split(`\n`) : [``]
   const message = splitMessage[splitMessage.length - 1]

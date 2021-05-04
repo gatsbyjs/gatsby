@@ -545,6 +545,7 @@ module.exports = {
 
         if (!sourceContent || !lineNumber) {
           res.json(emptyResponse)
+          return null
         }
 
         const codeFrame = codeFrameColumns(
