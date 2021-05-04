@@ -47,7 +47,7 @@ export const startPluginRunner = (): void => {
     plugin.nodeAPIs.includes(`onCreatePage`)
   )
   const pluginsImplementingOnCreateNode = plugins.filter(plugin =>
-    plugin.nodeAPIs.includes(`onCreatePage`)
+    plugin.nodeAPIs.includes(`onCreateNode`)
   )
   if (pluginsImplementingOnCreatePage.length > 0) {
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
