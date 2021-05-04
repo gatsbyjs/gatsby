@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.4.0...gatsby-source-wordpress@5.4.1) (2021-05-04)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** previewing drafts requires using the preview query ([#31133](https://github.com/gatsbyjs/gatsby/issues/31133)) ([#31243](https://github.com/gatsbyjs/gatsby/issues/31243)) ([22590b4](https://github.com/gatsbyjs/gatsby/commit/22590b4c8293f2f3dcec2ef355d6d690280beda8))
+
 # [5.4.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.4.0-next.3...gatsby-source-wordpress@5.4.0) (2021-04-27)
 
 **Note:** Version bump only for package gatsby-source-wordpress
