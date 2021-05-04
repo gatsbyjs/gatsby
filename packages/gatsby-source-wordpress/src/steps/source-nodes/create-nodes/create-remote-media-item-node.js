@@ -230,21 +230,11 @@ export const createRemoteMediaItemNode = async ({
     maxFileSizeBytes,
   } = pluginOptions.type?.MediaItem?.localFile
 
-  // if this file is larger than maxFileSizeBytes, don't fetch the remote file
-  if (fileSize > maxFileSizeBytes) {
-    reporter.warn(
-      formatLogMessage(
-        `\n\n\tRemote media item node not created because its size exceeded the maxFileSizeBytes config option:\n\t${mediaItemNode?.mediaDetails?.file}\n\n`
-      )
-    )
-    return null
-  }
-
   // if this type of file is excluded, don't fetch the remote file
   if (excludeByMimeTypes.includes(mimeType)) {
     reporter.warn(
       formatLogMessage(
-        `\n\n\tRemote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option\n\n`
+        `Remote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option`
       )
     )
     return null
@@ -265,87 +255,122 @@ export const createRemoteMediaItemNode = async ({
   const fetchState = {
     shouldBail: false,
   }
-  // Otherwise we need to download it
-  const remoteFileNode = await retry(
-    async () => {
-      if (fetchState.shouldBail) {
-        failedImageUrls.add(mediaItemUrl)
-        return null
-      }
 
-      const createFileNodeRequirements = {
-        parentNodeId: mediaItemNode.id,
-        store: gatsbyStore,
-        cache,
-        createNode,
-        createNodeId,
-        reporter,
-      }
+  const createFileNodeRequirements = {
+    parentNodeId: mediaItemNode.id,
+    store: gatsbyStore,
+    cache,
+    createNode,
+    createNodeId,
+    reporter,
+  }
 
-      if (hardCacheMediaFiles) {
-        // check for file in .wordpress-cache/wp-content
-        // if it exists, use that to create a node from instead of
-        // fetching from wp
-        try {
-          const buffer = await fs.readFile(hardCachedFilePath)
-          const node = await createFileNodeFromBuffer({
-            buffer,
-            name: title,
-            ext: path.extname(mediaItemUrl),
-            ...createFileNodeRequirements,
-          })
+  let imageNode
 
-          if (node) {
-            return node
-          }
-        } catch (e) {
-          // ignore errors, we'll download the image below if it doesn't exist
+  // if this file is larger than maxFileSizeBytes, don't fetch the remote file
+  if (fileSize > maxFileSizeBytes) {
+    reporter.warn(
+      formatLogMessage(
+        `Remote media item not fetched because its size exceeded the maxFileSizeBytes config option: ${mediaItemNode?.mediaDetails?.file}`
+      )
+    )
+
+    imageNode = await createNode({
+      parent: mediaItemNode.id,
+      url: mediaItemUrl,
+      internal: {
+        description: `File "${mediaItemUrl}"`,
+      },
+    })
+  } else {
+    // Otherwise we need to download it
+
+    imageNode = await retry(
+      async () => {
+        if (fetchState.shouldBail) {
+          failedImageUrls.add(mediaItemUrl)
+          return null
         }
-      }
 
-      const { hostname: wpUrlHostname } = url.parse(wpUrl)
-      const { hostname: mediaItemHostname } = url.parse(mediaItemUrl)
+        if (hardCacheMediaFiles) {
+          // check for file in .wordpress-cache/wp-content
+          // if it exists, use that to create a node from instead of
+          // fetching from wp
+          try {
+            const buffer = await fs.readFile(hardCachedFilePath)
+            const node = await createFileNodeFromBuffer({
+              buffer,
+              name: title,
+              ext: path.extname(mediaItemUrl),
+              ...createFileNodeRequirements,
+            })
 
-      const htaccessCredentials = pluginOptions.auth.htaccess
-
-      // if media items are hosted on another url like s3,
-      // using the htaccess creds will throw 400 errors
-      const shouldUseHtaccessCredentials = wpUrlHostname === mediaItemHostname
-
-      const auth =
-        htaccessCredentials && shouldUseHtaccessCredentials
-          ? {
-              htaccess_pass: htaccessCredentials?.password,
-              htaccess_user: htaccessCredentials?.username,
+            if (node) {
+              return node
             }
-          : null
+          } catch (e) {
+            // ignore errors, we'll download the image below if it doesn't exist
+          }
+        }
 
-      // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
-      const node = await createRemoteFileNode({
-        url: mediaItemUrl,
-        auth,
-        ...createFileNodeRequirements,
-        pluginOptions,
-      })
+        const { hostname: wpUrlHostname } = url.parse(wpUrl)
+        const { hostname: mediaItemHostname } = url.parse(mediaItemUrl)
 
-      return node
-    },
-    {
-      retries: 3,
-      factor: 1.1,
-      minTimeout: 5000,
-      onRetry: error =>
-        errorPanicker({
-          error,
-          reporter,
-          node: mediaItemNode,
-          fetchState,
-          parentName,
-        }),
-    }
+        const htaccessCredentials = pluginOptions.auth.htaccess
+
+        // if media items are hosted on another url like s3,
+        // using the htaccess creds will throw 400 errors
+        const shouldUseHtaccessCredentials = wpUrlHostname === mediaItemHostname
+
+        const auth =
+          htaccessCredentials && shouldUseHtaccessCredentials
+            ? {
+                htaccess_pass: htaccessCredentials?.password,
+                htaccess_user: htaccessCredentials?.username,
+              }
+            : null
+
+        // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
+        const node = await createRemoteFileNode({
+          url: mediaItemUrl,
+          auth,
+          ...createFileNodeRequirements,
+          pluginOptions,
+        })
+
+        return node
+      },
+      {
+        retries: 3,
+        factor: 1.1,
+        minTimeout: 5000,
+        onRetry: error =>
+          errorPanicker({
+            error,
+            reporter,
+            node: mediaItemNode,
+            fetchState,
+            parentName,
+          }),
+      }
+    )
+  }
+
+  // remoteFileNode.absolutePath
+  /**
+   * Notes --------------------------------
+   * 1. set localFile to null on whatever object is returned from this function
+   * if the file exceeds maxFileSizeBytes
+   */
+
+  console.log(
+    `remote file node`,
+    imageNode,
+    Object.keys(imageNode),
+    mediaItemNode
   )
 
-  if (!remoteFileNode) {
+  if (!imageNode) {
     return null
   }
 
@@ -353,7 +378,7 @@ export const createRemoteMediaItemNode = async ({
   // so we can touch this node next time
   // and so we can easily access the id by source url later
   store.dispatch.imageNodes.pushNodeMeta({
-    id: remoteFileNode.id,
+    id: imageNode.id,
     sourceUrl: mediaItemUrl,
     modifiedGmt,
   })
@@ -363,12 +388,12 @@ export const createRemoteMediaItemNode = async ({
       // make sure the directory exists
       await fs.ensureDir(path.dirname(hardCachedFilePath))
       // copy our downloaded file to our existing directory
-      await fs.copyFile(remoteFileNode.absolutePath, hardCachedFilePath)
+      await fs.copyFile(imageNode.absolutePath, hardCachedFilePath)
     } catch (e) {
       helpers.reporter.panic(e)
     }
   }
 
   // and use it
-  return remoteFileNode
+  return imageNode
 }
