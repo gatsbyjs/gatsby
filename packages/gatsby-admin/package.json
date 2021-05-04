@@ -41,7 +41,7 @@
     "react-markdown": "^4.3.1",
     "remove-markdown": "^0.3.0",
     "rimraf": "^3.0.2",
-    "socket.io-client": "2.4.0",
+    "socket.io-client": "4.0.1",
     "strict-ui": "^0.2.0-0",
     "subscriptions-transport-ws": "^0.9.18",
     "theme-ui": "^0.4.0-rc.14",

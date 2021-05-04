@@ -141,7 +141,7 @@
     "signal-exit": "^3.0.3",
     "slugify": "^1.4.4",
     "socket.io": "4.0.1",
-    "socket.io-client": "3.1.1",
+    "socket.io-client": "4.0.1",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.19",
     "st": "^2.0.0",
