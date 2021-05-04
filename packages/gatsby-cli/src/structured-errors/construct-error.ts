@@ -40,6 +40,7 @@ const constructError = (
   const { error } = errorSchema.validate(structuredError)
   if (error) {
     console.log(`Failed to validate error`, error)
+    console.trace()
     process.exit(1)
   }
 
