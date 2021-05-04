@@ -87,7 +87,7 @@ module.exports = {
       options: {
         url: process.env.WPGRAPHQL_URL,
         schema: {
-          requestConcurrency: 10,
+          requestConcurrency: 7,
         },
         production: {
           hardCacheMediaFiles: true,
