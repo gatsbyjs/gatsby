@@ -466,7 +466,7 @@ module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
   }
 
   // If there's no implementing plugins, return early.
-  if ((implementingPlugins.length === 0) & !args.deferNodeMutation) {
+  if (implementingPlugins.length === 0) {
     return null
   }
 
