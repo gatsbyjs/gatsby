@@ -1,7 +1,7 @@
 {
   "name": "gatsby-telemetry",
   "description": "Gatsby Telemetry",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "author": "Jarmo Isotalo <jarmo@isotalo.fi>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
