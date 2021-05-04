@@ -15,6 +15,9 @@ git clone --depth 1 -b ${WPGATSBY_VERSION} https://github.com/gatsbyjs/wp-gatsby
 # WP GraphQL ACF from GitHub release
 install-plugin wp-graphql-acf wp-graphql/wp-graphql-acf ${WPGRAPHQL_ACF_VERSION} && \
 
+# wp-graphql-gutenberg from Github release
+install-plugin wp-graphql-gutenberg pristas-peter/wp-graphql-gutenberg ${WPGRAPHQL_GUTENBERG_VERSION} && \
+
 # CPTUI from Github release
 install-plugin custom-post-type-ui WebDevStudios/custom-post-type-ui ${CPT_UI_VERSION} && \
 

@@ -59,12 +59,14 @@ const wpPluginOptions = !process.env.DEFAULT_PLUGIN_OPTIONS
               : // and we don't actually need more than 1000 in production
                 1000,
         },
+        // excluding this because it causes Gatsby to throw errors
         BlockEditorContentNode: { exclude: true },
       },
     }
   : {
       type: {
         MediaItem: mediaItemTypeSettings,
+        // excluding this because it causes Gatsby to throw errors
         BlockEditorContentNode: { exclude: true },
       },
     }
