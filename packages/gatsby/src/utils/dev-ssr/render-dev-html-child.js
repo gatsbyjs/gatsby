@@ -59,10 +59,6 @@ const parseError = function ({ err, directory, componentPath }) {
     sourceContent = null
   }
 
-  const splitMessage = err.message ? err.message.split(`\n`) : [``]
-  const message = splitMessage[splitMessage.length - 1]
-  const type = err.type ? err.type : err.name
-
   // We prefer the file path from the stack trace as the error might not be in the
   // component — but if source-maps fail and we just get public/render-page.js as
   // the file, we fall back on the component filepath as at least the user
@@ -73,8 +69,6 @@ const parseError = function ({ err, directory, componentPath }) {
 
   return {
     filename: slash(sysPath.relative(directory, trueFileName)),
-    message: message,
-    type: type,
     sourceContent,
     stack: stack,
     line: position.line,
