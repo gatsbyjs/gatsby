@@ -524,7 +524,7 @@ module.exports = {
         const lineNumber = error?.line as number
         const columnNumber = error?.column as number
         const filePath = error?.filename as string
-        const sourceContent = error?.code as string
+        const sourceContent = error?.sourceContent as string
 
         report.error({
           id: `11614`,
@@ -537,7 +537,6 @@ module.exports = {
         })
 
         const emptyResponse = {
-          isDevSSRError: true,
           codeFrame: `No codeFrame could be generated`,
           sourcePosition: null,
           sourceContent: null,

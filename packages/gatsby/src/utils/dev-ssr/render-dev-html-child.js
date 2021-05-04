@@ -52,11 +52,11 @@ const parseError = function ({ err, directory, componentPath }) {
     ...position.filename.split(sysPath.sep).slice(2)
   )
 
-  let code
+  let sourceContent
   try {
-    code = fs.readFileSync(filename, `utf-8`)
+    sourceContent = fs.readFileSync(filename, `utf-8`)
   } catch (e) {
-    code = null
+    sourceContent = null
   }
 
   const splitMessage = err.message ? err.message.split(`\n`) : [``]
@@ -75,7 +75,7 @@ const parseError = function ({ err, directory, componentPath }) {
     filename: slash(sysPath.relative(directory, trueFileName)),
     message: message,
     type: type,
-    code,
+    sourceContent,
     stack: stack,
     line: position.line,
     column: position.column,
