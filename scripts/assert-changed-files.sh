@@ -3,19 +3,34 @@
 IS_CI="${CI:-false}"
 GREP_PATTERN=$1
 
+# See https://discuss.circleci.com/t/create-a-circle-target-branch-envar/10022
+if [[ -n ${CIRCLE_PR_NUMBER} ]]; then
+  curl -L "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64" \
+    -o jq
+  chmod +x jq
+  url="https://api.github.com/repos/gatsbyjs/gatsby/pulls/$CIRCLE_PR_NUMBER"
+  target_branch=$(
+    curl "$url" | ./jq '.base.ref' | tr -d '"'
+  )
+else
+  target_branch="master"
+fi
+
+echo "Target branch: $target_branch"
+
 if [ "$IS_CI" = true ]; then
   git config --local url."https://github.com/".insteadOf git@github.com:
   git config --local user.name "GatsbyJS Bot"
   git config --local user.email "core-team@gatsbyjs.com"
 
   git fetch origin
-  git merge --no-edit origin/master
+  git merge --no-edit origin/$target_branch
 
   if [ $? -ne 0 ]; then
-    echo "Branch has conflicts with master, rolling back test."
+    echo "Branch has conflicts with $target_branch, rolling back test."
     git merge --abort
 
-    if [ $? -ne 0]; then
+    if [ $? -ne 0 ]; then
       # seems like we can't abort merge - script doesn't really handle that, we should fail this step because something is wonky
       echo "Something went wrong, we could not abort our merge command. Please re-run the test."
       exit 1
@@ -27,7 +42,7 @@ if [ "$IS_CI" = true ]; then
   git config --local --unset url."https://github.com/".insteadOf
 fi
 
-FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/master | grep -E "$GREP_PATTERN" -c)"
+FILES_COUNT="$(git diff-tree --no-commit-id --name-only -r "$CIRCLE_BRANCH" origin/$target_branch | grep -E "$GREP_PATTERN" -c)"
 
 if [ "$IS_CI" = true ]; then
   # reset to previous state
