@@ -3,20 +3,20 @@
 IS_CI="${CI:-false}"
 GREP_PATTERN=$1
 
+# See https://support.circleci.com/hc/en-us/articles/360047521451-Why-is-CIRCLE-PR-NUMBER-empty-
+PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
+
+echo "PR number: $PR_NUMBER"
+
 # See https://discuss.circleci.com/t/create-a-circle-target-branch-envar/10022
-if [[ -n ${CIRCLE_PR_NUMBER} ]]; then
-  echo "PR number: $CIRCLE_PR_NUMBER"
-  curl -L "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64" \
-    -o jq
-  chmod +x jq
-  url="https://api.github.com/repos/gatsbyjs/gatsby/pulls/$CIRCLE_PR_NUMBER"
-  echo "url: $url"
-  target_branch=$(
-    curl "$url" | ./jq '.base.ref' | tr -d '"'
-  )
-else
-  target_branch="master"
-fi
+curl -L "https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64" \
+  -o jq
+chmod +x jq
+url="https://api.github.com/repos/gatsbyjs/gatsby/pulls/$PR_NUMBER"
+echo "url: $url"
+target_branch=$(
+  curl "$url" | ./jq '.base.ref' | tr -d '"'
+)
 
 echo "Target branch: $target_branch"
 
