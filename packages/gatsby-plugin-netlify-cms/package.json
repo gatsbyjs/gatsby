@@ -12,7 +12,7 @@
     "html-webpack-plugin": "^5.3.1",
     "html-webpack-tags-plugin": "^3.0.1",
     "lodash": "^4.17.21",
-    "mini-css-extract-plugin": "1.5.0",
+    "mini-css-extract-plugin": "1.5.1",
     "netlify-identity-widget": "^1.9.1",
     "webpack": "^5.23.00"
   },
