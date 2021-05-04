@@ -135,6 +135,7 @@ module.exports = async function mdxLoader(content) {
         content,
         options,
         getNodesByType,
+        getNode: rawGetNode,
       }))
     } else {
       mdxNode = await createMdxNodeExtraBabel({
