@@ -447,8 +447,30 @@ const apisRunningById = new Map()
 const apisRunningByTraceId = new Map()
 let waitingForCasacadeToFinish = []
 
-module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
-  new Promise(resolve => {
+module.exports = (api, args = {}, { pluginSource, activity } = {}) => {
+  const plugins = store.getState().flattenedPlugins
+
+  // Get the list of plugins that implement this API.
+  // Also: Break infinite loops. Sometimes a plugin will implement an API and
+  // call an action which will trigger the same API being called.
+  // `onCreatePage` is the only example right now. In these cases, we should
+  // avoid calling the originating plugin again.
+  let implementingPlugins = plugins.filter(
+    plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
+  )
+
+  if (api === `sourceNodes` && args.pluginName) {
+    implementingPlugins = implementingPlugins.filter(
+      plugin => plugin.name === args.pluginName
+    )
+  }
+
+  // If there's no implementing plugins, return early.
+  if (implementingPlugins.length === 0) {
+    return null
+  }
+
+  return new Promise(resolve => {
     const { parentSpan, traceId, traceTags, waitForCascadingActions } = args
     const apiSpanArgs = parentSpan ? { childOf: parentSpan } : {}
     const apiSpan = tracer.startSpan(`run-api`, apiSpanArgs)
@@ -457,23 +479,6 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
     _.forEach(traceTags, (value, key) => {
       apiSpan.setTag(key, value)
     })
-
-    const plugins = store.getState().flattenedPlugins
-
-    // Get the list of plugins that implement this API.
-    // Also: Break infinite loops. Sometimes a plugin will implement an API and
-    // call an action which will trigger the same API being called.
-    // `onCreatePage` is the only example right now. In these cases, we should
-    // avoid calling the originating plugin again.
-    let implementingPlugins = plugins.filter(
-      plugin => plugin.nodeAPIs.includes(api) && plugin.name !== pluginSource
-    )
-
-    if (api === `sourceNodes` && args.pluginName) {
-      implementingPlugins = implementingPlugins.filter(
-        plugin => plugin.name === args.pluginName
-      )
-    }
 
     const apiRunInstance = {
       api,
@@ -680,3 +685,4 @@ module.exports = async (api, args = {}, { pluginSource, activity } = {}) =>
       return
     })
   })
+}

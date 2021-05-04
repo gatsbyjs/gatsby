@@ -42,7 +42,6 @@ export async function startWebpackServer({
     cancelDevJSNotice,
     webpackWatching,
   } = await startServer(program, app, workerPool)
-  webpackWatching.suspend()
 
   compiler.hooks.invalid.tap(`log compiling`, function () {
     if (!webpackActivity) {
@@ -75,6 +74,10 @@ export async function startWebpackServer({
       stats,
       done
     ) {
+      if (isFirstCompile) {
+        webpackWatching.suspend()
+      }
+
       if (cancelDevJSNotice) {
         cancelDevJSNotice()
       }
