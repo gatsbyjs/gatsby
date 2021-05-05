@@ -87,6 +87,8 @@ async function findPageOwnedByNodeId({
             // and if we don't have an owner this is a better guess
             // of an owner than grabbing the first page query we find
             // that's mapped to this node id.
+            // this also makes this work with the filesystem Route API without
+            // changing that API.
             fullPage.context.id === nodeId)
         ) {
           // save this path to use in our manifest!
