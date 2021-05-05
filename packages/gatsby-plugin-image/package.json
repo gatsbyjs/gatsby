@@ -47,7 +47,7 @@
     "@types/babel__core": "^7.1.12",
     "@types/babel__traverse": "^7.11.1",
     "@types/fs-extra": "^8.1.1",
-    "@types/node": "^14.10.2",
+    "@types/node": "^14.14.44",
     "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.8",
