@@ -107,32 +107,14 @@ const translateFieldType = field => {
 function generateAssetTypes({ createTypes }) {
   createTypes(`
     type ContentfulAsset implements ContentfulInternalReference & Node {
-      file: ContentfulAssetFile
-      title: String
-      description: String
       sys: ContentfulInternalSys
       id: ID!
-    }
-  `)
-
-  createTypes(`
-    type ContentfulAssetFile @derivedTypes {
-      url: String
-      details: ContentfulAssetFileDetails
-      fileName: String
+      title: String
+      description: String
       contentType: String
-    }
-  `)
-
-  createTypes(`
-    type ContentfulAssetFileDetails @derivedTypes {
+      fileName: String
+      url: String
       size: Int
-      image: ContentfulAssetFileDetailsImage
-    }
-  `)
-
-  createTypes(`
-    type ContentfulAssetFileDetailsImage {
       width: Int
       height: Int
     }
@@ -187,24 +169,21 @@ export function generateSchema({
   generateAssetTypes({ createTypes })
 
   // Rich Text
-  const makeRichTextLinksResolver = (nodeType, entityType) => (
-    source,
-    args,
-    context
-  ) => {
-    const links = getRichTextEntityLinks(source, nodeType)[entityType].map(
-      ({ id }) => id
-    )
+  const makeRichTextLinksResolver =
+    (nodeType, entityType) => (source, args, context) => {
+      const links = getRichTextEntityLinks(source, nodeType)[entityType].map(
+        ({ id }) => id
+      )
 
-    return context.nodeModel.getAllNodes().filter(
-      node =>
-        node.internal.owner === `gatsby-source-contentful` &&
-        node?.sys?.id &&
-        node?.sys?.type === entityType &&
-        links.includes(node.sys.id)
-      // @todo how can we check for correct space and environment? We need to access the sys field of the fields parent entry.
-    )
-  }
+      return context.nodeModel.getAllNodes().filter(
+        node =>
+          node.internal.owner === `gatsby-source-contentful` &&
+          node?.sys?.id &&
+          node?.sys?.type === entityType &&
+          links.includes(node.sys.id)
+        // @todo how can we check for correct space and environment? We need to access the sys field of the fields parent entry.
+      )
+    }
 
   // Contentful specific types
   if (pluginConfig.get(`enableTags`)) {
