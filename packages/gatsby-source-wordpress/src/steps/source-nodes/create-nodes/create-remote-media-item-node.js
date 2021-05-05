@@ -6,6 +6,7 @@ import { bold } from "chalk"
 import retry from "async-retry"
 
 import { createFileNodeFromBuffer } from "gatsby-source-filesystem"
+import { createContentDigest } from "gatsby-core-utils"
 
 import createRemoteFileNode from "./create-remote-file-node/index"
 
@@ -267,8 +268,10 @@ export const createRemoteMediaItemNode = async ({
 
   let imageNode
 
+  const shouldFetchImage = fileSize > maxFileSizeBytes
+
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
-  if (fileSize > maxFileSizeBytes) {
+  if (shouldFetchImage) {
     reporter.warn(
       formatLogMessage(
         `Remote media item not fetched because its size exceeded the maxFileSizeBytes config option: ${mediaItemNode?.mediaDetails?.file}`
@@ -276,10 +279,13 @@ export const createRemoteMediaItemNode = async ({
     )
 
     imageNode = await createNode({
+      id: createNodeId(mediaItemUrl),
       parent: mediaItemNode.id,
       url: mediaItemUrl,
       internal: {
-        description: `File "${mediaItemUrl}"`,
+        contentDigest: createContentDigest({ mediaItemUrl, fileSize }),
+        description: `RemoteFile "${mediaItemUrl}"`,
+        type: `RemoteFile`,
       },
     })
   } else {
@@ -356,20 +362,6 @@ export const createRemoteMediaItemNode = async ({
     )
   }
 
-  // remoteFileNode.absolutePath
-  /**
-   * Notes --------------------------------
-   * 1. set localFile to null on whatever object is returned from this function
-   * if the file exceeds maxFileSizeBytes
-   */
-
-  console.log(
-    `remote file node`,
-    imageNode,
-    Object.keys(imageNode),
-    mediaItemNode
-  )
-
   if (!imageNode) {
     return null
   }
@@ -383,7 +375,7 @@ export const createRemoteMediaItemNode = async ({
     modifiedGmt,
   })
 
-  if (hardCacheMediaFiles) {
+  if (hardCacheMediaFiles && shouldFetchImage) {
     try {
       // make sure the directory exists
       await fs.ensureDir(path.dirname(hardCachedFilePath))
