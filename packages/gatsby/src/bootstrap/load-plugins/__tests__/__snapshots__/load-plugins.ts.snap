@@ -37,7 +37,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "createResolvers",
-      "onCreatePage",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -50,9 +49,7 @@ Array [
     "browserAPIs": Array [],
     "id": "",
     "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -287,7 +284,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "createResolvers",
-      "onCreatePage",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -300,9 +296,7 @@ Array [
     "browserAPIs": Array [],
     "id": "",
     "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },
@@ -567,7 +561,6 @@ Array [
     "nodeAPIs": Array [
       "sourceNodes",
       "createResolvers",
-      "onCreatePage",
     ],
     "pluginOptions": Object {
       "plugins": Array [],
@@ -580,9 +573,7 @@ Array [
     "browserAPIs": Array [],
     "id": "",
     "name": "prod-404",
-    "nodeAPIs": Array [
-      "onCreatePage",
-    ],
+    "nodeAPIs": Array [],
     "pluginOptions": Object {
       "plugins": Array [],
     },

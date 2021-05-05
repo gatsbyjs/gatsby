@@ -1529,9 +1529,9 @@ export interface PluginOptionsSchemaArgs {
 type Send<T> = (body: T) => void
 
 /**
- * Gatsby API Function route response
+ * Gatsby Function route response
  */
-export interface GatsbyAPIFunctionResponse extends ServerResponse {
+export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
   /**
    * Send `any` data in response
    */
@@ -1543,15 +1543,15 @@ export interface GatsbyAPIFunctionResponse extends ServerResponse {
   /**
    * Set the HTTP status code of the response
    */
-  status: (statusCode: number) => GatsbyAPIFunctionResponse<T>
-  redirect(url: string): GatsbyAPIFunctionResponse<T>
-  redirect(status: number, url: string): GatsbyAPIFunctionResponse<T>
+  status: (statusCode: number) => GatsbyFunctionResponse<T>
+  redirect(url: string): GatsbyFunctionResponse<T>
+  redirect(status: number, url: string): GatsbyFunctionResponse<T>
 }
 
 /**
- * Gatsby API function route request
+ * Gatsby function route request
  */
-export interface GatsbyAPIFunctionRequest extends IncomingMessage {
+export interface GatsbyFunctionRequest extends IncomingMessage {
   /**
    * Object of values from URL query parameters (after the ? in the URL)
    */

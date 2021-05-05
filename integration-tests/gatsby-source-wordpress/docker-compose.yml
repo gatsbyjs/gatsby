@@ -1,0 +1,50 @@
+version: "3.2"
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: gtsb-wp-dckr
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: gtsb-wp-dckr-user
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - "db_data:/var/lib/mysql"
+      - "./docker/seed:/docker-entrypoint-initdb.d"
+
+  wordpress:
+    depends_on:
+      - db
+    env_file:
+      - ./.env.test
+    build:
+      context: ./docker/wordpress
+    ports:
+      - "8001:8001"
+    environment:
+      WORDPRESS_DB_PASSWORD: gtsb-wp-dckr-user
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DEBUG: 1
+    restart: always
+    volumes:
+      - wp_data:/var/www/html
+
+  wordpress-cli:
+    depends_on:
+      - db
+      - wordpress
+    env_file:
+      - ./.env.test
+    build:
+      context: ./docker/wp-cli
+    volumes:
+      - wp_data:/var/www/html
+
+volumes:
+  db_data:
+  wp_data:

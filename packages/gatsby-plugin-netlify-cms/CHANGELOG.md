@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.1...gatsby-plugin-netlify-cms@5.5.0-next.2) (2021-05-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** Fix typo in semver ([#31177](https://github.com/gatsbyjs/gatsby/issues/31177)) ([6a9b2a4](https://github.com/gatsbyjs/gatsby/commit/6a9b2a45d3c60d40d427c8d6517264fa6671bc80))
+
+# [5.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.0...gatsby-plugin-netlify-cms@5.5.0-next.1) (2021-04-29)
+
+**Note:** Version bump only for package gatsby-plugin-netlify-cms
+
 # [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.4.0-next.1...gatsby-plugin-netlify-cms@5.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-plugin-netlify-cms
