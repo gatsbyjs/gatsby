@@ -1425,6 +1425,21 @@ actions.createServerVisitedPage = (chunkName: string) => {
   }
 }
 
+/**
+ * Creates an individual node manifest.
+ * This is used to tie the unique revision state within a data source at the current point in time to a page generated from the provided node when it's node manifest is processed.
+ *
+ * @param {Object} manifest a page object
+ * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
+ * @param {string} manifest.node The Gatsyby node to tie the manifestId to
+ * @example
+ * createNodeManifest({
+ *   manifestId: `post-id-1--updated-53154315`,
+ *   node: {
+ *      id: `post-id-1`
+ *   },
+ * })
+ */
 actions.createNodeManifest = (
   {
     manifestId,
