@@ -6,6 +6,7 @@ import chalk from "chalk"
 import urlUtil from "url"
 import PQueue from "p-queue"
 import { dump } from "dumper.js"
+import { actions as gatsbyActions } from "gatsby/dist/redux/actions/public"
 
 import { paginatedWpNodeFetch } from "~/steps/source-nodes/fetch-nodes/fetch-nodes-paginated"
 import fetchGraphql from "~/utils/fetch-graphql"
@@ -38,7 +39,7 @@ export type PreviewStatusUnion =
   | `GATSBY_PREVIEW_PROCESS_ERROR`
   | `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL`
 
-export interface IWebhookBody {
+export interface IPreviewData {
   previewDatabaseId: number
   userDatabaseId: number
   token: string
@@ -100,7 +101,7 @@ const writeDummyPageDataJsonIfNeeded = async ({
   previewData,
   pageNode,
 }: {
-  previewData: IWebhookBody
+  previewData: IPreviewData
   pageNode: IPageNode
 }): Promise<void> => {
   if (!previewData.isDraft) {
@@ -143,7 +144,7 @@ const createPreviewStatusCallback = ({
   previewData,
   reporter,
 }: {
-  previewData: IWebhookBody
+  previewData: IPreviewData
   reporter: Reporter
 }) => async ({
   passedNode,
@@ -216,7 +217,15 @@ const createPreviewStatusCallback = ({
  * already started processing for this action
  */
 export const sourcePreview = async (
-  { previewData, reporter }: { previewData: IWebhookBody; reporter: Reporter },
+  {
+    previewData,
+    reporter,
+    actions,
+  }: {
+    previewData: IPreviewData
+    reporter: Reporter
+    actions: typeof gatsbyActions
+  },
   { url }: IPluginOptions
 ): Promise<void> => {
   if (previewForIdIsAlreadyBeingProcessed(previewData?.id)) {
@@ -296,11 +305,16 @@ export const sourcePreview = async (
     sendPreviewStatus,
   })
 
-  await fetchAndCreateSingleNode({
+  const { node } = await fetchAndCreateSingleNode({
     actionType: `PREVIEW`,
     ...previewData,
     previewParentId: previewData.parentDatabaseId,
     isPreview: true,
+  })
+
+  actions.createNodeManifest({
+    manifestId: previewData.previewDatabaseId + previewData.modified,
+    node,
   })
 }
 
@@ -313,7 +327,7 @@ export const sourcePreviews = async (
   helpers: GatsbyHelpers,
   pluginOptions: IPluginOptions
 ): Promise<void> => {
-  const { webhookBody, reporter } = helpers
+  const { webhookBody, reporter, actions } = helpers
   const {
     debug: { preview: inPreviewDebugModeOption },
   } = getPluginOptions()
@@ -403,6 +417,7 @@ export const sourcePreviews = async (
         {
           previewData: { ...previewData, token: webhookBody.token },
           reporter,
+          actions,
         },
         pluginOptions
       )
