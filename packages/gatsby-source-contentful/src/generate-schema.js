@@ -1,3 +1,5 @@
+import { getRichTextEntityLinks } from "@contentful/rich-text-links"
+
 import { makeTypeName } from "./normalize"
 
 // Contentful content type schemas
@@ -143,6 +145,7 @@ export function generateSchema({
   pluginConfig,
   contentTypeItems,
 }) {
+  // Generic Types
   createTypes(`
     interface ContentfulInternalReference implements Node {
       id: ID!
@@ -180,59 +183,100 @@ export function generateSchema({
     }
   `)
 
+  // Assets
   generateAssetTypes({ createTypes })
+
+  // Rich Text
+  const makeRichTextLinksResolver = (nodeType, entityType) => (
+    source,
+    args,
+    context
+  ) => {
+    const links = getRichTextEntityLinks(source, nodeType)[entityType].map(
+      ({ id }) => id
+    )
+
+    return context.nodeModel.getAllNodes().filter(
+      node =>
+        node.internal.owner === `gatsby-source-contentful` &&
+        node?.sys?.id &&
+        node?.sys?.type === entityType &&
+        links.includes(node.sys.id)
+      // @todo how can we check for correct space and environment? We need to access the sys field of the fields parent entry.
+    )
+  }
 
   // Contentful specific types
   createTypes(
     schema.buildObjectType({
+      name: `ContentfulNodeTypeRichTextAssets`,
+      fields: {
+        block: {
+          type: `[ContentfulAsset]!`,
+          resolve: makeRichTextLinksResolver(`embedded-asset-block`, `Asset`),
+        },
+        hyperlink: {
+          type: `[ContentfulAsset]!`,
+          resolve: makeRichTextLinksResolver(`asset-hyperlink`, `Asset`),
+        },
+      },
+    })
+  )
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulNodeTypeRichTextEntries`,
+      fields: {
+        inline: {
+          type: `[ContentfulEntry]!`,
+          resolve: makeRichTextLinksResolver(`embedded-entry-inline`, `Entry`),
+        },
+        block: {
+          type: `[ContentfulEntry]!`,
+          resolve: makeRichTextLinksResolver(`embedded-entry-block`, `Entry`),
+        },
+        hyperlink: {
+          type: `[ContentfulEntry]!`,
+          resolve: makeRichTextLinksResolver(`entry-hyperlink`, `Entry`),
+        },
+      },
+    })
+  )
+
+  createTypes(
+    schema.buildObjectType({
+      name: `ContentfulNodeTypeRichTextLinks`,
+      fields: {
+        assets: {
+          type: `ContentfulNodeTypeRichTextAssets`,
+          resolve(source) {
+            return source
+          },
+        },
+        entries: {
+          type: `ContentfulNodeTypeRichTextEntries`,
+          resolve(source) {
+            return source
+          },
+        },
+      },
+    })
+  )
+
+  createTypes(
+    schema.buildObjectType({
       name: `ContentfulNodeTypeRichText`,
       fields: {
-        raw: {
+        json: {
           type: `JSON`,
           resolve(source) {
             return source
           },
         },
-        references: {
-          type: `[ContentfulInternalReference]`,
-          resolve(source, args, context) {
-            const referencedEntries = new Set()
-            const referencedAssets = new Set()
-
-            // Locate all Contentful Links within the rich text data
-            // Traverse logic based on https://github.com/contentful/contentful-resolve-response
-            const traverse = obj => {
-              // eslint-disable-next-line guard-for-in
-              for (const k in obj) {
-                const v = obj[k]
-                if (v && v.sys && v.sys.type === `Link`) {
-                  if (v.sys.linkType === `Asset`) {
-                    referencedAssets.add(v.sys.id)
-                  }
-                  if (v.sys.linkType === `Entry`) {
-                    referencedEntries.add(v.sys.id)
-                  }
-                } else if (v && typeof v === `object`) {
-                  traverse(v)
-                }
-              }
-            }
-            traverse(source)
-
-            // Get all nodes and return all that got referenced in the rich text
-            return context.nodeModel.getAllNodes().filter(node => {
-              if (
-                !(
-                  node.internal.owner === `gatsby-source-contentful` &&
-                  node?.sys?.id
-                )
-              ) {
-                return false
-              }
-              return node.internal.type === `ContentfulAsset`
-                ? referencedAssets.has(node.sys.id)
-                : referencedEntries.has(node.sys.id)
-            })
+        links: {
+          type: `ContentfulNodeTypeRichTextLinks`,
+          resolve(source) {
+            return source
           },
         },
       },
@@ -240,6 +284,7 @@ export function generateSchema({
     })
   )
 
+  // Location
   createTypes(
     schema.buildObjectType({
       name: `ContentfulNodeTypeLocation`,
@@ -253,6 +298,7 @@ export function generateSchema({
     })
   )
 
+  // Text
   // @todo Is there a way to have this as string and let transformer-remark replace it with an object?
   createTypes(
     schema.buildObjectType({
@@ -267,6 +313,7 @@ export function generateSchema({
     })
   )
 
+  // Content types
   for (const contentTypeItem of contentTypeItems) {
     try {
       const fields = {}

@@ -20,13 +20,13 @@ function renderReferencedComponent(ref) {
   return <Component {...ref} />
 }
 
-const options = {
+const makeOptions = ({ assetBlockMap, entryBlockMap, entryInlineMap }) => ({
   renderMark: {
     [MARKS.BOLD]: text => <strong data-cy-strong>{text}</strong>,
   },
   renderNode: {
     [BLOCKS.EMBEDDED_ASSET]: node => {
-      const asset = node.data.target
+      const asset = assetBlockMap.get(node?.data?.target?.sys.id)
       if (asset.fluid) {
         return <GatsbyImage {...asset} style={{ width: 200 }} />
       }
@@ -40,7 +40,7 @@ const options = {
       )
     },
     [BLOCKS.EMBEDDED_ENTRY]: node => {
-      const entry = node?.data?.target
+      const entry = entryBlockMap.get(node?.data?.target?.sys.id)
       if (!entry) {
         throw new Error(
           `Entity not available for node:\n${JSON.stringify(node, null, 2)}`
@@ -49,7 +49,7 @@ const options = {
       return renderReferencedComponent(entry)
     },
     [INLINES.EMBEDDED_ENTRY]: node => {
-      const entry = node.data.target
+      const entry = entryInlineMap.get(node?.data?.target?.sys.id)
       if (entry.__typename === "ContentfulText") {
         return (
           <span data-cy-id="inline-text">
@@ -64,7 +64,7 @@ const options = {
       )
     },
   },
-}
+})
 
 const RichTextPage = ({ data }) => {
   const defaultEntries = data.default.nodes
@@ -77,7 +77,7 @@ const RichTextPage = ({ data }) => {
         return (
           <div data-cy-id={slug} key={id}>
             <h2>{title}</h2>
-            {renderRichText(richText, options)}
+            {renderRichText(richText, makeOptions)}
             <hr />
           </div>
         )
@@ -89,7 +89,7 @@ const RichTextPage = ({ data }) => {
         return (
           <div data-cy-id={`english-${slug}`} key={id}>
             <h2>{title}</h2>
-            {renderRichText(richTextLocalized, options)}
+            {renderRichText(richTextLocalized, makeOptions)}
             <hr />
           </div>
         )
@@ -101,7 +101,7 @@ const RichTextPage = ({ data }) => {
         return (
           <div data-cy-id={`german-${slug}`} key={id}>
             <h2>{title}</h2>
-            {renderRichText(richTextLocalized, options)}
+            {renderRichText(richTextLocalized, makeOptions)}
             <hr />
           </div>
         )
@@ -125,77 +125,94 @@ export const pageQuery = graphql`
         id
         title
         richText {
-          raw
-          references {
-            __typename
-            sys {
-              id
-            }
-            ... on ContentfulAsset {
-              fluid(maxWidth: 200) {
-                ...GatsbyContentfulFluid
+          json
+          links {
+            assets {
+              block {
+                sys {
+                  id
+                }
+                fluid(maxWidth: 200) {
+                  ...GatsbyContentfulFluid
+                }
               }
             }
-            ... on ContentfulText {
-              title
-              short
-            }
-            ... on ContentfulLocation {
-              location {
-                lat
-                lon
-              }
-            }
-            ... on ContentfulContentReference {
-              title
-              one {
+            entries {
+              block {
                 __typename
                 sys {
                   id
+                  type
                 }
                 ... on ContentfulText {
                   title
                   short
                 }
+                ... on ContentfulLocation {
+                  location {
+                    lat
+                    lon
+                  }
+                }
                 ... on ContentfulContentReference {
                   title
                   one {
+                    __typename
+                    sys {
+                      id
+                    }
+                    ... on ContentfulText {
+                      title
+                      short
+                    }
                     ... on ContentfulContentReference {
                       title
+                      one {
+                        ... on ContentfulContentReference {
+                          title
+                        }
+                      }
+                      many {
+                        ... on ContentfulContentReference {
+                          title
+                        }
+                      }
                     }
                   }
                   many {
+                    __typename
+                    sys {
+                      id
+                    }
+                    ... on ContentfulText {
+                      title
+                      short
+                    }
+                    ... on ContentfulNumber {
+                      title
+                      integer
+                    }
                     ... on ContentfulContentReference {
                       title
+                      one {
+                        ... on ContentfulContentReference {
+                          title
+                        }
+                      }
+                      many {
+                        ... on ContentfulContentReference {
+                          title
+                        }
+                      }
                     }
                   }
                 }
               }
-              many {
+              inline {
                 __typename
                 sys {
                   id
-                }
-                ... on ContentfulText {
-                  title
-                  short
-                }
-                ... on ContentfulNumber {
-                  title
-                  integer
-                }
-                ... on ContentfulContentReference {
-                  title
-                  one {
-                    ... on ContentfulContentReference {
-                      title
-                    }
-                  }
-                  many {
-                    ... on ContentfulContentReference {
-                      title
-                    }
-                  }
+                  type
                 }
               }
             }
@@ -214,7 +231,7 @@ export const pageQuery = graphql`
         id
         title
         richTextLocalized {
-          raw
+          json
         }
       }
     }
@@ -229,7 +246,7 @@ export const pageQuery = graphql`
         id
         title
         richTextLocalized {
-          raw
+          json
         }
       }
     }
