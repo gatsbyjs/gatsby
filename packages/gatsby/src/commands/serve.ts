@@ -195,11 +195,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
           } catch (e) {
             console.error(e)
             // Don't send the error if that would cause another error.
-            if (
-              !e.message.includes(
-                `Cannot set headers after they are sent to the client`
-              )
-            ) {
+            if (!res.headersSent) {
               res.sendStatus(500)
             }
           }

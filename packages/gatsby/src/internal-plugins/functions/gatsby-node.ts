@@ -365,11 +365,7 @@ export async function onCreateDevServer({
         } catch (e) {
           reporter.error(e)
           // Don't send the error if that would cause another error.
-          if (
-            !e.message.includes(
-              `Cannot set headers after they are sent to the client`
-            )
-          ) {
+          if (!res.headersSent) {
             res
               .status(500)
               .send(
