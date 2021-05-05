@@ -55,7 +55,7 @@ async function findPageOwnedByNodeId({
 
   // but if we have more than one page where this node shows up
   // we need to try to be more specific
-  if (pagePathSet.size > 1) {
+  if (pagePathSet && pagePathSet.size > 1) {
     let ownerPagePath: string | undefined
     let foundOwnerNodeId = false
 
