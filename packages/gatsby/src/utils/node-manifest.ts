@@ -21,31 +21,88 @@ interface INodeManifestOut {
   }
 }
 
-async function findPageCreatedFromNodeId({
+/**
+ * Finds a final built page by nodeId
+ *
+ * Note that this function wont work properly in `gatsby develop`
+ * since develop no longer runs all page queries when creating pages.
+ * We use the node id to query mapping to find the right page but
+ * this mapping only exists once you've visited a page in your browser.
+ * When this fn is being used for routing to previews the user wont necessarily have
+ * visited the page in the browser yet.
+ */
+async function findPageOwnedByNodeId({
   nodeId,
   store,
 }: {
   nodeId: string
   store: any
 }): Promise<INodeManifestPage> {
-  // @todo queries.byNode doesn't seem to update
-  // when brand new pages are added while the process is running
-  const pagesBynode = store.getState().queries.byNode
+  const state = store.getState()
+  const { pages } = state
+  const pagesBynode = state.queries.byNode
   const pagePathSet = pagesBynode.get(nodeId)
-  const pagePath = pagePathSet?.values()?.next()?.value
 
-  console.log({ pagesBynode, pagePathSet, pagePath })
+  // the default page path is the first page found in
+  // node id to page query tracking
+  let pagePath = pagePathSet?.values()?.next()?.value
 
-  // @todo if we didn't find a node that a page queries directly
-  // we should find a page where this node is queried as a connection
-  // and return that instead
+  // but if we have more than one page where this node shows up
+  // we need to try to be more specific
+  if (pagePathSet.size > 1) {
+    let ownerPagePath: string | undefined
+    let foundOwnerNodeId = false
+
+    // for each page this nodeId is queried in
+    pagePathSet.forEach(path => {
+      if (
+        // if we haven't found a page with this nodeId
+        // set as page.ownerNodeId then run this logic.
+        // this condition is on foundOwnerNodeId instead of ownerPagePath
+        // in case we find a page with the nodeId in page.context.id
+        // and then later in the loop there's a page with this nodeId
+        // set on page.ownerNodeId.
+        // We always want to prefer ownerPagePath over context.id
+        !foundOwnerNodeId
+      ) {
+        // get the page node
+        const fullPage = pages.get(path)
+
+        foundOwnerNodeId = fullPage.ownerNodeId === nodeId
+
+        if (
+          fullPage &&
+          // first check for the ownerNodeId on the page. this is
+          // the defacto owner. Can't get more specific than this
+          (foundOwnerNodeId ||
+            // if there's no specified owner look to see if
+            // pageContext has an `id` variable which matches our
+            // nodeId. Using an "id" as a variable in queries is common
+            // and if we don't have an owner this is a better guess
+            // of an owner than grabbing the first page query we find
+            // that's mapped to this node id.
+            fullPage.context.id === nodeId)
+        ) {
+          // save this path to use in our manifest!
+          ownerPagePath = fullPage.path
+        }
+      }
+    })
+
+    if (ownerPagePath) {
+      pagePath = ownerPagePath
+    }
+  }
 
   return {
     path: pagePath || null,
   }
 }
 
-async function writeNodeManifest({
+/**
+ * Prepares and then writes out an individual node manifest file to be used for routing to previews
+ */
+async function processNodeManifest({
   inputManifest,
   store,
   reporter,
@@ -55,7 +112,7 @@ async function writeNodeManifest({
   reporter: any
 }): Promise<void> {
   // map the node to a page that was created
-  const nodeManifestPage = await findPageCreatedFromNodeId({
+  const nodeManifestPage = await findPageOwnedByNodeId({
     nodeId: inputManifest.node.id,
     store,
   })
@@ -86,6 +143,10 @@ async function writeNodeManifest({
   await fs.writeJSON(manifestFilePath, finalManifest)
 }
 
+/**
+ * Grabs all pending node manifests, processes them, writes them to disk,
+ * and then removes them from the store.
+ */
 export async function processNodeManifests({ store, reporter }): Promise<void> {
   const { nodeManifests } = store.getState()
 
@@ -97,7 +158,7 @@ export async function processNodeManifests({ store, reporter }): Promise<void> {
 
   await Promise.all(
     nodeManifests.map(inputManifest =>
-      writeNodeManifest({ inputManifest, store, reporter })
+      processNodeManifest({ inputManifest, store, reporter })
     )
   )
 
