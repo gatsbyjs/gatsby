@@ -268,10 +268,10 @@ export const createRemoteMediaItemNode = async ({
 
   let imageNode
 
-  const shouldFetchImage = fileSize > maxFileSizeBytes
+  const doNotFetchImage = fileSize > maxFileSizeBytes
 
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
-  if (shouldFetchImage) {
+  if (doNotFetchImage) {
     reporter.warn(
       formatLogMessage(
         `Remote media item not fetched because its size exceeded the maxFileSizeBytes config option: ${mediaItemNode?.mediaDetails?.file}`
@@ -377,7 +377,7 @@ export const createRemoteMediaItemNode = async ({
     modifiedGmt,
   })
 
-  if (hardCacheMediaFiles && shouldFetchImage) {
+  if (hardCacheMediaFiles && doNotFetchImage) {
     try {
       // make sure the directory exists
       await fs.ensureDir(path.dirname(hardCachedFilePath))
