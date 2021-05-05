@@ -290,76 +290,78 @@ export const createRemoteMediaItemNode = async ({
     })
   } else {
     // Otherwise we need to download it
-
-    imageNode = await retry(
-      async () => {
-        if (fetchState.shouldBail) {
-          failedImageUrls.add(mediaItemUrl)
-          return null
-        }
-
-        if (hardCacheMediaFiles) {
-          // check for file in .wordpress-cache/wp-content
-          // if it exists, use that to create a node from instead of
-          // fetching from wp
-          try {
-            const buffer = await fs.readFile(hardCachedFilePath)
-            const node = await createFileNodeFromBuffer({
-              buffer,
-              name: title,
-              ext: path.extname(mediaItemUrl),
-              ...createFileNodeRequirements,
-            })
-
-            if (node) {
-              return node
-            }
-          } catch (e) {
-            // ignore errors, we'll download the image below if it doesn't exist
-          }
-        }
-
-        const { hostname: wpUrlHostname } = url.parse(wpUrl)
-        const { hostname: mediaItemHostname } = url.parse(mediaItemUrl)
-
-        const htaccessCredentials = pluginOptions.auth.htaccess
-
-        // if media items are hosted on another url like s3,
-        // using the htaccess creds will throw 400 errors
-        const shouldUseHtaccessCredentials = wpUrlHostname === mediaItemHostname
-
-        const auth =
-          htaccessCredentials && shouldUseHtaccessCredentials
-            ? {
-                htaccess_pass: htaccessCredentials?.password,
-                htaccess_user: htaccessCredentials?.username,
-              }
-            : null
-
-        // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
-        const node = await createRemoteFileNode({
-          url: mediaItemUrl,
-          auth,
+    if (hardCacheMediaFiles) {
+      // check for file in .wordpress-cache/wp-content
+      // if it exists, use that to create a node from instead of
+      // fetching from wp
+      try {
+        const buffer = await fs.readFile(hardCachedFilePath)
+        const node = await createFileNodeFromBuffer({
+          buffer,
+          name: title,
+          ext: path.extname(mediaItemUrl),
           ...createFileNodeRequirements,
-          pluginOptions,
         })
 
-        return node
-      },
-      {
-        retries: 3,
-        factor: 1.1,
-        minTimeout: 5000,
-        onRetry: error =>
-          errorPanicker({
-            error,
-            reporter,
-            node: mediaItemNode,
-            fetchState,
-            parentName,
-          }),
+        if (node) {
+          imageNode = node
+        }
+      } catch (e) {
+        // ignore errors, we'll download the image below if it doesn't exist
       }
-    )
+    }
+
+    if (!imageNode) {
+      imageNode = await retry(
+        async () => {
+          if (fetchState.shouldBail) {
+            failedImageUrls.add(mediaItemUrl)
+            return null
+          }
+
+          const { hostname: wpUrlHostname } = url.parse(wpUrl)
+          const { hostname: mediaItemHostname } = url.parse(mediaItemUrl)
+
+          const htaccessCredentials = pluginOptions.auth.htaccess
+
+          // if media items are hosted on another url like s3,
+          // using the htaccess creds will throw 400 errors
+          const shouldUseHtaccessCredentials =
+            wpUrlHostname === mediaItemHostname
+
+          const auth =
+            htaccessCredentials && shouldUseHtaccessCredentials
+              ? {
+                  htaccess_pass: htaccessCredentials?.password,
+                  htaccess_user: htaccessCredentials?.username,
+                }
+              : null
+
+          // if this errors, it's caught one level above in fetch-referenced-media-items.js so it can be placed on the end of the request queue
+          const node = await createRemoteFileNode({
+            url: mediaItemUrl,
+            auth,
+            ...createFileNodeRequirements,
+            pluginOptions,
+          })
+
+          return node
+        },
+        {
+          retries: 3,
+          factor: 1.1,
+          minTimeout: 5000,
+          onRetry: error =>
+            errorPanicker({
+              error,
+              reporter,
+              node: mediaItemNode,
+              fetchState,
+              parentName,
+            }),
+        }
+      )
+    }
   }
 
   if (!imageNode) {
