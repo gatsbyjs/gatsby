@@ -61,7 +61,7 @@ const CONTENTFUL_IMAGE_MAX_SIZE = 4000
 
 const isImage = image =>
   [`image/jpeg`, `image/jpg`, `image/png`, `image/webp`, `image/gif`].includes(
-    image?.file?.contentType
+    image?.contentType
   )
 
 // Note: this may return a Promise<body>, body (sync), or null
@@ -148,19 +148,19 @@ const getBase64Image = (imageProps, reporter) => {
 
 const getBasicImageProps = (image, args) => {
   let aspectRatio
+  const { width, height } = image
   if (args.width && args.height) {
     aspectRatio = args.width / args.height
   } else {
-    aspectRatio =
-      image.file.details.image.width / image.file.details.image.height
+    aspectRatio = width / height
   }
 
   return {
-    baseUrl: image.file.url,
-    contentType: image.file.contentType,
+    baseUrl: image.url,
+    contentType: image.contentType,
     aspectRatio,
-    width: image.file.details.image.width,
-    height: image.file.details.image.height,
+    width,
+    height,
   }
 }
 
@@ -411,7 +411,7 @@ const resolveFluid = (image, options) => {
   const srcSet = sortedSizes
     .map(width => {
       const h = Math.round(width / desiredAspectRatio)
-      return `${createUrl(image.file.url, {
+      return `${createUrl(image.url, {
         ...options,
         width,
         height: h,
@@ -463,7 +463,7 @@ const resolveResize = (image, options) => {
   }
 
   return {
-    src: createUrl(image.file.url, options),
+    src: createUrl(image.url, options),
     width: Math.round(pickedWidth),
     height: Math.round(pickedHeight),
     aspectRatio,
@@ -495,7 +495,7 @@ const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -512,7 +512,7 @@ const fixedNodeType = ({ name, getTracedSVG, reporter }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -588,7 +588,7 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -605,7 +605,7 @@ const fluidNodeType = ({ name, getTracedSVG, reporter }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -674,9 +674,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     const { traceSVG } = require(`gatsby-plugin-sharp`)
 
     const { image, options } = args
-    const {
-      file: { contentType },
-    } = image
+    const { contentType } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
@@ -688,7 +686,7 @@ exports.extendNodeType = ({ type, store, reporter }) => {
     return traceSVG({
       file: {
         internal: image.internal,
-        name: image.file.fileName,
+        name: image.fileName,
         extension,
         absolutePath,
       },

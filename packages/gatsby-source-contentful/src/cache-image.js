@@ -10,9 +10,7 @@ const inFlightImageCache = new Map()
 module.exports = async function cacheImage(store, image, options, reporter) {
   const program = store.getState().program
   const CACHE_DIR = resolve(`${program.directory}/.cache/contentful/assets/`)
-  const {
-    file: { url, fileName, details },
-  } = image
+  const { url, fileName } = image
   const {
     width,
     height,
@@ -25,7 +23,7 @@ module.exports = async function cacheImage(store, image, options, reporter) {
   const userWidth = maxWidth || width
   const userHeight = maxHeight || height
 
-  const aspectRatio = details.image.height / details.image.width
+  const aspectRatio = image.height / image.width
   const resultingWidth = Math.round(userWidth || 800)
   const resultingHeight = Math.round(userHeight || resultingWidth * aspectRatio)
 

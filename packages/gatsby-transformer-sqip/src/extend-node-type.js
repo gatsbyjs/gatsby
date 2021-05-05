@@ -191,9 +191,7 @@ async function sqipContentful({ type, cache, store }) {
         },
       },
       async resolve(asset, fieldArgs, context) {
-        const {
-          file: { contentType },
-        } = asset
+        const { contentType } = asset
 
         if (!contentType.includes(`image/`)) {
           return null

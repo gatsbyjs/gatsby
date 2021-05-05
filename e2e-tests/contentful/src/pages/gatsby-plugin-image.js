@@ -16,14 +16,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
               <GatsbyImage image={node.constrained} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -34,14 +34,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fullWidth ? (
               <GatsbyImage image={node.fullWidth} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -53,14 +53,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fixed ? (
               <GatsbyImage image={node.fixed} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -72,14 +72,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.dominantColor ? (
               <GatsbyImage image={node.dominantColor} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -91,14 +91,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.traced ? (
               <GatsbyImage image={node.traced} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -110,14 +110,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.blurred ? (
               <GatsbyImage image={node.blurred} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -129,7 +129,7 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -143,7 +143,7 @@ const GatsbyPluginImagePage = ({ data }) => {
                 }}
               />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -155,14 +155,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
               <GatsbyImage image={node.constrained} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -174,14 +174,14 @@ const GatsbyPluginImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.constrained ? (
               <GatsbyImage image={node.constrained} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -212,10 +212,8 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         constrained: gatsbyImageData(width: 420)
         fullWidth: gatsbyImageData(width: 200, layout: FIXED)
         fixed: gatsbyImageData(width: 200, layout: FIXED)
@@ -248,10 +246,8 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         constrained: gatsbyImageData(width: 420)
       }
     }
@@ -264,10 +260,8 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         constrained: gatsbyImageData(width: 420)
       }
     }
