@@ -18,6 +18,10 @@ import {
 } from "./types"
 import { PackageJson } from "../../.."
 import reporter from "gatsby-cli/lib/reporter"
+import { silent as resolveFromSilent } from "resolve-from"
+
+const GATSBY_CLOUD_PLUGIN_NAME = `gatsby-plugin-gatsby-cloud`
+const TYPESCRIPT_PLUGIN_NAME = `gatsby-plugin-typescript`
 
 function createFileContentHash(root: string, globPattern: string): string {
   const hash = crypto.createHash(`md5`)
@@ -141,12 +145,33 @@ export function resolvePlugin(
   }
 }
 
+function addGatsbyPluginCloudPluginWhenInstalled(
+  plugins: Array<IPluginInfo>,
+  processPlugin: (plugin: PluginRef) => IPluginInfo,
+  rootDir: string
+): void {
+  const cloudPluginLocation = resolveFromSilent(
+    rootDir,
+    GATSBY_CLOUD_PLUGIN_NAME
+  )
+
+  if (cloudPluginLocation) {
+    plugins.push(
+      processPlugin({
+        resolve: cloudPluginLocation,
+        options: {},
+      })
+    )
+  }
+}
+
 export function loadPlugins(
   config: ISiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string
 ): Array<IPluginInfo> {
   // Instantiate plugins.
   const plugins: Array<IPluginInfo> = []
+  const configuredPluginNames = new Set()
 
   // Create fake little site with a plugin for testing this
   // w/ snapshots. Move plugin processing to its own module.
@@ -229,7 +254,9 @@ export function loadPlugins(
   // Add plugins from the site config.
   if (config.plugins) {
     config.plugins.forEach(plugin => {
-      plugins.push(processPlugin(plugin))
+      const processedPlugin = processPlugin(plugin)
+      plugins.push(processedPlugin)
+      configuredPluginNames.add(processedPlugin.name)
     })
   }
 
@@ -250,15 +277,15 @@ export function loadPlugins(
     )
   })
 
-  // TypeScript support by default! use the user-provided one if it exists
-  const typescriptPlugin = (config.plugins || []).find(
-    plugin => plugin.resolve === `gatsby-plugin-typescript`
-  )
+  if (!configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME)) {
+    addGatsbyPluginCloudPluginWhenInstalled(plugins, processPlugin, rootDir)
+  }
 
-  if (typescriptPlugin === undefined) {
+  // Suppor Typescript by default but allow users to override it
+  if (!configuredPluginNames.has(TYPESCRIPT_PLUGIN_NAME)) {
     plugins.push(
       processPlugin({
-        resolve: require.resolve(`gatsby-plugin-typescript`),
+        resolve: require.resolve(TYPESCRIPT_PLUGIN_NAME),
         options: {
           // TODO(@mxstbr): Do not hard-code these defaults but infer them from the
           // pluginOptionsSchema of gatsby-plugin-typescript

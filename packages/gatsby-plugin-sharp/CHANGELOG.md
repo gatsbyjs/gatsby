@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.5.0-next.1...gatsby-plugin-sharp@3.5.0-next.2) (2021-05-05)
+
+**Note:** Version bump only for package gatsby-plugin-sharp
+
+# [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.5.0-next.0...gatsby-plugin-sharp@3.5.0-next.1) (2021-04-28)
+
+### Bug Fixes
+
+- **gatsby-plugin-sharp:** Handle fractional image sizes ([#31057](https://github.com/gatsbyjs/gatsby/issues/31057)) ([08dfb37](https://github.com/gatsbyjs/gatsby/commit/08dfb37577510ba8d4900c487cea7301fb7667f8))
+
 # [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sharp@3.4.0-next.3...gatsby-plugin-sharp@3.5.0-next.0) (2021-04-23)
 
 ### Bug Fixes

@@ -50,20 +50,6 @@ exports.sourceNodes = ({
   const { createNode, deleteNode } = actions
   const { program, flattenedPlugins, config } = store.getState()
 
-  // Add our default development page since we know it's going to
-  // exist and we need a node to exist so its query works :-)
-  const page = { path: `/dev-404-page/` }
-  createNode({
-    ...page,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(page),
-    },
-  })
-
   flattenedPlugins.forEach(plugin => {
     plugin.pluginFilepath = plugin.resolve
     createNode({
@@ -226,29 +212,8 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
   }
+
   createResolvers(resolvers)
-}
-
-exports.onCreatePage = ({ createContentDigest, page, actions }) => {
-  const { createNode } = actions
-  // eslint-disable-next-line
-  const { updatedAt, ...pageWithoutUpdated } = page
-
-  // Add page.
-  createNode({
-    ...pageWithoutUpdated,
-    id: createPageId(page.path),
-    parent: null,
-    children: [],
-    internal: {
-      type: `SitePage`,
-      contentDigest: createContentDigest(pageWithoutUpdated),
-      description:
-        page.pluginCreatorId === `Plugin default-site-plugin`
-          ? `Your site's "gatsby-node.js"`
-          : page.pluginCreatorId,
-    },
-  })
 }
 
 // Listen for DELETE_PAGE and delete page nodes.

@@ -119,9 +119,11 @@ exports.healOptions = (
   // only set width to 400 if neither width nor height is passed
   if (options.width === undefined && options.height === undefined) {
     options.width = 400
-  } else if (options.width !== undefined) {
+  }
+  if (options.width !== undefined) {
     options.width = parseInt(options.width, 10)
-  } else if (options.height !== undefined) {
+  }
+  if (options.height !== undefined) {
     options.height = parseInt(options.height, 10)
   }
 
@@ -141,7 +143,6 @@ exports.healOptions = (
       )
     }
   })
-
   return options
 }
 

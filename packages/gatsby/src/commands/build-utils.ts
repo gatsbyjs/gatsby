@@ -1,6 +1,6 @@
 import fs from "fs-extra"
 import path from "path"
-
+import { platform } from "os"
 import reporter from "gatsby-cli/lib/reporter"
 
 import {
@@ -66,10 +66,18 @@ export const removePageFiles = async (
   })
 }
 
+const FSisCaseInsensitive = platform() === `win32` || platform() === `darwin`
 function normalizePagePath(path: string): string {
   if (path === `/`) {
     return `/`
   }
+
+  if (FSisCaseInsensitive) {
+    // e.g. /TEST/ and /test/ would produce "same" artifacts on case insensitive
+    // file systems
+    path = path.toLowerCase()
+  }
+
   return path.endsWith(`/`) ? path.slice(0, -1) : path
 }
 
@@ -105,7 +113,8 @@ export function calcDirtyHtmlFiles(
    * to regenerate and more importantly - to delete (so we don't delete html and page-data file
    * when path changes slightly but it would still result in same html and page-data filenames
    * for example adding/removing trailing slash between builds or even mid build with plugins
-   * like `gatsby-plugin-remove-trailing-slashes`)
+   * like `gatsby-plugin-remove-trailing-slashes`). Additionally similar consideration need to
+   * be accounted for cases where page paths casing on case-insensitive file systems.
    */
   function markActionForPage(path: string, action: PageGenerationAction): void {
     const normalizedPagePath = normalizePagePath(path)

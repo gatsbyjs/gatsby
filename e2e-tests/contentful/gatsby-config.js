@@ -17,5 +17,13 @@ module.exports = {
     `gatsby-transformer-sqip`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
+    // Enable to update schema.sql
+    // {
+    //   resolve: `gatsby-plugin-schema-snapshot`,
+    //   options: {
+    //     path: `schema.gql`,
+    //     update: true,
+    //   },
+    // },
   ],
 }

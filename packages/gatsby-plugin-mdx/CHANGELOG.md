@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.5.0-next.0...gatsby-plugin-mdx@2.5.0-next.1) (2021-05-05)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** Img w/ lessBabel option in src/pages not working ([#31210](https://github.com/gatsbyjs/gatsby/issues/31210)) ([b2ae4da](https://github.com/gatsbyjs/gatsby/commit/b2ae4da089d2783dc83738224f362e6f8fb44d0c))
+
 # [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.4.0-next.3...gatsby-plugin-mdx@2.5.0-next.0) (2021-04-23)
 
 ### Bug Fixes
