@@ -556,6 +556,13 @@ const errors = {
       } to resolve the error.`),
     level: Level.WARNING,
   },
+  "11615": {
+    text: (context): string =>
+      stripIndent(`There was an error while trying to load dev-404-page:
+      ${context.sourceMessage}`),
+    level: Level.ERROR,
+    category: ErrorCategory.SYSTEM,
+  },
   // Watchdog
   "11701": {
     text: (context): string =>

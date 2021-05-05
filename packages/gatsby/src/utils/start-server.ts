@@ -624,7 +624,13 @@ module.exports = {
           })
           res.status(404).send(renderResponse)
         } catch (e) {
-          report.error(e)
+          report.error({
+            id: `11615`,
+            context: {
+              sourceMessage: e.message,
+            },
+            filePath: e.filename,
+          })
           res.send(e).status(500)
         }
       } else {
