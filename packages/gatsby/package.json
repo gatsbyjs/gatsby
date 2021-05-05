@@ -37,7 +37,6 @@
     "babel-plugin-remove-graphql-queries": "^3.5.0-next.0",
     "babel-preset-gatsby": "^1.5.0-next.0",
     "better-opn": "^2.0.0",
-    "better-queue": "^3.8.10",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "browserslist": "^4.12.2",
