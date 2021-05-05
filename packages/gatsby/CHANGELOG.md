@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.3...gatsby@3.5.0-next.4) (2021-05-05)
+
+### Bug Fixes
+
+- **gatsby:** add generic type to GatsbyFunctionResponse ([#31182](https://github.com/gatsbyjs/gatsby/issues/31182)) ([4b9d0d4](https://github.com/gatsbyjs/gatsby/commit/4b9d0d4d4757d006ec385bb80f1db415a9636f63))
+- **gatsby:** rehydration issue in Dev404Page with DEV_SSR ([#30581](https://github.com/gatsbyjs/gatsby/issues/30581)) ([5005588](https://github.com/gatsbyjs/gatsby/commit/5005588c92101d8be19c23d9404bdd952ac3ed73))
+- **gatsby:** upgrade css-minimizer-webpack-plugin to v2 ([#31176](https://github.com/gatsbyjs/gatsby/issues/31176)) ([257de93](https://github.com/gatsbyjs/gatsby/commit/257de93a6e1caf46cbad4172ef342e928aa4b97e))
+
+### Performance Improvements
+
+- **gatsby:** Create page object & SitePage node in same action creator ([#31104](https://github.com/gatsbyjs/gatsby/issues/31104)) ([d1005fa](https://github.com/gatsbyjs/gatsby/commit/d1005fae2fe273f26cc650137426369c4c84b067)), closes [#31236](https://github.com/gatsbyjs/gatsby/issues/31236)
+
 # [3.5.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.2...gatsby@3.5.0-next.3) (2021-05-01)
 
 ### Bug Fixes
