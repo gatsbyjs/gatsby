@@ -161,6 +161,7 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -169,6 +170,7 @@ const reservedFields = [
  * createPage({
  *   path: `/my-sweet-new-page/`,
  *   component: path.resolve(`./src/templates/my-sweet-new-page.js`),
+ *   ownerNodeId: `123456`,
  *   // The context is passed as props to the component as well
  *   // as into the component's GraphQL query.
  *   context: {

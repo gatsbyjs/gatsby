@@ -2,10 +2,9 @@ import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
 
-interface INodeManifestPage {
-  path?: string
-}
-
+/**
+ * This is the input for the public createNodeManifest action
+ */
 interface INodeManifestIn {
   manifestId: string
   pluginName: string
@@ -14,6 +13,13 @@ interface INodeManifestIn {
   }
 }
 
+interface INodeManifestPage {
+  path?: string
+}
+
+/**
+ * This it the output after processing calls to the public createNodeManifest action
+ */
 interface INodeManifestOut {
   page: INodeManifestPage
   node: {
@@ -100,7 +106,7 @@ async function findPageOwnedByNodeId({
 }
 
 /**
- * Prepares and then writes out an individual node manifest file to be used for routing to previews
+ * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public createNodeManifest action
  */
 async function processNodeManifest({
   inputManifest,
@@ -146,6 +152,7 @@ async function processNodeManifest({
 /**
  * Grabs all pending node manifests, processes them, writes them to disk,
  * and then removes them from the store.
+ * Manifest files are added via the public createNodeManifest action in sourceNodes
  */
 export async function processNodeManifests({ store, reporter }): Promise<void> {
   const { nodeManifests } = store.getState()
