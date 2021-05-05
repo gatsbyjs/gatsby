@@ -16,14 +16,12 @@ const MediaReferencePage = ({ data }) => {
         let content = null
         if (many) {
           content = many.map(imageData => (
-            <img src={imageData.file.url} style={{ width: 200 }} alt={title} />
+            <img src={imageData.url} style={{ width: 200 }} alt={title} />
           ))
         }
 
         if (one) {
-          content = (
-            <img src={one.file.url} style={{ width: 200 }} alt={title} />
-          )
+          content = <img src={one.url} style={{ width: 200 }} alt={title} />
         }
 
         return (
@@ -41,38 +39,24 @@ const MediaReferencePage = ({ data }) => {
           let content = null
           if (manyLocalized) {
             content = manyLocalized.map(imageData => (
-              <img
-                src={imageData.file.url}
-                style={{ width: 200 }}
-                alt={title}
-              />
+              <img src={imageData.url} style={{ width: 200 }} alt={title} />
             ))
           }
 
           if (oneLocalized) {
             content = (
-              <img
-                src={oneLocalized.file.url}
-                style={{ width: 200 }}
-                alt={title}
-              />
+              <img src={oneLocalized.url} style={{ width: 200 }} alt={title} />
             )
           }
 
           if (many) {
             content = many.map(imageData => (
-              <img
-                src={imageData.file.url}
-                style={{ width: 200 }}
-                alt={title}
-              />
+              <img src={imageData.url} style={{ width: 200 }} alt={title} />
             ))
           }
 
           if (one) {
-            content = (
-              <img src={one.file.url} style={{ width: 200 }} alt={title} />
-            )
+            content = <img src={one.url} style={{ width: 200 }} alt={title} />
           }
 
           return (
@@ -92,38 +76,24 @@ const MediaReferencePage = ({ data }) => {
           let content = null
           if (manyLocalized) {
             content = manyLocalized.map(imageData => (
-              <img
-                src={imageData.file.url}
-                style={{ width: 200 }}
-                alt={title}
-              />
+              <img src={imageData.url} style={{ width: 200 }} alt={title} />
             ))
           }
 
           if (oneLocalized) {
             content = (
-              <img
-                src={oneLocalized.file.url}
-                style={{ width: 200 }}
-                alt={title}
-              />
+              <img src={oneLocalized.url} style={{ width: 200 }} alt={title} />
             )
           }
 
           if (many) {
             content = many.map(imageData => (
-              <img
-                src={imageData.file.url}
-                style={{ width: 200 }}
-                alt={title}
-              />
+              <img src={imageData.url} style={{ width: 200 }} alt={title} />
             ))
           }
 
           if (one) {
-            content = (
-              <img src={one.file.url} style={{ width: 200 }} alt={title} />
-            )
+            content = <img src={one.url} style={{ width: 200 }} alt={title} />
           }
 
           return (
@@ -155,14 +125,10 @@ export const pageQuery = graphql`
           id
         }
         one {
-          file {
-            url
-          }
+          url
         }
         many {
-          file {
-            url
-          }
+          url
         }
       }
     }
@@ -179,24 +145,16 @@ export const pageQuery = graphql`
           id
         }
         one {
-          file {
-            url
-          }
+          url
         }
         many {
-          file {
-            url
-          }
+          url
         }
         oneLocalized {
-          file {
-            url
-          }
+          url
         }
         manyLocalized {
-          file {
-            url
-          }
+          url
         }
       }
     }
@@ -213,24 +171,16 @@ export const pageQuery = graphql`
           id
         }
         one {
-          file {
-            url
-          }
+          url
         }
         many {
-          file {
-            url
-          }
+          url
         }
         oneLocalized {
-          file {
-            url
-          }
+          url
         }
         manyLocalized {
-          file {
-            url
-          }
+          url
         }
       }
     }

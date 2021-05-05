@@ -585,15 +585,12 @@ export const createAssetNodes = ({
       localesFallback,
     })
 
+    const file = getField(assetItem.fields.file)
+
     const assetNode = {
       id: mId(space.sys.id, assetItem.sys.id, assetItem.sys.type),
       parent: null,
       children: [],
-      file: assetItem.fields.file ? getField(assetItem.fields.file) : null,
-      title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
-      description: assetItem.fields.description
-        ? getField(assetItem.fields.description)
-        : ``,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
         // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
@@ -611,6 +608,16 @@ export const createAssetNodes = ({
         publishedAt: assetItem.sys.updatedAt,
         publishedVersion: assetItem.sys.revision,
       },
+      title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
+      description: assetItem.fields.description
+        ? getField(assetItem.fields.description)
+        : ``,
+      contentType: file.contentType,
+      fileName: file.fileName,
+      url: file.url,
+      size: file.details.size,
+      width: file.details?.image?.width || null,
+      height: file.details?.image?.height || null,
     }
 
     // Link tags
