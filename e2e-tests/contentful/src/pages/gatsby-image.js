@@ -16,14 +16,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fluid ? (
               <GatsbyImage fluid={node.fluid} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -35,14 +35,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.fixed ? (
               <GatsbyImage fixed={node.fixed} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -54,14 +54,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.webp ? (
               <GatsbyImage fixed={node.webp} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -73,14 +73,14 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
             {node.traced ? (
               <GatsbyImage fixed={node.traced} />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -92,7 +92,7 @@ const GatsbyImagePage = ({ data }) => {
           <div>
             <p>
               <strong>
-                {node.title} ({node.file.fileName.split(".").pop()})
+                {node.title} ({node.fileName.split(".").pop()})
               </strong>
             </p>
             {node.description && <p>{node.description}</p>}
@@ -104,7 +104,7 @@ const GatsbyImagePage = ({ data }) => {
                 }}
               />
             ) : (
-              <SvgImage src={node.file.url} />
+              <SvgImage src={node.url} />
             )}
           </div>
         ))}
@@ -134,10 +134,8 @@ export const pageQuery = graphql`
       nodes {
         title
         description
-        file {
-          fileName
-          url
-        }
+        fileName
+        url
         fluid(maxWidth: 420) {
           ...GatsbyContentfulFluid
         }
