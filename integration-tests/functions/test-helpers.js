@@ -220,6 +220,14 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`function errors don't crash the server`, () => {
+      test(`normal`, async () => {
+        const result = await fetch(`${host}/api/error-send-function-twice`)
+
+        expect(result.statusCode).toEqual(200)
+      })
+    })
+
     describe(`functions can have custom middleware`, () => {
       test(`normal`, async () => {
         const result = await fetch(`${host}/api/cors`)

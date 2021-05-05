@@ -364,11 +364,18 @@ export async function onCreateDevServer({
           await Promise.resolve(fnToExecute(req, res))
         } catch (e) {
           reporter.error(e)
-          res
-            .status(500)
-            .send(
-              `Error when executing function "${functionObj.originalFilePath}": "${e.message}"`
+          // Don't send the error if that would cause another error.
+          if (
+            !e.message.includes(
+              `Cannot set headers after they are sent to the client`
             )
+          ) {
+            res
+              .status(500)
+              .send(
+                `Error when executing function "${functionObj.originalFilePath}": "${e.message}"`
+              )
+          }
         }
 
         const end = Date.now()
