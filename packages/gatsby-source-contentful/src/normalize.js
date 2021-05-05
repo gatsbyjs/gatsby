@@ -601,10 +601,6 @@ export const createAssetNodes = ({
       parent: null,
       children: [],
       file,
-      title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
-      description: assetItem.fields.description
-        ? getField(assetItem.fields.description)
-        : ``,
       internal: {
         type: `${makeTypeName(`Asset`)}`,
         // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
@@ -622,7 +618,6 @@ export const createAssetNodes = ({
         publishedAt: assetItem.sys.updatedAt,
         publishedVersion: assetItem.sys.revision,
       },
-      url: `https:${file.url}`,
       placeholderUrl: `https:${file.url}?w=%width%&h=%height%`,
       // These fields are optional for edge cases in the Preview API and Contentfuls asset processing
       mimeType: file.contentType,
@@ -630,6 +625,13 @@ export const createAssetNodes = ({
       width: file.details?.image?.width ?? null,
       height: file.details?.image?.height ?? null,
       size: file.details?.size ?? null,
+      title: assetItem.fields.title ? getField(assetItem.fields.title) : ``,
+      description: assetItem.fields.description
+        ? getField(assetItem.fields.description)
+        : ``,
+      contentType: file.contentType,
+      fileName: file.fileName,
+      url: `https:${file.url}`,
     }
 
     // Link tags

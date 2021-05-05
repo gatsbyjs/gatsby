@@ -376,7 +376,12 @@ describe(`gatsby-node`, () => {
               true,
               noLocaleFallback
             ) || ``,
-          file,
+          contentType: file.contentType,
+          fileName: file.fileName,
+          url: file.url,
+          size: file.details.size,
+          width: file.details?.image?.width || null,
+          height: file.details?.image?.height || null,
         })
       })
     })
