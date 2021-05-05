@@ -1,7 +1,10 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
-function renderRichText({ json, links }, makeOptions) {
-  const options = makeOptions(generateLinkMaps(links))
+function renderRichText({ json, links }, makeOptions = {}) {
+  const options =
+    typeof makeOptions === `function`
+      ? makeOptions(generateLinkMaps(links))
+      : makeOptions
 
   return documentToReactComponents(json, options)
 }

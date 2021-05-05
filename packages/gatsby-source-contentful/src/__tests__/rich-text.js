@@ -2,10 +2,11 @@ import React from "react"
 import { render } from "@testing-library/react"
 import { renderRichText } from "gatsby-source-contentful/rich-text"
 import { BLOCKS, INLINES } from "@contentful/rich-text-types"
+import { getRichTextEntityLinks } from "@contentful/rich-text-links"
 import { initialSync } from "../__fixtures__/rich-text-data"
 import { cloneDeep } from "lodash"
 
-const raw = {
+const json = {
   nodeType: `document`,
   data: {},
   content: [
@@ -404,101 +405,128 @@ const raw = {
 }
 
 const fixtures = initialSync().currentSyncData
+const fixturesEntriesMap = new Map()
+const fixturesAssetsMap = new Map()
 
-const references = [
-  ...fixtures.entries.map(entity => {
-    return {
-      sys: entity.sys,
-      __typename: `ContentfulContent`,
-      ...entity.fields,
-    }
-  }),
-  ...fixtures.assets.map(entity => {
-    return {
-      sys: entity.sys,
-      __typename: `ContentfulAsset`,
-      ...entity.fields,
-    }
-  }),
-]
+fixtures.entries.forEach(entity =>
+  fixturesEntriesMap.set(entity.sys.id, { sys: entity.sys, ...entity.fields })
+)
+fixtures.assets.forEach(entity =>
+  fixturesAssetsMap.set(entity.sys.id, { sys: entity.sys, ...entity.fields })
+)
+
+const links = {
+  assets: {
+    block: getRichTextEntityLinks(json, `embedded-asset-block`)[
+      `Asset`
+    ].map(entity => fixturesAssetsMap.get(entity.id)),
+    hyperlink: getRichTextEntityLinks(json, `asset-hyperlink`)[
+      `Asset`
+    ].map(entity => fixturesAssetsMap.get(entity.id)),
+  },
+  entries: {
+    inline: getRichTextEntityLinks(json, `embedded-entry-inline`)[
+      `Entry`
+    ].map(entity => fixturesEntriesMap.get(entity.id)),
+    block: getRichTextEntityLinks(json, `embedded-entry-block`)[
+      `Entry`
+    ].map(entity => fixturesEntriesMap.get(entity.id)),
+    hyperlink: getRichTextEntityLinks(json, `entry-hyperlink`)[
+      `Entry`
+    ].map(entity => fixturesEntriesMap.get(entity.id)),
+  },
+}
 
 describe(`rich text`, () => {
   test(`renders with default options`, () => {
     const { container } = render(
-      renderRichText({ raw: cloneDeep(raw), references: cloneDeep(references) })
+      renderRichText({ json: cloneDeep(json), links: cloneDeep(links) })
     )
     expect(container).toMatchSnapshot()
   })
 
   test(`renders with custom options`, () => {
-    const options = {
-      renderNode: {
-        [INLINES.EMBEDDED_ENTRY]: node => {
-          if (!node.data.target) {
+    const makeOptions = ({
+      assetBlockMap,
+      assetHyperlinkMap,
+      entryBlockMap,
+      entryInlineMap,
+      entryHyperlinkMap,
+    }) => {
+      return {
+        renderNode: {
+          [INLINES.EMBEDDED_ENTRY]: node => {
+            const entry = entryInlineMap.get(node?.data?.target?.sys.id)
+            if (!entry) {
+              return (
+                <span>
+                  Unresolved INLINE ENTRY:{` `}
+                  {JSON.stringify({ node, entryInlineMap }, null, 2)}
+                </span>
+              )
+            }
+            return <span>Resolved inline Entry ({entry.sys.id})</span>
+          },
+          [INLINES.ENTRY_HYPERLINK]: node => {
+            const entry = entryHyperlinkMap.get(node?.data?.target?.sys.id)
+            if (!entry) {
+              return (
+                <span>
+                  Unresolved ENTRY HYPERLINK: {JSON.stringify(node, null, 2)}
+                </span>
+              )
+            }
+            return <span>Resolved entry Hyperlink ({entry.sys.id})</span>
+          },
+          [INLINES.ASSET_HYPERLINK]: node => {
+            const entry = assetHyperlinkMap.get(node?.data?.target?.sys.id)
+            if (!entry) {
+              return (
+                <span>
+                  Unresolved ASSET HYPERLINK: {JSON.stringify(node, null, 2)}
+                </span>
+              )
+            }
+            return <span>Resolved asset Hyperlink ({entry.sys.id})</span>
+          },
+          [BLOCKS.EMBEDDED_ENTRY]: node => {
+            const entry = entryBlockMap.get(node?.data?.target?.sys.id)
+            if (!entry) {
+              return (
+                <div>
+                  Unresolved ENTRY !!!!": {JSON.stringify(node, null, 2)}
+                </div>
+              )
+            }
             return (
-              <span>
-                Unresolved INLINE ENTRY: {JSON.stringify(node, null, 2)}
-              </span>
+              <h2>
+                Resolved embedded Entry: {entry.title[`en-US`]} ({entry.sys.id})
+              </h2>
             )
-          }
-          return <span>Resolved inline Entry ({node.data.target.sys.id})</span>
-        },
-        [INLINES.ENTRY_HYPERLINK]: node => {
-          if (!node.data.target) {
+          },
+          [BLOCKS.EMBEDDED_ASSET]: node => {
+            const entry = assetBlockMap.get(node?.data?.target?.sys.id)
+            if (!entry) {
+              return (
+                <div>
+                  Unresolved ASSET !!!!": {JSON.stringify(node, null, 2)}
+                </div>
+              )
+            }
             return (
-              <span>
-                Unresolved ENTRY HYPERLINK: {JSON.stringify(node, null, 2)}
-              </span>
+              <h2>
+                Resolved embedded Asset: {entry.title[`en-US`]} ({entry.sys.id})
+              </h2>
             )
-          }
-          return (
-            <span>Resolved entry Hyperlink ({node.data.target.sys.id})</span>
-          )
+          },
         },
-        [INLINES.ASSET_HYPERLINK]: node => {
-          if (!node.data.target) {
-            return (
-              <span>
-                Unresolved ASSET HYPERLINK: {JSON.stringify(node, null, 2)}
-              </span>
-            )
-          }
-          return (
-            <span>Resolved asset Hyperlink ({node.data.target.sys.id})</span>
-          )
-        },
-        [BLOCKS.EMBEDDED_ENTRY]: node => {
-          if (!node.data.target) {
-            return (
-              <div>Unresolved ENTRY !!!!": {JSON.stringify(node, null, 2)}</div>
-            )
-          }
-          return (
-            <h2>
-              Resolved embedded Entry: {node.data.target.title[`en-US`]} (
-              {node.data.target.sys.id})
-            </h2>
-          )
-        },
-        [BLOCKS.EMBEDDED_ASSET]: node => {
-          if (!node.data.target) {
-            return (
-              <div>Unresolved ASSET !!!!": {JSON.stringify(node, null, 2)}</div>
-            )
-          }
-          return (
-            <h2>
-              Resolved embedded Asset: {node.data.target.title[`en-US`]} (
-              {node.data.target.sys.id})
-            </h2>
-          )
-        },
-      },
+      }
     }
+
     const { container } = render(
       renderRichText(
-        { raw: cloneDeep(raw), references: cloneDeep(references) },
-        options
+        { json: cloneDeep(json), links: cloneDeep(links) },
+        makeOptions
       )
     )
     expect(container).toMatchSnapshot()
