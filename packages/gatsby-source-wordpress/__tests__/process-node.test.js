@@ -4,6 +4,7 @@ import {
   getImgSrcRemoteFileMatchesFromNodeString,
   getImgTagMatchesWithUrl,
   getWpLinkRegex,
+  searchAndReplaceNodeStrings,
 } from "../dist/steps/source-nodes/create-nodes/process-node"
 
 const wpUrl = `wp.fakesite.com`
@@ -42,4 +43,29 @@ test(`HTML link transformation regex matches links`, async () => {
   const matches = execall(wpLinkRegex, nodeString)
 
   expect(matches.length).toBe(2)
+})
+
+test(`Search and replace node strings using regex matches`, async () => {
+  const nodeString = `Some stuff in a random string
+
+  A new line with some stuff!
+
+  We need to test some <a href=\\"https://old-site.com/hi\\" />link</a> as well!`
+
+  const result = searchAndReplaceNodeStrings({
+    nodeString,
+    node: { __typename: "FakeTypeName", id: "cG9zdDo0OQ==" },
+    pluginOptions: {
+      searchAndReplace: [
+        { search: "(S|s)ome stuff", replace: "some other thing" },
+        { search: "https://old-site\.com", replace: "https://new-site.com" },
+      ]
+    }
+  })
+
+  expect(result).toBe(`some other thing in a random string
+
+  A new line with some other thing!
+
+  We need to test some <a href=\\"https://new-site.com/hi\\" />link</a> as well!`)
 })
