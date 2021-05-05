@@ -492,7 +492,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -509,7 +509,7 @@ const fixedNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -585,7 +585,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -602,7 +602,7 @@ const fluidNodeType = ({ name, getTracedSVG }) => {
           type: GraphQLString,
           resolve({ image, options }) {
             if (
-              image?.file?.contentType === `image/webp` ||
+              image?.contentType === `image/webp` ||
               options.toFormat === `webp`
             ) {
               return null
@@ -671,9 +671,7 @@ exports.extendNodeType = ({ type, store }) => {
     const { traceSVG } = require(`gatsby-plugin-sharp`)
 
     const { image, options } = args
-    const {
-      file: { contentType },
-    } = image
+    const { contentType } = image
 
     if (contentType.indexOf(`image/`) !== 0) {
       return null
