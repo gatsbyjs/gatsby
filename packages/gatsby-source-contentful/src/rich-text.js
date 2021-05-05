@@ -1,46 +1,52 @@
 // @ts-check
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
-import resolveResponse from "contentful-resolve-response"
 
-export function renderRichText({ raw, references }, options = {}) {
-  const richText = raw
+export function renderRichText({ json, links }, makeOptions = {}) {
+  const options =
+    typeof makeOptions === `function`
+      ? makeOptions(generateLinkMaps(links))
+      : makeOptions
 
-  // If no references are given, there is no need to resolve them
-  if (!references || !references.length) {
-    return documentToReactComponents(richText, options)
+  return documentToReactComponents(json, options)
+}
+
+exports.renderRichText = renderRichText
+
+/**
+ * Helper function to simplify Rich Text rendering. Based on:
+ * https://www.contentful.com/blog/2021/04/14/rendering-linked-assets-entries-in-contentful/
+ */
+function generateLinkMaps(links) {
+  const assetBlockMap = new Map()
+  for (const asset of links.assets.block || []) {
+    assetBlockMap.set(asset.sys.id, asset)
   }
 
-  // Create dummy response so we can use official libraries for resolving the entries
-  const dummyResponse = {
-    items: [
-      {
-        sys: { type: `Entry` },
-        richText,
-      },
-    ],
-    includes: {
-      Entry: references
-        .filter(({ __typename }) => __typename !== `ContentfulAsset`)
-        .map(reference => {
-          return {
-            ...reference,
-            sys: { type: `Entry`, id: reference.sys.id },
-          }
-        }),
-      Asset: references
-        .filter(({ __typename }) => __typename === `ContentfulAsset`)
-        .map(reference => {
-          return {
-            ...reference,
-            sys: { type: `Asset`, id: reference.sys.id },
-          }
-        }),
-    },
+  const assetHyperlinkMap = new Map()
+  for (const asset of links.assets.hyperlink || []) {
+    assetHyperlinkMap.set(asset.sys.id, asset)
   }
 
-  const resolved = resolveResponse(dummyResponse, {
-    removeUnresolved: true,
-  })
+  const entryBlockMap = new Map()
+  for (const entry of links.entries.block || []) {
+    entryBlockMap.set(entry.sys.id, entry)
+  }
 
-  return documentToReactComponents(resolved[0].richText, options)
+  const entryInlineMap = new Map()
+  for (const entry of links.entries.inline || []) {
+    entryInlineMap.set(entry.sys.id, entry)
+  }
+
+  const entryHyperlinkMap = new Map()
+  for (const entry of links.entries.hyperlink || []) {
+    entryHyperlinkMap.set(entry.sys.id, entry)
+  }
+
+  return {
+    assetBlockMap,
+    assetHyperlinkMap,
+    entryBlockMap,
+    entryInlineMap,
+    entryHyperlinkMap,
+  }
 }
