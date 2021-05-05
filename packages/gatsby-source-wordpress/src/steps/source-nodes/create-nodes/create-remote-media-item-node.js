@@ -377,7 +377,7 @@ export const createRemoteMediaItemNode = async ({
     modifiedGmt,
   })
 
-  if (hardCacheMediaFiles && doNotFetchImage) {
+  if (hardCacheMediaFiles && !doNotFetchImage) {
     try {
       // make sure the directory exists
       await fs.ensureDir(path.dirname(hardCachedFilePath))
