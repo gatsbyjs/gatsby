@@ -1,9 +1,10 @@
 const _ = require(`lodash`)
+const fastq = require(`fastq`)
 const { store } = require(`../redux`)
 const { hasFlag, FLAG_ERROR_EXTRACTION } = require(`../redux/reducers/queries`)
 const { queryRunner } = require(`./query-runner`)
 const { websocketManager } = require(`../utils/websocket-manager`)
-const fastq = require(`fastq`)
+const { GraphQLRunner } = require(`./graphql-runner`)
 
 if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
   console.info(
@@ -57,7 +58,16 @@ function groupQueryIds(queryIds) {
   }
 }
 
-function createQueue({ createJobFn, state, activity, graphqlRunner }) {
+function createQueue({
+  createJobFn,
+  state,
+  activity,
+  graphqlRunner,
+  graphqlTracing,
+}) {
+  if (!graphqlRunner) {
+    graphqlRunner = new GraphQLRunner(store, { graphqlTracing })
+  }
   state = state || store.getState()
 
   function worker(queryId, cb) {
@@ -88,6 +98,7 @@ async function processQueries({
   state,
   activity,
   graphqlRunner,
+  graphqlTracing,
 }) {
   return new Promise((resolve, reject) => {
     const fastQueue = createQueue({
@@ -95,6 +106,7 @@ async function processQueries({
       state,
       activity,
       graphqlRunner,
+      graphqlTracing,
     })
 
     queryIds.forEach(queryId => {
@@ -142,7 +154,7 @@ function onDevelopStaticQueryDone({ job, result }) {
 
 async function processStaticQueries(
   queryIds,
-  { state, activity, graphqlRunner }
+  { state, activity, graphqlRunner, graphqlTracing }
 ) {
   return processQueries({
     queryIds,
@@ -154,12 +166,13 @@ async function processStaticQueries(
     state,
     activity,
     graphqlRunner,
+    graphqlTracing,
   })
 }
 
 async function processPageQueries(
   queryIds,
-  { state, activity, graphqlRunner }
+  { state, activity, graphqlRunner, graphqlTracing }
 ) {
   return processQueries({
     queryIds,
@@ -167,6 +180,7 @@ async function processPageQueries(
     state,
     activity,
     graphqlRunner,
+    graphqlTracing,
   })
 }
 
