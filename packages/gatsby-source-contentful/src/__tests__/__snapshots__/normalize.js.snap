@@ -2206,25 +2206,17 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -2236,30 +2228,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -2271,30 +2257,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -2306,30 +2286,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -2341,30 +2315,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -2376,30 +2344,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -2411,30 +2373,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -2446,30 +2402,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -2481,30 +2431,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -2516,30 +2460,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -2551,30 +2489,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -2586,30 +2518,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -2621,30 +2547,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -2656,30 +2576,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -2691,30 +2605,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -2726,30 +2634,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -2761,30 +2663,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -2796,30 +2692,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -2831,30 +2721,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -2866,30 +2750,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -2901,30 +2779,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -2936,30 +2808,24 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -2971,6 +2837,8 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
 ]
@@ -6933,25 +6801,17 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -6963,30 +6823,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -6998,30 +6852,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -7033,30 +6881,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -7068,30 +6910,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -7103,30 +6939,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -7138,30 +6968,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -7173,30 +6997,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -7208,30 +7026,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -7243,30 +7055,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -7278,30 +7084,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -7313,30 +7113,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -7348,30 +7142,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -7383,30 +7171,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -7418,30 +7200,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -7453,30 +7229,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -7488,30 +7258,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -7523,30 +7287,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -7558,30 +7316,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -7593,30 +7345,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -7628,30 +7374,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -7663,30 +7403,24 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -7698,6 +7432,8 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
 ]
@@ -9459,25 +9195,17 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -9489,30 +9217,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -9524,30 +9246,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -9559,30 +9275,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -9594,30 +9304,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -9629,30 +9333,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -9664,30 +9362,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -9699,30 +9391,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -9734,30 +9420,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -9769,30 +9449,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -9804,30 +9478,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -9839,30 +9507,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -9874,30 +9536,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -9909,30 +9565,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -9944,30 +9594,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -9979,30 +9623,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -10014,30 +9652,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -10049,30 +9681,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -10084,30 +9710,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -10119,30 +9739,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -10154,30 +9768,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -10189,30 +9797,24 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -10224,6 +9826,8 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
 ]
@@ -11985,25 +11589,17 @@ Array [
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -12015,30 +11611,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 353,
-            "width": 353,
-          },
-          "size": 12302,
-        },
-        "fileName": "zJYzDlGk.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
-      },
+      "fileName": "zJYzDlGk.jpeg",
+      "height": 353,
       "id": "rocybtov1ozk___c3wtvPBbBjiMKqKKga8I2Cu___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.178Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 12302,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.178Z",
@@ -12050,30 +11640,24 @@ Array [
         "type": "Asset",
       },
       "title": "Normann Copenhagen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/3wtvPBbBjiMKqKKga8I2Cu/c65cb9cce1107c2e7e63c17072fe7932/zJYzDlGk.jpeg",
+      "width": 353,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -12085,30 +11669,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "by Lemnos",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 1000,
-            "width": 1000,
-          },
-          "size": 66927,
-        },
-        "fileName": "soso.clock.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
-      },
+      "fileName": "soso.clock.jpg",
+      "height": 1000,
       "id": "rocybtov1ozk___KTRF62Q4gg60q6WCsWKw8___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.064Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 66927,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.064Z",
@@ -12120,30 +11698,24 @@ Array [
         "type": "Asset",
       },
       "title": "SoSo Wall Clock",
+      "url": "//images.ctfassets.net/rocybtov1ozk/KTRF62Q4gg60q6WCsWKw8/a8b2e93ac83fbbbb7bf9fba9f92b018e/soso.clock.jpg",
+      "width": 1000,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -12155,30 +11727,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise image",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 600,
-          },
-          "size": 48751,
-        },
-        "fileName": "jqvtazcyfwseah9fmysz.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
-      },
+      "fileName": "jqvtazcyfwseah9fmysz.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___Xc0ny7GWsMEMCeASWO2um___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.027Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 48751,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.027Z",
@@ -12190,30 +11756,24 @@ Array [
         "type": "Asset",
       },
       "title": "Hudson Wall Cup ",
+      "url": "//images.ctfassets.net/rocybtov1ozk/Xc0ny7GWsMEMCeASWO2um/af8e29320c04af689798afe96e2345c7/jqvtazcyfwseah9fmysz.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -12225,30 +11785,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "company logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 32,
-            "width": 175,
-          },
-          "size": 7149,
-        },
-        "fileName": "lemnos-logo.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
-      },
+      "fileName": "lemnos-logo.jpg",
+      "height": 32,
       "id": "rocybtov1ozk___c2Y8LhXLnYAYqKCGEWG4EKI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:37.012Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7149,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:37.012Z",
@@ -12260,30 +11814,24 @@ Array [
         "type": "Asset",
       },
       "title": "Lemnos",
+      "url": "//images.ctfassets.net/rocybtov1ozk/2Y8LhXLnYAYqKCGEWG4EKI/eb29ab3c817906993f65e221523ef252/lemnos-logo.jpg",
+      "width": 175,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -12295,30 +11843,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 128,
-            "width": 128,
-          },
-          "size": 6744,
-        },
-        "fileName": "toys_512pxGREY.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
-      },
+      "fileName": "toys_512pxGREY.png",
+      "height": 128,
       "id": "rocybtov1ozk___c6t4HKjytPi0mYgs240wkG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.633Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 6744,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.633Z",
@@ -12330,30 +11872,24 @@ Array [
         "type": "Asset",
       },
       "title": "Toys",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6t4HKjytPi0mYgs240wkG/6e730b1e6c2a46929239019240c037e6/toys_512pxGREY.png",
+      "width": 128,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -12365,30 +11901,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 500,
-            "width": 500,
-          },
-          "size": 44089,
-        },
-        "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
-      },
+      "fileName": "9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "height": 500,
       "id": "rocybtov1ozk___c1MgbdJNTsMWKI0W68oYqkU___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.182Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 44089,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.182Z",
@@ -12400,30 +11930,24 @@ Array [
         "type": "Asset",
       },
       "title": "Chive logo",
+      "url": "//images.ctfassets.net/rocybtov1ozk/1MgbdJNTsMWKI0W68oYqkU/ad0200fe320b85ecdd823c711161c2f6/9ef190c59f0d375c0dea58b58a4bc1f0.jpeg",
+      "width": 500,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -12435,30 +11959,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "category icon",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 256,
-            "width": 256,
-          },
-          "size": 2977,
-        },
-        "fileName": "1418244847_Streamline-18-256.png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
-      },
+      "fileName": "1418244847_Streamline-18-256.png",
+      "height": 256,
       "id": "rocybtov1ozk___c6m5AJ9vMPKc8OUoQeoCS4o___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.172Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 2977,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.172Z",
@@ -12470,30 +11988,24 @@ Array [
         "type": "Asset",
       },
       "title": "Home and Kitchen",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6m5AJ9vMPKc8OUoQeoCS4o/e782e3b291ff2b0287546a563af4683c/1418244847_Streamline-18-256.png",
+      "width": 256,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -12505,30 +12017,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Brand logo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 100,
-            "width": 100,
-          },
-          "size": 7003,
-        },
-        "fileName": "playsam.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
-      },
+      "fileName": "playsam.jpg",
+      "height": 100,
       "id": "rocybtov1ozk___c4zj1ZOfHgQ8oqgaSKm4Qo2___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.168Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 7003,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.168Z",
@@ -12540,30 +12046,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam",
+      "url": "//images.ctfassets.net/rocybtov1ozk/4zj1ZOfHgQ8oqgaSKm4Qo2/5d967c9c48d67eabff71a9a0232d4378/playsam.jpg",
+      "width": 100,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -12575,30 +12075,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 446,
-            "width": 600,
-          },
-          "size": 27187,
-        },
-        "fileName": "quwowooybuqbl6ntboz3.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
-      },
+      "fileName": "quwowooybuqbl6ntboz3.jpg",
+      "height": 446,
       "id": "rocybtov1ozk___wtrHxeu3zEoEce2MokCSi___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.037Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 27187,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.037Z",
@@ -12610,30 +12104,24 @@ Array [
         "type": "Asset",
       },
       "title": "Playsam Streamliner",
+      "url": "//images.ctfassets.net/rocybtov1ozk/wtrHxeu3zEoEce2MokCSi/73dce36715f16e27cf5ff0d2d97d7dff/quwowooybuqbl6ntboz3.jpg",
+      "width": 600,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -12645,30 +12133,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/jpeg",
       "description": "Merchandise photo",
-      "file": Object {
-        "contentType": "image/jpeg",
-        "details": Object {
-          "image": Object {
-            "height": 600,
-            "width": 450,
-          },
-          "size": 28435,
-        },
-        "fileName": "ryugj83mqwa1asojwtwb.jpg",
-        "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
-      },
+      "fileName": "ryugj83mqwa1asojwtwb.jpg",
+      "height": 600,
       "id": "rocybtov1ozk___c10TkaLheGeQG6qQGqWYqUI___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:36.032Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 28435,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:36.032Z",
@@ -12680,30 +12162,24 @@ Array [
         "type": "Asset",
       },
       "title": "Whisk beaters",
+      "url": "//images.ctfassets.net/rocybtov1ozk/10TkaLheGeQG6qQGqWYqUI/f997e8e13c8c83c145e976d0905e64b7/ryugj83mqwa1asojwtwb.jpg",
+      "width": 450,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -12715,30 +12191,24 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
   Array [
     Object {
       "children": Array [],
+      "contentType": "image/png",
       "description": "Category icon set",
-      "file": Object {
-        "contentType": "image/png",
-        "details": Object {
-          "image": Object {
-            "height": 250,
-            "width": 250,
-          },
-          "size": 4244,
-        },
-        "fileName": "1418244847_Streamline-18-256 (1).png",
-        "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
-      },
+      "fileName": "1418244847_Streamline-18-256 (1).png",
+      "height": 250,
       "id": "rocybtov1ozk___c6s3iG2OVmoUcosmA8ocqsG___Asset___de",
       "internal": Object {
         "contentDigest": "2017-06-27T09:35:35.994Z",
         "type": "ContentfulAsset",
       },
       "parent": null,
+      "size": 4244,
       "sys": Object {
         "environmentId": "master",
         "firstPublishedAt": "2017-06-27T09:35:35.994Z",
@@ -12750,6 +12220,8 @@ Array [
         "type": "Asset",
       },
       "title": "House icon",
+      "url": "//images.ctfassets.net/rocybtov1ozk/6s3iG2OVmoUcosmA8ocqsG/286ac4c1be74e05d2e7e11bc5a55bc83/1418244847_Streamline-18-256__1_.png",
+      "width": 250,
     },
   ],
 ]

@@ -81,10 +81,7 @@ export const getBase64Image = (imageProps, cache) => {
 
 const getTracedSVG = async ({ image, options, cache }) => {
   const { traceSVG } = await import(`gatsby-plugin-sharp`)
-
-  const {
-    file: { contentType, url: imgUrl, fileName },
-  } = image
+  const { url: imgUrl, fileName, contentType } = image
 
   if (contentType.indexOf(`image/`) !== 0) {
     return null
@@ -104,7 +101,7 @@ const getTracedSVG = async ({ image, options, cache }) => {
   return traceSVG({
     file: {
       internal: image.internal,
-      name: image.file.fileName,
+      name: fileName,
       extension,
       absolutePath,
     },
@@ -170,20 +167,18 @@ const getDominantColor = async ({ image, options, cache }) => {
 }
 
 function getBasicImageProps(image, args) {
-  let aspectRatio
+  let { width, height } = image
   if (args.width && args.height) {
-    aspectRatio = args.width / args.height
-  } else {
-    aspectRatio =
-      image.file.details.image.width / image.file.details.image.height
+    width = args.width
+    height = args.height
   }
 
   return {
-    baseUrl: image.file.url,
-    contentType: image.file.contentType,
-    aspectRatio,
-    width: image.file.details.image.width,
-    height: image.file.details.image.height,
+    baseUrl: image.url,
+    contentType: image.contentType,
+    aspectRatio: width / height,
+    width,
+    height,
   }
 }
 
