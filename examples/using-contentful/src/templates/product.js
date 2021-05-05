@@ -15,7 +15,7 @@ class ProductTemplate extends React.Component {
   render() {
     const product = this.props.data.contentfulProduct
     const {
-      productName: { productName },
+      productName: { raw: productName },
       productDescription,
       price,
       image,
@@ -39,7 +39,7 @@ class ProductTemplate extends React.Component {
           )}
         </div>
         <h1 style={{ marginBottom: rhythm(1 / 2) }}>{productName}</h1>
-        <h4>Made by {brand.companyName.companyName}</h4>
+        <h4>Made by {brand.companyName.raw}</h4>
         <div>
           <span>Price: ${price}</span>
           <div
@@ -53,7 +53,7 @@ class ProductTemplate extends React.Component {
               {categories.map((category, i) => (
                 <li key={i}>
                   <Link key={i} to={`/categories/${category.id}`}>
-                    {category.title.title}
+                    {category.title.raw}
                   </Link>
                 </li>
               ))}
@@ -73,7 +73,7 @@ export const pageQuery = graphql`
   query($id: String!) {
     contentfulProduct(id: { eq: $id }) {
       productName {
-        productName
+        raw
       }
       productDescription {
         childMarkdownRemark {
@@ -86,13 +86,13 @@ export const pageQuery = graphql`
       }
       brand {
         companyName {
-          companyName
+          raw
         }
       }
       categories {
         id
         title {
-          title
+          raw
         }
       }
     }
