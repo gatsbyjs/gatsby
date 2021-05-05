@@ -34,7 +34,7 @@ const Product = ({ node }) => (
             />
           )}
         </div>
-        <div style={{ flex: 1 }}>{node.productName.productName}</div>
+        <div style={{ flex: 1 }}>{node.productName.raw}</div>
       </div>
     </Link>
   </div>
@@ -61,8 +61,8 @@ class IndexPage extends React.Component {
           <p>
             An entry and asset node are created for each locale following
             fallback rules for missing localization. In addition, each node has
-            an additional field added, <code>node_locale</code> so you can
-            select for nodes from a single locale
+            an additional field added, <code>sys.locale</code> so you can select
+            for nodes from a single locale
           </p>
           <h3>en-US</h3>
           {usProductEdges.map(({ node }, i) => (
@@ -86,13 +86,13 @@ export default IndexPage
 
 export const pageQuery = graphql`
   query {
-    us: allContentfulProduct(filter: { node_locale: { eq: "en-US" } }) {
+    us: allContentfulProduct(filter: { sys: { locale: { eq: "en-US" } } }) {
       edges {
         node {
           id
           gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
           productName {
-            productName
+            raw
           }
           image {
             gatsbyImageData(layout: FIXED, width: 75)
@@ -100,13 +100,13 @@ export const pageQuery = graphql`
         }
       }
     }
-    german: allContentfulProduct(filter: { node_locale: { eq: "de" } }) {
+    german: allContentfulProduct(filter: { sys: { locale: { eq: "de" } } }) {
       edges {
         node {
           id
           gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
           productName {
-            productName
+            raw
           }
           image {
             gatsbyImageData(layout: FIXED, width: 75)

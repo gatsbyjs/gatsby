@@ -317,7 +317,7 @@ export default ImageAPI
 
 export const pageQuery = graphql`
   query {
-    allContentfulAsset(filter: { node_locale: { eq: "en-US" } }) {
+    allContentfulAsset(filter: { sys: { locale: { eq: "en-US" } } }) {
       edges {
         node {
           title
