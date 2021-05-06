@@ -110,9 +110,7 @@ function pageTitleAndDataAssertion(config) {
 function runTests(config) {
   preTestSetup(config)
 
-  cy.visit(`/query-data-caches/${config.slug}/page-A/`, {
-    failOnStatusCode: false,
-  }).waitForRouteChange()
+  cy.visit(`/query-data-caches/${config.slug}/page-A/`).waitForRouteChange()
 
   setupForAssertingNotReloading()
 
