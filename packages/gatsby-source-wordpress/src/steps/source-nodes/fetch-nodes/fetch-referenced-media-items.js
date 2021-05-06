@@ -173,14 +173,10 @@ export const createMediaItemNode = async ({
         )
       }
 
-      if (!localFileNode) {
-        return resolveFutureNode(null)
-      }
-
       node = {
         ...node,
         localFile: {
-          id: localFileNode.id,
+          id: localFileNode?.id,
         },
         parent: null,
         internal: {

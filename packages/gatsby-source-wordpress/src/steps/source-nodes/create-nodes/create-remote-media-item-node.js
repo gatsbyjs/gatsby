@@ -232,11 +232,23 @@ export const createRemoteMediaItemNode = async ({
 
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
   if (fileSize > maxFileSizeBytes) {
+    reporter.warn(
+      formatLogMessage(
+        `At least one remote media item not fetched because its size exceeded the maxFileSizeBytes config option.`
+      )
+    )
+
     return null
   }
 
   // if this type of file is excluded, don't fetch the remote file
   if (excludeByMimeTypes.includes(mimeType)) {
+    reporter.warn(
+      formatLogMessage(
+        `At least one remote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option.`
+      )
+    )
+
     return null
   }
 
