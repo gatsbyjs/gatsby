@@ -243,7 +243,7 @@ export default function PageTemplate({ data: { mdx } }) {
     <div>
       <h1>{mdx.frontmatter.title}</h1>
       <MDXProvider components={shortcodes}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
       </MDXProvider>
     </div>
   )
@@ -285,7 +285,7 @@ export default function PageTemplate({ data: { mdx } }) {
     <div>
       <h1>{mdx.frontmatter.title}</h1>
       <MDXProvider components={shortcodes}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
       </MDXProvider>
     </div>
   )
