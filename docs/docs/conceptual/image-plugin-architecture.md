@@ -94,7 +94,7 @@ In order to process images at build time, Gatsby needs to know which images will
 
 #### Extract `StaticImage` props
 
-The static analysis happens in `gatsby-plugin-image`, during the `preprocessSource` lifecycle. This runs immediately before query extraction. The plugin uses Babel to find references to `StaticImage` imported from `gatsby-plugin-image`. It then uses [babel-jsx-utils](https://www.npmjs.com/package/babel-jsx-utils) to extract the value of the props. This calls `evaluate()` on the AST nodes, so is able to extract values and evaluate expressions in the local scope as well as inline literals. If any of these props fails to be evaluated, it generates a structured error that includes the location of the error and [a link to the docs](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#restrictions-on-using-staticimage).
+The static analysis happens in `gatsby-plugin-image`, during the `preprocessSource` lifecycle. This runs immediately before query extraction. The plugin uses Babel to find references to `StaticImage` imported from `gatsby-plugin-image`. It then uses [babel-jsx-utils](https://www.npmjs.com/package/babel-jsx-utils) to extract the value of the props. This calls `evaluate()` on the AST nodes, so is able to extract values and evaluate expressions in the local scope as well as inline literals. If any of these props fails to be evaluated, it generates a structured error that includes the location of the error and [a link to the docs](/docs/reference/built-in-components/gatsby-plugin-image/#restrictions-on-using-staticimage).
 
 #### Process images
 
