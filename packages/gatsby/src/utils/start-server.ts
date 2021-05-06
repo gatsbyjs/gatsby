@@ -567,18 +567,35 @@ module.exports = {
           column: columnNumber ?? 0,
         }
 
-        // Generate a shell for client-only content -- for the error overlay
-        const clientOnlyShell = await renderDevHTML({
-          path: pathObj.path,
-          page: pathObj,
-          skipSsr: true,
-          store,
-          error: message,
-          htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
-          directory: program.directory,
-        })
+        try {
+          // Generate a shell for client-only content -- for the error overlay
+          const clientOnlyShell = await renderDevHTML({
+            path: pathObj.path,
+            page: pathObj,
+            skipSsr: true,
+            store,
+            error: message,
+            htmlComponentRendererPath: `${program.directory}/public/render-page.js`,
+            directory: program.directory,
+          })
 
-        res.send(clientOnlyShell)
+          res.send(clientOnlyShell)
+        } catch (e) {
+          report.error({
+            id: `11616`,
+            context: {
+              sourceMessage: e.message,
+            },
+            filePath: e.filename,
+            location: {
+              start: {
+                line: e.line,
+                column: e.column,
+              },
+            },
+          })
+          res.send(e).status(500)
+        }
       }
 
       htmlActivity.end()
@@ -630,6 +647,12 @@ module.exports = {
               sourceMessage: e.message,
             },
             filePath: e.filename,
+            location: {
+              start: {
+                line: e.line,
+                column: e.column,
+              },
+            },
           })
           res.send(e).status(500)
         }

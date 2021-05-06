@@ -563,6 +563,13 @@ const errors = {
     level: Level.ERROR,
     category: ErrorCategory.SYSTEM,
   },
+  "11616": {
+    text: (context): string =>
+      stripIndent(`There was an error while trying to create the client-only shell for displaying SSR errors:
+      ${context.sourceMessage}`),
+    level: Level.ERROR,
+    category: ErrorCategory.SYSTEM,
+  },
   // Watchdog
   "11701": {
     text: (context): string =>
