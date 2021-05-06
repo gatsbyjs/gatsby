@@ -1446,7 +1446,9 @@ actions.createNodeManifest = (
     node,
   }: {
     manifestId: string,
-    node: any,
+    node: {
+      id: string,
+    },
   },
   plugin: Plugin
 ) => {
