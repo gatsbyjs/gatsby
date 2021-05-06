@@ -82,7 +82,7 @@
     "common-tags": "^1.8.0",
     "fs-extra": "^8.1.0",
     "gatsby-core-utils": "^2.5.0-next.0",
-    "objectFitPolyfill": "^2.3.0",
+    "objectFitPolyfill": "^2.3.5",
     "prop-types": "^15.7.2"
   },
   "repository": {
