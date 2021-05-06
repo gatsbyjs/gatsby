@@ -59,6 +59,7 @@
       packageNames: ["remark", "retext"],
       packagePatterns: ["^remark-", "^retext-"],
       dependencyDashboardApproval: false,
+      excludePackageNames: ["remark-mdx", "remark-mdxjs"],
     },
     {
       groupName: "eslint",
@@ -2300,6 +2301,7 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby",
       commitMessageExtra: "",
+      matchDepTypes: ["peerDependencies", "dependencies"],
       excludePackageNames: [
         "@mdx-js/mdx",
         "@mdx-js/react",
@@ -2324,6 +2326,52 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby",
       excludePackageNames: ["cross-env"],
+      matchDepTypes: ["peerDependencies", "dependencies"],
+      packageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "express-graphql",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+        "webpack-virtual-modules",
+      ],
+    },
+    {
+      groupName: "minor and patch for gatsby dev dependencies",
+      paths: ["packages/gatsby/"],
+      groupSlug: "gatsby",
+      updateTypes: ["minor", "patch"],
+      // force pr title to be the plugin name
+      commitMessageTopic: "minor and patch for gatsby",
+      commitMessageExtra: "",
+      excludePackageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "cross-env",
+        "express-graphql",
+        "lodash",
+        "lodash-es",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+        "webpack-virtual-modules",
+        "mini-css-extract-plugin",
+      ],
+      matchDepTypes: ["devDependencies"],
+      excludePackagePatterns: ["^lodash/", "^@babel/"],
+    },
+    {
+      groupName: "major for gatsby dev dependencies",
+      paths: ["packages/gatsby/"],
+      groupSlug: "gatsby-major",
+      updateTypes: ["major"],
+      // force pr title to be the plugin name
+      commitMessageSuffix: "for gatsby",
+      excludePackageNames: ["cross-env"],
+      matchDepTypes: ["devDependencies"],
       packageNames: [
         "@mdx-js/mdx",
         "@mdx-js/react",
