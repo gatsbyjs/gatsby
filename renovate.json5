@@ -600,6 +600,26 @@
       excludePackageNames: ["cross-env"],
     },
     {
+      groupName: "minor and patch for gatsby-plugin-gatsby-cloud",
+      paths: ["packages/gatsby-plugin-gatsby-cloud/"],
+      groupSlug: "gatsby-plugin-gatsby-cloud",
+      updateTypes: ["minor", "patch"],
+      // force pr title to be the plugin name
+      commitMessageTopic: "minor and patch for gatsby-plugin-gatsby-cloud",
+      commitMessageExtra: "",
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
+      excludePackagePatterns: ["^lodash/", "^@babel/"],
+    },
+    {
+      groupName: "major for gatsby-plugin-gatsby-cloud",
+      paths: ["packages/gatsby-plugin-gatsby-cloud/"],
+      groupSlug: "gatsby-plugin-gatsby-cloud-major",
+      updateTypes: ["major"],
+      // force pr title to be the plugin name
+      commitMessageSuffix: "for gatsby-plugin-gatsby-cloud",
+      excludePackageNames: ["cross-env"],
+    },
+    {
       groupName: "minor and patch for gatsby-plugin-glamor",
       paths: ["packages/gatsby-plugin-glamor/"],
       groupSlug: "gatsby-plugin-glamor",
@@ -697,26 +717,6 @@
       updateTypes: ["major"],
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-plugin-graphql-config",
-      excludePackageNames: ["cross-env"],
-    },
-    {
-      groupName: "minor and patch for gatsby-plugin-guess-js",
-      paths: ["packages/gatsby-plugin-guess-js/"],
-      groupSlug: "gatsby-plugin-guess-js",
-      updateTypes: ["minor", "patch"],
-      // force pr title to be the plugin name
-      commitMessageTopic: "minor and patch for gatsby-plugin-guess-js",
-      commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
-      excludePackagePatterns: ["^lodash/", "^@babel/"],
-    },
-    {
-      groupName: "major for gatsby-plugin-guess-js",
-      paths: ["packages/gatsby-plugin-guess-js/"],
-      groupSlug: "gatsby-plugin-guess-js-major",
-      updateTypes: ["major"],
-      // force pr title to be the plugin name
-      commitMessageSuffix: "for gatsby-plugin-guess-js",
       excludePackageNames: ["cross-env"],
     },
     {
