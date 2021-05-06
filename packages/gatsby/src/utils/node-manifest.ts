@@ -1,17 +1,9 @@
+import { IGatsbyPage, INodeManifest } from "./../redux/types"
+import { Reporter } from "gatsby-cli/lib/reporter/reporter"
+import { store as gatsbyStore } from "./../redux/index"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
-
-/**
- * This is the input for the public unstable_createNodeManifest action
- */
-interface INodeManifestIn {
-  manifestId: string
-  pluginName: string
-  node: {
-    id: string
-  }
-}
 
 interface INodeManifestPage {
   path?: string
@@ -42,25 +34,36 @@ async function findPageOwnedByNodeId({
   store,
 }: {
   nodeId: string
-  store: any
+  store: typeof gatsbyStore
 }): Promise<INodeManifestPage> {
   const state = store.getState()
   const { pages } = state
   const pagesBynode = state.queries.byNode
-  const pagePathSet = pagesBynode.get(nodeId)
+
+  // in development queries are run on demand so we wont have an accurate nodeId->pages map until those pages are visited in the browser. We want this mapping before the page is visited in the browser so we can route to the right page in the browser.
+  // So in development we can just use the Map of all pages (pagePath -> pageNode)
+  // but for builds (preview inc builds or regular builds) we will have a full map
+  // of all nodeId's to pages they're queried on and we can use that instead since it
+  // will be a much smaller list of pages, resulting in better performance for large sites
+  const usingPagesMapInDevelop: boolean = process.env.NODE_ENV === `development`
+  const pagePathSetOrMap = usingPagesMapInDevelop
+    ? pages
+    : pagesBynode.get(nodeId)
 
   // the default page path is the first page found in
   // node id to page query tracking
-  let pagePath = pagePathSet?.values()?.next()?.value
+  let pagePath = usingPagesMapInDevelop
+    ? null
+    : pagePathSetOrMap?.values()?.next()?.value
 
   // but if we have more than one page where this node shows up
   // we need to try to be more specific
-  if (pagePathSet && pagePathSet.size > 1) {
+  if (pagePathSetOrMap && pagePathSetOrMap.size > 1) {
     let ownerPagePath: string | undefined
     let foundOwnerNodeId = false
 
     // for each page this nodeId is queried in
-    pagePathSet.forEach(path => {
+    pagePathSetOrMap.forEach((...args) => {
       if (
         // if we haven't found a page with this nodeId
         // set as page.ownerNodeId then run this logic.
@@ -71,10 +74,15 @@ async function findPageOwnedByNodeId({
         // We always want to prefer ownerPagePath over context.id
         !foundOwnerNodeId
       ) {
-        // get the page node
-        const fullPage = pages.get(path)
+        const path: string = usingPagesMapInDevelop
+          ? // in development this is a Map, so the page path is the second arg (the key)
+            args[1]
+          : // in builds we're using a Set so the page path is the first arg (the value)
+            args[0]
 
-        foundOwnerNodeId = fullPage.ownerNodeId === nodeId
+        const fullPage: IGatsbyPage | undefined = pages.get(path)
+
+        foundOwnerNodeId = fullPage?.ownerNodeId === nodeId
 
         if (
           fullPage &&
@@ -115,9 +123,9 @@ async function processNodeManifest({
   store,
   reporter,
 }: {
-  inputManifest: INodeManifestIn
-  store: any
-  reporter: any
+  inputManifest: INodeManifest
+  store: typeof gatsbyStore
+  reporter: Reporter
 }): Promise<void> {
   // map the node to a page that was created
   const nodeManifestPage = await findPageOwnedByNodeId({
@@ -125,9 +133,9 @@ async function processNodeManifest({
     store,
   })
 
-  if (!nodeManifestPage) {
+  if (!nodeManifestPage.path) {
     reporter.warn(
-      `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for node id ${inputManifest.node.id} with a manifest id of ${inputManifest.manifestId} but your Gatsby site didn't create a page for this node.`
+      `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for node id ${inputManifest.node.id} with a manifest id of "${inputManifest.manifestId}" but your Gatsby site didn't create a page for this node.\n`
     )
   }
 
@@ -156,7 +164,13 @@ async function processNodeManifest({
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests({ store, reporter }): Promise<void> {
+export async function processNodeManifests({
+  store,
+  reporter,
+}: {
+  store: typeof gatsbyStore
+  reporter: Reporter
+}): Promise<void> {
   const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length

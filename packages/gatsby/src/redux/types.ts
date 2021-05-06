@@ -37,6 +37,7 @@ export interface IGatsbyPage {
   pluginCreator___NODE: Identifier
   pluginCreatorId: Identifier
   componentPath: SystemPath
+  ownerNodeId: Identifier
 }
 
 export interface IGatsbyFunction {
@@ -205,7 +206,7 @@ export interface IGatsbyState {
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
-  nodeManifests: Array<{ manifestId: string; node: { id: string } }>
+  nodeManifests: Array<INodeManifest>
   lastAction: ActionsUnion
   flattenedPlugins: Array<{
     resolve: SystemPath
@@ -868,4 +869,12 @@ export interface ICreateNodeManifest {
 
 export interface IDeleteNodeManifests {
   type: `DELETE_NODE_MANIFESTS`
+}
+
+export interface INodeManifest {
+  manifestId: string
+  pluginName: string
+  node: {
+    id: string
+  }
 }
