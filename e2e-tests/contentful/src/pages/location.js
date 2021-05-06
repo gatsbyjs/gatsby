@@ -56,7 +56,7 @@ export default LocationPage
 
 export const pageQuery = graphql`
   query LocationQuery {
-    default: allContentfulLocation(
+    default: allContentfulContentTypeLocation(
       sort: { fields: sys___id }
       filter: {
         title: { glob: "!*Localized*" }
@@ -71,7 +71,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    english: allContentfulLocation(
+    english: allContentfulContentTypeLocation(
       sort: { fields: sys___id }
       filter: {
         title: { glob: "*Localized*" }
@@ -86,7 +86,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    german: allContentfulLocation(
+    german: allContentfulContentTypeLocation(
       sort: { fields: sys___id }
       filter: {
         title: { glob: "*Localized*" }

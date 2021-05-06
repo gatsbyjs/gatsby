@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 
-const typePrefix = `Contentful`
+const typePrefix = `ContentfulContentType`
 export const makeTypeName = type =>
   _.upperFirst(_.camelCase(`${typePrefix} ${type}`))
 
@@ -185,7 +185,7 @@ function prepareTextNode(id, node, key, text) {
     parent: node.id,
     raw: str,
     internal: {
-      type: `ContentfulNodeTypeText`,
+      type: `ContentfulText`,
       mediaType: `text/markdown`,
       content: str,
       // entryItem.sys.publishedAt is source of truth from contentful
@@ -512,7 +512,7 @@ exports.createAssetNodes = ({
       parent: null,
       children: [],
       internal: {
-        type: `${makeTypeName(`Asset`)}`,
+        type: `ContentfulAsset`,
         // The content of an asset is guaranteed to be updated if and only if the .sys.updatedAt field changed
         contentDigest: assetItem.sys.updatedAt,
       },

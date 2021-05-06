@@ -1,6 +1,6 @@
 import React from "react"
 
-export const ContentfulContentReference = ({ one, many, title }) => {
+export const ContentfulContentTypeContentReference = ({ one, many, title }) => {
   const references = [one, ...(many || [])].filter(Boolean)
   return (
     <p data-cy-id="reference">

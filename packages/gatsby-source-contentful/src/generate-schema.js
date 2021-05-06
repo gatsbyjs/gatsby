@@ -14,7 +14,7 @@ const ContentfulDataTypes = new Map([
     `Text`,
     field => {
       return {
-        type: `ContentfulNodeTypeText`,
+        type: `ContentfulText`,
         extensions: {
           link: { by: `id`, from: `${field.id}___NODE` },
         },
@@ -59,13 +59,13 @@ const ContentfulDataTypes = new Map([
   [
     `Location`,
     () => {
-      return { type: `ContentfulNodeTypeLocation` }
+      return { type: `ContentfulLocation` }
     },
   ],
   [
     `RichText`,
     () => {
-      return { type: `ContentfulNodeTypeRichText` }
+      return { type: `ContentfulRichText` }
     },
   ],
 ])
@@ -106,8 +106,8 @@ const translateFieldType = field => {
 
 function generateAssetTypes({ createTypes }) {
   createTypes(`
-    type ContentfulAsset implements ContentfulInternalReference & Node {
-      sys: ContentfulInternalSys
+    type ContentfulAsset implements ContentfulReference & Node {
+      sys: ContentfulSys
       id: ID!
       title: String
       description: String
@@ -129,9 +129,9 @@ export function generateSchema({
 }) {
   // Generic Types
   createTypes(`
-    interface ContentfulInternalReference implements Node {
+    interface ContentfulReference implements Node {
       id: ID!
-      sys: ContentfulInternalSys
+      sys: ContentfulSys
     }
   `)
 
@@ -145,7 +145,7 @@ export function generateSchema({
   `)
 
   createTypes(`
-    type ContentfulInternalSys @dontInfer {
+    type ContentfulSys @dontInfer {
       type: String!
       id: String!
       spaceId: String!
@@ -161,7 +161,7 @@ export function generateSchema({
   createTypes(`
     interface ContentfulEntry implements Node @dontInfer {
       id: ID!
-      sys: ContentfulInternalSys
+      sys: ContentfulSys
     }
   `)
 
@@ -191,7 +191,7 @@ export function generateSchema({
   // Contentful specific types
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichTextAssets`,
+      name: `ContentfulRichTextAssets`,
       fields: {
         block: {
           type: `[ContentfulAsset]!`,
@@ -207,7 +207,7 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichTextEntries`,
+      name: `ContentfulRichTextEntries`,
       fields: {
         inline: {
           type: `[ContentfulEntry]!`,
@@ -227,16 +227,16 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichTextLinks`,
+      name: `ContentfulRichTextLinks`,
       fields: {
         assets: {
-          type: `ContentfulNodeTypeRichTextAssets`,
+          type: `ContentfulRichTextAssets`,
           resolve(source) {
             return source
           },
         },
         entries: {
-          type: `ContentfulNodeTypeRichTextEntries`,
+          type: `ContentfulRichTextEntries`,
           resolve(source) {
             return source
           },
@@ -247,7 +247,7 @@ export function generateSchema({
 
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeRichText`,
+      name: `ContentfulRichText`,
       fields: {
         json: {
           type: `JSON`,
@@ -256,7 +256,7 @@ export function generateSchema({
           },
         },
         links: {
-          type: `ContentfulNodeTypeRichTextLinks`,
+          type: `ContentfulRichTextLinks`,
           resolve(source) {
             return source
           },
@@ -269,7 +269,7 @@ export function generateSchema({
   // Location
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeLocation`,
+      name: `ContentfulLocation`,
       fields: {
         lat: { type: `Float!` },
         lon: { type: `Float!` },
@@ -284,7 +284,7 @@ export function generateSchema({
   // @todo Is there a way to have this as string and let transformer-remark replace it with an object?
   createTypes(
     schema.buildObjectType({
-      name: `ContentfulNodeTypeText`,
+      name: `ContentfulText`,
       fields: {
         raw: `String!`,
       },
@@ -315,14 +315,10 @@ export function generateSchema({
           name: makeTypeName(type),
           fields: {
             id: { type: `ID!` },
-            sys: { type: `ContentfulInternalSys` },
+            sys: { type: `ContentfulSys` },
             ...fields,
           },
-          interfaces: [
-            `ContentfulInternalReference`,
-            `ContentfulEntry`,
-            `Node`,
-          ],
+          interfaces: [`ContentfulReference`, `ContentfulEntry`, `Node`],
           extensions: { dontInfer: {} },
         })
       )

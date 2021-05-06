@@ -49,7 +49,7 @@ export default BooleanPage
 
 export const pageQuery = graphql`
   query BooleanQuery {
-    default: allContentfulBoolean(
+    default: allContentfulContentTypeBoolean(
       sort: { fields: sys___id }
       filter: {
         sys: { locale: { eq: "en-US" } }
@@ -61,7 +61,7 @@ export const pageQuery = graphql`
         boolean
       }
     }
-    english: allContentfulBoolean(
+    english: allContentfulContentTypeBoolean(
       sort: { fields: sys___id }
       filter: {
         sys: { locale: { eq: "en-US" } }
@@ -73,7 +73,7 @@ export const pageQuery = graphql`
         booleanLocalized
       }
     }
-    german: allContentfulBoolean(
+    german: allContentfulContentTypeBoolean(
       sort: { fields: sys___id }
       filter: {
         sys: { locale: { eq: "de-DE" } }

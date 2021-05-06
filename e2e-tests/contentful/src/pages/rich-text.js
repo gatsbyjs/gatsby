@@ -114,7 +114,7 @@ export default RichTextPage
 
 export const pageQuery = graphql`
   query RichTextQuery {
-    default: allContentfulRichText(
+    default: allContentfulContentTypeRichText(
       sort: { fields: title }
       filter: {
         title: { glob: "!*Localized*|*Validated*" }
@@ -144,36 +144,36 @@ export const pageQuery = graphql`
                   id
                   type
                 }
-                ... on ContentfulText {
+                ... on ContentfulContentTypeText {
                   title
                   short
                 }
-                ... on ContentfulLocation {
+                ... on ContentfulContentTypeLocation {
                   location {
                     lat
                     lon
                   }
                 }
-                ... on ContentfulContentReference {
+                ... on ContentfulContentTypeContentReference {
                   title
                   one {
                     __typename
                     sys {
                       id
                     }
-                    ... on ContentfulText {
+                    ... on ContentfulContentTypeText {
                       title
                       short
                     }
-                    ... on ContentfulContentReference {
+                    ... on ContentfulContentTypeContentReference {
                       title
                       one {
-                        ... on ContentfulContentReference {
+                        ... on ContentfulContentTypeContentReference {
                           title
                         }
                       }
                       many {
-                        ... on ContentfulContentReference {
+                        ... on ContentfulContentTypeContentReference {
                           title
                         }
                       }
@@ -184,23 +184,23 @@ export const pageQuery = graphql`
                     sys {
                       id
                     }
-                    ... on ContentfulText {
+                    ... on ContentfulContentTypeText {
                       title
                       short
                     }
-                    ... on ContentfulNumber {
+                    ... on ContentfulContentTypeNumber {
                       title
                       integer
                     }
-                    ... on ContentfulContentReference {
+                    ... on ContentfulContentTypeContentReference {
                       title
                       one {
-                        ... on ContentfulContentReference {
+                        ... on ContentfulContentTypeContentReference {
                           title
                         }
                       }
                       many {
-                        ... on ContentfulContentReference {
+                        ... on ContentfulContentTypeContentReference {
                           title
                         }
                       }
@@ -220,7 +220,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    english: allContentfulRichText(
+    english: allContentfulContentTypeRichText(
       sort: { fields: title }
       filter: {
         title: { glob: "*Localized*" }
@@ -235,7 +235,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    german: allContentfulRichText(
+    german: allContentfulContentTypeRichText(
       sort: { fields: title }
       filter: {
         title: { glob: "*Localized*" }
