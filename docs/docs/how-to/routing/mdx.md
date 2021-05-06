@@ -94,7 +94,7 @@ query {
 >
 > Check out the How-To Guide: [How to Source Data from the Filesystem](/docs/how-to/sourcing-data/sourcing-from-the-filesystem/).
 
-Frontmatter is also available in `props.mdx.frontmatter` and
+Frontmatter is also available in `props.pageContext.frontmatter` and
 can be accessed in blocks of JSX in your MDX document:
 
 ```mdx
@@ -103,17 +103,10 @@ title: Building with Gatsby
 author: Jay Gatsby
 ---
 
-<h1>{props.frontmatter.title}</h1>
-<span>{props.frontmatter.author}</span>
+<h1>{props.pageContext.frontmatter.title}</h1>
+<span>{props.pageContext.frontmatter.author}</span>
 
 (Blog post content, components, etc.)
-```
-
-Make sure to pass frontmatter to the MDXRenderer component like below:
-
-```
-<MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
-
 ```
 
 ## Part 3: Importing JSX components and MDX documents
