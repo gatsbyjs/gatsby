@@ -229,6 +229,8 @@ For now, to update imports within `.mdx` files, you should rerun your Gatsby dev
 First, create a component that accepts the queried MDX data (which will be
 added in the next step).
 
+
+
 ```jsx:title=src/components/posts-page-layout.js
 import React from "react"
 import { graphql } from "gatsby"
@@ -243,7 +245,7 @@ export default function PageTemplate({ data: { mdx } }) {
     <div>
       <h1>{mdx.frontmatter.title}</h1>
       <MDXProvider components={shortcodes}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
       </MDXProvider>
     </div>
   )
@@ -285,7 +287,7 @@ export default function PageTemplate({ data: { mdx } }) {
     <div>
       <h1>{mdx.frontmatter.title}</h1>
       <MDXProvider components={shortcodes}>
-        <MDXRenderer>{mdx.body}</MDXRenderer>
+        <MDXRenderer frontmatter={mdx.frontmatter}>{mdx.body}</MDXRenderer>
       </MDXProvider>
     </div>
   )
