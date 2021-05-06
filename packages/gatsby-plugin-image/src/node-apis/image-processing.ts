@@ -110,8 +110,7 @@ export async function writeImages({
             reporter,
           })
         } catch (err) {
-          reporter.error(`Error loading image ${src}`)
-          reporter.error(err)
+          reporter.error(`Error loading image ${src}`, err)
           return
         }
         if (
