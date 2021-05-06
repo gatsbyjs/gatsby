@@ -2,6 +2,8 @@ const babel = require(`@babel/core`)
 const grayMatter = require(`gray-matter`)
 const mdx = require(`@mdx-js/mdx`)
 const objRestSpread = require(`@babel/plugin-proposal-object-rest-spread`)
+const path = require(`path`)
+const fs = require(`fs-extra`)
 
 const debug = require(`debug`)(`gatsby-plugin-mdx:gen-mdx`)
 
@@ -10,6 +12,7 @@ const htmlAttrToJSXAttr = require(`./babel-plugin-html-attr-to-jsx-attr`)
 const removeExportKeywords = require(`./babel-plugin-remove-export-keywords`)
 const BabelPluginPluckImports = require(`./babel-plugin-pluck-imports`)
 const { parseImportBindings } = require(`./import-parser`)
+const { MDX_LOADER_PASSTHROUGH_LOCATION } = require(`../constants`)
 
 /*
  * function mutateNode({
@@ -89,7 +92,9 @@ async function genMDX(
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
   const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = `${frontMatterCodeResult}
+  const content = isLoader
+    ? frontMatterCodeResult
+    : `${frontMatterCodeResult}
 
 export const _frontmatter = ${JSON.stringify(data)}`
 
@@ -136,11 +141,13 @@ export const _frontmatter = ${JSON.stringify(data)}`
     ),
   })
 
-  results.rawMDXOutput = `/* @jsx mdx */
+  const rawMDXOutput = `/* @jsx mdx */
 import { mdx } from '@mdx-js/react';
 ${code}`
 
   if (!isLoader) {
+    results.rawMDXOutput = rawMDXOutput
+
     debug(`compiling scope`)
     const instance = new BabelPluginPluckImports()
     const result = babel.transform(code, {
@@ -183,6 +190,25 @@ ${code}`
         /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
         `return MDXContent;`
       )
+  } else {
+    // code path for webpack loader
+    // actual react component is saved to different file so that _frontmatter export doesn't
+    // disable react-refresh (multiple exports are not handled)
+    const filePath = path.join(
+      cache.directory,
+      MDX_LOADER_PASSTHROUGH_LOCATION,
+      `${helpers.createContentDigest(node.fileAbsolutePath)}.js`
+    )
+
+    await fs.outputFile(filePath, rawMDXOutput)
+
+    results.rawMDXOutput = `
+      import MDXContent from "${filePath}";
+      
+      export default MDXContent;
+
+      export const _frontmatter = ${JSON.stringify(data)};
+    `
   }
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)
