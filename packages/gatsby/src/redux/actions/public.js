@@ -161,7 +161,7 @@ const reservedFields = [
  * @param {string} page.path Any valid URL. Must start with a forward slash
  * @param {string} page.matchPath Path that Reach Router uses to match the page on the client side.
  * Also see docs on [matchPath](/docs/gatsby-internals-terminology/#matchpath)
- * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
+ * @param {string} page.ownerNodeId The id of the node that owns this page. This is used for routing users to previews via the unstable_createNodeManifest public action. Since multiple nodes can be queried on a single page, this allows the user to tell us which node is the main node for the page.
  * @param {string} page.component The absolute path to the component for this page
  * @param {Object} page.context Context data for this page. Passed as props
  * to the component `this.props.pageContext` as well as to the graphql query
@@ -1433,14 +1433,14 @@ actions.createServerVisitedPage = (chunkName: string) => {
  * @param {string} manifest.manifestId An id which ties the revision unique state of this manifest to the unique revision state of a data source.
  * @param {string} manifest.node The Gatsyby node to tie the manifestId to
  * @example
- * createNodeManifest({
+ * unstable_createNodeManifest({
  *   manifestId: `post-id-1--updated-53154315`,
  *   node: {
  *      id: `post-id-1`
  *   },
  * })
  */
-actions.createNodeManifest = (
+actions.unstable_createNodeManifest = (
   {
     manifestId,
     node,

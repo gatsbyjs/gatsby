@@ -3,7 +3,7 @@ import path from "path"
 import fs from "fs-extra"
 
 /**
- * This is the input for the public createNodeManifest action
+ * This is the input for the public unstable_createNodeManifest action
  */
 interface INodeManifestIn {
   manifestId: string
@@ -18,7 +18,7 @@ interface INodeManifestPage {
 }
 
 /**
- * This it the output after processing calls to the public createNodeManifest action
+ * This it the output after processing calls to the public unstable_createNodeManifest action
  */
 interface INodeManifestOut {
   page: INodeManifestPage
@@ -108,7 +108,7 @@ async function findPageOwnedByNodeId({
 }
 
 /**
- * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public createNodeManifest action
+ * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 async function processNodeManifest({
   inputManifest,
@@ -127,7 +127,7 @@ async function processNodeManifest({
 
   if (!nodeManifestPage) {
     reporter.warn(
-      `Plugin ${inputManifest.pluginName} called createNodeManifest for node id ${inputManifest.node.id} with a manifest id of ${inputManifest.manifestId} but your Gatsby site didn't create a page for this node.`
+      `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for node id ${inputManifest.node.id} with a manifest id of ${inputManifest.manifestId} but your Gatsby site didn't create a page for this node.`
     )
   }
 
@@ -154,7 +154,7 @@ async function processNodeManifest({
 /**
  * Grabs all pending node manifests, processes them, writes them to disk,
  * and then removes them from the store.
- * Manifest files are added via the public createNodeManifest action in sourceNodes
+ * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
 export async function processNodeManifests({ store, reporter }): Promise<void> {
   const { nodeManifests } = store.getState()

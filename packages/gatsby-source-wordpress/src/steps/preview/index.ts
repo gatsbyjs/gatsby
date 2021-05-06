@@ -312,7 +312,7 @@ export const sourcePreview = async (
     isPreview: true,
   })
 
-  actions.createNodeManifest({
+  actions.unstable_createNodeManifest({
     manifestId: previewData.previewDatabaseId + previewData.modified,
     node,
   })
