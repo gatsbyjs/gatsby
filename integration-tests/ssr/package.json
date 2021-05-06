@@ -31,7 +31,7 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop",
+    "develop": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true CI=1 gatsby develop",
     "serve": "gatsby serve",
     "start-dev-server": "start-server-and-test develop http://localhost:8000 test:jest",
     "test": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true npm-run-all -s build start-dev-server",
