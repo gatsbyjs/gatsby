@@ -141,6 +141,8 @@ interface IRenderDevHtmlProps {
     source: string
     line: number
     column: number
+    sourceMessage?: string
+    stack?: string
   }
   htmlComponentRendererPath: string
   directory: string

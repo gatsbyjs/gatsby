@@ -565,6 +565,8 @@ module.exports = {
           source: filePath,
           line: lineNumber,
           column: columnNumber ?? 0,
+          sourceMessage: error?.message,
+          stack: error?.stack,
         }
 
         try {

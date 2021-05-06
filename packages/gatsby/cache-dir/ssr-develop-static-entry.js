@@ -68,6 +68,19 @@ export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
           )} }])`,
         }}
       />,
+      <noscript key="dev-ssr-error-noscript">
+        <h1>Failed to Server Render (SSR)</h1>
+        <h2>Error message:</h2>
+        <p>{error.sourceMessage}</p>
+        <h2>File:</h2>
+        <p>
+          {error.source}:{error.line}:{error.column}
+        </p>
+        <h2>Stack:</h2>
+        <pre>
+          <code>{error.stack}</code>
+        </pre>
+      </noscript>,
     ])
   }
 
