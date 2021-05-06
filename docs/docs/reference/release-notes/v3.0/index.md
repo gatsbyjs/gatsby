@@ -51,7 +51,7 @@ Take a project powered by Shopify as an example. You have your listing of all pr
 
 ![Side-by-side view of a Shopify store instance on the left, and the preview on the right. At the bottom the terminal shows that after the change only one page was rebuilt](./incremental-builds-in-oss.jpg)
 
-The screenshot is taken from a talk about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on YouTube.
+The screenshot is taken from a talk about Gatsby v3 at [GatsbyConf](https://gatsbyconf.com/). You can view the video showcasing this feature on [YouTube](https://www.youtube.com/watch?v=tO-5qFa_hH8).
 
 ### How does it work?
 
@@ -98,6 +98,8 @@ We also added two new ESLint rules inside the default configuration that will wa
 
 - No anonymous default exports
 - Page templates must only export one default export (the page) and `query` as a named export
+
+Visit the [Fast Refresh reference guide](/docs/reference/local-development/fast-refresh/) to learn more.
 
 ## Node 12
 
@@ -182,6 +184,7 @@ For more information, see:
 - [How-To Guide: Using gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image/)
 - [Reference Guide: Gatsby Image plugin](/docs/reference/built-in-components/gatsby-plugin-image/)
 - [The `gatsby-plugin-image` README](/plugins/gatsby-plugin-image/)
+- [GatsbyConf: Announcing gatsby-plugin-image](https://www.youtube.com/watch?v=zRtFwzF4p1o)
 
 ## `gatsby-source-wordpress@5.0.0`
 

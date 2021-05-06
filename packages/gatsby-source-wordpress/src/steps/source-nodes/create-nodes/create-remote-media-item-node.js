@@ -315,6 +315,7 @@ export const createRemoteMediaItemNode = async ({
         url: mediaItemUrl,
         auth,
         ...createFileNodeRequirements,
+        pluginOptions,
       })
 
       return node

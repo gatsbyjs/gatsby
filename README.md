@@ -7,12 +7,14 @@
   Gatsby v3
 </h1>
 
-<h3 align="center">
+<p align="center">
   ⚛️ 📄 🚀
-</h3>
-<h3 align="center">
-  Fast in every way that matters
-</h3>
+</p>
+<p align="center">
+  <strong>
+    Fast in every way that matters
+  </strong>
+</p>
 <p align="center">
   Gatsby is a free and open source framework based on React that helps developers build blazing fast websites and apps
 </p>
@@ -40,7 +42,7 @@
   </a>
 </p>
 
-<h3 align="center">
+<h2 align="center">
   <a href="https://www.gatsbyjs.com/docs/">Quickstart</a>
   <span> · </span>
   <a href="https://www.gatsbyjs.com/tutorial/">Tutorial</a>
@@ -56,7 +58,7 @@
   Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
-</h3>
+</h2>
 
 Gatsby is a modern web framework for blazing fast websites.
 
@@ -138,6 +140,10 @@ We welcome suggestions for improving our docs. See the [“how to contribute”]
 
 **Start Learning Gatsby: [Follow the Tutorial](https://www.gatsbyjs.com/tutorial/) · [Read the Docs](https://www.gatsbyjs.com/docs/)**
 
+## 🚢 Release Notes
+
+Wondering what we've shipped recently? Check out our [release notes](https://www.gatsbyjs.com/docs/reference/release-notes) for key highlights, performance improvements, new features, and notable bugfixes.
+
 ## 💼 Migration Guides
 
 Already have a Gatsby site? These handy guides will help you add the improvements of Gatsby v3 to your site without starting from scratch!
@@ -161,7 +167,7 @@ This repository is a [monorepo](https://trunkbaseddevelopment.com/monorepos/) ma
 
 ### Contributing to Gatsby v2
 
-We are currently only accepting bug fixes for Gatsby v2. No new features will be accepted.
+We are only accepting critical security patches for Gatsby v2.
 
 ## 📝 License
 
@@ -169,6 +175,6 @@ Licensed under the [MIT License](./LICENSE).
 
 ## 💜 Thanks
 
-Thanks goes out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
+Thanks go out to all our many contributors creating plugins, starters, videos, and blog posts. And a special appreciation for our community members helping with issues and PRs, or answering questions on Discord and GitHub Discussions.
 
 A big part of what makes Gatsby great is each and every one of you in the community. Your contributions enrich the Gatsby experience and make it better every day.

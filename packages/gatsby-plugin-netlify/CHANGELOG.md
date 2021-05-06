@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.4.0-next.1...gatsby-plugin-netlify@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.4.0-next.0...gatsby-plugin-netlify@3.4.0-next.1) (2021-04-22)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-netlify ([#30680](https://github.com/gatsbyjs/gatsby/issues/30680)) ([118105b](https://github.com/gatsbyjs/gatsby/commit/118105bbd9849b3ca263d0bd8cc37f93f78b658e))
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.3.0-next.1...gatsby-plugin-netlify@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.3.0-next.0...gatsby-plugin-netlify@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.2.0-next.1...gatsby-plugin-netlify@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-netlify
+
+# [3.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.2.0-next.0...gatsby-plugin-netlify@3.2.0-next.1) (2021-03-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** upgrade webpack-assets-manifest for compatibility with webpack@5 ([#30217](https://github.com/gatsbyjs/gatsby/issues/30217)) ([ca44a9e](https://github.com/gatsbyjs/gatsby/commit/ca44a9eb04878919ee52874a5e879a1a29ee0463))
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.1.0-next.2...gatsby-plugin-netlify@3.2.0-next.0) (2021-03-11)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify:** Add an allow list for redirect options ([#30155](https://github.com/gatsbyjs/gatsby/issues/30155)) ([962c4a1](https://github.com/gatsbyjs/gatsby/commit/962c4a1d3d8a5c952ec88957bdc20352bbeb151c))
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.1.0-next.1...gatsby-plugin-netlify@3.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+
 # [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify@3.1.0-next.0...gatsby-plugin-netlify@3.1.0-next.1) (2021-02-26)
 
 **Note:** Version bump only for package gatsby-plugin-netlify

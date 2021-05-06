@@ -1,32 +1,38 @@
 // initializing global here for unsafe builtin usage at import time
 global.unsafeBuiltinUsage = []
 
-function createProxyHandler(prefix) {
+function createProxyHandler(prefix, options) {
   return {
     get: function (target, key) {
       const value = target[key]
+      const path = key && key.toString ? `${prefix}.${key.toString()}` : prefix
+
+      if (options.ignore.includes(path)) {
+        return value
+      }
+
       if (typeof value === `function`) {
         return function wrapper(...args) {
           const myErrorHolder = {
-            name: `Unsafe builtin usage ${prefix}.${key}`,
+            name: `Unsafe builtin usage ${path}`,
           }
           Error.captureStackTrace(myErrorHolder, wrapper)
 
-          // loadPageDataSync already is tracked with dedicated warning messages,
+          // - loadPageDataSync already is tracked with dedicated warning messages,
           // so skipping marking it to avoid multiple messages for same usage
-          if (!myErrorHolder.stack.includes(`loadPageDataSync`)) {
+          // - node-gyp-build will use fs.readDirSync in attempt to load binaries
+          // this should be ok to ignore.
+          if (
+            !myErrorHolder.stack.includes(`loadPageDataSync`) &&
+            !myErrorHolder.stack.includes(`node-gyp-build`)
+          ) {
             global.unsafeBuiltinUsage.push(myErrorHolder.stack)
           }
 
           return value.apply(target, args)
         }
       } else if (typeof value === `object` && value !== null) {
-        return new Proxy(
-          value,
-          createProxyHandler(
-            key && key.toString ? `${prefix}.${key.toString()}` : prefix
-          )
-        )
+        return new Proxy(value, createProxyHandler(path, options))
       }
 
       return value
@@ -34,9 +40,13 @@ function createProxyHandler(prefix) {
   }
 }
 
-function wrapModuleWithTracking(moduleName) {
+function wrapModuleWithTracking(moduleName, options = {}) {
+  if (!options.ignore) {
+    options.ignore = []
+  }
+
   const mod = require(moduleName)
-  return new Proxy(mod, createProxyHandler(moduleName))
+  return new Proxy(mod, createProxyHandler(moduleName, options))
 }
 
 exports.wrapModuleWithTracking = wrapModuleWithTracking

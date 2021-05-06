@@ -17,6 +17,11 @@ function makeNodes() {
       float: 1.5,
       hair: 1,
       date: `2006-07-22T22:39:53.000Z`,
+      dateArray: [
+        `2006-07-22T22:39:53.000Z`,
+        `2006-07-04T22:39:53.000Z`,
+        `1999-07-04T22:39:53.000Z`,
+      ],
       anArray: [1, 2, 3, 4],
       key: {
         withEmptyArray: [],
@@ -88,13 +93,18 @@ function makeNodes() {
       float: 3.5,
       hair: 0,
       date: `2006-07-29T22:39:53.000Z`,
+      dateArray: [
+        new Date(`1997-07-04T22:39:53.000Z`),
+        new Date(`2006-07-04T22:39:53.000Z`),
+        new Date(`1999-07-04T22:39:53.000Z`),
+      ],
       anotherKey: {
         withANested: {
           nestedKey: `bar`,
         },
       },
       frontmatter: {
-        date: `2006-07-22T22:39:53.000Z`,
+        date: new Date(`2006-07-22T22:39:53.000Z`),
         title: `The world of shave and adventure`,
         blue: 10010,
         circle: `happy`,
@@ -168,6 +178,7 @@ describe(`connection input fields`, () => {
             names: distinct(field: name)
             array: distinct(field: anArray)
             blue: distinct(field: frontmatter___blue)
+            dates: distinct(field: dateArray)
             # Only one node has this field
             circle: distinct(field: frontmatter___circle)
             nestedField: distinct(field: anotherKey___withANested___nestedKey)
@@ -177,7 +188,6 @@ describe(`connection input fields`, () => {
     )
 
     expect(result.errors).not.toBeDefined()
-
     expect(result.data.allTest.names.length).toEqual(2)
     expect(result.data.allTest.names[0]).toEqual(`The Mad Max`)
 
@@ -189,6 +199,9 @@ describe(`connection input fields`, () => {
 
     expect(result.data.allTest.circle.length).toEqual(1)
     expect(result.data.allTest.circle[0]).toEqual(`happy`)
+
+    expect(result.data.allTest.dates[2]).toEqual(`2006-07-04T22:39:53.000Z`)
+    expect(result.data.allTest.dates.length).toEqual(4)
 
     expect(result.data.allTest.nestedField.length).toEqual(2)
     expect(result.data.allTest.nestedField[0]).toEqual(`bar`)

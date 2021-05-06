@@ -80,7 +80,10 @@ const openDebuggerPort = (debugInfo: IDebugInfo): void => {
 }
 
 module.exports = async (program: IDevelopArgs): Promise<void> => {
-  reporter.setVerbose(isTruthy(process.env.VERBOSE) || program.verbose)
+  if (isTruthy(process.env.VERBOSE)) {
+    program.verbose = true
+  }
+  reporter.setVerbose(program.verbose)
 
   if (program.debugInfo) {
     openDebuggerPort(program.debugInfo)

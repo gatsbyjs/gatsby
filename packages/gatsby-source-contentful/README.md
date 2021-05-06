@@ -17,6 +17,22 @@ npm install gatsby-source-contentful
 
 First, you need a way to pass environment variables to the build process, so secrets and other secured data aren't committed to source control. We recommend using [`dotenv`][dotenv] which will then expose environment variables. [Read more about `dotenv` and using environment variables here][envvars]. Then we can _use_ these environment variables and configure our plugin.
 
+## Restrictions and limitations
+
+This plugin has several limitations, please be aware of these:
+
+1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema. This can break your site when field values get removed. You may workaround with an extra content entry with all fields filled out.
+
+2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+
+3. When working with environments, your access token has to have access to your desired enviornment and the `master` environment.
+
+4. Using the preview functionallity might result in broken content over time, as syncing data on preview is not officially supported by Contentful. Make sure to regulary clean your cache when using Contentfuls preview API.
+
+5. The following content type names are not allowed: `entity`, `reference`
+
+6. The following field names are restricted and will be prefixed: `children`, `contentful_id`, `fields`, `id`, `internal`, `parent`,
+
 ### Using Delivery API
 
 ```javascript
@@ -54,71 +70,6 @@ module.exports = {
 }
 ```
 
-### Download assets for static distribution
-
-Downloads and caches Contentful assets to the local filesystem. Useful for reduced data usage in development or projects where you want the assets copied locally with builds for deploying without links to Contentful's CDN.
-
-Enable this feature with the `downloadLocal: true` option.
-
-```javascript
-// In your gatsby-config.js
-module.exports = {
-  plugins: [
-    {
-      resolve: `gatsby-source-contentful`,
-      options: {
-        spaceId: `your_space_id`,
-        // Learn about environment variables: https://gatsby.app/env-vars
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-        downloadLocal: true,
-      },
-    },
-  ],
-}
-```
-
-Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-image` is different:
-
-```graphql
-query MyQuery {
-  # Example is for a `ContentType` with a `ContentfulAsset` field
-  # You could also query an asset directly via
-  # `allContentfulAsset { edges{ node { } } }`
-  # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
-  contentfulMyContentType {
-    myContentfulAssetField {
-      # Direct URL to Contentful CDN for this asset
-      file {
-        url
-      }
-
-      # Query for a fluid image resource on this `ContentfulAsset` node
-      fluid(maxWidth: 500) {
-        ...GatsbyContentfulFluid_withWebp
-      }
-
-      # Query for locally stored file(e.g. An image) - `File` node
-      localFile {
-        # Where the asset is downloaded into cache, don't use this
-        absolutePath
-        # Where the asset is copied to for distribution, equivalent to using ContentfulAsset `file {url}`
-        publicURL
-        # Use `gatsby-image` to create fluid image resource
-        childImageSharp {
-          fluid(maxWidth: 500) {
-            ...GatsbyImageSharpFluid
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
-
-For any troubleshooting related to this feature, first try clearing your `./cache/` directory. `gatsby-source-contentful` will acquire fresh data, and all `ContentfulAsset`s will be downloaded and cached again.
-
 ### Offline
 
 If you don't have internet connection you can add `export GATSBY_CONTENTFUL_OFFLINE=true` to tell the plugin to fallback to the cached data, if there is any.
@@ -143,9 +94,7 @@ The environment to pull the content from, for more info on environments check ou
 
 **`downloadLocal`** [boolean][optional] [default: `false`]
 
-Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to query a `ContentfulAsset`'s `localFile` field, which is not linked to Contentful's CDN. Useful for reducing data usage.
-
-You can pass in any other options available in the [contentful.js SDK](https://github.com/contentful/contentful.js#configuration).
+Downloads and caches `ContentfulAsset`'s to the local filesystem. Allows you to query a `ContentfulAsset`'s `localFile` field, which is not linked to Contentful's CDN. See [Download assets for static distribution](#download-assets-for-static-distribution) for more information on when and how to use this feature.
 
 **`localeFilter`** [function][optional] [default: `() => true`]
 
@@ -181,13 +130,11 @@ Number of entries to retrieve from Contentful at a time. Due to some technical l
 
 Number of workers to use when downloading Contentful assets. Due to technical limitations, opening too many concurrent requests can cause stalled downloads. If you encounter this issue you can set this param to a lower number than 50, e.g 25.
 
-## Notes on Contentful Content Models
+**`contentfulClientConfig`** [object][optional] [default: `{}`]
 
-There are currently some things to keep in mind when building your content models at Contentful.
+Additional config which will get passed to [Contentfuls JS SDK](https://github.com/contentful/contentful.js#configuration).
 
-1. At the moment, fields that do not have at least one populated instance will not be created in the GraphQL schema.
-
-2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
+Use this with caution, you might override values this plugin does set for you to connect to Contentful.
 
 ## How to query for nodes
 
@@ -467,6 +414,69 @@ function BlogPostTemplate({ data }) {
 ```
 
 Check out the examples at [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text/tree/master/packages/rich-text-react-renderer).
+
+## Download assets for static distribution
+
+When you set `downloadLocal: true` in your config, the plugin will download and cache Contentful assets to the local filesystem.
+
+There are two main reasons you might want to use this option:
+
+- Avoiding the extra network handshake required to the Contentful CDN for images hosted there
+- Gain more control over how images are processed or rendered (ie, providing AVIF with gatsby-plugin-image)
+
+The default setting for this feature is `false`, as there are certain tradeoffs for using this feature:
+
+- All assets in your Contentful space will be downloaded during builds
+- Your build times and build output size will increase
+- Bandwidth going through your CDN will increase (since images are no longer being served from the Contentful CDN)
+- You will have to change how you query images and which image fragments you use.
+
+### Enable the feature with the `downloadLocal: true` option.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `your_space_id`,
+        // Learn about environment variables: https://gatsby.app/env-vars
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        downloadLocal: true,
+      },
+    },
+  ],
+}
+```
+
+### Updating Queries for downloadLocal
+
+When using the `downloadLocal` setting, you'll need to update your codebase to be working with the locally downloaded images, rather than the default Contentful Nodes. Query a `ContentfulAsset`'s `localFile` field in GraphQL to gain access to the common fields of the `gatsby-source-filesystem` `File` node. This is not a Contentful node, so usage for `gatsby-plugin-image` is different:
+
+```graphql
+query MyQuery {
+  # Example is for a `ContentType` with a `ContentfulAsset` field
+  # You could also query an asset directly via
+  # `allContentfulAsset { edges{ node { } } }`
+  # or `contentfulAsset(contentful_id: { eq: "contentful_id here" } ) { }`
+  contentfulMyContentType {
+    myContentfulAssetField {
+      # Query for locally stored file(e.g. An image) - `File` node
+      localFile {
+        # Use `gatsby-plugin-image` to create the image data
+        childImageSharp {
+          gatsbyImageData(formats: AVIF)
+        }
+      }
+    }
+  }
+}
+```
+
+Note: This feature downloads any file from a `ContentfulAsset` node that `gatsby-source-contentful` provides. They are all copied over from `./cache/gatsby-source-filesystem/` to the sites build location `./public/static/`.
+
+For any troubleshooting related to this feature, first try clearing your `./cache/` directory. `gatsby-source-contentful` will acquire fresh data, and all `ContentfulAsset`s will be downloaded and cached again.
 
 ## Sourcing From Multiple Contentful Spaces
 

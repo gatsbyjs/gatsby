@@ -6,7 +6,7 @@ This guide will show you how to configure your images, including choosing layout
 
 ## Components
 
-The Gatsby Image plugin includes two components to display responsive images on your site, used for static and dynamic images.
+The Gatsby Image plugin includes two components to display responsive images on your site. One is used for static and the other for dynamic images.
 
 - **[`StaticImage`](#staticimage):** Use this if the image is the same every time the component is used. _Examples: site logo, index page hero image_
 - **[`GatsbyImage`](#gatsbyimage):** Use this if the image is passed into the component as a prop, or otherwise changes. _Examples: Blog post hero image, author avatar_
@@ -51,7 +51,7 @@ This does not work:
 
 export function Logo({ logo }) {
   // You can't use a prop passed into the parent component
-  return <StaticImage src={logo}>
+  return <StaticImage src={logo} />
 }
 ```
 
@@ -61,9 +61,9 @@ export function Logo({ logo }) {
 // ⚠️ Doesn't work
 
 export function Dino() {
-    // Props can't come from function calls
-    const width = getTheWidthFromSomewhere();
-    return <StaticImage src="trex.png" width={width}>
+  // Props can't come from function calls
+  const width = getTheWidthFromSomewhere()
+  return <StaticImage src="trex.png" width={width} />
 }
 ```
 
@@ -71,10 +71,10 @@ You can use variables and expressions if they're in the scope of the file, e.g.:
 
 ```js
 // OK
-export function Dino()  {
-    // Local variables are fine
-    const width = 300
-    return <StaticImage src="trex.png" width={width}>
+export function Dino() {
+  // Local variables are fine
+  const width = 300
+  return <StaticImage src="trex.png" width={width} />
 }
 ```
 
@@ -84,14 +84,65 @@ export function Dino()  {
 // A variable in the same file is fine.
 const width = 300
 
-export function Dino()  {
-    // This works because the value can be statically-analyzed
-    const height = width * 16 / 9
-    return <StaticImage src="trex.png" width={width} height={height}>
+export function Dino() {
+  // This works because the value can be statically-analyzed
+  const height = (width * 16) / 9
+  return <StaticImage src="trex.png" width={width} height={height} />
 }
 ```
 
 If you find yourself wishing you could use a prop for the image `src` then it's likely that you should be using a dynamic image.
+
+#### Using `StaticImage` with CSS-in-JS libraries
+
+The `StaticImage` component does not support higher-order components, which includes the `styled` function from libraries such as Emotion and styled-components. The parser relies on being able to identify `StaticImage` components in the source, and passing them to a function means this is not possible.
+
+```js
+// ⚠️ Doesn't work
+
+const AwesomeImage = styled(StaticImage)`
+  border: 4px green dashed;
+`
+
+export function Dino() {
+  // Parser doesn't know that this is a StaticImage
+  return <AwesomeImage src="trex.png" />
+}
+```
+
+You should instead use the `css` prop provided by these libraries:
+
+```jsx
+// Emotion
+
+export function Dino() {
+  return (
+    <StaticImage
+      src="trex.png"
+      css={css`
+        border: 4px green dashed;
+      `}
+    />
+  )
+}
+```
+
+```jsx
+// styled-components
+
+export function Dino() {
+  return (
+    <StaticImage
+      src="trex.png"
+      css={`
+        border: 4px green dashed;
+      `}
+    />
+  )
+}
+```
+
+You can also use a regular `style` or `className` prop. Note that in all of these cases the styling is applied to the wrapper, not the image itself. If you need to style the `<img>` tag, you can use `imgStyle` or `imgClassName`.
 
 ### `GatsbyImage`
 

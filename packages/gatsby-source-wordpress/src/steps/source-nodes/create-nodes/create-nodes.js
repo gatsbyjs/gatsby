@@ -48,13 +48,16 @@ export const createNodeWithSideEffects = ({
     })
   }
 
+  const builtTypename = buildTypeName(node.__typename)
+
   let remoteNode = {
     ...node,
+    __typename: builtTypename,
     id: node.id,
     parent: null,
     internal: {
       contentDigest: createContentDigest(node),
-      type: type || buildTypeName(node.type),
+      type: type || builtTypename,
     },
   }
 

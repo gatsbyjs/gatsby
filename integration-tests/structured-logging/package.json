@@ -6,7 +6,7 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "test-comment": "We use --runInBand to ensure we don't spawn multiple gatsby processes concurrently",
-    "test": "jest --config=jest.config.js --runInBand",
+    "test": "jest --runInBand",
     "serve": "gatsby serve"
   },
   "dependencies": {
@@ -17,9 +17,9 @@
   },
   "devDependencies": {
     "babel-plugin-dynamic-import-node-sync": "^2.0.1",
+    "cpy": "^8.1.2",
     "fs-extra": "^9.0.1",
     "jest": "^24.0.0",
-    "jest-cli": "^24.0.0",
     "joi": "^17.4.0",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1"

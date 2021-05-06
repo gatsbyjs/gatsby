@@ -22,7 +22,7 @@ export const eslintRequiredConfig: ESLint.Options = {
       // TODO proper check for custom babel & plugins config
       // Currently when a babelrc is added to the project, it will override our babelOptions
       babelOptions: {
-        presets: [`babel-preset-gatsby`],
+        presets: [require.resolve(`babel-preset-gatsby`)],
       },
       requireConfigFile: false,
     },
@@ -63,7 +63,7 @@ export const eslintConfig = (
         // TODO proper check for custom babel & plugins config
         // Currently when a babelrc is added to the project, it will override our babelOptions
         babelOptions: {
-          presets: [`babel-preset-gatsby`],
+          presets: [require.resolve(`babel-preset-gatsby`)],
         },
         requireConfigFile: false,
       },
@@ -84,7 +84,12 @@ export const eslintConfig = (
             tagName: `graphql`,
           },
         ],
-        "react/jsx-pascal-case": `warn`,
+        "react/jsx-pascal-case": [
+          `warn`,
+          {
+            allowNamespace: true,
+          },
+        ],
         // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/master/docs/rules
         "jsx-a11y/accessible-emoji": `warn`,
         "jsx-a11y/alt-text": `warn`,

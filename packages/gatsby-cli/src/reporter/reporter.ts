@@ -9,7 +9,7 @@ import { getErrorFormatter } from "./errors"
 import constructError from "../structured-errors/construct-error"
 import { IErrorMapEntry, ErrorId } from "../structured-errors/error-map"
 import { prematureEnd } from "./catch-exit-signals"
-import { IStructuredError } from "../structured-errors/types"
+import { IConstructError, IStructuredError } from "../structured-errors/types"
 import { createTimerReporter, ITimerReporter } from "./reporter-timer"
 import { createPhantomReporter, IPhantomReporter } from "./reporter-phantom"
 import { createProgressReporter, IProgressReporter } from "./reporter-progress"
@@ -83,8 +83,12 @@ class Reporter {
   /**
    * Log arguments and exit process with status 1.
    */
-  panic = (errorMeta: ErrorMeta, error?: Error | Array<Error>): never => {
-    const reporterError = this.error(errorMeta, error)
+  panic = (
+    errorMeta: ErrorMeta,
+    error?: Error | Array<Error>,
+    pluginName?: string
+  ): never => {
+    const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`GENERAL_PANIC`, { error: reporterError })
     prematureEnd()
     return process.exit(1)
@@ -92,9 +96,10 @@ class Reporter {
 
   panicOnBuild = (
     errorMeta: ErrorMeta,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
-    const reporterError = this.error(errorMeta, error)
+    const reporterError = this.error(errorMeta, error, pluginName)
     trackError(`BUILD_PANIC`, { error: reporterError })
     if (process.env.gatsby_executing_command === `build`) {
       prematureEnd()
@@ -105,12 +110,10 @@ class Reporter {
 
   error = (
     errorMeta: ErrorMeta | Array<ErrorMeta>,
-    error?: Error | Array<Error>
+    error?: Error | Array<Error>,
+    pluginName?: string
   ): IStructuredError | Array<IStructuredError> => {
-    let details: {
-      error?: Error
-      context: Record<string, string>
-    } = {
+    let details: IConstructError["details"] = {
       context: {},
     }
 
@@ -151,6 +154,18 @@ class Reporter {
     } else if (typeof errorMeta === `string`) {
       details.context = {
         sourceMessage: errorMeta,
+      }
+    }
+
+    if (pluginName) {
+      details.pluginName = pluginName
+      const id = details?.id
+
+      if (id) {
+        const isPrefixed = id.includes(`${pluginName}_`)
+        if (!isPrefixed) {
+          details.id = `${pluginName}_${id}`
+        }
       }
     }
 

@@ -1,4 +1,5 @@
 const { store } = require(`../../redux`)
+const { graphql } = require(`../../../graphql`)
 const { build, rebuildWithSitePage } = require(`..`)
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
@@ -115,7 +116,7 @@ describe(`build and update schema for SitePage`, () => {
     expect(sortFieldsEnum.getValue(`context___key`)).toBeDefined()
   })
 
-  it(`updates nested types on rebuild`, async () => {
+  const testNestedFields = async () => {
     let fields
     let inputFields
 
@@ -149,6 +150,43 @@ describe(`build and update schema for SitePage`, () => {
       .map(value => value.name)
     expect(fieldsEnum.includes(`fields___oldKey`)).toBeTruthy()
     expect(fieldsEnum.includes(`fields___key`)).toBeTruthy()
+  }
+
+  it(`updates nested types on rebuild`, testNestedFields)
+
+  it(`updates nested types on rebuild (with query executed before rebuilding)`, async () => {
+    // Set a stage for the same test as above but with graphql query executed before updating schema
+    // See https://github.com/gatsbyjs/gatsby/issues/30107
+    const result = await graphql(
+      schema,
+      `
+        {
+          __typename
+        }
+      `,
+      null,
+      {}
+    )
+    expect(result).toEqual({ data: { __typename: `Query` } })
+    await testNestedFields()
+  })
+
+  it(`updates nested input types on rebuild`, async () => {
+    // sanity-check
+    const inputFields = Object.keys(
+      schema.getType(`SitePageFieldsFilterInput`).getFields()
+    )
+    expect(inputFields.length).toBe(1)
+    expect(inputFields).toEqual([`oldKey`])
+
+    // Rebuild
+    const page = firstPage()
+    page.fields = {}
+    store.dispatch({ type: `CREATE_NODE`, payload: page })
+    await rebuildWithSitePage({})
+    schema = store.getState().schema
+
+    expect(schema.getType(`SitePageFieldsFilterInput`)).toBeUndefined()
   })
 
   it(`respects @dontInfer on SitePage`, async () => {

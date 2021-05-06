@@ -29,6 +29,10 @@ export const hasNativeLazyLoadSupport = (): boolean =>
   typeof HTMLImageElement !== `undefined` &&
   `loading` in HTMLImageElement.prototype
 
+export function gatsbyImageIsInstalled(): boolean {
+  return typeof GATSBY___IMAGE !== `undefined` && GATSBY___IMAGE
+}
+
 export function storeImageloaded(cacheKey?: string): void {
   if (cacheKey) {
     imageCache.add(cacheKey)
@@ -86,7 +90,7 @@ export function getWrapperProps(
   let className = `gatsby-image-wrapper`
 
   // If the plugin isn't installed we need to apply the styles inline
-  if (!global.GATSBY___IMAGE) {
+  if (!gatsbyImageIsInstalled()) {
     wrapperStyle.position = `relative`
     wrapperStyle.overflow = `hidden`
   }
@@ -95,7 +99,7 @@ export function getWrapperProps(
     wrapperStyle.width = width
     wrapperStyle.height = height
   } else if (layout === `constrained`) {
-    if (!global.GATSBY___IMAGE) {
+    if (!gatsbyImageIsInstalled()) {
       wrapperStyle.display = `inline-block`
     }
     className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
@@ -179,12 +183,18 @@ export function getImageData<OptionsType>({
   urlBuilder,
   sourceWidth,
   sourceHeight,
-  pluginName = `useGatsbyImage`,
+  pluginName = `getImageData`,
   formats = [`auto`],
-  breakpoints = EVERY_BREAKPOINT,
+  breakpoints,
   options,
   ...props
 }: IGetImageDataArgs<OptionsType>): IGatsbyImageData {
+  if (
+    !breakpoints?.length &&
+    (props.layout === `fullWidth` || (props.layout as string) === `FULL_WIDTH`)
+  ) {
+    breakpoints = EVERY_BREAKPOINT
+  }
   const generateImageSource = (
     baseUrl: string,
     width: number,
@@ -261,7 +271,7 @@ export function getMainProps(
   }
 
   // fallback when it's not configured in gatsby-config.
-  if (!global.GATSBY___IMAGE) {
+  if (!gatsbyImageIsInstalled()) {
     style = {
       height: `100%`,
       left: 0,
@@ -302,7 +312,9 @@ export function getPlaceholderProps(
   layout: Layout,
   width?: number,
   height?: number,
-  backgroundColor?: string
+  backgroundColor?: string,
+  objectFit?: CSSProperties["objectFit"],
+  objectPosition?: CSSProperties["objectPosition"]
 ): PlaceholderImageAttrs {
   const wrapperStyle: CSSProperties = {}
 
@@ -329,6 +341,13 @@ export function getPlaceholderProps(
     }
   }
 
+  if (objectFit) {
+    wrapperStyle.objectFit = objectFit
+  }
+
+  if (objectPosition) {
+    wrapperStyle.objectPosition = objectPosition
+  }
   const result: PlaceholderImageAttrs = {
     ...placeholder,
     "aria-hidden": true,
@@ -341,7 +360,7 @@ export function getPlaceholderProps(
   }
 
   // fallback when it's not configured in gatsby-config.
-  if (!global.GATSBY___IMAGE) {
+  if (!gatsbyImageIsInstalled()) {
     result.style = {
       height: `100%`,
       left: 0,

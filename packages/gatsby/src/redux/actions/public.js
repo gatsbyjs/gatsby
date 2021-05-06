@@ -7,7 +7,7 @@ const { platform } = require(`os`)
 const path = require(`path`)
 const { trueCasePathSync } = require(`true-case-path`)
 const url = require(`url`)
-const { slash } = require(`gatsby-core-utils`)
+const { slash, createContentDigest } = require(`gatsby-core-utils`)
 const { hasNodeChanged, getNode } = require(`../../redux/nodes`)
 const sanitizeNode = require(`../../db/sanitize-node`)
 const { store } = require(`..`)
@@ -22,6 +22,9 @@ const {
 const apiRunnerNode = require(`../../utils/api-runner-node`)
 const { trackCli } = require(`gatsby-telemetry`)
 const { getNonGatsbyCodeFrame } = require(`../../utils/stack-trace-utils`)
+
+const isNotTestEnv = process.env.NODE_ENV !== `test`
+const isTestEnv = process.env.NODE_ENV === `test`
 
 /**
  * Memoize function used to pick shadowed page components to avoid expensive I/O.
@@ -137,11 +140,10 @@ actions.deletePage = (page: PageInput) => {
   }
 }
 
-const pascalCase = _.flow(_.camelCase, _.upperFirst)
 const hasWarnedForPageComponentInvalidContext = new Set()
 const hasWarnedForPageComponentInvalidCasing = new Set()
 const hasErroredBecauseOfNodeValidation = new Set()
-const pageComponentCache = {}
+const pageComponentCache = new Map()
 const reservedFields = [
   `path`,
   `matchPath`,
@@ -184,7 +186,7 @@ actions.createPage = (
   if (!page.path) {
     const message = `${name} must set the page path when creating a page`
     // Don't log out when testing
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11323`,
         context: {
@@ -231,7 +233,7 @@ The following fields are used by the page object and should be avoided.
 ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
             `
-      if (process.env.NODE_ENV === `test`) {
+      if (isTestEnv) {
         return error
         // Only error if the context version is different than the page
         // version.  People in v1 often thought that they needed to also pass
@@ -254,7 +256,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
 
   // Check if a component is set.
   if (!page.component) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       report.panic({
         id: `11322`,
         context: {
@@ -280,7 +282,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   )
 
   if (error) {
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       if (panicOnBuild) {
         report.panicOnBuild(error)
       } else {
@@ -295,9 +297,9 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   // operation
   //
   // Skip during testing as the paths don't exist on disk.
-  if (process.env.NODE_ENV !== `test`) {
-    if (pageComponentCache[page.component]) {
-      page.component = pageComponentCache[page.component]
+  if (isNotTestEnv) {
+    if (pageComponentCache.has(page.component)) {
+      page.component = pageComponentCache.get(page.component)
     } else {
       const originalPageComponent = page.component
 
@@ -357,7 +359,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
         page.component = trueComponentPath
       }
 
-      pageComponentCache[originalPageComponent] = page.component
+      pageComponentCache.set(originalPageComponent, page.component)
     }
   }
 
@@ -365,7 +367,7 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
   if (page.path === `/`) {
     internalComponentName = `ComponentIndex`
   } else {
-    internalComponentName = `Component${pascalCase(page.path)}`
+    internalComponentName = `Component${page.path}`
   }
 
   const invalidPathSegments = tooLongSegmentsInPath(page.path)
@@ -397,6 +399,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Ensure the page has a context object
     context: page.context || {},
     updatedAt: Date.now(),
+
+    // Link page to its plugin.
+    pluginCreator___NODE: plugin.id ?? ``,
+    pluginCreatorId: plugin.id ?? ``,
   }
 
   // If the path doesn't have an initial forward slash, add it.
@@ -422,13 +428,70 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     )
   }
 
-  return {
-    ...actionOptions,
-    type: `CREATE_PAGE`,
-    contextModified,
-    plugin,
-    payload: internalPage,
+  // just so it's easier to c&p from createPage action creator for now - ideally it's DRYed
+  const { updatedAt, ...node } = internalPage
+  node.children = []
+  node.internal = {
+    type: `SitePage`,
+    contentDigest: createContentDigest(node),
   }
+  node.id = `SitePage ${internalPage.path}`
+  const oldNode = getNode(node.id)
+
+  let deleteActions
+  let updateNodeAction
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+    updateNodeAction = {
+      ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
+      payload: node.id,
+    }
+  } else {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const createDeleteAction = node => {
+        return {
+          ...actionOptions,
+          type: `DELETE_NODE`,
+          plugin,
+          payload: node,
+        }
+      }
+      deleteActions = findChildren(oldNode.children)
+        .map(getNode)
+        .map(createDeleteAction)
+    }
+
+    node.internal.counter = getNextNodeCounter()
+
+    updateNodeAction = {
+      ...actionOptions,
+      type: `CREATE_NODE`,
+      plugin,
+      oldNode,
+      payload: node,
+    }
+  }
+
+  const actions = [
+    {
+      ...actionOptions,
+      type: `CREATE_PAGE`,
+      contextModified,
+      plugin,
+      payload: internalPage,
+    },
+  ]
+
+  if (deleteActions && deleteActions.length) {
+    actions.push(...deleteActions)
+  }
+
+  actions.push(updateNodeAction)
+
+  return actions
 }
 
 const deleteNodeDeprecationWarningDisplayedMessages = new Set()
@@ -512,9 +575,17 @@ actions.deleteNode = (node: any, plugin?: Plugin) => {
   }
 }
 
-// We add a counter to internal to make sure we maintain insertion order for
-// backends that don't do that out of the box
-let NODE_COUNTER = 0
+// We add a counter to node.internal for fast comparisons/intersections
+// of various node slices. The counter must increase even across builds.
+function getNextNodeCounter() {
+  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
+  if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
+    throw new Error(
+      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
+    )
+  }
+  return lastNodeCounter + 1
+}
 
 const typeOwners = {}
 
@@ -613,9 +684,6 @@ const createNode = (
   if (!node.internal) {
     node.internal = {}
   }
-
-  NODE_COUNTER++
-  node.internal.counter = NODE_COUNTER
 
   // Ensure the new node has a children array.
   if (!node.array && !_.isArray(node.children)) {
@@ -773,6 +841,8 @@ const createNode = (
         .map(getNode)
         .map(createDeleteAction)
     }
+
+    node.internal.counter = getNextNodeCounter()
 
     updateNodeAction = {
       ...actionOptions,
@@ -1037,7 +1107,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options)) {
     console.log(`${name} must pass an object to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1045,7 +1115,7 @@ actions.setBabelOptions = (options: Object, plugin?: ?Plugin = null) => {
   if (!_.isObject(options.options)) {
     console.log(`${name} must pass options to "setBabelOptions"`)
     console.log(JSON.stringify(options, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1079,7 +1149,7 @@ actions.setBabelPlugin = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel plugin`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }
@@ -1115,7 +1185,7 @@ actions.setBabelPreset = (config: Object, plugin?: ?Plugin = null) => {
   if (!config.name) {
     console.log(`${name} must set the name of the Babel preset`)
     console.log(JSON.stringify(config, null, 4))
-    if (process.env.NODE_ENV !== `test`) {
+    if (isNotTestEnv) {
       process.exit(1)
     }
   }

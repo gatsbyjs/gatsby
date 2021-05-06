@@ -97,7 +97,11 @@ const requestRemoteNode = (
 
     let haveAllBytesBeenWritten = false
     responseStream.on(`downloadProgress`, progress => {
-      if (progress.transferred === progress.total || progress.total === null) {
+      if (
+        progress.transferred === progress.total ||
+        progress.total === null ||
+        progress.total === undefined
+      ) {
         haveAllBytesBeenWritten = true
       }
     })

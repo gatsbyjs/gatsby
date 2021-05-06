@@ -78,6 +78,11 @@ export async function startServer(
   })
   webpackActivity.start()
 
+  // loading indicator
+  // write virtual module always to not fail webpack compilation, but only add express route handlers when
+  // query on demand is enabled and loading indicator is not disabled
+  writeVirtualLoadingIndicatorModule()
+
   const THIRTY_SECONDS = 30 * 1000
   let cancelDevJSNotice: CancelExperimentNoticeCallbackOrUndefined
   if (
@@ -105,7 +110,7 @@ module.exports = {
   const { buildRenderer, doBuildPages } = require(`../commands/build-html`)
   const createIndexHtml = async (activity: ActivityTracker): Promise<void> => {
     try {
-      const rendererPath = await buildRenderer(
+      const { rendererPath } = await buildRenderer(
         program,
         Stage.DevelopHTML,
         activity.span
@@ -136,7 +141,8 @@ module.exports = {
   let pageRenderer: string
   if (process.env.GATSBY_EXPERIMENTAL_DEV_SSR) {
     const { buildRenderer } = require(`../commands/build-html`)
-    pageRenderer = await buildRenderer(program, Stage.DevelopHTML)
+    pageRenderer = (await buildRenderer(program, Stage.DevelopHTML))
+      .rendererPath
     const { initDevWorkerPool } = require(`./dev-ssr/render-dev-html`)
     initDevWorkerPool()
   } else {
@@ -486,10 +492,6 @@ module.exports = {
     route({ app, program, store })
   }
 
-  // loading indicator
-  // write virtual module always to not fail webpack compilation, but only add express route handlers when
-  // query on demand is enabled and loading indicator is not disabled
-  writeVirtualLoadingIndicatorModule()
   if (
     process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
     process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`

@@ -29,10 +29,6 @@ const unionType = typeBuilderApi => {
     name: buildTypeName(type.name),
     types,
     resolveType: node => {
-      if (node.type) {
-        return buildTypeName(node.type)
-      }
-
       if (node.__typename) {
         return buildTypeName(node.__typename)
       }
@@ -100,11 +96,11 @@ const interfaceType = typeBuilderApi => {
     // so we can add them to node interfaces as well in order to filter
     // by a couple different content types
     typeDef.fields[`nodeType`] = `String`
-    typeDef.extensions.nodeInterface = {}
+    typeDef.interfaces = [`Node`]
   } else {
     // otherwise this is a regular interface type so we need to resolve the type name
     typeDef.resolveType = node =>
-      node && node.__typename ? buildTypeName(node.__typename) : null
+      node?.__typename ? buildTypeName(node.__typename) : null
   }
 
   // @todo add this as a plugin option

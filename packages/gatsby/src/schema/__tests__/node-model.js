@@ -16,6 +16,7 @@ describe(`NodeModel`, () => {
     `Directory`,
     `Site`,
     `SitePage`,
+    `SiteFunction`,
     `Author`,
     `Contributor`,
     `RemoteFile`,

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-page-utils",
-  "version": "1.1.0-next.1",
+  "version": "1.5.0-next.0",
   "description": "Gatsby library that helps creating pages",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
     "bluebird": "^3.7.2",
     "chokidar": "^3.5.1",
     "fs-exists-cached": "^1.0.0",
-    "gatsby-core-utils": "^2.1.0-next.1",
+    "gatsby-core-utils": "^2.5.0-next.0",
     "glob": "^7.1.6",
     "lodash": "^4.17.21",
     "micromatch": "^4.0.2"
@@ -35,7 +35,7 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
     "@types/micromatch": "^4.0.1",
-    "babel-preset-gatsby-package": "^1.1.0-next.1",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3",
     "rimraf": "^3.0.2",
     "typescript": "^4.1.5"

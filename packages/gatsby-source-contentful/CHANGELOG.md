@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.3...gatsby-source-contentful@5.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.2...gatsby-source-contentful@5.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.1...gatsby-source-contentful@5.4.0-next.2) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.4.0-next.0...gatsby-source-contentful@5.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby-source-contentful:** De-dupe type names ([#30834](https://github.com/gatsbyjs/gatsby/issues/30834)) ([71ec0cd](https://github.com/gatsbyjs/gatsby/commit/71ec0cdb0f6e5143f3eec9a4f918104c6b3a815d))
+
+### Features
+
+- **contentful:** warn users when using restricted content type names ([#30715](https://github.com/gatsbyjs/gatsby/issues/30715)) ([62a4121](https://github.com/gatsbyjs/gatsby/commit/62a4121a32b7eb2ad4e7e3337c2730993c202e20)), closes [#30089](https://github.com/gatsbyjs/gatsby/issues/30089)
+
+# [5.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.2...gatsby-source-contentful@5.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.3.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.1...gatsby-source-contentful@5.3.0-next.2) (2021-04-07)
+
+### Bug Fixes
+
+- **contentful:** make gatsby-plugin-image a peer dependency ([#30709](https://github.com/gatsbyjs/gatsby/issues/30709)) ([0f3fa4e](https://github.com/gatsbyjs/gatsby/commit/0f3fa4e6aca1e250da7bce5cf8de0d24b0d9af44)), closes [#30519](https://github.com/gatsbyjs/gatsby/issues/30519)
+
+# [5.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.3.0-next.0...gatsby-source-contentful@5.3.0-next.1) (2021-03-30)
+
+### Bug Fixes
+
+- **contentful:** ensure fragments are properly distributed ([#30555](https://github.com/gatsbyjs/gatsby/issues/30555)) ([079d7f8](https://github.com/gatsbyjs/gatsby/commit/079d7f80e42b1f6bf46620eb2eec124a229888c8))
+- **contentful:** set proper defaults for gatsby-plugin-image ([#30536](https://github.com/gatsbyjs/gatsby/issues/30536)) ([418c3bc](https://github.com/gatsbyjs/gatsby/commit/418c3bca3fc8eceefd51c4e66d3956722b2358f0))
+- **gatsby-source-contentful:** Contentful page limit backoff ([#30549](https://github.com/gatsbyjs/gatsby/issues/30549)) ([9d883c6](https://github.com/gatsbyjs/gatsby/commit/9d883c66093fee4c49c87377e7eb65ab2d83e482))
+- **gatsby-source-contentful:** Improve network error handling ([#30257](https://github.com/gatsbyjs/gatsby/issues/30257)) ([c1ac5e4](https://github.com/gatsbyjs/gatsby/commit/c1ac5e43309bc1e6201b948ab715bafc337feaf5))
+
+### Features
+
+- **gatsby-source-contentful:** Increase Contentful sync by up to 10x ([#30422](https://github.com/gatsbyjs/gatsby/issues/30422)) ([b9791fe](https://github.com/gatsbyjs/gatsby/commit/b9791feaba554fe19910ca9ab25f3cb660d3bf05))
+- **gatsby-source-contentful:** update docs and improve errors ([#30538](https://github.com/gatsbyjs/gatsby/issues/30538)) ([2cc90df](https://github.com/gatsbyjs/gatsby/commit/2cc90df8b43cd213bb8dd8d8bd0ddbc6087e81c4)), closes [#26909](https://github.com/gatsbyjs/gatsby/issues/26909)
+
+# [5.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.2.0-next.1...gatsby-source-contentful@5.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.2.0-next.0...gatsby-source-contentful@5.2.0-next.1) (2021-03-19)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.1.0-next.2...gatsby-source-contentful@5.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-source-contentful
+
+# [5.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.1.0-next.1...gatsby-source-contentful@5.1.0-next.2) (2021-03-10)
+
+### Bug Fixes
+
+- **deps:** update lodash monorepo to ^4.17.21 ([#29382](https://github.com/gatsbyjs/gatsby/issues/29382)) ([9fd287b](https://github.com/gatsbyjs/gatsby/commit/9fd287ba89eacd55652d468b18f6e1526230e7c6))
+- **gatsby-source-contentful:** Remove image beta warning ([#29980](https://github.com/gatsbyjs/gatsby/issues/29980)) ([2f59995](https://github.com/gatsbyjs/gatsby/commit/2f599952142b9f2350ef268187839dcbe01ccd74))
+- **gatsby-source-contentful:** Set image source format ([#30103](https://github.com/gatsbyjs/gatsby/issues/30103)) ([759ed72](https://github.com/gatsbyjs/gatsby/commit/759ed722c3fd69216e7d8c7b0212ea2a9335a16e))
+- **gatsby-source-contentful:** use reporter progressbar instead of own ([#29853](https://github.com/gatsbyjs/gatsby/issues/29853)) ([6c8e277](https://github.com/gatsbyjs/gatsby/commit/6c8e277a535d104b0f545d90dd0dd7d3f688839c))
+
 # [5.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-contentful@5.1.0-next.0...gatsby-source-contentful@5.1.0-next.1) (2021-02-26)
 
 **Note:** Version bump only for package gatsby-source-contentful
