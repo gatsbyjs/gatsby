@@ -20,7 +20,7 @@ import fetchReferencedMediaItemsAndCreateNodes, {
 } from "../fetch-nodes/fetch-referenced-media-items"
 import btoa from "btoa"
 import store from "~/store"
-import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
+import { createLocalFileNode } from "./create-local-file-node"
 
 const getNodeEditLink = node => {
   const { protocol, hostname } = url.parse(node.link)
@@ -246,7 +246,7 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
       // we need to fetch it and create a file node for it with no
       // media item node.
       try {
-        imageNode = await createRemoteMediaItemNode({
+        imageNode = await createLocalFileNode({
           skipExistingNode: true,
           parentName: `Creating File node from URL where we couldn't find a MediaItem node`,
           mediaItemNode: {

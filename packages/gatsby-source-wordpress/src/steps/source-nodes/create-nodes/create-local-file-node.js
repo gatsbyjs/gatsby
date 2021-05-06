@@ -189,7 +189,7 @@ export const getFileNodeByMediaItemNode = async ({
 
 const failedImageUrls = new Set()
 
-export const createRemoteMediaItemNode = async ({
+export const createLocalFileNode = async ({
   mediaItemNode,
   parentName,
   skipExistingNode = false,

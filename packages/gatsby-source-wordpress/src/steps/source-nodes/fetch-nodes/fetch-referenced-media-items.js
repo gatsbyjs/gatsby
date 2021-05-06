@@ -3,11 +3,11 @@ import store from "~/store"
 import atob from "atob"
 import filesize from "filesize"
 import PQueue from "p-queue"
-import { createRemoteMediaItemNode } from "../create-nodes/create-remote-media-item-node"
+import { createLocalFileNode } from "../create-nodes/create-local-file-node"
 import { paginatedWpNodeFetch, normalizeNode } from "./fetch-nodes-paginated"
 import { buildTypeName } from "~/steps/create-schema-customization/helpers"
 import fetchGraphql from "~/utils/fetch-graphql"
-import { getFileNodeMetaBySourceUrl } from "~/steps/source-nodes/create-nodes/create-remote-media-item-node"
+import { getFileNodeMetaBySourceUrl } from "~/steps/source-nodes/create-nodes/create-local-file-node"
 import uniq from "lodash/uniq"
 import urlUtil from "url"
 import path from "path"
@@ -67,7 +67,7 @@ const pushPromiseOntoRetryQueue = ({
       })
     } catch (error) {
       // Errors that should exit are handled one level down
-      // in createRemoteMediaItemNode
+      // in createLocalFileNode
       //
       // if we haven't reqeued this before,
       // add it to the end of the queue to
@@ -159,7 +159,7 @@ export const createMediaItemNode = async ({
         )
       }, 15000)
 
-      const localFileNode = await createRemoteMediaItemNode({
+      const localFileNode = await createLocalFileNode({
         mediaItemNode: node,
         helpers,
         parentName,
