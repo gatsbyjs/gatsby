@@ -16,6 +16,8 @@ import {
   IPageQueryRunAction,
   IRemoveStaleJobAction,
   ISetSiteConfig,
+  ISetSiteFunctions,
+  IGatsbyState,
   IDefinitionMeta,
   ISetGraphQLDefinitionsAction,
   IQueryStartAction,
@@ -102,7 +104,13 @@ export const apiFinished = (
  * @private
  */
 export const replaceStaticQuery = (
-  args: any,
+  args: {
+    name: string
+    componentPath: string
+    id: string
+    query: string
+    hash: string
+  },
   plugin: IGatsbyPlugin | null | undefined = null
 ): IReplaceStaticQueryAction => {
   return {
@@ -225,7 +233,7 @@ export const setProgramStatus = (
  * @private
  */
 export const pageQueryRun = (
-  { path, componentPath, isPage },
+  payload: IPageQueryRunAction["payload"],
   plugin: IGatsbyPlugin,
   traceId?: string
 ): IPageQueryRunAction => {
@@ -233,7 +241,7 @@ export const pageQueryRun = (
     type: `PAGE_QUERY_RUN`,
     plugin,
     traceId,
-    payload: { path, componentPath, isPage },
+    payload,
   }
 }
 
@@ -285,7 +293,7 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
 
   if (result.error) {
     const hasUnknownKeys = result.error.details.filter(
-      details => details.type === `object.allowUnknown`
+      details => details.type === `object.unknown`
     )
 
     if (Array.isArray(hasUnknownKeys) && hasUnknownKeys.length) {
@@ -320,5 +328,18 @@ export const setSiteConfig = (config?: unknown): ISetSiteConfig => {
   return {
     type: `SET_SITE_CONFIG`,
     payload: normalizedPayload,
+  }
+}
+
+/**
+ * Set gatsby functions
+ * @private
+ */
+export const setFunctions = (
+  functions: IGatsbyState["functions"]
+): ISetSiteFunctions => {
+  return {
+    type: `SET_SITE_FUNCTIONS`,
+    payload: functions,
   }
 }

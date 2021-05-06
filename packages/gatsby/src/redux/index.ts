@@ -103,10 +103,11 @@ export const saveState = (): void => {
     staticQueryComponents: state.staticQueryComponents,
     webpackCompilationHash: state.webpackCompilationHash,
     pageDataStats: state.pageDataStats,
-    pageData: state.pageData,
+    pages: state.pages,
     pendingPageDataWrites: state.pendingPageDataWrites,
     staticQueriesByTemplate: state.staticQueriesByTemplate,
     queries: state.queries,
+    html: state.html,
   })
 }
 

@@ -494,7 +494,7 @@ describe(`pathPrefix is handled if caught link to ${pathPrefix}/article navigate
 describe(`navigation is routed through browser without SVGAnimatedString support`, () => {
   let hrefHandler
   let eventDestroyer
-  let oldSVGAnimatedString = SVGAnimatedString
+  const oldSVGAnimatedString = SVGAnimatedString
 
   beforeAll(() => {
     hrefHandler = jest.fn()

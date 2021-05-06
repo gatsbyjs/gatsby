@@ -19,7 +19,6 @@ import { loadPlugins } from "../bootstrap/load-plugins"
 import { store, emitter } from "../redux"
 import loadThemes from "../bootstrap/load-themes"
 import reporter from "gatsby-cli/lib/reporter"
-import { getReactHotLoaderStrategy } from "../utils/get-react-hot-loader-strategy"
 import { getConfigFile } from "../bootstrap/get-config-file"
 import { removeStaleJobs } from "../bootstrap/remove-stale-jobs"
 import { IPluginInfoOptions } from "../bootstrap/load-plugins/types"
@@ -31,6 +30,10 @@ import availableFlags from "../utils/flags"
 interface IPluginResolution {
   resolve: string
   options: IPluginInfoOptions
+}
+
+interface IPluginResolutionSSR extends IPluginResolution {
+  name: string
 }
 
 // If the env variable GATSBY_EXPERIMENTAL_FAST_DEV is set, enable
@@ -101,10 +104,6 @@ export async function initialize({
     args.setStore(store)
   }
 
-  // Start plugin runner which listens to the store
-  // and invokes Gatsby API based on actions.
-  startPluginRunner()
-
   const directory = slash(args.directory)
 
   const program = {
@@ -161,24 +160,6 @@ export async function initialize({
 
   // Setup flags
   if (config) {
-    // TODO: this should be handled in FAST_REFRESH configuration and not be one-off here.
-    if (
-      config.flags?.FAST_REFRESH &&
-      process.env.GATSBY_HOT_LOADER &&
-      process.env.GATSBY_HOT_LOADER !== `fast-refresh`
-    ) {
-      delete config.flags.FAST_REFRESH
-      reporter.warn(
-        reporter.stripIndent(`
-          Both FAST_REFRESH gatsby-config flag and GATSBY_HOT_LOADER environment variable is used with conflicting setting ("${process.env.GATSBY_HOT_LOADER}").
-
-          Will use react-hot-loader.
-
-          To use Fast Refresh either do not use GATSBY_HOT_LOADER environment variable or set it to "fast-refresh".
-        `)
-      )
-    }
-
     // Get flags
     const { enabledConfigFlags, unknownFlagMessage, message } = handleFlags(
       availableFlags,
@@ -212,8 +193,6 @@ export async function initialize({
     }
   }
 
-  process.env.GATSBY_HOT_LOADER = getReactHotLoaderStrategy()
-
   // TODO: figure out proper way of disabling loading indicator
   // for now GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR=false gatsby develop
   // will work, but we don't want to force users into using env vars
@@ -227,24 +206,8 @@ export async function initialize({
   }
 
   // theme gatsby configs can be functions or objects
-  if (config && config.__experimentalThemes) {
-    reporter.warn(
-      `The gatsby-config key "__experimentalThemes" has been deprecated. Please use the "plugins" key instead.`
-    )
-    const themes = await loadThemes(config, {
-      useLegacyThemes: true,
-      configFilePath,
-      rootDir: program.directory,
-    })
-    config = themes.config
-
-    store.dispatch({
-      type: `SET_RESOLVED_THEMES`,
-      payload: themes.themes,
-    })
-  } else if (config) {
+  if (config) {
     const plugins = await loadThemes(config, {
-      useLegacyThemes: false,
       configFilePath,
       rootDir: program.directory,
     })
@@ -266,7 +229,7 @@ export async function initialize({
       // we don't want to ever have this flag enabled for anything than develop
       // in case someone have this env var globally set
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
-    } else if (isCI()) {
+    } else if (isCI() && !process.env.CYPRESS_SUPPORT) {
       delete process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND
       reporter.verbose(
         `Experimental Query on Demand feature is not available in CI environment. Continuing with eager query running.`
@@ -295,6 +258,10 @@ export async function initialize({
     plugins: pluginsStr,
   })
 
+  // Start plugin runner which listens to the store
+  // and invokes Gatsby API based on actions.
+  startPluginRunner()
+
   // onPreInit
   activity = reporter.activityTimer(`onPreInit`, {
     parentSpan,
@@ -303,11 +270,18 @@ export async function initialize({
   await apiRunnerNode(`onPreInit`, { parentSpan: activity.span })
   activity.end()
 
-  // During builds, delete html and css files from the public directory as we don't want
-  // deleted pages and styles from previous builds to stick around.
+  const cacheDirectory = `${program.directory}/.cache`
+  const publicDirectory = `${program.directory}/public`
+
+  const cacheJsonDirExists = fs.existsSync(`${cacheDirectory}/json`)
+  const publicDirExists = fs.existsSync(publicDirectory)
+
+  // For builds in case public dir exists, but cache doesn't, we need to clean up potentially stale
+  // artifacts from previous builds (due to cache not being available, we can't rely on tracking of artifacts)
   if (
-    !process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES &&
-    process.env.NODE_ENV === `production`
+    process.env.NODE_ENV === `production` &&
+    publicDirExists &&
+    !cacheJsonDirExists
   ) {
     activity = reporter.activityTimer(
       `delete html and css files from previous builds`,
@@ -339,7 +313,6 @@ export async function initialize({
   // logic in there e.g. generating slugs for custom pages.
   const pluginVersions = flattenedPlugins.map(p => p.version)
   const hashes: any = await Promise.all([
-    !!process.env.GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES,
     md5File(`package.json`),
     md5File(`${program.directory}/gatsby-config.js`).catch(() => {}), // ignore as this file isn't required),
     md5File(`${program.directory}/gatsby-node.js`).catch(() => {}), // ignore as this file isn't required),
@@ -362,13 +335,10 @@ export async function initialize({
       a precaution, we're deleting your site's cache to ensure there's no stale data.
     `)
   }
-  const cacheDirectory = `${program.directory}/.cache`
-  const publicDirectory = `${program.directory}/public`
 
   // .cache directory exists in develop at this point
   // so checking for .cache/json as a heuristic (could be any expected file)
-  const cacheIsCorrupt =
-    fs.existsSync(`${cacheDirectory}/json`) && !fs.existsSync(publicDirectory)
+  const cacheIsCorrupt = cacheJsonDirExists && !publicDirExists
 
   if (cacheIsCorrupt) {
     reporter.info(reporter.stripIndent`
@@ -445,7 +415,10 @@ export async function initialize({
         ]
 
         if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_FILE_DOWNLOAD_CACHE) {
-          // Add gatsby-source-filesystem
+          // Stop the caches directory from being deleted, add all sub directories,
+          // but remove gatsby-source-filesystem
+          deleteGlobs.push(`!${cacheDirectory}/caches`)
+          deleteGlobs.push(`${cacheDirectory}/caches/*`)
           deleteGlobs.push(`!${cacheDirectory}/caches/gatsby-source-filesystem`)
         }
 
@@ -542,15 +515,18 @@ export async function initialize({
   }
 
   const isResolved = (plugin): plugin is IPluginResolution => !!plugin.resolve
+  const isResolvedSSR = (plugin): plugin is IPluginResolutionSSR =>
+    !!plugin.resolve
 
-  const ssrPlugins: Array<IPluginResolution> = flattenedPlugins
+  const ssrPlugins: Array<IPluginResolutionSSR> = flattenedPlugins
     .map(plugin => {
       return {
+        name: plugin.name,
         resolve: hasAPIFile(`ssr`, plugin),
         options: plugin.pluginOptions,
       }
     })
-    .filter(isResolved)
+    .filter(isResolvedSSR)
 
   const browserPlugins: Array<IPluginResolution> = flattenedPlugins
     .map(plugin => {
@@ -586,6 +562,7 @@ export async function initialize({
     .map(
       plugin =>
         `{
+      name: '${plugin.name}',
       plugin: require('${plugin.resolve}'),
       options: ${JSON.stringify(plugin.options)},
     }`

@@ -22,6 +22,9 @@ const WrapRootElement = ({ element }) => (
         <div>
           StaticQuery in wrapRootElement test (should show site title):
           <span data-testid="wrap-root-element-result">{title}</span>
+          <div data-testid="gatsby-browser-hmr">
+            %TEST_HMR_IN_GATSBY_BROWSER%
+          </div>
         </div>
       </>
     )}

@@ -1,6 +1,6 @@
 const _ = require(`lodash`)
 
-/// Plugin options are loaded onPreBootstrap in gatsby-node
+// Plugin options are loaded onPreBootstrap in gatsby-node
 const pluginDefaults = {
   base64Width: 20,
   forceBase64Format: ``, // valid formats: png,jpg,webp
@@ -74,13 +74,19 @@ exports.createTransformObject = args => {
 /**
  * Used for gatsbyImageData and StaticImage only
  */
-exports.mergeDefaults = args => {
-  const { defaults } = pluginOptions
+exports.mergeDefaults = args => doMergeDefaults(args, pluginOptions.defaults)
+
+const customizer = (objValue, srcValue) =>
+  Array.isArray(objValue) ? srcValue : undefined
+
+function doMergeDefaults(args, defaults) {
   if (!defaults) {
     return args
   }
-  return _.defaultsDeep(args, defaults)
+  return _.mergeWith({}, defaults, args, customizer)
 }
+
+exports.doMergeDefaults = doMergeDefaults
 
 exports.healOptions = (
   { defaultQuality: quality, base64Width },
@@ -88,7 +94,7 @@ exports.healOptions = (
   fileExtension = ``,
   defaultArgs = {}
 ) => {
-  let options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
+  const options = _.defaults({}, args, { quality }, defaultArgs, generalArgs)
   options.quality = parseInt(options.quality, 10)
   options.pngCompressionLevel = parseInt(options.pngCompressionLevel, 10)
   options.pngCompressionSpeed = parseInt(options.pngCompressionSpeed, 10)
@@ -113,9 +119,11 @@ exports.healOptions = (
   // only set width to 400 if neither width nor height is passed
   if (options.width === undefined && options.height === undefined) {
     options.width = 400
-  } else if (options.width !== undefined) {
+  }
+  if (options.width !== undefined) {
     options.width = parseInt(options.width, 10)
-  } else if (options.height !== undefined) {
+  }
+  if (options.height !== undefined) {
     options.height = parseInt(options.height, 10)
   }
 
@@ -135,7 +143,6 @@ exports.healOptions = (
       )
     }
   })
-
   return options
 }
 

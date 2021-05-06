@@ -1,4 +1,4 @@
-import normalize from "normalize-path"
+import normalize from "./normalize-path"
 import {
   IGatsbyState,
   IGatsbyPage,
@@ -28,10 +28,6 @@ export const pagesReducer = (
           `Pages can only be created by plugins. There wasn't a plugin set when creating this page.`
         )
       }
-
-      // Link page to its plugin.
-      action.payload.pluginCreator___NODE = action.plugin.id ?? ``
-      action.payload.pluginCreatorId = action.plugin.id ?? ``
 
       // Add page to the state with the path as key
       state.set(action.payload.path, action.payload)

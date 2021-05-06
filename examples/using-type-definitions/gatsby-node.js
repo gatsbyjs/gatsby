@@ -33,7 +33,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           type: `BlogJson`,
           resolve(parent, args, context) {
             return context.nodeModel.getNodeById({
-              id: parent.author,
+              id: parent.blog,
               type: `BlogJson`,
             })
           },

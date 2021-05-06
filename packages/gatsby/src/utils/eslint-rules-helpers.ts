@@ -1,4 +1,5 @@
 import { Rule } from "eslint"
+import { slash } from "gatsby-core-utils"
 import { GatsbyReduxStore } from "../redux"
 
 export function isPageTemplate(
@@ -9,7 +10,8 @@ export function isPageTemplate(
   if (!filename) {
     return false
   }
-  return s.getState().components.has(filename)
+
+  return s.getState().components.has(slash(filename))
 }
 
 export function test(t): any {

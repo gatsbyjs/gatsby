@@ -1,7 +1,7 @@
 {
   "name": "gatsby-recipes",
   "description": "Core functionality for Gatsby Recipes",
-  "version": "0.9.0-next.1",
+  "version": "0.16.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -30,11 +30,11 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.10.0-next.0",
-    "gatsby-telemetry": "^1.10.0-next.1",
+    "gatsby-core-utils": "^2.5.0-next.0",
+    "gatsby-telemetry": "^2.5.0-next.1",
     "glob": "^7.1.6",
-    "graphql": "^14.6.0",
-    "graphql-compose": "^6.3.8",
+    "graphql": "^15.4.0",
+    "graphql-compose": "~7.25.0",
     "graphql-subscriptions": "^1.1.0",
     "graphql-type-json": "^0.3.2",
     "hicat": "^0.8.0",
@@ -42,7 +42,7 @@
     "is-url": "^1.2.4",
     "jest-diff": "^25.5.0",
     "lock": "^1.0.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "mitt": "^1.2.0",
     "mkdirp": "^0.5.1",
     "node-fetch": "^2.5.0",
@@ -116,7 +116,7 @@
     "@mdx-js/mdx": "^2.0.0-next.4",
     "@mdx-js/react": "^2.0.0-next.4",
     "@mdx-js/runtime": "^2.0.0-next.4",
-    "graphql": "^14.6.0",
+    "graphql": "^15.4.0",
     "property-information": "5.5.0",
     "remark-mdx": "^2.0.0-next.4",
     "remark-mdxjs": "^2.0.0-next.4"

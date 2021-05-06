@@ -5,7 +5,7 @@ import {
   createHistory,
   LocationProvider,
 } from "@reach/router"
-import Link, { navigate, push, replace, withPrefix, withAssetPrefix } from "../"
+import Link, { navigate, withPrefix, withAssetPrefix } from "../"
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -24,16 +24,6 @@ const getNavigate = () => {
   return navigate
 }
 
-const getPush = () => {
-  global.___push = jest.fn()
-  return push
-}
-
-const getReplace = () => {
-  global.___replace = jest.fn()
-  return replace
-}
-
 const getWithPrefix = (pathPrefix = ``) => {
   global.__BASE_PATH__ = pathPrefix
   return withPrefix
@@ -45,10 +35,10 @@ const getWithAssetPrefix = (prefix = ``) => {
 }
 
 const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
-  let intersectionInstances = new WeakMap()
+  const intersectionInstances = new WeakMap()
   // mock intersectionObserver
   global.IntersectionObserver = jest.fn(cb => {
-    let instance = {
+    const instance = {
       observe: ref => {
         intersectionInstances.set(ref, instance)
       },
@@ -241,16 +231,6 @@ describe(`<Link />`, () => {
       setup({ linkProps: { to } })
       expect(console.warn).toBeCalled()
     })
-  })
-
-  it(`push is called with correct args`, () => {
-    getPush()(`/some-path`)
-    expect(global.___push).toHaveBeenCalledWith(`/some-path`)
-  })
-
-  it(`replace is called with correct args`, () => {
-    getReplace()(`/some-path`)
-    expect(global.___replace).toHaveBeenCalledWith(`/some-path`)
   })
 
   describe(`uses push or replace adequately`, () => {

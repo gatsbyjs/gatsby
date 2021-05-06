@@ -1,28 +1,38 @@
-import React from "react"
+import * as React from "react"
 
-const CodeFrame = ({ decoded }) => (
-  <pre data-gatsby-overlay="pre">
-    <code data-gatsby-overlay="pre__code">
-      {decoded
-        ? decoded.map((entry, index) => (
+export function CodeFrame({ decoded }) {
+  if (!decoded) {
+    return (
+      <pre data-gatsby-overlay="pre">
+        <code data-gatsby-overlay="pre__code" />
+      </pre>
+    )
+  }
+
+  return (
+    <pre data-gatsby-overlay="pre">
+      <code data-gatsby-overlay="pre__code">
+        {decoded.map((entry, index) => {
+          const style = {
+            color: entry.fg ? `var(--color-${entry.fg})` : undefined,
+            ...(entry.decoration === `bold`
+              ? { fontWeight: 800 }
+              : entry.decoration === `italic`
+              ? { fontStyle: `italic` }
+              : undefined),
+          }
+
+          return (
             <span
               key={`frame-${index}`}
               data-gatsby-overlay="pre__code__span"
-              style={{
-                color: entry.fg ? `var(--color-${entry.fg})` : undefined,
-                ...(entry.decoration === `bold`
-                  ? { fontWeight: 800 }
-                  : entry.decoration === `italic`
-                  ? { fontStyle: `italic` }
-                  : undefined),
-              }}
+              style={style}
             >
               {entry.content}
             </span>
-          ))
-        : null}
-    </code>
-  </pre>
-)
-
-export default CodeFrame
+          )
+        })}
+      </code>
+    </pre>
+  )
+}

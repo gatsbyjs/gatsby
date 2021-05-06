@@ -6,6 +6,9 @@ module.exports = {
       twitter: `kylemathews`,
     },
   },
+  flags: {
+    DEV_SSR: false,
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
@@ -24,6 +27,7 @@ module.exports = {
     },
     `gatsby-source-fake-data`,
     `gatsby-source-pinc-data`,
+    `gatsby-source-query-on-demand-data`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {
@@ -46,6 +50,9 @@ module.exports = {
       },
     },
     `gatsby-plugin-image`,
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-less`,
+    `gatsby-plugin-stylus`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',

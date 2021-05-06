@@ -1,7 +1,9 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
 import * as PropTypes from "prop-types"
-import Img from "gatsby-image"
+
+import { Link, graphql } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
+
 import { rhythm } from "../utils/typography"
 import Layout from "../layouts"
 
@@ -25,8 +27,11 @@ const Product = ({ node }) => (
         }}
       >
         <div style={{ marginRight: rhythm(1 / 2) }}>
-          {node.image[0].fixed.src && (
-            <Img style={{ margin: 0 }} fixed={node.image[0].fixed} />
+          {node.image[0].gatsbyImageData && (
+            <GatsbyImage
+              style={{ margin: 0 }}
+              image={node.image[0].gatsbyImageData}
+            />
           )}
         </div>
         <div style={{ flex: 1 }}>{node.productName.productName}</div>
@@ -89,9 +94,7 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            fixed(width: 75) {
-              ...GatsbyContentfulFixed
-            }
+            gatsbyImageData(layout: FIXED, width: 75)
           }
         }
       }
@@ -104,9 +107,7 @@ export const pageQuery = graphql`
             productName
           }
           image {
-            fixed(width: 75) {
-              ...GatsbyContentfulFixed
-            }
+            gatsbyImageData(layout: FIXED, width: 75)
           }
         }
       }

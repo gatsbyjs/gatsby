@@ -5,23 +5,21 @@ import { WindowLocation, NavigateFn, NavigateOptions } from "@reach/router"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
 export { Reporter }
 import {
-  ComposeEnumTypeConfig,
-  ComposeInputObjectTypeConfig,
-  ComposeInterfaceTypeConfig,
-  ComposeObjectTypeConfig,
-  ComposeScalarTypeConfig,
-  ComposeUnionTypeConfig,
+  EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
+  InputTypeComposerAsObjectDefinition as ComposeInputObjectTypeConfig,
+  InterfaceTypeComposerAsObjectDefinition as ComposeInterfaceTypeConfig,
+  ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
+  ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
+  UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
 } from "graphql-compose"
 import { GraphQLOutputType } from "graphql"
 import { PluginOptionsSchemaJoi, ObjectSchema } from "gatsby-plugin-utils"
+import { IncomingMessage, ServerResponse } from "http"
 
 export {
   default as Link,
   GatsbyLinkProps,
   navigate,
-  navigateTo,
-  push,
-  replace,
   withPrefix,
   withAssetPrefix,
 } from "gatsby-link"
@@ -77,8 +75,6 @@ export type PageProps<
   navigate: NavigateFn
   /** You can't get passed children as this is the root user-land component */
   children: undefined
-  /** @deprecated use pageContext instead */
-  pathContext: object
   /** The URL parameters when the page has a `matchPath` */
   params: Record<string, string>
   /** Holds information about the build process for this component */
@@ -566,10 +562,6 @@ export interface GatsbyBrowser {
     options: PluginOptions
   ): any
   registerServiceWorker?(args: BrowserPluginArgs, options: PluginOptions): any
-  replaceComponentRenderer?(
-    args: ReplaceComponentRendererArgs,
-    options: PluginOptions
-  ): any
   replaceHydrateFunction?(
     args: BrowserPluginArgs,
     options: PluginOptions
@@ -960,12 +952,6 @@ export interface NodePluginArgs {
 
   /**
    * Collection of functions used to programmatically modify Gatsby’s internal state.
-   * @deprecated Will be removed in gatsby 3.0. Use `actions` instead
-   */
-  boundActionCreators: Actions
-
-  /**
-   * Collection of functions used to programmatically modify Gatsby’s internal state.
    */
   actions: Actions
 
@@ -1028,16 +1014,6 @@ export interface NodePluginArgs {
    * const markdownNodes = getNodesByType(`MarkdownRemark`)
    */
   getNodesByType(type: string): Node[]
-
-  /**
-   * Compares `contentDigest` of cached node with passed value
-   * to determine if node has changed.
-   *
-   * @param id of node
-   * @param contentDigest of node
-   * @deprecated This check is done internally in Gatsby and it's not necessary to use it in plugins. Will be removed in gatsby 3.0.
-   */
-  hasNodeChanged(id: string, contentDigest: string): boolean
 
   /**
    * Set of utilities to output information to user
@@ -1110,24 +1086,10 @@ interface ActionPlugin {
   name: string
 }
 
-interface DeleteNodeArgs {
-  node: Node
-}
-
 interface CreateNodeFieldArgs {
   node: Node
   name: string
   value: string
-
-  /**
-   * @deprecated
-   */
-  fieldName?: string
-
-  /**
-   * @deprecated
-   */
-  fieldValue?: string
 }
 
 interface ActionOptions {
@@ -1156,17 +1118,7 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#deletePage */
-  deleteNode(
-    options: { node: Node },
-    plugin?: ActionPlugin,
-    option?: ActionOptions
-  ): void
-
-  /**
-   * @deprecated
-   * @see https://www.gatsbyjs.org/docs/actions/#deleteNodes
-   */
-  deleteNodes(nodes: string[], plugin?: ActionPlugin): void
+  deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNode */
   createNode(
@@ -1176,14 +1128,12 @@ export interface Actions {
   ): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#touchNode */
-  touchNode(node: { nodeId: string }, plugin?: ActionPlugin): void
+  touchNode(node: NodeInput, plugin?: ActionPlugin): void
 
   /** @see https://www.gatsbyjs.org/docs/actions/#createNodeField */
   createNodeField(
     args: {
       node: Node
-      fieldName?: string
-      fieldValue?: string
       name?: string
       value: any
     },
@@ -1256,6 +1206,7 @@ export interface Actions {
       redirectInBrowser?: boolean
       force?: boolean
       statusCode?: number
+      ignoreCase?: boolean
       [key: string]: unknown
     },
     plugin?: ActionPlugin
@@ -1346,6 +1297,8 @@ export interface Cache {
 }
 
 export interface GatsbyCache {
+  name: string
+  directory: string
   /**
    * Retrieve cached value
    * @param key Cache key
@@ -1482,12 +1435,7 @@ export interface PrefetchPathnameArgs extends BrowserPluginArgs {
 
 export interface RouteUpdateArgs extends BrowserPluginArgs {
   location: Location
-  prevLocation: Location | null;
-}
-
-export interface ReplaceComponentRendererArgs extends BrowserPluginArgs {
-  props: PageProps
-  loader: object
+  prevLocation: Location | null
 }
 
 export interface ShouldUpdateScrollArgs extends BrowserPluginArgs {
@@ -1515,8 +1463,6 @@ export interface WrapRootElementBrowserArgs extends BrowserPluginArgs {
 }
 
 export interface BrowserPluginArgs {
-  getResourcesForPathnameSync: Function
-  getResourcesForPathname: Function
   getResourceURLsForPathname: Function
   [key: string]: unknown
 }
@@ -1575,4 +1521,49 @@ export interface IPluginRefOptions {
 
 export interface PluginOptionsSchemaArgs {
   Joi: PluginOptionsSchemaJoi
+}
+
+/**
+ * Send body of response
+ */
+type Send<T> = (body: T) => void
+
+/**
+ * Gatsby Function route response
+ */
+export interface GatsbyFunctionResponse<T = any> extends ServerResponse {
+  /**
+   * Send `any` data in response
+   */
+  send: Send<T>
+  /**
+   * Send `JSON` data in response
+   */
+  json: Send<T>
+  /**
+   * Set the HTTP status code of the response
+   */
+  status: (statusCode: number) => GatsbyFunctionResponse<T>
+  redirect(url: string): GatsbyFunctionResponse<T>
+  redirect(status: number, url: string): GatsbyFunctionResponse<T>
+}
+
+/**
+ * Gatsby function route request
+ */
+export interface GatsbyFunctionRequest extends IncomingMessage {
+  /**
+   * Object of values from URL query parameters (after the ? in the URL)
+   */
+  query: Record<string, string>
+
+  /**
+   * Object of values from route parameters
+   */
+  params: Record<string, string>
+  body: any
+  /**
+   * Object of `cookies` from header
+   */
+  cookies: Record<string, string>
 }

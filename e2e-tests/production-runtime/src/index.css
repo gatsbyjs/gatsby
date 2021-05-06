@@ -2,3 +2,27 @@
   position: relative;
   z-index: 9001; /* it's over 9000 */
 }
+
+.dog-background {
+  background: url("/dog-thumbnail.jpg");
+  width: 640px;
+  height: 427px;
+}
+
+.merriweather {
+  font-family: "Merriweather";
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.dog-background-flip {
+  background: url("//localhost:9000/dog-thumbnail-flip.jpg");
+  width: 640px;
+  height: 427px;
+}
+
+.dog-background-dither {
+  background: url("http://localhost:9000/dog-thumbnail-dither.jpg");
+  width: 640px;
+  height: 427px;
+}

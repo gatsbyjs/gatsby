@@ -125,7 +125,7 @@ Using the `id` as an access point to query for other properties in the template 
 const path = require("path")
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
   const queryResults = await graphql(`
     query AllProducts {
       allProducts {
@@ -137,21 +137,20 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     }
-  `);
+  `)
 
-  const productTemplate = path.resolve(`src/templates/product.js`);
+  const productTemplate = path.resolve(`src/templates/product.js`)
   queryResults.data.allProducts.nodes.forEach(node => {
     createPage({
       path: `/products/${node.id}`,
       component: productTemplate,
       context: {
         // This time the entire product is passed down as context
-        product: node
-      }
-    });
-  });
-};
-};
+        product: node,
+      },
+    })
+  })
+}
 ```
 
 > You are now requesting all the data you need in a single query (this requires server-side support to fetch many products in a single database query).

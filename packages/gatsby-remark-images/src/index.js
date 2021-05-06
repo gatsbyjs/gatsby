@@ -50,7 +50,7 @@ module.exports = (
 
   // This will allow the use of html image tags
   // const rawHtmlNodes = select(markdownAST, `html`)
-  let rawHtmlNodes = []
+  const rawHtmlNodes = []
   visitWithParents(markdownAST, [`html`, `jsx`], (node, ancestors) => {
     const inLink = ancestors.some(findParentLinks)
 
@@ -58,7 +58,7 @@ module.exports = (
   })
 
   // This will only work for markdown syntax image tags
-  let markdownImageNodes = []
+  const markdownImageNodes = []
 
   visitWithParents(
     markdownAST,
@@ -148,7 +148,7 @@ module.exports = (
       return resolve()
     }
 
-    let fluidResult = await fluid({
+    const fluidResult = await fluid({
       file: imageNode,
       args: options,
       reporter,
@@ -387,14 +387,14 @@ module.exports = (
     // Simple because there is no nesting in markdown
     markdownImageNodes.map(
       ({ node, inLink }) =>
-        new Promise(async (resolve, reject) => {
+        new Promise(resolve => {
           const overWrites = {}
           let refNode
           if (
             !node.hasOwnProperty(`url`) &&
             node.hasOwnProperty(`identifier`)
           ) {
-            //consider as imageReference node
+            // consider as imageReference node
             refNode = node
             node = definitions(refNode.identifier)
             // pass original alt from referencing node
@@ -414,22 +414,23 @@ module.exports = (
             fileType !== `gif` &&
             fileType !== `svg`
           ) {
-            const rawHTML = await generateImagesAndUpdateNode(
+            return generateImagesAndUpdateNode(
               node,
               resolve,
               inLink,
               overWrites
-            )
-
-            if (rawHTML) {
-              // Replace the image or ref node with an inline HTML node.
-              if (refNode) {
-                node = refNode
+            ).then(rawHTML => {
+              if (rawHTML) {
+                // Replace the image or ref node with an inline HTML node.
+                if (refNode) {
+                  node = refNode
+                }
+                node.type = `html`
+                node.value = rawHTML
               }
-              node.type = `html`
-              node.value = rawHTML
-            }
-            return resolve(node)
+
+              return resolve(node)
+            })
           } else {
             // Image isn't relative so there's nothing for us to do.
             return resolve()
@@ -442,6 +443,7 @@ module.exports = (
       // Complex because HTML nodes can contain multiple images
       rawHtmlNodes.map(
         ({ node, inLink }) =>
+          // eslint-disable-next-line no-async-promise-executor
           new Promise(async (resolve, reject) => {
             if (!node.value) {
               return resolve()
@@ -453,14 +455,15 @@ module.exports = (
               return resolve()
             }
 
-            let imageRefs = []
+            const imageRefs = []
             $(`img`).each(function () {
+              // eslint-disable-next-line @babel/no-invalid-this
               imageRefs.push($(this))
             })
 
-            for (let thisImg of imageRefs) {
+            for (const thisImg of imageRefs) {
               // Get the details we need.
-              let formattedImgTag = {}
+              const formattedImgTag = {}
               formattedImgTag.url = thisImg.attr(`src`)
               formattedImgTag.title = thisImg.attr(`title`)
               formattedImgTag.alt = thisImg.attr(`alt`)

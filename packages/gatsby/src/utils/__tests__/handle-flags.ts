@@ -10,10 +10,6 @@ jest.mock(`gatsby-core-utils`, () => {
   }
 })
 
-jest.mock(`terminal-link`, () => (text: string, url: string): string =>
-  `${text} (${url})`
-)
-
 describe(`satisfies semver`, () => {
   it(`returns false if a module doesn't exist`, () => {
     const semverConstraints = {
@@ -265,14 +261,10 @@ describe(`handle flags`, () => {
       - ALWAYS_OPT_IN · (Umbrella Issue (test)) · test
       - DEV_SSR · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/28138)) · SSR pages on full reloads during develop. Helps you detect SSR bugs and fix them without needing to do full builds.
 
-      There are 7 other flags available that you might be interested in:
+      There are 3 other flags available that you might be interested in:
       - FAST_DEV · Enable all experiments aimed at improving develop server start time
-      - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-      - ONLY_BUILDS · (Umbrella Issue (test)) · test
       - ALL_COMMANDS · (Umbrella Issue (test)) · test
       - YET_ANOTHER · (Umbrella Issue (test)) · test
-      - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
-      - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
       "
     `)
   })
@@ -336,6 +328,60 @@ describe(`handle flags`, () => {
       `)
     })
 
+    it(`Display message when LOCKED_IN applies to command different than currently executed`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `ALWAYS_LOCKED_IN_SET_IN_CONFIG_FOR_DEVELOP`,
+            env: `GATSBY_ALWAYS_LOCKED_IN_SET_IN_CONFIG_FOR_DEVELOP`,
+            command: `develop`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            // this will always LOCKED IN
+            testFitness: (): fitnessEnum => `LOCKED_IN`,
+          },
+          {
+            name: `SOME_FLAG`,
+            env: `GATSBY_SOME_FLAG`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          // this has no effect, but we want to show to user that
+          SOME_FLAG: true,
+        },
+        `build`
+      )
+
+      expect(response).toMatchInlineSnapshot(`
+        Object {
+          "enabledConfigFlags": Array [
+            Object {
+              "command": "all",
+              "description": "test",
+              "env": "GATSBY_SOME_FLAG",
+              "experimental": false,
+              "name": "SOME_FLAG",
+              "telemetryId": "test",
+              "testFitness": [Function],
+              "umbrellaIssue": "test",
+            },
+          ],
+          "message": "The following flags are active:
+        - SOME_FLAG · (Umbrella Issue (test)) · test
+        ",
+          "unknownFlagMessage": "",
+        }
+      `)
+    })
+
     it(`Kitchen sink`, () => {
       const response = handleFlags(
         activeFlags.concat([
@@ -389,14 +435,124 @@ describe(`handle flags`, () => {
         Those flags no longer have any effect and you can remove them from config:
         - ALWAYS_LOCKED_IN_SET_IN_CONFIG · (Umbrella Issue (test)) · test
 
-        There are 5 other flags available that you might be interested in:
+        There are 3 other flags available that you might be interested in:
         - FAST_DEV · Enable all experiments aimed at improving develop server start time
-        - QUERY_ON_DEMAND · (Umbrella Issue (https://github.com/gatsbyjs/gatsby/discussions/27620)) · Only run queries when needed instead of running all queries upfront. Speeds starting the develop server.
-        - ONLY_BUILDS · (Umbrella Issue (test)) · test
         - ALL_COMMANDS · (Umbrella Issue (test)) · test
         - YET_ANOTHER · (Umbrella Issue (test)) · test
-        - PARTIAL_RELEASE · (Umbrella Issue (test)) · test
-        - PARTIAL_RELEASE_ONLY_NEW_LODASH · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+  })
+
+  describe(`includeFlags`, () => {
+    it(`enabling umbrella flag implies enabling individual flags`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `UMBRELLA`,
+            env: `GATSBY_UMBRELLA`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+            includedFlags: [`SUB_FLAG_A`, `SUB_FLAG_B`],
+          },
+          {
+            name: `SUB_FLAG_A`,
+            env: `GATSBY_SUB_FLAG_A`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `SUB_FLAG_B`,
+            env: `GATSBY_SUB_FLAG_B`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          UMBRELLA: true,
+        },
+        `build`
+      )
+
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_A` })
+      )
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_B` })
+      )
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - UMBRELLA · (Umbrella Issue (test)) · test
+        - SUB_FLAG_A · (Umbrella Issue (test)) · test
+        - SUB_FLAG_B · (Umbrella Issue (test)) · test
+        "
+      `)
+    })
+
+    it(`allow disabling individual flags that umbrella flag would enable`, () => {
+      const response = handleFlags(
+        [
+          {
+            name: `UMBRELLA`,
+            env: `GATSBY_UMBRELLA`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+            includedFlags: [`SUB_FLAG_A`, `SUB_FLAG_B`],
+          },
+          {
+            name: `SUB_FLAG_A`,
+            env: `GATSBY_SUB_FLAG_A`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+          {
+            name: `SUB_FLAG_B`,
+            env: `GATSBY_SUB_FLAG_B`,
+            command: `all`,
+            description: `test`,
+            umbrellaIssue: `test`,
+            telemetryId: `test`,
+            experimental: false,
+            testFitness: (): fitnessEnum => true,
+          },
+        ],
+        {
+          UMBRELLA: true,
+          SUB_FLAG_B: false,
+        },
+        `build`
+      )
+
+      expect(response.enabledConfigFlags).toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_A` })
+      )
+      expect(response.enabledConfigFlags).not.toContainEqual(
+        expect.objectContaining({ name: `SUB_FLAG_B` })
+      )
+      expect(response.message).toMatchInlineSnapshot(`
+        "The following flags are active:
+        - UMBRELLA · (Umbrella Issue (test)) · test
+        - SUB_FLAG_A · (Umbrella Issue (test)) · test
         "
       `)
     })

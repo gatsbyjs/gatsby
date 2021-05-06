@@ -82,7 +82,7 @@ const normalizeConfig = (config: IRawSiteConfig = {}): ISiteConfig => {
 
 export async function loadPlugins(
   rawConfig: IRawSiteConfig = {},
-  rootDir: string | null = null
+  rootDir: string
 ): Promise<Array<IFlattenedPlugin>> {
   // Turn all strings in plugins: [`...`] into the { resolve: ``, options: {} } form
   const config = normalizeConfig(rawConfig)

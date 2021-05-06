@@ -4,29 +4,42 @@ import reporter from "gatsby-cli/lib/reporter"
 import { createErrorFromString } from "gatsby-cli/lib/reporter/errors"
 import { chunk } from "lodash"
 import webpack from "webpack"
+import * as path from "path"
 
-import { emitter } from "../redux"
+import { emitter, store } from "../redux"
+import { IWebpackWatchingPauseResume } from "../utils/start-server"
 import webpackConfig from "../utils/webpack.config"
 import { structureWebpackErrors } from "../utils/webpack-error-utils"
+import * as buildUtils from "./build-utils"
 
+import { Span } from "opentracing"
 import { IProgram, Stage } from "./types"
+import { PackageJson } from "../.."
 
 type IActivity = any // TODO
 type IWorkerPool = any // TODO
 
-export interface IWebpackWatchingPauseResume extends webpack.Watching {
-  suspend: () => void
-  resume: () => void
+export interface IBuildArgs extends IProgram {
+  directory: string
+  sitePackageJson: PackageJson
+  prefixPaths: boolean
+  noUglify: boolean
+  logPages: boolean
+  writeToFile: boolean
+  profile: boolean
+  graphqlTracing: boolean
+  openTracingConfigFile: string
+  keepPageRenderer: boolean
 }
 
 let devssrWebpackCompiler: webpack.Compiler
 let devssrWebpackWatcher: IWebpackWatchingPauseResume
 let needToRecompileSSRBundle = true
-export const getDevSSRWebpack = (): Record<
-  IWebpackWatchingPauseResume,
-  webpack.Compiler,
-  needToRecompileSSRBundle
-> => {
+export const getDevSSRWebpack = (): {
+  devssrWebpackWatcher: IWebpackWatchingPauseResume
+  devssrWebpackCompiler: webpack.Compiler
+  needToRecompileSSRBundle: boolean
+} => {
   if (process.env.gatsby_executing_command !== `develop`) {
     throw new Error(`This function can only be called in development`)
   }
@@ -43,15 +56,39 @@ let newHash = ``
 const runWebpack = (
   compilerConfig,
   stage: Stage,
-  directory
-): Bluebird<webpack.Stats> =>
+  directory,
+  parentSpan?: Span
+): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
-      webpack(compilerConfig).run((err, stats) => {
+      const compiler = webpack(compilerConfig)
+      compiler.run((err, stats) => {
+        let activity
+        if (process.env.GATSBY_EXPERIMENTAL_PRESERVE_WEBPACK_CACHE) {
+          activity = reporter.activityTimer(
+            `Caching HTML renderer compilation`,
+            { parentSpan }
+          )
+          activity.start()
+        }
+
+        const waitForCompilerClose = new Promise<void>((resolve, reject) => {
+          compiler.close(error => {
+            if (activity) {
+              activity.end()
+            }
+
+            if (error) {
+              return reject(error)
+            }
+            return resolve()
+          })
+        })
+
         if (err) {
           return reject(err)
         } else {
-          return resolve(stats)
+          return resolve({ stats, waitForCompilerClose })
         }
       })
     } else if (
@@ -86,38 +123,57 @@ const runWebpack = (
 
             oldHash = newHash
 
-            return resolve(stats)
+            return resolve({ stats, waitForCompilerClose: Promise.resolve() })
           }
         }
-      )
+      ) as IWebpackWatchingPauseResume
     }
   })
 
 const doBuildRenderer = async (
   { directory }: IProgram,
   webpackConfig: webpack.Configuration,
-  stage: Stage
-): Promise<string> => {
-  const stats = await runWebpack(webpackConfig, stage, directory)
+  stage: Stage,
+  parentSpan?: Span
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
+  const { stats, waitForCompilerClose } = await runWebpack(
+    webpackConfig,
+    stage,
+    directory,
+    parentSpan
+  )
   if (stats.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
+  if (
+    stage === `build-html` &&
+    store.getState().html.ssrCompilationHash !== stats.hash
+  ) {
+    store.dispatch({
+      type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
+      payload: stats.hash,
+    })
+  }
+
   // render-page.js is hard coded in webpack.config
-  return `${directory}/public/render-page.js`
+  return {
+    rendererPath: `${directory}/public/render-page.js`,
+    waitForCompilerClose,
+  }
 }
 
 export const buildRenderer = async (
   program: IProgram,
   stage: Stage,
   parentSpan?: IActivity
-): Promise<string> => {
+): Promise<{ rendererPath: string; waitForCompilerClose }> => {
   const { directory } = program
   const config = await webpackConfig(program, directory, stage, null, {
     parentSpan,
   })
 
-  return doBuildRenderer(program, config, stage)
+  return doBuildRenderer(program, config, stage, parentSpan)
 }
 
 export const deleteRenderer = async (rendererPath: string): Promise<void> => {
@@ -129,11 +185,16 @@ export const deleteRenderer = async (rendererPath: string): Promise<void> => {
   }
 }
 
+export interface IRenderHtmlResult {
+  unsafeBuiltinsUsageByPagePath: Record<string, Array<string>>
+}
+
 const renderHTMLQueue = async (
   workerPool: IWorkerPool,
   activity: IActivity,
   htmlComponentRendererPath: string,
-  pages: Array<string>
+  pages: Array<string>,
+  stage: Stage = Stage.BuildHTML
 ): Promise<void> => {
   // We need to only pass env vars that are set programmatically in gatsby-cli
   // to child process. Other vars will be picked up from environment.
@@ -145,17 +206,78 @@ const renderHTMLQueue = async (
 
   const segments = chunk(pages, 50)
 
-  await Bluebird.map(segments, async pageSegment => {
-    await workerPool.renderHTML({
-      envVars,
-      htmlComponentRendererPath,
-      paths: pageSegment,
-    })
+  const sessionId = Date.now()
 
-    if (activity && activity.tick) {
-      activity.tick(pageSegment.length)
+  const renderHTML =
+    stage === `build-html`
+      ? workerPool.renderHTMLProd
+      : workerPool.renderHTMLDev
+
+  const uniqueUnsafeBuiltinUsedStacks = new Set<string>()
+
+  try {
+    await Bluebird.map(segments, async pageSegment => {
+      const htmlRenderMeta: IRenderHtmlResult = await renderHTML({
+        envVars,
+        htmlComponentRendererPath,
+        paths: pageSegment,
+        sessionId,
+      })
+
+      if (stage === `build-html`) {
+        store.dispatch({
+          type: `HTML_GENERATED`,
+          payload: pageSegment,
+        })
+
+        for (const [_pagePath, arrayOfUsages] of Object.entries(
+          htmlRenderMeta.unsafeBuiltinsUsageByPagePath
+        )) {
+          for (const unsafeUsageStack of arrayOfUsages) {
+            uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+          }
+        }
+      }
+
+      if (activity && activity.tick) {
+        activity.tick(pageSegment.length)
+      }
+    })
+  } catch (e) {
+    if (e?.context?.unsafeBuiltinsUsageByPagePath) {
+      for (const [_pagePath, arrayOfUsages] of Object.entries(
+        e.context.unsafeBuiltinsUsageByPagePath
+      )) {
+        // @ts-ignore TS doesn't know arrayOfUsages is Iterable
+        for (const unsafeUsageStack of arrayOfUsages) {
+          uniqueUnsafeBuiltinUsedStacks.add(unsafeUsageStack)
+        }
+      }
     }
-  })
+    throw e
+  } finally {
+    if (uniqueUnsafeBuiltinUsedStacks.size > 0) {
+      console.warn(
+        `Unsafe builtin method was used, future builds will need to rebuild all pages`
+      )
+      store.dispatch({
+        type: `SSR_USED_UNSAFE_BUILTIN`,
+      })
+    }
+
+    for (const unsafeBuiltinUsedStack of uniqueUnsafeBuiltinUsedStacks) {
+      const prettyError = await createErrorFromString(
+        unsafeBuiltinUsedStack,
+        `${htmlComponentRendererPath}.map`
+      )
+
+      const warningMessage = `${prettyError.stack}${
+        prettyError.codeFrame ? `\n\n${prettyError.codeFrame}\n` : ``
+      }`
+
+      reporter.warn(warningMessage)
+    }
+  }
 }
 
 class BuildHTMLError extends Error {
@@ -179,10 +301,11 @@ export const doBuildPages = async (
   rendererPath: string,
   pagePaths: Array<string>,
   activity: IActivity,
-  workerPool: IWorkerPool
+  workerPool: IWorkerPool,
+  stage: Stage
 ): Promise<void> => {
   try {
-    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths)
+    await renderHTMLQueue(workerPool, activity, rendererPath, pagePaths, stage)
   } catch (error) {
     const prettyError = await createErrorFromString(
       error.stack,
@@ -208,7 +331,100 @@ export const buildHTML = async ({
   activity: IActivity
   workerPool: IWorkerPool
 }): Promise<void> => {
-  const rendererPath = await buildRenderer(program, stage, activity.span)
-  await doBuildPages(rendererPath, pagePaths, activity, workerPool)
+  const { rendererPath } = await buildRenderer(program, stage, activity.span)
+  await doBuildPages(rendererPath, pagePaths, activity, workerPool, stage)
   await deleteRenderer(rendererPath)
+}
+
+export async function buildHTMLPagesAndDeleteStaleArtifacts({
+  pageRenderer,
+  workerPool,
+  buildSpan,
+  program,
+}: {
+  pageRenderer: string
+  workerPool: IWorkerPool
+  buildSpan?: Span
+  program: IBuildArgs
+}): Promise<{
+  toRegenerate: Array<string>
+  toDelete: Array<string>
+}> {
+  buildUtils.markHtmlDirtyIfResultOfUsedStaticQueryChanged()
+
+  const {
+    toRegenerate,
+    toDelete,
+    toCleanupFromTrackedState,
+  } = buildUtils.calcDirtyHtmlFiles(store.getState())
+
+  store.dispatch({
+    type: `HTML_TRACKED_PAGES_CLEANUP`,
+    payload: toCleanupFromTrackedState,
+  })
+
+  if (toRegenerate.length > 0) {
+    const buildHTMLActivityProgress = reporter.createProgress(
+      `Building static HTML for pages`,
+      toRegenerate.length,
+      0,
+      {
+        parentSpan: buildSpan,
+      }
+    )
+    buildHTMLActivityProgress.start()
+    try {
+      await doBuildPages(
+        pageRenderer,
+        toRegenerate,
+        buildHTMLActivityProgress,
+        workerPool,
+        Stage.BuildHTML
+      )
+    } catch (err) {
+      let id = `95313` // TODO: verify error IDs exist
+      const context = {
+        errorPath: err.context && err.context.path,
+        ref: ``,
+      }
+
+      const match = err.message.match(
+        /ReferenceError: (window|document|localStorage|navigator|alert|location) is not defined/i
+      )
+      if (match && match[1]) {
+        id = `95312`
+        context.ref = match[1]
+      }
+
+      buildHTMLActivityProgress.panic({
+        id,
+        context,
+        error: err,
+      })
+    }
+    buildHTMLActivityProgress.end()
+  } else {
+    reporter.info(`There are no new or changed html files to build.`)
+  }
+
+  if (!program.keepPageRenderer) {
+    try {
+      await deleteRenderer(pageRenderer)
+    } catch (err) {
+      // pass through
+    }
+  }
+
+  if (toDelete.length > 0) {
+    const publicDir = path.join(program.directory, `public`)
+    const deletePageDataActivityTimer = reporter.activityTimer(
+      `Delete previous page data`
+    )
+    deletePageDataActivityTimer.start()
+    await buildUtils.removePageFiles(publicDir, toDelete)
+
+    deletePageDataActivityTimer.end()
+  }
+
+  return { toRegenerate, toDelete }
 }

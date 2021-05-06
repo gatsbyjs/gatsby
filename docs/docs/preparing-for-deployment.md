@@ -56,5 +56,6 @@ If you have a server from one of the following providers, you should read the in
 - [Microsoft Internet Information Server (IIS)](/docs/deploying-to-iis)
 - [Firebase Hosting](/docs/how-to/previews-deploys-hosting/deploying-to-firebase)
 - [KintoHub](/docs/deploying-to-kintohub)
+- [21YunBox](/docs/how-to/previews-deploys-hosting/deploying-to-21yunbox)
 
 If you don't see the hosting you are interested, it's possible to add other hosting providers through [contributions to the docs](/contributing/docs-contributions).

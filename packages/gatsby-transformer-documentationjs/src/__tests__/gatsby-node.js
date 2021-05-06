@@ -3,7 +3,8 @@ import path from "path"
 import gatsbyNode from "../gatsby-node"
 
 describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
-  let createdNodes, updatedNodes
+  let createdNodes
+  let updatedNodes
   const createNodeId = jest.fn(id => id)
   const createContentDigest = jest.fn().mockReturnValue(`content-digest`)
 
@@ -147,7 +148,8 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
       await run(getFileNode(`complex-example.js`))
     })
 
-    let callbackNode, typedefNode
+    let callbackNode
+    let typedefNode
 
     it(`should create top-level node for callback`, () => {
       callbackNode = createdNodes.find(
@@ -170,7 +172,8 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
         expect(typedefNode).toBeDefined()
       })
 
-      let readyNode, nestedNode
+      let readyNode
+      let nestedNode
 
       it(`should have property nodes for typedef`, () => {
         expect(typedefNode.properties___NODE).toBeDefined()
@@ -184,7 +187,9 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
         expect(readyNode).toMatchSnapshot()
       })
 
-      let nestedFooNode, nestedOptionalNode, nestedCallbackNode
+      let nestedFooNode
+      let nestedOptionalNode
+      let nestedCallbackNode
 
       it(`should have second param as nested object`, () => {
         expect(nestedNode.name).toBe(`nested`)
@@ -229,7 +234,8 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
     })
 
     describe(`should handle members`, () => {
-      let complexNode, memberNode
+      let complexNode
+      let memberNode
       beforeAll(() => {
         complexNode = createdNodes.find(
           node => node.name === `complex` && node.parent === `node_1`
@@ -349,7 +355,7 @@ describe(`gatsby-transformer-documentationjs: onCreateNode`, () => {
 
   describe(`Sanity checks`, () => {
     it(`should extract create description nodes with markdown types`, () => {
-      let types = groupBy(createdNodes, `internal.type`)
+      const types = groupBy(createdNodes, `internal.type`)
       expect(
         types.DocumentationJSComponentDescription.every(
           d => d.internal.mediaType === `text/markdown`

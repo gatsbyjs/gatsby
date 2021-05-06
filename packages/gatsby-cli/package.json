@@ -1,7 +1,7 @@
 {
   "name": "gatsby-cli",
   "description": "Gatsby command-line interface for creating new sites and running Gatsby commands",
-  "version": "2.19.0-next.1",
+  "version": "3.5.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "cli.js"
@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.10.4",
-    "@hapi/joi": "^15.1.1",
     "@types/common-tags": "^1.8.0",
     "better-opn": "^2.0.0",
     "chalk": "^4.1.0",
@@ -19,17 +18,18 @@
     "common-tags": "^1.8.0",
     "configstore": "^5.0.1",
     "convert-hrtime": "^3.0.0",
-    "create-gatsby": "^0.5.0-next.0",
+    "create-gatsby": "^1.5.0-next.0",
     "envinfo": "^7.7.3",
     "execa": "^3.4.0",
     "fs-exists-cached": "^1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-core-utils": "^1.10.0-next.0",
-    "gatsby-recipes": "^0.9.0-next.1",
-    "gatsby-telemetry": "^1.10.0-next.1",
+    "gatsby-core-utils": "^2.5.0-next.0",
+    "gatsby-recipes": "^0.16.0-next.1",
+    "gatsby-telemetry": "^2.5.0-next.1",
     "hosted-git-info": "^3.0.6",
     "is-valid-path": "^0.1.1",
-    "lodash": "^4.17.20",
+    "joi": "^17.4.0",
+    "lodash": "^4.17.21",
     "meant": "^1.0.2",
     "node-fetch": "^2.6.1",
     "opentracing": "^0.14.4",
@@ -59,17 +59,17 @@
     "@rollup/plugin-replace": "^2.3.3",
     "@types/hosted-git-info": "^3.0.1",
     "@types/yargs": "^15.0.8",
-    "babel-preset-gatsby-package": "^0.12.0-next.0",
+    "babel-preset-gatsby-package": "^1.5.0-next.0",
     "cross-env": "^7.0.3",
     "ink": "^3.0.8",
     "ink-spinner": "^4.0.1",
     "npm-run-all": "4.1.5",
-    "react": "^16.8.0",
+    "react": "^16.9.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.34.2",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-internal": "^1.0.0",
-    "typescript": "^3.9.7"
+    "typescript": "^4.1.5"
   },
   "files": [
     "lib/",
@@ -99,6 +99,6 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

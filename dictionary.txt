@@ -58,7 +58,6 @@ APIs
 APIs.
 AppSync
 architecting
-Archlinux
 arg
 args
 args.
@@ -270,7 +269,6 @@ devcert
 devcert-cli
 devDependencies
 developMiddleware
-Devops
 DevOps
 DevTools
 Dgraph
@@ -407,7 +405,7 @@ gatsby-source-flotiq
 gatsby-source-graphql
 gatsby-source-sanity
 gatsby-source-tmdb
-gatsby-source-wordpress-experimental
+gatsby-source-wordpress
 gatsby-source-x-cms
 gatsby-starter-blog
 gatsby-starter-buttercms
@@ -548,7 +546,6 @@ JAMstack
 JAMStack
 jankiness
 Javascript
-Javscript
 jbampton
 joi
 Joi
@@ -636,7 +633,6 @@ modelling
 modularity
 modularize
 modularizing
-modyfing
 mongodb
 monorepo
 monorepos

@@ -7,7 +7,7 @@ property, and creates `Screenshot` child nodes with a `screenshotFile` field.
 [Live demo](https://thatotherperson.github.io/gatsby-screenshot-demo/)
 ([source](https://github.com/ThatOtherPerson/gatsby-screenshot-demo))
 
-Data should be in a yaml file named `sites.yml` and look like:
+Data should be in a YAML file named `sites.yml` and look like:
 
 ```yaml
 - url: https://reactjs.org/
@@ -31,7 +31,7 @@ module.exports = {
 }
 ```
 
-By default, the plugin will target nodes sourced from a yaml file named `sites.yml`.
+By default, the plugin will target nodes sourced from a YAML file named `sites.yml`.
 
 To source additional node types, supply an array of the types to a `nodeTypes` option on the plugin.
 

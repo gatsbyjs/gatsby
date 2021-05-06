@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "gatsby": "^2.27.0",
+    "gatsby": "^3.0.0-next.0",
     "gatsby-plugin-postcss": "^3.3.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -17,7 +17,6 @@
     "cross-env": "^5.0.2",
     "fs-extra": "^9.0.0",
     "jest": "^24.0.0",
-    "jest-cli": "^24.0.0",
     "jest-diff": "^24.0.0",
     "npm-run-all": "4.1.5",
     "start-server-and-test": "^1.11.3"
@@ -36,6 +35,6 @@
     "start-dev-server": "start-server-and-test develop http://localhost:8000 test:jest",
     "test": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true npm-run-all -s build start-dev-server",
     "test-output": "node test-output.js",
-    "test:jest": "jest --config=jest.config.js --runInBand"
+    "test:jest": "jest --runInBand"
   }
 }
