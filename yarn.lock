@@ -3631,10 +3631,10 @@
   resolved "https://registry.yarnpkg.com/@prefresh/utils/-/utils-1.1.1.tgz#ffe7f2e6bd48a0633631a3d92c0ee4bdeb0ac330"
   integrity sha512-MUhT5m2XNN5NsZl4GnpuvlzLo6VSTa/+wBfBd3fiWUvHGhv0GF9hnA1pd//v0uJaKwUnVRQ1hYElxCV7DtYsCQ==
 
-"@prefresh/webpack@^3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@prefresh/webpack/-/webpack-3.2.1.tgz#8d2dc1076384db653d333b371fc12193478cbed9"
-  integrity sha512-2Eb5DZlCHir3WO+U7cTeOgbrOjknlMObZSm8KvHgjmVLjTEZJHmHxJ40MCrlk1V4UIxAVOIcfRXleWJ/RV4U4g==
+"@prefresh/webpack@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@prefresh/webpack/-/webpack-3.2.2.tgz#efc59cf1be581531826e253f2fcf429cf3693b9e"
+  integrity sha512-DXjA+548YIdcFN1BTY44zTdGys7Egl1Y1wbN122ZGUnSBq2Opr9BNSi2msLjO3Bzndq+iuy3K3BP+DO+pdJzLQ==
   dependencies:
     "@prefresh/core" "^1.3.1"
     "@prefresh/utils" "^1.1.0"
