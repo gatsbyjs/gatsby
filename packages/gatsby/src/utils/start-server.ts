@@ -594,7 +594,10 @@ module.exports = {
               },
             },
           })
-          res.send(e).status(500)
+
+          const minimalHTML = `<head><title>Failed to Server Render (SSR)</title></head><body><h1>Failed to Server Render (SSR)</h1><h2>Error message:</h2><p>${e.message}</p><h2>File:</h2><p>${e.filename}:${e.line}:${e.column}</p><h2>Stack:</h2><pre><code>${e.stack}</code></pre></body>`
+
+          res.send(minimalHTML).status(500)
         }
       }
 

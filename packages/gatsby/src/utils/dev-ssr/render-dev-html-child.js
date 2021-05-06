@@ -70,6 +70,7 @@ const parseError = function ({ err, directory, componentPath }) {
   return {
     filename: slash(sysPath.relative(directory, trueFileName)),
     sourceContent,
+    message: err.message,
     stack: stack,
     line: position.line,
     column: position.column,
