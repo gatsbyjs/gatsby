@@ -550,23 +550,26 @@ const errors = {
   },
   "11614": {
     text: (context): string =>
-      stripIndent(`The path "${context.path}" errored during SSR.
-    Edit its component ${context.filePath}${
+      stripIndent(`
+        The path "${context.path}" errored during SSR.
+        Edit its component ${context.filePath}${
         context.line ? `:${context.line}:${context.column}` : ``
       } to resolve the error.`),
     level: Level.WARNING,
   },
   "11615": {
     text: (context): string =>
-      stripIndent(`There was an error while trying to load dev-404-page:
-      ${context.sourceMessage}`),
+      stripIndent(`
+        There was an error while trying to load dev-404-page:
+        ${context.sourceMessage}`),
     level: Level.ERROR,
     category: ErrorCategory.SYSTEM,
   },
   "11616": {
     text: (context): string =>
-      stripIndent(`There was an error while trying to create the client-only shell for displaying SSR errors:
-      ${context.sourceMessage}`),
+      stripIndent(`
+        There was an error while trying to create the client-only shell for displaying SSR errors:
+        ${context.sourceMessage}`),
     level: Level.ERROR,
     category: ErrorCategory.SYSTEM,
   },
