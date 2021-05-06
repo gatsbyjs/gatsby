@@ -1,6 +1,6 @@
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import { Reporter } from "gatsby-cli/lib/reporter/reporter"
-import { store as gatsbyStore } from "./../redux/index"
+import { Store } from "../../index"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
@@ -34,7 +34,7 @@ async function findPageOwnedByNodeId({
   store,
 }: {
   nodeId: string
-  store: typeof gatsbyStore
+  store: Store
 }): Promise<INodeManifestPage> {
   const state = store.getState()
   const { pages } = state
@@ -124,7 +124,7 @@ async function processNodeManifest({
   reporter,
 }: {
   inputManifest: INodeManifest
-  store: typeof gatsbyStore
+  store: Store
   reporter: Reporter
 }): Promise<void> {
   // map the node to a page that was created
@@ -168,7 +168,7 @@ export async function processNodeManifests({
   store,
   reporter,
 }: {
-  store: typeof gatsbyStore
+  store: Store
   reporter: Reporter
 }): Promise<void> {
   const { nodeManifests } = store.getState()
