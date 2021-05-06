@@ -37,5 +37,7 @@ export const errorSchema: Joi.ObjectSchema<IStructuredError> = Joi.object().keys
     group: Joi.string(),
     panicOnBuild: Joi.boolean(),
     pluginName: Joi.string(),
+    // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
+    name: Joi.string(),
   }
 )
