@@ -199,8 +199,7 @@ You can customize the default options with `gatsby-plugin-sharp`.
 
 The following configuration describes the options that can be customized along with their default values:
 
-```javascript
-// In gatsby-config.js
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
