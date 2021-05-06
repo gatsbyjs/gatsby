@@ -82,7 +82,6 @@ const restore = () => {
 
 module.exports = {
   restoreAllBlockedResources: restore,
-  restoreAsset,
   blockAssetsForPage,
   blockPageComponent,
 }
