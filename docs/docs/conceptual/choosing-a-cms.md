@@ -79,7 +79,7 @@ To make that a bit more concrete, here's a screenshot of what this looks like cu
 
 Finally, there are several options for content composition and management that work well as non-CMS choices.
 
-- **Markdown** and **MDX** are common choices for documentation and small developer sites, since they are natural composition formats for developers and allow embedding components within your content. There are several guides in our [Routing and Pages documentation](https://www.gatsbyjs.com/docs/how-to/routing/) on using Markdown and MDX. You may also want to consider a git-based CMS like Foresty.io or NetlifyCMS to provide a UI for this workflow.
+- **Markdown** and **MDX** are common choices for documentation and small developer sites, since they are natural composition formats for developers and allow embedding components within your content. There are several guides in our [Routing and Pages documentation](https://www.gatsbyjs.com/docs/how-to/routing/) on using Markdown and MDX. You may also want to consider a git-based CMS like Foresty.io or Netlify CMS to provide a UI for this workflow.
 
 - **JSON** or **YAML** is a common choice for hierarchical data (for example, a site navigation tree), especially when the underlying content is stored in Markdown.
 

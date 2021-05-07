@@ -89,7 +89,7 @@ describe(`the top-level develop state machine`, () => {
     expect(service.state.context.sourceFilesDirty).toBeTruthy()
   })
 
-  // This is current behaviour, but it will be queued in future
+  // This is current behavior, but it will be queued in future
   it(`handles a webhook during node sourcing`, () => {
     const webhookBody = { foo: 1 }
     const service = interpret(machine)

@@ -194,7 +194,7 @@ Function to customize webpack configuration.
 
 Function parameters:
 
-- config: webpack configuration for NetlifyCMS
+- config: webpack configuration for Netlify CMS
 - destructured object from onCreateWebpackConfig { store, stage, pathPrefix, getConfig, rules, loaders, plugins} as seen in https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
 
 ```javascript

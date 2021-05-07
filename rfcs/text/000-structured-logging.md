@@ -14,7 +14,7 @@ See this issue for a good overview of current logging limitations: https://githu
 
 - minimal (ideally 0) breaking changes
 - support different log levels
-- support multiple log formatters (e.g. output logs in json format, output logs to a file, output without colours and spinners for non-tty environments)
+- support multiple log formatters (e.g. output logs in json format, output logs to a file, output without colors and spinners for non-tty environments)
 - maybe support custom user-provided log formatters?
 - should be easier to use across all parts of Gatsby - e.g. within the sharp transformer or the createRemoteFileNode helper
 

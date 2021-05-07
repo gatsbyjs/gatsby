@@ -109,7 +109,7 @@ The following three nodes would be created:
 ]
 ```
 
-Alternatively the `typeName` plugin option can be used to modify this behaviour.
+Alternatively the `typeName` plugin option can be used to modify this behavior.
 
 Its arguments are either a string denoting the type name or a function that accepts an argument object of `{ node, object }` which should return the string type name.
 
@@ -163,7 +163,7 @@ module.exports = {
 }
 ```
 
-## Alternate content behaviour
+## Alternate content behavior
 
 The `nodePerFile` plugin option can either be `false`, which creates a node per line like above, `true`, which creates a node per file, with the key `items` containing the content, or a string which is the key containing the content.
 

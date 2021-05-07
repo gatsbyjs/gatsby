@@ -50,7 +50,7 @@ Features:
 
 - The default limit when fetching data from Contentful was increased by 10 times. This will speed up build times.
 - The [`using-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) example got updated to Gatsby v3 and demonstrates how to use [`gatsby-plugin-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) with Contenful.
-- New e2e-contentful test suite to improve plugin reliabliity.
+- New e2e-contentful test suite to improve plugin reliability.
 
 Fixes:
 

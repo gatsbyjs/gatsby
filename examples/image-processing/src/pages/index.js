@@ -123,7 +123,7 @@ class Index extends React.Component {
         <p>
           The default is
           <code>ATTENTION</code>, which the Sharp documentation describes as
-          "focus on the region with the highest luminance frequency, colour
+          "focus on the region with the highest luminance frequency, color
           saturation and presence of skin tones" – which is why we actually see
           F. Scott Fitzgerald centered in the first thumbnail:
         </p>

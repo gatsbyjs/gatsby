@@ -108,7 +108,7 @@ const parseLine = (line, code, index, actions) => {
 module.exports = function highlightLineRange(code, highlights = []) {
   if (highlights.length > 0 || HIGHLIGHT_DIRECTIVE.test(code)) {
     // HACK split multiline spans with line separators inside into multiple spans
-    // separated by line separator - this fixes line highlighting behaviour for
+    // separated by line separator - this fixes line highlighting behavior for
     //  - plain-text in jsx,
     //  - tripple-quoted-string in python,
     //  - comment in c-like languages (including javascript), etc.

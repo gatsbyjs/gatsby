@@ -48,7 +48,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   // For example:
   //   - page have `/app/*` matchPath
   //   - inside template user needs to use `/app/xyz` as path
-  // Resetting `basepath`/`baseuri` keeps current behaviour
+  // Resetting `basepath`/`baseuri` keeps current behavior
   // to not introduce breaking change.
   // Remove this in v3
   const RouteHandler = props => (

@@ -114,7 +114,7 @@ Popular hosting services like Gatsby Cloud, Netlify, and Vercel have plugins tha
 - [Netlify](https://www.gatsbyjs.com/plugins/gatsby-plugin-netlify/?=netlif)
 - Vercel automatically adds its Gatsby plugin.
 
-### Self-hosting with Ngninx and Apache
+### Self-hosting with Nginx and Apache
 
 Your server configuration should handle `GET` requests to `/app/*` e.g. `/app/why-gatsby-is-awesome` with `/app/index.html` and let the client handle the rendering of the route with the matching path. It is important to note that the response code should be a **200** (an OK) and not a **301** (a redirect). This can be done with NGINX using [`try_files`](https://docs.nginx.com/nginx/admin-guide/web-server/serving-static-content/#trying-several-options), or an [equivalent directive](https://serverfault.com/questions/290784/what-is-apaches-equivalent-of-nginxs-try-files) if using Apache.
 

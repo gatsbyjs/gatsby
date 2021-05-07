@@ -31,7 +31,7 @@ The following CMSs have high popularity among Gatsby users and support key funct
 | [DatoCMS](https://www.datocms.com/)           | [guide](https://www.gatsbyjs.com/guides/datocms/)              | [docs](/plugins/gatsby-source-datocms)      | [starter](/starters/datocms/gatsby-portfolio/)                              |
 | [Drupal](https://www.drupal.com/)             | [guide](/docs/how-to/sourcing-data/sourcing-from-drupal/)      | [docs](/plugins/gatsby-source-drupal)       |                                                                             |
 | [Prismic](https://www.prismic.io/)            | [guide](/docs/how-to/sourcing-data/sourcing-from-prismic/)     | [docs](/plugins/gatsby-source-prismic)      | [starter](/starters/LekoArts/gatsby-starter-prismic/)                       |
-| [NetlifyCMS](https://www.netlifycms.org/)     | [guide](/docs/how-to/sourcing-data/sourcing-from-netlify-cms/) | [docs](/plugins/gatsby-plugin-netlify-cms)  | [starter](/starters/netlify-templates/gatsby-starter-netlify-cms/)          |
+| [Netlify CMS](https://www.netlifycms.org/)    | [guide](/docs/how-to/sourcing-data/sourcing-from-netlify-cms/) | [docs](/plugins/gatsby-plugin-netlify-cms)  | [starter](/starters/netlify-templates/gatsby-starter-netlify-cms/)          |
 
 ## Other CMSs
 
@@ -45,7 +45,7 @@ The following CMSs have high popularity among Gatsby users and support key funct
 | [GraphCMS](https://graphcms.com/)       | [guide](/docs/sourcing-from-graphcms)                                            | [docs](/plugins/gatsby-source-graphql)              | [starter](/starters/GraphCMS/gatsby-graphcms-tailwindcss-example/)   |
 | [Storyblok](https://www.storyblok.com/) | [guide](https://www.storyblok.com/tp/gatsby-multilanguage-website-tutorial)      | [docs](/plugins/gatsby-source-storyblok)            | [starter](https://github.com/storyblok/gatsby-storyblok-boilerplate) |
 | [Cockpit](https://getcockpit.com/)      |                                                                                  | [docs](/plugins/gatsby-plugin-cockpit)              |                                                                      |
-| [CraftCMS](https://craftcms.com/)       |                                                                                  | [docs](/plugins/gatsby-source-craftcms)             |                                                                      |
+| [Craft CMS](https://craftcms.com/)      |                                                                                  | [docs](/plugins/gatsby-source-craftcms)             |                                                                      |
 | [Agility CMS](https://agilitycms.com/)  | [guide](/docs/sourcing-from-agilitycms/)                                         | [docs](/plugins/@agility/gatsby-source-agilitycms/) | [starter](/starters/agility/agility-gatsby-starter/)                 |
 | [Forestry](https://forestry.io/)        | [guide](/docs/sourcing-from-forestry/)                                           |                                                     |                                                                      |
 | [Gentics Mesh](https://getmesh.io)      | [guide](/docs/sourcing-from-gentics-mesh)                                        |                                                     |                                                                      |

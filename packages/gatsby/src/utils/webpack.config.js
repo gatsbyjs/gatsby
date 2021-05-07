@@ -306,7 +306,7 @@ module.exports = async (
     // prettier-ignore
     let configRules = [
       // Webpack expects extensions when importing ESM modules as that's what the spec describes.
-      // Not all libraries have adapted so we don't enforce its behaviour
+      // Not all libraries have adapted so we don't enforce its behavior
       // @see https://github.com/webpack/webpack/issues/11467
       {
         test: /\.mjs$/i,
@@ -342,7 +342,7 @@ module.exports = async (
 
       // This is a hack that exports one of @reach/router internals (BaseContext)
       // to export list. We need it to reset basepath and baseuri context after
-      // Gatsby main router changes it, to keep v2 behaviour.
+      // Gatsby main router changes it, to keep v2 behavior.
       // We will need to most likely remove this for v3.
       {
         test: require.resolve(`@gatsbyjs/reach-router/es/index`),
@@ -354,7 +354,7 @@ module.exports = async (
     ]
 
     // Speedup 🏎️💨 the build! We only include transpilation of node_modules on javascript production builds
-    // TODO create gatsby plugin to enable this behaviour on develop (only when people are requesting this feature)
+    // TODO create gatsby plugin to enable this behavior on develop (only when people are requesting this feature)
     if (stage === `build-javascript`) {
       configRules.push(
         rules.dependencies({

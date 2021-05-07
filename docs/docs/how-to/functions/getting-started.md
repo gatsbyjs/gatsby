@@ -21,7 +21,7 @@ A Function file must export a single function that takes two parameters:
 - req: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
 - res: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
 
-Dynamic routing is supported for creating REST-ful APIs and other uses cases
+Dynamic routing is supported for creating RESTful APIs and other uses cases
 
 - `/api/users` => `src/api/users/index.js`
 - `/api/users/23` => `src/api/users/[id].js`

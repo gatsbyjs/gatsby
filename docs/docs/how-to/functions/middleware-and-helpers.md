@@ -17,7 +17,7 @@ We parse commonly used data types. Available on the `req` object:
 ## Response helpers
 
 - `res.send(body)` — returns the response. The `body` can be a `string`, `object`, or `buffer`
-- `res.json(body)` — returns a JSON response. The `body` can be any value that can be seralized with `JSON.stringify()`
+- `res.json(body)` — returns a JSON response. The `body` can be any value that can be serialized with `JSON.stringify()`
 - `res.status(statusCode)` — set the [HTTP status](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) for the response. Defaults to `200`.
 - `res.redirect([statusCode], url)` — Returns a redirect to a URL. Optionally set the statusCode which defaults to `302`.
 

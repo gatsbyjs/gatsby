@@ -441,7 +441,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 - **gatsby-link:** use path prefix in navigate/replace/push calls ([#8289](https://github.com/gatsbyjs/gatsby/issues/8289)) ([df3ac18](https://github.com/gatsbyjs/gatsby/commit/df3ac18)), closes [#8155](https://github.com/gatsbyjs/gatsby/issues/8155)
-- scroll behaviour when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/commit/ef44cff))
+- scroll behavior when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/commit/ef44cff))
 
 <a name="2.0.1"></a>
 

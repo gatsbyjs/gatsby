@@ -3370,7 +3370,7 @@ The migration is as simple as adding \_\_typename field to the query manually.
 
 ### Bug Fixes
 
-- **gatsby:** restore client-only-paths behaviour ([#15457](https://github.com/gatsbyjs/gatsby/issues/15457)) ([0ffbe59](https://github.com/gatsbyjs/gatsby/commit/0ffbe59))
+- **gatsby:** restore client-only-paths behavior ([#15457](https://github.com/gatsbyjs/gatsby/issues/15457)) ([0ffbe59](https://github.com/gatsbyjs/gatsby/commit/0ffbe59))
 
 ## [2.13.9](https://github.com/gatsbyjs/gatsby/compare/gatsby@2.13.8...gatsby@2.13.9) (2019-07-08)
 
@@ -5175,7 +5175,7 @@ The migration is as simple as adding \_\_typename field to the query manually.
 
 ### Bug Fixes
 
-- scroll behaviour when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/commit/ef44cff))
+- scroll behavior when navigating back to anchor on the same page ([#8061](https://github.com/gatsbyjs/gatsby/issues/8061)) ([ef44cff](https://github.com/gatsbyjs/gatsby/commit/ef44cff))
 
 <a name="2.0.8"></a>
 

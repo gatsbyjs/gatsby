@@ -108,7 +108,7 @@ exports.onPreBootstrap = async ({ actions, emitter, cache }, pluginOptions) => {
   setActions(actions)
   setPluginOptions(pluginOptions)
 
-  // below is a hack / hot fix for confusing progress bar behaviour
+  // below is a hack / hot fix for confusing progress bar behavior
   // that doesn't recognize duplicate jobs, as it's now
   // in gatsby core internals (if `createJobV2` is available)
   // we should remove this or make this code path not hit

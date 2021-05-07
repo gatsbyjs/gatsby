@@ -163,7 +163,7 @@ Please refer to `eslint`'s own [migration guide](https://eslint.org/docs/user-gu
 
 If you rely on Gatsby's default ESLint configuration, you should have a smooth transition. We upgraded the underlying rules, so you might get some new warnings/errors.
 
-Gatsby no longer uses the deprecated `eslint-loader`. We’ve moved to `eslint-webpack-plugin`. By using the plugin, behaviour has changed a little bit, as warnings and errors are displayed later than in version 2.
+Gatsby no longer uses the deprecated `eslint-loader`. We’ve moved to `eslint-webpack-plugin`. By using the plugin, behavior has changed a little bit, as warnings and errors are displayed later than in version 2.
 
 ## `gatsby-plugin-image@1.0.0`
 
