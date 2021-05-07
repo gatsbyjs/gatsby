@@ -19,6 +19,13 @@ interface INodeManifestOut {
   }
 }
 
+type FoundPageBy =
+  | `ownerNodeId`
+  | `context.id`
+  | `queryTracking`
+  | `filesystem-route-api`
+  | `none`
+
 /**
  * Finds a final built page by nodeId
  *
@@ -33,9 +40,12 @@ async function findPageOwnedByNodeId({
   nodeId,
 }: {
   nodeId: string
-}): Promise<INodeManifestPage> {
+}): Promise<{
+  page: INodeManifestPage
+  foundPageBy: FoundPageBy
+}> {
   const state = store.getState()
-  const { pages } = state
+  const { pages, nodes } = state
   const pagesBynode = state.queries.byNode
 
   // in development queries are run on demand so we wont have an accurate nodeId->pages map until those pages are visited in the browser. We want this mapping before the page is visited in the browser so we can route to the right page in the browser.
@@ -53,6 +63,8 @@ async function findPageOwnedByNodeId({
   let pagePath = usingPagesMapInDevelop
     ? null
     : pagePathSetOrMap?.values()?.next()?.value
+
+  let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
   // but if we have more than one page where this node shows up
   // we need to try to be more specific
@@ -82,6 +94,22 @@ async function findPageOwnedByNodeId({
 
         foundOwnerNodeId = fullPage?.ownerNodeId === nodeId
 
+        const foundPageIdInContext = fullPage?.context.id === nodeId
+
+        if (foundOwnerNodeId) {
+          foundPageBy = `ownerNodeId`
+        } else if (foundPageIdInContext && fullPage) {
+          const pageCreatedByPluginName = nodes.get(fullPage.pluginCreatorId)
+            ?.name
+
+          const pageCreatedByFilesystemPlugin =
+            pageCreatedByPluginName === `gatsby-plugin-page-creator`
+
+          foundPageBy = pageCreatedByFilesystemPlugin
+            ? `filesystem-route-api`
+            : `context.id`
+        }
+
         if (
           fullPage &&
           // first check for the ownerNodeId on the page. this is
@@ -95,7 +123,7 @@ async function findPageOwnedByNodeId({
             // that's mapped to this node id.
             // this also makes this work with the filesystem Route API without
             // changing that API.
-            fullPage.context.id === nodeId)
+            foundPageIdInContext)
         ) {
           // save this path to use in our manifest!
           ownerPagePath = fullPage.path
@@ -108,8 +136,86 @@ async function findPageOwnedByNodeId({
     }
   }
 
+  debugger
+
   return {
-    path: pagePath || null,
+    page: {
+      path: pagePath || null,
+    },
+    foundPageBy,
+  }
+}
+
+/**
+ * Takes in some info about a node manifest and the page we did or didn't find for it, then warns and returns the warning string
+ */
+function warnAboutNodeManifestMappingProblems({
+  inputManifest,
+  pagePath,
+  foundPageBy,
+}: {
+  inputManifest: INodeManifest
+  pagePath?: string
+  foundPageBy: FoundPageBy
+}): { message: string; possibleMessages: { [key in FoundPageBy]: string } } {
+  const sharedWarning = `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
+
+  const didntFindOwnerNodeIdWarning = `but Gatsby didn't find a nodeOwnerId for the page at ${pagePath}\n`
+
+  const possiblyInnacurateWarning = `This may result in an inaccurate node manifest (for previews or other purposes).`
+
+  const success = `success` as const
+
+  const messages = {
+    // @todo add docs link to "using Preview" once it's updated with an explanation of nodeOwnerId
+    none: `${sharedWarning} but Gatsby couldn't find a page for this node.
+    If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a nodeOwnerId is added to createPage() if you're not using the Filesystem Route API).\n` as const,
+
+    // @todo add docs link to "using Preview" once it's updated with an explanation of nodeOwnerId
+    [`context.id`]: `${sharedWarning} ${didntFindOwnerNodeIdWarning}Using the first page that was found with the node manifest id set in pageContext.id in createPage().\n${possiblyInnacurateWarning}` as const,
+
+    // @todo add docs link to "using Preview" once it's updated with an explanation of nodeOwnerId
+    queryTracking: `${sharedWarning} ${didntFindOwnerNodeIdWarning}Using the first page where this node is queried.\n${possiblyInnacurateWarning}` as const,
+
+    ownerNodeId: success,
+    [`filesystem-route-api`]: success,
+  }
+
+  const messageValues = Object.values(messages)
+  type MessageValues = typeof messageValues[number]
+
+  let message: MessageValues
+
+  switch (foundPageBy) {
+    case `none`: {
+      reporter.warn(messages.none)
+      message = messages.none
+      break
+    }
+
+    case `context.id`:
+      reporter.warn(messages[`context.id`])
+      message = messages[`context.id`]
+      break
+
+    case `queryTracking`:
+      reporter.warn(messages.queryTracking)
+      message = messages.queryTracking
+      break
+
+    case `filesystem-route-api`:
+    case `ownerNodeId`:
+      message = success
+      break
+
+    default: {
+      throw Error(`Node Manifest mapping is in an impossible state`)
+    }
+  }
+
+  return {
+    message,
+    possibleMessages: messages,
   }
 }
 
@@ -120,15 +226,15 @@ async function processNodeManifest(
   inputManifest: INodeManifest
 ): Promise<void> {
   // map the node to a page that was created
-  const nodeManifestPage = await findPageOwnedByNodeId({
+  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeId({
     nodeId: inputManifest.node.id,
   })
 
-  if (!nodeManifestPage.path) {
-    reporter.warn(
-      `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for node id ${inputManifest.node.id} with a manifest id of "${inputManifest.manifestId}" but your Gatsby site didn't create a page for this node.\n`
-    )
-  }
+  warnAboutNodeManifestMappingProblems({
+    inputManifest,
+    pagePath: nodeManifestPage.path,
+    foundPageBy,
+  })
 
   const finalManifest: INodeManifestOut = {
     node: inputManifest.node,
