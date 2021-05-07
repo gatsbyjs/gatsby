@@ -54,6 +54,7 @@ async function genMDX(
     reporter,
     cache,
     pathPrefix,
+    stage,
     ...helpers
   },
   { forceDisableCache = false } = {}
@@ -92,7 +93,10 @@ async function genMDX(
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
   const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = isLoader
+
+  const isDevelopLoader = isLoader && stage === `develop`
+
+  const content = isDevelopLoader
     ? frontMatterCodeResult
     : `${frontMatterCodeResult}
 
@@ -145,9 +149,9 @@ export const _frontmatter = ${JSON.stringify(data)}`
 import { mdx } from '@mdx-js/react';
 ${code}`
 
-  if (!isLoader) {
-    results.rawMDXOutput = rawMDXOutput
+  results.rawMDXOutput = rawMDXOutput
 
+  if (!isLoader) {
     debug(`compiling scope`)
     const instance = new BabelPluginPluckImports()
     const result = babel.transform(code, {
@@ -190,8 +194,8 @@ ${code}`
         /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
         `return MDXContent;`
       )
-  } else {
-    // code path for webpack loader
+  } else if (isDevelopLoader) {
+    // code path for webpack loader in `develop` stage
     // actual react component is saved to different file so that _frontmatter export doesn't
     // disable react-refresh (multiple exports are not handled)
     const filePath = path.join(

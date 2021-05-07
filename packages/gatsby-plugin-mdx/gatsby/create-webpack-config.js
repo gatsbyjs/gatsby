@@ -76,6 +76,7 @@ module.exports = (
               options: {
                 cache: cache,
                 actions: actions,
+                stage,
                 ...other,
                 pluginOptions: options,
               },

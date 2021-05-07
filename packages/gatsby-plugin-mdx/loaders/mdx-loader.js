@@ -96,6 +96,7 @@ const hasDefaultExport = (str, options) => {
 module.exports = async function mdxLoader(content) {
   const callback = this.async()
   const {
+    stage,
     getNode: rawGetNode,
     getNodes,
     getNodesByType,
@@ -214,6 +215,7 @@ ${contentWithoutFrontmatter}`
     reporter,
     cache,
     pathPrefix,
+    stage,
   })
 
   try {
