@@ -44,7 +44,7 @@ exports.onCreatePage = ({ page, actions }) => {
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
 
-  // Check for "Mdx" type so that other files (e.g. images) are exluded
+  // Check for "Mdx" type so that other files (e.g. images) are excluded
   if (node.internal.type === `Mdx`) {
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext

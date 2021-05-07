@@ -6,7 +6,7 @@ This monorepo serves as an example of a site using a first class source plugin t
 
 ## Setup
 
-This monorepo uses yarn workspaces to manage the 3 indivdual projects:
+This monorepo uses yarn workspaces to manage the 3 individual projects:
 
 - api: a Node.js API with in-memory data, and a Post and Author type, as well as support for subscriptions when Posts are mutated
 - example-site: a barebones Gatsby site that implements the source plugin

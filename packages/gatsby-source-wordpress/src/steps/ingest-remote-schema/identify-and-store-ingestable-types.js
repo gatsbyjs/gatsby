@@ -102,7 +102,7 @@ const identifyAndStoreIngestableFieldsAndTypes = async () => {
             // nodeInterface is different than a node which is an interface type.
             // In Gatsby nodeInterface means the node data is pulled from a different type. On the WP side we can also have nodes that are of an interface type, but we only pull them from a single root field
             // the problem is that if we don't mark them as a node list root field
-            // we don't know to identify them later as being a node type that will have been fetched and we also wont try to fetch this type during node sourcing.
+            // we don't know to identify them later as being a node type that will have been fetched and we also won't try to fetch this type during node sourcing.
             !pluginOptions?.type?.[nodeListField.type.ofType.name]
               ?.nodeInterface
           ) {

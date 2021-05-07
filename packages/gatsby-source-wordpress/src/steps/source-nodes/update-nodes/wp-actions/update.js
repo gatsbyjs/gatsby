@@ -30,7 +30,7 @@ export const fetchAndCreateSingleNode = async ({
 
     // if this is a preview use the preview query
     // if it's a preview but it's the initial blank node
-    // then use the regular node query as the preview query wont
+    // then use the regular node query as the preview query won't
     // return anything
     const query = isPreview ? previewQuery : nodeQuery
 

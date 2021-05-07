@@ -2,7 +2,7 @@
 
 Due to our [WPGatsby](https://github.com/gatsbyjs/wp-gatsby) WordPress plugin which tracks data changes in WordPress, we can do very aggressive caching.
 
-On the first run of `gatsby develop` or `gatsby build` all public data is fetched from WordPress (minus any data exluded via [plugin options](../plugin-options.md#typetypenameexclude-boolean)). On subsequent builds only changed data is fetched from WordPress.
+On the first run of `gatsby develop` or `gatsby build` all public data is fetched from WordPress (minus any data excluded via [plugin options](../plugin-options.md#typetypenameexclude-boolean)). On subsequent builds only changed data is fetched from WordPress.
 This allows [Previews](./preview.md), [Incremental Builds](#incremental-builds-triangular_ruler) and [Fast Builds](#fast-builds-running_woman) to work properly with this plugin!
 
 **Note:** If the remote schema changes between builds, the entire cache will be invalidated and the plugin will start over and re-fetch all data. This can happen when updating your `gatsby-node.js` , `gatsby-config.js` or when adding a new npm package to your project.

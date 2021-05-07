@@ -8,7 +8,7 @@ Thanks everyone for checking this out. I've started on the code and am a happy t
 
 I find it tedious to have to do the same 3 steps every time I add a plugin to gatsby.
 
-- `npm instal *plugin*`
+- `npm install *plugin*`
 - Check plugin docs for correct -`gatsby-config.js` syntax
 - modify `gatsby-config.js`
 

@@ -820,7 +820,6 @@ ReactJS
 read-eval-print
 readme
 README
-realease
 reCAPTCHA
 reconciler
 recurse

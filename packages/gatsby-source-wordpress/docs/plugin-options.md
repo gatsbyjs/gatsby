@@ -744,7 +744,7 @@ The number of concurrent GraphQL requests to make at any time during node sourci
 
 ### schema.previewRequestConcurrency
 
-The number of concurrent GraphQL requests to make at any time during preview sourcing. Try lowering this if your WordPress server crashes during previews. Normally this wont be needed and only comes into effect when multiple users are previewing simultaneously.
+The number of concurrent GraphQL requests to make at any time during preview sourcing. Try lowering this if your WordPress server crashes during previews. Normally this won't be needed and only comes into effect when multiple users are previewing simultaneously.
 
 **Field type**: `Number`
 

@@ -76,7 +76,7 @@ You can find more information on how to switch to [`gatsby-plugin-image`](https:
 - gatsby: Fix hanging Gatsby process between webpack rebuilds in development, via [PR 30127](https://github.com/gatsbyjs/gatsby/pull/30127)
 - gatsby: fix SitePage schema, via [PR #30132](https://github.com/gatsbyjs/gatsby/pull/30132)
 - gatsby: fix double save during gatsby develop, via [PR #30193](https://github.com/gatsbyjs/gatsby/pull/30193)
-- gatsby-plugin-image: Handle placeholder in plugin toolkit correclty, via [PR #30141](https://github.com/gatsbyjs/gatsby/pull/30141)
+- gatsby-plugin-image: Handle placeholder in plugin toolkit correctly, via [PR #30141](https://github.com/gatsbyjs/gatsby/pull/30141)
 - gatsby-source-contentful: fix deprecation warnings, via [PR #29675](https://github.com/gatsbyjs/gatsby/pull/29675)
 
 ## Contributors
