@@ -13,7 +13,7 @@ export const pluginOptionsSchema = ({ Joi }) =>
   Joi.object({
     plugins: Joi.array().strip(),
     output: Joi.string()
-      .default(`/`)
+      .default(`/sitemap`)
       .description(`Folder path where sitemaps are stored in \`public\`.`),
     createLinkInHead: Joi.boolean()
       .default(true)
