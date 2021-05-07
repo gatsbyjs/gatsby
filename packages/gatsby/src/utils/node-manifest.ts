@@ -1,6 +1,6 @@
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
-import { Reporter } from "gatsby-cli/lib/reporter/reporter"
-import { Store } from "../../index"
+import reporter from "gatsby-cli/lib/reporter"
+import { store } from "../redux/"
 import { internalActions } from "../redux/actions"
 import path from "path"
 import fs from "fs-extra"
@@ -31,10 +31,8 @@ interface INodeManifestOut {
  */
 async function findPageOwnedByNodeId({
   nodeId,
-  store,
 }: {
   nodeId: string
-  store: Store
 }): Promise<INodeManifestPage> {
   const state = store.getState()
   const { pages } = state
@@ -118,19 +116,12 @@ async function findPageOwnedByNodeId({
 /**
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
-async function processNodeManifest({
-  inputManifest,
-  store,
-  reporter,
-}: {
+async function processNodeManifest(
   inputManifest: INodeManifest
-  store: Store
-  reporter: Reporter
-}): Promise<void> {
+): Promise<void> {
   // map the node to a page that was created
   const nodeManifestPage = await findPageOwnedByNodeId({
     nodeId: inputManifest.node.id,
-    store,
   })
 
   if (!nodeManifestPage.path) {
@@ -164,13 +155,7 @@ async function processNodeManifest({
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests({
-  store,
-  reporter,
-}: {
-  store: Store
-  reporter: Reporter
-}): Promise<void> {
+export async function processNodeManifests(): Promise<void> {
   const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
@@ -179,11 +164,7 @@ export async function processNodeManifests({
     return
   }
 
-  await Promise.all(
-    nodeManifests.map(inputManifest =>
-      processNodeManifest({ inputManifest, store, reporter })
-    )
-  )
+  await Promise.all(nodeManifests.map(processNodeManifest))
 
   reporter.info(
     `Wrote out ${totalManifests} node page manifest file${

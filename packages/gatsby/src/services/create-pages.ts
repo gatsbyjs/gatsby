@@ -100,8 +100,6 @@ export async function createPages({
     }`
   )
 
-  await processNodeManifests({ store, reporter })
-
   tim.end()
 
   store.dispatch(actions.apiFinished({ apiName: `createPages` }))

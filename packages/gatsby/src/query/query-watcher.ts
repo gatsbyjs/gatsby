@@ -20,6 +20,7 @@ import { IGatsbyStaticQueryComponents } from "../redux/types"
 import queryCompiler from "./query-compiler"
 import report from "gatsby-cli/lib/reporter"
 import { getGatsbyDependents } from "../utils/gatsby-dependents"
+import { processNodeManifests } from "../utils/node-manifest"
 
 const debug = require(`debug`)(`gatsby:query-watcher`)
 
@@ -277,6 +278,8 @@ export const updateStateAndRunQueries = async (
 
       `)
   }
+
+  await processNodeManifests()
 }
 
 export const extractQueries = ({
