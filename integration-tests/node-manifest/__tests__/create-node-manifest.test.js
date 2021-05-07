@@ -23,10 +23,12 @@ const gatsbyCommandName = process.env.GATSBY_COMMAND_NAME || `develop`
 const getManifestContents = async id =>
   await fs.readJSON(path.join(manifestDir, `${gatsbyCommandName}-${id}.json`))
 
+let gatsbyProcess
+
 beforeAll(async () => {
   await cleanNodeManifests()
 
-  const gatsbyProcess = spawnGatsbyProcess(gatsbyCommandName)
+  gatsbyProcess = spawnGatsbyProcess(gatsbyCommandName)
 
   if (gatsbyCommandName === `develop`) {
     // wait for localhost
@@ -37,6 +39,8 @@ beforeAll(async () => {
     gatsbyProcess.kill()
   }
 })
+
+afterAll(() => gatsbyProcess.kill())
 
 // see gatsby-node.js for where createNodeManifest was called
 // and for the corresponding pages that were created with createPage
@@ -65,9 +69,9 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
   })
 
   it(`Creates a node manifest with a null page path when createNodeManifest is called but a page is not created for the provided node in the Gatsby site`, async () => {
-    const manifestFileContents = await getManifestContents(3)
+    const manifestFileContents = await getManifestContents(4)
 
-    expect(manifestFileContents.node.id).toBe(`3`)
+    expect(manifestFileContents.node.id).toBe(`4`)
     expect(manifestFileContents.page.path).toBe(null)
   })
 })
