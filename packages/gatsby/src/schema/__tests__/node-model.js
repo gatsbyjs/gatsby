@@ -1255,7 +1255,8 @@ describe(`NodeModel`, () => {
     })
   })
 
-  describe(`circular references`, () => {
+  // FIXME: disallow circular references in the strict mode
+  describe.skip(`circular references`, () => {
     describe(`directly on a node`, () => {
       beforeEach(async () => {
         // This tests whether addRootNodeToInlineObject properly prevents re-traversing the same key-value pair infinitely

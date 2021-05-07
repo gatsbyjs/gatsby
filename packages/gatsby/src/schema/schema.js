@@ -18,6 +18,7 @@ const {
   EnumTypeComposer,
 } = require(`graphql-compose`)
 const { getNode, getNodesByType } = require(`../redux/nodes`)
+const { getDataStore } = require(`../datastore`)
 
 const apiRunner = require(`../utils/api-runner-node`)
 const report = require(`gatsby-cli/lib/reporter`)
@@ -61,6 +62,8 @@ const buildSchema = async ({
   inferenceMetadata,
   parentSpan,
 }) => {
+  // FIXME: consider removing .ready here - it is needed for various tests to pass (although probably harmless)
+  await getDataStore().ready()
   await updateSchemaComposer({
     schemaComposer,
     types,

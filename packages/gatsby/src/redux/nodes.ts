@@ -2,6 +2,7 @@ import { store } from "./"
 import { IGatsbyNode } from "./types"
 import { createPageDependency } from "./actions/add-page-dependency"
 import { IDbQueryElemMatch } from "../db/common/query"
+import { getDataStore } from "../datastore"
 
 // Only list supported ops here. "CacheableFilterOp"
 export type FilterOp =  // TODO: merge with DbComparator ?
@@ -62,53 +63,35 @@ export interface IFilterCache {
 }
 export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 
+const datastore = getDataStore()
+
 /**
  * Get all nodes from redux store.
  */
-export const getNodes = (): Array<IGatsbyNode> => {
-  const nodes = store.getState().nodes
-  if (nodes) {
-    return Array.from(nodes.values())
-  } else {
-    return []
-  }
-}
+export const getNodes = (): Array<IGatsbyNode> => datastore.getNodes()
 
 /**
  * Get node by id from store.
  */
 export const getNode = (id: string): IGatsbyNode | undefined =>
-  store.getState().nodes.get(id)
+  datastore.getNode(id)
 
 /**
  * Get all nodes of type from redux store.
  */
-export const getNodesByType = (type: string): Array<IGatsbyNode> => {
-  const nodes = store.getState().nodesByType.get(type)
-  if (nodes) {
-    return Array.from(nodes.values())
-  } else {
-    return []
-  }
-}
+export const getNodesByType = (type: string): Array<IGatsbyNode> =>
+  datastore.getNodesByType(type)
 
 /**
  * Get all type names from redux store.
  */
-export const getTypes = (): Array<string> =>
-  Array.from(store.getState().nodesByType.keys())
+export const getTypes = (): Array<string> => datastore.getTypes()
 
 /**
  * Determine if node has changed.
  */
-export const hasNodeChanged = (id: string, digest: string): boolean => {
-  const node = store.getState().nodes.get(id)
-  if (!node) {
-    return true
-  } else {
-    return node.internal.contentDigest !== digest
-  }
-}
+export const hasNodeChanged = (id: string, digest: string): boolean =>
+  datastore.hasNodeChanged(id, digest)
 
 /**
  * Get node and save path dependency.
@@ -137,11 +120,11 @@ export const saveResolvedNodes = async (
   resolver: Resolver
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
-    const nodes = store.getState().nodesByType.get(typeName)
-    if (!nodes) continue
+    const nodes = datastore.getNodesByType(typeName)
+    if (!nodes || !nodes.length) continue
 
     const resolvedNodes = new Map()
-    for (const node of nodes.values()) {
+    for (const node of nodes) {
       const resolved = await resolver(node)
       resolvedNodes.set(node.id, resolved)
     }
@@ -162,16 +145,11 @@ export const getResolvedNode = (
   typeName: string,
   id: string
 ): IGatsbyNode | null => {
-  const { nodesByType, resolvedNodesCache } = store.getState()
-  const nodes = nodesByType.get(typeName)
+  const { resolvedNodesCache } = store.getState()
 
-  if (!nodes) {
-    return null
-  }
+  const node = getNode(id)
 
-  const node = nodes.get(id)
-
-  if (!node) {
+  if (!node || node.internal.type !== typeName) {
     return null
   }
 
@@ -333,7 +311,7 @@ export const ensureIndexByQuery = (
   } else {
     // Here we must first filter for the node type
     // This loop is expensive at scale (!)
-    state.nodes.forEach(node => {
+    getNodes().forEach(node => {
       if (!nodeTypeNames.includes(node.internal.type)) {
         return
       }
@@ -381,7 +359,7 @@ export function ensureEmptyFilterCache(
   } else {
     // Here we must first filter for the node type
     // This loop is expensive at scale (!)
-    state.nodes.forEach(node => {
+    getNodes().forEach(node => {
       if (nodeTypeNames.includes(node.internal.type)) {
         if (!node.__gatsby_resolved) {
           const typeName = node.internal.type
@@ -496,7 +474,7 @@ export const ensureIndexByElemMatch = (
     })
   } else {
     // Expensive at scale
-    state.nodes.forEach(node => {
+    getNodes().forEach(node => {
       if (!nodeTypeNames.includes(node.internal.type)) {
         return
       }
