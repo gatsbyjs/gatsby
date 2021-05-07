@@ -49,7 +49,7 @@ Please see the [migration guide](/docs/reference/release-notes/migrating-from-v2
 Features:
 
 - The default limit when fetching data from Contentful was increased by 10 times. This will speed up build times.
-- The [`using-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) example got updated to Gatsby v3 and demonstrates how to use [`gatsby-plugin-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) with Contenful.
+- The [`using-contentful`](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful) example got updated to Gatsby v3 and demonstrates how to use [`gatsby-plugin-image`](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-image) with Contentful.
 - New e2e-contentful test suite to improve plugin reliability.
 
 Fixes:
@@ -74,7 +74,7 @@ Fixes:
 
 Remark has had a significant [major upgrade](https://github.com/remarkjs/remark/releases/tag/13.0.0) recently and changed the underlying parser. The ecosystem seems to have almost [caught up](https://github.com/remarkjs/remark/blob/main/doc/plugins.md#list-of-plugins) since then, so we are going to release a new major version for all remark-related plugins soon.
 
-We tried to make the upgrade effortless but there could still be subtle differences in output and edge cases. So please try pre-release versions of those plugins and [let us know](https://github.com/gatsbyjs/gatsby/discussions/30385) if you notice any inconsistencies or bugs.
+We tried to make the upgrade effortless but there could still be subtle differences in output and edge cases. So please try prerelease versions of those plugins and [let us know](https://github.com/gatsbyjs/gatsby/discussions/30385) if you notice any inconsistencies or bugs.
 
 Install the following canary versions of all remark packages that you have in your `package.json`:
 

@@ -366,7 +366,7 @@ The `ThemeProvider` exports variables for the CSS to use (this is the [theming](
 
 The `hasFocus` variable tracks whether the search box is currently in focus. When it is, it should display the input field (if not, only the search icon button is visible).
 
-The `searchClient` variable is [memoized](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid re-creating the Algolia search client when the `Search` component is re-rendered. This is important for performance, as the client caches searches to minimise the number of requests made to Algolia.
+The `searchClient` variable is [memoized](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid re-creating the Algolia search client when the `Search` component is re-rendered. This is important for performance, as the client caches searches to minimize the number of requests made to Algolia.
 
 `StyledSearchRoot` is the root of the whole component. The React hook `useClickOutside` provides a callback if the user clicks anywhere else on the page, in which case it should close.
 

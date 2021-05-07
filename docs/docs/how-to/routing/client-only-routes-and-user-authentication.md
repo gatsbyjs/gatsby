@@ -106,7 +106,7 @@ export default PrivateRoute
 
 ## How to configure your hosting service to handle client-only routes
 
-Site hosting services and software needs some help in order to server client-only routes correctly. Most Gatsby pages have a corresponding html file that the server responds with when a user visits the page e.g. visiting `/blog/my-blog-post/` makes the server respond with `/blog/my-blog-post/index.html`. But client-only routes like `/app/why-gatsby-is-awesome/` don't have a corresponding html file. The server needs to be configured to know to serve instead `/app/index.html`.
+Site hosting services and software needs some help in order to server client-only routes correctly. Most Gatsby pages have a corresponding HTML file that the server responds with when a user visits the page e.g. visiting `/blog/my-blog-post/` makes the server respond with `/blog/my-blog-post/index.html`. But client-only routes like `/app/why-gatsby-is-awesome/` don't have a corresponding HTML file. The server needs to be configured to know to serve instead `/app/index.html`.
 
 Popular hosting services like Gatsby Cloud, Netlify, and Vercel have plugins that automatically configure hosting to handle client-only routes.
 
