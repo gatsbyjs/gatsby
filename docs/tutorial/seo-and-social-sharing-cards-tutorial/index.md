@@ -574,7 +574,7 @@ There are a few aspects worth nothing here:
 
 ## The Payoff
 
-Using the techniques outlined in this post, you've made your Gatsby application SEO-friendly as well as sharable on common social networks. Check out the following examples of a sample blog post.
+Using the techniques outlined in this post, you've made your Gatsby application SEO-friendly as well as shareable on common social networks. Check out the following examples of a sample blog post.
 
 ### Google
 

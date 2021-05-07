@@ -2,7 +2,7 @@
  * Description of callback type
  * @callback CallbackType
  * @param {string} message A message to split
- * @returns {string[]} Splitted message
+ * @returns {string[]} Split message
  */
 
 /**
