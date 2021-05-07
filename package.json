@@ -23,7 +23,7 @@
     "@types/node-fetch": "^2.5.10",
     "@types/normalize-path": "^3.0.0",
     "@types/react": "^16.9.56",
-    "@types/semver": "^7.3.4",
+    "@types/semver": "^7.3.5",
     "@types/signal-exit": "^3.0.0",
     "@types/stack-trace": "^0.0.29",
     "@types/webpack-merge": "^4.1.5",

@@ -194,6 +194,7 @@ export type GatsbyNodeAPI =
   | "onPostBoostrap"
   | "onCreateWebpackConfig"
   | "onCreatePage"
+  | "onCreateNode"
   | "sourceNodes"
   | "createPagesStatefully"
   | "createPages"

@@ -192,6 +192,40 @@ If you need to have dynamic images (such as if they are coming from a CMS), you 
    `
    ```
 
+## Customizing the defaults
+
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
+
+The following configuration describes the options that can be customized along with their default values:
+
+```javascript:title=gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`
+          quality: 50
+          breakpoints: [750, 1080, 1366, 1920]
+          backgroundColor: `transparent`
+          tracedSVGOptions: {}
+          blurredOptions: {}
+          jpgOptions: {}
+          pngOptions: {}
+          webpOptions: {}
+          avifOptions: {}
+        }
+      }
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-image`,
+  ],
+}
+```
+
 ## Using images from a CMS or CDN
 
 Many source plugins have native support for `gatsby-plugin-image`, with images served directly from a content delivery network (CDN). This means that builds are faster, because there is no need download images and process them locally. The query syntax varies according to the plugin, as do the supported transformation features and image formats. Make sure you update to the latest version of the source plugin to ensure there is support. For plugins that are not in this list you can use [dynamic images from `gatsby-transformer-sharp`](#dynamic-images).

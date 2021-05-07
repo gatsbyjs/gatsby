@@ -1,13 +1,8 @@
-const getIsIncrement = () =>
-  !!(process.env.WPGQL_INCREMENT && process.env.WPGQL_INCREMENT !== `false`)
+const isWarmCache = process.env.WARM_CACHE
 
 exports.incrementalIt = (name, test) => {
-  const isIncrement = getIsIncrement()
-
   // full fetch
-  ;(!isIncrement ? it : it.skip)(name, test)
+  ;(!isWarmCache ? it : it.skip)(name, test)
   // incremental data fetch
-  ;(isIncrement ? it : it.skip)(`${name} INCREMENTED`, test)
+  ;(isWarmCache ? it : it.skip)(`${name} INCREMENTED`, test)
 }
-
-exports.getIsIncrement = getIsIncrement

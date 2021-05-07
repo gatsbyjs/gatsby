@@ -85,6 +85,15 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`function errors don't crash the server`, () => {
+      // This test mainly just shows that the server doesn't crash.
+      test(`normal`, async () => {
+        const result = await fetch(`${host}/api/error-send-function-twice`)
+
+        expect(result.status).toEqual(200)
+      })
+    })
+
     describe(`response formats`, () => {
       test(`returns json correctly`, async () => {
         const res = await fetch(`${host}/api/i-am-json`)
