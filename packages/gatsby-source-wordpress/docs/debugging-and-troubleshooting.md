@@ -159,9 +159,9 @@ The main error that occurs while fetching media files is overwhelming the remote
 
 ## Media File Download Skipped
 
-This might happen for several reasons, but two of the most common are that the file was excluded due to a the `maxFileSizeBytes` or `excludeByMimeTypes` config option.
+This might happen for several reasons, but two of the most common are that the file was excluded due to the file's size exceeding the `maxFileSizeBytes` config option or because its mime type was included in the `excludeByMimeTypes` config option.
 
-In order to determine what media items were not downloaded on account of `maxFileSizeBytes`, start your gatsby develop server and run the following GraphQL query
+In order to determine what media items were not downloaded on account of `maxFileSizeBytes`, start your gatsby develop server and run the following GraphQL query.
 
 > ️⚠️ Ensure that you replace the number in the `gt` filter with the value of `maxFileSizeBytes` found in your gatsby config
 
@@ -177,12 +177,12 @@ query TOO_LARGE_FILES {
 }
 ```
 
-If you want to investigate which images weren't downloaded due to the `excludeByMimeTypes` option, start up a gatsby develop server and run the following...
+If you want to investigate which images weren't downloaded due to the `excludeByMimeTypes` option, start up a gatsby develop server and run the following.
 
 > ⚠️ Ensure that the array of mime types passed to the `in` filter in the following query matches the value of `excludeByMimeTypes` in your gatsby config
 
 ```graphql
-query TOO_LARGE_FILES {
+query MIME_TYPE_EXCLUDED {
   allWpMediaItem(filter: { mimeType: { in: ["image/jpeg", "video/mp4"] } }) {
     nodes {
       id
