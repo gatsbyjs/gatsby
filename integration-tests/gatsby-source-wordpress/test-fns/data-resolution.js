@@ -6,6 +6,8 @@ const {
   default: fetchGraphql,
 } = require("gatsby-source-wordpress/dist/utils/fetch-graphql")
 
+const gatsbyConfig = require("../gatsby-config")
+
 const { testResolvedData } = require("./test-utils/test-resolved-data")
 const { queries } = require("./test-utils/queries")
 
@@ -308,4 +310,34 @@ describe(`data resolution`, () => {
     expect(gatsbyResult.data.wpPage).toStrictEqual(wpGraphQLPageNormalizedPaths)
     expect(gatsbyResult.data.wp.seo).toStrictEqual(WPGraphQLData.seo)
   })
+
+  it(`Does not download files whose size exceed the maxFileSizeBytes option`, async () => {
+    const wpPluginName = `gatsby-source-wordpress`
+    const wpPluginOpts = gatsbyConfig.plugins.find(
+      plugin => typeof plugin === 'object' && plugin.resolve === wpPluginName
+    )
+    const { maxFileSizeBytes } = wpPluginOpts.type.MediaItem.localFile
+    /**
+     * Ensure that the "gt" filter value matches the maxFileSizeBytes value 
+     */
+    const result = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query tooLargeFiles($maxFileSizeBytes: Int!) {
+          allWpMediaItem(filter: { fileSize: { gt: $maxFileSizeBytes } }) {
+            nodes {
+              id
+              sourceUrl
+              fileSize
+            }
+          }
+        } 
+      `,
+      variables: {
+        maxFileSizeBytes,
+      }
+    })
+  })
+
+  console.log('result ------------------------------', result)
 })
