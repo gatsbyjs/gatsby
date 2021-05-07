@@ -9,6 +9,7 @@ import { websocketManager } from "./websocket-manager"
 import { isWebpackStatusPending } from "./webpack-status"
 import { store } from "../redux"
 import { hasFlag, FLAG_DIRTY_NEW_PAGE } from "../redux/reducers/queries"
+import ldmbStore from "../utils/lmdb"
 
 import { IExecutionResult } from "../query/types"
 
@@ -85,7 +86,8 @@ export async function writePageData(
   )
 
   const outputFilePath = getFilePath(publicDir, pagePath)
-  const result = await fs.readJSON(inputFilePath)
+  // const result = await fs.readJSON(inputFilePath)
+  const result = JSON.parse(ldmbStore.get(inputFilePath))
   const body = {
     componentChunkName,
     path: pagePath,
@@ -108,7 +110,8 @@ export async function writePageData(
     },
   })
 
-  await fs.outputFile(outputFilePath, bodyStr)
+  // await fs.outputFile(outputFilePath, bodyStr)
+  await ldmbStore.put(outputFilePath, bodyStr)
   return body
 }
 
@@ -197,7 +200,7 @@ export async function flush(): Promise<void> {
     })
 
     return cb(null, true)
-  }, 25)
+  }, 50)
 
   for (const pagePath of pagesToWrite) {
     flushQueue.push(pagePath, () => {})

@@ -13,7 +13,7 @@ if (process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) {
 }
 
 const concurrency =
-  Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 4
+  Number(process.env.GATSBY_EXPERIMENTAL_QUERY_CONCURRENCY) || 60
 
 /**
  * Calculates the set of dirty query IDs (page.paths, or staticQuery.id's).

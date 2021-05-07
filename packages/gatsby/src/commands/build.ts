@@ -164,7 +164,18 @@ module.exports = async function build(program: IBuildArgs): Promise<void> {
     rewriteActivityTimer.end()
   }
 
+  const flushTimer = report.activityTimer(
+    `Writing page-data.json files to disk`,
+    {
+      parentSpan: buildSpan,
+    }
+  )
+  flushTimer.start()
   await flushPendingPageDataWrites()
+  flushTimer.end()
+
+  console.log(`time elapased — ${process.uptime()}`)
+  process.exit()
   markWebpackStatusAsDone()
 
   if (telemetry.isTrackingEnabled()) {
