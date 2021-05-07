@@ -55,7 +55,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       destinationDir,
       sourceData,
     } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
-    expect(destinationDir).toEqual(`public/`)
+    expect(destinationDir).toEqual(path.join(`public`, `/`))
     expect(sourceData).toMatchSnapshot()
   })
 
