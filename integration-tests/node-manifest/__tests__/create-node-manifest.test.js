@@ -59,14 +59,20 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     expect(manifestFileContents.page.path).toBe(`/two`)
   })
 
-  it(`Creates a node manifest from the first tracked page it finds in query tracking`, async () => {
-    const manifestFileContents = await getManifestContents(3)
+  if (gatsbyCommandName === `build`) {
+    // this doesn't work in gatsby develop since query tracking
+    // only runs when visiting a page in browser.
+    it(`Creates a node manifest from the first tracked page it finds in query tracking`, async () => {
+      const manifestFileContents = await getManifestContents(3)
 
-    expect(manifestFileContents.node.id).toBe(`3`)
-    expect(
-      [`/three`, `/three-alternative`].includes(manifestFileContents.page.path)
-    ).toBe(true)
-  })
+      expect(manifestFileContents.node.id).toBe(`3`)
+      expect(
+        [`/three`, `/three-alternative`].includes(
+          manifestFileContents.page.path
+        )
+      ).toBe(true)
+    })
+  }
 
   it(`Creates a node manifest with a null page path when createNodeManifest is called but a page is not created for the provided node in the Gatsby site`, async () => {
     const manifestFileContents = await getManifestContents(4)
