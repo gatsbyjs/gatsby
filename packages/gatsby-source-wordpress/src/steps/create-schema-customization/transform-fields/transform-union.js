@@ -43,7 +43,7 @@ export const transformListOfUnions = ({ field, fieldName }) => {
 
       return resolvedField.reduce((accumulator, item) => {
         // @todo use our list of Gatsby node types to do a more performant check
-        // on wether this is a Gatsby node or not.
+        // on whether this is a Gatsby node or not.
         const node = item.id
           ? context.nodeModel.getNodeById({
               id: item.id,

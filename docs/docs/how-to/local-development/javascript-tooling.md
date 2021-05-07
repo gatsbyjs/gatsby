@@ -1,5 +1,5 @@
 ---
-title: Javascript tooling
+title: JavaScript tooling
 ---
 
 Gatsby offers support for the standard JavaScript toolchain.

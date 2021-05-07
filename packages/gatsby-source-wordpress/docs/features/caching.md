@@ -13,7 +13,7 @@ This allows [Previews](./preview.md), [Incremental Builds](#incremental-builds-t
 
 When you're using [Gatsby Cloud](https://www.gatsbyjs.com/), inc-builds will work by default! :zap:
 
-There are no other other services which can provide true incremental builds wether they claim they can or not. If your "inc-builds" take longer than 20 seconds, consider switching to [Gatsby Cloud](https://www.gatsbyjs.com/) :smile_cat:
+There are no other other services which can provide true incremental builds whether they claim they can or not. If your "inc-builds" take longer than 20 seconds, consider switching to [Gatsby Cloud](https://www.gatsbyjs.com/) :smile_cat:
 
 You can expect proper inc-build times to be between 4 - 12 seconds depending on your setup for most sites. For very large sites or sites which include other source plugins inc builds times may be longer.
 We've seen that other CI services claiming to offer incremental builds usually result in 2+ minute build times and they are often slower than regular non-incremental builds on Gatsby Cloud.

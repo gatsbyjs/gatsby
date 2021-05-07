@@ -71,7 +71,7 @@ export const pluginOptionsSchema: Step = ({ Joi }) => {
         .allow(null)
         .allow(false)
         .description(
-          `Determines wether or not this type will be treated as an interface comprised entirely of other Gatsby node types.`
+          `Determines whether or not this type will be treated as an interface comprised entirely of other Gatsby node types.`
         )
         .meta({
           example: wrapOptions(`
@@ -156,7 +156,7 @@ export const pluginOptionsSchema: Step = ({ Joi }) => {
         showQueryVarsOnError: Joi.boolean()
           .default(false)
           .description(
-            `When a GraphQL error is returned and the process exits, this plugin option determines wether or not to log out the query vars that were used in the query that returned GraphQL errors.`
+            `When a GraphQL error is returned and the process exits, this plugin option determines whether or not to log out the query vars that were used in the query that returned GraphQL errors.`
           )
           .meta({
             example: wrapOptions(`
@@ -198,7 +198,7 @@ export const pluginOptionsSchema: Step = ({ Joi }) => {
         panicOnError: Joi.boolean()
           .default(false)
           .description(
-            `Determines wether or not to panic when any GraphQL error is returned.
+            `Determines whether or not to panic when any GraphQL error is returned.
 
 Default is false because sometimes non-critical errors are returned alongside valid data.`
           )
@@ -214,7 +214,7 @@ Default is false because sometimes non-critical errors are returned alongside va
         onlyReportCriticalErrors: Joi.boolean()
           .default(true)
           .description(
-            `Determines wether or not to log non-critical errors. A non-critical error is any error which is returned alongside valid data. In previous versions of WPGraphQL this was very noisy because trying to access an entity that was private returned errors.`
+            `Determines whether or not to log non-critical errors. A non-critical error is any error which is returned alongside valid data. In previous versions of WPGraphQL this was very noisy because trying to access an entity that was private returned errors.`
           )
           .meta({
             example: wrapOptions(`
@@ -772,7 +772,7 @@ This should be the full url of your GraphQL endpoint.`
               }),
             useIf: Joi.any()
               .description(
-                `A function used to determine wether or not to apply this plugin options preset. It should return a boolean value. True will cause the preset to apply, false will disclude it.`
+                `A function used to determine whether or not to apply this plugin options preset. It should return a boolean value. True will cause the preset to apply, false will disclude it.`
               )
               .default(`() => false`)
               .meta({

@@ -25,9 +25,9 @@ This plugin has several limitations, please be aware of these:
 
 2. When using reference fields, be aware that this source plugin will automatically create the reverse reference. You do not need to create references on both content types.
 
-3. When working with environments, your access token has to have access to your desired enviornment and the `master` environment.
+3. When working with environments, your access token has to have access to your desired environment and the `master` environment.
 
-4. Using the preview functionallity might result in broken content over time, as syncing data on preview is not officially supported by Contentful. Make sure to regulary clean your cache when using Contentfuls preview API.
+4. Using the preview functionality might result in broken content over time, as syncing data on preview is not officially supported by Contentful. Make sure to regularly clean your cache when using Contentfuls preview API.
 
 5. The following content type names are not allowed: `entity`, `reference`
 

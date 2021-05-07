@@ -24,19 +24,19 @@
 ## How it works internally
 
 - The user presses "preview" from the WordPress admin screen
-- There are some checks in place to determine wether or not this is a new preview or if it's a draft, regular post update or duplicate. If it is new a webhook should be sent to the Preview instance.
+- There are some checks in place to determine whether or not this is a new preview or if it's a draft, regular post update or duplicate. If it is new a webhook should be sent to the Preview instance.
 - Preview "save_post" calls are debounced (per-post) so that many webhooks within a 5 second interval for the same post will only send a single webhook. Different posts that are previewed at the same time will still trigger multiple preview builds (for now) but the preview loading logic will still work great in this case.
 - The Preview webhook is POST'ed to with the following information:
   - A JWT token which Gatsby can use to query private preview revision data.
   - The parent database id of the revision
-  - Wether or not the preview is for a new post draft (or a regular draft)
+  - Whether or not the preview is for a new post draft (or a regular draft)
   - The type of the node being previewed
   - The id of the revision (or draft) being previewed
   - The URL of the WordPress instance which is sending the Preview
-  - Wether or not revisions are disabled
+  - Whether or not revisions are disabled
   - The modified time of the node being previewed
-  - `preview: true` (the source plugin uses this to tell wether or not previews are being sourced)
-- WPGatsby records wether or not the preview webhook was a success (to be used in optimistically loading the preview frontend)
+  - `preview: true` (the source plugin uses this to tell whether or not previews are being sourced)
+- WPGatsby records whether or not the preview webhook was a success (to be used in optimistically loading the preview frontend)
 - If the webhook is not online, WPGatsby will record an error in the WP debug log.
 - On the Gatsby side, `sourceNodes` as a refresh is invoked via the refresh webhook and the source plugin detects this and invokes `sourcePreviews` instead of sourcing nodes.
 - If the Preview was sent from a WP instance other than the one which the source plugin is configured to use, a preview status of `RECEIVED_PREVIEW_DATA_FROM_WRONG_URL` is sent back to WPGatsby for processing.

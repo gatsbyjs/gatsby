@@ -156,7 +156,7 @@ Please consider addressing this issue by changing your WordPress settings or plu
     )
   }
 
-  // record wether the schema changed so other logic can beware
+  // record whether the schema changed so other logic can beware
   // as well as the wpUrl because we need this sometimes :p
   store.dispatch.remoteSchema.setState({
     schemaWasChanged,

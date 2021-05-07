@@ -92,7 +92,7 @@ export const fetchAndCreateSingleNode = async ({
     const existingNode = getNode(id)
 
     /**
-     * For Preview, revisions of a node type can have data that updates unecessarily
+     * For Preview, revisions of a node type can have data that updates unnecessarily
      * This code block fixes that. The result being that less queries
      * are invalidated in Gatsby. For example if you have a query where you're getting the latest published post using the date field, that should be static but each preview updates the date field on the node being previewed (because the revision has a new date). So if we prevent the following fields from changing, this will be less problematic.
      */

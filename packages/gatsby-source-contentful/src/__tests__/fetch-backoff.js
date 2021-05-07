@@ -94,12 +94,12 @@ describe(`fetch-backoff`, () => {
     expect(reporter.warn.mock.calls).toMatchInlineSnapshot(`
       Array [
         Array [
-          "The sync with Contentful failed using pageLimit 1000 as the reponse size limit of the API is exceeded.
+          "The sync with Contentful failed using pageLimit 1000 as the response size limit of the API is exceeded.
 
       Retrying sync with pageLimit of 666",
         ],
         Array [
-          "The sync with Contentful failed using pageLimit 666 as the reponse size limit of the API is exceeded.
+          "The sync with Contentful failed using pageLimit 666 as the response size limit of the API is exceeded.
 
       Retrying sync with pageLimit of 444",
         ],

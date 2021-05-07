@@ -12,7 +12,7 @@ export const normalizeNode = ({ node, nodeTypeName }) => {
   return node
 }
 
-// this is used to determine wether we've already seen an id
+// this is used to determine whether we've already seen an id
 // for cold builds.
 // the reason we want to do this is to detect if we create 2 nodes with the same id
 // if we do there will be less nodes in Gatsby than in WP and users will be confused.
