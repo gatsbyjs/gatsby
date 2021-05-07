@@ -188,6 +188,23 @@ export const getFileNodeByMediaItemNode = async ({
 }
 
 const failedImageUrls = new Set()
+const warningLogCounts = {
+  excludedMimeType: 0,
+  maxFileSizeBytesExceeded: 0,
+}
+
+/**
+ * Util to log a warning only once per build to avoid console spam
+ * @returns
+ */
+const maybePrintWarningFactory = reporter => ({ message, warningName }) => {
+  const logCount = warningLogCounts[warningName]
+  if (!logCount >= 1) {
+    reporter.warn(formatLogMessage(message))
+  }
+
+  warningLogCounts[warningName] = logCount + 1
+}
 
 export const createLocalFileNode = async ({
   mediaItemNode,
@@ -230,24 +247,24 @@ export const createLocalFileNode = async ({
     maxFileSizeBytes,
   } = pluginOptions.type?.MediaItem?.localFile
 
+  const maybePrintWarning = maybePrintWarningFactory(reporter)
+
   // if this file is larger than maxFileSizeBytes, don't fetch the remote file
   if (fileSize > maxFileSizeBytes) {
-    reporter.warn(
-      formatLogMessage(
-        `At least one remote media item not fetched because its size exceeded the maxFileSizeBytes config option.`
-      )
-    )
+    maybePrintWarning({
+      message: `At least one remote media item not fetched because its size exceeded the maxFileSizeBytes config option. Other media items items may have been skipped for this reason as well but this warning is only logged once to avoid terminal spam.`,
+      warningName: `maxFileSizeBytesExceeded`,
+    })
 
     return null
   }
 
   // if this type of file is excluded, don't fetch the remote file
   if (excludeByMimeTypes.includes(mimeType)) {
-    reporter.warn(
-      formatLogMessage(
-        `At least one remote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option.`
-      )
-    )
+    maybePrintWarning({
+      message: `At least one remote media item node not created because its mimetype was specified in the "exludeByMimeTypes" config option. Other media items items may have been skipped for this reason as well but this warning is only logged once to avoid terminal spam.`,
+      warningName: `excludedMimeType`,
+    })
 
     return null
   }
