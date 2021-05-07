@@ -4,7 +4,7 @@
   "description": "A test site for Gatsby's node manifest API",
   "main": "index.js",
   "scripts": {
-    "test": "GATSBY_COMMAND_NAME=build jest"
+    "test": "GATSBY_COMMAND_NAME=build jest && GATSBY_COMMAND_NAME=develop jest"
   },
   "author": "Tyler Barnes <tyler@gatsbyjs.com>",
   "license": "ISC",
