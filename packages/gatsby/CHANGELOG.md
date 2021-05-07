@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.2](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.1...gatsby@3.4.2) (2021-05-07)
+
+### Bug Fixes
+
+- **gatsby:** add generic type to GatsbyFunctionResponse ([#31182](https://github.com/gatsbyjs/gatsby/issues/31182)) ([#31330](https://github.com/gatsbyjs/gatsby/issues/31330)) ([942ddba](https://github.com/gatsbyjs/gatsby/commit/942ddba72c15c875a80958ab03723f1114ff1c68))
+
+### Features
+
+- **gatsby:** first pass at API functions docs ([#31066](https://github.com/gatsbyjs/gatsby/issues/31066)) ([#31329](https://github.com/gatsbyjs/gatsby/issues/31329)) ([6a6f46b](https://github.com/gatsbyjs/gatsby/commit/6a6f46bf38a4234beb682bc7bac3986467454ee1))
+
 ## [3.4.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0...gatsby@3.4.1) (2021-05-04)
 
 **Note:** Version bump only for package gatsby
