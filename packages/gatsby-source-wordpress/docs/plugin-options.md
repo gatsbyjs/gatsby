@@ -1144,7 +1144,7 @@ Allows preventing the download of files that are above a certain file size (in b
 
 ##### type.MediaItem.localFile.requestConcurrency
 
-Amount of images to download concurrently. Try lowering this if wordpress server crashes on import.
+Amount of images to download concurrently. Try lowering this if WordPress server crashes on import.
 
 **Field type**: `Number`
 

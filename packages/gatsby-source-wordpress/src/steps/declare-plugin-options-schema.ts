@@ -695,7 +695,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             .integer()
             .default(100)
             .description(
-              `Amount of images to download concurrently. Try lowering this if wordpress server crashes on import`
+              `Amount of images to download concurrently. Try lowering this if WordPress server crashes on import`
             )
             .meta({
               example: wrapOptions(`

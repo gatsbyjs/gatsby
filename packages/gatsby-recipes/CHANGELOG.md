@@ -200,7 +200,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-recipes:** Added isLocal prop to wordpress recipe ([#27523](https://github.com/gatsbyjs/gatsby/issues/27523)) ([10d3451](https://github.com/gatsbyjs/gatsby/commit/10d345111d37f6c4ef1cfd896d050f8dfdd2d349))
+- **gatsby-recipes:** Added isLocal prop to WordPress recipe ([#27523](https://github.com/gatsbyjs/gatsby/issues/27523)) ([10d3451](https://github.com/gatsbyjs/gatsby/commit/10d345111d37f6c4ef1cfd896d050f8dfdd2d349))
 
 ## [0.2.31](https://github.com/gatsbyjs/gatsby/compare/gatsby-recipes@0.2.30...gatsby-recipes@0.2.31) (2020-10-06)
 

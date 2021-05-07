@@ -114,7 +114,7 @@ export const errorPanicker = ({
       formatLogMessage(
         [
           `Unrecoverable error ${sharedError}`,
-          `\nYour wordpress host appears to be overloaded by our requests for images`,
+          `\nYour WordPress host appears to be overloaded by our requests for images`,
           `\nIn ${bold(`gatsby-config.js`)}, try lowering the ${bold(
             `requestConcurrency`
           )} for MediaItems:`,
