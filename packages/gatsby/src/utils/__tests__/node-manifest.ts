@@ -122,4 +122,14 @@ describe(`Node Manifests utils`, () => {
     expect(reporterFn.warn.mock.calls.length).toBe(0)
     expect(message).toEqual(`success`)
   })
+
+  it(`warnings helper throws in impossible foundPageBy state`, () => {
+    expect(() =>
+      warnAboutNodeManifestMappingProblems({
+        inputManifest: null,
+        pagePath: null,
+        foundPageBy: `nope`,
+      })
+    ).toThrow()
+  })
 })
