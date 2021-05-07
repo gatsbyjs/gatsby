@@ -31,7 +31,9 @@
     "cy:open:develop": "cypress open --config-file cypress-dev.json",
     "cy:open:build": "cypress open",
     "cy:run:build": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --group production",
-    "cy:run:develop": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file cypress-dev.json --group development"
+    "cy:run:develop": "node ../../scripts/cypress-run-with-conditional-record-flag.js --browser chrome --config-file cypress-dev.json --group development",
+    "reset": "node scripts/reset.js",
+    "update": "node scripts/update.js"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
