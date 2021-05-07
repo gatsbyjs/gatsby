@@ -194,8 +194,8 @@ export function warnAboutNodeManifestMappingProblems(
     case `none`:
     case `context.id`:
     case `queryTracking`: {
-      reporterFn.warn(messages[foundPageBy])
       message = messages[foundPageBy]
+      reporterFn.warn(message)
       break
     }
 
