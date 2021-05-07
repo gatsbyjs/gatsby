@@ -162,24 +162,24 @@ export function warnAboutNodeManifestMappingProblems(
   // allows overriding the reporter for tests
   { reporterFn }: { reporterFn: typeof reporter } = { reporterFn: reporter }
 ): { message: string; possibleMessages: { [key in FoundPageBy]: string } } {
-  const sharedWarning = `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`
-
-  const didntFindOwnerNodeIdWarning = `but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\n`
-
-  const possiblyInnacurateWarning = `This may result in an inaccurate node manifest (for previews or other purposes).`
+  const warnings = {
+    shared: `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`,
+    noOwnerNodeId: `but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\n`,
+    possiblyInaccurate: `This may result in an inaccurate node manifest (for previews or other purposes).`,
+  }
 
   const success = `success` as const
 
   const messages = {
     // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
-    none: `${sharedWarning} but Gatsby couldn't find a page for this node.
+    none: `${warnings.shared} but Gatsby couldn't find a page for this node.
     If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API).\n` as const,
 
     // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
-    [`context.id`]: `${sharedWarning} ${didntFindOwnerNodeIdWarning}Using the first page that was found with the node manifest id set in pageContext.id in createPage().\n${possiblyInnacurateWarning}` as const,
+    [`context.id`]: `${warnings.shared} ${warnings.noOwnerNodeId}Using the first page that was found with the node manifest id set in pageContext.id in createPage().\n${warnings.possiblyInaccurate}` as const,
 
     // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
-    queryTracking: `${sharedWarning} ${didntFindOwnerNodeIdWarning}Using the first page where this node is queried.\n${possiblyInnacurateWarning}` as const,
+    queryTracking: `${warnings.shared} ${warnings.noOwnerNodeId}Using the first page where this node is queried.\n${warnings.possiblyInaccurate}` as const,
 
     ownerNodeId: success,
     [`filesystem-route-api`]: success,
@@ -219,12 +219,15 @@ export function warnAboutNodeManifestMappingProblems(
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 async function processNodeManifest(
-  inputManifest: INodeManifest
+  inputManifest: INodeManifest,
+  { fsFn = fs, findPageOwnedByNodeIdFn = findPageOwnedByNodeId }
 ): Promise<void> {
   // map the node to a page that was created
-  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeId({
-    nodeId: inputManifest.node.id,
-  })
+  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeIdFn(
+    {
+      nodeId: inputManifest.node.id,
+    }
+  )
 
   warnAboutNodeManifestMappingProblems({
     inputManifest,
@@ -248,8 +251,8 @@ async function processNodeManifest(
 
   const manifestFileDir = path.dirname(manifestFilePath)
 
-  await fs.ensureDir(manifestFileDir)
-  await fs.writeJSON(manifestFilePath, finalManifest)
+  await fsFn.ensureDir(manifestFileDir)
+  await fsFn.writeJSON(manifestFilePath, finalManifest)
 }
 
 /**
