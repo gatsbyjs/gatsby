@@ -69,7 +69,7 @@ Some options offered in `gatsby-plugin-image`, such as AVIF and traced-svg, incr
 
 #### Decrease bundle size
 
-The build time cost of generating Javascript bundles is proportional to the size of your bundles. [Optimizations to improve bundle size](https://www.gatsbyjs.com/docs/how-to/performance/improving-site-performance/#reduce-your-javascript-bundle-cost), especially of the templates that are most commonly used, should generate significant benefits. For example, if you have a 30k-page site with 25k product pages, to optimize build time start by optimizing your product page template.
+The build time cost of generating JavaScript bundles is proportional to the size of your bundles. [Optimizations to improve bundle size](https://www.gatsbyjs.com/docs/how-to/performance/improving-site-performance/#reduce-your-javascript-bundle-cost), especially of the templates that are most commonly used, should generate significant benefits. For example, if you have a 30k-page site with 25k product pages, to optimize build time start by optimizing your product page template.
 
 ### 4. Advanced options
 

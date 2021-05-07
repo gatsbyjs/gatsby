@@ -144,4 +144,4 @@ but you should be alright since you're only running it locally.
 
 ### Use different Chrome/Chromium executable
 
-In some cases, you might have to point Puppeteer to an external installation of Chrome/Chromium (e.g., on Alpine Linux, the build-in version of Chromium does not work). You can set the `PUPPETEER_EXECUTABLE_PATH` environment variable to the path of your custom chromium installation. A list with all environment variables to configure Puppeteer can be found [at the official docs](https://pptr.dev/#?product=Puppeteer&version=v1.20.0&show=api-environment-variables).
+In some cases, you might have to point Puppeteer to an external installation of Chrome/Chromium (e.g., on Alpine Linux, the built-in version of Chromium does not work). You can set the `PUPPETEER_EXECUTABLE_PATH` environment variable to the path of your custom chromium installation. A list with all environment variables to configure Puppeteer can be found [at the official docs](https://pptr.dev/#?product=Puppeteer&version=v1.20.0&show=api-environment-variables).

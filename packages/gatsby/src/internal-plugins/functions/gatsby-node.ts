@@ -231,11 +231,11 @@ export async function onPreBootstrap({
         if (isProductionEnv) {
           if (errors.length > 0) return reject(stats.compilation.errors)
         } else {
-          const formated = formatWebpackMessages({
+          const formatted = formatWebpackMessages({
             errors: rawMessages.errors.map(e => e.message),
             warnings: [],
           })
-          reporter.error(formated.errors)
+          reporter.error(formatted.errors)
         }
 
         // Log success in dev

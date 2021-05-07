@@ -163,7 +163,7 @@ describe(`Queryable Node interfaces with @nodeInterface`, () => {
     expect(rootQueryFields.allWrongInterface).toBeUndefined()
   })
 
-  it(`shows error when not all types implementing the queryable interface als implement the Node interface`, async () => {
+  it(`shows error when not all types implementing the queryable interface also implement the Node interface`, async () => {
     dispatch(
       createTypes(`
         interface WrongInterface @nodeInterface {

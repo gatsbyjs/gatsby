@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`builds responsive sizes proberly calculates responsive values 1`] = `
+exports[`builds responsive sizes properly calculates responsive values 1`] = `
 Object {
   "aspectRatio": 1.3333333333333333,
   "base64": "data:image/jpeg;base64,bW9ja2VkQmFzZTY0",

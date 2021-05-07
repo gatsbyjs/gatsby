@@ -4,7 +4,7 @@ import { GatsbyNodeApiHelpers } from "~/utils/gatsby-types"
 import { inPreviewMode } from "."
 
 /**
- * during onCreatePage we want to figure out which node the page is dependant on
+ * during onCreatePage we want to figure out which node the page is dependent on
 and then store that page in state so we can return info about the page to WordPress
 when the page is updated during Previews.
 We do that by finding the node id on pageContext.id

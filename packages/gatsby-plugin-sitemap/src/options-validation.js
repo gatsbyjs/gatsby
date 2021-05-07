@@ -62,7 +62,7 @@ export const pluginOptionsSchema = ({ Joi }) =>
         If you override the query, you may need to pass in a custom \`resolvePagePath\` or
         \`resolvePages\` to keep everything working.
         If you fetch pages without using \`allSitePage.nodes\` query structure
-        you will definately need to customize the \`resolvePages\` function.`
+        you will definitely need to customize the \`resolvePages\` function.`
       ),
     excludes: Joi.array()
       .items(Joi.any())

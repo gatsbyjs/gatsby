@@ -142,7 +142,7 @@ class GatsbyImageHydrator extends Component<
       // Props have changed between SSR and hydration, so we need to force render instead of hydrate
       this.forceRender.current = true
     }
-    // this check mostly means people do not have the correct ref checks in place, we want to reset some state to suppport loading effects
+    // this check mostly means people do not have the correct ref checks in place, we want to reset some state to support loading effects
     if (this.props.image.images !== nextProps.image.images) {
       // reset state, we'll rely on intersection observer to reload
       if (this.unobserveRef) {

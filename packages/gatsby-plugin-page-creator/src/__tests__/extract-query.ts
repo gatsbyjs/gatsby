@@ -1,9 +1,9 @@
 import { generateQueryFromString, reverseLookupParams } from "../extract-query"
 import path from "path"
 
-// windows and mac have different seperators, all code is written with unix-like
+// windows and mac have different separators, all code is written with unix-like
 // file systems, but the underlying code uses `path.sep`. So when running tests
-// on windows, they would fail without us swapping the seperators.
+// on windows, they would fail without us swapping the separators.
 const compatiblePath = (filepath: string): string =>
   filepath.replace(/\//g, path.sep)
 

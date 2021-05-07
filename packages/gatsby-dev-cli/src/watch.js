@@ -7,7 +7,7 @@ const findWorkspaceRoot = require(`find-yarn-workspace-root`)
 
 const { publishPackagesLocallyAndInstall } = require(`./local-npm-registry`)
 const { checkDepsChanges } = require(`./utils/check-deps-changes`)
-const { getDependantPackages } = require(`./utils/get-dependant-packages`)
+const { getDependentPackages } = require(`./utils/get-dependent-packages`)
 const {
   setDefaultSpawnStdio,
   promisifiedSpawn,
@@ -278,7 +278,7 @@ async function watch(
             // gatsby package - like for example `gatsby-plugin-page-creator`
             // we need to publish both `gatsby-plugin-page-creator` and `gatsby`
             // and install `gatsby` in example site project.
-            getDependantPackages({
+            getDependentPackages({
               packageName,
               depTree,
               packages,

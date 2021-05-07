@@ -2,15 +2,15 @@
 title: Javascript tooling
 ---
 
-Gatsby offers support for the standard Javascript toolchain.
+Gatsby offers support for the standard JavaScript toolchain.
 
-## Typescript
+## TypeScript
 
-Gatsby supports [Typescript](https://www.typescriptlang.org/) automatically, with the [ability to modify the default configuration](/plugins/gatsby-plugin-typescript/) if desired.
+Gatsby supports [TypeScript](https://www.typescriptlang.org/) automatically, with the [ability to modify the default configuration](/plugins/gatsby-plugin-typescript/) if desired.
 
 ## Bundling and transpilation
 
-Gatsby uses [webpack](https://webpack.js.org/) to bundle files and [Babel](https://babeljs.io/) to transpile Javascript.
+Gatsby uses [webpack](https://webpack.js.org/) to bundle files and [Babel](https://babeljs.io/) to transpile JavaScript.
 
 - [How to configure webpack](/docs/how-to/custom-configuration/add-custom-webpack-config/)
 - [How to configure Babel](/docs/how-to/custom-configuration/babel/)

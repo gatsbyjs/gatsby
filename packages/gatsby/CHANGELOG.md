@@ -63,7 +63,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - **gatsby:** Refactor overlay utils ([#31005](https://github.com/gatsbyjs/gatsby/issues/31005)) ([4930aa5](https://github.com/gatsbyjs/gatsby/commit/4930aa5b34e08ad49177820304bb6dd262c56b3f))
 - use cpuCount for all parallel parts ([#30548](https://github.com/gatsbyjs/gatsby/issues/30548)) ([9dbb772](https://github.com/gatsbyjs/gatsby/commit/9dbb77238f23eedbb9b6dcf5ffb3453cb67bc9b8))
-- **gatsby:** honor flags disabled via config when deciding wether to add included flags ([#30992](https://github.com/gatsbyjs/gatsby/issues/30992)) ([e7327c3](https://github.com/gatsbyjs/gatsby/commit/e7327c311c0b606dc3ddc8e06507ad0c55a82f07))
+- **gatsby:** honor flags disabled via config when deciding whether to add included flags ([#30992](https://github.com/gatsbyjs/gatsby/issues/30992)) ([e7327c3](https://github.com/gatsbyjs/gatsby/commit/e7327c311c0b606dc3ddc8e06507ad0c55a82f07))
 - **gatsby:** persist pages between runs ([#28590](https://github.com/gatsbyjs/gatsby/issues/28590)) ([a0b31bc](https://github.com/gatsbyjs/gatsby/commit/a0b31bcaaa04db8ff0675b3653c841bf47c67814)), closes [#28760](https://github.com/gatsbyjs/gatsby/issues/28760) [#29431](https://github.com/gatsbyjs/gatsby/issues/29431) [#30848](https://github.com/gatsbyjs/gatsby/issues/30848)
 - **gatsby:** try to get linenumber from compile error ([#30615](https://github.com/gatsbyjs/gatsby/issues/30615)) ([7dd645d](https://github.com/gatsbyjs/gatsby/commit/7dd645d65dd971cb6eaa800895f7267fa2fa6c5c))
 - **gatsby,gatsby-plugin-offline:** register offline plugin when not on preview ([#30984](https://github.com/gatsbyjs/gatsby/issues/30984)) ([17f028d](https://github.com/gatsbyjs/gatsby/commit/17f028d7085e1e4dc7bd361134bf0230b2cb7d95))
@@ -82,7 +82,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- **gatsby:** Add Typescript types for function requests/responses ([#30991](https://github.com/gatsbyjs/gatsby/issues/30991)) ([b8692ac](https://github.com/gatsbyjs/gatsby/commit/b8692ac15bcef0c6bdbd3f6c920e36af848240b3))
+- **gatsby:** Add TypeScript types for function requests/responses ([#30991](https://github.com/gatsbyjs/gatsby/issues/30991)) ([b8692ac](https://github.com/gatsbyjs/gatsby/commit/b8692ac15bcef0c6bdbd3f6c920e36af848240b3))
 - **gatsby:** parse cookies in functions to req.cookies ([#30993](https://github.com/gatsbyjs/gatsby/issues/30993)) ([ca172c8](https://github.com/gatsbyjs/gatsby/commit/ca172c8f043c842a297f1e6029b078b94031d3b5))
 
 # [3.4.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.4.0-next.4...gatsby@3.4.0-next.5) (2021-04-20)
@@ -462,7 +462,7 @@ The migration is as simple as adding \_\_typename field to the query manually.
 
 ### Bug Fixes
 
-- **gatsby:** Only set auto optin flags if not in config ([#28627](https://github.com/gatsbyjs/gatsby/issues/28627)) ([b81e6bd](https://github.com/gatsbyjs/gatsby/commit/b81e6bdb70fbda4f02739728f79b12c166b1a188))
+- **gatsby:** Only set auto option flags if not in config ([#28627](https://github.com/gatsbyjs/gatsby/issues/28627)) ([b81e6bd](https://github.com/gatsbyjs/gatsby/commit/b81e6bdb70fbda4f02739728f79b12c166b1a188))
 - **gatsby:** require gatsby-config.js before accessing process.env ([#28572](https://github.com/gatsbyjs/gatsby/issues/28572)) ([b3f11ed](https://github.com/gatsbyjs/gatsby/commit/b3f11ed1b48113142333ccb57124fd5dc625aac5))
 
 ### Features
@@ -6691,7 +6691,7 @@ export const pageQuery = graphql`
 
 ### Added
 
-- Did the intitial build of the new gatsbyjs.org! It's in the `www` subdirectory
+- Did the initial build of the new gatsbyjs.org! It's in the `www` subdirectory
   on the 1.0 branch and is built on each push! That's my kind of integration
   testing :-) You can see the early version of the site at
   https://gatsbyjs.netlify.app/. PRs welcome!

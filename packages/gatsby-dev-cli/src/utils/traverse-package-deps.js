@@ -3,7 +3,7 @@ const path = require(`path`)
 
 /**
  * @typedef {Object} TraversePackagesDepsReturn
- * @property {Object} depTree Lookup table to check dependants for given package.
+ * @property {Object} depTree Lookup table to check dependents for given package.
  * Used to determine which packages need to be published.
  * @example
  * ```

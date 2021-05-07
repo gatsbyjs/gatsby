@@ -682,7 +682,7 @@ export const getNodesFromCacheByValue = (
       const arrUndef = filterCache.byValue.get(undefined) ?? []
 
       // Merge the two (ordered) arrays and return an ordered deduped array
-      // TODO: is there a reason left why we cant just cache this merged list?
+      // TODO: is there a reason left why we can't just cache this merged list?
       return unionNodesByCounter(arrNull, arrUndef)
     }
 

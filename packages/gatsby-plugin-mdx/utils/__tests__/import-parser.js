@@ -68,8 +68,8 @@ function getBruteForceCases() {
     import {x, import as y} from 'bar'
     import Events from "@components/events/events"
     import {x, import as y} from 'bar';
-    import foo from 'bar' // commment
-    import foo from 'bar' // commment containing confusing from "chars"
+    import foo from 'bar' // comment
+    import foo from 'bar' // comment containing confusing from "chars"
     import foo from 'bar' // import bad from 'imp'
     import foo from 'bar'//next to it
     import "./empty.css"

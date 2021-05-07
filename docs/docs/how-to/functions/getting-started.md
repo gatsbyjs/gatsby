@@ -28,9 +28,9 @@ Dynamic routing is supported for creating REST-ful APIs and other uses cases
 
 [Learn more about dynamic routes](/docs/how-to/functions/routing#dynamic-routing)
 
-## Typescript
+## TypeScript
 
-Functions can be written in JavaScript or Typescript.
+Functions can be written in JavaScript or TypeScript.
 
 ```ts:title=src/api/typescript.ts
 import { GatsbyFunctionRequest, GatsbyFunctionResponse } from "gatsby"

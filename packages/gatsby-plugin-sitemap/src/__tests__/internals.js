@@ -27,7 +27,7 @@ describe(`gatsby-plugin-sitemap internals tests`, () => {
     expect(result2).toStrictEqual(`/test/path`)
   })
 
-  it(`prefixPath should correctly concatonate path`, () => {
+  it(`prefixPath should correctly concatenate path`, () => {
     const result = prefixPath({
       url: TestPath,
       siteUrl: SiteUrl,

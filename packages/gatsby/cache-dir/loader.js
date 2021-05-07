@@ -457,7 +457,7 @@ export class BaseLoader {
         let appData
 
         if (status !== 200 && retries < 3) {
-          // Retry 3 times incase of non-200 responses
+          // Retry 3 times in case of non-200 responses
           return this.loadAppData(retries + 1)
         }
 

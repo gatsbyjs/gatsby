@@ -4,7 +4,7 @@ import {
   userPassesFeedbackRequestHeuristic,
 } from "../feedback"
 jest.mock(`date-fns/getDayOfYear`, (): (() => number) => (): number => {
-  // This is required for Hueristic 1 to always match up
+  // This is required for Heuristic 1 to always match up
   // When Math.random returns 1 (mocked in the `clearStateToAllowHeuristicsToPass` fn)
   const currentQuarter = Math.floor((new Date().getMonth() + 3) / 3)
   return 1 * 30 * 3 * currentQuarter

@@ -3073,7 +3073,7 @@ var Shadows = (function () {
     {
       key: '_cleanup',
       value: function _cleanup() {
-        // remove those identifers we put on the ShadowHost to avoid using Map()
+        // remove those identifiers we put on the ShadowHost to avoid using Map()
         Object.keys(this.hosts).forEach(function (key) {
           delete this.hosts[key]._sortingId
         }, this)

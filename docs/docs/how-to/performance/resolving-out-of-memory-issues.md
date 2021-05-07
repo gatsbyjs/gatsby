@@ -24,7 +24,7 @@ There are three types of out-of-memory issues that we see occur in Gatsby sites:
 
 - First, image processing with gatsby-plugin-image (Generating image thumbnails). This is related loosely to the number of images. but more related to the dimensions of individual images; overly large images (eg a 3,000 x 3,000 pixel JPG) can cause memory spikes.
 
-- Second, Javascript bundle creation (Building production JavaScript and CSS bundles) and page serialization (Building static HTML for pages). Depending on the size of your templates, serializing them during the page build (SSR) process can cause memory spikes.
+- Second, JavaScript bundle creation (Building production JavaScript and CSS bundles) and page serialization (Building static HTML for pages). Depending on the size of your templates, serializing them during the page build (SSR) process can cause memory spikes.
 
 - Third, memory usage from the number of "nodes" stored as data in the system. Gatsby represents data you source as "nodes" and keeps all the nodes in memory. This establishes a "baseline" level of memory usage.
 
@@ -60,7 +60,7 @@ Paid tiers of Gatsby Cloud parallelize image processing and run other parts of t
 
 #### Try reducing the number of cores
 
-Gatsby defaults to using the number of physical cores on your machine to speed up builds, and parallelizes during certain steps of the process (image processing, Javascript bundle creation, and HTML generation).
+Gatsby defaults to using the number of physical cores on your machine to speed up builds, and parallelizes during certain steps of the process (image processing, JavaScript bundle creation, and HTML generation).
 
 So if you're experiencing out of memory issues during any of those steps, you can try setting the environment variable `GATSBY_CPU_COUNT` to a lower number, like 2. Note that this will slow your builds down!
 
@@ -94,7 +94,7 @@ Overly large images being used by Gatsby image can cause memory spikes. For exam
 
 Generating AVIFs often causes increased memory usage by gatsby-plugin-image. This option is turned off by default in gatsby-plugin-image; if you've turned it on and are seeing issues, try turning it back off.
 
-### 3. Reducing crashes in generating Javascript bundles & serializing HTML pages
+### 3. Reducing crashes in generating JavaScript bundles & serializing HTML pages
 
 #### Turn off source maps generation
 

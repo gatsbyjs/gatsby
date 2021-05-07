@@ -383,7 +383,7 @@ git push -u origin master
 
 Now you're ready to link this GitHub repository right to Gatsby Cloud! Sign-in to Gatsby Cloud using the login option (GitHub or GitLab). If this is your first time logging into Gatsby Cloud, you will create a workspace where you can add multiple sites.
 
-Now, click "Add a Site" and select "Import from a Git repository." Select the Github repo that you just created, and update the Site Name if you'd like to use something different than the repo name. For now, you can skip the integrations step and when you get to the final step, click "Create Site." You'll have a Gatsby site live on a Gatsby-provided url in minutes!
+Now, click "Add a Site" and select "Import from a Git repository." Select the GitHub repo that you just created, and update the Site Name if you'd like to use something different than the repo name. For now, you can skip the integrations step and when you get to the final step, click "Create Site." You'll have a Gatsby site live on a Gatsby-provided url in minutes!
 
 Check out the reference guide on [Deploying to Gatsby Cloud](/docs/how-to/previews-deploys-hosting/deploying-to-gatsby-cloud/#set-up-an-existing-gatsby-site).
 

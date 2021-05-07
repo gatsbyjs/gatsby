@@ -281,7 +281,7 @@ export function loadPlugins(
     addGatsbyPluginCloudPluginWhenInstalled(plugins, processPlugin, rootDir)
   }
 
-  // Suppor Typescript by default but allow users to override it
+  // Support TypeScript by default but allow users to override it
   if (!configuredPluginNames.has(TYPESCRIPT_PLUGIN_NAME)) {
     plugins.push(
       processPlugin({
