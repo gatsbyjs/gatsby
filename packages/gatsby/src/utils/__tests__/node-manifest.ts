@@ -1,6 +1,9 @@
+import path from "path"
+import { INodeManifest } from "./../../redux/types"
 const {
   warnAboutNodeManifestMappingProblems,
   processNodeManifests,
+  processNodeManifest,
 } = require(`../node-manifest`)
 
 const getFakeReporter = (): {
@@ -204,5 +207,77 @@ describe(`processNodeManifests`, () => {
     )
     expect(storeDep.dispatch.mock.calls.length).toBe(1)
     expect(internalActionsDep.deleteNodeManifests.mock.calls.length).toBe(1)
+  })
+})
+
+describe(`processNodeManifest`, () => {
+  it(`processes node manifests`, async () => {
+    const pendingManifests: Array<INodeManifest> = [
+      {
+        pluginName: `test`,
+        manifestId: `1`,
+        node: { id: `1` },
+      },
+      {
+        pluginName: `test`,
+        manifestId: `2`,
+        node: { id: `2` },
+      },
+      {
+        pluginName: `test`,
+        manifestId: `3`,
+        node: { id: `3` },
+      },
+    ]
+
+    const fsFn = {
+      ensureDir: jest.fn(),
+      writeJSON: jest.fn((manifestFilePath, finalManifest) => {
+        return { manifestFilePath, finalManifest }
+      }),
+    }
+
+    const findPageOwnedByNodeIdFn = jest.fn(({ nodeId }) => {
+      return {
+        page: {
+          path: `/${nodeId}`,
+        },
+        foundPageBy: `pageContext.id`,
+      }
+    })
+
+    const warnAboutNodeManifestMappingProblemsFn = jest.fn()
+
+    await Promise.all(
+      pendingManifests.map(manifest =>
+        processNodeManifest(manifest, {
+          fsFn,
+          findPageOwnedByNodeIdFn,
+          warnAboutNodeManifestMappingProblemsFn,
+        })
+      )
+    )
+
+    expect(warnAboutNodeManifestMappingProblemsFn.mock.calls.length).toBe(
+      pendingManifests.length
+    )
+    expect(findPageOwnedByNodeIdFn.mock.calls.length).toBe(
+      pendingManifests.length
+    )
+
+    expect(fsFn.ensureDir.mock.calls.length).toBe(pendingManifests.length)
+    expect(fsFn.writeJSON.mock.calls.length).toBe(pendingManifests.length)
+
+    pendingManifests.forEach((manifest, index) => {
+      const jsonResults = fsFn.writeJSON.mock.results[index].value
+
+      expect(jsonResults.manifestFilePath).toBe(
+        `${path.join(process.cwd(), `.cache`, `node-manifests`, `test`)}/${
+          manifest.manifestId
+        }.json`
+      )
+
+      expect(jsonResults.finalManifest.page.path).toBe(`/${manifest.node.id}`)
+    })
   })
 })

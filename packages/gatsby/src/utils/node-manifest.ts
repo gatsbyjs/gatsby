@@ -216,10 +216,14 @@ export function warnAboutNodeManifestMappingProblems(
 /**
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
-async function processNodeManifest(
+export async function processNodeManifest(
   inputManifest: INodeManifest,
   // to allow overriding deps in tests:
-  { fsFn = fs, findPageOwnedByNodeIdFn = findPageOwnedByNodeId } = {}
+  {
+    fsFn = fs,
+    findPageOwnedByNodeIdFn = findPageOwnedByNodeId,
+    warnAboutNodeManifestMappingProblemsFn = warnAboutNodeManifestMappingProblems,
+  } = {}
 ): Promise<void> {
   // map the node to a page that was created
   const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeIdFn(
@@ -228,7 +232,7 @@ async function processNodeManifest(
     }
   )
 
-  warnAboutNodeManifestMappingProblems({
+  warnAboutNodeManifestMappingProblemsFn({
     inputManifest,
     pagePath: nodeManifestPage.path,
     foundPageBy,
