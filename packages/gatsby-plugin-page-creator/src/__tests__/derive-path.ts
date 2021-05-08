@@ -265,6 +265,45 @@ describe(`derive-path`, () => {
     ).toEqual(`foo/dolores/[...name]`)
   })
 
+  it(`supports index paths`, () => {
+    expect(
+      derivePath(
+        `{Page.path}`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`index`)
+    expect(
+      derivePath(
+        `{Page.path}.js`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`index.js`)
+    expect(
+      derivePath(
+        `foo/{Page.path}`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo`)
+    expect(
+      derivePath(
+        `foo/{Page.path}/bar`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar`)
+  })
+
   it(`handles special chars`, () => {
     expect(
       derivePath(
