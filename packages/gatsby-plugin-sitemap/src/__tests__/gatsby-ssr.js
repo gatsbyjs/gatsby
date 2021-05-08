@@ -28,6 +28,23 @@ describe(`gatsby-plugin-sitemap SSR API`, () => {
     expect(setHeadComponents).toMatchSnapshot()
     expect(setHeadComponents).toHaveBeenCalledTimes(1)
   })
+  it(`should create a Link in root when output is "/"`, async () => {
+    const pluginOptions = {
+      createLinkInHead: true,
+      output: `/`,
+    }
+    const setHeadComponents = jest.fn()
+
+    await onRenderBody(
+      {
+        setHeadComponents,
+      },
+      pluginOptions
+    )
+
+    expect(setHeadComponents).toMatchSnapshot()
+    expect(setHeadComponents).toHaveBeenCalledTimes(1)
+  })
   it(`should not create Link if createLinkInHead is false`, async () => {
     const pluginOptions = {
       createLinkInHead: false,

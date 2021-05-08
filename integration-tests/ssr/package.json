@@ -17,8 +17,8 @@
     "cross-env": "^5.0.2",
     "fs-extra": "^9.0.0",
     "jest": "^24.0.0",
-    "jest-cli": "^24.0.0",
     "jest-diff": "^24.0.0",
+    "jest-serializer-path": "^0.1.15",
     "npm-run-all": "4.1.5",
     "start-server-and-test": "^1.11.3"
   },
@@ -31,11 +31,11 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true gatsby develop",
+    "develop": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true CI=1 FORCE_COLOR=0 gatsby develop",
     "serve": "gatsby serve",
     "start-dev-server": "start-server-and-test develop http://localhost:8000 test:jest",
     "test": "cross-env GATSBY_EXPERIMENTAL_DEV_SSR=true npm-run-all -s build start-dev-server",
     "test-output": "node test-output.js",
-    "test:jest": "jest --config=jest.config.js --runInBand"
+    "test:jest": "jest --runInBand"
   }
 }

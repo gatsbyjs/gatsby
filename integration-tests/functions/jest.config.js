@@ -8,6 +8,6 @@ module.exports = {
   ],
   watchPathIgnorePatterns: ["src/api", ".cache"],
   transform: {
-    "^.+\\.[jt]sx?$": `<rootDir>../../jest-transformer.js`,
+    "^.+\\.[jt]sx?$": `./jest-transformer.js`,
   },
 }

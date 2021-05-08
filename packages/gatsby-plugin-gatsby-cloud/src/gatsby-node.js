@@ -56,7 +56,7 @@ exports.onPostBuild = async (
   await Promise.all([
     buildHeadersProgram(pluginData, pluginOptions, reporter),
     createRedirects(pluginData, redirects, rewrites),
-    copyFunctionsManifest(pluginData, redirects, rewrites),
+    copyFunctionsManifest(pluginData),
   ])
 }
 

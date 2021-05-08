@@ -2,7 +2,7 @@ const { spawn } = require(`child_process`)
 const path = require(`path`)
 const rimraf = require("rimraf")
 
-const gatsbyBin = path.join(`node_modules`, `.bin`, `gatsby`)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 exports.gatsbyCleanBeforeAll = async done => {
   const gatsbySiteDir = path.join(__dirname, `..`, `..`)
@@ -23,10 +23,10 @@ exports.gatsbyCleanBeforeAll = async done => {
 
 exports.spawnGatsbyProcess = (command = `develop`, env = {}) =>
   spawn(
-    gatsbyBin,
-    [command, ...(command === `develop` ? ["-H", "localhost"] : [])],
+    process.execPath,
+    [gatsbyBin, command, ...(command === `develop` ? ["-H", "localhost"] : [])],
     {
-      stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+      stdio: [`inherit`, `inherit`, `inherit`],
       env: {
         ...process.env,
         NODE_ENV: command === `develop` ? `development` : `production`,

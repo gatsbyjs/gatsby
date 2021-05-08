@@ -4,8 +4,10 @@ set -e
 # Delete unwanted plugins
 wp plugin delete akismet hello
 
+wp plugin install wordpress-seo
+
 # activate plugins
-wp plugin activate wp-graphql custom-post-type-ui wp-graphql-custom-post-type-ui advanced-custom-fields-pro basic-auth wp-graphql-acf wp-gatsby
+wp plugin activate --all
 
 # this seems to be needed now
 wp core update-db

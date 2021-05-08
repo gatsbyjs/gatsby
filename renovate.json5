@@ -5,12 +5,10 @@
     ":ignoreUnstable",
     ":prImmediately",
     ":semanticPrefixFixDepsChoreOthers",
-    ":updateNotScheduled",
     ":automergeDisabled",
     ":disablePeerDependencies",
     ":maintainLockFilesDisabled",
     ":disableRateLimiting",
-    ":label(type: maintenance)",
     ":label(topic: automation)",
     ":ignoreModulesAndTests",
     ":enableVulnerabilityAlerts",
@@ -28,7 +26,7 @@
   stabilityDays: 2,
   postUpdateOptions: ["yarnDedupeHighest"],
   timezone: "GMT",
-  schedule: ["before 7am on Monday"],
+  schedule: ["before 7am on the first day of the month"],
   packageRules: [
     {
       depTypeList: ["engines"],
@@ -57,40 +55,47 @@
     {
       groupName: "remark docs linting",
       updateTypes: ["major", "minor", "patch", "pin"],
-      paths: ["package.json"],
+      paths: ["./package.json"],
       packageNames: ["remark", "retext"],
       packagePatterns: ["^remark-", "^retext-"],
       dependencyDashboardApproval: false,
+      excludePackageNames: ["remark-mdx", "remark-mdxjs"],
     },
     {
       groupName: "eslint",
       updateTypes: ["major", "minor", "patch", "pin"],
-      paths: ["package.json"],
+      paths: ["./package.json"],
       packageNames: ["eslint"],
       packagePatterns: ["^eslint-"],
       dependencyDashboardApproval: false,
     },
     {
       groupName: "cross-env",
-      paths: ["package.json", "packages/**"],
+      paths: ["./package.json", "packages/**"],
       packageNames: ["cross-env"],
       dependencyDashboardApproval: false,
     },
     {
+      groupName: "mini-css-extract-plugin",
+      paths: ["./package.json", "packages/**"],
+      packageNames: ["mini-css-extract-plugin"],
+      dependencyDashboardApproval: false,
+    },
+    {
       groupName: "typescript",
-      paths: ["package.json", "packages/**"],
+      paths: ["./package.json", "packages/**"],
       packageNames: ["typescript"],
       dependencyDashboardApproval: false,
     },
     {
       groupName: "babel monorepo",
-      paths: ["package.json", "packages/**"],
+      paths: ["./package.json", "packages/**"],
       sourceUrlPrefixes: ["https://github.com/babel/babel"],
       dependencyDashboardApproval: false,
     },
     {
       groupName: "lodash monorepo",
-      paths: ["package.json", "packages/**"],
+      paths: ["./package.json", "packages/**"],
       sourceUrlPrefixes: ["https://github.com/lodash"],
       dependencyDashboardApproval: false,
     },
@@ -112,6 +117,26 @@
       updateTypes: ["major"],
       // force pr title to be the plugin name
       commitMessageSuffix: "for babel-preset-gatsby-package",
+      excludePackageNames: ["cross-env"],
+    },
+    {
+      groupName: "minor and patch for create-gatsby",
+      paths: ["packages/create-gatsby/"],
+      groupSlug: "create-gatsby",
+      updateTypes: ["minor", "patch"],
+      // force pr title to be the plugin name
+      commitMessageTopic: "minor and patch for create-gatsby",
+      commitMessageExtra: "",
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
+      excludePackagePatterns: ["^lodash/", "^@babel/"],
+    },
+    {
+      groupName: "major for create-gatsby",
+      paths: ["packages/create-gatsby/"],
+      groupSlug: "create-gatsby-major",
+      updateTypes: ["major"],
+      // force pr title to be the plugin name
+      commitMessageSuffix: "for create-gatsby",
       excludePackageNames: ["cross-env"],
     },
     {
@@ -192,26 +217,6 @@
       updateTypes: ["major"],
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-plugin-schema-snapshot",
-      excludePackageNames: ["cross-env"],
-    },
-    {
-      groupName: "minor and patch for gatsby-theme",
-      paths: ["packages/gatsby-theme/"],
-      groupSlug: "gatsby-theme",
-      updateTypes: ["minor", "patch"],
-      // force pr title to be the plugin name
-      commitMessageTopic: "minor and patch for gatsby-theme",
-      commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
-      excludePackagePatterns: ["^lodash/", "^@babel/"],
-    },
-    {
-      groupName: "major for gatsby-theme",
-      paths: ["packages/gatsby-theme/"],
-      groupSlug: "gatsby-theme-major",
-      updateTypes: ["major"],
-      // force pr title to be the plugin name
-      commitMessageSuffix: "for gatsby-theme",
       excludePackageNames: ["cross-env"],
     },
     {
@@ -595,6 +600,26 @@
       excludePackageNames: ["cross-env"],
     },
     {
+      groupName: "minor and patch for gatsby-plugin-gatsby-cloud",
+      paths: ["packages/gatsby-plugin-gatsby-cloud/"],
+      groupSlug: "gatsby-plugin-gatsby-cloud",
+      updateTypes: ["minor", "patch"],
+      // force pr title to be the plugin name
+      commitMessageTopic: "minor and patch for gatsby-plugin-gatsby-cloud",
+      commitMessageExtra: "",
+      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
+      excludePackagePatterns: ["^lodash/", "^@babel/"],
+    },
+    {
+      groupName: "major for gatsby-plugin-gatsby-cloud",
+      paths: ["packages/gatsby-plugin-gatsby-cloud/"],
+      groupSlug: "gatsby-plugin-gatsby-cloud-major",
+      updateTypes: ["major"],
+      // force pr title to be the plugin name
+      commitMessageSuffix: "for gatsby-plugin-gatsby-cloud",
+      excludePackageNames: ["cross-env"],
+    },
+    {
       groupName: "minor and patch for gatsby-plugin-glamor",
       paths: ["packages/gatsby-plugin-glamor/"],
       groupSlug: "gatsby-plugin-glamor",
@@ -695,23 +720,23 @@
       excludePackageNames: ["cross-env"],
     },
     {
-      groupName: "minor and patch for gatsby-plugin-guess-js",
-      paths: ["packages/gatsby-plugin-guess-js/"],
-      groupSlug: "gatsby-plugin-guess-js",
+      groupName: "minor and patch for gatsby-plugin-image",
+      paths: ["packages/gatsby-plugin-image/"],
+      groupSlug: "gatsby-plugin-image",
       updateTypes: ["minor", "patch"],
       // force pr title to be the plugin name
-      commitMessageTopic: "minor and patch for gatsby-plugin-guess-js",
+      commitMessageTopic: "minor and patch for gatsby-plugin-image",
       commitMessageExtra: "",
       excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
-      groupName: "major for gatsby-plugin-guess-js",
-      paths: ["packages/gatsby-plugin-guess-js/"],
-      groupSlug: "gatsby-plugin-guess-js-major",
+      groupName: "major for gatsby-plugin-image",
+      paths: ["packages/gatsby-plugin-image/"],
+      groupSlug: "gatsby-plugin-image-major",
       updateTypes: ["major"],
       // force pr title to be the plugin name
-      commitMessageSuffix: "for gatsby-plugin-guess-js",
+      commitMessageSuffix: "for gatsby-plugin-image",
       excludePackageNames: ["cross-env"],
     },
     {
@@ -802,7 +827,13 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-plugin-netlify-cms",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "typescript"],
+      excludePackageNames: [
+        "cross-env",
+        "lodash",
+        "lodash-es",
+        "typescript",
+        "mini-css-extract-plugin",
+      ],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2022,7 +2053,13 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-source-filesystem",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "msw", "typescript"],
+      excludePackageNames: [
+        "cross-env",
+        "lodash",
+        "lodash-es",
+        "msw",
+        "typescript",
+      ],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2103,7 +2140,19 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-recipes",
       commitMessageExtra: "",
-      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "react-reconciler", "remark-mdx", "remark-mdxjs", "typescript"],
+      excludePackageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "cross-env",
+        "express-graphql",
+        "lodash",
+        "lodash-es",
+        "react-reconciler",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+      ],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2114,7 +2163,15 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby-recipes",
       excludePackageNames: ["cross-env"],
-      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "react-reconciler", "remark-mdx", "remark-mdxjs"],
+      packageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "express-graphql",
+        "react-reconciler",
+        "remark-mdx",
+        "remark-mdxjs",
+      ],
     },
     {
       groupName: "minor and patch for gatsby-source-contentful",
@@ -2244,7 +2301,21 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby",
       commitMessageExtra: "",
-      excludePackageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "cross-env", "express-graphql", "lodash", "lodash-es", "remark-mdx", "remark-mdxjs", "typescript", "webpack-virtual-modules"],
+      matchDepTypes: ["peerDependencies", "dependencies"],
+      excludePackageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "cross-env",
+        "express-graphql",
+        "lodash",
+        "lodash-es",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+        "webpack-virtual-modules",
+        "mini-css-extract-plugin",
+      ],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {
@@ -2255,7 +2326,62 @@
       // force pr title to be the plugin name
       commitMessageSuffix: "for gatsby",
       excludePackageNames: ["cross-env"],
-      packageNames: ["@mdx-js/mdx", "@mdx-js/react", "@mdx-js/runtime", "express-graphql", "remark-mdx", "remark-mdxjs", "typescript", "webpack-virtual-modules"],
+      matchDepTypes: ["peerDependencies", "dependencies"],
+      packageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "express-graphql",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+        "webpack-virtual-modules",
+      ],
+    },
+    {
+      groupName: "minor and patch for gatsby dev dependencies",
+      paths: ["packages/gatsby/"],
+      groupSlug: "gatsby",
+      updateTypes: ["minor", "patch"],
+      // force pr title to be the plugin name
+      commitMessageTopic: "minor and patch for gatsby",
+      commitMessageExtra: "",
+      excludePackageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "cross-env",
+        "express-graphql",
+        "lodash",
+        "lodash-es",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+        "webpack-virtual-modules",
+        "mini-css-extract-plugin",
+      ],
+      matchDepTypes: ["devDependencies"],
+      excludePackagePatterns: ["^lodash/", "^@babel/"],
+    },
+    {
+      groupName: "major for gatsby dev dependencies",
+      paths: ["packages/gatsby/"],
+      groupSlug: "gatsby-major",
+      updateTypes: ["major"],
+      // force pr title to be the plugin name
+      commitMessageSuffix: "for gatsby",
+      excludePackageNames: ["cross-env"],
+      matchDepTypes: ["devDependencies"],
+      packageNames: [
+        "@mdx-js/mdx",
+        "@mdx-js/react",
+        "@mdx-js/runtime",
+        "express-graphql",
+        "remark-mdx",
+        "remark-mdxjs",
+        "typescript",
+        "webpack-virtual-modules",
+      ],
     },
     {
       groupName: "minor and patch for gatsby-admin",
@@ -2265,7 +2391,13 @@
       // force pr title to be the plugin name
       commitMessageTopic: "minor and patch for gatsby-admin",
       commitMessageExtra: "",
-      excludePackageNames: ["cross-env", "lodash", "lodash-es", "theme-ui", "typescript"],
+      excludePackageNames: [
+        "cross-env",
+        "lodash",
+        "lodash-es",
+        "theme-ui",
+        "typescript",
+      ],
       excludePackagePatterns: ["^lodash/", "^@babel/"],
     },
     {

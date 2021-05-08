@@ -29,6 +29,7 @@ describe(`filtered type definitions`, () => {
       `,
     })
 
+    expect(result.data.wpPage).toBeTruthy()
     expect(result).toMatchSnapshot()
   })
 })

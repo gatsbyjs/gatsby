@@ -9,16 +9,19 @@ jest.setTimeout(100000)
 
 const publicDir = path.join(process.cwd(), `public`)
 
-const gatsbyBin = path.join(`node_modules`, `.bin`, `gatsby`)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const manifest = {}
 const filesToRevert = {}
 
+let exitCode
+
 function runGatsbyWithRunTestSetup(runNumber = 1) {
   return function beforeAllImpl() {
+    exitCode = `reset`
     return new Promise(resolve => {
-      const gatsbyProcess = spawn(gatsbyBin, [`build`], {
-        stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+      const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
+        stdio: [`inherit`, `inherit`, `inherit`],
         env: {
           ...process.env,
           NODE_ENV: `production`,
@@ -26,7 +29,8 @@ function runGatsbyWithRunTestSetup(runNumber = 1) {
         },
       })
 
-      gatsbyProcess.on(`exit`, () => {
+      gatsbyProcess.on(`exit`, code => {
+        exitCode = code
         manifest[runNumber] = fs.readJSONSync(
           path.join(process.cwd(), `.cache`, `build-manifest-for-test-1.json`)
         )
@@ -308,6 +312,23 @@ function assertHTMLCorrectness(runNumber) {
       )
     })
   })
+
+  describe(`/extension-change/`, () => {
+    let htmlContent
+    beforeAll(() => {
+      htmlContent = fs.readFileSync(
+        path.join(process.cwd(), `public`, `extension-change`, `index.html`),
+        `utf-8`
+      )
+    })
+
+    it(`html is correctly generated using up to date code of file that changed extension`, () => {
+      // remove <!-- --> from html content string as that's impl details of react ssr
+      expect(htmlContent.replace(/<!-- -->/g, ``)).toContain(
+        `extension of imported file: ${runNumber === 10 ? `.ts` : `.js`}`
+      )
+    })
+  })
 }
 
 function assertNodeCorrectness(runNumber) {
@@ -328,11 +349,17 @@ function assertNodeCorrectness(runNumber) {
   })
 }
 
+function assertExitCode(runNumber) {
+  it(`Build was successful`, () => {
+    expect(exitCode).toEqual(0)
+  })
+}
+
 beforeAll(done => {
   fs.removeSync(path.join(__dirname, `__debug__`))
 
-  const gatsbyCleanProcess = spawn(gatsbyBin, [`clean`], {
-    stdio: [`inherit`, `inherit`, `inherit`, `inherit`],
+  const gatsbyCleanProcess = spawn(process.execPath, [gatsbyBin, `clean`], {
+    stdio: [`inherit`, `inherit`, `inherit`],
     env: {
       ...process.env,
       NODE_ENV: `production`,
@@ -344,16 +371,24 @@ beforeAll(done => {
   })
 })
 
-afterAll(() => {
+const teardownFns = []
+
+afterAll(async () => {
   Object.entries(filesToRevert).forEach(([filePath, fileContent]) => {
     fs.writeFileSync(filePath, fileContent)
   })
+
+  for (const teardownFn of teardownFns) {
+    await teardownFn()
+  }
 })
 
 describe(`First run (baseline)`, () => {
   const runNumber = 1
 
   beforeAll(runGatsbyWithRunTestSetup(runNumber))
+
+  assertExitCode(runNumber)
 
   describe(`Static Queries`, () => {
     test(`are written correctly when inline`, async () => {
@@ -591,6 +626,8 @@ describe(`Second run (different pages created, data changed)`, () => {
 
   beforeAll(runGatsbyWithRunTestSetup(runNumber))
 
+  assertExitCode(runNumber)
+
   describe(`html files`, () => {
     const type = `html`
 
@@ -685,6 +722,8 @@ describe(`Third run (js change, all pages are recreated)`, () => {
     await runGatsbyWithRunTestSetup(runNumber)()
   })
 
+  assertExitCode(runNumber)
+
   describe(`html files`, () => {
     const type = `html`
 
@@ -773,6 +812,8 @@ describe(`Fourth run (gatsby-browser change - cache get invalidated)`, () => {
     await runGatsbyWithRunTestSetup(runNumber)()
   })
 
+  assertExitCode(runNumber)
+
   describe(`html files`, () => {
     const type = `html`
 
@@ -849,6 +890,8 @@ describe(`Fifth run (.cache is deleted but public isn't)`, () => {
     fs.removeSync(path.join(process.cwd(), `.cache`))
     await runGatsbyWithRunTestSetup(runNumber)()
   })
+
+  assertExitCode(runNumber)
 
   describe(`html files`, () => {
     const type = `html`
@@ -946,6 +989,8 @@ describe(`Sixth run (change webpack plugin variant 1 - invalidate webpack cache)
     fs.writeFileSync(changedFileAbspath, newContent)
     await runGatsbyWithRunTestSetup(runNumber)()
   })
+
+  assertExitCode(runNumber)
 
   describe(`html files`, () => {
     const type = `html`
@@ -1045,6 +1090,8 @@ describe(`Seventh run (change webpack plugin variant 2 - invalidate webpack cach
     await runGatsbyWithRunTestSetup(runNumber)()
   })
 
+  assertExitCode(runNumber)
+
   describe(`html files`, () => {
     const type = `html`
 
@@ -1139,6 +1186,8 @@ describe(`Eight run (ssr-only change - only ssr compilation hash changes)`, () =
     await runGatsbyWithRunTestSetup(runNumber)()
   })
 
+  assertExitCode(runNumber)
+
   describe(`html files`, () => {
     const type = `html`
 
@@ -1231,6 +1280,8 @@ describe(`Ninth run (no change in any file that is bundled, we change untracked 
     await runGatsbyWithRunTestSetup(runNumber)()
   })
 
+  assertExitCode(runNumber)
+
   describe(`html files`, () => {
     const type = `html`
 
@@ -1279,6 +1330,120 @@ describe(`Ninth run (no change in any file that is bundled, we change untracked 
 
   // Ninth run - no bundle should change as we don't change anything that IS bundled
   assertWebpackBundleChanges({ browser: false, ssr: false, runNumber })
+
+  assertHTMLCorrectness(runNumber)
+
+  assertNodeCorrectness(runNumber)
+})
+
+describe(`Tenth run (changing extension and content of imported file - making sure webpack cache handles this well)`, () => {
+  const runNumber = 10
+
+  const expectedPages = [
+    `/stale-pages/only-not-in-first`,
+    `/page-query-dynamic-10/`,
+  ]
+
+  const unexpectedPages = [
+    `/stale-pages/only-in-first/`,
+    `/page-query-dynamic-1/`,
+    `/page-query-dynamic-2/`,
+    `/page-query-dynamic-3/`,
+    `/page-query-dynamic-4/`,
+    `/page-query-dynamic-5/`,
+    `/page-query-dynamic-6/`,
+    `/page-query-dynamic-7/`,
+    `/page-query-dynamic-8/`,
+    `/page-query-dynamic-9/`,
+  ]
+
+  beforeAll(async () => {
+    // make change to gatsby-ssr
+    const changedFileAbspath = path.join(
+      process.cwd(),
+      `src`,
+      `components`,
+      `file-that-will-change-extension.js`
+    )
+
+    const newFileAbspath = changedFileAbspath.replace(`.js`, `.ts`)
+
+    if (changedFileAbspath === newFileAbspath) {
+      throw new Error(`Test setup failed`)
+    }
+
+    const changedFileOriginalContent = fs.readFileSync(
+      changedFileAbspath,
+      `utf-8`
+    )
+    filesToRevert[changedFileAbspath] = changedFileOriginalContent
+
+    const newContent = changedFileOriginalContent.replace(`.js`, `.ts`)
+
+    if (newContent === changedFileOriginalContent) {
+      throw new Error(`Test setup failed`)
+    }
+
+    fs.writeFileSync(newFileAbspath, newContent)
+    fs.removeSync(changedFileAbspath)
+
+    teardownFns.unshift(() => {
+      fs.removeSync(newFileAbspath)
+    })
+
+    await runGatsbyWithRunTestSetup(runNumber)()
+  })
+
+  assertExitCode(runNumber)
+
+  describe(`html files`, () => {
+    const type = `html`
+
+    describe(`should have expected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected html files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+
+    it(`should recreate all html files`, () => {
+      expect(manifest[runNumber].generated.sort()).toEqual(
+        manifest[runNumber].allPages.sort()
+      )
+    })
+  })
+
+  describe(`page-data files`, () => {
+    const type = `page-data`
+
+    describe(`should have expected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: expectedPages,
+        type,
+        shouldExist: true,
+      })
+    })
+
+    describe(`shouldn't have unexpected page-data files`, () => {
+      assertFileExistenceForPagePaths({
+        pagePaths: unexpectedPages,
+        type,
+        shouldExist: false,
+      })
+    })
+  })
+
+  // Tenth run - we change extension and content of imported file so compilation hashes should change
+  assertWebpackBundleChanges({ browser: true, ssr: true, runNumber })
 
   assertHTMLCorrectness(runNumber)
 

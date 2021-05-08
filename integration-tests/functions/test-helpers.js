@@ -85,6 +85,15 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`function errors don't crash the server`, () => {
+      // This test mainly just shows that the server doesn't crash.
+      test(`normal`, async () => {
+        const result = await fetch(`${host}/api/error-send-function-twice`)
+
+        expect(result.status).toEqual(200)
+      })
+    })
+
     describe(`response formats`, () => {
       test(`returns json correctly`, async () => {
         const res = await fetch(`${host}/api/i-am-json`)
@@ -217,6 +226,15 @@ export function runTests(env, host) {
         const result = await fetch(`${host}/api/redirect-me`)
 
         expect(result.url).toEqual(host + `/`)
+      })
+    })
+
+    describe(`functions can have custom middleware`, () => {
+      test(`normal`, async () => {
+        const result = await fetch(`${host}/api/cors`)
+
+        const headers = Object.fromEntries(result.headers)
+        expect(headers[`access-control-allow-origin`]).toEqual(`*`)
       })
     })
 

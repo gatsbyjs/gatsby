@@ -194,7 +194,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
             await Promise.resolve(fnToExecute(req, res))
           } catch (e) {
             console.error(e)
-            res.sendStatus(500)
+            // Don't send the error if that would cause another error.
+            if (!res.headersSent) {
+              res.sendStatus(500)
+            }
           }
 
           const end = Date.now()

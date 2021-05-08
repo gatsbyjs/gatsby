@@ -150,7 +150,7 @@ commands:
         default: false
       trigger_pattern:
         type: string
-        default: "packages/*|.circleci/*"
+        default: "packages/*|.circleci/*|scripts/e2e-test.sh"
       test_path:
         type: string
       test_command:
@@ -169,6 +169,9 @@ commands:
 
       - <<: *attach_to_bootstrap
       - run:
+          name: Install gatsby-dev
+          command: yarn global add gatsby-dev-cli
+      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
@@ -179,7 +182,7 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
       - <<: *check_lockfile
@@ -264,7 +267,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
-          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
+          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*|scripts/e2e-test.sh
 
   integration_tests_structured_logging:
     executor: node
@@ -377,8 +380,8 @@ jobs:
       CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
       - e2e-test:
-          test_path: e2e-tests/themes/development-runtime
-          test_command: yarn test
+          test_path: e2e-tests/themes
+          test_command: cd development-runtime; yarn test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
@@ -387,8 +390,8 @@ jobs:
       CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
     steps:
       - e2e-test:
-          test_path: e2e-tests/themes/production-runtime
-          test_command: yarn test
+          test_path: e2e-tests/themes
+          test_command: cd production-runtime; yarn test
 
   mdx_e2e_tests:
     <<: *e2e-executor
@@ -490,7 +493,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
           shell: bash.exe
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:

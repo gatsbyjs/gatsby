@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.5.0-next.1...gatsby-plugin-preact@5.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-preact ([#31169](https://github.com/gatsbyjs/gatsby/issues/31169)) ([62f0ad6](https://github.com/gatsbyjs/gatsby/commit/62f0ad6f2d5648e5cc1d9b3ef2096f4ed45827f3))
+
+# [5.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.5.0-next.0...gatsby-plugin-preact@5.5.0-next.1) (2021-05-01)
+
+### Features
+
+- **gatsby-plugin-preact:** enable error-overlay ([#30613](https://github.com/gatsbyjs/gatsby/issues/30613)) ([0dee367](https://github.com/gatsbyjs/gatsby/commit/0dee367aae2166262b7ce9dd4c6a12affc236edd))
+
 # [5.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-preact@5.4.0-next.0...gatsby-plugin-preact@5.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-plugin-preact
