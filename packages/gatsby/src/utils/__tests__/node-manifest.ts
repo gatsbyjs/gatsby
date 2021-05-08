@@ -150,14 +150,14 @@ describe(`processNodeManifests`, () => {
           nodeManifests: [],
         }
       }),
-      dispatch: jest.fn(() => {}),
+      dispatch: jest.fn(),
     }
 
     const internalActionsDep = {
-      deleteNodeManifests: jest.fn(() => {}),
+      deleteNodeManifests: jest.fn(),
     }
 
-    const processNodeManifestFn = jest.fn(() => {})
+    const processNodeManifestFn = jest.fn()
     const reporterFn = getFakeReporter()
 
     await processNodeManifests({
@@ -180,14 +180,14 @@ describe(`processNodeManifests`, () => {
           nodeManifests: [{}, {}, {}],
         }
       }),
-      dispatch: jest.fn(() => {}),
+      dispatch: jest.fn(),
     }
 
     const internalActionsDep = {
-      deleteNodeManifests: jest.fn(() => {}),
+      deleteNodeManifests: jest.fn(),
     }
 
-    const processNodeManifestFn = jest.fn(() => {})
+    const processNodeManifestFn = jest.fn()
     const reporterFn = getFakeReporter()
 
     await processNodeManifests({
