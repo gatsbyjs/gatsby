@@ -1,3 +1,4 @@
+import { getNode } from "./../redux/nodes"
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../redux/"
@@ -223,12 +224,24 @@ export async function processNodeManifest(
     fsFn = fs,
     findPageOwnedByNodeIdFn = findPageOwnedByNodeId,
     warnAboutNodeManifestMappingProblemsFn = warnAboutNodeManifestMappingProblems,
+    reporterFn = reporter,
+    getNodeFn = getNode,
   } = {}
 ): Promise<void> {
+  const nodeId = inputManifest.node.id
+  const fullNode = getNodeFn(nodeId)
+
+  if (!fullNode) {
+    reporterFn.warn(
+      `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}.`
+    )
+    return
+  }
+
   // map the node to a page that was created
   const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeIdFn(
     {
-      nodeId: inputManifest.node.id,
+      nodeId,
     }
   )
 

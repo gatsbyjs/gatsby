@@ -212,6 +212,8 @@ describe(`processNodeManifests`, () => {
 
 describe(`processNodeManifest`, () => {
   it(`processes node manifests`, async () => {
+    const nodes = [{ id: `1` }, { id: `2` }, { id: `3` }]
+
     const pendingManifests: Array<INodeManifest> = [
       {
         pluginName: `test`,
@@ -228,6 +230,11 @@ describe(`processNodeManifest`, () => {
         manifestId: `3`,
         node: { id: `3` },
       },
+      {
+        pluginName: `test`,
+        manifestId: `4`,
+        node: { id: `4` },
+      },
     ]
 
     const fsFn = {
@@ -236,6 +243,13 @@ describe(`processNodeManifest`, () => {
         return { manifestFilePath, finalManifest }
       }),
     }
+
+    const getNode = (nodeId: string): { id: string } | undefined =>
+      nodes.find(({ id }) => nodeId === id)
+
+    const getNodeFn = jest.fn(getNode)
+
+    const reporterFn = getFakeReporter()
 
     const findPageOwnedByNodeIdFn = jest.fn(({ nodeId }) => {
       return {
@@ -254,21 +268,30 @@ describe(`processNodeManifest`, () => {
           fsFn,
           findPageOwnedByNodeIdFn,
           warnAboutNodeManifestMappingProblemsFn,
+          reporterFn,
+          getNodeFn,
         })
       )
     )
 
-    expect(warnAboutNodeManifestMappingProblemsFn.mock.calls.length).toBe(
-      pendingManifests.length
-    )
-    expect(findPageOwnedByNodeIdFn.mock.calls.length).toBe(
-      pendingManifests.length
+    expect(reporterFn.warn.mock.calls.length).toBe(1)
+    expect(reporterFn.warn.mock.results[0].value).toBe(
+      `Plugin test called unstable_createNodeManifest for a node which doesn't exist with an id of 4.`
     )
 
-    expect(fsFn.ensureDir.mock.calls.length).toBe(pendingManifests.length)
-    expect(fsFn.writeJSON.mock.calls.length).toBe(pendingManifests.length)
+    expect(warnAboutNodeManifestMappingProblemsFn.mock.calls.length).toBe(
+      nodes.length
+    )
+    expect(findPageOwnedByNodeIdFn.mock.calls.length).toBe(nodes.length)
+
+    expect(fsFn.ensureDir.mock.calls.length).toBe(nodes.length)
+    expect(fsFn.writeJSON.mock.calls.length).toBe(nodes.length)
 
     pendingManifests.forEach((manifest, index) => {
+      if (!getNode(manifest.node.id)) {
+        return
+      }
+
       const jsonResults = fsFn.writeJSON.mock.results[index].value
 
       expect(jsonResults.manifestFilePath).toBe(
