@@ -1,3 +1,5 @@
+import reporter from "gatsby-cli/lib/reporter"
+
 import {
   IGatsbyState,
   ICreateNodeManifest,
@@ -10,7 +12,24 @@ export const nodeManifestReducer = (
 ): IGatsbyState["nodeManifests"] => {
   switch (action.type) {
     case `CREATE_NODE_MANIFEST`: {
-      // @todo check payload for correct values and throw errors
+      const { manifestId, pluginName, node } = action.payload
+
+      if (typeof manifestId !== `string`) {
+        reporter.warn(
+          `Plugin ${pluginName} called unstable_createNodeManifest with a manifestId that isn't a string.`
+        )
+
+        return state
+      }
+
+      if (!node?.id) {
+        reporter.warn(
+          `Plugin ${pluginName} called unstable_createNodeManifest but didn't provide a node.`
+        )
+
+        return state
+      }
+
       state.push({
         ...action.payload,
         node: {
