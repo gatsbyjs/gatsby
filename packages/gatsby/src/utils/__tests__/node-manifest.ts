@@ -1,17 +1,25 @@
-const { warnAboutNodeManifestMappingProblems } = require(`../node-manifest`)
+const {
+  warnAboutNodeManifestMappingProblems,
+  processNodeManifests,
+} = require(`../node-manifest`)
 
 const getFakeReporter = (): {
   warn: jest.MockedFunction<(arg0: string) => string>
+  info: jest.MockedFunction<(arg0: string) => string>
 } => {
   return {
     warn: jest.fn(message => {
       console.warn(message)
       return message
     }),
+    info: jest.fn(message => {
+      console.info(message)
+      return message
+    }),
   }
 }
 
-describe(`Node Manifests utils`, () => {
+describe(`warnAboutNodeManifestMappingProblems`, () => {
   it(`warns about no page found for manifest node id`, () => {
     const reporterFn = getFakeReporter()
 
@@ -131,5 +139,70 @@ describe(`Node Manifests utils`, () => {
         foundPageBy: `nope`,
       })
     ).toThrow()
+  })
+})
+
+describe(`processNodeManifests`, () => {
+  it(`Doesn't do anything special when there are no pending manifests`, async () => {
+    const storeDep = {
+      getState: jest.fn(() => {
+        return {
+          nodeManifests: [],
+        }
+      }),
+      dispatch: jest.fn(() => {}),
+    }
+
+    const internalActionsDep = {
+      deleteNodeManifests: jest.fn(() => {}),
+    }
+
+    const processNodeManifestFn = jest.fn(() => {})
+    const reporterFn = getFakeReporter()
+
+    await processNodeManifests({
+      storeDep,
+      internalActionsDep,
+      processNodeManifestFn,
+      reporterFn,
+    })
+
+    expect(processNodeManifestFn.mock.calls.length).toBe(0)
+    expect(internalActionsDep.deleteNodeManifests.mock.calls.length).toBe(0)
+    expect(reporterFn.info.mock.calls.length).toBe(0)
+    expect(storeDep.dispatch.mock.calls.length).toBe(0)
+  })
+
+  it(`accurately logs out how many manifest files were written to disk`, async () => {
+    const storeDep = {
+      getState: jest.fn(() => {
+        return {
+          nodeManifests: [{}, {}, {}],
+        }
+      }),
+      dispatch: jest.fn(() => {}),
+    }
+
+    const internalActionsDep = {
+      deleteNodeManifests: jest.fn(() => {}),
+    }
+
+    const processNodeManifestFn = jest.fn(() => {})
+    const reporterFn = getFakeReporter()
+
+    await processNodeManifests({
+      storeDep,
+      internalActionsDep,
+      processNodeManifestFn,
+      reporterFn,
+    })
+
+    expect(processNodeManifestFn.mock.calls.length).toBe(3)
+    expect(reporterFn.info.mock.calls.length).toBe(1)
+    expect(reporterFn.info.mock.results[0].value).toBe(
+      `Wrote out 3 node page manifest files`
+    )
+    expect(storeDep.dispatch.mock.calls.length).toBe(1)
+    expect(internalActionsDep.deleteNodeManifests.mock.calls.length).toBe(1)
   })
 })

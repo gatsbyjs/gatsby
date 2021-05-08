@@ -136,8 +136,6 @@ async function findPageOwnedByNodeId({
     }
   }
 
-  debugger
-
   return {
     page: {
       path: pagePath || null,
@@ -220,7 +218,8 @@ export function warnAboutNodeManifestMappingProblems(
  */
 async function processNodeManifest(
   inputManifest: INodeManifest,
-  { fsFn = fs, findPageOwnedByNodeIdFn = findPageOwnedByNodeId }
+  // to allow overriding deps in tests:
+  { fsFn = fs, findPageOwnedByNodeIdFn = findPageOwnedByNodeId } = {}
 ): Promise<void> {
   // map the node to a page that was created
   const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeIdFn(
@@ -260,8 +259,13 @@ async function processNodeManifest(
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests(): Promise<void> {
-  const { nodeManifests } = store.getState()
+export async function processNodeManifests({
+  storeDep = store,
+  internalActionsDep = internalActions,
+  processNodeManifestFn = processNodeManifest,
+  reporterFn = reporter,
+} = {}): Promise<void> {
+  const { nodeManifests } = storeDep.getState()
 
   const totalManifests = nodeManifests.length
 
@@ -269,14 +273,16 @@ export async function processNodeManifests(): Promise<void> {
     return
   }
 
-  await Promise.all(nodeManifests.map(processNodeManifest))
+  await Promise.all(
+    nodeManifests.map(manifest => processNodeManifestFn(manifest))
+  )
 
-  reporter.info(
+  reporterFn.info(
     `Wrote out ${totalManifests} node page manifest file${
       totalManifests > 1 ? `s` : ``
     }`
   )
 
   // clean up all pending manifests from the store
-  store.dispatch(internalActions.deleteNodeManifests())
+  storeDep.dispatch(internalActionsDep.deleteNodeManifests())
 }
