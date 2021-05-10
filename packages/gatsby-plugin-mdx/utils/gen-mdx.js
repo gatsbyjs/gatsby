@@ -12,7 +12,6 @@ const htmlAttrToJSXAttr = require(`./babel-plugin-html-attr-to-jsx-attr`)
 const removeExportKeywords = require(`./babel-plugin-remove-export-keywords`)
 const BabelPluginPluckImports = require(`./babel-plugin-pluck-imports`)
 const { parseImportBindings } = require(`./import-parser`)
-const { MDX_LOADER_PASSTHROUGH_LOCATION } = require(`../constants`)
 
 /*
  * function mutateNode({
