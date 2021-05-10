@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.5.0-next.0...gatsby-plugin-manifest@3.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-plugin-manifest ([#31160](https://github.com/gatsbyjs/gatsby/issues/31160)) ([f3ee3fd](https://github.com/gatsbyjs/gatsby/commit/f3ee3fdbd1c82bcbe3093c1af28c8e45872f3825))
+
 # [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-manifest@3.4.0-next.3...gatsby-plugin-manifest@3.5.0-next.0) (2021-04-23)
 
 ### Bug Fixes

@@ -19,6 +19,7 @@ class Dev404Page extends React.Component {
     const initialPagePathSearchTerms = urlState.filter ? urlState.filter : ``
 
     this.state = {
+      hasMounted: false,
       showCustom404: false,
       initPagePaths: pagePaths,
       pagePathSearchTerms: initialPagePathSearchTerms,
@@ -30,6 +31,12 @@ class Dev404Page extends React.Component {
     this.showCustom404 = this.showCustom404.bind(this)
     this.handlePagePathSearch = this.handlePagePathSearch.bind(this)
     this.handleSearchTermChange = this.handleSearchTermChange.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      hasMounted: true,
+    })
   }
 
   showCustom404() {
@@ -78,6 +85,10 @@ class Dev404Page extends React.Component {
   }
 
   render() {
+    if (!this.state.hasMounted) {
+      return null
+    }
+
     // Detect when the query returns the default function node that's added when functions
     // are *not* enabled. That seems the simplest way to communicate whether
     // functions are enabled or not to this page.

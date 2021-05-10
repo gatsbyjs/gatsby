@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.4...gatsby@3.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update dependency mini-css-extract-plugin to v1.6.0 ([#31158](https://github.com/gatsbyjs/gatsby/issues/31158)) ([137630e](https://github.com/gatsbyjs/gatsby/commit/137630ec719ae67836755a44ddd8451ef25435ed))
+- **gatsby:** update plugin api types ([#30819](https://github.com/gatsbyjs/gatsby/issues/30819)) ([aa09e6f](https://github.com/gatsbyjs/gatsby/commit/aa09e6fb2f525242680d53d77b5ce7f76b5b63a8))
+
+### Features
+
+- **gatsby:** Don't send error for function errors if headers are already sent ([#31265](https://github.com/gatsbyjs/gatsby/issues/31265)) ([d9c78a0](https://github.com/gatsbyjs/gatsby/commit/d9c78a052d2187ad6808b584185f731c0988d610))
+
+### Performance Improvements
+
+- **gatsby:** use fastq instead of better-queue + refactor ([#31269](https://github.com/gatsbyjs/gatsby/issues/31269)) ([fef8d6b](https://github.com/gatsbyjs/gatsby/commit/fef8d6ba5fdb1386fd7716dc59423c65fa9fd402))
+
+# [3.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.3...gatsby@3.5.0-next.4) (2021-05-05)
+
+### Bug Fixes
+
+- **gatsby:** add generic type to GatsbyFunctionResponse ([#31182](https://github.com/gatsbyjs/gatsby/issues/31182)) ([4b9d0d4](https://github.com/gatsbyjs/gatsby/commit/4b9d0d4d4757d006ec385bb80f1db415a9636f63))
+- **gatsby:** rehydration issue in Dev404Page with DEV_SSR ([#30581](https://github.com/gatsbyjs/gatsby/issues/30581)) ([5005588](https://github.com/gatsbyjs/gatsby/commit/5005588c92101d8be19c23d9404bdd952ac3ed73))
+- **gatsby:** upgrade css-minimizer-webpack-plugin to v2 ([#31176](https://github.com/gatsbyjs/gatsby/issues/31176)) ([257de93](https://github.com/gatsbyjs/gatsby/commit/257de93a6e1caf46cbad4172ef342e928aa4b97e))
+
+### Performance Improvements
+
+- **gatsby:** Create page object & SitePage node in same action creator ([#31104](https://github.com/gatsbyjs/gatsby/issues/31104)) ([d1005fa](https://github.com/gatsbyjs/gatsby/commit/d1005fae2fe273f26cc650137426369c4c84b067)), closes [#31236](https://github.com/gatsbyjs/gatsby/issues/31236)
+
 # [3.5.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.2...gatsby@3.5.0-next.3) (2021-05-01)
 
 ### Bug Fixes
