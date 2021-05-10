@@ -222,7 +222,7 @@ describe(`Load plugins`, () => {
       )
     })
 
-    it(`loads gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
+    it(`doesn't loads gatsby-plugin-gatsby-cloud if not provided and installed`, async () => {
       resolveFrom.mockImplementation(
         (rootDir, pkg) => rootDir + `/node_modules/` + pkg
       )
@@ -231,6 +231,29 @@ describe(`Load plugins`, () => {
       }
 
       let plugins = await loadPlugins(config, process.cwd())
+
+      plugins = replaceFieldsThatCanVary(plugins)
+
+      expect(plugins).toEqual(
+        expect.arrayContaining([
+          expect.not.objectContaining({
+            name: `gatsby-plugin-gatsby-cloud`,
+          }),
+        ])
+      )
+    })
+
+    it(`loads gatsby-plugin-gatsby-cloud if not provided and installed on gatsby-cloud`, async () => {
+      resolveFrom.mockImplementation(
+        (rootDir, pkg) => rootDir + `/node_modules/` + pkg
+      )
+      const config = {
+        plugins: [],
+      }
+
+      process.env.GATSBY_CLOUD = `true`
+      let plugins = await loadPlugins(config, process.cwd())
+      delete process.env.GATSBY_CLOUD
 
       plugins = replaceFieldsThatCanVary(plugins)
 
@@ -258,7 +281,9 @@ describe(`Load plugins`, () => {
         ],
       }
 
+      process.env.GATSBY_CLOUD = `true`
       let plugins = await loadPlugins(config, process.cwd())
+      delete process.env.GATSBY_CLOUD
 
       plugins = replaceFieldsThatCanVary(plugins)
 

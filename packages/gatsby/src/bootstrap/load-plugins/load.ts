@@ -277,7 +277,10 @@ export function loadPlugins(
     )
   })
 
-  if (!configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME)) {
+  if (
+    !configuredPluginNames.has(GATSBY_CLOUD_PLUGIN_NAME) &&
+    (process.env.GATSBY_CLOUD === `true` || process.env.GATSBY_CLOUD === `1`)
+  ) {
     addGatsbyPluginCloudPluginWhenInstalled(plugins, processPlugin, rootDir)
   }
 
