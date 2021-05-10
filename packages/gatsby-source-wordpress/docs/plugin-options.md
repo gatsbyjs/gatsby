@@ -804,7 +804,7 @@ An array of options to search and replace strings in nodes. See below for option
 
 ### searchAndReplace[].search
 
-The regex rule used to search a terme.
+The regex rule used to search a terme. Using a 'regular expression literal' is recommended over a simple regex string.
 
 **Field type**: `String`
 
