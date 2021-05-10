@@ -536,7 +536,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
       .items(
         Joi.object({
           search: Joi.string()
-            .description(`The regex rule used to search a terme.`)
+            .description(`The regex rule used to search a terme. Using a 'regular expression literal' is recommended over a simple regex string.`)
             .meta({
               example: wrapOptions(`
                 searchAndReplace: [
