@@ -95,6 +95,8 @@ const hasDefaultExport = (str, options) => {
 }
 
 module.exports = async function mdxLoader(content) {
+  const callback = this.async()
+
   const {
     isolateMDXComponent,
     getNode: rawGetNode,
@@ -111,17 +113,20 @@ module.exports = async function mdxLoader(content) {
   if (isolateMDXComponent && !resourceQuery.includes(`type=component`)) {
     const { data } = grayMatter(content)
 
-    return `import MDXContent from "/${path.relative(
+    const requestPath = `/${path.relative(
       this.rootContext,
       this.resourcePath
-    )}?type=component";
-      
+    )}?type=component`
+
+    return callback(
+      null,
+      `import MDXContent from "${requestPath}";
 export default MDXContent;
+export * from "${requestPath}"
 
 export const _frontmatter = ${JSON.stringify(data)};`
+    )
   }
-
-  const callback = this.async()
 
   const options = withDefaultOptions(pluginOptions)
 
