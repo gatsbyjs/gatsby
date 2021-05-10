@@ -58,7 +58,7 @@ test(`Search and replace node strings using regex matches`, async () => {
     pluginOptions: {
       searchAndReplace: [
         { search: /(S|s)ome stuff/gm, replace: `some other thing` },
-        { search: `https://old-site\.com`, replace: `https://new-site.com` },
+        { search: `https://old-site.com`, replace: `https://new-site.com` },
       ]
     }
   })
