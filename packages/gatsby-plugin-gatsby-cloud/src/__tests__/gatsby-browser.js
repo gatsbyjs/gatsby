@@ -2,24 +2,20 @@ import React from "react"
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event"
 import { render, screen, act } from "@testing-library/react"
-// import Enzyme, { shallow, mount, unmount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-
-// Enzyme.configure({ adapter: new Adapter() });
 
 import { wrapRootElement } from "../gatsby-browser"
 import Indicator from "../components/Indicator"
-import GatsbyIndicatorButton from "../components/GatsbyIndicatorButton"
-import LinkIndicatorButton from "../components/LinkIndicatorButton"
-import InfoIndicatorButton from "../components/InfoIndicatorButton"
+// import GatsbyIndicatorButton from "../components/GatsbyIndicatorButton"
+// import LinkIndicatorButton from "../components/LinkIndicatorButton"
+// import InfoIndicatorButton from "../components/InfoIndicatorButton"
 
 import { server } from "../mocks/server"
 
-global.fetch = require("node-fetch")
+global.fetch = require(`node-fetch`)
 
-const createUrl = (path) => `https://test.com/${path}`
+const createUrl = path => `https://test.com/${path}`
 
-process.env.GATSBY_PREVIEW_AUTH_TOKEN = 'token'
+process.env.GATSBY_PREVIEW_AUTH_TOKEN = `token`
 
 beforeAll(() => {
   server.listen()
@@ -95,21 +91,19 @@ describe(`Preview status indicator`, () => {
   })
 
   describe(`Indicator component`, () => {
-
     describe(`success state`, () => {
       beforeEach(async () => {
-        process.env.GATSBY_PREVIEW_API_URL = createUrl('success')
+        process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
 
         await waitForPoll()
       })
 
       describe(`gatsby button`, () => {
         beforeEach(async () => {
-          await act(() => { 
-            render(<Indicator /> )
+          await act(() => {
+            render(<Indicator />)
             return waitForPoll(150)
           })
-
         })
 
         it(`renders when more recent successful build available`, async () => {
@@ -121,7 +115,7 @@ describe(`Preview status indicator`, () => {
 
     describe(`Success state`, () => {
       beforeEach(async () => {
-        process.env.GATSBY_PREVIEW_API_URL = createUrl(success)
+        process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
 
         await waitForPoll(100)
       })
