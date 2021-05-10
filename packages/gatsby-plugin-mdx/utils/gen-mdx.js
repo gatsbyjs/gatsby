@@ -2,8 +2,6 @@ const babel = require(`@babel/core`)
 const grayMatter = require(`gray-matter`)
 const mdx = require(`@mdx-js/mdx`)
 const objRestSpread = require(`@babel/plugin-proposal-object-rest-spread`)
-const path = require(`path`)
-const fs = require(`fs-extra`)
 
 const debug = require(`debug`)(`gatsby-plugin-mdx:gen-mdx`)
 
