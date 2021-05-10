@@ -4,11 +4,11 @@ const searchIndex = client.initIndex(`npm-search`)
 
 exports.browse = ({ ...params }) => {
   let hits = []
-  const browser = searchIndex.browseAll(params)
 
-  return new Promise((resolve, reject) => {
-    browser.on(`result`, content => (hits = hits.concat(content.hits)))
-    browser.on(`end`, () => resolve(hits))
-    browser.on(`error`, err => reject(err))
-  })
+  return searchIndex
+    .browseObjects({
+      batch: batch => (hits = hits.concat(batch)),
+      ...params,
+    })
+    .then(() => hits)
 }

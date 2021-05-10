@@ -5,7 +5,7 @@ import path from "path"
  * We need to use private Module methods in this polyfill
  */
 interface IModulePrivateMethods {
-  _nodeModulePaths: (directory: string) => string[]
+  _nodeModulePaths: (directory: string) => Array<string>
   _compile: (src: string, file: string) => void
 }
 

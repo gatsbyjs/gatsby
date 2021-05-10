@@ -5,14 +5,14 @@
   "version": "1.0.0",
   "author": "Madalyn Parker <hello@madalyn.dev>",
   "dependencies": {
-    "@reach/skip-nav": "^0.8.0",
-    "gatsby": "^2.23.12",
-    "gatsby-plugin-manifest": "^2.4.14",
-    "gatsby-plugin-react-helmet": "^3.3.6",
-    "gatsby-source-filesystem": "^2.3.14",
-    "lodash": "^4.17.15",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "@reach/skip-nav": "^0.11.2",
+    "gatsby": "next",
+    "gatsby-plugin-manifest": "next",
+    "gatsby-plugin-react-helmet": "next",
+    "gatsby-source-filesystem": "next",
+    "lodash": "^4.17.20",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "keywords": [
@@ -31,7 +31,7 @@
     "test:e2e": "start-server-and-test develop http://localhost:8001 cy:open"
   },
   "devDependencies": {
-    "cypress": "^4.9.0",
-    "start-server-and-test": "^1.11.0"
+    "cypress": "^4.12.1",
+    "start-server-and-test": "^1.11.3"
   }
 }

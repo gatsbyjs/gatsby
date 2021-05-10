@@ -1,6 +1,6 @@
-const generate = require(`@babel/generator`).default
+import generate from "@babel/generator"
 
-const buildPluginNode = require(`./build-plugin-node`)
+import buildPluginNode from "./build-plugin-node"
 
 const testPluginNode = obj => {
   const ast = buildPluginNode(obj)

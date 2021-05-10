@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.5.0-next.0...gatsby-transformer-javascript-frontmatter@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.4.0-next.0...gatsby-transformer-javascript-frontmatter@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.3.0-next.1...gatsby-transformer-javascript-frontmatter@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.3.0-next.0...gatsby-transformer-javascript-frontmatter@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.2.0-next.0...gatsby-transformer-javascript-frontmatter@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.1.0-next.2...gatsby-transformer-javascript-frontmatter@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.1.0-next.1...gatsby-transformer-javascript-frontmatter@3.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.1.0-next.0...gatsby-transformer-javascript-frontmatter@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@3.0.0-next.0...gatsby-transformer-javascript-frontmatter@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.11.0-next.0...gatsby-transformer-javascript-frontmatter@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.10.0-next.0...gatsby-transformer-javascript-frontmatter@2.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.9.0-next.0...gatsby-transformer-javascript-frontmatter@2.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.8.0-next.0...gatsby-transformer-javascript-frontmatter@2.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.7.0-next.0...gatsby-transformer-javascript-frontmatter@2.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.6.0-next.0...gatsby-transformer-javascript-frontmatter@2.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.5.0-next.0...gatsby-transformer-javascript-frontmatter@2.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.4.0-next.0...gatsby-transformer-javascript-frontmatter@2.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.3.15](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.3.14...gatsby-transformer-javascript-frontmatter@2.3.15) (2020-10-20)
+
+### Performance Improvements
+
+- implement shouldOnCreateNode for all our plugins/benchmarks ([#27545](https://github.com/gatsbyjs/gatsby/issues/27545)) ([df914d9](https://github.com/gatsbyjs/gatsby/commit/df914d94a7c47c6082b6f165eb44dc6e15e12c7d))
+
+## [2.3.14](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.3.13...gatsby-transformer-javascript-frontmatter@2.3.14) (2020-10-06)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.3.13](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.3.12...gatsby-transformer-javascript-frontmatter@2.3.13) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
+## [2.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.3.11...gatsby-transformer-javascript-frontmatter@2.3.12) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-transformer-javascript-frontmatter
+
 ## [2.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-transformer-javascript-frontmatter@2.3.10...gatsby-transformer-javascript-frontmatter@2.3.11) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-transformer-javascript-frontmatter

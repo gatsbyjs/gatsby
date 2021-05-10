@@ -1,4 +1,4 @@
-import { match } from "@reach/router/lib/utils"
+import { pick } from "@gatsbyjs/reach-router/lib/utils"
 import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
 
@@ -8,7 +8,10 @@ let matchPaths = []
 const trimPathname = rawPathname => {
   const pathname = decodeURIComponent(rawPathname)
   // Remove the pathPrefix from the pathname.
-  const trimmedPathname = stripPrefix(pathname, __BASE_PATH__)
+  const trimmedPathname = stripPrefix(
+    pathname,
+    decodeURIComponent(__BASE_PATH__)
+  )
     // Remove any hashfragment
     .split(`#`)[0]
     // Remove search query
@@ -54,13 +57,48 @@ export const setMatchPaths = value => {
 export const findMatchPath = rawPathname => {
   const trimmedPathname = cleanPath(rawPathname)
 
-  for (const { matchPath, path } of matchPaths) {
-    if (match(matchPath, trimmedPathname)) {
-      return normalizePagePath(path)
+  const pickPaths = matchPaths.map(({ path, matchPath }) => {
+    return {
+      path: matchPath,
+      originalPath: path,
     }
+  })
+
+  const path = pick(pickPaths, trimmedPathname)
+
+  if (path) {
+    return normalizePagePath(path.route.originalPath)
   }
 
   return null
+}
+
+/**
+ * Return a matchpath params from reach/router rules
+ * if `match-paths.json` contains `{ ":bar/*foo" }`, and the path is /baz/zaz/zoo
+ * then it returns
+ *  { bar: baz, foo: zaz/zoo }
+ *
+ * @param {string} rawPathname A raw pathname
+ * @return {object}
+ */
+export const grabMatchParams = rawPathname => {
+  const trimmedPathname = cleanPath(rawPathname)
+
+  const pickPaths = matchPaths.map(({ path, matchPath }) => {
+    return {
+      path: matchPath,
+      originalPath: path,
+    }
+  })
+
+  const path = pick(pickPaths, trimmedPathname)
+
+  if (path) {
+    return path.params
+  }
+
+  return {}
 }
 
 // Given a raw URL path, returns the cleaned version of it (trim off

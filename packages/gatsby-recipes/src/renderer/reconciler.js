@@ -1,6 +1,12 @@
-const ReactReconciler = require(`react-reconciler`)
+import ReactReconciler from "react-reconciler"
 
-const debug = require(`debug`)(`recipes-reconciler`)
+// const debugInner = require(`debug`)(`recipes-reconciler`)
+const debug = (title, data) => {
+  if (process.env.DEBUG) {
+    console.log(title, data)
+  }
+  // debugInner(title, JSON.stringify(data, null, 2))
+}
 
 const reconciler = ReactReconciler({
   finalizeInitialChildren(element, type, props) {},
@@ -37,10 +43,19 @@ const reconciler = ReactReconciler({
     debug(`creating text instance`, text)
     return { text }
   },
+  commitTextUpdate(textInstance, oldText, newText) {
+    debug(`updating text instance`, newText)
+    textInstance.text = newText
+    return textInstance
+  },
   appendChildToContainer(container, child) {
-    debug(`appending child to container`, { container, child })
     container.children = container.children || []
-    const index = container.children.findIndex(c => c.key === child.key)
+    const propName = child.key ? `key` : `_uuid`
+    const index = container.children.findIndex(
+      c => c[propName] === child[propName]
+    )
+
+    debug(`appending child to container at index ${index}`)
 
     if (index === -1) {
       container.children.push(child)
@@ -91,13 +106,11 @@ const reconciler = ReactReconciler({
 const RecipesRenderer = {
   render(whatToRender, currState) {
     debug(`rendering recipe`)
-    let container = reconciler.createContainer(currState, false, false)
+    const container = reconciler.createContainer(currState, false, false)
     reconciler.updateContainer(whatToRender, container, null, null)
-
-    debug(`render result`, JSON.stringify(currState, null, 2))
 
     return currState
   },
 }
 
-module.exports = RecipesRenderer
+export default RecipesRenderer

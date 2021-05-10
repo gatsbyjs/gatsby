@@ -10,8 +10,8 @@ import { publicActions, internalActions } from "../redux/actions"
 
 export const removeStaleJobs = (
   state: IGatsbyState
-): IRemoveStaleJobAction[] => {
-  const actions: IRemoveStaleJobAction[] = []
+): Array<IRemoveStaleJobAction> => {
+  const actions: Array<IRemoveStaleJobAction> = []
 
   // If any of our finished jobs are stale we remove them to keep our cache small
   state.jobsV2.complete.forEach(

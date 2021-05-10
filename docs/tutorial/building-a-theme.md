@@ -107,8 +107,8 @@ You should now see the following dependencies in your `site/package.json`:
   "dependencies": {
     "gatsby": "^2.9.11",
     "gatsby-theme-events": "*",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   }
 }
 ```
@@ -155,14 +155,14 @@ The `gatsby-theme-events/package.json` file should now include the following:
 ```json:title=gatsby-theme-events/package.json
 {
   "peerDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
-    "gatsby": "^2.9.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "gatsby": "^3.0.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   }
 }
 ```
@@ -332,7 +332,7 @@ exports.sourceNodes = ({ actions }) => {
 1. You'll use the `createTypes` to create the new `Event` type
 2. The `Event` type will implement the typical Gatsby `Node` interface.
 3. You'll use `@dontInfer`, because rather than Gatsby inferring fields, you'll be defining them explicitly.
-4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/actions/#createTypes)_.
+4. In addition to an `id` field, you'll create new fields for each data point associated with an event (name, location, startDate, endDate, url). _To read more detail about creating types, check out the [`createTypes` documentation](/docs/reference/config-files/actions/#createTypes)_.
 5. You'll also create a `slug` field. You'll notice your event data doesn't include "slug" data. You'll define this in the next step.
 
 ### Define resolvers for any custom fields (slug)
@@ -1098,7 +1098,7 @@ You can make your theme styles extendable using the `gatsby-plugin-theme-ui` pac
 Install dependencies:
 
 ```shell
-yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/core @emotion/styled @mdx-js/react
+yarn workspace gatsby-theme-events add gatsby-plugin-theme-ui theme-ui @emotion/react @emotion/styled @mdx-js/react
 ```
 
 Then, add the `gatsby-plugin-theme-ui` plugin to the `gatsby-theme-events/gatsby-config.js` file:
@@ -1267,7 +1267,7 @@ yarn workspace site develop
 
 ![Theme UI changes starting to take effect on the site. For example, the header is now purple.](./images/building-a-theme-theme-ui-changes.png)
 
-To continue applying theme styles, you can use the `Style` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
+To continue applying theme styles, you can use the `Styled` import from Theme UI. For example, in the `event-list.js` component, change the `<h1>`, `<ul>` and `<li>` elements to reference their themed styles:
 
 ```jsx:title=gatsby-theme-events/src/components/event-list.js
 import React from "react"
@@ -1335,17 +1335,17 @@ It's important to namespace your theme. It helps differentiate between published
   },
   "peerDependencies": {
     "gatsby": "^2.13.19",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0 || ^17.0.0",
+    "react-dom": "^16.9.0 || ^17.0.0"
   },
   "devDependencies": {
     "gatsby": "^2.13.19",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.14",
-    "@emotion/styled": "^10.0.14",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
     "@mdx-js/react": "^1.0.27",
     "gatsby-plugin-theme-ui": "^0.2.6",
     "gatsby-source-filesystem": "^2.1.5",

@@ -1,15 +1,16 @@
 /* eslint-disable no-invalid-this */
-import path from "path"
-import { store } from "../redux"
+
+import { store, emitter } from "../redux"
+import { IAddPendingTemplateDataWriteAction } from "../redux/types"
+import { clearDirtyQueriesListToEmitViaWebsocket } from "../redux/actions/internal"
 import { Server as HTTPSServer } from "https"
 import { Server as HTTPServer } from "http"
-import fs from "fs"
-import { readPageData, IPageDataWithQueryResult } from "../utils/page-data"
+import { IPageDataWithQueryResult } from "../utils/page-data"
 import telemetry from "gatsby-telemetry"
 import url from "url"
 import { createHash } from "crypto"
-import { normalizePagePath, denormalizePagePath } from "./normalize-page-path"
-import socketIO from "socket.io"
+import { findPageByPath } from "./find-page-by-path"
+import { Server as SocketIO, Socket } from "socket.io"
 
 export interface IPageQueryResult {
   id: string
@@ -24,133 +25,79 @@ export interface IStaticQueryResult {
 type PageResultsMap = Map<string, IPageQueryResult>
 type QueryResultsMap = Map<string, IStaticQueryResult>
 
-/**
- * Get cached page query result for given page path.
- * @param {string} pagePath Path to a page.
- */
-const getCachedPageData = async (
-  pagePath: string
-): Promise<IPageQueryResult> => {
-  const { program, pages } = store.getState()
-  const publicDir = path.join(program.directory, `public`)
-  if (pages.has(denormalizePagePath(pagePath)) || pages.has(pagePath)) {
-    try {
-      const pageData: IPageDataWithQueryResult = await readPageData(
-        publicDir,
-        pagePath
-      )
-
-      return {
-        result: pageData,
-        id: pagePath,
-      }
-    } catch (err) {
-      throw new Error(
-        `Error loading a result for the page query in "${pagePath}". Query was not run and no cached result was found.`
-      )
-    }
-  }
-
-  return {
-    id: pagePath,
-    result: undefined,
-  }
+function hashPaths(paths: Array<string>): Array<string> {
+  return paths.map(path => createHash(`sha256`).update(path).digest(`hex`))
 }
 
-const hashPaths = (paths?: string[]): undefined | Array<string | undefined> => {
-  if (!paths) {
-    return undefined
-  }
-  return paths.map(path => {
-    if (!path) {
-      return undefined
-    }
-    return createHash(`sha256`).update(path).digest(`hex`)
-  })
+interface IClientInfo {
+  activePath: string | null
+  socket: Socket
 }
-
-/**
- * Get cached StaticQuery results for components that Gatsby didn't run query yet.
- * @param {QueryResultsMap} resultsMap Already stored results for queries that don't need to be read from files.
- * @param {string} directory Root directory of current project.
- */
-const getCachedStaticQueryResults = (
-  resultsMap: QueryResultsMap,
-  directory: string
-): QueryResultsMap => {
-  const cachedStaticQueryResults: QueryResultsMap = new Map()
-  const { staticQueryComponents } = store.getState()
-  staticQueryComponents.forEach(staticQueryComponent => {
-    // Don't read from file if results were already passed from query runner
-    if (resultsMap.has(staticQueryComponent.hash)) return
-    const filePath = path.join(
-      directory,
-      `public`,
-      `static`,
-      `d`,
-      `${staticQueryComponent.hash}.json`
-    )
-    const fileResult = fs.readFileSync(filePath, `utf-8`)
-    if (fileResult === `undefined`) {
-      console.log(
-        `Error loading a result for the StaticQuery in "${staticQueryComponent.componentPath}". Query was not run and no cached result was found.`
-      )
-      return
-    }
-    cachedStaticQueryResults.set(staticQueryComponent.hash, {
-      result: JSON.parse(fileResult),
-      id: staticQueryComponent.hash,
-    })
-  })
-  return cachedStaticQueryResults
-}
-
-const getRoomNameFromPath = (path: string): string => `path-${path}`
 
 export class WebsocketManager {
   activePaths: Set<string> = new Set()
-  connectedClients = 0
+  clients: Set<IClientInfo> = new Set()
   errors: Map<string, string> = new Map()
   pageResults: PageResultsMap = new Map()
   staticQueryResults: QueryResultsMap = new Map()
-  websocket: socketIO.Server | undefined
+  websocket: SocketIO | undefined
 
-  init = ({
-    directory,
-    server,
-  }: {
-    directory: string
-    server: HTTPSServer | HTTPServer
-  }): socketIO.Server => {
-    const cachedStaticQueryResults = getCachedStaticQueryResults(
-      this.staticQueryResults,
-      directory
-    )
-    this.staticQueryResults = new Map([
-      ...this.staticQueryResults,
-      ...cachedStaticQueryResults,
-    ])
+  init = ({ server }: { server: HTTPSServer | HTTPServer }): SocketIO => {
+    // make typescript happy, else it complained about this.websocket being undefined
+    const websocket = new SocketIO(server, {
+      // we see ping-pong timeouts on gatsby-cloud when socket.io is running for a while
+      // increasing it should help
+      // @see https://github.com/socketio/socket.io/issues/3259#issuecomment-448058937
+      pingTimeout: 30000,
+      // whitelist all (https://github.com/expressjs/cors#configuration-options)
+      cors: {
+        origin: true,
+      },
+      cookie: true,
+    })
+    this.websocket = websocket
 
-    this.websocket = socketIO(server)
-
-    this.websocket.on(`connection`, socket => {
-      let activePath: string | null = null
-      if (socket?.handshake?.headers?.referer) {
-        const path = url.parse(socket.handshake.headers.referer).path
-        if (path) {
-          activePath = path
-          this.activePaths.add(path)
+    const updateServerActivePaths = (): void => {
+      const serverActivePaths = new Set<string>()
+      for (const client of this.clients) {
+        if (client.activePath) {
+          serverActivePaths.add(client.activePath)
         }
       }
+      this.activePaths = serverActivePaths
+    }
 
-      this.connectedClients += 1
-      // Send already existing static query results
-      this.staticQueryResults.forEach(result => {
-        socket.send({
-          type: `staticQueryResult`,
-          payload: result,
-        })
-      })
+    websocket.on(`connection`, socket => {
+      const clientInfo: IClientInfo = {
+        activePath: null,
+        socket,
+      }
+      this.clients.add(clientInfo)
+
+      const setActivePath = (
+        newActivePath: string | null,
+        fallbackTo404: boolean = false
+      ): void => {
+        let activePagePath: string | null = null
+        if (newActivePath) {
+          const page = findPageByPath(
+            store.getState(),
+            newActivePath,
+            fallbackTo404
+          )
+          if (page) {
+            activePagePath = page.path
+          }
+        }
+        clientInfo.activePath = activePagePath
+        updateServerActivePaths()
+      }
+
+      if (socket?.handshake?.headers?.referer) {
+        const path = url.parse(socket.handshake.headers.referer).path
+        setActivePath(path, true)
+      }
+
       this.errors.forEach((message, errorID) => {
         socket.send({
           type: `overlayError`,
@@ -161,84 +108,66 @@ export class WebsocketManager {
         })
       })
 
-      const leaveRoom = (path: string): void => {
-        socket.leave(getRoomNameFromPath(path))
-        if (!this.websocket) return
-        const leftRoom = this.websocket.sockets.adapter.rooms[
-          getRoomNameFromPath(path)
-        ]
-        if (!leftRoom || leftRoom.length === 0) {
-          this.activePaths.delete(path)
-        }
-      }
-
-      const getDataForPath = async (path: string): Promise<void> => {
-        if (!this.pageResults.has(path)) {
-          try {
-            const result = await getCachedPageData(path)
-
-            this.pageResults.set(path, result)
-          } catch (err) {
-            console.log(err.message)
-
-            return
-          }
-        }
-
-        socket.send({
-          type: `pageQueryResult`,
-          why: `getDataForPath`,
-          payload: this.pageResults.get(path),
-        })
-
-        if (this.connectedClients > 0) {
-          telemetry.trackCli(
-            `WEBSOCKET_PAGE_DATA_UPDATE`,
-            {
-              siteMeasurements: {
-                clientsCount: this.connectedClients,
-                paths: hashPaths(Array.from(this.activePaths)),
-              },
-            },
-            { debounce: true }
-          )
-        }
-      }
-
-      socket.on(`getDataForPath`, getDataForPath)
-
       socket.on(`registerPath`, (path: string): void => {
-        socket.join(getRoomNameFromPath(path))
-        activePath = path
-        this.activePaths.add(path)
+        setActivePath(path, true)
       })
 
       socket.on(`disconnect`, (): void => {
-        if (activePath) leaveRoom(activePath)
-        this.connectedClients -= 1
+        setActivePath(null)
+        this.clients.delete(clientInfo)
       })
 
-      socket.on(`unregisterPath`, (path: string): void => {
-        leaveRoom(path)
+      socket.on(`unregisterPath`, (_path: string): void => {
+        setActivePath(null)
       })
     })
 
-    return this.websocket
+    if (process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND) {
+      // page-data marked stale due to dirty query tracking
+      const boundEmitStalePageDataPathsFromDirtyQueryTracking = this.emitStalePageDataPathsFromDirtyQueryTracking.bind(
+        this
+      )
+      emitter.on(
+        `CREATE_PAGE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `CREATE_NODE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `DELETE_NODE`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+      emitter.on(
+        `QUERY_EXTRACTED`,
+        boundEmitStalePageDataPathsFromDirtyQueryTracking
+      )
+    }
+
+    // page-data marked stale due to static query hashes change
+    emitter.on(
+      `ADD_PENDING_TEMPLATE_DATA_WRITE`,
+      this.emitStalePageDataPathsFromStaticQueriesAssignment.bind(this)
+    )
+
+    return websocket
   }
 
-  getSocket = (): socketIO.Server | undefined => this.websocket
+  getSocket = (): SocketIO | undefined => this.websocket
 
   emitStaticQueryData = (data: IStaticQueryResult): void => {
     this.staticQueryResults.set(data.id, data)
 
     if (this.websocket) {
       this.websocket.send({ type: `staticQueryResult`, payload: data })
-      if (this.connectedClients > 0) {
+
+      if (this.clients.size > 0) {
         telemetry.trackCli(
           `WEBSOCKET_EMIT_STATIC_PAGE_DATA_UPDATE`,
           {
             siteMeasurements: {
-              clientsCount: this.connectedClients,
+              clientsCount: this.clients.size,
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
@@ -249,18 +178,17 @@ export class WebsocketManager {
   }
 
   emitPageData = (data: IPageQueryResult): void => {
-    data.id = normalizePagePath(data.id)
     this.pageResults.set(data.id, data)
 
     if (this.websocket) {
       this.websocket.send({ type: `pageQueryResult`, payload: data })
 
-      if (this.connectedClients > 0) {
+      if (this.clients.size > 0) {
         telemetry.trackCli(
           `WEBSOCKET_EMIT_PAGE_DATA_UPDATE`,
           {
             siteMeasurements: {
-              clientsCount: this.connectedClients,
+              clientsCount: this.clients.size,
               paths: hashPaths(Array.from(this.activePaths)),
             },
           },
@@ -278,8 +206,42 @@ export class WebsocketManager {
     }
 
     if (this.websocket) {
-      this.websocket.send({ type: `overlayError`, payload: { id, message } })
+      this.websocket.send({
+        type: `overlayError`,
+        payload: { id, message },
+      })
     }
+  }
+
+  emitStalePageDataPathsFromDirtyQueryTracking(): void {
+    const dirtyQueries = store.getState().queries
+      .dirtyQueriesListToEmitViaWebsocket
+
+    if (this.emitStalePageDataPaths(dirtyQueries)) {
+      store.dispatch(clearDirtyQueriesListToEmitViaWebsocket())
+    }
+  }
+
+  emitStalePageDataPathsFromStaticQueriesAssignment(
+    pendingTemplateDataWrite: IAddPendingTemplateDataWriteAction
+  ): void {
+    this.emitStalePageDataPaths(
+      Array.from(pendingTemplateDataWrite.payload.pages)
+    )
+  }
+
+  emitStalePageDataPaths(stalePageDataPaths: Array<string>): boolean {
+    if (stalePageDataPaths.length > 0) {
+      if (this.websocket) {
+        this.websocket.send({
+          type: `stalePageData`,
+          payload: { stalePageDataPaths },
+        })
+
+        return true
+      }
+    }
+    return false
   }
 }
 

@@ -24,7 +24,7 @@ To build the user interface for searching, this guide will use [React InstantSea
 
 ## Setting up the project
 
-This guide will set up a search based on the [Gatsby starter blog](/starters/gatsbyjs/gatsby-starter-blog/). You can of course base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
+This guide will set up a search based on the [Gatsby starter blog](/starters/gatsbyjs/gatsby-starter-blog/). You can base it on your own project instead, but that might require minor modifications to the code, depending on your page structure and the frameworks you use.
 
 Create a new site using
 
@@ -32,7 +32,7 @@ Create a new site using
 gatsby new gatsby-algolia-guide https://github.com/gatsbyjs/gatsby-starter-blog
 ```
 
-The starter blog contains the pages you will index in the directory `content/blog`. These are Markdown files that have the [frontmatter field](/docs/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) `title`. It is referenced when configuring the Algolia query. If you call this field something else, the query needs to be modified.
+The starter blog contains the pages you will index in the directory `content/blog`. These are Markdown files that have the [frontmatter field](/docs/how-to/routing/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files) `title`. It is referenced when configuring the Algolia query. If you call this field something else, the query needs to be modified.
 
 ## Indexing
 
@@ -54,7 +54,7 @@ Then, go to [the 'API Keys' section of your Algolia profile](https://www.algolia
 
 ![The API Keys section of the Algolia profile](./images/algolia-api-keys.png)
 
-Copy out the Application ID, Search-Only API Key, and Admin API Key from Algolia and create a file called `.env` in the root of your project (`gatsby-algolia-guide` if created as described above). This file contains your [project environment variables](/docs/environment-variables). Replace the placeholders with your copied values:
+Copy out the Application ID, Search-Only API Key, and Admin API Key from Algolia and create a file called `.env` in the root of your project (`gatsby-algolia-guide` if created as described above). This file contains your [project environment variables](/docs/how-to/local-development/environment-variables). Replace the placeholders with your copied values:
 
 ```text:title=.env
 GATSBY_ALGOLIA_APP_ID=<App ID>
@@ -191,7 +191,7 @@ The guide will use the following frameworks:
 
 - [React InstantSearch](https://community.algolia.com/react-instantsearch), a component library provided by Algolia for easily building search interfaces.
 - [Algolia Search](https://www.npmjs.com/package/algoliasearch) provides the API client for calling Algolia.
-- [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/packages/gatsby-plugin-styled-components/).
+- [Styled Components](https://styled-components.com) for embedding the CSS in the code, integrated using the [Gatsby styled component plugin](/plugins/gatsby-plugin-styled-components/).
 - [Styled Icons](https://styled-icons.js.org/) provides the magnifying glass icon for the search bar.
 
 Styled Components can also be replaced by any other CSS solution you prefer.
@@ -313,7 +313,7 @@ You now need to hook up the two components to each other and perform the actual 
 
 ```jsx:title=src/components/search/index.js
 import algoliasearch from "algoliasearch/lite"
-import { createRef, default as React, useState } from "react"
+import { createRef, default as React, useState, useMemo } from "react"
 import { InstantSearch } from "react-instantsearch-dom"
 import { ThemeProvider } from "styled-components"
 import StyledSearchBox from "./styled-search-box"
@@ -331,9 +331,13 @@ export default function Search({ indices }) {
   const rootRef = createRef()
   const [query, setQuery] = useState()
   const [hasFocus, setFocus] = useState(false)
-  const searchClient = algoliasearch(
-    process.env.GATSBY_ALGOLIA_APP_ID,
-    process.env.GATSBY_ALGOLIA_SEARCH_KEY
+  const searchClient = useMemo(
+    () =>
+      algoliasearch(
+        process.env.GATSBY_ALGOLIA_APP_ID,
+        process.env.GATSBY_ALGOLIA_SEARCH_KEY
+      ),
+    []
   )
 
   useClickOutside(rootRef, () => setFocus(false))
@@ -361,6 +365,8 @@ export default function Search({ indices }) {
 The `ThemeProvider` exports variables for the CSS to use (this is the [theming](https://styled-components.com/docs/advanced#theming) functionality of `styled-components`). If you are using `styled-components` elsewhere in your project you probably want to place it at the root of your widget hierarchy rather than in the search widget itself.
 
 The `hasFocus` variable tracks whether the search box is currently in focus. When it is, it should display the input field (if not, only the search icon button is visible).
+
+The `searchClient` variable is [memoized](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid re-creating the Algolia search client when the `Search` component is re-rendered. This is important for performance, as the client caches searches to minimise the number of requests made to Algolia.
 
 `StyledSearchRoot` is the root of the whole component. The React hook `useClickOutside` provides a callback if the user clicks anywhere else on the page, in which case it should close.
 
@@ -559,7 +565,7 @@ const Layout = ({ location, title, children }) => {
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <a href="https://www.gatsbyjs.com">Gatsby</a>
       </footer>
     </div>
   )
@@ -588,7 +594,7 @@ You therefore need to declare the same environment variables you put in `.env` i
 
 ![Netlify environment variable configuration](./images/algolia-netlify-env.png)
 
-The Netlify documentation has more information on [how to configure environment variables in Netlify](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables). Also see the chapter [Environment Variables](/docs/environment-variables) for an overview of environment variables in Gatsby.
+The Netlify documentation has more information on [how to configure environment variables in Netlify](https://docs.netlify.com/configure-builds/environment-variables/#declare-variables). Also see the [Environment Variables](/docs/how-to/local-development/environment-variables) guide for an overview of environment variables in Gatsby.
 
 ## Additional Resources
 

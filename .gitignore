@@ -26,8 +26,6 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
-examples/biz-website/public/
-examples/blog/public/
 integration-tests/gatsby-cli/execution-folder/*
 *.un~
 dist
@@ -40,8 +38,10 @@ test/**/public
 public/
 node_modules/
 e2e-tests/gatsby-pnp/
+__diff_output__/
 .cache/
 .netlify
+.Rhistory
 
 # IDE specific
 .idea/
@@ -51,6 +51,7 @@ e2e-tests/gatsby-pnp/
 # misc
 .serverless/
 .eslintcache
+scripts/.env
 
 # lock files
 yarn.lock

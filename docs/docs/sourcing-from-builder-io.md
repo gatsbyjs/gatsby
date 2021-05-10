@@ -2,7 +2,7 @@
 title: Sourcing from Builder.io
 ---
 
-[Builder.io](https://builder.io) has all the benefits of a modern headless CMS platform, plus the power of an easy to learn drag and drop editor that enables everyone to edit more than just content. Builder.io + Gatsby empowers your entire team to create performant and fully customizable pages quickly.
+[Builder.io](https://builder.io) has all the benefits of a modern headless CMS platform, plus the power of a drag and drop editor that enables everyone to edit more than just content. Builder.io + Gatsby empowers your entire team to create performant and fully customizable pages quickly.
 
 <img src="https://imgur.com/HjBWIbv.gif" alt="Editor example" />
 
@@ -24,7 +24,7 @@ gatsby new my-builder-site https://github.com/BuilderIO/gatsby-starter-builder
 
 ### Existing project:
 
-Use [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/) which will expose Builder.io data and optionally generate pages dynamically from a provided templates.
+Use [@builder.io/gatsby plugin](/plugins/@builder.io/gatsby/) which will expose Builder.io data and optionally generate pages dynamically from a provided templates.
 
 ## Query Builder.io data
 
@@ -64,6 +64,6 @@ query($path: String!) {
 ## Learn more
 
 - [Builder.io GraphQL docs](https://www.builder.io/c/docs/graphql-api)
-- [@builder.io/gatsby plugin](/packages/@builder.io/gatsby/)
+- [@builder.io/gatsby plugin](/plugins/@builder.io/gatsby/)
 - [Design system example](https://github.com/BuilderIO/builder/tree/master/examples/react-design-system)
 - [Official docs](https://www.builder.io/c/docs/getting-started)

@@ -2,65 +2,46 @@
 title: Quick Start
 ---
 
-This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/tutorial/)!
+This quick start is intended for intermediate to advanced developers. For a gentler intro to Gatsby, [head to our tutorial](/docs/tutorial/)!
 
-## Use the Gatsby CLI
+## Getting started with Gatsby
 
-<EggheadEmbed
-  lessonLink="https://egghead.io/lessons/gatsby-quick-start-with-gatsby-from-the-command-line-5bf2403a"
-  lessonTitle="Quick Start with Gatsby: Create, Develop, and Build Gatsby Sites From the Command Line"
-/>
-
-### Install the Gatsby CLI
+1. Create a new site
 
 ```shell
-npm install -g gatsby-cli
+npm init gatsby
 ```
 
-> The above command installs Gatsby CLI globally on your machine.
+Follow the prompts to choose your preferred CMS, styling tools and additional features.
 
-### Create a new site
+2. Once everything is downloaded you will see a message with instructions for navigating to your site and running it locally.
+
+It will look like this, but use your project's directory.
+
+Start by going to the directory with
 
 ```shell
-gatsby new gatsby-site https://github.com/gatsbyjs/gatsby-starter-hello-world
+cd my-gatsby-site
 ```
 
-### Change directories into site folder
+Start the local development server with
 
 ```shell
-cd gatsby-site
-```
-
-### Start development server
-
-```shell
-gatsby develop
+npm run develop
 ```
 
 Gatsby will start a hot-reloading development environment accessible by default at `http://localhost:8000`.
 
+3. Now you're ready to make changes to your site!
+
 Try editing the home page in `src/pages/index.js`. Saved changes will live reload in the browser.
 
-### Create a production build
+## What's next?
 
-```shell
-gatsby build
-```
+### Add more features
 
-Gatsby will perform an optimized production build for your site, generating static HTML and per-route JavaScript code bundles.
+[Install and configure additional plugins](/docs/recipes/) to quickly add additional functionality to your site.
 
-### Serve the production build locally
+### Deploy your site
 
-```shell
-gatsby serve
-```
-
-Gatsby starts a local HTML server for testing your built site. Remember to build your site using `gatsby build` before using this command.
-
-### Access documentation for CLI commands
-
-To see detailed documentation for the CLI commands, run `gatsby --help` in the terminal.
-
-For specific commands, run `gatsby COMMAND_NAME --help` e.g. `gatsby new --help`.
-
-For more information on the Gatsby CLI, visit the [CLI reference](/docs/gatsby-cli/) section of the docs.
+Try using [Gatsby Cloud](https://www.gatsbyjs.com/cloud/) to build and deploy your site to one of many hosting providers.

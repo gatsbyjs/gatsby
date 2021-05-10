@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-typescript",
   "description": "Adds TypeScript support to Gatsby",
-  "version": "2.4.16",
+  "version": "3.6.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,19 +10,22 @@
     "Noah Lange <noahrlange@gmail.com>"
   ],
   "dependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.1",
-    "@babel/plugin-proposal-numeric-separator": "^7.10.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.3",
-    "@babel/preset-typescript": "^7.10.1",
-    "@babel/runtime": "^7.10.3",
-    "babel-plugin-remove-graphql-queries": "^2.9.15"
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-numeric-separator": "^7.12.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@babel/runtime": "^7.12.5",
+    "babel-plugin-remove-graphql-queries": "^3.6.0-next.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.6.0-next.0",
+    "cross-env": "^7.0.3"
+  },
+  "peerDependencies": {
+    "gatsby": "^3.0.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typescript#readme",
   "keywords": [
@@ -43,6 +46,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

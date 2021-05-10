@@ -20,7 +20,7 @@ const { mdxHTMLLoader: loader } = require(`../utils/render-html`)
 const { interopDefault } = require(`../utils/interop-default`)
 
 async function getCounts({ mdast }) {
-  let counts = {}
+  const counts = {}
 
   // convert the mdxast to back to mdast
   remove(mdast, `import`)
@@ -44,9 +44,9 @@ async function getCounts({ mdast }) {
   }
 
   return {
-    paragraphs: counts.ParagraphNode,
-    sentences: counts.SentenceNode,
-    words: counts.WordNode,
+    paragraphs: counts.ParagraphNode || 0,
+    sentences: counts.SentenceNode || 0,
+    words: counts.WordNode || 0,
   }
 }
 
@@ -93,12 +93,12 @@ module.exports = (
   /**
    * Support gatsby-remark parser plugins
    */
-  for (let plugin of options.gatsbyRemarkPlugins) {
+  for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
     const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
-      for (let parserPlugin of requiredPlugin.setParserPlugins(
+      for (const parserPlugin of requiredPlugin.setParserPlugins(
         plugin.options || {}
       )) {
         if (_.isArray(parserPlugin)) {

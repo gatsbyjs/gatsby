@@ -58,18 +58,8 @@ const typesWithoutInference = (typeNames = [], typeOrTypeDef) => {
       if (!def.directives) return
 
       def.directives.forEach(directive => {
-        if (directive.name.value === dontInferExtensionName) {
-          const noDefaultResolversArg = (directive.arguments || []).find(
-            arg => arg.name.value === `noDefaultResolvers`
-          )
-          const shouldAddDefaultResolver =
-            noDefaultResolversArg &&
-            noDefaultResolversArg.value &&
-            noDefaultResolversArg.value.value === false
-
-          if (!shouldAddDefaultResolver && def.name.value) {
-            typeNames.push(def.name.value)
-          }
+        if (directive.name.value === dontInferExtensionName && def.name.value) {
+          typeNames.push(def.name.value)
         }
       })
     })
@@ -82,9 +72,7 @@ const typesWithoutInference = (typeNames = [], typeOrTypeDef) => {
       (extensions[dontInferExtensionName] ||
         extensions[inferExtensionName] === false)
     ) {
-      if (!extensions.addDefaultResolvers) {
-        typeNames.push(name)
-      }
+      typeNames.push(name)
     }
   }
   return typeNames

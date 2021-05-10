@@ -986,6 +986,26 @@ Object {
 
 exports[`regex import scanner syntactic coverage should parse brute force regular case 62 1`] = `
 Object {
+  "input": "import \\"./empty.css\\"",
+  "result": Object {
+    "bindings": Array [],
+    "segments": Array [],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 63 1`] = `
+Object {
+  "input": "import \\"./empty.css\\"; // This happens in the real world",
+  "result": Object {
+    "bindings": Array [],
+    "segments": Array [],
+  },
+}
+`;
+
+exports[`regex import scanner syntactic coverage should parse brute force regular case 64 1`] = `
+Object {
   "input": "import multi as dong, {foo} from 'bar'
 import as as x, {from as y} from 'bar'",
   "result": Object {

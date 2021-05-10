@@ -8,9 +8,9 @@
   "license": "MIT",
   "dependencies": {
     "file-loader": "^4.3.0",
-    "gatsby": "^2.23.12",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "gatsby": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"

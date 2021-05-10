@@ -1,13 +1,13 @@
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const mkdirp = require(`mkdirp`)
-const Joi = require(`@hapi/joi`)
-const isUrl = require(`is-url`)
-const fetch = require(`node-fetch`)
-const isBinaryPath = require(`is-binary-path`)
+import fs from "fs-extra"
+import path from "path"
+import mkdirp from "mkdirp"
+import * as Joi from "@hapi/joi"
+import isUrl from "is-url"
+import fetch from "node-fetch"
+import isBinaryPath from "is-binary-path"
 
-const getDiff = require(`../utils/get-diff`)
-const resourceSchema = require(`../resource-schema`)
+import getDiff from "../utils/get-diff"
+import resourceSchema from "../resource-schema"
 
 const makePath = (root, relativePath) => path.join(root, relativePath)
 
@@ -77,7 +77,7 @@ const destroy = async (context, fileResource) => {
 }
 
 // TODO pass action to plan
-module.exports.plan = async (context, { id, path: filePath, content }) => {
+export const plan = async (context, { id, path: filePath, content }) => {
   let currentResource
   if (!isBinaryPath(filePath)) {
     currentResource = await read(context, filePath)
@@ -103,7 +103,7 @@ module.exports.plan = async (context, { id, path: filePath, content }) => {
   }
 
   if (plan.currentState !== plan.newState) {
-    plan.diff = await getDiff(plan.currentState, plan.newState)
+    plan.diff = getDiff(plan.currentState, plan.newState)
   }
 
   return plan
@@ -116,13 +116,8 @@ const schema = {
   content: Joi.string(),
   ...resourceSchema,
 }
-exports.schema = schema
-exports.validate = resource =>
+
+export const validate = resource =>
   Joi.validate(resource, schema, { abortEarly: false })
 
-module.exports.exists = fileExists
-
-module.exports.create = create
-module.exports.update = update
-module.exports.read = read
-module.exports.destroy = destroy
+export { schema, fileExists as exists, create, update, read, destroy }

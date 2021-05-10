@@ -1,4 +1,4 @@
-const getFields = require(`./get-graphql-fields`)
+import getFields from "./get-graphql-fields"
 
 const options = {
   metadata: [`type`, `title`],
@@ -17,19 +17,19 @@ test(`get-graphql-fields returns an array of fields`, () => {
   expect(result).toMatchInlineSnapshot(`
     Array [
       Object {
-        "fields": Object {
-          "body": Object {
-            "metadata": Object {
-              "title": "Content",
-              "type": "Text",
-            },
+        "fields": Array [
+          Object {
+            "id": "title",
+            "name": "title",
             "type": "String",
           },
-          "title": Object {
-            "metadata": undefined,
-            "type": "String",
+          Object {
+            "id": "body",
+            "name": "body",
+            "title": "Content",
+            "type": "Text",
           },
-        },
+        ],
         "name": "BlogPost",
       },
     ]

@@ -5,14 +5,21 @@ import {
   IGatsbyCompleteJobV2,
 } from "../types"
 
-export const jobsV2Reducer = (
-  state: IGatsbyState["jobsV2"] = {
+const initialState = (): IGatsbyState["jobsV2"] => {
+  return {
     incomplete: new Map(),
     complete: new Map(),
-  },
+  }
+}
+
+export const jobsV2Reducer = (
+  state = initialState(),
   action: ActionsUnion
 ): IGatsbyState["jobsV2"] => {
   switch (action.type) {
+    case `DELETE_CACHE`:
+      return action.cacheIsCorrupt ? initialState() : state
+
     case `CREATE_JOB_V2`: {
       const { job, plugin } = action.payload
 

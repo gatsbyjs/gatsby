@@ -1,28 +1,28 @@
 {
   "name": "gatsby-remark-copy-linked-files",
   "description": "Find files which are linked to from markdown and copy them to the public directory",
-  "version": "2.3.12",
+  "version": "4.3.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
-    "cheerio": "^1.0.0-rc.3",
+    "@babel/runtime": "^7.12.5",
+    "cheerio": "^1.0.0-rc.9",
     "fs-extra": "^8.1.0",
     "is-relative-url": "^3.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "path-is-inside": "^1.0.2",
-    "probe-image-size": "^4.1.1",
-    "unist-util-visit": "^1.4.1"
+    "probe-image-size": "^6.0.0",
+    "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1",
-    "remark": "^10.0.1",
-    "remark-mdx": "^1.6.6"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.6.0-next.0",
+    "cross-env": "^7.0.3",
+    "remark": "^13.0.0",
+    "remark-mdx": "^1.6.22"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-copy-linked-files#readme",
   "keywords": [
@@ -34,7 +34,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -47,6 +47,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

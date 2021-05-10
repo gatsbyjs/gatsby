@@ -4,7 +4,7 @@ title: Using Multiple Themes Together
 
 ## What this tutorial covers
 
-This tutorial covers how to compose multiple themes into a final site using [gatsby-theme-blog](/packages/gatsby-theme-blog/), [gatsby-theme-notes](/packages/gatsby-theme-notes/) and [gatsby-mdx-embed](/packages/@pauliescanlon/gatsby-mdx-embed/) as examples. It will also cover the concept of component shadowing with [Theme-UI](/docs/theme-ui/) for styling.
+This tutorial covers how to compose multiple themes into a final site using [gatsby-theme-blog](/plugins/gatsby-theme-blog/), [gatsby-theme-notes](/plugins/gatsby-theme-notes/) and [gatsby-mdx-embed](/plugins/@pauliescanlon/gatsby-mdx-embed/) as examples. It will also cover the concept of component shadowing with [Theme-UI](/docs/how-to/styling/theme-ui/) for styling.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ cd multiple-themes
 
 ## Install and compose the themes
 
-This step composes [gatsby-theme-blog](/packages/gatsby-theme-blog/) and [gatsby-theme-notes](/packages/gatsby-theme-notes/).
+This step composes [gatsby-theme-blog](/plugins/gatsby-theme-blog/) and [gatsby-theme-notes](/plugins/gatsby-theme-notes/).
 
 1. Install the themes:
 
@@ -78,7 +78,7 @@ module.exports = {
 gatsby develop
 ```
 
-4. Checkout `localhost:8000` to see what is currently there.
+4. Checkout `http://localhost:8000` to see what is currently there.
 
 ## Add content
 
@@ -172,7 +172,7 @@ export default function BioContent() {
 
 ### Shadow Theme UI
 
-`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](/docs/theme-ui/) design tokens to manage their styling: colors, font sizes, spacing, etc. You can use component shadowing to gain control over these design tokens in the final site.
+`gatsby-theme-blog` and `gatsby-theme-notes` both use [Theme-UI](/docs/how-to/styling/theme-ui/) design tokens to manage their styling: colors, font sizes, spacing, etc. You can use component shadowing to gain control over these design tokens in the final site.
 
 As with your bio, you need to match the file structure of the theme. In this case, that's `src/gatsby-plugin-theme-ui/index.js` and the resulting structure will look like this:
 

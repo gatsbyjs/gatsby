@@ -1,6 +1,6 @@
-const { interpret } = require(`xstate`)
+import { interpret } from "xstate"
 
-const recipeMachine = require(`.`)
+import recipeMachine from "."
 
 describe(`recipe-machine errors`, () => {
   it(`errors if part of the recipe fails schema validation`, done => {
@@ -12,19 +12,21 @@ describe(`recipe-machine errors`, () => {
 
 <File path="./hi.md" contentz="#yo" />
     `,
-      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
     ).onTransition(state => {
       if (state.value === `doneError`) {
-        expect(state.context.error).toBeTruthy()
+        expect(
+          state.context.plan
+            .filter(p => p.error)
+            .map(p => p.error)
+            .join(``)
+        ).toBeTruthy()
         service.stop()
         done()
       } else if (state.value === `presentPlan`) {
-        if (state.context.currentStep === 0) {
-          service.send(`CONTINUE`)
-        }
+        service.send(`CONTINUE`)
       }
     })
 
@@ -34,11 +36,10 @@ describe(`recipe-machine errors`, () => {
   it(`errors if the introduction step has a command`, done => {
     const initialContext = {
       src: `
-# Hello, world
+  # Hello, world
 
-<File path="./hi.md" content="#yo" />
-    `,
-      currentStep: 0,
+  <File path="./hi.md" content="#yo" />
+      `,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
@@ -54,15 +55,12 @@ describe(`recipe-machine errors`, () => {
   })
 
   it(`errors if no src or recipePath has been given`, done => {
-    const initialContext = {
-      currentStep: 0,
-    }
+    const initialContext = {}
     const service = interpret(
       recipeMachine.withContext(initialContext)
     ).onTransition(state => {
       if (state.value === `doneError`) {
         expect(state.context.error).toBeTruthy()
-        //expect(state.context.error).toMatchSnapshot()
         service.stop()
         done()
       }
@@ -78,14 +76,12 @@ describe(`recipe-machine errors`, () => {
 
 <File path="./hi.md" contentz="#yo" /
     `,
-      currentStep: 0,
     }
     const service = interpret(
       recipeMachine.withContext(initialContext)
     ).onTransition(state => {
       if (state.value === `doneError`) {
         expect(state.context.error).toBeTruthy()
-        //expect(state.context.error).toMatchSnapshot()
         service.stop()
         done()
       }

@@ -1,14 +1,18 @@
 const fs = require(`fs-extra`)
 const path = require(`path`)
 const tmp = require(`tmp-promise`)
-
+const resourceSchema = require(`../resource-schema`)
+const Joi = require(`@hapi/joi`)
 const plugin = require(`./plugin`)
+jest.mock(`node-fetch`, () => require(`fetch-mock-jest`).sandbox())
+const { mockReadmeLoader } = require(`../../test-helper`)
+mockReadmeLoader()
+
 const {
   addPluginToConfig,
   getPluginsFromConfig,
   removePluginFromConfig,
 } = require(`./plugin`)
-const resourceTestHelper = require(`../resource-test-helper`)
 
 const STARTER_BLOG_FIXTURE = path.join(
   __dirname,
@@ -18,7 +22,66 @@ const HELLO_WORLD_FIXTURE = path.join(
   __dirname,
   `./fixtures/gatsby-starter-hello-world`
 )
+const EDGE_CASY_FIXTURE = path.join(
+  __dirname,
+  `./fixtures/gatsby-starter-edge-casy`
+)
+const NOPE_FIXTURE = path.join(__dirname, `./fixtures/gatsby-starter-nope`)
 const name = `gatsby-source-filesystem`
+
+// Some of these are slow tests, because they hit the network
+jest.setTimeout(20000)
+
+const pluginSnapshotMatcher = {
+  readme: expect.any(String),
+  description: expect.any(String),
+  shadowableFiles: expect.any(Array),
+}
+
+async function testPluginResource(root) {
+  const context = { root }
+  const initialObject = { id: name, name }
+  const partialUpdate = { id: name }
+
+  const createPlan = await plugin.plan(context, initialObject)
+  expect(createPlan).toBeTruthy()
+
+  expect(createPlan).toMatchSnapshot(`GatsbyPlugin create plan`)
+
+  // Test creating the resource
+  const createResponse = await plugin.create(context, initialObject)
+  const validateResult = Joi.validate(createResponse, {
+    ...plugin.schema,
+    ...resourceSchema,
+  })
+  expect(validateResult.error).toBeNull()
+  expect(createResponse).toMatchSnapshot(
+    pluginSnapshotMatcher,
+    `GatsbyPlugin create`
+  )
+
+  // Test reading the resource
+  const readResponse = await plugin.read(context, createResponse.id)
+  expect(readResponse).toEqual(createResponse)
+
+  // Test updating the resource
+  const updatedResource = { ...readResponse, ...partialUpdate }
+  const updatePlan = await plugin.plan(context, updatedResource)
+  expect(updatePlan).toMatchSnapshot(`GatsbyPlugin update plan`)
+
+  const updateResponse = await plugin.update(context, updatedResource)
+  expect(updateResponse).toMatchSnapshot(
+    pluginSnapshotMatcher,
+    `GatsbyPlugin update`
+  )
+
+  const destroyReponse = await plugin.destroy(context, updateResponse)
+  expect(destroyReponse).toMatchSnapshot(`GatsbyPlugin destroy`)
+
+  // Ensure that resource was destroyed
+  const postDestroyReadResponse = await plugin.read(context, createResponse.id)
+  expect(postDestroyReadResponse).toBeUndefined()
+}
 
 describe(`gatsby-plugin resource`, () => {
   let tmpDir
@@ -26,19 +89,29 @@ describe(`gatsby-plugin resource`, () => {
   let helloWorldRoot
   let configPath
   let emptyRoot
+  let edgeCasyRoot
+  let nopeRoot
+  let nopePath
   beforeAll(async () => {
     tmpDir = await tmp.dir({
       unsafeCleanup: true,
     })
     starterBlogRoot = path.join(tmpDir.path, `gatsby-starter-blog`)
     helloWorldRoot = path.join(tmpDir.path, `gatsby-starter-hello-world`)
+    edgeCasyRoot = path.join(tmpDir.path, `gatsby-starter-edge-casy`)
     configPath = path.join(helloWorldRoot, `gatsby-config.js`)
     emptyRoot = path.join(tmpDir.path, `empty-site-directory`)
+    nopeRoot = path.join(tmpDir.path, `gatsby-starter-nope`)
+    nopePath = path.join(nopeRoot, `gatsby-config.js`)
     await fs.ensureDir(emptyRoot)
     await fs.ensureDir(starterBlogRoot)
     await fs.copy(STARTER_BLOG_FIXTURE, starterBlogRoot)
     await fs.ensureDir(helloWorldRoot)
     await fs.copy(HELLO_WORLD_FIXTURE, helloWorldRoot)
+    await fs.ensureDir(edgeCasyRoot)
+    await fs.copy(EDGE_CASY_FIXTURE, edgeCasyRoot)
+    await fs.ensureDir(nopeRoot)
+    await fs.copy(NOPE_FIXTURE, nopeRoot)
   })
   afterAll(async () => {
     if (tmpDir) {
@@ -47,29 +120,23 @@ describe(`gatsby-plugin resource`, () => {
   })
 
   test(`e2e plugin resource test`, async () => {
-    await resourceTestHelper({
-      resourceModule: plugin,
-      resourceName: `GatsbyPlugin`,
-      context: { root: starterBlogRoot },
-      initialObject: { id: name, name },
-      partialUpdate: { id: name },
-    })
+    await testPluginResource(starterBlogRoot)
   })
 
   test(`e2e plugin resource test with hello world starter`, async () => {
-    await resourceTestHelper({
-      resourceModule: plugin,
-      resourceName: `GatsbyPlugin`,
-      context: { root: helloWorldRoot },
-      initialObject: { id: name, name },
-      partialUpdate: { id: name },
-    })
+    await testPluginResource(helloWorldRoot)
+  })
+
+  test(`e2e plugin resource test with edge-casy starter`, async () => {
+    await testPluginResource(edgeCasyRoot)
   })
 
   test(`all returns plugins as array`, async () => {
     const result = await plugin.all({ root: STARTER_BLOG_FIXTURE })
 
-    expect(result).toMatchSnapshot()
+    result.forEach(res => {
+      expect(res).toMatchSnapshot(pluginSnapshotMatcher)
+    })
   })
 
   test(`does not add the same plugin twice by default`, async () => {
@@ -139,7 +206,7 @@ describe(`gatsby-plugin resource`, () => {
   test(`validates the gatsby-source-filesystem specifies a key that isn't equal to the name`, async () => {
     const result = plugin.validate({
       name: `gatsby-source-filesystem`,
-      key: `gatsby-source-filesystem`,
+      _key: `gatsby-source-filesystem`,
     })
 
     expect(result.error).toEqual(
@@ -166,8 +233,11 @@ describe(`gatsby-plugin resource`, () => {
       },
     }
 
-    await plugin.create(context, fooPlugin)
-    await plugin.create(context, barPlugin)
+    const createPromise1 = plugin.create(context, fooPlugin)
+    const createPromise2 = plugin.create(context, barPlugin)
+
+    await createPromise1
+    await createPromise2
 
     const barResult = await plugin.read(context, barPlugin.key)
     const fooResult = await plugin.read(context, fooPlugin.key)
@@ -216,6 +286,23 @@ describe(`gatsby-plugin resource`, () => {
       { root: emptyRoot },
       { name: `gatsby-source-filesystem` }
     )
-    expect(result).toMatchSnapshot()
+    expect(result).toMatchSnapshot(pluginSnapshotMatcher)
+  })
+
+  test(`returns empty array for empty plugins array`, async () => {
+    const configSrc = await fs.readFile(configPath, `utf8`)
+    const plugins = getPluginsFromConfig(configSrc)
+
+    expect(plugins).toEqual([])
+  })
+
+  test(`throws error for invalid gatsby-config.js`, async () => {
+    const configSrc = await fs.readFile(nopePath, `utf8`)
+
+    expect(() => {
+      getPluginsFromConfig(configSrc)
+    }).toThrow(
+      `Your gatsby-config.js format is currently not supported by Gatsby Admin. Please share your gatsby-config.js file via the "Send feedback" button. Thanks!`
+    )
   })
 })

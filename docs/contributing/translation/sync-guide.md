@@ -126,7 +126,7 @@ The only necessary change is to ensure the translated content carries over these
 These changes involve updating the URL of a link:
 
 ```diff
-- Please see our [plugins page](/packages).
+- Please see our [plugins page](/plugins).
 + Please see our [plugins page](/plugins).
 ```
 
@@ -167,7 +167,7 @@ If a page has significant changes, it may be worth splitting it into its own pul
 ```shell
 git checkout conflicts-9032a0
 git checkout -b sync-tutorial-0
-# Fix conflicts in /docs/tutorial/part-zero/index.md
+# Fix conflicts in /docs/docs/tutorial/part-zero/index.md
 git commit -am "Fix conflicts in tutorial part zero"
 git push -u origin sync-tutorial-0
 ```

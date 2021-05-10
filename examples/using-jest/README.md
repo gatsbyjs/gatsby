@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  <a href="https://www.gatsbyjs.com">
+    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
   </a>
 </p>
 <h1 align="center">
@@ -13,5 +13,5 @@ Check out the [unit testing doc][unit-testing-doc] for further info!
 
 [jest]: https://jestjs.io
 [react-testing-library]: https://github.com/testing-library/react-testing-library
-[gatsby]: https://gatsbyjs.org
-[unit-testing-doc]: https://www.gatsbyjs.org/docs/unit-testing
+[gatsby]: https://www.gatsbyjs.com
+[unit-testing-doc]: https://www.gatsbyjs.com/docs/unit-testing

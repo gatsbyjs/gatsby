@@ -1,10 +1,10 @@
 import {
-  ComposeObjectTypeConfig,
-  ComposeInputObjectTypeConfig,
-  ComposeInterfaceTypeConfig,
-  ComposeUnionTypeConfig,
-  ComposeEnumTypeConfig,
-  ComposeScalarTypeConfig,
+  ObjectTypeComposerAsObjectDefinition as ComposeObjectTypeConfig,
+  InputTypeComposerAsObjectDefinition as ComposeInputObjectTypeConfig,
+  InterfaceTypeComposerAsObjectDefinition as ComposeInterfaceTypeConfig,
+  UnionTypeComposerAsObjectDefinition as ComposeUnionTypeConfig,
+  EnumTypeComposerAsObjectDefinition as ComposeEnumTypeConfig,
+  ScalarTypeComposerAsObjectDefinition as ComposeScalarTypeConfig,
 } from "graphql-compose"
 
 enum GatsbyGraphQLTypeKind {

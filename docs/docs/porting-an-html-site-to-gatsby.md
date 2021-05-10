@@ -2,7 +2,7 @@
 title: Porting an HTML Site to Gatsby
 ---
 
-This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
+This guide focuses on the parts of Gatsby that are applicable to a static website. For a more comprehensive walk through Gatsby's features check out the [Gatsby tutorial](/docs/tutorial/). By following the example on this page, you will complete the key stages of porting an HTML website to Gatsby and establish your Gatsby development workflow.
 
 **Note:** This guide can also be used to migrate a section of a site, to be served next to existing files. Pay extra attention to the section on [hosting](#hosting-the-new-website) for guidance.
 
@@ -35,13 +35,13 @@ website-domain
 
 ### Assumptions
 
-The example site uses global CSS files (`style.css` and `normalize.css`); styling structures like [Sass](/docs/sass/) architectures or [CSS-in-JS](/docs/css-in-js/) can be accommodated but will not be covered here.
+The example site uses global CSS files (`style.css` and `normalize.css`); styling structures like [Sass](/docs/how-to/styling/sass/) architectures or [CSS-in-JS](/docs/how-to/styling/css-in-js/) can be accommodated but will not be covered here.
 
 No [client-side](/docs/glossary#client-side) JavaScript (e.g jQuery etc.) is on the example site. If your site includes client-side JavaScript libraries and functionality, Gatsby may conflict with it at [build](/docs/glossary#build) time if not handled or removed when porting. Learn more about [Debugging HTML Builds](/docs/debugging-html-builds/).
 
 ### Development environment
 
-Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/tutorial/part-zero/).
+Gatsby generates websites and web applications for production through a compilation and build process, and it also has tools optimized for local development. To set up the Gatsby [CLI](/docs/glossary#cli) and development environment (if you haven't already) check out [Part Zero of the Gatsby tutorial](/docs/tutorial/part-zero/).
 
 ### Gatsby Project
 
@@ -134,7 +134,7 @@ export default function Home() {
 You might have noticed that the component in `/src/pages/index.js` doesn't include `<html>`, `<head>` or `<body>`. Gatsby makes a default HTML structure for each page and places the output from `/src/pages/index.js` into its body. More `<head>` child elements and HTML attributes are added to the output page with a module called [React Helmet](https://github.com/nfl/react-helmet). React Helmet is added to a Gatsby project in the command line with npm and then to the Gatsby config file:
 
 ```shell
-npm install --save react-helmet gatsby-plugin-react-helmet
+npm install react-helmet gatsby-plugin-react-helmet
 ```
 
 Gatsby projects have a config file at `/gatsby-config.js` where site metadata and options can be specified and plugins added. Add a plugin line with `gatsby-plugin-react-helmet` to your config file:
@@ -143,7 +143,7 @@ Gatsby projects have a config file at `/gatsby-config.js` where site metadata an
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 
 module.exports = {
@@ -244,7 +244,7 @@ Opening the site in a browser again at `http://localhost:8000`, you should have 
 
 The code for Gatsby pages looks like a hybrid of JavaScript and HTML. The code for each page is typically a JavaScript function describing a block of HTML given a set of inputs, or "props". Gatsby runs each page's JavaScript function during the build process to produce a static HTML file.
 
-The appearance of a Gatsby component depends on how dynamic the content and behavior is. The code for a very static page will include mostly all HTML markup wrapped in a bit of JavaScript for Gatsby to assemble. The code for a component with props (a.k.a. "inputs"), and logic applied to those props, will interweave more JavaScript through JSX: examples could include data [sourced with GraphQL](/docs/graphql-api/) or [imported from a file](/docs/sourcing-content-from-json-or-yaml/) to produce dynamic markup, such as a list of related links.
+The appearance of a Gatsby component depends on how dynamic the content and behavior is. The code for a very static page will include mostly all HTML markup wrapped in a bit of JavaScript for Gatsby to assemble. The code for a component with props (a.k.a. "inputs"), and logic applied to those props, will interweave more JavaScript through JSX: examples could include data [sourced with GraphQL](/docs/reference/graphql-data-layer/graphql-api/) or [imported from a file](/docs/how-to/sourcing-data/sourcing-from-json-or-yaml/) to produce dynamic markup, such as a list of related links.
 
 This guide will stay on the HTML side of the balance to suit a more static site. Using Gatsby to arrange the necessary client-side JavaScript with React early can open many future possibilities though. While Gatsby produces static pages from your components, it can also deliver dynamic client-side JavaScript after the page loads and the site [hydrates](/docs/glossary#hydration) into a full React web application.
 
@@ -289,7 +289,7 @@ There are 4 pages in the `/who` section of Taylor's Tidy Trees for members of Ta
 
 ### Layout component
 
-The foundational building block for building and styling pages in Gatsby is [the `<Layout>` component](/docs/layout-components/). The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/index.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
+The foundational building block for building and styling pages in Gatsby is [the `<Layout>` component](/docs/how-to/routing/layout-components/). The `<Layout>` component wraps around page content, providing the common structure that appears on all pages. Looking at the `/index.html` and `/who/index.html` you can see that most of the page is identical. Other than the title of the page, everything except for the contents of the main block is repeated.
 
 Create a folder inside `/src`, next to `/src/pages` called `components`. Inside `components` make a file called `Layout.js`.
 
@@ -496,13 +496,13 @@ What about migrating a section of a site? No problem. The Gatsby build output in
 
 If the Gatsby site is to be hosted at a non-root path, e.g. `example.com/blog/`, Gatsby needs to be informed so page and asset links in the built output can be prefixed.
 
-[Path prefix](/docs/path-prefix/) is the Gatsby option for setting a non-root hosting path. Here is the example project `gatsby-config.js` file with a path prefix added for `/blog`:
+[Path prefix](/docs/how-to/previews-deploys-hosting/path-prefix/) is the Gatsby option for setting a non-root hosting path. Here is the example project `gatsby-config.js` file with a path prefix added for `/blog`:
 
 ```js:title=/gatsby-site/gatsby-config.js
 /**
  * Configure your Gatsby site with this file.
  *
- * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-config/
  */
 
 module.exports = {
@@ -511,7 +511,7 @@ module.exports = {
 }
 ```
 
-If the HTML and non-HTML files of the Gatsby build output are to be served in different locations, this can also be supported with the [Asset Prefix](/docs/asset-prefix/) option.
+If the HTML and non-HTML files of the Gatsby build output are to be served in different locations, this can also be supported with the [Asset Prefix](/docs/how-to/previews-deploys-hosting/asset-prefix/) option.
 
 Once prefix options have been set, the build must be run with the `--prefix-paths` flag to apply them:
 
@@ -560,9 +560,9 @@ website-domain
 
 ## Next steps
 
-Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/importing-assets-into-files/) covers this. There is also the [Gatsby Image](/docs/gatsby-image/) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
+Gatsby can handle images through direct imports to page and component files too! The [asset import documentation](/docs/how-to/images-and-media/importing-assets-into-files/) covers this. There is also [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image) component for even deeper optimizations. Once assets are handled through Gatsby, plugins can be used to optimize their processing and delivery.
 
-The [building with components doc](/docs/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
+The [building with components doc](/docs/conceptual/building-with-components/) has information about why Gatsby uses React component architecture and how it fits into a Gatsby application.
 
 [Sourcing content and data](/docs/content-and-data/) is a great next step if you are interested in separating your content from your website code, such as sourcing the site title from `gatsby-config.js` with GraphQL and writing content in Markdown.
 

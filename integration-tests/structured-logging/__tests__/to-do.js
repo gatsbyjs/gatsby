@@ -2,11 +2,12 @@
 // Should errors that are not followed panic(onBuild)/process.exit be actually errors
 // or warnings? If yes, then we should add assertions for SUCCESS status that no errors are
 // emitted
-const { spawn, execSync } = require(`child_process`)
+const { spawn } = require(`child_process`)
 const EventEmitter = require(`events`)
 const fetch = require(`node-fetch`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
+const cpy = require(`cpy`)
 const { first, last } = require(`lodash`)
 // const { groupBy, filter } = require(`lodash`)
 const joi = require(`joi`)
@@ -17,18 +18,12 @@ const ISO8601 = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z
 
 jest.setTimeout(100000)
 
-const gatsbyBin = path.join(
-  `node_modules`,
-  `gatsby`,
-  `dist`,
-  `bin`,
-  `gatsby.js`
-)
+const gatsbyBin = path.join(`node_modules`, `gatsby`, `cli.js`)
 
 const defaultStdio = `ignore`
 
 const collectEventsForDevelop = (events, env = {}) => {
-  const gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+  const gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
     stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
     env: {
       ...process.env,
@@ -38,8 +33,9 @@ const collectEventsForDevelop = (events, env = {}) => {
     },
   })
 
-  const finishedPromise = new Promise(resolve => {
+  const finishedPromise = new Promise((resolve, reject) => {
     let listening = true
+
     gatsbyProcess.on(`message`, msg => {
       if (!listening) {
         return
@@ -55,7 +51,8 @@ const collectEventsForDevelop = (events, env = {}) => {
         setTimeout(() => {
           listening = false
           gatsbyProcess.kill()
-          resolve()
+
+          setTimeout(resolve, 1000)
         }, 5000)
       }
     })
@@ -103,12 +100,12 @@ const commonAssertions = events => {
     const actionSchema = joi.alternatives().try(
       joi
         .object({
-          type: joi.string().required().valid([`SET_STATUS`]),
+          type: joi.string().required().valid(`SET_STATUS`),
           // TODO: We should change this to always be an Object I think pieh
           payload: joi
             .string()
             .required()
-            .valid([`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`]),
+            .valid(`SUCCESS`, `IN_PROGRESS`, `FAILED`, `INTERRUPTED`),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
         })
@@ -119,12 +116,7 @@ const commonAssertions = events => {
           type: joi
             .string()
             .required()
-            .valid([
-              `ACTIVITY_START`,
-              `ACTIVITY_UPDATE`,
-              `ACTIVITY_END`,
-              `LOG`,
-            ]),
+            .valid(`ACTIVITY_START`, `ACTIVITY_UPDATE`, `ACTIVITY_END`, `LOG`),
           payload: joi.object(),
           // Should this be here or one level up?
           timestamp: joi.string().required(),
@@ -133,7 +125,7 @@ const commonAssertions = events => {
     )
 
     const eventSchema = joi.object({
-      type: joi.string().required().valid([`LOG_ACTION`]),
+      type: joi.string().required().valid(`LOG_ACTION`),
       action: actionSchema,
     })
     events.forEach(event => {
@@ -332,7 +324,7 @@ describe(`develop`, () => {
       events.splice(0, events.length)
     }
     beforeAll(async done => {
-      gatsbyProcess = spawn(gatsbyBin, [`develop`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `develop`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -359,11 +351,22 @@ describe(`develop`, () => {
       })
     })
 
-    afterAll(() => {
+    afterAll(done => {
       gatsbyProcess.kill()
+      setTimeout(done, 1000)
     })
 
     describe(`code change`, () => {
+      beforeAll(() => {
+        return cpy(
+          path.join(__dirname, "../src/pages/index.js"),
+          path.join(__dirname, "../original/"),
+          {
+            overwrite: true,
+          }
+        )
+      })
+
       describe(`invalid`, () => {
         beforeAll(async done => {
           clearEvents()
@@ -409,8 +412,12 @@ describe(`develop`, () => {
         beforeAll(async done => {
           clearEvents()
 
-          execSync(
-            `git checkout -- ${require.resolve(`../src/pages/index.js`)}`
+          await cpy(
+            path.join(__dirname, "../original/index.js"),
+            path.join(__dirname, "../src/pages/"),
+            {
+              overwrite: true,
+            }
           )
 
           eventEmitter.once(`done`, () => {
@@ -477,7 +484,7 @@ describe(`build`, () => {
     let events = []
 
     beforeAll(async () => {
-      gatsbyProcess = spawn(gatsbyBin, [`build`], {
+      gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
         stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
         env: {
           ...process.env,
@@ -512,7 +519,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -544,7 +551,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -576,7 +583,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,
@@ -610,7 +617,7 @@ describe(`build`, () => {
       let events = []
 
       beforeAll(async () => {
-        gatsbyProcess = spawn(gatsbyBin, [`build`], {
+        gatsbyProcess = spawn(process.execPath, [gatsbyBin, `build`], {
           stdio: [defaultStdio, defaultStdio, defaultStdio, `ipc`],
           env: {
             ...process.env,

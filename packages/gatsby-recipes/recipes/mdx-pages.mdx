@@ -10,9 +10,11 @@ the necessary NPM packages & Gatsby Plugins
 to enable auto-creation of MDX pages within
 src/pages.
 
+This recipe:
+
 ---
 
-Install NPM Packages
+Installs NPM Packages.
 
 <NPMPackage
   name="gatsby-source-filesystem"
@@ -29,9 +31,7 @@ Install NPM Packages
 
 ---
 
-Install the Gatsby Plugins.
-
-First `gatsby-source-filesystem` to read the MDX files in the src/pages
+Adds `gatsby-source-filesystem` to read the MDX files in the src/pages
 directory.
 
 <GatsbyPlugin
@@ -45,13 +45,13 @@ directory.
 
 ---
 
-Then `gatsby-plugin-mdx` to convert MDX files to pages.
+Adds `gatsby-plugin-mdx` to convert MDX files to pages.
 
 <GatsbyPlugin name="gatsby-plugin-mdx" />
 
 ---
 
-Then we'll add an example MDX page for you to play with.
+Adds an example MDX page for you to play with.
 
 <File
   path="src/pages/test-mdx.mdx"
@@ -60,9 +60,9 @@ Then we'll add an example MDX page for you to play with.
 
 ---
 
-You're now ready to start writing MDX pages on your Gatsby site!
+Once you've installed this recipe, you can start writing MDX pages on your Gatsby site.
 
-Try editing the test-mdx.mdx file as well as adding your own!
+Once this recipe is installed, try editing the `test-mdx.mdx` file as well as adding your own file.
 
-Read more about MDX at https://mdxjs.com/
+Read more about MDX at https://mdxjs.com/.
 

@@ -129,7 +129,7 @@ async function watch(
     ? _.intersection(packages, seenPackages)
     : seenPackages
 
-  let ignoredPackageJSON = new Map()
+  const ignoredPackageJSON = new Map()
   const ignorePackageJSONChanges = (packageName, contentArray) => {
     ignoredPackageJSON.set(packageName, contentArray)
 
@@ -140,13 +140,22 @@ async function watch(
 
   if (forceInstall) {
     try {
-      await publishPackagesLocallyAndInstall({
-        packagesToPublish: allPackagesToWatch,
-        root,
-        localPackages,
-        ignorePackageJSONChanges,
-        yarnWorkspaceRoot,
-      })
+      if (allPackagesToWatch.length > 0) {
+        await publishPackagesLocallyAndInstall({
+          packagesToPublish: allPackagesToWatch,
+          root,
+          localPackages,
+          ignorePackageJSONChanges,
+          yarnWorkspaceRoot,
+        })
+      } else {
+        // run `yarn`
+        const yarnInstallCmd = [`yarn`]
+
+        console.log(`Installing packages from public NPM registry`)
+        await promisifiedSpawn(yarnInstallCmd)
+        console.log(`Installation complete`)
+      }
     } catch (e) {
       console.log(e)
     }
@@ -286,7 +295,7 @@ async function watch(
         return
       }
 
-      let localCopies = [copyPath(filePath, newPath, quiet, packageName)]
+      const localCopies = [copyPath(filePath, newPath, quiet, packageName)]
 
       // If this is from "cache-dir" also copy it into the site's .cache
       if (_.includes(filePath, `cache-dir`)) {

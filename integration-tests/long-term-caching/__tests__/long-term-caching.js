@@ -1,7 +1,6 @@
 const {
   copy,
   mkdirp,
-  move,
   readdir,
   readFile,
   remove,
@@ -41,7 +40,7 @@ describe(`long term caching`, () => {
 
   const createPublic0 = async () => {
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    return move(`${basePath}/public`, `${basePath}/public-0`)
+    return copy(`${basePath}/public`, `${basePath}/public-0`)
   }
 
   const createPublic1 = async () => {
@@ -53,7 +52,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    return move(`${basePath}/public`, `${basePath}/public-1`)
+    return copy(`${basePath}/public`, `${basePath}/public-1`)
   }
 
   const createPublic2 = async () => {
@@ -66,7 +65,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    return move(`${basePath}/public`, `${basePath}/public-2`)
+    return copy(`${basePath}/public`, `${basePath}/public-2`)
   }
 
   const createPublic3 = async () => {
@@ -79,7 +78,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    return move(`${basePath}/public`, `${basePath}/public-3`)
+    return copy(`${basePath}/public`, `${basePath}/public-3`)
   }
 
   const createPublic4 = async () => {
@@ -93,7 +92,7 @@ describe(`long term caching`, () => {
     await writeFile(`${pagesPath}/index.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    return move(`${basePath}/public`, `${basePath}/public-4`)
+    return copy(`${basePath}/public`, `${basePath}/public-4`)
   }
 
   const createPublic5 = async () => {
@@ -105,7 +104,7 @@ describe(`long term caching`, () => {
     await writeFile(`${srcPath}/async-2.js`, modifiedData)
 
     execFileSync(`yarn`, [`build`], { cwd: basePath })
-    return move(`${basePath}/public`, `${basePath}/public-5`)
+    return copy(`${basePath}/public`, `${basePath}/public-5`)
   }
 
   beforeAll(async () => {

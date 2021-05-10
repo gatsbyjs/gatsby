@@ -1,6 +1,13 @@
-import { AnalyticsTracker, IAggregateStats } from "./telemetry"
-import * as express from "express"
+import {
+  AnalyticsTracker,
+  IAggregateStats,
+  ITelemetryTagsPayload,
+  ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
+} from "./telemetry"
+import { Request, Response } from "express"
 import { createFlush } from "./create-flush"
+import time, { TimeUnit } from "@turist/time"
 
 const instance = new AnalyticsTracker()
 
@@ -16,7 +23,7 @@ const intervalDuration = process.env.TELEMETRY_BUFFER_INTERVAL
 const interval =
   intervalDuration && Number.isFinite(+intervalDuration)
     ? Math.max(Number(intervalDuration), 1000)
-    : 10 * 60 * 1000 // 10 min
+    : time(10, TimeUnit.Minute)
 
 function tick(): void {
   flush()
@@ -24,34 +31,111 @@ function tick(): void {
     .then(() => setTimeout(tick, interval))
 }
 
-module.exports = {
-  trackCli: (input, tags, opts): void =>
-    instance.captureEvent(input, tags, opts),
-  trackError: (input, tags): void => instance.captureError(input, tags),
-  trackBuildError: (input, tags): void =>
-    instance.captureBuildError(input, tags),
-  setDefaultTags: (tags): void => instance.decorateAll(tags),
-  decorateEvent: (event, tags): void => instance.decorateNextEvent(event, tags),
-  setTelemetryEnabled: (enabled): void => instance.setTelemetryEnabled(enabled),
-  startBackgroundUpdate: (): void => {
-    setTimeout(tick, interval)
-  },
-  isTrackingEnabled: (): boolean => instance.isTrackingEnabled(),
-  aggregateStats: (data): IAggregateStats => instance.aggregateStats(data),
-  addSiteMeasurement: (event, obj): void =>
-    instance.addSiteMeasurement(event, obj),
-  expressMiddleware: function (source: string) {
-    return function (
-      _req: express.Request,
-      _res: express.Response,
-      next
-    ): void {
-      try {
-        instance.trackActivity(`${source}_ACTIVE`)
-      } catch (e) {
-        // ignore
-      }
-      next()
+export function trackFeatureIsUsed(name: string): void {
+  instance.trackFeatureIsUsed(name)
+}
+
+export function trackCli(
+  input: string | Array<string>,
+  tags?: ITelemetryTagsPayload,
+  opts?: ITelemetryOptsPayload
+): void {
+  instance.trackCli(input, tags, opts)
+}
+
+export function captureEvent(
+  input: string | Array<string>,
+  tags?: ITelemetryTagsPayload,
+  opts?: ITelemetryOptsPayload
+): void {
+  instance.captureEvent(input, tags, opts)
+}
+
+export function trackError(input: string, tags?: ITelemetryTagsPayload): void {
+  instance.captureError(input, tags)
+}
+
+export function trackBuildError(
+  input: string,
+  tags?: ITelemetryTagsPayload
+): void {
+  instance.captureBuildError(input, tags)
+}
+
+export function setDefaultTags(tags: IDefaultTelemetryTagsPayload): void {
+  instance.decorateAll(tags)
+}
+
+export function decorateEvent(
+  event: string,
+  tags?: Record<string, unknown>
+): void {
+  instance.decorateNextEvent(event, tags)
+}
+
+export function setTelemetryEnabled(enabled: boolean): void {
+  instance.setTelemetryEnabled(enabled)
+}
+
+export function startBackgroundUpdate(): void {
+  setTimeout(tick, interval)
+}
+
+export function isTrackingEnabled(): boolean {
+  return instance.isTrackingEnabled()
+}
+
+export function aggregateStats(data: Array<number>): IAggregateStats {
+  return instance.aggregateStats(data)
+}
+
+export function addSiteMeasurement(event: string, obj): void {
+  instance.addSiteMeasurement(event, obj)
+}
+
+export function expressMiddleware(source: string) {
+  return function (req: Request, _res: Response, next): void {
+    try {
+      instance.trackActivity(`${source}_ACTIVE`, {
+        userAgent: req.headers[`user-agent`],
+      })
+    } catch (e) {
+      // ignore
     }
-  },
+    next()
+  }
+}
+
+// Internal
+export function setDefaultComponentId(componentId: string): void {
+  instance.componentId = componentId
+}
+
+export function setGatsbyCliVersion(version: string): void {
+  instance.gatsbyCliVersion = version
+}
+
+export {
+  AnalyticsTracker,
+  IAggregateStats,
+  ITelemetryTagsPayload,
+  ITelemetryOptsPayload,
+  IDefaultTelemetryTagsPayload,
+}
+
+module.exports = {
+  trackFeatureIsUsed,
+  trackCli,
+  trackError,
+  trackBuildError,
+  setDefaultTags,
+  decorateEvent,
+  setTelemetryEnabled,
+  startBackgroundUpdate,
+  isTrackingEnabled,
+  aggregateStats,
+  addSiteMeasurement,
+  expressMiddleware,
+  setDefaultComponentId,
+  setGatsbyCliVersion,
 }

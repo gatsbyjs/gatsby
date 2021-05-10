@@ -2,10 +2,6 @@
 
 exports[`redux db should write redux cache to disk 1`] = `
 Object {
-  "componentDataDependencies": Object {
-    "connections": Map {},
-    "nodes": Map {},
-  },
   "components": Map {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
@@ -15,6 +11,19 @@ Object {
       },
       "query": "",
     },
+  },
+  "html": Object {
+    "browserCompilationHash": "",
+    "ssrCompilationHash": "",
+    "trackedHtmlFiles": Map {
+      "/my-sweet-new-page/" => Object {
+        "dirty": 2,
+        "isDeleted": false,
+        "pageDataHash": "",
+      },
+    },
+    "trackedStaticQueryResults": Map {},
+    "unsafeBuiltinWasUsedInSSR": false,
   },
   "jobsV2": Object {
     "complete": Map {},
@@ -52,15 +61,54 @@ Object {
       },
     },
   },
-  "pageData": Map {},
   "pageDataStats": Map {},
+  "pages": Map {
+    "/my-sweet-new-page/" => Object {
+      "component": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
+      "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+      "context": Object {
+        "id": "123456",
+      },
+      "internalComponentName": "Component/my-sweet-new-page/",
+      "isCreatedByStatefulCreatePages": false,
+      "matchPath": undefined,
+      "path": "/my-sweet-new-page/",
+      "pluginCreatorId": "",
+      "pluginCreator___NODE": "",
+      "updatedAt": 1,
+    },
+  },
   "pendingPageDataWrites": Object {
     "pagePaths": Set {},
-    "templatePaths": Set {},
+  },
+  "queries": Object {
+    "byConnection": Map {},
+    "byNode": Map {},
+    "deletedQueries": Set {},
+    "dirtyQueriesListToEmitViaWebsocket": Array [],
+    "queryNodes": Map {},
+    "trackedComponents": Map {
+      "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+        "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
+        "errors": 0,
+        "pages": Set {
+          "/my-sweet-new-page/",
+        },
+        "query": "",
+      },
+    },
+    "trackedQueries": Map {
+      "/my-sweet-new-page/" => Object {
+        "dirty": 1,
+        "running": 0,
+      },
+    },
   },
   "staticQueriesByTemplate": Map {},
   "staticQueryComponents": Map {},
   "status": Object {
+    "LAST_NODE_COUNTER": 0,
     "PLUGINS_HASH": "",
     "plugins": Object {},
   },

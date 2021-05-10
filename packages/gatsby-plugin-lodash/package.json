@@ -1,21 +1,21 @@
 {
   "name": "gatsby-plugin-lodash",
   "description": "Easy modular Lodash builds. Adds the Lodash webpack & Babel plugins to your Gatsby build",
-  "version": "3.3.10",
+  "version": "4.6.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.12.5",
     "babel-plugin-lodash": "^3.3.4",
-    "lodash-webpack-plugin": "^0.11.5"
+    "lodash-webpack-plugin": "^0.11.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "babel-preset-gatsby-package": "^1.6.0-next.0",
+    "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-lodash#readme",
   "keywords": [
@@ -25,7 +25,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0-next.0"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

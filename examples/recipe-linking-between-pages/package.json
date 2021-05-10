@@ -5,17 +5,17 @@
   "version": "0.1.0",
   "author": "@gatsbyjs",
   "dependencies": {
-    "gatsby": "^2.23.12",
+    "gatsby": "next",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
-    "cypress": "^4.9.0",
-    "gatsby-cypress": "^0.4.6",
-    "prettier": "2.0.5",
-    "start-server-and-test": "^1.11.0"
+    "cypress": "^4.12.1",
+    "gatsby-cypress": "^0.4.10",
+    "prettier": "2.1.1",
+    "start-server-and-test": "^1.11.3"
   },
   "keywords": [
     "gatsby"

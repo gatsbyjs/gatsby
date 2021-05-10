@@ -14,7 +14,7 @@ Markdown defines a plain text syntax for HTML elements such as `h1`, `strong`, a
 ```markdown
 # Hello world!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <figure class="chart">
   <object data="chart.svg" type="image/svg+xml"></object>
@@ -42,24 +42,24 @@ import { Figure } from './components/Figure';
 
 # Hello world!
 
-You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.org/).
+You can use Markdown to create documents for [Gatsby](https://www.gatsbyjs.com/).
 
 <Figure data="chart.svg" caption="MDX adoption has increased 120% since last year." />
 ```
 
-If you're creating a Gatsby site from scratch, the [gatsby-starter-mdx-basic](https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic) is the fastest way to add MDX support. Use the Gatsby [CLI](/docs/glossary/#cli) to create a new project with this starter as a base.
+If you're creating a Gatsby site from scratch, the [gatsby-starter-mdx-basic](https://github.com/gatsbyjs/gatsby-starter-mdx-basic) is the fastest way to add MDX support. Use the Gatsby [CLI](/docs/glossary/#cli) to create a new project with this starter as a base.
 
 ```shell
-gatsby new my-mdx-starter https://github.com/ChristopherBiscardi/gatsby-starter-mdx-basic
+gatsby new my-mdx-starter https://github.com/gatsbyjs/gatsby-starter-mdx-basic
 ```
 
-To use MDX with an existing Gatsby site, add the [`gatsby-plugin-mdx`](/packages/gatsby-plugin-mdx/?=gatsby-plugin-mdx) plugin. As with Gatsby itself, you can install it using [npm](/docs/glossary/#npm). You'll also need to install MDX itself, and the React implementation of MDX.
+To use MDX with an existing Gatsby site, add the [`gatsby-plugin-mdx`](/plugins/gatsby-plugin-mdx/?=gatsby-plugin-mdx) plugin. As with Gatsby itself, you can install it using [npm](/docs/glossary/#npm). You'll also need to install MDX itself, and the React implementation of MDX.
 
 ```shell
-npm install --save gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
+npm install gatsby-plugin-mdx @mdx-js/mdx @mdx-js/react
 ```
 
-Then add `gatsby-plugin-mdx` to your plugins list in `gatsby-config.js`, and set the [configuration options](/packages/gatsby-plugin-mdx/?=gatsby-plugin-mdx#configuration) you prefer.
+Then add `gatsby-plugin-mdx` to your plugins list in `gatsby-config.js`, and set the [configuration options](/plugins/gatsby-plugin-mdx/?=gatsby-plugin-mdx#configuration) you prefer.
 
 MDX enhances Markdown's capabilities so that you can use React components anywhere in your Gatsby-powered site.
 
@@ -67,5 +67,5 @@ MDX enhances Markdown's capabilities so that you can use React components anywhe
 
 - [MDX](https://mdxjs.com/) official site
 - [What is MDX](https://www.youtube.com/watch?v=d2sQiI5NFAM) (video)
-- [Adding Components to Markdown with MDX](/docs/mdx/) from the Gatsby docs
+- [Adding Components to Markdown with MDX](/docs/how-to/routing/mdx/) from the Gatsby docs
 - [Introducing JSX](https://reactjs.org/docs/introducing-jsx.html) from the React documentation

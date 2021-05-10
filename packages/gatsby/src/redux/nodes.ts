@@ -65,7 +65,7 @@ export type FiltersCache = Map<FilterCacheKey, IFilterCache>
 /**
  * Get all nodes from redux store.
  */
-export const getNodes = (): IGatsbyNode[] => {
+export const getNodes = (): Array<IGatsbyNode> => {
   const nodes = store.getState().nodes
   if (nodes) {
     return Array.from(nodes.values())
@@ -83,7 +83,7 @@ export const getNode = (id: string): IGatsbyNode | undefined =>
 /**
  * Get all nodes of type from redux store.
  */
-export const getNodesByType = (type: string): IGatsbyNode[] => {
+export const getNodesByType = (type: string): Array<IGatsbyNode> => {
   const nodes = store.getState().nodesByType.get(type)
   if (nodes) {
     return Array.from(nodes.values())
@@ -95,7 +95,7 @@ export const getNodesByType = (type: string): IGatsbyNode[] => {
 /**
  * Get all type names from redux store.
  */
-export const getTypes = (): string[] =>
+export const getTypes = (): Array<string> =>
   Array.from(store.getState().nodesByType.keys())
 
 /**
@@ -133,12 +133,12 @@ export const getNodeAndSavePathDependency = (
 type Resolver = (node: IGatsbyNode) => Promise<any> // TODO
 
 export const saveResolvedNodes = async (
-  nodeTypeNames: string[],
+  nodeTypeNames: Array<string>,
   resolver: Resolver
 ): Promise<void> => {
   for (const typeName of nodeTypeNames) {
     const nodes = store.getState().nodesByType.get(typeName)
-    if (!nodes) return
+    if (!nodes) continue
 
     const resolvedNodes = new Map()
     for (const node of nodes.values()) {
@@ -308,8 +308,8 @@ function postIndexingMetaSetupLtLteGtGte(
 export const ensureIndexByQuery = (
   op: FilterOp,
   filterCacheKey: FilterCacheKey,
-  filterPath: string[],
-  nodeTypeNames: string[],
+  filterPath: Array<string>,
+  nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
 ): void => {
   const state = store.getState()
@@ -347,7 +347,7 @@ export const ensureIndexByQuery = (
 
 export function ensureEmptyFilterCache(
   filterCacheKey,
-  nodeTypeNames: string[],
+  nodeTypeNames: Array<string>,
   filtersCache: FiltersCache
 ): void {
   // This is called for queries without any filters
@@ -695,15 +695,16 @@ export const getNodesFromCacheByValue = (
     }
     const filterValueArr: Array<FilterValueNullable> = filterValue
 
-    const arr: Array<IGatsbyNode> = []
+    const set: Set<IGatsbyNode> = new Set()
 
     // TODO: we can also mergeSort for every step. this may perform worse because of how memory in js works.
     // For every value in the needle array, find the bucket of nodes for
     // that value, add this bucket of nodes to one list, return the list.
     filterValueArr.forEach((v: FilterValueNullable) =>
-      filterCache.byValue.get(v)?.forEach(v => arr.push(v))
+      filterCache.byValue.get(v)?.forEach(v => set.add(v))
     )
 
+    const arr = [...set] // this is bad for perf but will guarantee us a unique set :(
     arr.sort((A, B) => A.internal.counter - B.internal.counter)
 
     // Note: it's very unlikely that the list of filter values is big so .includes should be fine here
@@ -742,7 +743,7 @@ export const getNodesFromCacheByValue = (
     })
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to re-sort
+    //       subtraction in such a way that we don't have to re-sort
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
@@ -752,7 +753,7 @@ export const getNodesFromCacheByValue = (
     removeBucketFromSet(filterValue, filterCache, set)
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to resort here
+    //       subtraction in such a way that we don't have to resort here
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
@@ -1103,6 +1104,11 @@ export function intersectNodesByCounter(
     } else if (counterA > counterB) {
       pointerB++
     } else {
+      if (nodeA !== nodeB) {
+        throw new Error(
+          `Invariant violation: inconsistent node counters detected`
+        )
+      }
       // nodeA===nodeB. Make sure we didn't just add this node already.
       // Since input arrays are sorted, the same node should be grouped
       // back to back, so even if both input arrays contained the same node

@@ -264,10 +264,12 @@ export const actions = {
     extension: GraphQLFieldExtensionDefinition,
     plugin: IGatsbyPlugin,
     traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateFieldExtension> => (
-    dispatch,
-    getState
-  ): void => {
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateFieldExtension
+  > => (dispatch, getState): void => {
     const { name } = extension || {}
     const { fieldExtensions } = getState().schemaCustomization
 
@@ -303,6 +305,8 @@ export const actions = {
    * list of types to include/exclude. This is recommended to avoid including
    * definitions for plugin-created types.
    *
+   * The first object parameter is required, however all the fields in the object are optional.
+   *
    * @availableIn [createSchemaCustomization]
    *
    * @param {object} $0
@@ -313,7 +317,17 @@ export const actions = {
    * @param {object} [$0.exclude] Configure types to exclude
    * @param {string[]} [$0.exclude.types] Do not include these types
    * @param {string[]} [$0.exclude.plugins] Do not include types owned by these plugins
-   * @param {boolean} [withFieldTypes] Include field types, defaults to `true`
+   * @param {boolean} [$0.withFieldTypes] Include field types, defaults to `true`
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`.
+   *   actions.printTypeDefinitions({})
+   * }
+   * @example
+   * exports.createSchemaCustomization = ({ actions }) => {
+   *   // This code writes a GraphQL schema to a file named `schema.gql`, but this time it does not include field types.
+   *   actions.printTypeDefinitions({ withFieldTypes: false })
+   * }
    */
   printTypeDefinitions: (
     {
@@ -357,7 +371,7 @@ export const actions = {
    *   actions.createResolverContext({ getHtml })
    * }
    * // The context value can then be accessed in any field resolver like this:
-   * exports.createSchemaCustomization = ({ actions }) => {
+   * exports.createSchemaCustomization = ({ actions, schema }) => {
    *   actions.createTypes(schema.buildObjectType({
    *     name: 'Test',
    *     interfaces: ['Node'],
@@ -377,9 +391,12 @@ export const actions = {
     context: IGatsbyPluginContext,
     plugin: IGatsbyPlugin,
     traceId?: string
-  ): ThunkAction<void, IGatsbyState, {}, ICreateResolverContext> => (
-    dispatch
-  ): void => {
+  ): ThunkAction<
+    void,
+    IGatsbyState,
+    Record<string, unknown>,
+    ICreateResolverContext
+  > => (dispatch): void => {
     if (!context || typeof context !== `object`) {
       report.error(
         `Expected context value passed to \`createResolverContext\` to be an object. Received "${context}".`
@@ -404,8 +421,10 @@ const withDeprecationWarning = (
   actionName: RestrictionActionNames,
   action: SomeActionCreator,
   api: API,
-  allowedIn: API[]
-): SomeActionCreator => (...args: any[]): ReturnType<ActionCreator<any>> => {
+  allowedIn: Array<API>
+): SomeActionCreator => (
+  ...args: Array<any>
+): ReturnType<ActionCreator<any>> => {
   report.warn(
     `Calling \`${actionName}\` in the \`${api}\` API is deprecated. ` +
       `Please use: ${allowedIn.map(a => `\`${a}\``).join(`, `)}.`
@@ -416,7 +435,7 @@ const withDeprecationWarning = (
 const withErrorMessage = (
   actionName: RestrictionActionNames,
   api: API,
-  allowedIn: API[]
+  allowedIn: Array<API>
 ) => () =>
   // return a thunk that does not dispatch anything
   (): void => {
@@ -436,8 +455,8 @@ type API = string
 type Restrictions = Record<
   RestrictionActionNames,
   Partial<{
-    ALLOWED_IN: API[]
-    DEPRECATED_IN: API[]
+    ALLOWED_IN: Array<API>
+    DEPRECATED_IN: Array<API>
   }>
 >
 
@@ -447,7 +466,7 @@ type AvailableActionsByAPI = Record<
 >
 
 const set = (
-  availableActionsByAPI: {},
+  availableActionsByAPI: Record<string, any>,
   api: API,
   actionName: RestrictionActionNames,
   action: SomeActionCreator
@@ -461,16 +480,19 @@ const mapAvailableActionsToAPIs = (
 ): AvailableActionsByAPI => {
   const availableActionsByAPI: AvailableActionsByAPI = {}
 
-  const actionNames = Object.keys(restrictions) as (keyof typeof restrictions)[]
+  const actionNames = Object.keys(restrictions) as Array<
+    keyof typeof restrictions
+  >
   actionNames.forEach(actionName => {
     const action = actions[actionName]
 
-    const allowedIn: API[] = restrictions[actionName][ALLOWED_IN] || []
+    const allowedIn: Array<API> = restrictions[actionName][ALLOWED_IN] || []
     allowedIn.forEach(api =>
       set(availableActionsByAPI, api, actionName, action)
     )
 
-    const deprecatedIn: API[] = restrictions[actionName][DEPRECATED_IN] || []
+    const deprecatedIn: Array<API> =
+      restrictions[actionName][DEPRECATED_IN] || []
     deprecatedIn.forEach(api =>
       set(
         availableActionsByAPI,

@@ -6,14 +6,19 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "skipLibCheck": true,
     "strictBindCallApply": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "paths": {
+      "@reach/router/*": ["./node_modules/@gatsbyjs/reach-router/*"]
+    }
   },
   "exclude": ["peril/*", "examples/*"]
 }

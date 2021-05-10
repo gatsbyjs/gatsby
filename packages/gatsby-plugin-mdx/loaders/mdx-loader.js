@@ -25,7 +25,10 @@ const debugMore = require(`debug`)(`gatsby-plugin-mdx-info:mdx-loader`)
 
 const genMdx = require(`../utils/gen-mdx`)
 const withDefaultOptions = require(`../utils/default-options`)
-const createMDXNodeWithScope = require(`../utils/mdx-node-with-scope`)
+const {
+  createMdxNodeExtraBabel,
+  createMdxNodeLessBabel,
+} = require(`../utils/create-mdx-node`)
 const { createFileNode } = require(`../utils/create-fake-file-node`)
 
 const DEFAULT_OPTIONS = {
@@ -69,9 +72,10 @@ const hasDefaultExport = (str, options) => {
     isExport(value) || isImport(value) ? -1 : 1
 
   function esSyntax() {
-    var Parser = this.Parser
-    var tokenizers = Parser.prototype.blockTokenizers
-    var methods = Parser.prototype.blockMethods
+    // eslint-disable-next-line @babel/no-invalid-this
+    const Parser = this.Parser
+    const tokenizers = Parser.prototype.blockTokenizers
+    const methods = Parser.prototype.blockMethods
 
     tokenizers.esSyntax = tokenizeEsSyntax
 
@@ -89,7 +93,7 @@ const hasDefaultExport = (str, options) => {
   return hasDefaultExportBool
 }
 
-module.exports = async function (content) {
+module.exports = async function mdxLoader(content) {
   const callback = this.async()
   const {
     getNode: rawGetNode,
@@ -122,15 +126,24 @@ module.exports = async function (content) {
 
   let mdxNode
   try {
-    // This node attempts to break the chicken-egg problem, where parsing mdx
-    // allows for custom plugins, which can receive a mdx node
-    ;({ mdxNode } = await createMDXNodeWithScope({
-      id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
-      node: fileNode,
-      content,
-      options,
-      getNodesByType,
-    }))
+    // This fakeNodeIdMDXFileABugIfYouSeeThis node object attempts to break the chicken-egg problem,
+    // where parsing mdx allows for custom plugins, which can receive a mdx node.
+    if (options.lessBabel) {
+      ;({ mdxNode } = await createMdxNodeLessBabel({
+        id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+        node: fileNode,
+        content,
+        options,
+        getNodesByType,
+        getNode: rawGetNode,
+      }))
+    } else {
+      mdxNode = await createMdxNodeExtraBabel({
+        id: `fakeNodeIdMDXFileABugIfYouSeeThis`,
+        node: fileNode,
+        content,
+      })
+    }
   } catch (e) {
     return callback(e)
   }
@@ -170,12 +183,12 @@ ${contentWithoutFrontmatter}`
   /**
    * Support gatsby-remark parser plugins
    */
-  for (let plugin of options.gatsbyRemarkPlugins) {
+  for (const plugin of options.gatsbyRemarkPlugins) {
     debug(`requiring`, plugin.resolve)
     const requiredPlugin = interopDefault(require(plugin.resolve))
     debug(`required`, plugin)
     if (_.isFunction(requiredPlugin.setParserPlugins)) {
-      for (let parserPlugin of requiredPlugin.setParserPlugins(
+      for (const parserPlugin of requiredPlugin.setParserPlugins(
         plugin.options || {}
       )) {
         if (_.isArray(parserPlugin)) {

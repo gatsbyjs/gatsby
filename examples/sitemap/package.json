@@ -5,13 +5,13 @@
   "version": "1.0.0",
   "author": "Nicholas Young <nicholas@nicholaswyoung.com>",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-core-utils": "^1.3.8",
-    "gatsby-plugin-sitemap": "^2.4.7",
-    "gatsby-source-filesystem": "^2.3.14",
-    "gatsby-transformer-remark": "^2.8.20",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "gatsby": "next",
+    "gatsby-core-utils": "next",
+    "gatsby-plugin-sitemap": "next",
+    "gatsby-source-filesystem": "next",
+    "gatsby-transformer-remark": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"

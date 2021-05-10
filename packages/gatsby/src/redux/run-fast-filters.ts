@@ -1,7 +1,7 @@
 import { IGatsbyNode } from "./types"
 import { GatsbyGraphQLType } from "../.."
 import { prepareRegex } from "../utils/prepare-regex"
-const { makeRe } = require(`micromatch`)
+import { makeRe } from "micromatch"
 import { getValueAt } from "../utils/get-value-at"
 import _ from "lodash"
 import {
@@ -417,10 +417,7 @@ function convertAndApplyFastFilters(
     stats.totalSiftHits++
   }
 
-  if (firstOnly) {
-    return []
-  }
-  return null
+  return []
 }
 
 function filterToStats(

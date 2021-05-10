@@ -1,6 +1,7 @@
 const sharp = require(`./safe-sharp`)
-
+const { generateImageData } = require(`./image-data`)
 const imageSize = require(`probe-image-size`)
+const { isCI } = require(`gatsby-core-utils`)
 
 const _ = require(`lodash`)
 const fs = require(`fs-extra`)
@@ -18,8 +19,32 @@ const {
 const { memoizedTraceSVG, notMemoizedtraceSVG } = require(`./trace-svg`)
 const duotone = require(`./duotone`)
 const { IMAGE_PROCESSING_JOB_NAME } = require(`./gatsby-worker`)
+const { getDimensionsAndAspectRatio } = require(`./utils`)
+const { getDominantColor } = require(`./utils`)
 
 const imageSizeCache = new Map()
+
+const getImageSizeAsync = async file => {
+  if (
+    process.env.NODE_ENV !== `test` &&
+    imageSizeCache.has(file.internal.contentDigest)
+  ) {
+    return imageSizeCache.get(file.internal.contentDigest)
+  }
+  const input = fs.createReadStream(file.absolutePath)
+  const dimensions = await imageSize(input)
+
+  if (!dimensions) {
+    reportError(
+      `gatsby-plugin-sharp couldn't determine dimensions for file:\n${file.absolutePath}\nThis file is unusable and is most likely corrupt.`,
+      ``
+    )
+  }
+
+  imageSizeCache.set(file.internal.contentDigest, dimensions)
+  return dimensions
+}
+// Remove in next major as it's really slow
 const getImageSize = file => {
   if (
     process.env.NODE_ENV !== `test` &&
@@ -27,9 +52,7 @@ const getImageSize = file => {
   ) {
     return imageSizeCache.get(file.internal.contentDigest)
   } else {
-    const dimensions = imageSize.sync(
-      toArray(fs.readFileSync(file.absolutePath))
-    )
+    const dimensions = imageSize.sync(fs.readFileSync(file.absolutePath))
 
     if (!dimensions) {
       reportError(
@@ -43,75 +66,21 @@ const getImageSize = file => {
   }
 }
 
-// Bound action creators should be set when passed to onPreInit in gatsby-node.
+// Actions should be set when passed to onPreInit in gatsby-node.
 // ** It is NOT safe to just directly require the gatsby module **.
 // There is no guarantee that the module resolved is the module executing!
 // This can occur in mono repos depending on how dependencies have been hoisted.
 // The direct require has been left only to avoid breaking changes.
-let boundActionCreators
-exports.setBoundActionCreators = actions => {
-  boundActionCreators = actions
+let actions
+exports.setActions = _actions => {
+  actions = _actions
 }
 
+exports.generateImageData = generateImageData
+
 function calculateImageDimensionsAndAspectRatio(file, options) {
-  // Calculate the eventual width/height of the image.
   const dimensions = getImageSize(file)
-  const imageAspectRatio = dimensions.width / dimensions.height
-
-  let width = options.width
-  let height = options.height
-
-  switch (options.fit) {
-    case sharp.fit.fill: {
-      width = options.width ? options.width : dimensions.width
-      height = options.height ? options.height : dimensions.height
-      break
-    }
-    case sharp.fit.inside: {
-      const widthOption = options.width
-        ? options.width
-        : Number.MAX_SAFE_INTEGER
-      const heightOption = options.height
-        ? options.height
-        : Number.MAX_SAFE_INTEGER
-
-      width = Math.min(widthOption, Math.round(heightOption * imageAspectRatio))
-      height = Math.min(
-        heightOption,
-        Math.round(widthOption / imageAspectRatio)
-      )
-      break
-    }
-    case sharp.fit.outside: {
-      const widthOption = options.width ? options.width : 0
-      const heightOption = options.height ? options.height : 0
-
-      width = Math.max(widthOption, Math.round(heightOption * imageAspectRatio))
-      height = Math.max(
-        heightOption,
-        Math.round(widthOption / imageAspectRatio)
-      )
-      break
-    }
-
-    default: {
-      if (options.width && !options.height) {
-        width = options.width
-        height = Math.round(options.width / imageAspectRatio)
-      }
-
-      if (options.height && !options.width) {
-        width = Math.round(options.height * imageAspectRatio)
-        height = options.height
-      }
-    }
-  }
-
-  return {
-    width,
-    height,
-    aspectRatio: width / height,
-  }
+  return getDimensionsAndAspectRatio(dimensions, options)
 }
 
 function prepareQueue({ file, args }) {
@@ -156,7 +125,7 @@ function prepareQueue({ file, args }) {
 }
 
 function createJob(job, { reporter }) {
-  if (!boundActionCreators) {
+  if (!actions) {
     reporter.panic(
       `Gatsby-plugin-sharp wasn't setup correctly in gatsby-config.js. Make sure you add it to the plugins array.`
     )
@@ -170,17 +139,28 @@ function createJob(job, { reporter }) {
   // entire closure would keep duplicate job in memory until
   // initial job finish.
   let promise = null
-  if (boundActionCreators.createJobV2) {
-    promise = boundActionCreators.createJobV2(job)
+  if (actions.createJobV2) {
+    promise = actions.createJobV2(job)
   } else {
-    promise = scheduleJob(job, boundActionCreators, reporter)
+    promise = scheduleJob(job, actions, reporter)
   }
 
   promise.catch(err => {
-    reporter.panic(err)
+    reporter.panic(`error converting image`, err)
   })
 
   return promise
+}
+
+function lazyJobsEnabled() {
+  return (
+    process.env.gatsby_executing_command === `develop` &&
+    !isCI() &&
+    !(
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `true` ||
+      process.env.ENABLE_GATSBY_EXTERNAL_JOBS === `1`
+    )
+  )
 }
 
 function queueImageResizing({ file, args = {}, reporter }) {
@@ -202,6 +182,7 @@ function queueImageResizing({ file, args = {}, reporter }) {
       inputPaths: [file.absolutePath],
       outputDir,
       args: {
+        isLazy: lazyJobsEnabled(),
         operations: [
           {
             outputPath: relativePath,
@@ -269,6 +250,7 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
         file.internal.contentDigest
       ),
       args: {
+        isLazy: lazyJobsEnabled(),
         operations,
         pluginOptions: getPluginOptions(),
       },
@@ -283,16 +265,18 @@ function batchQueueImageResizing({ file, transforms = [], reporter }) {
   })
 }
 
-// A value in pixels(Int)
-const defaultBase64Width = () => getPluginOptions().base64Width || 20
 async function generateBase64({ file, args = {}, reporter }) {
   const pluginOptions = getPluginOptions()
   const options = healOptions(pluginOptions, args, file.extension, {
-    width: defaultBase64Width(),
+    // Should already be set to base64Width by `fluid()`/`fixed()` methods
+    // calling `generateBase64()`. Useful in Jest tests still.
+    width: args.base64Width || pluginOptions.base64Width,
   })
   let pipeline
   try {
-    pipeline = sharp(file.absolutePath)
+    pipeline = !options.failOnError
+      ? sharp(file.absolutePath, { failOnError: false })
+      : sharp(file.absolutePath)
 
     if (!options.rotate) {
       pipeline.rotate()
@@ -306,10 +290,10 @@ async function generateBase64({ file, args = {}, reporter }) {
     pipeline = pipeline.trim(options.trim)
   }
 
-  const forceBase64Format =
-    args.toFormatBase64 || pluginOptions.forceBase64Format
-  if (forceBase64Format) {
-    args.toFormat = forceBase64Format
+  const changedBase64Format =
+    options.toFormatBase64 || pluginOptions.forceBase64Format
+  if (changedBase64Format) {
+    options.toFormat = changedBase64Format
   }
 
   pipeline
@@ -323,16 +307,16 @@ async function generateBase64({ file, args = {}, reporter }) {
     .png({
       compressionLevel: options.pngCompressionLevel,
       adaptiveFiltering: false,
-      force: args.toFormat === `png`,
+      force: options.toFormat === `png`,
     })
     .jpeg({
       quality: options.jpegQuality || options.quality,
       progressive: options.jpegProgressive,
-      force: args.toFormat === `jpg`,
+      force: options.toFormat === `jpg`,
     })
     .webp({
       quality: options.webpQuality || options.quality,
-      force: args.toFormat === `webp`,
+      force: options.toFormat === `webp`,
     })
 
   // grayscale
@@ -347,11 +331,32 @@ async function generateBase64({ file, args = {}, reporter }) {
 
   // duotone
   if (options.duotone) {
-    pipeline = await duotone(options.duotone, args.toFormat, pipeline)
+    if (options.duotone.highlight && options.duotone.shadow) {
+      pipeline = await duotone(options.duotone, options.toFormat, pipeline)
+    } else {
+      reporter.warn(
+        `Invalid duotone option specified for ${file.absolutePath}, ignoring. Please pass an object to duotone with the keys "highlight" and "shadow" set to the corresponding hex values you want to use.`
+      )
+    }
   }
-  const { data: buffer, info } = await pipeline.toBuffer({
-    resolveWithObject: true,
-  })
+  let buffer
+  let info
+  try {
+    const result = await pipeline.toBuffer({
+      resolveWithObject: true,
+    })
+    buffer = result.data
+    info = result.info
+  } catch (err) {
+    reportError(
+      `Failed to process image ${file.absolutePath}.
+It is probably corrupt, so please try replacing it.  If it still fails, please open an issue with the image attached.`,
+      err,
+      reporter
+    )
+    return null
+  }
+
   const base64output = {
     src: `data:image/${info.format};base64,${buffer.toString(`base64`)}`,
     width: info.width,
@@ -432,7 +437,6 @@ async function stats({ file, reporter }) {
 
 async function fluid({ file, args = {}, reporter, cache }) {
   const options = healOptions(getPluginOptions(), args, file.extension)
-
   if (options.sizeByPixelDensity) {
     /*
      * We learned that `sizeByPixelDensity` is only valid for vector images,
@@ -564,12 +568,13 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -611,6 +616,9 @@ async function fluid({ file, args = {}, reporter, cache }) {
         break
       case `webp`:
         srcSetType = `image/webp`
+        break
+      case `avif`:
+        srcSetType = `image/avif`
         break
       case ``:
       case `no_change`:
@@ -656,7 +664,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
   sizes.push(options[fixedDimension])
   sizes.push(options[fixedDimension] * 1.5)
   sizes.push(options[fixedDimension] * 2)
-  const dimensions = getImageSize(file)
+  const dimensions = await getImageSizeAsync(file)
 
   const filteredSizes = sizes.filter(size => size <= dimensions[fixedDimension])
 
@@ -699,12 +707,13 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   let base64Image
   if (options.base64) {
-    const base64Width = options.base64Width || defaultBase64Width()
+    const base64Width = options.base64Width
     const base64Height = Math.max(
       1,
       Math.round(base64Width / images[0].aspectRatio)
     )
     const base64Args = {
+      background: options.background,
       duotone: options.duotone,
       grayscale: options.grayscale,
       rotate: options.rotate,
@@ -761,23 +770,19 @@ async function fixed({ file, args = {}, reporter, cache }) {
   }
 }
 
-function toArray(buf) {
-  var arr = new Array(buf.length)
-
-  for (var i = 0; i < buf.length; i++) {
-    arr[i] = buf[i]
-  }
-
-  return arr
-}
-
 exports.queueImageResizing = queueImageResizing
+exports.batchQueueImageResizing = batchQueueImageResizing
 exports.resize = queueImageResizing
 exports.base64 = base64
+exports.generateBase64 = generateBase64
 exports.traceSVG = traceSVG
 exports.sizes = fluid
 exports.resolutions = fixed
 exports.fluid = fluid
 exports.fixed = fixed
 exports.getImageSize = getImageSize
+exports.getImageSizeAsync = getImageSizeAsync
+exports.getDominantColor = getDominantColor
 exports.stats = stats
+exports._unstable_createJob = createJob
+exports._lazyJobsEnabled = lazyJobsEnabled

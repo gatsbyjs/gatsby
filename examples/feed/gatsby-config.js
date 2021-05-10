@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `GatsbyJS RSS`,
     description: `A blog with RSS powered by GatsbyJS.`,
-    siteUrl: `https://gatsbyjs.org`,
+    siteUrl: `https://www.gatsbyjs.com`,
   },
   plugins: [
     {

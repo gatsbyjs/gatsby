@@ -7,7 +7,8 @@
  * `from` tail. What's left ought to be a string in the form of
  * `id[ as id] [, id[ as id]]`
  * (where the brackets represent optional repeating parts). The left-most id
- * might also contain star (namespaced import).
+ * might also contain star (namespaced import). This step also strips
+ * `import "foo"` shorthand imports.
  * The second part will trim and split the string on comma, then each segment
  * is split on `as` (in a proper way) and the right-most identifier is returned.
  *
@@ -19,7 +20,7 @@
  */
 function parseImportBindings(importCode, returnSegments = false) {
   const str = importCode.replace(
-    /^\s*import|[{},]|\s*from\s*['"][^'"]*?['"].*?$/gm,
+    /^\s*import\s*['"][^'"]*?['"].*?$|^\s*import|[{},]|\s*from\s*['"][^'"]*?['"].*?$/gm,
     ` , `
   )
   const segments = str

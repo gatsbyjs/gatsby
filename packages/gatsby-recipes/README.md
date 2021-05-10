@@ -1,8 +1,10 @@
 # Gatsby Recipes
 
-Gatsby Recipes is framework for automating common Gatsby tasks. Recipes are MDX
-files which, when run by our interpreter, perform common actions like installing
-NPM packages, installing plugins, creating pages, etc.
+Recipes is an “infrastructure as code” system that lets users automatically manage and provision the technology stack for their Gatsby site/app through code rather than manual processes.
+
+It’s powered by React & MDX and a useful analogy is “React Native for Infrastructure”.
+
+Recipes also provides a read/write API for Desktop/Admin to build lowcode tooling on top of Gatsby & integrated services.
 
 It's designed to be extensible so new capabilities can be added which allow
 Recipes to automate more things.
@@ -15,10 +17,7 @@ tutorials.
 [Read more about Recipes on the launch blog post](https://www.gatsbyjs.org/blog/2020-04-15-announcing-gatsby-recipes/)
 
 There's an umbrella issue for testing / using Recipes during its incubation stage.
-
-Follow the issue for updates!
-
-https://github.com/gatsbyjs/gatsby/issues/22991
+Follow the issue for updates! https://github.com/gatsbyjs/gatsby/issues/22991
 
 ## Get set up for running Recipes
 
@@ -78,7 +77,7 @@ Install necessary NPM packages
 <!-- refer to the API in this doc to see what APIs are available, like `NPMPackage` -->
 
 <NPMPackage name="gatsby-plugin-emotion" />
-<NPMPackage name="@emotion/core" />
+<NPMPackage name="@emotion/react" />
 <NPMPackage name="@emotion/styled" />
 
 ---
@@ -150,6 +149,9 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 - **name**: name of the plugin
 - **options**: object with options to be added to the plugin declaration in `gatsby-config.js`. JavaScript code is not _yet_ supported in options e.g. `process.env.API_TOKEN`. This is being worked on. For now only simple values like strings and numbers are supported.
 - **key**: string used to distinguish between multiple plugin instances
+- **isLocal**: boolean that indicates this is a local plugin. This lets
+  recipes know it shouldn't require an NPMPackage with the plugin name
+  to be installed as well.
 
 ### `<GatsbyShadowFile>`
 
@@ -173,6 +175,26 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 - **name**: name of the package to install
 - **version**: defaults to latest
 - **dependencyType**: defaults to `production`. Other options include `development`
+
+### `<NPMPackageJson>`
+
+<!-- prettier-ignore-start -->
+```jsx
+<NPMPackageJson
+  name="lint-staged"
+  value={{
+     "src/**/*.js": [
+      "jest --findRelatedTests"
+    ],
+  }}
+/>
+```
+<!-- prettier-ignore-end -->
+
+#### props
+
+- **name**: name of the property to add to the package.json
+- **value**: the value assigned to the property. can be an object or a string.
 
 ### `<NPMScript>`
 
@@ -214,32 +236,6 @@ Installs a Gatsby Plugin in the site's `gatsby-config.js`.
 ## How to set up your development environment to work on Gatsby Recipes core
 
 The Gatsby recipes codebase consists of the core framework, code for each resource, and the MDX source.
-
-### Work on Resources & the core framework
-
-First [follow the instructions on setting up a local Gatsby dev environment](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/).
-
-If you want to fix a bug in a resource or extend it in some way, typically you'll be working against the tests for that resource.
-
-In your terminal, start a jest watch process against the resource you're working on e.g. for GatsbyPlugin:
-
-```shell
-GATSBY_RECIPES_NO_COLOR=true jest --testPathPattern "src/.*plugin.test" --watch
-```
-
-You can create test recipes that you run in a test site. You'll need to [use `gatsby-dev-cli` for this.](https://www.gatsbyjs.org/contributing/setting-up-your-local-dev-environment/#gatsby-functional-changes).
-
-One note, as you'll be testing changes to the Gatsby CLI — instead of running the global gatsby-cli package (i.e. what you'd
-run by typing `gatsby`, you'll want to run the version copied over by `gatsby-dev-cli` by running `./node_modules/.bin/gatsby`.
-
-When debugging the CLI, you may run into errors without stacktraces. In order
-to work around that, you can use the node inspector:
-
-```sh
-DEBUG=true node --inspect-brk ./node_modules/.bin/gatsby recipes ./test.mdx
-```
-
-Then, open up Chrome and click the node icon in dev tools.
 
 ### Official recipes
 

@@ -47,6 +47,7 @@ async function genMDX(
     options,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -65,7 +66,7 @@ async function genMDX(
     }
   }
 
-  let results = {
+  const results = {
     mdast: undefined,
     hast: undefined,
     html: undefined,
@@ -114,6 +115,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
       //          files,
       getNode,
       getNodes,
+      getNodesByType,
       reporter,
       cache,
       pathPrefix,
@@ -126,7 +128,7 @@ export const _frontmatter = ${JSON.stringify(data)}`
   )
 
   debug(`running mdx`)
-  let code = await mdx(content, {
+  const code = await mdx(content, {
     filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: options.remarkPlugins.concat(
@@ -194,10 +196,8 @@ ${code}`
 module.exports = genMDX // Legacy API, drop in v3 in favor of named export
 module.exports.genMDX = genMDX
 
-async function findImportsExports({
+async function findImports({
   node,
-  rawInput,
-  absolutePath = null,
   options,
   getNode,
   getNodes,
@@ -207,7 +207,7 @@ async function findImportsExports({
   pathPrefix,
   ...helpers
 }) {
-  const { data: frontmatter, content } = grayMatter(rawInput)
+  const { content } = grayMatter(node.rawBody)
 
   const gatsbyRemarkPluginsAsremarkPlugins = await getSourcePluginsAsRemarkPlugins(
     {
@@ -228,7 +228,7 @@ async function findImportsExports({
   )
 
   const compilerOptions = {
-    filepath: absolutePath,
+    filepath: node.fileAbsolutePath,
     ...options,
     remarkPlugins: [
       ...options.remarkPlugins,
@@ -238,11 +238,92 @@ async function findImportsExports({
   const compiler = mdx.createCompiler(compilerOptions)
 
   const fileOpts = { contents: content }
+  if (node.fileAbsolutePath) {
+    fileOpts.path = node.fileAbsolutePath
+  }
+
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast, fileOpts)
+
+  // Assuming valid code, identifiers must be unique (they are consts) so
+  // we don't need to dedupe the symbols here.
+  const identifiers = []
+  const imports = []
+
+  mdast.children.forEach(node => {
+    if (node.type !== `import`) return
+
+    const importCode = node.value
+
+    imports.push(importCode)
+
+    const bindings = parseImportBindings(importCode)
+    identifiers.push(...bindings)
+  })
+
+  if (!identifiers.includes(`React`)) {
+    identifiers.push(`React`)
+    imports.push(`import * as React from 'react'`)
+  }
+
+  return {
+    scopeImports: imports,
+    scopeIdentifiers: identifiers,
+  }
+}
+
+module.exports.findImports = findImports
+
+async function findImportsExports({
+  mdxNode,
+  rawInput,
+  absolutePath = null,
+  options,
+  getNode,
+  getNodes,
+  getNodesByType,
+  reporter,
+  cache,
+  pathPrefix,
+  ...helpers
+}) {
+  const { data: frontmatter, content } = grayMatter(rawInput)
+
+  const gatsbyRemarkPluginsAsRemarkPlugins = await getSourcePluginsAsRemarkPlugins(
+    {
+      gatsbyRemarkPlugins: options.gatsbyRemarkPlugins,
+      mdxNode,
+      getNode,
+      getNodes,
+      getNodesByType,
+      reporter,
+      cache,
+      pathPrefix,
+      compiler: {
+        parseString: () => compiler.parse.bind(compiler),
+        generateHTML: ast => mdx(ast, options),
+      },
+      ...helpers,
+    }
+  )
+
+  const compilerOptions = {
+    filepath: absolutePath,
+    ...options,
+    remarkPlugins: [
+      ...options.remarkPlugins,
+      ...gatsbyRemarkPluginsAsRemarkPlugins,
+    ],
+  }
+  const compiler = mdx.createCompiler(compilerOptions)
+
+  const fileOpts = { contents: content }
   if (absolutePath) {
     fileOpts.path = absolutePath
   }
 
-  const mdast = await compiler.parse(fileOpts)
+  let mdast = await compiler.parse(fileOpts)
+  mdast = await compiler.run(mdast, fileOpts)
 
   // Assuming valid code, identifiers must be unique (they are consts) so
   // we don't need to dedupe the symbols here.
@@ -253,7 +334,9 @@ async function findImportsExports({
   mdast.children.forEach(node => {
     if (node.type === `import`) {
       const importCode = node.value
+
       imports.push(importCode)
+
       const bindings = parseImportBindings(importCode)
       identifiers.push(...bindings)
     } else if (node.type === `export`) {

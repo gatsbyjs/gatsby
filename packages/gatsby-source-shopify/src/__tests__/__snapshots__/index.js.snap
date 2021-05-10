@@ -352,11 +352,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "b736d3dec3818a427de40e2dceccc0b8",
+      "contentDigest": "a3ee401ff2a8db5db5031f54f5e8820d",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -382,11 +383,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "4641c428031a714706870e88110e49a4",
+      "contentDigest": "35c6299896a00cfff7d7c18dac0f4eb4",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -412,11 +414,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "88bfa40e3f5625bbd9cf63b35e54f226",
+      "contentDigest": "b95cc0d09fc67973b61bf6d87bf875e0",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -442,11 +445,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "910a3abea936904c9d930401b5534689",
+      "contentDigest": "3d0967c9e5fd64fc9baf31a0273b70fd",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -472,11 +476,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "bbfd2ef0033a2ac3158bf1b4094c6e46",
+      "contentDigest": "02dbf1b3c90354eca2dd4295192a4c36",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -502,11 +507,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/sock-mockup_1.jpg?v=1531343345",
     },
     "internal": Object {
-      "contentDigest": "9dab325ac003feb3df04b04e4897fd04",
+      "contentDigest": "b70e12f3f05b5b8b14e26652cb0c5c51",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NzAyMjQ5Nzg4MA==",
     "selectedOptions": Array [
       Object {
@@ -532,11 +538,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "01d81fec84b8c407dc0257afbae4a492",
+      "contentDigest": "0016aad4c9786bf6fd6ffcd6702bcc0a",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -562,11 +569,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "90b28f9ad99c8e83f50cec7e98ba4f03",
+      "contentDigest": "b7ac2da5e2775c93253624c67a9ce9be",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -592,11 +600,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6208.jpg?v=1555548544",
     },
     "internal": Object {
-      "contentDigest": "eded7022aa10c1402e53d73d48b1008f",
+      "contentDigest": "d3e975028946f23934ff851a76921704",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "2.00",
+    "priceNumber": 2,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzEzMTIxMjA1Njk5NDQ=",
     "selectedOptions": Array [
       Object {
@@ -622,11 +631,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "8bdd2b8d71b3507e98a41e211f28b4b2",
+      "contentDigest": "edd0bd9b9f486cc781aa1081a392377f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -652,11 +662,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "8a2e8826f5e05fb3e2d614b049f14a70",
+      "contentDigest": "dd04923fdfccea530b7720c411168318",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -682,11 +693,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "459409b3b681d9babb9ca010ef7dc245",
+      "contentDigest": "da5ec3103887a13262573985eaee2010",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -712,11 +724,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "bdb4422dd29a42a2389c1e05c96c9689",
+      "contentDigest": "b49fd6f96b04c56a0ec8576d128c7590",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -742,11 +755,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "42967b1918662760252e8135e419ef52",
+      "contentDigest": "a48eb1e29980030eba1796f178735e13",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -772,11 +786,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_4839_002.jpg?v=1546015349",
     },
     "internal": Object {
-      "contentDigest": "aa01cdf0bd7fa080049540378d8786ad",
+      "contentDigest": "031a0c7d6c7a4cd61b80c29149f95c1c",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTUyNTkyMjQ=",
     "selectedOptions": Array [
       Object {
@@ -802,11 +817,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_4862.jpg?v=1540860991",
     },
     "internal": Object {
-      "contentDigest": "6e969e4c040ae42e2c049307527db056",
+      "contentDigest": "1e3fbc328de15d4703534a3692e33e08",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE0MDMyNTU2NTI0NDA=",
     "selectedOptions": Array [
       Object {
@@ -832,11 +848,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_4947.png?v=1542402545",
     },
     "internal": Object {
-      "contentDigest": "deb7326b3cfc10f9364d1174b1677da6",
+      "contentDigest": "ff82d5ccc2c81914ae081db2e2e8e096",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "2.00",
+    "priceNumber": 2,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE1NjYyNjk5OTcxNDQ=",
     "selectedOptions": Array [
       Object {
@@ -862,11 +879,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "b8c5bea4326b23577e6b634f1f268ef2",
+      "contentDigest": "5d026c59b31e1afb5aa1502e41f4a97f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -892,11 +910,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "57f3899acc9b134fd6c2e7b49a85a1d7",
+      "contentDigest": "c28be7fcd6d7fbdc6eb4eae7a5112fc7",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -922,11 +941,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "5dd78df83251893dd69c80690b014596",
+      "contentDigest": "676cfb826c6503f9fd7f88b49f5e2384",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -952,11 +972,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "292b2815d6762525d8e7c7bd4845d4a8",
+      "contentDigest": "90774ef31230bc817339b937734211a4",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -982,11 +1003,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG-5659.png?v=1543972353",
     },
     "internal": Object {
-      "contentDigest": "57b25ab9dd87006f3135c2845de94df6",
+      "contentDigest": "6e40fde47dd34c9b42a7d5cebd02abae",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MjM0MTkzNDA4ODg=",
     "selectedOptions": Array [
       Object {
@@ -1012,11 +1034,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "e2b4ae16a883d2f32acf4aeb5ded731e",
+      "contentDigest": "54cc5d9a012455ac0c8b5d12cb8711ac",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
     "selectedOptions": Array [
       Object {
@@ -1042,11 +1065,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "efa92e1509c258eee0b91ddaf22d24b2",
+      "contentDigest": "9603ce48113f4428eaa0fdc4770b9f7f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
     "selectedOptions": Array [
       Object {
@@ -1072,11 +1096,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "4d1298feb5ebade79ceba66c42d8c035",
+      "contentDigest": "32a38d46cea7aedb829954bffabc9f1b",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
     "selectedOptions": Array [
       Object {
@@ -1102,11 +1127,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "b6339bff75242de05e13b2ddf6c01b39",
+      "contentDigest": "bdd32030543110e4e2e2235f202e6901",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
     "selectedOptions": Array [
       Object {
@@ -1132,11 +1158,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "9214cb1a932fa04f6aea625ebdd1ea91",
+      "contentDigest": "ced8908979cee42693fdeeae897041c3",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
     "selectedOptions": Array [
       Object {
@@ -1162,11 +1189,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5137.png?v=1546036613",
     },
     "internal": Object {
-      "contentDigest": "61a6f0d5d00d03d0cf9e96f3fc761739",
+      "contentDigest": "e12cd1858f654a895284634f99aaafeb",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTQ1ODU0MzI=",
     "selectedOptions": Array [
       Object {
@@ -1192,11 +1220,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "48fa33236abc34623eb79b26c24c54e0",
+      "contentDigest": "e477def9619ab33fb88008895e1eeb61",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
     "selectedOptions": Array [
       Object {
@@ -1222,11 +1251,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "267a7ca34e204ebd8d4a4758441cd70c",
+      "contentDigest": "0b72649db00228f90c39877713c0905f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
     "selectedOptions": Array [
       Object {
@@ -1252,11 +1282,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "992918cb3bace8cdee27772a2f4582b6",
+      "contentDigest": "d6a31e8d02ef91df652d8c03c3d2217d",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
     "selectedOptions": Array [
       Object {
@@ -1282,11 +1313,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "2d9f7cedadddfd41e6289f49dcdcd110",
+      "contentDigest": "3101871722c3f260a3811b0739ee1496",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
     "selectedOptions": Array [
       Object {
@@ -1312,11 +1344,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "8b639e3d1ffe6dabe6296c706973ac3a",
+      "contentDigest": "14d3577481332fee33171db68c549878",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
     "selectedOptions": Array [
       Object {
@@ -1342,11 +1375,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_5136.png?v=1546037022",
     },
     "internal": Object {
-      "contentDigest": "f82263c6b9136747d46d62a2af0a8dc3",
+      "contentDigest": "d8422f8b268010cda4c10374cebb1842",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5MzI2OTUwNzY5NTI=",
     "selectedOptions": Array [
       Object {
@@ -1372,11 +1406,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/purple-logo-mockup.jpg?v=1531344564",
     },
     "internal": Object {
-      "contentDigest": "0480138ca6dc11ef78644d1716e39b96",
+      "contentDigest": "4fc1e1bdd9db19e5c9f60a31588e765e",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc2NDkxNDY2MzUxMg==",
     "selectedOptions": Array [
       Object {
@@ -1402,11 +1437,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/dark-deploy-mockup.jpg?v=1531343706",
     },
     "internal": Object {
-      "contentDigest": "78231dc9bbeb0985f03547ca7100d434",
+      "contentDigest": "f6a63b58c1ec66377cedfaed21a2e0a9",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIzOTczOTk5NDEzNw==",
     "selectedOptions": Array [
       Object {
@@ -1432,11 +1468,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "c3d17ff9bceed8407baf1c7f00d035cb",
+      "contentDigest": "4cae0b23be3894fa0a67cf66bbd3d857",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
     "selectedOptions": Array [
       Object {
@@ -1462,11 +1499,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "589f85471b454ba85ed4aeee765674d7",
+      "contentDigest": "185c427847c680988c7e4d9cbb3e809d",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
     "selectedOptions": Array [
       Object {
@@ -1492,11 +1530,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "6baaa462ef2fe94502d47ef2d5d18891",
+      "contentDigest": "9880bab23e7adc1552ebc2ac00f583fc",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
     "selectedOptions": Array [
       Object {
@@ -1522,11 +1561,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "4fb8929c41b620a8afe1ac1ba66c5cf1",
+      "contentDigest": "2bdbefa4c461684d753d222c8bdc1976",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
     "selectedOptions": Array [
       Object {
@@ -1552,11 +1592,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "58923b035cc3cc0527c1ede5ad97067b",
+      "contentDigest": "d4bb4397a485a4cb5b2286e3d2a7d74e",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
     "selectedOptions": Array [
       Object {
@@ -1582,11 +1623,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/Gatsby_Dark_Hoodie.jpg?v=1556318115",
     },
     "internal": Object {
-      "contentDigest": "fb4de5059f2a615c19519ed80c2d8320",
+      "contentDigest": "64b0878287761c063d0a0101faf5a81e",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5NzQ0MzIyMDI4NDA=",
     "selectedOptions": Array [
       Object {
@@ -1612,11 +1654,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "525c8b92cf76606cb76271bca9bca501",
+      "contentDigest": "dfe073cf911dba2c1712dc4357093b0f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1642,11 +1685,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "ec5f65b4aa6fc2b4a9ec798bd01df46f",
+      "contentDigest": "91e971a4a8a9a78a70142e0e76575028",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1672,11 +1716,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "8ceef969dc9f2209ce7f0fc84e00508c",
+      "contentDigest": "1e1bd054b2976f40848b5fa7735a8e17",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1702,11 +1747,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "102b4b49f5719e2bbdcd91ee4ef9e945",
+      "contentDigest": "cf20f4368a61f4085aebb4951a86f759",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1732,11 +1778,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "551963b82f62d3481aa4f08617d3979a",
+      "contentDigest": "b46a8f0597e8da6f3c20ad08e7bf8089",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1762,11 +1809,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "ed424de85a783895801b8e40b493fd51",
+      "contentDigest": "48ea6af557034607b6536735c5bc985f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1792,11 +1840,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "b60cdd8eed821afef58d7b73ee344edd",
+      "contentDigest": "10cf7cbb14bd1531f1a6d1f2b124a524",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1822,11 +1871,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "f2664118c59e4e9872dd05e4e9e5180b",
+      "contentDigest": "c0ffb0a2893859d36a70bb321e8db710",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1852,11 +1902,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "950e2711eacf85ba433d69d51e93fd5c",
+      "contentDigest": "31a879ae7af658f6c0c4ce02d2c4506f",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1882,11 +1933,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6058.jpg?v=1552519884",
     },
     "internal": Object {
-      "contentDigest": "2253119f3555909a773546fb36b57db8",
+      "contentDigest": "b320d5f24acbd889c803704d9e4d9f8b",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "26.00",
+    "priceNumber": 26,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzE5OTI2MzIwNDE1NjA=",
     "selectedOptions": Array [
       Object {
@@ -1912,11 +1964,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "c34ce19886b224fcfc082fdfbca44159",
+      "contentDigest": "565d432180af8778827f0e68ecd7b342",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
     "selectedOptions": Array [
       Object {
@@ -1942,11 +1995,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "fe89a8d895ed0d07d13b98487c878b3f",
+      "contentDigest": "ef2951de88dc0f2af2f703be493c8340",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
     "selectedOptions": Array [
       Object {
@@ -1972,11 +2026,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "88512ba4b9050f4aa5a36f4ccce544e5",
+      "contentDigest": "00c6060131140ad9a4d8be5bb8d97c78",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
     "selectedOptions": Array [
       Object {
@@ -2002,11 +2057,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "8d1ee73313a2a84167c3d50470621e4c",
+      "contentDigest": "5d98703fae6648dd154e4a26ff7fc9ef",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
     "selectedOptions": Array [
       Object {
@@ -2032,11 +2088,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "2af95bfec1a54522a6a1352625194e5b",
+      "contentDigest": "7572c259afaf6358fff3072d740eda92",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
     "selectedOptions": Array [
       Object {
@@ -2062,11 +2119,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6198.jpg?v=1555695165",
     },
     "internal": Object {
-      "contentDigest": "a0e148d581cc342789fcaec24b57d9bf",
+      "contentDigest": "942ff4f56f86aaed34eb0907c5a305cc",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwMzY4MjEyMjk2NTY=",
     "selectedOptions": Array [
       Object {
@@ -2092,11 +2150,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6192.jpg?v=1555695177",
     },
     "internal": Object {
-      "contentDigest": "0bfe11b8c254c470ec886709d14c9135",
+      "contentDigest": "7a9842c6c7040f7fbd44f3f78e7881e1",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzIwNTg0MDQxNjc3Njg=",
     "selectedOptions": Array [
       Object {
@@ -2122,11 +2181,12 @@ Object {
       "originalSrc": "https://cdn.shopify.com/s/files/1/0011/5936/4633/products/IMG_6689.jpg?v=1560443279",
     },
     "internal": Object {
-      "contentDigest": "ba638faae306da36c4e20d1fd64ab345",
+      "contentDigest": "a97fbe8c6c26de50b281ab9738e6b627",
       "type": "ShopifyProductVariant",
     },
     "parent": "__SOURCE__",
     "price": "10.00",
+    "priceNumber": 10,
     "product___NODE": "Shopify__Product__Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzM4MTkwNDIxNzcxMTI=",
     "selectedOptions": Array [
       Object {

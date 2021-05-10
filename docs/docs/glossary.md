@@ -16,7 +16,7 @@ When you're new to Gatsby there can be a lot of words to learn. This glossary ai
 
 ### AST
 
-Abstract Syntax Tree: A tree representation of the source code that is found during a [compilation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/packages/gatsby-transformer-remark/) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure using the [Remark](#remark) parser.
+Abstract Syntax Tree: A tree representation of the source code that is found during a [compilation](#compiler) step between two languages. For example, [gatsby-transformer-remark](/plugins/gatsby-transformer-remark/) will create an AST from [Markdown](#markdown) to describe a Markdown document in a tree structure using the [Remark](#remark) parser.
 
 ### API
 
@@ -50,7 +50,7 @@ A storage of information locally that might be used again, so computations and l
 
 Command Line Interface: An application that runs on your computer through the [command line](#command-line) and interacted with your keyboard.
 
-Gatsby has two command line interfaces. One, [`gatsby`](/docs/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
+Gatsby has two command line interfaces. One, [`gatsby`](/docs/reference/gatsby-cli/), for day-to-day development with Gatsby and another, [`gatsby-dev`](/contributing/setting-up-your-local-dev-environment/#gatsby-repo-install-instructions), for those who contribute to the Gatsby project.
 
 ### Client-side
 
@@ -58,7 +58,7 @@ Client-side refers to operations that are performed by the user's browser in a [
 
 ### Client-side rendering
 
-The practice of using JavaScript to render pages on the [client-side](#client-side), as opposed to [server-side rendering](/docs/glossary/server-side-rendering/) alone. Gatsby uses [React](#react) and the [`@reach/router`](https://reach.tech/router/) library to enhance HTML pages compiled at [build time](#build) to navigate site pages in a web browser without traditional page reloads, enabling performance techniques like preloading and [pre-fetching](/docs/routing/#performance-and-prefetching), [intersection observer and responsive `srcset`](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#modern-apis-in-gatsby) for images, and more. See also: [routing](#routing), which is handled on the client-side in Gatsby by default.
+The practice of using JavaScript to render pages on the [client-side](#client-side), as opposed to [server-side rendering](/docs/glossary/server-side-rendering/) alone. Gatsby uses [React](#react) and the [`@reach/router`](https://reach.tech/router/) library to enhance HTML pages compiled at [build time](#build) to navigate site pages in a web browser without traditional page reloads, enabling performance techniques like preloading and [pre-fetching](/docs/reference/routing/creating-routes/#performance-and-prefetching), [intersection observer and responsive `srcset`](/blog/2019-04-02-behind-the-scenes-what-makes-gatsby-great/#modern-apis-in-gatsby) for images, and more. See also: [routing](#routing), which is handled on the client-side in Gatsby by default.
 
 ### CMS
 
@@ -138,7 +138,7 @@ Gatsby supports two environments by default, the [development environment](#deve
 
 ### Environment Variables
 
-[Environment Variables](/docs/environment-variables/) allow you to customize the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
+[Environment Variables](/docs/how-to/local-development/environment-variables/) allow you to customize the behavior of your app depending on its [environment](#environment). For instance, you may wish to get content from a staging CMS during development and connect to your production CMS when you [build](#build) your site. With environment variables you can set a different URL for each environment.
 
 ## F
 
@@ -180,7 +180,7 @@ A hosting provider keeps a copy of your website or app and makes it accessible t
 
 ### Hot module replacement
 
-A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window.
+A feature in use when you run `gatsby develop` that live updates your site on save of code in a text editor by automatically replacing modules, or chunks of code, in an open browser window. Gatsby uses [Fast Refresh](/docs/reference/local-development/fast-refresh/).
 
 ### [Hydration](/docs/glossary/hydration/)
 
@@ -190,7 +190,7 @@ Once a site has been [built](#build) by Gatsby and loaded in a web browser, [cli
 
 ### Inference
 
-As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/schema-customization/).
+As part of its data layer and [build](#build) process, Gatsby will automatically **infer** a [schema](#schema), or type-based structure, based on available data sources (e.g. Markdown file nodes, WordPress posts, etc.). More control can be gained over this structure by using Gatsby's [Schema Customization API](/docs/reference/graphql-data-layer/schema-customization/).
 
 ### [Infrastructure as Code](/docs/glossary/infrastructure-as-code/)
 
@@ -236,7 +236,7 @@ A way of writing HTML content with plain text, using special characters to denot
 
 ### Node
 
-Gatsby uses [data nodes](/docs/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
+Gatsby uses [data nodes](/docs/reference/graphql-data-layer/node-interface/) to represent a single piece of data. A [data source](#data-source) will create multiple nodes.
 
 ### [Node.js](/docs/glossary/node/)
 
@@ -258,7 +258,7 @@ This also often refers to [components](#component) that live in `/src/pages/` an
 
 ### Plugin
 
-Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugins) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
+Additional code that adds functionality to Gatsby that wasn't included out-of-the-box. Common [Gatsby plugins](/plugins/) include [source](#source-plugin) and [transformer](#transformer) plugins for pulling in and manipulating data, respectively.
 
 ### Production Environment
 
@@ -354,7 +354,7 @@ A [plugin](#plugin) that transforms one type of data to another. For example you
 
 ### Transpile
 
-The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compilation) process.
+The process of converting code from one syntax or format to another, such as TypeScript, a superset of JavaScript which provides custom type checking during development. [Babel](#babel) is another common example of transpilation that reformats newer JavaScript code following the [ECMAScript](#ecmascript) standard to be more backwards-compatible during the site [compilation](#compiler) process.
 
 ## U
 

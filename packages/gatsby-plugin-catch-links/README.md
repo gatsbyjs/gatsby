@@ -6,13 +6,13 @@ Example use cases:
 
 - A markdown file with relative links (transformed
   to `a` tags by
-  [`gatsby-transformer-remark`](/packages/gatsby-transformer-remark/))
+  [`gatsby-transformer-remark`](/plugins/gatsby-transformer-remark/))
 - An `a` tag that has been created by a Content Management System (CMS) WYSIWYG editor
 
 ## Installation
 
 ```shell
-npm install --save gatsby-plugin-catch-links
+npm install gatsby-plugin-catch-links
 ```
 
 ## How to use

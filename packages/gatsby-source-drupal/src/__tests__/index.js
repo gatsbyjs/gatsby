@@ -193,8 +193,8 @@ describe(`gatsby-source-drupal`, () => {
       `https://files.s3.eu-central-1.amazonaws.com/2020-05/third-image.png`,
       `/sites/default/files/forth-image.png`,
     ].map(fileUrl => new URL(fileUrl, baseUrl).href)
-    //first call without basicAuth (no fileSystem defined)
-    //(the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
+    // first call without basicAuth (no fileSystem defined)
+    // (the first call is actually the 5th because sourceNodes was ran at first with no basicAuth)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       5,
       expect.objectContaining({
@@ -202,7 +202,7 @@ describe(`gatsby-source-drupal`, () => {
         auth: {},
       })
     )
-    //2nd call with basicAuth (public: fileSystem defined)
+    // 2nd call with basicAuth (public: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
@@ -213,7 +213,7 @@ describe(`gatsby-source-drupal`, () => {
         },
       })
     )
-    //3rd call without basicAuth (s3: fileSystem defined)
+    // 3rd call without basicAuth (s3: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       7,
       expect.objectContaining({
@@ -221,7 +221,7 @@ describe(`gatsby-source-drupal`, () => {
         auth: {},
       })
     )
-    //4th call with basicAuth (private: fileSystem defined)
+    // 4th call with basicAuth (private: fileSystem defined)
     expect(createRemoteFileNode).toHaveBeenNthCalledWith(
       8,
       expect.objectContaining({
@@ -372,16 +372,40 @@ describe(`gatsby-source-drupal`, () => {
     // Reset nodes and test includes relationships.
     Object.keys(nodes).forEach(key => delete nodes[key])
     const disallowedLinkTypes = [`self`, `describedby`, `taxonomy_term--tags`]
+    const entityReferenceRevisions = [`paragraph`]
     const filters = {
       "node--article": `include=field_tags`,
     }
     const apiBase = `jsonapi-includes`
-    await sourceNodes(args, { baseUrl, apiBase, disallowedLinkTypes, filters })
+    await sourceNodes(args, {
+      baseUrl,
+      apiBase,
+      disallowedLinkTypes,
+      filters,
+      entityReferenceRevisions,
+    })
     expect(Object.keys(nodes).length).not.toEqual(0)
     expect(nodes[createNodeId(`tag-1`)]).toBeUndefined()
     expect(nodes[createNodeId(`tag-2`)]).toBeUndefined()
     expect(nodes[createNodeId(`tag-3`)]).toBeDefined()
-    expect(nodes[createNodeId(`article-5`)]).toBeDefined()
+    const paragraphForwardRevisionId = createNodeId(
+      `08d07c95-26ab-46b8-a56d-0a55567b2e31.4`
+    )
+    const paragraphDraft = nodes[paragraphForwardRevisionId]
+    expect(paragraphDraft).toBeDefined()
+    expect(
+      nodes[createNodeId(`08d07c95-26ab-46b8-a56d-0a55567b2e31.3`)]
+    ).toBeDefined()
+    expect(nodes[createNodeId(`tag-3`)]).toBeDefined()
+
+    const article = nodes[createNodeId(`article-5`)]
+    expect(article).toBeDefined()
+    const paragraphRelationships = article.relationships[`content___NODE`]
+    expect(paragraphRelationships).toContain(paragraphForwardRevisionId)
+
+    expect(paragraphDraft.body.value).toEqual(
+      `Aenean porta turpis quis vulputate blandit`
+    )
   })
 
   describe(`Fastbuilds sync`, () => {

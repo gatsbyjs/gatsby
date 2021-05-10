@@ -3,7 +3,7 @@
 const fs = require(`fs-extra`)
 import { print, visit, getLocation } from "graphql"
 import { codeFrameColumns } from "@babel/code-frame"
-const levenshtein = require(`fast-levenshtein`)
+const { distance: levenshtein } = require(`fastest-levenshtein`)
 import _ from "lodash"
 import report from "gatsby-cli/lib/reporter"
 const { locInGraphQlToLocInFile } = require(`./error-parser`)
@@ -238,7 +238,7 @@ export function unknownFragmentError({
   const name = node.name.value
   const closestFragment = fragmentNames
     .map(f => {
-      return { fragment: f, score: levenshtein.get(name, f) }
+      return { fragment: f, score: levenshtein(name, f) }
     })
     .filter(f => f.score < 10)
     .sort((a, b) => a.score > b.score)[0]?.fragment

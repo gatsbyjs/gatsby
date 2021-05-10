@@ -29,7 +29,7 @@ module.exports = {
         url: "https://api.graphcms.com/simple/v1/swapi",
       },
     },
-    // Passing paramaters (passed to apollo-link)
+    // Passing parameters (passed to apollo-link)
     {
       resolve: "gatsby-source-graphql",
       options: {
@@ -126,8 +126,8 @@ This is a higher level plugin. Instead of just merging a schema, it allows a mor
 - `url: string?` - url of a third-party service
 - `headers: object?` - headers to add to the request
 - `fetchOptions: object?` - additional `node-fetch` options
-- `createLink: (options: object) => ApolloLink` - a callback that will create an ApolloLink instance that should query the third-party API. An escape hatch that overrides `url`, `headers` and `fetchOptions` parameters above and allows complex logic for eg authorization
-- `createSchema: (options: object) => GraphQLSchema` - callback that will create a GraphQLSchema of a third-party API. Resolvers are going to be ignored. This allows not using introspection (eg if it's disabled) or to customize third-party schema before passing it to stitching
+- `createLink: (options: object) => ApolloLink` - a callback that will create an ApolloLink instance that should query the third-party API. An escape hatch that overrides `url`, `headers` and `fetchOptions` parameters above and allows complex logic for e.g. authorization
+- `createSchema: (options: object) => GraphQLSchema` - callback that will create a GraphQLSchema of a third-party API. Resolvers are going to be ignored. This allows not using introspection (e.g. if it's disabled) or to customize third-party schema before passing it to stitching
 
 Either `url` or `createLink` must be specified. If no `createSchema` is passed, third-party schema must support introspection.
 

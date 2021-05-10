@@ -3,6 +3,7 @@ const {
   applyFastFilters,
 } = require(`../run-fast-filters`)
 const { store } = require(`../index`)
+const { getNode } = require(`../nodes`)
 const { createDbQueriesFromObject } = require(`../../db/common/query`)
 const { actions } = require(`../actions`)
 const {
@@ -187,7 +188,7 @@ describe(`fast filter tests`, () => {
 
       // `id-1` node is not of queried type, so results should be empty
       expect(resultSingular).toEqual([])
-      expect(resultMany).toEqual(null)
+      expect(resultMany).toEqual([])
     })
 
     it(`non-eq operator`, async () => {
@@ -353,7 +354,7 @@ describe(`fast filter tests`, () => {
         filtersCache: new Map(),
       })
 
-      expect(resultMany).toBe(null)
+      expect(resultMany).toEqual([])
     })
 
     it(`elemMatch on array of objects`, async () => {
@@ -457,5 +458,56 @@ describe(`applyFastFilters`, () => {
 
     expect(result).not.toBe(undefined)
     expect(result.length).toBe(2)
+  })
+})
+
+describe(`edge cases (yay)`, () => {
+  beforeAll(() => {
+    store.dispatch({ type: `DELETE_CACHE` })
+    mockNodes().forEach(node =>
+      actions.createNode(node, { name: `test` })(store.dispatch)
+    )
+  })
+
+  it(`throws when node counters are messed up`, () => {
+    const filter = {
+      slog: { $eq: `def` }, // matches id_2 and id_4
+      deep: { flat: { search: { chain: { $eq: 500 } } } }, // matches id_2
+    }
+
+    const result = applyFastFilters(
+      createDbQueriesFromObject(filter),
+      [typeName],
+      new Map()
+    )
+
+    // Sanity-check
+    expect(result.length).toEqual(1)
+    expect(result[0].id).toEqual(`id_2`)
+
+    // After process restart node.internal.counter is reset and conflicts with counters from the previous run
+    //  in some situations this leads to incorrect intersection of filtered results.
+    //  Below we set node.internal.counter to same value that existing node id_4 has and leads
+    //  to bad intersection of filtered results
+    const badNode = {
+      id: `bad-node`,
+      deep: { flat: { search: { chain: 500 } } },
+      internal: {
+        type: typeName,
+        contentDigest: `bad-node`,
+        counter: getNode(`id_4`).internal.counter,
+      },
+    }
+    store.dispatch({
+      type: `CREATE_NODE`,
+      payload: badNode,
+    })
+
+    const run = () =>
+      applyFastFilters(createDbQueriesFromObject(filter), [typeName], new Map())
+
+    expect(run).toThrow(
+      `Invariant violation: inconsistent node counters detected`
+    )
   })
 })

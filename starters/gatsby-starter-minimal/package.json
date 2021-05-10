@@ -2,7 +2,7 @@
   "name": "gatsby-starter-minimal",
   "version": "1.0.0",
   "private": true,
-  "description": "A Gatsby starter for running recipes and adding themes. It does not come with any pages.",
+  "description": "A Gatsby starter with no plugins and a single welcome page.",
   "author": "Laurie Barth",
   "keywords": [
     "gatsby"
@@ -11,12 +11,13 @@
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
+    "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
   "license": "0BSD",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "gatsby": "^3.4.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }

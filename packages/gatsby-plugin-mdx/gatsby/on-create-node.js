@@ -1,15 +1,58 @@
 const fs = require(`fs`)
 const path = require(`path`)
 const babel = require(`@babel/core`)
-const { createContentDigest } = require(`gatsby-core-utils`)
+const { createContentDigest, slash } = require(`gatsby-core-utils`)
 
 const defaultOptions = require(`../utils/default-options`)
-const createMDXNodeWithScope = require(`../utils/mdx-node-with-scope`)
+const {
+  createMdxNodeExtraBabel,
+  createMdxNodeLessBabel,
+} = require(`../utils/create-mdx-node`)
 const { MDX_SCOPES_LOCATION } = require(`../constants`)
+const { findImports } = require(`../utils/gen-mdx`)
 
 const contentDigest = val => createContentDigest(val)
 
-module.exports = async (
+function unstable_shouldOnCreateNode({ node }, pluginOptions) {
+  const options = defaultOptions(pluginOptions)
+
+  return _unstable_shouldOnCreateNode({ node }, options)
+}
+
+// eslint-disable-next-line camelcase
+function _unstable_shouldOnCreateNode({ node }, options) {
+  // options check to stop transformation of the node
+  if (options.shouldBlockNodeFromTransformation(node)) {
+    return false
+  }
+
+  return node.internal.type === `File`
+    ? options.extensions.includes(node.ext)
+    : options.mediaTypes.includes(node.internal.mediaType)
+}
+
+module.exports.unstable_shouldOnCreateNode = unstable_shouldOnCreateNode
+
+async function onCreateNode(api, pluginOptions) {
+  const options = defaultOptions(pluginOptions)
+
+  if (!_unstable_shouldOnCreateNode({ node: api.node }, options)) {
+    return
+  }
+
+  const content = await api.loadNodeContent(api.node)
+
+  if (options.lessBabel) {
+    await onCreateNodeLessBabel(content, api, options)
+  } else {
+    await onCreateNodeExtraBabel(content, api, options)
+  }
+}
+
+module.exports.onCreateNode = onCreateNode
+
+async function onCreateNodeExtraBabel(
+  content,
   {
     node,
     loadNodeContent,
@@ -17,44 +60,81 @@ module.exports = async (
     createNodeId,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
     ...helpers
   },
-  pluginOptions
-) => {
+  options
+) {
   const { createNode, createParentChildLink } = actions
-  const options = defaultOptions(pluginOptions)
 
-  // options check to stop transformation of the node
-  if (options.shouldBlockNodeFromTransformation(node)) {
-    return
-  }
+  const mdxNode = await createMdxNodeExtraBabel({
+    id: createNodeId(`${node.id} >>> Mdx`),
+    node,
+    content,
+  })
 
-  // if we shouldn't process this node, then return
-  if (
-    !(node.internal.type === `File` && options.extensions.includes(node.ext)) &&
-    !(
-      node.internal.type !== `File` &&
-      options.mediaTypes.includes(node.internal.mediaType)
-    )
-  ) {
-    return
-  }
+  createNode(mdxNode)
+  createParentChildLink({ parent: node, child: mdxNode })
 
-  const content = await loadNodeContent(node)
+  // write scope files into .cache for later consumption
+  const { scopeImports, scopeIdentifiers } = await findImports({
+    node: mdxNode,
+    getNode,
+    getNodes,
+    getNodesByType,
+    reporter,
+    cache,
+    pathPrefix,
+    options,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    ...helpers,
+  })
+
+  // write scope files into .cache for later consumption
+  await cacheScope({
+    cache,
+    scopeIdentifiers,
+    scopeImports,
+    createContentDigest: contentDigest,
+    parentNode: node,
+  })
+}
+
+async function onCreateNodeLessBabel(
+  content,
+  {
+    node,
+    loadNodeContent,
+    actions,
+    createNodeId,
+    getNode,
+    getNodes,
+    getNodesByType,
+    reporter,
+    cache,
+    pathPrefix,
+    ...helpers
+  },
+  options
+) {
+  const { createNode, createParentChildLink } = actions
 
   const {
     mdxNode,
     scopeIdentifiers,
     scopeImports,
-  } = await createMDXNodeWithScope({
+  } = await createMdxNodeLessBabel({
     id: createNodeId(`${node.id} >>> Mdx`),
     node,
     content,
     getNode,
     getNodes,
+    getNodesByType,
     reporter,
     cache,
     pathPrefix,
@@ -68,6 +148,7 @@ module.exports = async (
   createNode(mdxNode)
   createParentChildLink({ parent: node, child: mdxNode })
 
+  // write scope files into .cache for later consumption
   await cacheScope({
     cache,
     scopeIdentifiers,
@@ -76,6 +157,8 @@ module.exports = async (
     parentNode: node,
   })
 }
+
+const writeCache = new Set()
 
 async function cacheScope({
   cache,
@@ -88,6 +171,16 @@ async function cacheScope({
   let scopeFileContent = `${scopeImports.join(`\n`)}
 
 export default { ${scopeIdentifiers.join(`, `)} }`
+
+  // Multiple files sharing the same imports/exports will lead to the same file writes.
+  // Prevent writing the same content to the same file over and over again (reduces io pressure).
+  // This also prevents an expensive babel step whose outcome is based on this same value
+  if (writeCache.has(scopeFileContent)) {
+    return
+  }
+
+  // Make sure other calls see this value being processed during async time
+  writeCache.add(scopeFileContent)
 
   // if parent node is a file, convert relative imports to be
   // relative to new .cache location
@@ -122,16 +215,18 @@ class BabelPluginTransformRelativeImports {
       return {
         visitor: {
           StringLiteral({ node }) {
-            let split = node.value.split(`!`)
+            const split = node.value.split(`!`)
             const nodePath = split.pop()
             const loaders = `${split.join(`!`)}${split.length > 0 ? `!` : ``}`
             if (nodePath.startsWith(`.`)) {
               const valueAbsPath = path.resolve(parentFilepath, nodePath)
               const replacementPath =
                 loaders +
-                path.relative(
-                  path.join(cache.directory, MDX_SCOPES_LOCATION),
-                  valueAbsPath
+                slash(
+                  path.relative(
+                    path.join(cache.directory, MDX_SCOPES_LOCATION),
+                    valueAbsPath
+                  )
                 )
               node.value = replacementPath
             }

@@ -6,7 +6,6 @@ import {
   sourceNodes,
   buildSchema,
   createPages,
-  createPagesStatefully,
   extractQueries,
   writeOutRedirects,
   postBootstrap,
@@ -16,6 +15,8 @@ import { Runner, createGraphQLRunner } from "./create-graphql-runner"
 import reporter from "gatsby-cli/lib/reporter"
 import { globalTracer } from "opentracing"
 import JestWorker from "jest-worker"
+import { handleStalePageData } from "../utils/page-data"
+
 const tracer = globalTracer()
 
 export async function bootstrap(
@@ -30,9 +31,12 @@ export async function bootstrap(
 
   const parentSpan = tracer.startSpan(`bootstrap`, spanArgs)
 
-  const bootstrapContext: IBuildContext = {
+  const bootstrapContext: IBuildContext & {
+    shouldRunCreatePagesStatefully: boolean
+  } = {
     ...initialContext,
     parentSpan,
+    shouldRunCreatePagesStatefully: true,
   }
 
   const context = {
@@ -52,7 +56,7 @@ export async function bootstrap(
 
   await createPages(context)
 
-  await createPagesStatefully(context)
+  await handleStalePageData()
 
   await rebuildSchemaWithSitePage(context)
 

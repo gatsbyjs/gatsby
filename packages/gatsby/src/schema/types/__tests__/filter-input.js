@@ -68,7 +68,7 @@ describe(`Filter input`, () => {
     const parentFilterInput = schema.getType(`ParentFilterInput`)
     const fields = parentFilterInput.getFields()
     expect(fields.id).toBeDefined()
-    expect(fields.nested).toBeUndefined()
+    expect(fields.nested).not.toBeDefined()
   })
 })
 

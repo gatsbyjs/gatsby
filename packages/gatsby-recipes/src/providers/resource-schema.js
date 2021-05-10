@@ -1,7 +1,8 @@
-const Joi = require(`@hapi/joi`)
+import * as Joi from "@hapi/joi"
 
-module.exports = {
+export default {
   id: Joi.string(),
   key: Joi.string(),
+  _key: Joi.string(),
   _message: Joi.string(),
 }

@@ -34,7 +34,7 @@ const END_DIRECTIVE = {
   hide: /hide-end/,
 }
 
-const PLAIN_TEXT_WITH_LF_TEST = /<span class="token plain-text">[^<]*\n[^<]*<\/span>/g
+const MULTILINE_TOKEN_SPAN = /<span class="token ([^"]+)">[^<]*\n[^<]*<\/span>/g
 
 const stripComment = line =>
   /**
@@ -91,7 +91,7 @@ const parseLine = (line, code, index, actions) => {
 
       if (directiveRange) {
         const strippedDirectiveRange = directiveRange.slice(1, -1)
-        const range = rangeParser.parse(strippedDirectiveRange)
+        const range = rangeParser(strippedDirectiveRange)
         if (range.length > 0) {
           range.forEach(relativeIndex => {
             actions.flag(feature, index + relativeIndex, flagSource)
@@ -107,10 +107,13 @@ const parseLine = (line, code, index, actions) => {
 
 module.exports = function highlightLineRange(code, highlights = []) {
   if (highlights.length > 0 || HIGHLIGHT_DIRECTIVE.test(code)) {
-    // HACK split plain-text spans with line separators inside into multiple plain-text spans
-    // separated by line separator - this fixes line highlighting behaviour for jsx
-    code = code.replace(PLAIN_TEXT_WITH_LF_TEST, match =>
-      match.replace(/\n/g, `</span>\n<span class="token plain-text">`)
+    // HACK split multiline spans with line separators inside into multiple spans
+    // separated by line separator - this fixes line highlighting behaviour for
+    //  - plain-text in jsx,
+    //  - tripple-quoted-string in python,
+    //  - comment in c-like languages (including javascript), etc.
+    code = code.replace(MULTILINE_TOKEN_SPAN, (match, token) =>
+      match.replace(/\n/g, `</span>\n<span class="token ${token}">`)
     )
   }
 

@@ -6,10 +6,9 @@ packages/*/dist/**
 packages/*/lib/**
 packages/*/scripts/**
 **/dist/*
+**/public/*
 **/__testfixtures__/**
 **/__tests__/fixtures/**
-www/public
-www/src/components/search-form/docsearch.min.js
 peril
 docs
 plop-templates
@@ -25,3 +24,10 @@ packages/gatsby-plugin-preload-fonts/prepare/*.js
 packages/gatsby-image/withIEPolyfill/index.js
 packages/gatsby/cache-dir/commonjs/**/*
 packages/gatsby-admin/public
+packages/gatsby/gatsby-admin-public
+packages/gatsby-codemods/transforms
+packages/gatsby-source-graphql/batching
+
+packages/gatsby-source-wordpress/test-site/**
+!packages/gatsby-source-wordpress/test-site/__tests__
+!packages/gatsby-source-wordpress/test-site/test-utils

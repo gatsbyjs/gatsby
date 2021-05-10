@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`add page data dependency lets you add both a node and connection in one action 1`] = `
+Object {
+  "byConnection": Map {
+    "MarkdownRemark" => Set {
+      "/hi/",
+    },
+  },
+  "byNode": Map {
+    "SuperCoolNode" => Set {
+      "/hi/",
+    },
+  },
+  "deletedQueries": Set {},
+  "dirtyQueriesListToEmitViaWebsocket": Array [],
+  "queryNodes": Map {
+    "/hi/" => Set {
+      "SuperCoolNode",
+    },
+  },
+  "trackedComponents": Map {},
+  "trackedQueries": Map {},
+}
+`;

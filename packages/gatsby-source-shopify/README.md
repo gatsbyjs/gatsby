@@ -1,4 +1,16 @@
-# gatsby-source-shopify
+# 📣 Looking for the latest version of `gatsby-source-shopify`?
+
+👉 Get started at [`gatsbyjs/gatsby-source-shopify`](https://github.com/gatsbyjs/gatsby-source-shopify)
+
+- Support for incremental builds
+- Scale up to 10k products
+- Up to 16x faster builds
+
+`gatsbyjs/gatsby-source-shopify` will replace the below package with the next minor release of `gatsbyjs/gatsby`.
+
+---
+
+## Legacy source plugin instructions:
 
 Source plugin for pulling data into [Gatsby][gatsby] from [Shopify][shopify]
 stores via the [Shopify Storefront API][shopify-storefront-api].
@@ -12,10 +24,12 @@ stores via the [Shopify Storefront API][shopify-storefront-api].
 ## Install
 
 ```shell
-npm install --save gatsby-source-shopify
+npm install gatsby-source-shopify
 ```
 
 ## How to use
+
+[See the Shopify tutorial on gatsbyjs.com for a full getting started guide](https://www.gatsbyjs.com/docs/building-an-ecommerce-site-with-shopify/)
 
 Ensure you have an access token for the [Shopify Storefront API][shopify-storefront-api]. The token should have the following permissions:
 
@@ -70,6 +84,9 @@ plugins: [
       // Possible values are: 'shop' and 'content'.
       // Defaults to ['shop', 'content'].
       includeCollections: ["shop", "content"],
+      // Download Images Locally
+      // set to false if you plan on using shopify's CDN
+      downloadImages: true,
 
       // Allow overriding the default queries
       // This allows you to include/exclude extra fields when sourcing nodes
@@ -467,8 +484,8 @@ To learn more about image processing, check the documentation of
 ```js
 const path = require("path")
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
   const pages = await graphql(`
     {

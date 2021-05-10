@@ -11,4 +11,4 @@ Demonstrates how to render Markdown files as pages in your Gatsby application.
 
 ## References
 
-- [Adding Markdown Pages](https://www.gatsbyjs.org/docs/adding-markdown-pages/)
+- [Adding Markdown Pages](https://www.gatsbyjs.com/docs/adding-markdown-pages/)

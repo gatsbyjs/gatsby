@@ -5,10 +5,10 @@
   "version": "1.0.0",
   "author": "Nadiia Dmytrenko <nadiia.dmytrenko@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.23.12",
-    "gatsby-plugin-styletron": "^3.0.5",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "gatsby": "next",
+    "gatsby-plugin-styletron": "next",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "keywords": [
     "gatsby"

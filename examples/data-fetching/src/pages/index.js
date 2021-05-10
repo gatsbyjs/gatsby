@@ -44,7 +44,7 @@ const IndexPage = () => {
         especially beneficial for users with slower internet connections or if
         you want to allow your site to be visited offline using a plugin like
         {` `}
-        <a href="https://www.gatsbyjs.org/packages/gatsby-plugin-offline/">
+        <a href="https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/">
           gatsby-plugin-offline
         </a>
         .

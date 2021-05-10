@@ -12,4 +12,4 @@ The following versions are currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Please email Kyle Mathews @ mathews.kyle@gmail.com
+Please email security@gatsbyjs.com

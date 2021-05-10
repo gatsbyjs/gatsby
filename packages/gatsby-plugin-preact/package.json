@@ -1,21 +1,22 @@
 {
   "name": "gatsby-plugin-preact",
   "description": "A Gatsby plugin which replaces React with Preact",
-  "version": "4.0.9",
+  "version": "5.6.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@prefresh/webpack": "^0.8.1",
-    "react-refresh": "^0.8.2"
+    "@gatsbyjs/webpack-hot-middleware": "^2.25.2",
+    "@prefresh/babel-plugin": "^0.4.1",
+    "@prefresh/webpack": "^3.2.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.3.3",
-    "babel-preset-gatsby-package": "^0.5.2",
-    "cross-env": "^5.2.1"
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "babel-preset-gatsby-package": "^1.6.0-next.0",
+    "cross-env": "^7.0.3"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-preact#readme",
   "keywords": [
@@ -26,7 +27,7 @@
   "license": "MIT",
   "main": "index.js",
   "peerDependencies": {
-    "gatsby": "^2.0.0",
+    "gatsby": "^3.0.0-next.0",
     "preact": "^10.3.4",
     "preact-render-to-string": "^5.1.8"
   },
@@ -41,6 +42,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

@@ -1,17 +1,98 @@
-const withDefaultOptions = require(`../utils/default-options`)
-const { getNodesByType } = require(`gatsby/dist/redux/nodes.js`)
-const createMdxNodeWithScope = require(`../utils/mdx-node-with-scope`)
+const { createContentDigest } = require(`gatsby-core-utils`)
 
-async function createMdxNodeLegacy({ id, node, content } = {}) {
-  const nodeWithScope = await createMdxNodeWithScope({
+const mdx = require(`../utils/mdx`)
+const extractExports = require(`../utils/extract-exports`)
+
+const { findImportsExports } = require(`../utils/gen-mdx`)
+
+async function createMdxNodeExtraBabel({ id, node, content }) {
+  let code
+  try {
+    code = await mdx(content)
+  } catch (e) {
+    // add the path of the file to simplify debugging error messages
+    e.message += `${node.absolutePath}: ${e.message}`
+    throw e
+  }
+
+  // extract all the exports
+  const { frontmatter, ...nodeExports } = extractExports(
+    code,
+    node.absolutePath
+  )
+
+  const mdxNode = {
     id,
-    node,
-    content,
-    getNodesByType,
-    options: withDefaultOptions({ plugins: [] }),
-  })
-  return nodeWithScope.mdxNode
+    children: [],
+    parent: node.id,
+    internal: {
+      content: content,
+      type: `Mdx`,
+    },
+  }
+
+  mdxNode.frontmatter = {
+    title: ``, // always include a title
+    ...frontmatter,
+  }
+
+  mdxNode.excerpt = frontmatter.excerpt
+  mdxNode.exports = nodeExports
+  mdxNode.rawBody = content
+
+  // Add path to the markdown file path
+  if (node.internal.type === `File`) {
+    mdxNode.fileAbsolutePath = node.absolutePath
+  }
+
+  mdxNode.internal.contentDigest = createContentDigest(mdxNode)
+
+  return mdxNode
 }
 
-// This function is deprecated in favor of createMDXNodeWithScope and slated to be dropped in v3
-module.exports = createMdxNodeLegacy
+async function createMdxNodeLessBabel({ id, node, content, ...helpers }) {
+  const {
+    frontmatter,
+    scopeImports,
+    scopeExports,
+    scopeIdentifiers,
+  } = await findImportsExports({
+    mdxNode: node,
+    rawInput: content,
+    absolutePath: node.absolutePath,
+    ...helpers,
+  })
+
+  const mdxNode = {
+    id,
+    children: [],
+    parent: node.id,
+    internal: {
+      content: content,
+      type: `Mdx`,
+    },
+  }
+
+  mdxNode.frontmatter = {
+    title: ``, // always include a title
+    ...frontmatter,
+  }
+
+  mdxNode.excerpt = frontmatter.excerpt
+  mdxNode.exports = scopeExports
+  mdxNode.rawBody = content
+
+  // Add path to the markdown file path
+  if (node.internal.type === `File`) {
+    mdxNode.fileAbsolutePath = node.absolutePath
+  }
+
+  mdxNode.internal.contentDigest = createContentDigest(mdxNode)
+
+  return { mdxNode, scopeIdentifiers, scopeImports }
+}
+
+module.exports = createMdxNodeExtraBabel // Legacy default export
+
+module.exports.createMdxNodeExtraBabel = createMdxNodeExtraBabel
+module.exports.createMdxNodeLessBabel = createMdxNodeLessBabel

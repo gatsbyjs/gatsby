@@ -13,12 +13,12 @@ Once a source plugin brings data into Gatsby's system, it can be transformed fur
 At a high-level, a source plugin:
 
 - Ensures local data is synced with its source and is 100% accurate.
-- Creates [nodes](/docs/node-interface/) with accurate media types, human-readable types, and accurate
-  [contentDigests](/docs/node-interface/#contentdigest).
+- Creates [nodes](/docs/reference/graphql-data-layer/node-interface/) with accurate media types, human-readable types, and accurate
+  [contentDigests](/docs/reference/graphql-data-layer/node-interface/#contentdigest).
 - Links nodes & creates relationships between them.
 - Lets Gatsby know when nodes are finished sourcing so it can move on to processing them.
 
-A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/api-files-gatsby-node) file where you implement Gatsby's [Node APIs](/docs/node-apis/). Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/creating-a-generic-plugin).
+A source plugin is a regular npm package. It has a `package.json` file, with optional dependencies, as well as a [`gatsby-node.js`](/docs/reference/config-files/gatsby-node/) file where you implement Gatsby's Node APIs. Read more about [files Gatsby looks for in a plugin](/docs/files-gatsby-looks-for-in-a-plugin/) or [creating a generic plugin](/docs/how-to/plugins-and-themes/creating-a-generic-plugin).
 
 ## Implementing features for source plugins
 
@@ -28,9 +28,9 @@ Key features that are often built into source plugins are covered in this guide 
 
 ### Sourcing data and creating nodes
 
-All source plugins must fetch data and create nodes from that data. By fetching data and creating nodes at [build time](/docs/glossary#build), Gatsby can make the data available as static assets instead of having to fetch it at [runtime](/docs/glossary#runtime). This happens in the [`sourceNodes` lifecycle](/docs/node-apis/#sourceNodes) with the [`createNode` action](/docs/actions/#createNode).
+All source plugins must fetch data and create nodes from that data. By fetching data and creating nodes at [build time](/docs/glossary#build), Gatsby can make the data available as static assets instead of having to fetch it at [runtime](/docs/glossary#runtime). This happens in the [`sourceNodes` lifecycle](/docs/reference/config-files/gatsby-node/#sourceNodes) with the [`createNode` action](/docs/reference/config-files/actions/#createNode).
 
-This example—taken from [the `sourceNodes` API docs](/docs/node-apis/#sourceNodes)—shows how to create a single node from hardcoded data:
+This example—taken from [the `sourceNodes` API docs](/docs/reference/config-files/gatsby-node/#sourceNodes)—shows how to create a single node from hardcoded data:
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -78,7 +78,7 @@ exports.sourceNodes = async ({ actions }) => {
 }
 ```
 
-The [`createNode`](/docs/actions/#createNode) function is a Gatsby specific action. `createNode` is used to create the nodes that Gatsby tracks and makes available for querying with GraphQL.
+The [`createNode`](/docs/reference/config-files/actions/#createNode) function is a Gatsby specific action. `createNode` is used to create the nodes that Gatsby tracks and makes available for querying with GraphQL.
 
 _Note: **Be aware of asynchronous operations!** Because fetching data is an asynchronous task, you need to make sure you `await` data coming from remote sources, return a Promise, or return the callback (the 3rd parameter available in lifecycle APIs) from `sourceNodes`. If you don't, Gatsby will continue on in the build process, before nodes are finished being created. This can result in your nodes not ending up in the generated schema at compilation time, or the process could hang while waiting for an indication that it's finished. You can read more in the [Debugging Asynchronous Lifecycle APIs guide](/docs/debugging-async-lifecycles/)._
 
@@ -145,7 +145,7 @@ author {
 }
 ```
 
-Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modelling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
+Each type has independent schemas and field(s) on that reference the other entity -- in this case the `Post` would have an `Author`, and the `Author` might have `Post`s. The API of a service that allows complex object modeling, for example a CMS, will often allow users to add relationships between entities and expose them through the API. This same relationship can be represented by your schema.
 
 ```graphql
 post {
@@ -265,7 +265,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       author: Author @link(from: "author.name" by: "name") // highlight-line
       # ... other fields
     }
-    
+
     type Author implements Node {
       name: String!
       post: Post @link // highlight-line
@@ -273,13 +273,13 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 ```
 
-You can read more about connecting foreign key fields with schema customization in the guide on [customizing the GraphQL schema](/docs/schema-customization/#foreign-key-fields).
+You can read more about connecting foreign key fields with schema customization in the guide on [customizing the GraphQL schema](/docs/reference/graphql-data-layer/schema-customization/#foreign-key-fields).
 
 #### Option 2: transformation relationships
 
 When a node is _completely_ derived from another node you'll want to use a transformation relationship. An example that is common in source plugins is for transforming File nodes from remote sources, e.g. images. You can read about this use case in the section below on [sourcing images from remote locations](/docs/creating-a-source-plugin/#sourcing-images-from-remote-locations).
 
-You can find more information about transformation relationships in the [creating a transformer plugin guide](/docs/creating-a-transformer-plugin/#creating-the-transformer-relationship).
+You can find more information about transformation relationships in the [creating a transformer plugin guide](/docs/how-to/plugins-and-themes/creating-a-transformer-plugin/#creating-the-transformer-relationship).
 
 #### Union types
 
@@ -305,7 +305,7 @@ This loose coupling between the data source and the transformer plugins allow Ga
 
 #### Sourcing and optimizing images from remote locations
 
-A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/packages/gatsby-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
+A common use case for source plugins is pulling images from a remote location and optimizing them for use with [Gatsby Image](/plugins/gatsby-image/). An API may return a URL for an image on a CDN, which could be further optimized by Gatsby at build time.
 
 This can be achieved by the following steps:
 
@@ -377,7 +377,7 @@ exports.onCreateNode = async ({
 }
 ```
 
-Attaching `fileNode.id` to `remoteImage___NODE` will rely on Gatsby's [inference](/docs/glossary/#inference) of the GraphQL schema to create a new field `remoteImage` as a relationship between the nodes. This is done automatically. For a sturdier schema, you can relate them using [`schemaCustomization` APIs](/docs/node-apis/#createSchemaCustomization) by adding the `fileNode.id` to a field that you reference when you `createTypes`:
+Attaching `fileNode.id` to `remoteImage___NODE` will rely on Gatsby's [inference](/docs/glossary/#inference) of the GraphQL schema to create a new field `remoteImage` as a relationship between the nodes. This is done automatically. For a sturdier schema, you can relate them using [`schemaCustomization` APIs](/docs/reference/config-files/gatsby-node/#createSchemaCustomization) by adding the `fileNode.id` to a field that you reference when you `createTypes`:
 
 ```javascript:title=source-plugin/gatsby-node.js
 exports.createSchemaCustomization = ({ actions }) => {
@@ -413,7 +413,7 @@ query {
     id
     remoteImage {
       childImageSharp {
-        # fluid or fixed fields for optimzed images
+        # fluid or fixed fields for optimized images
       }
     }
   }
@@ -425,7 +425,7 @@ query {
 One challenge when developing locally is that a developer might make modifications in a remote data source, like a CMS, and then want to see how it looks in the local environment. Typically they will have to restart the `gatsby develop` server to see changes. In order to improve the development experience of using a plugin, you can reduce the time it takes to sync between Gatsby and the data source by enabling faster synchronization of data changes. There are two approaches for doing this:
 
 - **Proactively fetch updates**. You can avoid having to restart the `gatsby develop` server by proactively fetching updates from the remote server. For example, [gatsby-source-sanity](https://github.com/sanity-io/gatsby-source-sanity) listens to changes to Sanity content when `watchMode` is enabled and pulls them into the Gatsby develop server. The [example source plugin repository](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) uses GraphQL subscriptions to listen for changes and update data.
-- **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) or [`setPluginStatus`](/docs/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
+- **Add event-based sync**. Some data sources keep event logs and are able to return a list of objects modified since a given time. If you're building a source plugin, you can store the last time you fetched data using the [cache](/docs/creating-a-source-plugin/#caching-data-between-runs) or [`setPluginStatus`](/docs/reference/config-files/actions/#setPluginStatus) and then only sync down nodes that have been modified since that time. [gatsby-source-contentful](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-contentful) is an example of a source plugin that does this.
 
 If possible, the proactive listener approach creates the best experience if existing APIs in the data source can support it (or you have access to build support into the data source).
 
@@ -437,7 +437,7 @@ exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(`YourSourceType`).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(`YourSourceType`).forEach(node => touchNode(node)
 
   // ensure a plugin is in a preview mode and/or supports listening
   if (pluginOptions.preview) {
@@ -446,9 +446,7 @@ exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
       newData.forEach(newDatum => {
         switch (newDatum.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)),
-            })
+            deleteNode(getNode(createNodeId(`YourSourceType-${newDatum.uuid}`)))
             break
           case "created":
           case "updated":
@@ -475,12 +473,12 @@ exports.sourceNodes = async ({ actions, getNodesByType }, pluginOptions) => {
 
 _Note: This is pseudo code to illustrate the logic and concept of how these plugins function, you can see an example in the [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) repository._
 
-Because the code in `sourceNodes` is reinvoked when changes in the data source occur, a few steps need to be taken to ensure that Gatsby is tracking the existing nodes as well as the new data. A first step is ensuring that the existing nodes created are not garbage collected which is done by "touching" the nodes with the [`touchNode` action](/docs/actions/#touchNode).
+Because the code in `sourceNodes` is reinvoked when changes in the data source occur, a few steps need to be taken to ensure that Gatsby is tracking the existing nodes as well as the new data. A first step is ensuring that the existing nodes created are not garbage collected which is done by "touching" the nodes with the [`touchNode` action](/docs/reference/config-files/actions/#touchNode).
 
 Then the new data needs to be pulled in via a live update like a websocket (in the example above with a subscription). The new data needs to have some information attached that dictates whether the data was created, updated, or deleted; that way, when it is processed, a new node can be created/updated (with `createNode`) or deleted (with `deleteNode`). In the example above that information is coming from `newDatum.status`.
 
 ## Additional resources
 
 - Working example repository on [creating source plugins](https://github.com/gatsbyjs/gatsby/tree/master/examples/creating-source-plugins) with the features in this guide implemented
-- Tutorial on [Creating a Source Plugin](/tutorial/source-plugin-tutorial/)
+- Tutorial on [Creating a Source Plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/)
 - [`gatsby-node-helpers`](https://github.com/angeloashmore/gatsby-node-helpers), a community-made npm package with helper functions to generate Node objects with required fields like IDs and the `contentDigest` MD5 hash.

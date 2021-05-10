@@ -369,4 +369,16 @@ describe(`<Image />`, () => {
     const placeholderImageTag = setup().querySelector(`picture img`)
     expect(placeholderImageTag.getAttribute(`aria-hidden`)).toBe(null)
   })
+
+  it(`should not have a "source" tag if no srcSet is provided`, () => {
+    jest.spyOn(global.console, `warn`)
+
+    const props = {
+      fixed: { ...fixedShapeMock, srcSet: null, srcSetWebp: null },
+    }
+    const sourceTag = setup(false, props).querySelector(`source`)
+    expect(sourceTag).toEqual(null)
+
+    expect(console.warn).toBeCalled()
+  })
 })

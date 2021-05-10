@@ -91,13 +91,108 @@ const IndexPage = () => {
 export default IndexPage
 ```
 
+To charge payment source using nonce, a server-side implementation is required which will uses the Square Node.js SDK library to call the Square Payments API.
+
+In the `PaymentForm` component, call `processPayment` end point once the nonce is generated. Use the nonce, amount and currency to capture payment. API can be served using netlify lambda function, but any form backend implementation will work.
+
+```js
+axios
+    .post("PROCESS_PAYMENT_API_END_POINT", {
+        amount: 1 * 100 // charge 1 USD,
+        currency: "USD",
+        nonce, //highlight-line
+    })
+    .then((result) => {
+        alert('Payment complete successfully!\nCheck browser developer console for more details');
+    })
+    .catch((error) => {
+        console.log(`error in processing payment:${error}`);
+        alert('Payment failed to complete!\nCheck browser developer console for more details');
+        this.setState({ error: true });
+    });
+```
+
+Below is the Netlify lambda implementation. Create a PaymentsApi object and call the CreatePayment endpoint to charge the payment source. After receiving the `Payments.CreatePayment` endpoint request, Square processes the payment and returns a response.
+
+```js
+import crypto from "crypto"
+import { ApiClient, PaymentsApi } from "square-connect"
+
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "Origin, X-Requested-With, Content-Type, Accept",
+}
+
+exports.handler = async (event, context) => {
+  try {
+    // Set the Access Token (while testing use the sandbox one)
+    const accessToken = "YOUR_ACCESS_TOKEN"
+
+    // retrieves the payment data sent from the website
+    const data = JSON.parse(event.body)
+
+    // Set Square Connect credentials and environment
+    const defaultClient = ApiClient.instance
+
+    // Configure OAuth2 access token for authorization: oauth2
+    const oauth2 = defaultClient.authentications["oauth2"]
+    oauth2.accessToken = accessToken
+
+    // Set 'basePath' to switch between sandbox env and production env
+    // sandbox: https://connect.squareupsandbox.com
+    // production: https://connect.squareup.com
+    defaultClient.basePath = "https://connect.squareupsandbox.com"
+
+    // generate a idempotency key for the payment
+    // length of idempotency_key should be less than 45
+    const idempotency_key = crypto.randomBytes(22).toString("hex")
+
+    // instantiate the api
+    const payments_api = new PaymentsApi()
+
+    // request object to process the payment
+    const request_body = {
+      source_id: data.nonce,
+      amount_money: {
+        amount: data.amount,
+        currency: data.currency,
+      },
+      idempotency_key: idempotency_key,
+    }
+
+    // calls the square payments api to process the payment issued
+    const response = await payments_api.createPayment(request_body)
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        message: `Payment Successful`,
+        paymentInfo: response,
+      }),
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      statusCode: 500,
+      headers,
+      body: "Something went wrong. Try again later",
+    }
+  }
+}
+```
+
+Review the payment in the Sandbox Seller Dashboard. The payment is credited to the Sandbox test account whose access token is used in the application.
+
 ## The Square sandbox
 
-You can test your setup [using the Square sandbox](https://developer.squareup.com/docs/testing/sandbox). To do so, you'll need to return to your [developer dashboard](https://developer.squareup.com/apps). In the "Credentials" tab, you can toggle back and forth between your production and sandbox credentials!
+You can test your setup [using the Square sandbox](https://developer.squareup.com/docs/how-to/testing/sandbox). To do so, you'll need to return to your [developer dashboard](https://developer.squareup.com/apps). In the "Credentials" tab, you can toggle back and forth between your production and sandbox credentials!
 
 ## Other resources
 
 - [`SqPaymentForm` documentation](https://developer.squareup.com/docs/api/paymentform#navsection-paymentform)
 - [Square's tutorial for online payment options](https://developer.squareup.com/docs/online-payment-options)
+- [Sqaure's Payment Walkthrough](https://developer.squareup.com/docs/payment-form/payment-form-walkthrough)
+- [Square's Test Cards](https://developer.squareup.com/docs/testing/test-values)
 - Square's blog post on [Online Payments with React + Square](https://developer.squareup.com/blog/online-payments-form-react/)
 - Example code for [using Square Payments](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-square-payments)

@@ -3,6 +3,112 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.5.0-next.0...gatsby-codemods@2.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.4.0-next.0...gatsby-codemods@2.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.3.0-next.1...gatsby-codemods@2.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.3.0-next.0...gatsby-codemods@2.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.2.0-next.0...gatsby-codemods@2.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.1.0-next.2...gatsby-codemods@2.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.1.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.1.0-next.1...gatsby-codemods@2.1.0-next.2) (2021-03-10)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.1.0-next.0...gatsby-codemods@2.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.0.0-next.2...gatsby-codemods@2.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.0.0-next.1...gatsby-codemods@2.0.0-next.2) (2021-02-22)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-codemods ([#29513](https://github.com/gatsbyjs/gatsby/issues/29513)) ([e65d60c](https://github.com/gatsbyjs/gatsby/commit/e65d60c154b3523fbefa9a9fb7a4bc8dddef32f6))
+
+# [2.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@2.0.0-next.0...gatsby-codemods@2.0.0-next.1) (2021-02-11)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [2.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.11.0-next.0...gatsby-codemods@2.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.10.0-next.0...gatsby-codemods@1.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.9.0-next.0...gatsby-codemods@1.10.0-next.0) (2021-01-18)
+
+### Features
+
+- **gatsby-codemods:** Handle or warn on nested options changes ([#29046](https://github.com/gatsbyjs/gatsby/issues/29046)) ([2439b44](https://github.com/gatsbyjs/gatsby/commit/2439b4440e7c756ae6c09b0e854c91b484d9a462))
+
+# [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.8.0-next.0...gatsby-codemods@1.9.0-next.0) (2020-12-29)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.8.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.4...gatsby-codemods@1.8.0-next.0) (2020-12-10)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.7.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.3...gatsby-codemods@1.7.0-next.4) (2020-12-08)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.7.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.2...gatsby-codemods@1.7.0-next.3) (2020-12-04)
+
+### Bug Fixes
+
+- **gatsby-codemods:** Need as dependencies and not devDependencies ([#28493](https://github.com/gatsbyjs/gatsby/issues/28493)) ([01b0278](https://github.com/gatsbyjs/gatsby/commit/01b0278b53460c348c5e803d7fcb49229a8e9131))
+
+# [1.7.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.1...gatsby-codemods@1.7.0-next.2) (2020-12-04)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.7.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.7.0-next.0...gatsby-codemods@1.7.0-next.1) (2020-12-04)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.6.0-next.0...gatsby-codemods@1.7.0-next.0) (2020-11-26)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.5.0-next.0...gatsby-codemods@1.6.0-next.0) (2020-11-18)
+
+**Note:** Version bump only for package gatsby-codemods
+
+# [1.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.4.0-next.0...gatsby-codemods@1.4.0-next.1) (2020-11-10)
+
+**Note:** Version bump only for package gatsby-codemods
+
+## [1.3.12](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.3.11...gatsby-codemods@1.3.12) (2020-09-28)
+
+**Note:** Version bump only for package gatsby-codemods
+
+## [1.3.11](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.3.10...gatsby-codemods@1.3.11) (2020-09-15)
+
+**Note:** Version bump only for package gatsby-codemods
+
 ## [1.3.10](https://github.com/gatsbyjs/gatsby/compare/gatsby-codemods@1.3.9...gatsby-codemods@1.3.10) (2020-07-09)
 
 **Note:** Version bump only for package gatsby-codemods

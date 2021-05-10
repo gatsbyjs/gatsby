@@ -10,16 +10,6 @@ To get started, in your terminal, after running the initial site setup steps [he
 
 ## REPL Commands
 
-- [`babelrc`](#babelrc)
-- [`components`](#components)
-- [`getNode`](#getNode)
-- [`getNodes`](#getNodes)
-- [`nodes`](#nodes)
-- [`pages`](#pages)
-- [`schema`](#schema)
-- [`siteConfig`](#siteConfig)
-- [`staticQueries`](#staticQueries)
-
 ### `babelrc`
 
 Returns an object with the global `babelrc` settings.
