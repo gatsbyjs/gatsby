@@ -10,7 +10,6 @@ Welcome to `gatsby@3.5.0` release (May 2021 #1)
 Key highlights of this release:
 
 - [Performance improvements](#performance-improvements) - faster query running
-- [New `gatsby-source-shopify`](#new-gatsby-source-shopify) - TODO
 - [`gatsby-graphql-source-toolkit` v2](#gatsby-graphql-source-toolkit-v2) - TODO
 - [New SSR in Develop overlay](#new-ssr-in-develop-overlay) - the experimental SSR in Develop feature got a new overlay
 - [Documentation updates](#documentation-updates) - new docs on troubleshooting build performance
@@ -33,10 +32,6 @@ We're always working hard on making Gatsby faster. In this release we shipped th
 - Speedup CLI startup by lazyily requiring some modules. [PR #31134](https://github.com/gatsbyjs/gatsby/pull/31134)
 - Create page object & `SitePage` node in same action creator. In our synthetic [create-pages](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages) benchmark (for 100K pages) this reduced the `createPages` activity from 16s to 4.5s (~70% drop) and peak RSS memory from 1.4gb to 0.7gb (~50% drop). [PR #31104](https://github.com/gatsbyjs/gatsby/pull/31104)
 - A ~12% to ~20% improvement for the `run page queries` activity if you use commonly used filters (e.g. `eq` filter on the `id` property). [PR #31269](https://github.com/gatsbyjs/gatsby/pull/31269)
-
-## New `gatsby-source-shopify`
-
-TODO
 
 ## `gatsby-graphql-source-toolkit` v2
 
