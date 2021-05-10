@@ -1,6 +1,7 @@
 const _ = require(`lodash`)
 const { getOptions } = require(`loader-utils`)
 const grayMatter = require(`gray-matter`)
+const path = require(`path`)
 const unified = require(`unified`)
 const babel = require(`@babel/core`)
 const { createRequireFromPath, slash } = require(`gatsby-core-utils`)
@@ -94,9 +95,8 @@ const hasDefaultExport = (str, options) => {
 }
 
 module.exports = async function mdxLoader(content) {
-  const callback = this.async()
   const {
-    stage,
+    isolateMDXComponent,
     getNode: rawGetNode,
     getNodes,
     getNodesByType,
@@ -106,6 +106,22 @@ module.exports = async function mdxLoader(content) {
     pluginOptions,
     ...helpers
   } = getOptions(this)
+
+  const resourceQuery = this.resourceQuery || ``
+  if (isolateMDXComponent && !resourceQuery.includes(`type=component`)) {
+    const { data } = grayMatter(content)
+
+    return `import MDXContent from "/${path.relative(
+      this.rootContext,
+      this.resourcePath
+    )}?type=component";
+      
+export default MDXContent;
+
+export const _frontmatter = ${JSON.stringify(data)};`
+  }
+
+  const callback = this.async()
 
   const options = withDefaultOptions(pluginOptions)
 
@@ -215,7 +231,7 @@ ${contentWithoutFrontmatter}`
     reporter,
     cache,
     pathPrefix,
-    stage,
+    isolateMDXComponent,
   })
 
   try {

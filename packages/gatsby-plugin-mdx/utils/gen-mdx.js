@@ -54,14 +54,14 @@ async function genMDX(
     reporter,
     cache,
     pathPrefix,
-    stage,
+    isolateMDXComponent,
     ...helpers
   },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
   const payloadCacheKey = node =>
-    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}`
+    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}-${isolateMDXComponent}`
 
   if (!forceDisableCache) {
     const cachedPayload = await cache.get(payloadCacheKey(node))
@@ -94,9 +94,7 @@ async function genMDX(
   debug(`processing classic frontmatter`)
   const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
 
-  const isDevelopLoader = isLoader && stage === `develop`
-
-  const content = isDevelopLoader
+  const content = isolateMDXComponent
     ? frontMatterCodeResult
     : `${frontMatterCodeResult}
 
@@ -194,25 +192,6 @@ ${code}`
         /export\s*{\s*MDXContent\s+as\s+default\s*};?/,
         `return MDXContent;`
       )
-  } else if (isDevelopLoader) {
-    // code path for webpack loader in `develop` stage
-    // actual react component is saved to different file so that _frontmatter export doesn't
-    // disable react-refresh (multiple exports are not handled)
-    const filePath = path.join(
-      cache.directory,
-      MDX_LOADER_PASSTHROUGH_LOCATION,
-      `${helpers.createContentDigest(node.fileAbsolutePath)}.js`
-    )
-
-    await fs.outputFile(filePath, rawMDXOutput)
-
-    results.rawMDXOutput = `
-      import MDXContent from "${filePath}";
-      
-      export default MDXContent;
-
-      export const _frontmatter = ${JSON.stringify(data)};
-    `
   }
   /* results.html = renderToStaticMarkup(
    *   React.createElement(MDXRenderer, null, results.body)

@@ -38,6 +38,7 @@ module.exports = async (
   port,
   { parentSpan } = {}
 ) => {
+  let fastRefreshPlugin
   const modulesThatUseGatsby = await getGatsbyDependents()
   const directoryPath = withBasePath(directory)
 
@@ -219,7 +220,7 @@ module.exports = async (
       case `develop`: {
         configPlugins = configPlugins
           .concat([
-            plugins.fastRefresh({ modulesThatUseGatsby }),
+            (fastRefreshPlugin = plugins.fastRefresh({ modulesThatUseGatsby })),
             new ForceCssHMRForEdgeCases(),
             plugins.hotModuleReplacement(),
             plugins.noEmitOnErrors(),
@@ -276,7 +277,7 @@ module.exports = async (
   function getDevtool() {
     switch (stage) {
       case `develop`:
-        return `eval-cheap-module-source-map`
+        return `cheap-module-source-map`
       // use a normal `source-map` for the html phases since
       // it gives better line and column numbers
       case `develop-html`:
@@ -809,6 +810,44 @@ module.exports = async (
     plugins,
     parentSpan,
   })
+
+  if (fastRefreshPlugin) {
+    // Fast refresh plugin has `include` option that determines
+    // wether HMR code gets injected. We need to make sure all custom loaders
+    // (like .ts or .mdx) that use our babel-loader will be taken into account
+    // when deciding which modules get fast-refresh HMR addition.
+    const fastRefreshIncludes = []
+    const babelLoaderLoc = require.resolve(`./babel-loader`)
+    for (const rule of getConfig().module.rules) {
+      if (!rule.use) {
+        continue
+      }
+
+      const hasBabelLoader = (Array.isArray(rule.use)
+        ? rule.use
+        : [rule.use]
+      ).some(loaderConfig => loaderConfig.loader === babelLoaderLoc)
+
+      if (hasBabelLoader) {
+        fastRefreshIncludes.push(rule.test)
+      }
+    }
+
+    // start with default include of fast refresh plugin
+    const includeRegex = /\.([jt]sx?|flow)$/i
+    includeRegex.test = modulePath => {
+      // drop query param from request (i.e. ?type=component for mdx-loader)
+      // so loader rule test work well
+      const queryParamStartIndex = modulePath.indexOf(`?`)
+      if (queryParamStartIndex !== -1) {
+        modulePath = modulePath.substr(0, queryParamStartIndex)
+      }
+
+      return fastRefreshIncludes.some(re => re.test(modulePath))
+    }
+
+    fastRefreshPlugin.options.include = includeRegex
+  }
 
   return getConfig()
 }
