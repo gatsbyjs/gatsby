@@ -1,10 +1,18 @@
 import React from "react"
 import "@testing-library/jest-dom"
 import userEvent from "@testing-library/user-event"
-import { render, screen } from "@testing-library/react"
+import { render, screen, act } from "@testing-library/react"
+// import Enzyme, { shallow, mount, unmount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+// Enzyme.configure({ adapter: new Adapter() });
 
 import { wrapRootElement } from "../gatsby-browser"
 import Indicator from "../components/Indicator"
+import GatsbyIndicatorButton from "../components/GatsbyIndicatorButton"
+import LinkIndicatorButton from "../components/LinkIndicatorButton"
+import InfoIndicatorButton from "../components/InfoIndicatorButton"
+
 import { server } from "../mocks/server"
 
 global.fetch = require("node-fetch")
@@ -87,8 +95,28 @@ describe(`Preview status indicator`, () => {
   })
 
   describe(`Indicator component`, () => {
-    beforeEach(() => {
-      render(<Indicator />)
+
+    describe(`success state`, () => {
+      beforeEach(async () => {
+        process.env.GATSBY_PREVIEW_API_URL = createUrl('success')
+
+        await waitForPoll()
+      })
+
+      describe(`gatsby button`, () => {
+        beforeEach(async () => {
+          await act(() => { 
+            render(<Indicator /> )
+            return waitForPoll(150)
+          })
+
+        })
+
+        it(`renders when more recent successful build available`, async () => {
+          console.log(screen.getByTestId(`gatsby-button`))
+          expect(screen.getByTestId(`gatsby-button`)).toBeInTheDocument()
+        })
+      })
     })
 
     describe(`Success state`, () => {
@@ -98,7 +126,7 @@ describe(`Preview status indicator`, () => {
         await waitForPoll(100)
       })
 
-      it(`renders when more recent successful build available`, async () => {
+      xit(`renders when more recent successful build available`, async () => {
         expect(screen.getByText(`Click to view`)).toBeInTheDocument()
       })
 

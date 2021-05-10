@@ -38,7 +38,8 @@ const IndicatorButton = ({
     iconSvg,
     onClick,
     showSpinner,
-    active=false 
+    active=false,
+    testId 
   }) => {
     const [showTooltip, setShowTooltip] = useState(false)
     const marginTop = isFirstButton ? '0px' : '8px';
@@ -50,6 +51,7 @@ const IndicatorButton = ({
       <>
         <div
           data-gatsby-preview-indicator="button"
+          data-testid={testId}
           data-gatsby-preview-indicator-active-button={`${active}`}
           data-gatsby-preview-indicator-hoverable={active && !isFirstButton ? "true" : "false"}
           style={{ marginTop: marginTop }}

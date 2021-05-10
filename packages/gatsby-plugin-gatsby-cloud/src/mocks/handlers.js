@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 
 export const handlers = [
-  rest.get('/success', async (req, res, ctx) => {
+  rest.get('https://test.com/success', async (req, res, ctx) => {
     return res(
       ctx.json({
         currentBuild: { id: `123`, buildStatus: `SUCCESS` },
@@ -10,7 +10,7 @@ export const handlers = [
       })
     )
   }),
-  rest.get('/error', async (req, res, ctx) => {
+  rest.get('https://test.com/error', async (req, res, ctx) => {
     return res(
       ctx.json({
         currentBuild: { id: `123`, buildStatus: `ERROR` },
@@ -19,7 +19,7 @@ export const handlers = [
       })
     )
   }),
-  rest.get('/building', async (req, res, ctx) => {
+  rest.get('https://test.com/building', async (req, res, ctx) => {
     return res(
       ctx.json({
         currentBuild: { id: `123`, buildStatus: `BUILDING` },
@@ -28,7 +28,7 @@ export const handlers = [
       })
     )
   }),
-  rest.get('/uptodate', async (req, res, ctx) => {
+  rest.get('https://test.com/uptodate', async (req, res, ctx) => {
     return res(
       ctx.json({
         currentBuild: { id: null, buildStatus: `SUCCESS` },
