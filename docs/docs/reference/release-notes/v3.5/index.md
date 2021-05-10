@@ -9,11 +9,11 @@ Welcome to `gatsby@3.5.0` release (May 2021 #1)
 
 Key highlights of this release:
 
-- [Documentation updates](#) - new docs on troubleshooting build performance
-- [Performance improvements](#) - faster query running
-- [Experimental: Gatsby Functions](#experimental-gatsby-functions) - serverless functions in Gatsby & Gatsby Cloud
-- [New gatsby-source-shopify](#) - TODO
-- [gatsby-graphql-source-toolkit 2.0](#) - TODO
+- [Performance improvements](#performance-improvements) - faster query running
+- [New `gatsby-source-shopify`](#new-gatsby-source-shopify) - TODO
+- [`gatsby-graphql-source-toolkit` v2](#gatsby-graphql-source-toolkit-v2) - TODO
+- [New SSR in Develop overlay](#new-ssr-in-develop-overlay) - the experimental SSR in Develop feature got a new overlay
+- [Documentation updates](#documentation-updates) - new docs on troubleshooting build performance
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -26,26 +26,33 @@ if you have any [issues](https://github.com/gatsbyjs/gatsby/issues).
 
 ---
 
-## Docs updates
+## Performance Improvements
 
-- [PR](https://github.com/gatsbyjs/gatsby/pull/31138)
-  New top-level CSS doc: https://www.gatsbyjs.com/docs/how-to/styling/built-in-css/
-- [PR](https://github.com/gatsbyjs/gatsby/pull/31137)
-  Javascript tooling: https://www.gatsbyjs.com/docs/how-to/local-development/javascript-tooling/
-- [PR](https://github.com/gatsbyjs/gatsby/pull/31137)
-  Creating Pages: https://www.gatsbyjs.com/docs/how-to/routing/creating-routes/
-- [PR](https://github.com/gatsbyjs/gatsby/pull/31140)
-  Updated 'Adding Markdown Pages' to use Collection Routes: https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/
-- [PR](https://github.com/gatsbyjs/gatsby/pull/31096)
-  Architecture of Gatsby's image plugins: https://www.gatsbyjs.com/docs/conceptual/image-plugin-architecture/
+We're always working hard on making Gatsby faster. In this release we shipped three improvements:
 
-## Performance improvements
+- Speedup CLI startup by lazyily requiring some modules. [PR #31134](https://github.com/gatsbyjs/gatsby/pull/31134)
+- Create page object & `SitePage` node in same action creator. In our synthetic [create-pages](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages) benchmark (for 100K pages) this reduced the `createPages` activity from 16s to 4.5s (~70% drop) and peak RSS memory from 1.4gb to 0.7gb (~50% drop). [PR #31104](https://github.com/gatsbyjs/gatsby/pull/31104)
+- A ~12% to ~20% improvement for the `run page queries` activity if you use commonly used filters (e.g. `eq` filter on the `id` property). [PR #31269](https://github.com/gatsbyjs/gatsby/pull/31269)
 
-Speedup CLI startup: https://github.com/gatsbyjs/gatsby/pull/31134
+## New `gatsby-source-shopify`
 
-Create page object & SitePage node in same action creator: https://github.com/gatsbyjs/gatsby/pull/31104
+TODO
 
-Faster queries (esp. with `eq` filters): https://github.com/gatsbyjs/gatsby/pull/31269
+## `gatsby-graphql-source-toolkit` v2
+
+TODO
+
+## New SSR in Develop overlay
+
+Previously the error overlay (when the page didn't successfully ssr'ed) consisted out of a HTML page served by express. But that wasn't tied into our already existing [Fast Refresh](/docs/reference/local-development/fast-refresh/) overlay we use throughout Gatsby. The information on the page stays the same but it now has the look & feel of all our other errors:
+
+![A modal showing that the page failed to SSR and showing a code block with the exact location of the error. Optionally you can reload the page or skip SSR rendering for now.](https://user-images.githubusercontent.com/16143594/116409324-088a9e00-a834-11eb-8cf3-1c3745be8b51.png)
+
+## Documentation Updates
+
+- [New top-level CSS doc](/docs/how-to/styling/built-in-css/) - [PR #31138](https://github.com/gatsbyjs/gatsby/pull/31138)
+- [Architecture of Gatsby's image plugins](/docs/conceptual/image-plugin-architecture/) - [PR #31096](https://github.com/gatsbyjs/gatsby/pull/31096)
+- If you're maintaining a plugin, please subscribe to [this GitHub discussion](https://github.com/gatsbyjs/gatsby/discussions/30955) to receive information about changes that may require updates to the plugins you maintain
 
 ## Notable bugfixes & improvements
 
@@ -54,6 +61,8 @@ Faster queries (esp. with `eq` filters): https://github.com/gatsbyjs/gatsby/pull
 - `gatsby-plugin-preact`: enable error-overlay [PR #30613](https://github.com/gatsbyjs/gatsby/pull/30613)
 - `gatsby-plugin-sitemap`: allow writing sitemap to the root of the public folder [PR #31130](https://github.com/gatsbyjs/gatsby/pull/31130)
 - `gatsby-transformer-remark`: restore support for footnotes [PR #31019](https://github.com/gatsbyjs/gatsby/pull/31019)
+- Add `ImageDataLike` as an exported type of `gatsby-plugin-image` [PR #30590](https://github.com/gatsbyjs/gatsby/pull/30590)
+- Update the public plugin API types [PR #30819](https://github.com/gatsbyjs/gatsby/pull/30819)
 
 ## Contributors
 
