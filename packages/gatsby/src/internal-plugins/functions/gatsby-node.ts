@@ -220,7 +220,7 @@ export async function onPreBootstrap({
       function callback(err, stats): any {
         const rawMessages = stats.toJson({ moduleTrace: false })
         if (rawMessages.warnings.length > 0) {
-          reporter.warn(reportWebpackWarnings(rawMessages.warnings, reporter))
+          reportWebpackWarnings(rawMessages.warnings, reporter)
         }
 
         if (err) return reject(err)
