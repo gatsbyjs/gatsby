@@ -888,10 +888,10 @@ const processNodeString = async ({
   wpUrl,
 }) => {
   const nodeStringFilters = [
+    searchAndReplaceNodeStrings,
     replaceNodeHtmlImages,
     replaceFileLinks,
     replaceNodeHtmlLinks,
-    searchAndReplaceNodeStrings,
   ]
 
   for (const nodeStringFilter of nodeStringFilters) {
