@@ -142,11 +142,9 @@ export const _frontmatter = ${JSON.stringify(data)}`
     ),
   })
 
-  const rawMDXOutput = `/* @jsx mdx */
+  results.rawMDXOutput = `/* @jsx mdx */
 import { mdx } from '@mdx-js/react';
 ${code}`
-
-  results.rawMDXOutput = rawMDXOutput
 
   if (!isLoader) {
     debug(`compiling scope`)
