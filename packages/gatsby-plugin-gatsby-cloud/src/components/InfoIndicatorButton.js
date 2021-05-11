@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import { formatDistance } from "date-fns"
 
 import IndicatorButton from "./IndicatorButton"
@@ -46,30 +46,6 @@ const getButtonProps = ({ status, createdAt }) => {
 }
 
 export default function InfoIndicatorButton({ status, createdAt }) {
-  const [button, setButton] = useState()
-
-  const copyLinkClick = () => {
-    setButton({
-      tooltipIcon: successIcon,
-      overrideShowTooltip: true,
-      tooltipText: `Link copied`,
-    })
-
-    setTimeout(() => {
-      setButton({
-        tooltipIcon: successIcon,
-        tooltipText: `Link copied`,
-        overrideShowTooltip: false,
-      })
-    }, 2000)
-
-    setTimeout(() => {
-      setButton({ tooltipText: `Copy Link` })
-    }, 2400)
-
-    navigator.clipboard.writeText(window.location.href)
-  }
-
   const buttonProps = getButtonProps({ status, copyLinkClick, createdAt })
 
   return (

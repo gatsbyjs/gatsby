@@ -199,7 +199,7 @@ describe(`Preview status indicator`, () => {
           copyLinkButton = screen.getByText(copyLinkMessage, { exact: false })
         })
 
-        userEvent.click(screen.getByText(copyLinkMessage, { exact: false }))
+        userEvent.click(copyLinkButton))
         expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`http://localhost/`)
       })
     })
