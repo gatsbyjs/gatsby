@@ -9,7 +9,12 @@ const requestConcurrency = 1
 const mediaItemTypeSettings = {
   localFile: {
     requestConcurrency,
-    maxFileSizeBytes: 10485760,
+    // maxFileSizeBytes: 10485760,
+    /** 
+     * This is set to one byte smaller than the largest image in the Gatsby site so that we will have exactly one image that isn't fetched
+     * during the site build
+     */
+    maxFileSizeBytes: 740690,
   },
 }
 
