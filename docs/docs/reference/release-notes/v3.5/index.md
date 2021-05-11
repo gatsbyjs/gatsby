@@ -9,7 +9,7 @@ Welcome to `gatsby@3.5.0` release (May 2021 #1)
 
 Key highlights of this release:
 
-- [Performance improvements](#performance-improvements) - 20% faster CLI startup, up to 20% faster query running, 70% speedup to creating pages
+- [Performance improvements](#performance-improvements) - up to 20% faster CLI startup, up to 20% faster query running, 70% speedup to creating pages
 - [`gatsby-graphql-source-toolkit` v2](#gatsby-graphql-source-toolkit-v2) - Compatibility with Gatsby v3
 - [New SSR in Develop overlay](#new-ssr-in-develop-overlay) - the experimental SSR in Develop feature got a new overlay
 - [Documentation updates](#documentation-updates) - new docs: Functions, CSS, and our image plugins
