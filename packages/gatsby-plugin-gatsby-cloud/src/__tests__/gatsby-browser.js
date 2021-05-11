@@ -33,9 +33,7 @@ describe(`Preview status indicator`, () => {
       })
     } else if (matcherType === `get`) {
       await waitFor(() => {
-        expect(
-          screen.getByText(text, { exact: false })
-        ).toBeInTheDocument()
+        expect(screen.getByText(text, { exact: false })).toBeInTheDocument()
       })
     }
   }
@@ -122,23 +120,43 @@ describe(`Preview status indicator`, () => {
   describe(`Indicator`, () => {
     describe(`Gatsby Button`, () => {
       it(`should show a more recent succesful build when available`, async () => {
-        await assertTooltipText({ route: `success`, text: `New preview available`, matcherType: `get`})
+        await assertTooltipText({
+          route: `success`,
+          text: `New preview available`,
+          matcherType: `get`,
+        })
       })
 
       it(`should show an error message when most recent build fails`, async () => {
-        await assertTooltipText({ route: `error`, text: `Preview error`, matcherType: `get`})
+        await assertTooltipText({
+          route: `error`,
+          text: `Preview error`,
+          matcherType: `get`,
+        })
       })
 
       it(`should show a preview building message when most recent build is building`, async () => {
-        await assertTooltipText({ route: `building`, text: `Building a new preview`, matcherType: `get`})
+        await assertTooltipText({
+          route: `building`,
+          text: `Building a new preview`,
+          matcherType: `get`,
+        })
       })
 
       it(`should have loading state if no build data has been fetched`, async () => {
-        await assertTooltipText({ route: `fetching`, text: `Fetching preview info...`, matcherType: `get`})
+        await assertTooltipText({
+          route: `fetching`,
+          text: `Fetching preview info...`,
+          matcherType: `get`,
+        })
       })
 
       it(`should have no tooltip when preview is up to date`, async () => {
-        await assertTooltipText({ route: `uptodate`, text: `Fetching preview info...`, matcherType: `query`})
+        await assertTooltipText({
+          route: `uptodate`,
+          text: `Fetching preview info...`,
+          matcherType: `query`,
+        })
       })
 
       it(`should open a new window to build logs when tooltip is clicked on error`, async () => {
@@ -148,7 +166,7 @@ describe(`Preview status indicator`, () => {
         let gatsbyButtonTooltip
         const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/null/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
-        
+
         await act(async () => {
           render(<Indicator />)
         })
@@ -158,7 +176,9 @@ describe(`Preview status indicator`, () => {
         })
 
         userEvent.click(gatsbyButtonTooltip)
-        expect(window.open).toHaveBeenCalledWith(`${pathToBuildLogs}?returnTo=${returnTo}`)
+        expect(window.open).toHaveBeenCalledWith(
+          `${pathToBuildLogs}?returnTo=${returnTo}`
+        )
       })
     })
 
@@ -166,23 +186,43 @@ describe(`Preview status indicator`, () => {
       // TODO: Test hoverability
 
       it(`should have no tooltip when successful`, async () => {
-        await assertTooltipText({ route: `success`, text: copyLinkMessage, matcherType: `query`})
+        await assertTooltipText({
+          route: `success`,
+          text: copyLinkMessage,
+          matcherType: `query`,
+        })
       })
 
       it(`should have no tooltip when error`, async () => {
-        await assertTooltipText({ route: `error`, text: copyLinkMessage, matcherType: `query`})
+        await assertTooltipText({
+          route: `error`,
+          text: copyLinkMessage,
+          matcherType: `query`,
+        })
       })
 
       it(`should have a copy link tooltip when building`, async () => {
-        await assertTooltipText({ route: `building`, text: copyLinkMessage, matcherType: `get`})
+        await assertTooltipText({
+          route: `building`,
+          text: copyLinkMessage,
+          matcherType: `get`,
+        })
       })
 
       it(`should have a copy link tooltip in initial state`, async () => {
-        await assertTooltipText({ route: `fetching`, text: copyLinkMessage, matcherType: `get`})
+        await assertTooltipText({
+          route: `fetching`,
+          text: copyLinkMessage,
+          matcherType: `get`,
+        })
       })
 
       it(`should have a copy link tooltip when up to date`, async () => {
-        await assertTooltipText({ route: `uptodate`, text: copyLinkMessage, matcherType: `get`})
+        await assertTooltipText({
+          route: `uptodate`,
+          text: copyLinkMessage,
+          matcherType: `get`,
+        })
       })
 
       it(`should copy to clipboard when copy link is clicked`, async () => {
@@ -190,7 +230,7 @@ describe(`Preview status indicator`, () => {
 
         navigator.clipboard = { writeText: jest.fn() }
         let copyLinkButton
-        
+
         await act(async () => {
           render(<Indicator />)
         })
@@ -199,81 +239,107 @@ describe(`Preview status indicator`, () => {
           copyLinkButton = screen.getByText(copyLinkMessage, { exact: false })
         })
 
-        userEvent.click(copyLinkButton))
-        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(`http://localhost/`)
+        userEvent.click(copyLinkButton)
+        expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+          `http://localhost/`
+        )
       })
     })
 
     describe(`Info Button`, () => {
       it(`should have no tooltip when successful`, async () => {
-        await assertTooltipText({ route: `success`, text: infoButtonMessage, matcherType: `query`})
+        await assertTooltipText({
+          route: `success`,
+          text: infoButtonMessage,
+          matcherType: `query`,
+        })
       })
 
       it(`should have no tooltip when error`, async () => {
-        await assertTooltipText({ route: `error`, text: infoButtonMessage, matcherType: `query`})
+        await assertTooltipText({
+          route: `error`,
+          text: infoButtonMessage,
+          matcherType: `query`,
+        })
       })
 
       it(`should have no tooltip when building`, async () => {
-        await assertTooltipText({ route: `building`, text: infoButtonMessage, matcherType: `query`})
+        await assertTooltipText({
+          route: `building`,
+          text: infoButtonMessage,
+          matcherType: `query`,
+        })
       })
 
       it(`should have no tooltip in initial state`, async () => {
-        await assertTooltipText({ route: `fetching`, text: infoButtonMessage, matcherType: `query`})
+        await assertTooltipText({
+          route: `fetching`,
+          text: infoButtonMessage,
+          matcherType: `query`,
+        })
       })
 
       it(`should have a last updated tooltip when up to date`, async () => {
-        await assertTooltipText({ route: `uptodate`, text: infoButtonMessage, matcherType: `get`})
+        await assertTooltipText({
+          route: `uptodate`,
+          text: infoButtonMessage,
+          matcherType: `get`,
+        })
       })
     })
   })
 
-  describe('window.location', () => {
-    const { location } = window;
-  
-    beforeAll(() => {
-      delete window.location;
-      window.location = { href: `https://preview-xxx.gtsb.io`, reload: jest.fn(), host: 'preview-xxx.gtsb.io', hostname: 'preview-xxx.gtsb.io' }
+  describe(`window.location`, () => {
+    const { location } = window
 
-      const replace = jest.fn((url) => {
+    beforeAll(() => {
+      delete window.location
+      window.location = {
+        href: `https://preview-xxx.gtsb.io`,
+        reload: jest.fn(),
+        host: `preview-xxx.gtsb.io`,
+        hostname: `preview-xxx.gtsb.io`,
+      }
+
+      const replace = jest.fn(url => {
         window.location.href = url
       })
 
       window.location.replace = replace
-    });
-  
+    })
+
     afterAll(() => {
-      window.location = location;
-    });
-  
+      window.location = location
+    })
+
     // it('mocks `reload`', () => {
     //   expect(jest.isMockFunction(window.location.reload)).toBe(true);
     // });
-  
+
     // it('calls `reload`', () => {
     //   window.location.reload();
     //   expect(window.location.reload).toHaveBeenCalled();
     // });
-  
+
     it(`should reload to the pretty url when gatsby button success state tooltip is clicked`, async () => {
       process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
 
       let gatsbyButtonTooltip
       jest.useFakeTimers()
-  
+
       await act(async () => {
         render(<Indicator />)
       })
-  
+
       await waitFor(() => {
         gatsbyButtonTooltip = screen.queryByTestId(`gatsby-tooltip`)
       })
-  
+
       await act(async () => {
         userEvent.click(gatsbyButtonTooltip)
       })
 
       expect(window.location.replace).toHaveBeenCalledTimes(1)
     })
-  });
+  })
 })
-
