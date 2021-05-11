@@ -31,7 +31,7 @@ We're always working hard on making Gatsby faster. In this release we shipped th
 
 - Speedup CLI startup by lazily requiring some modules. [PR #31134](https://github.com/gatsbyjs/gatsby/pull/31134)
 - Create page object & `SitePage` node in same action creator. In our synthetic [create-pages](https://github.com/gatsbyjs/gatsby/tree/master/benchmarks/create-pages) benchmark (for 100K pages) this reduced the `createPages` activity from 16s to 4.5s (~70% drop) and peak RSS memory from 1.4gb to 0.7gb (~50% drop). [PR #31104](https://github.com/gatsbyjs/gatsby/pull/31104)
-- Up to ~20% improvement to running queries by switching to a faster queue library ([fastq](https://www.npmjs.com/package/fastq). The improvmenets are most noticible if you use the fastest query filters (e.g. `eq` filter on the `id` property) and don't do CPU intensive work in query running e.g. process markdown or MDX. [PR #31269](https://github.com/gatsbyjs/gatsby/pull/31269)
+- Up to ~20% improvement to running queries by switching to a faster queue library ([fastq](https://www.npmjs.com/package/fastq). The improvements are most noticible if you use the fastest query filters (e.g. `eq` filter on the `id` property) and don't do CPU intensive work in query running e.g. process markdown or MDX. [PR #31269](https://github.com/gatsbyjs/gatsby/pull/31269)
 
 ## `gatsby-graphql-source-toolkit` v2
 
