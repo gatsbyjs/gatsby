@@ -1,6 +1,7 @@
 import { pick } from "@gatsbyjs/reach-router/lib/utils"
 import stripPrefix from "./strip-prefix"
 import normalizePagePath from "./normalize-page-path"
+import { maybeGetBrowserRedirect } from "./redirects.js"
 
 const pathCache = new Map()
 let matchPaths = []
@@ -113,6 +114,11 @@ export const findPath = rawPathname => {
   const trimmedPathname = trimPathname(absolutify(rawPathname))
   if (pathCache.has(trimmedPathname)) {
     return pathCache.get(trimmedPathname)
+  }
+
+  const redirect = maybeGetBrowserRedirect(rawPathname)
+  if (redirect) {
+    return findPath(redirect.toPath)
   }
 
   let foundPath = findMatchPath(trimmedPathname)
