@@ -110,7 +110,7 @@ export function Dino() {
 }
 ```
 
-You should instead use the `css` prop provided by these libraries:
+If you use Emotion you can use the provided `css` prop:
 
 ```jsx
 // Emotion
@@ -127,22 +127,9 @@ export function Dino() {
 }
 ```
 
-```jsx
-// styled-components
+Unfortunately the [`css` prop from styled-components](https://styled-components.com/docs/api#css-prop) turns the code into a `styled` function under the hood and as explained above `StaticImage` doesn't support that syntax.
 
-export function Dino() {
-  return (
-    <StaticImage
-      src="trex.png"
-      css={`
-        border: 4px green dashed;
-      `}
-    />
-  )
-}
-```
-
-You can also use a regular `style` or `className` prop. Note that in all of these cases the styling is applied to the wrapper, not the image itself. If you need to style the `<img>` tag, you can use `imgStyle` or `imgClassName`.
+You can also use a regular `style` or `className` prop. Note that in all of these cases the styling is applied to the wrapper, not the image itself. If you need to style the `<img>` tag, you can use `imgStyle` or `imgClassName`. The `className` or `imgClassName` prop is helpful if your styling library is giving you a computed class name string instead of the computed styles.
 
 ### `GatsbyImage`
 
