@@ -1,5 +1,5 @@
 import React from "react"
-import "@testing-library/jest-dom"
+import "@testing-library/jest-dom/extend-expect"
 import userEvent from "@testing-library/user-event"
 import { render, screen, act } from "@testing-library/react"
 
@@ -9,25 +9,30 @@ import Indicator from "../components/Indicator"
 // import LinkIndicatorButton from "../components/LinkIndicatorButton"
 // import InfoIndicatorButton from "../components/InfoIndicatorButton"
 
-import { server } from "../mocks/server"
-
-global.fetch = require(`node-fetch`)
+import { server } from "./mocks/server"
 
 const createUrl = path => `https://test.com/${path}`
 
 process.env.GATSBY_PREVIEW_AUTH_TOKEN = `token`
 
-beforeAll(() => {
-  server.listen()
-})
-
-afterEach(() => server.resetHandlers())
-
-afterAll(() => {
-  server.close()
-})
-
 describe(`Preview status indicator`, () => {
+  beforeAll(() => {
+    server.listen()
+  })
+
+  beforeEach(() => {
+    global.fetch = require(`node-fetch`)
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+    server.resetHandlers()
+  })
+
+  afterAll(() => {
+    server.close()
+  })
+
   const waitForPoll = ms =>
     new Promise(resolve => setTimeout(resolve, ms || 50))
 
@@ -41,13 +46,16 @@ describe(`Preview status indicator`, () => {
     it(`renders the initial page and indicator if indicator enabled`, async () => {
       process.env.GATSBY_PREVIEW_INDICATOR_ENABLED = `true`
 
-      render(
-        wrapRootElement({
-          element: <div>{testMessage}</div>,
-        })
-      )
+      jest.useFakeTimers()
+      await act(() => {
+        render(
+          wrapRootElement({
+            element: <div>{testMessage}</div>,
+          })
+        )
+      })
 
-      await waitForPoll()
+      jest.advanceTimersByTime(3000)
 
       expect(screen.getByText(testMessage)).toBeInTheDocument()
       expect(
@@ -90,41 +98,41 @@ describe(`Preview status indicator`, () => {
     })
   })
 
-  describe(`Indicator component`, () => {
+  describe.only(`GatsbyIndicatorButton`, () => {
     describe(`success state`, () => {
       beforeEach(async () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
-
-        await waitForPoll()
       })
 
       describe(`gatsby button`, () => {
         beforeEach(async () => {
-          await act(() => {
+          act(() => {
             render(<Indicator />)
-            return waitForPoll(150)
           })
+
+          await act(() => waitForPoll(3000))
         })
 
-        it(`renders when more recent successful build available`, async () => {
-          console.log(screen.getByTestId(`gatsby-button`))
-          expect(screen.getByTestId(`gatsby-button`)).toBeInTheDocument()
+        it.only(`renders when more recent successful build available`, async () => {
+          expect(
+            screen.getByText(`New preview available`, { exact: false })
+          ).toBeInTheDocument()
         })
       })
     })
 
-    describe(`Success state`, () => {
+    describe.skip(`Success state`, () => {
       beforeEach(async () => {
         process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
 
         await waitForPoll(100)
       })
 
-      xit(`renders when more recent successful build available`, async () => {
+      it(`renders when more recent successful build available`, async () => {
         expect(screen.getByText(`Click to view`)).toBeInTheDocument()
       })
 
-      xit(`navigates to new build when indicator is clicked`, async () => {
+      it(`navigates to new build when indicator is clicked`, async () => {
         delete window.location
         window.location = new URL(`https://preview-testsite.gtsb.io`)
         window.location.replace = jest.fn(
@@ -139,18 +147,7 @@ describe(`Preview status indicator`, () => {
       })
     })
 
-    xit(`renders FAILED state when most recent build failed`, async () => {
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          json: () => {
-            return {
-              currentBuild: { id: `123`, buildStatus: `ERROR` },
-              latestBuild: { id: `1234`, buildStatus: `SUCCESS` },
-            }
-          },
-        })
-      )
-
+    it(`renders FAILED state when most recent build failed`, async () => {
       await waitForPoll()
 
       expect(
@@ -158,7 +155,7 @@ describe(`Preview status indicator`, () => {
       ).toBeInTheDocument()
     })
 
-    xit(`renders BUILDING state when most recent build is currently building`, async () => {
+    it(`renders BUILDING state when most recent build is currently building`, async () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           json: () => {
@@ -175,7 +172,7 @@ describe(`Preview status indicator`, () => {
       expect(screen.getByText(`New preview building`)).toBeInTheDocument()
     })
 
-    xit(`renders NO state when on most successful build`, async () => {
+    it.skip(`renders NO state when on most successful build`, async () => {
       global.fetch = jest.fn(() =>
         Promise.resolve({
           json: () => {

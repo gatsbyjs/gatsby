@@ -1,11 +1,6 @@
 import React from "react"
 
-import {
-  colors,
-  shadows,
-  transition,
-  space,
-} from 'gatsby-design-tokens'
+import { colors, shadows, transition, space } from "gatsby-design-tokens"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
@@ -46,7 +41,8 @@ const Style = () => (
           top: 50%;
           bottom: 50;
           left: 16px;
-          box-shadow: 0px 2px 4px rgba(46, 41, 51, 0.08), 0px 4px 8px rgba(71, 63, 79, 0.16);
+          box-shadow: 0px 2px 4px rgba(46, 41, 51, 0.08),
+            0px 4px 8px rgba(71, 63, 79, 0.16);
           border-radius: 4px;
           z-index: var(--z-index-preview-indicator);
           border-left: 0.25em solid var(--purple-40);
@@ -57,9 +53,8 @@ const Style = () => (
           padding: 0.75em 1.15em;
           min-width: 48px;
         }
-        
-        [data-gatsby-preview-indicator="button"] {
 
+        [data-gatsby-preview-indicator="button"] {
         }
 
         [data-gatsby-preview-indicator-visible="false"] {
@@ -257,22 +252,18 @@ const getBuildInfo = async () => {
 //   </>
 // )
 
-export default Indicator = ({ children }) => {
-  return (
-    <>
+export default Indicator = ({ children }) => (
+  <>
     <Style />
     <div
       data-testid="preview-status-indicator"
       data-gatsby-preview-indicator="root"
-      data-gatsby-preview-indicator-visible={
-        true
-      }
+      data-gatsby-preview-indicator-visible={true}
       aria-live="assertive"
     ></div>
     {children}
-    </>
-  )
-}
+  </>
+)
 
 // export default class Indicator extends React.Component {
 //   state = {

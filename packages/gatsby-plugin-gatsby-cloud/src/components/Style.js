@@ -1,12 +1,12 @@
-import React from "react";
+import React from "react"
 
 function css(strings, ...keys) {
-    const lastIndex = strings.length - 1
-    return (
-      strings.slice(0, lastIndex).reduce((p, s, i) => p + s + keys[i], ``) +
-      strings[lastIndex]
-    )
-  }
+  const lastIndex = strings.length - 1
+  return (
+    strings.slice(0, lastIndex).reduce((p, s, i) => p + s + keys[i], ``) +
+    strings[lastIndex]
+  )
+}
 
 const Style = () => (
   <style
@@ -37,7 +37,8 @@ const Style = () => (
           -ms-transform: translateY(-50%);
           transform: translateY(-50%);
           left: 16px;
-          box-shadow: 0px 2px 4px rgba(46, 41, 51, 0.08), 0px 4px 8px rgba(71, 63, 79, 0.16);
+          box-shadow: 0px 2px 4px rgba(46, 41, 51, 0.08),
+            0px 4px 8px rgba(71, 63, 79, 0.16);
           border-radius: 6px;
           z-index: var(--z-index-preview-indicator);
           display: flex;
@@ -45,16 +46,16 @@ const Style = () => (
           padding: 8px;
           min-width: 48px;
         }
-        
+
         [data-gatsby-preview-indicator="button"] {
           width: 32px;
           height: 32px;
           padding: 4px;
-          border-radius: 4px
+          border-radius: 4px;
         }
 
         [data-gatsby-preview-indicator-hoverable="true"]:hover {
-          background: #F3F3F3;
+          background: #f3f3f3;
         }
 
         [data-gatsby-preview-indicator-active-button="true"] {
@@ -105,7 +106,7 @@ const Style = () => (
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
-          color: #A97EC7;
+          color: #a97ec7;
           font-weight: bold;
           margin-left: 5px;
           line-height: 12px;

@@ -9,7 +9,7 @@ import InfoIndicatorButton from "./InfoIndicatorButton"
 
 const POLLING_INTERVAL = process.env.GATSBY_PREVIEW_POLL_INTERVAL || 3000
 
-export default function Indicator ({ children }) {
+export default function Indicator({ children }) {
   const [buildInfo, setBuildInfo] = useState()
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Indicator ({ children }) {
           const isOnPrettyUrl = prettyUrlRegex.test(host)
           const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
           console.log(currentBuild, latestBuild, siteInfo)
-          
+
           // buildId = "b4ac0f53-63ce-405c-ab78-90f7dada0dd8"
           if (!buildId) {
             if (isOnPrettyUrl) {
@@ -42,31 +42,31 @@ export default function Indicator ({ children }) {
             siteId: siteInfo?.siteId,
             buildId,
             isOnPrettyUrl,
-            sitePrefix: siteInfo?.sitePrefix
+            sitePrefix: siteInfo?.sitePrefix,
           }
 
           if (currentBuild?.buildStatus === `BUILDING`) {
-            setBuildInfo({ 
-              status: 'BUILDING',
-              ...defaultBuildInfo
+            setBuildInfo({
+              status: `BUILDING`,
+              ...defaultBuildInfo,
             })
           } else if (currentBuild?.buildStatus === `ERROR`) {
-            setBuildInfo({ 
-              status: 'ERROR',
-              ...defaultBuildInfo
+            setBuildInfo({
+              status: `ERROR`,
+              ...defaultBuildInfo,
             })
           } else if (buildId === currentBuild?.id) {
-            setBuildInfo({ 
-              status: 'UPTODATE',
-              ...defaultBuildInfo
+            setBuildInfo({
+              status: `UPTODATE`,
+              ...defaultBuildInfo,
             })
           } else if (
             buildId !== latestBuild?.id &&
             latestBuild?.buildStatus === `SUCCESS`
           ) {
-            setBuildInfo({ 
-              status: 'SUCCESS',
-              ...defaultBuildInfo
+            setBuildInfo({
+              status: `SUCCESS`,
+              ...defaultBuildInfo,
             })
           }
         },
@@ -80,18 +80,18 @@ export default function Indicator ({ children }) {
     }
   })
 
-    console.log(buildInfo)
+  console.log(buildInfo)
   return (
     <>
       <Style />
       <div
-      data-testid="preview-status-indicator"
-      data-gatsby-preview-indicator="root"
-      aria-live="assertive"
+        data-testid="preview-status-indicator"
+        data-gatsby-preview-indicator="root"
+        aria-live="assertive"
       >
-        <GatsbyIndicatorButton {...buildInfo}/>
-        <LinkIndicatorButton {...buildInfo}/>
-        <InfoIndicatorButton {...buildInfo}/>
+        <GatsbyIndicatorButton {...buildInfo} />
+        <LinkIndicatorButton {...buildInfo} />
+        <InfoIndicatorButton {...buildInfo} />
       </div>
       {children}
     </>
