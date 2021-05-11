@@ -397,7 +397,6 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     path: page.path,
     matchPath: page.matchPath,
     component: page.component,
-    ownerNodeId: page.ownerNodeId || null,
     componentChunkName: generateComponentChunkName(page.component),
     isCreatedByStatefulCreatePages:
       actionOptions?.traceId === `initial-createPagesStatefully`,
@@ -408,6 +407,10 @@ ${reservedFields.map(f => `  * "${f}"`).join(`\n`)}
     // Link page to its plugin.
     pluginCreator___NODE: plugin.id ?? ``,
     pluginCreatorId: plugin.id ?? ``,
+  }
+
+  if (page.ownerNodeId) {
+    internalPage.ownerNodeId = page.ownerNodeId
   }
 
   // If the path doesn't have an initial forward slash, add it.
