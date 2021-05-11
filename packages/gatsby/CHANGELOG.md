@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.4...gatsby@3.5.0) (2021-05-11)
+
+### Bug Fixes
+
+- **deps:** update dependency mini-css-extract-plugin to v1.6.0 ([#31158](https://github.com/gatsbyjs/gatsby/issues/31158)) ([137630e](https://github.com/gatsbyjs/gatsby/commit/137630ec719ae67836755a44ddd8451ef25435ed))
+- **gatsby:** don't print out flag suggestions if none are enabled or opted-in ([#31299](https://github.com/gatsbyjs/gatsby/issues/31299)) ([#31362](https://github.com/gatsbyjs/gatsby/issues/31362)) ([01de613](https://github.com/gatsbyjs/gatsby/commit/01de613a76c3cbc7956832f77c8ca3cc868d85bc))
+- **gatsby:** fix proxy creation on read-only properties ([#31346](https://github.com/gatsbyjs/gatsby/issues/31346)) ([#31364](https://github.com/gatsbyjs/gatsby/issues/31364)) ([63942db](https://github.com/gatsbyjs/gatsby/commit/63942db3c1df4167891a82a466ec447cff2cc246))
+- **gatsby:** Fixes incorrect type ([#31358](https://github.com/gatsbyjs/gatsby/issues/31358)) ([#31365](https://github.com/gatsbyjs/gatsby/issues/31365)) ([a44a426](https://github.com/gatsbyjs/gatsby/commit/a44a4266d4733366c44d2f0208a0b1e7a75f232d))
+- **gatsby:** Pass reporter from functions code for reporting warning ([#31336](https://github.com/gatsbyjs/gatsby/issues/31336)) ([#31363](https://github.com/gatsbyjs/gatsby/issues/31363)) ([4eca6cc](https://github.com/gatsbyjs/gatsby/commit/4eca6cce3b39bbcff95166e3294da1e50b32fdf8))
+- **gatsby:** update plugin api types ([#30819](https://github.com/gatsbyjs/gatsby/issues/30819)) ([aa09e6f](https://github.com/gatsbyjs/gatsby/commit/aa09e6fb2f525242680d53d77b5ce7f76b5b63a8))
+- **gatsby-plugin-mdx:** enable hmr when importing mdx ([#31288](https://github.com/gatsbyjs/gatsby/issues/31288)) ([#31370](https://github.com/gatsbyjs/gatsby/issues/31370)) ([baa0804](https://github.com/gatsbyjs/gatsby/commit/baa0804eb61d3b9ad2240b461e45c502b69d4ac9))
+
+### Features
+
+- **gatsby:** Don't send error for function errors if headers are already sent ([#31265](https://github.com/gatsbyjs/gatsby/issues/31265)) ([d9c78a0](https://github.com/gatsbyjs/gatsby/commit/d9c78a052d2187ad6808b584185f731c0988d610))
+- **gatsby:** New overlay for DEV_SSR ([#31061](https://github.com/gatsbyjs/gatsby/issues/31061)) ([#31361](https://github.com/gatsbyjs/gatsby/issues/31361)) ([1a4a3a7](https://github.com/gatsbyjs/gatsby/commit/1a4a3a785f88afc0cd54382a5d93fcc0fa1958ef))
+
+### Performance Improvements
+
+- **gatsby:** use fastq instead of better-queue + refactor ([#31269](https://github.com/gatsbyjs/gatsby/issues/31269)) ([fef8d6b](https://github.com/gatsbyjs/gatsby/commit/fef8d6ba5fdb1386fd7716dc59423c65fa9fd402))
+
 # [3.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.3...gatsby@3.5.0-next.4) (2021-05-05)
 
 ### Bug Fixes

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@2.5.0-next.0...gatsby-plugin-layout@2.5.0) (2021-05-11)
+
+**Note:** Version bump only for package gatsby-plugin-layout
+
 # [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-layout@2.4.0-next.0...gatsby-plugin-layout@2.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-plugin-layout

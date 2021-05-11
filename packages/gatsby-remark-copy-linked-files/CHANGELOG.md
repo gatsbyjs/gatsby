@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.2.0-next.0...gatsby-remark-copy-linked-files@4.2.0) (2021-05-11)
+
+### Bug Fixes
+
+- **deps:** update minor and patch for gatsby-remark-copy-linked-files ([#31163](https://github.com/gatsbyjs/gatsby/issues/31163)) ([2291fbd](https://github.com/gatsbyjs/gatsby/commit/2291fbd962e9813bf1b83851738b438f8d83040b))
+
 # [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-copy-linked-files@4.1.0-next.0...gatsby-remark-copy-linked-files@4.2.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-remark-copy-linked-files

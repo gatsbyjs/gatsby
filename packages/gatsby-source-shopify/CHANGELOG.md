@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.5.0-next.0...gatsby-source-shopify@4.5.0) (2021-05-11)
+
+### Bug Fixes
+
+- **gatsby-source-shopify:** fix linting ([#31291](https://github.com/gatsbyjs/gatsby/issues/31291)) ([fbab17b](https://github.com/gatsbyjs/gatsby/commit/fbab17b9260f451be37b8cf0de1ca43878560cbe))
+
 # [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-shopify@4.4.0-next.3...gatsby-source-shopify@4.5.0-next.0) (2021-04-23)
 
 **Note:** Version bump only for package gatsby-source-shopify
