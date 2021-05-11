@@ -51,13 +51,14 @@ async function genMDX(
     reporter,
     cache,
     pathPrefix,
+    isolateMDXComponent,
     ...helpers
   },
   { forceDisableCache = false } = {}
 ) {
   const pathPrefixCacheStr = pathPrefix || ``
   const payloadCacheKey = node =>
-    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}`
+    `gatsby-plugin-mdx-entire-payload-${node.internal.contentDigest}-${pathPrefixCacheStr}-${isolateMDXComponent}`
 
   if (!forceDisableCache) {
     const cachedPayload = await cache.get(payloadCacheKey(node))
@@ -89,7 +90,10 @@ async function genMDX(
   // pull classic style frontmatter off the raw MDX body
   debug(`processing classic frontmatter`)
   const { data, content: frontMatterCodeResult } = grayMatter(node.rawBody)
-  const content = `${frontMatterCodeResult}
+
+  const content = isolateMDXComponent
+    ? frontMatterCodeResult
+    : `${frontMatterCodeResult}
 
 export const _frontmatter = ${JSON.stringify(data)}`
 
