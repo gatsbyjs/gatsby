@@ -302,6 +302,35 @@ describe(`derive-path`, () => {
         reporter
       ).derivedPath
     ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.pathOne}/{Page.pathTwo}`,
+        {
+          pathOne: `/`,
+          pathTwo: `bar`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.pathOne}/{Page.pathTwo}`,
+        {
+          pathOne: `/`,
+          pathTwo: `/bar`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/bar`)
+    expect(
+      derivePath(
+        `foo/{Page.path}/[...name]`,
+        {
+          path: `/`,
+        },
+        reporter
+      ).derivedPath
+    ).toEqual(`foo/[...name]`)
   })
 
   it(`handles special chars`, () => {

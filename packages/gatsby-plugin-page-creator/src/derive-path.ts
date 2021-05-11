@@ -10,6 +10,7 @@ import {
 } from "./path-utils"
 
 const doubleForwardSlashes = /\/\/+/g
+// Match 0 or 1 of "/"
 const indexRoute = /^\/?$/
 
 // Generates the path for the page from the file path
