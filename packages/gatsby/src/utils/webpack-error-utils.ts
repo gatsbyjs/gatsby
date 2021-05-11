@@ -148,7 +148,9 @@ export const reportWebpackWarnings = (
   warnings: StatsCompilation["warnings"] = [],
   reporter: Reporter
 ): void => {
-  const warningMessages = warnings.map(warning => warning.message)
+  const warningMessages = warnings.map(
+    warning => `${warning.moduleName}\n\n${warning.message}`
+  )
 
   formatWebpackMessages({
     errors: [],
