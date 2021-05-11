@@ -15,7 +15,7 @@ module.exports = (language = `html`) => {
   // Gatsby Prism Autolinker Plugin
   //
   // This file serves as an adapter module
-  // for the original Prism Show Invisibles
+  // for the original Prism Autolinker
   // implementation. The ported plugin code
   // is from npm's prismjs@1.21.0.
   //
