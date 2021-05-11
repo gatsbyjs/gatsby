@@ -3,33 +3,7 @@ title: Use and Style React Components
 ---
 
 import { Announcement } from 'gatsby-interface'
-import Collapsible, { CollapsibleNotification } from '@components/collapsible'
-
-<Collapsible
-  summary={
-    <h3>This is a title</h3>
-  }
->
-
-This **stuff** is in a collapsible section
-
-</Collapsible>
-
-<CollapsibleNotification>
-
-<details>
-
-<summary>
-
-### Another title
-
-</summary>
-
-Some collapsed stuff.
-
-</details>
-
-</CollapsibleNotification>
+import Collapsible from '@components/collapsible'
 
 ## Introduction
 
@@ -62,7 +36,7 @@ To build this page in React, you might have a `<Navbar>` component for the navig
 You can also create components from other components. For example, you might decide to break down the `<ProductGrid>` component into a list of multiple `<ProductCard>` components, which each display the details about a single product. This pattern is called **composition**, since your larger `<ProductGrid>` component is *composed* of smaller `<ProductCard>` components.
 
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Try it!**
 
@@ -85,20 +59,19 @@ The simplest way to write React elements is with **JSX**. JSX is a JavaScript sy
 const hello = <h1>Hello world!</h1>
 ```
 
-One powerful aspect of JSX is that you can embed JavaScript expressions into your JSX. You can put JS expressions into your JSX using curly brackets `{}` For example, this code snippet will swap out the name in the `greeting` element based on the value of the `name` variable:
+So a simple React component might look something like this:
 
 ```javascript
-const name = "Megan"
-const greeting = <p>Hi {name}!</p>
+const Greeting = () => {
+  return (
+    <h1>Hello world!</h1>
+  )
+}
 ```
 
 You'll learn more about how to create React components in the next section.
 
 ## Create a page component
-
-* New key React concept: How to create a component (3 steps)
-* Component type: page
-* Task: Create an /about page
 
 There are two main types of components in a Gatsby site. The first type you'll create are **page components**. A page component contains all the UI elements for a specific page of your site.
 
@@ -138,7 +111,7 @@ export default MyComponent
 Your component must return a single React element, but you can put as many elements inside that top-level element as you want. The code snippet below shows an example of a valid component and an invalid component:
 
 ```javascript
-import React from 'react'
+import * as React from 'react'
 
 const ValidComponent = () => {
   return (
@@ -160,7 +133,7 @@ const InvalidComponent = () => {
 }
 ```
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 If you try to build your site with the code above, you'll get an error for `<InvalidComponent>` like this:
 
@@ -178,7 +151,7 @@ wrapped in an enclosing tag. Did you want a JSX fragment
 
 Now that you've gotten a high-level introduction to React, it's time to your hands at writing some React components. To start, you'll update the content for the home page.
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 If you haven't already, open your Gatsby site in Visual Studio Code, and start up your local development server in the command line:
 
@@ -189,12 +162,13 @@ If you haven't already, open your Gatsby site in Visual Studio Code, and start u
 
 </Announcement>
 
-
 1. Open your `src/pages/index.js` file. Replace its contents with the following. (Notice how the component's structure matches the three steps for writing React components?)
 
 ```js:title=src/pages/index.js
-import * as React from "react"
+// Step 1: Import React
+import * as React from 'react'
 
+// Step 2: Define your component
 const IndexPage = () => {
   return (
     <main>
@@ -205,6 +179,7 @@ const IndexPage = () => {
   )
 }
 
+// Step 3: Export your component
 export default IndexPage
 ```
 
@@ -212,11 +187,13 @@ export default IndexPage
 
 ![A screenshot of "localhost:8000" in a web browser. There's a heading that says, "Welcome to my Gatsby site!" and a paragraph that says, "I'm making this by following the Gatsby Tutorial."](./index-page.png)
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Key Gatsby Concept** 💡
 
 Gatsby automatically creates pages for React components that are the default export of files in the `src/pages` directory.
+
+If a user tries to visit the URL for a page that doesn't actually exist, Gatsby will use the `src/pages/404.js` page component to display an error instead. Go ahead and give it a try! (If you're trying it on `localhost:8000` you'll need to click the "Preview custom 404 page" button on the development 404 page.)
 
 </Announcement>
 
@@ -227,8 +204,10 @@ Now that you've updated the existing Home page, try creating a new page from scr
 1. Create a new file: `src/pages/about.js`. Use the code below as a starting point for your About page. (Feel free to switch up the content to make it more specific to you. Maybe share your favorite food or go-to vacation spot!)
 
 ```js:title=src/pages/about.js
-import React from 'react'
+// Step 1: Import your component
+import * as React from 'react'
 
+// Step 2: Define your component
 const AboutPage = () => {
   return (
     <main>
@@ -239,6 +218,7 @@ const AboutPage = () => {
   )
 }
 
+// Step 3: Export your component
 export default AboutPage
 ```
 
@@ -246,7 +226,7 @@ export default AboutPage
 
 ![A screenshot of "localhost:8000/about" in a web browser. It has a heading that says, "About Me", and a paragraph that says, "Hi there! I'm the proud creator of this site, which I built with Gatsby."](./about-page.png)
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Key Gatsby Concept** 💡
 
@@ -258,35 +238,90 @@ For example, if you had a file called `src/pages/garden-gnomes.js`, you could ac
 
 ## Use the `<Link>` component
 
-* New React concept: components with props
-* Component type: pre-built building block
-* Task: Use the `<Link>` component to hard-code a navbar into the Home and About pages
+Now that you've built a few page components, it's time to look at the other type of React components in a Gatsby site: **"building-block" components**.
 
-1. Add a Link to your about page.
+<Announcement style={{marginBottom: "1.5rem"}}>
 
-```js:title="src/pages/index.js"
-import React from 'react'
-// highlight-next-line
-import { Link } from 'gatsby'
+**Note:** The term building-block component isn't an official technical term. It's just the best name we could come up with to describe this kind of component.
 
-const AboutPage = () => {
-  return (
-    <main>
-      <title>About Me</title>
-      <h1>About Me</h1>
-      <Link to="/">Back to Home</Link>
-      <p>My name is Megan. I like teaching, video games, and dogs!</p>
-    </main>
-  )
-}
+</Announcement>
 
-export default AboutPage
-```
+Building-block components are smaller components that represent just a part of a page's user interface (instead of an entire page). Think back to the store website example from the ["What is React?"](#what-is-react) section. The `Navbar`, `Sidebar`, `ProductGrid`, and `ProductCard` components are examples of building-block components. You can combine several smaller building-block components into a larger page component.
 
-1. Update your index page.
+![A product page for the Gatsby store site, with different parts of the UI outlined to show how one might break it down into React components.](./ui-built-from-components.png)
+
+One of the powerful things about building-block components is that you can reuse the same component in multiple places across your site. This is especially useful for pieces of your UI that share a similar structure but render different values.
+
+For example, each of the `ProductCard` components in the product grid above shows a photo of the product, the product name, a short description, the price, and a link to the product page. The exact values change for each product, but the general structure stays the same. By making the `ProductCard` component dynamic, you can reuse the same code for all the products in the grid!
+
+React has a built-in feature to help you make your components dynamic: **properties** (or **props**, for short).
+
+<Collapsible
+  summary={<h3>Key React Concept: Components with props</h3>}
+>
+
+You can use component props to change the way a component renders. Props are essentially arguments that you pass into your component function.
+
+![component with props](./component-with-props.png)
+
+The code snippets below show an example of how to pass a prop into a component when it's rendered and how to use the value of that prop within the component definition:
+
+* When you define your component, it should take in a single argument: an object called `props`. The `props` object will have whatever properties you passed into your component when you rendered it.
+
+    ```javascript:title=src/components/greeting.js
+    // Defining the <Greeting> component
+    const Greeting = (props) => { // highlight-line
+      return (
+        <p>Hi {props.name}!</p> // highlight-line
+      )
+    }
+    ```
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+**Syntax Hint:** In JSX, you can embed any JavaScript expression by wrapping it with `{}`. That's how you can access the value of the `name` prop from the `props` object.
+
+</Announcement>
+
+* When rendering the `Greeting` component, you pass in the `name` prop with a specific value, like `"Megan"`. You could swap in a different value string each time you render the `Greeting` component.
+
+    ```javascript:title=src/pages/say-hello.js
+    // Rendering the <Greeting> component
+    const SayHello = () => {
+      return (
+        <div>
+          {/* highlight-start */}
+          <Greeting name="Megan" />
+          <Greeting name="Obinna" />
+          <Greeting name="Generosa" />
+          {/* highlight-end */}
+        </div>
+      )
+    }
+    ```
+
+You can name your props whatever you want. For example, if you passed in `iceCreamFlavor="mint chip"` when you rendered a component, that prop would be available to use inside your component at `props.iceCreamFlavor`.
+
+</Collapsible>
+
+So far, your blog site has two separate pages (Home and About), but the only way to get from one page to the other is to update the URL manually. It would be nice to add links to make it easier to switch between pages on your site.
+
+The `Link` component is an example of a **pre-built** component that you can use in your site. In other words, the `Link` component is defined and maintained by another package (in this case, the Gatsby package). That means you can import it and use it in your own components without knowing too much about how it works under the hood.
+
+The `Link` component lets you add a link to another page in your Gatsby site. You use it similarly to how you'd use an HTML `<a>` tag, but it gives you some extra performance benefits that the `<a>` tag doesn't have. The `Link` component takes in a `to` prop, which is the pathname to the page on your site you want to link to.
+
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+The Gatsby `Link` component is for linking between pages within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
+
+</Announcement>
+
+Follow the steps below to add `Link` components to your Home and About pages.
+
+1. On the Home page, import the `Link` component from the Gatsby package and add a link to your About page.
 
 ```js:title=src/pages/index.js
-import * as React from "react"
+import * as React from 'react'
 // highlight-next-line
 import { Link } from 'gatsby'
 
@@ -294,22 +329,45 @@ const IndexPage = () => {
   return (
     <main>
       <title>Home Page</title>
-      <h1>
-        Congratulations
-        <br />
-        <span>— you just made a Gatsby site! </span>
-        <span role="img" aria-label="Party popper emojis">
-          🎉🎉🎉
-        </span>
-      </h1>
+      <h1>Welcome to my Gatsby site!</h1>
       {/* highlight-next-line */}
       <Link to="/about">About</Link>
+      <p>I'm making this by following the Gatsby Tutorial.</p>
     </main>
   )
 }
 
 export default IndexPage
 ```
+
+
+2. On the About page, import the `Link` component from the Gatsby package and add a link to your Home page.
+
+```js:title=src/pages/about.js
+import * as React from 'react'
+import { Link } from 'gatsby' // highlight-line
+
+const AboutPage = () => {
+  return (
+    <main>
+      <title>About Me</title>
+      <h1>About Me</h1>
+      {/* highlight-next-line */}
+      <Link to="/">Back to Home</Link>
+      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    </main>
+  )
+}
+
+export default AboutPage
+```
+
+
+3. In your web browser, click on each of the links to make sure they're working correctly.
+
+![A screenshot of the Home page. Now, under the heading, there's a link to the About page.](./index-with-link.png)
+![A screenshot of the About page. Now, under the heading, there's a link to the Home page.](./about-page-with-link.png)
+
 
 ## Create a reusable layout component
 
@@ -332,7 +390,7 @@ But how do you create a wrapper component? You need to learn about children.
 1. Create a layout component. (It takes children.)
 
 ```js:title=src/components/layout.js
-import React from 'react'
+import * as React from 'react'
 import { Link } from 'gatsby'
 
 const Layout = ({ pageTitle, children }) => {
@@ -357,7 +415,7 @@ export default Layout
 1. Update your /about page and home page to use the Layout component instead of the hard-coded Link component.
 
 ```js:title=src/pages/about.js
-import React from 'react'
+import * as React from 'react'
 import Layout from '../components/layout' // highlight-line
 
 const AboutPage = () => {
@@ -376,7 +434,7 @@ export default AboutPage
 1. Repeat the same process for your home page.
 
 ```js:title=src/pages/index.js
-import * as React from "react"
+import * as React from 'react'
 import Layout from '../components/layout' // highlight-line
 
 const IndexPage = () => {
@@ -394,6 +452,8 @@ const IndexPage = () => {
 
 * New (Gatsby?) concept: CSS modules
 * Task: style the Layout component
+
+One of the big mental shifts you make when starting to build with components (if you are already a developer) is that now your CSS, HTML, and JavaScript are tightly coupled and often living even within the same file.
 
 1. Create a file with styles. Make sure your file ends with `.module.css`.
 
@@ -428,7 +488,7 @@ Note: add these individually, explain generally what each chunk of styles do.
 1. Import the styles into your Layout component, and apply each class to the corresponding element.
 
 ```js:title=src/components/layout.js
-import React from 'react'
+import * as React from 'react'
 import { Link } from 'gatsby'
 // highlight-start
 import {
@@ -467,7 +527,29 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
+
+
 ## Summary
+
+Congratulations, you've made it to the end of Part 2! 🥳
+
+<Announcement>
+
+**Ship It!** 🚀
+
+Before you move on, deploy your changes to your live site on Gatsby Cloud so that you can share your progress!
+
+First, run the following commands in a terminal to push your changes to your GitHub repository. (Make sure you're in the top-level directory for your Gatsby site!)
+
+```shell
+git add .
+git commit -m "Finished Gatsby Tutorial Part 2"
+git push
+```
+
+Once your changes have been pushed to GitHub, Gatsby Cloud should notice the update and rebuild and deploy the latest version of your site. (It may take a few minutes for your changes to be reflected on the live site. Watch your build's progress from your [Gatsby Cloud dashboard](/dashboard).)
+
+</Announcement>
 
 Key takeaways:
 
@@ -478,7 +560,7 @@ Key takeaways:
 
 // Pull out key images
 
-<Announcement>
+<Announcement style={{marginBottom: "1.5rem"}}>
 
 **Share Your Feedback!**
 
