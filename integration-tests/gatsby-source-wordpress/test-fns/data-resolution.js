@@ -322,7 +322,7 @@ describe(`data resolution`, () => {
     /**
      * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
      */
-    let { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
       url,
       query: /* GraphQL */`
         query tooLargeFiles($maxFileSizeBytes: Int!, $includedMimeTypes: [String]!) {
@@ -355,5 +355,29 @@ describe(`data resolution`, () => {
     const wpPluginOpts = getPluginConfig()
     const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
 
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query excludedMimeType($excludeByMimeTypes: [String]) {
+          allWpMediaItem(filter: { mimeType: { in: $excludeByMimeTypes }}) {
+            nodes {
+              id
+              mimeType
+              localFile {
+                size
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        excludeByMimeTypes,
+      },
+    })
+
+    expect(nodes.length).toEqual(2)
+    nodes.forEach(node => {
+      expect(node.localFile).toEqual(null)
+    })
   })
 })
