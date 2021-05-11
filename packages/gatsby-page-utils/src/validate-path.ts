@@ -2,7 +2,8 @@ import { parse } from "path"
 import { isMatch } from "micromatch"
 
 const tsDeclarationExtTest = /\.d\.tsx?$/
-const jsonYamlExtTest = /\.(json|ya?ml)$/
+const jsonExtTest = /\.json$/
+const yamlExtTest = /\.ya?ml$/
 
 // https://github.com/facebook/jest/blob/v24.0.0-alpha.4/packages/jest-config/src/Defaults.js#L71
 function isTestFile(filePath: string): boolean {
@@ -14,7 +15,10 @@ function isTestFile(filePath: string): boolean {
   return isMatch(filePath, testPatterns)
 }
 
-export function validatePath(path: string): boolean {
+export function validatePath(
+  path: string,
+  includeYamlFiles?: boolean
+): boolean {
   // Disallow paths starting with an underscore (_) or dot (.)
   // and template-.
   // and .d.ts
@@ -24,7 +28,8 @@ export function validatePath(path: string): boolean {
     parsedPath.name.slice(0, 1) !== `.` &&
     parsedPath.name.slice(0, 9) !== `template-` &&
     !tsDeclarationExtTest.test(parsedPath.base) &&
-    !jsonYamlExtTest.test(parsedPath.base) &&
+    !jsonExtTest.test(parsedPath.base) &&
+    (includeYamlFiles || !yamlExtTest.test(parsedPath.base)) &&
     !isTestFile(path.replace(/\\/g, `/`))
   )
 }

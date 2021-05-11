@@ -28,6 +28,7 @@ interface IOptions extends PluginOptions {
   pathCheck?: boolean
   ignore?: IPathIgnoreOptions | string | Array<string> | null
   slugify?: ISlugifyOptions
+  includeYamlFiles?: boolean
 }
 
 const knownCollections = new Map()
@@ -51,6 +52,7 @@ export async function createPagesStatefully(
     pathCheck = true,
     ignore,
     slugify: slugifyOptions,
+    includeYamlFiles,
   }: IOptions,
   doneCb: PluginCallback
 ): Promise<void> {
@@ -98,7 +100,8 @@ Please pick a path to an existing directory.`,
         graphql,
         reporter,
         ignore,
-        slugifyOptions
+        slugifyOptions,
+        includeYamlFiles
       )
     })
 
@@ -117,7 +120,8 @@ Please pick a path to an existing directory.`,
               graphql,
               reporter,
               ignore,
-              slugifyOptions
+              slugifyOptions,
+              includeYamlFiles
             )
             knownFiles.add(addedPath)
           }

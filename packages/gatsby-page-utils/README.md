@@ -82,9 +82,10 @@ Create a page path from a file path. It returns the page path.
 
 Validate a file path. It verifies that the path doesn't contain specific characters or strings. It returns `true` if the path is valid otherwise it returns `false`.
 
-| property | description | type   |
-| -------- | ----------- | ------ |
-| path     | File path   | String |
+| property         | description        | type    |
+| ---------------- | ------------------ | ------- |
+| path             | File path          | String  |
+| includeYamlFiles | Include YAML files | Boolean |
 
 #### ignorePath
 

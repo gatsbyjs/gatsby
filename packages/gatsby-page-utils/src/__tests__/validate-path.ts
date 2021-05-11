@@ -115,4 +115,17 @@ describe(`validatePath`, () => {
       validFiles
     )
   })
+
+  it(`doesn't filter out yaml files when includeYamlFiles option set`, () => {
+    const validFiles = [
+      { path: `somefile.js` },
+      { path: `something/blah.js` },
+      { path: `something/otherConfig.yml` },
+      { path: `config.yaml` },
+    ]
+
+    expect(validFiles.filter(file => validatePath(file.path, true))).toEqual(
+      validFiles
+    )
+  })
 })
