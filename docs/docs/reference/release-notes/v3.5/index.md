@@ -65,4 +65,37 @@ Previously the error overlay (when the page didn't successfully SSR) consisted o
 
 ## Contributors
 
-TODO
+A big **Thank You** to [our community who contributed](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.0...gatsby@3.5.0) to this release 💜
+
+- [micha149](https://github.com/micha149): fix(gatsby-react-router-scroll): scroll restoration for layout components [PR #26861](https://github.com/gatsbyjs/gatsby/pull/26861)
+- [hoobdeebla](https://github.com/hoobdeebla): chore(renovate): update typescript as its own group [PR #30909](https://github.com/gatsbyjs/gatsby/pull/30909)
+- [P177](https://github.com/P177): fix(docs): replace invalid style prop with emotion css prop in tutorial [PR #31062](https://github.com/gatsbyjs/gatsby/pull/31062)
+- [fshowalter](https://github.com/fshowalter): fix(gatsby-transformer-remark): Activate footnotes by default & remove included options with remark v13 [PR #31019](https://github.com/gatsbyjs/gatsby/pull/31019)
+- [axe312ger](https://github.com/axe312ger)
+
+  - test(e2e-contentful): add schema.sql for comparision with later updates [PR #31074](https://github.com/gatsbyjs/gatsby/pull/31074)
+  - fix(gatsby): upgrade css-minimizer-webpack-plugin to v2 [PR #31176](https://github.com/gatsbyjs/gatsby/pull/31176)
+
+- [joshua-isaac](https://github.com/joshua-isaac): chore(docs): Update sourcing from agility cms [PR #30966](https://github.com/gatsbyjs/gatsby/pull/30966)
+- [Auspicus](https://github.com/Auspicus): fix(gatsby-source-drupal): remove computed fields before running createNode on existing node [PR #28682](https://github.com/gatsbyjs/gatsby/pull/28682)
+- [mjameswh](https://github.com/mjameswh): fix(webpack-theme-component-shadowing): Support shadowing in yarn-style workspaces with Webpack 5 [PR #30435](https://github.com/gatsbyjs/gatsby/pull/30435)
+- [ben-xD](https://github.com/ben-xD): Update Cloudflare Workers Sites deployment documentation [PR #31173](https://github.com/gatsbyjs/gatsby/pull/31173)
+- [pedrolamas](https://github.com/pedrolamas): Allows sitemap output on root of public folder [PR #31130](https://github.com/gatsbyjs/gatsby/pull/31130)
+- [nrandell](https://github.com/nrandell): Don't remove gatsby-source-filesystem [PR #31069](https://github.com/gatsbyjs/gatsby/pull/31069)
+- [ridem](https://github.com/ridem): fix(gatsby-plugin-netlify-cms): Fix typo in semver [PR #31177](https://github.com/gatsbyjs/gatsby/pull/31177)
+- [benomatis](https://github.com/benomatis): chore(docs): GATSBY_ACTIVE_ENV is undefined by default [PR #31136](https://github.com/gatsbyjs/gatsby/pull/31136)
+- [donno2048](https://github.com/donno2048): chore: Fix grammar error in README [PR #31186](https://github.com/gatsbyjs/gatsby/pull/31186)
+- [junaidilyas](https://github.com/junaidilyas): fix(gatsby): add generic type to GatsbyFunctionResponse [PR #31182](https://github.com/gatsbyjs/gatsby/pull/31182)
+- [MorrisonCole](https://github.com/MorrisonCole): fix(gatsby-plugin-image): add @babel/core peer dependency [PR #31188](https://github.com/gatsbyjs/gatsby/pull/31188)
+- [kimbaudi](https://github.com/kimbaudi): fix(gatsby): rehydration issue in Dev404Page with DEV_SSR [PR #30581](https://github.com/gatsbyjs/gatsby/pull/30581)
+- [FlxAlbroscheit](https://github.com/FlxAlbroscheit): docs: Updates file name suggestion in babel.md [PR #31198](https://github.com/gatsbyjs/gatsby/pull/31198)
+- [dev-szymon](https://github.com/dev-szymon): added breakpoints to sharp_attributes set in babel-helpers [PR #30451](https://github.com/gatsbyjs/gatsby/pull/30451)
+- [tobyglei](https://github.com/tobyglei): chore(docs): Update 21yunbox guide [PR #28848](https://github.com/gatsbyjs/gatsby/pull/28848)
+- [pvpg](https://github.com/pvpg): chore(docs): Update sourcing-from-prismic [PR #29237](https://github.com/gatsbyjs/gatsby/pull/29237)
+- [gabo2192](https://github.com/gabo2192): docs: Update example to apollo-client v3 [PR #29737](https://github.com/gatsbyjs/gatsby/pull/29737)
+- [Js-Brecht](https://github.com/Js-Brecht): fix(gatsby): update plugin api types [PR #30819](https://github.com/gatsbyjs/gatsby/pull/30819)
+- [cobraz](https://github.com/cobraz): feat(gatsby-plugin-image): Export ImageDataLike type [PR #30590](https://github.com/gatsbyjs/gatsby/pull/30590)
+- [Hannah-goodridge](https://github.com/Hannah-goodridge): chore(docs): Update MDX frontmatter for programmatic pages [PR #29798](https://github.com/gatsbyjs/gatsby/pull/29798)
+- [alowdon](https://github.com/alowdon): chore(docs): Update "Adding Search with Algolia" guide [PR #29460](https://github.com/gatsbyjs/gatsby/pull/29460)
+- [YehudaKremer](https://github.com/YehudaKremer): fix(gatsby-plugin-image): print error details [PR #30417](https://github.com/gatsbyjs/gatsby/pull/30417)
+- [kelvindecosta](https://github.com/kelvindecosta): docs(gatsby-plugin-image): Add docs for customizing default options [PR #30344](https://github.com/gatsbyjs/gatsby/pull/30344)
