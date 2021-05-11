@@ -56,6 +56,7 @@ Previously the error overlay (when the page didn't successfully SSR) consisted o
 
 - Fix support of theme shadowing in monorepo [PR #30435](https://github.com/gatsbyjs/gatsby/pull/30435)
 - Fix scroll restoration for layout components [PR #26861](https://github.com/gatsbyjs/gatsby/pull/26861)
+- `gatsby-plugin-mdx`: make HMR work again for MDX [PR #31288](https://github.com/gatsbyjs/gatsby/pull/31288)
 - `gatsby-plugin-preact`: enable error-overlay [PR #30613](https://github.com/gatsbyjs/gatsby/pull/30613)
 - `gatsby-plugin-sitemap`: allow writing sitemap to the root of the public folder [PR #31130](https://github.com/gatsbyjs/gatsby/pull/31130)
 - `gatsby-transformer-remark`: restore support for footnotes [PR #31019](https://github.com/gatsbyjs/gatsby/pull/31019)
