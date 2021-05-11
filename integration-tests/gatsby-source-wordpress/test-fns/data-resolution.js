@@ -32,11 +32,11 @@ describe(`data resolution`, () => {
 
     expect(data[`allWpMediaItem`].nodes).toBeTruthy()
     expect(data[`allWpMediaItem`].nodes).toMatchSnapshot()
-    expect(data[`allWpMediaItem`].totalCount).toBe(15)
+    expect(data[`allWpMediaItem`].totalCount).toBe(17)
 
     expect(data[`allWpTag`].totalCount).toBe(5)
     expect(data[`allWpUser`].totalCount).toBe(1)
-    expect(data[`allWpPage`].totalCount).toBe(4)
+    expect(data[`allWpPage`].totalCount).toBe(5)
     expect(data[`allWpPost`].totalCount).toBe(5)
     expect(data[`allWpComment`].totalCount).toBe(1)
     expect(data[`allWpTaxonomy`].totalCount).toBe(3)
@@ -85,7 +85,7 @@ describe(`data resolution`, () => {
     })
 
     expect(gatsbyResult.data.allWpTermNode.nodes.length).toBe(14)
-    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(27)
+    expect(gatsbyResult.data.allWpContentNode.nodes.length).toBe(30)
   })
 
   it(`resolves interface fields which are a mix of Gatsby nodes and regular object data with no node`, async () => {
@@ -353,7 +353,7 @@ describe(`data resolution`, () => {
 
   it(`Does not dowload files whose mime types are excluded`, async () => {
     const wpPluginOpts = getPluginConfig()
-    const {  } = wpPluginOpts.options.type.MediaItem.localFile
+    const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
 
   })
 })
