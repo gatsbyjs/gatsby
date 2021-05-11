@@ -1,7 +1,7 @@
 AgilityCMS
 connexion
 CraftCMS
-Longe
+longe
 NetlifyCMS
 nin
 pullrequest
