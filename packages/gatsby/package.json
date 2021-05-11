@@ -252,7 +252,8 @@
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "postinstall": "node scripts/postinstall.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
+    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch",
+    "typecheck": "tsc --noEmit"
   },
   "types": "index.d.ts",
   "yargs": {
