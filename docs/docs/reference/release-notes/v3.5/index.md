@@ -10,9 +10,9 @@ Welcome to `gatsby@3.5.0` release (May 2021 #1)
 Key highlights of this release:
 
 - [Performance improvements](#performance-improvements) - faster query running
-- [`gatsby-graphql-source-toolkit` v2](#gatsby-graphql-source-toolkit-v2) - TODO
+- [`gatsby-graphql-source-toolkit` v2](#gatsby-graphql-source-toolkit-v2) - Compatibility with Gatsby v3
 - [New SSR in Develop overlay](#new-ssr-in-develop-overlay) - the experimental SSR in Develop feature got a new overlay
-- [Documentation updates](#documentation-updates) - new docs on troubleshooting build performance
+- [Documentation updates](#documentation-updates) - new docs CSS and our image plugins
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
 
@@ -35,7 +35,9 @@ We're always working hard on making Gatsby faster. In this release we shipped th
 
 ## `gatsby-graphql-source-toolkit` v2
 
-TODO
+The [`gatsby-graphql-source-toolkit`](https://github.com/gatsbyjs/gatsby-graphql-toolkit) simplifies data sourcing from remote GraphQL APIs into Gatsby. While it's not a source plugin by itself, it helps you writing custom GraphQL source plugins by providing a set of convenience tools and conventions. [Craft CMS](https://github.com/craftcms/gatsby-source-craft) or [GraphCMS](https://github.com/GraphCMS/gatsby-source-graphcms) use it for their source plugins.
+
+The bump to a new major version ensures compatibility with `gatsby@^3.0.0`. No breaking changes were in this release.
 
 ## New SSR in Develop overlay
 
