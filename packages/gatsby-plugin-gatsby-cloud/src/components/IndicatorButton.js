@@ -104,7 +104,7 @@ const IndicatorButton = ({
     <>
       <div
         data-gatsby-preview-indicator="button"
-        data-testid={testId}
+        data-testid={`${testId}-button`}
         data-gatsby-preview-indicator-active-button={`${active}`}
         data-gatsby-preview-indicator-hoverable={
           active && !isFirstButton ? `true` : `false`
@@ -132,6 +132,7 @@ const IndicatorButton = ({
           tooltipLink={tooltipLink}
           tooltipLinkImage={tooltipLinkImage}
           onClick={onClick}
+          testId={testId}
         />
       )}
     </>

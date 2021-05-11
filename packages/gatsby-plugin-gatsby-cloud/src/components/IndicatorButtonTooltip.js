@@ -9,6 +9,7 @@ const IndicatorButtonTooltip = ({
   tooltipText,
   tooltipIcon,
   toolTipOffset,
+  testId
 }) => (
   <div
     onClick={onClick}
@@ -17,6 +18,7 @@ const IndicatorButtonTooltip = ({
     data-gatsby-preview-indicator-visible={`${
       overrideShowTooltip || showTooltip
     }`}
+    data-testid={`${testId}-tooltip`}
   >
     {tooltipIcon}
     {tooltipText}

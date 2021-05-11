@@ -1,6 +1,5 @@
 export default async function getBuildInfo() {
   try {
-    console.log(`url`, process.env.GATSBY_PREVIEW_API_URL)
     const res = await fetch(process.env.GATSBY_PREVIEW_API_URL, {
       mode: `cors`,
       headers: {

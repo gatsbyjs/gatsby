@@ -74,6 +74,7 @@ export default function InfoIndicatorButton({ status, createdAt }) {
 
   return (
     <IndicatorButton
+      testId="info"
       iconSvg={infoIcon}
       {...buttonProps}
       toolTipOffset={80 + 12}

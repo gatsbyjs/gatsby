@@ -138,7 +138,7 @@ export default function GatsbyIndicatorButton({
 
   return (
     <IndicatorButton
-      testId="gatsby-button"
+      testId="gatsby"
       iconSvg={gatsbyIcon}
       {...buttonProps}
       isFirstButton={true}

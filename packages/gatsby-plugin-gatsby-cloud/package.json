@@ -52,5 +52,8 @@
   },
   "engines": {
     "node": ">=12.13.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules", "/__tests__/mocks"]
   }
 }

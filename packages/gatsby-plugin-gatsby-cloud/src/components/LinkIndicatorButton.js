@@ -84,6 +84,7 @@ export default function LinkIndicatorButton({ status }) {
 
   return (
     <IndicatorButton
+      testId={`link`}
       iconSvg={linkIcon}
       {...buttonProps}
       toolTipOffset={40 + 12}
