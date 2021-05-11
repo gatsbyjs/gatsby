@@ -5,6 +5,7 @@ const highlightCode = require(`./highlight-code`)
 const addLineNumbers = require(`./add-line-numbers`)
 const commandLine = require(`./command-line`)
 const loadPrismShowInvisibles = require(`./plugins/prism-show-invisibles`)
+const loadPrismAutoLinker = require(`./plugins/prism-autolinker`)
 
 module.exports = (
   { markdownAST },
@@ -15,6 +16,7 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     showInvisibles = false,
+    autoLinker = false,
     languageExtensions = [],
     prompt = {
       user: `root`,
@@ -95,6 +97,10 @@ module.exports = (
 
     if (showInvisibles) {
       loadPrismShowInvisibles(languageName)
+    }
+
+    if (autoLinker) {
+      loadPrismAutoLinker(languageName)
     }
 
     const useCommandLine =
