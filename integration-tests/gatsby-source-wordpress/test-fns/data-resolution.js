@@ -18,6 +18,11 @@ jest.setTimeout(100000)
 const isWarmCache = process.env.WARM_CACHE
 const url = `http://localhost:8000/___graphql`
 
+const getPluginConfig = () =>
+  gatsbyConfig.plugins.find(
+    plugin => typeof plugin === 'object' && plugin.resolve === `gatsby-source-wordpress`
+  )
+
 describe(`data resolution`, () => {
   it(`resolves correct number of nodes`, async () => {
     const { data } = await fetchGraphql({
@@ -312,11 +317,7 @@ describe(`data resolution`, () => {
   })
 
   it(`Does not download files whose size exceed the maxFileSizeBytes option`, async () => {
-    const wpPluginName = `gatsby-source-wordpress`
-    const wpPluginOpts = gatsbyConfig.plugins.find(
-      plugin => typeof plugin === 'object' && plugin.resolve === wpPluginName
-    )
-
+    const wpPluginOpts = getPluginConfig()
     const { maxFileSizeBytes } = wpPluginOpts.options.type.MediaItem.localFile
     /**
      * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
@@ -348,5 +349,11 @@ describe(`data resolution`, () => {
     nodes.forEach(node => {
       expect(node.localFile).toEqual(null)
     })
+  })
+
+  it(`Does not dowload files whose mime types are excluded`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const {  } = wpPluginOpts.options.type.MediaItem.localFile
+
   })
 })

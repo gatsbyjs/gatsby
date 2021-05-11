@@ -8,7 +8,7 @@ const requestConcurrency = 1
 
 const mediaItemTypeSettings = {
   localFile: {
-    requestConcurrency,
+    excludeByMimeTypes: ['application/msword'],
     // maxFileSizeBytes: 10485760,
     /** 
      * This is set to one byte smaller than the largest image in the Gatsby site so that we will have exactly one image that isn't fetched
