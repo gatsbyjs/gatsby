@@ -3,7 +3,7 @@ import { ArrayLikeIterable, open, RootDatabase } from "lmdb-store"
 import { ActionsUnion, IGatsbyNode } from "../../redux/types"
 import { updateNodes } from "./updates/nodes"
 import { updateNodesByType } from "./updates/nodes-by-type"
-import { ILmdbDatabases } from "../types"
+import { IDataStore, ILmdbDatabases } from "../types"
 import { emitter } from "../../redux"
 
 const rootDbFile =
@@ -138,7 +138,7 @@ async function ready(): Promise<void> {
   await lastOperationPromise
 }
 
-export function setupLmdbStore() {
+export function setupLmdbStore(): IDataStore {
   const lmdbDatastore = {
     getNode,
     getTypes,
