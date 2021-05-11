@@ -25,4 +25,4 @@ jobs:
           pip install codespell
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Check spelling with codespell
-        run: codespell --ignore-words=codespell.txt --skip="./.yarn/**,./yarnrc,./yarn.lock,./benchmarks/**,./deprecated-packages/**,./e2e-tests/**,./examples/**,./integration-tests/**,./packages/**,./scripts/**" || exit 1
+        run: codespell --ignore-words=codespell.txt --skip="./.yarn/**,./yarnrc,./yarn.lock,./benchmarks/**,./deprecated-packages/**,./e2e-tests/**,./examples/**,./integration-tests/**,./packages/**,./scripts/**,./starters/**/package-lock.json,./.github/**" || exit 1
