@@ -81,7 +81,7 @@ export default function HelloGatsby() {
 
 ```jsx
 importar Reaccionar desde "reaccionar"
-exportar defecto funcion HelloGatsby() {
+exportar defecto function HelloGatsby() {
   retornar (
      <div estilo = {{color: `morado`, fontSize:` 72px`}}> ¡Hola Gatsby! </div>
   );
