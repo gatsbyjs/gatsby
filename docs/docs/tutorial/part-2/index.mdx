@@ -3,51 +3,228 @@ title: Use and Style React Components
 ---
 
 import { Announcement } from 'gatsby-interface'
+import Collapsible, { CollapsibleNotification } from '@components/collapsible'
+
+<Collapsible
+  summary={
+    <h3>This is a title</h3>
+  }
+>
+
+This **stuff** is in a collapsible section
+
+</Collapsible>
+
+<CollapsibleNotification>
+
+<details>
+
+<summary>
+
+### Another title
+
+</summary>
+
+Some collapsed stuff.
+
+</details>
+
+</CollapsibleNotification>
 
 ## Introduction
 
-In the previous part of the Tutorial, you created your first Gatsby site and used Gatsby Cloud to deploy it to the internet.
+In the previous part of the Tutorial, you created your first Gatsby site and used Gatsby Cloud to deploy it to the internet. Now that you have everything all set up, it's time to make this site your own!
 
-Now that you have everything all set up, it's time to make this site your own! In order to customize your site, you'll need to learn about React components and how Gatsby uses them.
+Throughout the rest of the Tutorial, you'll build a blog site. (Want to peek ahead? Here's a [finished example of the site you'll build](https://introworkshopexamplesitev3.gatsbyjs.io).)
 
-React is the JavaScript library that Gatsby uses under the hood to create user interfaces (UIs). In this part of the Tutorial, you'll learn about the different kinds of React **components** in Gatsby, which will help you create new pages and UI elements for your site.
+The first step of creating your blog site is to build out the basic page structure. To do that, you'll need to know about React components and how Gatsby uses them.
 
 By the end of this part of the Tutorial, you will be able to:
 
-* Create **page components** to add new pages to your site
-* Use a **pre-built component** from another package
-* Create your own **reusable component**
-* Use **props** to change the way a component renders
-* Use the **`children`** prop to create wrapper components
+* Create **page components** to add new pages to your site.
+* Import and use a **pre-built component** from another package.
+* Create your own **reusable "building block" component**.
+* Use component **props** to change the way it renders.
+* Use the **`children`** prop to create wrapper components.
 
 ## A quick intro to React
 
 ### What is React?
 
-Gatsby uses a JavaScript library called React to build UIs. With React, you can break down your UI into smaller, reusable pieces called **components**.
+React is the JavaScript library that Gatsby uses under the hood to create user interfaces (UIs). With React, you can break down your UI into smaller, reusable pieces called **components**.
 
-For example, imagine the UI for a store's website. To build this site in React, you might have a `<Navbar>` component for the navigation menu, a `<Sidebar>` component for additional information displayed to the side of the main content, and a `<ProductGrid>` component to display all of the products for sale.
+For example, imagine the UI for an online store's Products page:
+
+![A product page for the Gatsby store site, with different parts of the UI outlined to show how one might break it down into React components.](./ui-built-from-components.png)
+
+To build this page in React, you might have a `<Navbar>` component for the navigation menu, a `<Sidebar>` component for extra information displayed to the side of the main content, and a `<ProductGrid>` component to display all of the products for sale.
 
 You can also create components from other components. For example, you might decide to break down the `<ProductGrid>` component into a list of multiple `<ProductCard>` components, which each display the details about a single product. This pattern is called **composition**, since your larger `<ProductGrid>` component is *composed* of smaller `<ProductCard>` components.
 
-![GATSBY_EMPTY_ALT](./ui-built-from-components.png)
 
-// Task: Split the UI for the example site into components
+<Announcement>
 
-### A closer look at React components
+**Try it!**
 
-### Types of React components in a Gatsby site
+Look back at the [finished example blog site](https://introworkshopexamplesitev3.gatsbyjs.io). How might you break down the pages into components?
 
-* page vs. building block components: difference in scope
-* pre-built vs. custom components: difference in how it's made (but both can be used the same way - by importing it into another page or building block component)
+Not sure where to start? Look for parts of the UI that repeat within a page or across multiple pages.
 
-## Create a new page component
+</Announcement>
+
+
+### What is a React component?
+
+Under the hood, a **React component** is a function that returns a React element. A **React element** is an object that React uses to render DOM elements.
+
+![A component is a function that outputs a React component, written in JSX.](./component-without-props.png)
+
+The simplest way to write React elements is with **JSX**. JSX is a JavaScript syntax extension that describes the DOM structure for your component. It looks a bit like having HTML in your JavaScript files:
+
+```javascript
+const hello = <h1>Hello world!</h1>
+```
+
+One powerful aspect of JSX is that you can embed JavaScript expressions into your JSX. You can put JS expressions into your JSX using curly brackets `{}` For example, this code snippet will swap out the name in the `greeting` element based on the value of the `name` variable:
+
+```javascript
+const name = "Megan"
+const greeting = <p>Hi {name}!</p>
+```
+
+You'll learn more about how to create React components in the next section.
+
+## Create a page component
 
 * New key React concept: How to create a component (3 steps)
 * Component type: page
 * Task: Create an /about page
 
-1. Create a new file: `src/pages/about.js`
+There are two main types of components in a Gatsby site. The first type you'll create are **page components**. A page component contains all the UI elements for a specific page of your site.
+
+In this section, you'll create two new page components: one for the Home page and one for an About page.
+
+(If you're new to writing React components, expand the content below for a quick overview.)
+
+<Collapsible
+  summary={<h3>Key React Concept: Writing a React component</h3>}
+>
+
+There are three main steps to writing a React component:
+
+1. **Import React** from the `'react'` package, so that you can use JSX inside your `.js` file.
+1. **Define your component.** It should be a function that returns a JSX element.
+1. **Export your component**, so that it can be used by other parts of your site.
+
+Here's an example of what that basic structure looks like in code:
+
+```javascript:title=my-component.js
+// Step 1: Import React. This lets you use JSX inside your .js file.
+import * as React from 'react'
+
+/* Step 2: Define your component. Note that your
+component name should start with a capital letter. */
+const MyComponent = () => {
+  return (
+    <h1>Hi, welcome to my site!</h1>
+  )
+}
+
+/* Step 3: Export your component so it
+can be used by other parts of your app. */
+export default MyComponent
+```
+
+Your component must return a single React element, but you can put as many elements inside that top-level element as you want. The code snippet below shows an example of a valid component and an invalid component:
+
+```javascript
+import React from 'react'
+
+const ValidComponent = () => {
+  return (
+    <div>
+      <h1>A valid component!</h1>
+      <p>This will work fine.</p>
+      <p>
+        Since there is only one top-level element: the div.
+      </p>
+    </div>
+  )
+}
+
+const InvalidComponent = () => {
+  return (
+    <h1>This won't work.</h1>
+    <p>Because there are two elements at the top level.</p>
+  )
+}
+```
+
+<Announcement>
+
+If you try to build your site with the code above, you'll get an error for `<InvalidComponent>` like this:
+
+```shell
+Parsing error: Adjacent JSX elements must be
+wrapped in an enclosing tag. Did you want a JSX fragment
+<>...</>?
+```
+
+</Announcement>
+
+</Collapsible>
+
+### Task: Update the home page content
+
+Now that you've gotten a high-level introduction to React, it's time to your hands at writing some React components. To start, you'll update the content for the home page.
+
+<Announcement>
+
+If you haven't already, open your Gatsby site in Visual Studio Code, and start up your local development server in the command line:
+
+1. Open your command line application.
+1. Change directories into the folder for your Gatsby site.
+1. Run `gatsby develop`.
+1. Open `localhost:8000` in your web browser.
+
+</Announcement>
+
+
+1. Open your `src/pages/index.js` file. Replace its contents with the following. (Notice how the component's structure matches the three steps for writing React components?)
+
+```js:title=src/pages/index.js
+import * as React from "react"
+
+const IndexPage = () => {
+  return (
+    <main>
+      <title>Home Page</title>
+      <h1>Welcome to my Gatsby site!</h1>
+      <p>I'm making this by following the Gatsby Tutorial.</p>
+    </main>
+  )
+}
+
+export default IndexPage
+```
+
+2. Go to `localhost:8000` in a web browser. (You might need to wait a moment while your development server rebuilds.) Once your page updates, it should look something like this:
+
+![A screenshot of "localhost:8000" in a web browser. There's a heading that says, "Welcome to my Gatsby site!" and a paragraph that says, "I'm making this by following the Gatsby Tutorial."](./index-page.png)
+
+<Announcement>
+
+**Key Gatsby Concept** 💡
+
+Gatsby automatically creates pages for React components that are the default export of files in the `src/pages` directory.
+
+</Announcement>
+
+### Task: Create a new page component for an About page
+
+Now that you've updated the existing Home page, try creating a new page from scratch. Make an About page, so that you can tell people a little about yourself.
+
+1. Create a new file: `src/pages/about.js`. Use the code below as a starting point for your About page. (Feel free to switch up the content to make it more specific to you. Maybe share your favorite food or go-to vacation spot!)
 
 ```js:title=src/pages/about.js
 import React from 'react'
@@ -64,6 +241,20 @@ const AboutPage = () => {
 
 export default AboutPage
 ```
+
+2. In a web browser, visit `localhost:8000/about`. When your development server finishes rebuilding your site, the About page should look something like this:
+
+![A screenshot of "localhost:8000/about" in a web browser. It has a heading that says, "About Me", and a paragraph that says, "Hi there! I'm the proud creator of this site, which I built with Gatsby."](./about-page.png)
+
+<Announcement>
+
+**Key Gatsby Concept** 💡
+
+Pages created in the `src/pages` directory use the name of the file as the route for the page.
+
+For example, if you had a file called `src/pages/garden-gnomes.js`, you could access that page at `localhost:8000/garden-gnomes`.
+
+</Announcement>
 
 ## Use the `<Link>` component
 
@@ -140,10 +331,141 @@ But how do you create a wrapper component? You need to learn about children.
 
 1. Create a layout component. (It takes children.)
 
-## Styling components with CSS modules
+```js:title=src/components/layout.js
+import React from 'react'
+import { Link } from 'gatsby'
+
+const Layout = ({ pageTitle, children }) => {
+  return (
+    <main>
+      <title>{pageTitle}</title>
+      <nav>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+        </ul>
+      </nav>
+      <h1>{pageTitle}</h1>
+      {children}
+    </main>
+  )
+}
+
+export default Layout
+```
+
+1. Update your /about page and home page to use the Layout component instead of the hard-coded Link component.
+
+```js:title=src/pages/about.js
+import React from 'react'
+import Layout from '../components/layout' // highlight-line
+
+const AboutPage = () => {
+  return (
+    // highlight-start
+    <Layout pageTitle="About Me">
+      <p>My name is Megan. I like teaching, video games, and dogs!</p>
+    </Layout>
+    // highlight-end
+  )
+}
+
+export default AboutPage
+```
+
+1. Repeat the same process for your home page.
+
+```js:title=src/pages/index.js
+import * as React from "react"
+import Layout from '../components/layout' // highlight-line
+
+const IndexPage = () => {
+  return (
+    // highlight-start
+    <Layout pageTitle="Home Page">
+      <p>Welcome to my blog!</p>
+    </Layout>
+    // highlight-end
+  )
+}
+```
+
+## Style components with CSS modules
 
 * New (Gatsby?) concept: CSS modules
 * Task: style the Layout component
+
+1. Create a file with styles. Make sure your file ends with `.module.css`.
+
+Note: add these individually, explain generally what each chunk of styles do.
+
+```css:title=src/components/layout.module.css
+.container {
+  margin: auto;
+  max-width: 500px;
+  font-family: sans-serif;
+}
+
+.heading {
+  color: rebeccapurple;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+}
+
+.nav-link-item {
+  padding-right: 2rem;
+}
+
+.nav-link-text {
+  color: black;
+}
+```
+
+1. Import the styles into your Layout component, and apply each class to the corresponding element.
+
+```js:title=src/components/layout.js
+import React from 'react'
+import { Link } from 'gatsby'
+// highlight-start
+import {
+  container,
+  heading,
+  navLinks,
+  navLinkItem,
+  navLinkText
+} from './layout.module.css'
+// highlight-end
+
+const Layout = ({ pageTitle, children }) => {
+  return (
+    <main className={container}> // highlight-line
+      <title>{pageTitle}</title>
+      <nav>
+        <ul className={navLinks}> // highlight-line
+          <li className={navLinkItem}> // highlight-line
+            <Link to="/" className={navLinkText}> // highlight-line
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}> // highlight-line
+            <Link to="/about" className={navLinkText}> // highlight-line
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <h1 className={heading}>{pageTitle}</h1> // highlight-line
+      {children}
+    </main>
+  )
+}
+
+export default Layout
+```
 
 ## Summary
 
