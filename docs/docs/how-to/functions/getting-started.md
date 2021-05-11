@@ -4,6 +4,8 @@ title: Getting Started
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
 
+Functions are currently in beta and can be enabled by adding the `FUNCTIONS` flag to your `gatsby-config.js` to sites running Gatsby 3.4 and above. [Learn more and join the discussion](https://github.com/gatsbyjs/gatsby/discussions/30735).
+
 ## Hello World
 
 JavaScript and Typescript files in `src/api/*` are mapped to function routes like files in `src/pages/*` become pages.
@@ -18,8 +20,8 @@ export default function handler(req, res) {
 
 A Function file must export a single function that takes two parameters:
 
-- req: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
-- res: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
+- req: An instance of the [Node.js HTTP request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
+- res: An instance of the [Node.js HTTP response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
 
 Dynamic routing is supported for creating REST-ful APIs and other uses cases
 

@@ -530,6 +530,49 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
             excludeFieldNames: [\`viewer\`],
           `),
       }),
+    searchAndReplace: Joi.array()
+      .description(
+        `An array of options to search and replace strings in nodes. See below for options.`
+      )
+      .allow(null)
+      .items(
+        Joi.object({
+          search: Joi.string()
+            .description(
+              `The regex rule used to search a terme. Using a 'regular expression literal' is recommended over a simple regex string.`
+            )
+            .meta({
+              example: wrapOptions(`
+                searchAndReplace: [
+                  {
+                    search: "https://some-url.com"
+                  },
+                ],
+              `),
+            }),
+          replace: Joi.string()
+            .description(`The replacement string for each regex match.`)
+            .meta({
+              example: wrapOptions(`
+                searchAndReplace: [
+                  {
+                    replace: "https://some-new-url.com",
+                  },
+                ],
+              `),
+            }),
+        })
+      )
+      .meta({
+        example: wrapOptions(`
+          searchAndReplace: [
+            {
+              search:  "https://some-url.com",
+              replace: "https://some-new-url.com",
+            },
+          ],
+        `),
+      }),
     html: Joi.object({
       useGatsbyImage: Joi.boolean()
         .default(true)
