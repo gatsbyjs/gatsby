@@ -139,13 +139,20 @@ class Dev404Page extends React.Component {
               Create a React.js component like the following in your site
               directory at
               {` `}"<code>{newFilePath}</code>"{` `}
-              and this page will automatically refresh to show the new page
-              component you created.
+              and then refresh to show the new page component you created.
             </p>
-            <pre>
+            <pre
+              style={{
+                border: `1px solid lightgray`,
+                padding: `8px`,
+                maxWidth: `80ch`,
+                background: `#f3f3f3`,
+              }}
+            >
               <code
                 dangerouslySetInnerHTML={{
-                  __html: `
+                  __html: `import * as React from "react"
+
 export default function Component () {
   return "Hello world"
 }`,
@@ -163,7 +170,14 @@ export default function Component () {
               {` `}"<code>{newAPIPath}</code>"{` `}
               and refresh to execute the new API function you created.
             </p>
-            <pre>
+            <pre
+              style={{
+                border: `1px solid lightgray`,
+                padding: `8px`,
+                maxWidth: `80ch`,
+                background: `#f3f3f3`,
+              }}
+            >
               <code
                 dangerouslySetInnerHTML={{
                   __html: `
