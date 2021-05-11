@@ -308,9 +308,13 @@ So far, your blog site has two separate pages (Home and About), but the only way
 
 The `Link` component is an example of a **pre-built** component that you can use in your site. In other words, the `Link` component is defined and maintained by another package (in this case, the Gatsby package). That means you can import it and use it in your own components without knowing too much about how it works under the hood.
 
-The `Link` component lets you add a link to another page in your Gatsby site. You use it similarly to how you'd use an HTML `<a>` tag, but it gives you some extra performance benefits that the `<a>` tag doesn't have. The `Link` component takes in a `to` prop, which is the pathname to the page on your site you want to link to.
+The `Link` component lets you add a link to another page in your Gatsby site. You use it similarly to how you'd use an HTML `<a>` tag, but it gives you some extra performance benefits that the `<a>` tag doesn't have. The `Link` component takes in a prop called `to`, which is the pathname to the page on your site you want to link to.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
+
+**Key Gatsby Concept** 💡
+
+The Gatsby `Link` component provides a performance feature called **preloading**. This means that the resources for the linked page are requested when the link scrolls into view or when the mouse hovers on it. That way, when the user actually clicks on the link, the new page can load super quickly.
 
 The Gatsby `Link` component is for linking between pages within your site. For external links to pages not handled by your Gatsby site, use the regular HTML `<a>` tag.
 
@@ -365,29 +369,95 @@ export default AboutPage
 
 3. In your web browser, click on each of the links to make sure they're working correctly.
 
-![A screenshot of the Home page. Now, under the heading, there's a link to the About page.](./index-with-link.png)
+![A screenshot of the Home page. Now, under the heading, there's a link to the About page.](./index-page-with-link.png)
+
 ![A screenshot of the About page. Now, under the heading, there's a link to the Home page.](./about-page-with-link.png)
 
 
 ## Create a reusable layout component
 
-* New key React concept: components with the `children` prop
-* Component type: custom building block
-* Task: create a Layout component
+If you take another look at the [finished example blog](https://introworkshopexamplesitev3.gatsbyjs.io), you might notice that there are some repeated parts of the UI across each page, like the site title and the navigation menu.
 
-Notice: there are some repeated parts of our page layout. It's not a big deal now, but imagine how tedious it would be if your site had dozens (or even thousands) of pages. What if you wanted to make a change to the layout? You'd have to go and update every one of those thousands of files. Yuck.
+You could copy those elements into each page of your site separately. But imagine your site had dozens (or even thousands) of pages. If you wanted to make a change to the structure of your navigation menu, you'd have to go and update every one of those files separately. Yuck.
 
-Instead, it would be better to have one common Layout component that you can use anywhere. That way, when you need to make updates, you only have to do it in one place. And those changes will automatically be applied to all your other files.
+Instead, it would be better to create one common `Layout` component that you can group all the shared elements to reuse across multiple pages. That way, when you need to make updates to the layout, you can make the change in one place and it will automatically be applied to all the pages that use that component.
 
-// INSERT DIAGRAM TO HELP EXPLAIN THIS. Hard-coded links in every page, vs. one layout component that gets imported into every page.
+In this section, you'll create your first **custom** building-block component: `Layout`. To do that, you'll need to use a special React prop called `children`.
 
-Now, instead of using someone else's building block component, you're creating your own.
+<Collapsible
+  summary={<h3>Key React Concept: Components with children</h3>}
+>
 
-But how do you create a wrapper component? You need to learn about children.
+In addition to the props that you can add to your components, React also creates certain props for your components automatically.
 
-// KEY REACT CONCEPT: children prop
+One such prop is called `children`. When you render a component, the `children` prop will automatically be passed whatever content comes between the opening and closing tags for that component. This is helpful when you want to create a component that wraps some generic content.
 
-1. Create a layout component. (It takes children.)
+<Announcement style={{marginBottom: "1.5rem"}}>
+
+The `Link` component you used in the last section also used the `children` prop. You used it to pass in the text to be hyperlinked.
+
+```js
+<Link to="/">
+  This text is passed into the Link component's children prop!
+</Link>
+```
+
+</Announcement>
+
+Think of your wrapper component as a picture frame. A frame has its own shape and style, but you can swap out its contents with whatever you want. You could use the same picture frame around a photo of a house or a statue. You could even put in something besides a picture, like a painting or a piece of embroidery.
+
+![The same <Frame> component can be used around a <Painting> component of a house or a painting of a statue. The contents of the frame are different, but the frame itself stays the same.](./children-example.png)
+
+Here's an example of what the code for this scenario might look like. First, when the `<Frame>` component is rendered, it has contents passed in between the opening and closing tag:
+
+```javascript:title=src/pages/gallery.js
+import Frame from '../components/frame' // highlight-line
+
+const GalleryPage = () => {
+  return (
+    {/* highlight-start */}
+    <Frame>
+      <p>This will be passed in as children</p>
+    </Frame>
+    {/* highlight-end */}
+  )
+}
+
+export const GalleryPage
+```
+
+Then in the component definition, the `children` prop will get passed whatever elements came between the opening and closing tag. You can render the `children` prop in your JSX to insert the contents.
+
+```javascript:title=src/components/frame.js
+import React from 'react'
+
+const Frame = ({ children }) => { // highlight-line
+  return (
+    <div>
+      <h1>This is the page title</h1>
+      {/* highlight-next-line */}
+      { children }
+    </div>
+  )
+}
+
+export default Frame
+```
+
+In the browser, the actual DOM elements will look something like this:
+
+```html
+<div>
+  <h1>This is the page title</h1>
+  <p>This will be passed in as children</p>
+</div>
+```
+
+</Collapsible>
+
+Follow the steps below to create a `Layout` component and add it to your Home and About pages.
+
+1. Create a new file called `src/components/layout.js`. Insert the following code to define your `Layout` component. This component will render a `<main>` element that includes a dynamic page title and heading (from the `pageTitle` prop), a list of navigation links, and the contents passed in with the `children` prop.
 
 ```js:title=src/components/layout.js
 import * as React from 'react'
@@ -412,26 +482,41 @@ const Layout = ({ pageTitle, children }) => {
 export default Layout
 ```
 
-1. Update your /about page and home page to use the Layout component instead of the hard-coded Link component.
+<Announcement style={{marginBottom: "1.5rem"}}>
 
-```js:title=src/pages/about.js
-import * as React from 'react'
-import Layout from '../components/layout' // highlight-line
+**Syntax Hint**: You might have noticed that the `Layout` component is using a slightly different syntax for its props.
 
-const AboutPage = () => {
-  return (
-    // highlight-start
-    <Layout pageTitle="About Me">
-      <p>My name is Megan. I like teaching, video games, and dogs!</p>
-    </Layout>
-    // highlight-end
-  )
+Now it looks like this:
+
+```js
+const Layout = ({ pageTitle, children }) => {
+  ...
 }
-
-export default AboutPage
 ```
 
-1. Repeat the same process for your home page.
+instead of this:
+
+```js
+const Layout = (props) => {
+  ...
+}
+```
+
+This is a JavaScript technique called **destructuring**. It's basically a shortcut for defining variables based on an object's properties. It's like saying, "Take the object that gets passed into this function, and unpack its `pageTitle` and `children` properties into their own variables."
+
+It's a shorter way to do the following:
+
+```javascript
+const Layout = (props) => {
+  const pageTitle = props.pageTitle
+  const children = props.children
+  ...
+}
+```
+
+</Announcement>
+
+2. Update your Home page component to use the Layout component instead of the hard-coded `Link` component you added in the previous section.
 
 ```js:title=src/pages/index.js
 import * as React from 'react'
@@ -441,12 +526,39 @@ const IndexPage = () => {
   return (
     // highlight-start
     <Layout pageTitle="Home Page">
-      <p>Welcome to my blog!</p>
+      <p>I'm making this by following the Gatsby Tutorial.</p>
     </Layout>
     // highlight-end
   )
 }
+
+export default IndexPage
 ```
+
+3. Update your About page component to use the Layout component as well.
+
+```js:title=src/pages/about.js
+import * as React from 'react'
+import Layout from '../components/layout' // highlight-line
+
+const AboutPage = () => {
+  return (
+    // highlight-start
+    <Layout pageTitle="About Me">
+      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    </Layout>
+    // highlight-end
+  )
+}
+
+export default AboutPage
+```
+
+4. Check your Home and About pages in a web browser to make sure your new `Layout` component is working:
+
+![A screenshot of the Home page. Now there's a list of navigation links at the top of the page, with links to the Home and About pages.](./index-page-with-layout.png)
+
+![A screenshot of the About page. It has the same list of navigation links at the top of the page as the Home page.](./about-page-with-layout.png)
 
 ## Style components with CSS modules
 
@@ -531,7 +643,7 @@ export default Layout
 
 ## Summary
 
-Congratulations, you've made it to the end of Part 2! 🥳
+Congratulations, you've made it to the end of Part 2! 🥳 (That was a long one!)
 
 <Announcement>
 
@@ -558,7 +670,7 @@ Key takeaways:
 * You can import pre-built components from other packages, or you can write your own custom components from scratch.
 * Gatsby isn't opinionated about what kind of styling approach you want to use.
 
-// Pull out key images
+In the next section, you'll learn about how to ues Gatsby plugins to add more pre-built functionality to your site.
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
