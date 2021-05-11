@@ -12,7 +12,6 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "jsx": "preserve",

@@ -743,7 +743,7 @@ export interface CreateDevServerArgs extends ParentSpanPluginArgs {
 export interface CreateNodeArgs<
   TNode extends Record<string, unknown> = Record<string, unknown>
 > extends ParentSpanPluginArgs {
-  node: Node<TNode>
+  node: Node & TNode
   traceId: string
   traceTags: {
     nodeId: string
