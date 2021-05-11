@@ -535,6 +535,10 @@ const replaceNodeHtmlImages = async ({
             : // otherwise grab the file node
               helpers.getNode(imageNode.localFile.id)
 
+        if (!fileNode) {
+          return null
+        }
+
         const imgTagMaxWidth = findImgTagMaxWidthFromCheerioImg(cheerioImg)
 
         const mediaItemNodeWidth = isMediaItemNode
