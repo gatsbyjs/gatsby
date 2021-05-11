@@ -244,6 +244,12 @@ jobs:
       - e2e-test:
           test_path: integration-tests/gatsby-source-wordpress
 
+  integration_tests_node_manifest:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/node-manifest
+
   integration_tests_long_term_caching:
     executor: node
     steps:
