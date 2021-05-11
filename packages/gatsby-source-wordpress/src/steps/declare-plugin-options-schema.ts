@@ -545,7 +545,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
               example: wrapOptions(`
                 searchAndReplace: [
                   {
-                    search: "https://some-url\.com"
+                    search: "https://some-url.com"
                   },
                 ],
               `),
@@ -567,7 +567,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         example: wrapOptions(`
           searchAndReplace: [
             {
-              search:  "https://some-url\.com",
+              search:  "https://some-url.com",
               replace: "https://some-new-url.com",
             },
           ],
