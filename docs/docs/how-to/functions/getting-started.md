@@ -1,5 +1,14 @@
 ---
 title: Getting Started
+examples:
+  - label: Authenticate with Google Auth
+    href: "https://example.com"
+  - label: Authenticate with Auth0
+    href: "https://example.com"
+  - label: Submit form to Airtable
+    href: "https://example.com"
+  - label: Send email with SendGrid
+    href: "https://example.com"
 ---
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
@@ -20,8 +29,8 @@ export default function handler(req, res) {
 
 A Function file must export a single function that takes two parameters:
 
-- req: An instance of the [Node.js HTTP request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
-- res: An instance of the [Node.js HTTP response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
+- `req`: Node's [http request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
+- `res`: Node's [http response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
 
 Dynamic routing is supported for creating REST-ful APIs and other uses cases
 
