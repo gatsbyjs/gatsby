@@ -27,7 +27,6 @@
     "@typescript-eslint/parser": "^4.15.2",
     "address": "1.1.2",
     "anser": "^2.0.1",
-    "ansi-html": "^0.0.7",
     "autoprefixer": "^10.2.4",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",

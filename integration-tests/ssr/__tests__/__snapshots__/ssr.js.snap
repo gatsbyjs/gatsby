@@ -3,134 +3,15 @@
 exports[`SSR is run for a page when it is requested 1`] = `"<!DOCTYPE html><html><head><meta charSet=\\"utf-8\\"/><meta http-equiv=\\"x-ua-compatible\\" content=\\"ie=edge\\"/><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1, shrink-to-fit=no\\"/><link data-identity=\\"gatsby-dev-css\\" rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/commons.css\\"/><meta name=\\"note\\" content=\\"environment=development\\"/><script src=\\"/socket.io/socket.io.js\\"></script></head><body><div id=\\"___gatsby\\"><div style=\\"outline:none\\" tabindex=\\"-1\\" id=\\"gatsby-focus-wrapper\\"><div><h1 class=\\"hi\\">Hello world</h1></div></div><div id=\\"gatsby-announcer\\" style=\\"position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\"></div></div><script src=\\"/polyfill.js\\" nomodule=\\"\\"></script><script src=\\"/framework.js\\"></script><script src=\\"/commons.js\\"></script></body></html>"`;
 
 exports[`SSR it generates an error page correctly 1`] = `
-"<head>
-       <title>Develop SSR Error</title>
-       <style>
-          * {
-            --gatsby: #663399;
-            --gatsbyLight: #9158ca;
-            --dimmedWhite: rgba(255, 255, 255, 0.8);
-            --white: #ffffff;
-            --black: #000000;
-            --color-ansi-selection: rgba(95, 126, 151, 0.48);
-            --color-ansi-bg: #fafafa;
-            --color-ansi-fg: #545454;
-            --color-ansi-white: #969896;
-            --color-ansi-black: #141414;
-            --color-ansi-blue: #183691;
-            --color-ansi-cyan: #007faa;
-            --color-ansi-green: #008000;
-            --color-ansi-magenta: #795da3;
-            --color-ansi-red: #d91e18;
-            --color-ansi-yellow: #aa5d00;
-            --color-ansi-bright-white: #ffffff;
-            --color-ansi-bright-black: #545454;
-            --color-ansi-bright-blue: #183691;
-            --color-ansi-bright-cyan: #007faa;
-            --color-ansi-bright-green: #008000;
-            --color-ansi-bright-magenta: #795da3;
-            --color-ansi-bright-red: #d91e18;
-            --color-ansi-bright-yellow: #aa5d00;
-            --radii: 5px;
-            --z-index-normal: 5;
-            --z-index-elevated: 10;
-            --space: 1.5em;
-            --space-sm: 1em;
-            --space-lg: 2.5em;
-          }
-          [data-gatsby-overlay=\\"backdrop\\"] {
-            background: rgba(72, 67, 79, 0.5);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 100%;
-            width: 100%;
-            z-index: var(--z-index-normal);
-            backdrop-filter: blur(10px);
-          }
-          body {
-            font: 18px/1.5 -apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto,
-              Helvetica, Arial, sans-serif, \\"Apple Color Emoji\\", \\"Segoe UI Emoji\\",
-              \\"Segoe UI Symbol\\" !important;
-            background: var(--color-ansi-bright-white);
-            padding: var(--space);
-            overflow: auto;
-          }
-          h1,
-          h2,
-          h3 {
-            display: flex;
-            align-items: center;
-            color: var(--dimmedWhite);
-            background: var(--gatsby);
-            padding: var(--space);
-            border-top-left-radius: var(--radii);
-            border-top-right-radius: var(--radii);
-          }
-          code {
-            font-family: Consolas, \\"Andale Mono WT\\", \\"Andale Mono\\", \\"Lucida Console\\", \\"Lucida Sans Typewriter\\", \\"DejaVu Sans Mono\\", \\"Bitstream Vera Sans Mono\\", \\"Liberation Mono\\", \\"Nimbus Mono L\\", Monaco, \\"Courier New\\", Courier, monospace;
-          }
-          pre {
-            margin: 0;
-            color: var(--color-ansi-fg);
-            padding: var(--space-sm);
-            border-radius: var(--radii);
-          }
-          button {
-            cursor: pointer;
-            border: 1px;
-            padding: 10px;
-            background-color: var(--gatsbyLight);
-            color: var(--white);
-            appearance: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radii);
-          }
-        </style>
-       </head>
-        <h1>Error</h1>
-        <h2>The page didn't server render (SSR) correctly</h2>
-        <p style=\\"padding-left: var(--space-sm);\\">
-          React components in Gatsby must render successfully in the browser and in a
-          node.js environment. When we tried to render your page component in
-          node.js, it errored.
-        </p>
-        <ul>
-          <li><strong>URL path:</strong> <code>/bad-page/</code></li>
-          <li><strong>File path:</strong> <code>src/pages/bad-page.js</code></li>
-        </ul>
-        <h3>error</h3>
-        <code style=\\"padding: var(--space);padding-left: var(--space-sm);\\">window is not defined</code>
-        <pre><span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 2 |</span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 3 |</span> <span style=\\"color:#006500;\\">const</span> <span style=\\"color:#DB3A00;\\">Component</span> <span style=\\"color:#DB3A00;\\">=</span> () <span style=\\"color:#DB3A00;\\">=></span> {</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"><span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">></span></span><span style=\\"color:#527713;\\"> 4 |</span>   <span style=\\"color:#006500;\\">const</span> a <span style=\\"color:#DB3A00;\\">=</span> window<span style=\\"color:#DB3A00;\\">.</span>width</span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\">   |</span>             <span style=\\"color:#096fb3;\\"><span style=\\"font-weight:bold;\\">^</span></span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 5 |</span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 6 |</span>   <span style=\\"color:#006500;\\">return</span> <span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span>hi<span style=\\"color:#DB3A00;\\"><</span><span style=\\"color:#DB3A00;\\">/</span><span style=\\"color:#DB3A00;\\">div</span><span style=\\"color:#DB3A00;\\">></span></span>
-<span style=\\"font-weight:normal;opacity:1;color:#452475;background:#ffffff;\\"> <span style=\\"color:#527713;\\"> 7 |</span> }</span></pre>
-      <p>For help debugging SSR errors, see this docs page: <a
-      href=\\"https://www.gatsbyjs.com/docs/debugging-html-builds/\\">https://www.gatsbyjs.com/docs/debugging-html-builds/</a></p>
-        <h3>Skip SSR</h3>
-        <p style=\\"padding-left: var(--space-sm);\\">
-        If you don't wish to fix the SSR error at the moment, press the
-        button below to reload the page without attempting SSR</p>
-        <p style=\\"padding-left: var(--space-sm);\\">
-        <strong>Note</strong>: this error will show up in when you build your site so must be fixed before then.</p>
-        <p style=\\"padding-left: var(--space-sm);\\">
-        <strong>Caveat</strong>: SSR errors in module scope i.e. outside of your components can't be skipped so will need fixed before you can continue</p>
-        <button style=\\"margin-left: var(--space-sm);\\" onclick='refreshWithQueryString()'>Skip SSR</button>
-        <script>
-          function refreshWithQueryString() {
-            if ('URLSearchParams' in window) {
-              var searchParams = new URLSearchParams(window.location.search);
-              searchParams.set(\\"skip-ssr\\", \\"true\\");
-              window.location.search = searchParams.toString();
-            }
-          }
-          </script>
-        "
+"<!DOCTYPE html><html><head><meta charSet=\\"utf-8\\"/><meta http-equiv=\\"x-ua-compatible\\" content=\\"ie=edge\\"/><meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1, shrink-to-fit=no\\"/><link data-identity=\\"gatsby-dev-css\\" rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"/commons.css\\"/><meta name=\\"note\\" content=\\"environment=development\\"/><script src=\\"/socket.io/socket.io.js\\"></script></head><body><div id=\\"___gatsby\\"><div style=\\"outline:none\\" tabindex=\\"-1\\" id=\\"gatsby-focus-wrapper\\"></div><div id=\\"gatsby-announcer\\" style=\\"position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0\\" aria-live=\\"assertive\\" aria-atomic=\\"true\\"></div></div><script>window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push([\\"FAST_REFRESH\\", { action: \\"SHOW_DEV_SSR_ERROR\\", payload: {\\"codeFrame\\":\\"  2 |/n  3 | const Component = () => {/n> 4 |   const a = window.width/n    |             ^/n  5 |/n  6 |   return <div>hi</div>/n  7 | }\\",\\"source\\":\\"src/pages/bad-page.js\\",\\"line\\":4,\\"column\\":13,\\"sourceMessage\\":\\"window is not defined\\",\\"stack\\":\\"ReferenceError: window is not defined/n    at Component (<PROJECT_ROOT>/public/webpack:/ssr/src/pages/bad-page.js:4:13)/n    at d (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:36:498)/n    at $a (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:39:16)/n    at a.b.render (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:44:476)/n    at a.b.read (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:44:18)/n    at renderToString (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:54:364)/n    at generateBodyHTML (<PROJECT_ROOT>/public/webpack:/ssr/.cache/ssr-develop-static-entry.js:293:34)/n    at Object.__WEBPACK_DEFAULT_EXPORT__ [as default] (<PROJECT_ROOT>/public/webpack:/ssr/.cache/ssr-develop-static-entry.js:323:19)/n    at <PROJECT_ROOT>/node_modules/gatsby/src/utils/dev-ssr/render-dev-html-child.js:95:9/n    at new Promise (<anonymous>)\\"} }])</script><noscript><h1>Failed to Server Render (SSR)</h1><h2>Error message:</h2><p>window is not defined</p><h2>File:</h2><p>src/pages/bad-page.js:4:13</p><h2>Stack:</h2><pre><code>ReferenceError: window is not defined
+    at Component (<PROJECT_ROOT>/public/webpack:/ssr/src/pages/bad-page.js:4:13)
+    at d (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:36:498)
+    at $a (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:39:16)
+    at a.b.render (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:44:476)
+    at a.b.read (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:44:18)
+    at renderToString (<PROJECT_ROOT>/node_modules/react-dom/cjs/react-dom-server.node.production.min.js:54:364)
+    at generateBodyHTML (<PROJECT_ROOT>/public/webpack:/ssr/.cache/ssr-develop-static-entry.js:293:34)
+    at Object.__WEBPACK_DEFAULT_EXPORT__ [as default] (<PROJECT_ROOT>/public/webpack:/ssr/.cache/ssr-develop-static-entry.js:323:19)
+    at <PROJECT_ROOT>/node_modules/gatsby/src/utils/dev-ssr/render-dev-html-child.js:95:9
+    at new Promise (&lt;anonymous&gt;)</code></pre></noscript><script src=\\"/polyfill.js\\" nomodule=\\"\\"></script><script src=\\"/framework.js\\"></script><script src=\\"/commons.js\\"></script></body></html>"
 `;

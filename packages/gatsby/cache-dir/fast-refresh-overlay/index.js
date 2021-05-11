@@ -5,6 +5,7 @@ import { Style } from "./style"
 import { BuildError } from "./components/build-error"
 import { RuntimeErrors } from "./components/runtime-errors"
 import { GraphqlErrors } from "./components/graphql-errors"
+import { DevSsrError } from "./components/dev-ssr-error"
 
 const reducer = (state, event) => {
   switch (event.action) {
@@ -14,8 +15,14 @@ const reducer = (state, event) => {
     case `CLEAR_RUNTIME_ERRORS`: {
       return { ...state, errors: [] }
     }
+    case `CLEAR_DEV_SSR_ERROR`: {
+      return { ...state, devSsrError: null }
+    }
     case `SHOW_COMPILE_ERROR`: {
       return { ...state, buildError: event.payload }
+    }
+    case `SHOW_DEV_SSR_ERROR`: {
+      return { ...state, devSsrError: event.payload }
     }
     case `HANDLE_RUNTIME_ERROR`:
     case `SHOW_RUNTIME_ERRORS`: {
@@ -47,6 +54,7 @@ const reducer = (state, event) => {
 const initialState = {
   errors: [],
   buildError: null,
+  devSsrError: null,
   graphqlErrors: [],
 }
 
@@ -81,7 +89,9 @@ function DevOverlay({ children }) {
   const hasBuildError = state.buildError !== null
   const hasRuntimeErrors = Boolean(state.errors.length)
   const hasGraphqlErrors = Boolean(state.graphqlErrors.length)
-  const hasErrors = hasBuildError || hasRuntimeErrors || hasGraphqlErrors
+  const hasDevSsrError = state.devSsrError !== null
+  const hasErrors =
+    hasBuildError || hasRuntimeErrors || hasGraphqlErrors || hasDevSsrError
 
   // This component has a deliberate order (priority)
   const ErrorComponent = () => {
@@ -93,6 +103,9 @@ function DevOverlay({ children }) {
     }
     if (hasGraphqlErrors) {
       return <GraphqlErrors errors={state.graphqlErrors} dismiss={dismiss} />
+    }
+    if (hasDevSsrError) {
+      return <DevSsrError error={state.devSsrError} />
     }
 
     return null

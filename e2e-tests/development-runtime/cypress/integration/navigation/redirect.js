@@ -5,34 +5,38 @@ Cypress.on(`window:before:load`, win => {
 
 const runTests = () => {
   it(`should redirect page to index page when there is no such page`, () => {
-    cy.visit(`/redirect-without-page`).waitForRouteChange()
+    cy.visit(`/redirect-without-page`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/`)
     cy.then(() => {
       const calls = spy.getCalls()
 
-      const callsAboutRedirectMatchingPage = calls.filter(call => {
-        return call.args[0].includes(
-          "matches both a page and a redirect; this is probably not intentional."
+      const callsAboutRedirectMatchingPage = calls.filter(call =>
+        call.args[0].includes(
+          `matches both a page and a redirect; this is probably not intentional.`
         )
-      })
+      )
 
       expect(callsAboutRedirectMatchingPage.length).to.equal(0)
     })
   })
 
   it(`should redirect page to index page even there is a such page`, () => {
-    cy.visit(`/redirect`).waitForRouteChange()
+    cy.visit(`/redirect`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/`)
     cy.then(() => {
       const calls = spy.getCalls()
 
-      const callsAboutRedirectMatchingPage = calls.filter(call => {
-        return call.args[0].includes(
-          "matches both a page and a redirect; this is probably not intentional."
+      const callsAboutRedirectMatchingPage = calls.filter(call =>
+        call.args[0].includes(
+          `matches both a page and a redirect; this is probably not intentional.`
         )
-      })
+      )
 
       expect(callsAboutRedirectMatchingPage.length).not.to.equal(0)
       expect(spy).to.be.calledWith(
@@ -42,7 +46,9 @@ const runTests = () => {
   })
 
   it(`should redirect to a dynamically-created replacement page`, () => {
-    cy.visit(`/redirect-me/`).waitForRouteChange()
+    cy.visit(`/redirect-me/`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/pt/redirect-me/`)
     cy.then(() => {
@@ -50,7 +56,7 @@ const runTests = () => {
         `The route "/redirect" matches both a page and a redirect; this is probably not intentional.`
       )
 
-      cy.findByText("This should be at /pt/redirect-me/", {
+      cy.findByText(`This should be at /pt/redirect-me/`, {
         exact: false,
       }).should(`exist`)
     })
@@ -58,27 +64,29 @@ const runTests = () => {
 }
 
 describe(`redirect`, () => {
-  describe("404 is present", () => {
+  describe(`404 is present`, () => {
     before(() => {
       cy.task(`restoreAllBlockedResources`)
     })
 
     // this is sanity check for this group
     it(`make sure 404 is present`, () => {
-      cy.visit(`/______not_existing_page`).waitForRouteChange()
-      cy.findByText("Preview custom 404 page").click()
-      cy.findByText("A custom 404 page wasn't detected", {
+      cy.visit(`/______not_existing_page`, {
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+      cy.findByText(`Preview custom 404 page`).click()
+      cy.findByText(`A custom 404 page wasn't detected`, {
         exact: false,
       }).should(`not.exist`)
       cy.findByText(
-        "You just hit a route that does not exist... the sadness."
+        `You just hit a route that does not exist... the sadness.`
       ).should(`exist`)
     })
 
     runTests()
   })
 
-  describe("no 404", () => {
+  describe(`no 404`, () => {
     before(() => {
       cy.task(`restoreAllBlockedResources`)
 
@@ -100,13 +108,15 @@ describe(`redirect`, () => {
     })
 
     it(`make sure 404 is NOT present`, () => {
-      cy.visit(`/______not_existing_page`).waitForRouteChange()
-      cy.findByText("Preview custom 404 page").click()
-      cy.findByText("A custom 404 page wasn't detected", {
+      cy.visit(`/______not_existing_page`, {
+        failOnStatusCode: false,
+      }).waitForRouteChange()
+      cy.findByText(`Preview custom 404 page`).click()
+      cy.findByText(`A custom 404 page wasn't detected`, {
         exact: false,
       }).should(`exist`)
       cy.findByText(
-        "You just hit a route that does not exist... the sadness.",
+        `You just hit a route that does not exist... the sadness.`,
         { exact: false }
       ).should(`not.exist`)
     })

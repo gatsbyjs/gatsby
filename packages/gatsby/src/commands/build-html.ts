@@ -58,7 +58,10 @@ const runWebpack = (
   stage: Stage,
   directory,
   parentSpan?: Span
-): Bluebird<{ stats: webpack.Stats; waitForCompilerClose: Promise<void> }> =>
+): Bluebird<{
+  stats: webpack.Stats | undefined
+  waitForCompilerClose: Promise<void>
+}> =>
   new Bluebird((resolve, reject) => {
     if (!process.env.GATSBY_EXPERIMENTAL_DEV_SSR || stage === `build-html`) {
       const compiler = webpack(compilerConfig)
@@ -96,7 +99,7 @@ const runWebpack = (
       stage === `develop-html`
     ) {
       devssrWebpackCompiler = webpack(compilerConfig)
-      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, file => {
+      devssrWebpackCompiler.hooks.invalid.tap(`ssr file invalidation`, () => {
         needToRecompileSSRBundle = true
       })
       devssrWebpackWatcher = devssrWebpackCompiler.watch(
@@ -111,7 +114,7 @@ const runWebpack = (
           if (err) {
             return reject(err)
           } else {
-            newHash = stats.hash || ``
+            newHash = stats?.hash || ``
 
             const {
               restartWorker,
@@ -142,17 +145,17 @@ const doBuildRenderer = async (
     directory,
     parentSpan
   )
-  if (stats.hasErrors()) {
+  if (stats?.hasErrors()) {
     reporter.panic(structureWebpackErrors(stage, stats.compilation.errors))
   }
 
   if (
     stage === `build-html` &&
-    store.getState().html.ssrCompilationHash !== stats.hash
+    store.getState().html.ssrCompilationHash !== stats?.hash
   ) {
     store.dispatch({
       type: `SET_SSR_WEBPACK_COMPILATION_HASH`,
-      payload: stats.hash,
+      payload: stats?.hash,
     })
   }
 
