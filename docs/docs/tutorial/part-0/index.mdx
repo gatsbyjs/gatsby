@@ -4,6 +4,7 @@ tableOfContentsDepth: 2
 ---
 
 import { Announcement } from 'gatsby-interface'
+import Collapsible from '@components/collapsible'
 
 ## Introduction
 
@@ -64,13 +65,9 @@ The rest of this part of the Tutorial walks you through how to install the follo
 
 Follow the installation instructions below, based on your computer's operating system. (Click the header to expand the section.)
 
-<details>
-
-<summary>
-
-#### Mac instructions
-
-</summary>
+<Collapsible
+  summary={<h4>Mac instructions</h4>}
+>
 
 To install Gatsby and Node.js on a Mac, it is recommended to use [Homebrew](https://brew.sh/). A little set-up in the beginning can save you from some headaches later on!
 
@@ -118,30 +115,21 @@ If you don't want to install it through Homebrew, download the latest Node.js ve
 
 </Announcement>
 
-</details>
+</Collapsible>
 
-<details>
+<Collapsible
+  summary={<h4>Windows instructions</h4>}
+>
 
-<summary>
+Download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
 
-#### Windows Instructions
+</Collapsible>
 
-</summary>
-
-- Download and install the latest Node.js version from [the official Node.js website](https://nodejs.org/en/)
-
-</details>
-
-<details>
-
-<summary>
-
-#### Linux Instructions
-
-</summary>
+<Collapsible
+  summary={<h4>Linux instructions</h4>}
+>
 
 Install nvm (Node Version Manager) and needed dependencies. nvm is used to manage Node.js and all its associated versions.
-
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -243,20 +231,16 @@ nvm install 10
 nvm use 10
 ```
 
-Confirm that this worked:
+Confirm that this worked. The output should be a version number.
 
 ```shell
-npm --version
 node --version
+npm --version
 ```
-
-The output should look similar to the screenshot below, showing version numbers in response to the commands.
-
-![Check node and npm versions in terminal](01-node-npm-versions.png)
 
 Once you have followed the installation steps and you have checked everything is installed properly, you can continue to the next step.
 
-</details>
+</Collapsible>
 
 ### Git
 
