@@ -8,7 +8,7 @@ on:
 
 jobs:
   codespell:
-    name: Check spelling all files with codespell
+    name: Check spelling of docs & starters with codespell
     runs-on: ubuntu-latest
     strategy:
       matrix:
