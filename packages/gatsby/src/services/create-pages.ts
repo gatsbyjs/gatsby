@@ -5,7 +5,6 @@ import { assertStore } from "../utils/assert-store"
 import { IGatsbyPage } from "../redux/types"
 import { actions } from "../redux/actions"
 import { deleteUntouchedPages, findChangedPages } from "../utils/changed-pages"
-import { processNodeManifests } from "../utils/node-manifest"
 
 export async function createPages({
   parentSpan,
