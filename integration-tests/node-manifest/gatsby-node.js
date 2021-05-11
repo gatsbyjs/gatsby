@@ -1,7 +1,8 @@
-exports.sourceNodes = ({ actions }) => {
-  const ids = [1, 2, 3, 4]
+const commandName = process.env.NODE_ENV === `development` ? `develop` : `build`
 
-  for (const id of ids) {
+exports.sourceNodes = ({ actions }) => {
+  // template nodes
+  for (let id = 1; id < 5; id++) {
     const node = {
       id: `${id}`,
       internal: {
@@ -12,14 +13,26 @@ exports.sourceNodes = ({ actions }) => {
 
     actions.createNode(node)
 
-    const commandName =
-      process.env.NODE_ENV === `development` ? `develop` : `build`
-
     actions.unstable_createNodeManifest({
       manifestId: `${commandName}-${id}`,
       node,
     })
   }
+
+  // filesystem route api node
+  const node = {
+    id: `filesystem-1`,
+    internal: {
+      type: `TestFSRouteType`,
+      contentDigest: `1`,
+    },
+  }
+
+  actions.createNode(node)
+  actions.unstable_createNodeManifest({
+    manifestId: `${commandName}-filesystem-1`,
+    node,
+  })
 }
 
 /**

@@ -80,4 +80,11 @@ describe(`Node Manifest API in "gatsby ${gatsbyCommandName}"`, () => {
     expect(manifestFileContents.node.id).toBe(`4`)
     expect(manifestFileContents.page.path).toBe(null)
   })
+
+  it(`Creates a Node manifest for filesystem routes`, async () => {
+    const manifestFileContents = await getManifestContents(`filesystem-1`)
+
+    expect(manifestFileContents.node.id).toBe(`filesystem-1`)
+    expect(manifestFileContents.page.path).toBe(`/filesystem-1/`)
+  })
 })
