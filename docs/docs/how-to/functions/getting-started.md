@@ -2,13 +2,13 @@
 title: Getting Started
 examples:
   - label: Authenticate with Google Auth
-    href: "https://example.com"
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/google-auth"
   - label: Authenticate with Auth0
-    href: "https://example.com"
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/auth0"
   - label: Submit form to Airtable
-    href: "https://example.com"
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form"
   - label: Send email with SendGrid
-    href: "https://example.com"
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/sendgrid-email"
 ---
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
