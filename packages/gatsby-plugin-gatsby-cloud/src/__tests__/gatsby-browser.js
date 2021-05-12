@@ -289,57 +289,57 @@ describe(`Preview status indicator`, () => {
     })
   })
 
-  describe(`window.location`, () => {
-    const { location } = window
+  // describe(`window.location`, () => {
+  //   const { location } = window
 
-    beforeAll(() => {
-      delete window.location
-      window.location = {
-        href: `https://preview-xxx.gtsb.io`,
-        reload: jest.fn(),
-        host: `preview-xxx.gtsb.io`,
-        hostname: `preview-xxx.gtsb.io`,
-      }
+  //   beforeAll(() => {
+  //     delete window.location
+  //     window.location = {
+  //       href: `https://preview-xxx.gtsb.io`,
+  //       reload: jest.fn(),
+  //       host: `preview-xxx.gtsb.io`,
+  //       hostname: `preview-xxx.gtsb.io`,
+  //     }
 
-      const replace = jest.fn(url => {
-        window.location.href = url
-      })
+  //     const replace = jest.fn(url => {
+  //       window.location.href = url
+  //     })
 
-      window.location.replace = replace
-    })
+  //     window.location.replace = replace
+  //   })
 
-    afterAll(() => {
-      window.location = location
-    })
+  //   afterAll(() => {
+  //     window.location = location
+  //   })
 
-    // it('mocks `reload`', () => {
-    //   expect(jest.isMockFunction(window.location.reload)).toBe(true);
-    // });
+  // it('mocks `reload`', () => {
+  //   expect(jest.isMockFunction(window.location.reload)).toBe(true);
+  // });
 
-    // it('calls `reload`', () => {
-    //   window.location.reload();
-    //   expect(window.location.reload).toHaveBeenCalled();
-    // });
+  // it('calls `reload`', () => {
+  //   window.location.reload();
+  //   expect(window.location.reload).toHaveBeenCalled();
+  // });
 
-    it(`should reload to the pretty url when gatsby button success state tooltip is clicked`, async () => {
-      process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
+  //   it(`should reload to the pretty url when gatsby button success state tooltip is clicked`, async () => {
+  //     process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
 
-      let gatsbyButtonTooltip
-      jest.useFakeTimers()
+  //     let gatsbyButtonTooltip
+  //     jest.useFakeTimers()
 
-      await act(async () => {
-        render(<Indicator />)
-      })
+  //     await act(async () => {
+  //       render(<Indicator />)
+  //     })
 
-      await waitFor(() => {
-        gatsbyButtonTooltip = screen.queryByTestId(`gatsby-tooltip`)
-      })
+  //     await waitFor(() => {
+  //       gatsbyButtonTooltip = screen.queryByTestId(`gatsby-tooltip`)
+  //     })
 
-      await act(async () => {
-        userEvent.click(gatsbyButtonTooltip)
-      })
+  //     await act(async () => {
+  //       userEvent.click(gatsbyButtonTooltip)
+  //     })
 
-      expect(window.location.replace).toHaveBeenCalledTimes(1)
-    })
-  })
+  //     expect(window.location.replace).toHaveBeenCalledTimes(1)
+  //   })
+  // })
 })
