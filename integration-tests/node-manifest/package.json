@@ -9,7 +9,7 @@
   "author": "Tyler Barnes <tyler@gatsbyjs.com>",
   "license": "ISC",
   "dependencies": {
-    "gatsby": "3.5.0-next.0-dev-1620344424045"
+    "gatsby": "3.6.0-next.1"
   },
   "devDependencies": {
     "fs-extra": "^10.0.0",
