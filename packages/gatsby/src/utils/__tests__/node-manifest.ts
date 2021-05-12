@@ -39,8 +39,8 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       { reporterFn }
     )
 
-    expect(reporterFn.warn.mock.calls.length).toBe(1)
-    expect(reporterFn.warn.mock.results[0].value).toBe(possibleMessages.none)
+    expect(reporterFn.warn).toBeCalled()
+    expect(reporterFn.warn).toBeCalledWith(possibleMessages.none)
     expect(message).toEqual(possibleMessages.none)
     expect(message.includes(`couldn't find a page for this node`)).toBeTruthy()
   })
@@ -61,10 +61,8 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       { reporterFn }
     )
 
-    expect(reporterFn.warn.mock.calls.length).toBe(1)
-    expect(reporterFn.warn.mock.results[0].value).toBe(
-      possibleMessages[`context.id`]
-    )
+    expect(reporterFn.warn).toBeCalled()
+    expect(reporterFn.warn).toBeCalledWith(possibleMessages[`context.id`])
     expect(message).toEqual(possibleMessages[`context.id`])
     expect(message.includes(`pageContext.id`)).toBeTruthy()
     expect(message.includes(`ownerNodeId`)).toBeTruthy()
@@ -86,10 +84,8 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       { reporterFn }
     )
 
-    expect(reporterFn.warn.mock.calls.length).toBe(1)
-    expect(reporterFn.warn.mock.results[0].value).toBe(
-      possibleMessages[`queryTracking`]
-    )
+    expect(reporterFn.warn).toBeCalled()
+    expect(reporterFn.warn).toBeCalledWith(possibleMessages[`queryTracking`])
     expect(message).toEqual(possibleMessages[`queryTracking`])
     expect(
       message.includes(`the first page where this node is queried`)
@@ -111,7 +107,7 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       { reporterFn }
     )
 
-    expect(reporterFn.warn.mock.calls.length).toBe(0)
+    expect(reporterFn.warn).not.toBeCalled()
     expect(message).toEqual(`success`)
   })
 
