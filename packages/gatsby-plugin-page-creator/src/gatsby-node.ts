@@ -90,17 +90,19 @@ Please pick a path to an existing directory.`,
 
     // Get initial list of files.
     const files = await glob(pagesGlob, { cwd: pagesPath })
-    files.forEach(file => {
-      createPage(
-        file,
-        pagesDirectory,
-        actions,
-        graphql,
-        reporter,
-        ignore,
-        slugifyOptions
+    await Promise.allSettled(
+      files.map(file =>
+        createPage(
+          file,
+          pagesDirectory,
+          actions,
+          graphql,
+          reporter,
+          ignore,
+          slugifyOptions
+        )
       )
-    })
+    )
 
     const knownFiles = new Set(files)
 
