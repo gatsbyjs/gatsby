@@ -57,21 +57,22 @@ export async function createPages({
     activity.end()
   }
 
-  reporter.info(
-    `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
-      store.getState().nodesByType?.get(`SitePage`)?.size
-    } (use --verbose for breakdown)`
-  )
-
-  if (process.env.gatsby_log_level === `verbose`) {
-    reporter.verbose(
-      `Number of node types: ${
-        store.getState().nodesByType.size
-      }. Nodes per type: ${[...store.getState().nodesByType.entries()]
-        .map(([type, nodes]) => type + `: ` + nodes.size)
-        .join(`, `)}`
-    )
-  }
+  // TODO: move counts to datastore
+  // reporter.info(
+  //   `Total nodes: ${store.getState().nodes.size}, SitePage nodes: ${
+  //     store.getState().nodesByType?.get(`SitePage`)?.size
+  //   } (use --verbose for breakdown)`
+  // )
+  //
+  // if (process.env.gatsby_log_level === `verbose`) {
+  //   reporter.verbose(
+  //     `Number of node types: ${
+  //       store.getState().nodesByType.size
+  //     }. Nodes per type: ${[...store.getState().nodesByType.entries()]
+  //       .map(([type, nodes]) => type + `: ` + nodes.size)
+  //       .join(`, `)}`
+  //   )
+  // }
 
   reporter.verbose(`Checking for deleted pages`)
 

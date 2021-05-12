@@ -40,22 +40,23 @@ export function readFromCache(): ICachedReduxState {
     readFileSync(reduxSharedFile(reduxCacheFolder))
   )
 
+  // TODO: disable this for LMDB case only
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
-  const nodesChunks = globSync(
-    reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
-  ).map(file => v8.deserialize(readFileSync(file)))
-
-  const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
-
-  if (!nodesChunks.length) {
-    report.info(
-      `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
-    )
-    // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
-    return {} as ICachedReduxState
-  }
-
-  obj.nodes = new Map(nodes)
+  // const nodesChunks = globSync(
+  //   reduxChunkedNodesFilePrefix(reduxCacheFolder) + `*`
+  // ).map(file => v8.deserialize(readFileSync(file)))
+  //
+  // const nodes: Array<[string, IGatsbyNode]> = [].concat(...nodesChunks)
+  //
+  // if (!nodesChunks.length) {
+  //   report.info(
+  //     `Cache exists but contains no nodes. There should be at least some nodes available so it seems the cache was corrupted. Disregarding the cache and proceeding as if there was none.`
+  //   )
+  //   // TODO: this is a DeepPartial<ICachedReduxState> but requires a big change
+  //   return {} as ICachedReduxState
+  // }
+  //
+  // obj.nodes = new Map(nodes)
 
   // Note: at 1M pages, this will be 1M/chunkSize chunks (ie. 1m/10k=100)
   const pagesChunks = globSync(
@@ -107,15 +108,16 @@ function prepareCacheFolder(
 ): void {
   // Temporarily save the nodes and pages and remove them from the main redux store
   // This prevents an OOM when the page nodes collectively contain to much data
-  const nodesMap = contents.nodes
-  contents.nodes = undefined
+  const nodesMap: any = undefined
+  // const nodesMap = contents.nodes
+  // contents.nodes = undefined
 
   const pagesMap = contents.pages
   contents.pages = undefined
 
   writeFileSync(reduxSharedFile(targetDir), v8.serialize(contents))
   // Now restore them on the redux store
-  contents.nodes = nodesMap
+  // contents.nodes = nodesMap
   contents.pages = pagesMap
 
   if (nodesMap) {

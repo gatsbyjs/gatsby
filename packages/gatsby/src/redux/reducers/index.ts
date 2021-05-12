@@ -1,4 +1,4 @@
-import { nodesReducer } from "./nodes"
+// import { nodesReducer } from "./nodes"
 import { reducer as logReducer } from "gatsby-cli/lib/reporter/redux/reducer"
 import { pagesReducer } from "./pages"
 import { redirectsReducer } from "./redirects"
@@ -15,7 +15,7 @@ import { pageDataStatsReducer } from "./page-data-stats"
 import { componentsReducer } from "./components"
 import { babelrcReducer } from "./babelrc"
 import { jobsReducer } from "./jobs"
-import { nodesByTypeReducer } from "./nodes-by-type"
+// import { nodesByTypeReducer } from "./nodes-by-type"
 import { programReducer } from "./program"
 import { resolvedNodesCacheReducer } from "./resolved-nodes"
 import { nodesTouchedReducer } from "./nodes-touched"
@@ -35,8 +35,8 @@ import { functionsReducer } from "./functions"
 export {
   definitionsReducer as definitions,
   programReducer as program,
-  nodesReducer as nodes,
-  nodesByTypeReducer as nodesByType,
+  // nodesReducer as nodes,
+  // nodesByTypeReducer as nodesByType,
   resolvedNodesCacheReducer as resolvedNodesCache,
   nodesTouchedReducer as nodesTouched,
   lastActionReducer as lastAction,

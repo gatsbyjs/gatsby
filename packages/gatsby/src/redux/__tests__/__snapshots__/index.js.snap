@@ -29,38 +29,6 @@ Object {
     "complete": Map {},
     "incomplete": Map {},
   },
-  "nodes": Map {
-    "pageA" => Object {
-      "id": "pageA",
-      "internal": Object {
-        "type": "Ding",
-      },
-    },
-    "pageB" => Object {
-      "id": "pageB",
-      "internal": Object {
-        "type": "Dong",
-      },
-    },
-  },
-  "nodesByType": Map {
-    "Ding" => Map {
-      "pageA" => Object {
-        "id": "pageA",
-        "internal": Object {
-          "type": "Ding",
-        },
-      },
-    },
-    "Dong" => Map {
-      "pageB" => Object {
-        "id": "pageB",
-        "internal": Object {
-          "type": "Dong",
-        },
-      },
-    },
-  },
   "pageDataStats": Map {},
   "pages": Map {
     "/my-sweet-new-page/" => Object {
