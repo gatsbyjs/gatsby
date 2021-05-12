@@ -1,7 +1,7 @@
 {
   "name": "gatsby-remark-images",
   "description": "Processes images in markdown so they can be used in the production build.",
-  "version": "5.3.0-next.0",
+  "version": "5.3.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
