@@ -40,7 +40,7 @@ const Style = () => (
           box-shadow: 0px 2px 4px rgba(46, 41, 51, 0.08),
             0px 4px 8px rgba(71, 63, 79, 0.16);
           border-radius: 6px;
-          z-index: var(--z-index-preview-indicator);
+          z-index: 999999;
           display: flex;
           flex-direction: column;
           padding: 8px;
