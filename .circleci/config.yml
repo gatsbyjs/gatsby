@@ -226,8 +226,8 @@ jobs:
     <<: *test_template
 
   integration_tests_gatsby_source_wordpress:
-    # machine: true
-    executor: node
+    machine:
+      image: ubuntu-2004:202104-01
     steps:
       - run:
           command: |
