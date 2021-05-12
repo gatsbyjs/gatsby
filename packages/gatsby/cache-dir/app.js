@@ -31,6 +31,12 @@ module.hot.accept([
 
 window.___emitter = emitter
 
+if (process.env.GATSBY_CONCURRENT_FEATURES && !ReactDOM.unstable_createRoot) {
+  throw new Error(
+    `The GATSBY_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-57768ef90" and "react-dom@0.0.0-experimental-57768ef90" or higher.`
+  )
+}
+
 const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
@@ -127,12 +133,25 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const rootElement = document.getElementById(`___gatsby`)
 
   const focusEl = document.getElementById(`gatsby-focus-wrapper`)
+
+  // Client only pages have any empty body so we just do a normal
+  // render to avoid React complaining about hydration mis-matches.
+  let defaultRenderer = ReactDOM.render
+  if (focusEl && focusEl.children.length) {
+    if (
+      process.env.GATSBY_CONCURRENT_FEATURES &&
+      ReactDOM.unstable_createRoot
+    ) {
+      defaultRenderer = ReactDOM.unstable_createRoot
+    } else {
+      defaultRenderer = ReactDOM.hydrate
+    }
+  }
+
   const renderer = apiRunner(
     `replaceHydrateFunction`,
     undefined,
-    // Client only pages have any empty body so we just do a normal
-    // render to avoid React complaining about hydration mis-matches.
-    focusEl && focusEl.children.length > 0 ? ReactDOM.hydrate : ReactDOM.render
+    defaultRenderer
   )[0]
 
   let dismissLoadingIndicator
@@ -166,31 +185,57 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   ]).then(() => {
     navigationInit()
 
+    function onHydrated() {
+      apiRunner(`onInitialClientRender`)
+
+      // Render query on demand overlay
+      if (
+        process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
+        process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
+      ) {
+        const indicatorMountElement = document.createElement(`div`)
+        indicatorMountElement.setAttribute(
+          `id`,
+          `query-on-demand-indicator-element`
+        )
+        document.body.append(indicatorMountElement)
+
+        if (renderer === ReactDOM.unstable_createRoot) {
+          renderer(indicatorMountElement).render(
+            <LoadingIndicatorEventHandler />
+          )
+        } else {
+          renderer(<LoadingIndicatorEventHandler />, indicatorMountElement)
+        }
+      }
+    }
+
+    function App() {
+      const onClientEntryRanRef = React.useRef(false)
+
+      React.useEffect(() => {
+        if (!onClientEntryRanRef.current) {
+          onClientEntryRanRef.current = true
+
+          onHydrated()
+        }
+      }, [])
+
+      return <Root />
+    }
+
     domReady(() => {
       if (dismissLoadingIndicator) {
         dismissLoadingIndicator()
       }
 
-      renderer(<Root />, rootElement, () => {
-        apiRunner(`onInitialClientRender`)
-
-        // Render query on demand overlay
-        if (
-          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR &&
-          process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
-        ) {
-          const indicatorMountElement = document.createElement(`div`)
-          indicatorMountElement.setAttribute(
-            `id`,
-            `query-on-demand-indicator-element`
-          )
-          document.body.append(indicatorMountElement)
-          ReactDOM.render(
-            <LoadingIndicatorEventHandler />,
-            indicatorMountElement
-          )
-        }
-      })
+      if (renderer === ReactDOM.unstable_createRoot) {
+        renderer(rootElement, {
+          hydrate: true,
+        }).render(<App />)
+      } else {
+        renderer(<App />, rootElement)
+      }
     })
   })
 })

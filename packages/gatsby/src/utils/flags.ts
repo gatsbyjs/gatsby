@@ -176,6 +176,16 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `CONCURRENT_FEATURES`,
+    env: `GATSBY_CONCURRENT_FEATURES`,
+    command: `all`,
+    telemetryId: `ConcurrentFeatures`,
+    experimental: true,
+    description: `Enable React's concurrent features`,
+    umbrellaIssue: `https://gatsby.dev/concurrent-features`,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags
