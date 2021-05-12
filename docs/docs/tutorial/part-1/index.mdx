@@ -3,24 +3,23 @@ title: Create and Deploy Your First Gatsby Site
 ---
 
 import { Announcement } from 'gatsby-interface'
+import Collapsible from '@components/collapsible'
 
 ## Introduction
 
 Now that you've set up your computer with all the tools you'll need, it's time to get started!
 
-In this part of the Tutorial, you will go through the process of creating your first Gatsby site and deploying it online for everyone to see.
+Over the course of this Tutorial, you'll build and deploy your first Gatsby site: a blog site with support for images and MDX! (If that doesn't mean anything to you now, don't worry! It will by the time you reach the end.) Here's a [finished example](https://introworkshopexamplesitev3.gatsbyjs.io/) of the site you'll build.
+
+In this part of the Tutorial, you will go through the process of creating the template for your blog site and deploying it online for everyone to see.
 
 The diagram below shows a high-level view of how all the pieces of this process fit together. (Don't worry if this doesn't make sense yet. You'll learn about each step as you go.)
 
 ![The workflow for how your code gets from your computer to your users. Extended description below.](deployment-workflow.png)
 
-<details>
-
-<summary>
-
-*Expand for detailed description* 👈
-
-</summary>
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
 
 First, you write the code for your Gatsby site from your computer. When you're ready to make your changes live on the internet, you go through the following steps:
 
@@ -28,7 +27,7 @@ First, you write the code for your Gatsby site from your computer. When you're r
 1. Gatsby Cloud watches your GitHub repository for changes. When it sees your new changes, Gatsby Cloud builds your site from your code on GitHub.
 1. Gatsby Cloud hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
 
-</details>
+</Collapsible>
 
 
 ## Create a Gatsby site
@@ -270,13 +269,9 @@ In this section, you learned how to create a new Gatsby site and deploy it onlin
 
 ![The workflow for how your code gets from your computer to your users. Extended description below.](deployment-workflow.png)
 
-<details>
-
-<summary>
-
-*Expand for detailed description* 👈
-
-</summary>
+<Collapsible
+  summary={<em>Expand for detailed description</em>}
+>
 
 First, you write the code for your Gatsby site from your computer. When you're ready to make your changes live on the internet, you go through the following steps:
 
@@ -284,7 +279,9 @@ First, you write the code for your Gatsby site from your computer. When you're r
 1. Gatsby Cloud watches your GitHub repository for changes. When it sees your new changes, Gatsby Cloud builds your site from your code on GitHub.
 1. Gatsby Cloud hosts the finished version of your site at a unique URL, which users can use to access the latest version of your site.
 
-</details>
+</Collapsible>
+
+### What's coming next?
 
 Now that you have a default Gatsby site up and running, it's time to make it your own. In the next section, you'll learn how to use React to customize the design and contents of your site.
 
