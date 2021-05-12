@@ -8,14 +8,14 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "12.13"
+        default: "14.16"
     docker:
       - image: circleci/node:<< parameters.image >>
 
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node12.18.3-chrome87-ff82
+      - image: cypress/browsers:node14.16.0-chrome89-ff86
 
   restore_cache: &restore_cache
     restore_cache:
@@ -82,7 +82,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node12
+      - unit_tests_node14
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -218,11 +218,6 @@ jobs:
       - <<: *attach_to_bootstrap
       - run: yarn typecheck
       - run: yarn check-repo-fields
-
-  unit_tests_node12:
-    executor:
-      name: node
-    <<: *test_template
 
   unit_tests_node14:
     executor:
@@ -614,12 +609,6 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
-      - unit_tests_node12:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
       - unit_tests_node14:
           <<: *ignore_docs
           requires:
