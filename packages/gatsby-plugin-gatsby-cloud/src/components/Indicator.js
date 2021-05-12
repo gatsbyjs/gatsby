@@ -13,10 +13,10 @@ export default function Indicator({ children }) {
   const [buildInfo, setBuildInfo] = useState()
   const timeoutRef = useRef()
   const shouldPoll = useRef(false)
+  let buildId
   const pollData = useCallback(async function pollData() {
     const prettyUrlRegex = /^preview-/
     const host = window.location.hostname
-    let buildId
 
     // currentBuild is the most recent build that is not QUEUED.
     // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
