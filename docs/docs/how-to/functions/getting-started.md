@@ -9,6 +9,8 @@ examples:
     href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form"
   - label: Send email with SendGrid
     href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/sendgrid-email"
+  - label: Basic form that submits to a Function
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form"
 ---
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
@@ -118,3 +120,7 @@ export default async function postNewPersonHandler(req, res) {
   }
 }
 ```
+
+## Forms
+
+Forms and Functions are often used together. See the [basic form example](https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form) as well as the [Forms doc page](/docs/how-to/adding-common-features/adding-forms/) which walks you through building a custom form.
