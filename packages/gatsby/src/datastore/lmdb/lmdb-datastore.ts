@@ -19,6 +19,7 @@ function getRootDb(): RootDatabase {
     rootDb = open({
       name: `root`,
       path: process.cwd() + `/.data/` + rootDbFile,
+      sharedStructuresKey: Symbol.for(`structures`),
       compression: true,
     })
   }
@@ -31,7 +32,6 @@ function getDatabases(): ILmdbDatabases {
     databases = {
       nodes: rootDb.openDB({
         name: `nodes`,
-        sharedStructuresKey: Symbol.for(`structures`),
         cache: true,
       }),
       nodesByType: rootDb.openDB({

@@ -14,7 +14,10 @@ export function updateNodes(
       return nodesDb.put(action.payload.id, action.payload)
     }
     case `DELETE_NODE`: {
-      return action.payload ? nodesDb.remove(action.payload.id) : false
+      if (action.payload) {
+        return nodesDb.remove(action.payload.id)
+      }
+      return false
     }
   }
   return false
