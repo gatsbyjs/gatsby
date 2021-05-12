@@ -61,7 +61,7 @@ const customizeSchema = async ({ actions, schema }) => {
           break
         case `SCALAR`:
           /**
-           * custom scalar types aren't imlemented currently.
+           * custom scalar types aren't implemented currently.
            *  @todo make this hookable so sub-plugins or plugin options can add custom scalar support.
            */
           break

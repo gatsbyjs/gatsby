@@ -175,7 +175,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **gatsby-source-medium:** fix data fecthing & add limitation to readme ([#17547](https://github.com/gatsbyjs/gatsby/issues/17547)) ([3ba9f9c](https://github.com/gatsbyjs/gatsby/commit/3ba9f9c))
+- **gatsby-source-medium:** fix data fetching & add limitation to readme ([#17547](https://github.com/gatsbyjs/gatsby/issues/17547)) ([3ba9f9c](https://github.com/gatsbyjs/gatsby/commit/3ba9f9c))
 
 ## [2.1.19](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-medium@2.1.18...gatsby-source-medium@2.1.19) (2020-02-01)
 

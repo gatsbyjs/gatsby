@@ -457,7 +457,7 @@ export class BaseLoader {
         let appData
 
         if (status !== 200 && retries < 3) {
-          // Retry 3 times incase of non-200 responses
+          // Retry 3 times in case of non-200 responses
           return this.loadAppData(retries + 1)
         }
 
@@ -556,7 +556,7 @@ export const publicLoader = {
   getResourceURLsForPathname: rawPath =>
     instance.getResourceURLsForPathname(rawPath),
   loadPage: rawPath => instance.loadPage(rawPath),
-  // TODO add deprecation to v4 so people use withErrorDetails and then we can remove in v5 and change default behaviour
+  // TODO add deprecation to v4 so people use withErrorDetails and then we can remove in v5 and change default behavior
   loadPageSync: (rawPath, options = {}) =>
     instance.loadPageSync(rawPath, options),
   prefetch: rawPath => instance.prefetch(rawPath),

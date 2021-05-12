@@ -511,7 +511,7 @@ describe(`gatsby-plugin-sharp`, () => {
     })
 
     // Matches base64 string in snapshot, converts to jpg to force use of bg
-    // Testing pixel colour for a match would be better
+    // Testing pixel color for a match would be better
     it(`should support option: 'background'`, async () => {
       const result = await generateBase64({
         file: getFileObject(path.join(__dirname, `images/alphatest.png`)),

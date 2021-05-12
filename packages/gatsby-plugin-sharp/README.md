@@ -234,7 +234,7 @@ allImageSharp {
 
 #### duotone
 
-Applys a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
+Applies a "duotone" effect (see [I][1], [II][2], [III][3]) to the source image if
 given two hex colors `shadow` and `highlight` defining start and end color of
 the duotone gradient, e.g.
 

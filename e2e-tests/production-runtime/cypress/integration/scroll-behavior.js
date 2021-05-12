@@ -1,4 +1,4 @@
-describe(`Scroll behaviour`, () => {
+describe(`Scroll behavior`, () => {
   it(`should restore scroll position only when going back in history`, () => {
     cy.visit(`/`).waitForRouteChange()
 

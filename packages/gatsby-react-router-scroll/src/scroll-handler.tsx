@@ -80,7 +80,7 @@ export class ScrollHandler extends React.Component<
 
     /**  There are two pieces of state: the browser url and
      * history state which keeps track of scroll position
-     * Native behaviour prescribes that we ought to restore scroll position
+     * Native behavior prescribes that we ought to restore scroll position
      * when a user navigates back in their browser (this is the `POP` action)
      * Currently, reach router has a bug that prevents this at https://github.com/reach/router/issues/228
      * So we _always_ stick to the url as a source of truth — if the url

@@ -2,7 +2,7 @@ const childProcess = require(`child_process`)
 const path = require(`path`)
 
 const IS_CI = !!(
-  process.env.CI || // Travis CI, CircleCI, Cirrus CI, Gitlab CI, Appveyor, CodeShip, dsari
+  process.env.CI || // Travis CI, CircleCI, Cirrus CI, GitLab CI, Appveyor, CodeShip, dsari
   process.env.CONTINUOUS_INTEGRATION || // Travis CI, Cirrus CI
   process.env.BUILD_NUMBER || // Jenkins, TeamCity
   process.env.RUN_ID || // TaskCluster, dsari

@@ -250,7 +250,7 @@ digraph graphname {
 }
 ```
 
-You can overwrite the `style` attribute if you don't like that behaviour:
+You can overwrite the `style` attribute if you don't like that behavior:
 
     ```dot style=""
     digraph graphname {

@@ -74,7 +74,7 @@ const getPreviewQueue = (): PQueue => {
   return previewQueue
 }
 
-// This checks wether or not we're already currently processing a preview
+// This checks whether or not we're already currently processing a preview
 // for the passed preview id.
 const previewForIdIsAlreadyBeingProcessed = (id: string): boolean => {
   if (!id) {

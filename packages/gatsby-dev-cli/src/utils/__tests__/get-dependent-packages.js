@@ -1,8 +1,8 @@
-const { getDependantPackages } = require(`../get-dependant-packages`)
+const { getDependentPackages } = require(`../get-dependent-packages`)
 
-describe(`getDependantPackages`, () => {
+describe(`getDependentPackages`, () => {
   it(`handles deep dependency chains`, () => {
-    const packagesToPublish = getDependantPackages({
+    const packagesToPublish = getDependentPackages({
       packageName: `package-a-dep1-dep1`,
       depTree: {
         "package-a-dep1": new Set([`package-a`]),
@@ -17,7 +17,7 @@ describe(`getDependantPackages`, () => {
   })
 
   it(`doesn't get stuck in circular dependency loops`, () => {
-    const packagesToPublish = getDependantPackages({
+    const packagesToPublish = getDependentPackages({
       packageName: `package-a`,
       depTree: {
         "package-a": new Set([`package-b`]),

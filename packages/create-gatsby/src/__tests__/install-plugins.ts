@@ -24,7 +24,7 @@ describe(`install-plugins`, () => {
 
     await installPlugins([], {}, `not-existing-path`, [])
 
-    // Test function behaviour but improves the DX, it probably worth it
+    // Test function behavior but improves the DX, it probably worth it
     expect(reporter.error).toBeCalledWith(
       `Could not find "gatsby" in not-existing-path. Perhaps it wasn't installed properly?`
     )
@@ -43,7 +43,7 @@ describe(`install-plugins`, () => {
 
     await installPlugins([], {}, `not-existing-path`, [])
 
-    // Test function behaviour but improves the DX, it probably worth it
+    // Test function behavior but improves the DX, it probably worth it
     expect(reporter.error).toBeCalledWith(
       `Could not find a suitable version of gatsby-cli. Please report this issue at https://www.github.com/gatsbyjs/gatsby/issues`
     )
@@ -56,7 +56,7 @@ describe(`install-plugins`, () => {
 
     await installPlugins([], {}, `not-existing-path`, [])
 
-    // Test function behaviour but improves the DX, it probably worth it
+    // Test function behavior but improves the DX, it probably worth it
     expect(reporter.error).toBeCalledWith(
       `Something went wrong when trying to add the plugins to the project: addPlugins is not a function`
     )

@@ -88,7 +88,7 @@ exports.createResolvers = ({ createResolvers }) => {
     AuthorJson: {
       // Add a field to an existing type by providing a field config.
       // Note that added fields will not be available in the input filter
-      // when no type definitions are provided wth `createTypes`.
+      // when no type definitions are provided with `createTypes`.
       posts: {
         type: [`BlogJson`],
         resolve(source, args, context, info) {

@@ -171,7 +171,7 @@ You can proactively protect against broken Preview templates by using [optional 
 
 ## Previews Don't Update
 
-Check in your `wp-config.php` to determine wether or not post revisions are disabled. Look for `define( 'WP_POST_REVISIONS', FALSE );` and if you find it, remove it. This appears to be a WPGraphQL bug and we're working on fixing it. If you're interested in the status of that check https://github.com/wp-graphql/wp-graphql/issues/1408.
+Check in your `wp-config.php` to determine whether or not post revisions are disabled. Look for `define( 'WP_POST_REVISIONS', FALSE );` and if you find it, remove it. This appears to be a WPGraphQL bug and we're working on fixing it. If you're interested in the status of that check https://github.com/wp-graphql/wp-graphql/issues/1408.
 If post revisions are enabled on your site and previews are still not working, please open a [new issue](https://github.com/gatsbyjs/gatsby/issues/new).
 
 ## Preview debug mode

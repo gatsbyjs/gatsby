@@ -637,8 +637,8 @@ const replaceNodeHtmlImages = async ({
       // @todo retain img tag classes and attributes from cheerioImg
       const imgOptions = {
         style: {
-          // these styles make it so that the image wont be stretched
-          // beyond it's max width, but it also wont exceed the width
+          // these styles make it so that the image won't be stretched
+          // beyond it's max width, but it also won't exceed the width
           // of it's parent element
           maxWidth: `100%`,
           width: `${imageResize?.presentationWidth || maxWidth}px`,
@@ -712,7 +712,7 @@ const replaceFileLinks = async ({
 
   if (node.__typename === `MediaItem`) {
     // we don't want to replace file links on MediaItem nodes because they're processed specially from other node types.
-    // if we replace file links here then we wont be able to properly fetch the localFile node
+    // if we replace file links here then we won't be able to properly fetch the localFile node
     return nodeString
   }
 

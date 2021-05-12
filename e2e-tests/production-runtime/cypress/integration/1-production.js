@@ -71,7 +71,7 @@ describe(`Production build tests`, () => {
         .should(`eq`, `/subdirectory`)
     })
 
-    it(`can navigate to a sibling page programatically`, () => {
+    it(`can navigate to a sibling page programmatically`, () => {
       cy.visit(`/subdirectory/page-1`)
         .waitForRouteChange()
         .getTestElement(`page-2-button-link`)

@@ -12,7 +12,7 @@ describe(`plugin-options-form`, () => {
     expect(makePluginConfigQuestions(plugins)).toEqual([])
   })
 
-  it(`returns an array containing only the wordpress options (choices are included)`, () => {
+  it(`returns an array containing only the WordPress options (choices are included)`, () => {
     const plugins = [`gatsby-source-wordpress`]
     expect(makePluginConfigQuestions(plugins)).toEqual([
       {

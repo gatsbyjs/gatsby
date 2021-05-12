@@ -930,7 +930,7 @@ Object {
 
 exports[`regex import scanner syntactic coverage should parse brute force regular case 58 1`] = `
 Object {
-  "input": "import foo from 'bar' // commment",
+  "input": "import foo from 'bar' // comment",
   "result": Object {
     "bindings": Array [
       "foo",
@@ -944,7 +944,7 @@ Object {
 
 exports[`regex import scanner syntactic coverage should parse brute force regular case 59 1`] = `
 Object {
-  "input": "import foo from 'bar' // commment containing confusing from \\"chars\\"",
+  "input": "import foo from 'bar' // comment containing confusing from \\"chars\\"",
   "result": Object {
     "bindings": Array [
       "foo",

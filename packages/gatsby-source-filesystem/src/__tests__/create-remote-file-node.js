@@ -100,7 +100,7 @@ describe(`create-remote-file-node`, () => {
         pipe: jest.fn(() => gotMock),
         on: jest.fn((mockType, mockCallback) => {
           if (mockType === `response`) {
-            // got throws on 404/500 so we mimic this behaviour
+            // got throws on 404/500 so we mimic this behavior
             if (response.statusCode === 404) {
               throw new Error(`Response code 404 (Not Found)`)
             }

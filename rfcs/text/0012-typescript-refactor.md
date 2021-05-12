@@ -31,11 +31,11 @@ The following packages will be converted to TypeScript:
 
 # Drawbacks
 
-Reasons to not consider this are the time investment, the community impact, and the reality that TypeScript is not a sound type system. Of course any refactor requires time and interation, but one of the benefits is that we'll absolutely discover and fix bugs along the way. The community impact is hard to measure, but there is surely going to be someone who wants to contribute to Gatsby, but becomes overwhelmed by not knowing TS. This is unfortunate, but I believe the benefits outweigh this risk. It is slightly uncommon for the community to contribute to Gatsby's core. When we do receive community contributions, they are very impressive and there is likely a bet those PRs would still be submitted with TS support. Lastly, TypeScript is not a truly sound type language. So while we will get benefits of a type system, it will not be fully error proof.
+Reasons to not consider this are the time investment, the community impact, and the reality that TypeScript is not a sound type system. Of course any refactor requires time and interaction, but one of the benefits is that we'll absolutely discover and fix bugs along the way. The community impact is hard to measure, but there is surely going to be someone who wants to contribute to Gatsby, but becomes overwhelmed by not knowing TS. This is unfortunate, but I believe the benefits outweigh this risk. It is slightly uncommon for the community to contribute to Gatsby's core. When we do receive community contributions, they are very impressive and there is likely a bet those PRs would still be submitted with TS support. Lastly, TypeScript is not a truly sound type language. So while we will get benefits of a type system, it will not be fully error proof.
 
 # Alternatives
 
-Flow. Unfortunately, it is less mature, has a less robust ecosystem, and will require us to manually type 3rd party libraries. The main downside to Flow is the non-strictness it has. TypeScript can fail builds if it is not typed soundly, and this is a huge benefit actually. Flow not having that allows you to run down rabbit holes of unsound code until you finlly run aflow and are told of your problems.
+Flow. Unfortunately, it is less mature, has a less robust ecosystem, and will require us to manually type 3rd party libraries. The main downside to Flow is the non-strictness it has. TypeScript can fail builds if it is not typed soundly, and this is a huge benefit actually. Flow not having that allows you to run down rabbit holes of unsound code until you finally run aflow and are told of your problems.
 
 Other alternatives would be a different language like Reason or Rust + WASM.
 

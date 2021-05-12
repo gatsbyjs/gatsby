@@ -145,7 +145,7 @@ describe(`Jobs manager`, () => {
       }
     })
 
-    it(`shouldn't augument a job twice`, () => {
+    it(`shouldn't augment a job twice`, () => {
       const { createInternalJob } = jobManager
 
       const internalJob = createInternalJob(createMockJob(), plugin)

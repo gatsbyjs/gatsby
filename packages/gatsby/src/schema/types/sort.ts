@@ -79,7 +79,7 @@ const convert = <TContext = any>({
     const sortKey = prefix ? `${prefix}.${fieldName}` : fieldName
     const sortKeyFieldName = sortKey.split(`.`).join(SORT_FIELD_DELIMITER)
 
-    // XXX(freiksenet): this is to preserve legacy behaviour, this probably doesn't actually sort
+    // XXX(freiksenet): this is to preserve legacy behavior, this probably doesn't actually sort
     if (getNullableType(fieldConfig.type) instanceof GraphQLList) {
       sortFields[sortKeyFieldName] = {
         value: sortKey,

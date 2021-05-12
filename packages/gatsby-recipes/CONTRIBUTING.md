@@ -425,7 +425,7 @@ There are two primary clients, the CLI and GUI, which are used to communicate wi
 
 They render directly to DOM and makes aspects like input support render live on the page. This is also why the client has to emit input changes because those are added to context on the server renderer and that gets flushed out into a single plan when the event is received.
 
-They leverage the aformentioned [GraphQL API](#graphql-api) and render the UI based on what makes sense.
+They leverage the aforementioned [GraphQL API](#graphql-api) and render the UI based on what makes sense.
 
 ##### An aside on the clients
 

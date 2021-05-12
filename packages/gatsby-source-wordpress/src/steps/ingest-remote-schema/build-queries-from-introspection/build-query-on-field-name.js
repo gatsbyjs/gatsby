@@ -37,7 +37,7 @@ export const generateReusableFragments = ({ fragments, selectionSet }) => {
 
     fragmentsValues.forEach(({ name, type }) => {
       // if our query didn't use the fragment due to the query depth AND the fragment isn't used in another fragment, delete it
-      // @todo these fragments shouldn't be generated if they wont be used.
+      // @todo these fragments shouldn't be generated if they won't be used.
       // if we fix this todo, we can use the buildReusableFragments function directly
       // instead of running it twice to remove unused fragments
       if (

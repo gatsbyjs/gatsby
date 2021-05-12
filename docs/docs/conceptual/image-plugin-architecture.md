@@ -64,7 +64,7 @@ The browser component is a class component, which uses `shouldComponentUpdate` t
 
 #### Sizer
 
-The `GatsbyImage` component supports three types of layout, which define the resizing behavior of the images. The component uses a `Sizer` component inside `layout-wrapper.tsx` to ensure that the wrapper is the correct size, even before any image has loaded. This avoids the page needing to re-layout, which looks bad for the user and is a serious problem for performance. For fixed layout components the size is just set via CSS. For full-width images, `Sizer` uses a `padding-top` hack to maintain aspect ratio as the image scales infinitely. For constrained layouts, `Sizer` uses an `<img>` tag with an inline, empty SVG `src` to make the browser use its native `<img>` resizing behaviour, even though the main image will not have loaded at this point.
+The `GatsbyImage` component supports three types of layout, which define the resizing behavior of the images. The component uses a `Sizer` component inside `layout-wrapper.tsx` to ensure that the wrapper is the correct size, even before any image has loaded. This avoids the page needing to re-layout, which looks bad for the user and is a serious problem for performance. For fixed layout components the size is just set via CSS. For full-width images, `Sizer` uses a `padding-top` hack to maintain aspect ratio as the image scales infinitely. For constrained layouts, `Sizer` uses an `<img>` tag with an inline, empty SVG `src` to make the browser use its native `<img>` resizing behavior, even though the main image will not have loaded at this point.
 
 #### Placeholder
 

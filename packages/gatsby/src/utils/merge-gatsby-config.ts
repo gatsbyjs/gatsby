@@ -83,7 +83,7 @@ export const mergeGatsbyConfig = (
     Object.keys(a).concat(Object.keys(b))
   ) as Array<ConfigKey>
 
-  // reduce the array of mergable keys into a single gatsby config object
+  // reduce the array of mergeable keys into a single gatsby config object
   const mergedConfig = allGatsbyConfigKeysWithAValue.reduce(
     (config, gatsbyConfigKey) => {
       // choose a merge function for the config key if there's one defined,

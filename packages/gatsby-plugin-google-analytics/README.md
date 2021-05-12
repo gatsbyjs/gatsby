@@ -215,7 +215,7 @@ For more information see the [Google Analytics](https://developers.google.com/an
 
 #### hitCallback
 
-A timeout is included by default incase the Analytics library fails to load. For more information see [Google Analytics - Handling Timeouts](https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#handling_timeouts)
+A timeout is included by default in case the Analytics library fails to load. For more information see [Google Analytics - Handling Timeouts](https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits#handling_timeouts)
 
 ## Troubleshooting
 

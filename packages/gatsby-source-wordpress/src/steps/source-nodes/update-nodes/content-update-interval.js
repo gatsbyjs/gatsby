@@ -6,7 +6,7 @@ import fetchGraphql from "../../../utils/fetch-graphql"
 import { LAST_COMPLETED_SOURCE_TIME } from "../../../constants"
 
 /**
- * This function checks wether there is atleast 1 WPGatsby action ready to be processed by Gatsby
+ * This function checks whether there is at least 1 WPGatsby action ready to be processed by Gatsby
  * If there is, it calls the refresh webhook so that schema customization and source nodes run again.
  */
 const checkForNodeUpdates = async ({ cache, emitter }) => {
@@ -30,7 +30,7 @@ const checkForNodeUpdates = async ({ cache, emitter }) => {
   })
 
   if (newActions.length) {
-    // if there's atleast 1 new action, pause polling,
+    // if there's at least 1 new action, pause polling,
     // refresh Gatsby schema+nodes and continue on
     store.dispatch.develop.pauseRefreshPolling()
 

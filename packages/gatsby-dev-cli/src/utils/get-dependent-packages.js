@@ -2,7 +2,7 @@
  * Recursively get set of packages that depend on given package.
  * Set also includes passed package.
  */
-const getDependantPackages = ({
+const getDependentPackages = ({
   packageName,
   depTree,
   packagesToPublish = new Set(),
@@ -13,11 +13,11 @@ const getDependantPackages = ({
   }
 
   packagesToPublish.add(packageName)
-  const dependants = depTree[packageName]
-  if (dependants) {
-    dependants.forEach(dependant =>
-      getDependantPackages({
-        packageName: dependant,
+  const dependents = depTree[packageName]
+  if (dependents) {
+    dependents.forEach(dependent =>
+      getDependentPackages({
+        packageName: dependent,
         depTree,
         packagesToPublish,
       })
@@ -27,4 +27,4 @@ const getDependantPackages = ({
   return packagesToPublish
 }
 
-exports.getDependantPackages = getDependantPackages
+exports.getDependentPackages = getDependentPackages

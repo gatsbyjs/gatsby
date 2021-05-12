@@ -16,7 +16,7 @@ npx gatsby-codemods <codemod-name> <filepath>
 
 `filepath` is not required and will default to the directory you're currently in.
 
-Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extenstions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
+Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extensions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
 
 2. Use JSCodeshift directly
 

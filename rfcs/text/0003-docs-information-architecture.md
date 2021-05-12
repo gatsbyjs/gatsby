@@ -190,7 +190,7 @@ Why should we _not_ do this? Please consider:
 
 # Alternatives
 
-I'm not aware of any other designs we've considered. The potential benefits of doing this outweight the negatives, imo. Especially because docs are only going to keep growing. The current hierarchy doesn't allow for much more growth.
+I'm not aware of any other designs we've considered. The potential benefits of doing this outweighs the negatives, imo. Especially because docs are only going to keep growing. The current hierarchy doesn't allow for much more growth.
 
 # Adoption strategy
 

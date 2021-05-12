@@ -311,7 +311,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-- **scroll:** use location.key for scroll behaviours ([#12403](https://github.com/gatsbyjs/gatsby/issues/12403)) ([853ceb9](https://github.com/gatsbyjs/gatsby/commit/853ceb9)), closes [/github.com/taion/scroll-behavior/issues/135#issuecomment-468962628](https://github.com/gatsbyjs/gatsby/issues/issuecomment-468962628) [#12390](https://github.com/gatsbyjs/gatsby/issues/12390)
+- **scroll:** use location.key for scroll behaviors ([#12403](https://github.com/gatsbyjs/gatsby/issues/12403)) ([853ceb9](https://github.com/gatsbyjs/gatsby/commit/853ceb9)), closes [/github.com/taion/scroll-behavior/issues/135#issuecomment-468962628](https://github.com/gatsbyjs/gatsby/issues/issuecomment-468962628) [#12390](https://github.com/gatsbyjs/gatsby/issues/12390)
 
 ## [2.0.6](https://github.com/gatsbyjs/gatsby/compare/gatsby-react-router-scroll@2.0.5...gatsby-react-router-scroll@2.0.6) (2019-03-16)
 
