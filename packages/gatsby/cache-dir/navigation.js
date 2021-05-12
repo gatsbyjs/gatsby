@@ -13,14 +13,6 @@ function maybeRedirect(pathname) {
   const redirect = maybeGetBrowserRedirect(pathname)
 
   if (redirect != null) {
-    if (process.env.NODE_ENV !== `production`) {
-      if (!loader.isPageNotFound(pathname)) {
-        console.error(
-          `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
-        )
-      }
-    }
-
     window.___replace(redirect.toPath)
     return true
   } else {
