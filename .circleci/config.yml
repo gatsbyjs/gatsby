@@ -15,7 +15,7 @@ executors:
 aliases:
   e2e-executor: &e2e-executor
     docker:
-      - image: cypress/browsers:node14.16.0-chrome89-ff86
+      - image: cypress/browsers:node14.15.0-chrome86-ff82
 
   restore_cache: &restore_cache
     restore_cache:
