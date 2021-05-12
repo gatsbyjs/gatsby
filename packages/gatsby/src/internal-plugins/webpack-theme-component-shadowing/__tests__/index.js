@@ -1,5 +1,5 @@
-import path from "path"
-import ShadowingPlugin from "../"
+const path = require(`path`)
+const ShadowingPlugin = require(`../`)
 
 // allow writing paths like path/to/thing, even on windows
 const xplatPath = uri => uri.split(`/`).join(path.sep)
@@ -13,6 +13,15 @@ describe(`Component Shadowing`, () => {
         themeName: `a-theme`,
       },
       `/components/a-component`,
+    ],
+    [
+      // simple request path to a theme's component with folder index pattern
+      `/some/place/a-theme/src/components/a-component/index.js`,
+      {
+        themeDir: `/some/place/a-theme`,
+        themeName: `a-theme`,
+      },
+      `/components/a-component/index.js`,
     ],
     [
       // request to a shadowed component in theme b
