@@ -55,6 +55,43 @@ test.each([
     `./src/theme-a/components.js`,
   ],
   [
+    // This means one has wants to shadow package-a/src/theme.js
+    // With src/package-a/theme/index.js
+    // Instead of shadowing with src/package-a/theme.js
+    `shadows a single .js file with the folder-index pattern`,
+    {
+      mode: `development`,
+      entry: `./index.js`,
+      resolve: {
+        plugins: [
+          new ShadowRealm({
+            extensions: [`.wasm`, `.mjs`, `.js`, `.json`],
+            themes: [
+              {
+                themeName: `theme-a`,
+                themeDir: path.join(
+                  __dirname,
+                  `./fixtures/test-sites/folder-index-shadowing/node_modules/theme-a`
+                ),
+              },
+            ],
+            projectRoot: path.resolve(
+              __dirname,
+              `fixtures/test-sites/folder-index-shadowing`
+            ),
+          }),
+        ],
+      },
+    },
+    {
+      context: path.resolve(
+        __dirname,
+        `fixtures/test-sites/folder-index-shadowing`
+      ),
+    },
+    `./src/theme-a/theme/index.js`,
+  ],
+  [
     `shadows a single .css file`,
     {
       mode: `development`,
