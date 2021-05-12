@@ -101,7 +101,7 @@
     "json-loader": "^0.5.7",
     "json-stringify-safe": "^5.0.1",
     "latest-version": "5.1.0",
-    "lmdb-store": "1.4.1",
+    "lmdb-store": "^1.4.2",
     "lodash": "^4.17.21",
     "md5-file": "^5.0.0",
     "meant": "^1.0.1",
