@@ -496,11 +496,11 @@ jobs:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
       - run:
-          name: Install node 12.13
+          name: Install node 14.16
           command: |
-            nvm install 12.13.0
-            nvm alias default 12.13.0
-            nvm use 12.13.0
+            nvm install 14.16.0
+            nvm alias default 14.16.0
+            nvm use 14.16.0
             choco install yarn
       - run:
           name: Set yarn timeout
