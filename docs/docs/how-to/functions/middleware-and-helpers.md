@@ -25,7 +25,7 @@ We parse commonly used data types. You can parse more by [adding custom middlewa
 
 Custom Connect/Express middleware are supported.
 
-An example of how to add CORS support to route:
+An example of how to add CORS support to a Function:
 
 ```js:title=src/api/cors.js
 import Cors from "cors"
