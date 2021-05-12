@@ -351,7 +351,41 @@ describe(`data resolution`, () => {
     })
   })
 
-  it(`Does not dowload files whose mime types are excluded`, async () => {
+  it(`Downloads files and creates a local file node for files whose size are <= maxFileSizeBytes`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const { maxFileSizeBytes } = wpPluginOpts.options.type.MediaItem.localFile
+    /**
+     * Ensure that the fileSize "gt" filter value matches the maxFileSizeBytes value in gatsby-config
+     */
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query tooLargeFiles($maxFileSizeBytes: Int!, $includedMimeTypes: [String]!) {
+          allWpMediaItem(filter: { fileSize: { lte: $maxFileSizeBytes }, mimeType: {in: $includedMimeTypes } }) {
+            nodes {
+              id
+              sourceUrl
+              fileSize
+              localFile {
+                absolutePath
+                size
+              }
+            }
+          }
+        } 
+      `,
+      variables: {
+        maxFileSizeBytes,
+        includedMimeTypes: ['image/jpeg'],
+      }
+    })
+
+    nodes.forEach(node => {
+      expect(node.localFile).toBeDefined()
+    })
+  })
+
+  it(`Does not download files whose mime types are excluded`, async () => {
     const wpPluginOpts = getPluginConfig()
     const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
 
@@ -378,6 +412,35 @@ describe(`data resolution`, () => {
     expect(nodes.length).toEqual(2)
     nodes.forEach(node => {
       expect(node.localFile).toEqual(null)
+    })
+  })
+
+  it(`Creats a local file node for files not excluded by the "excludedByMimeTypes" option`, async () => {
+    const wpPluginOpts = getPluginConfig()
+    const { excludeByMimeTypes } = wpPluginOpts.options.type.MediaItem.localFile
+
+    const { data: { allWpMediaItem: { nodes }}} = await fetchGraphql({
+      url,
+      query: /* GraphQL */`
+        query excludedMimeType($excludeByMimeTypes: [String]) {
+          allWpMediaItem(filter: { mimeType: { nin: $excludeByMimeTypes }}) {
+            nodes {
+              id
+              mimeType
+              localFile {
+                size
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        excludeByMimeTypes,
+      },
+    })
+
+    nodes.forEach(node => {
+      expect(node.localFile).toBeDefined()
     })
   })
 })
