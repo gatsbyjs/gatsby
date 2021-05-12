@@ -50,5 +50,7 @@ export default async function corsHandler(req, res) {
 
 ## Custom body parsing
 
+Generally useful for file upload support.
+
 This is not yet supported. [Add a comment in the discussion if this is an
 important use case for you](https://github.com/gatsbyjs/gatsby/discussions/30735).
