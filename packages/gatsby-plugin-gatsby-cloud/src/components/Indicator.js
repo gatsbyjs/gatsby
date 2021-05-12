@@ -22,6 +22,7 @@ export default function Indicator({ children }) {
     // latestBuild is the most recent build that finished running (ONLY status ERROR or SUCCESS)
     const isOnPrettyUrl = prettyUrlRegex.test(host)
     const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
+
     console.log(currentBuild, latestBuild, siteInfo)
 
     // buildId = "b4ac0f53-63ce-405c-ab78-90f7dada0dd8"
