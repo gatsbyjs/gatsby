@@ -59,8 +59,8 @@ const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
   }
 }
 
-const viewLogsClick = ({ orgId, siteId, buildId }) => {
-  const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${buildId}/details`
+const viewLogsClick = ({ orgId, siteId, errorBuildId }) => {
+  const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/${orgId}/sites/${siteId}/builds/${errorBuildId}/details`
   const returnTo = encodeURIComponent(pathToBuildLogs)
 
   window.open(`${pathToBuildLogs}?returnTo=${returnTo}`)
@@ -70,7 +70,7 @@ const getButtonProps = ({
   status,
   orgId,
   siteId,
-  buildId,
+  errorBuildId,
   isOnPrettyUrl,
   sitePrefix,
 }) => {
@@ -92,7 +92,7 @@ const getButtonProps = ({
         tooltipIcon: failedIcon,
         tooltipLink: `View logs`,
         tooltipLinkImage: logsIcon,
-        onClick: () => viewLogsClick({ orgId, siteId, buildId }),
+        onClick: () => viewLogsClick({ orgId, siteId, errorBuildId }),
       }
     }
     case `BUILDING`: {
@@ -123,7 +123,7 @@ export default function GatsbyIndicatorButton({
   status,
   orgId,
   siteId,
-  buildId,
+  errorBuildId,
   isOnPrettyUrl,
   sitePrefix,
 }) {
@@ -131,7 +131,7 @@ export default function GatsbyIndicatorButton({
     status,
     orgId,
     siteId,
-    buildId,
+    errorBuildId,
     isOnPrettyUrl,
     sitePrefix,
   })

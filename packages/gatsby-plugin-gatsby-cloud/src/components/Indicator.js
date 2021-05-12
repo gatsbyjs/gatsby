@@ -39,7 +39,6 @@ export default function Indicator({ children }) {
       createdAt: currentBuild?.createdAt,
       orgId: siteInfo?.orgId,
       siteId: siteInfo?.siteId,
-      buildId,
       isOnPrettyUrl,
       sitePrefix: siteInfo?.sitePrefix,
     }
@@ -52,6 +51,7 @@ export default function Indicator({ children }) {
     } else if (currentBuild?.buildStatus === `ERROR`) {
       setBuildInfo({
         status: `ERROR`,
+        errorBuildId: currentBuild?.id,
         ...defaultBuildInfo,
       })
     } else if (buildId === currentBuild?.id) {
