@@ -110,7 +110,7 @@ export function Dino() {
 }
 ```
 
-If you use Emotion you can use the provided `css` prop:
+If you use Emotion you can use the provided `css` prop instead:
 
 ```jsx
 // Emotion
