@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.6.0-next.0...gatsby-plugin-mdx@2.6.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** enable hmr when importing mdx ([#31288](https://github.com/gatsbyjs/gatsby/issues/31288)) ([c8db78f](https://github.com/gatsbyjs/gatsby/commit/c8db78fad43294413b950c49205adcf3dbb6dd1e))
+
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.5.0-next.1...gatsby-plugin-mdx@2.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-mdx
+
 # [2.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.5.0-next.0...gatsby-plugin-mdx@2.5.0-next.1) (2021-05-05)
 
 ### Bug Fixes

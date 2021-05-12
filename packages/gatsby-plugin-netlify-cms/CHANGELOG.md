@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.2...gatsby-plugin-netlify-cms@5.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update dependency mini-css-extract-plugin to v1.6.0 ([#31158](https://github.com/gatsbyjs/gatsby/issues/31158)) ([137630e](https://github.com/gatsbyjs/gatsby/commit/137630ec719ae67836755a44ddd8451ef25435ed))
+
 # [5.5.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.1...gatsby-plugin-netlify-cms@5.5.0-next.2) (2021-05-05)
 
 ### Bug Fixes

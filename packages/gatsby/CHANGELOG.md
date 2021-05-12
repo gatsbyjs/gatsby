@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.0...gatsby@3.6.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **gatsby:** don't print out flag suggestions if none are enabled or opted-in ([#31299](https://github.com/gatsbyjs/gatsby/issues/31299)) ([48eea6f](https://github.com/gatsbyjs/gatsby/commit/48eea6f4f155b354c000cd7fdf1ed4830aaad642))
+- **gatsby:** fix proxy creation on read-only properties ([#31346](https://github.com/gatsbyjs/gatsby/issues/31346)) ([c210f1d](https://github.com/gatsbyjs/gatsby/commit/c210f1dba38b16da851a72f9f864d0d21f9878f7))
+- **gatsby:** Fixes incorrect type ([#31358](https://github.com/gatsbyjs/gatsby/issues/31358)) ([f629806](https://github.com/gatsbyjs/gatsby/commit/f6298068b3b4e0528c006bcc3d163a9873e76783))
+- **gatsby:** only load gatsby-plugin-gatsby-cloud on cloud ([#31345](https://github.com/gatsbyjs/gatsby/issues/31345)) ([ec0fc57](https://github.com/gatsbyjs/gatsby/commit/ec0fc571bcb5a1ee25fb507c52b64310a86e935b))
+- **gatsby:** Pass reporter from functions code for reporting warning ([#31336](https://github.com/gatsbyjs/gatsby/issues/31336)) ([f09fae8](https://github.com/gatsbyjs/gatsby/commit/f09fae8f415a018f60abb56fff017f574ae8c871))
+- **gatsby-plugin-mdx:** enable hmr when importing mdx ([#31288](https://github.com/gatsbyjs/gatsby/issues/31288)) ([c8db78f](https://github.com/gatsbyjs/gatsby/commit/c8db78fad43294413b950c49205adcf3dbb6dd1e))
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([e06599d](https://github.com/gatsbyjs/gatsby/commit/e06599d9acc53442f8830b04f8fa2c749a820cc5))
+
+### Features
+
+- **gatsby:** change bgcolor of 'EXPERIMENTAL' label so it does look like an error ([#31352](https://github.com/gatsbyjs/gatsby/issues/31352)) ([043371f](https://github.com/gatsbyjs/gatsby/commit/043371fc60bf7e2dea851eff307fe24e5416f077))
+- **gatsby:** Functions aren't GA but they're not longer EXPERIMENTAL ([#31353](https://github.com/gatsbyjs/gatsby/issues/31353)) ([c1f365a](https://github.com/gatsbyjs/gatsby/commit/c1f365a80877032116587061b708b1c23c0caecc))
+- **gatsby:** Improve dev 404 page ([#31332](https://github.com/gatsbyjs/gatsby/issues/31332)) ([dfaea09](https://github.com/gatsbyjs/gatsby/commit/dfaea09dc7c0cb4a3694eb75c5f0a9ab5a32e39f))
+- **gatsby:** New overlay for DEV_SSR ([#31061](https://github.com/gatsbyjs/gatsby/issues/31061)) ([7110189](https://github.com/gatsbyjs/gatsby/commit/7110189fda3942aba27cf35f577ce14d7b252d0b))
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.4...gatsby@3.6.0-next.0) (2021-05-06)
+
+### Bug Fixes
+
+- **deps:** update dependency mini-css-extract-plugin to v1.6.0 ([#31158](https://github.com/gatsbyjs/gatsby/issues/31158)) ([137630e](https://github.com/gatsbyjs/gatsby/commit/137630ec719ae67836755a44ddd8451ef25435ed))
+- **gatsby:** update plugin api types ([#30819](https://github.com/gatsbyjs/gatsby/issues/30819)) ([aa09e6f](https://github.com/gatsbyjs/gatsby/commit/aa09e6fb2f525242680d53d77b5ce7f76b5b63a8))
+
+### Features
+
+- **gatsby:** Don't send error for function errors if headers are already sent ([#31265](https://github.com/gatsbyjs/gatsby/issues/31265)) ([d9c78a0](https://github.com/gatsbyjs/gatsby/commit/d9c78a052d2187ad6808b584185f731c0988d610))
+
+### Performance Improvements
+
+- **gatsby:** use fastq instead of better-queue + refactor ([#31269](https://github.com/gatsbyjs/gatsby/issues/31269)) ([fef8d6b](https://github.com/gatsbyjs/gatsby/commit/fef8d6ba5fdb1386fd7716dc59423c65fa9fd402))
+
 # [3.5.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.3...gatsby@3.5.0-next.4) (2021-05-05)
 
 ### Bug Fixes

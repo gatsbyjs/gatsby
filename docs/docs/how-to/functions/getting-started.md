@@ -1,8 +1,19 @@
 ---
 title: Getting Started
+examples:
+  - label: Authenticate with Google Auth
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/google-auth"
+  - label: Authenticate with Auth0
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/auth0"
+  - label: Submit form to Airtable
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form"
+  - label: Send email with SendGrid
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/sendgrid-email"
 ---
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
+
+Functions are currently in beta and can be enabled by adding the `FUNCTIONS` flag to your `gatsby-config.js` to sites running Gatsby 3.4 and above. [Learn more and join the discussion](https://github.com/gatsbyjs/gatsby/discussions/30735).
 
 ## Hello World
 
@@ -18,8 +29,8 @@ export default function handler(req, res) {
 
 A Function file must export a single function that takes two parameters:
 
-- req: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
-- res: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
+- `req`: Node's [http request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
+- `res`: Node's [http response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
 
 Dynamic routing is supported for creating REST-ful APIs and other uses cases
 

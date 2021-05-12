@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.6.0-next.0...gatsby-plugin-page-creator@3.6.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **gatsby-plugin-page-creator:** support index routes when using the File System Route API ([#31339](https://github.com/gatsbyjs/gatsby/issues/31339)) ([6ad990c](https://github.com/gatsbyjs/gatsby/commit/6ad990c11479b263b585cf9681e591818e021feb))
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.5.0-next.1...gatsby-plugin-page-creator@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-page-creator
+
 # [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-page-creator@3.5.0-next.0...gatsby-plugin-page-creator@3.5.0-next.1) (2021-05-05)
 
 **Note:** Version bump only for package gatsby-plugin-page-creator

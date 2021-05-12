@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.2.0-next.0...gatsby-plugin-sitemap@4.2.0-next.1) (2021-05-12)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
+# [4.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.1.0-next.1...gatsby-plugin-sitemap@4.2.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-sitemap
+
 # [4.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-sitemap@4.1.0-next.0...gatsby-plugin-sitemap@4.1.0-next.1) (2021-05-01)
 
 **Note:** Version bump only for package gatsby-plugin-sitemap

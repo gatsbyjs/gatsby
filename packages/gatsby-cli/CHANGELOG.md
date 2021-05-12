@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.6.0-next.0...gatsby-cli@3.6.0-next.1) (2021-05-12)
+
+### Features
+
+- **gatsby:** New overlay for DEV_SSR ([#31061](https://github.com/gatsbyjs/gatsby/issues/31061)) ([7110189](https://github.com/gatsbyjs/gatsby/commit/7110189fda3942aba27cf35f577ce14d7b252d0b))
+
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.5.0-next.1...gatsby-cli@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-cli
+
 # [3.5.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.5.0-next.0...gatsby-cli@3.5.0-next.1) (2021-05-05)
 
 ### Features

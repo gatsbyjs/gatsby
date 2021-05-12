@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.6.0-next.0...gatsby-plugin-offline@4.6.0-next.1) (2021-05-12)
+
+### Bug Fixes
+
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([e06599d](https://github.com/gatsbyjs/gatsby/commit/e06599d9acc53442f8830b04f8fa2c749a820cc5))
+
+# [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.5.0-next.0...gatsby-plugin-offline@4.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-offline
+
 # [4.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-offline@4.4.0-next.3...gatsby-plugin-offline@4.5.0-next.0) (2021-04-23)
 
 ### Bug Fixes
