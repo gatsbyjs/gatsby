@@ -7,7 +7,7 @@ Node.js APIs. We include a number of middlewares to parse common request data as
 
 ## Data formats
 
-We parse commonly used data types. Available on the `req` object:
+We parse commonly used data types. You can parse more by [adding custom middleware](#custom-middleware). Data available by default on the `req` object:
 
 - Cookies at `req.cookies`
 - URL Queries (e.g. `api/foo?query=foo`) at `req.query`
