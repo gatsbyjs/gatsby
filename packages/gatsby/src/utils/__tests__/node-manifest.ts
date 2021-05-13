@@ -1,5 +1,8 @@
+import { dispatch } from "./../../../../gatsby-cli/src/reporter/redux/index"
 import path from "path"
 import reporter from "gatsby-cli/lib/reporter"
+import { store } from "../../redux"
+
 import { INodeManifest } from "./../../redux/types"
 import {
   warnAboutNodeManifestMappingProblems,
@@ -11,6 +14,24 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
     warn: jest.fn(message => message),
     info: jest.fn(message => message),
+  }
+})
+
+jest.mock(`../../redux`, () => {
+  let nodeManifests = []
+
+  return {
+    store: {
+      getState: jest.fn(() => {
+        return {
+          nodeManifests,
+        }
+      }),
+      setManifests: (manifests): void => {
+        nodeManifests = manifests
+      },
+      dispatch: jest.fn(),
+    },
   }
 })
 
@@ -118,49 +139,34 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
 })
 
 describe(`processNodeManifests`, () => {
+  beforeEach(() => {
+    store.setManifests([])
+  })
   it(`Doesn't do anything special when there are no pending manifests`, async () => {
-    const storeDep = {
-      getState: jest.fn(() => {
-        return {
-          nodeManifests: [],
-        }
-      }),
-      dispatch: jest.fn(),
-    }
-
     const processNodeManifestFn = jest.fn()
 
     await processNodeManifests({
-      storeDep,
       processNodeManifestFn,
     })
 
-    expect(processNodeManifestFn.mock.calls.length).toBe(0)
+    expect(processNodeManifestFn).not.toBeCalled()
     expect(reporter.info).not.toBeCalled()
-    expect(storeDep.dispatch.mock.calls.length).toBe(0)
+    expect(store.dispatch).not.toBeCalled()
   })
 
   it(`accurately logs out how many manifest files were written to disk`, async () => {
-    const storeDep = {
-      getState: jest.fn(() => {
-        return {
-          nodeManifests: [{}, {}, {}],
-        }
-      }),
-      dispatch: jest.fn(),
-    }
+    store.setManifests([{}, {}, {}])
 
     const processNodeManifestFn = jest.fn()
 
     await processNodeManifests({
-      storeDep,
       processNodeManifestFn,
     })
 
     expect(processNodeManifestFn.mock.calls.length).toBe(3)
     expect(reporter.info).toBeCalled()
     expect(reporter.info).toBeCalledWith(`Wrote out 3 node page manifest files`)
-    expect(storeDep.dispatch.mock.calls.length).toBe(1)
+    expect(store.dispatch).toBeCalled()
   })
 })
 

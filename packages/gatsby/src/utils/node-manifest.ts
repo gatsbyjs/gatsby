@@ -272,10 +272,9 @@ export async function processNodeManifest(
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
 export async function processNodeManifests({
-  storeDep = store,
   processNodeManifestFn = processNodeManifest,
 } = {}): Promise<void> {
-  const { nodeManifests } = storeDep.getState()
+  const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
 
@@ -294,5 +293,5 @@ export async function processNodeManifests({
   )
 
   // clean up all pending manifests from the store
-  storeDep.dispatch(internalActions.deleteNodeManifests())
+  store.dispatch(internalActions.deleteNodeManifests())
 }
