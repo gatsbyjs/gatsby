@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://localhost:9000",
   "retries": {
-    "runMode": 0,
+    "runMode": 2,
     "openMode": 0
   },
   "viewportWidth": 1440,
