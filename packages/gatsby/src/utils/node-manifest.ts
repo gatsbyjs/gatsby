@@ -217,7 +217,6 @@ export async function processNodeManifest(
   inputManifest: INodeManifest,
   // to allow overriding deps in tests:
   {
-    fsFn = fs,
     findPageOwnedByNodeIdFn = findPageOwnedByNodeId,
     warnAboutNodeManifestMappingProblemsFn = warnAboutNodeManifestMappingProblems,
     getNodeFn = getNode,
@@ -264,8 +263,8 @@ export async function processNodeManifest(
 
   const manifestFileDir = path.dirname(manifestFilePath)
 
-  await fsFn.ensureDir(manifestFileDir)
-  await fsFn.writeJSON(manifestFilePath, finalManifest)
+  await fs.ensureDir(manifestFileDir)
+  await fs.writeJSON(manifestFilePath, finalManifest)
 }
 
 /**
