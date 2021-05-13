@@ -18,7 +18,7 @@ function getRootDb(): RootDatabase {
   if (!rootDb) {
     rootDb = open({
       name: `root`,
-      path: process.cwd() + `/.data/` + rootDbFile,
+      path: process.cwd() + `/.cache/data/` + rootDbFile,
       sharedStructuresKey: Symbol.for(`structures`),
       compression: true,
     })
