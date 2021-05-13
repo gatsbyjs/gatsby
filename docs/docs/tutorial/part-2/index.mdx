@@ -2,8 +2,31 @@
 title: Use and Style React Components
 ---
 
-import { Announcement } from 'gatsby-interface'
+import { Announcement, Notification } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
+import { MdInfo } from 'react-icons/md'
+
+<Notification
+  Icon={MdInfo}
+  tone="WARNING"
+  variant="SECONDARY"
+  content={
+    <div>
+      <p>
+        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
+        The first few parts of the new Tutorial have been released here, and subsequent parts
+        will be added as we finish them.
+      </p>
+      <p style={{ marginBottom: 0 }}>
+        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
+        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
+          <strong>Gatsby v2 Tutorial</strong>
+        </a>
+        .
+      </p>
+    </div>
+  }
+/>
 
 ## Introduction
 
@@ -378,7 +401,7 @@ If you take another look at the [finished example blog](https://introworkshopexa
 
 You could copy those elements into each page of your site separately. But imagine your site had dozens (or even thousands) of pages. If you wanted to make a change to the structure of your navigation menu, you'd have to go and update every one of those files separately. Yuck.
 
-Instead, it would be better to create one common `Layout` component that you can group all the shared elements to reuse across multiple pages. That way, when you need to make updates to the layout, you can make the change in one place and it will automatically be applied to all the pages that use that component.
+Instead, it would be better to create one common `Layout` component that groups all the shared elements to reuse across multiple pages. That way, when you need to make updates to the layout, you can make the change in one place and it will automatically be applied to all the pages using that component.
 
 In this section, you'll create your first **custom** building-block component: `Layout`. To do that, you'll need to use a special React prop called `children`.
 
@@ -739,8 +762,9 @@ Take a moment to think back on what you've learned so far. Challenge yourself to
 
 * What's the difference between a page component and a building-block component?
 * How do you add a new page to your Gatsby site?
-* What are the three steps for writing a new component?
+* What are the three steps for writing a new React component?
 * What are props and when might you use them?
+* What is the `children` prop and why is it useful?
 
 <Announcement style={{marginBottom: "1.5rem"}}>
 
@@ -782,3 +806,25 @@ Our goal is for this Tutorial to be helpful and easy to follow. We'd love to hea
 Use the "Was this doc helpful to you?" form at the bottom of this page to let us know what worked well and what we can improve.
 
 </Announcement>
+
+<Notification
+  Icon={MdInfo}
+  tone="WARNING"
+  variant="SECONDARY"
+  content={
+    <div>
+      <p>
+        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
+        You've reached the end of the new content we've released so far. Subsequent parts
+        will be added as we finish them.
+      </p>
+      <p style={{ marginBottom: 0 }}>
+        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
+        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
+          <strong>Gatsby v2 Tutorial</strong>
+        </a>
+        .
+      </p>
+    </div>
+  }
+/>
