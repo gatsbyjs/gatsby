@@ -219,11 +219,10 @@ export async function processNodeManifest(
   {
     findPageOwnedByNodeIdFn = findPageOwnedByNodeId,
     warnAboutNodeManifestMappingProblemsFn = warnAboutNodeManifestMappingProblems,
-    getNodeFn = getNode,
   } = {}
 ): Promise<void> {
   const nodeId = inputManifest.node.id
-  const fullNode = getNodeFn(nodeId)
+  const fullNode = getNode(nodeId)
 
   if (!fullNode) {
     reporter.warn(

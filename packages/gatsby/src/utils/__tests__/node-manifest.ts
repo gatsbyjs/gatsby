@@ -22,26 +22,42 @@ jest.mock(`fs-extra`, () => {
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
-    warn: jest.fn(message => message),
-    info: jest.fn(message => message),
+    warn: jest.fn(message => {
+      if (process.env.DEBUG) {
+        console.warn(message)
+      }
+      return message
+    }),
+    info: jest.fn(message => {
+      if (process.env.DEBUG) {
+        console.info(message)
+      }
+      return message
+    }),
   }
 })
 
 jest.mock(`../../redux`, () => {
-  let nodeManifests = []
+  const initialState = {
+    nodeManifests: [],
+    nodes: new Map(),
+    program: {
+      directory: process.cwd(),
+    },
+  }
+
+  const state = { ...initialState }
 
   return {
     store: {
-      getState: jest.fn(() => {
-        return {
-          nodeManifests,
-          program: {
-            directory: process.cwd(),
-          },
-        }
-      }),
+      getState: jest.fn(() => state),
+      getNode: (nodeId: string): { id: string } | undefined =>
+        state.nodes.get(nodeId),
       setManifests: (manifests): void => {
-        nodeManifests = manifests
+        state.nodeManifests = manifests
+      },
+      createNode: node => {
+        state.nodes.set(node.id, node)
       },
       dispatch: jest.fn(),
     },
@@ -188,6 +204,8 @@ describe(`processNodeManifest`, () => {
   it(`processes node manifests`, async () => {
     const nodes = [{ id: `1` }, { id: `2` }, { id: `3` }]
 
+    nodes.forEach(store.createNode)
+
     const pendingManifests: Array<INodeManifest> = [
       {
         pluginName: `test`,
@@ -211,11 +229,6 @@ describe(`processNodeManifest`, () => {
       },
     ]
 
-    const getNode = (nodeId: string): { id: string } | undefined =>
-      nodes.find(({ id }) => nodeId === id)
-
-    const getNodeFn = jest.fn(getNode)
-
     const findPageOwnedByNodeIdFn = jest.fn(({ nodeId }) => {
       return {
         page: {
@@ -232,7 +245,6 @@ describe(`processNodeManifest`, () => {
         processNodeManifest(manifest, {
           findPageOwnedByNodeIdFn,
           warnAboutNodeManifestMappingProblemsFn,
-          getNodeFn,
         })
       )
     )
@@ -251,7 +263,7 @@ describe(`processNodeManifest`, () => {
     expect(fs.writeJSON.mock.calls.length).toBe(nodes.length)
 
     pendingManifests.forEach((manifest, index) => {
-      if (!getNode(manifest.node.id)) {
+      if (!store.getNode(manifest.node.id)) {
         return
       }
 
