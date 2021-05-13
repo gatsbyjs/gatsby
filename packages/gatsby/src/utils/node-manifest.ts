@@ -148,19 +148,15 @@ async function findPageOwnedByNodeId({
 /**
  * Takes in some info about a node manifest and the page we did or didn't find for it, then warns and returns the warning string
  */
-export function warnAboutNodeManifestMappingProblems(
-  {
-    inputManifest,
-    pagePath,
-    foundPageBy,
-  }: {
-    inputManifest: INodeManifest
-    pagePath?: string
-    foundPageBy: FoundPageBy
-  },
-  // allows overriding the reporter for tests
-  { reporterFn }: { reporterFn: typeof reporter } = { reporterFn: reporter }
-): { message: string; possibleMessages: { [key in FoundPageBy]: string } } {
+export function warnAboutNodeManifestMappingProblems({
+  inputManifest,
+  pagePath,
+  foundPageBy,
+}: {
+  inputManifest: INodeManifest
+  pagePath?: string
+  foundPageBy: FoundPageBy
+}): { message: string; possibleMessages: { [key in FoundPageBy]: string } } {
   const warnings = {
     shared: `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`,
     noOwnerNodeId: `but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\n`,
@@ -194,7 +190,7 @@ export function warnAboutNodeManifestMappingProblems(
     case `context.id`:
     case `queryTracking`: {
       message = messages[foundPageBy]
-      reporterFn.warn(message)
+      reporter.warn(message)
       break
     }
 
@@ -224,7 +220,6 @@ export async function processNodeManifest(
     fsFn = fs,
     findPageOwnedByNodeIdFn = findPageOwnedByNodeId,
     warnAboutNodeManifestMappingProblemsFn = warnAboutNodeManifestMappingProblems,
-    reporterFn = reporter,
     getNodeFn = getNode,
   } = {}
 ): Promise<void> {
@@ -232,7 +227,7 @@ export async function processNodeManifest(
   const fullNode = getNodeFn(nodeId)
 
   if (!fullNode) {
-    reporterFn.warn(
+    reporter.warn(
       `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}.`
     )
     return
@@ -280,7 +275,6 @@ export async function processNodeManifests({
   storeDep = store,
   internalActionsDep = internalActions,
   processNodeManifestFn = processNodeManifest,
-  reporterFn = reporter,
 } = {}): Promise<void> {
   const { nodeManifests } = storeDep.getState()
 
@@ -294,7 +288,7 @@ export async function processNodeManifests({
     nodeManifests.map(manifest => processNodeManifestFn(manifest))
   )
 
-  reporterFn.info(
+  reporter.info(
     `Wrote out ${totalManifests} node page manifest file${
       totalManifests > 1 ? `s` : ``
     }`
