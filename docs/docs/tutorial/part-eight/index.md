@@ -26,7 +26,7 @@ Lighthouse is included in Chrome DevTools. Running its audit -- and then address
 
 Try it out!
 
-First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast; But the site that it generates, while closely resembling a production version of the site, isn't as optimized.
+First, you need to create a production build of your Gatsby site. The Gatsby development server is optimized for making development fast but the site that it generates, while closely resembling a production version of the site, isn't as optimized.
 
 ### ✋ Create a production build
 
@@ -113,49 +113,6 @@ npm install gatsby-plugin-manifest
 
 That's all you need to get started with adding a web manifest to a Gatsby site. The example given reflects a base configuration -- Check out the [plugin reference](/plugins/gatsby-plugin-manifest/?=gatsby-plugin-manifest#automatic-mode) for more options.
 
-## Add offline support
-
-Another requirement for a website to qualify as a PWA is the use of a [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). A service worker runs in the background, deciding to serve network or cached content based on connectivity, allowing for a seamless, managed offline experience.
-
-[Gatsby's offline plugin](/plugins/gatsby-plugin-offline/) makes a Gatsby site work offline and more resistant to bad network conditions by creating a service worker for your site.
-
-### ✋ Using `gatsby-plugin-offline`
-
-1. Install the plugin:
-
-```shell
-npm install gatsby-plugin-offline
-```
-
-2. Add the plugin to the `plugins` array in your `gatsby-config.js` file.
-
-```javascript:title=gatsby-config.js
-{
-  plugins: [
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `GatsbyJS`,
-        short_name: `GatsbyJS`,
-        start_url: `/`,
-        background_color: `#6b37bf`,
-        theme_color: `#6b37bf`,
-        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
-        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
-        display: `standalone`,
-        icon: `src/images/icon.png`, // This path is relative to the root of the site.
-      },
-    },
-    // highlight-next-line
-    `gatsby-plugin-offline`,
-  ]
-}
-```
-
-That's all you need to get started with service workers with Gatsby.
-
-> 💡 The offline plugin should be listed _after_ the manifest plugin so that the offline plugin can cache the created `manifest.webmanifest`.
-
 ## Add page metadata
 
 Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your content and decide when to surface it in search results.
@@ -198,7 +155,6 @@ module.exports = {
         icon: `src/images/icon.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-offline`,
     // highlight-next-line
     `gatsby-plugin-react-helmet`,
   ],
@@ -371,4 +327,4 @@ This is just the beginning. Keep going!
 
 Check out the ["how to contribute"](/contributing/how-to-contribute/) docs for even more ideas.
 
-We can't wait to see what you do 😄.
+We can't wait to see what you do! 😄

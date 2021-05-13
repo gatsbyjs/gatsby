@@ -21,7 +21,8 @@ export const SHARP_ATTRIBUTES = new Set([
   `placeholder`,
   `tracedSVGOptions`,
   `sizes`,
-  `background`,
+  `backgroundColor`,
+  `breakpoints`,
 ])
 
 export function normalizeProps(
@@ -51,7 +52,7 @@ export function normalizeProps(
 
 export function evaluateImageAttributes(
   nodePath: NodePath<JSXOpeningElement>,
-  onError?: (prop: string) => void
+  onError?: (prop: string, nodePath: NodePath<any>) => void
 ): Record<string, unknown> {
   // Only get attributes that we need for generating the images
   return normalizeProps(getAttributeValues(nodePath, onError, SHARP_ATTRIBUTES))

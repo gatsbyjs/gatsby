@@ -37,11 +37,11 @@ Chakra UI is built on top of the [Emotion styling library](/docs/how-to/styling/
 
 Chakra UI provides a library of components, and it comes with dark mode out of the box. It also has a theme object which you can use to customize your site's color palette, typography, breakpoints, and more.
 
-If you're interested in using Chakra UI, check out the [`gatsby-plugin-chakra-ui` documentation](/plugins/gatsby-plugin-chakra-ui/?=chakra).
+If you're interested in using Chakra UI, check out the [`@chakra-ui/gatsby-plugin` documentation](/plugins/@chakra-ui/gatsby-plugin/).
 
 - [Chakra UI documentation](https://chakra-ui.com/getting-started)
 - [Chakra UI repo on GitHub](https://github.com/chakra-ui/chakra-ui/)
-- [Setting Up Chakra UI in a GatsbyJS App (YouTube)](https://www.youtube.com/watch?v=PjQHqDWnzGw)
+- [Chakra UI and Gatsby - Getting Started (YouTube)](https://www.youtube.com/watch?v=hXM9Ju_NIpU)
 
 ## Grommet
 

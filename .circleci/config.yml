@@ -1,5 +1,5 @@
 orbs:
-  win: circleci/windows@2.2.0
+  win: circleci/windows@2.4.0
   slack: circleci/slack@3.4.1
 
 executors:
@@ -8,15 +8,7 @@ executors:
       image:
         type: string
         # First 10.x LTS release, but old Yarn
-        default: "10.13"
-    docker:
-      - image: circleci/node:<< parameters.image >>
-  node_10_19:
-    parameters:
-      image:
-        type: string
-        # More recent Yarn binary
-        default: "10.19"
+        default: "12.13"
     docker:
       - image: circleci/node:<< parameters.image >>
 
@@ -34,7 +26,12 @@ aliases:
   install_node_modules: &install_node_modules
     run:
       name: Install node modules
-      command: yarn --frozen-lockfile
+      command: yarn
+
+  check_lockfile: &check_lockfile
+    run:
+      name: Check for dirty lockfile
+      command: ./scripts/check-lockfile.sh || exit 1
 
   persist_cache: &persist_cache
     save_cache:
@@ -85,7 +82,7 @@ aliases:
     requires:
       - lint
       - typecheck
-      - unit_tests_node10
+      - unit_tests_node12
 
   e2e_tests_production_runtime_alias: &e2e_tests_production_runtime_alias
     <<: *e2e-executor
@@ -153,7 +150,7 @@ commands:
         default: false
       trigger_pattern:
         type: string
-        default: "packages/*|.circleci/*"
+        default: "packages/*|.circleci/*|scripts/e2e-test.sh"
       test_path:
         type: string
       test_command:
@@ -172,6 +169,9 @@ commands:
 
       - <<: *attach_to_bootstrap
       - run:
+          name: Install gatsby-dev
+          command: yarn global add gatsby-dev-cli
+      - run:
           name: Run tests (using defaults)
           command: ./scripts/e2e-test.sh "<< parameters.test_path >>" "<< parameters.test_command >>"
 
@@ -182,9 +182,10 @@ jobs:
     executor: node
     steps:
       - checkout
-      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|yarn.lock"
+      - run: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
       - <<: *restore_cache
       - <<: *install_node_modules
+      - <<: *check_lockfile
       - <<: *persist_cache
       - run: yarn bootstrap -- concurrency=2
       # Persist the workspace again with all packages already built
@@ -202,7 +203,7 @@ jobs:
       - run:
           name: "remove workspaces from package.json"
           command: |
-            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]//g' package.json
+            sed -i ':a;N;$!ba;s/,\n\s*"workspaces":\s\[[^]]*]/,"workspaces":\["packages\/babel-preset-gatsby"\]/g' package.json
       - <<: *install_node_modules
       - run: yarn lint:code
       - run: yarn lint:docs
@@ -218,14 +219,9 @@ jobs:
       - run: yarn typecheck
       - run: yarn check-repo-fields
 
-  unit_tests_node10:
-    executor: node
-    <<: *test_template
-
   unit_tests_node12:
     executor:
       name: node
-      image: "12"
     <<: *test_template
 
   unit_tests_node14:
@@ -233,6 +229,20 @@ jobs:
       name: node
       image: "14"
     <<: *test_template
+
+  integration_tests_gatsby_source_wordpress:
+    machine: true
+    steps:
+      - run:
+          command: |
+            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+            echo ' [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
+      - run: nvm install v12
+      - run: nvm alias default v12
+      - run: nvm use v12
+      - run: npm i -g yarn@1.22.10
+      - e2e-test:
+          test_path: integration-tests/gatsby-source-wordpress
 
   integration_tests_long_term_caching:
     executor: node
@@ -257,7 +267,7 @@ jobs:
     steps:
       - e2e-test:
           test_path: integration-tests/gatsby-cli
-          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*
+          trigger_pattern: packages/gatsby-cli/*|packages/gatsby/*|integration-tests/gatsby-cli/*|scripts/e2e-test.sh
 
   integration_tests_structured_logging:
     executor: node
@@ -277,6 +287,22 @@ jobs:
       - e2e-test:
           test_path: integration-tests/ssr
 
+  integration_tests_images:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/images
+          test_command: yarn build-and-test
+      - store_artifacts:
+          path: integration-tests/images/__diff_output__
+
+  integration_tests_functions:
+    executor: node
+    steps:
+      - e2e-test:
+          test_path: integration-tests/functions
+          test_command: yarn test
+
   e2e_tests_path-prefix:
     <<: *e2e-executor
     environment:
@@ -287,7 +313,7 @@ jobs:
           test_path: e2e-tests/path-prefix
 
   e2e_tests_pnp:
-    executor: node_10_19
+    executor: node
     steps:
       - checkout
       - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
@@ -300,6 +326,9 @@ jobs:
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Quick upgrade to the v2 (any version, we just need the real set version)
           command: yarn policies set-version berry
+          working_directory: ~/project/e2e-tests/gatsby-pnp
+      - run: # force typescript to 4.1.5 to pass test
+          command: sed '$ s/.$/,"resolutions":{"typescript":"4.1.5"}}/' package.json > tmpfile && cat tmpfile > package.json && rm tmpfile
           working_directory: ~/project/e2e-tests/gatsby-pnp
       - run: # Forces to use the local packages
           command: yarn link --all --private ../..
@@ -329,14 +358,6 @@ jobs:
   e2e_tests_development_runtime:
     <<: *e2e_tests_development_runtime_alias
 
-  e2e_tests_development_runtime_fast_refresh:
-    <<: *e2e_tests_development_runtime_alias
-    environment:
-      GATSBY_HOT_LOADER: fast-refresh
-      CYPRESS_HOT_LOADER: fast-refresh
-      CYPRESS_PROJECT_ID: 917bea
-      CYPRESS_RECORD_KEY: 4750fb36-4576-4638-a617-d243a381acef
-
   e2e_tests_development_runtime_with_experimental_react:
     <<: *e2e_tests_development_runtime_alias
 
@@ -359,8 +380,8 @@ jobs:
       CYPRESS_RECORD_KEY: 3fb49000-4143-4bd8-9ab4-219389060910
     steps:
       - e2e-test:
-          test_path: e2e-tests/themes/development-runtime
-          test_command: yarn test
+          test_path: e2e-tests/themes
+          test_command: cd development-runtime; yarn test
 
   themes_e2e_tests_production_runtime:
     <<: *e2e-executor
@@ -369,8 +390,8 @@ jobs:
       CYPRESS_RECORD_KEY: e4e7b3b8-e1e7-4a74-a0c9-9ac76585236b
     steps:
       - e2e-test:
-          test_path: e2e-tests/themes/production-runtime
-          test_command: yarn test
+          test_path: e2e-tests/themes
+          test_command: cd production-runtime; yarn test
 
   mdx_e2e_tests:
     <<: *e2e-executor
@@ -405,6 +426,20 @@ jobs:
           path: e2e-tests/visual-regression/__diff_output__
       - store_test_results:
           path: e2e-tests/visual-regression/cypress/results
+
+  e2e_tests_contentful:
+    <<: *e2e-executor
+    environment:
+      CYPRESS_PROJECT_ID: 2193cm
+      CYPRESS_RECORD_KEY: 57e9563e-af49-494c-837c-5af53c2d6f76
+    steps:
+      - e2e-test:
+          test_path: e2e-tests/contentful
+          test_command: yarn test
+      - store_artifacts:
+          path: e2e-tests/contentful/__diff_output__
+      - store_test_results:
+          path: e2e-tests/contentful/cypress/results
 
   starters_validate:
     executor: node
@@ -457,11 +492,21 @@ jobs:
       shell: powershell.exe
     steps:
       - checkout
+      - run:
+          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*|scripts/e2e-test.sh|yarn.lock"
+          shell: bash.exe
       # Restoring cache takes as long as installing node modules, so skipping
       # - restore_cache:
       #     keys:
       #       - yarn-packages-v2-{{ checksum "yarn.lock" }}
       #       - yarn-packages-v2-
+      - run:
+          name: Install node 12.13
+          command: |
+            nvm install 12.13.0
+            nvm alias default 12.13.0
+            nvm use 12.13.0
+            choco install yarn
       - run:
           name: Set yarn timeout
           command: yarn config set network-timeout 300000
@@ -473,9 +518,6 @@ jobs:
       #     paths:
       #       - C:\Users\circleci\AppData\Local\Yarn\Cache
       #     key: yarn-packages-v2-{{ checksum "yarn.lock" }}
-      - run:
-          command: ./scripts/assert-changed-files.sh "packages/*|(e2e|integration)-tests/*|.circleci/*"
-          shell: bash.exe
       - run: yarn npm-run-all -s check-versions "lerna-prepare --concurrency=4 --stream"
       - run:
           name: "Run Tests"
@@ -513,17 +555,6 @@ workflows:
                 - master
     jobs:
       - sync_translation_repo
-
-  weekly-node-14:
-    triggers:
-      - schedule:
-          cron: "0 1 * * 6"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - unit_tests_node14
 
   nightly-react-next:
     triggers:
@@ -583,18 +614,20 @@ workflows:
           <<: *ignore_docs
           requires:
             - lint
-      - unit_tests_node10:
-          <<: *ignore_docs
-          requires:
-            - lint
-            - typecheck
-            - bootstrap
       - unit_tests_node12:
           <<: *ignore_docs
           requires:
             - lint
             - typecheck
             - bootstrap
+      - unit_tests_node14:
+          <<: *ignore_docs
+          requires:
+            - lint
+            - typecheck
+            - bootstrap
+      - integration_tests_gatsby_source_wordpress:
+          <<: *e2e-test-workflow
       - integration_tests_long_term_caching:
           <<: *e2e-test-workflow
       - integration_tests_cache_resilience:
@@ -606,6 +639,10 @@ workflows:
       - integration_tests_artifacts:
           <<: *e2e-test-workflow
       - integration_tests_ssr:
+          <<: *e2e-test-workflow
+      - integration_tests_images:
+          <<: *e2e-test-workflow
+      - integration_tests_functions:
           <<: *e2e-test-workflow
       - integration_tests_gatsby_cli:
           requires:
@@ -620,9 +657,9 @@ workflows:
           <<: *e2e-test-workflow
       - e2e_tests_visual-regression:
           <<: *e2e-test-workflow
-      - e2e_tests_development_runtime:
+      - e2e_tests_contentful:
           <<: *e2e-test-workflow
-      - e2e_tests_development_runtime_fast_refresh:
+      - e2e_tests_development_runtime:
           <<: *e2e-test-workflow
       - e2e_tests_production_runtime:
           <<: *e2e-test-workflow

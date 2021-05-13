@@ -8,7 +8,7 @@ This guide will walk you through sourcing data from the filesystem.
 
 This guide assumes that you have a Gatsby project set up. If you need to set up a project, please reference the [Quick Start Guide](/docs/quick-start/).
 
-It will also be useful if you are familiar with [GraphiQL](/docs/introducing-graphiql/), a tool that helps you structure your queries correctly.
+It will also be useful if you are familiar with [GraphiQL](/docs/how-to/querying-data/running-queries-with-graphiql/), a tool that helps you structure your queries correctly.
 
 ## Using `gatsby-source-filesystem`
 

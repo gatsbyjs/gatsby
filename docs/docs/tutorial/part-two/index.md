@@ -154,7 +154,7 @@ First, create a new `Container` component.
 
 ```jsx:title=src/components/container.js
 import React from "react"
-import containerStyles from "./container.module.css"
+import * as containerStyles from "./container.module.css"
 
 export default function Container({ children }) {
   return <div className={containerStyles.container}>{children}</div>
@@ -243,7 +243,7 @@ In this section, you'll create a list of people with names, avatars, and short L
 ```javascript:title=src/pages/about-css-modules.js
 import React from "react"
 // highlight-next-line
-import styles from "./about-css-modules.module.css"
+import * as styles from "./about-css-modules.module.css"
 import Container from "../components/container"
 
 // highlight-next-line
@@ -261,7 +261,7 @@ If you compare that to your CSS file, you'll see that each class is now a key in
 
 ```jsx:title=src/pages/about-css-modules.js
 import React from "react"
-import styles from "./about-css-modules.module.css"
+import * as styles from "./about-css-modules.module.css"
 import Container from "../components/container"
 
 console.log(styles)
@@ -285,14 +285,14 @@ export default function About() {
       <p>CSS Modules are cool</p>
       {/* highlight-start */}
       <User
-        username="Jane Doe"
-        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-        excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        username="Maria Randall"
+        avatar="https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/tutorial/part-two/pexels-daniel-xavier-1102341.jpg"
+        excerpt="I'm Maria Randall. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
       />
       <User
-        username="Bob Smith"
-        avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-        excerpt="I'm Bob Smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
+        username="Daniela Dewitt"
+        avatar="https://raw.githubusercontent.com/gatsbyjs/gatsby/master/docs/docs/tutorial/part-two/pexels-guilherme-almeida-1858175.jpg"
+        excerpt="I'm Daniela Dewitt. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
       />
       {/* highlight-end */}
     </Container>
@@ -327,6 +327,7 @@ Gatsby supports almost every possible styling option (if there isn't a plugin ye
 - [JSS](/plugins/gatsby-plugin-jss/)
 - [Stylus](/plugins/gatsby-plugin-stylus/)
 - [PostCSS](/plugins/gatsby-plugin-postcss/)
+- [Tailwind](/docs/how-to/styling/tailwind-css/)
 
 and more!
 

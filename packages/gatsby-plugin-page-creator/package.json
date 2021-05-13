@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-page-creator",
-  "version": "2.9.0-next.1",
+  "version": "3.6.0-next.1",
   "description": "Gatsby plugin that automatically creates pages from React components in specified directories",
   "main": "index.js",
   "scripts": {
@@ -25,24 +25,25 @@
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-page-creator#readme",
   "dependencies": {
     "@babel/traverse": "^7.12.5",
-    "@sindresorhus/slugify": "^1.1.0",
-    "chokidar": "^3.4.2",
+    "@sindresorhus/slugify": "^1.1.2",
+    "chokidar": "^3.5.1",
     "fs-exists-cached": "^1.0.0",
-    "gatsby-page-utils": "^0.8.0-next.0",
-    "gatsby-telemetry": "^1.9.0-next.1",
-    "globby": "^11.0.1",
-    "lodash": "^4.17.20"
+    "gatsby-core-utils": "^2.6.0-next.0",
+    "gatsby-page-utils": "^1.6.0-next.0",
+    "gatsby-telemetry": "^2.6.0-next.0",
+    "globby": "^11.0.3",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.11.0-next.0",
+    "babel-preset-gatsby-package": "^1.6.0-next.0",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0"
+    "gatsby": "^3.0.0-next.0"
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

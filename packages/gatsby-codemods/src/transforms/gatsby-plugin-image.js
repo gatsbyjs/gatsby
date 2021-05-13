@@ -25,6 +25,22 @@ const legacyFragmentsSVGPlaceholder = [
   `GatsbyImageSharpFluid_withWebp_tracedSVG`,
 ]
 
+const transformOptions = [
+  `grayscale`,
+  `duotone`,
+  `rotate`,
+  `trim`,
+  `cropFocus`,
+  `fit`,
+]
+
+const otherOptions = [
+  `jpegQuality`,
+  `webpQuality`,
+  `pngQuality`,
+  `pngCompressionSpeed`,
+]
+
 const typeMapper = {
   fixed: `FIXED`,
   fluid: `FULL_WIDTH`,
@@ -313,12 +329,19 @@ function processArguments(queryArguments, fragment, layout, state) {
     }
     queryArguments.push(placeholderArgument)
   }
-  for (let index in queryArguments) {
-    const argument = queryArguments[index]
+  const transformOptionsToNest = []
+  let newLayout = layout
+  queryArguments.forEach((argument, index) => {
     if (argument.name.value === `maxWidth`) {
       argument.name.value = `width`
       if (layout === `fluid` && Number(argument.value.value) >= 1000) {
         delete queryArguments[index]
+        const maxHeightIndex = queryArguments.findIndex(
+          arg => arg?.name?.value === `maxHeight`
+        )
+
+        delete queryArguments?.[maxHeightIndex]
+
         console.log(
           `maxWidth is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`
         )
@@ -326,16 +349,31 @@ function processArguments(queryArguments, fragment, layout, state) {
         console.log(
           `maxWidth is no longer supported for fluid (now fullWidth) images. We've updated the query in ${state.opts.filename} to use a constrained image instead.`
         )
-        return `constrained`
+        newLayout = `constrained`
       }
     } else if (argument.name.value === `maxHeight`) {
       argument.name.value = `height`
       console.log(
         `maxHeight is no longer supported for fluid (now fullWidth) images. It's been removed from your query in ${state.opts.filename}.`
       )
+    } else if (transformOptions.includes(argument.name.value)) {
+      transformOptionsToNest.push(argument)
+      delete queryArguments[index]
+    } else if (otherOptions.includes(argument.name.value)) {
+      console.log(
+        `${argument.name.value} is now a nested value, please see the API docs and update the query in ${state.opts.filename} manually.`
+      )
     }
+  })
+  if (transformOptionsToNest.length > 0) {
+    const newOptions = {
+      kind: `Argument`,
+      name: { kind: `Name`, value: `transformOptions` },
+      value: { kind: `ObjectValue`, fields: transformOptionsToNest },
+    }
+    queryArguments.push(newOptions)
   }
-  return layout
+  return newLayout
 }
 
 function processGraphQLQuery(query, state) {

@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.5.0-next.0...gatsby-core-utils@2.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.4.0-next.3...gatsby-core-utils@2.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.4.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.4.0-next.2...gatsby-core-utils@2.4.0-next.3) (2021-04-20)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.4.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.4.0-next.1...gatsby-core-utils@2.4.0-next.2) (2021-04-20)
+
+### Features
+
+- **gatsby:** add support for dynamic routes for API functions ([#30904](https://github.com/gatsbyjs/gatsby/issues/30904)) ([e44d6a7](https://github.com/gatsbyjs/gatsby/commit/e44d6a78f7f63e434a159536f07d1105067e997b))
+
+# [2.4.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.4.0-next.0...gatsby-core-utils@2.4.0-next.1) (2021-04-16)
+
+### Bug Fixes
+
+- **gatsby-core-utils:** fetch-remote-file download failure when missing content-length header ([#30810](https://github.com/gatsbyjs/gatsby/issues/30810)) ([1164a93](https://github.com/gatsbyjs/gatsby/commit/1164a93b5dfe411bba088267ba1ffb6a2ad5449d))
+
+# [2.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.3.0-next.1...gatsby-core-utils@2.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.3.0-next.0...gatsby-core-utils@2.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.2.0-next.0...gatsby-core-utils@2.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.1.0-next.1...gatsby-core-utils@2.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.1.0-next.0...gatsby-core-utils@2.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.0.0-next.2...gatsby-core-utils@2.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.0.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.0.0-next.1...gatsby-core-utils@2.0.0-next.2) (2021-02-25)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [2.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@2.0.0-next.0...gatsby-core-utils@2.0.0-next.1) (2021-02-22)
+
+### Features
+
+- **gatsby-core-utils:** Add file download functions ([#29531](https://github.com/gatsbyjs/gatsby/issues/29531)) ([1a9469d](https://github.com/gatsbyjs/gatsby/commit/1a9469d67a19007faebebfb8ce876970c5e0ffaf))
+
+# [2.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.11.0-next.0...gatsby-core-utils@2.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [1.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.10.0-next.0...gatsby-core-utils@1.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-core-utils
+
+# [1.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.9.0-next.0...gatsby-core-utils@1.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-core-utils
+
 # [1.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-core-utils@1.8.0-next.1...gatsby-core-utils@1.9.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-core-utils

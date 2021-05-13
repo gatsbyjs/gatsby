@@ -2,14 +2,18 @@
 title: Debugging HTML Builds
 ---
 
-Errors while building static HTML files generally happen for one of the following reasons:
+Errors while building static HTML files (the build-time React SSR process) generally happen for one of the following reasons:
 
-1. Some of your code references "browser globals" like `window` or `document`. If
-   this is your problem you should see an error above like "window is not
-   defined". To fix this, find the offending code and either a) check before
-   calling the code if window is defined so the code doesn't run while Gatsby is
-   building (see code sample below) or b) if the code is in the render function
-   of a React.js component, move that code into a [`componentDidMount` lifecycle](https://reactjs.org/docs/react-component.html#componentdidmount) or into a [`useEffect` hook](https://reactjs.org/docs/hooks-reference.html#useeffect), which
+1. Some of your code references "browser globals" like `window` or `document`
+   that aren't available in Node.js. If this is your problem you should see an
+   error above like "window is not defined". To fix this, find the offending
+   code and either a) check before calling the code if window is defined so the
+   code doesn't run while Gatsby is building (see code sample below) or b) if
+   the code is in the render function of a React.js component, move that code
+   into a [`componentDidMount`
+   lifecycle](https://reactjs.org/docs/react-component.html#componentdidmount)
+   or into a [`useEffect`
+   hook](https://reactjs.org/docs/hooks-reference.html#useeffect), which
    ensures the code doesn't run unless it's in the browser.
 
 2. Check that each of your JS files listed in your `pages` directory (and any
@@ -22,9 +26,12 @@ Errors while building static HTML files generally happen for one of the followin
    is stricter than v3](/docs/reference/release-notes/migrating-from-v1-to-v2/#convert-to-either-pure-commonjs-or-pure-es6).
    The solution is to only use `import` and this also extends to `gatsby-ssr` and `gatsby-browser` files.
 
-4. Your app is not correctly [hydrated](https://reactjs.org/docs/react-dom.html), which results in gatsby develop and gatsby
-   build being inconsistent. It's possible that a change in a file like `gatsby-ssr` or `gatsby-browser` has a structure that is
-   not reflected in the other file, meaning that there is a mismatch between client and server output.
+4. Your app doesn't correctly
+   [hydrate](https://reactjs.org/docs/react-dom.html) in the client, which
+   results in gatsby develop and gatsby build being inconsistent. It's possible
+   that a change in a file like `gatsby-ssr` or `gatsby-browser` has
+   a structure that is not reflected in the other file, meaning that there is
+   a mismatch between client and server output.
 
 5. Some other reason :-) #1 is the most common reason building static files
    fail. If it's another reason, you have to be a bit more creative in figuring
@@ -32,8 +39,28 @@ Errors while building static HTML files generally happen for one of the followin
 
 ## How to check if `window` is defined
 
+When referencing `window` in a React component.
+
+```jsx
+import * as React from "react"
+
+// Check if window is defined (so if in the browser or in node.js).
+const isBrowser = typeof window !== "undefined"
+
+export default function MyComponent() {
+  let loggedIn = false
+  if (isBrowser) {
+    window.localstorage.getItem("isLoggedIn") === "true"
+  }
+
+  return <div>Am I logged in? {loggedIn}</div>
+}
+```
+
+When requiring a module:
+
 ```javascript
-// Requiring function causes error during builds
+// Requiring a function causes an error during builds
 // as the code tries to reference window
 const module = require("module") // Error
 
@@ -63,7 +90,7 @@ rendering.
 
 ```js:title=gatsby-node.js
 exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-  if (stage === "build-html") {
+  if (stage === "build-html" || stage === "develop-html") {
     actions.setWebpackConfig({
       module: {
         rules: [

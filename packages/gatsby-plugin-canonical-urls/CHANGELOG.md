@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.5.0-next.0...gatsby-plugin-canonical-urls@3.6.0-next.0) (2021-05-06)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.5.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.4.0-next.0...gatsby-plugin-canonical-urls@3.5.0-next.0) (2021-04-23)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.4.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.3.0-next.1...gatsby-plugin-canonical-urls@3.4.0-next.0) (2021-04-09)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.3.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.3.0-next.0...gatsby-plugin-canonical-urls@3.3.0-next.1) (2021-04-07)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.3.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.2.0-next.0...gatsby-plugin-canonical-urls@3.3.0-next.0) (2021-03-25)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.2.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.1.0-next.1...gatsby-plugin-canonical-urls@3.2.0-next.0) (2021-03-11)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.1.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.1.0-next.0...gatsby-plugin-canonical-urls@3.1.0-next.1) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.1.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.0.0-next.1...gatsby-plugin-canonical-urls@3.1.0-next.0) (2021-02-26)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [3.0.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@3.0.0-next.0...gatsby-plugin-canonical-urls@3.0.0-next.1) (2021-02-25)
+
+### Features
+
+- **gatsby-plugin-canonical-urls:** Add plugin validation ([#29688](https://github.com/gatsbyjs/gatsby/issues/29688)) ([4d4a7ab](https://github.com/gatsbyjs/gatsby/commit/4d4a7ab432a8d8159ffab96374e79e909dd47f51))
+
+# [3.0.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@2.11.0-next.0...gatsby-plugin-canonical-urls@3.0.0-next.0) (2021-02-05)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [2.11.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@2.10.0-next.0...gatsby-plugin-canonical-urls@2.11.0-next.0) (2021-01-28)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
+# [2.10.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@2.9.0-next.0...gatsby-plugin-canonical-urls@2.10.0-next.0) (2021-01-18)
+
+**Note:** Version bump only for package gatsby-plugin-canonical-urls
+
 # [2.9.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-canonical-urls@2.8.0-next.0...gatsby-plugin-canonical-urls@2.9.0-next.0) (2020-12-29)
 
 **Note:** Version bump only for package gatsby-plugin-canonical-urls

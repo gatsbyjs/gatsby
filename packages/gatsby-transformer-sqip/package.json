@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-sqip",
   "description": "Generates geometric primitive version of images",
-  "version": "2.10.0-next.1",
+  "version": "3.6.0-next.0",
   "author": "Benedikt Rötsch <roetsch.beni@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "fs-extra": "^8.1.0",
-    "gatsby-plugin-sharp": "^2.13.0-next.1",
+    "gatsby-plugin-sharp": "^3.6.0-next.0",
     "md5-file": "^5.0.0",
     "mini-svg-data-uri": "^1.2.3",
     "p-queue": "^6.6.2",
@@ -18,14 +18,14 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "babel-preset-gatsby-package": "^0.11.0-next.0",
+    "babel-preset-gatsby-package": "^1.6.0-next.0",
     "cross-env": "^7.0.3",
-    "debug": "^3.2.6"
+    "debug": "^3.2.7"
   },
   "peerDependencies": {
-    "gatsby": "^2.0.0",
-    "gatsby-source-contentful": "^2.0.0",
-    "gatsby-transformer-sharp": "^2.0.0"
+    "gatsby": "^3.0.0-next.0",
+    "gatsby-source-contentful": "^5.0.0-next.0",
+    "gatsby-transformer-sharp": "^3.0.0-next.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-transformer-sqip#readme",
   "keywords": [
@@ -47,6 +47,6 @@
     "watch": "babel -w src --out-dir . --ignore \"**/__tests__\""
   },
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   }
 }

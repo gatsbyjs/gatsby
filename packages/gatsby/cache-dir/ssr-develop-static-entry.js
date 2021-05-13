@@ -2,7 +2,7 @@ import React from "react"
 import fs from "fs"
 import { renderToString, renderToStaticMarkup } from "react-dom/server"
 import { get, merge, isObject, flatten, uniqBy, concat } from "lodash"
-import { join } from "path"
+import nodePath from "path"
 import apiRunner from "./api-runner-ssr"
 import { grabMatchParams } from "./find-path"
 import syncRequires from "$virtual/ssr-sync-requires"
@@ -20,9 +20,18 @@ const testRequireError = (moduleName, err) => {
   return regex.test(firstLine)
 }
 
-const stats = JSON.parse(
-  fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
-)
+let cachedStats
+const getStats = publicDir => {
+  if (cachedStats) {
+    return cachedStats
+  } else {
+    cachedStats = JSON.parse(
+      fs.readFileSync(nodePath.join(publicDir, `webpack.stats.json`), `utf-8`)
+    )
+
+    return cachedStats
+  }
+}
 
 let Html
 try {
@@ -38,7 +47,7 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html
 
-export default (pagePath, isClientOnlyPage, callback) => {
+export default (pagePath, isClientOnlyPage, publicDir, error, callback) => {
   let bodyHtml = ``
   let headComponents = [
     <meta key="environment" name="note" content="environment=development" />,
@@ -48,6 +57,32 @@ export default (pagePath, isClientOnlyPage, callback) => {
   let preBodyComponents = []
   let postBodyComponents = []
   let bodyProps = {}
+
+  if (error) {
+    postBodyComponents.push([
+      <script
+        key="dev-ssr-error"
+        dangerouslySetInnerHTML={{
+          __html: `window._gatsbyEvents = window._gatsbyEvents || []; window._gatsbyEvents.push(["FAST_REFRESH", { action: "SHOW_DEV_SSR_ERROR", payload: ${JSON.stringify(
+            error
+          )} }])`,
+        }}
+      />,
+      <noscript key="dev-ssr-error-noscript">
+        <h1>Failed to Server Render (SSR)</h1>
+        <h2>Error message:</h2>
+        <p>{error.sourceMessage}</p>
+        <h2>File:</h2>
+        <p>
+          {error.source}:{error.line}:{error.column}
+        </p>
+        <h2>Stack:</h2>
+        <pre>
+          <code>{error.stack}</code>
+        </pre>
+      </noscript>,
+    ])
+  }
 
   const generateBodyHTML = () => {
     const setHeadComponents = components => {
@@ -98,12 +133,12 @@ export default (pagePath, isClientOnlyPage, callback) => {
 
     const getPageDataPath = path => {
       const fixedPagePath = path === `/` ? `index` : path
-      return join(`page-data`, fixedPagePath, `page-data.json`)
+      return nodePath.join(`page-data`, fixedPagePath, `page-data.json`)
     }
 
     const getPageData = pagePath => {
       const pageDataPath = getPageDataPath(pagePath)
-      const absolutePageDataPath = join(process.cwd(), `public`, pageDataPath)
+      const absolutePageDataPath = nodePath.join(publicDir, pageDataPath)
       const pageDataJson = fs.readFileSync(absolutePageDataPath, `utf8`)
 
       try {
@@ -121,6 +156,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
       [`commons`].map(chunkKey => {
         const fetchKey = `assetsByChunkName[${chunkKey}]`
 
+        const stats = getStats(publicDir)
         let chunks = get(stats, fetchKey)
         const namedChunkGroups = get(stats, `namedChunkGroups`)
 
@@ -136,17 +172,19 @@ export default (pagePath, isClientOnlyPage, callback) => {
         })
 
         namedChunkGroups[chunkKey].assets.forEach(asset =>
-          chunks.push({ rel: `preload`, name: asset })
+          chunks.push({ rel: `preload`, name: asset.name })
         )
 
         const childAssets = namedChunkGroups[chunkKey].childAssets
         for (const rel in childAssets) {
-          chunks = concat(
-            chunks,
-            childAssets[rel].map(chunk => {
-              return { rel, name: chunk }
-            })
-          )
+          if (childAssets.hasownProperty(rel)) {
+            chunks = concat(
+              chunks,
+              childAssets[rel].map(chunk => {
+                return { rel, name: chunk }
+              })
+            )
+          }
         }
 
         return chunks
@@ -187,16 +225,22 @@ export default (pagePath, isClientOnlyPage, callback) => {
             ...grabMatchParams(this.props.location.pathname),
             ...(pageData.result?.pageContext?.__params || {}),
           },
-          // pathContext was deprecated in v2. Renamed to pageContext
-          pathContext: pageData.result
-            ? pageData.result.pageContext
-            : undefined,
         }
 
-        const pageElement = createElement(
-          syncRequires.ssrComponents[componentChunkName],
-          props
-        )
+        let pageElement
+        if (
+          syncRequires.ssrComponents[componentChunkName] &&
+          !isClientOnlyPage
+        ) {
+          pageElement = createElement(
+            syncRequires.ssrComponents[componentChunkName],
+            props
+          )
+        } else {
+          // If this is a client-only page or the pageComponent didn't finish
+          // compiling yet, just render an empty component.
+          pageElement = () => null
+        }
 
         const wrappedPage = apiRunner(
           `wrapPageElement`,
@@ -276,7 +320,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     return bodyHtml
   }
 
-  const bodyStr = isClientOnlyPage ? `` : generateBodyHTML()
+  const bodyStr = generateBodyHTML()
 
   const htmlElement = React.createElement(Html, {
     ...bodyProps,
@@ -289,6 +333,7 @@ export default (pagePath, isClientOnlyPage, callback) => {
     preBodyComponents,
     postBodyComponents: postBodyComponents.concat([
       <script key={`polyfill`} src="/polyfill.js" noModule={true} />,
+      <script key={`framework`} src="/framework.js" />,
       <script key={`commons`} src="/commons.js" />,
     ]),
   })

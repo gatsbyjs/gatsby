@@ -1,4 +1,16 @@
-# gatsby-source-shopify
+# 📣 Looking for the latest version of `gatsby-source-shopify`?
+
+👉 Get started at [`gatsbyjs/gatsby-source-shopify`](https://github.com/gatsbyjs/gatsby-source-shopify)
+
+- Support for incremental builds
+- Scale up to 10k products
+- Up to 16x faster builds
+
+`gatsbyjs/gatsby-source-shopify` will replace the below package with the next minor release of `gatsbyjs/gatsby`.
+
+---
+
+## Legacy source plugin instructions:
 
 Source plugin for pulling data into [Gatsby][gatsby] from [Shopify][shopify]
 stores via the [Shopify Storefront API][shopify-storefront-api].
@@ -472,8 +484,8 @@ To learn more about image processing, check the documentation of
 ```js
 const path = require("path")
 
-exports.createPages = async ({ graphql, boundActionCreators }) => {
-  const { createPage } = boundActionCreators
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
 
   const pages = await graphql(`
     {

@@ -4,6 +4,7 @@ const {
   prepareOptions,
   getCustomOptions,
   mergeConfigItemOptions,
+  addRequiredPresetOptions,
 } = require(`./babel-loader-helpers`)
 const { getBrowsersList } = require(`./browserslist`)
 
@@ -22,8 +23,13 @@ const { getBrowsersList } = require(`./browserslist`)
  *
  * You can find documentation for the custom loader here: https://babeljs.io/docs/en/next/babel-core.html#loadpartialconfig
  */
+
+const customOptionsCache = new Map()
+const configCache = new Map()
+const babelrcFileToCacheKey = new Map()
+
 module.exports = babelLoader.custom(babel => {
-  const toReturn = {
+  return {
     // Passed the loader options.
     customOptions({
       stage = `test`,
@@ -31,7 +37,11 @@ module.exports = babelLoader.custom(babel => {
       rootDir = process.cwd(),
       ...options
     }) {
-      return {
+      if (customOptionsCache.has(stage)) {
+        return customOptionsCache.get(stage)
+      }
+
+      const toReturn = {
         custom: {
           stage,
           reactRuntime,
@@ -48,11 +58,39 @@ module.exports = babelLoader.custom(babel => {
           ...options,
         },
       }
+
+      customOptionsCache.set(stage, toReturn)
+
+      return toReturn
     },
 
     // Passed Babel's 'PartialConfig' object.
     config(partialConfig, { customOptions }) {
+      let configCacheKey = customOptions.stage
+      if (partialConfig.hasFilesystemConfig()) {
+        // partialConfig.files is a Set that accumulates used config files (absolute paths)
+        partialConfig.files.forEach(configFilePath => {
+          configCacheKey += `_${configFilePath}`
+        })
+
+        // after generating configCacheKey add link between babelrc files and cache keys that rely on it
+        // so we can invalidate memoized configs when used babelrc file changes
+        partialConfig.files.forEach(configFilePath => {
+          let cacheKeysToInvalidate = babelrcFileToCacheKey.get(configFilePath)
+          if (!cacheKeysToInvalidate) {
+            cacheKeysToInvalidate = new Set()
+            babelrcFileToCacheKey.set(configFilePath, cacheKeysToInvalidate)
+          }
+
+          cacheKeysToInvalidate.add(configCacheKey)
+        })
+      }
+
       let { options } = partialConfig
+      if (configCache.has(configCacheKey)) {
+        return { ...options, ...configCache.get(configCacheKey) }
+      }
+
       const [
         reduxPresets,
         reduxPlugins,
@@ -76,6 +114,9 @@ module.exports = babelLoader.custom(babel => {
           plugins: [...options.plugins, ...requiredPlugins],
           presets: [...options.presets, ...requiredPresets],
         }
+        // User-defined preset likely contains `babel-preset-gatsby`
+        // Make sure to pass required dynamic options (e.g. `stage` to it):
+        addRequiredPresetOptions(babel, options.presets, customOptions)
       }
 
       // Merge in presets/plugins added from gatsby plugins.
@@ -97,9 +138,35 @@ module.exports = babelLoader.custom(babel => {
         })
       })
 
+      // cache just plugins and presets, because config also includes things like
+      // filenames - this is mostly to not call `mergeConfigItemOptions` for each file
+      // as that function call `babel.createConfigItem` and is quite expensive but also
+      // skips quite a few nested loops on top of that
+      configCache.set(configCacheKey, {
+        plugins: options.plugins,
+        presets: options.presets,
+      })
+
       return options
     },
   }
-
-  return toReturn
 })
+
+module.exports.BabelConfigItemsCacheInvalidatorPlugin = class BabelConfigItemsCacheInvalidatorPlugin {
+  constructor() {
+    this.name = `BabelConfigItemsCacheInvalidatorPlugin`
+  }
+
+  apply(compiler) {
+    compiler.hooks.invalid.tap(this.name, function (file) {
+      const cacheKeysToInvalidate = babelrcFileToCacheKey.get(file)
+
+      if (cacheKeysToInvalidate) {
+        for (const cacheKey of cacheKeysToInvalidate) {
+          configCache.delete(cacheKey)
+        }
+        babelrcFileToCacheKey.delete(file)
+      }
+    })
+  }
+}

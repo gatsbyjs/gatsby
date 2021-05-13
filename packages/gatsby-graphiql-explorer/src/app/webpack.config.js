@@ -35,7 +35,7 @@ module.exports = {
                 {
                   useBuiltIns: true,
                   pragma: `React.createElement`,
-                  development: false,
+                  development: mode !== `production`,
                 },
               ],
             ],

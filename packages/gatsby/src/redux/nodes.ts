@@ -743,7 +743,7 @@ export const getNodesFromCacheByValue = (
     })
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to re-sort
+    //       subtraction in such a way that we don't have to re-sort
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
@@ -753,7 +753,7 @@ export const getNodesFromCacheByValue = (
     removeBucketFromSet(filterValue, filterCache, set)
 
     // TODO: there's probably a more efficient algorithm to do set
-    //       subtraction in such a way that we dont have to resort here
+    //       subtraction in such a way that we don't have to resort here
     return [...set].sort((A, B) => A.internal.counter - B.internal.counter)
   }
 
@@ -1104,6 +1104,11 @@ export function intersectNodesByCounter(
     } else if (counterA > counterB) {
       pointerB++
     } else {
+      if (nodeA !== nodeB) {
+        throw new Error(
+          `Invariant violation: inconsistent node counters detected`
+        )
+      }
       // nodeA===nodeB. Make sure we didn't just add this node already.
       // Since input arrays are sorted, the same node should be grouped
       // back to back, so even if both input arrays contained the same node

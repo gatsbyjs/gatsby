@@ -1,14 +1,17 @@
 import _ from "lodash"
 import slugify, { Options as ISlugifyOptions } from "@sindresorhus/slugify"
-import { Reporter } from "gatsby"
+import { Reporter } from "gatsby/reporter"
 import {
   extractFieldWithoutUnion,
   extractAllCollectionSegments,
   switchToPeriodDelimiters,
   stripTrailingSlash,
+  removeFileExtension,
 } from "./path-utils"
 
 const doubleForwardSlashes = /\/\/+/g
+// Match 0 or 1 of "/"
+const indexRoute = /^\/?$/
 
 // Generates the path for the page from the file path
 // product/{Product.id} => /product/:id, pulls from nodes.id
@@ -63,6 +66,14 @@ export function derivePath(
 
   // 4.  Remove double forward slashes that could occur in the final URL
   modifiedPath = modifiedPath.replace(doubleForwardSlashes, `/`)
+
+  // 5.  Remove trailing slashes that could occur in the final URL
+  modifiedPath = stripTrailingSlash(modifiedPath)
+
+  // 6.  If the final URL appears to be an index path, use the "index" file naming convention
+  if (indexRoute.test(removeFileExtension(modifiedPath))) {
+    modifiedPath = `index${modifiedPath}`
+  }
 
   const derivedPath = modifiedPath
 

@@ -1,11 +1,6 @@
-const React = require("react")
+import React from "react"
+import { LaterHydrator } from "."
 
-const { LaterHydrator } = require(".")
-
-exports.wrapRootElement = ({ element }) => {
-  return (
-    <LaterHydrator>
-      {element}
-    </LaterHydrator>
-  )
+export function wrapRootElement({ element }) {
+  return <LaterHydrator>{element}</LaterHydrator>
 }

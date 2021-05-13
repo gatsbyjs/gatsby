@@ -110,6 +110,14 @@ const getTypedNodeCreators = ({
       createNode,
       createContentDigest,
     }),
+    createFooNode: typedNodeCreator(`Foo`, {
+      createNode,
+      createContentDigest,
+    }),
+    createBarNode: typedNodeCreator(`Bar`, {
+      createNode,
+      createContentDigest,
+    }),
   }
 }
 
@@ -140,6 +148,7 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
       return mockAPIs[apiName](
         {
           actions: doubleBoundActionCreators,
+          schema: require(`../../schema/types/type-builders`),
           createContentDigest: require(`gatsby-core-utils`).createContentDigest,
         },
         pluginOptions
@@ -152,8 +161,11 @@ const setup = async ({ restart = isFirstRun, clearCache = false } = {}) => {
   const { store, emitter } = require(`../../redux`)
   const { saveState } = require(`../../db`)
   const reporter = require(`gatsby-cli/lib/reporter`)
+  const { bindActionCreators } = require(`redux`)
   const { queryRunner } = require(`../query-runner`)
-  const { boundActionCreators } = require(`../../redux/actions`)
+  const { actions } = require(`../../redux/actions`)
+  const boundActionCreators = bindActionCreators(actions, store.dispatch)
+
   const doubleBoundActionCreators = Object.keys(boundActionCreators).reduce(
     (acc, actionName) => {
       acc[actionName] = (...args) =>
@@ -867,7 +879,7 @@ describe(`query caching between builds`, () => {
     }, 99999)
   })
 
-  describe.skip(`Changing page context invalidates page queries`, () => {
+  describe(`Changing page context invalidates page queries`, () => {
     beforeAll(() => {
       let pageChangeCounter = 1
       let nodeChangeCounter = 1
@@ -1320,5 +1332,232 @@ describe(`query caching between builds`, () => {
       expect(pathsOfPagesWithQueriesThatRan).toEqual([])
       expect(staticQueriesThatRan).toEqual([])
     }, 999999)
+  })
+
+  describe(`Properly tracks runQuery results (from custom resolvers)`, () => {
+    let stage
+    beforeAll(() => {
+      setAPIhooks({
+        createSchemaCustomization: ({ actions: { createTypes }, schema }) => {
+          // Define fields with custom resolvers first
+          const resolveOne = type => (value, args, context) =>
+            context.nodeModel.runQuery({
+              query: { testId: { eq: value.id } },
+              firstOnly: true,
+              type,
+            })
+
+          createTypes([
+            schema.buildObjectType({
+              name: `Foo`,
+              fields: { id: `ID!` },
+              interfaces: [`Node`],
+            }),
+            schema.buildObjectType({
+              name: `Bar`,
+              fields: { id: `ID!` },
+              interfaces: [`Node`],
+            }),
+            schema.buildObjectType({
+              name: `Test`,
+              fields: {
+                foo: {
+                  type: `Foo`,
+                  resolve: resolveOne(`Foo`),
+                },
+                bar: {
+                  type: `Bar`,
+                  resolve: resolveOne(`Bar`),
+                },
+                fooList: {
+                  type: [`Foo`],
+                  resolve: (value, args, context) =>
+                    context.nodeModel.runQuery({
+                      query: { testId: { eq: value.id } },
+                      type: `Foo`,
+                    }),
+                },
+                barList: {
+                  type: [`Bar`],
+                  resolve: (value, args, context) =>
+                    context.nodeModel.getAllNodes({ type: `Bar` }),
+                },
+              },
+              interfaces: [`Node`],
+            }),
+          ])
+        },
+        sourceNodes: nodeApiContext => {
+          const {
+            createTestNode,
+            createFooNode,
+            createBarNode,
+          } = getTypedNodeCreators(nodeApiContext)
+
+          createTestNode({
+            id: `test-1`,
+            slug: `test`,
+            content: `Lorem ipsum.`,
+          })
+
+          // Note: there are no `Foo` nodes initially
+          createBarNode({
+            id: `bar-1`,
+            testId: `test-1`,
+          })
+
+          if (stage === `add-foo`) {
+            createFooNode({
+              id: `foo-1`,
+              testId: `test-1`,
+            })
+          }
+          if (stage === `delete-foo`) {
+            nodeApiContext.actions.deleteNode({ node: { id: `foo-1` } })
+          }
+          if (stage === `add-bar2`) {
+            createBarNode({
+              id: `bar-2`,
+              testId: `test-1`,
+            })
+          }
+          if (stage === `delete-bar2`) {
+            nodeApiContext.actions.deleteNode({ node: { id: `bar-2` } })
+          }
+          if (stage === `delete-bar1`) {
+            nodeApiContext.actions.deleteNode({ node: { id: `bar-1` } })
+          }
+        },
+        createPages: ({ actions: { createPage } }, _pluginOptions) => {
+          createPage({
+            component: `/src/templates/foo.js`,
+            path: `/foo`,
+          })
+          createPage({
+            component: `/src/templates/foo-list.js`,
+            path: `/foo-list`,
+          })
+          createPage({
+            component: `/src/templates/bar.js`,
+            path: `/bar`,
+          })
+          createPage({
+            component: `/src/templates/bar-list.js`,
+            path: `/bar-list`,
+          })
+        },
+      })
+      setPageQueries({
+        "/src/templates/foo.js": `
+          {
+            test {
+              foo { id }
+            }
+          }
+        `,
+        "/src/templates/foo-list.js": `
+          {
+            test {
+              fooList { id }
+            }
+          }
+        `,
+        "/src/templates/bar.js": `
+          {
+            test {
+              bar { id }
+            }
+          }
+        `,
+        "/src/templates/bar-list.js": `
+          {
+            test {
+              barList { id }
+            }
+          }
+        `,
+      })
+      setStaticQueries({})
+    })
+
+    const runDataDependencyClearingOnDirtyTest = ({ withRestarts }) => {
+      it(`Initial - runs all queries`, async () => {
+        stage = `initial`
+        const { pathsOfPagesWithQueriesThatRan, pages } = await setup({
+          restart: true,
+          clearCache: true,
+        })
+        // sanity check, to make sure test setup is correct
+        expect(pages).toEqual([`/bar`, `/bar-list`, `/foo`, `/foo-list`])
+
+        // on initial we want query to run
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([
+          `/bar`,
+          `/bar-list`,
+          `/foo`,
+          `/foo-list`,
+        ])
+      }, 999999)
+
+      it(`re-runs queries when a foo node is added`, async () => {
+        stage = `add-foo`
+        const { pathsOfPagesWithQueriesThatRan } = await setup({
+          restart: withRestarts,
+        })
+
+        // Since there was no single "foo" node before - we will also re-run the "/foo"
+        // (as maybe the new node matches this query now)
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/foo`, `/foo-list`])
+      }, 999999)
+
+      it(`re-runs queries when a foo node is deleted`, async () => {
+        stage = `delete-foo`
+        const { pathsOfPagesWithQueriesThatRan } = await setup({
+          restart: withRestarts,
+        })
+
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/foo`, `/foo-list`])
+      }, 999999)
+
+      it(`re-runs queries when a bar-2 node is added`, async () => {
+        stage = `add-bar2`
+        const { pathsOfPagesWithQueriesThatRan } = await setup({
+          restart: withRestarts,
+        })
+
+        // Note: we don't re-run "/bar" query because tracked relation is "node: bar-1".
+        // Adding node "bar-2" doesn't affect this relation.
+        // FIXME: this can be actually wrong behavior when filtering by any field other than "id"
+        //   we should rework this to use connection + filter for tracking.
+        //   In this case this test will also re-run "/bar" query (also affects other bar-related tests)
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/bar-list`])
+      }, 999999)
+
+      it(`re-runs queries when a bar-2 node is deleted`, async () => {
+        stage = `delete-bar2`
+        const { pathsOfPagesWithQueriesThatRan } = await setup({
+          restart: withRestarts,
+        })
+
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/bar-list`])
+      }, 999999)
+
+      it(`re-runs queries when a bar-1 node is deleted`, async () => {
+        stage = `delete-bar1`
+        const { pathsOfPagesWithQueriesThatRan } = await setup({
+          restart: withRestarts,
+        })
+
+        expect(pathsOfPagesWithQueriesThatRan).toEqual([`/bar`, `/bar-list`])
+      }, 999999)
+    }
+
+    describe(`No restarts`, () => {
+      runDataDependencyClearingOnDirtyTest({ withRestarts: false })
+    })
+
+    describe(`With restarts`, () => {
+      runDataDependencyClearingOnDirtyTest({ withRestarts: true })
+    })
   })
 })

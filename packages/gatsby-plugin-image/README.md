@@ -1,354 +1,237 @@
-# gatsby-plugin-image (beta)
+# gatsby-plugin-image
 
-This plugin is a replacement for gatsby-image. It adds [static images](#staticimage), and a [new higher-performance gatsby-image component](#gatsbyimage). It also adds [a new GraphQL resolver](#graphql-resolver) to gatsby-transformer-sharp.
+Adding responsive images to your site while maintaining high performance scores can be difficult to do manually. The Gatsby Image plugin handles the hard parts of producing images in multiple sizes and formats for you!
+
+For full documentation on all configuration options, see [the Gatsby Image Plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/)
 
 ## Contents
 
-- [StaticImage](#staticimage) - the new static image component
-- [GatsbyImage](#gatsbyimage) - a high-performance gatsby-image component
-- [gatsbyImageData](#graphql-resolver) - a simpler GraphQL API
+- [Installation](#installation)
+- [Using the Gatsby Image components](#using-the-gatsby-image-components)
+  - [Static images](#static-images)
+  - [Dynamic images](#dynamic-images)
+- [Customizing the default options](#customizing-the-default-options)
+- [Migrating to gatsby-plugin-image](#migrating)
 
-## Usage
+## Installation
 
-1. Install `gatsby-plugin-image` and `gatsby-plugin-sharp`:
+1. Install `gatsby-plugin-image` and `gatsby-plugin-sharp`. Additionally install `gatsby-source-filesystem` if you are using static images, and `gatsby-transformer-sharp` if you are using dynamic images.
 
 ```shell
-npm install gatsby-plugin-image gatsby-plugin-sharp
+npm install gatsby-plugin-image gatsby-plugin-sharp gatsby-source-filesystem gatsby-transformer-sharp
 ```
 
-If you're using the new `GatsbyImage` in addition to `StaticImage`, you'll also want to install `gatsby-transformer-sharp`.
-
-2. Upgrade `gatsby` to at least `2.24.78`.
-
-3. Add the plugins to your `gatsby-config.js`:
+2. Add the plugins to your `gatsby-config.js`:
 
 ```javascript
 module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
-    // `gatsby-transformer-sharp`
+    `gatsby-transformer-sharp`, // Needed for dynamic images
   ],
 }
 ```
 
-# StaticImage
+## Using the Gatsby Image components
 
-This component is a new, simpler way to use Gatsby's image processing tools and components without needing to write GraphQL queries. It is designed for static images such as logos rather than ones loaded dynamically from a CMS.
+### Deciding which component to use
 
-```js
-import React from "react"
-import { StaticImage } from "gatsby-plugin-image"
+The Gatsby Image plugin includes two image components: one for static and one for dynamic images. An effective way to decide which you need to is to ask yourself: _"will this image be the same every time the component or template is used?"_. If it will always be the same, then use `StaticImage`. If it will change, whether through data coming from a CMS or different values passed to a component each time you use it, then it is a dynamic image and you should use the `GatsbyImage` component.
 
-export const Dino = () => (
-  <StaticImage height={100} src="trex.png" alt="T-Rex" />
-)
-```
+### Static images
 
-The `src` prop is relative to the source file, like in static HTML.
+If you are using an image that will be the same each time the component is used, such as a logo or front page hero image, you can use the `StaticImage` component. The image can be a local file in your project or an image hosted on a remote server. Any remote images are downloaded and resized at build time.
 
-You can pass the same options as those available via [`gatsbyImageData`](#graphql-resolver) queries:
+1. **Add the image to your project.**
 
-```js
-import React from "react"
-import { StaticImage } from "gatsby-plugin-image"
+   If you are using a local image, copy it into the project. A folder such as `src/images` is a good choice.
 
-export const Dino = () => (
-  <StaticImage
-    src="trex.png"
-    placeholder="none"
-    layout="constrained"
-    width={200}
-    alt="T-Rex"
-    transformOptions={{ grayscale: true }}
-  />
-)
-```
+2. **Add the `StaticImage` component to your template.**
 
-### Are there restrictions to how this is used?
+   Import the component, then set the `src` prop to point to the image you added earlier. The path is relative to the source file itself. If your component file was `src/components/dino.js`, then you would load the image like this:
 
-Because the images still need to be resized during build, the props must be able to be statically-analyzed at build time. You can't pass them as props from outside the component, or use the results of function calls, for example.
+   ```jsx
+   import { StaticImage } from "gatsby-plugin-image"
 
-This does not work:
+   export function Dino() {
+     return <StaticImage src="../images/dino.png" alt="A dinosaur" />
+   }
+   ```
 
-```js
-// ⚠️ Doesn't work
+   If you are using a remote image, pass the image URL in the `src` prop:
 
-({ logo }) => <Img src={logo}>
-```
+   ```jsx
+   import { StaticImage } from "gatsby-plugin-image"
 
-...and nor does this:
+   export function Kitten() {
+     return <StaticImage src="https://placekitten.com/800/600" alt="A kitten" />
+   }
+   ```
 
-```js
-// ⚠️ Doesn't work
+   When you build your site, the `StaticImage` component will load the image from your filesystem or from the remote URL, and it will generate all the sizes and formats that you need to support a responsive image.
 
-() => {
-    const width = getTheWidthFromSomewhere();
-    return <Img src="trex.png" width={width}>
-}
-```
+   Because the image is loaded at build time, you cannot pass the filename in as a prop, or otherwise generate it outside of the component. It should either be a static string, or a local variable in the component's scope.
 
-You can use variables and expressions if they're in the scope of the file, e.g.:
+   **Important:** Remote images are downloaded and resized at build time. If the image is changed on the other server, it will not be updated on your site until you rebuild.
 
-```js
-//OK
-() => {
-    const width = 300
-    return <Img src="trex.png" width={width}>
-}
-```
+3. **Configure the image.**
 
-```js
-//Also OK
+   You configure the image by passing props to the `<StaticImage />` component. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options [in the API docs](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
-const width = 300
+   ```jsx
+   import { StaticImage } from "gatsby-plugin-image"
 
-() => {
-    const height = width * 16 / 9
-    return <Img src="trex.png" width={width} height={height}>
-}
-```
+   export function Dino() {
+     return (
+       <StaticImage
+         src="../images/dino.png"
+         alt="A dinosaur"
+         placeholder="blurred"
+         layout="fixed"
+         width={200}
+         height={200}
+       />
+     )
+   }
+   ```
 
-### API
+   This component renders a 200px by 200px image of a dinosaur. Before loading it will have a blurred, low-resolution placeholder. It uses the `"fixed"` layout, which means the image does not resize with its container.
 
-The only required prop is `src`. The default type is `constrained`. The other props match those of [the new GatsbyImage component](#gatsbyimage). You can also pass in options which are forwarded to [`gatsbyImageData`](#graphql-resolver).
+#### Restrictions on using `StaticImage`
 
-## GatsbyImage
+There are a few technical restrictions to the way you can pass props into `StaticImage`. Most importantly, you can't use any of the parent component's props. For more information, refer to the [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/#restrictions-on-using-staticimage). If you find yourself wishing you could use a prop passed from a parent for the image `src` then it's likely that you should be using a dynamic image.
 
-Speedy, optimized images without the work.
+### Dynamic images
 
-GatsbyImage is a React component specially designed to give your users a great image experience. It combines speed and best practices.
+If you need to have dynamic images (such as if they are coming from a CMS), you can load them via GraphQL and display them using the `GatsbyImage` component.
 
-Note: GatsbyImage is not a drop-in replacement for `<img>`. It's optimized for fixed width/height images and images that stretch the full-width of a container.
+1. **Add the image to your page query.**
 
-## Table of Contents
+   Any GraphQL File object that includes an image will have a `childImageSharp` field that you can use to query the image data. The exact data structure will vary according to your data source, but the syntax is like this:
 
-- [Problem](#problem)
-- [Solution](#solution)
-- [How to use](#how-to-use)
-- [Types of Responsive Images](#three-types-of-responsive-images)
-- [Gatsby Image Props](#gatsby-plugin-image-props)
+   ```graphql
+   query {
+     blogPost(id: { eq: $Id }) {
+       title
+       body
+       avatar {
+         childImageSharp {
+           gatsbyImageData(width: 200)
+         }
+       }
+     }
+   }
+   ```
 
-## Problem
+2. **Configure your image.**
 
-Large, unoptimized images dramatically slow down your site.
+   For all the configuration options, see the [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image/).
 
-But creating optimized images for websites has long been a thorny problem.
-Ideally you would:
+   You configure the image by passing arguments to the `gatsbyImageData` resolver. You can change the size and layout, as well as settings such as the type of placeholder used when lazy loading. There are also advanced image processing options available. You can find the full list of options in the API docs.
 
-- Resize large images to the size needed by your design.
-- Generate multiple smaller images so smartphones and tablets don't download
-  desktop-sized images.
-- Strip all unnecessary metadata and optimize JPEG and PNG compression.
-- Efficiently lazy load images to speed initial page load and save bandwidth.
-- Use the "blur-up" technique or a
-  "[traced placeholder](https://github.com/gatsbyjs/gatsby/issues/2435)" SVG to
-  show a preview of the image while it loads.
-- Hold the image position so your page doesn't jump while images load.
+   ```graphql
+   query {
+     blogPost(id: { eq: $Id }) {
+       title
+       body
+       author
+       avatar {
+         childImageSharp {
+           gatsbyImageData(
+             width: 200
+             placeholder: BLURRED
+             formats: [AUTO, WEBP, AVIF]
+           )
+         }
+       }
+     }
+   }
+   ```
 
-Doing this consistently across a site feels like a task that can never be completed. You manually
-optimize your images and then… several images are swapped in at the last minute
-or a design-tweak shaves 100px of width off your images.
+3. **Display the image.**
 
-Most solutions involve a lot of manual labor and bookkeeping to ensure every
-image is optimized.
+   You can then use the `GatbsyImage` component to display the image on the page. The `getImage()` function is an optional helper to make your code easier to read. It takes a `File` and returns `file.childImageSharp.gatsbyImageData`, which can be passed to the `GatsbyImage` component.
 
-This isn't ideal. Optimized images should be easy and the default.
+   ```jsx
+   import { graphql } from "gatsby"
+   import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
-## Solution
+   function BlogPost({ data }) {
+     const image = getImage(data.blogPost.avatar)
+     return (
+       <section>
+         <h2>{data.blogPost.title}</h2>
+         <GatsbyImage image={image} alt={data.blogPost.author} />
+         <p>{data.blogPost.body}</p>
+       </section>
+     )
+   }
 
-With Gatsby, we can make images way _way_ better.
+   export const pageQuery = graphql`
+     query {
+       blogPost(id: { eq: $Id }) {
+         title
+         body
+         author
+         avatar {
+           childImageSharp {
+             gatsbyImageData(
+               width: 200
+               placeholder: BLURRED
+               formats: [AUTO, WEBP, AVIF]
+             )
+           }
+         }
+       }
+     }
+   `
+   ```
 
-`gatsby-plugin-image` is designed to work seamlessly with Gatsby's native image
-processing capabilities powered by GraphQL and Sharp. To produce perfect images,
-you need only:
+For full APIs, see [Gatsby Image plugin reference guide](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-plugin-image).
 
-1. Import `{ GatsbyImage } from "gatsby-plugin-image"`.
-2. Write a GraphQL query with all necessary fields needed by `gatsby-plugin-image`.
+## Customizing the default options
 
-The GraphQL query creates multiple thumbnails with optimized JPEG and PNG
-compression. The `gatsby-plugin-image` component automatically sets up the "blur-up"
-effect as well as lazy loading of images further down the screen.
+You might find yourself using the same options (like `placeholder`, `formats` etc.) with most of your `GatsbyImage` and `StaticImage` instances.
+You can customize the default options with `gatsby-plugin-sharp`.
 
-Make sure you have set up a source plugin, so your images are available in GraphQL queries. For example, if your images live in a project folder on the local filesystem, you would set up `gatsby-source-filesystem` in `gatsby-config.js` like so:
+The following configuration describes the options that can be customized along with their default values:
 
-```js
-const path = require(`path`)
-
+```javascript:title=gatsby-config.js
 module.exports = {
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `gatsby-plugin-sharp`,
       options: {
-        name: `images`,
-        path: path.join(__dirname, `src`, `images`),
-      },
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`
+          quality: 50
+          breakpoints: [750, 1080, 1366, 1920]
+          backgroundColor: `transparent`
+          tracedSVGOptions: {}
+          blurredOptions: {}
+          jpgOptions: {}
+          pngOptions: {}
+          webpOptions: {}
+          avifOptions: {}
+        }
+      }
     },
-    `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
   ],
 }
 ```
 
-## How to use
+## Migrating
 
-This is what a component using `gatsby-plugin-image` looks like:
+_Main article: **[Migrating from gatsby-image to gatsby-plugin-image](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide)**_
 
-```jsx
-import * as React from "react"
-import { graphql } from "gatsby"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
-
-export default ({ data }) => {
-  // You can use the helper function `getImage`, which is equivalent to:
-  // const imageData = data.file.childImageSharp.gatsbyImageData
-  const imageData = getImage(data.file)
-
-  return (
-    <div>
-      <h1>Hello GatsbyImage</h1>
-      <GatsbyImage image={imageData} alt="my gatsby image" />
-    </div>
-  )
-}
-
-export const query = graphql`
-  query {
-    file(relativePath: { eq: "blog/avatars/kyle-mathews.jpeg" }) {
-      childImageSharp {
-        gatsbyImageData(layout: FIXED, width: 125, height: 125)
-      }
-    }
-  }
-`
-```
-
-If you need the image `src` directly you can import the `getSrc` helper function from `gatsby-plugin-image`. That function is equivalent to `data.file.childImageSharp.gatsbyImageData.images.fallback.src`. Note that `src` will be undefined if a .png or .jpg image is not available.
-
-### Upgrading from the gatsby-image@2
-
-We've included a codemod to help you migrate to the new `gatsby-plugin-image` API.
+If your site uses the old `gatsby-image` component, you can use a codemod to help you migrate to the new Gatsby Image components. This can update the code for most sites. To use the codemod, run this command in the root of your site:
 
 ```shell
-npx gatsby-codemods gatsby-plugin-image <path>
+npx gatsby-codemods gatsby-plugin-image
 ```
 
-`path` is not required and will default to the directory you're currently in.
-
-Note that you cannot pass additional flags to this command. It will automatically run the codemod against file extensions `js, jsx, ts, tsx` and ignore the `node_modules`, `.cache` and `public` directories of your project.
-
-**If you have a custom babel config for your site, run in the root directory, otherwise `./src` is sufficient.**
-
-Note that jscodeshift tries to match the formatting of your existing code, but you may need to use a tool like [prettier](https://prettier.io/) to ensure consistency after running these codemods.
-
-If you need to run with custom flags, you can install [jscodeshift](https://github.com/facebook/jscodeshift) globally and `gatsby-codemods` in your project. Then `jscodeshift -t node_modules/gatsby-codemods/transforms/gatsby-plugin-image.js .` will transform your current directory and you can pass any valid jscodeshift flags.
-
-After the code is modified, be sure to install and configure everything needed to use `gatsby-plugin-image.`
-
-1. Install this package
-
-```shell
-npm install gatsby-plugin-image
-```
-
-2. Add `gatsby-plugin-image` to your `gatsby-config.js` file.
-
-3. Make sure `gatsby-transformer-sharp` and `gatsby-plugin-sharp` are updated to the latest versions.
-
-## Three types of responsive images
-
-There are three types of responsive images supported by gatsby-image.
-
-1. Images that have a _fixed_ width and height
-1. Images that stretch across a _fluid_ container
-1. Images that stretch across a container but are _constrained_ to a maximum width
-
-In the first scenario, you want to vary the image's size for different screen
-resolutions -- in other words, create retina images.
-
-For the second and third scenario, you want to create multiple sizes of thumbnails for
-devices with widths stretching from smartphone to wide desktop monitors.
-
-To decide between the two, ask yourself: "do I know what the exact size of this image
-will be?" If yes, it's "fixed". If no and its width and/or height need to
-vary depending on the size of the screen, then it's "fullWidth". If you want it to shrink
-to fit on smaller screens, but not to expand larger than a maximum, then use "constrained"
-
-In Gatsby's GraphQL implementation, you specify the type of image with the `layout` argument
-
-## `GatsbyImage` props
-
-| Name  | Type            | Description                                                                                                                |
-| ----- | --------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| image | object          | The image data object returned from a GraphQL query                                                                        |
-| alt   | string          | Passed to the `img` element. Defaults to an empty string                                                                   |
-| sizes | string          | An HTML "sizes" argument, which is passed-though to the image. Can be left blank, when it will be calculated automatically |
-| as    | React Component | The component that wraps the Gatsby Image. Default is `div`                                                                |
-
-# GraphQL resolver
-
-We have added a new `gatsbyImageData` resolver to the `ImageSharp` node. Unlike the existing `fixed` and `fluid` resolvers, this returns a
-JSON type, meaning you don't specify the individual fields, but are instead given the whole object. This is because the object is then passed into the `<GatsbyImage>` component. The API is like this:
-
-```graphql
-coverImage: file(relativePath: { eq: "plant.jpg" }) {
-  childImageSharp {
-    gatsbyImageData(width: 720, layout: CONSTRAINED, placeholder: TRACED_SVG)
-  }
-}
-```
-
-You then use the data like this:
-
-```jsx
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
-
-export function Plant({ data }) {
-  const imageData = getImage(data.coverImage)
-  return <GatsbyImage image={imageData} alt="Plant" />
-}
-```
-
-The optional helper function `getImage` takes a file node and returns `file?.childImageSharp?.gatsbyImageData`
-
-## API
-
-These arguments can be passed to the `gatsbyImageData()` resolver:
-
-- **width**: The display width of the generated image for layout = FIXED, if layout = CONSTRAINED it's the display width of the largest generated image. The actual largest image resolution will be this value multiplied by the largest value in outputPixelDensities.
-- **height**: If set, the height of the generated image. If omitted, it is calculated from the supplied width, matching the aspect ratio of the source image.
-- **placeholder**: Format of generated placeholder image.
-  - `BLURRED`: (default) a blurred, low resolution image, encoded as a base64 data URI
-  - `TRACED_SVG`: a low-resolution traced SVG of the image.
-  - `NONE`: no placeholder. Set "background" to use a fixed background color.
-  - `DOMINANT_COLOR`: a solid color, calculated from the dominant color of the image.
-- **layout**: The layout for the image.
-  - `CONSTRAINED`: (default) Resizes to fit its container, up to a maximum width, at which point it will remain fixed in size.
-  - `FIXED`: A static image size, that does not resize according to the screen width
-  - `FULL_WIDTH`: The image resizes to fit its container. Pass a "sizes" option if it isn't going to be the full width of the screen.
-- **outputPixelDensities**: A list of image pixel densities to generate, for high-resolution (retina) screens. It will never generate images larger than the source, and will always include a 1x image.
-  Default is `[ 0.25, 0.5, 1, 2 ]`, for fullWidth/constrained images, and `[ 1, 2 ]` for fixed.
-- **sizes**: The "[sizes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)" attribute, passed to the `<img>` tag. This describes the display size of the image. This does not affect the generated images, but is used by the browser to decide which images to download. You can leave this blank for fixed images, or if the responsive image container will be the full width of the screen. In these cases we will generate an appropriate value. If, however, you are generating responsive images that are not the full width of the screen, you should provide a sizes property for best performance. You can alternatively pass this value to the component.
-- **formats**: an array of file formats to generate. The default is `[AUTO, WEBP]`, which means it will generate images in the same format as the source image, as well as in the next-generation [WebP](https://developers.google.com/speed/webp) format. We strongly recommend you do not change this option, as doing so will affect performance scores.
-- **quality**: The default quality. This is overridden by any format-specific options
-- **blurredOptions**: Options for the low-resolution placeholder image. Set placeholder to "BLURRED" to use this
-  - width
-  - toFormat
-- **tracedSVGOptions**: Options for traced placeholder SVGs. You also should set placeholder to "SVG".
-- **jpgOptions**: Options to pass to sharp when generating JPG images.
-  - quality
-  - progressive
-- **pngOptions**: Options to pass to sharp when generating PNG images.
-  - quality
-  - compressionSpeed
-- **webpOptions**: Options to pass to sharp when generating WebP images.
-  - quality
-- **transformOptions**: Options to pass to sharp to control cropping and other image manipulations.
-  - grayscale
-  - duotone
-  - rotate
-  - trim
-  - cropFocus
-  - fit
-- **background**: Background color applied to the wrapper. Also passed to sharp to use as a background when "letterboxing" an image to another aspect ratio.
+This will convert all GraphQL queries and components to use the new plugin. For more details, see [the migration guide](https://www.gatsbyjs.com/docs/reference/release-notes/image-migration-guide).

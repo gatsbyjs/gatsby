@@ -18,6 +18,7 @@ const tests = [
   `optional-chaining`,
   `styled`,
   `fluid`,
+  `transform-options`,
   `variable-src`,
 ]
 

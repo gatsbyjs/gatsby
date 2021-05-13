@@ -201,7 +201,7 @@ You can query data from any location to source at build time using functions and
 You'll use several modules from npm to making fetching data with GraphQL easier. Install them in the `source-plugin` project with:
 
 ```shell:title=source-plugin
-npm install apollo-cache-inmemory apollo-client apollo-link apollo-link-http apollo-link-ws apollo-utilities graphql graphql-tag node-fetch ws subscriptions-transport-ws
+npm install @apollo-client graphql subscriptions-transport-ws ws
 ```
 
 _Note: The libraries used here are specifically chosen so that the source plugin can support [GraphQL subscriptions](https://www.apollographql.com/docs/react/data/subscriptions/). You can fetch data the same way you would in any other Node.js app or however you are most comfortable._
@@ -214,15 +214,11 @@ Import the handful of Apollo packages that you installed to help set up an Apoll
 
 ```javascript:title=source-plugin/gatsby-node.js
 // highlight-start
-const { ApolloClient } = require("apollo-client")
-const { InMemoryCache } = require("apollo-cache-inmemory")
-const { split } = require("apollo-link")
-const { HttpLink } = require("apollo-link-http")
-const { WebSocketLink } = require("apollo-link-ws")
-const { getMainDefinition } = require("apollo-utilities")
-const fetch = require("node-fetch")
-const gql = require("graphql-tag")
+const { ApolloClient, InMemoryCache, gql, split, HttpLink } = require("@apollo-client")
+const { WebSocketLink } = require("@apollo/client/link/ws")
+const { getMainDefinition } = require("@apollo/client/utilities")
 const WebSocket = require("ws")
+const fetch = require("node-fetch")
 // highlight-end
 
 const POST_NODE_TYPE = `Post`
@@ -764,9 +760,9 @@ exports.sourceNodes = async (
 
   // highlight-start
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
   // highlight-end
 
@@ -786,9 +782,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   // highlight-start
@@ -811,9 +807,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   if (pluginOptions.previewMode) {
@@ -854,9 +850,9 @@ exports.sourceNodes = async (
   const { createNode, touchNode, deleteNode } = actions
 
   // touch nodes to ensure they aren't garbage collected
-  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode({ nodeId: node.id }))
+  getNodesByType(POST_NODE_TYPE).forEach(node => touchNode(node)
   getNodesByType(AUTHOR_NODE_TYPE).forEach(node =>
-    touchNode({ nodeId: node.id })
+    touchNode(node)
   )
 
   if (pluginOptions.previewMode) {
@@ -887,9 +883,7 @@ exports.sourceNodes = async (
         const nodeId = createNodeId(`${POST_NODE_TYPE}-${post.id}`)
         switch (post.status) {
           case "deleted":
-            deleteNode({
-              node: getNode(nodeId),
-            })
+            deleteNode(getNode(nodeId))
             break
           case "created":
           case "updated":
