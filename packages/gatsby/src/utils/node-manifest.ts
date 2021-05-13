@@ -251,9 +251,11 @@ export async function processNodeManifest(
     page: nodeManifestPage,
   }
 
+  const gatsbySiteDirectory = store.getState().program.directory
+
   // write out the manifest file
   const manifestFilePath = path.join(
-    process.cwd(),
+    gatsbySiteDirectory,
     `.cache`,
     `node-manifests`,
     inputManifest.pluginName,

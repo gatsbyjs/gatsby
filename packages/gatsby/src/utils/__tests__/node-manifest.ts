@@ -1,4 +1,3 @@
-import { dispatch } from "./../../../../gatsby-cli/src/reporter/redux/index"
 import path from "path"
 import reporter from "gatsby-cli/lib/reporter"
 import { store } from "../../redux"
@@ -25,6 +24,9 @@ jest.mock(`../../redux`, () => {
       getState: jest.fn(() => {
         return {
           nodeManifests,
+          program: {
+            directory: process.cwd(),
+          },
         }
       }),
       setManifests: (manifests): void => {
