@@ -7,7 +7,7 @@ Node.js APIs. We include a number of middlewares to parse common request data as
 
 ## Data formats
 
-We parse commonly used data types. Available on the `req` object:
+We parse commonly used data types. You can parse more by [adding custom middleware](#custom-middleware). Data available by default on the `req` object:
 
 - Cookies at `req.cookies`
 - URL Queries (e.g. `api/foo?query=foo`) at `req.query`
@@ -25,7 +25,7 @@ We parse commonly used data types. Available on the `req` object:
 
 Custom Connect/Express middleware are supported.
 
-An example of how to add CORS support to route:
+An example of how to add CORS support to a Function:
 
 ```js:title=src/api/cors.js
 import Cors from "cors"
@@ -49,6 +49,8 @@ export default async function corsHandler(req, res) {
 ```
 
 ## Custom body parsing
+
+Generally useful for file upload support.
 
 This is not yet supported. [Add a comment in the discussion if this is an
 important use case for you](https://github.com/gatsbyjs/gatsby/discussions/30735).

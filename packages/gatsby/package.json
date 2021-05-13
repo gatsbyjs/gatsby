@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "3.6.0-next.0",
+  "version": "3.6.0-next.1",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -27,7 +27,6 @@
     "@typescript-eslint/parser": "^4.15.2",
     "address": "1.1.2",
     "anser": "^2.0.1",
-    "ansi-html": "^0.0.7",
     "autoprefixer": "^10.2.4",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
@@ -77,12 +76,12 @@
     "find-cache-dir": "^3.3.1",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-cli": "^3.6.0-next.0",
+    "gatsby-cli": "^3.6.0-next.1",
     "gatsby-core-utils": "^2.6.0-next.0",
     "gatsby-graphiql-explorer": "^1.6.0-next.0",
     "gatsby-legacy-polyfills": "^1.6.0-next.0",
     "gatsby-link": "^3.6.0-next.0",
-    "gatsby-plugin-page-creator": "^3.6.0-next.0",
+    "gatsby-plugin-page-creator": "^3.6.0-next.1",
     "gatsby-plugin-typescript": "^3.6.0-next.0",
     "gatsby-plugin-utils": "^1.6.0-next.0",
     "gatsby-react-router-scroll": "^4.6.0-next.0",
@@ -252,7 +251,8 @@
     "prebuild": "rimraf dist && rimraf cache-dir/commonjs",
     "postinstall": "node scripts/postinstall.js",
     "prepare": "cross-env NODE_ENV=production npm run build",
-    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch"
+    "watch": "rimraf dist && mkdir dist && npm run build:internal-plugins && npm run build:rawfiles && npm run build:src -- --watch",
+    "typecheck": "tsc --noEmit"
   },
   "types": "index.d.ts",
   "yargs": {

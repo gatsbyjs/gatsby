@@ -7,7 +7,7 @@ WPGatsby is a required plugin which modifies WPGraphQL and WordPress to work wit
 
 ## Setting Up Builds
 
-Wether you're using a regular CI service like Netlify (I would encourage you to try the free tier of Gatsby Cloud if you are!), or you're using a supercharged CI service like Gatsby Cloud with Incremental Builds, you will set things up the same way.
+Whether you're using a regular CI service like Netlify (I would encourage you to try the free tier of Gatsby Cloud if you are!), or you're using a supercharged CI service like Gatsby Cloud with Incremental Builds, you will set things up the same way.
 
 Navigate to your GatsbyJS WordPress settings by visiting this path in your WP instance `/wp-admin/options-general.php?page=gatsbyjs` or by hovering on "Settings" in the WordPress admin menu and clicking on "GatsbyJS".
 
@@ -31,7 +31,7 @@ Once configured in the GatsbyJS settings page in wp-admin, Previews will work ou
 
 ### Connecting Preview
 
-To get started, set up a Preview instance on [Gatsby Cloud](https://www.gatsbyjs.com/) or set up your [self-hosted Preview instance](https://www.gatsbyjs.org/docs/running-a-gatsby-preview-server/). If you want to try out Preview but aren't sure wether you want to subscribe to Gatsby Cloud or self-host, you can start a free 2 week Gatsby Cloud trial with no credit card to help you make up your mind!
+To get started, set up a Preview instance on [Gatsby Cloud](https://www.gatsbyjs.com/) or set up your [self-hosted Preview instance](https://www.gatsbyjs.org/docs/running-a-gatsby-preview-server/). If you want to try out Preview but aren't sure whether you want to subscribe to Gatsby Cloud or self-host, you can start a free 2 week Gatsby Cloud trial with no credit card to help you make up your mind!
 
 #### WordPress Settings
 

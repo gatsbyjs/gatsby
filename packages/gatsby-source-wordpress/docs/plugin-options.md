@@ -38,6 +38,9 @@
   - [schema.requestConcurrency](#schemarequestconcurrency)
   - [schema.previewRequestConcurrency](#schemapreviewrequestconcurrency)
 - [excludeFieldNames](#excludefieldnames)
+- [searchAndReplace](#searchandreplace)
+  - [searchAndReplace[].search](#searchandreplacesearch)
+  - [searchAndReplace[].replace](#searchandreplacereplace)
 - [html](#html)
   - [html.useGatsbyImage](#htmlusegatsbyimage)
   - [html.imageMaxWidth](#htmlimagemaxwidth)
@@ -773,6 +776,67 @@ A list of field names to globally exclude from the ingested schema.
   resolve: `gatsby-source-wordpress`,
   options: {
     excludeFieldNames: [`viewer`],
+  },
+}
+
+```
+
+## searchAndReplace
+
+An array of options to search and replace strings in nodes. See below for options.
+
+**Field type**: `Array`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        search: "https://some-url.com",
+        replace: "https://some-new-url.com",
+      },
+    ],
+  },
+}
+
+```
+
+### searchAndReplace[].search
+
+The regex rule used to search a string. Using a 'regular expression literal' is recommended over a simple regex string.
+
+**Field type**: `String`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        search: "https://some-url.com",
+      },
+    ],
+  },
+}
+
+```
+
+### searchAndReplace[].replace
+
+The replacement string for each regex match.
+
+**Field type**: `String`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    searchAndReplace: [
+      {
+        replace: "https://some-new-url.com",
+      },
+    ],
   },
 }
 

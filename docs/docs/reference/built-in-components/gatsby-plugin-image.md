@@ -1,5 +1,8 @@
 ---
 title: Gatsby Image plugin
+examples:
+  - label: Using Gatsby Image
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
 ---
 
 This guide will show you how to configure your images, including choosing layouts, placeholders and image processing options. While most of these options are available regardless of where you source your images, be sure to refer to the documentation of your source plugin if you are using images from a CMS, as the exact options are likely to vary.
