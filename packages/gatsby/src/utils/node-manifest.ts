@@ -273,7 +273,6 @@ export async function processNodeManifest(
  */
 export async function processNodeManifests({
   storeDep = store,
-  internalActionsDep = internalActions,
   processNodeManifestFn = processNodeManifest,
 } = {}): Promise<void> {
   const { nodeManifests } = storeDep.getState()
@@ -295,5 +294,5 @@ export async function processNodeManifests({
   )
 
   // clean up all pending manifests from the store
-  storeDep.dispatch(internalActionsDep.deleteNodeManifests())
+  storeDep.dispatch(internalActions.deleteNodeManifests())
 }

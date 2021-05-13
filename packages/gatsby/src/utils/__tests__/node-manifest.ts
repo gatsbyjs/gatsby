@@ -16,6 +16,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 
 describe(`warnAboutNodeManifestMappingProblems`, () => {
   afterEach(() => {
+    // @ts-ignore: reporter is mocked
     reporter.warn.mockReset()
   })
 
@@ -127,20 +128,14 @@ describe(`processNodeManifests`, () => {
       dispatch: jest.fn(),
     }
 
-    const internalActionsDep = {
-      deleteNodeManifests: jest.fn(),
-    }
-
     const processNodeManifestFn = jest.fn()
 
     await processNodeManifests({
       storeDep,
-      internalActionsDep,
       processNodeManifestFn,
     })
 
     expect(processNodeManifestFn.mock.calls.length).toBe(0)
-    expect(internalActionsDep.deleteNodeManifests.mock.calls.length).toBe(0)
     expect(reporter.info).not.toBeCalled()
     expect(storeDep.dispatch.mock.calls.length).toBe(0)
   })
@@ -155,15 +150,10 @@ describe(`processNodeManifests`, () => {
       dispatch: jest.fn(),
     }
 
-    const internalActionsDep = {
-      deleteNodeManifests: jest.fn(),
-    }
-
     const processNodeManifestFn = jest.fn()
 
     await processNodeManifests({
       storeDep,
-      internalActionsDep,
       processNodeManifestFn,
     })
 
@@ -171,7 +161,6 @@ describe(`processNodeManifests`, () => {
     expect(reporter.info).toBeCalled()
     expect(reporter.info).toBeCalledWith(`Wrote out 3 node page manifest files`)
     expect(storeDep.dispatch.mock.calls.length).toBe(1)
-    expect(internalActionsDep.deleteNodeManifests.mock.calls.length).toBe(1)
   })
 })
 
