@@ -113,10 +113,9 @@ module.exports = async function mdxLoader(content) {
   if (isolateMDXComponent && !resourceQuery.includes(`type=component`)) {
     const { data } = grayMatter(content)
 
-    const requestPath = `/${path.relative(
-      this.rootContext,
-      this.resourcePath
-    )}?type=component`
+    const requestPath = slash(
+      `/${path.relative(this.rootContext, this.resourcePath)}?type=component`
+    )
 
     return callback(
       null,
