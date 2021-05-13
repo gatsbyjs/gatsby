@@ -1,6 +1,7 @@
 describe(`rich-text`, () => {
   beforeEach(() => {
     cy.visit("/rich-text").waitForRouteChange()
+    cy.wait(2000)
   })
   it(`rich-text: All Features`, () => {
     cy.get(`[data-cy-id="rich-text-all-features"]`).snapshot()

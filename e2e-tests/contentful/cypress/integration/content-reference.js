@@ -1,7 +1,6 @@
 describe(`content-reference`, () => {
   beforeEach(() => {
     cy.visit("/content-reference").waitForRouteChange()
-    cy.wait(2000)
   })
   it(`content-reference-many-2nd-level-loop`, () => {
     cy.get('[data-cy-id="content-reference-many-2nd-level-loop"]').snapshot()
