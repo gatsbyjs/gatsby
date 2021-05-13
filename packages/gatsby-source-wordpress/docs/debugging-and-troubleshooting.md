@@ -7,6 +7,7 @@
     - [WordPress 50\* errors](#wordpress-50-errors)
     - [Node Sourcing Timeouts](#node-sourcing-timeouts)
   - [Media File Download Errors](#media-file-download-errors)
+  - [Media File Download Skipped](#media-file-download-skipped)
   - [Broken Preview templates](#broken-preview-templates)
   - [Previews Don't Update](#previews-dont-update)
   - [Preview debug mode](#preview-debug-mode)
@@ -155,6 +156,42 @@ Note that `GATSBY_CONCURRENCT_DOWNLOAD` has been retired, now [`schema.requestCo
 ## Media File Download Errors
 
 The main error that occurs while fetching media files is overwhelming the remote server due to too many concurrent requests. You can set the [`schema.requestConcurrency`](./plugin-options.md#schema.requestconcurrency-int) plugin option below it's default of `100`. You will need to experiment a bit to determine what the maximum number of concurrent requests for media files your server can handle is.
+
+## Media File Download Skipped
+
+This might happen for several reasons, but two of the most common are that the file was excluded due to the file's size exceeding the `maxFileSizeBytes` config option or because its mime type was included in the `excludeByMimeTypes` config option.
+
+In order to determine what media items were not downloaded on account of `maxFileSizeBytes`, start your gatsby develop server and run the following GraphQL query.
+
+> ️⚠️ Ensure that you replace the number in the `gt` filter with the value of `maxFileSizeBytes` found in your gatsby config
+
+```graphql
+query TOO_LARGE_FILES {
+  allWpMediaItem(filter: { fileSize: { gt: 15728640 } }) {
+    nodes {
+      id
+      sourceUrl
+      fileSize
+    }
+  }
+}
+```
+
+If you want to investigate which images weren't downloaded due to the `excludeByMimeTypes` option, start up a gatsby develop server and run the following.
+
+> ⚠️ Ensure that the array of mime types passed to the `in` filter in the following query matches the value of `excludeByMimeTypes` in your gatsby config
+
+```graphql
+query MIME_TYPE_EXCLUDED {
+  allWpMediaItem(filter: { mimeType: { in: ["image/jpeg", "video/mp4"] } }) {
+    nodes {
+      id
+      sourceUrl
+      mimeType
+    }
+  }
+}
+```
 
 ## Broken Preview templates
 
