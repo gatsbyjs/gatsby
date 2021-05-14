@@ -93,6 +93,7 @@ exports.sourceNodes = async (
       basicAuth,
       headers,
       params,
+      reporter,
     })
 
     if (translation && !languageConfig.enabledLanguages.length) {
@@ -101,6 +102,8 @@ exports.sourceNodes = async (
       )
     }
   }
+
+  setOptions({ languageConfig, ...getOptions() })
 
   setPluginStatus({ languageConfig })
 
