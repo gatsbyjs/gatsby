@@ -1,6 +1,7 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
 
+const { getOptions } = require(`./plugin-options`)
 const getHref = link => {
   if (typeof link === `object`) {
     return link.href
@@ -14,12 +15,13 @@ const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
+  const langcode = datum.attributes.langcode || `und`
   return {
     id: createNodeId(
       createNodeIdWithVersion(
         datum.id,
         datum.type,
-        datum.langcode,
+        langcode,
         attributes.drupal_internal__revision_id,
         entityReferenceRevisions
       )
@@ -51,12 +53,17 @@ const createNodeIdWithVersion = (
   langcode,
   revisionId,
   entityReferenceRevisions = []
-) =>
+) => {
+  // If the source plugin hasn't enabled `translation` then always just set langcode
+  // to "undefined".
+  const langcodeNormalized = getOptions().translation ? langcode : `und`
+
   // The relationship between an entity and another entity also depends on the revision ID if the field is of type
   // entity reference revision such as for paragraphs.
-  isEntityReferenceRevision(type, entityReferenceRevisions)
-    ? `${langcode}${id}.${revisionId || 0}`
-    : `${langcode}${id}`
+  return isEntityReferenceRevision(type, entityReferenceRevisions)
+    ? `${langcodeNormalized}${id}.${revisionId || 0}`
+    : `${langcodeNormalized}${id}`
+}
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
 

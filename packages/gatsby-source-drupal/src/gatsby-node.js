@@ -1,6 +1,8 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
 
+const { setOptions, getOptions } = require(`./plugin-options`)
+
 const {
   nodeFromData,
   downloadFile,
@@ -29,6 +31,10 @@ function gracefullyRethrow(activity, error) {
   if (!activity.panicOnBuild) {
     throw error
   }
+}
+
+exports.onPreBootstrap = (_, pluginOptions) => {
+  setOptions(pluginOptions)
 }
 
 exports.sourceNodes = async (
@@ -200,7 +206,9 @@ exports.sourceNodes = async (
                   createNodeIdWithVersion(
                     nodeSyncData.id,
                     nodeSyncData.type,
-                    nodeSyncData.langcode,
+                    getOptions().translation
+                      ? nodeSyncData.attributes.langcode
+                      : `und`,
                     nodeSyncData.attributes?.drupal_internal__revision_id,
                     entityReferenceRevisions
                   )

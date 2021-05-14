@@ -9,6 +9,8 @@ const {
   createNodeIdWithVersion,
 } = require(`./normalize`)
 
+const { getOptions } = require(`./plugin-options`)
+
 const backRefsNamesLookup = new WeakMap()
 const referencedNodesLookup = new WeakMap()
 
@@ -90,7 +92,7 @@ const handleReferences = (
   { getNode, createNodeId, entityReferenceRevisions = [] }
 ) => {
   const relationships = node.relationships
-  const rootNodeLanguage = node.langcode
+  const rootNodeLanguage = getOptions().translation ? node.langcode : `und`
 
   if (node.drupal_relationships) {
     const referencedNodes = []
