@@ -1,5 +1,6 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
+const urlJoin = require(`url-join`)
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
@@ -344,11 +345,19 @@ exports.sourceNodes = async (
             const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
             // The default language's JSON API is at the root.
             if (
-              currentLanguage === getOptions().languageConfig.defaultLanguage
+              currentLanguage === getOptions().languageConfig.defaultLanguage ||
+              baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
+                currentLanguage
             ) {
               currentLanguage = ``
             }
-            const joinedUrl = `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
+
+            const joinedUrl = urlJoin(
+              baseUrlWithoutTrailingSlash,
+              currentLanguage,
+              apiBase,
+              urlPath
+            )
             const dataForLanguage = await getNext(joinedUrl)
 
             data = data.concat(dataForLanguage)
