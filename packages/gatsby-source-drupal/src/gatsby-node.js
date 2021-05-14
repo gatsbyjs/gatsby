@@ -339,12 +339,17 @@ exports.sourceNodes = async (
           data = await getNext(url)
         } else {
           for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
-            const currentLanguage = languageConfig.enabledLanguages[i]
+            let currentLanguage = languageConfig.enabledLanguages[i]
             const urlPath = url.href.split(`${apiBase}/`).pop()
             const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
-            const dataForLanguage = await getNext(
-              `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
-            )
+            // The default language's JSON API is at the root.
+            if (
+              currentLanguage === getOptions().languageConfig.defaultLanguage
+            ) {
+              currentLanguage = ``
+            }
+            const joinedUrl = `${baseUrlWithoutTrailingSlash}/${currentLanguage}/${apiBase}/${urlPath}`
+            const dataForLanguage = await getNext(joinedUrl)
 
             data = data.concat(dataForLanguage)
           }
