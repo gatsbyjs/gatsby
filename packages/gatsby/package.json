@@ -160,7 +160,7 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
     "webpack-stats-plugin": "^1.0.3",
-    "webpack-virtual-modules": "^0.3.2",
+    "webpack-virtual-modules": "^0.4.3",
     "xstate": "^4.11.0",
     "yaml-loader": "^0.6.0"
   },
