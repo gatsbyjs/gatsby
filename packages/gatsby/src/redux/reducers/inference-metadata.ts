@@ -155,6 +155,10 @@ export const inferenceMetadataReducer = (
       return initialState()
     }
 
+    case `SET_INFERENCE_METADATA`: {
+      return action.payload
+    }
+
     default: {
       state.typeMap = incrementalReducer(state.typeMap, action)
       return state

@@ -52,9 +52,12 @@ export const initializeIPCLogger = (): void => {
       }
     }
 
-    process.send({
-      type: Actions.LogAction,
-      action: sanitizedAction,
-    })
+    // disable structured logs IPC for now, as jest-worker doesn't play nice with it
+    if (!process.env.JEST_WORKER_ID) {
+      process.send({
+        type: Actions.LogAction,
+        action: sanitizedAction,
+      })
+    }
   })
 }

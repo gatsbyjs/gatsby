@@ -280,6 +280,28 @@ const runAPI = async (plugin, api, args, activity) => {
         ...(restrictedActionsAvailableInAPI[api] || {}),
       }
 
+      if (process.env.JEST_WORKER_ID) {
+        // allow using `createTypes` action in workers, log everything else
+        availableActions = Object.fromEntries(
+          Object.entries(availableActions).map(
+            ([actionName, actionCreator]) => [
+              actionName,
+              actionName === `createTypes`
+                ? actionCreator
+                : (...args) => {
+                    console.log(
+                      `action from worker`,
+                      process.env.JEST_WORKER_ID,
+                      actionName,
+                      args
+                    )
+                    return () => Promise.resolve()
+                  },
+            ]
+          )
+        )
+      }
+
       availableActionsCache.set(api, availableActions)
     }
 

@@ -5,7 +5,8 @@ import { GraphQLRunner } from "../query/graphql-runner"
 import { Store, AnyAction } from "redux"
 import { IGatsbyState } from "../redux/types"
 import { Express } from "express"
-import JestWorker from "jest-worker"
+// import JestWorker from "jest-worker"
+import { IGatsbyWorkerPool } from "../utils/worker/pool"
 import { Actor, AnyEventObject } from "xstate"
 import { Compiler } from "webpack"
 import { WebsocketManager } from "../utils/websocket-manager"
@@ -30,7 +31,7 @@ export interface IBuildContext {
   webhookBody?: Record<string, unknown>
   webhookSourcePluginName?: string
   refresh?: boolean
-  workerPool?: JestWorker
+  workerPool?: IGatsbyWorkerPool
   app?: Express
   nodesMutatedDuringQueryRun?: boolean
   nodesMutatedDuringQueryRunRecompileCount?: number
