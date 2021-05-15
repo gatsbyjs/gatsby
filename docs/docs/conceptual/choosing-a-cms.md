@@ -61,7 +61,7 @@ Typically, teams that use multiple CMSs use a specialized CMS for part of the we
 - **Using WordPress as a blogging tool.**
   - WordPress is very familiar to content authors and has a best-in-class content composition experience
   - As a result, some teams move the blog portion of the website with Gatsby, and use a flexible content modelling CMS for the rest of the website.
-  - Apollo does this (source: [tweet from Apollo](https://twitter.com/apollographql/status/1250479066605662210)), as does the [Gatsby blog](gatsbyjs.com/blog).
+  - Apollo does this (source: [tweet from Apollo](https://twitter.com/apollographql/status/1250479066605662210)), as does the [Gatsby blog](https://gatsbyjs.com/blog).
 
 ### Considerations when using multiple CMSs
 
