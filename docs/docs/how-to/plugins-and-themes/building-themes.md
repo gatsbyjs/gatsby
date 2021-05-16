@@ -113,3 +113,4 @@ Check out how some existing themes are built:
 - The official [Gatsby Blog Theme](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-blog)
 - The official [Gatsby Notes Theme](https://github.com/gatsbyjs/themes/tree/master/packages/gatsby-theme-notes)
 - The [Apollo themes](https://github.com/apollographql/gatsby-theme-apollo/tree/master/packages/). (_You might also be interested in the [Apollo case study on themes](/blog/2019-07-03-using-themes-for-distributed-docs/) on the blog._)
+- [Starter for creating a Gatsby Theme workspace using Yalc](https://github.com/DanailMinchev/gatsby-starter-theme-yalc-workspace). (_If you prefer to use [Yalc](https://github.com/wclr/yalc) for local theme development._)
