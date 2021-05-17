@@ -133,7 +133,7 @@ export default function formHandler(req, res) {
   // Here is where you would validate the form values and
   // do any other actions with it you need (e.g. save it somewhere or
   // trigger an action for the user).
-  res.json(`OK`);
+  return res.json(`OK`);
 }
 ```
 
