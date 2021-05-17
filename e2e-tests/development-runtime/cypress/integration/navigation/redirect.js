@@ -1,8 +1,3 @@
-let spy
-Cypress.on(`window:before:load`, win => {
-  spy = cy.spy(win.console, `error`).as(`spyWinConsoleError`)
-})
-
 const runTests = () => {
   it(`should redirect page to index page when there is no such page`, () => {
     cy.visit(`/redirect-without-page`, {
@@ -10,17 +5,6 @@ const runTests = () => {
     }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/`)
-    cy.then(() => {
-      const calls = spy.getCalls()
-
-      const callsAboutRedirectMatchingPage = calls.filter(call =>
-        call.args[0].includes(
-          `matches both a page and a redirect; this is probably not intentional.`
-        )
-      )
-
-      expect(callsAboutRedirectMatchingPage.length).to.equal(0)
-    })
   })
 
   it(`should redirect page to index page even there is a such page`, () => {
@@ -29,20 +13,6 @@ const runTests = () => {
     }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/`)
-    cy.then(() => {
-      const calls = spy.getCalls()
-
-      const callsAboutRedirectMatchingPage = calls.filter(call =>
-        call.args[0].includes(
-          `matches both a page and a redirect; this is probably not intentional.`
-        )
-      )
-
-      expect(callsAboutRedirectMatchingPage.length).not.to.equal(0)
-      expect(spy).to.be.calledWith(
-        `The route "/redirect" matches both a page and a redirect; this is probably not intentional.`
-      )
-    })
   })
 
   it(`should redirect to a dynamically-created replacement page`, () => {
@@ -51,15 +21,6 @@ const runTests = () => {
     }).waitForRouteChange()
 
     cy.location(`pathname`).should(`equal`, `/pt/redirect-me/`)
-    cy.then(() => {
-      expect(spy).not.to.be.calledWith(
-        `The route "/redirect" matches both a page and a redirect; this is probably not intentional.`
-      )
-
-      cy.findByText(`This should be at /pt/redirect-me/`, {
-        exact: false,
-      }).should(`exist`)
-    })
   })
 }
 
