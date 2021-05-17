@@ -9,7 +9,7 @@ const IndicatorButtonTooltip = ({
   tooltipText,
   tooltipIcon,
   toolTipOffset,
-  testId
+  testId,
 }) => (
   <div
     onClick={onClick}
