@@ -16,5 +16,6 @@ export default async function getBuildInfo() {
     return res.json()
   } catch (e) {
     console.log(e, e.message)
+    return {}
   }
 }
