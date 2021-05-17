@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@pieh/friendly-errors-webpack-plugin": "1.7.0-chalk-2",
+    "@soda/friendly-errors-webpack-plugin": "1.8.0",
     "copy-webpack-plugin": "^7.0.0",
     "html-webpack-plugin": "^5.3.1",
     "html-webpack-tags-plugin": "^3.0.1",
