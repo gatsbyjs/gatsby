@@ -47,17 +47,20 @@ async function findPageOwnedByNodeId({
 }> {
   const state = store.getState()
   const { pages, nodes } = state
-  const pagesBynode = state.queries.byNode
+  const pagesBynode = state?.queries?.byNode
 
   // in development queries are run on demand so we wont have an accurate nodeId->pages map until those pages are visited in the browser. We want this mapping before the page is visited in the browser so we can route to the right page in the browser.
   // So in development we can just use the Map of all pages (pagePath -> pageNode)
   // but for builds (preview inc builds or regular builds) we will have a full map
   // of all nodeId's to pages they're queried on and we can use that instead since it
   // will be a much smaller list of pages, resulting in better performance for large sites
-  const usingPagesMapInDevelop: boolean = process.env.NODE_ENV === `development`
+  const usingPagesMapInDevelop: boolean =
+    `development` === process.env.NODE_ENV ||
+    (`test` === process.env.NODE_ENV && !pagesBynode)
+
   const pagePathSetOrMap = usingPagesMapInDevelop
     ? pages
-    : pagesBynode.get(nodeId)
+    : pagesBynode?.get(nodeId)
 
   // the default page path is the first page found in
   // node id to page query tracking
@@ -214,13 +217,8 @@ export function warnAboutNodeManifestMappingProblems({
  * Prepares and then writes out an individual node manifest file to be used for routing to previews. Manifest files are added via the public unstable_createNodeManifest action
  */
 export async function processNodeManifest(
-  inputManifest: INodeManifest,
-  // to allow overriding deps in tests:
-  {
-    findPageOwnedByNodeIdFn = findPageOwnedByNodeId,
-    warnAboutNodeManifestMappingProblemsFn = warnAboutNodeManifestMappingProblems,
-  } = {}
-): Promise<void> {
+  inputManifest: INodeManifest
+): Promise<null | INodeManifestOut> {
   const nodeId = inputManifest.node.id
   const fullNode = getNode(nodeId)
 
@@ -228,17 +226,15 @@ export async function processNodeManifest(
     reporter.warn(
       `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest for a node which doesn't exist with an id of ${nodeId}.`
     )
-    return
+    return null
   }
 
   // map the node to a page that was created
-  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeIdFn(
-    {
-      nodeId,
-    }
-  )
+  const { page: nodeManifestPage, foundPageBy } = await findPageOwnedByNodeId({
+    nodeId,
+  })
 
-  warnAboutNodeManifestMappingProblemsFn({
+  warnAboutNodeManifestMappingProblems({
     inputManifest,
     pagePath: nodeManifestPage.path,
     foundPageBy,
@@ -264,6 +260,8 @@ export async function processNodeManifest(
 
   await fs.ensureDir(manifestFileDir)
   await fs.writeJSON(manifestFilePath, finalManifest)
+
+  return finalManifest
 }
 
 /**
@@ -271,9 +269,7 @@ export async function processNodeManifest(
  * and then removes them from the store.
  * Manifest files are added via the public unstable_createNodeManifest action in sourceNodes
  */
-export async function processNodeManifests({
-  processNodeManifestFn = processNodeManifest,
-} = {}): Promise<void> {
+export async function processNodeManifests(): Promise<void> {
   const { nodeManifests } = store.getState()
 
   const totalManifests = nodeManifests.length
@@ -282,13 +278,32 @@ export async function processNodeManifests({
     return
   }
 
-  await Promise.all(
-    nodeManifests.map(manifest => processNodeManifestFn(manifest))
+  const processedManifests = await Promise.all(
+    nodeManifests.map(manifest => processNodeManifest(manifest))
   )
 
+  let totalProcessedManifests = 0
+  let totalFailedManifests = 0
+
+  processedManifests.forEach(manifest => {
+    if (manifest) {
+      totalProcessedManifests++
+    } else {
+      totalFailedManifests++
+    }
+  })
+
+  const s = (length: number): string => (length > 1 ? `s` : ``)
+
   reporter.info(
-    `Wrote out ${totalManifests} node page manifest file${
-      totalManifests > 1 ? `s` : ``
+    `Wrote out ${totalProcessedManifests} node page manifest file${s(
+      totalProcessedManifests
+    )}${
+      totalFailedManifests > 0
+        ? `. ${totalFailedManifests} manifest${s(
+            totalFailedManifests
+          )} couldn't be processed.`
+        : ``
     }`
   )
 

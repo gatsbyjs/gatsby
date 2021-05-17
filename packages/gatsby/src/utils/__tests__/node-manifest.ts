@@ -8,13 +8,15 @@ import { INodeManifest } from "./../../redux/types"
 import {
   warnAboutNodeManifestMappingProblems,
   processNodeManifests,
-  processNodeManifest,
 } from "../node-manifest"
 
 jest.mock(`fs-extra`, () => {
   return {
     ensureDir: jest.fn(),
     writeJSON: jest.fn((manifestFilePath, finalManifest) => {
+      if (process.env.DEBUG) {
+        console.log({ manifestFilePath, finalManifest })
+      }
       return { manifestFilePath, finalManifest }
     }),
   }
@@ -41,12 +43,13 @@ jest.mock(`../../redux`, () => {
   const initialState = {
     nodeManifests: [],
     nodes: new Map(),
+    pages: new Map(),
     program: {
       directory: process.cwd(),
     },
   }
 
-  const state = { ...initialState }
+  let state = { ...initialState }
 
   return {
     store: {
@@ -56,8 +59,14 @@ jest.mock(`../../redux`, () => {
       setManifests: (manifests): void => {
         state.nodeManifests = manifests
       },
-      createNode: node => {
+      reset: (): void => {
+        state = initialState
+      },
+      createNode: (node): void => {
         state.nodes.set(node.id, node)
+      },
+      createPage: page => {
+        state.pages.set(page.path, page)
       },
       dispatch: jest.fn(),
     },
@@ -169,95 +178,63 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
 
 describe(`processNodeManifests`, () => {
   beforeEach(() => {
-    store.setManifests([])
+    store.reset()
   })
 
-  it(`Doesn't do anything special when there are no pending manifests`, async () => {
-    const processNodeManifestFn = jest.fn()
+  it(`Doesn't do anything when there are no pending manifests`, async () => {
+    await processNodeManifests()
 
-    await processNodeManifests({
-      processNodeManifestFn,
-    })
-
-    expect(processNodeManifestFn).not.toBeCalled()
+    expect(fs.writeJSON).not.toBeCalled()
     expect(reporter.info).not.toBeCalled()
     expect(store.dispatch).not.toBeCalled()
   })
 
-  it(`accurately logs out how many manifest files were written to disk`, async () => {
-    store.setManifests([{}, {}, {}])
-
-    const processNodeManifestFn = jest.fn()
-
-    await processNodeManifests({
-      processNodeManifestFn,
-    })
-
-    expect(processNodeManifestFn.mock.calls.length).toBe(3)
-    expect(reporter.info).toBeCalled()
-    expect(reporter.info).toBeCalledWith(`Wrote out 3 node page manifest files`)
-    expect(store.dispatch).toBeCalled()
-  })
-})
-
-describe(`processNodeManifest`, () => {
   it(`processes node manifests`, async () => {
-    const nodes = [{ id: `1` }, { id: `2` }, { id: `3` }]
-
-    nodes.forEach(store.createNode)
-
-    const pendingManifests: Array<INodeManifest> = [
-      {
-        pluginName: `test`,
-        manifestId: `1`,
-        node: { id: `1` },
-      },
-      {
-        pluginName: `test`,
-        manifestId: `2`,
-        node: { id: `2` },
-      },
-      {
-        pluginName: `test`,
-        manifestId: `3`,
-        node: { id: `3` },
-      },
-      {
-        pluginName: `test`,
-        manifestId: `4`,
-        node: { id: `4` },
-      },
+    const nodes = [
+      { id: `1` },
+      { id: `2`, useOwnerNodeId: true },
+      { id: `3`, useOwnerNodeId: true },
     ]
 
-    const findPageOwnedByNodeIdFn = jest.fn(({ nodeId }) => {
-      return {
-        page: {
-          path: `/${nodeId}`,
+    nodes.forEach(node => {
+      store.createNode(node)
+      store.createPage({
+        path: `/${node.id}`,
+        ownerNodeId: node.useOwnerNodeId ? node.id : null,
+        context: {
+          id: !node.useOwnerNodeId ? node.id : null,
         },
-        foundPageBy: `pageContext.id`,
+      })
+    })
+
+    const pendingManifests: Array<INodeManifest> = [
+      ...nodes,
+      {
+        // this node doesn't exist
+        id: `4`,
+      },
+    ].map(node => {
+      return {
+        pluginName: `test`,
+        manifestId: `${node.id}`,
+        node,
       }
     })
 
-    const warnAboutNodeManifestMappingProblemsFn = jest.fn()
+    store.setManifests(pendingManifests)
 
-    await Promise.all(
-      pendingManifests.map(manifest =>
-        processNodeManifest(manifest, {
-          findPageOwnedByNodeIdFn,
-          warnAboutNodeManifestMappingProblemsFn,
-        })
-      )
-    )
+    await processNodeManifests()
 
     expect(reporter.warn).toBeCalled()
     expect(reporter.warn).toBeCalledWith(
       `Plugin test called unstable_createNodeManifest for a node which doesn't exist with an id of 4.`
     )
 
-    expect(warnAboutNodeManifestMappingProblemsFn.mock.calls.length).toBe(
-      nodes.length
+    expect(reporter.info).toBeCalled()
+    expect(reporter.info).toBeCalledWith(
+      `Wrote out ${nodes.length} node page manifest files. 1 manifest couldn't be processed.`
     )
-    expect(findPageOwnedByNodeIdFn.mock.calls.length).toBe(nodes.length)
+    expect(store.dispatch).toBeCalled()
 
     expect(fs.ensureDir.mock.calls.length).toBe(nodes.length)
     expect(fs.writeJSON.mock.calls.length).toBe(nodes.length)
