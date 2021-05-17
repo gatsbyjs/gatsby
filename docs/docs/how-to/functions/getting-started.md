@@ -128,7 +128,7 @@ Forms and Functions are often used together. For a working example you can play 
 ```js:title=src/api/form.js
 export default function formHandler(req, res) {
   // req.body has the form values
-  console.log(req.body);
+  console.log(req.body)
 
   // Here is where you would validate the form values and
   // do any other actions with it you need (e.g. save it somewhere or
@@ -137,31 +137,31 @@ export default function formHandler(req, res) {
   // e.g.
 
   if (!req.body.name) {
-    return res.status(422).json("Name field is required");
+    return res.status(422).json("Name field is required")
   }
 
-  return res.json(`OK`);
+  return res.json(`OK`)
 }
 ```
 
 ```js:title=src/pages/form.js
-import * as React from "react";
+import * as React from "react"
 
 export default function FormPage() {
-  const [value, setValue] = React.useState({});
-  const [serverResponse, setServerResponse] = React.useState(``);
+  const [value, setValue] = React.useState({})
+  const [serverResponse, setServerResponse] = React.useState(``)
 
   // Listen to form changes and save them.
   function handleChange(e) {
-    value[e.target.id] = e.target.value;
-    setServerResponse(``);
-    setValue({ ...value });
+    value[e.target.id] = e.target.value
+    setServerResponse(``)
+    setValue({ ...value })
   }
 
   // When the form is submitted, send the form values
   // to our function for processing.
   async function onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
     const response = await window
       .fetch(`/api/form`, {
         method: `POST`,
@@ -170,9 +170,9 @@ export default function FormPage() {
         },
         body: JSON.stringify(value),
       })
-      .then((res) => res.json());
+      .then(res => res.json())
 
-    setServerResponse(response);
+    setServerResponse(response)
   }
 
   return (
@@ -189,6 +189,6 @@ export default function FormPage() {
         <input type="submit" />
       </form>
     </div>
-  );
+  )
 }
 ```
