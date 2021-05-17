@@ -45,24 +45,24 @@ function getDatabases(): ILmdbDatabases {
 
 function getNodes(): Array<IGatsbyNode> {
   // const start = performance.now()
-  const result = iterateNodes().asArray
+  const result = Array.from<IGatsbyNode>(iterateNodes())
   // const timeTotal = performance.now() - start
   // console.warn(
   //   `getNodes() is deprecated, use iterateNodes() instead; ` +
   //     `array length: ${result.length}; time(ms): ${timeTotal}`
   // )
-  return result
+  return result ?? []
 }
 
 function getNodesByType(type: string): Array<IGatsbyNode> {
   // const start = performance.now()
-  const result = iterateNodesByType(type).asArray
+  const result = Array.from<IGatsbyNode>(iterateNodesByType(type))
   // const timeTotal = performance.now() - start
   // console.warn(
   //   `getNodesByType() is deprecated, use iterateNodesByType() instead; ` +
   //     `array length: ${result.length}; time(ms): ${timeTotal}`
   // )
-  return result
+  return result ?? []
 }
 
 function iterateNodes(): ArrayLikeIterable<IGatsbyNode> {
