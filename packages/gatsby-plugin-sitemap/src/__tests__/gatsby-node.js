@@ -19,6 +19,12 @@ const reporter = {
   panic: jest.fn(),
 }
 
+const mockStoreGetState = jest.fn(() => ({config: {}}))
+
+const store = {
+  getState: mockStoreGetState
+}
+
 beforeEach(() => {
   global.__PATH_PREFIX__ = ``
 
@@ -48,7 +54,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       },
     })
     await onPostBuild(
-      { graphql, pathPrefix, reporter },
+      { graphql, pathPrefix, reporter, store },
       await schema.validateAsync({})
     )
     const {
@@ -106,7 +112,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     }
 
     await onPostBuild(
-      { graphql, pathPrefix, reporter },
+      { graphql, pathPrefix, reporter, store },
       await schema.validateAsync(options)
     )
 
@@ -147,7 +153,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     }
     const prefix = `/test`
     await onPostBuild(
-      { graphql, pathPrefix: prefix, reporter },
+      { graphql, pathPrefix: prefix, reporter, store },
       await schema.validateAsync(options)
     )
     const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
@@ -182,8 +188,15 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     const options = {
       output: subdir,
     }
+
+    mockStoreGetState.mockImplementationOnce(() => ({
+      config: {
+        assetPrefix: 'assets'
+      }
+    }))
+
     await onPostBuild(
-      { graphql, pathPrefix: prefix, reporter },
+      { graphql, pathPrefix: prefix, reporter, store },
       await schema.validateAsync(options)
     )
     expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].publicBasePath).toBe(

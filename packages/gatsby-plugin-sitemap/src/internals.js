@@ -19,9 +19,9 @@ export const withoutTrailingSlash = path =>
  * @param {string} siteUrl - results of the resolveSiteUrl function
  * @returns {string}
  */
-// TODO: Update for v3 - Fix janky path/asset prefixing
-export function prefixPath({ url, siteUrl, pathPrefix = `` }) {
-  return new URL(pathPrefix + url, siteUrl).toString()
+export function prefixPath({ url, siteUrl, pathPrefix = ``, assetPrefix }) {
+  const purePathPrefix = !assetPrefix ? pathPrefix : pathPrefix.replace(`/${assetPrefix}`, '')
+  return new URL(purePathPrefix + url, siteUrl).toString()
 }
 
 /**

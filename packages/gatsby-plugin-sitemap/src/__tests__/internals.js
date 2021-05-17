@@ -27,14 +27,31 @@ describe(`gatsby-plugin-sitemap internals tests`, () => {
     expect(result2).toStrictEqual(`/test/path`)
   })
 
-  it(`prefixPath should correctly concatonate path`, () => {
-    const result = prefixPath({
+  it(`prefixPath should correctly concatenate path`, () => {
+    const resultIfPathPrefix = prefixPath({
       url: TestPath,
       siteUrl: SiteUrl,
       pathPrefix: `/root`,
     })
 
-    expect(result).toStrictEqual(`https://example.net/root/test/path/`)
+    expect(resultIfPathPrefix).toStrictEqual(`https://example.net/root/test/path/`)
+
+    const resultIfAssetPrefix = prefixPath({
+      url: TestPath,
+      siteUrl: SiteUrl,
+      assetPrefix: 'assets'
+    })
+
+    expect(resultIfAssetPrefix).toStrictEqual(`https://example.net/test/path/`)
+
+    const resultIfAssetAndPathPrefix = prefixPath({
+      url: TestPath,
+      siteUrl: SiteUrl,
+      pathPrefix: `/assets/root`,
+      assetPrefix: 'assets'
+    })
+
+    expect(resultIfAssetAndPathPrefix).toStrictEqual(`https://example.net/root/test/path/`)
   })
 
   it(`resolveSiteUrl should return SiteUrl`, () => {

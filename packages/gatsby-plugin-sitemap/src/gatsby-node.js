@@ -6,7 +6,7 @@ import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals"
 exports.pluginOptionsSchema = pluginOptionsSchema
 
 exports.onPostBuild = async (
-  { graphql, reporter, pathPrefix },
+  { graphql, reporter, pathPrefix, store },
   {
     output,
     entryLimit,
@@ -59,6 +59,10 @@ exports.onPostBuild = async (
     `${REPORTER_PREFIX} ${filteredPages.length} pages remain after filtering`
   )
 
+  const { assetPrefix } = store.getState().config
+
+  
+
   const serializedPages = []
 
   for (const page of filteredPages) {
@@ -67,7 +71,7 @@ exports.onPostBuild = async (
         serialize(page, { resolvePagePath })
       )
       serializedPages.push({
-        url: prefixPath({ url, siteUrl, pathPrefix }),
+        url: prefixPath({ url, siteUrl, pathPrefix, assetPrefix }),
         ...rest,
       })
     } catch (err) {
