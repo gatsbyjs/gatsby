@@ -179,7 +179,7 @@ exports.sourceNodes = async (
     try {
       // Hit fastbuilds endpoint with the lastFetched date.
       const data = await axios.get(
-        urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched),
+        urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
         {
           auth: basicAuth,
           headers,

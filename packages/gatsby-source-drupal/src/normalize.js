@@ -67,8 +67,8 @@ const createNodeIdWithVersion = (
   // The relationship between an entity and another entity also depends on the revision ID if the field is of type
   // entity reference revision such as for paragraphs.
   return isEntityReferenceRevision(type, entityReferenceRevisions)
-    ? `${langcodeNormalized}${id}.${revisionId || 0}`
-    : `${langcodeNormalized}${id}`
+    ? `${langcodeNormalized}.${id}.${revisionId || 0}`
+    : `${langcodeNormalized}.${id}`
 }
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
