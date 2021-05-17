@@ -538,7 +538,9 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
       .items(
         Joi.object({
           search: Joi.string()
-            .description(`The regex rule used to search when replacing strings in node data. It will search the stringified JSON of each node to capture strings at any nested depth.`)
+            .description(
+              `The regex rule used to search when replacing strings in node data. It will search the stringified JSON of each node to capture strings at any nested depth.`
+            )
             .meta({
               example: wrapOptions(`
                 searchAndReplace: [
