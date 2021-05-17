@@ -21,14 +21,6 @@ exports.onPostBuild = async (
 ) => {
   const { data: queryRecords } = await graphql(query)
 
-  reporter.verbose(
-    `${REPORTER_PREFIX} Query Results:\n${JSON.stringify(
-      queryRecords,
-      null,
-      2
-    )}`
-  )
-
   // resolvePages and resolveSuteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
   const allPages = await Promise.resolve(
     resolvePages(queryRecords)
