@@ -10,7 +10,6 @@
     "@babel/runtime": "^7.12.5",
     "date-fns": "^2.21.1",
     "fs-extra": "^8.1.0",
-    "gatsby-design-tokens": "^3.4.0",
     "kebab-hash": "^0.1.2",
     "lodash": "^4.17.21",
     "webpack-assets-manifest": "^5.0.1"
@@ -54,6 +53,9 @@
     "node": ">=12.13.0"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules", "/__tests__/mocks"]
+    "testPathIgnorePatterns": [
+      "/node_modules",
+      "/__tests__/mocks"
+    ]
   }
 }

@@ -23,9 +23,6 @@ export default function Indicator({ children }) {
     const isOnPrettyUrl = prettyUrlRegex.test(host)
     const { siteInfo, currentBuild, latestBuild } = await getBuildInfo()
 
-    console.log(currentBuild, latestBuild, siteInfo)
-
-    // buildId = "b4ac0f53-63ce-405c-ab78-90f7dada0dd8"
     if (!buildId) {
       if (isOnPrettyUrl) {
         buildId = latestBuild?.id

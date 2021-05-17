@@ -11,6 +11,7 @@ import { server } from "./mocks/server"
 const createUrl = path => `https://test.com/${path}`
 const copyLinkMessage = `Copy link`
 const infoButtonMessage = `Preview updated`
+const { location } = window
 
 process.env.GATSBY_PREVIEW_AUTH_TOKEN = `token`
 
@@ -47,11 +48,20 @@ describe(`Preview status indicator`, () => {
     jest.resetModules()
     global.fetch = require(`node-fetch`)
     jest.spyOn(global, `fetch`)
+    // delete window.location
+    //   window.location = {
+    //     href: `https://preview-xxx.gtsb.io`,
+    //     host: `preview-xxx.gtsb.io`,
+    //     hostname: `preview-xxx.gtsb.io`,
+    //     reload: jest.fn(),
+    //     replace: jest.fn()
+    //   }
   })
 
   afterEach(() => {
     jest.useRealTimers()
     server.resetHandlers()
+    // window.location = location
   })
 
   afterAll(() => {
@@ -164,7 +174,7 @@ describe(`Preview status indicator`, () => {
         window.open = jest.fn()
 
         let gatsbyButtonTooltip
-        const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/null/details`
+        const pathToBuildLogs = `https://www.gatsbyjs.com/dashboard/999/sites/111/builds/123/details`
         const returnTo = encodeURIComponent(pathToBuildLogs)
 
         await act(async () => {
@@ -288,58 +298,4 @@ describe(`Preview status indicator`, () => {
       })
     })
   })
-
-  // describe(`window.location`, () => {
-  //   const { location } = window
-
-  //   beforeAll(() => {
-  //     delete window.location
-  //     window.location = {
-  //       href: `https://preview-xxx.gtsb.io`,
-  //       reload: jest.fn(),
-  //       host: `preview-xxx.gtsb.io`,
-  //       hostname: `preview-xxx.gtsb.io`,
-  //     }
-
-  //     const replace = jest.fn(url => {
-  //       window.location.href = url
-  //     })
-
-  //     window.location.replace = replace
-  //   })
-
-  //   afterAll(() => {
-  //     window.location = location
-  //   })
-
-  // it('mocks `reload`', () => {
-  //   expect(jest.isMockFunction(window.location.reload)).toBe(true);
-  // });
-
-  // it('calls `reload`', () => {
-  //   window.location.reload();
-  //   expect(window.location.reload).toHaveBeenCalled();
-  // });
-
-  //   it(`should reload to the pretty url when gatsby button success state tooltip is clicked`, async () => {
-  //     process.env.GATSBY_PREVIEW_API_URL = createUrl(`success`)
-
-  //     let gatsbyButtonTooltip
-  //     jest.useFakeTimers()
-
-  //     await act(async () => {
-  //       render(<Indicator />)
-  //     })
-
-  //     await waitFor(() => {
-  //       gatsbyButtonTooltip = screen.queryByTestId(`gatsby-tooltip`)
-  //     })
-
-  //     await act(async () => {
-  //       userEvent.click(gatsbyButtonTooltip)
-  //     })
-
-  //     expect(window.location.replace).toHaveBeenCalledTimes(1)
-  //   })
-  // })
 })
