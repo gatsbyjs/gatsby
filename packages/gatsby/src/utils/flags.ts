@@ -184,7 +184,21 @@ const activeFlags: Array<IFlag> = [
     experimental: true,
     description: `Enable React's concurrent features`,
     // umbrellaIssue: `https://gatsby.dev/concurrent-features`,
-    testFitness: (): fitnessEnum => true,
+    testFitness: (): fitnessEnum => {
+      // Because of this, this flag will never show up
+      const semverConstraints = {
+        react: `^0.0.0-experimental-57768ef90`,
+        "react-dom": `^0.0.0-experimental-57768ef90`,
+      }
+
+      if (satisfiesSemvers(semverConstraints)) {
+        return true
+      } else {
+        // react & react-dom is either not installed or not new enough so
+        // just disable — it won't work anyways.
+        return false
+      }
+    },
   },
 ]
 
