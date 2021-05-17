@@ -83,11 +83,13 @@ exports.onPostBuild = async (
     }
   }
 
-  const sitemapPath = path.join(`public`, output)
+  const sitemapWritePath = path.join(`public`, output)
+  const sitemapPublicPath = path.posix.join(pathPrefix, output)
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,
-    destinationDir: sitemapPath,
+    publicBasePath: sitemapPublicPath,
+    destinationDir: sitemapWritePath,
     sourceData: serializedPages,
     limit: entryLimit,
     gzip: false,
