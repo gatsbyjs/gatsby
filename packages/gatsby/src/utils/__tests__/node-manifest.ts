@@ -311,7 +311,7 @@ describe(`processNodeManifests`, () => {
         return
       }
 
-      // @ts-ignore: store is mocked
+      // @ts-ignore: fs is mocked
       const jsonResults = fs.writeJSON.mock.results[index].value
 
       expect(jsonResults.manifestFilePath).toBe(
