@@ -47,6 +47,7 @@ jest.mock(`../../redux`, () => {
     program: {
       directory: process.cwd(),
     },
+    queries: { byNode: new Map() },
   }
 
   let state = { ...initialState }
@@ -65,8 +66,21 @@ jest.mock(`../../redux`, () => {
       createNode: (node): void => {
         state.nodes.set(node.id, node)
       },
-      createPage: page => {
+      createPage: (page): void => {
         state.pages.set(page.path, page)
+      },
+      trackPagePathOnNode: (nodeId: string, pagePath: string): void => {
+        const byNode = state.queries.byNode || new Map()
+        const pagePaths = byNode.get(nodeId)
+
+        if (pagePaths?.size > 0) {
+          pagePaths.add(pagePath)
+          byNode.set(nodeId, pagePaths)
+        } else {
+          byNode.set(nodeId, new Set([pagePath]))
+        }
+
+        state.queries.byNode = byNode
       },
       dispatch: jest.fn(),
     },
@@ -179,6 +193,7 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
 describe(`processNodeManifests`, () => {
   beforeEach(() => {
     store.reset()
+    jest.clearAllMocks()
   })
 
   it(`Doesn't do anything when there are no pending manifests`, async () => {
@@ -189,22 +204,37 @@ describe(`processNodeManifests`, () => {
     expect(store.dispatch).not.toBeCalled()
   })
 
-  it(`processes node manifests`, async () => {
-    const nodes = [
-      { id: `1` },
+  const testProcessNodeManifests = async (
+    nodes = [
+      { id: `1`, usePageContextId: true },
       { id: `2`, useOwnerNodeId: true },
-      { id: `3`, useOwnerNodeId: true },
+      { id: `3`, useQueryTracking: true },
     ]
-
+  ): Promise<void> => {
     nodes.forEach(node => {
+      // @ts-ignore: store is mocked
       store.createNode(node)
+
+      const pagePath = `/${node.id}`
+
+      // @ts-ignore: store is mocked
       store.createPage({
-        path: `/${node.id}`,
+        path: pagePath,
         ownerNodeId: node.useOwnerNodeId ? node.id : null,
         context: {
-          id: !node.useOwnerNodeId ? node.id : null,
+          id: node.usePageContextId ? node.id : null,
         },
       })
+
+      if (
+        node.useQueryTracking ||
+        // if this isn't gatsby develop we emulate gatsby build
+        // where query tracking is always 100% complete
+        !process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
+      ) {
+        // @ts-ignore: store is mocked
+        store.trackPagePathOnNode(node.id, pagePath)
+      }
     })
 
     const pendingManifests: Array<INodeManifest> = [
@@ -221,6 +251,7 @@ describe(`processNodeManifests`, () => {
       }
     })
 
+    // @ts-ignore: store is mocked
     store.setManifests(pendingManifests)
 
     await processNodeManifests()
@@ -236,14 +267,18 @@ describe(`processNodeManifests`, () => {
     )
     expect(store.dispatch).toBeCalled()
 
+    // @ts-ignore: store is mocked
     expect(fs.ensureDir.mock.calls.length).toBe(nodes.length)
+    // @ts-ignore: store is mocked
     expect(fs.writeJSON.mock.calls.length).toBe(nodes.length)
 
     pendingManifests.forEach((manifest, index) => {
+      // @ts-ignore: store is mocked
       if (!store.getNode(manifest.node.id)) {
         return
       }
 
+      // @ts-ignore: store is mocked
       const jsonResults = fs.writeJSON.mock.results[index].value
 
       expect(jsonResults.manifestFilePath).toBe(
@@ -254,5 +289,19 @@ describe(`processNodeManifests`, () => {
 
       expect(jsonResults.finalManifest.page.path).toBe(`/${manifest.node.id}`)
     })
+  }
+
+  it(`processes node manifests gatsby develop`, async () => {
+    // this emulates `gatsby develop`
+    process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP = `1`
+
+    await testProcessNodeManifests()
+  })
+
+  it(`processes node manifests gatsby build`, async () => {
+    // removing this emulates `gatsby build`
+    delete process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
+
+    await testProcessNodeManifests()
   })
 })
