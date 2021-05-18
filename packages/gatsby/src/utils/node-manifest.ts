@@ -18,6 +18,7 @@ interface INodeManifestOut {
   node: {
     id: string
   }
+  foundPageBy: FoundPageBy
 }
 
 type FoundPageBy =
@@ -47,26 +48,26 @@ async function findPageOwnedByNodeId({
 }> {
   const state = store.getState()
   const { pages, nodes } = state
-  const pagesBynode = state?.queries?.byNode
+  const { byNode } = state.queries
 
   // in development queries are run on demand so we wont have an accurate nodeId->pages map until those pages are visited in the browser. We want this mapping before the page is visited in the browser so we can route to the right page in the browser.
   // So in development we can just use the Map of all pages (pagePath -> pageNode)
   // but for builds (preview inc builds or regular builds) we will have a full map
   // of all nodeId's to pages they're queried on and we can use that instead since it
   // will be a much smaller list of pages, resulting in better performance for large sites
-  const usingPagesMapInDevelop: boolean =
-    `development` === process.env.NODE_ENV ||
-    (`test` === process.env.NODE_ENV && !pagesBynode)
+  const usingPagesMap: boolean =
+    !!process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP ||
+    `development` === process.env.NODE_ENV
 
-  const pagePathSetOrMap = usingPagesMapInDevelop
-    ? pages
-    : pagesBynode?.get(nodeId)
+  const pagePathSetOrMap = usingPagesMap
+    ? // this is a Map of page path to page node
+      pages
+    : // this is a Set of page paths
+      byNode?.get(nodeId)
 
   // the default page path is the first page found in
   // node id to page query tracking
-  let pagePath = usingPagesMapInDevelop
-    ? null
-    : pagePathSetOrMap?.values()?.next()?.value
+  let pagePath = byNode?.get(nodeId)?.values()?.next()?.value
 
   let foundPageBy: FoundPageBy = pagePath ? `queryTracking` : `none`
 
@@ -88,7 +89,7 @@ async function findPageOwnedByNodeId({
         // We always want to prefer ownerPagePath over context.id
         !foundOwnerNodeId
       ) {
-        const path: string = usingPagesMapInDevelop
+        const path: string = usingPagesMap
           ? // in development this is a Map, so the page path is the second arg (the key)
             args[1]
           : // in builds we're using a Set so the page path is the first arg (the value)
@@ -243,6 +244,7 @@ export async function processNodeManifest(
   const finalManifest: INodeManifestOut = {
     node: inputManifest.node,
     page: nodeManifestPage,
+    foundPageBy,
   }
 
   const gatsbySiteDirectory = store.getState().program.directory
