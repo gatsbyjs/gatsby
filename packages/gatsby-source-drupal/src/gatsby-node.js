@@ -1,5 +1,8 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
+const urlJoin = require(`url-join`)
+
+const { setOptions, getOptions } = require(`./plugin-options`)
 
 const {
   nodeFromData,
@@ -25,6 +28,10 @@ function gracefullyRethrow(activity, error) {
   if (!activity.panicOnBuild) {
     throw error
   }
+}
+
+exports.onPreBootstrap = (_, pluginOptions) => {
+  setOptions(pluginOptions)
 }
 
 exports.sourceNodes = async (
@@ -54,9 +61,26 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
+    languageConfig = {
+      defaultLanguage: `und`,
+      enabledLanguages: [`und`],
+      translatableEntities: [],
+    },
     entityReferenceRevisions = [],
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
+
+  // Default apiBase to `jsonapi`
+  apiBase = apiBase || `jsonapi`
+
+  // Default disallowedLinkTypes to self, describedby.
+  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
+
+  // Default concurrentFileRequests to `20`
+  concurrentFileRequests = concurrentFileRequests || 20
+
+  // Default skipFileDownloads to false.
+  skipFileDownloads = skipFileDownloads || false
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -100,6 +124,7 @@ exports.sourceNodes = async (
             getNode,
             reporter,
             store,
+            languageConfig,
           },
           pluginOptions
         )
@@ -128,7 +153,7 @@ exports.sourceNodes = async (
     try {
       // Hit fastbuilds endpoint with the lastFetched date.
       const data = await axios.get(
-        `${baseUrl}/gatsby-fastbuilds/sync/${lastFetched}`,
+        urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
         {
           auth: basicAuth,
           headers,
@@ -159,6 +184,9 @@ exports.sourceNodes = async (
                   createNodeIdWithVersion(
                     nodeSyncData.id,
                     nodeSyncData.type,
+                    getOptions().languageConfig
+                      ? nodeSyncData.attributes.langcode
+                      : `und`,
                     nodeSyncData.attributes?.drupal_internal__revision_id,
                     entityReferenceRevisions
                   )
@@ -185,6 +213,7 @@ exports.sourceNodes = async (
                   getNode,
                   reporter,
                   store,
+                  languageConfig,
                 },
                 pluginOptions
               )
@@ -210,18 +239,6 @@ exports.sourceNodes = async (
     `Fetch all data from Drupal`
   )
 
-  // Default apiBase to `jsonapi`
-  apiBase = apiBase || `jsonapi`
-
-  // Default disallowedLinkTypes to self, describedby.
-  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
-
-  // Default concurrentFileRequests to `20`
-  concurrentFileRequests = concurrentFileRequests || 20
-
-  // Default skipFileDownloads to false.
-  skipFileDownloads = skipFileDownloads || false
-
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
 
@@ -229,7 +246,7 @@ exports.sourceNodes = async (
 
   let allData
   try {
-    const data = await axios.get(`${baseUrl}/${apiBase}`, {
+    const data = await axios.get(urlJoin(baseUrl, apiBase), {
       auth: basicAuth,
       headers,
       params,
@@ -239,6 +256,12 @@ exports.sourceNodes = async (
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
+
+        // Lookup this type in our list of language alterable entities.
+        const isTranslatable = languageConfig.translatableEntities.some(
+          entityType => entityType === type
+        )
+
         const getNext = async (url, data = []) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
@@ -296,7 +319,34 @@ exports.sourceNodes = async (
           return data
         }
 
-        const data = await getNext(url)
+        let data = []
+        if (isTranslatable === false) {
+          data = await getNext(url)
+        } else {
+          for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
+            let currentLanguage = languageConfig.enabledLanguages[i]
+            const urlPath = url.href.split(`${apiBase}/`).pop()
+            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+            // The default language's JSON API is at the root.
+            if (
+              currentLanguage === getOptions().languageConfig.defaultLanguage ||
+              baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
+                currentLanguage
+            ) {
+              currentLanguage = ``
+            }
+
+            const joinedUrl = urlJoin(
+              baseUrlWithoutTrailingSlash,
+              currentLanguage,
+              apiBase,
+              urlPath
+            )
+            const dataForLanguage = await getNext(joinedUrl)
+
+            data = data.concat(dataForLanguage)
+          }
+        }
 
         const result = {
           type,
