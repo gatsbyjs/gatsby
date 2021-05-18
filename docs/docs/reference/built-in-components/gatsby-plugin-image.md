@@ -305,9 +305,9 @@ module.exports = {
           jpgOptions: {},
           pngOptions: {},
           webpOptions: {},
-          avifOptions: {}
-        }
-      }
+          avifOptions: {},
+        },
+      },
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-image`,
