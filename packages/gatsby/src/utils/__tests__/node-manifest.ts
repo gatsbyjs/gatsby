@@ -48,7 +48,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 jest.mock(`../../redux`, () => {
-  const state = {
+  const initialState = {
     nodeManifests: [],
     nodes: new Map(),
     pages: new Map(),
@@ -57,6 +57,8 @@ jest.mock(`../../redux`, () => {
     },
     queries: { byNode: new Map() },
   }
+
+  let state = { ...initialState }
 
   return {
     store: {
@@ -85,6 +87,9 @@ jest.mock(`../../redux`, () => {
 
         state.queries.byNode = byNode
       },
+      reset: (): void => {
+        state = { ...initialState }
+      },
       dispatch: jest.fn(),
     },
   }
@@ -92,19 +97,24 @@ jest.mock(`../../redux`, () => {
 
 beforeEach(() => {
   jest.clearAllMocks()
+  store.reset()
+  delete process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
 })
 
-describe(`warnAboutNodeManifestMappingProblems`, () => {
-  it(`warns about no page found for manifest node id`, () => {
-    warnAboutNodeManifestMappingProblems({
-      inputManifest: {
+describe(`processNodeManifests() warnings`, () => {
+  it(`warns about no page found for manifest node id`, async () => {
+    store.createNode({
+      id: `1`,
+    })
+    store.setManifests([
+      {
         pluginName: `test`,
         node: { id: `1` },
         manifestId: `1`,
       },
-      pagePath: undefined,
-      foundPageBy: `none`,
-    })
+    ])
+
+    await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
     expect(reporter.error.mock.results[0].value.id).toEqual(
@@ -112,16 +122,49 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
     )
   })
 
-  it(`warns about using context.id to map from node->page instead of ownerNodeId`, () => {
-    warnAboutNodeManifestMappingProblems({
-      inputManifest: {
+  it(`warns about using context.id to map from node->page instead of ownerNodeId`, async () => {
+    store.createNode({
+      id: `1`,
+    })
+    store.createNode({
+      id: `2`,
+    })
+    store.createPage({
+      path: `/test`,
+      context: { id: `1` },
+    })
+    store.createPage({
+      path: `/test-2`,
+      context: { id: `2` },
+    })
+    store.setManifests([
+      {
         pluginName: `test`,
         node: { id: `1` },
         manifestId: `1`,
       },
-      pagePath: `/test`,
-      foundPageBy: `context.id`,
-    })
+    ])
+
+    // first as develop
+    process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP = `1`
+
+    await processNodeManifests()
+
+    expect(reporter.error).toBeCalled()
+    expect(reporter.error.mock.results[0].value.id).toEqual(
+      foundPageByToLogIds[`context.id`]
+    )
+
+    // then as build
+    delete process.env._GATSBY_INTERNAL_TEST_NODE_MANIFEST_AS_DEVELOP
+
+    // adding both nodes to query tracking on each page to force using context.id
+    store.trackPagePathOnNode(`1`, `/test`)
+    store.trackPagePathOnNode(`1`, `/test-2`)
+    store.trackPagePathOnNode(`2`, `/test`)
+    store.trackPagePathOnNode(`2`, `/test-2`)
+
+    await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
     expect(reporter.error.mock.results[0].value.id).toEqual(
@@ -129,16 +172,25 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
     )
   })
 
-  it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, () => {
-    warnAboutNodeManifestMappingProblems({
-      inputManifest: {
+  it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, async () => {
+    store.createNode({
+      id: `1`,
+    })
+    store.createPage({
+      path: `/test`,
+      context: {},
+    })
+    store.setManifests([
+      {
         pluginName: `test`,
         node: { id: `1` },
         manifestId: `1`,
       },
-      pagePath: `/test`,
-      foundPageBy: `queryTracking`,
-    })
+    ])
+
+    store.trackPagePathOnNode(`1`, `/test`)
+
+    await processNodeManifests()
 
     expect(reporter.error).toBeCalled()
     expect(reporter.error.mock.results[0].value.id).toEqual(
