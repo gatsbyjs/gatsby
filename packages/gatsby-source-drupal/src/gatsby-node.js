@@ -43,7 +43,7 @@ exports.sourceNodes = async (
   },
   pluginOptions
 ) => {
-  let {
+  const {
     baseUrl,
     apiBase,
     basicAuth,
@@ -54,7 +54,7 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
-    entityReferenceRevisions = [],
+    entityReferenceRevisions,
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -112,7 +112,6 @@ exports.sourceNodes = async (
     return
   }
 
-  fastBuilds = fastBuilds || false
   if (fastBuilds) {
     const lastFetched =
       store.getState().status.plugins?.[`gatsby-source-drupal`]?.lastFetched ??
@@ -209,18 +208,6 @@ exports.sourceNodes = async (
   const drupalFetchActivity = reporter.activityTimer(
     `Fetch all data from Drupal`
   )
-
-  // Default apiBase to `jsonapi`
-  apiBase = apiBase || `jsonapi`
-
-  // Default disallowedLinkTypes to self, describedby.
-  disallowedLinkTypes = disallowedLinkTypes || [`self`, `describedby`]
-
-  // Default concurrentFileRequests to `20`
-  concurrentFileRequests = concurrentFileRequests || 20
-
-  // Default skipFileDownloads to false.
-  skipFileDownloads = skipFileDownloads || false
 
   // Fetch articles.
   reporter.info(`Starting to fetch all data from Drupal`)
@@ -438,3 +425,41 @@ exports.onCreateDevServer = (
     }
   )
 }
+
+exports.pluginOptionsSchema = ({ Joi }) =>
+  Joi.object({
+    baseUrl: Joi.string()
+      .required()
+      .description(`The URL to root of your Drupal instance`),
+    apiBase: Joi.string()
+      .default(`jsonapi`)
+      .description(
+        `The path to the root of the JSONAPI — defaults to "jsonapi"`
+      ),
+    basicAuth: Joi.object({
+      username: Joi.string(),
+      password: Joi.string(),
+    }).description(`Enables basicAuth`),
+    filters: Joi.object().description(
+      `Pass filters to the JSON API for specific collections`
+    ),
+    headers: Joi.object().description(
+      `Set request headers for requests to the JSON API`
+    ),
+    params: Joi.object().description(`Append optional GET params to requests`),
+    concurrentFileRequests: Joi.number().integer().default(20).min(1),
+    disallowedLinkTypes: Joi.array()
+      .items(Joi.string())
+      .default([`self`, `describedby`]),
+    skipFileDownloads: Joi.boolean().default(false),
+    fastBuilds: Joi.boolean().default(false),
+    entityReferenceRevisions: Joi.array().items(Joi.string()).default([]),
+    secret: Joi.string().description(
+      `an optional secret token for added security shared between your Drupal instance and Gatsby preview`
+    ),
+    languageConfig: Joi.object({
+      defaultLanguage: Joi.string().required(),
+      enabledLanguages: Joi.array().items(Joi.string()).required(),
+      translatableEntities: Joi.array().items(Joi.string()).required(),
+    }),
+  })
