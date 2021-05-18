@@ -66,6 +66,11 @@ exports.sourceNodes = async (
     skipFileDownloads,
     fastBuilds,
     translation,
+    languageConfig = {
+      defaultLanguage: `und`,
+      enabledLanguages: [`und`],
+      translatableEntities: [],
+    },
     entityReferenceRevisions = [],
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
@@ -81,32 +86,6 @@ exports.sourceNodes = async (
 
   // Default skipFileDownloads to false.
   skipFileDownloads = skipFileDownloads || false
-
-  // Determine what entities can be translated and what languages are enabled.
-  let languageConfig = store.getState().status.plugins?.[`gatsby-source-drupal`]
-    ?.languageConfig
-
-  if (!languageConfig) {
-    languageConfig = await fetchLanguageConfig({
-      translation,
-      baseUrl,
-      apiBase,
-      basicAuth,
-      headers,
-      params,
-      reporter,
-    })
-
-    if (translation && !languageConfig.enabledLanguages.length) {
-      reporter.warn(
-        `The translation option is enabled but no enabled languages were retrieved from Drupal. Make sure your basicAuth credentials in the Gatsby config file are populated with a user that has the "administer languages" permission.`
-      )
-    }
-  }
-
-  setOptions({ languageConfig, ...getOptions() })
-
-  setPluginStatus({ languageConfig })
 
   if (webhookBody && Object.keys(webhookBody).length) {
     const changesActivity = reporter.activityTimer(
@@ -285,7 +264,7 @@ exports.sourceNodes = async (
 
         // Lookup this type in our list of language alterable entities.
         const isTranslatable = languageConfig.translatableEntities.some(
-          entity => entity.id === type
+          entityType => entityType === type
         )
 
         const getNext = async (url, data = []) => {
