@@ -10,11 +10,7 @@ const {
   isFileNode,
   createNodeIdWithVersion,
 } = require(`./normalize`)
-const {
-  handleReferences,
-  handleWebhookUpdate,
-  fetchLanguageConfig,
-} = require(`./utils`)
+const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
