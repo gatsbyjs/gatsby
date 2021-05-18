@@ -81,8 +81,10 @@ type SiteSiteMetadata {
 }
 
 type SiteFunction implements Node @dontInfer {
-  apiRoute: String!
-  originalFilePath: String!
+  functionRoute: String!
+  pluginName: String!
+  originalAbsoluteFilePath: String!
+  originalRelativeFilePath: String!
   relativeCompiledFilePath: String!
   absoluteCompiledFilePath: String!
   matchPath: String

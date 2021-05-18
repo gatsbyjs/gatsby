@@ -4,7 +4,9 @@
   "private": true,
   "description": "functions",
   "author": "Kyle Mathews",
-  "keywords": ["gatsby"],
+  "keywords": [
+    "gatsby"
+  ],
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
