@@ -539,7 +539,7 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
         Joi.object({
           search: Joi.string()
             .description(
-              `The regex rule used to search a terme. Using a 'regular expression literal' is recommended over a simple regex string.`
+              `The regex rule used to search when replacing strings in node data. It will search the stringified JSON of each node to capture strings at any nested depth.`
             )
             .meta({
               example: wrapOptions(`
