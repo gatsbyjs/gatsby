@@ -2,14 +2,37 @@
 title: Create and Deploy Your First Gatsby Site
 ---
 
-import { Announcement } from 'gatsby-interface'
+import { Announcement, Notification } from 'gatsby-interface'
 import Collapsible from '@components/collapsible'
+import { MdInfo } from 'react-icons/md'
+
+<Notification
+  Icon={MdInfo}
+  tone="WARNING"
+  variant="SECONDARY"
+  content={
+    <div>
+      <p>
+        <strong>Note:</strong> We{"'"}re still working on updating this Tutorial to use Gatsby v3.
+        The first few parts of the new Tutorial have been released here, and subsequent parts
+        will be added as we finish them.
+      </p>
+      <p style={{ marginBottom: 0 }}>
+        If you{"'"}re looking for a full experience in the meantime, you can check out the (slightly outdated){" "}
+        <a href="https://v2.gatsbyjs.com/docs/tutorial/">
+          <strong>Gatsby v2 Tutorial</strong>
+        </a>
+        .
+      </p>
+    </div>
+  }
+/>
 
 ## Introduction
 
 Now that you've set up your computer with all the tools you'll need, it's time to get started!
 
-Over the course of this Tutorial, you'll build and deploy your first Gatsby site: a blog site with support for images and MDX! (If that doesn't mean anything to you now, don't worry! It will by the time you reach the end.) Here's a [finished example](https://introworkshopexamplesitev3.gatsbyjs.io/) of the site you'll build.
+Over the course of this Tutorial, you'll build and deploy your first Gatsby site: a blog site with support for images and MDX! (If that doesn't mean anything to you now, that's okay! It will by the time you reach the end.) Here's a [finished example](https://introworkshopexamplesitev3.gatsbyjs.io/) of the site you'll build.
 
 In this part of the Tutorial, you will go through the process of creating the template for your blog site and deploying it online for everyone to see.
 
@@ -213,7 +236,7 @@ Gatsby Cloud is an infrastructure platform that is specifically optimized for bu
 
 To connect your code on GitHub to your Gatsby Cloud account, do the following:
 
-1. Go to your [Gatsby Cloud Dashboard](https://gatsbyjs.com/dashboard/). Click on the **"Add a site"** button.
+1. Go to your [Gatsby Cloud Dashboard](/dashboard/?utm_campaign=tutorial). Click on the **"Add a site"** button.
 
    ![An empty Gatsby Cloud dashboard](./01-create-a-site-button.png)
 

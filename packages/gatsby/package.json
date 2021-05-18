@@ -1,7 +1,7 @@
 {
   "name": "gatsby",
   "description": "Blazing fast modern site generator for React",
-  "version": "3.6.0-next.1",
+  "version": "3.6.0-next.3",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bin": {
     "gatsby": "./cli.js"
@@ -76,7 +76,7 @@
     "find-cache-dir": "^3.3.1",
     "fs-exists-cached": "1.0.0",
     "fs-extra": "^8.1.0",
-    "gatsby-cli": "^3.6.0-next.1",
+    "gatsby-cli": "^3.6.0-next.2",
     "gatsby-core-utils": "^2.6.0-next.0",
     "gatsby-graphiql-explorer": "^1.6.0-next.0",
     "gatsby-legacy-polyfills": "^1.6.0-next.0",
@@ -244,7 +244,7 @@
     "postbuild": "node scripts/output-api-file.js && yarn workspace gatsby-admin build",
     "build:internal-plugins": "copyfiles -u 1 src/internal-plugins/**/package.json dist",
     "build:rawfiles": "copyfiles -u 1 src/internal-plugins/**/raw_* dist",
-    "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\" --ignore \"**/__mocks__\"",
+    "build:cjs": "babel cache-dir --out-dir cache-dir/commonjs --ignore \"**/__tests__\" --ignore \"**/__mocks__\" && copyfiles -u 1 cache-dir/**/*.json cache-dir/commonjs",
     "build:src": "babel src --out-dir dist --source-maps --verbose --ignore \"**/gatsby-cli.js,src/internal-plugins/dev-404-page/raw_dev-404-page.js,**/__tests__,**/__mocks__\" --extensions \".ts,.js\"",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
     "clean-test-bundles": "find test/ -type f -name bundle.js* -exec rm -rf {} +",

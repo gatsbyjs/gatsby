@@ -20,7 +20,7 @@ import fetchReferencedMediaItemsAndCreateNodes, {
 } from "../fetch-nodes/fetch-referenced-media-items"
 import btoa from "btoa"
 import store from "~/store"
-import { createRemoteMediaItemNode } from "./create-remote-media-item-node"
+import { createLocalFileNode } from "./create-local-file-node"
 
 const getNodeEditLink = node => {
   const { protocol, hostname } = url.parse(node.link)
@@ -246,7 +246,7 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
       // we need to fetch it and create a file node for it with no
       // media item node.
       try {
-        imageNode = await createRemoteMediaItemNode({
+        imageNode = await createLocalFileNode({
           skipExistingNode: true,
           parentName: `Creating File node from URL where we couldn't find a MediaItem node`,
           mediaItemNode: {
@@ -266,7 +266,6 @@ const fetchNodeHtmlImageMediaItemNodes = async ({
         const nodeEditLink = getNodeEditLink(node)
 
         if (typeof e === `string` && e.includes(`404`)) {
-          helpers.reporter.log(``)
           helpers.reporter.warn(
             formatLogMessage(
               `\n\nReceived a 404 ${sharedError}\n\nMost likely this image was uploaded to this ${node.__typename} and then deleted from the media library.\nYou'll need to fix this and re-save this ${node.__typename} to remove this warning at\n${nodeEditLink}.\n\n`
@@ -535,6 +534,10 @@ const replaceNodeHtmlImages = async ({
               imageNode
             : // otherwise grab the file node
               helpers.getNode(imageNode.localFile.id)
+
+        if (!fileNode) {
+          return null
+        }
 
         const imgTagMaxWidth = findImgTagMaxWidthFromCheerioImg(cheerioImg)
 

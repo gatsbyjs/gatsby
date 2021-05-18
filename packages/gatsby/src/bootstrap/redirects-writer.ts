@@ -2,7 +2,9 @@ import _ from "lodash"
 import crypto from "crypto"
 import fs from "fs-extra"
 import { store, emitter } from "../redux"
+import { IRedirect } from "../redux/types"
 import { joinPath } from "gatsby-core-utils"
+import reporter from "gatsby-cli/lib/reporter"
 
 let lastHash: string | null = null
 let bootstrapFinished = false
@@ -10,21 +12,46 @@ let bootstrapFinished = false
 export const writeRedirects = async (): Promise<void> => {
   bootstrapFinished = true
 
-  const { program, redirects } = store.getState()
+  const { program, redirects, pages } = store.getState()
 
-  // Filter for redirects that are meant for the browser.
-  const browserRedirects = redirects
-    .filter(r => r.redirectInBrowser)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .map(
-      ({ redirectInBrowser, isPermanent, ignoreCase, fromPath, ...rest }) => {
-        return {
-          fromPath: ignoreCase ? fromPath.toLowerCase() : fromPath,
-          ignoreCase,
-          ...rest,
-        }
-      }
+  const redirectMatchingPageWarnings: Array<string> = []
+  const browserRedirects: Array<IRedirect> = []
+
+  for (const redirect of redirects) {
+    const alternativePath = redirect.fromPath.endsWith(`/`)
+      ? redirect.fromPath.substr(0, redirect.fromPath.length - 1)
+      : redirect.fromPath + `/`
+
+    let hasSamePage: boolean
+
+    if (
+      (hasSamePage = pages.has(redirect.fromPath)) ||
+      pages.has(alternativePath)
+    ) {
+      redirectMatchingPageWarnings.push(
+        ` - page: "${
+          hasSamePage ? redirect.fromPath : alternativePath
+        }" and redirect: "${redirect.fromPath}" -> "${redirect.toPath}"`
+      )
+    }
+    // Filter for redirects that are meant for the browser.
+    if (redirect.redirectInBrowser) {
+      browserRedirects.push({
+        ...redirect,
+        fromPath: redirect.ignoreCase
+          ? redirect.fromPath.toLowerCase()
+          : redirect.fromPath,
+      })
+    }
+  }
+
+  if (redirectMatchingPageWarnings.length > 0) {
+    reporter.warn(
+      `There are routes that match both page and redirect. It will result in page not being accessible; this is probably not intentional:\n${redirectMatchingPageWarnings.join(
+        `\n`
+      )}`
     )
+  }
 
   const newHash = crypto
     .createHash(`md5`)

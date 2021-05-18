@@ -153,7 +153,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
         // Check first for exact matches.
         let functionObj = functions.find(
-          ({ apiRoute }) => apiRoute === pathFragment
+          ({ functionRoute }) => functionRoute === pathFragment
         )
 
         if (!functionObj) {
@@ -202,7 +202,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
           const end = Date.now()
           console.log(
-            `Executed function "/api/${functionObj.apiRoute}" in ${
+            `Executed function "/api/${functionObj.functionRoute}" in ${
               end - start
             }ms`
           )

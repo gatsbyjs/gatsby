@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.6.0-next.0...gatsby-plugin-netlify-cms@5.6.0-next.1) (2021-05-18)
+
+### Bug Fixes
+
+- **gatsby-plugin-netlify-cms:** use friendly-errors-webpack-plugin package that satisfies webpack@5 peerDependency ([#31446](https://github.com/gatsbyjs/gatsby/issues/31446)) ([1a32958](https://github.com/gatsbyjs/gatsby/commit/1a32958e368ac63d2905bf27e1c2df6ac3aa8f43))
+
 # [5.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-netlify-cms@5.5.0-next.2...gatsby-plugin-netlify-cms@5.6.0-next.0) (2021-05-06)
 
 ### Bug Fixes
