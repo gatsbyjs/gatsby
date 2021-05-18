@@ -64,17 +64,17 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
     // Ignore any plugins we include by default. In the very unlikely case
     // we want to ship default functions, we'll special case add them. In the
     // meantime, we'll avoid extra FS IO.
-    if (plugin.resolve.includes("internal-plugin")) {
+    if (plugin.resolve.includes(`internal-plugin`)) {
       return
     }
-    if (plugin.resolve.includes("gatsby-plugin-typescript")) {
+    if (plugin.resolve.includes(`gatsby-plugin-typescript`)) {
       return
     }
-    if (plugin.resolve.includes("gatsby-plugin-page-creator")) {
+    if (plugin.resolve.includes(`gatsby-plugin-page-creator`)) {
       return
     }
 
-    let glob = {
+    const glob = {
       globPattern: `${plugin.resolve}/src/api/${plugin.name}/**/*.{js,ts}`,
       rootPath: path.join(plugin.resolve, `src/api`),
       pluginName: plugin.name,
@@ -86,7 +86,7 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   return _.union(globs)
 }
 
-async function globAsync(pattern, options) {
+async function globAsync(pattern, options): Promise<Array<string>> {
   return await new Promise((resolve, reject) => {
     glob(pattern, options, (err, files) => {
       if (err) {
@@ -117,7 +117,7 @@ const createWebpackConfig = async ({
 
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
-  let allFunctions = await Promise.all(
+  const allFunctions = await Promise.all(
     globs.map(async glob => {
       const knownFunctions: Array<IFunctionData> = []
       const files = await globAsync(glob.globPattern)
