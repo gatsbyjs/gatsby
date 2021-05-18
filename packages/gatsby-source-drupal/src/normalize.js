@@ -56,7 +56,7 @@ const createNodeIdWithVersion = (
 ) => {
   // If the source plugin hasn't enabled `translation` then always just set langcode
   // to "undefined".
-  let langcodeNormalized = getOptions().translation ? langcode : `und`
+  let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
 
   if (
     !getOptions().languageConfig.enabledLanguages.includes(langcodeNormalized)

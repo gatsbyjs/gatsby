@@ -19,7 +19,7 @@ const handleReferences = (
   { getNode, createNodeId, entityReferenceRevisions = [] }
 ) => {
   const relationships = node.relationships
-  const rootNodeLanguage = getOptions().translation ? node.langcode : `und`
+  const rootNodeLanguage = getOptions().languageConfig ? node.langcode : `und`
 
   if (node.drupal_relationships) {
     const referencedNodes = []

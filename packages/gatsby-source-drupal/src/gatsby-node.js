@@ -61,7 +61,6 @@ exports.sourceNodes = async (
     disallowedLinkTypes,
     skipFileDownloads,
     fastBuilds,
-    translation,
     languageConfig = {
       defaultLanguage: `und`,
       enabledLanguages: [`und`],
@@ -185,7 +184,7 @@ exports.sourceNodes = async (
                   createNodeIdWithVersion(
                     nodeSyncData.id,
                     nodeSyncData.type,
-                    getOptions().translation
+                    getOptions().languageConfig
                       ? nodeSyncData.attributes.langcode
                       : `und`,
                     nodeSyncData.attributes?.drupal_internal__revision_id,
