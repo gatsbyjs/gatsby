@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.6.0-next.1...gatsby-cli@3.6.0-next.2) (2021-05-18)
+
+### Bug Fixes
+
+- **gatsby-cli:** Switch host env to GATSBY\_ prefix ([#31426](https://github.com/gatsbyjs/gatsby/issues/31426)) ([7c587bf](https://github.com/gatsbyjs/gatsby/commit/7c587bff2041d1b0da79dad5eccab68cbd44fdf0))
+
+### Features
+
+- **gatsby:** Only load gatsby-recipes in develop if Admin is enabled ([#31401](https://github.com/gatsbyjs/gatsby/issues/31401)) ([3ee94dc](https://github.com/gatsbyjs/gatsby/commit/3ee94dcb5237f3ed1a05f2e53be964c735bd9e1c))
+
 # [3.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-cli@3.6.0-next.0...gatsby-cli@3.6.0-next.1) (2021-05-12)
 
 ### Features
