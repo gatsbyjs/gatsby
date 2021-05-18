@@ -283,7 +283,7 @@ export async function processNodeManifests(): Promise<void> {
     }
   })
 
-  const s = (length: number): string => (length > 1 ? `s` : ``)
+  const s = (length: number): string => (length > 1 || length === 0 ? `s` : ``)
 
   reporter.info(
     `Wrote out ${totalProcessedManifests} node page manifest file${s(
