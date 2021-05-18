@@ -59,7 +59,8 @@ const createNodeIdWithVersion = (
   let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
 
   if (
-    !getOptions().languageConfig.enabledLanguages.includes(langcodeNormalized)
+    getOptions().languageConfig &&
+    !getOptions().languageConfig?.enabledLanguages.includes(langcodeNormalized)
   ) {
     langcodeNormalized = getOptions().languageConfig.defaultLanguage
   }
