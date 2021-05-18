@@ -39,7 +39,9 @@ const fileType = `
 const siteFunctionType = `
   type SiteFunction implements Node @infer {
     functionRoute: String!
-    originalFilePath: String!
+    pluginName: String!
+    originalAbsoluteFilePath: String!
+    originalRelativeFilePath: String!
     relativeCompiledFilePath: String!
     absoluteCompiledFilePath: String!
     matchPath: String

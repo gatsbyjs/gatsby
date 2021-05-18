@@ -47,7 +47,7 @@ interface IGlobPattern {
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
 
-  // Add the default site src/api directory
+  // Add the default site src/api directory.
   globs.push({
     globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
     rootPath: path.join(siteDirectoryPath, `src/api`),
@@ -149,7 +149,12 @@ const createWebpackConfig = async ({
     })
   )
 
-  const knownFunctions = _.flatten(allFunctions) as Array<IFunctionData>
+  // Combine functions by the route name so that functions in the default
+  // functions directory can override the plugin's implementations.
+  const knownFunctions = _.unionBy(
+    ...allFunctions,
+    func => func.functionRoute
+  ) as Array<IFunctionData>
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
 

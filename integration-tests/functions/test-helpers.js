@@ -238,6 +238,26 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`plugins can declare functions and they can be shadowed`, () => {
+      test(`shadowing`, async () => {
+        const result = await fetch(
+          `${host}/api/gatsby-plugin-cool/shadowed`
+        ).then(res => res.text())
+        expect(result).toEqual(`I am shadowed`)
+
+        const result2 = await fetch(
+          `${host}/api/gatsby-plugin-cool/not-shadowed`
+        ).then(res => res.text())
+        expect(result2).toEqual(`I am not shadowed`)
+      })
+      test(`plugins can't declare functions outside of their namespace`, async () => {
+        const result = await fetch(
+          `${host}/api/i-will-not-work-cause-namespacing`
+        )
+        expect(result.status).toEqual(404)
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)
