@@ -52,17 +52,21 @@ exports.sourceNodes = async (
 ) => {
   const {
     baseUrl,
-    apiBase,
+    apiBase = `jsonapi`,
     basicAuth,
     filters,
     headers,
     params,
-    concurrentFileRequests,
-    disallowedLinkTypes,
-    skipFileDownloads,
-    fastBuilds,
-    entityReferenceRevisions,
-    languageConfig,
+    concurrentFileRequests = 20,
+    disallowedLinkTypes = [`self`, `describedby`],
+    skipFileDownloads = false,
+    fastBuilds = false,
+    entityReferenceRevisions = [],
+    languageConfig = {
+      defaultLanguage: `und`,
+      enabledLanguages: [`und`],
+      translatableEntities: [],
+    },
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -477,11 +481,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     baseUrl: Joi.string()
       .required()
       .description(`The URL to root of your Drupal instance`),
-    apiBase: Joi.string()
-      .default(`jsonapi`)
-      .description(
-        `The path to the root of the JSONAPI — defaults to "jsonapi"`
-      ),
+    apiBase: Joi.string().description(
+      `The path to the root of the JSONAPI — defaults to "jsonapi"`
+    ),
     basicAuth: Joi.object({
       username: Joi.string(),
       password: Joi.string(),
@@ -494,24 +496,16 @@ exports.pluginOptionsSchema = ({ Joi }) =>
     ),
     params: Joi.object().description(`Append optional GET params to requests`),
     concurrentFileRequests: Joi.number().integer().default(20).min(1),
-    disallowedLinkTypes: Joi.array()
-      .items(Joi.string())
-      .default([`self`, `describedby`]),
-    skipFileDownloads: Joi.boolean().default(false),
-    fastBuilds: Joi.boolean().default(false),
-    entityReferenceRevisions: Joi.array().items(Joi.string()).default([]),
+    disallowedLinkTypes: Joi.array().items(Joi.string()),
+    skipFileDownloads: Joi.boolean(),
+    fastBuilds: Joi.boolean(),
+    entityReferenceRevisions: Joi.array().items(Joi.string()),
     secret: Joi.string().description(
       `an optional secret token for added security shared between your Drupal instance and Gatsby preview`
     ),
     languageConfig: Joi.object({
-      defaultLanguage: Joi.string().required().default(`und`),
-      enabledLanguages: Joi.array()
-        .items(Joi.string())
-        .required()
-        .default([`und`]),
-      translatableEntities: Joi.array()
-        .items(Joi.string())
-        .required()
-        .default([]),
+      defaultLanguage: Joi.string().required(),
+      enabledLanguages: Joi.array().items(Joi.string()).required(),
+      translatableEntities: Joi.array().items(Joi.string()).required(),
     }),
   })
