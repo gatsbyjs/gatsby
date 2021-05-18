@@ -237,13 +237,13 @@ describe(`processNodeManifests`, () => {
     expect(store.dispatch).not.toBeCalled()
   })
 
-  const testProcessNodeManifests = async (
-    nodes = [
+  const testProcessNodeManifests = async (): Promise<void> => {
+    const nodes = [
       { id: `1`, usePageContextId: true },
       { id: `2`, useOwnerNodeId: true },
       { id: `3`, useQueryTracking: true },
     ]
-  ): Promise<void> => {
+
     nodes.forEach(node => {
       // @ts-ignore: store is mocked
       store.createNode(node)
