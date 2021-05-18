@@ -1,3 +1,5 @@
+import { foundPageByToLogIds } from "./../node-manifest"
+import { errorMap } from "./../../../../gatsby-cli/src/structured-errors/error-map"
 import path from "path"
 import fs from "fs-extra"
 import reporter from "gatsby-cli/lib/reporter"
@@ -24,6 +26,12 @@ jest.mock(`fs-extra`, () => {
 
 jest.mock(`gatsby-cli/lib/reporter`, () => {
   return {
+    error: jest.fn(input => {
+      if (process.env.DEBUG) {
+        console.error(JSON.stringify(input, null, 2))
+      }
+      return input
+    }),
     warn: jest.fn(message => {
       if (process.env.DEBUG) {
         console.warn(message)
@@ -82,14 +90,13 @@ jest.mock(`../../redux`, () => {
   }
 })
 
-describe(`warnAboutNodeManifestMappingProblems`, () => {
-  afterEach(() => {
-    // @ts-ignore: reporter is mocked
-    reporter.warn.mockReset()
-  })
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
+describe(`warnAboutNodeManifestMappingProblems`, () => {
   it(`warns about no page found for manifest node id`, () => {
-    const { message, possibleMessages } = warnAboutNodeManifestMappingProblems({
+    warnAboutNodeManifestMappingProblems({
       inputManifest: {
         pluginName: `test`,
         node: { id: `1` },
@@ -99,14 +106,14 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       foundPageBy: `none`,
     })
 
-    expect(reporter.warn).toBeCalled()
-    expect(reporter.warn).toBeCalledWith(possibleMessages.none)
-    expect(message).toEqual(possibleMessages.none)
-    expect(message.includes(`couldn't find a page for this node`)).toBeTruthy()
+    expect(reporter.error).toBeCalled()
+    expect(reporter.error.mock.results[0].value.id).toEqual(
+      foundPageByToLogIds.none
+    )
   })
 
   it(`warns about using context.id to map from node->page instead of ownerNodeId`, () => {
-    const { message, possibleMessages } = warnAboutNodeManifestMappingProblems({
+    warnAboutNodeManifestMappingProblems({
       inputManifest: {
         pluginName: `test`,
         node: { id: `1` },
@@ -116,15 +123,14 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       foundPageBy: `context.id`,
     })
 
-    expect(reporter.warn).toBeCalled()
-    expect(reporter.warn).toBeCalledWith(possibleMessages[`context.id`])
-    expect(message).toEqual(possibleMessages[`context.id`])
-    expect(message.includes(`pageContext.id`)).toBeTruthy()
-    expect(message.includes(`ownerNodeId`)).toBeTruthy()
+    expect(reporter.error).toBeCalled()
+    expect(reporter.error.mock.results[0].value.id).toEqual(
+      foundPageByToLogIds[`context.id`]
+    )
   })
 
   it(`warns about using node->query tracking to map from node->page instead of using ownerNodeId`, () => {
-    const { message, possibleMessages } = warnAboutNodeManifestMappingProblems({
+    warnAboutNodeManifestMappingProblems({
       inputManifest: {
         pluginName: `test`,
         node: { id: `1` },
@@ -134,16 +140,14 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       foundPageBy: `queryTracking`,
     })
 
-    expect(reporter.warn).toBeCalled()
-    expect(reporter.warn).toBeCalledWith(possibleMessages[`queryTracking`])
-    expect(message).toEqual(possibleMessages[`queryTracking`])
-    expect(
-      message.includes(`the first page where this node is queried`)
-    ).toBeTruthy()
+    expect(reporter.error).toBeCalled()
+    expect(reporter.error.mock.results[0].value.id).toEqual(
+      foundPageByToLogIds[`queryTracking`]
+    )
   })
 
   it(`doesn't warn when using the filesystem route api to map nodes->pages`, () => {
-    const { message } = warnAboutNodeManifestMappingProblems({
+    const { logId } = warnAboutNodeManifestMappingProblems({
       inputManifest: {
         pluginName: `test`,
         node: { id: `1` },
@@ -153,23 +157,8 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
       foundPageBy: `filesystem-route-api`,
     })
 
-    expect(reporter.warn).not.toBeCalled()
-    expect(message).toEqual(`success`)
-  })
-
-  it(`doesn't warn when using the filesystem route api to map nodes->pages`, () => {
-    const { message } = warnAboutNodeManifestMappingProblems({
-      inputManifest: {
-        pluginName: `test`,
-        node: { id: `1` },
-        manifestId: `1`,
-      },
-      pagePath: `/test`,
-      foundPageBy: `ownerNodeId`,
-    })
-
-    expect(reporter.warn).not.toBeCalled()
-    expect(message).toEqual(`success`)
+    expect(reporter.error).not.toBeCalled()
+    expect(logId).toEqual(foundPageByToLogIds[`filesystem-route-api`])
   })
 
   it(`warnings helper throws in impossible foundPageBy state`, () => {
@@ -186,15 +175,13 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
 })
 
 describe(`processNodeManifests`, () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   it(`Doesn't do anything when there are no pending manifests`, async () => {
     await processNodeManifests()
 
     expect(fs.writeJSON).not.toBeCalled()
     expect(reporter.info).not.toBeCalled()
+    expect(reporter.warn).not.toBeCalled()
+    expect(reporter.error).not.toBeCalled()
     expect(store.dispatch).not.toBeCalled()
   })
 

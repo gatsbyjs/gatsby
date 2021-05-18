@@ -1,3 +1,4 @@
+import { ErrorId } from "./../../../gatsby-cli/src/structured-errors/error-map"
 import { getNode } from "./../redux/nodes"
 import { IGatsbyPage, INodeManifest } from "./../redux/types"
 import reporter from "gatsby-cli/lib/reporter"
@@ -149,6 +150,14 @@ async function findPageOwnedByNodeId({
   }
 }
 
+export const foundPageByToLogIds = {
+  none: `11801`,
+  [`context.id`]: `11802`,
+  queryTracking: `11803`,
+  [`filesystem-route-api`]: `success`,
+  ownerNodeId: `success`,
+}
+
 /**
  * Takes in some info about a node manifest and the page we did or didn't find for it, then warns and returns the warning string
  */
@@ -160,47 +169,27 @@ export function warnAboutNodeManifestMappingProblems({
   inputManifest: INodeManifest
   pagePath?: string
   foundPageBy: FoundPageBy
-}): { message: string; possibleMessages: { [key in FoundPageBy]: string } } {
-  const warnings = {
-    shared: `Plugin ${inputManifest.pluginName} called unstable_createNodeManifest() for node id "${inputManifest.node.id}" with a manifest id of "${inputManifest.manifestId}"`,
-    noOwnerNodeId: `but Gatsby didn't find a ownerNodeId for the page at ${pagePath}\n`,
-    possiblyInaccurate: `This may result in an inaccurate node manifest (for previews or other purposes).`,
-  }
-
-  const success = `success` as const
-
-  const messages = {
-    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
-    none: `${warnings.shared} but Gatsby couldn't find a page for this node.
-    If you want a manifest to be created for this node (for previews or other purposes), ensure that a page was created (and that a ownerNodeId is added to createPage() if you're not using the Filesystem Route API).\n` as const,
-
-    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
-    [`context.id`]: `${warnings.shared} ${warnings.noOwnerNodeId}Using the first page that was found with the node manifest id set in pageContext.id in createPage().\n${warnings.possiblyInaccurate}` as const,
-
-    // @todo add docs link to "using Preview" once it's updated with an explanation of ownerNodeId
-    queryTracking: `${warnings.shared} ${warnings.noOwnerNodeId}Using the first page where this node is queried.\n${warnings.possiblyInaccurate}` as const,
-
-    ownerNodeId: success,
-    [`filesystem-route-api`]: success,
-  }
-
-  const messageValues = Object.values(messages)
-  type MessageValues = typeof messageValues[number]
-
-  let message: MessageValues
+}): { logId: string } {
+  let logId: ErrorId | `success`
 
   switch (foundPageBy) {
     case `none`:
     case `context.id`:
     case `queryTracking`: {
-      message = messages[foundPageBy]
-      reporter.warn(message)
+      logId = foundPageByToLogIds[foundPageBy]
+      reporter.error({
+        id: logId,
+        context: {
+          inputManifest,
+          pagePath,
+        },
+      })
       break
     }
 
     case `filesystem-route-api`:
     case `ownerNodeId`:
-      message = success
+      logId = `success`
       break
 
     default: {
@@ -209,8 +198,7 @@ export function warnAboutNodeManifestMappingProblems({
   }
 
   return {
-    message,
-    possibleMessages: messages,
+    logId,
   }
 }
 
