@@ -40,7 +40,7 @@ jest.mock(`gatsby-cli/lib/reporter`, () => {
 })
 
 jest.mock(`../../redux`, () => {
-  const initialState = {
+  const state = {
     nodeManifests: [],
     nodes: new Map(),
     pages: new Map(),
@@ -50,8 +50,6 @@ jest.mock(`../../redux`, () => {
     queries: { byNode: new Map() },
   }
 
-  let state = { ...initialState }
-
   return {
     store: {
       getState: jest.fn(() => state),
@@ -59,9 +57,6 @@ jest.mock(`../../redux`, () => {
         state.nodes.get(nodeId),
       setManifests: (manifests): void => {
         state.nodeManifests = manifests
-      },
-      reset: (): void => {
-        state = initialState
       },
       createNode: (node): void => {
         state.nodes.set(node.id, node)
@@ -192,7 +187,6 @@ describe(`warnAboutNodeManifestMappingProblems`, () => {
 
 describe(`processNodeManifests`, () => {
   beforeEach(() => {
-    store.reset()
     jest.clearAllMocks()
   })
 
