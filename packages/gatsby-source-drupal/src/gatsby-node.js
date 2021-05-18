@@ -1,5 +1,8 @@
 const axios = require(`axios`)
 const _ = require(`lodash`)
+const urlJoin = require(`url-join`)
+
+const { setOptions, getOptions } = require(`./plugin-options`)
 
 const {
   nodeFromData,
@@ -25,6 +28,10 @@ function gracefullyRethrow(activity, error) {
   if (!activity.panicOnBuild) {
     throw error
   }
+}
+
+exports.onPreBootstrap = (_, pluginOptions) => {
+  setOptions(pluginOptions)
 }
 
 exports.sourceNodes = async (
@@ -55,6 +62,7 @@ exports.sourceNodes = async (
     skipFileDownloads,
     fastBuilds,
     entityReferenceRevisions,
+    languageConfig,
   } = pluginOptions
   const { createNode, setPluginStatus, touchNode } = actions
 
@@ -100,6 +108,7 @@ exports.sourceNodes = async (
             getNode,
             reporter,
             store,
+            languageConfig,
           },
           pluginOptions
         )
@@ -127,7 +136,7 @@ exports.sourceNodes = async (
     try {
       // Hit fastbuilds endpoint with the lastFetched date.
       const data = await axios.get(
-        `${baseUrl}/gatsby-fastbuilds/sync/${lastFetched}`,
+        urlJoin(baseUrl, `gatsby-fastbuilds/sync/`, lastFetched.toString()),
         {
           auth: basicAuth,
           headers,
@@ -158,6 +167,9 @@ exports.sourceNodes = async (
                   createNodeIdWithVersion(
                     nodeSyncData.id,
                     nodeSyncData.type,
+                    getOptions().languageConfig
+                      ? nodeSyncData.attributes.langcode
+                      : `und`,
                     nodeSyncData.attributes?.drupal_internal__revision_id,
                     entityReferenceRevisions
                   )
@@ -184,6 +196,7 @@ exports.sourceNodes = async (
                   getNode,
                   reporter,
                   store,
+                  languageConfig,
                 },
                 pluginOptions
               )
@@ -216,7 +229,7 @@ exports.sourceNodes = async (
 
   let allData
   try {
-    const data = await axios.get(`${baseUrl}/${apiBase}`, {
+    const data = await axios.get(urlJoin(baseUrl, apiBase), {
       auth: basicAuth,
       headers,
       params,
@@ -226,6 +239,12 @@ exports.sourceNodes = async (
         if (disallowedLinkTypes.includes(type)) return
         if (!url) return
         if (!type) return
+
+        // Lookup this type in our list of language alterable entities.
+        const isTranslatable = languageConfig.translatableEntities.some(
+          entityType => entityType === type
+        )
+
         const getNext = async (url, data = []) => {
           if (typeof url === `object`) {
             // url can be string or object containing href field
@@ -283,7 +302,34 @@ exports.sourceNodes = async (
           return data
         }
 
-        const data = await getNext(url)
+        let data = []
+        if (isTranslatable === false) {
+          data = await getNext(url)
+        } else {
+          for (let i = 0; i < languageConfig.enabledLanguages.length; i++) {
+            let currentLanguage = languageConfig.enabledLanguages[i]
+            const urlPath = url.href.split(`${apiBase}/`).pop()
+            const baseUrlWithoutTrailingSlash = baseUrl.replace(/\/$/, ``)
+            // The default language's JSON API is at the root.
+            if (
+              currentLanguage === getOptions().languageConfig.defaultLanguage ||
+              baseUrlWithoutTrailingSlash.slice(-currentLanguage.length) ==
+                currentLanguage
+            ) {
+              currentLanguage = ``
+            }
+
+            const joinedUrl = urlJoin(
+              baseUrlWithoutTrailingSlash,
+              currentLanguage,
+              apiBase,
+              urlPath
+            )
+            const dataForLanguage = await getNext(joinedUrl)
+
+            data = data.concat(dataForLanguage)
+          }
+        }
 
         const result = {
           type,
@@ -458,8 +504,14 @@ exports.pluginOptionsSchema = ({ Joi }) =>
       `an optional secret token for added security shared between your Drupal instance and Gatsby preview`
     ),
     languageConfig: Joi.object({
-      defaultLanguage: Joi.string().required(),
-      enabledLanguages: Joi.array().items(Joi.string()).required(),
-      translatableEntities: Joi.array().items(Joi.string()).required(),
+      defaultLanguage: Joi.string().required().default(`und`),
+      enabledLanguages: Joi.array()
+        .items(Joi.string())
+        .required()
+        .default([`und`]),
+      translatableEntities: Joi.array()
+        .items(Joi.string())
+        .required()
+        .default([]),
     }),
   })
