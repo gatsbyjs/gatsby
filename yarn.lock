@@ -17223,17 +17223,17 @@ livereload-js@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/livereload-js/-/livereload-js-2.3.0.tgz#c3ab22e8aaf5bf3505d80d098cbad67726548c9a"
 
-lmdb-store@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/lmdb-store/-/lmdb-store-1.4.2.tgz#30e09a7fa96d3f19da0a7df1d2c1171ccb34720d"
-  integrity sha512-uNgf3FFb0HZqufE9zSzlAWI+VQDf0mwdDxmOxPdUMR/WKmDMil1xnI5rm68tB8HfGknmFcIhgau9GvDZbYmRzA==
+lmdb-store@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/lmdb-store/-/lmdb-store-1.5.0.tgz#691a03635d9d744b2b0d6362fb926f5f781a4d81"
+  integrity sha512-t06D13sUqC96rQcyU8el3TohzknsPXK3Upz6lt9ObZ+L13OhL8zZBzpVoS8jDbkjneRNmu3zMw9MMz3kQmtBgQ==
   dependencies:
     mkdirp "^1.0.4"
     nan "^2.14.2"
     node-gyp-build "^4.2.3"
     weak-lru-cache "^0.4.1"
   optionalDependencies:
-    msgpackr "^1.2.10"
+    msgpackr "^1.3.2"
 
 load-bmfont@^1.3.1, load-bmfont@^1.4.0:
   version "1.4.0"
@@ -18940,20 +18940,20 @@ ms@2.1.2, ms@^2.0.0, ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-msgpackr-extract@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/msgpackr-extract/-/msgpackr-extract-1.0.8.tgz#18f8f854c700db7f1b972fdb51c875efda5a4575"
-  integrity sha512-XjAPEv25aIhXMUM197XJGUA9O7bqvbNU1mEWCiJ30wJEZrmtpI7+Dzl+vHIfdQSL5rucfNFCGuNFfLj1wZHmeg==
+msgpackr-extract@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/msgpackr-extract/-/msgpackr-extract-1.0.11.tgz#68dd2e5da3f45788624e44190a25730c9f455d90"
+  integrity sha512-qE31O3AX4zUxGcf0eIxYF1h2n6FnJHmsfiT5M/aAeGmHQmiWJCkqeIDXGD0trDFQ7/tb8KBN69LLBQpon2WQnQ==
   dependencies:
     nan "^2.14.2"
     node-gyp-build "^4.2.3"
 
-msgpackr@^1.2.10:
-  version "1.2.11"
-  resolved "https://registry.yarnpkg.com/msgpackr/-/msgpackr-1.2.11.tgz#25990b1e4e510ad23fb23baf7cb16de8597d3d3e"
-  integrity sha512-v64MNuGKksxAp9BqvS+wASrnTcBEbncP4Vt4soEIxbpoOg22knUkeBITyt4cyEP3+If+l0fdwydkOtJ6bB208Q==
+msgpackr@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/msgpackr/-/msgpackr-1.3.2.tgz#820cdeb6e5dc0ec330c68f5813aab2514651651c"
+  integrity sha512-iZLLtOMZZXK/r9k0WjQHSqtzsGBDS5lupGKV29LPyiryNtFE0bpri6almK3HrrJJwx/9DLPLCwcLqNmckjsgQw==
   optionalDependencies:
-    msgpackr-extract "^1.0.8"
+    msgpackr-extract "^1.0.11"
 
 msw@^0.25.0:
   version "0.25.0"
