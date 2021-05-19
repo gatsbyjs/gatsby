@@ -1,4 +1,5 @@
 const fetch = require(`node-fetch`)
+const { createReadStream } = require("fs")
 const execa = require(`execa`)
 const fs = require(`fs-extra`)
 const path = require(`path`)
@@ -178,24 +179,24 @@ export function runTests(env, host) {
         expect(result).toMatchSnapshot()
       })
 
-      // TODO enable when functions support uploading files.
-      // test(`file in multipart/form`, async () => {
-      // const { readFileSync } = require("fs")
+      test(`file in multipart/form`, async () => {
+        const { readFileSync } = require("fs")
 
-      // const file = readFileSync(path.join(__dirname, "./fixtures/test.txt"))
+        const file = createReadStream(
+          path.join(__dirname, "./__tests__/fixtures/test.txt")
+        )
 
-      // const form = new FormData()
-      // form.append("file", file)
-      // const result = await fetch(`${host}/api/parser`, {
-      // method: `POST`,
-      // body: form,
-      // }).then(res => res.json())
+        const form = new FormData()
+        form.append("file", file)
+        const result = await fetch(`${host}/api/parser`, {
+          method: `POST`,
+          body: form,
+        }).then(res => res.json())
 
-      // console.log({ result })
+        expect(result).toMatchSnapshot()
+      })
 
-      // expect(result).toMatchSnapshot()
-      // })
-
+      // TODO enable when functions support streaming files.
       // test(`stream a file`, async () => {
       // const { createReadStream } = require("fs")
 

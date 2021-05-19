@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`production functions can parse different ways of sending data file in multipart/form 1`] = `
+Array [
+  Object {
+    "buffer": Object {
+      "data": Array [
+        104,
+        105,
+        32,
+        102,
+        114,
+        105,
+        101,
+        110,
+        100,
+        115,
+        10,
+      ],
+      "type": "Buffer",
+    },
+    "encoding": "7bit",
+    "fieldname": "file",
+    "mimetype": "text/plain",
+    "originalname": "test.txt",
+    "size": 11,
+  },
+]
+`;
+
 exports[`production functions can parse different ways of sending data form data 1`] = `
 Object {
   "a": "form-data",
