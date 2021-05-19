@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.5.0...gatsby-plugin-mdx@2.5.1) (2021-05-19)
+
+### Bug Fixes
+
+- **gatsby-plugin-mdx:** fix gatsby develop on windows ([#31396](https://github.com/gatsbyjs/gatsby/issues/31396)) ([#31481](https://github.com/gatsbyjs/gatsby/issues/31481)) ([ca1ce81](https://github.com/gatsbyjs/gatsby/commit/ca1ce811f457bb8e323576b9558c9e2b3f953949))
+
 # [2.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-mdx@2.5.0-next.1...gatsby-plugin-mdx@2.5.0) (2021-05-11)
 
 ### Bug Fixes

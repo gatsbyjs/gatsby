@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0...gatsby@3.5.1) (2021-05-19)
+
+### Bug Fixes
+
+- **gatsby:** preload and prefetches check for in-browser redirects ([#31366](https://github.com/gatsbyjs/gatsby/issues/31366)) ([#31480](https://github.com/gatsbyjs/gatsby/issues/31480)) ([e6e7eec](https://github.com/gatsbyjs/gatsby/commit/e6e7eec161fd1436d29d492e720c5f1031a3aa66))
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([#31483](https://github.com/gatsbyjs/gatsby/issues/31483)) ([67a4fce](https://github.com/gatsbyjs/gatsby/commit/67a4fcef4651443cbe89923d4ac80e5600d94c41))
+
 # [3.5.0](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.5.0-next.4...gatsby@3.5.0) (2021-05-11)
 
 ### Bug Fixes

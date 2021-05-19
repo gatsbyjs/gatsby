@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.2.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@4.2.0...gatsby-remark-responsive-iframe@4.2.1) (2021-05-19)
+
+### Bug Fixes
+
+- **tests:** update cheerio snapshots ([#31298](https://github.com/gatsbyjs/gatsby/issues/31298)) ([#31483](https://github.com/gatsbyjs/gatsby/issues/31483)) ([67a4fce](https://github.com/gatsbyjs/gatsby/commit/67a4fcef4651443cbe89923d4ac80e5600d94c41))
+
 # [4.2.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-remark-responsive-iframe@4.2.0-next.0...gatsby-remark-responsive-iframe@4.2.0) (2021-05-11)
 
 **Note:** Version bump only for package gatsby-remark-responsive-iframe
