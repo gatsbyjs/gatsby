@@ -180,8 +180,6 @@ export function runTests(env, host) {
       })
 
       test(`file in multipart/form`, async () => {
-        const { readFileSync } = require("fs")
-
         const file = createReadStream(
           path.join(__dirname, "./__tests__/fixtures/test.txt")
         )
