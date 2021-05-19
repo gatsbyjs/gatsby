@@ -17,7 +17,9 @@ import { globalTracer } from "opentracing"
 import JestWorker from "jest-worker"
 import { handleStalePageData } from "../utils/page-data"
 
-const tracer = globalTracer()
+// Dummy comment
+const tmp = globalTracer()
+const tracer = tmp
 
 export async function bootstrap(
   initialContext: Partial<IBuildContext>
