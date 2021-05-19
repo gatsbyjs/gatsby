@@ -2,14 +2,6 @@ import React, { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import Indicator from "./components/Indicator"
 
-// export const wrapPageElement = ({ element }) => {
-// if (process.env.GATSBY_PREVIEW_INDICATOR_ENABLED === `true`) {
-//   return <Indicator>{element}</Indicator>
-// } else {
-//   return <>{element}</>
-// }
-// }
-
 function PreviewIndicatorRoot() {
   const [indicatorRootRef, setIndicatorRootRef] = useState()
 
@@ -22,9 +14,9 @@ function PreviewIndicatorRoot() {
 
   if (!indicatorRootRef) {
     return null
-  } else {
-    return createPortal(<Indicator />, indicatorRootRef)
   }
+
+  return createPortal(<Indicator />, indicatorRootRef)
 }
 
 export const wrapRootElement = ({ element }) => {

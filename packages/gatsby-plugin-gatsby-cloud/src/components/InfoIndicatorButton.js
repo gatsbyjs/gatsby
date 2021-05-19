@@ -53,7 +53,8 @@ export default function InfoIndicatorButton({ status, createdAt }) {
       testId="info"
       iconSvg={infoIcon}
       {...buttonProps}
-      toolTipOffset={80 + 12}
+      // See IndicatorButtonTooltip for explanation
+      toolTipOffset={80}
     />
   )
 }

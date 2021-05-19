@@ -46,6 +46,8 @@ const failedIcon = (
 )
 
 const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
+  // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
+  // This will match `.gtsb.io`
   const previewDomain = window.location.host.match(/\..+/)
 
   if (isOnPrettyUrl || window.location.hostname === `localhost`) {
@@ -142,7 +144,6 @@ export default function GatsbyIndicatorButton({
       iconSvg={gatsbyIcon}
       {...buttonProps}
       isFirstButton={true}
-      toolTipOffset={12}
     />
   )
 }

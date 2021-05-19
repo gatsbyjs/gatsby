@@ -71,10 +71,13 @@ export default function LinkIndicatorButton({ status }) {
         tooltipText: `Link copied`,
         overrideShowTooltip: false,
       })
+      // We want the tooltip to linger for two seconds to let the user know it has been copied
     }, 2000)
 
     setTimeout(() => {
       setButton({ tooltipText: `Copy Link` })
+      // The tooltips fade out, in order to make sure that the text does not change
+      // while it is fading out we need to wait a bit longer than the time used above.
     }, 2400)
 
     navigator.clipboard.writeText(window.location.href)
@@ -87,7 +90,8 @@ export default function LinkIndicatorButton({ status }) {
       testId={`link`}
       iconSvg={linkIcon}
       {...buttonProps}
-      toolTipOffset={40 + 12}
+      // See IndicatorButtonTooltip for explanation
+      toolTipOffset={40}
     />
   )
 }

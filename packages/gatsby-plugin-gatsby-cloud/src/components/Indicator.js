@@ -27,6 +27,7 @@ export default function Indicator({ children }) {
       if (isOnPrettyUrl) {
         buildId = latestBuild?.id
       } else {
+        // Match UUID from preview build URL https://build-af44185e-b8e5-11eb-8529-0242ac130003.gtsb.io
         const buildIdMatch = host.match(/build-(.*?(?=\.))/)
         buildId = buildIdMatch && buildIdMatch[1]
       }
