@@ -819,13 +819,13 @@ module.exports = async (
     const fastRefreshIncludes = []
     const babelLoaderLoc = require.resolve(`./babel-loader`)
     for (const rule of getConfig().module.rules) {
-      if (!rule.use) {
+      if (!rule.use && !rule.loader) {
         continue
       }
 
       const hasBabelLoader = (Array.isArray(rule.use)
         ? rule.use
-        : [rule.use]
+        : [rule.use ?? { loader: rule.loader }]
       ).some(loaderConfig => loaderConfig.loader === babelLoaderLoc)
 
       if (hasBabelLoader) {
