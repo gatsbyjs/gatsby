@@ -237,6 +237,11 @@ const createWebpackConfig = async ({
       minimize: false,
     },
 
+    // Resolve files ending with .ts and the default extensions of .js, .json, .wasm
+    resolve: {
+      extensions: [`.ts`, `...`],
+    },
+
     mode: isProductionEnv ? `production` : `development`,
     // watch: !isProductionEnv,
     module: {
