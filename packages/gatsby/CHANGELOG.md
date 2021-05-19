@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.4...gatsby@3.6.0-next.5) (2021-05-19)
+
+### Features
+
+- **gatsby:** Speedup building Functions by disabling minification ([#31473](https://github.com/gatsbyjs/gatsby/issues/31473)) ([a8a4f76](https://github.com/gatsbyjs/gatsby/commit/a8a4f7670eaaafb67e2999efb0dc4af51e52ede6))
+
 # [3.6.0-next.4](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.3...gatsby@3.6.0-next.4) (2021-05-19)
 
 ### Features
