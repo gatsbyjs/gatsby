@@ -178,7 +178,7 @@ const activeFlags: Array<IFlag> = [
   },
   {
     name: `CONCURRENT_FEATURES`,
-    env: `GATSBY_CONCURRENT_FEATURES`,
+    env: `GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES`,
     command: `all`,
     telemetryId: `ConcurrentFeatures`,
     experimental: true,

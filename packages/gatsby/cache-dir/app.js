@@ -31,9 +31,12 @@ module.hot.accept([
 
 window.___emitter = emitter
 
-if (process.env.GATSBY_CONCURRENT_FEATURES && !ReactDOM.unstable_createRoot) {
+if (
+  process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
+  !ReactDOM.unstable_createRoot
+) {
   throw new Error(
-    `The GATSBY_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-57768ef90" and "react-dom@0.0.0-experimental-57768ef90" or higher.`
+    `The GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES flag is not compatible with your React version. Please install "react@0.0.0-experimental-57768ef90" and "react-dom@0.0.0-experimental-57768ef90" or higher.`
   )
 }
 
@@ -139,7 +142,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   let defaultRenderer = ReactDOM.render
   if (focusEl && focusEl.children.length) {
     if (
-      process.env.GATSBY_CONCURRENT_FEATURES &&
+      process.env.GATSBY_EXPERIMENTAL_CONCURRENT_FEATURES &&
       ReactDOM.unstable_createRoot
     ) {
       defaultRenderer = ReactDOM.unstable_createRoot
