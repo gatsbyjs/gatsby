@@ -386,7 +386,7 @@ export async function onCreateDevServer({
 
   app.use(
     `/api/*`,
-    multer().none(),
+    multer().any(),
     express.urlencoded({ extended: true }),
     (req, res, next) => {
       const cookies = req.headers.cookie

@@ -132,7 +132,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   if (functions) {
     app.use(
       `/api/*`,
-      multer().none(),
+      multer().any(),
       express.urlencoded({ extended: true }),
       (req, res, next) => {
         const cookies = req.headers.cookie
