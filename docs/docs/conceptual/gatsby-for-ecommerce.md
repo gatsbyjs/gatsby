@@ -2,6 +2,8 @@
 title: Using Gatsby For E-commerce
 ---
 
+import { Announcement } from 'gatsby-interface'
+
 Businesses selling products online typically need a variety of software to support their experience. At a minimum, their website needs product pages, product catalog navigation, a shopping cart, and checkout.
 
 Most have additional functionality like customer account creation, promotions, discounts, and loyalty, customer reviews, tax calculation, user tracking via analytics, and content personalization.
@@ -38,10 +40,17 @@ E-commerce tends to have a number of specific requirements. When building a Gats
 - **Handling checkout.** In order to comply with PCI regulations around storing credit card information, e-commerce providers typically exert strong control over the "buy" or "checkout" experience. Shopify requires all checkout flows using their platform to use their hosted checkout pages, though it's common to wrap them in a subdomain of the main site (e.g. the Gatsby/Shopify site [strivectin.com](strivectin.com] wraps a `myshopify.com` URL under a `shop.strivectin.com` URL for checkout).
 - **Handling account pages.** Again, many sites choose to wrap their e-commerce provider’s account pages under their own domain.
 
-Additional resources:
+## Additional resources:
+
+<Announcement style={{ marginBottom: "1.5rem" }}>
+
+Check out our [e-commerce demo](https://shopify-demo.gatsbyjs.com/) built with our Shopify Starter, a proof of concept showcasing 10,000 products and 30,000 SKUs (variants).
+Clone our Shopify Starter, host it on Gatsby and connect it to your own Shopify data to develop your own proof of concept in as little as an hour.
+
+</Announcement>
 
 - [What is Headless Commerce?](https://www.bigcommerce.com/articles/headless-commerce/#unlocking-flexibility-examples-of-headless-commerce-in-action), an overview from BigCommerce.
-- [Gatsby Shopify Starter](https://github.com/AlexanderProd/gatsby-shopify-starter)
+- [Gatsby Shopify Starter](https://shopify-demo.gatsbyjs.com/)
 - Sell Things Fast With Gatsby and Shopify by Trevor Harmon [blog post](https://thetrevorharmon.com/blog/sell-things-fast-with-gatsby-and-shopify), [video](https://www.youtube.com/watch?v=tUtuGAFOjYI&t=16m59s) and [GitHub repo](https://github.com/thetrevorharmon/sell-things-fast/)
 - [Gatsby Use Cases: E-commerce](https://www.gatsbyjs.com/use-cases/e-commerce)
 - [Best e-commerce solutions for Jamstack websites](https://bejamas.io/blog/jamstack-ecommerce/) from the Bejamas blog.
