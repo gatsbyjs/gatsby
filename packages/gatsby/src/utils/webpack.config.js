@@ -827,7 +827,7 @@ module.exports = async (
         ? rule.use.map(useEntry =>
             typeof useEntry === `string` ? useEntry : useEntry.loader
           )
-        : [rule.use.loader ?? rule.loader]
+        : [rule.use?.loader ?? rule.loader]
 
       const hasBabelLoader = ruleLoaders.some(
         loader => loader === babelLoaderLoc
