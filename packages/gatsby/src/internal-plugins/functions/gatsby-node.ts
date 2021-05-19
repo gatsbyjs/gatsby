@@ -232,6 +232,11 @@ const createWebpackConfig = async ({
     },
     target: `node`,
 
+    // Minification is expensive and not as helpful for serverless functions.
+    optimization: {
+      minimize: false,
+    },
+
     mode: isProductionEnv ? `production` : `development`,
     // watch: !isProductionEnv,
     module: {
