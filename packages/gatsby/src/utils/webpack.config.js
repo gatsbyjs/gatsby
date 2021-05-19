@@ -823,10 +823,15 @@ module.exports = async (
         continue
       }
 
-      const hasBabelLoader = (Array.isArray(rule.use)
-        ? rule.use
-        : [rule.use ?? { loader: rule.loader }]
-      ).some(loaderConfig => loaderConfig.loader === babelLoaderLoc)
+      const ruleLoaders = Array.isArray(rule.use)
+        ? rule.use.map(useEntry =>
+            typeof useEntry === `string` ? useEntry : useEntry.loader
+          )
+        : [rule.use.loader ?? rule.loader]
+
+      const hasBabelLoader = ruleLoaders.some(
+        loader => loader === babelLoaderLoc
+      )
 
       if (hasBabelLoader) {
         fastRefreshIncludes.push(rule.test)
