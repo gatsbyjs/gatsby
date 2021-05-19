@@ -2,7 +2,7 @@
 title: Using Gatsby For E-commerce
 ---
 
-import { Announcement } from 'gatsby-interface'
+import { Announcement } from "gatsby-interface"
 
 Businesses selling products online typically need a variety of software to support their experience. At a minimum, their website needs product pages, product catalog navigation, a shopping cart, and checkout.
 
@@ -44,10 +44,12 @@ E-commerce tends to have a number of specific requirements. When building a Gats
 
 <Announcement style={{ marginBottom: "1.5rem" }}>
 
+
 Check out our [e-commerce demo](https://shopify-demo.gatsbyjs.com/) built with our Shopify Starter, a proof of concept showcasing 10,000 products and 30,000 SKUs (variants).
 Clone our Shopify Starter, host it on Gatsby and connect it to your own Shopify data to develop your own proof of concept in as little as an hour.
 
 </Announcement>
+
 
 - [What is Headless Commerce?](https://www.bigcommerce.com/articles/headless-commerce/#unlocking-flexibility-examples-of-headless-commerce-in-action), an overview from BigCommerce.
 - [Gatsby Shopify Starter](https://shopify-demo.gatsbyjs.com/)
