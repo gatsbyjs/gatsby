@@ -87,6 +87,8 @@ Remote schema ingestion caches itself, diffing an md5 of the last remote schema 
 
 ## Sourcing nodes
 
+Using the queries we generated earlier, nodes are fetched via WPGraphQL using cursor pagination. Some plugin options affect how this logic behaves, mainly the `Type.limit`, `schema.requestConcurrency`, and `schema.perPage` options. There isn't currently any request retry logic built into node sourcing. This is because cursor pagination is somewhat fragile in the context of Gatsby needing to source every node that exists. Cursor pagination is a long chain of requests and any request within that chain which fails prevents anything further down the chain from being requested. This severely limits the request concurrency within a single node type (to 1 concurrent request) and it also means we can't retry a more resource intensive query later while still processing more queries. In the future we should re-architect this so that WPGatsby will let us fetch lists of node id's 10k at a time (and cursor paginated). Once we have all the id's we can construct queries that ask for a certain list of node's by ID. This will let us ratchet up the request concurrency and more cleanly retry failed requests without blocking anything. Requests that continually fail can be automatically adapted to use less resources (split your list of nodes for 1 request into 2 requests) or retried on the end of the queue.
+
 - options (limit, etc)
 
 ## Preview
