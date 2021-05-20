@@ -16,7 +16,7 @@ const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
-  const langcode = datum.attributes.langcode || `und`
+  const langcode = datum.attributes?.langcode || `und`
   return {
     id: createNodeId(
       createNodeIdWithVersion(
