@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.6.0-next.3](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.2...gatsby-source-drupal@4.6.0-next.3) (2021-05-19)
+
+**Note:** Version bump only for package gatsby-source-drupal
+
+# [4.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.1...gatsby-source-drupal@4.6.0-next.2) (2021-05-19)
+
+### Features
+
+- **gatsby-source-drupal:** Add option validation ([#31468](https://github.com/gatsbyjs/gatsby/issues/31468)) ([089c5c5](https://github.com/gatsbyjs/gatsby/commit/089c5c5cd159d63808280b9e976952c920b5c21e))
+
+# [4.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.6.0-next.0...gatsby-source-drupal@4.6.0-next.1) (2021-05-18)
+
+### Features
+
+- **gatsby-source-drupal:** Add toggleable multilingual support by prefixing nodes with their langcode ([#26720](https://github.com/gatsbyjs/gatsby/issues/26720)) ([408ba7b](https://github.com/gatsbyjs/gatsby/commit/408ba7b721d7e92dfec3a77537c60bab4a09294b))
+
 # [4.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-drupal@4.5.0-next.1...gatsby-source-drupal@4.6.0-next.0) (2021-05-06)
 
 **Note:** Version bump only for package gatsby-source-drupal

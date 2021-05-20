@@ -132,7 +132,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   if (functions) {
     app.use(
       `/api/*`,
-      multer().none(),
+      multer().any(),
       express.urlencoded({ extended: true }),
       (req, res, next) => {
         const cookies = req.headers.cookie
@@ -153,7 +153,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
         // Check first for exact matches.
         let functionObj = functions.find(
-          ({ apiRoute }) => apiRoute === pathFragment
+          ({ functionRoute }) => functionRoute === pathFragment
         )
 
         if (!functionObj) {
@@ -202,7 +202,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
           const end = Date.now()
           console.log(
-            `Executed function "/api/${functionObj.apiRoute}" in ${
+            `Executed function "/api/${functionObj.functionRoute}" in ${
               end - start
             }ms`
           )

@@ -1,15 +1,28 @@
 const { URL } = require(`url`)
 const { createRemoteFileNode } = require(`gatsby-source-filesystem`)
+const path = require(`path`)
+
+const { getOptions } = require(`./plugin-options`)
+const getHref = link => {
+  if (typeof link === `object`) {
+    return link.href
+  }
+  return link
+}
+
+exports.getHref = getHref
 
 const nodeFromData = (datum, createNodeId, entityReferenceRevisions = []) => {
   const { attributes: { id: attributeId, ...attributes } = {} } = datum
   const preservedId =
     typeof attributeId !== `undefined` ? { _attributes_id: attributeId } : {}
+  const langcode = datum.attributes.langcode || `und`
   return {
     id: createNodeId(
       createNodeIdWithVersion(
         datum.id,
         datum.type,
+        langcode,
         attributes.drupal_internal__revision_id,
         entityReferenceRevisions
       )
@@ -38,14 +51,27 @@ const isEntityReferenceRevision = (type, entityReferenceRevisions = []) =>
 const createNodeIdWithVersion = (
   id,
   type,
+  langcode,
   revisionId,
   entityReferenceRevisions = []
-) =>
+) => {
+  // If the source plugin hasn't enabled `translation` then always just set langcode
+  // to "undefined".
+  let langcodeNormalized = getOptions().languageConfig ? langcode : `und`
+
+  if (
+    getOptions().languageConfig &&
+    !getOptions().languageConfig?.enabledLanguages.includes(langcodeNormalized)
+  ) {
+    langcodeNormalized = getOptions().languageConfig.defaultLanguage
+  }
+
   // The relationship between an entity and another entity also depends on the revision ID if the field is of type
   // entity reference revision such as for paragraphs.
-  isEntityReferenceRevision(type, entityReferenceRevisions)
-    ? `${id}.${revisionId || 0}`
-    : id
+  return isEntityReferenceRevision(type, entityReferenceRevisions)
+    ? `${langcodeNormalized}.${id}.${revisionId || 0}`
+    : `${langcodeNormalized}.${id}`
+}
 
 exports.createNodeIdWithVersion = createNodeIdWithVersion
 
@@ -83,6 +109,7 @@ exports.downloadFile = async (
         : {}
     const fileNode = await createRemoteFileNode({
       url: url.href,
+      name: path.parse(decodeURIComponent(url.pathname)).name,
       store,
       cache,
       createNode,
