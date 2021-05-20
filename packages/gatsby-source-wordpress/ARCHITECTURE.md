@@ -10,10 +10,10 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
   - [Automatic Field Prefixing](#automatic-field-prefixing)
   - [Schema Caching](#schema-caching)
 - [Sourcing nodes](#sourcing-nodes)
-- [Preview](#preview)
 - [Compatibility api (DX and security-ish feature)](#compatibility-api-dx-and-security-ish-feature)
+- [Preview](#preview)
 - [We're using rematch which is a redux wrapper](#were-using-rematch-which-is-a-redux-wrapper)
-- [Gatsby node api helpers/actions are stored in local redux (not gatsby redux)](#gatsby-node-api-helpersactions-are-stored-in-local-redux-not-gatsby-redux)
+  - [Gatsby node api helpers/actions are stored in local redux (not gatsby redux)](#gatsby-node-api-helpersactions-are-stored-in-local-redux-not-gatsby-redux)
 - [Caching](#caching)
 - [Hard caching](#hard-caching)
 - [Image processing](#image-processing)
@@ -93,13 +93,18 @@ As nodes are fetched they're analyzed via regexp to find connection ID's to Medi
 
 See `src/steps/source-nodes`.
 
-## Preview
-
 ## Compatibility api (DX and security-ish feature)
+
+Since this plugin relies on the PHP WP plugins WPGatsby and WPGraphQL being installed and activated in the WordPress site, we can't immediately assume that the code for the source plugin will have the right versions of these plugins in the future as more features are added and as they've been added in the past.
+To solve this problem a remote compatibility API was added. See `src/supported-remote-plugin-versions.ts` for the version ranges of each WP plugin the current version of the source plugin supports.
+
+See `areRemotePluginVersionsSatisfied` in `src/steps/check-plugin-requirements.ts` for where this logic runs. WPGatsby exposes an endpoint allowing us to send version ranges for WPGraphQL and WPGatsby to ask if the remote plugin versions are within this range. The reason we don't just expose the versions of WPGraphQL and WPGatsby directly is that hackers could scan the internet for sites with vulnerable versions of these plugins. Since we can only send a version range (which doesn't include specific patch versions), hackers can't be sure wether or not a vulnerable version has been patched, making it harder to target sites with vulnerable plugin versions installed.
+
+## Preview
 
 ## We're using rematch which is a redux wrapper
 
-## Gatsby node api helpers/actions are stored in local redux (not gatsby redux)
+### Gatsby node api helpers/actions are stored in local redux (not gatsby redux)
 
 ## Caching
 
