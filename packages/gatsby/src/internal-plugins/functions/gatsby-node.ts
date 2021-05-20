@@ -241,6 +241,12 @@ const createWebpackConfig = async ({
       minimize: false,
     },
 
+    // Resolve files ending with .ts and the default extensions of .js, .json, .wasm
+    resolve: {
+      extensions: [`.ts`, `...`],
+    },
+    
+    // Have webpack save its cache to the .cache/webpack directory
     cache: {
       type: `filesystem`,
       name: stage,
