@@ -3,6 +3,10 @@ describe(`rich-text`, () => {
     cy.visit("/rich-text").waitForRouteChange()
   })
   it(`rich-text: All Features`, () => {
+    cy.get(`[data-cy-id="rich-text-all-features"]`).scrollIntoView({
+      duration: 500,
+    })
+    cy.wait(1000)
     cy.get(`[data-cy-id="rich-text-all-features"]`).snapshot()
   })
   it(`rich-text: Basic`, () => {
@@ -12,6 +16,10 @@ describe(`rich-text`, () => {
     cy.get(`[data-cy-id="rich-text-embedded-entry"]`).snapshot()
   })
   it(`rich-text: Embedded Asset`, () => {
+    cy.get(`[data-cy-id="rich-text-embedded-asset"]`).scrollIntoView({
+      duration: 500,
+    })
+    cy.wait(1000)
     cy.get(`[data-cy-id="rich-text-embedded-asset"]`).snapshot()
   })
   it(`rich-text: Embedded Entry With Deep Reference Loop`, () => {
