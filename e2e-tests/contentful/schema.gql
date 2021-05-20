@@ -1,4 +1,4 @@
-### Type definitions saved at 2021-04-27T13:44:24.013Z ###
+### Type definitions saved at 2021-05-12T15:50:31.482Z ###
 
 type File implements Node @dontInfer {
   sourceInstanceName: String!
@@ -125,7 +125,7 @@ type MarkdownWordCount {
   words: Int
 }
 
-type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["contentfulTextLongPlainTextNode", "contentfulTextLongMarkdownTextNode"]) @derivedTypes @dontInfer {
+type MarkdownRemark implements Node @childOf(mimeTypes: ["text/markdown", "text/x-markdown"], types: ["contentfulTextLongPlainTextNode", "contentfulTextLongMarkdownTextNode"]) @dontInfer {
   frontmatter: MarkdownRemarkFrontmatter
   excerpt: String
   rawMarkdownBody: String
@@ -146,7 +146,7 @@ interface ContentfulReference {
   id: ID!
 }
 
-type ContentfulAsset implements ContentfulReference & Node @derivedTypes @dontInfer {
+type ContentfulAsset implements ContentfulReference & Node @dontInfer {
   contentful_id: String!
   spaceId: String
   createdAt: Date @dateformat
@@ -158,14 +158,14 @@ type ContentfulAsset implements ContentfulReference & Node @derivedTypes @dontIn
   sys: ContentfulAssetSys
 }
 
-type ContentfulAssetFile @derivedTypes {
+type ContentfulAssetFile {
   url: String
   details: ContentfulAssetFileDetails
   fileName: String
   contentType: String
 }
 
-type ContentfulAssetFileDetails @derivedTypes {
+type ContentfulAssetFileDetails {
   size: Int
   image: ContentfulAssetFileDetailsImage
 }
@@ -180,12 +180,12 @@ type ContentfulAssetSys {
   revision: Int
 }
 
-type ContentfulNumber implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulNumber implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
   integer: Int
-  content_reference: [ContentfulContentReference] @link(by: "id", from: "content reference___NODE") @proxy(from: "content reference___NODE")
+  content_reference: [ContentfulContentReference] @link(by: "id", from: "content reference___NODE") @proxy(from: "content reference___NODE", fromNode: false)
   spaceId: String
   createdAt: Date @dateformat
   updatedAt: Date @dateformat
@@ -193,12 +193,12 @@ type ContentfulNumber implements ContentfulReference & ContentfulEntry & Node @d
   decimal: Float
 }
 
-type ContentfulContentReference implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulContentReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
   one: ContentfulContentReferenceContentfulTextUnion @link(by: "id", from: "one___NODE")
-  content_reference: [ContentfulContentReference] @link(by: "id", from: "content reference___NODE") @proxy(from: "content reference___NODE")
+  content_reference: [ContentfulContentReference] @link(by: "id", from: "content reference___NODE") @proxy(from: "content reference___NODE", fromNode: false)
   spaceId: String
   createdAt: Date @dateformat
   updatedAt: Date @dateformat
@@ -208,13 +208,13 @@ type ContentfulContentReference implements ContentfulReference & ContentfulEntry
 
 union ContentfulContentReferenceContentfulTextUnion = ContentfulContentReference | ContentfulText
 
-type ContentfulContentReferenceSys @derivedTypes {
+type ContentfulContentReferenceSys {
   type: String
   revision: Int
   contentType: ContentfulContentReferenceSysContentType
 }
 
-type ContentfulContentReferenceSysContentType @derivedTypes {
+type ContentfulContentReferenceSysContentType {
   sys: ContentfulContentReferenceSysContentTypeSys
 }
 
@@ -226,13 +226,13 @@ type ContentfulContentReferenceSysContentTypeSys {
 
 union ContentfulContentReferenceContentfulNumberContentfulTextUnion = ContentfulContentReference | ContentfulNumber | ContentfulText
 
-type ContentfulNumberSys @derivedTypes {
+type ContentfulNumberSys {
   type: String
   revision: Int
   contentType: ContentfulNumberSysContentType
 }
 
-type ContentfulNumberSysContentType @derivedTypes {
+type ContentfulNumberSysContentType {
   sys: ContentfulNumberSysContentTypeSys
 }
 
@@ -242,7 +242,7 @@ type ContentfulNumberSysContentTypeSys {
   id: String
 }
 
-type ContentfulText implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -253,11 +253,11 @@ type ContentfulText implements ContentfulReference & ContentfulEntry & Node @der
   sys: ContentfulTextSys
   longPlain: contentfulTextLongPlainTextNode @link(by: "id", from: "longPlain___NODE")
   short: String
-  content_reference: [ContentfulContentReference] @link(by: "id", from: "content reference___NODE") @proxy(from: "content reference___NODE")
+  content_reference: [ContentfulContentReference] @link(by: "id", from: "content reference___NODE") @proxy(from: "content reference___NODE", fromNode: false)
   shortList: [String]
 }
 
-type contentfulTextLongMarkdownTextNode implements Node @derivedTypes @childOf(types: ["ContentfulText"]) @dontInfer {
+type contentfulTextLongMarkdownTextNode implements Node @childOf(mimeTypes: [], types: ["ContentfulText"]) @dontInfer {
   longMarkdown: String
   sys: contentfulTextLongMarkdownTextNodeSys
 }
@@ -266,13 +266,13 @@ type contentfulTextLongMarkdownTextNodeSys {
   type: String
 }
 
-type ContentfulTextSys @derivedTypes {
+type ContentfulTextSys {
   type: String
   revision: Int
   contentType: ContentfulTextSysContentType
 }
 
-type ContentfulTextSysContentType @derivedTypes {
+type ContentfulTextSysContentType {
   sys: ContentfulTextSysContentTypeSys
 }
 
@@ -282,7 +282,7 @@ type ContentfulTextSysContentTypeSys {
   id: String
 }
 
-type contentfulTextLongPlainTextNode implements Node @derivedTypes @childOf(types: ["ContentfulText"]) @dontInfer {
+type contentfulTextLongPlainTextNode implements Node @childOf(mimeTypes: [], types: ["ContentfulText"]) @dontInfer {
   longPlain: String
   sys: contentfulTextLongPlainTextNodeSys
 }
@@ -291,7 +291,7 @@ type contentfulTextLongPlainTextNodeSys {
   type: String
 }
 
-type ContentfulMediaReference implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulMediaReference implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -303,13 +303,13 @@ type ContentfulMediaReference implements ContentfulReference & ContentfulEntry &
   one: ContentfulAsset @link(by: "id", from: "one___NODE")
 }
 
-type ContentfulMediaReferenceSys @derivedTypes {
+type ContentfulMediaReferenceSys {
   type: String
   revision: Int
   contentType: ContentfulMediaReferenceSysContentType
 }
 
-type ContentfulMediaReferenceSysContentType @derivedTypes {
+type ContentfulMediaReferenceSysContentType {
   sys: ContentfulMediaReferenceSysContentTypeSys
 }
 
@@ -319,7 +319,7 @@ type ContentfulMediaReferenceSysContentTypeSys {
   id: String
 }
 
-type ContentfulBoolean implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulBoolean implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -330,13 +330,13 @@ type ContentfulBoolean implements ContentfulReference & ContentfulEntry & Node @
   boolean: Boolean
 }
 
-type ContentfulBooleanSys @derivedTypes {
+type ContentfulBooleanSys {
   type: String
   revision: Int
   contentType: ContentfulBooleanSysContentType
 }
 
-type ContentfulBooleanSysContentType @derivedTypes {
+type ContentfulBooleanSysContentType {
   sys: ContentfulBooleanSysContentTypeSys
 }
 
@@ -346,7 +346,7 @@ type ContentfulBooleanSysContentTypeSys {
   id: String
 }
 
-type ContentfulDate implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulDate implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -359,13 +359,13 @@ type ContentfulDate implements ContentfulReference & ContentfulEntry & Node @der
   date: Date @dateformat
 }
 
-type ContentfulDateSys @derivedTypes {
+type ContentfulDateSys {
   type: String
   revision: Int
   contentType: ContentfulDateSysContentType
 }
 
-type ContentfulDateSysContentType @derivedTypes {
+type ContentfulDateSysContentType {
   sys: ContentfulDateSysContentTypeSys
 }
 
@@ -375,7 +375,7 @@ type ContentfulDateSysContentTypeSys {
   id: String
 }
 
-type ContentfulLocation implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulLocation implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -391,13 +391,13 @@ type ContentfulLocationLocation {
   lon: Float
 }
 
-type ContentfulLocationSys @derivedTypes {
+type ContentfulLocationSys {
   type: String
   revision: Int
   contentType: ContentfulLocationSysContentType
 }
 
-type ContentfulLocationSysContentType @derivedTypes {
+type ContentfulLocationSysContentType {
   sys: ContentfulLocationSysContentTypeSys
 }
 
@@ -407,7 +407,7 @@ type ContentfulLocationSysContentTypeSys {
   id: String
 }
 
-type ContentfulJson implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulJson implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -418,7 +418,7 @@ type ContentfulJson implements ContentfulReference & ContentfulEntry & Node @der
   sys: ContentfulJsonSys
 }
 
-type contentfulJsonJsonJsonNode implements Node @derivedTypes @childOf(types: ["ContentfulJson"]) @dontInfer {
+type contentfulJsonJsonJsonNode implements Node @childOf(mimeTypes: [], types: ["ContentfulJson"]) @dontInfer {
   Actors: [contentfulJsonJsonJsonNodeActors]
   sys: contentfulJsonJsonJsonNodeSys
   name: String
@@ -429,7 +429,7 @@ type contentfulJsonJsonJsonNode implements Node @derivedTypes @childOf(types: ["
 type contentfulJsonJsonJsonNodeActors {
   name: String
   age: Int
-  Born_At: String @proxy(from: "Born At")
+  Born_At: String @proxy(from: "Born At", fromNode: false)
   Birthdate: String
   photo: String
   wife: String
@@ -443,13 +443,13 @@ type contentfulJsonJsonJsonNodeSys {
   type: String
 }
 
-type ContentfulJsonSys @derivedTypes {
+type ContentfulJsonSys {
   type: String
   revision: Int
   contentType: ContentfulJsonSysContentType
 }
 
-type ContentfulJsonSysContentType @derivedTypes {
+type ContentfulJsonSysContentType {
   sys: ContentfulJsonSysContentTypeSys
 }
 
@@ -459,7 +459,7 @@ type ContentfulJsonSysContentTypeSys {
   id: String
 }
 
-type ContentfulRichText implements ContentfulReference & ContentfulEntry & Node @derivedTypes @dontInfer {
+type ContentfulRichText implements ContentfulReference & ContentfulEntry & Node @dontInfer {
   contentful_id: String!
   node_locale: String!
   title: String
@@ -477,13 +477,13 @@ type ContentfulRichTextRichText {
 
 union ContentfulAssetContentfulContentReferenceContentfulLocationContentfulTextUnion = ContentfulAsset | ContentfulContentReference | ContentfulLocation | ContentfulText
 
-type ContentfulRichTextSys @derivedTypes {
+type ContentfulRichTextSys {
   type: String
   revision: Int
   contentType: ContentfulRichTextSysContentType
 }
 
-type ContentfulRichTextSysContentType @derivedTypes {
+type ContentfulRichTextSysContentType {
   sys: ContentfulRichTextSysContentTypeSys
 }
 
@@ -493,7 +493,7 @@ type ContentfulRichTextSysContentTypeSys {
   id: String
 }
 
-type ContentfulContentType implements Node @derivedTypes @dontInfer {
+type ContentfulContentType implements Node @dontInfer {
   name: String
   displayField: String
   description: String
