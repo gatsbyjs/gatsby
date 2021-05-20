@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0-next.6](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.5...gatsby@3.6.0-next.6) (2021-05-20)
+
+### Features
+
+- **gatsby:** enable webpack fs caching for functions ([#31505](https://github.com/gatsbyjs/gatsby/issues/31505)) ([4ff7dd3](https://github.com/gatsbyjs/gatsby/commit/4ff7dd36376ffa7581fe8b02a54a2a06e00bcaba))
+- **gatsby:** Resolve typescript files in functions without needing to add the extension ([#31487](https://github.com/gatsbyjs/gatsby/issues/31487)) ([04f7a45](https://github.com/gatsbyjs/gatsby/commit/04f7a4562dc0b5922730d71acd3b157b7ad732b5))
+
 # [3.6.0-next.5](https://github.com/gatsbyjs/gatsby/compare/gatsby@3.6.0-next.4...gatsby@3.6.0-next.5) (2021-05-19)
 
 ### Features

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.6.0-next.0...gatsby-plugin-image@1.6.0-next.1) (2021-05-20)
+
+### Bug Fixes
+
+- **gatsby-plugin-image:** Extra "margin" on CONSTRAINED ([#31497](https://github.com/gatsbyjs/gatsby/issues/31497)) ([5392cff](https://github.com/gatsbyjs/gatsby/commit/5392cffa6b433c5d26676693fb3961978893a2a0))
+
 # [1.6.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-plugin-image@1.5.0-next.1...gatsby-plugin-image@1.6.0-next.0) (2021-05-06)
 
 ### Bug Fixes
