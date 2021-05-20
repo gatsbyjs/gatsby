@@ -47,6 +47,10 @@ This file is the entry point for 99.999% of the plugin (`src/gatsby-browser.ts` 
 
 Before we can source data from WPGraphQL we need to generate GraphQL queries to source that data. We do that by making an introspection query to WPGraphQL and then using the response to generate queries using a custom query builder (`src/steps/ingest-remote-schema/build-queries-from-introspection`).
 
+This logic runs during the Gatsby Node API `createSchemaCustomization`.
+
+See `src/steps/ingest-remote-schema`.
+
 ### Good to know
 
 - As we're aware of what will be a future Gatsby node, the queries can be generated to only fetch data we wont already have. Connections from one node to other nodes only fetch the id(s).
@@ -55,10 +59,6 @@ Before we can source data from WPGraphQL we need to generate GraphQL queries to 
 - In the future we should add an API to mark some field as being able to be resolved entirely via Gatsby without fetching any data. Since we have `Post.author.id` we don't need to fetch `User.posts[].id` since we can query for all posts that have the current user node id as the author.
 - Unnecessary overfetching also occurs as the plugin doesn't know which fields are being used in the Gatsby site, so we fetch all WPGQL data that's available. In `gatsby develop` this is necessary as we don't know what data the developer will want, but in `gatsby build` we know exactly what queries are being made.
 - We should automatically fetch only the fields that are queried for in cold builds and data updates outside of `gatsby develop`.
-
-This logic runs during the Gatsby Node API `createSchemaCustomization`.
-
-See `src/steps/ingest-remote-schema`.
 
 ## Schema Customization
 
