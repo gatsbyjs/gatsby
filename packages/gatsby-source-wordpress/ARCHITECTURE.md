@@ -39,7 +39,7 @@ The file you're reading was created many months after the first stable version o
 
 ## `gatsby-node.ts` Steps
 
-In `src/gatsby-node.ts` a helper (`runApisInSteps`) is being used to run different "steps" of the codebase in order. Many parts of the codebase count on something else happening at an earlier point, so `runApisInSteps` is an easy way to visualize that.
+In `src/gatsby-node.ts` a helper (`runApisInSteps`) is being used to run different "steps" of the codebase in order for each Gatsby Node API. Many parts of the codebase count on something else happening at an earlier point, so `runApisInSteps` is an easy way to visualize that.
 
 This file is the entry point for 99.999% of the plugin (`src/gatsby-browser.ts` only imports 1 css file) so it's a good jumping off point for looking at different areas of the plugin.
 
