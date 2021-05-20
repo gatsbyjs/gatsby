@@ -29,8 +29,6 @@ function preset(context, options = {}) {
     },
   }
 
-  console.log({browser, esm})
-
   return {
     presets: [
       [
