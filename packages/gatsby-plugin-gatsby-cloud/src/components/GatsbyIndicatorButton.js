@@ -47,16 +47,14 @@ const failedIcon = (
 
 const newPreviewAvailableClick = ({ isOnPrettyUrl, sitePrefix }) => {
   // Grabs domain that preview is hosted on https://preview-sitePrefix.gtsb.io
-  // This will match `.gtsb.io`
-  const previewDomain = window.location.host.match(/\..+/)
+  // This will match `gtsb.io`
+  const previewDomain = window.location.hostname.split(`.`).slice(-2).join(`.`)
 
   if (isOnPrettyUrl || window.location.hostname === `localhost`) {
     window.location.reload()
   } else {
     window.location.replace(
-      `https://preview-${sitePrefix}${previewDomain && previewDomain[0]}${
-        window.location.pathname
-      }`
+      `https://preview-${sitePrefix}.${previewDomain}${window.location.pathname}`
     )
   }
 }
