@@ -257,6 +257,15 @@ export function runTests(env, host) {
       })
     })
 
+    describe(`typescript files are resolved without needing to specify their extension`, () => {
+      test(`typescript`, async () => {
+        const result = await fetch(`${host}/api/extensions`).then(res =>
+          res.text()
+        )
+        expect(result).toEqual(`hi`)
+      })
+    })
+
     // TODO figure out why this gets into endless loops
     // describe.only(`hot reloading`, () => {
     // const fixturesDir = path.join(__dirname, `fixtures`)
