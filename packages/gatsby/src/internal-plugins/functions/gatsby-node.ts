@@ -223,6 +223,10 @@ const createWebpackConfig = async ({
     entries[compiledNameWithoutExtension] = functionObj.originalAbsoluteFilePath
   })
 
+  const stage = isProductionEnv
+    ? `functions-production`
+    : `functions-development`
+
   const config = {
     entry: entries,
     output: {
@@ -240,6 +244,18 @@ const createWebpackConfig = async ({
     // Resolve files ending with .ts and the default extensions of .js, .json, .wasm
     resolve: {
       extensions: [`.ts`, `...`],
+    },
+    
+    // Have webpack save its cache to the .cache/webpack directory
+    cache: {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation: path.join(
+        siteDirectoryPath,
+        `.cache`,
+        `webpack`,
+        `stage-` + stage
+      ),
     },
 
     mode: isProductionEnv ? `production` : `development`,
