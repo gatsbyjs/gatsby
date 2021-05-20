@@ -48,7 +48,11 @@ interface IGlobPattern {
 const activeDevelopmentFunctions = new Set<IFunctionData>()
 let activeEntries = {}
 
-async function _restartWebpack(compiler, config, callback) {
+async function _restartWebpack(
+  compiler,
+  config,
+  callback
+): Promise<webpack.Compiler> {
   return await new Promise(resolve =>
     compiler.close(async () => {
       compiler = webpack(config).watch({}, callback)
