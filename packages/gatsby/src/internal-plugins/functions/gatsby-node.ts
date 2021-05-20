@@ -223,6 +223,10 @@ const createWebpackConfig = async ({
     entries[compiledNameWithoutExtension] = functionObj.originalAbsoluteFilePath
   })
 
+  const stage = isProductionEnv
+    ? `functions-production`
+    : `functions-development`
+
   const config = {
     entry: entries,
     output: {
@@ -235,6 +239,17 @@ const createWebpackConfig = async ({
     // Minification is expensive and not as helpful for serverless functions.
     optimization: {
       minimize: false,
+    },
+
+    cache: {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation: path.join(
+        siteDirectoryPath,
+        `.cache`,
+        `webpack`,
+        `stage-` + stage
+      ),
     },
 
     mode: isProductionEnv ? `production` : `development`,
