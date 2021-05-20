@@ -48,6 +48,17 @@ interface IGlobPattern {
 const activeDevelopmentFunctions = new Set<IFunctionData>()
 let activeEntries = {}
 
+async function _restartWebpack(compiler, config, callback) {
+  return await new Promise(resolve =>
+    compiler.close(async () => {
+      compiler = webpack(config).watch({}, callback)
+      resolve(compiler)
+    })
+  )
+}
+
+const restartWebpack = _.throttle(_restartWebpack, 500)
+
 async function ensureFunctionIsCompiled(functionObj: IFunctionData): any {
   // stat the compiled function. If it's there, then return.
   let compiledFileExists = false
@@ -367,7 +378,7 @@ export async function onPreBootstrap({
           }
         }
 
-        return resolve()
+        return resolve(null)
       }
 
       if (isProductionEnv) {
@@ -390,7 +401,7 @@ export async function onPreBootstrap({
             ],
             { ignoreInitial: true }
           )
-          .on(`all`, (event, path) => {
+          .on(`all`, async (event, path) => {
             // Ignore change events from the API directory for functions we're
             // already watching.
             if (
@@ -405,16 +416,16 @@ export async function onPreBootstrap({
               `Restarting function watcher due to change to "${path}"`
             )
 
-            // Otherwise, restart the watcher
-            compiler.close(async () => {
-              const config = await createWebpackConfig({
-                siteDirectoryPath,
-                functionsDirectory,
-                store,
-                reporter,
-              })
-              compiler = webpack(config).watch({}, callback)
+            const config = await createWebpackConfig({
+              siteDirectoryPath,
+              functionsDirectory,
+              store,
+              reporter,
             })
+
+            // Throttle restarting the compilier to once every 500ms so we
+            // don't overwhelm the CI server during tests
+            compiler = await restartWebpack(compiler, config, callback)
           })
       }
     })
