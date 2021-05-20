@@ -22,6 +22,7 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
 - [Build caching & inc builds](#build-caching--inc-builds)
 - [Debugging options](#debugging-options)
 - [Plugin options schema and documentation generation](#plugin-options-schema-and-documentation-generation)
+- [`gatsby develop` DX features](#gatsby-develop-dx-features)
 - [Gatsby Node API's in use](#gatsby-node-apis-in-use)
 
 ## Historic Info
@@ -116,6 +117,8 @@ Remote schema ingestion caches itself, diffing an md5 of the last remote schema 
 ## Debugging options
 
 ## Plugin options schema and documentation generation
+
+## `gatsby develop` DX features
 
 ## Gatsby Node API's in use
 
