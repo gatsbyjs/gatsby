@@ -43,6 +43,38 @@ interface IGlobPattern {
   globPattern: string
 }
 
+// During development, we lazily compile functions only when they're requested.
+// Here we keep track of which functions have been requested so are "active"
+const activeDevelopmentFunctions = new Set<IFunctionData>()
+let activeEntries = {}
+
+async function ensureFunctionIsCompiled(functionObj: IFunctionData): any {
+  // stat the compiled function. If it's there, then return.
+  let compiledFileExists = false
+  try {
+    compiledFileExists = !!(await fs.stat(functionObj.absoluteCompiledFilePath))
+  } catch (e) {
+    // ignore
+  }
+  if (compiledFileExists) {
+    return
+  } else {
+    // Otherwise, restart webpack by touching the file and watch for the file to be
+    // compiled.
+    const time = new Date()
+    fs.utimesSync(functionObj.originalAbsoluteFilePath, time, time)
+    await new Promise(resolve => {
+      const watcher = chokidar
+        .watch(functionObj.absoluteCompiledFilePath)
+        .on(`all`, async (event, path) => {
+          await watcher.close()
+
+          resolve(null)
+        })
+    })
+  }
+}
+
 // Create glob type w/ glob, plugin name, root path
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
@@ -212,7 +244,10 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  knownFunctions.forEach(functionObj => {
+  const functionsList = isProductionEnv
+    ? knownFunctions
+    : activeDevelopmentFunctions
+  functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
     const compiledNameWithoutExtension = path.join(
@@ -222,6 +257,8 @@ const createWebpackConfig = async ({
 
     entries[compiledNameWithoutExtension] = functionObj.originalAbsoluteFilePath
   })
+
+  activeEntries = entries
 
   const config = {
     entry: entries,
@@ -286,6 +323,7 @@ export async function onPreBootstrap({
   )
 
   await fs.ensureDir(compiledFunctionsDir)
+  await fs.emptyDir(compiledFunctionsDir)
 
   try {
     // We do this ungainly thing as we need to make accessible
@@ -353,8 +391,13 @@ export async function onPreBootstrap({
             { ignoreInitial: true }
           )
           .on(`all`, (event, path) => {
-            // Ignore change events from the API directory
-            if (event === `change` && path.includes(`/src/api/`)) {
+            // Ignore change events from the API directory for functions we're
+            // already watching.
+            if (
+              event === `change` &&
+              Object.values(activeEntries).includes(path) &&
+              path.includes(`/src/api/`)
+            ) {
               return
             }
 
@@ -445,6 +488,10 @@ export async function onCreateDevServer({
       }
 
       if (functionObj) {
+        activeDevelopmentFunctions.add(functionObj)
+
+        await ensureFunctionIsCompiled(functionObj)
+
         reporter.verbose(`Running ${functionObj.functionRoute}`)
         const start = Date.now()
         const pathToFunction = functionObj.absoluteCompiledFilePath
