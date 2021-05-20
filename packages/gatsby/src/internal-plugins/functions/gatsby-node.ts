@@ -61,6 +61,8 @@ async function _restartWebpack(
   )
 }
 
+// Throttle restarting the compilier to once every 500ms so we
+// don't overwhelm the CI server during tests
 const restartWebpack = _.throttle(_restartWebpack, 500)
 
 async function ensureFunctionIsCompiled(functionObj: IFunctionData): any {
@@ -427,8 +429,6 @@ export async function onPreBootstrap({
               reporter,
             })
 
-            // Throttle restarting the compilier to once every 500ms so we
-            // don't overwhelm the CI server during tests
             compiler = await restartWebpack(compiler, config, callback)
           })
       }
