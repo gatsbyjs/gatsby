@@ -1,7 +1,7 @@
 ---
 title: Sourcing from Drupal
 examples:
-  - label: Official Example
+  - label: Using Drupal
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-drupal"
 ---
 

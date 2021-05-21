@@ -1,7 +1,7 @@
 ---
 title: Emotion
 examples:
-  - label: Official Example
+  - label: Using Emotion
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-emotion"
 ---
 

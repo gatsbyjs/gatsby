@@ -1,7 +1,7 @@
 ---
 title: End-to-End Testing
 examples:
-  - label: Official Example
+  - label: Using Cypress
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-cypress"
 ---
 

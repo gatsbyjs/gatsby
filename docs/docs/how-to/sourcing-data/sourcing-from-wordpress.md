@@ -1,9 +1,9 @@
 ---
 title: Sourcing from WordPress
 examples:
-  - label: Official Example
+  - label: Using WordPress
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress"
-  - label: Official Example w/ ACF
+  - label: Using WordPress with ACF
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress-with-acf"
 ---
 

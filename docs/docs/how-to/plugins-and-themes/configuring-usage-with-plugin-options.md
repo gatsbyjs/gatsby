@@ -1,7 +1,7 @@
 ---
 title: Configuring Plugin Usage with Plugin Options
 examples:
-  - label: Official Example
+  - label: Using plugin options
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-plugin-options"
 ---
 

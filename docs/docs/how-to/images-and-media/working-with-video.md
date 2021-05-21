@@ -1,7 +1,7 @@
 ---
 title: Working with Video
 examples:
-  - label: Official Example
+  - label: Using video
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-video"
 ---
 

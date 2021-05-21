@@ -3,8 +3,6 @@ title: Building an E-commerce site with Shopify
 examples:
   - label: Gatsby Shopify Starter
     href: "https://github.com/gatsbyjs/gatsby-starter-shopify"
-  - label: Using Shopify
-    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-shopify"
 ---
 
 In this tutorial, you will setup a new Gatsby website that fetches product data from [Shopify](https://www.shopify.com). The site displays a list of all products on a product listing page, and a page for every product in the store.

@@ -1,7 +1,7 @@
 ---
 title: Creating Routes
 examples:
-  - label: Collection Routing
+  - label: Using Collection Routing
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/route-api"
 ---
 

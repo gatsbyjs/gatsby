@@ -1,7 +1,7 @@
 ---
 title: Using Sass in Gatsby
 examples:
-  - label: Official Example
+  - label: Using Sass
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-sass"
 ---
 

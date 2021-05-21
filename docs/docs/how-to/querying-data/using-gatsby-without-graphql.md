@@ -1,7 +1,7 @@
 ---
 title: Gatsby without GraphQL
 examples:
-  - label: Official Example
+  - label: Using Gatsby without GraphQL
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-without-graphql"
 ---
 

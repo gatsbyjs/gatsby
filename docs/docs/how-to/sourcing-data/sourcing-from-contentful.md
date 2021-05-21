@@ -1,7 +1,7 @@
 ---
 title: Sourcing from Contentful
 examples:
-  - label: Official Example
+  - label: Using Contentful
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful"
 ---
 

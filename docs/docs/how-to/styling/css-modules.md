@@ -1,7 +1,7 @@
 ---
 title: Component-Scoped Styles with CSS Modules
 examples:
-  - label: Official Example
+  - label: Using CSS Modules
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules"
 ---
 

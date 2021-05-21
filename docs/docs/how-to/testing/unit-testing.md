@@ -1,7 +1,7 @@
 ---
 title: Unit Testing
 examples:
-  - label: Official Example
+  - label: Using Jest
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest"
 ---
 

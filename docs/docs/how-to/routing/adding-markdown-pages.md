@@ -1,7 +1,7 @@
 ---
 title: Adding Markdown Pages
 examples:
-  - label: Official Example
+  - label: Using gatsby-transformer-remark
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark"
 ---
 

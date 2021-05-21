@@ -1,7 +1,7 @@
 ---
 title: Adding Page Transitions with gatsby-plugin-transition-link
 examples:
-  - label: Official Example
+  - label: Using page-transitions
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions"
 ---
 

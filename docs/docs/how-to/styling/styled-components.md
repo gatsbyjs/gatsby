@@ -1,7 +1,7 @@
 ---
 title: Styled Components
 examples:
-  - label: Official Exaample
+  - label: Using Styled Components
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-styled-components"
 ---
 
