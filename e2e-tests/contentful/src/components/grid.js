@@ -4,9 +4,7 @@ const Grid = ({ children, columns, ...rest }) => (
   <div
     style={{
       display: "grid",
-      gridTemplateColumns: Array(columns || children.length)
-        .fill("1fr")
-        .join(" "),
+      gridTemplateColumns: "repeat(auto-fill, 240px)",
       gridGap: "2rem",
     }}
     {...rest}
