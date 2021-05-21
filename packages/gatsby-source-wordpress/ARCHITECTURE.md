@@ -108,6 +108,9 @@ See `areRemotePluginVersionsSatisfied` in `src/steps/check-plugin-requirements.t
 
 ## We're using rematch which is a redux wrapper
 
+Rematch makes using redux a bit cleaner. If I was to do it again I would use a state machine library instead, but this is how things are.
+Rematch has multiple stores which are called models and live in `src/models/index.ts`. We're currently using an old version of rematch as they changed their API fairly significantly and we don't have a compelling reason to upgrade.
+
 ### Gatsby node api helpers/actions are stored in local redux (not gatsby redux)
 
 ## Caching
