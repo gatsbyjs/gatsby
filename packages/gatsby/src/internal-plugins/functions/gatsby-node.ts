@@ -422,14 +422,14 @@ export async function onCreateDevServer({
         // We loop until we find the first match.
         functions.some(f => {
           let exp
-          type Key = {
+          interface IKey {
             name: string
             prefix: string
             suffix: string
             pattern: string
             modifier: string
           }
-          const keys: Array<Key> = []
+          const keys: Array<IKey> = []
           if (f.matchPath) {
             exp = pathToRegexp(f.matchPath, keys)
           }
