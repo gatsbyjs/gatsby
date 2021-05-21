@@ -1,5 +1,8 @@
 ---
 title: Making Your Site Accessible
+examples:
+  - label: Official Example
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-reach-skip-nav"
 ---
 
 The Gatsby team is passionate about helping you create websites that work for everyone, with helpful defaults that bake in web accessibility as well as performance optimizations. By making your website accessible to people with disabilities, you can make more inclusive sites that reach and remove barriers for more people on the Internet.

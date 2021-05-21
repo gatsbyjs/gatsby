@@ -1,5 +1,8 @@
 ---
 title: Adding Search with JS Search
+examples:
+  - label: Official Example
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-js-search"
 ---
 
 ## Prerequisites

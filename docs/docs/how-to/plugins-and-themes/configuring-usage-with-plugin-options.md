@@ -1,5 +1,8 @@
 ---
 title: Configuring Plugin Usage with Plugin Options
+examples:
+  - label: Official Example
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-plugin-options"
 ---
 
 Plugins loaded into a Gatsby site can have options passed in to customize how a plugin operates.

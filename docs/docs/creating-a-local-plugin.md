@@ -1,5 +1,10 @@
 ---
 title: Creating a Local Plugin
+examples:
+  - label: Using Local Plugins
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-local-plugins"
+  - label: Using Multiple Local Plugins
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-multiple-local-plugins"
 ---
 
 If a plugin is only relevant to your specific use-case, or if you’re developing a plugin and want a simpler workflow, a locally defined plugin is a convenient way to create and manage your plugin code.

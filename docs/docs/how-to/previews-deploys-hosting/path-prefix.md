@@ -1,5 +1,8 @@
 ---
 title: Adding a Path Prefix
+examples:
+  - label: Official Example
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-path-prefix"
 ---
 
 Many applications are hosted at something other than the root (`/`) of their domain.

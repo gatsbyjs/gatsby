@@ -1,5 +1,8 @@
 ---
 title: Adding an RSS Feed
+examples:
+  - label: Official Example
+    href: "https://github.com/gatsbyjs/gatsby/examples/feed"
 ---
 
 ## What is an RSS feed?

@@ -1,5 +1,8 @@
 ---
 title: Add components to content using MDX
+examples:
+  - label: Official Example
+    href: "https://github.com/gatsbyjs/gatsby/examples/using-MDX"
 ---
 
 ## Introduction
