@@ -48,23 +48,6 @@ interface IGlobPattern {
 const activeDevelopmentFunctions = new Set<IFunctionData>()
 let activeEntries = {}
 
-async function _restartWebpack(
-  compiler,
-  config,
-  callback
-): Promise<webpack.Compiler> {
-  return await new Promise(resolve =>
-    compiler.close(async () => {
-      compiler = webpack(config).watch({}, callback)
-      resolve(compiler)
-    })
-  )
-}
-
-// Throttle restarting the compilier to once every 500ms so we
-// don't overwhelm the CI server during tests
-const restartWebpack = _.throttle(_restartWebpack, 500)
-
 async function ensureFunctionIsCompiled(functionObj: IFunctionData): any {
   // stat the compiled function. If it's there, then return.
   let compiledFileExists = false
@@ -443,14 +426,16 @@ export async function onPreBootstrap({
               `Restarting function watcher due to change to "${path}"`
             )
 
-            const config = await createWebpackConfig({
-              siteDirectoryPath,
-              functionsDirectory,
-              store,
-              reporter,
+            // Otherwise, restart the watcher
+            compiler.close(async () => {
+              const config = await createWebpackConfig({
+                siteDirectoryPath,
+                functionsDirectory,
+                store,
+                reporter,
+              })
+              compiler = webpack(config).watch({}, callback)
             })
-
-            compiler = await restartWebpack(compiler, config, callback)
           })
       }
     })

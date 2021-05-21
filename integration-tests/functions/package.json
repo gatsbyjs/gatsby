@@ -12,7 +12,7 @@
     "test-prod": "start-server-and-test serve 9000 jest:prod",
     "test-dev": "start-server-and-test develop 8000 jest:dev",
     "jest:prod": "jest __tests__/functions-prod.js",
-    "jest:dev": "jest __tests__/functions-dev.js",
+    "jest:dev": "jest --runInBand __tests__/functions-dev.js",
     "test:jest": "jest",
     "test": "npm-run-all -s build test-prod test-dev"
   },
