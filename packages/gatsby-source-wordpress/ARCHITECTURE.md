@@ -156,6 +156,8 @@ Searching the project for `hardCacheMediaFiles` and `hardCacheData` will lead yo
 
 ## Plugin options schema and documentation generation
 
+The plugin options schema is defined in `src/steps/declare-plugin-options-schema.ts`. On each `yarn build`, `yarn generate-plugin-options-docs` is also run. This npm script runs `generate-plugin-options-docs.js` which uses the plugin options schema to generate the plugin options docs (in `docs/plugin-options.md`).
+
 ## `gatsby develop` DX features
 
 ## WPGatsby
