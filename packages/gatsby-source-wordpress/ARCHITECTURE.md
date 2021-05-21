@@ -113,6 +113,8 @@ Rematch has multiple stores which are called models and live in `src/models/inde
 
 ### Gatsby node api helpers/actions are stored in local redux (not gatsby redux)
 
+At the beginning of each Node API `setGatsbyApiToState` (see [above](#gatsby-nodets-steps)) is called to store the Gatsby Node API helpers in our Rematch model. This makes it easier to use Gatsby actions and helpers in deeply nested functions without passing them all the way down through each level.
+
 ## Caching
 
 All caching in the plugin is in 3 parts:
