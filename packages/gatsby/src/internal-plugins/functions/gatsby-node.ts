@@ -72,7 +72,7 @@ async function ensureFunctionIsCompiled(
         // can't watch files in directories that don't yet exist.
         .watch(compiledFunctionsDir)
         .on(`add`, async _path => {
-          if (path === functionObj.absoluteCompiledFilePath) {
+          if (_path === functionObj.absoluteCompiledFilePath) {
             await watcher.close()
 
             resolve(null)
