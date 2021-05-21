@@ -25,7 +25,7 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
 - [Debugging options](#debugging-options)
 - [Plugin options schema and documentation generation](#plugin-options-schema-and-documentation-generation)
 - [`gatsby develop` DX features](#gatsby-develop-dx-features)
-- [Gatsby Node API's in use](#gatsby-node-apis-in-use)
+- [WPGatsby](#wpgatsby)
 
 ## Historic Info
 
@@ -35,7 +35,7 @@ Inspired by this plugin, the [Gatsby GraphQL Toolkit](https://github.com/gatsbyj
 
 I initially wrote this plugin in JS and later it was partially ported to TS. As a result there are a mix of JS and TS files. When I was initially planning this plugin, the Gatsby core team collectively made a decision that Gatsby core should be written in TS and any plugins should be written in JS to keep community contributions from requiring the knowledge of TS. This plugin turned out to be one of the largest Gatsby plugin codebases and I later decided it 100% needs TS. If you want to convert some JS files to TS please feel welcome to do so! We will accept TS conversion PR's.
 
-The file you're reading was created many months after the first stable version of this plugin was released - so this is a non-exhaustive explanation of the architecture. If you notice something is missing, please take a crack at adding it here, or if you don't know much about the part you're documenting open a Github discussion so we can hash it out together.
+The file you're reading was created many months after the first stable version of this plugin was released - so this is a non-exhaustive explanation of the architecture. This doc is most likely incomplete. If you notice something is missing, please take a crack at adding it here, or if you don't know much about the part you're documenting open a Github discussion so we can hash it out together.
 
 &mdash; @TylerBarnes
 
@@ -44,6 +44,8 @@ The file you're reading was created many months after the first stable version o
 In `src/gatsby-node.ts` a helper (`runApisInSteps`) is being used to run different "steps" of the codebase in order for each Gatsby Node API. Many parts of the codebase count on something else happening at an earlier point, so `runApisInSteps` is an easy way to visualize that.
 
 This file is the entry point for 99.999% of the plugin (`src/gatsby-browser.ts` only imports 1 css file) so it's a good jumping off point for looking at different areas of the plugin.
+
+Each "step" is in it's own file in `src/steps`.
 
 ## Query Generation / Remote Schema Ingestion
 
@@ -146,15 +148,4 @@ In development this isn't as critical and refetching everything can be really an
 
 ## `gatsby develop` DX features
 
-## Gatsby Node API's in use
-
-See `src/gatsby-node.ts`
-
-- onPreInit
-- pluginOptionsSchema
-- createSchemaCustomization
-- sourceNodes
-- onPreExtractQueries
-- onPostBuild
-- onCreatePage
-- onCreateDevServer
+## WPGatsby
