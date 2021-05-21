@@ -2,7 +2,22 @@
 title: Working with Images in Gatsby
 ---
 
-_This document uses the deprecated image plugin. Please check out how to work with the new [gatsby-plugin-image](/docs/how-to/images-and-media/using-gatsby-plugin-image)._
+import { Notification } from 'gatsby-interface'
+
+<Notification
+  Icon={MdInfo}
+  tone="WARNING"
+  variant="SECONDARY"
+  content={
+    <div>
+      <p style={{ marginBottom: 0 }}>
+      This document uses the deprecated gatsby-image plugin. Please check out how to work with the new <a href="/docs/how-to/images-and-media/using-gatsby-plugin-image/"><strong>gatsby-plugin-image</strong></a>.
+      </p>
+    </div>
+  }
+/>
+
+__
 
 Optimizing images is a challenge on any website. To utilize best practices for performance across devices, you need multiple sizes and resolutions of each image. Luckily, Gatsby has several useful [plugins](/docs/plugins/) that work together to do that for images on [page components](/docs/conceptual/building-with-components/#page-components).
 
