@@ -15,7 +15,9 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
 - [We're using rematch which is a redux wrapper](#were-using-rematch-which-is-a-redux-wrapper)
   - [Gatsby node api helpers/actions are stored in local redux (not gatsby redux)](#gatsby-node-api-helpersactions-are-stored-in-local-redux-not-gatsby-redux)
 - [Caching](#caching)
-- [Hard caching](#hard-caching)
+  - [Remote schema changes (schema MD5 diffing)](#remote-schema-changes-schema-md5-diffing)
+  - [ActionMonitor (WPGatsby change events)](#actionmonitor-wpgatsby-change-events)
+  - [Hard caching files and data (for improved local dev DX)](#hard-caching-files-and-data-for-improved-local-dev-dx)
 - [Image processing](#image-processing)
 - [HTML processing](#html-processing)
 - [Basic Auth](#basic-auth)
@@ -108,7 +110,21 @@ See `areRemotePluginVersionsSatisfied` in `src/steps/check-plugin-requirements.t
 
 ## Caching
 
-## Hard caching
+All caching in the plugin is in 3 parts:
+
+- Remote schema changes (schema MD5 diffing)
+- ActionMonitor (WPGatsby change events)
+- Hard caching files and data (for improved local dev DX)
+
+### Remote schema changes (schema MD5 diffing)
+
+This happens in `src/steps/ingest-remote-schema/diff-schemas.js`.
+If the schema MD5 changes in production we refetch all data from WordPress as we can't be sure wether the new schema includes new or changed data.
+In development this isn't as critical and refetching everything can be really annoying so we only update the schema and log out a warning about running `gatsby clean` if data changed during the schema update.
+
+### ActionMonitor (WPGatsby change events)
+
+### Hard caching files and data (for improved local dev DX)
 
 ## Image processing
 
