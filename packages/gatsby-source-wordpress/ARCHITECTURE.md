@@ -11,21 +11,20 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
   - [Schema Caching](#schema-caching)
 - [Sourcing nodes](#sourcing-nodes)
 - [Compatibility api (DX and security-ish feature)](#compatibility-api-dx-and-security-ish-feature)
-- [Preview](#preview)
 - [We're using rematch which is a redux wrapper](#were-using-rematch-which-is-a-redux-wrapper)
   - [Gatsby node api helpers/actions are stored in local redux (not gatsby redux)](#gatsby-node-api-helpersactions-are-stored-in-local-redux-not-gatsby-redux)
 - [Caching](#caching)
   - [Remote schema changes (schema MD5 diffing)](#remote-schema-changes-schema-md5-diffing)
   - [ActionMonitor (WPGatsby change events)](#actionmonitor-wpgatsby-change-events)
   - [Hard caching files and data (for improved local dev DX)](#hard-caching-files-and-data-for-improved-local-dev-dx)
-- [Image processing](#image-processing)
-- [HTML processing](#html-processing)
 - [Basic Auth](#basic-auth)
-- [Build caching & inc builds](#build-caching--inc-builds)
 - [Debugging options](#debugging-options)
 - [Plugin options schema and documentation generation](#plugin-options-schema-and-documentation-generation)
 - [`gatsby develop` DX features](#gatsby-develop-dx-features)
 - [WPGatsby](#wpgatsby)
+- [Preview](#preview)
+- [Image processing](#image-processing)
+- [HTML processing](#html-processing)
 
 ## Historical Info
 
@@ -104,8 +103,6 @@ To solve this problem a remote compatibility API was added. See `src/supported-r
 
 See `areRemotePluginVersionsSatisfied` in `src/steps/check-plugin-requirements.ts` for where this logic runs. WPGatsby exposes an endpoint allowing us to send version ranges for WPGraphQL and WPGatsby to ask if the remote plugin versions are within this range. The reason we don't just expose the versions of WPGraphQL and WPGatsby directly is that hackers could scan the internet for sites with vulnerable versions of these plugins. Since we can only send a version range (which doesn't include specific patch versions), hackers can't be sure wether or not a vulnerable version has been patched, making it harder to target sites with vulnerable plugin versions installed.
 
-## Preview
-
 ## We're using rematch which is a redux wrapper
 
 Rematch makes using redux a bit cleaner. If I was to do it again I would use a state machine library instead, but this is how things are.
@@ -138,16 +135,6 @@ After an initial cold build, the current timestamp is stored in cache. On any su
 As Gatsby eagerly clears the cache (being that it doesn't have as much context on individual sources as source plugins do) "hard" caching options have been added to this plugin. There is an option for hard caching files and another for hard caching data. These options cache data outside of the Gatsby cache and they are considered experimental API's. There's no garuntee of data validity with them. Their main purpose is to improve local development DX so that installing an NPM package or updating gatsby-config.js or gatsby-node.js doesn't cause the source plugin to refetch hundreds or thousands of images or nodes.
 Searching the project for `hardCacheMediaFiles` and `hardCacheData` will lead you to areas where this caching logic is implemented.
 
-## Image processing
-
-- lazyNodes
-- retry on end of queue
-
-## HTML processing
-
-- links
-- files
-
 ## Basic Auth
 
 Basic Auth options are added in `src/steps/source-nodes/create-nodes/create-remote-media-item-node.js` and `src/steps/source-nodes/create-nodes/create-remote-file-node/index.js`. This option is intended for use with server-level authentication, not WP level authentication. The reason for this is Gatsby data should be considered public data. Anything not public should not be exposed to Gatsby as it could be accidentally leaked via GraphQL queries or the `/__graphql` endpoint of a running Preview instance. This option is intended to allow you to lock down your `/graphql` WPGraphQL endpoint so it can only be requested with some credentials. See https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/features/security.md for more info.
@@ -168,3 +155,20 @@ When developing a site locally, this plugin periodically checks for data or sche
 
 The WPGatsby plugin stores and exposes WP change events for Gatsby to query and then update data/schema with.
 It also adds some additional fields to the WPGraphQL schema (like `schemaMd5` and compatibility api fields) which the source plugin requires to function. See https://github.com/gatsbyjs/wp-gatsby for more info.
+
+<!-- todo -->
+
+## Preview
+
+## Image processing
+
+- lazyNodes
+- retry on end of queue
+
+## HTML processing
+
+- links
+- files
+- images
+
+<!-- end todo -->
