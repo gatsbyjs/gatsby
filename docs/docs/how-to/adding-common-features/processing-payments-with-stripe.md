@@ -1,5 +1,8 @@
 ---
 title: Processing Payments with Stripe
+examples:
+  - label: Using Stripe
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe"
 ---
 
 ## Why Stripe and Gatsby?

@@ -1,5 +1,8 @@
 ---
 title: Adding Markdown Pages
+examples:
+  - label: Using gatsby-transformer-remark
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-remark"
 ---
 
 Gatsby can use Markdown files to create pages in your site.

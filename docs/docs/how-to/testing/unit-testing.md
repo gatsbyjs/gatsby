@@ -1,5 +1,8 @@
 ---
 title: Unit Testing
+examples:
+  - label: Using Jest
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-jest"
 ---
 
 Unit testing is a great way to protect against errors in your code before you
