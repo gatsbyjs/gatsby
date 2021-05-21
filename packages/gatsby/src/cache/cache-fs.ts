@@ -54,7 +54,7 @@ exports.create = function (args): typeof DiskStore {
   return new DiskStore(args && args.options ? args.options : args)
 }
 
-function DiskStore(options): void {
+function DiskStore(this: any, options): void {
   options = options || {}
 
   this.options = {
@@ -91,7 +91,12 @@ function DiskStore(options): void {
  * @param {function} [cb]
  * @returns {Promise}
  */
-DiskStore.prototype.set = wrapCallback(async function (key, val, options) {
+DiskStore.prototype.set = wrapCallback(async function (
+  this: any,
+  key,
+  val,
+  options
+) {
   key = key + ``
   const filePath = this._getFilePathByKey(key)
 
@@ -128,7 +133,7 @@ DiskStore.prototype.set = wrapCallback(async function (key, val, options) {
  * @param {function} [cb]
  * @returns {Promise}
  */
-DiskStore.prototype.get = wrapCallback(async function (key) {
+DiskStore.prototype.get = wrapCallback(async function (this: any, key) {
   key = key + ``
   const filePath = this._getFilePathByKey(key)
 
@@ -172,7 +177,7 @@ DiskStore.prototype.get = wrapCallback(async function (key) {
 /**
  * delete entry from cache
  */
-DiskStore.prototype.del = wrapCallback(async function (key) {
+DiskStore.prototype.del = wrapCallback(async function (this: any, key) {
   const filePath = this._getFilePathByKey(key)
   try {
     if (this.options.subdirs) {
@@ -196,7 +201,9 @@ DiskStore.prototype.del = wrapCallback(async function (key) {
 /**
  * cleanup cache on disk -> delete all files from the cache
  */
-DiskStore.prototype.reset = wrapCallback(async function (): Promise<void> {
+DiskStore.prototype.reset = wrapCallback(async function (
+  this: any
+): Promise<void> {
   const readdir = promisify(fs.readdir)
   const stat = promisify(fs.stat)
   const unlink = promisify(fs.unlink)
