@@ -1,5 +1,5 @@
 import React from "react"
 
-export const ContentfulNumber = ({ integer }) => (
-  <p data-cy-id="integer">[ContentfulInteger] {integer}</p>
+export const ContentfulNumber = ({ integer, decimal }) => (
+  <p data-cy-id="integer">[ContentfulNumber] {integer || decimal}</p>
 )

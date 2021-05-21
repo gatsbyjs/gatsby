@@ -53,4 +53,19 @@ describe(`gatsby-image`, () => {
   it(`webp`, testConfig, () => testGatsbyImage(`webp`, hasJPEGPlaceholder))
   it(`traced`, testConfig, () => testGatsbyImage(`traced`, hasSVGPlaceholder))
   it(`sqip`, testConfig, () => testGatsbyImage(`sqip`, hasSVGPlaceholder))
+
+  it(`english`, testConfig, () => {
+    testGatsbyImage(`english`, hasJPEGPlaceholder)
+    cy.get(`[data-cy="english"] p strong`).should(
+      "have.text",
+      "Locale - American English (png)"
+    )
+  })
+  it(`german`, testConfig, () => {
+    testGatsbyImage(`german`, hasJPEGPlaceholder)
+    cy.get(`[data-cy="german"] p strong`).should(
+      "have.text",
+      "Locale - German (png)"
+    )
+  })
 })
