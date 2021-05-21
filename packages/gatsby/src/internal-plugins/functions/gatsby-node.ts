@@ -48,7 +48,10 @@ interface IGlobPattern {
 const activeDevelopmentFunctions = new Set<IFunctionData>()
 let activeEntries = {}
 
-async function ensureFunctionIsCompiled(functionObj: IFunctionData): any {
+async function ensureFunctionIsCompiled(
+  functionObj: IFunctionData,
+  compiledFunctionsDir: string
+): any {
   // stat the compiled function. If it's there, then return.
   let compiledFileExists = false
   try {
@@ -65,11 +68,15 @@ async function ensureFunctionIsCompiled(functionObj: IFunctionData): any {
     fs.utimesSync(functionObj.originalAbsoluteFilePath, time, time)
     await new Promise(resolve => {
       const watcher = chokidar
-        .watch(functionObj.absoluteCompiledFilePath)
-        .on(`all`, async (event, path) => {
-          await watcher.close()
+        // Watch the root of the compiled function directory in .cache as chokidar
+        // can't watch files in directories that don't yet exist.
+        .watch(compiledFunctionsDir)
+        .on(`add`, async _path => {
+          if (path === functionObj.absoluteCompiledFilePath) {
+            await watcher.close()
 
-          resolve(null)
+            resolve(null)
+          }
         })
     })
   }
@@ -453,6 +460,16 @@ export async function onCreateDevServer({
 }: CreateDevServerArgs): Promise<void> {
   reporter.verbose(`Attaching functions to development server`)
 
+  const {
+    program: { directory: siteDirectoryPath },
+  } = store.getState()
+
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
+
   app.use(
     `/api/*`,
     multer().any(),
@@ -511,7 +528,7 @@ export async function onCreateDevServer({
       if (functionObj) {
         activeDevelopmentFunctions.add(functionObj)
 
-        await ensureFunctionIsCompiled(functionObj)
+        await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
 
         reporter.verbose(`Running ${functionObj.functionRoute}`)
         const start = Date.now()
