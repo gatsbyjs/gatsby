@@ -27,7 +27,7 @@ const Style = () => (
             0px 4px 8px rgba(71, 63, 79, 0.16);
         }
 
-        svg {
+        [data-gatsby-preview-indicator="tooltip"] svg {
           display: inline;
         }
 
