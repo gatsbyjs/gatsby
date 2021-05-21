@@ -8,6 +8,7 @@ import * as express from "express"
 import { getMatchPath, urlResolve } from "gatsby-core-utils"
 import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import { internalActions } from "../../redux/actions"
+import { IGatsbyFunction } from "../../redux/types"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
 import dotenv from "dotenv"
@@ -16,23 +17,6 @@ import pathToRegexp from "path-to-regexp"
 import cookie from "cookie"
 
 const isProductionEnv = process.env.gatsby_executing_command !== `develop`
-
-interface IFunctionData {
-  /** The route in the browser to access the function **/
-  functionRoute: string
-  /** The absolute path to the original function **/
-  originalAbsoluteFilePath: string
-  /** The relative path to the original function **/
-  originalRelativeFilePath: string
-  /** The relative path to the compiled function (always ends with .js) **/
-  relativeCompiledFilePath: string
-  /** The absolute path to the compiled function (doesn't transfer across machines) **/
-  absoluteCompiledFilePath: string
-  /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
-  matchPath: string | undefined
-  /** The plugin that owns this function route **/
-  pluginName: string
-}
 
 interface IGlobPattern {
   /** The plugin that owns this namespace **/
@@ -120,35 +104,37 @@ const createWebpackConfig = async ({
   // Glob and return object with relative/absolute paths + which plugin
   // they belong to.
   const allFunctions = await Promise.all(
-    globs.map(async glob => {
-      const knownFunctions: Array<IFunctionData> = []
-      const files = await globAsync(glob.globPattern)
-      files.map(file => {
-        const originalAbsoluteFilePath = file
-        const originalRelativeFilePath = path.relative(glob.rootPath, file)
+    globs.map(
+      async (glob): Promise<Array<IGatsbyFunction>> => {
+        const knownFunctions: Array<IGatsbyFunction> = []
+        const files = await globAsync(glob.globPattern)
+        files.map(file => {
+          const originalAbsoluteFilePath = file
+          const originalRelativeFilePath = path.relative(glob.rootPath, file)
 
-        const { dir, name } = path.parse(originalRelativeFilePath)
-        // Ignore the original extension as all compiled functions now end with js.
-        const compiledFunctionName = path.join(dir, name + `.js`)
-        const compiledPath = path.join(
-          compiledFunctionsDir,
-          compiledFunctionName
-        )
-        const finalName = urlResolve(dir, name === `index` ? `` : name)
+          const { dir, name } = path.parse(originalRelativeFilePath)
+          // Ignore the original extension as all compiled functions now end with js.
+          const compiledFunctionName = path.join(dir, name + `.js`)
+          const compiledPath = path.join(
+            compiledFunctionsDir,
+            compiledFunctionName
+          )
+          const finalName = urlResolve(dir, name === `index` ? `` : name)
 
-        knownFunctions.push({
-          functionRoute: finalName,
-          pluginName: glob.pluginName,
-          originalAbsoluteFilePath,
-          originalRelativeFilePath,
-          relativeCompiledFilePath: compiledFunctionName,
-          absoluteCompiledFilePath: compiledPath,
-          matchPath: getMatchPath(finalName),
+          knownFunctions.push({
+            functionRoute: finalName,
+            pluginName: glob.pluginName,
+            originalAbsoluteFilePath,
+            originalRelativeFilePath,
+            relativeCompiledFilePath: compiledFunctionName,
+            absoluteCompiledFilePath: compiledPath,
+            matchPath: getMatchPath(finalName),
+          })
         })
-      })
 
-      return knownFunctions
-    })
+        return knownFunctions
+      }
+    )
   )
 
   // Combine functions by the route name so that functions in the default
@@ -424,7 +410,7 @@ export async function onCreateDevServer({
 
       const {
         functions,
-      }: { functions: Array<IFunctionData> } = store.getState()
+      }: { functions: Array<IGatsbyFunction> } = store.getState()
 
       // Check first for exact matches.
       let functionObj = functions.find(
@@ -436,7 +422,14 @@ export async function onCreateDevServer({
         // We loop until we find the first match.
         functions.some(f => {
           let exp
-          const keys = []
+          type Key = {
+            name: string
+            prefix: string
+            suffix: string
+            pattern: string
+            modifier: string
+          }
+          const keys: Array<Key> = []
           if (f.matchPath) {
             exp = pathToRegexp(f.matchPath, keys)
           }
