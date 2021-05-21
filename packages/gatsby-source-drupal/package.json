@@ -9,6 +9,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "got": "^11.8.2",
+    "agentkeepalive": "^4.1.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "gatsby-source-filesystem": "^3.6.0-next.0",

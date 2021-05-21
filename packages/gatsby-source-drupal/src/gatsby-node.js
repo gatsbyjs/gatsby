@@ -1,6 +1,9 @@
 const got = require(`got`)
 const _ = require(`lodash`)
 const urlJoin = require(`url-join`)
+import HttpAgent from "agentkeepalive"
+
+const { HttpsAgent } = HttpAgent
 
 const { setOptions, getOptions } = require(`./plugin-options`)
 
@@ -12,8 +15,12 @@ const {
 } = require(`./normalize`)
 const { handleReferences, handleWebhookUpdate } = require(`./utils`)
 
+const agent = {
+  http: new HttpAgent(),
+  https: new HttpsAgent(),
+}
 function worker([url, options]) {
-  return got(url, options)
+  return got(url, { agent, ...options })
 }
 
 const requestQueue = require(`fastq`).promise(worker, 10)
