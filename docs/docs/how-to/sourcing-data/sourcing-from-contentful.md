@@ -2,7 +2,7 @@
 title: Sourcing from Contentful
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-contentful"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-contentful"
 ---
 
 ## What is Contentful? Why choose it?

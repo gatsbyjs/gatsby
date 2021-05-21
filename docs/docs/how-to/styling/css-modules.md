@@ -2,7 +2,7 @@
 title: Component-Scoped Styles with CSS Modules
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-css-modules"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-css-modules"
 ---
 
 Component-scoped CSS allows you to write traditional, portable CSS with minimal side-effects: gone are the worries of selector name collisions or affecting other components' styles.

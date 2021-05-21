@@ -2,7 +2,7 @@
 title: TypeScript and Gatsby
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-typescript"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-typescript"
 ---
 
 ## Introductory paragraph

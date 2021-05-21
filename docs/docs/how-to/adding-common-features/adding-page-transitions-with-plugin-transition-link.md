@@ -2,7 +2,7 @@
 title: Adding Page Transitions with gatsby-plugin-transition-link
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-page-transitions"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions"
 ---
 
 This guide will cover how to use `gatsby-plugin-transition-link` to animate transitions between pages on your Gatsby site.

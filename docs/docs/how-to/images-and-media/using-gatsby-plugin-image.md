@@ -4,7 +4,7 @@ examples:
   - label: Using Gatsby Image
     href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-gatsby-image"
   - label: GatsbyGram
-    href: "https://github.com/gatsbyjs/gatsby/examples/gatsbygram"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/gatsbygram"
 ---
 
 _If you're looking for a guide on using the deprecated `gatsby-image` package, it can be found in the [How to use Gatsby Image](/docs/how-to/images-and-media/using-gatsby-image) doc._

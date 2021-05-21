@@ -2,7 +2,7 @@
 title: Add components to content using MDX
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-MDX"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-MDX"
 ---
 
 ## Introduction

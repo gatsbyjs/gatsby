@@ -2,7 +2,7 @@
 title: Processing Payments with Stripe
 examples:
   - label: Source Repo
-    href: "https://github.com/gatsbyjs/gatsby/examples/ecommerce-tutorial-with-stripe"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/ecommerce-tutorial-with-stripe"
 ---
 
 ## Why Stripe and Gatsby?

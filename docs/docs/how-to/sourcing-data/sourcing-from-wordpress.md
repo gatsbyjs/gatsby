@@ -2,9 +2,9 @@
 title: Sourcing from WordPress
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-wordpress"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress"
   - label: Official Example w/ ACF
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-wordpress-with-acf"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-wordpress-with-acf"
 ---
 
 This guide will walk you through the process of using Gatsby with WordPress and [WPGraphQL](https://www.wpgraphql.com/).

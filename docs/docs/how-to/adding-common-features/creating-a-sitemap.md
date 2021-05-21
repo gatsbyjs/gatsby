@@ -2,7 +2,7 @@
 title: Creating a Sitemap
 examples:
   - label: Official Example
-    href: "https://github.com/gatsbyjs/gatsby/examples/sitemap"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/sitemap"
 ---
 
 ## What is a sitemap?

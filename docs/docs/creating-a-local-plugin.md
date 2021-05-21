@@ -2,7 +2,7 @@
 title: Creating a Local Plugin
 examples:
   - label: Using Local Plugins
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-local-plugins"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-local-plugins"
   - label: Using Multiple Local Plugins
     href: "https://github.com/gatsbyjs/gatsby/examples/using-multiple-local-plugins"
 ---
