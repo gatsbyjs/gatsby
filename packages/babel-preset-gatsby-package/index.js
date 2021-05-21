@@ -8,16 +8,17 @@ function preset(context, options = {}) {
 
   const browserConfig = {
     useBuiltIns: false,
-    targets: {
-      browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
-    },
   }
 
   if (browser) {
-    if (esm ) {
-      browserConfig.targets.esmodules = true;
+    if (esm) {
+      browserConfig.targets = {
+        esmodules: true
+      }
     } else {
-      browserConfig.targets.browser = [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`];
+      browserConfig.targets = {
+        browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`]
+      }
     }
   }
 
