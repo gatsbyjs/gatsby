@@ -245,7 +245,7 @@ const createWebpackConfig = async ({
     resolve: {
       extensions: [`.ts`, `...`],
     },
-    
+
     // Have webpack save its cache to the .cache/webpack directory
     cache: {
       type: `filesystem`,
