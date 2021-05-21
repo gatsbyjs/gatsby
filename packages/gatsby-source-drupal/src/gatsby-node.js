@@ -19,7 +19,7 @@ const agent = {
   http: new HttpAgent(),
   https: new HttpsAgent(),
 }
-function worker([url, options]) {
+async function worker([url, options]) {
   return got(url, { agent, ...options })
 }
 
@@ -393,7 +393,6 @@ exports.sourceNodes = async (
     if (!contentType) return
     _.each(contentType.data, datum => {
       if (!datum) return
-      datum.type = contentType.type
       const node = nodeFromData(datum, createNodeId, entityReferenceRevisions)
       nodes.set(node.id, node)
     })
