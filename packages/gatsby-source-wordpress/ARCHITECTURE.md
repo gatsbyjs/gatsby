@@ -135,6 +135,9 @@ After an initial cold build, the current timestamp is stored in cache. On any su
 
 ### Hard caching files and data (for improved local dev DX)
 
+As Gatsby eagerly clears the cache (being that it doesn't have as much context on individual sources as source plugins do) "hard" caching options have been added to this plugin. There is an option for hard caching files and another for hard caching data. These are considered experimental API's and there's no garuntee of data validity with them. Their main purpose is to improve local development DX so that installing an NPM package or updating gatsby-config.js or gatsby-node.js doesn't cause the source plugin to refetch hundreds or thousands of images or nodes.
+Searching the project for `hardCacheMediaFiles` and `hardCacheData` will lead you to areas where this caching logic is implemented.
+
 ## Image processing
 
 - lazyNodes
