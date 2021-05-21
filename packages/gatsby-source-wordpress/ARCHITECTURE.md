@@ -131,6 +131,8 @@ In development this isn't as critical and refetching everything can be really an
 
 ### ActionMonitor (WPGatsby change events)
 
+After an initial cold build, the current timestamp is stored in cache. On any subsequent build this timestamp is sent via a gql query to WPGraphQL/WPGatsby/WordPress to ask what's changed since the last time data was fetched. See `src/steps/source-nodes/update-nodes/fetch-node-updates.js` and `src/steps/source-nodes/index.ts`. A list of change events is fetched and the source plugin loops through them and processes CREATE/UPDATE and DELETE events (see `src/steps/source-nodes/update-nodes/wp-actions`). WordPress itself doesn't store these events so there is a lot of custom code/logic in WPGatsby that hooks into various WordPress events and stores data in the WP db. See https://github.com/gatsbyjs/wp-gatsby/tree/master/src/ActionMonitor.
+
 ### Hard caching files and data (for improved local dev DX)
 
 ## Image processing
