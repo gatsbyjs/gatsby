@@ -391,6 +391,7 @@ exports.createNodesForContentType = ({
             publishedAt: entryItem.sys.updatedAt,
             publishedVersion: entryItem.sys.revision,
           },
+          localeTest: entryItem.fields,
         }
 
         // Replace text fields with text nodes so we can process their markdown

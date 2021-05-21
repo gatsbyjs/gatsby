@@ -13,6 +13,7 @@ const { restrictedNodeFields } = require(`./config`)
 const { generateSchema } = require(`./generate-schema`)
 const { createPluginConfig, maskText } = require(`./plugin-options`)
 const { downloadContentfulAssets } = require(`./download-contentful-assets`)
+const { CascadedContext } = require(`./cascaded-context`)
 
 const conflictFieldPrefix = `contentful`
 
@@ -142,6 +143,82 @@ List of locales and their codes can be found in Contentful app -> Settings -> Lo
     .external(validateContentfulAccess)
 
 exports.pluginOptionsSchema = pluginOptionsSchema
+
+const localeState = new CascadedContext()
+
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createResolverContext({ localeState })
+  actions.createFieldExtension({
+    name: `contentfulLocalized`,
+    args: {
+      contentfulFieldId: {
+        type: `String!`,
+      },
+    },
+    extend(options) {
+      return {
+        args: {
+          locale: `String`,
+        },
+        resolve(source, args, context, info) {
+          console.log(
+            JSON.stringify(
+              { source, args, context: context.sourceContentful },
+              null,
+              2
+            )
+          )
+
+          let locale
+          if (args.locale) {
+            context.sourceContentful.localeState.set(info, args.locale)
+            locale = args.locale
+          } else {
+            locale = context.sourceContentful.localeState.get(info) || `en-US` // @todo we need default locale
+          }
+          const fieldValue = source.localeTest[options.contentfulFieldId] || {}
+          return fieldValue[locale] || null
+        },
+      }
+    },
+  })
+}
+
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    Query: {
+      contentfulNumberLocalized: {
+        type: [`ContentfulNumber`],
+        args: {
+          locale: `String`, // "input PostsCountInput { min: Int, max: Int }",
+        },
+        resolve(source, args, context, info) {
+          let locale
+
+          if (args.locale) {
+            context.sourceContentful.localeState.set(info, args.locale)
+            locale = args.locale
+          } else {
+            locale = context.sourceContentful.localeState.get(info) || `en-US` // @todo where to get default locale from?
+          }
+
+          console.log({ locale })
+
+          return context.nodeModel.runQuery({
+            query: {
+              filter: {
+                sys: { locale: { eq: locale } },
+              },
+            },
+            type: `ContentfulNumber`,
+            firstOnly: false,
+          })
+        },
+      },
+    },
+  }
+  createResolvers(resolvers)
+}
 
 /***
  * Localization algorithm
@@ -366,7 +443,13 @@ exports.sourceNodes = async (
   processingActivity.start()
 
   // Generate schemas based on Contentful content model
-  generateSchema({ createTypes, schema, pluginConfig, contentTypeItems })
+  generateSchema({
+    createTypes,
+    schema,
+    pluginConfig,
+    contentTypeItems,
+    defaultLocale,
+  })
 
   // Create a map of up to date entries and assets
   function mergeSyncData(previous, current, deleted) {

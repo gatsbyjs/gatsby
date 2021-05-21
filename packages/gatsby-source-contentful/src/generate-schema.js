@@ -2,131 +2,169 @@ import { getRichTextEntityLinks } from "@contentful/rich-text-links"
 
 import { makeTypeName } from "./normalize"
 
-// Contentful content type schemas
-const ContentfulDataTypes = new Map([
-  [
-    `Symbol`,
-    () => {
-      return { type: `String` }
-    },
-  ],
-  [
-    `Text`,
-    field => {
-      return {
-        type: `ContentfulNodeTypeText`,
-        extensions: {
-          link: { by: `id`, from: `${field.id}___NODE` },
-        },
-      }
-    },
-  ],
-  [
-    `Integer`,
-    () => {
-      return { type: `Int` }
-    },
-  ],
-  [
-    `Number`,
-    () => {
-      return { type: `Float` }
-    },
-  ],
-  [
-    `Date`,
-    () => {
-      return {
-        type: `Date`,
-        extensions: {
-          dateformat: {},
-        },
-      }
-    },
-  ],
-  [
-    `Object`,
-    () => {
-      return { type: `JSON` }
-    },
-  ],
-  [
-    `Boolean`,
-    () => {
-      return { type: `Boolean` }
-    },
-  ],
-  [
-    `Location`,
-    () => {
-      return { type: `ContentfulNodeTypeLocation` }
-    },
-  ],
-  [
-    `RichText`,
-    () => {
-      return { type: `ContentfulNodeTypeRichText` }
-    },
-  ],
-])
-
-const getLinkFieldType = (linkType, field) => {
-  return {
-    type: `Contentful${linkType}`,
-    extensions: {
-      link: { by: `id`, from: `${field.id}___NODE` },
-    },
-  }
-}
-
-const translateFieldType = field => {
-  let fieldType
-  if (field.type === `Array`) {
-    // Arrays of Contentful Links or primitive types
-    const fieldData =
-      field.items.type === `Link`
-        ? getLinkFieldType(field.items.linkType, field)
-        : translateFieldType(field.items)
-
-    fieldType = { ...fieldData, type: `[${fieldData.type}]` }
-  } else if (field.type === `Link`) {
-    // Contentful Link (reference) field types
-    fieldType = getLinkFieldType(field.linkType, field)
-  } else {
-    // Primitive field types
-    fieldType = ContentfulDataTypes.get(field.type)(field)
-  }
-
-  if (field.required) {
-    fieldType.type = `${fieldType.type}!`
-  }
-
-  return fieldType
-}
-
-function generateAssetTypes({ createTypes }) {
-  createTypes(`
-    type ContentfulAsset implements ContentfulInternalReference & Node {
-      sys: ContentfulInternalSys
-      id: ID!
-      title: String
-      description: String
-      contentType: String
-      fileName: String
-      url: String
-      size: Int
-      width: Int
-      height: Int
-    }
-  `)
-}
-
 export function generateSchema({
   createTypes,
   schema,
   pluginConfig,
   contentTypeItems,
 }) {
+  const getLinkFieldType = (linkType, field) => {
+    return {
+      type: `Contentful${linkType}`,
+      extensions: {
+        link: { by: `id`, from: `${field.id}___NODE` },
+      },
+    }
+  }
+
+  const translateFieldType = field => {
+    let fieldType
+    if (field.type === `Array`) {
+      // Arrays of Contentful Links or primitive types
+      const fieldData =
+        field.items.type === `Link`
+          ? getLinkFieldType(field.items.linkType, field)
+          : translateFieldType(field.items)
+
+      fieldType = { ...fieldData, type: `[${fieldData.type}]` }
+    } else if (field.type === `Link`) {
+      // Contentful Link (reference) field types
+      fieldType = getLinkFieldType(field.linkType, field)
+    } else {
+      // Primitive field types
+      fieldType = ContentfulDataTypes.get(field.type)(field)
+    }
+
+    if (field.required) {
+      fieldType.type = `${fieldType.type}!`
+    }
+
+    return fieldType
+  }
+
+  // Contentful content type schemas
+  const ContentfulDataTypes = new Map([
+    [
+      `Symbol`,
+      field => {
+        return {
+          type: `String`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+    [
+      `Text`,
+      field => {
+        return {
+          type: `ContentfulNodeTypeText`,
+          args: {
+            locale: `String`,
+          },
+          extensions: {
+            link: { by: `id`, from: `${field.id}___NODE` },
+          },
+        }
+      },
+    ],
+    [
+      `Integer`,
+      field => {
+        return {
+          type: `Int`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+    [
+      `Number`,
+      field => {
+        return {
+          type: `Float`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+    [
+      `Date`,
+      field => {
+        return {
+          type: `Date`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+            dateformat: {},
+          },
+        }
+      },
+    ],
+    [
+      `Object`,
+      field => {
+        return {
+          type: `JSON`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+    [
+      `Boolean`,
+      field => {
+        return {
+          type: `Boolean`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+    [
+      `Location`,
+      field => {
+        return {
+          type: `ContentfulNodeTypeLocation`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+    [
+      `RichText`,
+      field => {
+        return {
+          type: `ContentfulNodeTypeRichText`,
+          extensions: {
+            contentfulLocalized: {
+              contentfulFieldId: field.id,
+            },
+          },
+        }
+      },
+    ],
+  ])
+
   // Generic Types
   createTypes(`
     interface ContentfulInternalReference implements Node {
@@ -166,7 +204,20 @@ export function generateSchema({
   `)
 
   // Assets
-  generateAssetTypes({ createTypes })
+  createTypes(`
+    type ContentfulAsset implements ContentfulInternalReference & Node {
+      sys: ContentfulInternalSys
+      id: ID!
+      title: String
+      description: String
+      contentType: String
+      fileName: String
+      url: String
+      size: Int
+      width: Int
+      height: Int
+    }
+  `)
 
   // Rich Text
   const makeRichTextLinksResolver = (nodeType, entityType) => (
