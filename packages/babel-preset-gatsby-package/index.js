@@ -1,16 +1,25 @@
 const r = require(`./resolver`)
 
 function preset(context, options = {}) {
-  const { browser = false, debug = false, nodeVersion = `12.13.0` } = options
+  const { browser = false, debug = false, nodeVersion = `12.13.0`, esm = false } = options
   const { NODE_ENV, BABEL_ENV } = process.env
 
   const IS_TEST = (BABEL_ENV || NODE_ENV) === `test`
 
   const browserConfig = {
     useBuiltIns: false,
-    targets: {
-      browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`],
-    },
+  }
+
+  if (browser) {
+    if (esm) {
+      browserConfig.targets = {
+        esmodules: true
+      }
+    } else {
+      browserConfig.targets = {
+        browsers: [`last 2 versions`, `not ie <= 11`, `not android 4.4.3`]
+      }
+    }
   }
 
   const nodeConfig = {
@@ -30,7 +39,8 @@ function preset(context, options = {}) {
             loose: true,
             debug: !!debug,
             shippedProposals: true,
-            modules: `commonjs`,
+            modules: esm ? false : `commonjs`,
+            bugfixes: esm,
           },
           browser ? browserConfig : nodeConfig
         ),

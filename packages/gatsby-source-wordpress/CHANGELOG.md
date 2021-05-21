@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0-next.0](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.6.0-next.2...gatsby-source-wordpress@5.7.0-next.0) (2021-05-21)
+
+**Note:** Version bump only for package gatsby-source-wordpress
+
+# [5.6.0-next.2](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.6.0-next.1...gatsby-source-wordpress@5.6.0-next.2) (2021-05-18)
+
+### Bug Fixes
+
+- **gatsby-source-wordpress:** Remove search and replace regex literal recommendation ([#31413](https://github.com/gatsbyjs/gatsby/issues/31413)) ([51bc94b](https://github.com/gatsbyjs/gatsby/commit/51bc94b0d2e4a4a9a376fe5d323efa7ee2fa49f0))
+- **wordpress-source-plugin:** create nodes properly for images who exceed maxFileSizeBytes ([#31318](https://github.com/gatsbyjs/gatsby/issues/31318)) ([dab650f](https://github.com/gatsbyjs/gatsby/commit/dab650fc539c0ea7392843941bcaa54d33cc423c))
+
 # [5.6.0-next.1](https://github.com/gatsbyjs/gatsby/compare/gatsby-source-wordpress@5.6.0-next.0...gatsby-source-wordpress@5.6.0-next.1) (2021-05-12)
 
 ### Bug Fixes

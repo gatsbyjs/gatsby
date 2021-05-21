@@ -5,7 +5,9 @@ export default function topLevel(req, res) {
     res.json(req.query)
   } else if (!_.isEmpty(req.body)) {
     res.json(req.body)
+  } else if (!_.isEmpty(req.files)) {
+    res.json(req.files)
   } else {
-    res.send(`no body was sent`)
+    res.json(`no body was sent`)
   }
 }

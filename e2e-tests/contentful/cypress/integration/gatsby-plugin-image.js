@@ -1,3 +1,10 @@
+const testConfig = {
+  retries: {
+    runMode: 2,
+    openMode: 0,
+  },
+}
+
 function hasSVGPlaceholder(el) {
   el.find(`img`)
     .should(`have.attr`, `src`)
@@ -54,13 +61,23 @@ describe(`gatsby-plugin-image`, () => {
     cy.visit("/gatsby-plugin-image").waitForRouteChange()
   })
 
-  it(`constrained`, () =>
-    testGatsbyPluginImage(`constrained`, hasColorPlaceholder))
-  it(`full-width`, () => testGatsbyPluginImage(`full-width`, hasNoPlaceholder))
-  it(`fixed`, () => testGatsbyPluginImage(`fixed`, hasNoPlaceholder))
-  it(`dominant-color`, () =>
-    testGatsbyPluginImage(`dominant-color`, hasColorPlaceholder))
-  it(`traced`, () => testGatsbyPluginImage(`traced`, hasSVGPlaceholder))
-  it(`blurred`, () => testGatsbyPluginImage(`blurred`, hasJPEGPlaceholder))
-  it(`sqip`, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
+  it(`constrained`, testConfig, () =>
+    testGatsbyPluginImage(`constrained`, hasColorPlaceholder)
+  )
+  it(`full-width`, testConfig, () =>
+    testGatsbyPluginImage(`full-width`, hasNoPlaceholder)
+  )
+  it(`fixed`, testConfig, () =>
+    testGatsbyPluginImage(`fixed`, hasNoPlaceholder)
+  )
+  it(`dominant-color`, testConfig, () =>
+    testGatsbyPluginImage(`dominant-color`, hasColorPlaceholder)
+  )
+  it(`traced`, testConfig, () =>
+    testGatsbyPluginImage(`traced`, hasSVGPlaceholder)
+  )
+  it(`blurred`, testConfig, () =>
+    testGatsbyPluginImage(`blurred`, hasJPEGPlaceholder)
+  )
+  it(`sqip`, testConfig, () => testGatsbyPluginImage(`sqip`, hasSVGPlaceholder))
 })

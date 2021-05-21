@@ -1,3 +1,10 @@
+const testConfig = {
+  retries: {
+    runMode: 2,
+    openMode: 0,
+  },
+}
+
 function hasSVGPlaceholder(el) {
   el.children(`img`)
     .should(`have.attr`, `src`)
@@ -41,9 +48,9 @@ describe(`gatsby-image`, () => {
   beforeEach(() => {
     cy.visit("/gatsby-image").waitForRouteChange()
   })
-  it(`fluid`, () => testGatsbyImage(`fluid`, hasJPEGPlaceholder))
-  it(`fixed`, () => testGatsbyImage(`fixed`, hasJPEGPlaceholder))
-  it(`webp`, () => testGatsbyImage(`webp`, hasJPEGPlaceholder))
-  it(`traced`, () => testGatsbyImage(`traced`, hasSVGPlaceholder))
-  it(`sqip`, () => testGatsbyImage(`sqip`, hasSVGPlaceholder))
+  it(`fluid`, testConfig, () => testGatsbyImage(`fluid`, hasJPEGPlaceholder))
+  it(`fixed`, testConfig, () => testGatsbyImage(`fixed`, hasJPEGPlaceholder))
+  it(`webp`, testConfig, () => testGatsbyImage(`webp`, hasJPEGPlaceholder))
+  it(`traced`, testConfig, () => testGatsbyImage(`traced`, hasSVGPlaceholder))
+  it(`sqip`, testConfig, () => testGatsbyImage(`sqip`, hasSVGPlaceholder))
 })
