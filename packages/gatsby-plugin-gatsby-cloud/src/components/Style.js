@@ -27,6 +27,10 @@ const Style = () => (
             0px 4px 8px rgba(71, 63, 79, 0.16);
         }
 
+        svg {
+          display: inline;
+        }
+
         [data-gatsby-preview-indicator="root"] {
           font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -98,11 +102,11 @@ const Style = () => (
           color: white;
           position: fixed;
           display: inline;
-          width: max-content;
           padding: 10px 13px;
           margin-top: -4px;
           border-radius: 4px;
           user-select: none;
+          white-space: nowrap;
         }
 
         [data-gatsby-preview-indicator="tooltip-link"] {
