@@ -32,7 +32,8 @@ const RecipeTemplate = ({ data }) => (
           <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(2)})` }}>
             <Img
               fluid={
-                data.recipe.relationships.image.localFile.childImageSharp.fluid
+                data.recipe.relationships.image.relationships.imageFile
+                  .localFile.childImageSharp.fluid
               }
             />
           </div>
@@ -66,9 +67,9 @@ const RecipeTemplate = ({ data }) => (
             <div css={{ width: `calc(1/2*100% - (1 - 1/2) * ${rhythm(1.5)})` }}>
               <h3>Method</h3>
               <ul>
-                {data.recipe.instructions.text &&
-                  data.recipe.instructions.text
-                    .split(`,`)
+                {data.recipe.instructions &&
+                  data.recipe.instructions
+                    .split(`.,`)
                     .map(i => <li key={i}>{i}</li>)}
               </ul>
             </div>
@@ -82,25 +83,27 @@ const RecipeTemplate = ({ data }) => (
 export default RecipeTemplate
 
 export const query = graphql`
-  query($slug: String!) {
-    recipe: nodeRecipe(fields: { slug: { eq: $slug } }) {
+  query($id: String!) {
+    recipe: recipes(id: { eq: $id }) {
       title
-      preparationTime: field_preparation_time
-      difficulty: field_difficulty
-      totalTime: field_cooking_time
-      ingredients: field_ingredients
-      instructions: field_recipe_instruction {
-        text: processed
-      }
+      preparationTime
+      difficulty
+      totalTime
+      ingredients
+      instructions
       relationships {
-        category: field_recipe_category {
+        category {
           name
         }
-        image: field_image {
-          localFile {
-            childImageSharp {
-              fluid(maxWidth: 470, maxHeight: 353) {
-                ...GatsbyImageSharpFluid
+        image {
+          relationships {
+            imageFile {
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 470, maxHeight: 353) {
+                    ...GatsbyImageSharpFluid
+                  }
+                }
               }
             }
           }
