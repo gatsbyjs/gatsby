@@ -289,7 +289,7 @@ const runAPI = async (plugin, api, args, activity) => {
               actionName === `createTypes`
                 ? actionCreator
                 : (...args) => {
-                    console.log(
+                    reporter.verbose(
                       `action from worker`,
                       process.env.JEST_WORKER_ID,
                       actionName,
