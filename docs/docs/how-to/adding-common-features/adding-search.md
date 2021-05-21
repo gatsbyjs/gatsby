@@ -43,7 +43,7 @@ Of these, the most common solution is Algolia. The Gatsby docs include a guide t
 
 - [Adding Search with Algolia](/docs/adding-search-with-algolia)
 
-When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. For UI components, Algolia provides a [React library](https://github.com/algolia/react-instantsearch) has helpful components.
+When using Algolia, they host the search index and search engine for you. Your search queries will be sent to their servers which will respond with any results. For UI components, Algolia provides a [React library](https://github.com/algolia/react-instantsearch) that has helpful components.
 
 If you're building a documentation website you can use [Algolia's DocSearch feature](https://community.algolia.com/docsearch/). It will automatically create a search index from the content of your pages.
 
