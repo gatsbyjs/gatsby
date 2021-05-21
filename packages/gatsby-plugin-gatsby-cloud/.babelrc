@@ -3,7 +3,7 @@
   "overrides": [
     {
       "test": ["**/gatsby-browser.js"],
-      "presets": [["babel-preset-gatsby-package", { "browser": true, "esm": true}]]
+      "presets": [["babel-preset-gatsby-package", { "browser": true, "esm": true }]]
     }
   ]
 }
