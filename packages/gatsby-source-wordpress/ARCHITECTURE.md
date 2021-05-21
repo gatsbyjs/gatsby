@@ -150,9 +150,11 @@ Searching the project for `hardCacheMediaFiles` and `hardCacheData` will lead yo
 
 ## Basic Auth
 
-## Build caching & inc builds
+Basic Auth options are added in `src/steps/source-nodes/create-nodes/create-remote-media-item-node.js` and `src/steps/source-nodes/create-nodes/create-remote-file-node/index.js`. This option is intended for use with server-level authentication, not WP level authentication. The reason for this is Gatsby data should be considered public data. Anything not public should not be exposed to Gatsby as it could be accidentally leaked via GraphQL queries or the `/__graphql` endpoint of a running Preview instance. This option is intended to allow you to lock down your `/graphql` WPGraphQL endpoint so it can only be requested with some credentials. See https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/features/security.md for more info.
 
 ## Debugging options
+
+There are a lot of debugging options to print out different info about the process. Check the debugging section in plugin options docs https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-source-wordpress/docs/plugin-options.md#debug. These are scattered throughout the codebase.
 
 ## Plugin options schema and documentation generation
 
@@ -160,4 +162,9 @@ The plugin options schema is defined in `src/steps/declare-plugin-options-schema
 
 ## `gatsby develop` DX features
 
+When developing a site locally, this plugin periodically checks for data or schema events in WP and reacts to them automatically, updating data/schema on the fly while you're working. See `src/steps/source-nodes/update-nodes/content-update-interval.js`.
+
 ## WPGatsby
+
+The WPGatsby plugin stores and exposes WP change events for Gatsby to query and then update data/schema with.
+It also adds some additional fields to the WPGraphQL schema (like `schemaMd5` and compatibility api fields) which the source plugin requires to function. See https://github.com/gatsbyjs/wp-gatsby for more info.
