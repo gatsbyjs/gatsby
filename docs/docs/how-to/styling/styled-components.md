@@ -2,7 +2,7 @@
 title: Styled Components
 examples:
   - label: Official Exaample
-    href: "https://github.com/gatsbyjs/gatsby/examples/using-styled-components"
+    href: "https://github.com/gatsbyjs/gatsby/tree/master/examples/using-styled-components"
 ---
 
 In this guide, you will learn how to set up a site with the CSS-in-JS library [Styled Components](https://styled-components.com/).
