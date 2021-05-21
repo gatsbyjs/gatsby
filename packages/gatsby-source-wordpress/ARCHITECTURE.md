@@ -1,6 +1,6 @@
 This doc goes over the high level areas of this plugin, roughly what they do, how they're related, and where to find the corresponding code.
 
-- [Historic Info](#historic-info)
+- [Historical Info](#historical-info)
 - [`gatsby-node.ts` Steps](#gatsby-nodets-steps)
 - [Query Generation / Remote Schema Ingestion](#query-generation--remote-schema-ingestion)
   - [Good to know](#good-to-know)
@@ -27,7 +27,7 @@ This doc goes over the high level areas of this plugin, roughly what they do, ho
 - [`gatsby develop` DX features](#gatsby-develop-dx-features)
 - [WPGatsby](#wpgatsby)
 
-## Historic Info
+## Historical Info
 
 This plugin was a ground-up rewrite of `gatsby-source-wordpress@^3.0.0` which used the WordPress REST API to source data. `gatsby-source-wordpress@^4.0.0` uses WPGraphQL to source data and is an entirely different plugin with no shared code. Work for `^4.0.0` was initially done in the [`gatsby-source-wordpress-experimental` repo](https://github.com/gatsbyjs/gatsby-source-wordpress-experimental) before being moved to the Gatsby monorepo.
 
