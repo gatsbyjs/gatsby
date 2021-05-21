@@ -5,8 +5,8 @@ import webpack from "webpack"
 import _ from "lodash"
 import multer from "multer"
 import * as express from "express"
-import { urlResolve, getMatchPath } from "gatsby-core-utils"
-import { ParentSpanPluginArgs, CreateDevServerArgs } from "gatsby"
+import { getMatchPath, urlResolve } from "gatsby-core-utils"
+import { CreateDevServerArgs, ParentSpanPluginArgs } from "gatsby"
 import { internalActions } from "../../redux/actions"
 import { reportWebpackWarnings } from "../../utils/webpack-error-utils"
 import formatWebpackMessages from "react-dev-utils/formatWebpackMessages"
@@ -29,7 +29,7 @@ interface IFunctionData {
   /** The absolute path to the compiled function (doesn't transfer across machines) **/
   absoluteCompiledFilePath: string
   /** The matchPath regex created by path-to-regexp. Only created if the function is dynamic. **/
-  matchPath: string
+  matchPath: string | undefined
   /** The plugin that owns this function route **/
   pluginName: string
 }
@@ -86,7 +86,10 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   return _.union(globs)
 }
 
-async function globAsync(pattern, options): Promise<Array<string>> {
+async function globAsync(
+  pattern: string,
+  options: glob.IOptions = {}
+): Promise<Array<string>> {
   return await new Promise((resolve, reject) => {
     glob(pattern, options, (err, files) => {
       if (err) {
@@ -100,7 +103,6 @@ async function globAsync(pattern, options): Promise<Array<string>> {
 
 const createWebpackConfig = async ({
   siteDirectoryPath,
-  functionsDirectory,
   store,
   reporter,
 }): Promise<webpack.Configuration> => {
@@ -151,10 +153,7 @@ const createWebpackConfig = async ({
 
   // Combine functions by the route name so that functions in the default
   // functions directory can override the plugin's implementations.
-  const knownFunctions = _.unionBy(
-    ...allFunctions,
-    func => func.functionRoute
-  ) as Array<IFunctionData>
+  const knownFunctions = _.unionBy(...allFunctions, func => func.functionRoute)
 
   store.dispatch(internalActions.setFunctions(knownFunctions))
 
@@ -168,7 +167,7 @@ const createWebpackConfig = async ({
   // Logic is shared with webpack.config.js
 
   // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
-  const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
+  const nodeEnv = process.env.NODE_ENV || `development`
   // config env is dependent on the env that it's run, this can be anything from staging-production
   // this allows you to set use different .env environments or conditions in gatsby files
   const configEnv = process.env.GATSBY_ACTIVE_ENV || nodeEnv
@@ -178,26 +177,29 @@ const createWebpackConfig = async ({
     parsed = dotenv.parse(fs.readFileSync(envFile, { encoding: `utf8` }))
   } catch (err) {
     if (err.code !== `ENOENT`) {
-      report.error(
+      reporter.error(
         `There was a problem processing the .env file (${envFile})`,
         err
       )
     }
   }
 
-  const envObject = Object.keys(parsed).reduce((acc, key) => {
-    acc[key] = JSON.stringify(parsed[key])
-    return acc
-  }, {})
+  const envObject = Object.keys(parsed).reduce(
+    (acc, key) => {
+      acc[key] = JSON.stringify(parsed[key])
+      return acc
+    },
+    // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
+    {
+      NODE_ENV: JSON.stringify(nodeEnv),
+      PUBLIC_DIR: JSON.stringify(`${siteDirectoryPath}/public`),
+    }
+  )
 
   const varsFromProcessEnv = Object.keys(process.env).reduce((acc, key) => {
     acc[key] = JSON.stringify(process.env[key])
     return acc
   }, {})
-
-  // Don't allow overwriting of NODE_ENV, PUBLIC_DIR as to not break gatsby things
-  envObject.NODE_ENV = JSON.stringify(nodeEnv)
-  envObject.PUBLIC_DIR = JSON.stringify(`${siteDirectoryPath}/public`)
 
   const mergedEnvVars = Object.assign(envObject, varsFromProcessEnv)
 
@@ -227,7 +229,7 @@ const createWebpackConfig = async ({
     ? `functions-production`
     : `functions-development`
 
-  const config = {
+  return {
     entry: entries,
     output: {
       path: compiledFunctionsDir,
@@ -276,8 +278,6 @@ const createWebpackConfig = async ({
     },
     plugins: [new webpack.DefinePlugin(processEnvVars)],
   }
-
-  return config
 }
 
 let isFirstBuild = true
@@ -292,13 +292,6 @@ export async function onPreBootstrap({
     program: { directory: siteDirectoryPath },
   } = store.getState()
 
-  const functionsDirectoryPath = path.join(siteDirectoryPath, `src/api`)
-
-  const functionsDirectory = path.resolve(
-    siteDirectoryPath,
-    functionsDirectoryPath as string
-  )
-
   reporter.verbose(`Attaching functions to development server`)
   const compiledFunctionsDir = path.join(
     siteDirectoryPath,
@@ -312,10 +305,9 @@ export async function onPreBootstrap({
     // We do this ungainly thing as we need to make accessible
     // the resolve/reject functions to our shared callback function
     // eslint-disable-next-line
-    await new Promise(async (resolve, reject) => {
+    await new Promise<void>(async (resolve, reject) => {
       const config = await createWebpackConfig({
         siteDirectoryPath,
-        functionsDirectory,
         store,
         reporter,
       })
@@ -334,11 +326,11 @@ export async function onPreBootstrap({
         if (isProductionEnv) {
           if (errors.length > 0) return reject(stats.compilation.errors)
         } else {
-          const formated = formatWebpackMessages({
+          const formatted = formatWebpackMessages({
             errors: rawMessages.errors.map(e => e.message),
             warnings: [],
           })
-          reporter.error(formated.errors)
+          reporter.error(formatted.errors)
         }
 
         // Log success in dev
@@ -387,7 +379,6 @@ export async function onPreBootstrap({
             compiler.close(async () => {
               const config = await createWebpackConfig({
                 siteDirectoryPath,
-                functionsDirectory,
                 store,
                 reporter,
               })
@@ -414,7 +405,7 @@ export async function onCreateDevServer({
     `/api/*`,
     multer().any(),
     express.urlencoded({ extended: true }),
-    (req, res, next) => {
+    (req, _, next) => {
       const cookies = req.headers.cookie
 
       if (!cookies) {

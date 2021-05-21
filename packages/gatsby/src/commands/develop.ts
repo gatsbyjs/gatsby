@@ -295,7 +295,7 @@ module.exports = async (program: IProgram): Promise<void> => {
     null
   )
 
-  let unlocks: Array<UnlockFn> = []
+  let unlocks: Array<UnlockFn | null> = []
   if (!isCI()) {
     const statusUnlock = await createServiceLock(
       program.directory,
@@ -416,7 +416,7 @@ module.exports = async (program: IProgram): Promise<void> => {
   )
 
   const files = [rootFile(`gatsby-config.js`), rootFile(`gatsby-node.js`)]
-  let watcher: chokidar.FSWatcher = null
+  let watcher: chokidar.FSWatcher
 
   if (!isCI()) {
     watcher = chokidar.watch(files).on(`change`, filePath => {

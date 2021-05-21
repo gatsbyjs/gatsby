@@ -123,7 +123,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   let functions
   try {
     functions = JSON.parse(
-      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`))
+      fs.readFileSync(path.join(compiledFunctionsDir, `manifest.json`), `utf-8`)
     )
   } catch (e) {
     // ignore
@@ -134,7 +134,7 @@ module.exports = async (program: IServeProgram): Promise<void> => {
       `/api/*`,
       multer().any(),
       express.urlencoded({ extended: true }),
-      (req, res, next) => {
+      (req, _, next) => {
         const cookies = req.headers.cookie
 
         if (!cookies) {
