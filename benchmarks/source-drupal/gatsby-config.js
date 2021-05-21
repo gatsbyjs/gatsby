@@ -7,7 +7,7 @@ module.exports = {
     siteTitle: `Gatsby Drupal Benchmark`,
   },
   plugins: [
-    `gatsby-plugin-benchmark-reporting`,
+    // `gatsby-plugin-benchmark-reporting`,
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
     {
