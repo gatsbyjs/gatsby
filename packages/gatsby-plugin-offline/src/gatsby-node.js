@@ -133,7 +133,10 @@ function getPrecachePages(globs, base) {
 
 exports.onPostBuild = async (
   args,
-  { precachePages: precachePagesGlobs = [], debug = undefined }
+  {
+    precachePages: precachePagesGlobs = [],
+    globPatterns: userGlobPatterns = [],
+  }
 ) => {
   const { pathPrefix, reporter, createContentDigest } = args
   const rootDir = `public`
@@ -165,6 +168,7 @@ exports.onPostBuild = async (
     // criticalFilePaths doesn't include HTML pages (we only need this one)
     `offline-plugin-app-shell-fallback/index.html`,
     ...criticalFilePaths,
+    ...userGlobPatterns,
   ])
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
@@ -250,6 +254,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     swSrc: Joi.string().description(
       `A file (path) to override the default entry point of the service worker. Will be compiled/bundled with webpack`
     ),
+    globPatterns: Joi.array().items(Joi.string()),
     modifyURLPrefix: Joi.object().pattern(MATCH_ALL_KEYS, Joi.string()),
     cacheId: Joi.string(),
     dontCacheBustURLsMatching: Joi.object().instance(RegExp),

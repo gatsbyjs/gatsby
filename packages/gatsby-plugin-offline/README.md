@@ -110,7 +110,7 @@ This means that some options are no longer supported (although it should be poss
 
 To upgrade from a version prior to 5.x (3.x, 4.x), you'll need to perform the following steps:
 
-1. Remove no longer supported options `importWorkboxFrom`, `globDirectory`, `globPatterns`
+1. Remove no longer supported options `importWorkboxFrom` and `globDirectory`
 
 2. Move supported options from `workboxConfig` to the root level option object
 
@@ -125,6 +125,7 @@ plugins: [
         offlineGoogleAnalytics: true,
         cleanupOutdatedCaches: true,
         directoryIndex: "index.html",
+        importWorkboxFrom: "cdn",
       },
     },
   },
@@ -272,7 +273,7 @@ plugins: [
 ```
 
 ```javascript:title=src/custom-sw.js
-// code based on gatsby-plugin-offline/serviceworker/index.js (note: `registerDefaultRoutes()` is not used)
+// code based on gatsby-plugin-offline/serviceworker/index.js (note: `registerDefaultRoutes()` is not used, as we will define all used route handlers below ourselfs)
 import { precache } from "gatsby-plugin-offline/serviceworker/precache.js"
 import { setup } from "gatsby-plugin-offline/serviceworker/setup.js"
 import { setupOfflineRouting } from "gatsby-plugin-offline/serviceworker/offline.js"
@@ -288,7 +289,7 @@ setupOfflineRouting()
 googleAnalytics()
 cleanup()
 
-// your custom/modified handlesr go here. Note: you'll need to specify all handlers manually, even those you didn't modify previously
+// your custom/modified handlers go here. Note: you'll need to specify all handlers manually, even those you didn't modify previously
 registerRoute(
   /(\.js$|\.css$|static\/|\.wasm$)/,
   new StaleWhileRevalidate(),
