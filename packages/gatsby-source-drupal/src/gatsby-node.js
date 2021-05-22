@@ -35,7 +35,7 @@ async function worker([url, options]) {
   return got(url, { agent, ...options })
 }
 
-const requestQueue = require(`fastq`).promise(worker, 10)
+const requestQueue = require(`fastq`).promise(worker, 5)
 
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
