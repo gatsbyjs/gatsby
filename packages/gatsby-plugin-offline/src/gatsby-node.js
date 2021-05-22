@@ -238,7 +238,7 @@ exports.onPostBuild = async (
 
 const MATCH_ALL_KEYS = /^/
 exports.pluginOptionsSchema = function ({ Joi }) {
-  // These are the options of the v3: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#available-options
+  // These are the options of the v5: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#available-options
   return Joi.object({
     precachePages: Joi.array()
       .items(Joi.string())

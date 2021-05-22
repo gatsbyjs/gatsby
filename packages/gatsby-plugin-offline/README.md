@@ -21,7 +21,7 @@ plugins: [`gatsby-plugin-offline`]
 
 ## Available options
 
-In `gatsby-plugin-offline` 3.x, the following options are available:
+In `gatsby-plugin-offline` 5.x, the following options are available:
 
 - `precachePages` lets you specify pages whose resources should be precached by the service worker, using an array of globs. For example:
 
@@ -38,14 +38,14 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
 
   Note: while essential resources of specified pages will be precached, such as JavaScript and CSS, non-essential resources such as fonts and images will not be included. Instead, these will be cached at runtime when a user visits a given page that includes these resources.
 
-- `appendScript` lets you specify a file to be appended at the end of the generated service worker (`sw.js`). For example:
+- `swSrc` lets you specify a file that is used as the entry point of the service worker (`sw.js`). For example:
 
   ```javascript:title=gatsby-config.js
   plugins: [
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        appendScript: require.resolve(`src/custom-sw-code.js`),
+        swSrc: require.resolve(`src/custom-sw-code.js`),
       },
     },
   ]
@@ -54,6 +54,22 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   <br />
 
   ```javascript:title=src/custom-sw-code.js
+  // default workbox setup & logic from `gatsby-plugin-offline/serviceworker/index.js`:
+  import { precache } from "gatsby-plugin-offline/serviceworker/precache.js"
+  import { setup } from "gatsby-plugin-offline/serviceworker/setup.js"
+  import { registerDefaultRoutes } from "gatsby-plugin-offline/serviceworker/default-routes.js"
+  import { setupOfflineRouting } from "gatsby-plugin-offline/serviceworker/offline.js"
+  import { googleAnalytics } from "gatsby-plugin-offline/serviceworker/google-analytics.js"
+  import { NavigationRoute, registerRoute } from "workbox-routing"
+
+  precache()
+  setup()
+  registerDefaultRoutes()
+  setupOfflineRouting()
+  googleAnalytics()
+
+  // custom code:
+
   // show a notification after 15 seconds (the notification
   // permission must be granted first)
   setTimeout(() => {
@@ -61,110 +77,222 @@ In `gatsby-plugin-offline` 3.x, the following options are available:
   }, 15000)
 
   // register a custom navigation route
-  const customRoute = new workbox.routing.NavigationRoute(({ event }) => {
+  const customRoute = new NavigationRoute(({ event }) => {
     // ...
   })
-  workbox.routing.registerRoute(customRoute)
+  registerRoute(customRoute)
   ```
 
-- `debug` specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on `localhost` only.
+  The specified file will be compiled/bundled with webpack, so as shown in the example above, other modules can be imported.
 
-- `workboxConfig` allows you to override the default Workbox options - see [Overriding Workbox configuration](#overriding-workbox-configuration). For example:
+  Note: if you provide the `swSrc` option, you'll need to make sure that the appropriate workbox routes get set up
+  and also the custom offline logic this plugin provides gets executed. See files in `gatsby-plugin-offline/serviceworker` for further information
 
-  ```javascript:title=gatsby-config.js
-  plugins: [
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        workboxConfig: {
-          importWorkboxFrom: `cdn`,
-        },
-      },
-    },
-  ]
-  ```
+- `cacheId` lets you specify a custom cache prefix used by workbox. See [Configure Workbox Documentation](https://developers.google.com/web/tools/workbox/guides/configure-workbox)
 
-## Upgrading from 2.x
+- `chunks` additional webpack chunk names that shall be precached. See [InjectManifest](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest) for more information
 
-To upgrade from 2.x to 3.x, move any existing options into the `workboxConfig` option. If you haven't specified any options, you have nothing to do.
+- `offlineAnalyticsConfig` If specified, these options get passed to the [workbox-google-analytics](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-google-analytics) plugin. You can also set this option to just enable this plugin with the default options
 
-For example, here is a 2.x config:
+- `cleanupOutdatedCaches` If set to true, automatically cleans up outdated caches from older workbox versions. See [workbox's documentation](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-precaching?hl=en#.cleanupOutdatedCaches)
+
+- `additionalManifestEntries`, `manifestTransforms`, `maximumFileSizeToCacheInBytes`, `dontCacheBustURLsMatching`, `modifyURLPrefix` Options passed to [workbox's InjectManifest webpack plugin](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest)
+
+## Upgrading to 5.x
+
+Version 5.x of this plugin no longer uses the `workbox-build`/`generateSW` tool to generate the service worker.
+Instead, it uses the `InjectManifest` webpack plugin.
+This means that some options are no longer supported (although it should be possible to implement the same features via a custom `swSrc` -> see above).
+
+To upgrade from a version prior to 5.x (3.x, 4.x), you'll need to perform the following steps:
+
+1. Remove no longer supported options `importWorkboxFrom`, `globDirectory`, `globPatterns`
+
+2. Move supported options from `workboxConfig` to the root level option object
 
 ```javascript
 plugins: [
   {
     resolve: `gatsby-plugin-offline`,
     options: {
-      importWorkboxFrom: `cdn`,
+      precachePages: ["about"],
+      workboxConfig: {
+        cacheId: "some-cache-id",
+        offlineGoogleAnalytics: true,
+        cleanupOutdatedCaches: true,
+        directoryIndex: "index.html",
+      },
     },
   },
 ]
 ```
 
-Here is the equivalent 3.x config:
-
 ```javascript
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      precachePages: ["about"],
+      cacheId: "some-cache-id",
+      offlineGoogleAnalytics: true,
+      cleanupOutdatedCaches: true,
+      directoryIndex: "index.html",
+    },
+  },
+]
+```
+
+3. The `runtimeCaching` option is no longer supported in 5.x.
+   If you previously used custom `runtimeCaching` handlers, you'll need to create a custom `swSrc` file to archive the same effect.
+
+   <br />
+
+   In case you just added some additional handlers without modifying the default handlers provided by `gatsby-plugin-offline`,
+   this should be straight forward:
+
+```javascript:title=old-gatsby-config.js
+// previous
 plugins: [
   {
     resolve: `gatsby-plugin-offline`,
     options: {
       workboxConfig: {
-        importWorkboxFrom: `cdn`,
+        runtimeCaching: [
+          // Default handlers from gatsby-plugin-offline
+          {
+            // Use cacheFirst since these don't need to be revalidated (same RegExp
+            // and same reason as above)
+            urlPattern: /(\.js$|\.css$|static\/)/,
+            handler: `CacheFirst`,
+          },
+          {
+            // page-data.json files, static query results and app-data.json
+            // are not content hashed
+            urlPattern: /^https?:.*\/page-data\/.*\.json/,
+            handler: `StaleWhileRevalidate`,
+          },
+          {
+            // Add runtime caching of various other page resources
+            urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
+            handler: `StaleWhileRevalidate`,
+          },
+          {
+            // Google Fonts CSS (doesn't end in .css so we need to specify it)
+            urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+            handler: `StaleWhileRevalidate`,
+          },
+
+          // Your custom handler
+          {
+            urlPattern: /my-custom-pattern/,
+            handler: `NetworkFirst`,
+          },
+        ],
       },
     },
   },
 ]
 ```
 
-In version 3, Workbox is also upgraded to version 4 so you may need to update your `workboxConfig` if any of those changes apply to you. Please see the [docs on Google Developers](https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v3) for more information.
-
-## Overriding Workbox configuration
-
-When adding this plugin to your `gatsby-config.js`, you can use the option `workboxConfig` to override the default Workbox config. To see the full list of options, see [this article on Google Developers](https://developers.google.com/web/tools/workbox/modules/workbox-build#full_generatesw_config).
-
-The default `workboxConfig` is as follows. Note that some of these options are configured automatically, e.g. `globPatterns`. If you're not sure about what all of these options mean, it's best to leave them as-is - otherwise, you may end up causing errors on your site, causing old files to be remain cached, or even breaking offline support.
-
-```javascript
-const options = {
-  importWorkboxFrom: `local`,
-  globDirectory: rootDir,
-  globPatterns,
-  modifyURLPrefix: {
-    // If `pathPrefix` is configured by user, we should replace
-    // the default prefix with `pathPrefix`.
-    "/": `${pathPrefix}/`,
+```javascript:title=new-gatsby-config.js
+// 5.x
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      // ...
+      swSrc: path.resolve(__dirname, "src/custom-sw.js"),
+    },
   },
-  cacheId: `gatsby-plugin-offline`,
-  // Don't cache-bust JS or CSS files, and anything in the static directory,
-  // since these files have unique URLs and their contents will never change
-  dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
-  runtimeCaching: [
-    {
-      // Use cacheFirst since these don't need to be revalidated (same RegExp
-      // and same reason as above)
-      urlPattern: /(\.js$|\.css$|static\/)/,
-      handler: `CacheFirst`,
+]
+```
+
+```javascript:title=src/custom-sw.js
+// this includes the default behaviour & setup of the service worker from gatsby-plugin-offline
+import "gatsby-plugin-offline/serviceworker/index.js"
+
+import { registerRoute } from "workbox-routing"
+import { NetworkFirst } from "workbox-strategies"
+
+// your custom handler goes here
+registerRoute(/my-custom-pattern/, new NetworkFirst(), `GET`)
+```
+
+  <br />
+
+If you have previously overwritten or modified the default handlers from `gatsby-plugin-offline`, you'll need a bit more code in your `swSrc`:
+
+  <br />
+
+```javascript:title=old-gatsby-config.js
+// previous
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      workboxConfig: {
+        runtimeCaching: [
+          // Default handlers from gatsby-plugin-offline
+          {
+            // *modified*
+            // Use cacheFirst since these don't need to be revalidated (same RegExp
+            // and same reason as above)
+            urlPattern: /(\.js$|\.css$|static\/|\.wasm$)/,
+            handler: `StaleWhileRevalidate`,
+          },
+          {
+            // *not modified*
+            // page-data.json files, static query results and app-data.json
+            // are not content hashed
+            urlPattern: /^https?:.*\/page-data\/.*\.json/,
+            handler: `StaleWhileRevalidate`,
+          },
+        ],
+      },
     },
-    {
-      // page-data.json files, static query results and app-data.json
-      // are not content hashed
-      urlPattern: /^https?:.*\/page-data\/.*\.json/,
-      handler: `StaleWhileRevalidate`,
+  },
+]
+```
+
+```javascript:title=new-gatsby-config.js
+// 5.x
+plugins: [
+  {
+    resolve: `gatsby-plugin-offline`,
+    options: {
+      // ...
+      swSrc: path.resolve(__dirname, "src/custom-sw.js"),
     },
-    {
-      // Add runtime caching of various other page resources
-      urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-      handler: `StaleWhileRevalidate`,
-    },
-    {
-      // Google Fonts CSS (doesn't end in .css so we need to specify it)
-      urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-      handler: `StaleWhileRevalidate`,
-    },
-  ],
-  skipWaiting: true,
-  clientsClaim: true,
-}
+  },
+]
+```
+
+```javascript:title=src/custom-sw.js
+// code based on gatsby-plugin-offline/serviceworker/index.js (note: `registerDefaultRoutes()` is not used)
+import { precache } from "gatsby-plugin-offline/serviceworker/precache.js"
+import { setup } from "gatsby-plugin-offline/serviceworker/setup.js"
+import { setupOfflineRouting } from "gatsby-plugin-offline/serviceworker/offline.js"
+import { googleAnalytics } from "gatsby-plugin-offline/serviceworker/google-analytics.js"
+import { NavigationRoute, registerRoute } from "workbox-routing"
+import { registerRoute } from "workbox-routing"
+import { StaleWhileRevalidate } from "workbox-strategies"
+
+precache()
+setup()
+setupOfflineRouting()
+googleAnalytics()
+
+// your custom/modified handlesr go here. Note: you'll need to specify all handlers manually, even those you didn't modify previously
+registerRoute(
+  /(\.js$|\.css$|static\/|\.wasm$)/,
+  new StaleWhileRevalidate(),
+  `GET`
+) // modified handler
+registerRoute(
+  /^https?:.*\/page-data\/.*\.json/,
+  new StaleWhileRevalidate(),
+  `GET`
+) // unmodified default handler
 ```
 
 ## Remove
