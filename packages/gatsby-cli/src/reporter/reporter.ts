@@ -1,5 +1,5 @@
 import { stripIndent } from "common-tags"
-import chalk from "chalk"
+import * as chalk from "chalk"
 import { trackError } from "gatsby-telemetry"
 import { globalTracer, Span } from "opentracing"
 
