@@ -60,6 +60,7 @@ In `gatsby-plugin-offline` 5.x, the following options are available:
   import { registerDefaultRoutes } from "gatsby-plugin-offline/serviceworker/default-routes.js"
   import { setupOfflineRouting } from "gatsby-plugin-offline/serviceworker/offline.js"
   import { googleAnalytics } from "gatsby-plugin-offline/serviceworker/google-analytics.js"
+  import { cleanup } from "gatsby-plugin-offline/serviceworker/cleanup.js"
   import { NavigationRoute, registerRoute } from "workbox-routing"
 
   precache()
@@ -67,6 +68,7 @@ In `gatsby-plugin-offline` 5.x, the following options are available:
   registerDefaultRoutes()
   setupOfflineRouting()
   googleAnalytics()
+  cleanup()
 
   // custom code:
 
@@ -93,6 +95,8 @@ In `gatsby-plugin-offline` 5.x, the following options are available:
 - `chunks` additional webpack chunk names that shall be precached. See [InjectManifest](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-webpack-plugin.InjectManifest) for more information
 
 - `offlineAnalyticsConfig` If specified, these options get passed to the [workbox-google-analytics](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-google-analytics) plugin. You can also set this option to just enable this plugin with the default options
+
+- `deletePreviousCacheVersionsOnUpdate` If set to true, automatically attempts to delete previous caches on service worker update if `cacheId` has changed. Useful if you're `chacheId` might change, and you want to avoid old, unused caches form taking up space on the user's device.
 
 - `cleanupOutdatedCaches` If set to true, automatically cleans up outdated caches from older workbox versions. See [workbox's documentation](https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-precaching?hl=en#.cleanupOutdatedCaches)
 
@@ -273,6 +277,7 @@ import { precache } from "gatsby-plugin-offline/serviceworker/precache.js"
 import { setup } from "gatsby-plugin-offline/serviceworker/setup.js"
 import { setupOfflineRouting } from "gatsby-plugin-offline/serviceworker/offline.js"
 import { googleAnalytics } from "gatsby-plugin-offline/serviceworker/google-analytics.js"
+import { cleanup } from "gatsby-plugin-offline/serviceworker/cleanup.js"
 import { NavigationRoute, registerRoute } from "workbox-routing"
 import { registerRoute } from "workbox-routing"
 import { StaleWhileRevalidate } from "workbox-strategies"
@@ -281,6 +286,7 @@ precache()
 setup()
 setupOfflineRouting()
 googleAnalytics()
+cleanup()
 
 // your custom/modified handlesr go here. Note: you'll need to specify all handlers manually, even those you didn't modify previously
 registerRoute(

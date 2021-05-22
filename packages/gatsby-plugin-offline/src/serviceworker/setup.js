@@ -1,6 +1,5 @@
 /* global __GATSBY_PLUGIN_OFFLINE_SETTINGS */
 import { clientsClaim } from "workbox-core"
-import { cleanupOutdatedCaches } from "workbox-precaching"
 
 export function setup() {
   if (__GATSBY_PLUGIN_OFFLINE_SETTINGS.skipWaiting) {
@@ -15,9 +14,5 @@ export function setup() {
 
   if (__GATSBY_PLUGIN_OFFLINE_SETTINGS.clientsClaim) {
     clientsClaim()
-  }
-
-  if (__GATSBY_PLUGIN_OFFLINE_SETTINGS.cleanupOutdatedCaches) {
-    cleanupOutdatedCaches()
   }
 }

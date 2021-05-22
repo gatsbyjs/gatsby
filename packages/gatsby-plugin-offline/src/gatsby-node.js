@@ -46,6 +46,8 @@ exports.onCreateWebpackConfig = (
     cacheId: options.cacheId ?? `gatsby-plugin-offline`,
     directoryIndex: `index.html`,
     skipWaiting: options.skipWaiting ?? true,
+    deletePreviousCacheVersionsOnUpdate:
+      options.deletePreviousCacheVersionsOnUpdate ?? false,
     clientsClaim: options.clientsClaim ?? true,
     cleanupOutdatedCaches: options.cleanupOutdatedCaches ?? true,
     offlineAnalyticsConfigString: !_.isNil(options.offlineAnalyticsConfig)
@@ -277,6 +279,9 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       ),
     cleanupOutdatedCaches: Joi.boolean().description(
       `Flag indicationg if incompatible cached versions from previous workbox versions should be cleaned up.`
+    ),
+    deletePreviousCacheVersionsOnUpdate: Joi.boolean().description(
+      `If set to true, automatically deletes previous caches on service worker update if the cacheId has changed.`
     ),
     offlineAnalyticsConfig: Joi.alternatives()
       .try(

@@ -3,9 +3,11 @@ import { setup } from "gatsby-plugin-offline/serviceworker/setup.js"
 import { registerDefaultRoutes } from "gatsby-plugin-offline/serviceworker/default-routes.js"
 import { setupOfflineRouting } from "gatsby-plugin-offline/serviceworker/offline.js"
 import { googleAnalytics } from "gatsby-plugin-offline/serviceworker/google-analytics.js"
+import { cleanup } from "gatsby-plugin-offline/serviceworker/cleanup.js"
 
 precache()
 setup()
 registerDefaultRoutes()
 setupOfflineRouting()
 googleAnalytics()
+cleanup()
