@@ -1,18 +1,80 @@
 // use `let` to workaround https://github.com/jhnns/rewire/issues/144
 /* eslint-disable prefer-const */
 let fs = require(`fs`)
-let workboxBuild = require(`workbox-build`)
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+const webpack = require(`webpack`)
+const { InjectManifest } = require(`workbox-webpack-plugin`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
+
+const SW_DESTINATION_NAME = `sw.js`
 
 exports.onPreBootstrap = ({ cache }) => {
   const appShellSourcePath = path.join(__dirname, `app-shell.js`)
   const appShellTargetPath = path.join(cache.directory, `app-shell.js`)
   fs.copyFileSync(appShellSourcePath, appShellTargetPath)
+}
+
+exports.onCreateWebpackConfig = (
+  { stage, actions, getConfig, pathPrefix },
+  options
+) => {
+  if (stage !== `build-javascript`) {
+    return
+  }
+
+  const webpackConfig = getConfig()
+
+  const swSrc = options.swSrc ?? path.join(__dirname, `serviceworker/index.js`)
+  const dontCacheBustURLsMatching =
+    options.dontCacheBustURLsMatching ?? /(\.js$|\.css$|static\/)/
+  const modifyURLPrefix = options.modifyURLPrefix ?? {
+    // If `pathPrefix` is configured by user, we should replace
+    // the default prefix with `pathPrefix`.
+    "/": `${pathPrefix}/`,
+  }
+
+  const defaultChunks = [`app`, `webpack-runtime`]
+  const chunks = options.chunks
+    ? [...defaultChunks, ...options.chunks]
+    : defaultChunks
+
+  const settings = {
+    cacheId: options.cacheId ?? `gatsby-plugin-offline`,
+    directoryIndex: `index.html`,
+    skipWaiting: options.skipWaiting ?? true,
+    clientsClaim: options.clientsClaim ?? true,
+    cleanupOutdatedCaches: options.cleanupOutdatedCaches ?? true,
+    offlineAnalyticsConfigString: !_.isNil(options.offlineAnalyticsConfig)
+      ? options.offlineAnalyticsConfig === true
+        ? `{}`
+        : JSON.stringify(options.offlineAnalyticsConfig)
+      : false,
+  }
+
+  webpackConfig.plugins.push(
+    new InjectManifest({
+      compileSrc: true,
+      swSrc,
+      swDest: SW_DESTINATION_NAME,
+      dontCacheBustURLsMatching,
+      modifyURLPrefix,
+      maximumFileSizeToCacheInBytes: options.maximumFileSizeToCacheInBytes,
+      manifestTransforms: options.manifestTransforms,
+      additionalManifestEntries: options.additionalManifestEntries,
+      chunks,
+      webpackCompilationPlugins: [
+        new webpack.DefinePlugin({
+          __GATSBY_PLUGIN_OFFLINE_SETTINGS: JSON.stringify(settings),
+        }),
+      ],
+    })
+  )
+
+  actions.replaceWebpackConfig(webpackConfig)
 }
 
 exports.createPages = ({ actions, cache }) => {
@@ -31,17 +93,13 @@ const readStats = () => {
   if (s) {
     return s
   } else {
-    s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
-    )
+    s = require(`${process.cwd()}/public/webpack.stats.json`)
     return s
   }
 }
 
 function getAssetsForChunks(chunks) {
-  const files = _.flatten(
-    chunks.map(chunk => readStats().assetsByChunkName[chunk])
-  )
+  const files = _.flatMap(chunks, chunk => readStats().assetsByChunkName[chunk])
   return _.compact(files)
 }
 
@@ -71,41 +129,34 @@ function getPrecachePages(globs, base) {
   return precachePages
 }
 
-exports.onPostBuild = (
+exports.onPostBuild = async (
   args,
-  {
-    precachePages: precachePagesGlobs = [],
-    appendScript = null,
-    debug = undefined,
-    workboxConfig = {},
-  }
+  { precachePages: precachePagesGlobs = [], debug = undefined }
 ) => {
-  const { pathPrefix, reporter } = args
+  const { pathPrefix, reporter, createContentDigest } = args
   const rootDir = `public`
-
-  // Get exact asset filenames for app and offline app shell chunks
+  const publicDir = path.resolve(process.cwd(), rootDir)
   const files = getAssetsForChunks([
-    `app`,
-    `webpack-runtime`,
-    `component---node-modules-gatsby-plugin-offline-app-shell-js`,
+    `component---cache-caches-gatsby-plugin-offline-app-shell-js`,
   ])
-  const appFile = files.find(file => file.startsWith(`app-`))
+  const appFile = getAssetsForChunks([`app`]).find(file =>
+    file.startsWith(`app-`)
+  )
 
-  function flat(arr) {
-    return Array.prototype.flat ? arr.flat() : [].concat(...arr)
-  }
+  const offlineShellPath = path.resolve(
+    publicDir,
+    `offline-plugin-app-shell-fallback/index.html`
+  )
 
-  const offlineShellPath = `${process.cwd()}/${rootDir}/offline-plugin-app-shell-fallback/index.html`
   const precachePages = [
     offlineShellPath,
-    ...getPrecachePages(
-      precachePagesGlobs,
-      `${process.cwd()}/${rootDir}`
-    ).filter(page => page !== offlineShellPath),
+    ...getPrecachePages(precachePagesGlobs, publicDir).filter(
+      page => page !== offlineShellPath
+    ),
   ]
 
   const criticalFilePaths = _.uniq(
-    flat(precachePages.map(page => getResourcesFromHTML(page, pathPrefix)))
+    _.flatMap(precachePages, page => getResourcesFromHTML(page, pathPrefix))
   )
 
   const globPatterns = files.concat([
@@ -116,101 +167,73 @@ exports.onPostBuild = (
 
   const manifests = [`manifest.json`, `manifest.webmanifest`]
   manifests.forEach(file => {
-    if (fs.existsSync(`${rootDir}/${file}`)) globPatterns.push(file)
+    if (fs.existsSync(path.resolve(rootDir, file))) {
+      globPatterns.push(file)
+    }
   })
 
-  const options = {
-    importWorkboxFrom: `local`,
-    globDirectory: rootDir,
-    globPatterns,
-    modifyURLPrefix: {
-      // If `pathPrefix` is configured by user, we should replace
-      // the default prefix with `pathPrefix`.
-      "/": `${pathPrefix}/`,
-    },
-    cacheId: `gatsby-plugin-offline`,
-    // Don't cache-bust JS or CSS files, and anything in the static directory,
-    // since these files have unique URLs and their contents will never change
-    dontCacheBustURLsMatching: /(\.js$|\.css$|static\/)/,
-    runtimeCaching: [
-      {
-        // Use cacheFirst since these don't need to be revalidated (same RegExp
-        // and same reason as above)
-        urlPattern: /(\.js$|\.css$|static\/)/,
-        handler: `CacheFirst`,
-      },
-      {
-        // page-data.json files, static query results and app-data.json
-        // are not content hashed
-        urlPattern: /^https?:.*\/page-data\/.*\.json/,
-        handler: `StaleWhileRevalidate`,
-      },
-      {
-        // Add runtime caching of various other page resources
-        urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|avif|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        handler: `StaleWhileRevalidate`,
-      },
-      {
-        // Google Fonts CSS (doesn't end in .css so we need to specify it)
-        urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-        handler: `StaleWhileRevalidate`,
-      },
-    ],
-    skipWaiting: true,
-    clientsClaim: true,
-  }
+  const precacheResources = _.flatten(
+    await Promise.all(
+      globPatterns.map(
+        pattern =>
+          new Promise((resolve, reject) => {
+            glob(
+              pattern,
+              {
+                cwd: publicDir,
+              },
+              (er, files) => {
+                if (er) {
+                  reject(er)
+                }
 
-  const combinedOptions = _.merge(options, workboxConfig)
-
-  const idbKeyvalFile = `idb-keyval-iife.min.js`
-  const idbKeyvalSource = require.resolve(`idb-keyval/dist/${idbKeyvalFile}`)
-  const idbKeyvalPackageJson = require(`idb-keyval/package.json`)
-  const idbKeyValVersioned = `idb-keyval-${idbKeyvalPackageJson.version}-iife.min.js`
-  const idbKeyvalDest = `public/${idbKeyValVersioned}`
-  fs.createReadStream(idbKeyvalSource).pipe(fs.createWriteStream(idbKeyvalDest))
-
-  const swDest = `public/sw.js`
-  return workboxBuild
-    .generateSW({ swDest, ...combinedOptions })
-    .then(({ count, size, warnings }) => {
-      if (warnings) warnings.forEach(warning => console.warn(warning))
-
-      if (debug !== undefined) {
-        const swText = fs
-          .readFileSync(swDest, `utf8`)
-          .replace(
-            /(workbox\.setConfig\({modulePathPrefix: "[^"]+")}\);/,
-            `$1, debug: ${JSON.stringify(debug)}});`
-          )
-        fs.writeFileSync(swDest, swText)
-      }
-
-      const swAppend = fs
-        .readFileSync(`${__dirname}/sw-append.js`, `utf8`)
-        .replace(/%idbKeyValVersioned%/g, idbKeyValVersioned)
-        .replace(/%pathPrefix%/g, pathPrefix)
-        .replace(/%appFile%/g, appFile)
-
-      fs.appendFileSync(`public/sw.js`, `\n` + swAppend)
-
-      if (appendScript !== null) {
-        let userAppend
-        try {
-          userAppend = fs.readFileSync(appendScript, `utf8`)
-        } catch (e) {
-          throw new Error(`Couldn't find the specified offline inject script`)
-        }
-        fs.appendFileSync(`public/sw.js`, `\n` + userAppend)
-      }
-
-      reporter.info(
-        `Generated ${swDest}, which will precache ${count} files, totaling ${size} bytes.\n` +
-          `The following pages will be precached:\n` +
-          precachePages
-            .map(path => path.replace(`${process.cwd()}/public`, ``))
-            .join(`\n`)
+                try {
+                  resolve(_.uniq(_.compact(files)))
+                } catch (e) {
+                  reject(e)
+                }
+              }
+            )
+          })
       )
-    })
+    )
+  ).map(file => {
+    return { url: `/${_.trimStart(slash(file), `/`)}`, revision: null }
+  })
+
+  const digest = createContentDigest(precacheResources).substr(0, 15)
+
+  const resourcePrecacheManifest = `offline-precache-page-resource-manifest-${digest}.js`
+  const precachePageResourceManifestPath = path.resolve(
+    rootDir,
+    resourcePrecacheManifest
+  )
+
+  fs.writeFileSync(
+    precachePageResourceManifestPath,
+    `self.__GATSBY_PLUGIN_OFFLINE_PRECACHE_PAGE_RESOURCES = ${JSON.stringify(
+      precacheResources
+    )}`
+  )
+
+  const swPublicPath = `public/${SW_DESTINATION_NAME}`
+  const swText = fs
+    .readFileSync(swPublicPath, `utf8`)
+    .replace(
+      /%precachePageResourcesManifestPath%/,
+      `/${resourcePrecacheManifest}`
+    )
+    .replace(/%pathPrefix%/g, pathPrefix)
+    .replace(/%appFile%/g, appFile)
+  fs.writeFileSync(swPublicPath, swText)
+
+  reporter.info(
+    `Generated public/${SW_DESTINATION_NAME}.\n` +
+      `The following pages will be precached:\n` +
+      precachePages
+        .map(path => path.replace(`${process.cwd()}/public`, ``))
+        .join(`\n`)
+  )
 }
 
 const MATCH_ALL_KEYS = /^/
@@ -222,39 +245,50 @@ exports.pluginOptionsSchema = function ({ Joi }) {
       .description(
         `An array of pages whose resources should be precached by the service worker, using an array of globs`
       ),
-    appendScript: Joi.string().description(
-      `A file (path) to be appended at the end of the generated service worker`
+    swSrc: Joi.string().description(
+      `A file (path) to override the default entry point of the service worker. Will be compiled/bundled with webpack`
     ),
-    debug: Joi.boolean().description(
-      `Specifies whether Workbox should show debugging output in the browser console at runtime. When undefined, defaults to showing debug messages on localhost only`
-    ),
-    workboxConfig: Joi.object({
-      importWorkboxFrom: Joi.string(),
-      globDirectory: Joi.string(),
-      globPatterns: Joi.array().items(Joi.string()),
-      modifyURLPrefix: Joi.object().pattern(MATCH_ALL_KEYS, Joi.string()),
-      cacheId: Joi.string(),
-      dontCacheBustURLsMatching: Joi.object().instance(RegExp),
-      maximumFileSizeToCacheInBytes: Joi.number(),
-      runtimeCaching: Joi.array().items(
-        Joi.object({
-          urlPattern: Joi.object().instance(RegExp),
-          handler: Joi.string().valid(
-            `StaleWhileRevalidate`,
-            `CacheFirst`,
-            `NetworkFirst`,
-            `NetworkOnly`,
-            `CacheOnly`
-          ),
-          options: Joi.object({
-            networkTimeoutSeconds: Joi.number(),
-          }),
-        })
+    modifyURLPrefix: Joi.object().pattern(MATCH_ALL_KEYS, Joi.string()),
+    cacheId: Joi.string(),
+    dontCacheBustURLsMatching: Joi.object().instance(RegExp),
+    maximumFileSizeToCacheInBytes: Joi.number(),
+    skipWaiting: Joi.boolean(),
+    clientsClaim: Joi.boolean(),
+    manifestTransforms: Joi.array()
+      .items(Joi.object().instance(Function))
+      .description(
+        `One or more functions which will be applied sequentially against the generated manifest. If modifyURLPrefix or dontCacheBustURLsMatching are also specified, their corresponding transformations will be applied first. See documentation https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.ManifestTransform`
       ),
-      skipWaiting: Joi.boolean(),
-      clientsClaim: Joi.boolean(),
-    })
-      .description(`Overrides workbox configuration. Helpful documentation: https://www.gatsbyjs.com/plugins/gatsby-plugin-offline/#overriding-workbox-configuration
-      `),
+    additionalManifestEntries: Joi.array()
+      .items(
+        Joi.object({
+          url: Joi.string(),
+          revision: Joi.string(),
+          integrity: Joi.string(),
+        })
+      )
+      .description(
+        `A list of entries to be precached, in addition to any entries that are generated as part of the build configuration. See documentation https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.ManifestEntry`
+      ),
+    chunks: Joi.array()
+      .items(Joi.string())
+      .description(
+        `An array of additional webpack chunks that should be precached. The app and webpack-runtime chunks are always precached.`
+      ),
+    cleanupOutdatedCaches: Joi.boolean().description(
+      `Flag indicationg if incompatible cached versions from previous workbox versions should be cleaned up.`
+    ),
+    offlineAnalyticsConfig: Joi.alternatives()
+      .try(
+        Joi.boolean(),
+        Joi.object({
+          cacheName: Joi.string,
+          parameterOverrides: Joi.object(),
+          hitFilter: Joi.object().instance(Function),
+        })
+      )
+      .description(
+        `Configuration for offline google analytics feature. See also https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-google-analytics. If not set, this feature is disabled by default`
+      ),
   })
 }

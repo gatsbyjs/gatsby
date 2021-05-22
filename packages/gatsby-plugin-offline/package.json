@@ -1,7 +1,7 @@
 {
   "name": "gatsby-plugin-offline",
   "description": "Gatsby plugin which sets up a site to be able to run offline",
-  "version": "4.7.0-next.0",
+  "version": "5.0.0-next.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
@@ -10,10 +10,10 @@
     "@babel/runtime": "^7.12.5",
     "cheerio": "^1.0.0-rc.9",
     "gatsby-core-utils": "^2.7.0-next.0",
-    "glob": "^7.1.6",
-    "idb-keyval": "^3.2.0",
+    "glob": "^7.1.7",
+    "idb-keyval": "^5.0.5",
     "lodash": "^4.17.21",
-    "workbox-build": "^4.3.1"
+    "workbox-webpack-plugin": "^6.1.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -45,9 +45,9 @@
     "directory": "packages/gatsby-plugin-offline"
   },
   "scripts": {
-    "build": "npm run build:src && npm run build:sw-append",
-    "build:src": "babel src --out-dir . --ignore \"**/__tests__,src/sw-append.js\"",
-    "build:sw-append": "cpx -v src/sw-append.js .",
+    "build": "npm run build:src && npm run build:sw",
+    "build:src": "babel src --out-dir . --ignore \"**/__tests__,src/sw-append.js,src/serviceworker/**/*\"",
+    "build:sw": "cpx -v src/serviceworker/**/*.js ./serviceworker",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "watch": "npm run build:sw-append -- --watch & npm run build:src -- --watch"
   },
