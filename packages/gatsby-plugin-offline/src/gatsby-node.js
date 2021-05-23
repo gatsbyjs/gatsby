@@ -106,7 +106,10 @@ const readStats = () => {
     return s
   } else {
     s = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+      fs.readFileSync(
+        path.resolve(process.cwd(), `public/webpack.stats.json`),
+        `utf-8`
+      )
     )
     return s
   }
