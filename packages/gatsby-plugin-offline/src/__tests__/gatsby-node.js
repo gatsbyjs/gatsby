@@ -228,6 +228,14 @@ describe(`onPostBuild`, () => {
 
   const resourcePrecacheManifestFileName = `offline-precache-page-resource-manifest-${mockDigest}.js`
 
+  beforeEach(() => {
+    createContentDigestMock.mockClear()
+    processMock.cwd.mockClear()
+    mockFs.readFileSync.mockClear()
+    mockFs.appendFileSync.mockClear()
+    mockFs.writeFileSync.mockClear()
+  })
+
   it(`should emit offline page resource manifest file`, async () => {
     await gatsbyNode.onPostBuild(
       {
