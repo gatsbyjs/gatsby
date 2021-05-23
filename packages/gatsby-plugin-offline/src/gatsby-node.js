@@ -5,8 +5,8 @@ const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
-const webpack = require(`webpack`)
-const { InjectManifest } = require(`workbox-webpack-plugin`)
+let webpack = require(`webpack`)
+let { InjectManifest } = require(`workbox-webpack-plugin`)
 
 let getResourcesFromHTML = require(`./get-resources-from-html`)
 
@@ -95,7 +95,9 @@ const readStats = () => {
   if (s) {
     return s
   } else {
-    s = require(`${process.cwd()}/public/webpack.stats.json`)
+    s = JSON.parse(
+      fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`)
+    )
     return s
   }
 }
@@ -211,7 +213,7 @@ exports.onPostBuild = async (
 
   const resourcePrecacheManifest = `offline-precache-page-resource-manifest-${digest}.js`
   const precachePageResourceManifestPath = path.resolve(
-    rootDir,
+    publicDir,
     resourcePrecacheManifest
   )
 
@@ -262,7 +264,7 @@ exports.pluginOptionsSchema = function ({ Joi }) {
     skipWaiting: Joi.boolean(),
     clientsClaim: Joi.boolean(),
     manifestTransforms: Joi.array()
-      .items(Joi.object().instance(Function))
+      .items(Joi.function())
       .description(
         `One or more functions which will be applied sequentially against the generated manifest. If modifyURLPrefix or dontCacheBustURLsMatching are also specified, their corresponding transformations will be applied first. See documentation https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-build#.ManifestTransform`
       ),
