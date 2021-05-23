@@ -28,14 +28,19 @@ exports.onCreateWebpackConfig = (
 
   const webpackConfig = getConfig()
 
-  const swSrc = options.swSrc ?? path.join(__dirname, `serviceworker/index.js`)
-  const dontCacheBustURLsMatching =
-    options.dontCacheBustURLsMatching ?? /(\.js$|\.css$|static\/)/
-  const modifyURLPrefix = options.modifyURLPrefix ?? {
-    // If `pathPrefix` is configured by user, we should replace
-    // the default prefix with `pathPrefix`.
-    "/": `${pathPrefix}/`,
-  }
+  const swSrc = options.swSrc
+    ? options.swSrc
+    : path.join(__dirname, `serviceworker/index.js`)
+  const dontCacheBustURLsMatching = options.dontCacheBustURLsMatching
+    ? options.dontCacheBustURLsMatching
+    : /(\.js$|\.css$|static\/)/
+  const modifyURLPrefix = options.modifyURLPrefix
+    ? options.modifyURLPrefix
+    : {
+        // If `pathPrefix` is configured by user, we should replace
+        // the default prefix with `pathPrefix`.
+        "/": `${pathPrefix}/`,
+      }
 
   const defaultChunks = [`app`, `webpack-runtime`]
   const chunks = options.chunks
@@ -43,13 +48,18 @@ exports.onCreateWebpackConfig = (
     : defaultChunks
 
   const settings = {
-    cacheId: options.cacheId ?? `gatsby-plugin-offline`,
+    cacheId: options.cacheId ? options.cacheId : `gatsby-plugin-offline`,
     directoryIndex: `index.html`,
-    skipWaiting: options.skipWaiting ?? true,
-    deletePreviousCacheVersionsOnUpdate:
-      options.deletePreviousCacheVersionsOnUpdate ?? false,
-    clientsClaim: options.clientsClaim ?? true,
-    cleanupOutdatedCaches: options.cleanupOutdatedCaches ?? true,
+    skipWaiting: !_.isNil(options.skipWaiting) ? options.skipWaiting : true,
+    deletePreviousCacheVersionsOnUpdate: !_.isNil(
+      options.deletePreviousCacheVersionsOnUpdate
+    )
+      ? options.deletePreviousCacheVersionsOnUpdate
+      : false,
+    clientsClaim: !_.isNil(options.clientsClaim) ? options.clientsClaim : true,
+    cleanupOutdatedCaches: !_.isNil(options.cleanupOutdatedCaches)
+      ? options.cleanupOutdatedCaches
+      : true,
     offlineAnalyticsConfigString: !_.isNil(options.offlineAnalyticsConfig)
       ? options.offlineAnalyticsConfig === true
         ? `{}`
