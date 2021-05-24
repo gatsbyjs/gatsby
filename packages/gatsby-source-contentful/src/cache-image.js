@@ -34,7 +34,7 @@ module.exports = async function cacheImage(store, image, options) {
     params.push(`fit=${resizingBehavior}`)
   }
   if (cropFocus) {
-    params.push(`crop=${cropFocus}`)
+    params.push(`f=${cropFocus}`)
   }
   if (background) {
     params.push(`bg=${background}`)

@@ -148,7 +148,7 @@ const handleFlags = (
     let message = ``
     message += `\n- ${flag.name}`
     if (flag.experimental) {
-      message += ` · ${chalk.white.bgRed.bold(`EXPERIMENTAL`)}`
+      message += ` · ${chalk.black.bgYellow.bold(`EXPERIMENTAL`)}`
     }
     if (flag.umbrellaIssue) {
       message += ` · (Umbrella Issue (${flag.umbrellaIssue}))`

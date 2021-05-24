@@ -1,8 +1,21 @@
 ---
 title: Getting Started
+examples:
+  - label: Authenticate with Google Auth
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/google-auth"
+  - label: Authenticate with Auth0
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/auth0"
+  - label: Submit form to Airtable
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/airtable-form"
+  - label: Send email with SendGrid
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/sendgrid-email"
+  - label: Basic form that submits to a Function
+    href: "https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form"
 ---
 
 Gatsby Functions help you build [Express-like](https://expressjs.com/) backends without running servers.
+
+Functions are currently in beta and can be enabled by adding the `FUNCTIONS` flag to your `gatsby-config.js` to sites running Gatsby 3.4 and above. [Learn more and join the discussion](https://github.com/gatsbyjs/gatsby/discussions/30735).
 
 ## Hello World
 
@@ -18,8 +31,8 @@ export default function handler(req, res) {
 
 A Function file must export a single function that takes two parameters:
 
-- req: An instance of [http.IncomingMessage](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
-- res: An instance of [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
+- `req`: Node's [http request object](https://nodejs.org/api/http.html#http_class_http_incomingmessage) with some [automatically parsed data](/docs/how-to/functions/getting-started/#common-data-formats-are-automatically-parsed)
+- `res`: Node's [http response object](https://nodejs.org/api/http.html#http_class_http_serverresponse) with some [extra helper functions](/docs/how-to/functions/middleware-and-helpers/#res-helpers)
 
 Dynamic routing is supported for creating REST-ful APIs and other uses cases
 
@@ -105,5 +118,77 @@ export default async function postNewPersonHandler(req, res) {
   } catch (error) {
     res.status(500).send(error)
   }
+}
+```
+
+## Forms
+
+Forms and Functions are often used together. For a working example you can play with locally, see the [form example](https://github.com/gatsbyjs/gatsby-functions-beta/tree/main/examples/basic-form). The [Forms doc page](/docs/how-to/adding-common-features/adding-forms/) is a gentle introduction for building forms in React. Below is sample code for a very simple form that submits to a function that you can use as a basis for building out forms in Gatsby.
+
+```js:title=src/api/form.js
+export default function formHandler(req, res) {
+  // req.body has the form values
+  console.log(req.body)
+
+  // Here is where you would validate the form values and
+  // do any other actions with it you need (e.g. save it somewhere or
+  // trigger an action for the user).
+  //
+  // e.g.
+
+  if (!req.body.name) {
+    return res.status(422).json("Name field is required")
+  }
+
+  return res.json(`OK`)
+}
+```
+
+```js:title=src/pages/form.js
+import * as React from "react"
+
+export default function FormPage() {
+  const [value, setValue] = React.useState({})
+  const [serverResponse, setServerResponse] = React.useState(``)
+
+  // Listen to form changes and save them.
+  function handleChange(e) {
+    value[e.target.id] = e.target.value
+    setServerResponse(``)
+    setValue({ ...value })
+  }
+
+  // When the form is submitted, send the form values
+  // to our function for processing.
+  async function onSubmit(e) {
+    e.preventDefault()
+    const response = await window
+      .fetch(`/api/form`, {
+        method: `POST`,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(value),
+      })
+      .then(res => res.json())
+
+    setServerResponse(response)
+  }
+
+  return (
+    <div>
+      <div>Server response: {serverResponse}</div>
+      <form onSubmit={onSubmit} method="POST" action="/api/form">
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          value={value[`name`] || ``}
+          onChange={handleChange}
+        />
+        <input type="submit" />
+      </form>
+    </div>
+  )
 }
 ```

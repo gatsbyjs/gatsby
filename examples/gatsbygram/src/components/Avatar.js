@@ -2,6 +2,7 @@ import * as PropTypes from "prop-types"
 import React from "react"
 import { rhythm } from "../utils/typography"
 import { graphql } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 const propTypes = {
   user: PropTypes.shape({
@@ -12,8 +13,10 @@ const propTypes = {
 
 function Avatar({ user }) {
   return (
-    <img
-      src={user.avatar}
+    <StaticImage
+      src={
+        "https://scontent-sjc3-1.cdninstagram.com/v/t51.2885-19/s320x320/179966117_255763296334587_3906825879185675712_n.jpg?tp=1&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_ohc=__IJGmHUQDsAX-sMNmb&edm=ALwy07oBAAAA&ccb=7-4&oh=19939dc18cf3da2ec783b1e19a891121&oe=60AE6EA4&_nc_sid=261c40"
+      }
       alt={user.username}
       css={{
         display: `block`,

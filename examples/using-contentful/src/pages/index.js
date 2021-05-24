@@ -15,7 +15,7 @@ const Product = ({ node }) => (
   <div>
     <Link
       style={{ color: `inherit`, textDecoration: `none` }}
-      to={`/products/${node.id}/`}
+      to={node.gatsbyPath}
     >
       <div
         style={{
@@ -90,6 +90,7 @@ export const pageQuery = graphql`
       edges {
         node {
           id
+          gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
           productName {
             productName
           }
@@ -103,6 +104,7 @@ export const pageQuery = graphql`
       edges {
         node {
           id
+          gatsbyPath(filePath: "/products/{ContentfulProduct.id}")
           productName {
             productName
           }

@@ -101,6 +101,7 @@ export function getWrapperProps(
   } else if (layout === `constrained`) {
     if (!gatsbyImageIsInstalled()) {
       wrapperStyle.display = `inline-block`
+      wrapperStyle.verticalAlign = `top`
     }
     className = `gatsby-image-wrapper gatsby-image-wrapper-constrained`
   }

@@ -91,6 +91,14 @@ Array [
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample.doc",
   },
   Object {
+    "id": "cG9zdDoxMDQ0OQ==",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample-mp4-file.mp4",
+  },
+  Object {
+    "id": "cG9zdDoxMDQ1Mw==",
+    "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2020/10/sample-mov-file.mov",
+  },
+  Object {
     "id": "cG9zdDoxMDQ=",
     "mediaItemUrl": "http://localhost:8001/wp-content/uploads/2018/10/wordpress-logotype-standard.pdf",
   },
@@ -388,6 +396,21 @@ Object {
             "nodes": Array [],
           },
         },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Featured Image Too Big",
+          "uri": "/featured-image-too-big/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
       ],
     },
     "testPage": Object {
@@ -459,6 +482,21 @@ Object {
           },
           "title": "Yoast SEO",
           "uri": "/beautiful_slug/",
+          "wpChildren": Object {
+            "nodes": Array [],
+          },
+        },
+        Object {
+          "acfPageFields": Object {
+            "fieldGroupName": "acfPageFields",
+          },
+          "author": Object {
+            "node": Object {
+              "name": "admin",
+            },
+          },
+          "title": "Featured Image Too Big",
+          "uri": "/featured-image-too-big/",
           "wpChildren": Object {
             "nodes": Array [],
           },
@@ -696,6 +734,9 @@ Object {
           "pages": Object {
             "nodes": Array [
               Object {
+                "title": "Featured Image Too Big",
+              },
+              Object {
                 "title": "Yoast SEO",
               },
               Object {
@@ -749,6 +790,9 @@ Object {
           "name": "admin",
           "pages": Object {
             "nodes": Array [
+              Object {
+                "title": "Featured Image Too Big",
+              },
               Object {
                 "title": "Yoast SEO",
               },

@@ -292,6 +292,29 @@ module.exports = {
 }
 ```
 
+## Translations
+
+If you have translations or multilingual enabled on your Drupal site, you can opt-in to sourcing translations of entities. To do this, enable in your plugin's configuration the languages and entity types you'd like to source. E.g.
+
+```javascript
+// In your gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `gatsby-source-drupal`,
+      options: {
+        baseUrl: `https://live-contentacms.pantheonsite.io/`,
+        languageConfig: {
+          defaultLanguage: `en`,
+          enabledLanguages: [`en`, `fil`],
+          translatableEntities: [`node--article`],
+        },
+      },
+    },
+  ],
+}
+```
+
 ## Gatsby Preview (experimental)
 
 You will need to have the Drupal module installed, more information on that here: https://www.drupal.org/project/gatsby

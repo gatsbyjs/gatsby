@@ -78,12 +78,12 @@ development server.
 
 #### Options
 
-|     Option      | Description                                     |          Default          |
-| :-------------: | ----------------------------------------------- | :-----------------------: |
-| `-H`, `--host`  | Set host.                                       | `env.HOST` or `localhost` |
-| `-p`, `--port`  | Set port.                                       |   `env.PORT` or `8000`    |
-| `-o`, `--open`  | Open the site in your (default) browser for you |                           |
-| `-S`, `--https` | Use HTTPS                                       |                           |
+|     Option      | Description                                     |             Default              |
+| :-------------: | ----------------------------------------------- | :------------------------------: |
+| `-H`, `--host`  | Set host.                                       | `env.GATSBY_HOST` or `localhost` |
+| `-p`, `--port`  | Set port.                                       |       `env.PORT` or `8000`       |
+| `-o`, `--open`  | Open the site in your (default) browser for you |                                  |
+| `-S`, `--https` | Use HTTPS                                       |                                  |
 
 Follow the [Local HTTPS guide](https://www.gatsbyjs.org/docs/local-https/)
 to find out how you can set up an HTTPS development server using Gatsby.
