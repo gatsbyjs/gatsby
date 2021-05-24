@@ -31,6 +31,7 @@ module.exports = {
     `<rootDir>/dist/`,
     `<rootDir>/node_modules/`,
     `<rootDir>/packages/gatsby-admin/.cache/`,
+    `<rootDir>/packages/gatsby-plugin-gatsby-cloud/src/__tests__/mocks/`,
     `<rootDir>/deprecated-packages/`,
     `__tests__/fixtures`,
     `__testfixtures__/`,

@@ -23,6 +23,7 @@ interface IRemoteSchemaState {
     internal: string
     plugin: string
     actionOptions: string
+    fields: string
   }
 }
 
@@ -97,6 +98,7 @@ const remoteSchema: IRemoteSchemaStore = {
       internal: `wpInternal`,
       plugin: `wpPlugin`,
       actionOptions: `wpActionOptions`,
+      fields: `wpFields`,
     },
   },
 

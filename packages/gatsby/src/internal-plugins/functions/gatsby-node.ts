@@ -43,6 +43,45 @@ interface IGlobPattern {
   globPattern: string
 }
 
+// During development, we lazily compile functions only when they're requested.
+// Here we keep track of which functions have been requested so are "active"
+const activeDevelopmentFunctions = new Set<IFunctionData>()
+let activeEntries = {}
+
+async function ensureFunctionIsCompiled(
+  functionObj: IFunctionData,
+  compiledFunctionsDir: string
+): any {
+  // stat the compiled function. If it's there, then return.
+  let compiledFileExists = false
+  try {
+    compiledFileExists = !!(await fs.stat(functionObj.absoluteCompiledFilePath))
+  } catch (e) {
+    // ignore
+  }
+  if (compiledFileExists) {
+    return
+  } else {
+    // Otherwise, restart webpack by touching the file and watch for the file to be
+    // compiled.
+    const time = new Date()
+    fs.utimesSync(functionObj.originalAbsoluteFilePath, time, time)
+    await new Promise(resolve => {
+      const watcher = chokidar
+        // Watch the root of the compiled function directory in .cache as chokidar
+        // can't watch files in directories that don't yet exist.
+        .watch(compiledFunctionsDir)
+        .on(`add`, async _path => {
+          if (_path === functionObj.absoluteCompiledFilePath) {
+            await watcher.close()
+
+            resolve(null)
+          }
+        })
+    })
+  }
+}
+
 // Create glob type w/ glob, plugin name, root path
 const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
   const globs: Array<IGlobPattern> = []
@@ -212,7 +251,10 @@ const createWebpackConfig = async ({
   )
 
   const entries = {}
-  knownFunctions.forEach(functionObj => {
+  const functionsList = isProductionEnv
+    ? knownFunctions
+    : activeDevelopmentFunctions
+  functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
     const parsedFile = path.parse(functionObj.originalRelativeFilePath)
     const compiledNameWithoutExtension = path.join(
@@ -222,6 +264,12 @@ const createWebpackConfig = async ({
 
     entries[compiledNameWithoutExtension] = functionObj.originalAbsoluteFilePath
   })
+
+  activeEntries = entries
+
+  const stage = isProductionEnv
+    ? `functions-production`
+    : `functions-development`
 
   const config = {
     entry: entries,
@@ -235,6 +283,23 @@ const createWebpackConfig = async ({
     // Minification is expensive and not as helpful for serverless functions.
     optimization: {
       minimize: false,
+    },
+
+    // Resolve files ending with .ts and the default extensions of .js, .json, .wasm
+    resolve: {
+      extensions: [`.ts`, `...`],
+    },
+
+    // Have webpack save its cache to the .cache/webpack directory
+    cache: {
+      type: `filesystem`,
+      name: stage,
+      cacheLocation: path.join(
+        siteDirectoryPath,
+        `.cache`,
+        `webpack`,
+        `stage-` + stage
+      ),
     },
 
     mode: isProductionEnv ? `production` : `development`,
@@ -286,6 +351,7 @@ export async function onPreBootstrap({
   )
 
   await fs.ensureDir(compiledFunctionsDir)
+  await fs.emptyDir(compiledFunctionsDir)
 
   try {
     // We do this ungainly thing as we need to make accessible
@@ -329,7 +395,7 @@ export async function onPreBootstrap({
           }
         }
 
-        return resolve()
+        return resolve(null)
       }
 
       if (isProductionEnv) {
@@ -352,9 +418,14 @@ export async function onPreBootstrap({
             ],
             { ignoreInitial: true }
           )
-          .on(`all`, (event, path) => {
-            // Ignore change events from the API directory
-            if (event === `change` && path.includes(`/src/api/`)) {
+          .on(`all`, async (event, path) => {
+            // Ignore change events from the API directory for functions we're
+            // already watching.
+            if (
+              event === `change` &&
+              Object.values(activeEntries).includes(path) &&
+              path.includes(`/src/api/`)
+            ) {
               return
             }
 
@@ -388,6 +459,16 @@ export async function onCreateDevServer({
   store,
 }: CreateDevServerArgs): Promise<void> {
   reporter.verbose(`Attaching functions to development server`)
+
+  const {
+    program: { directory: siteDirectoryPath },
+  } = store.getState()
+
+  const compiledFunctionsDir = path.join(
+    siteDirectoryPath,
+    `.cache`,
+    `functions`
+  )
 
   app.use(
     `/api/*`,
@@ -445,6 +526,10 @@ export async function onCreateDevServer({
       }
 
       if (functionObj) {
+        activeDevelopmentFunctions.add(functionObj)
+
+        await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
+
         reporter.verbose(`Running ${functionObj.functionRoute}`)
         const start = Date.now()
         const pathToFunction = functionObj.absoluteCompiledFilePath
