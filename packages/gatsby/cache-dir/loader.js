@@ -69,6 +69,7 @@ const toPageResources = (pageData, component = null) => {
   return {
     component,
     json: pageData.result,
+    serverProps: pageData.serverProps,
     page,
   }
 }
@@ -203,12 +204,41 @@ export class BaseLoader {
     })
   }
 
+  loadServerData(rawPath, pathname) {
+    console.trace()
+    const pagePath = findPath(rawPath)
+    console.log(`base loader`, {
+      rawPath,
+      pagePath,
+      pathname,
+    })
+
+    if (pathname) {
+      const functionPathname = `/api/_pages${pathname}`
+      console.log({ functionPathname })
+
+      return fetch(functionPathname)
+        .then(res => res.json())
+        .then(serverProps => {
+          console.log({ serverProps })
+
+          return serverProps
+        })
+        .catch(e => console.log(`fetch server props error`, e))
+    } else {
+      return {}
+    }
+  }
+
   findMatchPath(rawPath) {
     return findMatchPath(rawPath)
   }
 
   // TODO check all uses of this and whether they use undefined for page resources not exist
-  loadPage(rawPath) {
+  loadPage(rawPath, pathname) {
+    console.log({ rawPath })
+    const apiUrl = window.location.origin + `/api/_pages` + rawPath
+    console.log({ apiUrl })
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
@@ -231,15 +261,18 @@ export class BaseLoader {
     const inFlightPromise = Promise.all([
       this.loadAppData(),
       this.loadPageDataJson(pagePath),
+      this.loadServerData(pagePath, pathname),
     ]).then(allData => {
       const result = allData[1]
+      const serverProps = allData[2]
       if (result.status === PageResourceStatus.Error) {
         return {
           status: PageResourceStatus.Error,
         }
       }
 
-      let pageData = result.payload
+      let pageData = { serverProps: serverProps?.props, ...result.payload }
+      console.log({ serverProps: serverProps?.props, pageData })
       const { componentChunkName, staticQueryHashes = [] } = pageData
 
       const finalResult = {}
@@ -383,7 +416,9 @@ export class BaseLoader {
   }
 
   prefetch(pagePath) {
+    console.log(`prefetch`, { pagePath })
     if (!this.shouldPrefetch(pagePath)) {
+      console.log(`no prefetch`)
       return false
     }
 
@@ -400,9 +435,10 @@ export class BaseLoader {
     }
 
     const realPath = findPath(pagePath)
+    console.log({ realPath })
     // Todo make doPrefetch logic cacheable
     // eslint-disable-next-line consistent-return
-    this.doPrefetch(realPath).then(() => {
+    this.doPrefetch(realPath, pagePath).then(() => {
       if (!this.prefetchCompleted.has(pagePath)) {
         this.apiRunner(`onPostPrefetchPathname`, { pathname: pagePath })
         this.prefetchCompleted.add(pagePath)
@@ -412,19 +448,24 @@ export class BaseLoader {
     return true
   }
 
-  doPrefetch(pagePath) {
+  doPrefetch(pagePath, pathname) {
     const pageDataUrl = createPageDataUrl(pagePath)
+    console.log(`doPrefetch`, { pagePath, pageDataUrl, pathname })
     return prefetchHelper(pageDataUrl, {
       crossOrigin: `anonymous`,
       as: `fetch`,
     }).then(() =>
       // This was just prefetched, so will return a response from
       // the cache instead of making another request to the server
-      this.loadPageDataJson(pagePath)
+      Promise.all([
+        this.loadPageDataJson(pagePath),
+        this.loadServerData(pagePath, pathname),
+      ])
     )
   }
 
   hovering(rawPath) {
+    console.log(`hovering`, { rawPath })
     this.loadPage(rawPath)
   }
 
@@ -507,6 +548,7 @@ export class ProdLoader extends BaseLoader {
   }
 
   doPrefetch(pagePath) {
+    console.log(`doPrefetch`, { pagePath })
     return super.doPrefetch(pagePath).then(result => {
       if (result.status !== PageResourceStatus.Success) {
         return Promise.resolve()
@@ -522,7 +564,7 @@ export class ProdLoader extends BaseLoader {
     return super.loadPageDataJson(rawPath).then(data => {
       if (data.notFound) {
         // check if html file exist using HEAD request:
-        // if it does we should navigate to it instead of showing 404
+        // if it does we should navigate to it instead of showing 405
         return doFetch(rawPath, `HEAD`).then(req => {
           if (req.status === 200) {
             // page (.html file) actually exist (or we asked for 404 )
@@ -541,6 +583,11 @@ export class ProdLoader extends BaseLoader {
       return data
     })
   }
+
+  loadServerData(rawPath, pathname) {
+    console.log(`loader loadServerData`, { rawPath, pathname })
+    return super.loadServerData(rawPath, pathname)
+  }
 }
 
 let instance
@@ -555,7 +602,7 @@ export const publicLoader = {
   // Real methods
   getResourceURLsForPathname: rawPath =>
     instance.getResourceURLsForPathname(rawPath),
-  loadPage: rawPath => instance.loadPage(rawPath),
+  loadPage: (rawPath, pathname) => instance.loadPage(rawPath, pathname),
   // TODO add deprecation to v4 so people use withErrorDetails and then we can remove in v5 and change default behaviour
   loadPageSync: (rawPath, options = {}) =>
     instance.loadPageSync(rawPath, options),

@@ -39,6 +39,7 @@ const onRouteUpdate = (location, prevLocation) => {
 }
 
 const navigate = (to, options = {}) => {
+  console.log(`navigate`, { to, options })
   // Support forward/backward navigation with numbers
   // navigate(-2) (jumps back 2 history steps)
   // navigate(2)  (jumps forward 2 history steps)
@@ -74,6 +75,11 @@ const navigate = (to, options = {}) => {
   }, 1000)
 
   loader.loadPage(pathname).then(pageResources => {
+    console.log({
+      pageResources,
+      pathname,
+      apiUrl: window.location.origin + `/api/_pages` + pathname,
+    })
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing

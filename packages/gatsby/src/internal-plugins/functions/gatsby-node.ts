@@ -334,7 +334,7 @@ const createWebpackConfig = async ({
           use: {
             loader: `babel-loader`,
             options: {
-              presets: [`@babel/typescript`],
+              presets: [`@babel/preset-react`, `@babel/typescript`],
             },
           },
         },

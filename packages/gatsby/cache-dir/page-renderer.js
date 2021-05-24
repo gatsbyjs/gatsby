@@ -6,8 +6,10 @@ import { grabMatchParams } from "./find-path"
 // Renders page
 class PageRenderer extends React.Component {
   render() {
+    console.log(`PageRenderer`, this)
     const props = {
       ...this.props,
+      serverProps: this.props.pageResources.serverProps,
       params: {
         ...grabMatchParams(this.props.location.pathname),
         ...this.props.pageResources.json.pageContext.__params,
@@ -24,6 +26,7 @@ class PageRenderer extends React.Component {
       { element: pageElement, props },
       pageElement,
       ({ result }) => {
+        console.log(`wrappedPage`, { props })
         return { element: result, props }
       }
     ).pop()

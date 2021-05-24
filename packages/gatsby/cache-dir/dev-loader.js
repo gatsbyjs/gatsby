@@ -32,12 +32,9 @@ class DevLoader extends BaseLoader {
         )
       }
 
-      return (
-        asyncRequires.components[chunkName]()
-          .then(preferDefault)
-          // loader will handle the case when component is error
-          .catch(err => err)
-      )
+      return asyncRequires.components[chunkName]()
+        .then(preferDefault) // loader will handle the case when component is error
+        .catch(err => err)
     }
     super(loadComponent, matchPaths)
 
@@ -62,7 +59,7 @@ class DevLoader extends BaseLoader {
 
   loadPage(pagePath) {
     const realPath = findPath(pagePath)
-    return super.loadPage(realPath).then(result => {
+    return super.loadPage(realPath, pagePath).then(result => {
       if (this.isPageNotFound(realPath)) {
         this.notFoundPagePathsInCaches.add(realPath)
       }
@@ -89,6 +86,11 @@ class DevLoader extends BaseLoader {
 
       return data
     })
+  }
+
+  loadServerData(rawPath, pathname) {
+    console.log(`dev-loader loadServerData`, { rawPath, pathname })
+    return super.loadServerData(rawPath, pathname)
   }
 
   doPrefetch(pagePath) {
