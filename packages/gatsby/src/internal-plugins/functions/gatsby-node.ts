@@ -66,12 +66,17 @@ async function ensureFunctionIsCompiled(
     // compiled.
     const time = new Date()
     fs.utimesSync(functionObj.originalAbsoluteFilePath, time, time)
+    console.log(`going to watch`, { compiledFunctionsDir })
     await new Promise(resolve => {
       const watcher = chokidar
         // Watch the root of the compiled function directory in .cache as chokidar
         // can't watch files in directories that don't yet exist.
         .watch(compiledFunctionsDir)
         .on(`add`, async _path => {
+          console.log({
+            _path,
+            compiledFunctionPath: functionObj.absoluteCompiledFilePath,
+          })
           if (_path === functionObj.absoluteCompiledFilePath) {
             await watcher.close()
 
@@ -91,6 +96,15 @@ const createGlobArray = (siteDirectoryPath, plugins): Array<IGlobPattern> => {
     globPattern: `${siteDirectoryPath}/src/api/**/*.{js,ts}`,
     rootPath: path.join(siteDirectoryPath, `src/api`),
     pluginName: `default-site-plugin`,
+  })
+
+  // Add the site src/pages directory.
+  globs.push({
+    globPattern: `${siteDirectoryPath}/src/pages/**/[\[]*[\]].{ts,js}`,
+    rootPath: path.join(siteDirectoryPath, `src/pages`),
+    pluginName: `default-site-plugin`,
+    exportName: `getServerProps`,
+    pathPrefix: `_pages`,
   })
 
   // Add each plugin
@@ -165,13 +179,20 @@ const createWebpackConfig = async ({
         const originalRelativeFilePath = path.relative(glob.rootPath, file)
 
         const { dir, name } = path.parse(originalRelativeFilePath)
+        const pathPrefix = glob.pathPrefix ? glob.pathPrefix : ``
         // Ignore the original extension as all compiled functions now end with js.
-        const compiledFunctionName = path.join(dir, name + `.js`)
+        const compiledFunctionName = path.join(pathPrefix, dir, name + `.js`)
         const compiledPath = path.join(
           compiledFunctionsDir,
           compiledFunctionName
         )
-        const finalName = urlResolve(dir, name === `index` ? `` : name)
+        const finalName = urlResolve(
+          pathPrefix,
+          dir,
+          name === `index` ? `` : name
+        )
+
+        console.log({ pathPrefix, compiledFunctionName, finalName })
 
         knownFunctions.push({
           functionRoute: finalName,
@@ -180,6 +201,7 @@ const createWebpackConfig = async ({
           originalRelativeFilePath,
           relativeCompiledFilePath: compiledFunctionName,
           absoluteCompiledFilePath: compiledPath,
+          exportName: glob.exportName ? glob.exportName : `default`,
           matchPath: getMatchPath(finalName),
         })
       })
@@ -256,7 +278,7 @@ const createWebpackConfig = async ({
     : activeDevelopmentFunctions
   functionsList.forEach(functionObj => {
     // Get path without the extension (as it could be ts or js)
-    const parsedFile = path.parse(functionObj.originalRelativeFilePath)
+    const parsedFile = path.parse(functionObj.relativeCompiledFilePath)
     const compiledNameWithoutExtension = path.join(
       parsedFile.dir,
       parsedFile.name
@@ -526,9 +548,12 @@ export async function onCreateDevServer({
       }
 
       if (functionObj) {
+        console.log({ functionObj })
         activeDevelopmentFunctions.add(functionObj)
 
+        console.log(`before`)
         await ensureFunctionIsCompiled(functionObj, compiledFunctionsDir)
+        console.log(`after`)
 
         reporter.verbose(`Running ${functionObj.functionRoute}`)
         const start = Date.now()
@@ -538,9 +563,21 @@ export async function onCreateDevServer({
           delete require.cache[require.resolve(pathToFunction)]
           const fn = require(pathToFunction)
 
-          const fnToExecute = (fn && fn.default) || fn
+          let fnToExecute
+          let isSSRFunction = false
+          console.log(`exportName`, functionObj.exportName, fn)
+          if (functionObj.exportName === `default`) {
+            fnToExecute = (fn && fn.default) || fn
+          } else {
+            isSSRFunction = true
+            fnToExecute = fn && fn[functionObj.exportName]
+          }
 
-          await Promise.resolve(fnToExecute(req, res))
+          const result = await Promise.resolve(fnToExecute(req, res))
+          // SSR pages returns an object.
+          if (isSSRFunction) {
+            res.json(result)
+          }
         } catch (e) {
           // Override the default error with something more specific.
           if (e.message.includes(`fnToExecute is not a function`)) {
