@@ -13,7 +13,8 @@
     "glob": "^7.1.7",
     "idb-keyval": "^5.0.5",
     "lodash": "^4.17.21",
-    "workbox-webpack-plugin": "^6.1.5"
+    "workbox-webpack-plugin": "^6.1.5",
+    "md5-file": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",

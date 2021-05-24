@@ -5,6 +5,7 @@ const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
 const glob = require(`glob`)
 const _ = require(`lodash`)
+const md5File = require(`md5-file`)
 let webpack = require(`webpack`)
 let { InjectManifest } = require(`workbox-webpack-plugin`)
 
@@ -193,34 +194,41 @@ exports.onPostBuild = async (
     }
   })
 
-  const precacheResources = _.flatten(
-    await Promise.all(
-      globPatterns.map(
-        pattern =>
-          new Promise((resolve, reject) => {
-            glob(
-              pattern,
-              {
-                cwd: publicDir,
-              },
-              (er, files) => {
-                if (er) {
-                  reject(er)
-                }
+  const globedFiles = _.uniq(
+    _.flatten(
+      await Promise.all(
+        globPatterns.map(
+          pattern =>
+            new Promise((resolve, reject) => {
+              glob(
+                pattern,
+                {
+                  cwd: publicDir,
+                },
+                (er, files) => {
+                  if (er) {
+                    reject(er)
+                  }
 
-                try {
-                  resolve(_.uniq(_.compact(files)))
-                } catch (e) {
-                  reject(e)
+                  try {
+                    resolve(_.compact(files))
+                  } catch (e) {
+                    reject(e)
+                  }
                 }
-              }
-            )
-          })
+              )
+            })
+        )
       )
     )
-  ).map(file => {
-    return { url: `/${_.trimStart(slash(file), `/`)}`, revision: null }
-  })
+  )
+
+  const precacheResources = await Promise.all(
+    globedFiles.map(async file => {
+      const revision = await md5File(path.resolve(publicDir, file))
+      return { url: `/${_.trimStart(slash(file), `/`)}`, revision }
+    })
+  )
 
   const digest = createContentDigest(precacheResources).substr(0, 15)
 
