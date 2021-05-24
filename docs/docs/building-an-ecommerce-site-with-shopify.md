@@ -198,4 +198,3 @@ exports.createPages = async ({ graphql, actions }) => {
 ## Additional Resources
 
 - [Gatsby Shopify Starter](https://shopify-demo.gatsbyjs.com/)
-- [Gatsby Shopify Hello World](/starters/ohduran/gatsby-starter-hello-world-shopify/)
