@@ -63,7 +63,7 @@ A big **Thank You** to [our community who contributed](https://github.com/gatsby
   - fix(gatsby-source-wordpress): Remove search and replace regex literal recommendation [PR #31413](https://github.com/gatsbyjs/gatsby/pull/31413)
 - [DaleSeo](https://github.com/DaleSeo): chore(docs): Fix missing closing code fence [PR #31404](https://github.com/gatsbyjs/gatsby/pull/31404)
 - [camro](https://github.com/camro): Update typo in docs [PR #31405](https://github.com/gatsbyjs/gatsby/pull/31405)
-- [ascorbic](https://github.com/ascorbic): fix(gatsby-cli): Switch host env to GATSBY_ prefix [PR #31426](https://github.com/gatsbyjs/gatsby/pull/31426)
+- [ascorbic](https://github.com/ascorbic): fix(gatsby-cli): Switch host env to GATSBY\_ prefix [PR #31426](https://github.com/gatsbyjs/gatsby/pull/31426)
 - [saintmalik](https://github.com/saintmalik): chore(docs): Update "choosing a CMS" [PR #31429](https://github.com/gatsbyjs/gatsby/pull/31429)
 - [Hahlh](https://github.com/Hahlh): chore(gatsby-plugin-google-gtag): Fix typo [PR #31431](https://github.com/gatsbyjs/gatsby/pull/31431)
 - [moonmeister](https://github.com/moonmeister): fix(gatsby-plugin-sitemap): Sitemap path bug [PR #31184](https://github.com/gatsbyjs/gatsby/pull/31184)
