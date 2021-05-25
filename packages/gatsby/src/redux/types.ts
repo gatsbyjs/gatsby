@@ -203,7 +203,6 @@ export type GatsbyNodeAPI =
 
 export interface IGatsbyState {
   program: IStateProgram
-  // nodes and nodesByType can be empty when GATSBY_EXPERIMENTAL_STRICT_MODE is set
   nodes: GatsbyNodes
   nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
