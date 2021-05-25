@@ -166,8 +166,25 @@ describe(`redux db`, () => {
     // make sure data was read and is not the same as our clean redux state
     expect(data.components).not.toEqual(initialComponentsState)
 
-    const snapshotName = isStrictMode() ? `STRICT_MODE` : undefined
-    expect(data).toMatchSnapshot({}, snapshotName)
+    expect(data).toMatchSnapshot({
+      nodes: expect.any(Map),
+      nodesByType: expect.any(Map),
+    })
+
+    if (!isStrictMode()) {
+      const expecteNodes = getFakeNodes()
+      const expectedNodesByType = new Map([
+        [`Ding`, new Map()],
+        [`Dong`, new Map()],
+      ])
+      expectedNodesByType.get(`Ding`).set(`pageA`, expecteNodes.get(`pageA`))
+      expectedNodesByType.get(`Dong`).set(`pageB`, expecteNodes.get(`pageB`))
+      expect(data.nodes).toEqual(expecteNodes)
+      expect(data.nodesByType).toEqual(expectedNodesByType)
+    } else {
+      expect(data.nodes).toEqual(new Map())
+      expect(data.nodesByType).toEqual(new Map())
+    }
   })
 
   describe(`GATSBY_DISABLE_CACHE_PERSISTENCE`, () => {
