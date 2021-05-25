@@ -176,6 +176,15 @@ const activeFlags: Array<IFlag> = [
     umbrellaIssue: `https://gatsby.dev/functions-feedback`,
     testFitness: (): fitnessEnum => true,
   },
+  {
+    name: `STRICT_MODE`,
+    env: `GATSBY_EXPERIMENTAL_STRICT_MODE`,
+    command: `all`,
+    telemetryId: `StrictMode`,
+    experimental: true,
+    description: `Get faster builds with lower memory consumption by adhering to additional constraints.`,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags

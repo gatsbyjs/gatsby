@@ -90,8 +90,14 @@ export const getTypes = (): Array<string> => datastore.getTypes()
 /**
  * Determine if node has changed.
  */
-export const hasNodeChanged = (id: string, digest: string): boolean =>
-  datastore.hasNodeChanged(id, digest)
+export const hasNodeChanged = (id: string, digest: string): boolean => {
+  const node = datastore.getNode(id)
+  if (!node) {
+    return true
+  } else {
+    return node.internal.contentDigest !== digest
+  }
+}
 
 /**
  * Get node and save path dependency.

@@ -29,6 +29,8 @@ Object {
     "complete": Map {},
     "incomplete": Map {},
   },
+  "nodes": Map {},
+  "nodesByType": Map {},
   "pageDataStats": Map {},
   "pages": Map {
     "/my-sweet-new-page/" => Object {

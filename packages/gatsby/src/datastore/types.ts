@@ -10,7 +10,6 @@ export interface ILmdbDatabases {
 }
 
 export interface IDataStore {
-  hasNodeChanged(id: string, digest: string): boolean
   getNode(id: string): IGatsbyNode | undefined
   getTypes(): Array<string>
   ready(): Promise<void>

@@ -124,7 +124,7 @@ export interface IDefinitionMeta {
   hash: string
 }
 
-// type GatsbyNodes = Map<string, IGatsbyNode>
+type GatsbyNodes = Map<string, IGatsbyNode>
 
 export interface IGatsbyIncompleteJobV2 {
   job: InternalJob
@@ -202,8 +202,9 @@ export type GatsbyNodeAPI =
 
 export interface IGatsbyState {
   program: IStateProgram
-  // nodes: GatsbyNodes
-  // nodesByType: Map<string, GatsbyNodes>
+  // nodes and nodesByType can be empty when GATSBY_EXPERIMENTAL_STRICT_MODE is set
+  nodes: GatsbyNodes
+  nodesByType: Map<string, GatsbyNodes>
   resolvedNodesCache: Map<string, any> // TODO
   nodesTouched: Set<string>
   lastAction: ActionsUnion
@@ -305,7 +306,7 @@ export interface IGatsbyState {
 }
 
 export interface ICachedReduxState {
-  // nodes?: IGatsbyState["nodes"]
+  nodes?: IGatsbyState["nodes"]
   status: IGatsbyState["status"]
   components: IGatsbyState["components"]
   jobsV2: IGatsbyState["jobsV2"]

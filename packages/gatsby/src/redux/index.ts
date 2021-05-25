@@ -20,19 +20,19 @@ export const emitter = mett()
 export const readState = (): IGatsbyState => {
   try {
     const state = readFromCache() as IGatsbyState
-    // if (state.nodes) {
-    //   // re-create nodesByType
-    //   state.nodesByType = new Map()
-    //   state.nodes.forEach(node => {
-    //     const { type } = node.internal
-    //     if (!state.nodesByType.has(type)) {
-    //       state.nodesByType.set(type, new Map())
-    //     }
-    //     // The `.has` and `.set` calls above make this safe
-    //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    //     state.nodesByType.get(type)!.set(node.id, node)
-    //   })
-    // }
+    if (state.nodes) {
+      // re-create nodesByType
+      state.nodesByType = new Map()
+      state.nodes.forEach(node => {
+        const { type } = node.internal
+        if (!state.nodesByType.has(type)) {
+          state.nodesByType.set(type, new Map())
+        }
+        // The `.has` and `.set` calls above make this safe
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        state.nodesByType.get(type)!.set(node.id, node)
+      })
+    }
 
     // jsonDataPaths was removed in the per-page-manifest
     // changes. Explicitly delete it here to cover case where user
@@ -96,7 +96,7 @@ export const saveState = (): void => {
   const state = store.getState()
 
   return writeToCache({
-    // nodes: state.nodes,
+    nodes: state.nodes,
     status: state.status,
     components: state.components,
     jobsV2: state.jobsV2,
