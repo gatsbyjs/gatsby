@@ -9,7 +9,7 @@ Welcome to `gatsby@3.6.0` release (May 2021 #2)
 
 Key highlights of this release:
 
-- [Functions](#functions) - TODO
+- [Functions](#functions) - now supported in Plugings and Themes! Muliple performance and DX improvements.
 - [Preview Status Indicator](#preview-status-indicator) - Design upgrade and added functionality.
 
 Also check out [notable bugfixes](#notable-bugfixes--improvements).
