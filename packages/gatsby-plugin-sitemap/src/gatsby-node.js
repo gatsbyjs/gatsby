@@ -21,14 +21,6 @@ exports.onPostBuild = async (
 ) => {
   const { data: queryRecords } = await graphql(query)
 
-  reporter.verbose(
-    `${REPORTER_PREFIX} Query Results:\n${JSON.stringify(
-      queryRecords,
-      null,
-      2
-    )}`
-  )
-
   // resolvePages and resolveSuteUrl are allowed to be sync or async. The Promise.resolve handles each possibility
   const allPages = await Promise.resolve(
     resolvePages(queryRecords)
@@ -83,11 +75,13 @@ exports.onPostBuild = async (
     }
   }
 
-  const sitemapPath = path.join(`public`, output)
+  const sitemapWritePath = path.join(`public`, output)
+  const sitemapPublicPath = path.posix.join(pathPrefix, output)
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,
-    destinationDir: sitemapPath,
+    publicBasePath: sitemapPublicPath,
+    destinationDir: sitemapWritePath,
     sourceData: serializedPages,
     limit: entryLimit,
     gzip: false,

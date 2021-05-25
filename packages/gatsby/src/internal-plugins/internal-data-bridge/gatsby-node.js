@@ -158,7 +158,7 @@ exports.sourceNodes = ({
     })
   } else {
     // If not enabled, create a dummy node so we can ignore it in the dev 404 page
-    const config = { apiRoute: `FAKE`, absoluteCompiledFilePath: `FAKE` }
+    const config = { functionRoute: `FAKE`, absoluteCompiledFilePath: `FAKE` }
     createNode({
       id: `gatsby-function-${config.absoluteCompiledFilePath}`,
       ...config,

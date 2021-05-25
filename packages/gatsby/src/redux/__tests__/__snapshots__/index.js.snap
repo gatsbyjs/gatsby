@@ -4,6 +4,7 @@ exports[`redux db should write redux cache to disk 1`] = `
 Object {
   "components": Map {
     "/Users/username/dev/site/src/templates/my-sweet-new-page.js" => Object {
+      "componentChunkName": "component---users-username-dev-site-src-templates-my-sweet-new-page-js",
       "componentPath": "/Users/username/dev/site/src/templates/my-sweet-new-page.js",
       "isInBootstrap": true,
       "pages": Set {
